@@ -1,4 +1,4 @@
-/** Fixed design data. tools/gen-scss-data.mjs writes the Sass copy of these tables. */
+/** Fixed design data. packages/themes/scripts/gen-scss-data.mjs writes the Sass copy of these tables. */
 
 export const PRIMARY_SWATCHES = [
   { id: 'wira', hex: '#00a86b' },

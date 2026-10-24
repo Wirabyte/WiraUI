@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist/esm",
+    "module": "CommonJS",
+    "outDir": "dist/cjs",
     "declarationDir": "dist/types",
     "rootDir": "src",
     "noPropertyAccessFromIndexSignature": true

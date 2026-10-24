@@ -1,0 +1,71 @@
+// Helpers for app and component styles: `@use 'wiratheme/theme/api' as wt;`
+// Emits no CSS of its own, so it can be loaded from any number of files.
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+
+// min-width breakpoints used by media().
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;
+
+// token(primary-300) → var(--wt-primary-300)
+@function token($name) {
+  @return string.unquote('var(--wt-#{$name})');
+}
+
+// Styles for dark mode: the `.wt-dark` class on <html> (default), or `$mode: 'media'` for prefers-color-scheme.
+@mixin dark($mode: 'class') {
+  @if $mode == 'media' {
+    @media (prefers-color-scheme: dark) {
+      @content;
+    }
+  } @else if $mode != 'class' {
+    @error 'wiratheme: dark() $mode must be \'class\' or \'media\', got `#{meta.inspect($mode)}`.';
+  } @else if & {
+    :root.wt-dark & {
+      @content;
+    }
+  } @else {
+    :root.wt-dark {
+      @content;
+    }
+  }
+}
+
+// @include media(md) { … } → @media (min-width: 768px). Also takes a length.
+@mixin media($bp) {
+  $width: $bp;
+  @if meta.type-of($bp) != 'number' {
+    $width: map.get($breakpoints, $bp);
+    @if not $width {
+      @error 'wiratheme: unknown breakpoint `#{meta.inspect($bp)}`; use #{map.keys($breakpoints)} or a length.';
+    }
+  }
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+// Frosted-glass surface with a solid fallback where backdrop-filter is missing or transparency is
+// reduced. Include it after the element's own declarations.
+@mixin glass {
+  // Interpolated so Sass never treats saturate() as its own colour function.
+  $filter: 'blur(#{token(glass-blur)}) saturate(#{token(glass-saturate)})';
+  background: token(card-bg);
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background: token(glass-bg);
+    border: 1px solid token(glass-border);
+    box-shadow: token(glass-highlight), token(glass-shadow);
+    -webkit-backdrop-filter: #{$filter};
+    backdrop-filter: #{$filter};
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    background: token(card-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

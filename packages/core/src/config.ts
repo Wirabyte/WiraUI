@@ -1,5 +1,5 @@
 import { COMPONENT_TOKENS, ComponentId, DENSITY, DensityId, PRESETS, PresetId, SEMANTIC_DEFAULTS, SEMANTIC_KEYS, SemanticKey, SHADOWS, ShadowId, SURFACES, SurfaceId } from './catalog';
-import { isHex, isPalette, Palette } from './color';
+import { hexToRgb, isHex, isPalette, Palette, rgbToHex, SHADES } from './color';
 
 export type DarkMode = 'none' | 'class' | 'media';
 export type FocusRing = 'ring' | 'outline';
@@ -61,6 +61,13 @@ export function defaults(preset: PresetId | string = 'wira'): ThemeConfig {
   };
 }
 
+/** Lowercase 6-digit hex for every shade, the form the Sass engine always emits. */
+function canonicalPalette(p: Palette): Palette {
+  const out = {} as Palette;
+  for (const s of SHADES) out[s] = rgbToHex(hexToRgb(p[s]));
+  return out;
+}
+
 function pick<T>(value: unknown, ok: (v: unknown) => boolean, fallback: T): T {
   return ok(value) ? (value as T) : fallback;
 }
@@ -88,7 +95,7 @@ export function normalize(raw: unknown): ThemeConfig {
     v: 1,
     preset: base.preset,
     primary: isHex(r['primary']) ? (r['primary'] as string).toLowerCase() : base.primary,
-    primaryShades: isPalette(r['primaryShades']) ? { ...(r['primaryShades'] as Palette) } : null,
+    primaryShades: isPalette(r['primaryShades']) ? canonicalPalette(r['primaryShades'] as Palette) : null,
     surface: pick(r['surface'], (v) => typeof v === 'string' && v in SURFACES, base.surface),
     semantic,
     fontFamily: pick(r['fontFamily'], (v) => typeof v === 'string' && v.trim() !== '', base.fontFamily),

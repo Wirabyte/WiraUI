@@ -1,0 +1,122 @@
+// Colour maths: the Sass twin of packages/core/src/color.ts (and bestOn() in tokens.ts).
+// test/parity.test.ts compiles the theme with both supported Sass versions and compares it with core.
+// Colours travel as (r, g, b) lists of 0–255 integers and leave as lowercase '#rrggbb' strings,
+// built by hand so the output never depends on how a Sass version serialises colours.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'data';
+
+$-digits: '0123456789abcdef';
+
+// '#abc' or '#aabbcc' in any case → (r, g, b); null for anything else.
+@function -parse-hex($text) {
+  $text: string.to-lower-case($text);
+  $len: string.length($text);
+  @if string.slice($text, 1, 1) != '#' or ($len != 4 and $len != 7) {
+    @return null;
+  }
+  $d: ();
+  @for $i from 2 through $len {
+    $n: string.index($-digits, string.slice($text, $i, $i));
+    @if not $n {
+      @return null;
+    }
+    $d: list.append($d, $n - 1);
+  }
+  @if $len == 4 {
+    @return (list.nth($d, 1) * 17, list.nth($d, 2) * 17, list.nth($d, 3) * 17);
+  }
+  @return (list.nth($d, 1) * 16 + list.nth($d, 2), list.nth($d, 3) * 16 + list.nth($d, 4), list.nth($d, 5) * 16 + list.nth($d, 6));
+}
+
+// A hex colour (#abc / #aabbcc) or a string holding one → (r, g, b), or null.
+@function wt-try-rgb($value) {
+  $type: meta.type-of($value);
+  @if $type == 'color' {
+    // A colour literal inspects as written, so this reads the hex the user typed.
+    @return -parse-hex(meta.inspect($value));
+  }
+  @if $type == 'string' {
+    @return -parse-hex(string.unquote($value));
+  }
+  @return null;
+}
+
+// Like wt-try-rgb() but raises an error; $what names the setting in the message.
+@function wt-rgb($value, $what: 'colour') {
+  $rgb: wt-try-rgb($value);
+  @if not $rgb {
+    @error 'wiratheme: #{$what} must be a hex colour like #00a86b or #0a6, got `#{meta.inspect($value)}`.';
+  }
+  @return $rgb;
+}
+
+// (r, g, b) → '#rrggbb'. Channels are clamped and rounded like rgbToHex().
+@function wt-hex($rgb) {
+  $out: '#';
+  @each $v in $rgb {
+    $v: math.round(math.max(0, math.min(255, $v)));
+    $hi: math.floor(math.div($v, 16));
+    $lo: $v - $hi * 16;
+    $out: $out + string.slice($-digits, $hi + 1, $hi + 1) + string.slice($-digits, $lo + 1, $lo + 1);
+  }
+  @return $out;
+}
+
+// sRGB mix; $percent (whole number) is the share of $a. Same sum as mix() so .5 rounds up in both.
+@function wt-mix($a, $b, $percent) {
+  $out: ();
+  @for $i from 1 through 3 {
+    $out: list.append($out, math.div(list.nth($a, $i) * $percent + list.nth($b, $i) * (100 - $percent), 100), comma);
+  }
+  @return wt-hex($out);
+}
+
+// 50–950 scale from one base colour (the base becomes 500), as generatePalette().
+@function wt-palette($base) {
+  $out: ();
+  @each $s in data.$shades {
+    $hex: null;
+    @if $s == 500 {
+      $hex: wt-hex($base);
+    } @else if map.has-key(data.$tint, $s) {
+      $hex: wt-mix((255, 255, 255), $base, map.get(data.$tint, $s));
+    } @else {
+      $hex: wt-mix((0, 0, 0), $base, map.get(data.$shade-mix, $s));
+    }
+    $out: map.merge($out, ($s: $hex));
+  }
+  @return $out;
+}
+
+@function -linear($v) {
+  $s: math.div($v, 255);
+  @if $s <= 0.03928 {
+    @return math.div($s, 12.92);
+  }
+  @return math.pow(math.div($s + 0.055, 1.055), 2.4);
+}
+
+// WCAG relative luminance of (r, g, b).
+@function wt-luminance($rgb) {
+  @return 0.2126 * -linear(list.nth($rgb, 1)) + 0.7152 * -linear(list.nth($rgb, 2)) + 0.0722 * -linear(list.nth($rgb, 3));
+}
+
+// WCAG contrast ratio between two (r, g, b) colours.
+@function wt-contrast($a, $b) {
+  $l1: wt-luminance($a);
+  $l2: wt-luminance($b);
+  @return math.div(math.max($l1, $l2) + 0.05, math.min($l1, $l2) + 0.05);
+}
+
+// White or the darkest surface, whichever reads better on $bg (both hex strings), as bestOn().
+@function wt-best-on($bg, $surface-950) {
+  $bg: wt-rgb($bg);
+  @if wt-contrast((255, 255, 255), $bg) >= wt-contrast(wt-rgb($surface-950), $bg) {
+    @return '#ffffff';
+  }
+  @return 'var(--wt-surface-950)';
+}

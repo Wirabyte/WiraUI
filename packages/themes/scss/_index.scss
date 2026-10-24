@@ -1,0 +1,471 @@
+// WiraTheme theme: `@use 'wiratheme/theme' with ($preset: 'wira', $primary: #00a86b, …);`
+// Emits the same --wt-* tokens as computeTokens() + tokensToCss() in @wiratheme/core
+// (test/parity.test.ts compiles both supported Sass versions against it). Every setting is
+// optional; anything left out comes from $preset.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'data';
+@use 'color';
+
+// 'wira' | 'lanna' | 'siam' | 'nakhon'
+$preset: 'wira' !default;
+// A hex colour (50–950 are generated from it), a map (50: …, …, 950: …), or a swatch name such as 'sky'.
+$primary: null !default;
+// 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone'
+$surface: null !default;
+// (success: #22c55e, info: …, warn: …, danger: …, help: …); any subset.
+$semantic: null !default;
+// ('Kanit', sans-serif)
+$font-family: null !default;
+$font-size: null !default; // px
+$line-height: null !default;
+$radius: null !default; // px
+// 'compact' | 'normal' | 'comfortable'
+$density: null !default;
+// 'none' | 'subtle' | 'soft' | 'elevated'
+$shadow: null !default;
+// 'ring' | 'outline'
+$focus-ring: null !default;
+$transition: null !default; // ms
+$ripple: null !default;
+// 'none' | 'class' (.wt-dark on <html>) | 'media' (prefers-color-scheme)
+$dark-mode: 'class' !default;
+// 'solid' | 'glass'
+$material: 'solid' !default;
+// Component id → kebab-case (or camelCase) token keys: (card: (body-gap: 0px, bordered: false), table: (striped: true))
+$components: () !default;
+
+// ---------- reading settings ----------
+
+// A name without quotes or `{}`. A bare `gray` parses as a colour, so colours are read as written.
+@function -name($value) {
+  $type: meta.type-of($value);
+  @if $type == 'color' {
+    $value: meta.inspect($value);
+  } @else if $type != 'string' {
+    @return null;
+  }
+  $value: string.unquote($value);
+  @if string.slice($value, 1, 1) == '{' and string.slice($value, -1) == '}' {
+    $value: string.slice($value, 2, -2);
+  }
+  @return $value;
+}
+
+@function -id($value, $what, $options) {
+  $id: -name($value);
+  @if not $id or not list.index($options, $id) {
+    @error 'wiratheme: #{$what} must be one of #{$options}, got `#{meta.inspect($value)}`.';
+  }
+  @return $id;
+}
+
+@function -strip($n) {
+  @return math.div($n, $n * 0 + 1);
+}
+
+// A px length (or a bare number) → the bare number, so it prints like `n + 'px'` in core.
+@function -px($value, $what) {
+  @if meta.type-of($value) == 'number' and (math.is-unitless($value) or math.unit($value) == 'px') {
+    @return -strip($value);
+  }
+  @error 'wiratheme: #{$what} must be a px length like 14px, got `#{meta.inspect($value)}`.';
+}
+
+@function -ms($value, $what) {
+  @if meta.type-of($value) == 'number' {
+    @if math.is-unitless($value) or math.unit($value) == 'ms' {
+      @return -strip($value);
+    }
+    @if math.unit($value) == 's' {
+      @return -strip($value) * 1000;
+    }
+  }
+  @error 'wiratheme: #{$what} must be a time like 150ms, got `#{meta.inspect($value)}`.';
+}
+
+@function -is-map($value) {
+  @return meta.type-of($value) == 'map' or (meta.type-of($value) == 'list' and list.length($value) == 0);
+}
+
+// Hex colour, '{swatch}' / 'swatch' name, or a full 50…950 map → (shade: '#rrggbb').
+@function -palette($value, $what) {
+  @if -is-map($value) {
+    $out: ();
+    @each $s in data.$shades {
+      $v: map.get($value, $s);
+      @if $v == null {
+        $v: map.get($value, '#{$s}');
+      }
+      @if $v == null {
+        @error 'wiratheme: #{$what} is missing shade #{$s}; give every shade 50-950 or a single hex colour.';
+      }
+      $out: map.merge($out, ($s: color.wt-hex(color.wt-rgb($v, '#{$what} #{$s}'))));
+    }
+    @return $out;
+  }
+  $rgb: color.wt-try-rgb($value);
+  @if not $rgb and meta.type-of($value) == 'string' {
+    $hex: map.get(data.$primary-swatches, -name($value));
+    @if $hex {
+      $rgb: color.wt-rgb($hex);
+    }
+  }
+  @if not $rgb {
+    @error 'wiratheme: #{$what} must be a hex colour like #00a86b, a map of shades 50-950, or a swatch name in quotes like \'sky\', got `#{meta.inspect($value)}`.';
+  }
+  @return color.wt-palette($rgb);
+}
+
+// ('Kanit', sans-serif) → "'Kanit', sans-serif"; a single name gets `, sans-serif` like core.
+@function -font-family($value) {
+  @if meta.type-of($value) == 'list' and list.separator($value) == 'comma' {
+    $out: '';
+    @each $f in $value {
+      $text: meta.inspect($f);
+      @if meta.type-of($f) == 'string' and (string.slice($text, 1, 1) == '"' or string.slice($text, 1, 1) == "'") {
+        $text: "'#{$f}'";
+      }
+      @if $out != '' {
+        $out: $out + ', ';
+      }
+      $out: $out + $text;
+    }
+    @return $out;
+  }
+  @if meta.type-of($value) == 'string' {
+    @return "'#{$value}', sans-serif";
+  }
+  @if meta.type-of($value) == 'list' {
+    @return "'#{meta.inspect($value)}', sans-serif";
+  }
+  @error 'wiratheme: $font-family must be a list like (\'Kanit\', sans-serif), got `#{meta.inspect($value)}`.';
+}
+
+// ---------- settings, with gaps filled from the preset ----------
+
+$-preset: -id($preset, '$preset', map.keys(data.$presets));
+$-p: map.get(data.$presets, $-preset);
+
+@function -or($value, $key) {
+  @if $value == null {
+    @return map.get($-p, $key);
+  }
+  @return $value;
+}
+
+$-surface: -id(-or($surface, surface), '$surface', map.keys(data.$surfaces));
+$-surface-scale: map.get(data.$surfaces, $-surface);
+$-s950: list.nth($-surface-scale, 11);
+$-density: -id(-or($density, density), '$density', map.keys(data.$density));
+$-shadow: -id(-or($shadow, shadow), '$shadow', map.keys(data.$shadows));
+$-focus-ring: -id(-or($focus-ring, focus-ring), '$focus-ring', ('ring', 'outline'));
+$-dark-mode: -id($dark-mode, '$dark-mode', ('none', 'class', 'media'));
+$-material: -id($material, '$material', ('solid', 'glass'));
+$-radius: -px(-or($radius, radius), '$radius');
+$-font-size: -px(-or($font-size, font-size), '$font-size');
+$-transition: -ms(-or($transition, transition), '$transition');
+$-line-height: -or($line-height, line-height);
+@if meta.type-of($-line-height) != 'number' {
+  @error 'wiratheme: $line-height must be a number like 1.6, got `#{meta.inspect($-line-height)}`.';
+}
+// No token of its own; checked so a typo fails here rather than silently.
+@if meta.type-of(-or($ripple, ripple)) != 'bool' {
+  @error 'wiratheme: $ripple must be true or false, got `#{meta.inspect($ripple)}`.';
+}
+
+$-semantic: ();
+@if $semantic != null {
+  @if not -is-map($semantic) {
+    @error 'wiratheme: $semantic must be a map like (success: #22c55e), got `#{meta.inspect($semantic)}`.';
+  }
+  @each $k, $v in $semantic {
+    @if not list.index(data.$semantic-keys, $k) {
+      @error 'wiratheme: unknown $semantic key `#{$k}`; use #{data.$semantic-keys}.';
+    }
+  }
+  $-semantic: $semantic;
+}
+
+@function -spec($id, $key) {
+  @each $spec in data.$component-tokens {
+    @if map.get($spec, id) == $id and (map.get($spec, key) == $key or map.get($spec, camel) == $key) {
+      @return $spec;
+    }
+  }
+  @return null;
+}
+
+@if not -is-map($components) {
+  @error 'wiratheme: $components must be a map like (card: (body-gap: 0px)), got `#{meta.inspect($components)}`.';
+}
+@each $id, $group in $components {
+  @if not -is-map($group) {
+    @error 'wiratheme: $components.#{$id} must be a map like (radius: 8px), got `#{meta.inspect($group)}`.';
+  }
+  @each $key, $v in $group {
+    @if not -spec($id, $key) {
+      @error 'wiratheme: unknown component token `#{$id}.#{$key}`.';
+    }
+  }
+}
+
+// ---------- tokens (same order as computeTokens) ----------
+
+$-light: ();
+$-dark: ();
+
+// surfaceTokens
+$-light: map.merge($-light, ('surface-0': '#ffffff'));
+@for $i from 1 through 11 {
+  $-light: map.merge($-light, ('surface-#{list.nth(data.$shades, $i)}': list.nth($-surface-scale, $i)));
+}
+
+// primaryTokens
+$-primary-palette: -palette(-or($primary, primary), '$primary');
+@each $s in data.$shades {
+  $-light: map.merge($-light, ('primary-#{$s}': map.get($-primary-palette, $s)));
+}
+$-light: map.merge($-light, ('primary-contrast': color.wt-best-on(map.get($-primary-palette, 500), $-s950)));
+$-dark: map.merge($-dark, ('primary-contrast': color.wt-best-on(map.get($-primary-palette, 400), $-s950)));
+
+// semanticTokens
+@each $k in data.$semantic-keys {
+  $v: map.get($-semantic, $k);
+  @if $v == null {
+    $v: map.get(data.$semantic-defaults, $k);
+  }
+  $pal: -palette($v, '$semantic.#{$k}');
+  @each $s in data.$shades {
+    $-light: map.merge($-light, ('#{$k}-#{$s}': map.get($pal, $s)));
+  }
+  $-light: map.merge($-light, ('#{$k}-contrast': color.wt-best-on(map.get($pal, 600), $-s950)));
+  $-dark: map.merge($-dark, ('#{$k}-contrast': color.wt-best-on(map.get($pal, 400), $-s950)));
+}
+
+// fontTokens, radiusTokens, densityTokens, shadowTokens, focusRingTokens, transitionTokens, materialTokens
+$-d: map.get(data.$density, $-density);
+$-sh: map.get(data.$shadows, $-shadow);
+$-ring: '0 0 0 3px color-mix(in srgb, var(--wt-primary-color) 30%, transparent)';
+@if $-focus-ring == 'outline' {
+  $-ring: '0 0 0 2px var(--wt-card-bg), 0 0 0 4px var(--wt-primary-color)';
+}
+$-light: map.merge(
+  $-light,
+  (
+    'font-family': -font-family(-or($font-family, font-family)),
+    'font-size': '#{$-font-size}px',
+    'line-height': '#{$-line-height}',
+    'radius-sm': '#{math.round($-radius * 0.66)}px',
+    'radius-md': '#{$-radius}px',
+    'radius-lg': '#{math.round($-radius * 1.5)}px',
+    'radius-xl': '#{math.round($-radius * 2.5)}px',
+    'radius-full': '9999px',
+    'field-padding-y': '#{map.get($-d, field-py)}px',
+    'field-padding-x': '#{map.get($-d, field-px)}px',
+    'button-padding-y': '#{map.get($-d, btn-py)}px',
+    'gap': '#{map.get($-d, gap)}px',
+    'density-button-padding-x': '#{map.get($-d, btn-px)}px',
+    'density-card-padding': '#{map.get($-d, card-pad)}px',
+    'density-row-height': '#{map.get($-d, row)}px',
+    'shadow-sm': list.nth($-sh, 1),
+    'shadow-md': list.nth($-sh, 2),
+    'shadow-lg': list.nth($-sh, 3),
+    'focus-ring': $-ring,
+    'transition': '#{$-transition}ms',
+    'material': $-material,
+  )
+);
+
+// derived(): tokens that only reference other tokens
+@function -surf($s) {
+  @return 'var(--wt-surface-#{$s})';
+}
+@function -prim($s) {
+  @return 'var(--wt-primary-#{$s})';
+}
+@function -soft($ref) {
+  @return 'color-mix(in srgb, #{$ref} 16%, var(--wt-surface-900))';
+}
+
+$-light: map.merge(
+  $-light,
+  (
+    'primary-color': -prim(500),
+    'primary-hover': -prim(600),
+    'primary-active': -prim(700),
+    'primary-soft': -prim(50),
+    'primary-soft-text': -prim(700),
+    'ground': -surf(50),
+    'card-bg': -surf(0),
+    'overlay-bg': -surf(0),
+    'text': -surf(800),
+    'text-muted': -surf(500),
+    'border': -surf(200),
+    'hover-bg': -surf(100),
+    'field-bg': -surf(0),
+    'field-border': -surf(300),
+    'field-hover-border': -surf(400),
+    'field-disabled-bg': -surf(100),
+    'mask': 'rgba(0, 0, 0, 0.4)',
+    'table-header-bg': -surf(50),
+    'glass-bg': 'color-mix(in srgb, var(--wt-surface-0) 60%, transparent)',
+    'glass-blur': '20px',
+    'glass-saturate': '180%',
+    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 65%, transparent)',
+    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.7)',
+    'glass-shadow': '0 8px 32px rgba(15, 23, 42, 0.18)',
+    'primary-gradient': 'linear-gradient(135deg, var(--wt-primary-400), var(--wt-primary-600))',
+    'backdrop': 'var(--wt-ground)',
+  )
+);
+$-dark: map.merge(
+  $-dark,
+  (
+    'primary-color': -prim(400),
+    'primary-hover': -prim(300),
+    'primary-active': -prim(200),
+    'primary-soft': -soft(-prim(400)),
+    'primary-soft-text': -prim(200),
+    'ground': -surf(950),
+    'card-bg': -surf(900),
+    'overlay-bg': -surf(900),
+    'text': -surf(0),
+    'text-muted': -surf(400),
+    'border': -surf(700),
+    'hover-bg': -surf(800),
+    'field-bg': -surf(950),
+    'field-border': -surf(600),
+    'field-hover-border': -surf(500),
+    'field-disabled-bg': -surf(800),
+    'mask': 'rgba(0, 0, 0, 0.6)',
+    'table-header-bg': -surf(800),
+    'glass-bg': 'color-mix(in srgb, var(--wt-surface-900) 50%, transparent)',
+    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 14%, transparent)',
+    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.18)',
+    'glass-shadow': '0 8px 32px rgba(0, 0, 0, 0.4)',
+  )
+);
+@each $k in data.$semantic-keys {
+  $-light: map.merge($-light, ('#{$k}-color': 'var(--wt-#{$k}-600)', '#{$k}-bg': 'var(--wt-#{$k}-50)', '#{$k}-text': 'var(--wt-#{$k}-800)'));
+  $-dark: map.merge($-dark, ('#{$k}-color': 'var(--wt-#{$k}-400)', '#{$k}-bg': -soft('var(--wt-#{$k}-400)'), '#{$k}-text': 'var(--wt-#{$k}-200)'));
+}
+
+// componentValue(): tokens for one component value, as (light: (…), dark: (…)).
+@function -component-value($spec, $v) {
+  $css: map.get($spec, css);
+  $what: '$components.#{map.get($spec, id)}.#{map.get($spec, key)}';
+  @if map.get($spec, type) == 'bool' {
+    @if meta.type-of($v) != 'bool' {
+      @error 'wiratheme: #{$what} must be true or false, got `#{meta.inspect($v)}`.';
+    }
+    $light: null;
+    $dark: ();
+    @if $css == 'card-border-width' {
+      $light: '0px';
+      @if $v {
+        $light: '1px';
+      }
+    } @else if $css == 'tag-radius' {
+      $light: 'var(--wt-radius-sm)';
+      @if $v {
+        $light: 'var(--wt-radius-full)';
+      }
+    } @else if $css == 'table-stripe-bg' {
+      $light: 'transparent';
+      @if $v {
+        $light: -surf(50);
+        $dark: ($css: 'color-mix(in srgb, var(--wt-surface-800) 50%, var(--wt-surface-900))');
+      }
+    }
+    @return (light: ($css: $light), dark: $dark);
+  }
+  @if meta.type-of($v) == 'string' {
+    @return (light: ($css: '#{$v}'), dark: ());
+  }
+  @if meta.type-of($v) != 'number' {
+    @error 'wiratheme: #{$what} must be a number, got `#{meta.inspect($v)}`.';
+  }
+  // Like core, px tokens take a bare or px number; any other unit is passed through as written.
+  @if map.get($spec, type) == 'px' and (math.is-unitless($v) or math.unit($v) == 'px') {
+    @return (light: ($css: '#{-strip($v)}px'), dark: ());
+  }
+  @return (light: ($css: '#{$v}'), dark: ());
+}
+
+// componentDefault(): what a component token is when $components does not set it.
+$-component-refs: (
+  'button-radius': 'var(--wt-radius-md)',
+  'button-padding-x': 'var(--wt-density-button-padding-x)',
+  'input-radius': 'var(--wt-radius-md)',
+  'card-padding': 'var(--wt-density-card-padding)',
+  'card-radius': 'var(--wt-radius-lg)',
+  'card-body-gap': '8px',
+  'table-row-height': 'var(--wt-density-row-height)',
+  'dialog-radius': 'var(--wt-radius-xl)',
+);
+
+@function -component-default($spec) {
+  $css: map.get($spec, css);
+  @if $css == 'button-font-weight' {
+    @return (light: ($css: '#{map.get($-p, button-weight)}'), dark: ());
+  }
+  @if $css == 'card-border-width' {
+    @return -component-value($spec, map.get($-p, card-border));
+  }
+  @if $css == 'table-stripe-bg' or $css == 'tag-radius' {
+    @return -component-value($spec, false);
+  }
+  @return (light: ($css: map.get($-component-refs, $css)), dark: ());
+}
+
+@each $spec in data.$component-tokens {
+  $group: map.get($components, map.get($spec, id));
+  $v: null;
+  @if $group {
+    $v: map.get($group, map.get($spec, key));
+    @if $v == null {
+      $v: map.get($group, map.get($spec, camel));
+    }
+  }
+  $t: null;
+  @if $v == null {
+    $t: -component-default($spec);
+  } @else {
+    $t: -component-value($spec, $v);
+  }
+  $-light: map.merge($-light, map.get($t, light));
+  $-dark: map.merge($-dark, map.get($t, dark));
+}
+
+// ---------- output (mirrors tokensToCss with extra `theme-source: scss`) ----------
+
+@layer wiratheme.tokens, wiratheme.components, wiratheme.overrides;
+
+@layer wiratheme.tokens {
+  :root {
+    --wt-theme-source: scss;
+    @each $k, $v in $-light {
+      --wt-#{$k}: #{$v};
+    }
+  }
+
+  @if list.length($-dark) > 0 and $-dark-mode == 'class' {
+    :root.wt-dark {
+      @each $k, $v in $-dark {
+        --wt-#{$k}: #{$v};
+      }
+    }
+  } @else if list.length($-dark) > 0 and $-dark-mode == 'media' {
+    @media (prefers-color-scheme: dark) {
+      :root {
+        @each $k, $v in $-dark {
+          --wt-#{$k}: #{$v};
+        }
+      }
+    }
+  }
+}

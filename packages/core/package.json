@@ -2,23 +2,21 @@
   "name": "@wiratheme/core",
   "version": "0.1.0",
   "private": true,
-  "description": "WiraTheme token engine, exporters and Thai utilities. Framework-free; synced into every wiratheme build as `wiratheme/core`.",
+  "description": "WiraTheme token engine, exporters and Thai utilities. Framework-free. The Angular builds and the schematics compile this source in (`wiratheme/core`); dist/ is CommonJS for Node tooling only.",
   "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "default": "./dist/cjs/index.js"
     }
   },
   "sideEffects": false,
   "files": ["dist"],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && tsc -p tsconfig.cjs.json && node scripts/mark-module-types.mjs",
+    "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
-    "typecheck:ts49": "tsc -p tsconfig.ts49.json"
+    "typecheck:ts49": "node node_modules/typescript-49/bin/tsc -p tsconfig.ts49.json"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
