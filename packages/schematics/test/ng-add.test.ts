@@ -114,6 +114,14 @@ describe('ng add wiratheme', () => {
     expect(t.readContent('src/index.html')).toContain('family=Sarabun:wght@400;500;600;700');
   });
 
+  it('reads angular.json with comments and trailing commas, like the Angular CLI does', async () => {
+    const t = moduleApp();
+    const ws = t.readContent('angular.json').replace('"styles":["src/styles.scss"]', '"styles":["src/styles.scss",] /* app styles */');
+    t.overwrite('angular.json', '// workspace\n' + ws.replace('}}}}}', '},}}}}'));
+    const out = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, t);
+    expect(out.readContent('src/app/app.module.ts')).toContain('provideWiraTheme(');
+  });
+
   it('refuses an Angular version outside its range and names the right major', async () => {
     await expect(runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp('^18.2.0'))).rejects.toThrow(
       /Angular 15–17.*Angular 18.*ng add wiratheme@2/s

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { WIRATHEME_MAJOR } from 'wiratheme';
-import { WtThemeService } from 'wiratheme/config';
+import { definePreset, palette, Siam, WtThemeService } from 'wiratheme/config';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,11 @@ export class AppComponent {
 
   useBlue(): void {
     this.theme.setPrimary('#2563eb');
+  }
+
+  /** A whole theme from TypeScript; it replaces the SCSS/CSS theme values in the tokens layer. */
+  useSiam(): void {
+    this.theme.setPreset(definePreset(Siam, { semantic: { primary: palette('#e11d48') } }));
   }
 
   toggleDark(): void {

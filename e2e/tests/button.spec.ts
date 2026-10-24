@@ -30,6 +30,15 @@ test('[action] shows a spinner and blocks repeat clicks until the promise settle
   await expect(page.locator('#saved-count')).toHaveText('1');
 });
 
+test('a TypeScript preset (definePreset) replaces the theme at runtime', async ({ page }) => {
+  const btn = page.locator('#primary-btn button');
+  const style = () => btn.evaluate((el) => [getComputedStyle(el).backgroundColor, getComputedStyle(el).borderTopLeftRadius].join(' '));
+  expect(await style()).toBe('rgb(0, 168, 107) 6px');
+  await page.locator('#use-siam button').click();
+  // Siam radius 4px + the primary from definePreset(Siam, { semantic: { primary: palette('#e11d48') } }).
+  await expect.poll(style).toBe('rgb(225, 29, 72) 4px');
+});
+
 test('TypeScript overrides win over the theme file without !important', async ({ page }) => {
   const bg = () => page.locator('#primary-btn button').evaluate((el) => getComputedStyle(el).backgroundColor);
   expect(await bg()).toBe('rgb(0, 168, 107)');

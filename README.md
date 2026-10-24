@@ -36,6 +36,22 @@ apps/playground-v*       แอปทดสอบของแต่ละรุ�
 
 ```bash
 pnpm install
-pnpm build
-pnpm test
+pnpm test          # core, SCSS ↔ TS parity (Sass 1.58 + ปัจจุบัน), schematics
+pnpm pack:all      # build + pack wiratheme v1, v2, v3 เป็น tarball
 ```
+
+ทดสอบแบบแอปจริง (ครั้งแรกให้รัน `npm ci` ใน `apps/playground-v1..v3` และ `apps/docs` ก่อน):
+
+```bash
+pnpm playgrounds   # npm install tarball + ng add wiratheme + ng build ในทั้ง 3 playground
+pnpm docs          # build เว็บ docs ที่โหลด v1/v2/v3 แบบ lazy บน Angular 21
+pnpm e2e           # Playwright: 3 รุ่นต้องหน้าตาตรงกัน + เว็บ docs
+```
+
+ลอง `ng add` กับโปรเจคที่มีอยู่โดยไม่แตะไฟล์ (รันในหน่วยความจำแล้วแสดง diff):
+
+```bash
+node tools/dry-run-ng-add.mjs "../../Angular NodeJS SS Apps/Strisrinan_Apps"
+```
+
+ถ้า npm ในเครื่องเป็น 10.2.x ซึ่งมีบั๊กกับ Angular 21 ให้อัปเดต npm หรือรันสคริปต์ด้วย `WT_NPM="npx -y npm@11"`

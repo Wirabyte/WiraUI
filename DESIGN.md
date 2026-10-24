@@ -94,25 +94,26 @@
 ## 4. โครงสร้าง repo (pnpm monorepo)
 
 ```
-WiraTheme/
+WiraTheme/                      (โครงจริงหลัง Phase 0)
 ├─ packages/
-│  ├─ core/              @wiratheme/core — TypeScript ล้วน ไม่ผูก Angular
-│  │                     token engine, palette(), locale th/en, ปฏิทิน พ.ศ., ตรวจเลขบัตรประชาชน,
-│  │                     บาทเป็นตัวอักษร, mask engine, filter/sort ของ table, positioning, focus-trap
-│  ├─ themes/            (ไม่ publish แยก แต่ถูก copy เข้า wiratheme ตอน build)
-│  │  ├─ tokens/         schema ของ token + presets (wira, lanna, siam, …) เป็นไฟล์ TS
-│  │  ├─ scss/           _index.scss (ไว้ @use … with), _api.scss (mixin/function), _layers.scss
-│  │  └─ build/          script สร้าง preset × สี → themes/*.css สำเร็จรูป
-│  ├─ angular-signal/    source ของ component แบบ signal ที่ v2 และ v3 ใช้ร่วมกัน
-│  ├─ angular-v1/        build shell ของ wiratheme@1.x — toolchain Angular 15 + source แบบ @Input/*ngIf
-│  ├─ angular-v2/        build shell ของ wiratheme@2.x — toolchain Angular 18 + overlay เฉพาะ v2
-│  ├─ angular-v3/        build shell ของ wiratheme@3.x — toolchain Angular 21 + overlay เฉพาะ v3
-│  └─ schematics/        ng add / ng update / migrate-from-primeng (ใช้ร่วมทั้ง 3 รุ่น)
-├─ apps/
-│  ├─ docs/              เว็บแนะนำ + Theme Designer: Angular 21 แบบ NgModule, โหลด v1/v2/v3 แบบ lazy (ข้อ 10.1)
-│  └─ playground-v1/ playground-v2/ playground-v3/   แอปทดสอบจริงของแต่ละรุ่น
-├─ e2e/                  Playwright spec ชุดเดียว รันกับ playground ทั้ง 3 ตัว
-└─ tools/                sync-sources, api-parity, release
+│  ├─ core/              @wiratheme/core: token engine, presets, exporters/importer, locale th/en,
+│  │                     ปฏิทิน พ.ศ., ตรวจเลขบัตรประชาชน (TS ล้วน, ถูก copy เข้าทุก build เป็น wiratheme/core)
+│  ├─ themes/            scss/ (_index ไว้ @use … with, _api, _color, _data ที่ generate จาก core)
+│  │                     + script สร้าง CSS สำเร็จรูป 4 preset × 18 สี + parity test กับ core
+│  ├─ styles/            CSS ของ component ที่ทั้ง 3 รุ่นใช้ไฟล์เดียวกัน
+│  ├─ angular-common/    ส่วนที่เหมือนกันทุกรุ่น: config (provideWiraTheme, WtThemeService, ล็อกรุ่น),
+│  │                     presets, module/type ของ component (ใช้ API ที่มีตั้งแต่ Angular 15)
+│  ├─ angular-signal/    component แบบ signal ที่ v2 และ v3 ใช้ร่วมกัน
+│  ├─ angular-v1/        src/ = component แบบ @Input/*ngIf + build shell (Angular 15 toolchain)
+│  ├─ angular-v2/        build shell (Angular 18 toolchain) + overlay/
+│  ├─ angular-v3/        build shell (Angular 21 toolchain) + overlay/ (provideEnvironmentInitializer)
+│  └─ schematics/        ng add (compile เป็น .cjs สำหรับ Node 18 / devkit 15)
+├─ apps/                 npm project แยกทั้งหมด ติดตั้ง wiratheme จาก tarball แบบเดียวกับแอปจริง
+│  ├─ docs/              เว็บแนะนำ: Angular 21 แบบ NgModule, โหลด v1/v2/v3 แบบ lazy (ข้อ 10.1)
+│  └─ playground-v1/ playground-v2/ playground-v3/   Angular 15 / 19 / 21 หลังรัน ng add
+├─ e2e/                  Playwright: playground ทั้ง 3 ต้องหน้าตาตรงกัน + เว็บ docs
+└─ tools/                versions.mjs (ช่วง Angular ของแต่ละรุ่น), sync-sources, setup-playgrounds,
+                         build-docs-packages, dry-run-ng-add, finish-package
 ```
 
 ใน workspace แต่ละ build shell มีชื่อ package ไม่ซ้ำกัน แต่ตอน publish script จะตั้งชื่อเป็น `wiratheme` ตัวเดียวกันในคนละ major
@@ -569,7 +570,32 @@ const routes: Routes = [
 
 **ไม่อยู่ใน Phase 0:** component อื่นนอกจาก Button, เว็บแนะนำ, Designer ตัวจริง (ใช้ต้นแบบไปก่อน), preset Glass แบบเต็ม (แต่ token กลุ่ม glass ต้องอยู่ใน schema แล้ว) และการ publish ขึ้น npm จริง (ใช้ tarball ในเครื่องจนกว่าจะตัดสินใจข้อ 13.1)
 
-**ต้องตัดสินใจก่อนเริ่ม:** repo จะอยู่บน GitHub หรือ GitLab เพราะมีผลกับ CI ในลำดับที่ 11 ส่วนข้ออื่นในข้อ 13 รอได้ถึง Phase 1
+**ต้องตัดสินใจก่อนเริ่ม:** repo จะอยู่บน GitHub หรือ GitLab เพราะมีผลกับ CI ในลำดับที่ 11 ส่วนข้ออื่นในข้อ 13 รอได้ถึง Phase 1 (ตัดสินแล้ว: GitHub + GitHub Actions)
+
+### 12.2 ผล Phase 0 (24 ต.ค. 2569)
+
+ผ่านทุกเกณฑ์ที่ทดสอบในเครื่องได้ เหลือแค่ CI บน GitHub ที่จะรู้ผลหลัง push ครั้งแรก
+
+| เกณฑ์ | ผล |
+|---|---|
+| `ng add` บน Angular 15 / 19 / 21 ได้ `wt-button` ที่ใช้ธีมทั้ง SCSS, CSS และ TS | ผ่าน (playground v1 = SCSS + NgModule, v2 = SCSS + NgModule, v3 = CSS + standalone/zoneless; TS override และ TS preset ทดสอบใน Playwright) |
+| TS override ชนะธีมจากไฟล์โดยไม่ใช้ `!important` และ CSS ของแอปชนะทั้งหมด | ผ่าน |
+| ไฟล์ที่ export จาก Designer ต้นแบบใช้ได้ทันที | ผ่าน (import กลับได้ทุกรูปแบบ, SCSS compile บน Sass 1.58 และรุ่นปัจจุบันโดยไม่มีคำเตือน) |
+| หน้าตา v1 / v2 / v3 ตรงกัน | ผ่าน (screenshot light/dark ของ v1, v2 ต้องตรงกับ v3) |
+| `ng add --dry-run` บน Strisrinan_Apps และ SP Admission V2 | ผ่าน (`tools/dry-run-ng-add.mjs` รันในหน่วยความจำ ไม่แตะ repo จริง) |
+| เว็บ docs สลับ v1 → v2 → v3 ได้ ไม่มี error | ผ่าน (v1 ที่ build ด้วย Angular 15 และ v2 ที่ build ด้วย 18 รันบน Angular 21 ได้จริง) |
+| ล็อกรุ่น 3 ชั้น | ผ่าน (npm ERESOLVE, schematic ปฏิเสธ, แอป throw ตอนเริ่มเมื่อบังคับติดตั้ง) |
+| CI | เขียนแล้ว รอ push |
+
+**สิ่งที่เจอระหว่างทำ (กันไว้แล้วในโค้ด)**
+- npm 10.2.5 (ที่ติดตั้งในเครื่องนี้) มีบั๊ก `Cannot read properties of null (reading 'edgesOut')` เวลาติดตั้งโปรเจค Angular 21 แก้ได้ด้วยการอัปเดต npm
+- Angular CLI 21 ใช้ `ng add` กับ tarball ในเครื่อง (`file:`) ไม่ได้ ผู้ใช้จริงติดตั้งจาก registry จึงไม่กระทบ ส่วน CI/สคริปต์ใช้วิธี `npm install <tgz>` แล้ว `ng add wiratheme`
+- Angular CLI 15 ส่ง path ที่มีช่องว่างให้ npm แบบไม่ใส่เครื่องหมายคำพูด สคริปต์จึงใช้ path แบบ relative
+- ng-packagr 21 ใส่ `"type": "module"` ให้ทั้งแพ็กเกจ schematics จึงต้องเป็นไฟล์ `.cjs`
+- `angular.json` ของโปรเจคจริงมี trailing comma (Strisrinan) schematic จึงอ่านแบบเดียวกับ Angular CLI
+- Angular 22 ออกแล้ว v3 ยังล็อกไว้ที่ 21 จนกว่าจะทดสอบบน 22 ผ่าน (`tools/versions.mjs`)
+
+**เรื่องที่ต้องตัดสินใจ:** สีตัวอักษรบนปุ่มหลัก ระบบเลือกสีที่ contrast สูงกว่าโดยอัตโนมัติ บน `#00a86b` จึงได้ตัวอักษรสีเข้ม (ตัวอักษรขาวได้ contrast แค่ราว 3:1 ไม่ผ่าน WCAG AA) ซึ่งต่างจาก Strisrinan เดิมที่ใช้ตัวอักษรขาว ถ้าต้องการขาวตามแบรนด์ ตอนนี้ทำได้ด้วยการใส่ `--wt-primary-contrast: #ffffff;` ใน `:root` ของ CSS แอป (ชนะทุก layer) หรือเลือกสีหลักที่เข้มขึ้น ถ้าจะใช้บ่อยควรเพิ่มเป็นตัวเลือกใน Designer/overrides ใน Phase 1
 
 ---
 
