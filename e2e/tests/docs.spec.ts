@@ -57,6 +57,8 @@ test('lazy-loads only the version being viewed', async ({ page }) => {
   page.on('response', (r) => r.url().endsWith('.js') && chunks.push(r.url()));
   await page.goto('/v3/components/button');
   await expect(page.locator('#demo-version')).toContainText('wiratheme@3');
+  // Opening a version's URL directly must also select it in the dropdown.
+  await expect(page.locator('#docs-version')).toHaveValue('v3');
   const before = chunks.length;
   await page.locator('#docs-version').selectOption('v1');
   await expect(page.locator('#demo-version')).toContainText('wiratheme@1');
