@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "WiraThemeNgAdd",
+  "title": "ng add wiratheme",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Project to set up. Default: the first application in angular.json.",
+      "$default": { "$source": "projectName" }
+    },
+    "style": {
+      "type": "string",
+      "enum": ["auto", "scss", "css"],
+      "default": "auto",
+      "description": "How the main theme is loaded.",
+      "x-prompt": {
+        "message": "ธีมหลักโหลดแบบไหน / How should the main theme be loaded?",
+        "type": "list",
+        "items": [
+          { "value": "auto", "label": "ตรวจจากโปรเจค (แนะนำ) / Detect from the project (recommended)" },
+          { "value": "scss", "label": "SCSS: @use 'theme/wiratheme.theme' ใน styles.scss" },
+          { "value": "css", "label": "CSS: ไฟล์ .css ใน angular.json (ใช้กับ CSS, Less และอื่น ๆ)" }
+        ]
+      }
+    },
+    "structure": {
+      "type": "string",
+      "enum": ["auto", "module", "standalone"],
+      "default": "auto",
+      "description": "Where provideWiraTheme() goes.",
+      "x-prompt": {
+        "message": "โครงสร้างแอป / App structure?",
+        "type": "list",
+        "items": [
+          { "value": "auto", "label": "ตรวจจาก main.ts (แนะนำ) / Detect from main.ts (recommended)" },
+          { "value": "module", "label": "NgModule (AppModule)" },
+          { "value": "standalone", "label": "Standalone (app.config.ts)" }
+        ]
+      }
+    },
+    "preset": {
+      "type": "string",
+      "enum": ["wira", "lanna", "siam", "nakhon"],
+      "default": "wira",
+      "x-prompt": {
+        "message": "Preset?",
+        "type": "list",
+        "items": [
+          { "value": "wira", "label": "Wira: เรียบ สะอาด / clean default" },
+          { "value": "lanna", "label": "Lanna: นุ่ม โค้งมน / soft, rounded" },
+          { "value": "siam", "label": "Siam: มีมิติ มี ripple / elevated" },
+          { "value": "nakhon", "label": "Nakhon: เหลี่ยม แน่น / sharp, dense" }
+        ]
+      }
+    },
+    "primary": {
+      "type": "string",
+      "default": "",
+      "description": "Primary colour as hex. Empty keeps the preset's colour.",
+      "x-prompt": "สีหลักเป็น HEX (เว้นว่างเพื่อใช้สีของ preset) / Primary colour hex (empty = preset colour)"
+    },
+    "font": {
+      "type": "string",
+      "enum": ["auto", "Kanit", "Sarabun", "Prompt", "Noto Sans Thai", "IBM Plex Sans Thai", "Anuphan", "none"],
+      "default": "auto",
+      "description": "Thai font. auto = the preset's font; it is not linked again if the app already loads it.",
+      "x-prompt": {
+        "message": "ฟอนต์ / Font?",
+        "type": "list",
+        "items": [
+          { "value": "auto", "label": "ของ preset (ข้ามถ้าแอปโหลดไว้แล้ว) / Preset's font (skipped if already loaded)" },
+          "Kanit", "Sarabun", "Prompt", "Noto Sans Thai", "IBM Plex Sans Thai", "Anuphan",
+          { "value": "none", "label": "ไม่ตั้ง / Don't set a font" }
+        ]
+      }
+    },
+    "locale": {
+      "type": "string",
+      "enum": ["th-buddhist", "th-gregorian", "en"],
+      "default": "th-buddhist",
+      "x-prompt": {
+        "message": "ภาษาและปฏิทิน / Language and calendar?",
+        "type": "list",
+        "items": [
+          { "value": "th-buddhist", "label": "ไทย + พ.ศ." },
+          { "value": "th-gregorian", "label": "ไทย + ค.ศ." },
+          { "value": "en", "label": "English" }
+        ]
+      }
+    },
+    "darkMode": {
+      "type": "string",
+      "enum": ["none", "class", "media"],
+      "default": "none",
+      "x-prompt": {
+        "message": "Dark mode?",
+        "type": "list",
+        "items": [
+          { "value": "none", "label": "ปิด / Off" },
+          { "value": "class", "label": "สลับด้วย class .wt-dark / Toggle with .wt-dark" },
+          { "value": "media", "label": "ตามระบบ / Follow the OS setting" }
+        ]
+      }
+    },
+    "angularRange": {
+      "type": "string",
+      "visible": false,
+      "description": "Internal: overrides the supported Angular range read from wiratheme's package.json (tests only)."
+    }
+  }
+}

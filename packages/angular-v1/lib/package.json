@@ -3,7 +3,14 @@
   "version": "1.0.0-alpha.0",
   "description": "WiraTheme UI components for Angular 15–17: PrimeNG-style API, Thai-first, themable with SCSS, CSS or TypeScript.",
   "license": "UNLICENSED",
-  "keywords": ["angular", "ui", "components", "theme", "design-tokens", "thai"],
+  "keywords": [
+    "angular",
+    "ui",
+    "components",
+    "theme",
+    "design-tokens",
+    "thai"
+  ],
   "peerDependencies": {
     "@angular/common": ">=15.0.0 <18.0.0",
     "@angular/core": ">=15.0.0 <18.0.0",
@@ -16,6 +23,17 @@
     "node": ">=18"
   },
   "sideEffects": false,
+  "exports": {
+    "./theme": {
+      "sass": "./theme/_index.scss"
+    },
+    "./theme/api": {
+      "sass": "./theme/_api.scss"
+    },
+    "./themes/*": {
+      "default": "./themes/*"
+    }
+  },
   "schematics": "./schematics/collection.json",
   "ng-add": {
     "save": "dependencies"
