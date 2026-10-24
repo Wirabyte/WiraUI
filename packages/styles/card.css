@@ -1,0 +1,121 @@
+/* wt-card. Shared by wiratheme v1, v2 and v3. Empty slots collapse, so the body gap only sits between real parts. */
+@layer wiratheme.components {
+  wt-card {
+    display: block;
+  }
+  .wt-card {
+    background: var(--wt-card-bg);
+    color: var(--wt-text);
+    border: var(--wt-card-border-width) solid var(--wt-border);
+    border-radius: var(--wt-card-radius);
+    box-shadow: var(--wt-shadow-sm);
+    overflow: hidden;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+  }
+  .wt-card-outlined {
+    border-width: 1px;
+    box-shadow: none;
+  }
+  .wt-card-elevated {
+    border-width: 0;
+    box-shadow: var(--wt-shadow-md);
+  }
+  .wt-card-glass {
+    background: var(--wt-card-bg);
+    border: 1px solid var(--wt-glass-border);
+    box-shadow: var(--wt-glass-highlight), var(--wt-glass-shadow);
+  }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .wt-card-glass {
+      background: var(--wt-glass-bg);
+      -webkit-backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
+      backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
+    }
+  }
+
+  .wt-card-header:empty,
+  .wt-card-actions:empty,
+  .wt-card-footer:empty,
+  .wt-card-content:empty,
+  .wt-card-content[hidden],
+  .wt-card-caption:not(:has(> :not(:empty))) {
+    display: none;
+  }
+  .wt-card-header img {
+    display: block;
+    width: 100%;
+  }
+  .wt-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wt-card-body-gap);
+    padding: var(--wt-card-padding);
+  }
+  .wt-card-caption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--wt-gap);
+  }
+  .wt-card-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .wt-card-title {
+    font-size: calc(var(--wt-font-size) * 1.25);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .wt-card-subtitle {
+    color: var(--wt-text-muted);
+  }
+  .wt-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .wt-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .wt-card-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .wt-card-skeleton span {
+    display: block;
+    height: 0.9em;
+    border-radius: var(--wt-radius-sm);
+    background: linear-gradient(90deg, var(--wt-hover-bg) 25%, var(--wt-border) 50%, var(--wt-hover-bg) 75%);
+    background-size: 300% 100%;
+    animation: wt-card-shine 1.4s ease infinite;
+  }
+  .wt-card-skeleton span:nth-child(2) {
+    width: 85%;
+  }
+  .wt-card-skeleton span:nth-child(3) {
+    width: 60%;
+  }
+  @keyframes wt-card-shine {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-card-skeleton span {
+      animation: none;
+    }
+  }
+}

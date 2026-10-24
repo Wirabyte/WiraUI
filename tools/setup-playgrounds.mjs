@@ -39,16 +39,40 @@ for (const v of versions) {
     copyFileSync(join(fixtures, 'app.standalone.ts'), join(src, 'app.ts'));
   } else {
     copyFileSync(join(fixtures, 'app.component.module.ts'), join(src, 'app.component.ts'));
+    // What the shared test page needs in an NgModule app.
+    const needs = [
+      ['FormsModule', '@angular/forms'],
+      ['ReactiveFormsModule', '@angular/forms'],
+      ['WtButtonModule', 'wiratheme/button'],
+      ['WtCardModule', 'wiratheme/card'],
+      ['WtInputTextModule', 'wiratheme/inputtext'],
+      ['WtTextareaModule', 'wiratheme/textarea'],
+      ['WtCheckboxModule', 'wiratheme/checkbox'],
+      ['WtRadioButtonModule', 'wiratheme/radiobutton'],
+      ['WtToggleSwitchModule', 'wiratheme/toggleswitch'],
+    ];
     const modFile = join(src, 'app.module.ts');
     let mod = readFileSync(modFile, 'utf8');
-    if (!mod.includes('WtButtonModule')) {
-      mod = `import { WtButtonModule } from 'wiratheme/button';\n` + mod.replace(/imports:\s*\[/, 'imports: [WtButtonModule, ');
+    const missing = needs.filter(([name]) => !new RegExp(`\\b${name}\\b`).test(mod));
+    if (missing.length) {
+      mod =
+        missing.map(([name, from]) => `import { ${name} } from '${from}';\n`).join('') +
+        mod.replace(/imports:\s*\[/, `imports: [${missing.map(([name]) => name).join(', ')}, `);
       writeFileSync(modFile, mod);
     }
   }
+  // The fixture CSS lives between markers and is replaced on every run, so edits to it always land.
   const styles = ['styles.scss', 'styles.css'].map((f) => join(app, 'src', f)).find(existsSync);
-  const css = readFileSync(join(fixtures, 'playground.css'), 'utf8');
-  if (!readFileSync(styles, 'utf8').includes('.pg-gallery')) writeFileSync(styles, readFileSync(styles, 'utf8') + '\n' + css);
+  const START = '/* wiratheme-playground:start */';
+  const END = '/* wiratheme-playground:end */';
+  const block = `${START}\n${readFileSync(join(fixtures, 'playground.css'), 'utf8')}${END}\n`;
+  let current = readFileSync(styles, 'utf8');
+  const legacy = current.indexOf('/* Playground page layout.');
+  if (!current.includes(START) && legacy >= 0) current = current.slice(0, legacy);
+  const s = current.indexOf(START);
+  const e = current.indexOf(END);
+  current = s >= 0 && e > s ? current.slice(0, s) + block + current.slice(e + END.length + 1) : current.trimEnd() + '\n\n' + block;
+  writeFileSync(styles, current);
 
   run('npx ng build', app);
 }

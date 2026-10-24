@@ -1,0 +1,19 @@
+<label class="wt-checkbox" [class.wt-checkbox-checked]="checked" [class.wt-checkbox-disabled]="isDisabled" [class.wt-invalid]="invalid">
+  <input
+    type="checkbox"
+    class="wt-checkbox-input"
+    [id]="id"
+    [attr.name]="name || null"
+    [checked]="checked"
+    [disabled]="isDisabled"
+    [attr.aria-invalid]="invalid || null"
+    [attr.aria-readonly]="readonly || null"
+    [attr.aria-label]="ariaLabel || null"
+    (change)="toggle($event)"
+    (blur)="onTouched()"
+  />
+  <span class="wt-checkbox-box" aria-hidden="true">
+    <svg class="wt-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+  </span>
+  <span *ngIf="label" class="wt-checkbox-label">{{ label }}</span>
+</label>

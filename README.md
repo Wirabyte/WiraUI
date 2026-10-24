@@ -9,7 +9,23 @@ UI component library + Theme Designer สำหรับ Angular ที่ใช
 | `wiratheme@2` | 18 – 20 | active |
 | `wiratheme@3` | 21+ | active (latest) |
 
-แต่ละรุ่นถูกล็อกกับช่วง Angular ของตัวเอง ติดตั้งข้ามช่วงไม่ได้
+แต่ละรุ่นถูกล็อกกับช่วง Angular ของตัวเอง ติดตั้งข้ามช่วงไม่ได้ · License: [MIT](LICENSE) ใช้ฟรี
+
+## Component ที่มีแล้ว
+
+ทุกตัวมีใน v1, v2 และ v3 ใช้ได้ทั้ง NgModule (`WtXxxModule`) และ standalone (`WtXxx`) และหน้าตาเหมือนกันทุกรุ่น
+
+| Entry point | ใช้แบบนี้ | หมายเหตุ |
+|---|---|---|
+| `wiratheme/button` | `<wt-button label="บันทึก" [action]="save">` | `[action]` แสดง spinner และกันกดซ้ำจนงานเสร็จ |
+| `wiratheme/card` | `<wt-card header="…" subheader="…">` | slot `[wtCardHeader]`, `[wtCardActions]`, `[wtCardFooter]` · `variant` outlined / elevated / glass · `loading` |
+| `wiratheme/inputtext` | `<input wtInputText [(ngModel)]="name">` | `wtSize`, `variant="filled"`, `fluid`, `invalid` |
+| `wiratheme/textarea` | `<textarea wtTextarea autoResize formControlName="note">` | `autoResize` ขยายตามข้อความ รวมค่าที่ตั้งจากโค้ด |
+| `wiratheme/checkbox` | `<wt-checkbox [(ngModel)]="agree" binary label="…">` | `binary` หรือแบบกลุ่ม (array + `value`) |
+| `wiratheme/radiobutton` | `<wt-radiobutton name="plan" value="sci" formControlName="plan">` | กลุ่มเดียวกันใน Reactive Forms อัปเดตกันเอง |
+| `wiratheme/toggleswitch` | `<wt-toggleswitch [(ngModel)]="notify" label="…">` | `trueValue` / `falseValue` |
+
+control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้ว
 
 ## เอกสาร
 

@@ -1,5 +1,9 @@
 <header class="docs-bar">
   <a routerLink="/" class="docs-brand">WiraTheme</a>
+  <nav class="docs-nav">
+    <a id="nav-button" [routerLink]="['/', current, 'components', 'button']" routerLinkActive="active">Button</a>
+    <a id="nav-forms" [routerLink]="['/', current, 'components', 'forms']" routerLinkActive="active">ฟอร์ม</a>
+  </nav>
   <span class="docs-spacer"></span>
   <label for="docs-version">รุ่น</label>
   <select id="docs-version" [value]="current" (change)="switchTo($any($event.target).value)">

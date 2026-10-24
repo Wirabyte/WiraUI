@@ -15,6 +15,22 @@
 .docs-spacer {
   flex: 1;
 }
+.docs-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: 12px;
+}
+.docs-nav a {
+  padding: 4px 10px;
+  border-radius: var(--wt-radius-md);
+  color: var(--wt-text-muted);
+  text-decoration: none;
+}
+.docs-nav a.active {
+  background: var(--wt-primary-soft);
+  color: var(--wt-primary-soft-text);
+  font-weight: 600;
+}
 select {
   font: inherit;
   color: var(--wt-text);

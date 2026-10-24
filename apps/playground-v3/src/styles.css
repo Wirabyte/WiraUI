@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* wiratheme-playground:start */
 /* Playground page layout. Unlayered on purpose: it must beat every WiraTheme layer (see #app-css-wins). */
 html,
 body {
@@ -39,7 +40,31 @@ body {
   align-items: center;
   gap: 8px;
 }
+.pg-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.pg-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 8px;
+}
+.pg-p,
+.pg-gallery h2 {
+  margin: 0;
+}
+.pg-gallery h2 {
+  font-size: 1.1em;
+}
+.pg-gallery pre {
+  margin: 0;
+  font-size: 12px;
+  color: var(--wt-text-muted);
+}
 #app-css-wins .wt-btn {
   background: #111111;
   border-color: #111111;
 }
+/* wiratheme-playground:end */

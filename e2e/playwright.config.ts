@@ -23,9 +23,9 @@ export default defineConfig({
   expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.001, animations: 'disabled' } },
   use: { ...devices['Desktop Chrome'], viewport: { width: 1000, height: 800 }, deviceScaleFactor: 1 },
   projects: [
-    { name: 'v3', testMatch: 'button.spec.ts', use: { baseURL: url('playground-v3') } },
-    { name: 'v2', testMatch: 'button.spec.ts', use: { baseURL: url('playground-v2') }, dependencies: ['v3'] },
-    { name: 'v1', testMatch: 'button.spec.ts', use: { baseURL: url('playground-v1') }, dependencies: ['v3'] },
+    { name: 'v3', testMatch: /(button|forms)\.spec\.ts$/, use: { baseURL: url('playground-v3') } },
+    { name: 'v2', testMatch: /(button|forms)\.spec\.ts$/, use: { baseURL: url('playground-v2') }, dependencies: ['v3'] },
+    { name: 'v1', testMatch: /(button|forms)\.spec\.ts$/, use: { baseURL: url('playground-v1') }, dependencies: ['v3'] },
     { name: 'docs', testMatch: 'docs.spec.ts', use: { baseURL: url('docs') } },
   ],
   webServer: Object.keys(PORTS).map((app) => ({

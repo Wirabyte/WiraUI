@@ -13,13 +13,13 @@ const pkg = JSON.parse(readFileSync(join(dist, 'package.json'), 'utf8'));
 const problems = [];
 if (pkg.name !== 'wiratheme') problems.push(`name is ${pkg.name}`);
 if (pkg.peerDependencies['@angular/core'] !== peerRange(spec)) problems.push('peer range drifted');
-for (const entry of ['./core', './config', './presets', './button']) {
+for (const entry of ['./core', './config', './presets', './button', './card', './inputtext', './textarea', './checkbox', './radiobutton', './toggleswitch']) {
   if (!pkg.exports || !pkg.exports[entry]) problems.push(`missing export ${entry}`);
 }
 for (const file of ['theme/_index.scss', 'schematics/collection.json']) {
   if (!existsSync(join(dist, file))) problems.push(`missing ${file}`);
 }
-copyFileSync(join(root, 'README.md'), join(dist, 'README.md'));
+for (const f of ['README.md', 'LICENSE']) copyFileSync(join(root, f), join(dist, f));
 
 if (problems.length) {
   console.warn(`wiratheme@${pkg.version}: ${problems.length} problem(s)`);

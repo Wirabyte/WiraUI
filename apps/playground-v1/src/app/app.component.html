@@ -43,4 +43,91 @@
     <wt-button id="toggle-dark" label="สลับโหมดมืด" severity="secondary" (onClick)="toggleDark()"></wt-button>
     <wt-button id="app-css-wins" label="CSS ของแอปชนะ"></wt-button>
   </section>
+
+  <section id="forms-gallery" class="pg-gallery">
+    <div class="pg-cards">
+      <wt-card id="card-basic" header="ข้อมูลผู้สมัคร" subheader="กรอกให้ตรงกับทะเบียนบ้าน">
+        <wt-button wtCardActions label="แก้ไข" size="small" text></wt-button>
+        <p class="pg-p">การ์ดนี้มีหัวเรื่อง คำอธิบาย ปุ่มด้านขวา เนื้อหา และส่วนท้าย</p>
+        <div wtCardFooter>
+          <wt-button label="ยกเลิก" severity="secondary" size="small" text></wt-button>
+          <wt-button label="บันทึก" size="small"></wt-button>
+        </div>
+      </wt-card>
+      <wt-card id="card-loading" header="กำลังโหลด" loading>
+        <p class="pg-p">ไม่ควรเห็นข้อความนี้ระหว่างโหลด</p>
+      </wt-card>
+      <wt-card variant="outlined" header="Outlined"><p class="pg-p">มีเส้นขอบ ไม่มีเงา</p></wt-card>
+      <wt-card variant="elevated" header="Elevated"><p class="pg-p">มีเงา ไม่มีเส้นขอบ</p></wt-card>
+    </div>
+    <div class="pg-fields">
+      <input wtInputText placeholder="ชื่อ (placeholder)" />
+      <input wtInputText value="สมชาย ใจดี" />
+      <input wtInputText value="ปิดใช้งาน" disabled />
+      <input wtInputText value="0812" invalid />
+      <input wtInputText wtSize="small" placeholder="เล็ก" />
+      <input wtInputText wtSize="large" placeholder="ใหญ่" />
+      <input wtInputText variant="filled" placeholder="filled" />
+      <textarea wtTextarea rows="2">ที่อยู่ 99/1 หมู่ 4 ตำบลบางรัก ปู่ ปี้ ญี่</textarea>
+    </div>
+    <div class="pg-row">
+      <wt-checkbox [ngModel]="true" binary label="เลือกแล้ว"></wt-checkbox>
+      <wt-checkbox [ngModel]="false" binary label="ยังไม่เลือก"></wt-checkbox>
+      <wt-checkbox [ngModel]="true" binary disabled label="ปิดใช้งาน"></wt-checkbox>
+      <wt-checkbox [ngModel]="false" binary invalid label="ไม่ถูกต้อง"></wt-checkbox>
+    </div>
+    <div class="pg-row">
+      <wt-radiobutton name="g-radio" value="a" [ngModel]="'a'" label="เลือกแล้ว"></wt-radiobutton>
+      <wt-radiobutton name="g-radio" value="b" [ngModel]="'a'" label="ยังไม่เลือก"></wt-radiobutton>
+      <wt-radiobutton name="g-radio2" value="c" [ngModel]="'c'" disabled label="ปิดใช้งาน"></wt-radiobutton>
+    </div>
+    <div class="pg-row">
+      <wt-toggleswitch [ngModel]="true" label="เปิด"></wt-toggleswitch>
+      <wt-toggleswitch [ngModel]="false" label="ปิด"></wt-toggleswitch>
+      <wt-toggleswitch [ngModel]="true" disabled label="ปิดใช้งาน"></wt-toggleswitch>
+    </div>
+  </section>
+
+  <section id="tdf" class="pg-gallery">
+    <h2>ngModel</h2>
+    <div class="pg-fields">
+      <input id="tdf-name" wtInputText [(ngModel)]="tdf.name" placeholder="ชื่อ" />
+      <textarea id="tdf-note" wtTextarea autoResize rows="1" [(ngModel)]="tdf.note"></textarea>
+    </div>
+    <div class="pg-row">
+      <wt-checkbox id="tdf-agree" [(ngModel)]="tdf.agree" binary label="ยอมรับเงื่อนไข"></wt-checkbox>
+      <wt-checkbox id="tdf-doc-a" [(ngModel)]="tdf.docs" value="house" label="ทะเบียนบ้าน"></wt-checkbox>
+      <wt-checkbox id="tdf-doc-b" [(ngModel)]="tdf.docs" value="birth" label="สูติบัตร"></wt-checkbox>
+      <wt-checkbox id="tdf-doc-c" [(ngModel)]="tdf.docs" value="photo" label="รูปถ่าย"></wt-checkbox>
+    </div>
+    <div class="pg-row">
+      <wt-radiobutton id="tdf-plan-sci" name="tdf-plan" value="sci" [(ngModel)]="tdf.plan" label="วิทย์-คณิต"></wt-radiobutton>
+      <wt-radiobutton id="tdf-plan-art" name="tdf-plan" value="art" [(ngModel)]="tdf.plan" label="ศิลป์-ภาษา"></wt-radiobutton>
+      <wt-toggleswitch id="tdf-notify" [(ngModel)]="tdf.notify" label="แจ้งผลทาง LINE"></wt-toggleswitch>
+    </div>
+    <pre id="tdf-model">{{ tdf | json }}</pre>
+  </section>
+
+  <section id="rf" class="pg-gallery">
+    <h2>Reactive Forms</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="pg-fields">
+        <input id="rf-name" wtInputText formControlName="name" placeholder="ชื่อ (ต้องกรอก)" />
+        <textarea id="rf-note" wtTextarea formControlName="note" rows="2"></textarea>
+      </div>
+      <div class="pg-row">
+        <wt-checkbox id="rf-agree" formControlName="agree" binary label="ยอมรับเงื่อนไข (ต้องเลือก)"></wt-checkbox>
+        <wt-radiobutton id="rf-plan-sci" name="rf-plan" value="sci" formControlName="plan" label="วิทย์-คณิต"></wt-radiobutton>
+        <wt-radiobutton id="rf-plan-art" name="rf-plan" value="art" formControlName="plan" label="ศิลป์-ภาษา"></wt-radiobutton>
+        <wt-toggleswitch id="rf-notify" formControlName="notify" label="แจ้งผลทาง LINE"></wt-toggleswitch>
+      </div>
+      <div class="pg-row">
+        <wt-button id="rf-submit" type="submit" label="ส่ง"></wt-button>
+        <wt-button id="rf-patch" label="ใส่ค่าตัวอย่าง" severity="secondary" (onClick)="patch()"></wt-button>
+        <wt-button id="rf-disable" label="ปิด/เปิดฟอร์ม" severity="secondary" (onClick)="toggleDisabled()"></wt-button>
+        <span>valid: <b id="rf-valid">{{ form.valid }}</b></span>
+      </div>
+    </form>
+    <pre id="rf-value">{{ form.getRawValue() | json }}</pre>
+  </section>
 </main>

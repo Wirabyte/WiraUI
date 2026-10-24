@@ -1,0 +1,16 @@
+<label class="wt-radiobutton" [class.wt-radiobutton-checked]="checked" [class.wt-radiobutton-disabled]="isDisabled" [class.wt-invalid]="invalid">
+  <input
+    type="radio"
+    class="wt-radiobutton-input"
+    [id]="id"
+    [attr.name]="name || null"
+    [checked]="checked"
+    [disabled]="isDisabled"
+    [attr.aria-invalid]="invalid || null"
+    [attr.aria-label]="ariaLabel || null"
+    (change)="select($event)"
+    (blur)="onTouched()"
+  />
+  <span class="wt-radiobutton-box" aria-hidden="true"><span class="wt-radiobutton-dot"></span></span>
+  <span *ngIf="label" class="wt-radiobutton-label">{{ label }}</span>
+</label>

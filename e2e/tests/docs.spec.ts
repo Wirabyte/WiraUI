@@ -22,6 +22,36 @@ test('switches between v1, v2 and v3 with the dropdown, each version working', a
   expect(errors).toEqual([]);
 });
 
+// v1 (built with Angular 15) and v2 (18) form controls talking to @angular/forms 21 in the docs app.
+test('forms page works with ngModel and reactive forms in every version', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  const model = async () => JSON.parse((await page.locator('#d-model').textContent()) || '{}');
+
+  for (const [v, major] of [['v1', '1'], ['v2', '2'], ['v3', '3']] as const) {
+    await page.goto(`/${v}/components/button`);
+    await page.locator('#nav-forms').click();
+    await expect(page).toHaveURL(new RegExp(`/${v}/components/forms$`));
+    await expect(page.locator('#forms-version')).toContainText(`wiratheme@${major}`);
+
+    await page.locator('#d-name').fill('สมหญิง');
+    await page.locator('#d-agree input').check();
+    await page.locator('#d-art input').check();
+    await page.locator('#d-notify input').check();
+    await expect.poll(model).toEqual({ name: 'สมหญิง', note: '', agree: true, plan: 'art', notify: true });
+
+    await expect(page.locator('#r-valid')).toHaveText('false');
+    await page.locator('#r-patch button').click();
+    await expect(page.locator('#r-valid')).toHaveText('true');
+    await expect(page.locator('#r-name')).toHaveValue('กัญญาณัฐ');
+    await expect(page.locator('#r-art label')).toHaveClass(/wt-radiobutton-checked/);
+    await page.locator('#r-sci input').check();
+    await expect(page.locator('#r-art label')).not.toHaveClass(/wt-radiobutton-checked/);
+  }
+  expect(errors).toEqual([]);
+});
+
 test('lazy-loads only the version being viewed', async ({ page }) => {
   const chunks: string[] = [];
   page.on('response', (r) => r.url().endsWith('.js') && chunks.push(r.url()));

@@ -1,0 +1,26 @@
+<label
+  class="wt-toggleswitch"
+  [class.wt-toggleswitch-checked]="checked()"
+  [class.wt-toggleswitch-disabled]="isDisabled()"
+  [class.wt-invalid]="invalid()"
+>
+  <input
+    type="checkbox"
+    role="switch"
+    class="wt-toggleswitch-input"
+    [id]="id()"
+    [attr.name]="name() || null"
+    [checked]="checked()"
+    [disabled]="isDisabled()"
+    [attr.aria-checked]="checked()"
+    [attr.aria-invalid]="invalid() || null"
+    [attr.aria-readonly]="readonly() || null"
+    [attr.aria-label]="ariaLabel() || null"
+    (change)="toggle($event)"
+    (blur)="onTouched()"
+  />
+  <span class="wt-toggleswitch-track" aria-hidden="true"><span class="wt-toggleswitch-handle"></span></span>
+  @if (label()) {
+    <span class="wt-toggleswitch-label">{{ label() }}</span>
+  }
+</label>

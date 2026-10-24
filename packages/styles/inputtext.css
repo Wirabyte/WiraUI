@@ -1,0 +1,76 @@
+/* input[wtInputText] and textarea[wtTextarea]. Shared by wiratheme v1, v2 and v3; loaded at run time by the directives. */
+@layer wiratheme.components {
+  .wt-inputtext {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+    background: var(--wt-field-bg);
+    border: 1px solid var(--wt-field-border);
+    border-radius: var(--wt-input-radius);
+    padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
+    outline: none;
+    appearance: none;
+    transition:
+      border-color var(--wt-transition),
+      box-shadow var(--wt-transition),
+      background-color var(--wt-transition);
+  }
+  .wt-inputtext::placeholder {
+    color: var(--wt-text-muted);
+    opacity: 1;
+  }
+  .wt-inputtext:enabled:hover {
+    border-color: var(--wt-field-hover-border);
+  }
+  .wt-inputtext:enabled:focus {
+    border-color: var(--wt-primary-color);
+    box-shadow: var(--wt-focus-ring);
+  }
+  .wt-inputtext:disabled {
+    background: var(--wt-field-disabled-bg);
+    color: var(--wt-text-muted);
+    cursor: not-allowed;
+    opacity: 1;
+  }
+  .wt-inputtext[readonly] {
+    background: var(--wt-field-disabled-bg);
+  }
+  .wt-inputtext-filled {
+    background: var(--wt-hover-bg);
+  }
+  .wt-inputtext-filled:enabled:focus {
+    background: var(--wt-field-bg);
+  }
+  .wt-inputtext-sm {
+    font-size: calc(var(--wt-font-size) * 0.875);
+    padding: calc(var(--wt-field-padding-y) * 0.75) calc(var(--wt-field-padding-x) * 0.75);
+  }
+  .wt-inputtext-lg {
+    font-size: calc(var(--wt-font-size) * 1.125);
+    padding: calc(var(--wt-field-padding-y) * 1.25) calc(var(--wt-field-padding-x) * 1.25);
+  }
+  .wt-inputtext-fluid {
+    width: 100%;
+  }
+  /* Invalid: forced with [invalid], or automatically once a form control is invalid and touched. */
+  .wt-inputtext.wt-invalid,
+  .wt-inputtext.ng-invalid.ng-touched {
+    border-color: var(--wt-danger-color);
+  }
+  .wt-inputtext.wt-invalid:enabled:focus,
+  .wt-inputtext.ng-invalid.ng-touched:enabled:focus {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--wt-danger-color) 25%, transparent);
+  }
+
+  .wt-textarea {
+    resize: vertical;
+  }
+  .wt-textarea-autoresize {
+    resize: none;
+    overflow: hidden;
+  }
+}

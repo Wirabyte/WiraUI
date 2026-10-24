@@ -1,0 +1,15 @@
+<div [class]="classes" [attr.aria-busy]="loading || null">
+  <div class="wt-card-header"><ng-content select="[wtCardHeader]"></ng-content></div>
+  <div class="wt-card-body">
+    <div class="wt-card-caption">
+      <div *ngIf="header || subheader" class="wt-card-titles">
+        <div *ngIf="header" class="wt-card-title">{{ header }}</div>
+        <div *ngIf="subheader" class="wt-card-subtitle">{{ subheader }}</div>
+      </div>
+      <div class="wt-card-actions"><ng-content select="[wtCardActions]"></ng-content></div>
+    </div>
+    <div *ngIf="loading" class="wt-card-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="wt-card-content" [hidden]="loading"><ng-content></ng-content></div>
+    <div class="wt-card-footer"><ng-content select="[wtCardFooter]"></ng-content></div>
+  </div>
+</div>

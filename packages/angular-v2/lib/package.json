@@ -2,7 +2,7 @@
   "name": "wiratheme",
   "version": "2.0.0-alpha.0",
   "description": "WiraTheme UI components for Angular 18–20: PrimeNG-style API, Thai-first, themable with SCSS, CSS or TypeScript.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": [
     "angular",
     "ui",
@@ -14,6 +14,7 @@
   "peerDependencies": {
     "@angular/common": ">=18.0.0 <21.0.0",
     "@angular/core": ">=18.0.0 <21.0.0",
+    "@angular/forms": ">=18.0.0 <21.0.0",
     "rxjs": "^7.4.0"
   },
   "dependencies": {

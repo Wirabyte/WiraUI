@@ -1,0 +1,72 @@
+/* wt-toggleswitch. Shared by wiratheme v1, v2 and v3. Native checkbox with role="switch" underneath. */
+@layer wiratheme.components {
+  wt-toggleswitch {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  .wt-toggleswitch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-toggleswitch-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+    z-index: 1;
+  }
+  .wt-toggleswitch-track {
+    position: relative;
+    flex: none;
+    width: 2.5em;
+    height: 1.4em;
+    border-radius: var(--wt-radius-full);
+    background: var(--wt-field-border);
+    transition:
+      background-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-toggleswitch-handle {
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: var(--wt-surface-0);
+    box-shadow: var(--wt-shadow-sm);
+    transition: transform var(--wt-transition);
+  }
+  .wt-toggleswitch:not(.wt-toggleswitch-disabled):hover .wt-toggleswitch-track {
+    background: var(--wt-field-hover-border);
+  }
+  .wt-toggleswitch-checked .wt-toggleswitch-track,
+  .wt-toggleswitch-checked:not(.wt-toggleswitch-disabled):hover .wt-toggleswitch-track {
+    background: var(--wt-primary-color);
+  }
+  .wt-toggleswitch-checked .wt-toggleswitch-handle {
+    transform: translateX(1.1em);
+  }
+  .wt-toggleswitch-input:focus-visible + .wt-toggleswitch-track {
+    box-shadow: var(--wt-focus-ring);
+  }
+  .wt-toggleswitch-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .wt-toggleswitch.wt-invalid .wt-toggleswitch-track,
+  wt-toggleswitch.ng-invalid.ng-touched .wt-toggleswitch-track {
+    box-shadow: 0 0 0 1px var(--wt-danger-color);
+  }
+}

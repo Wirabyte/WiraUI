@@ -1,0 +1,74 @@
+/* wt-radiobutton. Shared by wiratheme v1, v2 and v3. Same structure as wt-checkbox. */
+@layer wiratheme.components {
+  wt-radiobutton {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  .wt-radiobutton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-radiobutton-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+    z-index: 1;
+  }
+  .wt-radiobutton-box {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.25em;
+    height: 1.25em;
+    box-sizing: border-box;
+    border: 1px solid var(--wt-field-border);
+    border-radius: 50%;
+    background: var(--wt-field-bg);
+    transition:
+      background-color var(--wt-transition),
+      border-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-radiobutton-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--wt-primary-contrast);
+    transform: scale(0);
+    transition: transform var(--wt-transition);
+  }
+  .wt-radiobutton:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
+    border-color: var(--wt-field-hover-border);
+  }
+  .wt-radiobutton-checked .wt-radiobutton-box,
+  .wt-radiobutton-checked:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
+    background: var(--wt-primary-color);
+    border-color: var(--wt-primary-color);
+  }
+  .wt-radiobutton-checked .wt-radiobutton-dot {
+    transform: scale(1);
+  }
+  .wt-radiobutton-input:focus-visible + .wt-radiobutton-box {
+    box-shadow: var(--wt-focus-ring);
+  }
+  .wt-radiobutton-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .wt-radiobutton.wt-invalid .wt-radiobutton-box,
+  wt-radiobutton.ng-invalid.ng-touched .wt-radiobutton-box {
+    border-color: var(--wt-danger-color);
+  }
+}

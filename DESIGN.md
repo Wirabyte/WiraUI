@@ -535,7 +535,7 @@ const routes: Routes = [
 |---|---|---|
 | 0 — ฐาน | ท่อทั้งเส้นด้วย component ตัวเดียว (`wt-button`): monorepo, `@wiratheme/core`, SCSS/CSS/TS theme, `provideWiraTheme`, `ng add`, playground 3 รุ่น, CI (รายละเอียดข้อ 12.1) | ดูเกณฑ์ในข้อ 12.1 |
 | 1 — MVP | component P1 (เริ่มใน `angular-signal` → v2/v3 → v1) | **นำร่องที่ Wutthiphon Homepage** (ใช้ไม่กี่ component ความเสี่ยงต่ำ) แล้วต่อด้วย SP Admission V2 โดยใช้คู่กับ PrimeNG และย้ายทีละหน้า |
-| 2 — เว็บ + Designer | เว็บแนะนำ, Theme Designer ตัวจริงเป็น Angular (ต่อยอดจากต้นแบบ + ปรับขนาดหน้าจอ preview ได้), configurator, preset Glass ของ v3 | ทำธีมของ Strisrinan (`#00a86b` + Kanit) ใน Designer แล้ว export ไปใช้ได้จริง |
+| 2 — เว็บ + Designer | เว็บแนะนำ, Theme Designer ตัวจริงเป็น Angular (ต่อยอดจากต้นแบบ + ปรับขนาดหน้าจอ preview ได้ + export token ไป Figma), configurator, preset Glass ของ v3, เริ่ม Figma UI Kit | ทำธีมของ Strisrinan (`#00a86b` + Kanit) ใน Designer แล้ว export ไปใช้ได้จริง |
 | 3 — ของเฉพาะ WiraTheme | กลุ่ม W (Alert, Thai inputs, Table export, …) + P2 บางส่วน | แอปเราไม่ต้องพึ่ง sweetalert2 / buddhist-datepicker / xlsx โดยตรงแล้ว |
 | 4 — เครื่องมือย้าย | schematic `ng g wiratheme:from-primeng` (เปลี่ยน `p-button` → `wt-button` ฯลฯ ใน component ที่ API ตรงกัน) | ย้าย Strisrinan_Apps (โปรเจคใหญ่สุด, v1) ได้ |
 
@@ -595,13 +595,24 @@ const routes: Routes = [
 - `angular.json` ของโปรเจคจริงมี trailing comma (Strisrinan) schematic จึงอ่านแบบเดียวกับ Angular CLI
 - Angular 22 ออกแล้ว v3 ยังล็อกไว้ที่ 21 จนกว่าจะทดสอบบน 22 ผ่าน (`tools/versions.mjs`)
 
+### 12.3 Phase 1 ชุดที่ 1: ฟอร์มพื้นฐาน (24 ต.ค. 2569)
+
+Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เสร็จครบทั้ง v1 / v2 / v3
+
+- **ฟอร์ม:** control ทุกตัวเป็น `ControlValueAccessor` จึงใช้ได้ทั้ง `ngModel` และ Reactive Forms ส่วน InputText/Textarea เป็น directive บน `<input>`/`<textarea>` จริง จึงใช้ value accessor เดิมของ Angular
+- **Radio ใน Reactive Forms:** radio หลายตัวใช้ FormControl เดียวกัน แต่ FormControl เขียนค่ากลับไปแค่ตัวที่เปลี่ยน จึงมี registry (`ɵWtRadioRegistry`) คอยบอกตัวอื่นในกลุ่มให้เลิกเลือก แบบเดียวกับที่ Angular ทำกับ radio ปกติ
+- **CSS ของ directive:** directive ไม่มี template ไว้แนบ style จึงโหลด CSS ผ่าน `ɵWtStyleLoader` (sync script สร้าง `<name>.styles.ts` จาก `packages/styles/<name>.css`)
+- **ทดสอบแล้ว:** Playwright 33 test รวมการเทียบหน้าตา gallery ฟอร์มของทั้ง 3 รุ่น (light/dark), ngModel, Reactive Forms (validation, `patchValue`, กลุ่ม radio, `disable()`) และหน้าฟอร์มในเว็บ docs ที่รัน v1/v2 บน Angular 21
+- **ที่เรียนรู้:** แอป zoneless (v3) render รอบถัดไป test ที่อ่านค่าหลังคลิกต้องรอ (`expect.poll`)
+
 **เรื่องที่ต้องตัดสินใจ:** สีตัวอักษรบนปุ่มหลัก ระบบเลือกสีที่ contrast สูงกว่าโดยอัตโนมัติ บน `#00a86b` จึงได้ตัวอักษรสีเข้ม (ตัวอักษรขาวได้ contrast แค่ราว 3:1 ไม่ผ่าน WCAG AA) ซึ่งต่างจาก Strisrinan เดิมที่ใช้ตัวอักษรขาว ถ้าต้องการขาวตามแบรนด์ ตอนนี้ทำได้ด้วยการใส่ `--wt-primary-contrast: #ffffff;` ใน `:root` ของ CSS แอป (ชนะทุก layer) หรือเลือกสีหลักที่เข้มขึ้น ถ้าจะใช้บ่อยควรเพิ่มเป็นตัวเลือกใน Designer/overrides ใน Phase 1
 
 ---
 
 ## 13. คำถามที่ต้องตัดสินใจ
 
-1. **ช่องทาง publish:** npm สาธารณะ (`wiratheme` ยังว่าง) หรือ private registry (เช่น GitLab → `@wirabyte/wiratheme`)? และใช้ license อะไร (MIT?)
+1. **License (ตัดสินแล้ว):** MIT ใช้ฟรีทุกรุ่นแบบ PrimeNG ยุคเดิม ไม่มี license ขายและไม่มีรุ่น LTS แบบเสียเงิน (ไฟล์ `LICENSE` ที่ root ถูก copy เข้าทุกแพ็กเกจ) ส่วนช่องทาง publish ยังเหลือเลือกระหว่าง npm สาธารณะ (`wiratheme` ยังว่าง) ซึ่งเข้ากับ MIT ที่สุด หรือ private registry
+8. **Figma UI Kit (วางแผนแล้ว):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
 2. **โดเมนของเว็บแนะนำ** เช่น `wiratheme.wirabyte.com` และ host ที่ไหน (มีโปรเจค NodeJS Web Hosting อยู่แล้ว หรือใช้ Cloudflare Pages)
 3. **PrimeFlex:** ยังใช้ต่อไป (แนะนำแบบนี้ในช่วงแรก) หรือจะทำ utility ของ WiraTheme ที่ใช้แทนได้ในภายหลัง
 4. **Icon:** พึ่ง primeicons/Font Awesome ต่อไป หรือทำ `@wiratheme/icons` (ตอนนี้ icon ที่ใช้ภายใน component เป็น SVG inline จึงไม่บังคับ dependency)
