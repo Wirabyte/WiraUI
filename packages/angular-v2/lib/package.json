@@ -1,7 +1,7 @@
 {
   "name": "wiratheme",
   "version": "2.0.0-alpha.0",
-  "description": "WiraTheme UI components for Angular 18–20: PrimeNG-style API, Thai-first, themable with SCSS, CSS or TypeScript.",
+  "description": "WiraTheme UI components for Angular 18–20: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
   "license": "MIT",
   "keywords": [
     "angular",
@@ -33,6 +33,14 @@
     },
     "./themes/*": {
       "default": "./themes/*"
+    },
+    "./utils": {
+      "sass": "./utils/_index.scss",
+      "style": "./utils/utils.css",
+      "default": "./utils/utils.css"
+    },
+    "./utils/*": {
+      "default": "./utils/*"
     }
   },
   "schematics": "./schematics/collection.json",

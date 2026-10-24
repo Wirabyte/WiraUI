@@ -1,0 +1,320 @@
+<span
+  #root
+  class="wt-datepicker p-datepicker p-component p-inputwrapper"
+  [ngClass]="styleClass() || ''"
+  [ngStyle]="style() || null"
+  [class.wt-datepicker-has-dropdown]="hasDropdown()"
+  [class.wt-datepicker-has-input-icon]="hasInputIcon()"
+  [class.wt-datepicker-has-clear]="hasClear && !inline()"
+  [class.p-datepicker-fluid]="fluid()"
+  [class.p-inputwrapper-filled]="filled"
+  [class.p-inputwrapper-focus]="focused || open"
+>
+  @if (!inline()) {
+    <span class="wt-datepicker-field">
+      <input
+        #input
+        type="text"
+        role="combobox"
+        autocomplete="off"
+        aria-autocomplete="none"
+        aria-haspopup="dialog"
+        class="wt-inputtext p-inputtext p-component wt-datepicker-input p-datepicker-input"
+        [class.wt-inputtext-sm]="sizeKey() === 'sm'"
+        [class.p-inputtext-sm]="sizeKey() === 'sm'"
+        [class.wt-inputtext-lg]="sizeKey() === 'lg'"
+        [class.p-inputtext-lg]="sizeKey() === 'lg'"
+        [ngClass]="inputStyleClass() || ''"
+        [ngStyle]="inputStyle() || null"
+        [class.wt-invalid]="invalid()"
+        [class.p-invalid]="invalid()"
+        [class.wt-filled]="filled"
+        [class.p-filled]="filled"
+        [id]="id"
+        [attr.name]="name() || null"
+        [attr.placeholder]="placeholder() || null"
+        [attr.aria-label]="ariaLabel() || null"
+        [attr.aria-labelledby]="ariaLabelledBy() || null"
+        [attr.aria-invalid]="invalid() || null"
+        [attr.aria-required]="required() || null"
+        [attr.aria-expanded]="open"
+        [attr.aria-controls]="open ? panelId : null"
+        [attr.tabindex]="tabindex() ?? null"
+        [attr.inputmode]="touchLayout ? 'none' : null"
+        [value]="inputText"
+        [disabled]="isDisabled"
+        [readOnly]="isReadonly()"
+        (click)="show()"
+        (focus)="inputFocus($event)"
+        (blur)="inputBlur($event)"
+        (input)="typed($event)"
+        (keydown)="inputKeydown($event)"
+      />
+      @if (hasClear) {
+        <button type="button" tabindex="-1" class="wt-datepicker-clear p-datepicker-clear-icon" [attr.aria-label]="t.clear" (click)="clearField()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"></path></svg>
+        </button>
+      }
+      @if (hasInputIcon()) {
+        <span class="wt-datepicker-input-icon p-datepicker-input-icon-container" aria-hidden="true" (click)="inputIconTemplate() ? null : toggle()">
+          <ng-container [ngTemplateOutlet]="inputIconTemplate() || iconTpl" [ngTemplateOutletContext]="iconContext"></ng-container>
+        </span>
+      }
+    </span>
+    @if (hasDropdown()) {
+      <button
+        type="button"
+        class="wt-datepicker-dropdown p-datepicker-dropdown"
+        [attr.aria-label]="t.chooseDate"
+        [attr.aria-expanded]="open"
+        [attr.aria-controls]="open ? panelId : null"
+        [disabled]="isDisabled"
+        (click)="toggle()"
+      >
+        <ng-container [ngTemplateOutlet]="triggerIconTemplate() || iconTpl" [ngTemplateOutletContext]="iconContext"></ng-container>
+      </button>
+    }
+  }
+
+  @if (inline() || open) {
+    <div
+      #panel
+      role="dialog"
+      class="wt-datepicker-panel p-datepicker-panel p-component"
+      [ngClass]="panelStyleClass() || ''"
+      [ngStyle]="panelStyle() || null"
+      [id]="panelId"
+      [attr.popover]="inline() ? null : 'manual'"
+      [attr.aria-label]="t.chooseDate"
+      [class.wt-datepicker-popup]="!inline()"
+      [class.wt-datepicker-inline]="inline()"
+      [class.p-datepicker-panel-inline]="inline()"
+      [class.p-datepicker-timeonly]="timeOnly()"
+      [class.wt-datepicker-disabled]="inline() && isDisabled"
+      [class.p-disabled]="isDisabled"
+      (mousedown)="panelMousedown($event)"
+      (keydown)="panelKeydown($event)"
+    >
+      @if (!timeOnly()) {
+        <div class="p-datepicker-calendar-container">
+          <div class="p-datepicker-calendar">
+            <div class="wt-datepicker-header p-datepicker-header">
+              <button
+                type="button"
+                class="wt-datepicker-nav p-datepicker-prev-button"
+                [attr.aria-label]="previousLabel"
+                [disabled]="!state.canGo(-1) || isDisabled"
+                (click)="go(-1)"
+              >
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5"></path></svg>
+              </button>
+              <div class="wt-datepicker-title p-datepicker-title">
+                @if (state.view === 'date') {
+                  <button type="button" class="wt-datepicker-title-button p-datepicker-select-month" [disabled]="isDisabled" (click)="showView('month')">{{ state.monthLabel }}</button>
+                }
+                @if (state.view !== 'year') {
+                  <button type="button" class="wt-datepicker-title-button p-datepicker-select-year" [disabled]="isDisabled" (click)="showView('year')">{{ state.yearLabel }}</button>
+                } @else {
+                  <span class="wt-datepicker-decade p-datepicker-decade" aria-live="polite">{{ state.decadeLabel }}</span>
+                }
+              </div>
+              <button
+                type="button"
+                class="wt-datepicker-nav p-datepicker-next-button"
+                [attr.aria-label]="nextLabel"
+                [disabled]="!state.canGo(1) || isDisabled"
+                (click)="go(1)"
+              >
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5L10.5 8 6 12.5"></path></svg>
+              </button>
+            </div>
+
+            <div class="wt-datepicker-body">
+              @switch (state.view) {
+                @case ('date') {
+                  <table role="grid" class="wt-datepicker-days p-datepicker-day-view" [attr.aria-label]="state.monthLabel + ' ' + state.yearLabel" (keydown)="gridKeydown($event)">
+                    <thead>
+                      <tr>
+                        @for (d of weekdays; track d.day) {
+                          <th scope="col" class="p-datepicker-weekday-cell" [attr.abbr]="d.long"><span class="p-datepicker-weekday">{{ d.short }}</span></th>
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (week of weeks; track $index) {
+                        <tr>
+                          @for (c of week; track $index) {
+                            <td
+                              class="p-datepicker-day-cell"
+                              [class.wt-datepicker-other-month]="c.otherMonth"
+                              [class.p-datepicker-other-month]="c.otherMonth"
+                              [class.wt-datepicker-today]="c.today"
+                              [class.p-datepicker-today]="c.today"
+                              [attr.aria-selected]="c.selected || c.inRange"
+                              [attr.aria-disabled]="!c.selectable || null"
+                            >
+                              @if (showOtherMonths() || !c.otherMonth) {
+                                <span
+                                  role="button"
+                                  class="wt-datepicker-cell p-datepicker-day"
+                                  [class.wt-datepicker-selected]="c.selected"
+                                  [class.wt-datepicker-in-range]="c.inRange"
+                                  [class.p-datepicker-day-selected]="c.selected"
+                                  [class.p-datepicker-day-selected-range]="c.inRange"
+                                  [class.p-disabled]="!c.selectable"
+                                  [attr.tabindex]="c.focused ? 0 : -1"
+                                  [attr.aria-label]="c.label"
+                                  [attr.aria-current]="c.today ? 'date' : null"
+                                  [attr.aria-disabled]="!c.selectable || null"
+                                  [attr.data-date]="c.date.getFullYear() + '-' + (c.date.getMonth() + 1) + '-' + c.date.getDate()"
+                                  (click)="pickDay(c)"
+                                >@if (dateTemplate()) {<ng-container [ngTemplateOutlet]="dateTemplate()" [ngTemplateOutletContext]="{ $implicit: c }"></ng-container>} @else {{{ c.day }}}</span>
+                              }
+                            </td>
+                          }
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                }
+                @case ('month') {
+                  <div class="wt-datepicker-grid p-datepicker-month-view" role="group" [attr.aria-label]="state.yearLabel" (keydown)="gridKeydown($event)">
+                    @for (m of months; track m.month) {
+                      <span
+                        role="button"
+                        class="wt-datepicker-cell p-datepicker-month"
+                        [class.wt-datepicker-selected]="m.selected"
+                        [class.p-datepicker-month-selected]="m.selected"
+                        [class.p-disabled]="!m.selectable"
+                        [class.wt-datepicker-current]="m.current"
+                        [attr.tabindex]="m.focused ? 0 : -1"
+                        [attr.aria-label]="t.monthNames[m.month] + ' ' + state.yearLabel"
+                        [attr.aria-pressed]="m.selected"
+                        [attr.aria-disabled]="!m.selectable || null"
+                        (click)="pickMonth(m)"
+                      >{{ m.label }}</span>
+                    }
+                  </div>
+                }
+                @case ('year') {
+                  <div class="wt-datepicker-grid p-datepicker-year-view" role="group" [attr.aria-label]="state.decadeLabel" (keydown)="gridKeydown($event)">
+                    @for (y of years; track $index) {
+                      <span
+                        role="button"
+                        class="wt-datepicker-cell p-datepicker-year"
+                        [class.wt-datepicker-selected]="y.selected"
+                        [class.wt-datepicker-outside]="y.outside"
+                        [class.p-datepicker-year-selected]="y.selected"
+                        [class.p-disabled]="!y.selectable"
+                        [attr.tabindex]="y.focused ? 0 : -1"
+                        [attr.aria-pressed]="y.selected"
+                        [attr.aria-disabled]="!y.selectable || null"
+                        (click)="pickYear(y)"
+                      >{{ y.label }}</span>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (showTime() || timeOnly()) {
+        <div class="wt-datepicker-time p-datepicker-time-picker">
+          @for (u of timeUnits(); track u; let last = $last) {
+            <div class="wt-datepicker-time-field" [ngClass]="'p-datepicker-' + u + '-picker'">
+              <button
+                type="button"
+                tabindex="-1"
+                class="wt-datepicker-time-step"
+                [attr.aria-label]="t[u] + ' +'"
+                [disabled]="isDisabled"
+                (mousedown)="$event.preventDefault()"
+                (pointerdown)="startRepeat($event, u, 1)"
+                (pointerup)="stopRepeat()"
+                (pointerleave)="stopRepeat()"
+                (pointercancel)="stopRepeat()"
+              >
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10l4-4 4 4"></path></svg>
+              </button>
+              <input
+                type="text"
+                role="spinbutton"
+                inputmode="numeric"
+                maxlength="2"
+                autocomplete="off"
+                class="wt-datepicker-time-input"
+                [attr.data-unit]="u"
+                [attr.aria-label]="t[u]"
+                [attr.aria-valuenow]="state.timeText(u)"
+                [attr.aria-valuemin]="u === 'hour' && hourFormat() === '12' ? 1 : 0"
+                [attr.aria-valuemax]="timeMax(u)"
+                [value]="timeText(u)"
+                [readOnly]="isTimeReadonly()"
+                [disabled]="isDisabled"
+                (focus)="timeFocus(u, $event)"
+                (input)="timeTyped(u, $event)"
+                (blur)="timeBlur(u)"
+                (keydown)="timeKeydown(u, $event)"
+              />
+              <button
+                type="button"
+                tabindex="-1"
+                class="wt-datepicker-time-step"
+                [attr.aria-label]="t[u] + ' −'"
+                [disabled]="isDisabled"
+                (mousedown)="$event.preventDefault()"
+                (pointerdown)="startRepeat($event, u, -1)"
+                (pointerup)="stopRepeat()"
+                (pointerleave)="stopRepeat()"
+                (pointercancel)="stopRepeat()"
+              >
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
+              </button>
+            </div>
+            @if (!last) {
+              <span class="wt-datepicker-time-separator p-datepicker-separator" aria-hidden="true">:</span>
+            }
+          }
+          @if (hourFormat() === '12') {
+            <div class="wt-datepicker-time-field p-datepicker-ampm-picker">
+              <button type="button" tabindex="-1" class="wt-datepicker-time-step" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"></path></svg>
+              </button>
+              <button
+                type="button"
+                role="spinbutton"
+                class="wt-datepicker-time-period"
+                [attr.aria-valuetext]="state.pm ? t.pm : t.am"
+                [disabled]="isDisabled"
+                (click)="togglePeriod()"
+                (keydown)="periodKeydown($event)"
+              >{{ state.pm ? t.pm : t.am }}</button>
+              <button type="button" tabindex="-1" class="wt-datepicker-time-step" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"></path></svg>
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (showButtonBar()) {
+        <div class="wt-datepicker-buttonbar p-datepicker-buttonbar">
+          <button type="button" class="wt-datepicker-bar-button p-datepicker-today-button" [disabled]="isDisabled" (click)="today($event)">{{ t.today }}</button>
+          <button type="button" class="wt-datepicker-bar-button p-datepicker-clear-button" [disabled]="isDisabled" (click)="clearAll($event)">{{ t.clear }}</button>
+        </div>
+      }
+    </div>
+  }
+</span>
+
+<ng-template #iconTpl>
+  @if (icon()) {
+    <i [class]="icon() + ' wt-datepicker-icon-custom'"></i>
+  } @else if (timeOnly()) {
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"></circle><path d="M8 4.75V8l2.25 1.5"></path></svg>
+  } @else {
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"></rect><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"></path></svg>
+  }
+</ng-template>

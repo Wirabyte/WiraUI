@@ -1,0 +1,20 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-progress-spinner ariaLabel="กำลังโหลด"></wt-progress-spinner>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="custom" [section]="sec['custom']">
+      <docs-demo [html]="code['custom']">
+        <wt-progress-spinner style="width: 2rem; height: 2rem" strokeWidth="6"></wt-progress-spinner>
+        <wt-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wt-progress-spinner>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

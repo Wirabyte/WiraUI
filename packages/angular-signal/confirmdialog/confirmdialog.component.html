@@ -1,0 +1,88 @@
+<wt-dialog
+  [visible]="visible"
+  (visibleChange)="dialogVisible($event)"
+  (onHide)="dialogHidden()"
+  [header]="headerText"
+  [closable]="isClosable"
+  [closeOnEscape]="escapeCloses"
+  [dismissableMask]="maskCloses"
+  [blockScroll]="scrollBlocked"
+  [focusOnShow]="focus !== 'none'"
+  [style]="dialogStyle"
+  [styleClass]="'wt-confirmdialog p-confirmdialog ' + (c.styleClass || styleClass || '')"
+  [maskStyleClass]="maskStyleClass"
+  [breakpoints]="breakpoints"
+  [position]="dialogPosition"
+  [closeAriaLabel]="closeAriaLabel"
+  [templateHeader]="headerTemplate ? headerWrap : null"
+  [templateHeadless]="headlessTemplate ? headlessWrap : null"
+  [templateFooter]="footer"
+>
+  <!-- Only with a confirmation: the content of wt-dialog is created with the page, before any confirm() call. -->
+  @if (confirmation) {
+  <div class="wt-confirmdialog-body">
+    @if (messageTemplate) {
+      <ng-container [ngTemplateOutlet]="messageTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
+    } @else {
+      @if (builtInIcon) {
+        <span class="wt-confirmdialog-icon p-confirmdialog-icon" [ngClass]="'wt-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            @switch (builtInIcon) {
+              @case ('success') { <path d="M7.5 12.5l3 3 6-6.5"></path> }
+              @case ('error') { <path d="M9 9l6 6M15 9l-6 6"></path> }
+              @case ('warning') { <path d="M12 7v6M12 16.5v.5"></path> }
+              @case ('info') { <path d="M12 11v6M12 7.5v.5"></path> }
+              @case ('question') { <path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1.9-1.1 1.8M12 16.5v.5"></path> }
+            }
+          </svg>
+        </span>
+      } @else if (iconClass) {
+        <i class="wt-confirmdialog-icon p-confirmdialog-icon" [ngClass]="iconClass"></i>
+      }
+      <span class="wt-confirmdialog-message p-confirmdialog-message">{{ messageText }}</span>
+    }
+  </div>
+  }
+</wt-dialog>
+
+<ng-template #headerWrap>
+  <ng-container [ngTemplateOutlet]="headerTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
+</ng-template>
+<ng-template #headlessWrap>
+  <ng-container [ngTemplateOutlet]="headlessTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
+</ng-template>
+<ng-template #footer>
+  @if (footerTemplate) {
+    <ng-container [ngTemplateOutlet]="footerTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
+  } @else {
+    @if (showReject) {
+      <button
+        type="button"
+        [class]="rejectClasses"
+        [attr.aria-label]="rejectAriaLabel || null"
+        [attr.autofocus]="focus === 'reject' ? '' : null"
+        (click)="reject()"
+      >
+        @if (rejectIconClass) {
+          <i [class]="rejectIconClass + ' wt-btn-icon'"></i>
+        }
+        <span class="wt-btn-label p-button-label">{{ rejectText }}</span>
+      </button>
+    }
+    @if (showAccept) {
+      <button
+        type="button"
+        [class]="acceptClasses"
+        [attr.aria-label]="acceptAriaLabel || null"
+        [attr.autofocus]="focus === 'accept' ? '' : null"
+        (click)="accept()"
+      >
+        @if (acceptIconClass) {
+          <i [class]="acceptIconClass + ' wt-btn-icon'"></i>
+        }
+        <span class="wt-btn-label p-button-label">{{ acceptText }}</span>
+      </button>
+    }
+  }
+</ng-template>

@@ -1,0 +1,530 @@
+// WiraTheme utility classes: grid, flex, spacing, sizing, typography and more, mobile-first.
+// Class names follow the utility conventions Angular apps already use (`grid`, `col-12 md:col-6`,
+// `flex align-items-center gap-2`, `p-3`, `surface-card`), so existing templates keep working.
+//
+//   @use 'wiratheme/utils';                                            everything
+//   @use 'wiratheme/utils' with ($groups: (palette: false));           drop a group
+//   @use 'wiratheme/utils' with ($prefix: 'u-');                       .u-flex, .md:u-col-6
+//
+// Responsive variants (`sm:` `md:` `lg:` `xl:`) apply from that width up. Colours and radii read the
+// theme's --wt-* tokens, so they follow the preset and dark mode.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'palettes';
+
+// Groups to leave out: (palette: false, shadows: false). Every group is on by default.
+$groups: () !default;
+// false drops every sm:/md:/lg:/xl: variant.
+$responsive: true !default;
+// Put in front of every class name, e.g. 'u-' to run next to another utility library.
+$prefix: '' !default;
+// min-width of each responsive prefix.
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;
+$columns: 12 !default;
+// Space around grid columns; change it at run time with --wt-grid-gutter.
+$gutter: 0.5rem !default;
+// Cascade layer: wins over component styles, loses to the app's own CSS. false for no layer.
+$layer: 'wiratheme.utilities' !default;
+$important: false !default;
+
+$-group-names: (display, flex, grid, forms, spacing, sizing, typography, colors, palette, borders, shadows, position, overflow, misc);
+
+@if meta.type-of($groups) != 'map' and not (meta.type-of($groups) == 'list' and list.length($groups) == 0) {
+  @error 'wiratheme/utils: $groups must be a map like (palette: false), got `#{meta.inspect($groups)}`.';
+}
+@each $name, $on in $groups {
+  @if not list.index($-group-names, $name) {
+    @error 'wiratheme/utils: unknown group `#{$name}`; use #{$-group-names}.';
+  }
+  @if meta.type-of($on) != 'bool' {
+    @error 'wiratheme/utils: $groups.#{$name} must be true or false, got `#{meta.inspect($on)}`.';
+  }
+}
+@if meta.type-of($prefix) != 'string' {
+  @error 'wiratheme/utils: $prefix must be a string like \'u-\', got `#{meta.inspect($prefix)}`.';
+}
+
+@function -on($group) {
+  $v: map.get($groups, $group);
+  @return $v == null or $v == true;
+}
+
+$-gutter: var(--wt-grid-gutter, #{$gutter});
+$-spacing: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 2rem,
+  6: 3rem,
+  7: 4rem,
+  8: 5rem,
+);
+
+// One class. $bp is '' or an escaped responsive prefix like 'md\:'.
+@mixin -rule($bp, $name, $props) {
+  .#{$bp}#{$prefix}#{$name} {
+    @each $p, $v in $props {
+      @if $important {
+        #{$p}: $v !important;
+      } @else {
+        #{$p}: $v;
+      }
+    }
+  }
+}
+
+// ---------- responsive groups ----------
+
+@mixin -display($bp) {
+  @each $name, $value in (hidden: none, block: block, inline: inline, inline-block: inline-block, flex: flex, inline-flex: inline-flex) {
+    @include -rule($bp, $name, (display: $value));
+  }
+}
+
+@mixin -flex($bp) {
+  @each $name, $value in (row: row, row-reverse: row-reverse, column: column, column-reverse: column-reverse) {
+    @include -rule($bp, 'flex-#{$name}', (flex-direction: $value));
+  }
+  @each $name in (wrap, wrap-reverse, nowrap) {
+    @include -rule($bp, 'flex-#{$name}', (flex-wrap: $name));
+  }
+  $places: (start: flex-start, end: flex-end, center: center, between: space-between, around: space-around, evenly: space-evenly);
+  @each $name, $value in $places {
+    @include -rule($bp, 'justify-content-#{$name}', (justify-content: $value));
+    @include -rule($bp, 'align-content-#{$name}', (align-content: $value));
+  }
+  @each $name, $value in (stretch: stretch, start: flex-start, center: center, end: flex-end, baseline: baseline) {
+    @include -rule($bp, 'align-items-#{$name}', (align-items: $value));
+  }
+  @each $name, $value in (auto: auto, start: flex-start, end: flex-end, center: center, stretch: stretch, baseline: baseline) {
+    @include -rule($bp, 'align-self-#{$name}', (align-self: $value));
+  }
+  @for $i from 0 through 6 {
+    @include -rule($bp, 'flex-order-#{$i}', (order: $i));
+  }
+  @each $name, $value in ('1': 1 1 0%, auto: 1 1 auto, initial: 0 1 auto, none: none) {
+    @include -rule($bp, 'flex-#{$name}', (flex: $value));
+  }
+  @each $i in (0, 1) {
+    @include -rule($bp, 'flex-grow-#{$i}', (flex-grow: $i));
+    @include -rule($bp, 'flex-shrink-#{$i}', (flex-shrink: $i));
+  }
+  @each $i, $value in $-spacing {
+    @include -rule($bp, 'gap-#{$i}', (gap: $value));
+    @include -rule($bp, 'row-gap-#{$i}', (row-gap: $value));
+    @include -rule($bp, 'column-gap-#{$i}', (column-gap: $value));
+  }
+}
+
+// 12-column flex grid: .grid > .col-12.md:col-6
+@mixin -grid($bp) {
+  @if $bp == '' {
+    .#{$prefix}grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: calc(#{$-gutter} * -1);
+      margin-left: calc(#{$-gutter} * -1);
+      margin-top: calc(#{$-gutter} * -1);
+    }
+    .#{$prefix}grid > .#{$prefix}col,
+    .#{$prefix}grid > [class*='#{$prefix}col'] {
+      box-sizing: border-box;
+    }
+    .#{$prefix}grid-nogutter {
+      margin-right: 0;
+      margin-left: 0;
+      margin-top: 0;
+    }
+    .#{$prefix}grid-nogutter > .#{$prefix}col,
+    .#{$prefix}grid-nogutter > [class*='#{$prefix}col-'] {
+      padding: 0;
+    }
+  }
+  @include -rule($bp, col, (flex-grow: 1, flex-basis: 0, padding: $-gutter));
+  @include -rule($bp, col-fixed, (flex: 0 0 auto, padding: $-gutter));
+  @for $i from 1 through $columns {
+    @include -rule($bp, 'col-#{$i}', (flex: 0 0 auto, padding: $-gutter, width: math.percentage(math.div($i, $columns))));
+  }
+  @for $i from 0 through $columns {
+    @include -rule($bp, 'col-offset-#{$i}', (margin-left: math.percentage(math.div($i, $columns))));
+  }
+}
+
+@mixin -spacing($bp) {
+  $sides: (
+    '': null,
+    t: (top),
+    r: (right),
+    b: (bottom),
+    l: (left),
+    x: (left, right),
+    y: (top, bottom),
+  );
+  @each $kind, $property in (p: padding, m: margin) {
+    @each $side, $edges in $sides {
+      @each $i, $value in $-spacing {
+        $props: ();
+        @if $edges == null {
+          $props: ($property: $value);
+        } @else {
+          @each $edge in $edges {
+            $props: map.merge($props, ('#{$property}-#{$edge}': $value));
+          }
+        }
+        @include -rule($bp, '#{$kind}#{$side}-#{$i}', $props);
+        @if $kind == m and $i != 0 {
+          $neg: ();
+          @each $p, $v in $props {
+            $neg: map.merge($neg, ($p: -$v));
+          }
+          @include -rule($bp, '-#{$kind}#{$side}-#{$i}', $neg);
+        }
+      }
+      @if $kind == m {
+        $auto: ();
+        @if $edges == null {
+          $auto: (margin: auto);
+        } @else {
+          @each $edge in $edges {
+            $auto: map.merge($auto, ('margin-#{$edge}': auto));
+          }
+        }
+        @include -rule($bp, 'm#{$side}-auto', $auto);
+      }
+    }
+  }
+}
+
+@mixin -sizing($bp) {
+  @each $axis, $property, $screen in ((w, width, 100vw), (h, height, 100vh)) {
+    @include -rule($bp, '#{$axis}-full', ($property: 100%));
+    @include -rule($bp, '#{$axis}-screen', ($property: $screen));
+    @include -rule($bp, '#{$axis}-auto', ($property: auto));
+    @include -rule($bp, '#{$axis}-min', ($property: min-content));
+    @include -rule($bp, '#{$axis}-max', ($property: max-content));
+    @include -rule($bp, '#{$axis}-fit', ($property: fit-content));
+    @for $i from 1 through 30 {
+      @include -rule($bp, '#{$axis}-#{$i}rem', ($property: #{$i}rem));
+    }
+    @include -rule($bp, 'min-#{$axis}-0', ('min-#{$property}': 0));
+    @include -rule($bp, 'min-#{$axis}-full', ('min-#{$property}': 100%));
+    @include -rule($bp, 'min-#{$axis}-screen', ('min-#{$property}': $screen));
+    @include -rule($bp, 'max-#{$axis}-full', ('max-#{$property}': 100%));
+    @include -rule($bp, 'max-#{$axis}-screen', ('max-#{$property}': $screen));
+  }
+  @for $i from 1 through $columns {
+    @include -rule($bp, 'w-#{$i}', (width: math.percentage(math.div($i, $columns))));
+  }
+}
+
+@mixin -typography($bp) {
+  @each $name in (left, center, right, justify) {
+    @include -rule($bp, 'text-#{$name}', (text-align: $name));
+  }
+  $sizes: (xs: 0.75rem, sm: 0.875rem, base: 1rem, lg: 1.125rem, xl: 1.25rem, 2xl: 1.5rem, 3xl: 1.75rem, 4xl: 2rem, 5xl: 2.5rem, 6xl: 3rem, 7xl: 4rem, 8xl: 6rem);
+  @each $name, $size in $sizes {
+    @include -rule($bp, 'text-#{$name}', (font-size: $size));
+  }
+}
+
+@mixin -position($bp) {
+  @each $name in (static, fixed, absolute, relative, sticky) {
+    @include -rule($bp, $name, (position: $name));
+  }
+  @each $edge in (top, right, bottom, left) {
+    @each $i in (0, 50, 100) {
+      @include -rule($bp, '#{$edge}-#{$i}', ($edge: math.percentage(math.div($i, 100))));
+    }
+    @include -rule($bp, '#{$edge}-auto', ($edge: auto));
+  }
+}
+
+// ---------- groups without responsive variants ----------
+
+@mixin -forms {
+  .#{$prefix}field {
+    margin-bottom: 1rem;
+  }
+  .#{$prefix}field > label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .#{$prefix}field.#{$prefix}grid > label {
+    display: flex;
+    align-items: center;
+  }
+  .#{$prefix}field > small {
+    margin-top: 0.25rem;
+  }
+  .#{$prefix}field.#{$prefix}grid,
+  .#{$prefix}formgrid.#{$prefix}grid {
+    margin-top: 0;
+  }
+  .#{$prefix}field.#{$prefix}grid .#{$prefix}col-fixed,
+  .#{$prefix}formgrid.#{$prefix}grid .#{$prefix}col-fixed,
+  .#{$prefix}field.#{$prefix}grid .#{$prefix}col,
+  .#{$prefix}formgrid.#{$prefix}grid .#{$prefix}col,
+  .#{$prefix}field.#{$prefix}grid [class*='#{$prefix}col-'],
+  .#{$prefix}formgrid.#{$prefix}grid [class*='#{$prefix}col-'] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .#{$prefix}formgroup-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .#{$prefix}formgroup-inline .#{$prefix}field,
+  .#{$prefix}formgroup-inline .#{$prefix}field-checkbox,
+  .#{$prefix}formgroup-inline .#{$prefix}field-radiobutton {
+    margin-right: 1rem;
+  }
+  .#{$prefix}field-checkbox,
+  .#{$prefix}field-radiobutton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@mixin -typography-static {
+  @each $name, $weight in (light: 300, normal: 400, medium: 500, semibold: 600, bold: 700) {
+    @include -rule('', 'font-#{$name}', (font-weight: $weight));
+  }
+  @include -rule('', font-italic, (font-style: italic));
+  @each $name, $value in (underline: underline, line-through: line-through, no-underline: none) {
+    @include -rule('', $name, (text-decoration: $value));
+  }
+  @each $name in (uppercase, lowercase, capitalize) {
+    @include -rule('', $name, (text-transform: $name));
+  }
+  @include -rule('', text-overflow-clip, (text-overflow: clip));
+  @include -rule('', text-overflow-ellipsis, (text-overflow: ellipsis, overflow: hidden, white-space: nowrap));
+  @each $name in (normal, nowrap, pre, pre-line, pre-wrap) {
+    @include -rule('', 'white-space-#{$name}', (white-space: $name));
+  }
+  @each $i, $value in ('1': 1, '2': 1.25, '3': 1.5, '4': 2) {
+    @include -rule('', 'line-height-#{$i}', (line-height: $value));
+  }
+  @each $name in (baseline, top, middle, bottom, text-top, text-bottom, sub, super) {
+    @include -rule('', 'vertical-align-#{$name}', (vertical-align: $name));
+  }
+  @include -rule('', break-word, (overflow-wrap: anywhere));
+}
+
+// Theme colours: follow the preset and dark mode.
+@mixin -colors {
+  @include -rule('', text-color, (color: var(--wt-text)));
+  @include -rule('', text-color-secondary, (color: var(--wt-text-muted)));
+  @include -rule('', text-primary, (color: var(--wt-primary-color)));
+  @include -rule('', text-white, (color: #ffffff));
+  @include -rule('', text-black, (color: #000000));
+  @include -rule('', bg-primary, (background-color: var(--wt-primary-color), color: var(--wt-primary-contrast)));
+  @include -rule('', bg-white, (background-color: #ffffff));
+  @include -rule('', bg-black, (background-color: #000000));
+  @include -rule('', bg-transparent, (background-color: transparent));
+  @include -rule('', border-primary, (border-color: var(--wt-primary-color)));
+  @each $name, $token in (ground: ground, section: card-bg, card: card-bg, overlay: overlay-bg, hover: hover-bg) {
+    @include -rule('', 'surface-#{$name}', (background-color: var(--wt-#{$token})));
+  }
+  @include -rule('', surface-border, (border-color: var(--wt-border)));
+  @each $k in (success, info, warn, danger, help) {
+    @include -rule('', 'text-#{$k}', (color: var(--wt-#{$k}-color)));
+    @include -rule('', 'bg-#{$k}', (background-color: var(--wt-#{$k}-color), color: var(--wt-#{$k}-contrast)));
+    @include -rule('', 'border-#{$k}', (border-color: var(--wt-#{$k}-color)));
+  }
+  @include -rule('', text-warning, (color: var(--wt-warn-color)));
+  @each $s in (0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950) {
+    @include -rule('', 'surface-#{$s}', (background-color: var(--wt-surface-#{$s})));
+    @include -rule('', 'text-surface-#{$s}', (color: var(--wt-surface-#{$s})));
+    // gray-* is the theme's surface scale, so it matches the preset's neutrals.
+    @include -rule('', 'text-gray-#{$s}', (color: var(--wt-surface-#{$s})));
+    @include -rule('', 'bg-gray-#{$s}', (background-color: var(--wt-surface-#{$s})));
+    @include -rule('', 'border-gray-#{$s}', (border-color: var(--wt-surface-#{$s})));
+    @if $s != 0 {
+      @include -rule('', 'text-primary-#{$s}', (color: var(--wt-primary-#{$s})));
+      @include -rule('', 'bg-primary-#{$s}', (background-color: var(--wt-primary-#{$s})));
+      @include -rule('', 'border-primary-#{$s}', (border-color: var(--wt-primary-#{$s})));
+    }
+  }
+}
+
+// Fixed colour palettes: text-blue-500, bg-green-100, border-red-300 …
+@mixin -palette {
+  @each $color, $shades in palettes.$palettes {
+    @each $s, $hex in $shades {
+      @include -rule('', 'text-#{$color}-#{$s}', (color: string.unquote($hex)));
+      @include -rule('', 'bg-#{$color}-#{$s}', (background-color: string.unquote($hex)));
+      @include -rule('', 'border-#{$color}-#{$s}', (border-color: string.unquote($hex)));
+    }
+  }
+}
+
+@mixin -borders {
+  @include -rule('', border-none, (border-width: 0, border-style: none));
+  @each $i in (1, 2, 3) {
+    @include -rule('', 'border-#{$i}', (border-width: #{$i}px, border-style: solid));
+  }
+  @each $edge in (top, right, bottom, left) {
+    @include -rule('', 'border-#{$edge}-none', ('border-#{$edge}-width': 0, 'border-#{$edge}-style': none));
+    @each $i in (1, 2, 3) {
+      @include -rule('', 'border-#{$edge}-#{$i}', ('border-#{$edge}-width': #{$i}px, 'border-#{$edge}-style': solid));
+    }
+  }
+  @each $name in (solid, dashed, dotted, double) {
+    @include -rule('', 'border-#{$name}', (border-style: $name));
+  }
+  @include -rule('', border-noround, (border-radius: 0));
+  @include -rule('', border-round, (border-radius: var(--wt-radius-md)));
+  @each $size in (xs, sm, md, lg, xl) {
+    @include -rule('', 'border-round-#{$size}', (border-radius: var(--wt-radius-#{$size})));
+  }
+  @include -rule('', border-circle, (border-radius: 50%));
+  @include -rule('', border-round-left, (border-top-left-radius: var(--wt-radius-md), border-bottom-left-radius: var(--wt-radius-md)));
+  @include -rule('', border-round-right, (border-top-right-radius: var(--wt-radius-md), border-bottom-right-radius: var(--wt-radius-md)));
+  @include -rule('', border-round-top, (border-top-left-radius: var(--wt-radius-md), border-top-right-radius: var(--wt-radius-md)));
+  @include -rule('', border-round-bottom, (border-bottom-left-radius: var(--wt-radius-md), border-bottom-right-radius: var(--wt-radius-md)));
+}
+
+@mixin -shadows {
+  $shadows: (
+    none: none,
+    1: (0 3px 5px rgba(0, 0, 0, 0.02), 0 0 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.08)),
+    2: (0 4px 10px rgba(0, 0, 0, 0.03), 0 0 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.12)),
+    3: (0 1px 8px rgba(0, 0, 0, 0.08), 0 3px 4px rgba(0, 0, 0, 0.1), 0 1px 4px -1px rgba(0, 0, 0, 0.1)),
+    4: (0 1px 10px rgba(0, 0, 0, 0.12), 0 4px 5px rgba(0, 0, 0, 0.14), 0 2px 4px -1px rgba(0, 0, 0, 0.2)),
+    5: (0 1px 7px rgba(0, 0, 0, 0.1), 0 4px 5px -2px rgba(0, 0, 0, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.2)),
+    6: (0 3px 5px rgba(0, 0, 0, 0.06), 0 7px 9px rgba(0, 0, 0, 0.12), 0 20px 25px -8px rgba(0, 0, 0, 0.18)),
+    7: (0 7px 30px rgba(0, 0, 0, 0.08), 0 22px 30px 2px rgba(0, 0, 0, 0.15), 0 8px 10px rgba(0, 0, 0, 0.15)),
+    8: (0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 11px 15px rgba(0, 0, 0, 0.2)),
+  );
+  @each $name, $value in $shadows {
+    @include -rule('', 'shadow-#{$name}', (box-shadow: $value));
+  }
+  // The theme's own elevation levels.
+  @each $name in (sm, md, lg) {
+    @include -rule('', 'shadow-#{$name}', (box-shadow: var(--wt-shadow-#{$name})));
+  }
+}
+
+@mixin -position-static {
+  @each $i in (0, 1, 2, 3, 4, 5) {
+    @include -rule('', 'z-#{$i}', (z-index: $i));
+  }
+  @include -rule('', z-auto, (z-index: auto));
+}
+
+@mixin -overflow {
+  @each $name in (auto, hidden, visible, scroll, clip) {
+    @include -rule('', 'overflow-#{$name}', (overflow: $name));
+    @include -rule('', 'overflow-x-#{$name}', (overflow-x: $name));
+    @include -rule('', 'overflow-y-#{$name}', (overflow-y: $name));
+  }
+}
+
+@mixin -misc {
+  @each $name in (auto, default, pointer, move, text, wait, not-allowed) {
+    @include -rule('', 'cursor-#{$name}', (cursor: $name));
+  }
+  @each $name in (none, text, all, auto) {
+    @include -rule('', 'select-#{$name}', (user-select: $name));
+  }
+  @include -rule('', pointer-events-none, (pointer-events: none));
+  @include -rule('', pointer-events-auto, (pointer-events: auto));
+  @for $i from 0 through 10 {
+    @include -rule('', 'opacity-#{$i * 10}', (opacity: math.div($i, 10)));
+  }
+  @include -rule('', list-none, (list-style: none));
+  @include -rule('', appearance-none, (appearance: none));
+  @include -rule('', outline-none, (outline: none));
+  // Hidden from sight, still read by screen readers.
+  @include -rule('', sr-only, (position: absolute, width: 1px, height: 1px, padding: 0, margin: -1px, overflow: hidden, clip: rect(0, 0, 0, 0), white-space: nowrap, border: 0));
+}
+
+// ---------- output ----------
+
+@mixin -responsive($bp) {
+  @if -on(display) {
+    @include -display($bp);
+  }
+  @if -on(flex) {
+    @include -flex($bp);
+  }
+  @if -on(grid) {
+    @include -grid($bp);
+  }
+  @if -on(spacing) {
+    @include -spacing($bp);
+  }
+  @if -on(sizing) {
+    @include -sizing($bp);
+  }
+  @if -on(typography) {
+    @include -typography($bp);
+  }
+  @if -on(position) {
+    @include -position($bp);
+  }
+}
+
+@mixin -all {
+  @include -responsive('');
+  @if -on(forms) {
+    @include -forms;
+  }
+  @if -on(typography) {
+    @include -typography-static;
+  }
+  @if -on(colors) {
+    @include -colors;
+  }
+  @if -on(palette) {
+    @include -palette;
+  }
+  @if -on(borders) {
+    @include -borders;
+  }
+  @if -on(shadows) {
+    @include -shadows;
+  }
+  @if -on(position) {
+    @include -position-static;
+  }
+  @if -on(overflow) {
+    @include -overflow;
+  }
+  @if -on(misc) {
+    @include -misc;
+  }
+  // Mobile-first: each breakpoint's variants come after the base classes and apply from that width up.
+  @if $responsive {
+    @each $bp, $width in $breakpoints {
+      @media screen and (min-width: $width) {
+        @include -responsive('#{$bp}\\:');
+      }
+    }
+  }
+}
+
+@if $layer {
+  @if $layer == 'wiratheme.utilities' {
+    // Same order statement as the theme, so loading this file first cannot reorder the layers.
+    @layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;
+  }
+  @layer #{$layer} {
+    @include -all;
+  }
+} @else {
+  @include -all;
+}

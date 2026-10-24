@@ -11,7 +11,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { isObservable } from 'rxjs';
-import { ɵassertSupportedAngular, ɵrippleAt, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵrippleAt, ɵsize, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
+import { ɵbuttonExtras } from './button-class';
 import { WtButtonAction, WtButtonSeverity, WtButtonSize, WtButtonVariant } from './button.types';
 
 /** Same as `booleanAttribute`, which Angular 15 does not have: `<wt-button outlined>` means true. */
@@ -20,7 +21,7 @@ function toBool(value: unknown): boolean {
 }
 
 /**
- * Button with PrimeNG-style inputs (`label`, `icon`, `severity`, `outlined`, `text`, `loading`, `(onClick)`)
+ * Button with the familiar inputs (`label`, `icon`, `severity`, `outlined`, `text`, `loading`, `(onClick)`)
  * plus `[action]`: pass a function returning a Promise or Observable and the button shows a spinner
  * and ignores repeat clicks until it settles. Renders the same DOM as wiratheme v2/v3.
  */
@@ -41,6 +42,8 @@ export class WtButton {
   @Input() severity: WtButtonSeverity = 'primary';
   @Input() variant: WtButtonVariant = 'solid';
   @Input() size?: WtButtonSize;
+  /** Extra classes for the <button>; the classic names (`p-button-sm`, `p-button-danger p-button-text`) work as they did. */
+  @Input() styleClass?: string;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() badge?: string | number;
   @Input() ariaLabel?: string;
@@ -91,18 +94,22 @@ export class WtButton {
     return !!this.icon && !this.busy;
   }
 
+  /** Our classes plus the classic-era `p-*` names for the same state, so app CSS written for `.p-button` keeps working. */
   get classes(): string {
     const sev = this.severity === 'warning' ? 'warn' : this.severity;
     const variant = this._outlined ? 'outlined' : this._text ? 'text' : this.variant;
-    const c = ['wt-btn'];
-    if (sev !== 'primary') c.push('wt-btn-' + sev);
-    if (variant !== 'solid') c.push('wt-btn-' + variant);
-    if (this.size === 'small') c.push('wt-btn-sm');
-    if (this.size === 'large') c.push('wt-btn-lg');
-    if (this._raised) c.push('wt-btn-raised');
-    if (this._rounded) c.push('wt-btn-rounded');
-    if (this.busy) c.push('wt-btn-loading');
-    if (!this.label && (this.icon || this.busy)) c.push('wt-btn-icon-only');
+    const c = ['wt-btn', 'p-button', 'p-component'];
+    if (sev !== 'primary') c.push('wt-btn-' + sev, 'p-button-' + (sev === 'warn' ? 'warning' : sev));
+    if (variant !== 'solid') c.push('wt-btn-' + variant, 'p-button-' + variant);
+    const size = ɵsize(this.size);
+    if (size === 'sm') c.push('wt-btn-sm', 'p-button-sm');
+    if (size === 'lg') c.push('wt-btn-lg', 'p-button-lg');
+    if (this._raised) c.push('wt-btn-raised', 'p-button-raised');
+    if (this._rounded) c.push('wt-btn-rounded', 'p-button-rounded');
+    if (this.busy) c.push('wt-btn-loading', 'p-button-loading');
+    if (this.busy || this._disabled) c.push('p-disabled');
+    if (!this.label && (this.icon || this.busy)) c.push('wt-btn-icon-only', 'p-button-icon-only');
+    if (this.styleClass) c.push(ɵbuttonExtras(this.styleClass));
     return c.join(' ');
   }
 

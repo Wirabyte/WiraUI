@@ -1,0 +1,24 @@
+<fieldset [class]="classes">
+  <legend class="wt-fieldset-legend p-fieldset-legend">
+    <button
+      *ngIf="toggleable; else plainLegend"
+      type="button"
+      class="wt-fieldset-toggle"
+      [attr.aria-expanded]="!isCollapsed"
+      [attr.aria-controls]="contentId"
+      (click)="toggle()"
+    >
+      <svg *ngIf="isCollapsed" class="p-fieldset-toggler" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"></path></svg>
+      <svg *ngIf="!isCollapsed" class="p-fieldset-toggler" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10"></path></svg>
+      <span class="p-fieldset-legend-text">{{ legend }}</span>
+    </button>
+    <ng-template #plainLegend>
+      <span class="wt-fieldset-legend-label p-fieldset-legend-text">{{ legend }}</span>
+    </ng-template>
+  </legend>
+  <div class="wt-fieldset-content-container p-toggleable-content" [id]="contentId" [attr.inert]="isCollapsed ? '' : null">
+    <div class="wt-fieldset-content-inner">
+      <div class="wt-fieldset-content p-fieldset-content"><ng-content></ng-content></div>
+    </div>
+  </div>
+</fieldset>

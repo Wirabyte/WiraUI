@@ -55,10 +55,14 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "utils.min.css",
+                "input": "node_modules/wiratheme/utils",
+                "output": "wiratheme-utils"
               }
             ],
             "styles": [
-              "node_modules/wiratheme/themes/wira/wira.css",
               "src/styles.scss"
             ]
           },
@@ -76,7 +80,12 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": { "minify": true, "inlineCritical": true },
+                "fonts": false
+              }
             },
             "development": {
               "optimization": false,

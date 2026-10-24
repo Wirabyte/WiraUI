@@ -1,0 +1,14 @@
+<div [class]="classes()" role="group" [attr.aria-labelledby]="ariaLabelledBy() || null">
+  @for (option of options() || []; track $index) {
+    <button
+      type="button"
+      [class]="optionClasses(option)"
+      [attr.aria-pressed]="isSelected(option)"
+      [disabled]="isDisabled() || isOptionDisabled(option)"
+      (click)="select(option, $index, $event)"
+      (blur)="onTouched()"
+    >
+      {{ labelOf(option) }}
+    </button>
+  }
+</div>

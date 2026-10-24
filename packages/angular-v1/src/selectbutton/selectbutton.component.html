@@ -1,0 +1,13 @@
+<div [class]="classes" role="group" [attr.aria-labelledby]="ariaLabelledBy || null">
+  <button
+    *ngFor="let option of options || []; let i = index"
+    type="button"
+    [class]="optionClasses(option)"
+    [attr.aria-pressed]="isSelected(option)"
+    [disabled]="isDisabled || isOptionDisabled(option)"
+    (click)="select(option, i, $event)"
+    (blur)="onTouched()"
+  >
+    <span class="p-button-label">{{ labelOf(option) }}</span>
+  </button>
+</div>

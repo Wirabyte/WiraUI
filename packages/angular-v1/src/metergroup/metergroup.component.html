@@ -1,0 +1,63 @@
+<div
+  [class]="classes"
+  role="meter"
+  [attr.aria-valuemin]="min"
+  [attr.aria-valuemax]="max"
+  [attr.aria-valuenow]="parts.totalPercent"
+  [attr.aria-label]="ariaLabel || null"
+>
+  <ng-container *ngIf="labelPosition === 'start'">
+    <ng-container *ngTemplateOutlet="legend"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="startTemplate">
+    <ng-container *ngTemplateOutlet="startTemplate; context: groupContext"></ng-container>
+  </ng-container>
+  <div class="wt-metergroup-meters p-metergroup-meters">
+    <ng-container *ngFor="let item of parts.items; let i = index">
+      <ng-container *ngIf="meterTemplate; else plainMeter">
+        <ng-container *ngTemplateOutlet="meterTemplate; context: meterContext(i)"></ng-container>
+      </ng-container>
+      <ng-template #plainMeter>
+        <span
+          class="wt-metergroup-meter p-metergroup-meter"
+          [style.background]="parts.colors[i]"
+          [style.width]="orientation === 'horizontal' ? parts.sizes[i] : null"
+          [style.height]="orientation === 'vertical' ? parts.sizes[i] : null"
+        ></span>
+      </ng-template>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="endTemplate">
+    <ng-container *ngTemplateOutlet="endTemplate; context: groupContext"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="labelPosition === 'end'">
+    <ng-container *ngTemplateOutlet="legend"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #legend>
+  <ng-container *ngIf="labelTemplate; else plainLegend">
+    <ng-container *ngTemplateOutlet="labelTemplate; context: groupContext"></ng-container>
+  </ng-container>
+  <ng-template #plainLegend>
+    <ol [class]="labelClasses">
+      <li *ngFor="let item of parts.items; let i = index" class="wt-metergroup-label p-metergroup-label">
+        <ng-container *ngIf="iconTemplate; else plainIcon">
+          <ng-container *ngTemplateOutlet="iconTemplate; context: { $implicit: item, icon: item.icon }"></ng-container>
+        </ng-container>
+        <ng-template #plainIcon>
+          <i
+            *ngIf="item.icon; else marker"
+            [class]="'wt-metergroup-label-icon p-metergroup-label-icon ' + item.icon"
+            [style.color]="parts.colors[i]"
+            aria-hidden="true"
+          ></i>
+          <ng-template #marker>
+            <span class="wt-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts.colors[i]"></span>
+          </ng-template>
+        </ng-template>
+        <span class="wt-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts.percentages[i] }}%)</span>
+      </li>
+    </ol>
+  </ng-template>
+</ng-template>

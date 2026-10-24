@@ -1,0 +1,33 @@
+<div [class]="classes">
+  <div class="wt-panel-header p-panel-header" [style.cursor]="toggleable && toggler === 'header' ? 'pointer' : null" (click)="headerClick()">
+    <span *ngIf="header" class="wt-panel-title p-panel-title" [id]="titleId">{{ header }}</span>
+    <ng-content select="[wtPanelHeader]"></ng-content>
+    <div class="wt-panel-icons p-panel-icons">
+      <ng-content select="[wtPanelIcons]"></ng-content>
+      <button
+        *ngIf="toggleable"
+        type="button"
+        class="wt-panel-toggler p-panel-header-icon p-panel-toggler p-link"
+        [attr.aria-expanded]="!isCollapsed"
+        [attr.aria-controls]="contentId"
+        [attr.aria-label]="togglerLabel"
+        (click)="toggle($event)"
+      >
+        <svg *ngIf="isCollapsed" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"></path></svg>
+        <svg *ngIf="!isCollapsed" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10"></path></svg>
+      </button>
+    </div>
+  </div>
+  <div
+    class="wt-panel-content-container p-toggleable-content"
+    [id]="contentId"
+    role="region"
+    [attr.aria-labelledby]="header ? titleId : null"
+    [attr.inert]="isCollapsed ? '' : null"
+  >
+    <div class="wt-panel-content-inner">
+      <div class="wt-panel-content p-panel-content"><ng-content></ng-content></div>
+      <div class="wt-panel-footer p-panel-footer"><ng-content select="[wtPanelFooter]"></ng-content></div>
+    </div>
+  </div>
+</div>

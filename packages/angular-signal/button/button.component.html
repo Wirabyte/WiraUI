@@ -8,19 +8,19 @@
   (pointerdown)="handlePointerDown($event)"
 >
   @if (busy()) {
-    <span class="wt-btn-spinner" aria-hidden="true"></span>
+    <span class="wt-btn-spinner p-button-loading-icon" aria-hidden="true"></span>
   }
   @if (showIcon() && iconPos() === 'left') {
-    <span [class]="'wt-btn-icon ' + icon()" aria-hidden="true"></span>
+    <span [class]="'wt-btn-icon p-button-icon p-button-icon-left ' + icon()" aria-hidden="true"></span>
   }
   @if (label()) {
-    <span class="wt-btn-label">{{ label() }}</span>
+    <span class="wt-btn-label p-button-label">{{ label() }}</span>
   }
   <ng-content></ng-content>
   @if (showIcon() && iconPos() === 'right') {
-    <span [class]="'wt-btn-icon ' + icon()" aria-hidden="true"></span>
+    <span [class]="'wt-btn-icon p-button-icon p-button-icon-right ' + icon()" aria-hidden="true"></span>
   }
   @if (badge() !== undefined && badge() !== null && badge() !== '') {
-    <span class="wt-btn-badge">{{ badge() }}</span>
+    <span class="wt-btn-badge p-badge p-component">{{ badge() }}</span>
   }
 </button>

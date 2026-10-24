@@ -76,11 +76,12 @@ const DARK_PATH: Record<core.DarkMode, string | null> = {
   media: '@layer wiratheme.tokens > @media (prefers-color-scheme: dark) > :root',
 };
 
-function tokensOf(decls: [string, string][] | undefined): Record<string, string> {
+/** --wt-* tokens without the prefix; anything else (PrimeNG compat variables) goes to `compat`. */
+function tokensOf(decls: [string, string][] | undefined, compat: Record<string, string> = {}): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [name, value] of decls || []) {
-    expect(name.startsWith('--wt-'), name).toBe(true);
-    out[name.slice(5)] = value;
+    if (name.startsWith('--wt-')) out[name.slice(5)] = value;
+    else compat[name] = value;
   }
   return out;
 }
@@ -89,7 +90,9 @@ function tokensOf(decls: [string, string][] | undefined): Record<string, string>
 function expectParity(css: string, c: core.ThemeConfig) {
   const got = parseCss(css);
   const t = core.computeTokens(c);
-  expect(tokensOf(got.blocks['@layer wiratheme.tokens > :root'])).toEqual({ 'theme-source': 'scss', ...t.light });
+  const compat: Record<string, string> = {};
+  expect(tokensOf(got.blocks['@layer wiratheme.tokens > :root'], compat)).toEqual({ 'theme-source': 'scss', ...t.light });
+  expect(compat).toEqual(t.compat || {});
   const dark = DARK_PATH[c.darkMode];
   if (dark) expect(tokensOf(got.blocks[dark])).toEqual(t.dark);
   expect(got).toEqual(parseCss(expectedCss(c)));
@@ -113,6 +116,15 @@ const SHADES_INDIGO = {
 
 const RAW_CONFIGS: Record<string, unknown>[] = [
   ...core.PRESET_IDS.map((preset) => ({ preset })),
+  ...Object.keys(core.CLASSIC_THEMES).map((name) => core.themeConfig(name) as unknown as Record<string, unknown>),
+  { preset: 'mali', scheme: 'dark', darkMode: 'media' },
+  { preset: 'sayan', scheme: 'light' },
+  { preset: 'arun', primary: '#ffc107', primaryContrast: '#212529' },
+  { preset: 'ratri', primaryContrast: '#FFFFFF', components: { table: { striped: true } } },
+  { preset: 'phet', material: 'glass' },
+  { preset: 'glass', material: 'solid', darkMode: 'none' },
+  ...core.FOCUS_STYLES.map((focusRing) => ({ preset: 'sila', focusRing })),
+  { preset: 'sila', components: { card: { bodyGap: 0, padding: 12, radius: 3 }, button: { radius: 20 } } },
   ...['#0ea5e9', '#eab308', '#00a86b', '#ffffff', '#FFF', '#000000', '#fefefe', '#808080', '#ff0000', '#123456'].map((primary) => ({ primary })),
   ...core.PRIMARY_SWATCHES.map((s) => ({ preset: 'lanna', primary: s.hex })),
   { preset: 'siam', primaryShades: SHADES_INDIGO },
@@ -122,6 +134,7 @@ const RAW_CONFIGS: Record<string, unknown>[] = [
   ...Object.keys(core.SHADOWS).map((shadow) => ({ shadow })),
   { focusRing: 'outline' },
   { preset: 'siam', focusRing: 'ring' },
+  { preset: 'material-classic', fontSize: 15, fontFamily: 'Inter' },
   { darkMode: 'none' },
   { darkMode: 'media', preset: 'lanna' },
   { material: 'glass', darkMode: 'media' },
@@ -163,6 +176,12 @@ const HAND_WRITTEN: [string, Record<string, unknown>][] = [
   ['$ripple: true', {}],
   ['$components: (card: (body-gap: 0), table: (row-height: 44px, striped: true))', { components: { card: { bodyGap: 0 }, table: { rowHeight: 44, striped: true } } }],
   ['$components: (card: (bodyGap: 4px), button: (paddingX: 18, font-weight: 600))', { components: { card: { bodyGap: 4 }, button: { paddingX: 18, fontWeight: 600 } } }],
+  ["$theme: 'sila-dark-teal'", core.themeConfig('sila-dark-teal')],
+  ["$theme: 'md-light-deeppurple', $radius: 2px", { ...core.themeConfig('md-light-deeppurple'), radius: 2 }],
+  ["$theme: sayan-orange, $primary-contrast: #212529", { ...core.themeConfig('sayan-orange'), primaryContrast: '#212529' }],
+  ["$theme: 'mali'", { preset: 'mali' }],
+  ["$preset: 'mali', $scheme: 'dark'", { preset: 'mali', scheme: 'dark' }],
+  ["$preset: 'phet', $focus-ring: 'inset', $material: 'glass'", { preset: 'phet', focusRing: 'inset', material: 'glass' }],
 ];
 
 const BAD: [string, RegExp][] = [
@@ -171,7 +190,12 @@ const BAD: [string, RegExp][] = [
   ["$primary: 'nope'", /\$primary must be a hex colour/],
   ['$primary: (50: #fff)', /\$primary is missing shade 100/],
   ['$primary: (50: #fff, 100: #fff, 200: #fff, 300: #fff, 400: #fff, 500: rgb(1, 2, 3), 600: #fff, 700: #fff, 800: #fff, 900: #fff, 950: #fff)', /\$primary 500 must be a hex colour/],
-  ["$preset: 'aurora'", /\$preset must be one of wira, lanna, siam, nakhon/],
+  ["$preset: 'aurora'", /\$preset must be one of sila-classic, arun, sayan, ratri, material-classic, mali/],
+  ["$theme: 'sila-light-pink'", /\$theme must be one of sila-light-blue/],
+  ["$theme: 'arun-blue', $preset: 'arun'", /set \$theme or \$preset, not both/],
+  ["$focus-ring: 'glow'", /\$focus-ring must be one of ring, outline, inset, bold/],
+  ["$scheme: 'dim'", /\$scheme must be one of light, dark/],
+  ['$primary-contrast: white', /\$primary-contrast must be a hex colour/],
   ["$surface: 'blue'", /\$surface must be one of/],
   ["$dark-mode: 'auto'", /\$dark-mode must be one of none, class, media/],
   ["$density: 'cozy'", /\$density must be one of/],

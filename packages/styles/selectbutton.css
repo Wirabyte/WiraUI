@@ -1,0 +1,96 @@
+/* wt-selectbutton. Shared by wiratheme v1, v2 and v3. A row of joined toggle buttons for picking one
+   option (or several with `multiple`). Uses the togglebutton tokens; wraps onto a new line on narrow screens. */
+@layer wiratheme.components {
+  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wt-selectbutton-sm,
+  .p-selectbutton-sm {
+    --_sb-scale: var(--wt-size-sm-scale);
+    --_sb-font: 0.875;
+  }
+  .wt-selectbutton-lg,
+  .p-selectbutton-lg {
+    --_sb-scale: var(--wt-size-lg-scale);
+    --_sb-font: var(--wt-size-lg-scale);
+  }
+  wt-selectbutton {
+    display: inline-flex;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+  .wt-selectbutton {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--wt-togglebutton-padding);
+    max-width: 100%;
+    padding: var(--wt-togglebutton-padding);
+    border: 1px solid var(--wt-togglebutton-border);
+    border-radius: var(--wt-input-radius);
+    background: var(--wt-togglebutton-bg);
+    font-family: var(--wt-font-family);
+    font-size: calc(var(--wt-font-size) * var(--_sb-font, 1));
+  }
+  .wt-selectbutton-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: calc(var(--wt-togglebutton-content-padding-y) * var(--_sb-scale, 1)) calc(var(--wt-togglebutton-content-padding-x) * var(--_sb-scale, 1));
+    border: 0;
+    border-radius: var(--wt-selectbutton-option-radius);
+    background: transparent;
+    color: var(--wt-togglebutton-color);
+    font: inherit;
+    font-weight: var(--wt-button-font-weight);
+    line-height: var(--wt-control-line-height);
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  /* Joined (classic look): square inner corners, rounded ends, a line between options. */
+  .wt-selectbutton-option:first-child {
+    border-top-left-radius: var(--wt-selectbutton-end-radius);
+    border-bottom-left-radius: var(--wt-selectbutton-end-radius);
+  }
+  .wt-selectbutton-option:last-child {
+    border-top-right-radius: var(--wt-selectbutton-end-radius);
+    border-bottom-right-radius: var(--wt-selectbutton-end-radius);
+  }
+  .wt-selectbutton-option + .wt-selectbutton-option {
+    border-left: var(--wt-selectbutton-divider) solid var(--wt-togglebutton-border);
+  }
+  .wt-selectbutton-option-checked + .wt-selectbutton-option-checked {
+    border-left-color: var(--wt-togglebutton-checked-border);
+  }
+  .wt-selectbutton-option:not(:disabled):hover {
+    color: var(--wt-togglebutton-hover-color);
+  }
+  /* The chip colour is layered over the checked colour: a white chip covers it (styled look), a
+     transparent one lets the solid primary show (classic look). */
+  .wt-selectbutton-option-checked,
+  .wt-selectbutton-option-checked:not(:disabled):hover {
+    background:
+      linear-gradient(var(--wt-togglebutton-chip-bg), var(--wt-togglebutton-chip-bg)),
+      var(--wt-togglebutton-checked-bg);
+    color: var(--wt-togglebutton-checked-color);
+    box-shadow: var(--wt-togglebutton-chip-shadow);
+  }
+  .wt-selectbutton-option:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-selectbutton-option:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-selectbutton.wt-invalid,
+  wt-selectbutton.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-selectbutton {
+    border-color: var(--wt-danger-color);
+  }
+}

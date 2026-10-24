@@ -1,4 +1,4 @@
-import { EnvironmentProviders, inject, makeEnvironmentProviders, ModuleWithProviders, NgModule } from '@angular/core';
+import { EnvironmentInjector, EnvironmentProviders, inject, makeEnvironmentProviders, ModuleWithProviders, NgModule } from '@angular/core';
 import { wtInitializer } from './initializer';
 import { WiraThemeOptions, WT_OPTIONS } from './options';
 import { WtThemeService } from './theme.service';
@@ -17,8 +17,19 @@ export function provideWiraTheme(options: WiraThemeOptions = {}): EnvironmentPro
     wtInitializer(() => {
       ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
       inject(WtThemeService).init();
+      rootInjector = inject(EnvironmentInjector);
     }),
   ]);
+}
+
+let rootInjector: EnvironmentInjector | null = null;
+
+/**
+ * The app's root injector, set by `provideWiraTheme()`. Lets static helpers such as `WtAlert.fire()` reach services
+ * from plain functions, the way code calling a global alert library expects.
+ */
+export function ɵwtRootInjector(): EnvironmentInjector | null {
+  return rootInjector;
 }
 
 /** NgModule form of `provideWiraTheme()` for apps that prefer `forRoot()`. */

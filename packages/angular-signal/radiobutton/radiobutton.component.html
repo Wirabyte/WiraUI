@@ -6,7 +6,7 @@
 >
   <input
     type="radio"
-    class="wt-radiobutton-input"
+    class="wt-radiobutton-input p-radiobutton-input"
     [id]="id()"
     [attr.name]="name() || null"
     [checked]="checked()"
@@ -16,8 +16,16 @@
     (change)="select($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-radiobutton-box" aria-hidden="true"><span class="wt-radiobutton-dot"></span></span>
+  <span
+    class="wt-radiobutton-control p-radiobutton p-component"
+    [class.p-radiobutton-checked]="checked()"
+    [class.p-disabled]="isDisabled()"
+    [class.p-invalid]="invalid()"
+    aria-hidden="true"
+  >
+    <span class="wt-radiobutton-box p-radiobutton-box"><span class="wt-radiobutton-dot p-radiobutton-icon"></span></span>
+  </span>
   @if (label()) {
-    <span class="wt-radiobutton-label">{{ label() }}</span>
+    <span class="wt-radiobutton-label p-radiobutton-label">{{ label() }}</span>
   }
 </label>

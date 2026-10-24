@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { posix } from 'path';
-import { FONTS, normalize, toCSS, toSCSS } from '../core';
+import { FONTS, MajorVersion, normalize, themeConfig, toCSS, toSCSS, VERSION_CATALOG } from '../core';
 import {
   Edit,
   findBootstrapModule,
@@ -18,8 +18,24 @@ import { NgAddOptions } from './schema';
 
 const GENERATOR = 'ng add wiratheme';
 
+/** Theme names teams know from the theme sets they used before, so a familiar `--theme` still finds WiraTheme's own. */
+const FAMILIAR_THEME_NAMES: [RegExp, string][] = [
+  [/^lara-(light|dark)-/, 'sila-$1-'],
+  [/^saga-/, 'arun-'],
+  [/^vela-/, 'sayan-'],
+  [/^arya-/, 'ratri-'],
+  [/^aura$/, 'mali'],
+  [/^lara$/, 'sila'],
+  [/^nora$/, 'phet'],
+];
+
+function ownThemeName(name: string): string {
+  const n = name.trim().toLowerCase();
+  for (const [from, to] of FAMILIAR_THEME_NAMES) if (from.test(n)) return n.replace(from, to);
+  return n;
+}
+
 const OVERRIDES_TEMPLATE = `// WiraTheme · wiratheme.overrides.ts
-// ค่าในไฟล์นี้ทับธีมหลัก (ไฟล์ SCSS/CSS) ผ่าน @layer wiratheme.overrides โดยไม่ต้องใช้ !important
 // Values here win over the main theme file through @layer wiratheme.overrides, no !important needed.
 import { defineOverrides } from 'wiratheme/config';
 
@@ -38,19 +54,27 @@ export function ngAdd(options: NgAddOptions): Rule {
     let style = options.style === 'auto' ? detectStyle(project) : options.style;
     const scssEntry = project.styles.find((s) => /\.(scss|sass)$/.test(s));
     if (style === 'scss' && !scssEntry) {
-      log.warn('ไม่พบ styles.scss ในโปรเจค จึงใช้ไฟล์ธีมแบบ CSS แทน / No global .scss file found, using the CSS theme instead.');
+      log.warn('No global .scss file found, using the CSS theme instead.');
       style = 'css';
     }
     const structure = options.structure === 'auto' ? detectStructure(tree, project) : options.structure;
     const fontChoice = options.font === 'auto' || options.font === 'none' ? undefined : options.font;
+    // The version lock above guarantees the project's Angular matches this wiratheme major.
+    const major = (wiraThemeMajorFor(angularMajor(tree) ?? 21) ?? 3) as MajorVersion;
+    const catalog = VERSION_CATALOG[major];
+    const themeName = !options.theme || options.theme === 'auto' ? catalog.defaultTheme : ownThemeName(options.theme);
+    if (!catalog.themes.includes(themeName)) {
+      throw new SchematicsException(`wiratheme@${major} has no theme "${themeName}"; choose one of: ${catalog.themes.join(', ')}`);
+    }
+    const base = themeConfig(themeName);
     const config = normalize({
-      preset: options.preset,
-      primary: options.primary ? options.primary.trim() : undefined,
+      ...base,
+      primary: options.primary ? options.primary.trim() : base.primary,
       fontFamily: fontChoice,
       darkMode: options.darkMode,
     });
     if (options.primary && config.primary !== options.primary.trim().toLowerCase()) {
-      log.warn(`"${options.primary}" ไม่ใช่ HEX จึงใช้สีของ preset / "${options.primary}" is not a hex colour; using the preset's colour.`);
+      log.warn(`"${options.primary}" is not a hex colour; using the preset's colour.`);
     }
 
     const themeDir = `${project.sourceRoot}/theme`;
@@ -61,9 +85,17 @@ export function ngAdd(options: NgAddOptions): Rule {
     } else {
       done.push(writeIfMissing(tree, `${themeDir}/wiratheme.theme.css`, toCSS(config, { generator: GENERATOR }), log));
       addGlobalStyle(tree, project.name, `${themeDir}/wiratheme.theme.css`);
-      done.push(`angular.json: เพิ่ม ${themeDir}/wiratheme.theme.css ใน styles`);
+      done.push(`angular.json: added ${themeDir}/wiratheme.theme.css to styles`);
     }
     done.push(writeIfMissing(tree, `${themeDir}/wiratheme.overrides.ts`, OVERRIDES_TEMPLATE, log));
+    if (options.utils !== false) {
+      if (style === 'scss') {
+        done.push(addScssUtils(tree, scssEntry as string));
+      } else {
+        addGlobalStyle(tree, project.name, UTILS_CSS);
+        done.push(`angular.json: added ${UTILS_CSS} to styles`);
+      }
+    }
 
     const [locale, calendar] =
       options.locale === 'en' ? ['en', 'gregorian'] : options.locale === 'th-gregorian' ? ['th', 'gregorian'] : ['th', 'buddhist'];
@@ -73,12 +105,19 @@ export function ngAdd(options: NgAddOptions): Rule {
     if (options.font !== 'none') done.push(addFont(tree, project, fontChoice || config.fontFamily));
 
     log.info('');
-    log.info(`WiraTheme: ${style === 'scss' ? 'SCSS' : 'CSS'} · ${structure === 'module' ? 'NgModule' : 'Standalone'} · preset ${config.preset} · ${config.primary}`);
+    log.info(`WiraTheme: ${style === 'scss' ? 'SCSS' : 'CSS'} · ${structure === 'module' ? 'NgModule' : 'Standalone'} · ${themeName} · ${config.primary}`);
     for (const line of done.filter(Boolean)) log.info('  ✔ ' + line);
-    if (hasDependency(tree, 'primeng')) {
-      log.info('  ℹ พบ PrimeNG ในโปรเจค ใช้คู่กันได้ระหว่างย้าย (wt-* ไม่ชนกับ p-*) / PrimeNG found: both can run side by side while you migrate.');
+    if (options.utils !== false && hasDependency(tree, 'primeflex')) {
+      log.info(
+        '  ℹ WiraTheme utilities use the same class names as the utility library already installed, so you can remove it when ready.'
+      );
     }
-    log.info('ขั้นต่อไป / Next: import WtButtonModule (NgModule) หรือ WtButton (standalone) จาก wiratheme/button แล้วใช้ <wt-button label="บันทึก"></wt-button>');
+    if (hasDependency(tree, 'primeng')) {
+      log.info(
+        '  ℹ An existing UI library was found: both can run side by side while you migrate, and WiraTheme components also carry the p-* classes your CSS targets.'
+      );
+    }
+    log.info('Next: import WtButtonModule (NgModule) or WtButton (standalone) from wiratheme/button, then use <wt-button label="Save"></wt-button>');
   };
 }
 
@@ -111,10 +150,8 @@ function assertAngularVersion(tree: Tree, range: string | undefined): void {
   const fit = wiraThemeMajorFor(major);
   const span = max === null ? `${min}+` : `${min}–${max - 1}`;
   throw new SchematicsException(
-    `wiratheme รุ่นนี้ใช้ได้กับ Angular ${span} แต่โปรเจคนี้เป็น Angular ${major}. ` +
-      (fit ? `ให้ติดตั้ง wiratheme@${fit}: ng add wiratheme@${fit}` : 'ไม่มี wiratheme ที่รองรับ Angular รุ่นนี้') +
-      ` / This wiratheme release supports Angular ${span}; this project uses Angular ${major}.` +
-      (fit ? ` Use: ng add wiratheme@${fit}` : '')
+    `This wiratheme release supports Angular ${span}; this project uses Angular ${major}.` +
+      (fit ? ` Use: ng add wiratheme@${fit}` : ' No wiratheme release supports this Angular version.')
   );
 }
 
@@ -128,12 +165,12 @@ function detectStyle(p: ProjectInfo): 'scss' | 'css' {
 
 function readText(tree: Tree, path: string): string {
   const buf = tree.read(path);
-  if (!buf) throw new SchematicsException(`ไม่พบ ${path} / ${path} not found`);
+  if (!buf) throw new SchematicsException(`${path} not found`);
   return buf.toString('utf8');
 }
 
 function detectStructure(tree: Tree, p: ProjectInfo): 'module' | 'standalone' {
-  if (!p.main) throw new SchematicsException('ไม่พบ main.ts ใน angular.json ระบุ --structure เอง / main.ts not found; pass --structure.');
+  if (!p.main) throw new SchematicsException('main.ts not found in angular.json; pass --structure.');
   return /bootstrapApplication\s*\(/.test(readText(tree, p.main)) ? 'standalone' : 'module';
 }
 
@@ -141,11 +178,11 @@ function detectStructure(tree: Tree, p: ProjectInfo): 'module' | 'standalone' {
 
 function writeIfMissing(tree: Tree, path: string, content: string, log: SchematicContext['logger']): string {
   if (tree.exists(path)) {
-    log.warn(`มี ${path} อยู่แล้ว ไม่เขียนทับ / ${path} exists, left unchanged.`);
+    log.warn(`${path} exists, left unchanged.`);
     return '';
   }
   tree.create(path, content);
-  return `สร้าง ${path}`;
+  return `created ${path}`;
 }
 
 function addScssUse(tree: Tree, stylesFile: string, themeModule: string): string {
@@ -155,7 +192,21 @@ function addScssUse(tree: Tree, stylesFile: string, themeModule: string): string
   const rel = posix.relative(posix.dirname(stylesFile), themeModule);
   const line = stylesFile.endsWith('.sass') ? `@use '${rel}'\n` : `@use '${rel}';\n`;
   tree.overwrite(stylesFile, line + text);
-  return `${stylesFile}: เพิ่ม @use '${rel}'`;
+  return `${stylesFile}: added @use '${rel}'`;
+}
+
+const UTILS_CSS = 'node_modules/wiratheme/utils/utils.css';
+
+/** `@use 'wiratheme/utils';` right under the theme's @use (both must come before any @import or rule). */
+function addScssUtils(tree: Tree, stylesFile: string): string {
+  const text = readText(tree, stylesFile);
+  if (text.includes('wiratheme/utils')) return '';
+  const line = stylesFile.endsWith('.sass') ? `@use 'wiratheme/utils'` : `@use 'wiratheme/utils';`;
+  const lines = text.split('\n');
+  const at = lines.findIndex((l) => l.includes('wiratheme.theme'));
+  lines.splice(at + 1, 0, line);
+  tree.overwrite(stylesFile, lines.join('\n'));
+  return `${stylesFile}: added ${line}`;
 }
 
 function relImport(fromFile: string, target: string): string {
@@ -176,19 +227,19 @@ function resolveTs(fromFile: string, spec: string): string {
 function addToModule(tree: Tree, p: ProjectInfo, themeDir: string, provider: string): string {
   const mainSf = parse(p.main as string, readText(tree, p.main as string));
   const boot = findBootstrapModule(mainSf);
-  if (!boot) throw new SchematicsException('หา bootstrapModule(...) ใน main.ts ไม่เจอ ใช้ --structure=standalone หรือเพิ่ม provider เอง');
+  if (!boot) throw new SchematicsException('bootstrapModule(...) not found in main.ts; use --structure=standalone or add the provider by hand.');
   const file = resolveTs(p.main as string, boot.from);
   const text = readText(tree, file);
-  if (text.includes('provideWiraTheme(')) return `${file}: มี provideWiraTheme() อยู่แล้ว`;
+  if (text.includes('provideWiraTheme(')) return `${file}: provideWiraTheme() already there`;
   const sf = parse(file, text);
   const obj = findNgModuleObject(sf, boot.name);
-  if (!obj) throw new SchematicsException(`หา @NgModule ของ ${boot.name} ใน ${file} ไม่เจอ / @NgModule for ${boot.name} not found`);
+  if (!obj) throw new SchematicsException(`@NgModule for ${boot.name} not found in ${file}`);
   apply(tree, file, [
     importEdit(sf, 'provideWiraTheme', 'wiratheme/config'),
     importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiratheme.overrides`)),
     providersEdit(obj, provider),
   ]);
-  return `${file}: เพิ่ม provideWiraTheme() ใน providers ของ ${boot.name}`;
+  return `${file}: added provideWiraTheme() to the providers of ${boot.name}`;
 }
 
 function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider: string): string {
@@ -200,28 +251,28 @@ function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider:
   let obj: ts.ObjectLiteralExpression | null = null;
   if (opts && ts.isIdentifier(opts)) {
     const from = importPathOf(mainSf, opts.text);
-    if (!from) throw new SchematicsException(`หาไฟล์ของ ${opts.text} ไม่เจอ / Could not find where ${opts.text} comes from`);
+    if (!from) throw new SchematicsException(`Could not find where ${opts.text} comes from`);
     file = resolveTs(main, from);
     sf = parse(file, readText(tree, file));
     obj = findConfigObject(sf, opts.text);
   } else if (opts && ts.isObjectLiteralExpression(opts)) {
     obj = opts;
   }
-  if (readText(tree, file).includes('provideWiraTheme(')) return `${file}: มี provideWiraTheme() อยู่แล้ว`;
-  if (!obj) throw new SchematicsException('หา ApplicationConfig ไม่เจอ เพิ่ม provideWiraTheme() เองใน providers / ApplicationConfig not found; add provideWiraTheme() by hand.');
+  if (readText(tree, file).includes('provideWiraTheme(')) return `${file}: provideWiraTheme() already there`;
+  if (!obj) throw new SchematicsException('ApplicationConfig not found; add provideWiraTheme() to its providers by hand.');
   apply(tree, file, [
     importEdit(sf, 'provideWiraTheme', 'wiratheme/config'),
     importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiratheme.overrides`)),
     providersEdit(obj, provider),
   ]);
-  return `${file}: เพิ่ม provideWiraTheme() ใน providers`;
+  return `${file}: added provideWiraTheme() to providers`;
 }
 
 function addFont(tree: Tree, p: ProjectInfo, family: string): string {
   const index = `${p.sourceRoot}/index.html`;
   if (!tree.exists(index)) return '';
   const haystack = [index, ...p.styles.filter((s) => tree.exists(s))].map((f) => readText(tree, f).toLowerCase()).join('\n');
-  if (haystack.includes(family.toLowerCase())) return `ฟอนต์ ${family} โหลดอยู่แล้ว ไม่เพิ่มซ้ำ`;
+  if (haystack.includes(family.toLowerCase())) return `font ${family} already loaded, not added again`;
   if (!(FONTS as readonly string[]).includes(family)) return '';
   const html = readText(tree, index);
   const href = `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, '+')}:wght@400;500;600;700&display=swap`;
@@ -229,5 +280,5 @@ function addFont(tree: Tree, p: ProjectInfo, family: string): string {
   const at = html.toLowerCase().indexOf('</head>');
   if (at < 0) return '';
   tree.overwrite(index, html.slice(0, at) + links + html.slice(at));
-  return `${index}: เพิ่มฟอนต์ ${family} จาก Google Fonts`;
+  return `${index}: added the ${family} font from Google Fonts`;
 }

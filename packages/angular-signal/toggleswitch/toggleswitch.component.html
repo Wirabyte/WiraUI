@@ -7,7 +7,7 @@
   <input
     type="checkbox"
     role="switch"
-    class="wt-toggleswitch-input"
+    class="wt-toggleswitch-input p-toggleswitch-input"
     [id]="id()"
     [attr.name]="name() || null"
     [checked]="checked()"
@@ -19,7 +19,15 @@
     (change)="toggle($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-toggleswitch-track" aria-hidden="true"><span class="wt-toggleswitch-handle"></span></span>
+  <span
+    class="wt-toggleswitch-control p-toggleswitch p-component"
+    [class.p-toggleswitch-checked]="checked()"
+    [class.p-disabled]="isDisabled()"
+    [class.p-invalid]="invalid()"
+    aria-hidden="true"
+  >
+    <span class="wt-toggleswitch-track p-toggleswitch-slider"><span class="wt-toggleswitch-handle p-toggleswitch-handle"></span></span>
+  </span>
   @if (label()) {
     <span class="wt-toggleswitch-label">{{ label() }}</span>
   }

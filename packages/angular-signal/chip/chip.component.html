@@ -1,0 +1,16 @@
+<div [class]="classes()">
+  @if (image()) {
+    <img class="wt-chip-image p-chip-image" [src]="image()" [alt]="alt() || label() || ''" (error)="onImageError.emit($event)" />
+  } @else if (icon()) {
+    <span [class]="'wt-chip-icon p-chip-icon ' + icon()" aria-hidden="true"></span>
+  }
+  @if (label()) {
+    <span class="wt-chip-label p-chip-label">{{ label() }}</span>
+  }
+  <ng-content></ng-content>
+  @if (removable()) {
+    <button type="button" class="wt-chip-remove p-chip-remove-icon" [attr.aria-label]="removeLabel() + (label() ? ' ' + label() : '')" (click)="remove($event)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+    </button>
+  }
+</div>

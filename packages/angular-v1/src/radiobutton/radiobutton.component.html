@@ -11,6 +11,8 @@
     (change)="select($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-radiobutton-box" aria-hidden="true"><span class="wt-radiobutton-dot"></span></span>
-  <span *ngIf="label" class="wt-radiobutton-label">{{ label }}</span>
+  <span class="wt-radiobutton-control p-radiobutton p-component" [class.p-radiobutton-checked]="checked" [class.p-radiobutton-disabled]="isDisabled" aria-hidden="true">
+    <span class="wt-radiobutton-box p-radiobutton-box" [class.p-highlight]="checked" [class.p-disabled]="isDisabled"><span class="wt-radiobutton-dot p-radiobutton-icon"></span></span>
+  </span>
+  <span *ngIf="label" class="wt-radiobutton-label p-radiobutton-label" [class.p-radiobutton-label-active]="checked">{{ label }}</span>
 </label>

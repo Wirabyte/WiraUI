@@ -6,7 +6,7 @@
 >
   <input
     type="checkbox"
-    class="wt-checkbox-input"
+    class="wt-checkbox-input p-checkbox-input"
     [id]="id()"
     [attr.name]="name() || null"
     [checked]="checked()"
@@ -17,10 +17,18 @@
     (change)="toggle($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-checkbox-box" aria-hidden="true">
-    <svg class="wt-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+  <span
+    class="wt-checkbox-control p-checkbox p-component"
+    [class.p-checkbox-checked]="checked()"
+    [class.p-disabled]="isDisabled()"
+    [class.p-invalid]="invalid()"
+    aria-hidden="true"
+  >
+    <span class="wt-checkbox-box p-checkbox-box">
+      <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+    </span>
   </span>
   @if (label()) {
-    <span class="wt-checkbox-label">{{ label() }}</span>
+    <span class="wt-checkbox-label p-checkbox-label">{{ label() }}</span>
   }
 </label>

@@ -21,7 +21,7 @@
 
 | สิ่งที่เจอ | ที่มา | WiraTheme ควรทำ |
 |---|---|---|
-| ใช้ `theme.css` ขนาด 154 KB ที่ export จาก Theme Designer รุ่นเก่า (Lara light teal, primary `#00a86b`, ฟอนต์ Kanit) | Strisrinan `src/assets/css/theme.css` | ทำ Designer ที่ export ไฟล์ได้ ซึ่งตรงกับวิธีที่ทีมใช้อยู่แล้ว |
+| ใช้ `theme.css` ขนาด 154 KB ที่ export จาก Theme Designer รุ่นเก่า (Lara light teal ของ PrimeNG, primary `#00a86b`, ฟอนต์ Kanit) | Strisrinan `src/assets/css/theme.css` | ทำ Designer ที่ export ไฟล์ได้ ซึ่งตรงกับวิธีที่ทีมใช้อยู่แล้ว |
 | override คลาส `.p-*` ใน SCSS ราว 215 / 46 / 245 จุด และมี `::ng-deep` ใน 25 / 6 / 8 ไฟล์ | ทั้ง 3 โปรเจค | ใช้ cascade layers + token ระดับ component + `[tokens]` สำหรับแก้เฉพาะจุด |
 | `--p-card-body-gap: 0px !important;` | SP Admission `styles.scss` | `components.card.bodyGap` |
 | `darkModeSelector: '.non-dark-selector'` ที่ใช้เพื่อปิด dark mode | SP Admission `app.module.ts` | มีตัวเลือก `darkMode: 'none'` ตรง ๆ |
@@ -157,7 +157,7 @@ ng add wiratheme
 ```
 ? ภาษาสไตล์ของโปรเจค            (ตรวจพบ: SCSS)        › SCSS · CSS · Less · Sass · ตั้งค่าเองทีหลัง
 ? โครงสร้างแอป                  (ตรวจพบ: NgModule)    › NgModule · Standalone
-? Preset                         (Wira)                › Wira · Lanna · Siam · Nora-like
+? Preset                         (Wira)                › Wira · Lanna · Siam · Phet-like
 ? สีหลัก                          (emerald)             › palette 17 สี · กรอก HEX เอง
 ? ฟอนต์                          (ตรวจพบ Kanit แล้ว)   › Kanit · Sarabun · Prompt · Noto Sans Thai · IBM Plex Sans Thai · ไม่ตั้ง
 ? ภาษา / ปฏิทิน                   (ไทย + พ.ศ.)          › ไทย + พ.ศ. · ไทย + ค.ศ. · English
@@ -225,10 +225,13 @@ token ทุกตัวประกาศบน `:root` ส่วน CSS ขอ
 ```jsonc
 // angular.json
 "styles": [
-  "node_modules/wiratheme/themes/wira/emerald.css",   // หรือไฟล์ที่ export จาก Designer
+  "node_modules/wiratheme/themes/sila-light-teal/theme.css",  // v1: แทน primeng/resources/themes/lara-light-teal/… (ตารางเทียบชื่อใน §12.8)
+  // "node_modules/wiratheme/themes/mali/emerald.css",        // v2/v3: <preset>/theme.css หรือ <preset>/<สี>.css
   "src/styles.css"
 ]
 ```
+
+แต่ละรุ่นมีไฟล์สำเร็จรูปเฉพาะธีมของรุ่นตัวเอง (ดู 6.10)
 
 ### 6.4 ทาง B — SCSS (ไฟล์แบบที่ Designer export ให้)
 
@@ -357,6 +360,48 @@ v3 มี preset ใหม่ชื่อชั่วคราวว่า **Gla
 
 ---
 
+### 6.10 หน้าตาแยกตามรุ่น (ย้ายจาก PrimeNG แล้วไม่พัง)
+
+แต่ละรุ่นหน้าตาเหมือน PrimeNG ยุคเดียวกัน ทั้งขนาด ระยะ และสี เพื่อให้แอปเดิม (TP-APPS, SS-APPS, …) ย้ายมาแล้ว layout ไม่ขยับ ส่วนธีมใหม่ของ WiraTheme เองเริ่มที่ v3
+
+| รุ่น | family (หน้าตา) | preset | ธีมสำเร็จรูป | ค่าเริ่มต้น |
+|---|---|---|---|---|
+| v1 | PrimeNG 15–17 | `sila-classic`, `arun`, `sayan`, `ratri`, `material-classic` | 25 ธีม (เทียบกับชื่อเดิมใน §12.8): `sila-light-*`, `sila-dark-*`, `arun-*`, `sayan-*`, `ratri-*`, `md-light-*`, `md-dark-*` และ `sila-light-wira` (สีเขียวที่แอป Wirabyte ส่วนใหญ่ใช้) | `sila-light-teal` |
+| v2 | PrimeNG 18–20 | `mali`, `sila`, `material`, `phet` | `<preset>/theme.css` + 18 สี | `mali` |
+| v3 | PrimeNG 21 + ของ WiraTheme | v2 + `wira`, `lanna`, `siam`, `nakhon`, `glass` | เหมือน v2 | `mali` |
+
+- **ทำงานอย่างไร:** CSS ของ component มีชุดเดียวใช้ทุกรุ่น ส่วนหน้าตามาจาก token ของ family (`packages/core/src/families.ts` ตัวเลขจากธีม MIT ของ PrimeNG เช่น ปุ่ม Sila 15 padding `.75rem 1.25rem` ตัวหนา 700, ปุ่ม Mali `.5rem .75rem` น้ำหนัก 500) ทุก family ต่อยอดจาก Mali จึงมี token ชุดเดียวกันครบ (มี test ตรวจว่า CSS ทุกไฟล์ใช้แต่ token ที่ทุกธีมประกาศ)
+- **`VERSION_CATALOG`** ใน core บอกว่ารุ่นไหนมี preset/ธีมอะไร ใช้ร่วมกันโดย `ng add` (ถามเฉพาะธีมของรุ่นนั้น), ไฟล์ CSS สำเร็จรูป, SCSS (`@use 'wiratheme/theme'` ไม่ใส่อะไรได้ค่าเริ่มต้นของรุ่น) และเว็บ docs
+- **ธีมมืดล้วน** (`scheme: 'dark'` เช่น sayan, ratri, sila-dark) ใส่ค่ามืดเป็นค่าเดียว ไม่มี block `.wt-dark` เหมือน PrimeNG 15 ที่สลับธีมด้วยการเปลี่ยนไฟล์ ส่วน overrides จาก TS อ่าน `--wt-scheme` จากไฟล์ธีมเองจึงทับถูกที่
+- **ชื่อ class ของ PrimeNG:** DOM มี class `p-*` ของยุคนั้นคู่กับ `wt-*` เช่น v1 ปุ่ม warn มี `p-button-warning` และ checkbox ที่เลือกมี `.p-checkbox-box.p-highlight`, switch เป็น `p-inputswitch` ส่วน v2/v3 ใช้ `p-button-warn`, `p-checkbox-checked`, `p-toggleswitch` CSS ของแอปที่เขียนทับ `.p-button`, `.p-card-body`, `.p-highlight` อยู่แล้วจึงยังทำงาน (CSS ของแอปไม่อยู่ใน layer จึงชนะ) class ของ checkbox/radio/switch อยู่บน wrapper รอบกล่อง ไม่ใช่บน `<label>` เพราะ PrimeNG กำหนดขนาด `.p-checkbox` ไว้ตายตัว ถ้าแอปยังโหลด CSS ของ PrimeNG ระหว่างย้ายจะไม่บีบข้อความ label
+- **ตัวแปร CSS ของ PrimeNG:** ไฟล์ธีม v1 สร้าง `--primary-color`, `--surface-ground`, `--surface-border`, `--text-color`, `--green-500`, … ส่วน v2/v3 สร้าง `--p-primary-color`, `--p-surface-0…950`, `--p-content-border-radius`, `--p-<สี>-<เฉด>`, … (`compat.ts`) โดยอ้างกลับไปที่ `--wt-*` จึงเปลี่ยนตามธีม และค่า component บางตัวอ่านค่าที่แอปตั้งแบบ PrimeNG ก่อน เช่น `--p-card-body-gap: 0` ของ SP Admission ยังได้ผล
+- **สีตัวอักษรบนปุ่มหลัก:** family แบบ PrimeNG ใช้ตัวอักษรขาวเสมอเหมือนต้นฉบับ (เช่นบน `#00a86b` ของ Strisrinan) ส่วน family Wira เลือกสีที่อ่านง่ายกว่าอัตโนมัติ (`*-contrast-auto`) และตั้งเองได้ด้วย `primaryContrast` (Designer, SCSS `$primary-contrast`, TS `semantic.primaryContrast`) ธีมสีส้มของ Arun/Sayan/Ratri ใช้ตัวอักษรเข้มแบบ PrimeNG
+- **ตัวเลือกแบบ PrimeNG 18+:** `provideWiraTheme({ darkModeSelector: '.my-dark' | 'system' | 'none' })` ใช้ชื่อเดียวกับ PrimeNG แอปที่ตั้ง `.non-dark-selector` (ไม่มีวันเป็นมืด) ใช้ได้เลย
+- **โหมดมืดแบบนวล:** ทุก family ใช้ชุดสีมืดเดียวกัน (`SOFT_DARK` ใน `families.ts`) ที่ยกพื้นขึ้นจากของ PrimeNG หนึ่งขั้น (พื้นหน้าระหว่าง surface 900 กับ 800, การ์ด 800) และใช้ตัวอักษร surface 200 แทนสีขาว contrast จึงเหลือราว 11:1 แทน 20:1 ยังผ่าน WCAG AAA
+- **ขนาดตัวอักษรเป็น rem** และระยะทั้งหมดคูณ `--wt-density` แอปที่ตั้ง `html { font-size: 14px }` แบบ PrimeNG จึงย่อทั้งชุดเหมือนเดิม
+
+### 6.11 Utility class ในตัว (`wiratheme/utils`)
+
+แทน utility library ที่แอปเดิมต้องติดตั้งแยก (ในแอปเราใช้หนักมาก เช่น Strisrinan ใช้ `col-12` ราว 3,300 ครั้ง, `grid` 1,200, `md:col-*` หลายร้อย) โดยใช้ **ชื่อ class เดิม** template จึงไม่ต้องแก้
+
+- **มีอะไรบ้าง:** grid 12 คอลัมน์ (`grid`, `col-N`, `col-offset-N`, `grid-nogutter`), flex, spacing (`p/m` + `t r b l x y`, สเกล 0–8, ค่าติดลบ, auto), sizing, typography, สีตามธีม (`surface-card`, `text-color-secondary`, `bg-primary`, `text-gray-*` = surface ของธีม), palette สีคงที่, border/radius ตาม token, shadow, position, overflow, form layout (`field`, `field-checkbox`, `formgrid`)
+- **Mobile-first:** class ปกติคือขนาดมือถือ ส่วน `sm:` `md:` `lg:` `xl:` (576/768/992/1200px) มีผลจากความกว้างนั้นขึ้นไป
+- **ตามธีม:** สี, radius และ shadow อ่าน `--wt-*` จึงเปลี่ยนตาม preset และโหมดมืดเอง ระยะ gutter ของ grid ปรับตอน runtime ได้ด้วย `--wt-grid-gutter`
+- **ลำดับ layer:** `@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides` (`reset` มีไว้ให้แอปห่อ CSS reset ของตัวเอง เช่น `button { font: inherit }` ไม่ให้ชนะ style ของ component) utility จึงชนะ style ของ component (เช่น `class="p-0"` บน component) แต่แพ้ CSS ของแอปเอง ไฟล์ utility ประกาศลำดับ layer เต็มไว้บนสุดด้วย โหลดก่อนธีมก็ไม่เพี้ยน
+- **เปิด/ปิด:** `ng add` ถามว่าจะเพิ่มไหม (`--utils=false` เพื่อข้าม) แบบ SCSS ใส่ `@use 'wiratheme/utils';` ใต้บรรทัดธีม แบบ CSS ใส่ `node_modules/wiratheme/utils/utils.css` ใน angular.json ปิดทั้งหมดได้ด้วยการลบบรรทัดนั้น หรือเลือกเฉพาะบางกลุ่มใน SCSS:
+
+```scss
+@use 'wiratheme/utils' with (
+  $groups: (palette: false, shadows: false),  // ปิดบางกลุ่ม
+  $prefix: 'u-',                                // .u-flex, .md:u-col-6 ถ้าต้องใช้คู่กับ library อื่นระหว่างย้าย
+  $responsive: true,
+  $layer: 'wiratheme.utilities',                // false = ไม่ใส่ layer
+  $important: false
+);
+```
+
+- **ขนาด:** ครบทุกกลุ่ม 157 KB (minified 102 KB, gzip ราว 12 KB) ตัดกลุ่มที่ไม่ใช้ออกได้ใน SCSS
+
 ## 7. Theme Designer (แบบ PrimeNG สมัยก่อน)
 
 Designer เป็นแค่ **ตัวแก้ token** และ preview ใช้ `WtThemeService` ตัวเดียวกับ runtime **สิ่งที่เห็นใน preview จึงตรงกับไฟล์ที่ export 100%**
@@ -364,7 +409,7 @@ Designer เป็นแค่ **ตัวแก้ token** และ preview �
 **หน้าจอ 3 ส่วน**
 - **แถบบน:** เลือก preset, สลับ light/dark, **ปรับขนาดหน้าจอ preview** (Desktop / Tablet / Mobile / กำหนดความกว้างเอง + หมุนจอ เพื่อดู responsive ของ component), Undo/Redo, Import, Export, Share
 - **ซ้าย (ตัวควบคุม):**
-  1. Preset: Wira (เรียบแบบ Aura), Lanna (นุ่ม โค้งมนแบบ Lara), Siam (มี elevation และ ripple แบบ Material), แบบเหลี่ยมคมสไตล์ enterprise (ชื่อทั้งหมดยังเป็นชื่อชั่วคราว)
+  1. Preset: Wira (เรียบแบบ Mali), Lanna (นุ่ม โค้งมนแบบ Sila), Siam (มี elevation และ ripple แบบ Material), แบบเหลี่ยมคมสไตล์ enterprise (ชื่อทั้งหมดยังเป็นชื่อชั่วคราว)
   2. สี: Primary (swatch แบบรูปที่ 3 + กรอก HEX แล้วสร้าง 50–950 ให้และแก้ได้ทีละเฉด), Surface, Semantic (success/info/warn/danger/help/contrast), text, border, focus ring, mask
   3. ตัวอักษร: ฟอนต์ไทยพร้อม preview (Kanit, Sarabun, Prompt, Noto Sans Thai, IBM Plex Sans Thai, Anuphan หรือกำหนดเอง), ขนาดพื้นฐาน, น้ำหนัก, line-height สำหรับภาษาไทย
   4. รูปทรง: radius scale, ความหนาเส้นขอบ
@@ -470,7 +515,10 @@ export class StudentListComponent {}
 
 ### P2 — รอบถัดไป
 
-Chart (wrapper ครอบ Chart.js), Image (preview), Timeline, AutoComplete, Stepper, Drawer, Breadcrumb, Tree, TreeSelect, TreeTable, Listbox, Slider, Rating, InputOtp, Knob, ColorPicker, Chip, Carousel, Galleria, DataView, Splitter, ScrollPanel, Inplace, OrderList, PickList, Editor (adapter ของ Quill/TinyMCE)
+Chart (wrapper ครอบ Chart.js), Image (preview), Timeline, AutoComplete, Stepper, Drawer, Breadcrumb, Tree, TreeSelect, TreeTable, Listbox, Slider, Rating, InputOtp, Knob, ColorPicker, Chip, Carousel, Galleria, DataView, Splitter, ScrollPanel, Inplace, OrderList, PickList, Editor
+
+- **Chart (ตัดสินแล้ว):** ครอบ Chart.js แบบเดียวกับ PrimeNG คือ `<wt-chart type="bar" [data]="…" [options]="…">` แอปติดตั้ง `chart.js` เอง (peer dependency แบบ optional) และ component โหลดแบบ lazy สีเริ่มต้นของกราฟ (ตัวอักษร เส้นตาราง palette ของ dataset) อ่านจาก token `--wt-*` จึงเปลี่ยนตามธีมและโหมดมืดเอง
+- **Editor (ยังเลือกอยู่):** ทางที่ผู้ใช้สนใจคือ integrate TinyMCE หรือทำ editor เอง เรื่องที่ต้องรู้: TinyMCE ตั้งแต่รุ่น 7 เปลี่ยน license จาก MIT เป็น GPLv2+ (หรือซื้อ license เชิงพาณิชย์) ส่วนรุ่น 6 ที่ยังเป็น MIT หมดการดูแลแล้ว ซึ่งขัดกับเหตุผลที่ย้ายออกจาก PrimeNG ข้อเสนอ: ทำ `<wt-editor>` ของเราเองบน Tiptap/ProseMirror (MIT) เป็น `ControlValueAccessor` มี toolbar ตามธีม, ตาราง, รูป, วางจาก Word, ฟอนต์ไทย และให้ TinyMCE เป็น adapter เสริมสำหรับโปรเจคที่มี license อยู่แล้ว แอปจะสลับได้โดยไม่แก้ template
 
 ---
 
@@ -605,7 +653,181 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **ทดสอบแล้ว:** Playwright 33 test รวมการเทียบหน้าตา gallery ฟอร์มของทั้ง 3 รุ่น (light/dark), ngModel, Reactive Forms (validation, `patchValue`, กลุ่ม radio, `disable()`) และหน้าฟอร์มในเว็บ docs ที่รัน v1/v2 บน Angular 21
 - **ที่เรียนรู้:** แอป zoneless (v3) render รอบถัดไป test ที่อ่านค่าหลังคลิกต้องรอ (`expect.poll`)
 
-**เรื่องที่ต้องตัดสินใจ:** สีตัวอักษรบนปุ่มหลัก ระบบเลือกสีที่ contrast สูงกว่าโดยอัตโนมัติ บน `#00a86b` จึงได้ตัวอักษรสีเข้ม (ตัวอักษรขาวได้ contrast แค่ราว 3:1 ไม่ผ่าน WCAG AA) ซึ่งต่างจาก Strisrinan เดิมที่ใช้ตัวอักษรขาว ถ้าต้องการขาวตามแบรนด์ ตอนนี้ทำได้ด้วยการใส่ `--wt-primary-contrast: #ffffff;` ใน `:root` ของ CSS แอป (ชนะทุก layer) หรือเลือกสีหลักที่เข้มขึ้น ถ้าจะใช้บ่อยควรเพิ่มเป็นตัวเลือกใน Designer/overrides ใน Phase 1
+**สีตัวอักษรบนปุ่มหลัก (ตัดสินแล้วใน 12.4):** family แบบ PrimeNG ใช้ตัวอักษรขาวเหมือนต้นฉบับ ส่วน Wira เลือกอัตโนมัติ และตั้งเองได้ด้วย `primaryContrast`
+
+### 12.4 หน้าตาแยกตามรุ่นแบบ PrimeNG (24 ต.ค. 2569)
+
+ทำตาม feedback ว่าปุ่มทุกรุ่นหน้าตาเหมือนกันและเว็บดู basic: แต่ละรุ่นมีธีมย่อยแบบ PrimeNG ยุคเดียวกัน (6.10) โดยสำรวจแอป PrimeNG ทุกตัวใน `E:\Web Applications Coding` ก่อน กลุ่ม v1 (Angular 15/17, Sila จาก Designer เก่า, `#00a86b`/`#4c99e1`/`#8f1403`, Kanit, radius 6px) ใช้ `var(--surface-ground)`, `var(--surface-border)` และเขียนทับ `.p-highlight`, `.p-button`, `.p-card-body`, `.p-datatable-*` ส่วนกลุ่ม v2/v3 (Mali) ส่วนใหญ่ตั้ง `darkModeSelector: '.non-dark-selector'` และอ่าน `--p-surface-*`, `--p-primary-color`, `--p-content-border-radius`
+
+- **core:** `families.ts` (token ของ 8 family), `compat.ts` (ตัวแปร PrimeNG), `CLASSIC_THEMES` + `VERSION_CATALOG` ใน `catalog.ts`, `themeConfig()` / `themePreset()` / `presetsFor()`, radius scale แบบ PrimeNG (xs…xl), focus 4 แบบ (ring/outline/inset/bold)
+- **Sass:** เขียนใหม่ให้ตรงกับ `computeTokens()` ทั้งค่าและลำดับ (parity test 343 กรณีบน Sass 1.58 และ 1.106 รวมธีม v1 ทั้ง 25 ชื่อ) เพิ่ม `$theme`, `$scheme`, `$primary-contrast`
+- **e2e (12.4):** แต่ละรุ่นตรวจหน้าตาเริ่มต้นของตัวเอง (padding/น้ำหนักตัวอักษรของปุ่ม) ส่วนการเทียบ pixel ข้ามรุ่นทำหลังใส่ preset เดียวกัน (ยืนยันว่า CSS ชุดเดียวกันให้ผลเหมือนกันทั้ง Angular 15, 19, 21) และตรวจ class/ตัวแปร PrimeNG ของแต่ละยุค
+
+### 12.5 โหมดมืดนวล, utility ในตัว, สีองค์กร และ component ชุดง่าย (24 ต.ค. 2569)
+
+- **โหมดมืดนวล** (6.10) และ **`wiratheme/utils`** (6.11)
+- **สีองค์กร Wirabyte** (จาก wirabyte.com): preset `wira` ใช้น้ำเงินองค์กร `#1e7ae0` บน surface `ink` (`#f6f8fc` … `#070b14`) และ swatch `wira` เป็นสีเดียวกัน ส่วนธีม `sila-light-wira` ยังเป็นเขียว `#00a86b` เพราะทำไว้ให้ตรงกับแอปเดิม
+- **Component ชุดง่าย (11 ตัว, ครบ v1/v2/v3):** Tag, Badge, Chip, Avatar + AvatarGroup, Divider, Skeleton, ProgressBar, ProgressSpinner, Message, Panel, Fieldset
+  - ทุกตัวมี token ของ family (เช่น Tag แบบ classic เป็นสีทึบ `tag-fill: 100%`, แบบ styled เป็นสีอ่อน `0%`; Panel แบบ classic มีเส้นขอบแยกหัว/เนื้อหา แบบ styled ขอบรอบทั้งกล่อง) และ class `p-*` ของแต่ละยุค (v1 `p-tag-warning`, `p-inline-message-error`, `p-toggleable-content`; v2/v3 `p-tag-warn`, `p-message-error`, `p-panel-content-container`)
+  - รับ severity แบบเดิม (`warning`, `error`) ผ่าน `ɵseverity()` กลาง
+  - Panel/Fieldset ยุบด้วย `grid-template-rows` (ลื่นทั้ง Chromium, Firefox, Safari 16+) และใส่ `inert` ให้เนื้อหาที่ยุบ กด tab ไม่ถึง
+  - ปุ่มไอคอน (ปิด, ลบ, ยุบ/ขยาย) มี `aria-label` จาก locale (`close`, `remove`, `expand`, `collapse`, `loading` เพิ่มใน `WtLocale`)
+  - ขนาดของ ProgressBar/Spinner อยู่ที่ host จึงใช้ `style="height: 6px"` ได้เหมือนแอปเดิม
+- **ตัวช่วยฟอร์ม (7 entry):** IconField + InputIcon, InputGroup + Addon, FloatLabel, ToggleButton, SelectButton, Rating, Password
+  - IconField / InputGroup / FloatLabel ไม่มี state จึงเขียนครั้งเดียวใน `angular-common` (decorator ใช้ได้ทั้ง Angular 15–21) CSS อยู่ใน `inputtext.css` ที่ `wtInputText` โหลดอยู่แล้ว markup เดิมแบบ class ล้วน (`p-input-icon-left`, `p-inputgroup`, `p-float-label`) จึงใช้ได้แม้ไม่ได้ใช้ component
+  - `wtInputText` / `wtTextarea` ใส่ class `wt-filled` (และ `p-filled`) เมื่อมีค่า FloatLabel ใช้ตัดสินว่าจะลอยหรือไม่ selector ที่มี `:autofill` ห่อด้วย `:is()` เพื่อไม่ให้ทั้ง rule หายใน browser ที่ไม่รู้จัก
+  - ToggleButton / SelectButton แบบ styled เป็นราง + ชิปสีขาวบนตัวที่เลือก แบบ classic เป็นปุ่มที่เปลี่ยนเป็นสีหลัก (สีชิปซ้อนบนสี checked: ชิปโปร่งใสจึงเห็นสีหลัก)
+  - Rating ใช้ radio จริงจึงกดลูกศร/ใช้ screen reader ได้, Password แสดงแถบความแข็งแรงใต้ช่องแทน overlay (ไม่บังเนื้อหา ใช้บนมือถือได้)
+  - helper กลางของรายการตัวเลือก (`ɵoptionLabel`, `ɵoptionValue`, `ɵoptionDisabled`, `ɵsameValue` + `dataKey`) อยู่ใน `config/forms.ts` เตรียมไว้ให้ Select / Listbox
+- **Panel (3 entry):** Toolbar (ไม่มี state เขียนใน `angular-common`), Accordion + AccordionTab, Tabs + TabPanel
+  - API แบบหัวข้อเดียว (`<wt-accordion-tab header>`, `<wt-tab-panel header>`) ใช้เหมือนกันทุกรุ่น class ของ DOM ตามยุค (v1 `p-tabview`, `p-accordion-tab-active`; v2/v3 `p-tabs`, `p-accordionpanel-active`)
+  - คีย์บอร์ดตาม WAI-ARIA: Accordion ลูกศรขึ้น/ลง/Home/End ระหว่างหัวข้อ, Tabs ลูกศรซ้าย/ขวา/Home/End ข้ามแท็บที่ปิดและเลือกทันที (roving tabindex)
+  - responsive: แถบแท็บเลื่อนด้านข้างในตัวเอง (`overflow-x: auto`, scrollbar บาง) ส่วน Toolbar ขึ้นบรรทัดใหม่
+- **InputNumber:** แสดงค่าที่จัดรูปแบบแล้ว (`฿1,234.50`, `60 กก.`) และไม่เปลี่ยนข้อความตอนโฟกัส (เปลี่ยนตอนนั้นทำให้การเลือกจาก Tab, คลิก, autofill หรือ `fill()` ของ test runner หาย แล้วตัวเลขที่พิมพ์ไปต่อท้ายค่าเดิม เจอใน e2e) สิ่งที่พิมพ์/วางอ่านแบบผ่อนปรน (ไม่สน `฿` และ `,`) แล้วจัดรูปแบบใหม่ตอนออกจากช่อง จึงไม่ต้องจัดการตำแหน่ง caret ระหว่างพิมพ์ model อัปเดตทุกครั้งที่พิมพ์ ส่วน min/max และจำนวนทศนิยมบังคับตอนออกจากช่อง ตรรกะตัวเลข (`formatNumber`, `parseNumber` รับเลขไทยและค่าที่วาง, `stepNumber` ไม่มีเศษทศนิยมลอย, `clampNumber`) อยู่ใน core มี unit test, `inputmode` numeric/decimal ให้มือถือแสดงแป้นตัวเลข
+- **เปลี่ยนภาษาระหว่างใช้งาน:** component ที่แสดงข้อความจาก locale เป็น OnPush จึงต้องรู้ตัวเมื่อเรียก `WtConfig.setTranslation()` รุ่น v1 ใช้ `ɵrefreshOnTranslation()` (markForCheck) ส่วน signal ที่อ่านข้อความใน `computed()` ใช้ signal `language` เป็นตัวกระตุ้น เพราะ computed เก็บค่าไว้ (เจอจากเว็บ docs ที่สลับ TH/EN)
+- **แถบแท็บ:** เส้นฐานใช้ `box-shadow: inset` แทน border + margin ติดลบ จึงไม่ล้นแนวตั้งจน scrollbar โผล่ (`overflow-x: auto` บังคับให้แกน y เป็น auto ด้วย)
+- **ลำดับถัดไปตามการใช้งานจริง:** นับไฟล์ HTML ในทุกโปรเจคที่ใช้แต่ละ component (24 ต.ค. 2569): Table 449, Dialog 432, Select/Dropdown 437, Toast 194, ConfirmDialog 155, Tooltip 119, InputNumber 116, DatePicker/Calendar 98, Tabs/TabView 64, Accordion 34, Timeline 28, Steps 10 ชุดถัดไปจึงควรเป็น overlay (Dialog, ConfirmDialog/`WtAlertService`, Toast, Tooltip, Popover) แล้ว Select, InputNumber, DatePicker พ.ศ. และ Table แอป v2/v3 ใช้ Tabs แบบ PrimeNG 18 (`<p-tabs><p-tablist><p-tab>`) อยู่ 41 ไฟล์ ถ้าจะลดงานย้ายควรเพิ่ม API แบบนั้นให้ `wiratheme/tabs` ด้วย
+
+### 12.6 DatePicker (24 ต.ค. 2569)
+
+- **ดูจากแอปจริงก่อน:** `dateFormat="dd/mm/yy"` 164 ที่, `hourFormat="24"` 129, `[showSeconds]` 154, `[readonlyInput]` 256, `appendTo="body"` 1,400+ ที่, และ `[isBudhistYear]` 27 ที่ (TP Hub, Samsen One ใช้ fork `primeng-buddhist-year-datepicker` พร้อม directive ที่บังคับ `readonlyInput`) จึงรับทั้งหมดนี้ได้ตรงตัว
+- **ตรรกะอยู่ใน core ไม่ผูก framework:** `core/src/date.ts` (ตาราง 6 สัปดาห์คงที่ให้ panel ไม่กระโดด, min/max/disabled, หน้าปี 12 ช่องตามทศวรรษที่คนเห็นเช่น 2560–2569, ลูกศร/Home/End/PageUp/PageDown, เวลา wrap 23→00, 12/24 ชม.) และ `DatePickerState` (เลือกวัน/ช่วง/หลายวัน/เดือน/ปี, เวลา, ข้อความในช่อง) มี unit test 32 ข้อ component v1 (decorator, `*ngIf`) กับ v2/v3 (signal, `@if`) จึงเหลือแค่ template กับการจัดการโฟกัส
+- **รูปแบบวันที่:** `dateFormat` ใช้ภาษา `dd/mm/yy` เดิม (`classicDateFormat()` แปลงเป็น pattern ของ `formatDate()`) ค่าเริ่มต้นเป็นของ locale พิมพ์ได้ทั้งตรงรูปแบบ, ตัวเลขตามลำดับวัน/เดือน/ปีของรูปแบบด้วยตัวคั่นอะไรก็ได้ (`12/3/2569`, `12-03-69`), เลขไทย, ชื่อเดือนตัวพิมพ์ใดก็ได้ และในโหมด พ.ศ. ปีที่ต่ำกว่า 2300 ถือเป็น ค.ศ. ที่พิมพ์ตามความเคยชิน ค่าที่ใช้ไม่ได้ (นอก min/max) ไม่เข้า model และถูกแทนด้วยค่าเดิมตอนออกจากช่อง
+- **เวลา:** ช่อง ชม./นาที/วินาที เป็น `<input>` ที่กดปุ่มขึ้นลง (กดค้างได้), ลูกศรขึ้นลง และพิมพ์ได้ พิมพ์ครบแล้วไปช่องถัดไปเอง (เช่น `45` หรือ `7` ในช่องนาที) เกินช่วงถูกบีบตอนออกจากช่อง `readonlyInput` (ช่องหลัก) กับ `timeReadonlyInput` (ช่องเวลา) แยกกัน รับชื่อ `readOnlyInput` / `timeReadOnlyInput` ด้วย เมื่อมีเวลา panel ไม่ปิดหลังเลือกวัน (ต่างจากต้นฉบับ ตั้ง `hideOnDateTimeSelect` ได้)
+- **Overlay:** `ɵWtPopup` ใน `wiratheme/config` (ใช้ต่อกับ Select, Dialog) วาง panel ใน top layer ด้วย `popover="manual"` จึงอยู่เหนือ dialog และไม่ถูก `overflow: hidden` ตัด ไม่ต้อง `appendTo` (รับไว้เฉย ๆ) panel อยู่ที่เดิมใน DOM ลำดับโฟกัสจึงถูก กลับด้านขึ้นบนเมื่อด้านล่างไม่พอ ตามช่องเมื่อ scroll บนมือถือเป็น bottom sheet ที่อยู่เหนือแป้นพิมพ์ (visualViewport) วันกว้าง 44px และช่องหลักไม่เรียกแป้นพิมพ์ (`inputmode="none"`)
+- **คีย์บอร์ด:** ช่องหลัก ลูกศรลงเข้าตาราง, Escape/Enter ปิด, Tab ปิดแล้วไปช่องถัดไป (ซ่อนทันทีใน keydown เดียวกัน ไม่งั้นแอป zoneless จะ Tab เข้า panel) ในตาราง roving tabindex ตาม WAI-ARIA และ Tab วนใน panel
+- **ยุค:** v1 มี class `p-calendar`, `p-datepicker` (panel), `p-datepicker-trigger`, `p-highlight`, `p-monthpicker`, `p-timepicker`; v2/v3 มี `p-datepicker`, `p-datepicker-panel`, `p-datepicker-dropdown`, `p-datepicker-day-selected`, `p-datepicker-time-picker` token `datepicker-*` แยกตาม family (classic ใช้สีอ่อนบนวันที่เลือกและช่อง 2.5rem, styled ใช้สีหลักทึบ 2rem, Phet มุมเหลี่ยม)
+- **e2e 15 ข้อ** (Chromium v1/v2/v3 + WebKit) ใช้ `page.clock` ตรึงวันที่ และภาพ inline calendar ชุดเดียวกันทุกรุ่น สิ่งที่ e2e จับได้และแก้แล้ว:
+  - ตาราง `width: 100%` ใน popup ที่กว้างตามเนื้อหา ทำให้ browser ขยาย popup เต็มหน้าต่าง จึงให้ตารางกว้าง auto และใช้ 100% เฉพาะ sheet / inline บนมือถือ
+  - ไฟล์ธีมที่ `ng add` สร้างคำนวณ token จาก core ที่ฝังใน schematics ต้อง build schematics ใหม่ทุกครั้งที่เพิ่ม token (`pnpm build` ทำตามลำดับนี้อยู่แล้ว)
+  - กดลูกศรจนถึง minDate/maxDate ปุ่มถูก disable แล้ว browser ทิ้งโฟกัส panel จึงปิดเอง ตอนนี้ย้ายโฟกัสไปที่ตารางแทน
+  - Safari ไม่โฟกัสปุ่มที่ถูกคลิก โฟกัสจึงตกไปที่หน้าและ panel ปิด ตอนนี้คลิกปุ่มหรือที่ว่างใน panel ไม่ย้ายโฟกัส (เฉพาะช่องเวลาและช่องวันรับโฟกัสจากการคลิก) และตัวเลขแรกที่พิมพ์หลังโฟกัสแทนค่าทั้งช่องผ่าน keydown แทนการพึ่ง selection ที่ WebKit ทิ้งได้
+  - หน้าตา classic สูงจนลงไม่พอทั้งด้านบนและด้านล่าง: เลือกด้านที่มีที่มากกว่าแล้วจำกัดความสูงให้เลื่อนในตัว แทนการทับช่อง บนมือถือช่องว่างระหว่างวันคงที่ 0.125rem เพื่อให้วันกว้าง 44px ทุกธีม
+
+### 12.7 Overlay, AlertDialog และ animate on scroll (24 ต.ค. 2569)
+
+- **ดูจากแอปจริงก่อน:**
+  - Dialog: `[modal]="true"` 832, `[(visible)]` 805, `[draggable]="false"` 763, `[style]="{ width: '50vw', 'min-width': '360px' }"` เป็นแบบที่พบบ่อย
+  - เทมเพลต: `pTemplate="header|footer"` 1,800+ ที่
+  - Swal: `Swal.fire` 835 ครั้ง (อ่าน `result.value` 250, `isConfirmed` 108, `showLoading` 20)
+  - Toast: `messageService.add({ severity, summary, detail })` 3,200+ ครั้ง
+  - Confirm: `confirm({ message, header, icon, accept })` 470
+  - Tooltip: `pTooltip` + `tooltipPosition` 390
+  - Popover: `#op` + `op.toggle($event)` 33
+- **ทุกตัวอยู่ใน top layer ของ browser:**
+  - Dialog / Alert ใช้ `<dialog>` + `showModal()` จึงได้ focus trap, หน้าข้างหลัง inert และซ้อนกันได้เองโดยไม่ต้องใช้ z-index หรือ appendTo
+  - Toast / Tooltip / Popover / DatePicker ใช้ `popover="manual"`
+  - Toast ที่เพิ่มตอนมี dialog เปิดอยู่จะ show ใหม่เพื่อขึ้นมาอยู่บนสุด
+  - ปุ่ม Escape จัดการเองใน keydown ไม่ปล่อยให้ browser ปิด `<dialog>` เอง และ component ข้างใน (DatePicker) ที่ใช้ Escape แล้วจะกันไม่ให้ dialog ปิดตาม
+- **เขียนครั้งเดียว:** logic อยู่ใน base class ของ `angular-common` (decorator input ใช้ได้ Angular 15–21) ส่วน template v1 (`*ngIf`) และ v2/v3 (`@if`) ต่างกันเฉพาะ control flow และ class ตามยุค
+  - v1: `p-dialog-header-close`, `p-confirm-dialog`, `p-toast-icon-close`, `p-overlaypanel`
+  - v2/v3: `p-dialog-close-button`, `p-confirmdialog`, `p-toast-close-button`, `p-popover`
+- **Migration ทำได้โดยเปลี่ยน import:**
+  - `WtTemplate` อ่าน `pTemplate` ด้วย
+  - `wiratheme/api` export ชื่อเดิม `ConfirmationService`, `MessageService`, `ConfirmEventType`, `SharedModule`, `Message`
+  - `WtTooltip` รับ attribute `pTooltip`
+  - `WtConfirmDialog` รับ `acceptButtonStyleClass="p-button-success"` และแปลงเป็นปุ่ม WiraTheme (`ɵbuttonClass`)
+  - selector `wt-confirmDialog`, `wt-overlayPanel` ใช้ได้
+- **AlertDialog แทน SweetAlert** (`wiratheme/alert`):
+  - `import { WtAlert as Swal } from 'wiratheme/alert'` แล้วโค้ด `Swal.fire(...)` เดิมทำงานต่อได้
+  - รับ option ชื่อเดิม: title, text, html, icon, showCancelButton, reverseButtons, confirmButtonColor, input, inputValidator, preConfirm, timer, didOpen, allowOutsideClick
+  - ผลลัพธ์รูปเดิม: isConfirmed, isDenied, isDismissed, value, dismiss
+  - มี `showLoading`, `close`, `mixin`, `confirm()` ที่คืน boolean
+  - ไอคอน SVG วาดเส้นเอง สีมาจาก semantic token และป้ายปุ่มมาจาก locale
+  - static facade หา service ผ่าน root injector ที่ `provideWiraTheme()` เก็บไว้
+  - เรียก `confirm()` โดยไม่มี `<wt-confirmdialog>` ใน key นั้น จะเปิดเป็น alert แทน คำถามจึงไม่หายเงียบ
+- **Responsive:**
+  - บนมือถือ Dialog กว้างเต็มจอเสมอ (`width`/`min-width` ของแอปถูกแทนด้วย `!important` เฉพาะ < 576px) เพราะแอปจำนวนมากตั้ง `min-width: 360px`
+  - Alert กว้างเต็มจอ ปุ่มแบ่งแถวเท่ากันและสูง 44px
+  - Toast เต็มความกว้างจอ
+  - Tooltip ที่ไม่พอด้านข้างย้ายไปบนหรือล่าง
+- **ความต่างจากของเดิมที่ตั้งใจไว้:**
+  - `draggable` ค่าเริ่มต้นเป็น false (แอปปิดอยู่แล้ว 763 จาก ~840)
+  - modal ล็อก scroll ของหน้าเป็นค่าเริ่มต้น
+  - Tooltip แสดงตอนโฟกัสด้วยคีย์บอร์ดด้วย
+  - Tooltip HTML (`[escape]="false"`) เหลือเฉพาะแท็กจัดรูปแบบและลิงก์ http/https/mailto
+- **Animate on scroll** (`wiratheme/animate`):
+  - แทน AOS โดยใช้ attribute เดิม (`data-aos`, `data-aos-delay`, `-duration`, `-easing`, `-offset`, `-once`, `-mirror`, `-anchor-placement`) และชื่อ animation ครบ 27 ชื่อ (fade, zoom, flip, slide)
+  - เปิดใช้ด้วย `provideWtAnimate()` (หรือ `WtAnimateModule.forRoot()`) แทน `AOS.init()` หรือใช้ directive `[wtAnimate]`
+  - ใช้ IntersectionObserver โดย MutationObserver คอยจับ element ที่เพิ่มทีหลัง
+  - ซ่อนเฉพาะ element ที่ script ดูอยู่ (`.wt-aos`) เนื้อหาจึงไม่หายถ้า script ไม่ทำงาน
+  - ผู้ใช้ที่ตั้ง reduced motion เห็นทุกอย่างทันที
+
+### 12.8 รอบรีวิวของผู้ใช้: ขนาด, validation, MeterGroup (24 ต.ค. 2569)
+
+- **ขนาดเทียบกับ PrimeNG จริง:** วัดที่ v17 / v19 / v21 (root 14px)
+  - ปุ่มสูง 33px, `sm` 27.5px, `lg` 38.5px, ปุ่มไอคอน 35×33 padding `0.5rem 0.75rem`
+  - ของเราสูงกว่าเพราะ Kanit มี line-height `normal` ราว 1.5
+  - เพิ่ม token `control-line-height` = 1.2 ใช้กับปุ่ม, input, datepicker, selectbutton, togglebutton
+  - ผลที่ root 14px: styled 33 / sm 28 / lg 37px, classic Sila 40 / 35 / 50px (ธีม Lara ของ PrimeNG v17 วัดได้ 39 / 34.4 / 49.3)
+  - ทดสอบแล้วสระ/วรรณยุกต์ไทยใน input ไม่ถูกตัด
+- **ขนาดทั้งระบบ:** `scale` ใน `provideWiraTheme()` และ `WtThemeService.setScale()`
+  - ตั้ง font-size ของ `<html>`: `sm` 12px, `md` 14px, `lg` 16px หรือใส่ตัวเลข px (ช่วงเดียวกับตัวเลือก scale ของเว็บเอกสาร PrimeNG ที่ค่าเริ่มต้น 14px)
+  - เว็บเอกสารเริ่มที่ `md` และมีตัวเลือก "ขนาด UI" ใน Theme panel
+- **ขนาดรายตัว:** `size="small"`/`"large"` (หรือ `sm`/`lg`) ใน button, checkbox, radiobutton, toggleswitch, togglebutton, selectbutton, password, inputnumber, datepicker
+  - class เดิม `p-button-sm`, `p-inputtext-sm` ใช้ได้
+  - มี `<button wtButton>` (อ่าน `pButton`) และ `styleClass="p-button-*"` แปลงเป็น class ของเรา
+- **Validation** (`wiratheme/validation`):
+  - field แดงเองเมื่อ invalid และ (touched หรือ form submitted)
+  - `wt-field-error` แสดงข้อความภาษาของ locale
+  - validator ไทย: `thaiId`, `thaiPhone`, `match`
+- **ปรับหน้าตาตามที่ผู้ใช้ทัก:**
+  - Divider ใช้สี `divider-color` (เข้มกว่า border), dotted หนา 2px, ระยะห่าง 0.75rem
+  - Fieldset legend เล็กลง และตอนยุบมีที่ว่างใต้ legend
+  - Panel: ปุ่มไอคอนใน header ขนาด 2rem และไม่ทำให้ header สูงขึ้น
+  - Tabs: padding เล็กลง, ไม่มี scrollbar, มีปุ่มเลื่อนเมื่อแท็บล้น (รับ `scrollable` เดิม)
+  - Toolbar (classic) padding 0.75rem
+- **CSS reset ของแอปทำปุ่มใหญ่:** เว็บเอกสารมี `button { font: inherit }` ไม่อยู่ใน layer
+  - ชนะ `.wt-btn` ใน `@layer wiratheme.components` ปุ่มจึงได้ตัวอักษร 15px และ line-height 1.75 ของหน้า (สูง 42–49px)
+  - Bootstrap Reboot และ Tailwind preflight ทำแบบเดียวกัน
+  - แก้ด้วยการเพิ่ม layer `reset` ไว้หน้าสุดของลำดับ ให้แอปห่อ reset ด้วย `@layer reset { }`
+- **พฤติกรรมที่เปลี่ยน:**
+  - AlertDialog: ปุ่มยืนยันอยู่ขวาเสมอ เรียงใน DOM ด้วย จึงกด Tab ตามที่ตาเห็น
+  - Toast:
+    - มีเส้นนับถอยหลัง ซึ่งหยุดตอน hover และนับต่อจากเวลาที่เหลือ
+    - ปุ่มปิดอยู่ขวาบนเสมอ
+    - severity contrast เห็นไอคอน
+  - Tooltip: เลื่อนเมาส์ไปบน tooltip ได้ (WCAG 1.4.13); `[autoHide]="true"` ซ่อนทันทีแบบเดิม
+  - Dialog: `position` ใช้ได้แล้ว (เดิมกฎของ mask ชนะ specificity) และไอคอนขยายเป็นลูกศรออกสองมุม
+  - InputNumber:
+    - ห้ามตัวอักษร, ทศนิยมเกิน, ลบเมื่อ `min ≥ 0` และค่าเกิน `max` ตอนพิมพ์
+    - ข้อความที่มาทีเดียว (วาง, autofill) อ่านแบบยืดหยุ่น
+  - Animate: ซ่อนทันทีโดยไม่ fade ออกก่อน (เดิมเนื้อหาที่เห็นอยู่จางหายก่อนเล่น)
+  - Focus ของช่องกรอก: ขอบ 1px เปลี่ยนเป็นสีหลักอย่างเดียว ไม่มี ring (ผู้ใช้ต้องการแบบนี้ เดิม ring 2px รวมขอบดูเป็นแถบหนา) ส่วนปุ่ม/checkbox ยังใช้ ring เดิม
+  - ปุ่มที่ disabled เป็นสีเทาจาง (`button-disabled-bg` / `-color`) ทุก severity และทุกแบบ ส่วนปุ่มที่กำลังโหลดยังเป็นสีเดิมแบบจางลง
+  - ปุ่มของ DatePicker กว้างเท่า addon ของ InputGroup (classic 3rem, styled 2.5rem)
+    - เดิมพยายามให้เป็นสี่เหลี่ยมจัตุรัสด้วย `aspect-ratio`
+    - แต่ใน flex ที่ยืดความสูง aspect-ratio ไม่ทำงาน ปุ่มจึงแคบ 35px บนช่องสูง 40px
+- **ใหม่:**
+  - ProgressBar รับ `max` (นับจำนวน `1,000 / 2,500 รายการ`), `text` และ template `#content`
+  - MeterGroup (`wiratheme/metergroup`) ครบ v1/v2/v3
+  - Glass เป็นของ v3 เท่านั้น: preset ไม่อยู่ใน `wiratheme/presets` ของ v1/v2 และ `variant="glass"` ของ Card แสดงเป็นการ์ดปกติใน v1/v2
+- **ชื่อ preset เป็นของเราเอง** (ผู้ใช้ไม่อยากใช้ชื่อที่ดูลอกมา) ชื่อไทยตามความหมาย:
+
+  | ชื่อเดิม (แนวเดียวกับ) | ชื่อใหม่ | ความหมาย |
+  |---|---|---|
+  | Aura | `mali` มะลิ | เรียบ สะอาด (ค่าเริ่มต้น v2/v3) |
+  | Lara / `lara-light-*`, `lara-dark-*` | `sila` ศิลา / `sila-light-*`, `sila-dark-*` | หนักแน่น ตัวหนา (ค่าเริ่มต้น v1 `sila-light-teal`) |
+  | Nora | `phet` เพชร | คม ชัด |
+  | Saga / `saga-*` | `arun-*` อรุณ | สว่าง |
+  | Vela / `vela-*` | `sayan-*` สายัณห์ | มืดโทนน้ำเงิน |
+  | Arya / `arya-*` | `ratri-*` ราตรี | มืดโทนเทา |
+  | Material / `md-*` | คงเดิม | ชื่อ design system ของ Google |
+
+  - ใช้ชื่อใหม่ทั้งใน API (`Mali`, `Sila`, `SilaClassic` …), ไฟล์ธีม และเว็บ
+  - `ng add --theme` ยังรับชื่อเดิมได้ เพื่อให้ทีมที่ย้ายมาพิมพ์ชื่อที่คุ้นได้
+- **สีสถานะแยกตาม preset** (ผู้ใช้ต้องการให้เปลี่ยนธีมแล้วโทนเปลี่ยนแบบ PrimeNG ที่ Aura นวลกว่า Lara):
+  - Mali นวล เย็น: emerald, sky, orange, rose, violet
+  - Sila สดแบบยุค 2019–2022: `#22c55e`, `#3b82f6`, amber, `#ef4444`, `#a855f7` และปุ่ม secondary สีเทาอมฟ้าทึบตัวอักษรขาว
+  - Phet เข้มขึ้นหนึ่งขั้นให้คม
+  - Material ใช้ชุดสีของ Material Design
+- **สไตล์โค้ดตัวอย่างบนเว็บ:** ตามโค้ดในโปรเจคของทีม (สำรวจ 21 แอป)
+  - ทุกรุ่น:
+    - boolean เขียน `[modal]="true"`
+    - ค่าคงที่เป็น attribute ธรรมดา
+    - `<wt-button (onClick)>` และ `[style]="{ width: '480px' }"`
+  - v1/v2: `wtTemplate="footer"` กับ `*ngIf`
+  - v3: `#footer` กับ `@if`
 
 ---
 
@@ -614,7 +836,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 1. **License (ตัดสินแล้ว):** MIT ใช้ฟรีทุกรุ่นแบบ PrimeNG ยุคเดิม ไม่มี license ขายและไม่มีรุ่น LTS แบบเสียเงิน (ไฟล์ `LICENSE` ที่ root ถูก copy เข้าทุกแพ็กเกจ) ส่วนช่องทาง publish ยังเหลือเลือกระหว่าง npm สาธารณะ (`wiratheme` ยังว่าง) ซึ่งเข้ากับ MIT ที่สุด หรือ private registry
 8. **Figma UI Kit (วางแผนแล้ว):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
 2. **โดเมนของเว็บแนะนำ** เช่น `wiratheme.wirabyte.com` และ host ที่ไหน (มีโปรเจค NodeJS Web Hosting อยู่แล้ว หรือใช้ Cloudflare Pages)
-3. **PrimeFlex:** ยังใช้ต่อไป (แนะนำแบบนี้ในช่วงแรก) หรือจะทำ utility ของ WiraTheme ที่ใช้แทนได้ในภายหลัง
+3. **PrimeFlex (ตัดสินแล้ว):** ทำ utility ของ WiraTheme เองในตัว (`wiratheme/utils`, 6.11) ชื่อ class เดิม เปิด/ปิดได้
 4. **Icon:** พึ่ง primeicons/Font Awesome ต่อไป หรือทำ `@wiratheme/icons` (ตอนนี้ icon ที่ใช้ภายใน component เป็น SVG inline จึงไม่บังคับ dependency)
 5. **ชื่อและเอกลักษณ์ของ preset** (Wira / Lanna / Siam / …) และจะใช้ Kanit เป็นฟอนต์เริ่มต้นไหม
 6. **ที่เก็บธีมใน Designer:** เก็บในเครื่องอย่างเดียว (localStorage + ไฟล์) หรือผูกบัญชีผู้ใช้เพื่อเก็บบน server

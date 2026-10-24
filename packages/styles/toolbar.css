@@ -1,0 +1,47 @@
+/* wt-toolbar. Shared by wiratheme v1, v2 and v3. Start / center / end groups that wrap onto new lines
+   on narrow screens instead of overflowing. */
+@layer wiratheme.components {
+  wt-toolbar {
+    display: block;
+  }
+  .wt-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: var(--wt-toolbar-padding);
+    border: 1px solid var(--wt-border);
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-toolbar-bg);
+    color: var(--wt-text);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+  }
+  .wt-toolbar-start,
+  .wt-toolbar-center,
+  .wt-toolbar-end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  /* Buttons inside the wrappers apps project (<div wtToolbarStart>) keep the toolbar's spacing. */
+  .wt-toolbar-start > [wtToolbarStart]:has(> wt-button, > button, > a, > .wt-btn),
+  .wt-toolbar-center > [wtToolbarCenter]:has(> wt-button, > button, > a, > .wt-btn),
+  .wt-toolbar-end > [wtToolbarEnd]:has(> wt-button, > button, > a, > .wt-btn) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .wt-toolbar-start:empty,
+  .wt-toolbar-center:empty,
+  .wt-toolbar-end:empty {
+    display: none;
+  }
+  .wt-toolbar-end {
+    margin-left: auto;
+  }
+}

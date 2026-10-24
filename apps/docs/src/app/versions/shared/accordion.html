@@ -1,0 +1,52 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-accordion id="d-accordion" [(activeIndex)]="open">
+          <wt-accordion-tab header="การจัดส่ง">จัดส่งภายใน 2 วันทำการ</wt-accordion-tab>
+          <wt-accordion-tab header="การคืนสินค้า">คืนได้ภายใน 30 วัน</wt-accordion-tab>
+          <wt-accordion-tab header="การชำระเงิน">บัตร โอนเงิน หรือ QR</wt-accordion-tab>
+        </wt-accordion>
+        <span class="docs-demo-output">activeIndex: <code id="d-accordion-value">{{ open | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="multiple" [section]="sec['multiple']">
+      <docs-demo [html]="code['multiple']" [ts]="ts['multiple']" layout="stack">
+        <wt-accordion
+          id="d-accordion-multi"
+          [multiple]="true"
+          [(activeIndex)]="openList"
+          (onOpen)="log('open', $event.index)"
+          (onClose)="log('close', $event.index)"
+        >
+          <wt-accordion-tab header="ข้อมูลทั่วไป">ชื่อ อีเมล และเบอร์โทร</wt-accordion-tab>
+          <wt-accordion-tab header="ที่อยู่">ที่อยู่จัดส่งและที่อยู่ออกใบกำกับภาษี</wt-accordion-tab>
+          <wt-accordion-tab header="การแจ้งเตือน">อีเมลและ SMS</wt-accordion-tab>
+        </wt-accordion>
+        <span class="docs-demo-output">
+          activeIndex: <code id="d-accordion-multi-value">{{ openList | json }}</code> · event: <code id="d-accordion-event">{{ lastEvent || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="selected" [section]="sec['selected']">
+      <docs-demo [html]="code['selected']" [ts]="ts['selected']" layout="stack">
+        <wt-accordion id="d-accordion-selected">
+          <wt-accordion-tab header="รายละเอียด" [(selected)]="detailsOpen">สั่งซื้อเมื่อ 12 มี.ค. · ชำระแล้ว</wt-accordion-tab>
+          <wt-accordion-tab header="ประวัติ (ต้องมีสิทธิ์)" [disabled]="true">ไม่แสดง</wt-accordion-tab>
+        </wt-accordion>
+        <div class="docs-demo-actions">
+          <wt-button id="d-open-details" label="เปิดรายละเอียด" size="small" severity="secondary" (onClick)="detailsOpen = true"></wt-button>
+          <span class="docs-demo-output">selected: <code id="d-details-value">{{ detailsOpen }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+  </ng-template>
+</docs-component-page>

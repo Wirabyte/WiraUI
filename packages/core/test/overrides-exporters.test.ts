@@ -32,7 +32,7 @@ describe('overrides', () => {
   it('only emits the tokens an override touches', () => {
     const t = overridesToTokens(defineOverrides({ semantic: { primary: palette('#2563eb') }, components: { card: { bodyGap: '0px' } } }));
     expect(t.light['primary-500']).toBe('#2563eb');
-    expect(t.light['primary-contrast']).toBe('#ffffff');
+    expect(t.light['primary-contrast-auto']).toBe('#ffffff');
     expect(t.light['card-body-gap']).toBe('0px');
     expect(t.light['surface-0']).toBeUndefined();
     expect(t.light['primary-color']).toBeUndefined();
@@ -45,8 +45,10 @@ describe('overrides', () => {
     });
     expect(t.light['surface-950']).toBe('#09090b');
     expect(t.light['font-family']).toBe("'Prompt', sans-serif");
-    expect(t.light['radius-lg']).toBe('15px');
-    expect(t.light['density-row-height']).toBe('36px');
+    expect(t.light['radius-md']).toBe('10px');
+    expect(t.light['radius-lg']).toBe('13px');
+    expect(t.light['density']).toBe('0.8');
+    expect(t.light['font-size']).toBe('15px');
     expect(t.light['button-font-weight']).toBe('600');
     expect(t.light['tag-radius']).toBe('var(--wt-radius-full)');
   });
@@ -88,7 +90,7 @@ describe('exporters', () => {
 
   it('writes CSS with the layer order, theme-source marker and dark block', () => {
     const css = toCSS(defaults(), { date });
-    expect(css).toContain('@layer wiratheme.tokens, wiratheme.components, wiratheme.overrides;');
+    expect(css).toContain('@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;');
     expect(css).toContain('--wt-theme-source: css;');
     expect(css).toContain(':root.wt-dark {');
   });
@@ -112,10 +114,10 @@ describe('exporters', () => {
   });
 
   it('only lists changed values in the TS overrides file', () => {
-    expect(toTSOverrides(defaults('siam'), { date })).toContain('ยังไม่มีค่าที่ต่างจาก preset Siam');
+    expect(toTSOverrides(defaults('siam'), { date })).toContain('nothing differs from the Siam preset yet');
     const ts = toTSOverrides(normalize({ preset: 'wira', surface: 'zinc' }), { date });
     expect(ts).toContain("surface: '{zinc}',");
     expect(ts).toContain("import { defineOverrides } from 'wiratheme/config';");
-    expect(computeTokens(defaults()).light['surface-950']).toBe('#020617');
+    expect(computeTokens(defaults()).light['surface-950']).toBe('#070b14');
   });
 });

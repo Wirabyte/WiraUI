@@ -1,69 +1,9 @@
-/* Docs site chrome. The WiraTheme tokens come from wiratheme/themes/wira/wira.css (angular.json). */
-html,
-body {
-  margin: 0;
-  background: var(--wt-ground);
-  color: var(--wt-text);
-  font-family: var(--wt-font-family);
-  font-size: var(--wt-font-size);
-  line-height: var(--wt-line-height);
-}
-
-.demo-page {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.demo-page h1,
-.demo-page h2 {
-  margin: 0;
-}
-.demo-eyebrow {
-  margin: 0;
-  color: var(--wt-primary-color);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.demo-lead,
-.demo-host {
-  margin: 0;
-  color: var(--wt-text-muted);
-}
-.demo-box {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding: 20px;
-  background: var(--wt-card-bg);
-  border: 1px solid var(--wt-border);
-  border-radius: var(--wt-radius-lg);
-}
-.demo-fields {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: 8px;
-}
-.demo-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  grid-column: 1 / -1;
-}
-.demo-json {
-  margin: 0;
-  font-size: 12px;
-  color: var(--wt-text-muted);
-}
-.demo-code {
-  margin: 0;
-  padding: 14px 16px;
-  overflow-x: auto;
-  background: var(--wt-surface-900);
-  color: var(--wt-surface-50);
-  border-radius: var(--wt-radius-md);
-  font-size: 0.85em;
-  line-height: 1.6;
-}
+/* Docs site styles. WiraTheme tokens (--wt-*) come from the preset of the version on screen,
+   applied at run time by that version's WtThemeService (see core/version-theme.ts). */
+@use 'styles/tokens';
+@use 'styles/base';
+@use 'styles/layout';
+@use 'styles/content';
+@use 'styles/code';
+@use 'styles/overlays';
+@use 'styles/landing';

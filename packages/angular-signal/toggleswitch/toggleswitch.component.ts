@@ -11,12 +11,18 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
 import { WtToggleSwitchChangeEvent } from './toggleswitch.types';
 
-/** On/off switch for ngModel and reactive forms (PrimeNG's ToggleSwitch / InputSwitch), with an optional `label`. */
+/** On/off switch for ngModel and reactive forms (also known as InputSwitch), with an optional `label`. */
 @Component({
   selector: 'wt-toggleswitch',
+  host: {
+    '[class.wt-toggleswitch-sm]': "sizeKey() === 'sm'",
+    '[class.p-toggleswitch-sm]': "sizeKey() === 'sm'",
+    '[class.wt-toggleswitch-lg]': "sizeKey() === 'lg'",
+    '[class.p-toggleswitch-lg]': "sizeKey() === 'lg'",
+  },
   standalone: true,
   templateUrl: './toggleswitch.component.html',
   styleUrl: './toggleswitch.css',
@@ -31,6 +37,9 @@ export class WtToggleSwitch implements ControlValueAccessor {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
+  /** `small` or `large` (also `sm` / `lg`). */
+  readonly size = input<WtSize>();
+  readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly trueValue = input<unknown>(true);
   readonly falseValue = input<unknown>(false);
   readonly ariaLabel = input<string>();

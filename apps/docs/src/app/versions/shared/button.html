@@ -1,0 +1,109 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-button label="บันทึก" icon="pi pi-save"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="action" [section]="sec['action']">
+      <docs-demo [html]="code['action']" [ts]="ts['action']">
+        <wt-button id="demo-save" label="ส่งข้อมูล" icon="pi pi-send" [action]="save"></wt-button>
+        <span class="docs-demo-output">
+          @if (en()) {
+            Sent <b id="demo-saved">{{ saved }}</b> {{ saved === 1 ? 'time' : 'times' }}
+          } @else {
+            ส่งแล้ว <b id="demo-saved">{{ saved }}</b> ครั้ง
+          }
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="severity" [section]="sec['severity']">
+      <docs-demo [html]="code['severity']">
+        <wt-button label="Primary"></wt-button>
+        <wt-button label="Secondary" severity="secondary"></wt-button>
+        <wt-button label="Success" severity="success"></wt-button>
+        <wt-button label="Info" severity="info"></wt-button>
+        <wt-button label="Warn" severity="warn"></wt-button>
+        <wt-button label="Help" severity="help"></wt-button>
+        <wt-button label="Danger" severity="danger"></wt-button>
+        <wt-button label="Contrast" severity="contrast"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']">
+        <wt-button label="Outlined" [outlined]="true"></wt-button>
+        <wt-button label="Outlined" severity="secondary" [outlined]="true"></wt-button>
+        <wt-button label="Text" [text]="true"></wt-button>
+        <wt-button label="Text" severity="danger" [text]="true"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="shape" [section]="sec['shape']">
+      <docs-demo [html]="code['shape']">
+        <wt-button label="Raised" [raised]="true"></wt-button>
+        <wt-button label="Rounded" [rounded]="true"></wt-button>
+        <wt-button label="Rounded" severity="secondary" [rounded]="true" [outlined]="true"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-button id="d-btn-sm" label="เล็ก" size="small"></wt-button>
+        <wt-button id="d-btn-md" label="ปกติ"></wt-button>
+        <wt-button id="d-btn-lg" label="ใหญ่" size="large"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="directive" [section]="sec['directive']">
+      <docs-demo [html]="code['directive']">
+        <button id="d-btn-directive" wtButton type="button" label="บันทึก" icon="pi pi-save" (click)="clicks = clicks + 1"></button>
+        <button wtButton type="button" label="ลบ" icon="pi pi-trash" severity="danger" [outlined]="true"></button>
+        <a wtButton href="#directive" label="ดูคำสั่งซื้อ" severity="secondary" [text]="true"></a>
+        <span class="docs-demo-output">click: <code id="d-btn-directive-count">{{ clicks }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="styleclass" [section]="sec['styleclass']">
+      <docs-demo [html]="code['styleclass']">
+        <wt-button id="d-btn-styleclass" label="ลบ" icon="pi pi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
+        <button wtButton type="button" label="ยกเลิก" class="p-button-text p-button-secondary"></button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="icons" [section]="sec['icons']">
+      <docs-demo [html]="code['icons']">
+        <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
+        <wt-button label="ส่ง" icon="pi pi-send" iconPos="right"></wt-button>
+        <wt-button icon="pi pi-search" ariaLabel="ค้นหา"></wt-button>
+        <wt-button icon="pi pi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="badge" [section]="sec['badge']">
+      <docs-demo [html]="code['badge']">
+        <wt-button label="แจ้งเตือน" icon="pi pi-bell" badge="3"></wt-button>
+        <wt-button label="ข้อความ" severity="secondary" badge="12"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="loading" [section]="sec['loading']">
+      <docs-demo [html]="code['loading']">
+        <wt-button label="กำลังบันทึก" [loading]="true"></wt-button>
+        <wt-button label="ปิดอยู่" [disabled]="true"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="fluid" [section]="sec['fluid']">
+      <docs-demo [html]="code['fluid']" layout="stack">
+        <wt-button label="เข้าสู่ระบบ" [fluid]="true"></wt-button>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

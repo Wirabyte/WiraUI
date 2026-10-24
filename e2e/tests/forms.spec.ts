@@ -18,11 +18,19 @@ test.beforeEach(async ({ page }) => {
   await expect(page.locator('#forms-gallery wt-card').first()).toBeVisible();
 });
 
-test('forms gallery renders the same in every version (light and dark)', async ({ page }) => {
-  await expect(page.locator('#forms-gallery')).toHaveScreenshot('forms-gallery.png');
+test("forms gallery in each major's own look (light and dark)", async ({ page }, info) => {
+  await expect(page.locator('#forms-gallery')).toHaveScreenshot(`forms-gallery-${info.project.name}.png`);
   await page.locator('#toggle-dark button').click();
   await expect(page.locator('html')).toHaveClass(/wt-dark/);
-  await expect(page.locator('#forms-gallery')).toHaveScreenshot('forms-gallery-dark.png');
+  await expect(page.locator('#forms-gallery')).toHaveScreenshot(`forms-gallery-${info.project.name}-dark.png`);
+});
+
+// One stylesheet serves every major: with the same preset, v1 and v2 must match the baseline v3 writes.
+test('forms gallery renders the same in every version once they share a preset', async ({ page }) => {
+  await page.locator('#use-siam button').click();
+  await expect.poll(() => colorOf(page, 'var(--wt-primary-color)')).toBe('rgb(225, 29, 72)');
+  await page.mouse.move(0, 0);
+  await expect(page.locator('#forms-gallery')).toHaveScreenshot('forms-gallery-siam.png');
 });
 
 test('card shows title, subtitle, actions, footer, and a skeleton while loading', async ({ page }) => {

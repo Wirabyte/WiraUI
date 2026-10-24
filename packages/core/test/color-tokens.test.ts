@@ -56,8 +56,8 @@ describe('computeTokens', () => {
   const t = computeTokens(defaults('wira'));
 
   it('emits primitives as hex and derived tokens as var() references', () => {
-    expect(t.light['primary-500']).toBe('#00a86b');
-    expect(t.light['surface-950']).toBe('#020617');
+    expect(t.light['primary-500']).toBe('#1e7ae0');
+    expect(t.light['surface-950']).toBe('#070b14');
     expect(t.light['primary-color']).toBe('var(--wt-primary-500)');
     expect(t.dark['primary-color']).toBe('var(--wt-primary-400)');
     expect(t.light['card-radius']).toBe('var(--wt-radius-lg)');
@@ -66,17 +66,24 @@ describe('computeTokens', () => {
   it('has a full palette and a contrast token for every status colour', () => {
     for (const k of SEMANTIC_KEYS) {
       for (const s of SHADES) expect(t.light[`${k}-${s}`]).toMatch(/^#[0-9a-f]{6}$/);
-      expect(t.light[`${k}-contrast`]).toBeDefined();
-      expect(t.dark[`${k}-contrast`]).toBeDefined();
+      expect(t.light[`${k}-contrast`]).toBe(`var(--wt-${k}-contrast-auto)`);
+      expect(t.light[`${k}-contrast-auto`]).toBeDefined();
+      expect(t.dark[`${k}-contrast-auto`]).toBeDefined();
     }
   });
 
-  it('picks the readable text colour for the primary button', () => {
+  it('picks the readable text colour for the primary button in the Wira family', () => {
     const yellow = computeTokens(normalize({ preset: 'wira', primary: '#eab308' }));
-    expect(yellow.light['primary-contrast']).toBe('var(--wt-surface-950)');
+    expect(yellow.light['primary-contrast']).toBe('var(--wt-primary-contrast-auto)');
+    expect(yellow.light['primary-contrast-auto']).toBe('var(--wt-surface-950)');
     const blue = computeTokens(normalize({ preset: 'wira', primary: '#1d4ed8' }));
-    expect(blue.light['primary-contrast']).toBe('#ffffff');
+    expect(blue.light['primary-contrast-auto']).toBe('#ffffff');
     expect(contrast('#ffffff', '#1d4ed8')).toBeGreaterThan(6);
+  });
+
+  it('keeps white text on PrimeNG-look buttons whatever the colour, unless primaryContrast says otherwise', () => {
+    expect(computeTokens(normalize({ preset: 'mali', primary: '#eab308' })).light['primary-contrast']).toBe('#ffffff');
+    expect(computeTokens(normalize({ preset: 'arun', primary: '#ffc107', primaryContrast: '#212529' })).light['primary-contrast']).toBe('#212529');
   });
 
   it('uses a literal for component values set by the user and var() otherwise', () => {
@@ -107,7 +114,7 @@ describe('tokensToCss', () => {
     const css = tokensToCss(t, { darkMode: 'class' });
     expect(css.startsWith('@layer wiratheme.tokens {')).toBe(true);
     expect(css).toContain(':root.wt-dark {');
-    expect(css).toContain('--wt-primary-500: #00a86b;');
+    expect(css).toContain('--wt-primary-500: #1e7ae0;');
   });
   it('supports media-query dark mode, none, and a custom selector without a layer', () => {
     expect(tokensToCss(t, { darkMode: 'media' })).toContain('@media (prefers-color-scheme: dark)');

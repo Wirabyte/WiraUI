@@ -1,0 +1,45 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <textarea wtTextarea [(ngModel)]="note" rows="3" placeholder="ข้อความถึงทีมงาน"></textarea>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="autoresize" [section]="sec['autoresize']">
+      <docs-demo [html]="code['autoresize']" layout="stack">
+        <textarea id="d-note" wtTextarea [autoResize]="true" rows="1" [(ngModel)]="address" placeholder="ที่อยู่สำหรับจัดส่ง (ขยายตามข้อความ)"></textarea>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-fields docs-demo-fields-1">
+          <textarea id="r-details" wtTextarea [autoResize]="true" formControlName="details" rows="2" placeholder="รายละเอียดปัญหา (อย่างน้อย 10 ตัวอักษร)"></textarea>
+        </form>
+        <div class="docs-demo-actions">
+          <wt-button id="r-fill" [label]="en() ? 'Fill 3 lines' : 'ใส่ข้อความ 3 บรรทัด'" size="small" severity="secondary" (onClick)="fill()"></wt-button>
+          <span class="docs-demo-output">valid: <b id="r-valid">{{ form.valid }}</b></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']">
+        <textarea wtTextarea wtSize="small" rows="2" placeholder="Small"></textarea>
+        <textarea wtTextarea variant="filled" rows="2" placeholder="Filled"></textarea>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']">
+        <textarea wtTextarea rows="2" [disabled]="true" aria-label="disabled">ปิดอยู่</textarea>
+        <textarea wtTextarea rows="2" [invalid]="true" placeholder="Invalid"></textarea>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

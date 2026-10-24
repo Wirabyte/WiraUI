@@ -1,0 +1,83 @@
+<wt-dialog
+  [visible]="visible"
+  (visibleChange)="dialogVisible($event)"
+  (onHide)="dialogHidden()"
+  [header]="headerText"
+  [closable]="isClosable"
+  [closeOnEscape]="escapeCloses"
+  [dismissableMask]="maskCloses"
+  [blockScroll]="scrollBlocked"
+  [focusOnShow]="focus !== 'none'"
+  [style]="dialogStyle"
+  [styleClass]="'wt-confirmdialog p-confirm-dialog ' + (c.styleClass || styleClass || '')"
+  [maskStyleClass]="maskStyleClass"
+  [breakpoints]="breakpoints"
+  [position]="dialogPosition"
+  [closeAriaLabel]="closeAriaLabel"
+  [templateHeader]="headerTemplate ? headerWrap : null"
+  [templateHeadless]="headlessTemplate ? headlessWrap : null"
+  [templateFooter]="footer"
+>
+  <!-- Only with a confirmation: the content of wt-dialog is created with the page, before any confirm() call. -->
+  <div *ngIf="confirmation" class="wt-confirmdialog-body">
+    <ng-container *ngIf="messageTemplate; else plain">
+      <ng-container *ngTemplateOutlet="messageTemplate; context: { $implicit: confirmation }"></ng-container>
+    </ng-container>
+    <ng-template #plain>
+      <span *ngIf="builtInIcon" class="wt-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="'wt-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngSwitch]="builtInIcon">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path *ngSwitchCase="'success'" d="M7.5 12.5l3 3 6-6.5"></path>
+          <path *ngSwitchCase="'error'" d="M9 9l6 6M15 9l-6 6"></path>
+          <path *ngSwitchCase="'warning'" d="M12 7v6M12 16.5v.5"></path>
+          <path *ngSwitchCase="'info'" d="M12 11v6M12 7.5v.5"></path>
+          <path *ngSwitchCase="'question'" d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1.9-1.1 1.8M12 16.5v.5"></path>
+        </svg>
+      </span>
+      <i *ngIf="iconClass && !builtInIcon" class="wt-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="iconClass"></i>
+      <span class="wt-confirmdialog-message p-confirm-dialog-message">{{ messageText }}</span>
+    </ng-template>
+  </div>
+</wt-dialog>
+
+<ng-template #headerWrap>
+  <ng-container *ngTemplateOutlet="headerTemplate; context: { $implicit: confirmation }"></ng-container>
+</ng-template>
+<ng-template #headlessWrap>
+  <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: confirmation }"></ng-container>
+</ng-template>
+<ng-template #footer>
+  <ng-container *ngIf="footerTemplate; else buttons">
+    <ng-container *ngTemplateOutlet="footerTemplate; context: { $implicit: confirmation }"></ng-container>
+  </ng-container>
+  <ng-template #buttons>
+    <button
+      *ngIf="showReject"
+      type="button"
+      [class]="rejectClasses"
+      [attr.aria-label]="rejectAriaLabel || null"
+      [attr.autofocus]="focus === 'reject' ? '' : null"
+      (click)="reject()"
+    >
+      <i *ngIf="rejectIconClass; else timesSvg" [class]="rejectIconClass + ' wt-btn-icon'"></i>
+      <ng-template #timesSvg>
+        <svg class="wt-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+      </ng-template>
+      <span class="wt-btn-label p-button-label">{{ rejectText }}</span>
+    </button>
+    <button
+      *ngIf="showAccept"
+      type="button"
+      [class]="acceptClasses"
+      [attr.aria-label]="acceptAriaLabel || null"
+      [attr.autofocus]="focus === 'accept' ? '' : null"
+      (click)="accept()"
+    >
+      <i *ngIf="acceptIconClass; else checkSvg" [class]="acceptIconClass + ' wt-btn-icon'"></i>
+      <ng-template #checkSvg>
+        <svg class="wt-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"></path></svg>
+      </ng-template>
+      <span class="wt-btn-label p-button-label">{{ acceptText }}</span>
+    </button>
+  </ng-template>
+</ng-template>

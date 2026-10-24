@@ -1,0 +1,158 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Getting Started</p>
+  <h1 class="docs-h1">{{ en() ? 'Introduction' : 'บทนำ' }}</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      WiraTheme is a set of UI components and a theming system built by Wirabyte. These docs cover the Angular packages (React and Vue are
+      coming). Familiar input names make moving an existing app easy, and the things Thai apps need are built in.
+    </p>
+  } @else {
+    <p class="docs-lead">
+      WiraTheme คือชุด UI component และระบบธีมที่ Wirabyte เขียนขึ้นเอง เอกสารนี้เป็นของแพ็กเกจ Angular (React และ Vue กำลังตามมา)
+      ชื่อ input คุ้นมือ ย้ายแอปเดิมมาใช้ได้ง่าย และมีของที่งานไทยต้องใช้อยู่ในตัว
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip">{{ en() ? 'MIT · free' : 'MIT · ใช้ฟรี' }}</span>
+  </div>
+</header>
+
+<div class="docs-note">
+  <docs-icon name="info"></docs-icon>
+  @if (en()) {
+    <p>
+      You are reading the docs for <b>wiratheme&#64;{{ v.major }}</b> (Angular {{ v.angular }}, {{ v.look | loc }}). On another Angular
+      version, switch with the dropdown in the top bar; you stay on the same page.
+    </p>
+  } @else {
+    <p>
+      เอกสารนี้เป็นของ <b>wiratheme&#64;{{ v.major }}</b> สำหรับ Angular {{ v.angular }} ({{ v.look | loc }})
+      ถ้าโปรเจคใช้ Angular รุ่นอื่น เปลี่ยนรุ่นได้จาก dropdown มุมขวาบน หน้านี้จะเปลี่ยนตามโดยไม่หลุดจากหน้าเดิม
+    </p>
+  }
+</div>
+
+<docs-section id="why" [title]="{ th: 'ทำไมต้อง WiraTheme', en: 'Why WiraTheme' }">
+  <div class="docs-feature-list">
+    @if (en()) {
+      <div>
+        <b>Move an existing app without rewriting CSS</b>
+        <p>
+          Familiar inputs and outputs (<code>label</code>, <code>severity</code>, <code>(onClick)</code> …), the <code>p-*</code> classes and theme
+          variables your CSS already targets, and side-by-side use while you move page by page.
+        </p>
+      </div>
+      <div>
+        <b>Thai by default</b>
+        <p>Thai locale and the Buddhist calendar built in, Thai fonts to choose from, and a line height that keeps Thai vowels and tone marks intact.</p>
+      </div>
+      <div>
+        <b>One set of CSS variables</b>
+        <p>Write themes in SCSS, CSS or TypeScript. <code>&#64;layer</code> decides what wins, so <code>!important</code> and <code>::ng-deep</code> can go.</p>
+      </div>
+      <div>
+        <b>NgModule and standalone in every version</b>
+        <p>Most of our apps are still NgModule-based, so every component ships both <code>WtXxxModule</code> and <code>WtXxx</code>, from v1 on.</p>
+      </div>
+    } @else {
+      <div>
+        <b>ย้ายแอปเดิมได้โดยไม่ต้องรื้อ CSS</b>
+        <p>
+          ชื่อ input / output คุ้นมือ (<code>label</code>, <code>severity</code>, <code>(onClick)</code> …) template มีคลาส <code>p-*</code> และธีมมีตัวแปรชื่อเดิมที่ CSS
+          ของแอปอ่านอยู่ และใช้คู่กับของเดิมในแอปเดียวกันได้ระหว่างย้ายทีละหน้า
+        </p>
+      </div>
+      <div>
+        <b>ไทยเป็นค่าเริ่มต้น</b>
+        <p>locale <code>th</code> และปฏิทิน พ.ศ. ในตัว เลือกฟอนต์ไทยได้ตอนติดตั้ง และ line-height ที่สระบนกับวรรณยุกต์ไม่ถูกตัด ไม่ต้องเขียน <code>setTranslation</code> ซ้ำทุก layout</p>
+      </div>
+      <div>
+        <b>ธีมเป็น CSS variables ชุดเดียว</b>
+        <p>เขียนธีมได้ทั้ง SCSS, CSS และ TypeScript ลำดับการชนะคุมด้วย <code>&#64;layer</code> จึงเลิกใช้ <code>!important</code> กับ <code>::ng-deep</code> ได้</p>
+      </div>
+      <div>
+        <b>NgModule และ standalone ทุกรุ่น</b>
+        <p>แอปของเราส่วนใหญ่ยังเป็น NgModule ทุก component จึงมีทั้ง <code>WtXxxModule</code> และ <code>WtXxx</code> ตั้งแต่ v1</p>
+      </div>
+    }
+  </div>
+</docs-section>
+
+<docs-section id="versions" [title]="{ th: 'รุ่นและ Angular', en: 'Versions and Angular' }">
+  @if (en()) {
+    <p>WiraTheme has one major per Angular range. Each is locked to its range, and <code>ng add wiratheme</code> picks the right one for you.</p>
+  } @else {
+    <p>WiraTheme แยก major ตามช่วง Angular แต่ละรุ่นถูกล็อกกับช่วงของตัวเอง ติดตั้งข้ามช่วงไม่ได้ และ <code>ng add wiratheme</code> เลือกรุ่นที่ถูกให้เอง</p>
+  }
+  <div class="docs-table-wrap">
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>{{ en() ? 'Package' : 'แพ็กเกจ' }}</th>
+          <th>Angular</th>
+          <th>{{ en() ? 'Themes' : 'ธีม' }}</th>
+          <th>API</th>
+          <th>{{ en() ? 'Status' : 'สถานะ' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (x of versions; track x.id) {
+          <tr [class.docs-row-current]="x.id === v.id">
+            <td><code>wiratheme&#64;{{ x.major }}</code></td>
+            <td>{{ x.angular }}</td>
+            <td>{{ x.look | loc }}</td>
+            <td><code>{{ x.api }}</code></td>
+            <td><span class="docs-status" [attr.data-status]="x.status">{{ x.status }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</docs-section>
+
+<docs-section id="components" [title]="{ th: 'Component ที่มีแล้ว', en: 'Available components' }">
+  @if (en()) {
+    <p>
+      All of them ship in v1, v2 and v3 and work with <code>ngModel</code>, <code>formControlName</code>, <code>formControl</code> and
+      <code>disable()</code>, turning red on their own once invalid and touched.
+    </p>
+  } @else {
+    <p>ทุกตัวมีครบใน v1, v2 และ v3 ใช้ได้ทั้ง <code>ngModel</code>, <code>formControlName</code>, <code>formControl</code> และ <code>disable()</code> และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้ว</p>
+  }
+  <div class="docs-link-grid">
+    @for (c of components; track c.id) {
+      @if (c.soon) {
+        <span class="docs-link-card docs-link-card-soon">
+          <b>{{ c.title | loc }}</b>
+          <span>{{ 'nav.soon' | t }}</span>
+        </span>
+      } @else {
+        <a class="docs-link-card" [routerLink]="link(c.path)">
+          <b>{{ c.title | loc }}</b>
+          <span>{{ c.group.replace('Components · ', '') }}</span>
+        </a>
+      }
+    }
+  </div>
+</docs-section>
+
+<docs-section id="next" [title]="{ th: 'ขั้นต่อไป', en: 'Next steps' }">
+  <div class="docs-next-grid">
+    <a class="docs-next-card" [routerLink]="link('getting-started/installation')">
+      <docs-icon name="rocket"></docs-icon>
+      <b>{{ en() ? 'Installation' : 'ติดตั้ง' }}</b>
+      <span>{{ en() ? 'One command:' : 'คำสั่งเดียว' }} <code>ng add wiratheme</code></span>
+    </a>
+    <a class="docs-next-card" [routerLink]="link('getting-started/migration')">
+      <docs-icon name="swap"></docs-icon>
+      <b>{{ en() ? 'Migrating an existing app' : 'ย้ายโปรเจคเดิม' }}</b>
+      <span>{{ en() ? 'Keep your classes, variables and themes' : 'ใช้คลาส ตัวแปร และธีมเดิมต่อได้' }}</span>
+    </a>
+    <a class="docs-next-card" [routerLink]="link('theming/overview')">
+      <docs-icon name="palette"></docs-icon>
+      <b>Theming</b>
+      <span>token, &#64;layer, SCSS / CSS / TS</span>
+    </a>
+  </div>
+</docs-section>

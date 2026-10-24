@@ -1,0 +1,104 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <wt-inputnumber inputId="d-qty" [(ngModel)]="quantity" placeholder="จำนวน" ariaLabel="จำนวน"></wt-inputnumber>
+        <span class="docs-demo-output">quantity: <code id="d-qty-value">{{ quantity | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="typing" [section]="sec['typing']">
+      <docs-demo [html]="code['typing']">
+        <wt-inputnumber
+          inputId="d-limit"
+          [(ngModel)]="limited"
+          [min]="0"
+          [max]="200"
+          [maxFractionDigits]="1"
+          suffix=" กก."
+          placeholder="0 – 200"
+          ariaLabel="น้ำหนัก"
+        ></wt-inputnumber>
+        <wt-inputnumber inputId="d-limit-price" [(ngModel)]="limitedPrice" mode="currency" [min]="0" ariaLabel="ราคา"></wt-inputnumber>
+        <span class="docs-demo-output">weight: <code id="d-limit-value">{{ limited | json }}</code> · price: <code id="d-limit-price-value">{{ limitedPrice | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-inputnumber [(ngModel)]="sizeValue" size="small" [showButtons]="true" ariaLabel="เล็ก"></wt-inputnumber>
+        <wt-inputnumber [(ngModel)]="sizeValue" [showButtons]="true" ariaLabel="ปกติ"></wt-inputnumber>
+        <wt-inputnumber [(ngModel)]="sizeValue" size="large" [showButtons]="true" ariaLabel="ใหญ่"></wt-inputnumber>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="currency" [section]="sec['currency']">
+      <docs-demo [html]="code['currency']">
+        <wt-inputnumber inputId="d-price" [(ngModel)]="price" mode="currency" ariaLabel="ราคา"></wt-inputnumber>
+        <wt-inputnumber inputId="d-price-usd" [(ngModel)]="price" mode="currency" currency="USD" locale="en-US" ariaLabel="Price"></wt-inputnumber>
+        <span class="docs-demo-output">price: <code id="d-price-value">{{ price | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="fraction" [section]="sec['fraction']">
+      <docs-demo [html]="code['fraction']">
+        <wt-inputnumber [(ngModel)]="rate" [minFractionDigits]="2" [maxFractionDigits]="4" ariaLabel="อัตรา"></wt-inputnumber>
+        <wt-inputnumber [(ngModel)]="year" [useGrouping]="false" ariaLabel="ปี"></wt-inputnumber>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="affix" [section]="sec['affix']">
+      <docs-demo [html]="code['affix']">
+        <wt-inputnumber inputId="d-weight" [(ngModel)]="weight" suffix=" กก." [maxFractionDigits]="1" ariaLabel="น้ำหนัก"></wt-inputnumber>
+        <wt-inputnumber [(ngModel)]="discount" prefix="ลด " suffix="%" [min]="0" [max]="100" ariaLabel="ส่วนลด"></wt-inputnumber>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="buttons" [section]="sec['buttons']">
+      <docs-demo [html]="code['buttons']">
+        <wt-inputnumber id="d-seats" inputId="d-seats-input" [(ngModel)]="seats" [showButtons]="true" [min]="1" [max]="10" ariaLabel="จำนวนที่นั่ง"></wt-inputnumber>
+        <wt-inputnumber
+          id="d-volume"
+          [(ngModel)]="volume"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          [step]="0.5"
+          [min]="0"
+          [max]="5"
+          [maxFractionDigits]="1"
+          ariaLabel="ปริมาณ"
+        ></wt-inputnumber>
+        <span class="docs-demo-output">
+          seats: <code id="d-seats-value">{{ seats | json }}</code> · volume: <code id="d-volume-value">{{ volume | json }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-inputnumber inputId="r-budget" formControlName="budget" mode="currency" [fluid]="true" ariaLabel="งบประมาณ"></wt-inputnumber>
+        </form>
+        <span class="docs-demo-output">
+          value: <code id="r-budget-value">{{ form.getRawValue() | json }}</code> · valid: <code id="r-budget-valid">{{ form.valid }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']">
+        <wt-inputnumber [ngModel]="1500" [disabled]="true" ariaLabel="Disabled"></wt-inputnumber>
+        <wt-inputnumber [ngModel]="1500" [readonly]="true" ariaLabel="Readonly"></wt-inputnumber>
+        <wt-inputnumber [invalid]="true" placeholder="ต้องกรอก" ariaLabel="Invalid"></wt-inputnumber>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="helpers" [section]="sec['helpers']">
+      <docs-code [code]="helpersCode" lang="ts"></docs-code>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

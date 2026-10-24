@@ -1,0 +1,87 @@
+<span [class]="classes">
+  <button
+    *ngIf="showButtons && buttonLayout === 'horizontal'"
+    type="button"
+    class="wt-inputnumber-button p-inputnumber-button p-inputnumber-button-down p-button p-button-icon-only"
+    tabindex="-1"
+    aria-hidden="true"
+    [disabled]="isDisabled || readonly || atMin"
+    (pointerdown)="startRepeat($event, -1)"
+    (pointerup)="stopRepeat()"
+    (pointerleave)="stopRepeat()"
+    (pointercancel)="stopRepeat()"
+  >
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h10"></path></svg>
+  </button>
+  <input
+    type="text"
+    role="spinbutton"
+    class="wt-inputtext p-inputtext p-component p-element p-inputnumber-input"
+    [class.wt-inputtext-sm]="sizeKey === 'sm'"
+    [class.p-inputtext-sm]="sizeKey === 'sm'"
+    [class.wt-inputtext-lg]="sizeKey === 'lg'"
+    [class.p-inputtext-lg]="sizeKey === 'lg'"
+    [class.wt-invalid]="invalid"
+    [class.wt-filled]="value !== null"
+    [class.p-filled]="value !== null"
+    [id]="id"
+    [attr.name]="name || null"
+    [attr.inputmode]="maxDigits > 0 ? 'decimal' : 'numeric'"
+    [attr.aria-valuenow]="value"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-invalid]="invalid || null"
+    [attr.placeholder]="placeholder || null"
+    [value]="display"
+    [disabled]="isDisabled"
+    [readOnly]="readonly"
+    (focus)="focus($event)"
+    (beforeinput)="guard($any($event))"
+    (input)="typed($event)"
+    (blur)="blur($event)"
+    (keydown)="keydown($event)"
+  />
+  <span *ngIf="showButtons && buttonLayout === 'stacked'" class="wt-inputnumber-buttons p-inputnumber-button-group">
+    <button
+      type="button"
+      class="wt-inputnumber-button p-inputnumber-button p-inputnumber-button-up p-button p-button-icon-only"
+      tabindex="-1"
+      aria-hidden="true"
+      [disabled]="isDisabled || readonly || atMax"
+      (pointerdown)="startRepeat($event, 1)"
+      (pointerup)="stopRepeat()"
+      (pointerleave)="stopRepeat()"
+      (pointercancel)="stopRepeat()"
+    >
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"></path></svg>
+    </button>
+    <button
+      type="button"
+      class="wt-inputnumber-button p-inputnumber-button p-inputnumber-button-down p-button p-button-icon-only"
+      tabindex="-1"
+      aria-hidden="true"
+      [disabled]="isDisabled || readonly || atMin"
+      (pointerdown)="startRepeat($event, -1)"
+      (pointerup)="stopRepeat()"
+      (pointerleave)="stopRepeat()"
+      (pointercancel)="stopRepeat()"
+    >
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"></path></svg>
+    </button>
+  </span>
+  <button
+    *ngIf="showButtons && buttonLayout === 'horizontal'"
+    type="button"
+    class="wt-inputnumber-button p-inputnumber-button p-inputnumber-button-up p-button p-button-icon-only"
+    tabindex="-1"
+    aria-hidden="true"
+    [disabled]="isDisabled || readonly || atMax"
+    (pointerdown)="startRepeat($event, 1)"
+    (pointerup)="stopRepeat()"
+    (pointerleave)="stopRepeat()"
+    (pointercancel)="stopRepeat()"
+  >
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+  </button>
+</span>

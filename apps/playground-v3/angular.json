@@ -49,7 +49,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/theme/wiratheme.theme.css", "src/styles.css"]
+            "styles": [
+              "node_modules/wiratheme/utils/utils.css",
+              "src/theme/wiratheme.theme.css",
+              "src/styles.css"
+            ]
           },
           "configurations": {
             "production": {

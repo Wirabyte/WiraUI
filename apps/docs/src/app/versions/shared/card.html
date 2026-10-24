@@ -1,0 +1,64 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-card header="โปรไฟล์" subheader="ข้อมูลบัญชี" class="docs-demo-card">
+          <p class="docs-demo-p">สมชาย ใจดี · สมาชิกตั้งแต่ 2566 · แผน Pro</p>
+        </wt-card>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="slots" [section]="sec['slots']">
+      <docs-demo [html]="code['slots']" layout="stack">
+        <wt-card header="แผน Pro" subheader="รายเดือน" class="docs-demo-card">
+          <div wtCardHeader class="docs-demo-cover"><span>฿290 / เดือน</span></div>
+          <wt-button wtCardActions icon="pi pi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+          <p class="docs-demo-p">5 โปรเจค · พื้นที่ 50 GB · ผู้ใช้ไม่จำกัด</p>
+          <div wtCardFooter>
+            <wt-button label="อัปเกรด" size="small"></wt-button>
+            <wt-button label="รายละเอียด" size="small" severity="secondary" [text]="true"></wt-button>
+          </div>
+        </wt-card>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']" layout="grid">
+        <wt-card header="Default" [subheader]="en() ? 'Thin border, soft shadow' : 'ขอบบาง + เงาอ่อน'"></wt-card>
+        <wt-card header="Outlined" [subheader]="en() ? 'Border, no shadow' : 'มีขอบ ไม่มีเงา'" variant="outlined"></wt-card>
+        <wt-card header="Elevated" [subheader]="en() ? 'Shadow, no border' : 'ไม่มีขอบ เงาชัด'" variant="elevated"></wt-card>
+        @if (glass) {
+          <div class="docs-demo-backdrop">
+            <wt-card header="Glass" [subheader]="en() ? 'Frosted glass' : 'พื้นกระจก'" variant="glass"></wt-card>
+          </div>
+        }
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="advanced" [section]="sec['advanced']">
+      <docs-demo [html]="code['advanced']" layout="stack">
+        <wt-card id="d-card-advanced" header="ทริปทะเลสาบยามเย็น" subheader="3 วัน 2 คืน · เชียงใหม่" class="docs-card-advanced">
+          <img wtCardHeader src="samples/card-cover.svg" alt="ทะเลสาบยามเย็น" class="docs-card-cover" />
+          <p class="docs-demo-p">พักริมทะเลสาบ ล่องเรือชมพระอาทิตย์ตก และอาหารเย็นจากฟาร์มท้องถิ่น</p>
+          <div wtCardFooter class="docs-card-actions">
+            <wt-button label="ยกเลิก" severity="secondary" [outlined]="true" [fluid]="true"></wt-button>
+            <wt-button label="บันทึก" [fluid]="true"></wt-button>
+          </div>
+        </wt-card>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="loading" [section]="sec['loading']">
+      <docs-demo [html]="code['loading']" layout="stack">
+        <wt-toggleswitch id="d-loading" [(ngModel)]="loading" label="loading"></wt-toggleswitch>
+        <wt-card header="ยอดขายเดือนนี้" [loading]="loading" class="docs-demo-card">
+          <p class="docs-demo-p">฿128,400 จาก 312 คำสั่งซื้อ</p>
+        </wt-card>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

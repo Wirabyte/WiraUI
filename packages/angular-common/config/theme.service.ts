@@ -1,18 +1,21 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject, isDevMode } from '@angular/core';
 import {
+  DarkMode,
   LAYER_ORDER,
   overridesToTokens,
   palette,
   presetToTokens,
+  Scheme,
   ThemeOverrideSet,
   ThemeOverrides,
   ThemePreset,
   tokensToCss,
 } from 'wiratheme/core';
-import { WT_OPTIONS } from './options';
+import { WT_OPTIONS, WtScale } from './options';
 
 const STYLE_ATTR = 'data-wt-style';
+const SCALE_PX: Record<string, number> = { sm: 12, md: 14, lg: 16 };
 
 /**
  * Writes TypeScript-defined tokens into `<head>` and switches them at runtime.
@@ -34,6 +37,7 @@ export class WtThemeService {
     this.style('layers', LAYER_ORDER, true);
     if (this.preset) this.writePreset();
     this.writeOverrides();
+    if (this.options.scale !== undefined) this.setScale(this.options.scale);
     if (this.preset && isDevMode()) this.warnIfStylesheetToo();
   }
 
@@ -64,20 +68,52 @@ export class WtThemeService {
     this.patch({ semantic: { primary: palette(hex) } });
   }
 
+  /** Adds or removes the dark-mode class on `<html>` (`wt-dark`, or the class `darkModeSelector` names). */
   setDarkMode(dark: boolean): void {
-    this.doc.documentElement.classList.toggle('wt-dark', dark);
+    this.doc.documentElement.classList.toggle(this.darkClass(), dark);
   }
 
   isDarkMode(): boolean {
-    return this.doc.documentElement.classList.contains('wt-dark');
+    return this.doc.documentElement.classList.contains(this.darkClass());
+  }
+
+  /**
+   * Makes the whole UI smaller or larger by setting the root font size, which every rem in the theme follows:
+   * `'sm'` 12px, `'md'` 14px, `'lg'` 16px, or a number of px. `null` hands the size back to the page's CSS.
+   */
+  setScale(scale: WtScale | null): void {
+    const px = scale === null ? 0 : typeof scale === 'number' ? scale : SCALE_PX[scale] || 0;
+    this.doc.documentElement.style.fontSize = px > 0 ? `${px}px` : '';
+  }
+
+  private darkClass(): string {
+    const sel = this.options.darkModeSelector;
+    return sel && /^\.[\w-]+$/.test(sel) ? sel.slice(1) : 'wt-dark';
+  }
+
+  private darkMode(): DarkMode {
+    const sel = this.options.darkModeSelector;
+    if (sel === 'system') return 'media';
+    if (sel === 'none') return 'none';
+    return sel ? 'class' : this.options.darkMode || 'class';
+  }
+
+  /** Dark-only themes (Sayan, Ratri, sila-dark-*) get overrides without a dark block. */
+  private scheme(): Scheme {
+    if (this.options.scheme) return this.options.scheme;
+    if (this.preset) return this.preset.config.scheme;
+    const win = this.doc.defaultView;
+    if (!win || typeof win.getComputedStyle !== 'function') return 'light';
+    return win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wt-scheme').trim() === 'dark' ? 'dark' : 'light';
   }
 
   private cssOptions() {
     const selector = this.options.selector || ':root';
+    const dark = `:root.${this.darkClass()}`;
     return {
       selector,
-      darkMode: this.options.darkMode || 'class',
-      darkSelector: selector === ':root' ? ':root.wt-dark' : `:root.wt-dark ${selector}`,
+      darkMode: this.darkMode(),
+      darkSelector: selector === ':root' ? dark : `${dark} ${selector}`,
     };
   }
 
@@ -88,7 +124,7 @@ export class WtThemeService {
   }
 
   private writeOverrides(): void {
-    const t = overridesToTokens(this.overrides);
+    const t = overridesToTokens(this.overrides, this.scheme());
     const empty = !Object.keys(t.light).length && !Object.keys(t.dark).length;
     this.style('overrides', empty ? '' : tokensToCss(t, { ...this.cssOptions(), layer: 'wiratheme.overrides' }));
   }
@@ -113,9 +149,8 @@ export class WtThemeService {
       const source = win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wt-theme-source').trim();
       if (source) {
         console.warn(
-          `[wiratheme] มีทั้งไฟล์ธีม (${source}) และ preset จาก TypeScript ให้เลือกอย่างใดอย่างหนึ่ง ` +
-            `ถ้าต้องการปรับบางค่าบนไฟล์ธีม ให้ใช้ overrides แทน preset. ` +
-            `(Both a ${source} theme file and a TypeScript preset are loaded; use overrides to adjust a theme file.)`
+          `[wiratheme] Both a ${source} theme file and a TypeScript preset are loaded; keep one. ` +
+            `To adjust a theme file, use overrides instead of a preset.`
         );
       }
     }, 0);

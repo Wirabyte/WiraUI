@@ -1,0 +1,62 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Utilities</p>
+  <h1 class="docs-h1">{{ topic().title | loc }}</h1>
+  <p class="docs-lead" [innerHTML]="topic().lead | loc"></p>
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip"><code>wiratheme/utils</code></span>
+  </div>
+</header>
+
+@for (s of topic().sections; track topic().id + '/' + s.id) {
+  <docs-section [id]="s.id" [title]="s.title" [text]="s.text">
+    @if (s.demo) {
+      @if (s.frame) {
+        <div class="docs-demo docs-u-demo">
+          <docs-viewport-demo [html]="s.demo"></docs-viewport-demo>
+          <docs-code-tabs [tabs]="[{ label: 'HTML', code: s.code || s.demo, lang: 'html' }]"></docs-code-tabs>
+        </div>
+      } @else {
+        <div class="docs-demo docs-u-demo">
+          <div class="docs-demo-preview docs-demo-stack" [innerHTML]="s.demo | trustHtml"></div>
+          <docs-code-tabs [tabs]="[{ label: 'HTML', code: s.code || s.demo, lang: s.codeLang || 'html' }]"></docs-code-tabs>
+        </div>
+      }
+    } @else if (s.code) {
+      <docs-code [code]="s.code" [lang]="s.codeLang || 'html'"></docs-code>
+    }
+    @if (s.classes) {
+      <div class="docs-table-wrap">
+        <table class="docs-table docs-api">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>{{ 'api.description' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of s.classes; track c[0]) {
+              <tr>
+                <td><code class="docs-api-name">{{ c[0] }}</code></td>
+                <td>{{ c[1] | loc }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </docs-section>
+}
+
+@if (topic().id === 'overview') {
+  <docs-section id="topics" [title]="{ th: 'หมวดทั้งหมด', en: 'All groups' }">
+    <div class="docs-link-grid">
+      @for (p of topics; track p.id) {
+        <a class="docs-link-card" [routerLink]="link(p.path)">
+          <b>{{ p.title | loc }}</b>
+          <span>{{ p.path.replace('utilities/', '') }}</span>
+        </a>
+      }
+    </div>
+  </docs-section>
+}

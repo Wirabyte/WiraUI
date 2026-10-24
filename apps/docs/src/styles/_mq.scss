@@ -1,0 +1,16 @@
+// Mobile-first breakpoints, the same as wiratheme/utils: base styles are for small screens,
+// `@include mq.up(md) { … }` adds from that width up.
+@use 'sass:map';
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

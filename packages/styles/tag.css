@@ -1,0 +1,52 @@
+/* wt-tag. Shared by wiratheme v1, v2 and v3. `--wt-tag-fill` picks the look: 0% = soft tint with coloured
+   text (styled), 100% = solid colour with contrast text (classic). */
+@layer wiratheme.components {
+  wt-tag {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  .wt-tag {
+    --_solid: var(--wt-primary-color);
+    --_on-solid: var(--wt-primary-contrast);
+    --_soft: var(--wt-primary-soft);
+    --_on-soft: var(--wt-primary-soft-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--wt-tag-gap);
+    max-width: 100%;
+    padding: var(--wt-tag-padding-y) var(--wt-tag-padding-x);
+    border-radius: var(--wt-tag-radius);
+    background: color-mix(in srgb, var(--_solid) var(--wt-tag-fill), var(--_soft));
+    color: color-mix(in srgb, var(--_on-solid) var(--wt-tag-fill), var(--_on-soft));
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-tag-font-size);
+    font-weight: var(--wt-tag-font-weight);
+    /* Thai marks above and below the line need room. */
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .wt-tag-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .wt-tag-rounded {
+    border-radius: var(--wt-radius-full);
+  }
+  .wt-tag-icon {
+    line-height: 1;
+    font-size: 0.9em;
+  }
+  .wt-tag-secondary {
+    --_solid: var(--wt-button-secondary-bg);
+    --_on-solid: var(--wt-button-secondary-color);
+    --_soft: var(--wt-chip-bg);
+    --_on-soft: var(--wt-chip-color);
+  }
+  .wt-tag-success { --_solid: var(--wt-success-color); --_on-solid: var(--wt-success-contrast); --_soft: var(--wt-success-bg); --_on-soft: var(--wt-success-text); }
+  .wt-tag-info { --_solid: var(--wt-info-color); --_on-solid: var(--wt-info-contrast); --_soft: var(--wt-info-bg); --_on-soft: var(--wt-info-text); }
+  .wt-tag-warn { --_solid: var(--wt-warn-color); --_on-solid: var(--wt-warn-contrast); --_soft: var(--wt-warn-bg); --_on-soft: var(--wt-warn-text); }
+  .wt-tag-danger { --_solid: var(--wt-danger-color); --_on-solid: var(--wt-danger-contrast); --_soft: var(--wt-danger-bg); --_on-soft: var(--wt-danger-text); }
+  .wt-tag-help { --_solid: var(--wt-help-color); --_on-solid: var(--wt-help-contrast); --_soft: var(--wt-help-bg); --_on-soft: var(--wt-help-text); }
+  .wt-tag-contrast { --_solid: var(--wt-text); --_on-solid: var(--wt-card-bg); --_soft: var(--wt-text); --_on-soft: var(--wt-card-bg); }
+}

@@ -1,0 +1,82 @@
+/* wt-divider. Shared by wiratheme v1, v2 and v3. Horizontal or vertical line with optional content on it. */
+@layer wiratheme.components {
+  wt-divider {
+    display: block;
+  }
+  wt-divider.wt-divider-host-vertical {
+    display: flex;
+    align-self: stretch;
+  }
+  .wt-divider {
+    --_style: solid;
+    --_width: 1px;
+    position: relative;
+    display: flex;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    color: var(--wt-text-muted);
+  }
+  .wt-divider::before {
+    content: '';
+    position: absolute;
+  }
+  .wt-divider-dashed {
+    --_style: dashed;
+  }
+  /* 1px dots almost disappear; 2px reads as a dotted line. */
+  .wt-divider-dotted {
+    --_style: dotted;
+    --_width: 2px;
+  }
+  .wt-divider-horizontal {
+    align-items: center;
+    width: 100%;
+    margin: var(--wt-divider-margin) 0;
+    padding: 0 var(--wt-divider-padding);
+    box-sizing: border-box;
+  }
+  .wt-divider-horizontal::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    border-top: var(--_width) var(--_style) var(--wt-divider-color);
+    margin-top: calc(var(--_width) / -2);
+  }
+  .wt-divider-vertical {
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+    margin: 0 var(--wt-divider-margin);
+    padding: var(--wt-divider-padding) 0;
+  }
+  .wt-divider-vertical::before {
+    top: 0;
+    left: 50%;
+    height: 100%;
+    border-left: var(--_width) var(--_style) var(--wt-divider-color);
+    margin-left: calc(var(--_width) / -2);
+  }
+  .wt-divider-content {
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--wt-divider-content-padding);
+    background: var(--wt-card-bg);
+  }
+  .wt-divider-vertical .wt-divider-content {
+    padding: var(--wt-divider-content-padding) 0;
+  }
+  .wt-divider-content:empty {
+    display: none;
+  }
+  .wt-divider-left,
+  .wt-divider-top {
+    justify-content: flex-start;
+  }
+  .wt-divider-center {
+    justify-content: center;
+  }
+  .wt-divider-right,
+  .wt-divider-bottom {
+    justify-content: flex-end;
+  }
+}

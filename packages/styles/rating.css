@@ -1,0 +1,60 @@
+/* wt-rating. Shared by wiratheme v1, v2 and v3. Stars backed by native radio buttons, so arrow keys,
+   screen readers and forms work as with any radio group. */
+@layer wiratheme.components {
+  wt-rating {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  .wt-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--wt-rating-gap);
+  }
+  .wt-rating-option {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    color: var(--wt-rating-icon-color);
+    transition: color var(--wt-transition);
+  }
+  .wt-rating-option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+  .wt-rating-icon {
+    width: var(--wt-rating-icon-size);
+    height: var(--wt-rating-icon-size);
+  }
+  .wt-rating-option-active {
+    color: var(--wt-rating-icon-active-color);
+  }
+  .wt-rating-option-active .wt-rating-icon {
+    fill: currentColor;
+  }
+  .wt-rating-option:has(input:focus-visible) {
+    border-radius: var(--wt-radius-sm);
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-rating-readonly .wt-rating-option,
+  .wt-rating-disabled .wt-rating-option {
+    cursor: default;
+  }
+  .wt-rating-disabled {
+    opacity: var(--wt-disabled-opacity);
+  }
+  /* Bigger touch targets on phones without changing the star size. */
+  @media (pointer: coarse) {
+    .wt-rating-option::after {
+      content: '';
+      position: absolute;
+      inset: -0.375rem;
+    }
+  }
+}

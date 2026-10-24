@@ -1,0 +1,42 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-badge value="8"></wt-badge>
+        <wt-badge></wt-badge>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="severity" [section]="sec['severity']">
+      <docs-demo [html]="code['severity']">
+        <wt-badge value="1" severity="primary"></wt-badge>
+        <wt-badge value="2" severity="secondary"></wt-badge>
+        <wt-badge value="3" severity="success"></wt-badge>
+        <wt-badge value="4" severity="info"></wt-badge>
+        <wt-badge value="5" severity="warn"></wt-badge>
+        <wt-badge value="6" severity="danger"></wt-badge>
+        <wt-badge value="7" severity="help"></wt-badge>
+        <wt-badge value="8" severity="contrast"></wt-badge>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-badge value="2"></wt-badge>
+        <wt-badge value="4" size="large"></wt-badge>
+        <wt-badge value="6" size="xlarge"></wt-badge>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="inline" [section]="sec['inline']">
+      <docs-demo [html]="code['inline']">
+        <span>กล่องข้อความ <wt-badge value="12" severity="danger"></wt-badge></span>
+        <span>สถานะออนไลน์ <wt-badge severity="success"></wt-badge></span>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

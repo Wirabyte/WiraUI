@@ -1,0 +1,34 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-chip label="Angular"></wt-chip>
+        <wt-chip label="TypeScript"></wt-chip>
+        <wt-chip label="SCSS"></wt-chip>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="icon" [section]="sec['icon']">
+      <docs-demo [html]="code['icon']">
+        <wt-chip label="ส่งแล้ว" icon="pi pi-send"></wt-chip>
+        <wt-chip label="สมชาย ใจดี" [image]="image" alt="สมชาย"></wt-chip>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="removable" [section]="sec['removable']">
+      <docs-demo [html]="code['removable']" [ts]="ts['removable']">
+        @for (t of tags; track t) {
+          <wt-chip [label]="t" [removable]="true" (onRemove)="remove(t)"></wt-chip>
+        }
+        <span class="docs-demo-output">tags: <code id="d-tags">{{ tags | json }}</code></span>
+        @if (tags.length < 3) {
+          <wt-button id="d-reset" [label]="en() ? 'Reset' : 'คืนค่า'" size="small" severity="secondary" [text]="true" (onClick)="resetTags()"></wt-button>
+        }
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

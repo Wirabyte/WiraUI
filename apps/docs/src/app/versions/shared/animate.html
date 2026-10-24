@@ -1,0 +1,49 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-code [code]="setupCode" lang="ts"></docs-code>
+    </docs-section>
+
+    <docs-section id="families" [section]="sec['families']">
+      <docs-demo [html]="code['families']" layout="stack">
+        @for (f of families; track f.name) {
+          <div class="docs-aos-family">
+            <b class="docs-aos-family-name">{{ f.name }}</b>
+            <div class="docs-aos-stage">
+              @for (a of f.items; track a) {
+                <div class="docs-aos-card" [wtAnimate]="a" [animateOnce]="false" [attr.data-test-aos]="a">
+                  <code>{{ a }}</code>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="timing" [section]="sec['timing']">
+      <docs-demo [html]="code['timing']" layout="stack">
+        <div class="docs-aos-stage">
+          <div class="docs-aos-card" data-aos="fade-up" data-aos-delay="0" data-aos-once="false"><code>delay 0</code></div>
+          <div class="docs-aos-card" data-aos="fade-up" data-aos-delay="150" data-aos-once="false"><code>delay 150</code></div>
+          <div class="docs-aos-card" data-aos="fade-up" data-aos-delay="300" data-aos-once="false"><code>delay 300</code></div>
+          <div class="docs-aos-card" data-aos="fade-up" data-aos-delay="450" data-aos-duration="800" data-aos-easing="ease-out-back" data-aos-once="false">
+            <code>ease-out-back</code>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="directive" [section]="sec['directive']">
+      <docs-demo [html]="code['directive']" layout="stack">
+        <div class="docs-aos-stage">
+          <div id="d-aos-directive" class="docs-aos-card" wtAnimate="zoom-in" [animateDelay]="200" [animateDuration]="600" [animateOnce]="false">
+            <code>wtAnimate="zoom-in"</code>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="a11y" [section]="sec['a11y']"></docs-section>
+  </ng-template>
+</docs-component-page>

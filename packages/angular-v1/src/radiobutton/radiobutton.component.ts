@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  HostBinding,
   inject,
   Injector,
   Input,
@@ -14,7 +15,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
 import { ɵWtRadioAccessor, ɵWtRadioRegistry } from './radio-registry';
 import { WtRadioButtonClickEvent } from './radiobutton.types';
 
@@ -41,6 +42,17 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
+  /** `small` or `large` (also `sm` / `lg`). */
+  @Input() size?: WtSize;
+  @HostBinding('class.wt-radiobutton-sm') @HostBinding('class.p-radiobutton-sm') get sizeSm(): boolean {
+    return this.sizeKey === 'sm';
+  }
+  @HostBinding('class.wt-radiobutton-lg') @HostBinding('class.p-radiobutton-lg') get sizeLg(): boolean {
+    return this.sizeKey === 'lg';
+  }
+  get sizeKey(): 'sm' | 'lg' | null {
+    return ɵsize(this.size);
+  }
   get invalid(): boolean { return this._invalid; }
 
   @Output() readonly onClick = new EventEmitter<WtRadioButtonClickEvent>();

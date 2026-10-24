@@ -1,0 +1,40 @@
+/* wt-skeleton. Shared by wiratheme v1, v2 and v3. Placeholder shape with a light sweep while loading. */
+@layer wiratheme.components {
+  wt-skeleton {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-skeleton {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 1rem;
+    max-width: 100%;
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-skeleton-bg);
+  }
+  .wt-skeleton-circle {
+    border-radius: 50%;
+  }
+  .wt-skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--wt-skeleton-wave), transparent);
+    animation: wt-skeleton-wave 1.2s infinite;
+  }
+  .wt-skeleton-none::after {
+    content: none;
+  }
+  @keyframes wt-skeleton-wave {
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-skeleton::after {
+      animation: none;
+    }
+  }
+}

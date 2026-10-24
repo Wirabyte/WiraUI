@@ -1,0 +1,183 @@
+<header class="docs-topbar">
+  <button
+    type="button"
+    class="docs-icon-btn docs-menu-btn"
+    id="docs-menu"
+    (click)="menuOpen.set(!menuOpen())"
+    [attr.aria-expanded]="menuOpen()"
+    aria-controls="docs-sidebar"
+    [attr.aria-label]="'top.menu' | t"
+  >
+    <docs-icon [name]="menuOpen() ? 'x' : 'menu'"></docs-icon>
+  </button>
+
+  <a class="docs-logo" routerLink="/" [attr.aria-label]="'site.home' | t">
+    <span class="docs-logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><path d="M7.5 10.5 11.5 22l4.5-9 4.5 9 4-11.5" /></svg>
+    </span>
+    <span class="docs-logo-text">WiraTheme</span>
+  </a>
+
+  <button type="button" class="docs-search-btn" id="docs-search" (click)="openSearch()" [attr.aria-label]="'top.searchAria' | t">
+    <docs-icon name="search"></docs-icon>
+    <span class="docs-search-btn-text">{{ 'top.search' | t }}</span>
+    <kbd>Ctrl K</kbd>
+  </button>
+
+  <span class="docs-topbar-spacer"></span>
+
+  <docs-lang-switch class="docs-topbar-lang"></docs-lang-switch>
+
+  <button
+    type="button"
+    class="docs-icon-btn"
+    id="docs-dark"
+    (click)="state.setDark(!state.dark())"
+    [attr.aria-pressed]="state.dark()"
+    [attr.aria-label]="(state.dark() ? 'top.light' : 'top.dark') | t"
+  >
+    <docs-icon [name]="state.dark() ? 'sun' : 'moon'"></docs-icon>
+  </button>
+
+  <div class="docs-config-wrap" #configWrap>
+    <button
+      type="button"
+      class="docs-icon-btn"
+      id="docs-config"
+      [class.active]="configOpen()"
+      (click)="configOpen.set(!configOpen())"
+      aria-haspopup="dialog"
+      [attr.aria-expanded]="configOpen()"
+      [attr.aria-label]="'top.theme' | t"
+    >
+      <docs-icon name="palette"></docs-icon>
+    </button>
+    @if (configOpen()) {
+      <docs-configurator [version]="version()" (closed)="configOpen.set(false)"></docs-configurator>
+    }
+  </div>
+
+  <label class="docs-version-select">
+    <span class="docs-sr">{{ 'top.version' | t }}</span>
+    <!-- [selected] per option, not [value] on <select>: the options do not exist yet when [value] is first set. -->
+    <select id="docs-version" (change)="switchTo($any($event.target).value)">
+      @for (v of versions; track v.id) {
+        <option [value]="v.id" [selected]="v.id === version()">{{ v.label }}</option>
+      }
+    </select>
+    <docs-icon name="chevronDown"></docs-icon>
+  </label>
+</header>
+
+<div class="docs-body">
+  <aside class="docs-sidebar docs-scroll" id="docs-sidebar" [class.open]="menuOpen()">
+    <docs-lang-switch class="docs-sidebar-lang" idPrefix="drawer-lang"></docs-lang-switch>
+    <nav [attr.aria-label]="'top.menu' | t">
+      @for (g of nav; track g.id) {
+        <div class="docs-nav-group" [class.open]="isOpen(g.id)">
+          <button
+            type="button"
+            class="docs-nav-title"
+            [id]="'nav-group-' + g.id"
+            [attr.aria-expanded]="isOpen(g.id)"
+            [attr.aria-controls]="'nav-list-' + g.id"
+            (click)="toggle(g.id)"
+          >
+            <span class="docs-nav-icon"><docs-icon [name]="g.icon"></docs-icon></span>
+            <span class="docs-nav-title-text">{{ g.title }}</span>
+            <docs-icon name="chevronDown" class="docs-nav-chevron"></docs-icon>
+          </button>
+          <div class="docs-collapse" [id]="'nav-list-' + g.id">
+            <div class="docs-collapse-inner">
+              @if (g.items) {
+                <ul>
+                  @for (i of g.items; track i.id) {
+                    <ng-container *ngTemplateOutlet="navItem; context: { $implicit: i }"></ng-container>
+                  }
+                </ul>
+              }
+              @for (s of g.groups || []; track s.id) {
+                <div class="docs-nav-subgroup" [class.open]="isOpen(s.id)">
+                  <button
+                    type="button"
+                    class="docs-nav-sub"
+                    [id]="'nav-sub-' + s.title.toLowerCase()"
+                    [attr.aria-expanded]="isOpen(s.id)"
+                    [attr.aria-controls]="'nav-list-' + s.title.toLowerCase()"
+                    (click)="toggle(s.id)"
+                  >
+                    {{ s.title }}
+                    <docs-icon name="chevronDown" class="docs-nav-chevron"></docs-icon>
+                  </button>
+                  <div class="docs-collapse" [id]="'nav-list-' + s.title.toLowerCase()">
+                    <div class="docs-collapse-inner">
+                      <ul>
+                        @for (i of s.items; track i.id) {
+                          <ng-container *ngTemplateOutlet="navItem; context: { $implicit: i }"></ng-container>
+                        }
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </nav>
+  </aside>
+  @if (menuOpen()) {
+    <div class="docs-backdrop" (click)="menuOpen.set(false)"></div>
+  }
+
+  <main class="docs-main" id="docs-main">
+    <article class="docs-article">
+      <router-outlet></router-outlet>
+    </article>
+
+    @if (pager().prev || pager().next) {
+      <nav class="docs-pager" [attr.aria-label]="'pager.label' | t">
+        @if (pager().prev; as p) {
+          <a class="docs-pager-link" id="pager-prev" [routerLink]="link(p.path)">
+            <span><docs-icon name="chevronLeft"></docs-icon>{{ 'pager.prev' | t }}</span>
+            <b>{{ p.title | loc }}</b>
+          </a>
+        } @else {
+          <span></span>
+        }
+        @if (pager().next; as n) {
+          <a class="docs-pager-link docs-pager-next" id="pager-next" [routerLink]="link(n.path)">
+            <span>{{ 'pager.next' | t }}<docs-icon name="chevronRight"></docs-icon></span>
+            <b>{{ n.title | loc }}</b>
+          </a>
+        }
+      </nav>
+    }
+
+    <footer class="docs-footer">
+      <span>{{ 'footer.license' | t }}</span>
+      <span>{{ 'footer.sample' | t }}</span>
+    </footer>
+  </main>
+
+  <aside class="docs-toc-col docs-scroll">
+    <docs-toc></docs-toc>
+  </aside>
+</div>
+
+@if (searchOpen()) {
+  <docs-search [version]="version()" (closed)="searchOpen.set(false)"></docs-search>
+}
+
+<ng-template #navItem let-i>
+  <li>
+    @if (i.soon) {
+      <span class="docs-nav-link docs-nav-soon" aria-disabled="true">
+        {{ i.title | loc }}
+        <span class="docs-soon">{{ 'nav.soon' | t }}</span>
+      </span>
+    } @else {
+      <a class="docs-nav-link" [id]="'nav-' + i.id" [routerLink]="link(i.path)" routerLinkActive="active" ariaCurrentWhenActive="page">{{ i.title | loc }}</a>
+    }
+  </li>
+</ng-template>

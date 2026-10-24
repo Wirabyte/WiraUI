@@ -1,0 +1,41 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-tag value="ใหม่"></wt-tag>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="severity" [section]="sec['severity']">
+      <docs-demo [html]="code['severity']">
+        <wt-tag value="primary" severity="primary"></wt-tag>
+        <wt-tag value="secondary" severity="secondary"></wt-tag>
+        <wt-tag value="success" severity="success"></wt-tag>
+        <wt-tag value="info" severity="info"></wt-tag>
+        <wt-tag value="warn" severity="warn"></wt-tag>
+        <wt-tag value="danger" severity="danger"></wt-tag>
+        <wt-tag value="help" severity="help"></wt-tag>
+        <wt-tag value="contrast" severity="contrast"></wt-tag>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="pill" [section]="sec['pill']">
+      <docs-demo [html]="code['pill']">
+        <wt-tag value="เปิดใช้งาน" severity="success" [rounded]="true"></wt-tag>
+        <wt-tag value="ยืนยันแล้ว" icon="pi pi-check" severity="info"></wt-tag>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="content" [section]="sec['content']">
+      <docs-demo [html]="code['content']">
+        <wt-tag severity="warn">
+          <span class="pi pi-bell"></span> รออนุมัติ 3 รายการ
+        </wt-tag>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

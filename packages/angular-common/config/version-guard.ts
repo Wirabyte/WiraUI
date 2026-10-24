@@ -37,10 +37,7 @@ export function ɵassertSupportedAngular(skip?: boolean | null): void {
   const range = ɵsupportedRangeText();
   const fit = ɵwiraThemeMajorFor(major);
   const fix = fit
-    ? `ให้ติดตั้ง wiratheme@${fit} แทน / Install wiratheme@${fit} instead.`
-    : 'ไม่มี wiratheme ที่รองรับ Angular รุ่นนี้ / No wiratheme release supports this Angular version.';
-  throw new Error(
-    `[wiratheme] wiratheme@${wt} ใช้ได้กับ Angular ${range} แต่แอปนี้เป็น Angular ${VERSION.full} ` +
-      `(wiratheme@${wt} supports Angular ${range}; this app runs ${VERSION.full}). ${fix}`
-  );
+    ? `Install wiratheme@${fit} instead.`
+    : 'No wiratheme release supports this Angular version.';
+  throw new Error(`[wiratheme] wiratheme@${wt} supports Angular ${range}; this app runs ${VERSION.full}. ${fix}`);
 }

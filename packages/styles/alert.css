@@ -1,0 +1,388 @@
+/* WtAlert. Shared by wiratheme v1, v2 and v3. A ready-made alert in a native modal <dialog>: an animated icon,
+   title, text, optional input and buttons, centred in a card. Colours come from the theme's semantic colours. */
+@layer wiratheme.components {
+  wt-alertdialog {
+    display: contents;
+  }
+  .wt-alert-mask[open] {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 1rem;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+  .wt-alert-mask::backdrop {
+    background: var(--wt-mask);
+    animation: wt-alert-fade 0.15s ease-out;
+  }
+  .wt-alert-leaving::backdrop {
+    opacity: 0;
+    transition: opacity 0.15s ease-in;
+  }
+  .wt-alert {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: var(--wt-alert-width);
+    max-width: 100%;
+    max-height: 100%;
+    padding: var(--wt-alert-padding);
+    overflow-y: auto;
+    border: 1px solid var(--wt-dialog-border);
+    border-radius: var(--wt-alert-radius);
+    background: var(--wt-dialog-bg);
+    color: var(--wt-text);
+    box-shadow: var(--wt-dialog-shadow);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    text-align: center;
+    animation: wt-alert-pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.25);
+  }
+  .wt-alert *,
+  .wt-alert *::before,
+  .wt-alert *::after {
+    box-sizing: border-box;
+  }
+  .wt-alert-leaving .wt-alert {
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+      opacity 0.15s ease-in,
+      transform 0.15s ease-in;
+  }
+  .wt-alert-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--wt-text-muted);
+    cursor: pointer;
+  }
+  .wt-alert-close:hover {
+    background: var(--wt-hover-bg);
+    color: var(--wt-text);
+  }
+  .wt-alert-close svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* ---------- icon: a ring that draws itself, then the mark ---------- */
+  .wt-alert-icon {
+    flex: none;
+    width: var(--wt-alert-icon-size);
+    height: var(--wt-alert-icon-size);
+    margin: 0.25rem 0 1rem;
+    color: var(--_icon, var(--wt-info-color));
+  }
+  .wt-alert-icon-success { --_icon: var(--wt-success-color); }
+  .wt-alert-icon-error { --_icon: var(--wt-danger-color); }
+  .wt-alert-icon-warning { --_icon: var(--wt-warn-color); }
+  .wt-alert-icon-info { --_icon: var(--wt-info-color); }
+  .wt-alert-icon-question { --_icon: var(--wt-help-color); }
+  .wt-alert-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .wt-alert-halo {
+    fill: currentColor;
+    opacity: 0.12;
+    transform-origin: center;
+    animation: wt-alert-halo 0.45s ease-out;
+  }
+  .wt-alert-ring,
+  .wt-alert-mark {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .wt-alert-ring {
+    stroke-width: 3;
+    stroke-dasharray: 227;
+    stroke-dashoffset: 0;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: wt-alert-draw-ring 0.5s ease-out both;
+  }
+  .wt-alert-mark {
+    stroke-width: 5;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 0;
+    animation: wt-alert-draw 0.35s 0.35s ease-out both;
+  }
+  .wt-alert-mark-2 {
+    animation-delay: 0.5s;
+  }
+  .wt-alert-dot {
+    fill: currentColor;
+    transform-origin: center;
+    animation: wt-alert-dot 0.3s 0.55s ease-out both;
+  }
+  .wt-alert-icon-error svg,
+  .wt-alert-icon-warning svg {
+    animation: wt-alert-nudge 0.45s 0.7s ease-in-out;
+  }
+
+  /* ---------- text, input, buttons ---------- */
+  .wt-alert-title {
+    margin: 0 0 0.5rem;
+    color: var(--wt-text);
+    font-size: var(--wt-alert-title-size);
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  .wt-alert-text {
+    max-width: 100%;
+    margin: 0;
+    color: var(--wt-text-muted);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+  .wt-alert-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: stretch;
+    margin-top: 1rem;
+    text-align: left;
+  }
+  .wt-alert-input .wt-inputtext,
+  .wt-alert-input select.wt-alert-field {
+    width: 100%;
+  }
+  .wt-alert-input select.wt-alert-field {
+    min-height: calc(var(--wt-field-padding-y) * 2 + 1.5em);
+    padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
+    border: var(--wt-field-border-width) solid var(--wt-field-border);
+    border-radius: var(--wt-input-radius);
+    background: var(--wt-field-bg);
+    color: var(--wt-field-color);
+    font: inherit;
+  }
+  .wt-alert-choice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  .wt-alert-choice input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0;
+    accent-color: var(--wt-primary-color);
+  }
+  .wt-alert-choices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+  }
+  .wt-alert-validation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    align-self: stretch;
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-danger-bg);
+    color: var(--wt-danger-text);
+    font-size: 0.875em;
+  }
+  .wt-alert-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .wt-alert-button {
+    min-width: 6rem;
+    min-height: 2.5rem;
+    padding: var(--wt-button-padding-y) calc(var(--wt-button-padding-x) * 1.25);
+    border: 1px solid transparent;
+    border-radius: var(--wt-button-radius);
+    font: inherit;
+    font-weight: var(--wt-button-font-weight);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition:
+      filter var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-alert-button:hover {
+    filter: brightness(0.94);
+  }
+  .wt-alert-button:focus-visible,
+  .wt-alert-close:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-alert-confirm {
+    border-color: var(--wt-primary-color);
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+  }
+  .wt-alert-deny {
+    border-color: var(--wt-danger-color);
+    background: var(--wt-danger-color);
+    color: var(--wt-danger-contrast);
+  }
+  .wt-alert-cancel {
+    border-color: var(--wt-button-secondary-border);
+    background: var(--wt-button-secondary-bg);
+    color: var(--wt-button-secondary-color);
+  }
+  /* A colour the app picked: white text reads on any saturated button colour. */
+  .wt-alert-button.wt-alert-custom {
+    color: #fff;
+  }
+  .wt-alert-loader {
+    display: grid;
+    place-items: center;
+    margin-top: 1.5rem;
+    min-height: 2.5rem;
+  }
+  .wt-alert-spinner {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 3px solid color-mix(in srgb, var(--wt-primary-color) 20%, transparent);
+    border-top-color: var(--wt-primary-color);
+    border-radius: 50%;
+    animation: wt-alert-spin 0.8s linear infinite;
+  }
+  .wt-alert-footer {
+    align-self: stretch;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--wt-border);
+    color: var(--wt-text-muted);
+    font-size: 0.875em;
+  }
+  .wt-alert-timer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 0.25rem;
+    overflow: hidden;
+    border-radius: 0 0 var(--wt-alert-radius) var(--wt-alert-radius);
+  }
+  .wt-alert-timer span {
+    display: block;
+    height: 100%;
+    background: color-mix(in srgb, var(--wt-primary-color) 45%, transparent);
+    transform-origin: left;
+    animation: wt-alert-timer linear forwards;
+  }
+
+  /* Phones: the card takes the screen width and the buttons share a row. */
+  @media (max-width: 575.98px) {
+    .wt-alert-mask[open] {
+      padding: 0.75rem;
+    }
+    .wt-alert {
+      width: 100% !important;
+    }
+    .wt-alert-actions {
+      align-self: stretch;
+    }
+    .wt-alert-button {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 2.75rem;
+    }
+  }
+
+  @keyframes wt-alert-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+  }
+  @keyframes wt-alert-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes wt-alert-halo {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+  @keyframes wt-alert-draw-ring {
+    from {
+      stroke-dashoffset: 227;
+    }
+  }
+  @keyframes wt-alert-draw {
+    from {
+      stroke-dashoffset: 60;
+    }
+  }
+  @keyframes wt-alert-dot {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+  @keyframes wt-alert-nudge {
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+  }
+  @keyframes wt-alert-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes wt-alert-timer {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-alert,
+    .wt-alert-mask::backdrop,
+    .wt-alert-halo,
+    .wt-alert-ring,
+    .wt-alert-mark,
+    .wt-alert-dot,
+    .wt-alert-icon svg {
+      animation: none;
+    }
+    .wt-alert-spinner {
+      animation-duration: 2s;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">{{ en() ? 'Presets in' : 'Presets ของ' }} wiratheme&#64;{{ v.major }}</h1>
+  <p class="docs-lead">{{ v.lookDetail | loc }}</p>
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip">{{ theme.presets.length }} {{ en() ? 'themes' : 'ธีม' }}</span>
+  </div>
+</header>
+
+<docs-section id="list" [title]="{ th: 'รายการ preset', en: 'Available presets' }">
+  @if (en()) {
+    <p>
+      This list comes straight from this version's <code>VERSION_CATALOG</code>. Pick one to restyle the whole page; only this version changes,
+      the others keep their own look.
+      @if (v.major === 1) {
+        Themes marked <span class="docs-chip docs-chip-quiet">dark</span> are dark-only.
+      }
+    </p>
+  } @else {
+    <p>
+      รายการนี้อ่านจาก <code>VERSION_CATALOG</code> ของแพ็กเกจรุ่นนี้โดยตรง กดเพื่อเปลี่ยนธีมของทั้งหน้า (เปลี่ยนเฉพาะรุ่นนี้ รุ่นอื่นยังเป็นหน้าตาของตัวเอง)
+      @if (v.major === 1) {
+        ธีมที่มีป้าย <span class="docs-chip docs-chip-quiet">dark</span> เป็นธีมมืดอย่างเดียว
+      }
+    </p>
+  }
+  @for (g of groups; track g.family) {
+    @if (g.family) {
+      <h3 class="docs-preset-family">{{ g.label }}</h3>
+    }
+    <div class="docs-preset-grid">
+      @for (p of g.items; track p.id) {
+        <button
+          type="button"
+          class="docs-preset-card"
+          [class.active]="state.activePresetId() === p.id"
+          [attr.aria-pressed]="state.activePresetId() === p.id"
+          [attr.data-preset]="p.id"
+          (click)="use(p.id)"
+        >
+          <span class="docs-preset-dot" [class.docs-theme-dark]="p.scheme === 'dark'" [style.background]="p.primary || null"></span>
+          <span class="docs-preset-text">
+            <b [attr.title]="p.name">{{ p.name }}</b>
+            @if (p.name !== p.id || p.id === theme.defaultPresetId || p.scheme === 'dark') {
+              <!-- Under the name, so the badge never squeezes it onto two lines. -->
+              <span class="docs-preset-meta">
+                @if (p.name !== p.id) {
+                  <code>{{ p.id }}</code>
+                }
+                @if (p.id === theme.defaultPresetId) {
+                  <span class="docs-chip docs-chip-quiet">{{ 'page.default' | t }}</span>
+                } @else if (p.scheme === 'dark') {
+                  <span class="docs-chip docs-chip-quiet">dark</span>
+                }
+              </span>
+            }
+          </span>
+        </button>
+      }
+    </div>
+  }
+</docs-section>
+
+<docs-section id="preview" [title]="{ th: 'ตัวอย่าง', en: 'Preview' }">
+  <p>
+    {{ en() ? 'Real' : 'component จริงของ' }} wiratheme&#64;{{ v.major }} {{ en() ? 'components in the theme' : 'ในธีม' }}
+    <code>{{ state.activePresetId() }}</code>
+  </p>
+  <div class="docs-preset-preview">
+    <wt-card header="โปรไฟล์" subheader="ข้อมูลบัญชี">
+      <div class="docs-demo-fields">
+        <input wtInputText value="สมชาย ใจดี" aria-label="ชื่อ" />
+        <input wtInputText placeholder="อีเมล" aria-label="อีเมล" />
+      </div>
+      <div class="docs-demo-form">
+        <wt-radiobutton name="preset-plan" value="free" [(ngModel)]="plan" label="Free"></wt-radiobutton>
+        <wt-radiobutton name="preset-plan" value="pro" [(ngModel)]="plan" label="Pro"></wt-radiobutton>
+      </div>
+      <div class="docs-demo-form">
+        <wt-checkbox [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไข"></wt-checkbox>
+        <wt-toggleswitch [(ngModel)]="newsletter" label="รับข่าวสาร"></wt-toggleswitch>
+      </div>
+      <div wtCardFooter>
+        <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
+        <wt-button label="ยกเลิก" severity="secondary"></wt-button>
+        <wt-button label="ลบบัญชี" severity="danger" [text]="true"></wt-button>
+      </div>
+    </wt-card>
+    <div class="docs-preset-buttons">
+      <wt-button label="Primary"></wt-button>
+      <wt-button label="Success" severity="success"></wt-button>
+      <wt-button label="Info" severity="info"></wt-button>
+      <wt-button label="Warn" severity="warn"></wt-button>
+      <wt-button label="Help" severity="help"></wt-button>
+      <wt-button label="Outlined" [outlined]="true"></wt-button>
+    </div>
+  </div>
+</docs-section>
+
+<docs-section id="use" [title]="{ th: 'ใช้ในโปรเจค', en: 'Use it in your app' }">
+  <p>
+    {{
+      en()
+        ? 'Pick the theme during ng add, or set it yourself with one of these. The samples follow the theme selected above.'
+        : 'เลือกธีมได้ตอน ng add หรือตั้งเองด้วยวิธีใดวิธีหนึ่งด้านล่าง ตัวอย่างเปลี่ยนตามธีมที่เลือกอยู่'
+    }}
+  </p>
+  <docs-code [code]="scssCode()" lang="scss" file="SCSS · src/theme/wiratheme.theme.scss"></docs-code>
+  <docs-code [code]="cssCode()" lang="json" file="CSS · angular.json"></docs-code>
+  <docs-code [code]="tsCode()" lang="ts" [file]="en() ? 'TypeScript only' : 'TypeScript อย่างเดียว'"></docs-code>
+</docs-section>

@@ -1,0 +1,93 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">CSS</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      A prebuilt CSS file for every theme in this version. Add it to <code>angular.json</code> and you are done; it works with CSS, Less and any preprocessor.
+      {{ v.major === 1 ? 'Each theme keeps light and dark in separate folders, as classic themes do.' : '' }}
+    </p>
+  } @else {
+    <p class="docs-lead">
+      ไฟล์ CSS สำเร็จรูปของทุกธีมในรุ่นนี้ ใส่ใน <code>angular.json</code> ได้ทันที ใช้ได้กับ CSS, Less และทุก preprocessor
+      {{ v.major === 1 ? 'แต่ละธีมแยกโฟลเดอร์ light / dark ไว้เหมือนธีมแบบคลาสสิก' : '' }}
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+  </div>
+</header>
+
+<docs-section id="prebuilt" [title]="{ th: 'ไฟล์สำเร็จรูป', en: 'Prebuilt files' }">
+  @if (v.major === 1) {
+    @if (en()) {
+      <p>
+        Files live at <code>wiratheme/themes/&lt;theme&gt;/theme.css</code>, e.g. <code>sila-light-teal</code>, <code>sila-dark-indigo</code>, <code>arun-blue</code>,
+        <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code>. A file exported from the Theme Designer works too.
+      </p>
+    } @else {
+      <p>
+        ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;ธีม&gt;/theme.css</code> เช่น <code>sila-light-teal</code>, <code>sila-dark-indigo</code>,
+        <code>arun-blue</code>, <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code> หรือใช้ไฟล์ที่ export จาก Theme Designer แทนก็ได้
+      </p>
+    }
+  } @else {
+    @if (en()) {
+      <p>
+        Files live at <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (the preset's own colour) or <code>themes/&lt;preset&gt;/&lt;colour&gt;.css</code>,
+        e.g. <code>themes/mali/cyan.css</code>. A file exported from the Theme Designer works too.
+      </p>
+    } @else {
+      <p>
+        ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (สีเริ่มต้นของ preset) หรือ <code>themes/&lt;preset&gt;/&lt;สี&gt;.css</code>
+        เช่น <code>themes/mali/cyan.css</code> หรือใช้ไฟล์ที่ export จาก Theme Designer แทนก็ได้
+      </p>
+    }
+  }
+  <docs-code [code]="filesCode" lang="json" file="angular.json"></docs-code>
+</docs-section>
+
+<docs-section id="override" [title]="{ th: 'ปรับค่าด้วย CSS ของแอป', en: 'Adjust values from app CSS' }">
+  @if (en()) {
+    <p>App CSS is not in an <code>&#64;layer</code>, so it always beats the theme. Set variables on <code>:root</code> once and the whole app follows.</p>
+  } @else {
+    <p>CSS ของแอปไม่อยู่ใน <code>&#64;layer</code> จึงชนะค่าของธีมเสมอ ตั้งตัวแปรบน <code>:root</code> ครั้งเดียวแล้วมีผลทั้งแอป</p>
+  }
+  <docs-code [code]="overrideCode" lang="css" file="src/styles.css"></docs-code>
+</docs-section>
+
+<docs-section id="scoped" [title]="{ th: 'ธีมเฉพาะจุด', en: 'Scoped themes' }">
+  @if (en()) {
+    <p>CSS variables inherit down to the components inside, so set them on a wrapping element.</p>
+  } @else {
+    <p>ตัวแปร CSS สืบทอดลงไปถึง component ข้างใน ตั้งค่าบน element ที่ครอบไว้ได้เลย</p>
+  }
+  <docs-code [code]="s.CSS_SCOPED" lang="css"></docs-code>
+</docs-section>
+
+<docs-section id="dark" title="Dark mode">
+  @if (v.major === 1) {
+    @if (en()) {
+      <p>
+        Classic themes ship light and dark as separate files: use <code>sila-dark-*</code>, <code>sayan-*</code> or <code>ratri-*</code> for a dark app. Those are
+        dark-only, with no class to toggle. Light files also carry dark values under <code>:root.wt-dark</code>.
+      </p>
+    } @else {
+      <p>
+        ธีมแบบคลาสสิกแยกไฟล์ light / dark ไว้แล้ว ใช้ไฟล์ <code>sila-dark-*</code>, <code>sayan-*</code> หรือ <code>ratri-*</code> เมื่อต้องการแอปสีมืด
+        ไฟล์กลุ่มนี้เป็นธีมมืดอย่างเดียวและไม่ต้องสลับ class ส่วนไฟล์ light มีค่า dark ใต้ <code>:root.wt-dark</code> ให้ด้วย
+      </p>
+    }
+  } @else {
+    @if (en()) {
+      <p>
+        The file has light values plus dark values under <code>:root.wt-dark</code>. Toggle with the <code>wt-dark</code> class on <code>&lt;html&gt;</code> or
+        <code>WtThemeService.setDarkMode(true)</code>. If your app already uses another class, name it in <code>darkModeSelector</code>.
+      </p>
+    } @else {
+      <p>
+        ไฟล์ CSS มีทั้งค่า light และค่า dark ใต้ <code>:root.wt-dark</code> สลับด้วยการใส่ class <code>wt-dark</code> ที่ <code>&lt;html&gt;</code>
+        หรือเรียก <code>WtThemeService.setDarkMode(true)</code> ถ้าแอปเดิมใช้ class อื่นอยู่ ตั้งชื่อเดียวกันใน <code>darkModeSelector</code> ได้
+      </p>
+    }
+  }
+</docs-section>

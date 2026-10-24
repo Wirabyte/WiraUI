@@ -1,0 +1,38 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-panel header="รายละเอียดคำสั่งซื้อ">
+          <p class="docs-demo-p">สินค้า 3 รายการ · ชำระแล้ว · จัดส่งภายใน 2 วัน</p>
+        </wt-panel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="toggleable" [section]="sec['toggleable']">
+      <docs-demo [html]="code['toggleable']" [ts]="ts['toggleable']" layout="stack">
+        <wt-panel id="d-panel" header="ตัวกรองขั้นสูง" [toggleable]="true" [(collapsed)]="filtersClosed">
+          <p class="docs-demo-p">ช่วงวันที่ สถานะ และผู้รับผิดชอบ</p>
+        </wt-panel>
+        <span class="docs-demo-output">collapsed: <code id="d-panel-state">{{ filtersClosed }}</code></span>
+        <wt-panel header="กดที่หัวเพื่อพับ" [toggleable]="true" toggler="header">
+          <p class="docs-demo-p">ทั้งแถบหัวกดได้</p>
+        </wt-panel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="slots" [section]="sec['slots']">
+      <docs-demo [html]="code['slots']" layout="stack">
+        <wt-panel>
+          <div wtPanelHeader class="docs-panel-head"><b>สมาชิก</b> <wt-badge value="5"></wt-badge></div>
+          <wt-button wtPanelIcons icon="pi pi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+          <p class="docs-demo-p">สมชาย, กมล, มานี และอีก 2 คน</p>
+          <div wtPanelFooter class="docs-demo-output">อัปเดตล่าสุด 5 นาทีที่แล้ว</div>
+        </wt-panel>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

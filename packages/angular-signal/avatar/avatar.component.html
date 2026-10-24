@@ -1,0 +1,10 @@
+<div [class]="classes()" [attr.role]="ariaLabel() ? 'img' : null" [attr.aria-label]="ariaLabel() || null">
+  @if (showImage()) {
+    <img [src]="image()" [alt]="ariaLabel() || label() || ''" (error)="imageError($event)" />
+  } @else if (label()) {
+    <span class="wt-avatar-text p-avatar-label">{{ label() }}</span>
+  } @else if (icon()) {
+    <span [class]="'wt-avatar-icon p-avatar-icon ' + icon()" aria-hidden="true"></span>
+  }
+  <ng-content></ng-content>
+</div>

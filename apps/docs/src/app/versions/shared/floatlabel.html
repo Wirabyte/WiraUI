@@ -1,0 +1,33 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-floatlabel id="d-floatlabel">
+          <input wtInputText id="fl-name" [(ngModel)]="name" />
+          <label for="fl-name">ชื่อ-นามสกุล</label>
+        </wt-floatlabel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']">
+        <wt-floatlabel variant="over">
+          <input wtInputText id="fl-over" [(ngModel)]="over" />
+          <label for="fl-over">Over</label>
+        </wt-floatlabel>
+        <wt-floatlabel variant="on">
+          <input wtInputText id="fl-on" [(ngModel)]="on" />
+          <label for="fl-on">On</label>
+        </wt-floatlabel>
+        <wt-floatlabel variant="in">
+          <input wtInputText id="fl-in" [(ngModel)]="inside" />
+          <label for="fl-in">In</label>
+        </wt-floatlabel>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

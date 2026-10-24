@@ -1,0 +1,11 @@
+<span [class]="classes()">
+  @if (icon()) {
+    <span [class]="'wt-tag-icon p-tag-icon ' + icon()" aria-hidden="true"></span>
+  }
+  <span class="wt-tag-label p-tag-label">
+    @if (hasValue()) {
+      {{ value() }}
+    }
+    <ng-content></ng-content>
+  </span>
+</span>

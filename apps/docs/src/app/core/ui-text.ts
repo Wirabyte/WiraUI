@@ -1,0 +1,56 @@
+/** Short UI strings of the docs chrome, Thai and English side by side. Use with `{{ 'key' | t }}` or `i18n.t('key')`. */
+export const UI = {
+  'site.title': { th: 'WiraTheme · ชุด UI ที่เข้าใจงานไทย', en: 'WiraTheme · UI components, Thai-first' },
+  'site.home': { th: 'WiraTheme หน้าแรก', en: 'WiraTheme home' },
+
+  'lang.label': { th: 'ภาษา', en: 'Language' },
+  'top.menu': { th: 'เมนูเอกสาร', en: 'Docs menu' },
+  'top.search': { th: 'ค้นหาเอกสาร', en: 'Search docs' },
+  'top.searchAria': { th: 'ค้นหาเอกสาร (Ctrl+K)', en: 'Search docs (Ctrl+K)' },
+  'top.light': { th: 'ใช้โหมดสว่าง', en: 'Switch to light mode' },
+  'top.dark': { th: 'ใช้โหมดมืด', en: 'Switch to dark mode' },
+  'top.theme': { th: 'ปรับธีม', en: 'Customize theme' },
+  'top.version': { th: 'รุ่นของ wiratheme', en: 'wiratheme version' },
+  'top.docs': { th: 'เอกสาร', en: 'Docs' },
+  'top.install': { th: 'ติดตั้ง', en: 'Install' },
+
+  'nav.soon': { th: 'เร็ว ๆ นี้', en: 'Soon' },
+  'pager.label': { th: 'หน้าก่อนหน้าและถัดไป', en: 'Previous and next page' },
+  'pager.prev': { th: 'ก่อนหน้า', en: 'Previous' },
+  'pager.next': { th: 'ถัดไป', en: 'Next' },
+  'footer.license': { th: 'WiraTheme · MIT License · โดย Wirabyte', en: 'WiraTheme · MIT License · by Wirabyte' },
+  'footer.sample': { th: 'ชื่อและข้อมูลในตัวอย่างทั้งหมดเป็นข้อมูลสมมติ', en: 'All names and figures in the examples are made up.' },
+  'toc.title': { th: 'ในหน้านี้', en: 'On this page' },
+
+  'search.dialog': { th: 'ค้นหาเอกสาร', en: 'Search docs' },
+  'search.placeholder': { th: 'ค้นหา component หรือหน้าเอกสาร…', en: 'Search components and pages…' },
+  'search.empty': { th: 'ไม่พบหน้าที่ตรงกับ', en: 'No pages match' },
+  'search.select': { th: 'เลือก', en: 'select' },
+  'search.open': { th: 'เปิด', en: 'open' },
+  'search.close': { th: 'ปิด', en: 'close' },
+
+  'config.title': { th: 'ปรับธีม', en: 'Theme' },
+  'config.reset': { th: 'คืนค่าเริ่มต้น', en: 'Reset' },
+  'config.presetColor': { th: 'สีของ preset', en: 'Preset colour' },
+  'config.presetSurface': { th: 'surface ของ preset', en: 'Preset surface' },
+  'config.surfaceDefault': { th: 'ตามธีม', en: 'Theme' },
+  'config.presets': { th: 'Presets ของ', en: 'Presets in' },
+  'config.current': { th: 'ใช้อยู่:', en: 'Active:' },
+  'config.scale': { th: 'ขนาด UI', en: 'UI size' },
+  'config.designer': { th: 'เปิด Theme Designer', en: 'Open Theme Designer' },
+
+  'code.copy': { th: 'คัดลอก', en: 'Copy' },
+  'code.copied': { th: 'คัดลอกแล้ว', en: 'Copied' },
+  'code.copyAria': { th: 'คัดลอกโค้ด', en: 'Copy code' },
+
+  'api.description': { th: 'คำอธิบาย', en: 'Description' },
+  'tokens.usedFor': { th: 'ใช้กับ', en: 'Used for' },
+  'tokens.value': { th: 'ค่าในธีมตอนนี้', en: 'Current value' },
+
+  'page.sections': { th: 'ส่วนของหน้า', en: 'Page sections' },
+  'page.runsOn': { th: 'demo รันบน Angular', en: 'demos run on Angular' },
+  'page.default': { th: 'ค่าเริ่มต้น', en: 'default' },
+  'page.sample': { th: 'ข้อมูลตัวอย่าง', en: 'Sample data' },
+} satisfies Record<string, { th: string; en: string }>;
+
+export type UiKey = keyof typeof UI;

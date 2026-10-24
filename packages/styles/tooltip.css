@@ -1,0 +1,85 @@
+/* wtTooltip. Shared by wiratheme v1, v2 and v3. A small dark label in the top layer, with an arrow that points at
+   the middle of its target even after the label was pushed back on screen. */
+@layer wiratheme.components {
+  .wt-tooltip {
+    position: fixed;
+    inset: auto;
+    z-index: 1300;
+    box-sizing: border-box;
+    max-width: min(var(--wt-tooltip-max-width), calc(100vw - 1rem));
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+    pointer-events: none;
+    font-family: var(--wt-font-family);
+    font-size: calc(var(--wt-font-size) * 0.875);
+    line-height: 1.45;
+    animation: wt-tooltip-in 0.12s ease-out;
+  }
+  /* Hoverable (the default): the pointer can rest on the tooltip and click its links. */
+  .wt-tooltip-hoverable {
+    pointer-events: auto;
+  }
+  .wt-tooltip-fit {
+    max-width: calc(100vw - 1rem);
+    white-space: nowrap;
+  }
+  .wt-tooltip-text {
+    padding: var(--wt-tooltip-padding);
+    border-radius: var(--wt-tooltip-radius);
+    background: var(--wt-tooltip-bg);
+    color: var(--wt-tooltip-color);
+    box-shadow: var(--wt-tooltip-shadow);
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+  .wt-tooltip-text a {
+    color: inherit;
+  }
+  .wt-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 0.3125rem solid transparent;
+  }
+  .wt-tooltip-top .wt-tooltip-arrow {
+    top: 100%;
+    left: var(--_arrow, 50%);
+    margin-left: -0.3125rem;
+    border-top-color: var(--wt-tooltip-bg);
+    border-bottom-width: 0;
+  }
+  .wt-tooltip-bottom .wt-tooltip-arrow {
+    bottom: 100%;
+    left: var(--_arrow, 50%);
+    margin-left: -0.3125rem;
+    border-bottom-color: var(--wt-tooltip-bg);
+    border-top-width: 0;
+  }
+  .wt-tooltip-left .wt-tooltip-arrow {
+    left: 100%;
+    top: var(--_arrow, 50%);
+    margin-top: -0.3125rem;
+    border-left-color: var(--wt-tooltip-bg);
+    border-right-width: 0;
+  }
+  .wt-tooltip-right .wt-tooltip-arrow {
+    right: 100%;
+    top: var(--_arrow, 50%);
+    margin-top: -0.3125rem;
+    border-right-color: var(--wt-tooltip-bg);
+    border-left-width: 0;
+  }
+  @keyframes wt-tooltip-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-tooltip {
+      animation: none;
+    }
+  }
+}

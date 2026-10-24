@@ -1,0 +1,13 @@
+import { inject, Provider } from '@angular/core';
+import { WIRATHEME_MAJOR } from 'wiratheme-v1';
+import { WT_VERSION_INFO, WtConfig, WtThemeService } from 'wiratheme-v1/config';
+import { EN_LOCALE, TH_LOCALE } from 'wiratheme-v1/core';
+import * as presets from 'wiratheme-v1/presets';
+import { DOCS_THEME, DOCS_VERSION, versionTheme } from '../../core/version-theme';
+import { docVersion } from '../../core/versions';
+
+/** wiratheme@1's own theme service and preset catalog, exposed to the docs chrome. */
+export const THEME_V1: Provider[] = [
+  { provide: DOCS_VERSION, useValue: { ...docVersion('v1'), major: WIRATHEME_MAJOR } },
+  { provide: DOCS_THEME, useFactory: () => versionTheme('v1', WT_VERSION_INFO.major, inject(WtThemeService), inject(WtConfig), presets, { th: TH_LOCALE, en: EN_LOCALE }) },
+];

@@ -1,0 +1,132 @@
+<dialog
+  #mask
+  *ngIf="rendered"
+  role="alertdialog"
+  class="wt-alert-mask"
+  [class.wt-alert-leaving]="leaving"
+  [attr.aria-labelledby]="o.title ? titleId : null"
+  [attr.aria-describedby]="o.text || o.html ? textId : null"
+  [attr.aria-busy]="loading || null"
+  (keydown)="keydown($event)"
+  (cancel)="cancelEvent($event)"
+  (pointerdown)="maskPointerdown($event)"
+  (click)="maskClick($event)"
+>
+  <div #popup tabindex="-1" class="wt-alert" [ngClass]="part('popup')" [style.width]="popupWidth">
+    <button *ngIf="o.showCloseButton" type="button" class="wt-alert-close" [attr.aria-label]="t.close" (click)="dismiss('close')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+    </button>
+
+    <ng-container *ngFor="let r of runs">
+      <div *ngIf="icon" class="wt-alert-icon" [ngClass]="'wt-alert-icon-' + icon" [style.color]="o.iconColor || null" aria-hidden="true">
+        <svg viewBox="0 0 80 80" [ngSwitch]="icon">
+          <circle class="wt-alert-halo" cx="40" cy="40" r="40"></circle>
+          <circle class="wt-alert-ring" cx="40" cy="40" r="36"></circle>
+          <path *ngSwitchCase="'success'" class="wt-alert-mark" d="M25 41l10 10 21-22"></path>
+          <ng-container *ngSwitchCase="'error'">
+            <path class="wt-alert-mark" d="M29 29l22 22"></path>
+            <path class="wt-alert-mark wt-alert-mark-2" d="M51 29L29 51"></path>
+          </ng-container>
+          <ng-container *ngSwitchCase="'warning'">
+            <path class="wt-alert-mark" d="M40 22v22"></path>
+            <circle class="wt-alert-dot" cx="40" cy="55" r="3.5"></circle>
+          </ng-container>
+          <ng-container *ngSwitchCase="'info'">
+            <circle class="wt-alert-dot" cx="40" cy="25" r="3.5"></circle>
+            <path class="wt-alert-mark" d="M40 36v22"></path>
+          </ng-container>
+          <ng-container *ngSwitchCase="'question'">
+            <path class="wt-alert-mark" d="M31 31a9 9 0 1 1 13 8c-3 1.8-4 3.4-4 6.5"></path>
+            <circle class="wt-alert-dot" cx="40" cy="56" r="3.5"></circle>
+          </ng-container>
+        </svg>
+      </div>
+    </ng-container>
+
+    <h2 *ngIf="o.title" class="wt-alert-title" [ngClass]="part('title')" [id]="titleId">{{ o.title }}</h2>
+    <div *ngIf="o.html" class="wt-alert-text" [ngClass]="part('htmlContainer')" [id]="textId" [innerHTML]="o.html"></div>
+    <p *ngIf="!o.html && o.text" class="wt-alert-text" [ngClass]="part('htmlContainer')" [id]="textId">{{ o.text }}</p>
+
+    <div *ngIf="o.input" class="wt-alert-input">
+      <label *ngIf="o.inputLabel && o.input !== 'checkbox'" class="wt-alert-label" [attr.for]="titleId + '-field'">{{ o.inputLabel }}</label>
+      <input
+        *ngIf="isTextInput"
+        [id]="titleId + '-field'"
+        class="wt-alert-field wt-inputtext p-inputtext"
+        [type]="o.input"
+        [value]="inputValue"
+        [attr.placeholder]="o.inputPlaceholder || null"
+        [attr.aria-invalid]="validation ? true : null"
+        (input)="typed($event)"
+      />
+      <textarea
+        *ngIf="o.input === 'textarea'"
+        [id]="titleId + '-field'"
+        rows="4"
+        class="wt-alert-field wt-inputtext p-inputtext"
+        [value]="inputValue"
+        [attr.placeholder]="o.inputPlaceholder || null"
+        (input)="typed($event)"
+      ></textarea>
+      <select *ngIf="o.input === 'select'" [id]="titleId + '-field'" class="wt-alert-field" (change)="typed($event)">
+        <option *ngIf="o.inputPlaceholder" value="" disabled [selected]="!inputValue">{{ o.inputPlaceholder }}</option>
+        <option *ngFor="let opt of options" [value]="opt.value" [selected]="opt.value === inputValue">{{ opt.label }}</option>
+      </select>
+      <div *ngIf="o.input === 'radio'" class="wt-alert-choices" role="radiogroup">
+        <label *ngFor="let opt of options; let i = index" class="wt-alert-choice">
+          <input type="radio" [name]="titleId + '-radio'" [value]="opt.value" [checked]="opt.value === inputValue" [class.wt-alert-field]="i === 0" (change)="typed($event)" />
+          {{ opt.label }}
+        </label>
+      </div>
+      <label *ngIf="o.input === 'checkbox'" class="wt-alert-choice wt-alert-choices">
+        <input type="checkbox" class="wt-alert-field" [checked]="!!inputValue" (change)="typed($event)" />
+        {{ o.inputPlaceholder || o.inputLabel }}
+      </label>
+    </div>
+
+    <div *ngIf="validation" class="wt-alert-validation" role="alert">{{ validation }}</div>
+
+    <div *ngIf="loading" class="wt-alert-loader" role="status" [attr.aria-label]="t.loading"><span class="wt-alert-spinner"></span></div>
+
+    <div *ngIf="hasActions" class="wt-alert-actions">
+      <ng-container *ngFor="let b of actions" [ngSwitch]="b">
+        <ng-container *ngSwitchCase="'confirm'">
+          <button
+            type="button"
+            class="wt-alert-button wt-alert-confirm"
+            [ngClass]="part('confirmButton')"
+            [class.wt-alert-custom]="!!o.confirmButtonColor"
+            [style.background]="o.confirmButtonColor || null"
+            [style.border-color]="o.confirmButtonColor || null"
+            (click)="confirm()"
+          >{{ confirmText }}</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="'deny'">
+          <button
+            type="button"
+            class="wt-alert-button wt-alert-deny"
+            [ngClass]="part('denyButton')"
+            [class.wt-alert-custom]="!!o.denyButtonColor"
+            [style.background]="o.denyButtonColor || null"
+            [style.border-color]="o.denyButtonColor || null"
+            (click)="deny()"
+          >{{ denyText }}</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="'cancel'">
+          <button
+            type="button"
+            class="wt-alert-button wt-alert-cancel"
+            [ngClass]="part('cancelButton')"
+            [class.wt-alert-custom]="!!o.cancelButtonColor"
+            [style.background]="o.cancelButtonColor || null"
+            [style.border-color]="o.cancelButtonColor || null"
+            (click)="dismiss('cancel')"
+          >{{ cancelText }}</button>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div *ngIf="o.footer" class="wt-alert-footer" [innerHTML]="o.footer"></div>
+    <div *ngIf="o.timer && o.timerProgressBar" class="wt-alert-timer"><span [style.animation-duration.ms]="o.timer"></span></div>
+  </div>
+</dialog>

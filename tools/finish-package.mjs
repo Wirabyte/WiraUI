@@ -13,10 +13,10 @@ const pkg = JSON.parse(readFileSync(join(dist, 'package.json'), 'utf8'));
 const problems = [];
 if (pkg.name !== 'wiratheme') problems.push(`name is ${pkg.name}`);
 if (pkg.peerDependencies['@angular/core'] !== peerRange(spec)) problems.push('peer range drifted');
-for (const entry of ['./core', './config', './presets', './button', './card', './inputtext', './textarea', './checkbox', './radiobutton', './toggleswitch']) {
+for (const entry of ['./core', './config', './presets', './button', './card', './inputtext', './textarea', './checkbox', './radiobutton', './toggleswitch', './tag', './badge', './chip', './avatar', './divider', './skeleton', './progressbar', './progressspinner', './message', './panel', './fieldset', './iconfield', './inputgroup', './floatlabel', './togglebutton', './selectbutton', './rating', './password', './toolbar', './accordion', './tabs', './inputnumber', './datepicker', './dialog', './alert', './confirmdialog', './toast', './tooltip', './popover', './animate', './api', './validation', './metergroup']) {
   if (!pkg.exports || !pkg.exports[entry]) problems.push(`missing export ${entry}`);
 }
-for (const file of ['theme/_index.scss', 'schematics/collection.json']) {
+for (const file of ['theme/_index.scss', 'utils/_index.scss', 'utils/utils.css', 'schematics/collection.json']) {
   if (!existsSync(join(dist, file))) problems.push(`missing ${file}`);
 }
 for (const f of ['README.md', 'LICENSE']) copyFileSync(join(root, f), join(dist, f));

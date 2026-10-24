@@ -11,15 +11,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
 import { WtCheckboxChangeEvent } from './checkbox.types';
 
 /**
- * Checkbox for ngModel and reactive forms, with PrimeNG's two modes:
+ * Checkbox for ngModel and reactive forms, with two modes:
  * `binary` (the model is `trueValue` / `falseValue`) or a group (the model is an array and `value` is added or removed).
  */
 @Component({
   selector: 'wt-checkbox',
+  host: {
+    '[class.wt-checkbox-sm]': "sizeKey() === 'sm'",
+    '[class.p-checkbox-sm]': "sizeKey() === 'sm'",
+    '[class.wt-checkbox-lg]': "sizeKey() === 'lg'",
+    '[class.p-checkbox-lg]': "sizeKey() === 'lg'",
+  },
   standalone: true,
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.css',
@@ -36,6 +42,9 @@ export class WtCheckbox implements ControlValueAccessor {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
+  /** `small` or `large` (also `sm` / `lg`). */
+  readonly size = input<WtSize>();
+  readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly trueValue = input<unknown>(true);
   readonly falseValue = input<unknown>(false);
   readonly ariaLabel = input<string>();

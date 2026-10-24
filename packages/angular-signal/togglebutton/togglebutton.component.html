@@ -1,0 +1,23 @@
+<button
+  type="button"
+  [id]="inputId() || null"
+  [class]="classes()"
+  [attr.aria-pressed]="checked()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-invalid]="invalid() || null"
+  [disabled]="isDisabled()"
+  (click)="toggle($event)"
+  (blur)="onTouched()"
+>
+  <span class="wt-togglebutton-content p-togglebutton-content">
+    @if (icon() && iconPos() === 'left') {
+      <span [class]="'wt-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
+    }
+    @if (label()) {
+      <span class="wt-togglebutton-label p-togglebutton-label">{{ label() }}</span>
+    }
+    @if (icon() && iconPos() === 'right') {
+      <span [class]="'wt-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
+    }
+  </span>
+</button>

@@ -1,0 +1,23 @@
+<div
+  #panel
+  *ngIf="overlayVisible"
+  popover="manual"
+  role="dialog"
+  class="wt-popover p-overlaypanel p-component"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="style || null"
+  (keydown)="keydown($event)"
+>
+  <div class="wt-popover-content p-overlaypanel-content">
+    <ng-content></ng-content>
+  </div>
+  <button
+    *ngIf="showCloseIcon"
+    type="button"
+    class="wt-popover-close p-overlaypanel-close p-link"
+    [attr.aria-label]="ariaCloseLabel || t.close"
+    (click)="hide()"
+  >
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+  </button>
+</div>

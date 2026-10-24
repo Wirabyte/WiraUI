@@ -1,11 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
   <head>
     <meta charset="utf-8" />
-    <title>Docs</title>
+    <title>WiraTheme · ชุด UI ที่เข้าใจงานไทย</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="description" content="WiraTheme: UI components and theming, Thai-first with the Buddhist calendar built in. Angular 15–21+ today, React and Vue coming. Free under MIT. · ชุด UI และระบบธีมที่เข้าใจงานไทย ภาษาไทยและ พ.ศ. ในตัว รองรับ Angular 15–21+ วันนี้ React และ Vue กำลังตามมา ใช้ฟรีภายใต้ MIT" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kanit:wght@400;500;600&display=swap"
+    />
+    <!-- Dark mode and language before Angular starts, so the first paint is already right. -->
+    <script>
+      try {
+        var d = localStorage.getItem('wiratheme-docs-dark');
+        if (d === '1' || (d === null && matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('wt-dark');
+        }
+        var q = /[?&]lang=(th|en)(?![a-z])/.exec(location.search);
+        var l = (q && q[1]) || localStorage.getItem('wiratheme-docs-lang');
+        document.documentElement.lang = l === 'th' || l === 'en' ? l : /^th/i.test(navigator.language) ? 'th' : 'en';
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <app-root></app-root>

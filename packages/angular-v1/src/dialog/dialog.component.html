@@ -1,0 +1,84 @@
+<dialog
+  #mask
+  *ngIf="rendered"
+  class="wt-dialog-mask p-dialog-mask p-component-overlay p-component-overlay-enter"
+  [ngClass]="(maskStyleClass || '') + ' ' + positionClasses"
+  [class.wt-dialog-modal]="modal"
+  [class.p-dialog-mask-scrollblocker]="modal"
+  [class.wt-dialog-leaving]="leaving"
+  [attr.aria-labelledby]="labelledBy"
+  (keydown)="keydown($event)"
+  (cancel)="cancel($event)"
+  (close)="nativeClose()"
+  (pointerdown)="maskPointerdown($event)"
+  (click)="maskClick($event)"
+>
+  <div
+    #panel
+    tabindex="-1"
+    class="wt-dialog p-dialog p-component"
+    [ngClass]="styleClass || ''"
+    [ngStyle]="panelStyle"
+    [class.wt-dialog-maximized]="maximized"
+    [class.p-dialog-maximized]="maximized"
+    [class.wt-dialog-draggable]="draggable"
+    [class.p-dialog-draggable]="draggable"
+    [class.wt-dialog-headerless]="!showHeader"
+  >
+    <ng-container *ngIf="headlessTemplate; else regular">
+      <ng-container *ngTemplateOutlet="headlessTemplate"></ng-container>
+    </ng-container>
+    <ng-template #regular>
+      <div *ngIf="showHeader" class="wt-dialog-header p-dialog-header" (pointerdown)="headerPointerdown($event)">
+        <span *ngIf="!headerTemplate" class="wt-dialog-title p-dialog-title" [id]="titleId">{{ header }}</span>
+        <div *ngIf="headerTemplate" class="wt-dialog-title p-dialog-title" [id]="titleId">
+          <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+        </div>
+        <div class="wt-dialog-header-actions p-dialog-header-icons">
+          <button
+            *ngIf="maximizable"
+            type="button"
+            class="wt-dialog-icon p-dialog-header-icon p-dialog-header-maximize p-link"
+            [attr.aria-label]="maximized ? t.collapse : t.expand"
+            (click)="toggleMaximize()"
+          >
+            <i *ngIf="maximized ? minimizeIcon : maximizeIcon; else maximizeSvg" [class]="(maximized ? minimizeIcon : maximizeIcon) || ''"></i>
+            <ng-template #maximizeSvg>
+              <svg *ngIf="!maximized" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"></path></svg>
+              <svg *ngIf="maximized" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 2.5 9 7M9 3v4h4M2.5 13.5 7 9M7 13V9H3"></path></svg>
+            </ng-template>
+          </button>
+          <button
+            *ngIf="closable"
+            type="button"
+            class="wt-dialog-icon p-dialog-header-icon p-dialog-header-close p-link"
+            [attr.aria-label]="closeAriaLabel || t.close"
+            (click)="close($event)"
+          >
+            <ng-container *ngIf="closeIconTemplate; else closeDefault">
+              <ng-container *ngTemplateOutlet="closeIconTemplate"></ng-container>
+            </ng-container>
+            <ng-template #closeDefault>
+              <i *ngIf="closeIcon; else closeSvg" [class]="closeIcon"></i>
+              <ng-template #closeSvg>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+              </ng-template>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+      <div class="wt-dialog-content p-dialog-content" [ngClass]="contentStyleClass || ''" [ngStyle]="contentStyle || null">
+        <ng-content></ng-content>
+        <ng-container *ngIf="contentTemplate">
+          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        </ng-container>
+      </div>
+      <div *ngIf="hasFooter" class="wt-dialog-footer p-dialog-footer">
+        <ng-content select="[wtDialogFooter], wt-footer"></ng-content>
+        <ng-container *ngIf="footerTemplate">
+          <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+        </ng-container>
+      </div>
+    </ng-template>
+  </div>
+</dialog>

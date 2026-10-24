@@ -1,0 +1,165 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">{{ en() ? 'Theming overview' : 'ภาพรวมของธีม' }}</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      A WiraTheme theme is a set of design tokens that becomes one set of <code>--wt-*</code> CSS variables. Write it in CSS, SCSS or TypeScript;
+      component CSS only reads <code>var(--wt-*)</code>, so theme files hold nothing but token values.
+    </p>
+  } @else {
+    <p class="docs-lead">
+      ธีมของ WiraTheme คือชุด design token ที่ออกมาเป็น CSS variable <code>--wt-*</code> ชุดเดียว เขียนได้ 3 ทาง (CSS, SCSS, TypeScript)
+      และ CSS ของ component อ่านแค่ <code>var(--wt-*)</code> ไฟล์ธีมจึงมีแต่ค่า token
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · {{ v.look | loc }}</span>
+  </div>
+</header>
+
+<docs-section id="tokens" [title]="{ th: 'Token 3 ชั้น', en: 'Three token tiers' }">
+  <div class="docs-table-wrap">
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>{{ en() ? 'Tier' : 'ชั้น' }}</th>
+          <th>{{ en() ? 'Examples' : 'ตัวอย่าง' }}</th>
+          <th>CSS variable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>primitive</b></td>
+          <td>{{ en() ? 'palettes 50–950, radius and spacing scales' : 'palette 50–950, radius scale, spacing scale' }}</td>
+          <td><code>--wt-primary-500</code>, <code>--wt-radius-md</code></td>
+        </tr>
+        <tr>
+          <td><b>semantic</b></td>
+          <td>
+            {{
+              en()
+                ? 'primary, surface, success / info / warn / danger / help, text, border, focus ring, form fields (light and dark values)'
+                : 'primary, surface, success / info / warn / danger / help, text, border, focus ring, form field (มีค่า light / dark)'
+            }}
+          </td>
+          <td><code>--wt-primary-color</code>, <code>--wt-text</code>, <code>--wt-field-padding-y</code></td>
+        </tr>
+        <tr>
+          <td><b>component</b></td>
+          <td>{{ en() ? 'per-component values that can refer to semantic tokens' : 'ค่าเฉพาะของแต่ละ component ที่อ้างถึง semantic ได้' }}</td>
+          <td><code>--wt-button-padding-x</code>, <code>--wt-card-body-gap</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  @if (en()) {
+    <p>Each component page has a <b>Theming</b> tab listing the tokens it reads, with their live values.</p>
+  } @else {
+    <p>ดู token ที่แต่ละ component อ่านได้ในแท็บ <b>Theming</b> ของหน้า component นั้น (มีค่าจริงของธีมที่ใช้อยู่ให้ดูด้วย)</p>
+  }
+</docs-section>
+
+<docs-section id="layers" [title]="{ th: 'ลำดับการชนะ (@layer)', en: 'What wins (@layer)' }">
+  @if (en()) {
+    <p>WiraTheme declares the cascade layer order at the top of <code>&lt;head&gt;</code> for you, so import order does not matter.</p>
+  } @else {
+    <p>WiraTheme ประกาศลำดับ cascade layer ไว้บนสุดของ <code>&lt;head&gt;</code> ให้เอง ไม่ต้องสนลำดับการ import</p>
+  }
+  <docs-code [code]="s.LAYER_ORDER" lang="css"></docs-code>
+  <docs-code [code]="s.LAYER_STACK" lang="text" [file]="en() ? 'Who wins' : 'ใครชนะ'"></docs-code>
+  @if (en()) {
+    <p>The main theme can still come from SCSS, TypeScript overrides always apply on top, and your app's CSS beats both without <code>!important</code>.</p>
+  } @else {
+    <p>ผลคือธีมหลักยัง import ผ่าน SCSS ได้ TypeScript override ทับได้เสมอ และ CSS ของแอปชนะทั้งหมดโดยไม่ต้องใช้ <code>!important</code></p>
+  }
+</docs-section>
+
+<docs-section id="ways" [title]="{ th: '3 ทางในการทำธีม', en: 'Three ways to theme' }">
+  <div class="docs-next-grid">
+    <a class="docs-next-card" [routerLink]="link('theming/scss')">
+      <docs-icon name="code"></docs-icon>
+      <b>SCSS</b>
+      <span><code>&#64;use 'wiratheme/theme' with (…)</code>{{ en() ? ', the format the Designer exports' : ' แบบไฟล์ที่ Designer export' }}</span>
+    </a>
+    <a class="docs-next-card" [routerLink]="link('theming/css')">
+      <docs-icon name="layers"></docs-icon>
+      <b>CSS</b>
+      <span>{{ en() ? 'Prebuilt files in angular.json, for any preprocessor' : 'ไฟล์สำเร็จรูปใน angular.json ใช้ได้กับทุก preprocessor' }}</span>
+    </a>
+    <a class="docs-next-card" [routerLink]="link('theming/typescript')">
+      <docs-icon name="wand"></docs-icon>
+      <b>TypeScript</b>
+      <span><code>defineOverrides</code>, <code>definePreset</code>{{ en() ? ' and run-time changes' : ' และเปลี่ยนตอน runtime' }}</span>
+    </a>
+  </div>
+</docs-section>
+
+<docs-section id="presets" [title]="{ th: 'Preset ของแต่ละรุ่น', en: 'Presets per version' }">
+  <p>{{ en() ? 'Each major has its own preset catalog and default look.' : 'แต่ละ major มีชุด preset และหน้าตาเริ่มต้นของตัวเอง' }}</p>
+  <div class="docs-table-wrap">
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>{{ en() ? 'Version' : 'รุ่น' }}</th>
+          <th>{{ en() ? 'Themes' : 'ธีม' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (x of versions; track x.id) {
+          <tr [class.docs-row-current]="x.id === v.id">
+            <td><code>wiratheme&#64;{{ x.major }}</code></td>
+            <td>{{ x.lookDetail | loc }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <a [routerLink]="link('theming/presets')">{{ en() ? 'See every theme in' : 'ดู preset ทั้งหมดของ' }} wiratheme&#64;{{ v.major }}</a>
+    {{ en() ? 'and try them right away.' : 'และลองสลับดูได้ทันที' }}
+  </p>
+</docs-section>
+
+<docs-section id="dark" title="Dark mode">
+  @if (en()) {
+    <p>
+      Three modes: <code>'none'</code> (light values only), <code>'class'</code> (toggled with <code>.wt-dark</code> on <code>&lt;html&gt;</code>) and
+      <code>'media'</code> (<code>prefers-color-scheme</code>). Or name your own class with <code>darkModeSelector</code>, e.g. <code>'.my-dark'</code>.
+    </p>
+    <p>
+      Dark-only themes (<code>sayan-*</code>, <code>ratri-*</code>, <code>sila-dark-*</code>, or <code>definePreset(…, {{ '{' }} scheme: 'dark' {{ '}' }})</code>) have no
+      light values, so there is no class to toggle. The dark button on this site switches to the matching twin, such as <code>sila-light-teal</code> ↔ <code>sila-dark-teal</code>.
+    </p>
+  } @else {
+    <p>
+      ตั้งได้ 3 แบบ: <code>'none'</code> (มีแค่ค่า light), <code>'class'</code> (สลับด้วย <code>.wt-dark</code> บน <code>&lt;html&gt;</code>)
+      และ <code>'media'</code> (ตาม <code>prefers-color-scheme</code>) หรือตั้งชื่อ class เองด้วย <code>darkModeSelector</code> เช่น <code>'.my-dark'</code>
+    </p>
+    <p>
+      ธีมมืดอย่างเดียว (<code>sayan-*</code>, <code>ratri-*</code>, <code>sila-dark-*</code> หรือ <code>definePreset(…, {{ '{' }} scheme: 'dark' {{ '}' }})</code>)
+      ไม่มีค่า light จึงไม่ต้องสลับ class ปุ่มโหมดมืดบนเว็บนี้สลับไปธีมคู่กันให้เอง เช่น <code>sila-light-teal</code> ↔ <code>sila-dark-teal</code>
+    </p>
+  }
+</docs-section>
+
+<docs-section id="scale" [title]="{ th: 'ขนาด UI ทั้งแอป', en: 'UI size for the whole app' }">
+  @if (en()) {
+    <p>
+      <code>scale</code> sets the root font size: <code>'sm'</code> 12px, <code>'md'</code> 14px, <code>'lg'</code> 16px (the browser default), or a number of px. Every
+      rem in the theme follows, so every component grows or shrinks together. Leave it out to keep the page's own root size. The "UI size" control in
+      this site's theme panel does the same (this site starts at <code>md</code>).
+    </p>
+  } @else {
+    <p>
+      <code>scale</code> กำหนดขนาดตัวอักษรของ root: <code>'sm'</code> 12px, <code>'md'</code> 14px, <code>'lg'</code> 16px (ค่าเริ่มต้นของเบราว์เซอร์) หรือตัวเลข px ทุกค่า rem
+      ในธีมเปลี่ยนตาม ทุก component จึงเล็กหรือใหญ่ขึ้นพร้อมกัน ถ้าไม่ใส่จะใช้ขนาดเดิมของหน้าเว็บ ปุ่ม "ขนาด UI" ในแผงปรับธีมของเว็บนี้ทำแบบเดียวกัน
+      (เว็บนี้เริ่มที่ <code>md</code>)
+    </p>
+  }
+  <docs-code [code]="s.SCALE" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="runtime" [title]="{ th: 'เปลี่ยนธีมตอน runtime', en: 'Changing the theme at run time' }">
+  <p>{{ en() ? "The theme button on this site calls the open version's WtThemeService directly." : 'ปุ่มปรับธีมด้านบนของเว็บนี้ใช้ WtThemeService ของรุ่นที่เปิดอยู่ตรง ๆ' }}</p>
+  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+</docs-section>

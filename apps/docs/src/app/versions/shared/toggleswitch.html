@@ -1,0 +1,56 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-toggleswitch id="d-notify" [(ngModel)]="newsletter" label="รับข่าวสารทางอีเมล"></wt-toggleswitch>
+        <span class="docs-demo-output">newsletter: <code id="d-notify-value">{{ newsletter | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-toggleswitch [(ngModel)]="sizeValue" size="small" label="เล็ก"></wt-toggleswitch>
+        <wt-toggleswitch [(ngModel)]="sizeValue" label="ปกติ"></wt-toggleswitch>
+        <wt-toggleswitch [(ngModel)]="sizeValue" size="large" label="ใหญ่"></wt-toggleswitch>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="values" [section]="sec['values']">
+      <docs-demo [html]="code['values']">
+        <wt-toggleswitch id="d-active" [(ngModel)]="status" trueValue="active" falseValue="inactive" label="เปิดใช้งานบัญชี"></wt-toggleswitch>
+        <span class="docs-demo-output">status: <code id="d-active-value">{{ status | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-toggleswitch id="r-email" formControlName="email" label="แจ้งเตือนทางอีเมล"></wt-toggleswitch>
+          <wt-toggleswitch id="r-sms" formControlName="sms" label="แจ้งเตือนทาง SMS"></wt-toggleswitch>
+        </form>
+        <div class="docs-demo-actions">
+          <wt-button
+            id="r-lock"
+            [label]="form.controls.sms.disabled ? 'enable() SMS' : 'disable() SMS'"
+            size="small"
+            severity="secondary"
+            (onClick)="toggleLock()"
+          ></wt-button>
+          <span class="docs-demo-output">value: <code id="r-value">{{ form.getRawValue() | json }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']">
+        <wt-toggleswitch [ngModel]="true" [disabled]="true" label="ปิดอยู่ (เปิด)"></wt-toggleswitch>
+        <wt-toggleswitch [ngModel]="false" [disabled]="true" label="ปิดอยู่"></wt-toggleswitch>
+        <wt-toggleswitch [invalid]="true" label="Invalid"></wt-toggleswitch>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

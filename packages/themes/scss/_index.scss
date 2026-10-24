@@ -1,7 +1,8 @@
-// WiraTheme theme: `@use 'wiratheme/theme' with ($preset: 'wira', $primary: #00a86b, …);`
+// WiraTheme theme: `@use 'wiratheme/theme' with ($preset: 'mali', $primary: #10b981, …);`
+// or a ready-made theme: `@use 'wiratheme/theme' with ($theme: 'sila-light-teal');`
 // Emits the same --wt-* tokens as computeTokens() + tokensToCss() in @wiratheme/core
 // (test/parity.test.ts compiles both supported Sass versions against it). Every setting is
-// optional; anything left out comes from $preset.
+// optional; anything left out comes from the theme or preset.
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
@@ -9,32 +10,40 @@
 @use 'sass:string';
 @use 'data';
 @use 'color';
+@use 'version';
 
-// 'wira' | 'lanna' | 'siam' | 'nakhon'
-$preset: 'wira' !default;
+// A ready-made theme such as 'sila-light-teal', 'sayan-blue', 'md-dark-indigo' (v1) or a preset name.
+$theme: null !default;
+// v1: 'sila-classic' | 'arun' | 'sayan' | 'ratri' | 'material-classic'
+// v2: 'mali' | 'sila' | 'material' | 'phet'    v3: v2's plus 'wira' | 'lanna' | 'siam' | 'nakhon' | 'glass'
+$preset: null !default;
 // A hex colour (50–950 are generated from it), a map (50: …, …, 950: …), or a swatch name such as 'sky'.
 $primary: null !default;
-// 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone'
+// 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone' | 'classic' | 'sayan' | 'ratri' | 'navy'
 $surface: null !default;
+// Text on primary buttons, e.g. #212529; null keeps the preset's choice.
+$primary-contrast: null !default;
 // (success: #22c55e, info: …, warn: …, danger: …, help: …); any subset.
 $semantic: null !default;
 // ('Kanit', sans-serif)
 $font-family: null !default;
-$font-size: null !default; // px
+$font-size: null !default; // px, emitted in rem
 $line-height: null !default;
 $radius: null !default; // px
 // 'compact' | 'normal' | 'comfortable'
 $density: null !default;
-// 'none' | 'subtle' | 'soft' | 'elevated'
+// 'none' | 'subtle' | 'soft' | 'elevated' | 'material' | 'mali' | 'sila' | 'phet'
 $shadow: null !default;
-// 'ring' | 'outline'
+// 'ring' | 'outline' | 'inset' | 'bold'
 $focus-ring: null !default;
 $transition: null !default; // ms
 $ripple: null !default;
 // 'none' | 'class' (.wt-dark on <html>) | 'media' (prefers-color-scheme)
 $dark-mode: 'class' !default;
+// 'light' | 'dark' (dark colours only, like Sayan and Ratri)
+$scheme: null !default;
 // 'solid' | 'glass'
-$material: 'solid' !default;
+$material: null !default;
 // Component id → kebab-case (or camelCase) token keys: (card: (body-gap: 0px, bordered: false), table: (striped: true))
 $components: () !default;
 
@@ -145,12 +154,33 @@ $components: () !default;
   @error 'wiratheme: $font-family must be a list like (\'Kanit\', sans-serif), got `#{meta.inspect($value)}`.';
 }
 
-// ---------- settings, with gaps filled from the preset ----------
+// ---------- settings, with gaps filled from the theme and preset ----------
 
-$-preset: -id($preset, '$preset', map.keys(data.$presets));
+// themeConfig(): a named theme gives the preset and may set primary, surface and scheme.
+$-theme: ();
+@if $theme != null {
+  @if $preset != null {
+    @error 'wiratheme: set $theme or $preset, not both (a theme already names its preset).';
+  }
+  $-theme-id: -id($theme, '$theme', list.join(map.keys(data.$classic-themes), map.keys(data.$presets)));
+  $-theme: map.get(data.$classic-themes, $-theme-id);
+  @if $-theme == null {
+    $-theme: (preset: $-theme-id);
+  }
+}
+$-preset-in: $preset;
+@if $-preset-in == null {
+  $-preset-in: map.get($-theme, preset) or version.$default-preset;
+}
+$-preset: -id($-preset-in, '$preset', map.keys(data.$presets));
 $-p: map.get(data.$presets, $-preset);
+$-family: map.get($-p, family);
+$-generation: map.get(data.$family-generation, $-family);
 
 @function -or($value, $key) {
+  @if $value == null {
+    $value: map.get($-theme, $key);
+  }
   @if $value == null {
     @return map.get($-p, $key);
   }
@@ -162,9 +192,10 @@ $-surface-scale: map.get(data.$surfaces, $-surface);
 $-s950: list.nth($-surface-scale, 11);
 $-density: -id(-or($density, density), '$density', map.keys(data.$density));
 $-shadow: -id(-or($shadow, shadow), '$shadow', map.keys(data.$shadows));
-$-focus-ring: -id(-or($focus-ring, focus-ring), '$focus-ring', ('ring', 'outline'));
+$-focus-ring: -id(-or($focus-ring, focus-ring), '$focus-ring', data.$focus-styles);
 $-dark-mode: -id($dark-mode, '$dark-mode', ('none', 'class', 'media'));
-$-material: -id($material, '$material', ('solid', 'glass'));
+$-scheme: -id(-or($scheme, scheme), '$scheme', ('light', 'dark'));
+$-material: -id(-or($material, material) or 'solid', '$material', ('solid', 'glass'));
 $-radius: -px(-or($radius, radius), '$radius');
 $-font-size: -px(-or($font-size, font-size), '$font-size');
 $-transition: -ms(-or($transition, transition), '$transition');
@@ -175,6 +206,10 @@ $-line-height: -or($line-height, line-height);
 // No token of its own; checked so a typo fails here rather than silently.
 @if meta.type-of(-or($ripple, ripple)) != 'bool' {
   @error 'wiratheme: $ripple must be true or false, got `#{meta.inspect($ripple)}`.';
+}
+$-primary-contrast: -or($primary-contrast, primary-contrast);
+@if $-primary-contrast != null {
+  $-primary-contrast: color.wt-hex(color.wt-rgb($-primary-contrast, '$primary-contrast'));
 }
 
 $-semantic: ();
@@ -218,6 +253,11 @@ $-semantic: ();
 $-light: ();
 $-dark: ();
 
+@mixin -add($t) {
+  $-light: map.merge($-light, map.get($t, light)) !global;
+  $-dark: map.merge($-dark, map.get($t, dark)) !global;
+}
+
 // surfaceTokens
 $-light: map.merge($-light, ('surface-0': '#ffffff'));
 @for $i from 1 through 11 {
@@ -225,133 +265,64 @@ $-light: map.merge($-light, ('surface-0': '#ffffff'));
 }
 
 // primaryTokens
-$-primary-palette: -palette(-or($primary, primary), '$primary');
+$-primary-in: -or($primary, primary);
+$-primary-palette: -palette($-primary-in, '$primary');
 @each $s in data.$shades {
   $-light: map.merge($-light, ('primary-#{$s}': map.get($-primary-palette, $s)));
 }
-$-light: map.merge($-light, ('primary-contrast': color.wt-best-on(map.get($-primary-palette, 500), $-s950)));
-$-dark: map.merge($-dark, ('primary-contrast': color.wt-best-on(map.get($-primary-palette, 400), $-s950)));
+$-light: map.merge($-light, ('primary-contrast-auto': color.wt-best-on(map.get($-primary-palette, 500), $-s950)));
+$-dark: map.merge($-dark, ('primary-contrast-auto': color.wt-best-on(map.get($-primary-palette, 400), $-s950)));
 
 // semanticTokens
 @each $k in data.$semantic-keys {
   $v: map.get($-semantic, $k);
   @if $v == null {
-    $v: map.get(data.$semantic-defaults, $k);
+    $v: map.get(map.get($-p, semantic), $k);
   }
   $pal: -palette($v, '$semantic.#{$k}');
   @each $s in data.$shades {
     $-light: map.merge($-light, ('#{$k}-#{$s}': map.get($pal, $s)));
   }
-  $-light: map.merge($-light, ('#{$k}-contrast': color.wt-best-on(map.get($pal, 600), $-s950)));
-  $-dark: map.merge($-dark, ('#{$k}-contrast': color.wt-best-on(map.get($pal, 400), $-s950)));
+  $-light: map.merge($-light, ('#{$k}-contrast-auto': color.wt-best-on(map.get($pal, 600), $-s950)));
+  $-dark: map.merge($-dark, ('#{$k}-contrast-auto': color.wt-best-on(map.get($pal, 400), $-s950)));
 }
 
-// fontTokens, radiusTokens, densityTokens, shadowTokens, focusRingTokens, transitionTokens, materialTokens
-$-d: map.get(data.$density, $-density);
+// fontTokens, radiusTokens, densityTokens, shadowTokens
 $-sh: map.get(data.$shadows, $-shadow);
-$-ring: '0 0 0 3px color-mix(in srgb, var(--wt-primary-color) 30%, transparent)';
-@if $-focus-ring == 'outline' {
-  $-ring: '0 0 0 2px var(--wt-card-bg), 0 0 0 4px var(--wt-primary-color)';
-}
 $-light: map.merge(
   $-light,
   (
     'font-family': -font-family(-or($font-family, font-family)),
-    'font-size': '#{$-font-size}px',
+    'font-size': '#{math.div($-font-size, 16)}rem',
     'line-height': '#{$-line-height}',
-    'radius-sm': '#{math.round($-radius * 0.66)}px',
+    'radius-xs': '#{math.round(math.div($-radius, 3))}px',
+    'radius-sm': '#{math.round(math.div($-radius * 2, 3))}px',
     'radius-md': '#{$-radius}px',
-    'radius-lg': '#{math.round($-radius * 1.5)}px',
-    'radius-xl': '#{math.round($-radius * 2.5)}px',
+    'radius-lg': '#{math.round(math.div($-radius * 4, 3))}px',
+    'radius-xl': '#{$-radius * 2}px',
     'radius-full': '9999px',
-    'field-padding-y': '#{map.get($-d, field-py)}px',
-    'field-padding-x': '#{map.get($-d, field-px)}px',
-    'button-padding-y': '#{map.get($-d, btn-py)}px',
-    'gap': '#{map.get($-d, gap)}px',
-    'density-button-padding-x': '#{map.get($-d, btn-px)}px',
-    'density-card-padding': '#{map.get($-d, card-pad)}px',
-    'density-row-height': '#{map.get($-d, row)}px',
+    'density': '#{map.get(data.$density, $-density)}',
     'shadow-sm': list.nth($-sh, 1),
     'shadow-md': list.nth($-sh, 2),
     'shadow-lg': list.nth($-sh, 3),
-    'focus-ring': $-ring,
-    'transition': '#{$-transition}ms',
-    'material': $-material,
   )
 );
+// focusTokens, transitionTokens, the family, materialTokens
+@include -add(map.get(data.$focus, $-focus-ring));
+$-light: map.merge($-light, ('transition': '#{$-transition}ms'));
+@include -add(map.get(data.$families, $-family));
+@include -add(map.get(data.$materials, $-material));
 
-// derived(): tokens that only reference other tokens
-@function -surf($s) {
-  @return 'var(--wt-surface-#{$s})';
-}
-@function -prim($s) {
-  @return 'var(--wt-primary-#{$s})';
-}
-@function -soft($ref) {
-  @return 'color-mix(in srgb, #{$ref} 16%, var(--wt-surface-900))';
+@if $-primary-contrast {
+  $-light: map.merge($-light, ('primary-contrast': $-primary-contrast));
+  $-dark: map.remove($-dark, 'primary-contrast');
 }
 
-$-light: map.merge(
-  $-light,
-  (
-    'primary-color': -prim(500),
-    'primary-hover': -prim(600),
-    'primary-active': -prim(700),
-    'primary-soft': -prim(50),
-    'primary-soft-text': -prim(700),
-    'ground': -surf(50),
-    'card-bg': -surf(0),
-    'overlay-bg': -surf(0),
-    'text': -surf(800),
-    'text-muted': -surf(500),
-    'border': -surf(200),
-    'hover-bg': -surf(100),
-    'field-bg': -surf(0),
-    'field-border': -surf(300),
-    'field-hover-border': -surf(400),
-    'field-disabled-bg': -surf(100),
-    'mask': 'rgba(0, 0, 0, 0.4)',
-    'table-header-bg': -surf(50),
-    'glass-bg': 'color-mix(in srgb, var(--wt-surface-0) 60%, transparent)',
-    'glass-blur': '20px',
-    'glass-saturate': '180%',
-    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 65%, transparent)',
-    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.7)',
-    'glass-shadow': '0 8px 32px rgba(15, 23, 42, 0.18)',
-    'primary-gradient': 'linear-gradient(135deg, var(--wt-primary-400), var(--wt-primary-600))',
-    'backdrop': 'var(--wt-ground)',
-  )
-);
-$-dark: map.merge(
-  $-dark,
-  (
-    'primary-color': -prim(400),
-    'primary-hover': -prim(300),
-    'primary-active': -prim(200),
-    'primary-soft': -soft(-prim(400)),
-    'primary-soft-text': -prim(200),
-    'ground': -surf(950),
-    'card-bg': -surf(900),
-    'overlay-bg': -surf(900),
-    'text': -surf(0),
-    'text-muted': -surf(400),
-    'border': -surf(700),
-    'hover-bg': -surf(800),
-    'field-bg': -surf(950),
-    'field-border': -surf(600),
-    'field-hover-border': -surf(500),
-    'field-disabled-bg': -surf(800),
-    'mask': 'rgba(0, 0, 0, 0.6)',
-    'table-header-bg': -surf(800),
-    'glass-bg': 'color-mix(in srgb, var(--wt-surface-900) 50%, transparent)',
-    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 14%, transparent)',
-    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.18)',
-    'glass-shadow': '0 8px 32px rgba(0, 0, 0, 0.4)',
-  )
-);
-@each $k in data.$semantic-keys {
-  $-light: map.merge($-light, ('#{$k}-color': 'var(--wt-#{$k}-600)', '#{$k}-bg': 'var(--wt-#{$k}-50)', '#{$k}-text': 'var(--wt-#{$k}-800)'));
-  $-dark: map.merge($-dark, ('#{$k}-color': 'var(--wt-#{$k}-400)', '#{$k}-bg': -soft('var(--wt-#{$k}-400)'), '#{$k}-text': 'var(--wt-#{$k}-200)'));
+// Styled-mode apps may set e.g. --p-card-body-gap themselves; read it first.
+@if $-generation == 'styled' {
+  @each $k, $p in data.$styled-inputs {
+    $-light: map.merge($-light, ($k: 'var(#{$p}, #{map.get($-light, $k)})'));
+  }
 }
 
 // componentValue(): tokens for one component value, as (light: (…), dark: (…)).
@@ -370,15 +341,15 @@ $-dark: map.merge(
         $light: '1px';
       }
     } @else if $css == 'tag-radius' {
-      $light: 'var(--wt-radius-sm)';
+      $light: 'var(--wt-radius-md)';
       @if $v {
         $light: 'var(--wt-radius-full)';
       }
     } @else if $css == 'table-stripe-bg' {
       $light: 'transparent';
       @if $v {
-        $light: -surf(50);
-        $dark: ($css: 'color-mix(in srgb, var(--wt-surface-800) 50%, var(--wt-surface-900))');
+        $light: 'var(--wt-surface-50)';
+        $dark: ($css: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))');
       }
     }
     @return (light: ($css: $light), dark: $dark);
@@ -396,32 +367,6 @@ $-dark: map.merge(
   @return (light: ($css: '#{$v}'), dark: ());
 }
 
-// componentDefault(): what a component token is when $components does not set it.
-$-component-refs: (
-  'button-radius': 'var(--wt-radius-md)',
-  'button-padding-x': 'var(--wt-density-button-padding-x)',
-  'input-radius': 'var(--wt-radius-md)',
-  'card-padding': 'var(--wt-density-card-padding)',
-  'card-radius': 'var(--wt-radius-lg)',
-  'card-body-gap': '8px',
-  'table-row-height': 'var(--wt-density-row-height)',
-  'dialog-radius': 'var(--wt-radius-xl)',
-);
-
-@function -component-default($spec) {
-  $css: map.get($spec, css);
-  @if $css == 'button-font-weight' {
-    @return (light: ($css: '#{map.get($-p, button-weight)}'), dark: ());
-  }
-  @if $css == 'card-border-width' {
-    @return -component-value($spec, map.get($-p, card-border));
-  }
-  @if $css == 'table-stripe-bg' or $css == 'tag-radius' {
-    @return -component-value($spec, false);
-  }
-  @return (light: ($css: map.get($-component-refs, $css)), dark: ());
-}
-
 @each $spec in data.$component-tokens {
   $group: map.get($components, map.get($spec, id));
   $v: null;
@@ -431,25 +376,33 @@ $-component-refs: (
       $v: map.get($group, map.get($spec, camel));
     }
   }
-  $t: null;
-  @if $v == null {
-    $t: -component-default($spec);
-  } @else {
-    $t: -component-value($spec, $v);
+  @if $v != null {
+    @include -add(-component-value($spec, $v));
   }
-  $-light: map.merge($-light, map.get($t, light));
-  $-dark: map.merge($-dark, map.get($t, dark));
 }
+
+@if $-scheme == 'dark' {
+  $-light: map.merge($-light, $-dark);
+  $-dark: ();
+}
+$-light: map.merge($-light, ('scheme': $-scheme));
+@if $-scheme == 'light' {
+  $-dark: map.merge($-dark, ('scheme': 'dark'));
+}
+$-compat: map.get(data.$compat, $-generation);
 
 // ---------- output (mirrors tokensToCss with extra `theme-source: scss`) ----------
 
-@layer wiratheme.tokens, wiratheme.components, wiratheme.overrides;
+@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;
 
 @layer wiratheme.tokens {
   :root {
     --wt-theme-source: scss;
     @each $k, $v in $-light {
       --wt-#{$k}: #{$v};
+    }
+    @each $k, $v in $-compat {
+      #{$k}: #{$v};
     }
   }
 

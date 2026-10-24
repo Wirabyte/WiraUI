@@ -1,0 +1,43 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-tabs id="d-tabs" [(activeIndex)]="tab" ariaLabel="ข้อมูลลูกค้า" (onChange)="changed = $event.index">
+          <wt-tab-panel header="ภาพรวม">ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ</wt-tab-panel>
+          <wt-tab-panel header="คำสั่งซื้อ">คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้</wt-tab-panel>
+          <wt-tab-panel header="บันทึก">โทรกลับเรื่องใบกำกับภาษี</wt-tab-panel>
+        </wt-tabs>
+        <span class="docs-demo-output">
+          activeIndex: <code id="d-tabs-value">{{ tab }}</code> · onChange: <code id="d-tabs-changed">{{ changed ?? '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="icons" [section]="sec['icons']">
+      <docs-demo [html]="code['icons']" layout="stack">
+        <wt-tabs id="d-tabs-icons">
+          <wt-tab-panel header="โปรไฟล์" leftIcon="pi pi-user">ชื่อที่แสดงและรูปโปรไฟล์</wt-tab-panel>
+          <wt-tab-panel header="อีเมล" leftIcon="pi pi-envelope">อีเมลหลักและอีเมลสำรอง</wt-tab-panel>
+          <wt-tab-panel header="ความปลอดภัย" leftIcon="pi pi-lock" [disabled]="true">รหัสผ่านและการยืนยันตัวตน</wt-tab-panel>
+          <wt-tab-panel header="การแจ้งเตือน" leftIcon="pi pi-bell">เลือกช่องทางรับการแจ้งเตือน</wt-tab-panel>
+        </wt-tabs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="scroll" [section]="sec['scroll']">
+      <docs-demo [html]="code['scroll']" [ts]="ts['scroll']" layout="stack">
+        <wt-tabs id="d-tabs-scroll">
+          @for (m of months; track m) {
+            <wt-tab-panel [header]="m">ยอดขายเดือน{{ m }}</wt-tab-panel>
+          }
+        </wt-tabs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+  </ng-template>
+</docs-component-page>

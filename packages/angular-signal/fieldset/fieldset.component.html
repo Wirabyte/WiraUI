@@ -1,0 +1,21 @@
+<fieldset [class]="classes()">
+  <legend class="wt-fieldset-legend p-fieldset-legend">
+    @if (toggleable()) {
+      <button type="button" class="wt-fieldset-toggle p-fieldset-toggle-button" [attr.aria-expanded]="!isCollapsed()" [attr.aria-controls]="contentId" (click)="toggle()">
+        @if (isCollapsed()) {
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"></path></svg>
+        } @else {
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10"></path></svg>
+        }
+        <span class="p-fieldset-legend-label">{{ legend() }}</span>
+      </button>
+    } @else {
+      <span class="wt-fieldset-legend-label p-fieldset-legend-label">{{ legend() }}</span>
+    }
+  </legend>
+  <div class="wt-fieldset-content-container p-fieldset-content-container" [id]="contentId" [attr.inert]="isCollapsed() ? '' : null">
+    <div class="wt-fieldset-content-inner">
+      <div class="wt-fieldset-content p-fieldset-content"><ng-content></ng-content></div>
+    </div>
+  </div>
+</fieldset>

@@ -1,0 +1,108 @@
+/* wt-inputnumber. Shared by wiratheme v1, v2 and v3. A text field that edits a number: formatted while
+   idle, plain while typing. Optional step buttons are joined to the field (stacked on the right, or
+   horizontal on both sides); they widen on touch screens. Field styles come from inputtext. */
+@layer wiratheme.components {
+  wt-inputnumber {
+    display: inline-flex;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+  wt-inputnumber.wt-inputnumber-fluid {
+    display: flex;
+    width: 100%;
+  }
+  .wt-inputnumber {
+    display: inline-flex;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+  }
+  .wt-inputnumber .wt-inputtext {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+  wt-inputnumber.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-inputtext {
+    border-color: var(--wt-danger-color);
+  }
+  .wt-inputnumber-button {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: var(--wt-inputnumber-button-width);
+    margin: 0;
+    padding: 0;
+    border: var(--wt-field-border-width) solid var(--wt-inputnumber-button-border);
+    background: var(--wt-inputnumber-button-bg);
+    color: var(--wt-inputnumber-button-color);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-inputnumber-sm .wt-inputnumber-button {
+    width: calc(var(--wt-inputnumber-button-width) * var(--wt-size-sm-scale));
+  }
+  .wt-inputnumber-lg .wt-inputnumber-button {
+    width: calc(var(--wt-inputnumber-button-width) * var(--wt-size-lg-scale));
+  }
+  .wt-inputnumber-button:not(:disabled):hover {
+    background: var(--wt-inputnumber-button-hover-bg);
+    color: var(--wt-inputnumber-button-hover-color);
+  }
+  .wt-inputnumber-button:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-inputnumber-button svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  /* stacked: up and down buttons in a column on the right */
+  .wt-inputnumber-stacked .wt-inputtext {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .wt-inputnumber-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: calc(var(--wt-field-border-width) * -1);
+  }
+  .wt-inputnumber-buttons .wt-inputnumber-button {
+    flex: 1 1 0;
+  }
+  .wt-inputnumber-buttons .wt-inputnumber-button:first-child {
+    border-top-right-radius: var(--wt-input-radius);
+  }
+  .wt-inputnumber-buttons .wt-inputnumber-button:last-child {
+    margin-top: calc(var(--wt-field-border-width) * -1);
+    border-bottom-right-radius: var(--wt-input-radius);
+  }
+
+  /* horizontal: minus on the left, plus on the right */
+  .wt-inputnumber-horizontal .wt-inputtext {
+    border-radius: 0;
+    text-align: center;
+  }
+  .wt-inputnumber-horizontal .wt-inputnumber-button:first-child {
+    margin-right: calc(var(--wt-field-border-width) * -1);
+    border-radius: var(--wt-input-radius) 0 0 var(--wt-input-radius);
+  }
+  .wt-inputnumber-horizontal .wt-inputnumber-button:last-child {
+    margin-left: calc(var(--wt-field-border-width) * -1);
+    border-radius: 0 var(--wt-input-radius) var(--wt-input-radius) 0;
+  }
+  .wt-inputnumber .wt-inputtext:focus {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Fingers need bigger targets than a mouse. */
+  @media (pointer: coarse) {
+    .wt-inputnumber-button {
+      width: calc(var(--wt-inputnumber-button-width) + 0.5rem);
+    }
+  }
+}

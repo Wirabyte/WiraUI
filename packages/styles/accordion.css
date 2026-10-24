@@ -1,0 +1,100 @@
+/* wt-accordion and wt-accordion-tab. Shared by wiratheme v1, v2 and v3.
+   Styled look: underlined rows with the chevron on the right. Classic look: boxed headers, chevron on the left. */
+@layer wiratheme.components {
+  wt-accordion,
+  wt-accordion-tab {
+    display: block;
+  }
+  .wt-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wt-accordion-gap);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-accordion-tab {
+    border-bottom: var(--wt-accordion-panel-border-width) solid var(--wt-border);
+  }
+  .wt-accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 0;
+    padding: var(--wt-accordion-header-padding);
+    border: var(--wt-accordion-header-border-width) solid var(--wt-border);
+    border-radius: var(--wt-accordion-radius);
+    background: var(--wt-accordion-header-bg);
+    color: var(--wt-accordion-header-color);
+    font: inherit;
+    font-weight: var(--wt-accordion-header-weight);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition),
+      border-radius var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-accordion-header:not(:disabled):hover,
+  .wt-accordion-tab-active .wt-accordion-header {
+    color: var(--wt-accordion-header-active-color);
+  }
+  .wt-accordion-header:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-accordion-header:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-accordion-tab-active .wt-accordion-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .wt-accordion-header-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .wt-accordion-toggle-icon {
+    flex: none;
+    order: var(--wt-accordion-icon-order);
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(var(--wt-accordion-icon-closed-rotate));
+    transition: transform var(--wt-transition);
+  }
+  .wt-accordion-tab-active .wt-accordion-toggle-icon {
+    transform: rotate(var(--wt-accordion-icon-open-rotate));
+  }
+  .wt-accordion-content-container {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--wt-transition) ease;
+  }
+  .wt-accordion-tab-active .wt-accordion-content-container {
+    grid-template-rows: 1fr;
+  }
+  .wt-accordion-content-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .wt-accordion-content {
+    padding: var(--wt-accordion-content-padding-top) var(--wt-accordion-content-padding) var(--wt-accordion-content-padding);
+    border: var(--wt-accordion-content-border-width) solid var(--wt-border);
+    border-top: 0;
+    border-radius: 0 0 var(--wt-accordion-radius) var(--wt-accordion-radius);
+    background: var(--wt-card-bg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-accordion-content-container,
+    .wt-accordion-toggle-icon {
+      transition: none;
+    }
+  }
+}

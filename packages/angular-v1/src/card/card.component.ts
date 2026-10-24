@@ -4,9 +4,10 @@ import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK } from 'wir
 import { WtCardVariant } from './card.types';
 
 /**
- * Card with PrimeNG-style `header` / `subheader` and projected slots:
+ * Card with `header` / `subheader` inputs and projected slots:
  * `[wtCardHeader]` (top media), `[wtCardActions]` (right of the title), default content, `[wtCardFooter]`.
- * Extras: `variant` (outlined, elevated, glass) and `loading` (skeleton lines instead of content).
+ * Extras: `variant` (outlined, elevated) and `loading` (skeleton lines instead of content). `glass` is a v3 look:
+ * here it shows a plain card.
  */
 @Component({
   selector: 'wt-card',
@@ -31,8 +32,8 @@ export class WtCard {
   }
 
   get classes(): string {
-    const c = ['wt-card'];
-    if (this.variant !== 'default') c.push('wt-card-' + this.variant);
+    const c = ['wt-card', 'p-card', 'p-component'];
+    if (this.variant !== 'default' && this.variant !== 'glass') c.push('wt-card-' + this.variant);
     if (this._loading) c.push('wt-card-loading');
     return c.join(' ');
   }

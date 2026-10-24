@@ -1,0 +1,228 @@
+/* wt-toast. Shared by wiratheme v1, v2 and v3. A stack of messages in the top layer (popover), so it shows above
+   dialogs without z-index. The family decides the look: a thick coloured edge in the classic look, a tinted
+   frosted card in the styled one. On phones the stack spans the screen. */
+@layer wiratheme.components {
+  wt-toast {
+    display: contents;
+  }
+  .wt-toast {
+    position: fixed;
+    inset: auto;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    width: var(--wt-toast-width);
+    max-width: calc(100vw - 2.5rem);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--wt-text);
+    overflow: visible;
+    pointer-events: none;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+  }
+  .wt-toast:not(:popover-open):empty {
+    display: none;
+  }
+  .wt-toast-top-right { top: 1.25rem; right: 1.25rem; }
+  .wt-toast-top-left { top: 1.25rem; left: 1.25rem; }
+  .wt-toast-bottom-right { bottom: 1.25rem; right: 1.25rem; }
+  .wt-toast-bottom-left { bottom: 1.25rem; left: 1.25rem; }
+  .wt-toast-top-center { top: 1.25rem; left: 50%; transform: translateX(-50%); }
+  .wt-toast-bottom-center { bottom: 1.25rem; left: 50%; transform: translateX(-50%); }
+  .wt-toast-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+  .wt-toast-message {
+    --_c: var(--wt-info-color);
+    --_bg: var(--wt-info-bg);
+    --_fg: var(--wt-info-text);
+    position: relative;
+    pointer-events: auto;
+    overflow: hidden;
+    border-style: solid;
+    border-width: var(--wt-toast-border-width);
+    border-color: color-mix(in srgb, var(--_c) var(--wt-toast-border-mix), transparent);
+    border-radius: var(--wt-toast-radius);
+    background: var(--_bg);
+    color: var(--_fg);
+    box-shadow: var(--wt-toast-shadow);
+    -webkit-backdrop-filter: blur(var(--wt-toast-blur));
+    backdrop-filter: blur(var(--wt-toast-blur));
+    animation: wt-toast-in-right 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+    transition:
+      opacity 0.2s ease-in,
+      transform 0.2s ease-in;
+  }
+  .wt-toast-top-left .wt-toast-message,
+  .wt-toast-bottom-left .wt-toast-message {
+    animation-name: wt-toast-in-left;
+  }
+  .wt-toast-top-center .wt-toast-message,
+  .wt-toast-bottom-center .wt-toast-message,
+  .wt-toast-center .wt-toast-message {
+    animation-name: wt-toast-in-down;
+  }
+  .wt-toast-leaving {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .wt-toast-success { --_c: var(--wt-success-color); --_bg: var(--wt-success-bg); --_fg: var(--wt-success-text); }
+  .wt-toast-warn { --_c: var(--wt-warn-color); --_bg: var(--wt-warn-bg); --_fg: var(--wt-warn-text); }
+  .wt-toast-error { --_c: var(--wt-danger-color); --_bg: var(--wt-danger-bg); --_fg: var(--wt-danger-text); }
+  .wt-toast-secondary { --_c: var(--wt-text-muted); --_bg: var(--wt-hover-bg); --_fg: var(--wt-text); }
+  /* The icon and border take the text colour on the dark box, not the box colour itself. */
+  .wt-toast-contrast { --_c: var(--wt-card-bg); --_bg: var(--wt-text); --_fg: var(--wt-card-bg); }
+
+  .wt-toast-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: var(--wt-toast-padding);
+  }
+  .wt-toast-icon {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--wt-toast-icon-size);
+    height: var(--wt-toast-icon-size);
+    color: var(--_c);
+    font-size: var(--wt-toast-icon-size);
+    line-height: 1;
+  }
+  .wt-toast-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .wt-toast-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .wt-toast-summary {
+    font-weight: var(--wt-toast-summary-weight);
+    line-height: 1.4;
+  }
+  .wt-toast-detail {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+  .wt-toast-summary:empty + .wt-toast-detail {
+    margin-top: 0;
+  }
+  /* Top-right of the box, whatever the message template put before it. */
+  .wt-toast-close {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: -0.25rem -0.25rem 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.75;
+  }
+  .wt-toast-close:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    opacity: 1;
+  }
+  .wt-toast-close:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-toast-close svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  /* Phones: the stack spans the screen and slides down from the top (or up from the bottom). */
+  @media (max-width: 575.98px) {
+    .wt-toast {
+      right: 0.75rem !important;
+      left: 0.75rem !important;
+      width: auto;
+      max-width: none;
+      transform: none;
+    }
+    .wt-toast-center {
+      top: 0.75rem;
+    }
+    .wt-toast-top-right,
+    .wt-toast-top-left,
+    .wt-toast-top-center {
+      top: 0.75rem;
+    }
+    .wt-toast-bottom-right,
+    .wt-toast-bottom-left,
+    .wt-toast-bottom-center {
+      bottom: 0.75rem;
+    }
+    .wt-toast .wt-toast-message {
+      animation-name: wt-toast-in-down;
+    }
+  }
+
+  @keyframes wt-toast-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(2rem);
+    }
+  }
+  @keyframes wt-toast-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-2rem);
+    }
+  }
+  @keyframes wt-toast-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-1rem);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-toast-message {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  /* Countdown: shrinks over the toast's life and stops while the pointer holds the toast. */
+  .wt-toast-timer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    pointer-events: none;
+  }
+  .wt-toast-timer span {
+    display: block;
+    height: 100%;
+    background: var(--_c);
+    opacity: 0.55;
+    transform-origin: left center;
+    animation: wt-toast-timer linear forwards;
+  }
+  .wt-toast-message:hover .wt-toast-timer span {
+    animation-play-state: paused;
+  }
+  @keyframes wt-toast-timer {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+}

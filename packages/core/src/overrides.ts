@@ -1,12 +1,29 @@
-import { COMPONENT_TOKENS, DensityId, PRESETS, PresetId, PRIMARY_SWATCHES, SEMANTIC_KEYS, ShadowId, SURFACES, SurfaceId } from './catalog';
-import { FocusRing, Material, ThemeConfig, defaults } from './config';
+import {
+  COMPONENT_TOKENS,
+  DensityId,
+  FocusRing,
+  MajorVersion,
+  MaterialMode,
+  PRESETS,
+  PresetId,
+  presetExportName,
+  PRIMARY_SWATCHES,
+  Scheme,
+  SEMANTIC_KEYS,
+  ShadowId,
+  SURFACES,
+  SurfaceId,
+  VERSION_CATALOG,
+} from './catalog';
+import { ThemeConfig, defaults, themeConfig } from './config';
 import { generatePalette, isHex, isPalette, Palette } from './color';
 import {
   componentValue,
   computeTokens,
   densityTokens,
   emptyTokens,
-  focusRingTokens,
+  focusTokens,
+  fontTokens,
   materialTokens,
   mergeTokens,
   primaryTokens,
@@ -29,6 +46,8 @@ export interface SemanticOverrides {
   warn?: Palette;
   danger?: Palette;
   help?: Palette;
+  /** Text colour on primary buttons, e.g. `'#ffffff'`. */
+  primaryContrast?: string;
   fontFamily?: string;
   fontSize?: Size;
   lineHeight?: Size;
@@ -37,7 +56,7 @@ export interface SemanticOverrides {
   shadow?: ShadowId;
   focusRing?: FocusRing;
   transition?: Size;
-  material?: Material;
+  material?: MaterialMode;
 }
 
 export interface ComponentOverrides {
@@ -58,6 +77,8 @@ export interface ThemeOverrideSet {
 export interface ThemeOverrides extends ThemeOverrideSet {
   /** Applied in dark mode only. Anything not listed here applies to both modes. */
   dark?: ThemeOverrideSet;
+  /** `definePreset()` only: `'dark'` makes the dark colours the only colours. */
+  scheme?: Scheme;
 }
 
 export interface ThemePreset {
@@ -68,7 +89,7 @@ export interface ThemePreset {
 }
 
 /**
- * A 50–950 palette from a hex colour (`'#00a86b'`) or a built-in swatch reference (`'{emerald}'`).
+ * A 50–950 palette from a hex colour (`'#1e7ae0'`) or a built-in swatch reference (`'{emerald}'`, `'{wira}'`).
  */
 export function palette(input: string): Palette {
   const ref = /^\{([a-z]+)\}$/.exec(input.trim());
@@ -86,18 +107,56 @@ export function defineOverrides(overrides: ThemeOverrides): ThemeOverrides {
 }
 
 function makePreset(id: PresetId): ThemePreset {
-  const name = id.charAt(0).toUpperCase() + id.slice(1);
-  return { wtPreset: true, name, config: defaults(id), overrides: [] };
+  return { wtPreset: true, name: presetExportName(id), config: defaults(id), overrides: [] };
 }
+// v1 (classic look)
+export const SilaClassic = makePreset('sila-classic');
+export const Arun = makePreset('arun');
+export const Sayan = makePreset('sayan');
+export const Ratri = makePreset('ratri');
+export const MaterialClassic = makePreset('material-classic');
+// v2, v3 (styled look)
+export const Mali = makePreset('mali');
+export const Sila = makePreset('sila');
+export const Material = makePreset('material');
+export const Phet = makePreset('phet');
+// v3 (WiraTheme's own)
 export const Wira = makePreset('wira');
 export const Lanna = makePreset('lanna');
 export const Siam = makePreset('siam');
 export const Nakhon = makePreset('nakhon');
-export const PRESET_LIST: Record<PresetId, ThemePreset> = { wira: Wira, lanna: Lanna, siam: Siam, nakhon: Nakhon };
+export const Glass = makePreset('glass');
+export const PRESET_LIST: Record<PresetId, ThemePreset> = {
+  'sila-classic': SilaClassic,
+  arun: Arun,
+  sayan: Sayan,
+  ratri: Ratri,
+  'material-classic': MaterialClassic,
+  mali: Mali,
+  sila: Sila,
+  material: Material,
+  phet: Phet,
+  wira: Wira,
+  lanna: Lanna,
+  siam: Siam,
+  nakhon: Nakhon,
+  glass: Glass,
+};
+
+/** A ready-made theme as a preset, e.g. `themePreset('sila-light-teal')` or `themePreset('sayan-green')`. */
+export function themePreset(name: string): ThemePreset {
+  return { wtPreset: true, name, config: themeConfig(name), overrides: [] };
+}
+
+/** Presets a wiratheme major offers, in menu order. */
+export function presetsFor(major: MajorVersion): ThemePreset[] {
+  return VERSION_CATALOG[major].presets.map((id) => PRESET_LIST[id]);
+}
 
 /** A new preset: `base` plus your changes. Use it with `provideWiraTheme({ preset })` when there is no SCSS/CSS theme file. */
 export function definePreset(base: ThemePreset, overrides: ThemeOverrides): ThemePreset {
-  return { wtPreset: true, name: base.name + '+', config: base.config, overrides: base.overrides.concat(overrides) };
+  const config = overrides.scheme ? { ...base.config, scheme: overrides.scheme } : base.config;
+  return { wtPreset: true, name: base.name + '+', config, overrides: base.overrides.concat(overrides) };
 }
 
 export function isThemePreset(value: unknown): value is ThemePreset {
@@ -105,7 +164,6 @@ export function isThemePreset(value: unknown): value is ThemePreset {
 }
 
 const num = (v: Size): number => (typeof v === 'number' ? v : parseFloat(v));
-const size = (v: Size): string => (typeof v === 'number' ? v + 'px' : v);
 
 function resolveSurface(s: string | Palette): SurfaceId | Palette {
   if (typeof s !== 'string') return s;
@@ -130,16 +188,20 @@ function setTokens(set: ThemeOverrideSet, s950: string): ThemeTokens {
     const p = sem[k];
     if (p !== undefined) mergeTokens(t, semanticTokens(k, p, s950));
   }
+  if (sem.primaryContrast !== undefined) t.light['primary-contrast'] = sem.primaryContrast;
   if (sem.fontFamily !== undefined) {
     const f = sem.fontFamily;
     t.light['font-family'] = /[,'"]/.test(f) ? f : `'${f}', sans-serif`;
   }
-  if (sem.fontSize !== undefined) t.light['font-size'] = size(sem.fontSize);
+  if (sem.fontSize !== undefined) {
+    if (typeof sem.fontSize === 'number') mergeTokens(t, fontTokens({ fontSize: sem.fontSize }));
+    else t.light['font-size'] = sem.fontSize;
+  }
   if (sem.lineHeight !== undefined) t.light['line-height'] = String(num(sem.lineHeight));
   if (sem.radius !== undefined) mergeTokens(t, radiusTokens(num(sem.radius)));
   if (sem.density !== undefined) mergeTokens(t, densityTokens(sem.density));
   if (sem.shadow !== undefined) mergeTokens(t, shadowTokens(sem.shadow));
-  if (sem.focusRing !== undefined) mergeTokens(t, focusRingTokens(sem.focusRing));
+  if (sem.focusRing !== undefined) mergeTokens(t, focusTokens(sem.focusRing));
   if (sem.transition !== undefined) mergeTokens(t, transitionTokens(num(sem.transition)));
   if (sem.material !== undefined) mergeTokens(t, materialTokens(sem.material));
 
@@ -152,8 +214,11 @@ function setTokens(set: ThemeOverrideSet, s950: string): ThemeTokens {
   return t;
 }
 
-/** Only the tokens an override set touches; derived tokens follow through `var()`. */
-export function overridesToTokens(o: ThemeOverrides): ThemeTokens {
+/**
+ * Only the tokens an override set touches; derived tokens follow through `var()`.
+ * With `scheme: 'dark'` (Sayan, Ratri, sila-dark-*) the dark values are the only values.
+ */
+export function overridesToTokens(o: ThemeOverrides, scheme: Scheme = 'light'): ThemeTokens {
   const sem = o.semantic || {};
   const s950 = surface950(sem.surface !== undefined ? resolveSurface(sem.surface) : undefined);
   const out = setTokens(o, s950);
@@ -161,13 +226,14 @@ export function overridesToTokens(o: ThemeOverrides): ThemeTokens {
     const d = setTokens(o.dark, s950);
     Object.assign(out.dark, d.light, d.dark);
   }
+  if (scheme === 'dark') return { light: { ...out.light, ...out.dark }, dark: {} };
   return out;
 }
 
 /** Full token set for a preset made with `definePreset()`. */
 export function presetToTokens(preset: ThemePreset): ThemeTokens {
   const t = computeTokens(preset.config);
-  for (const o of preset.overrides) mergeTokens(t, overridesToTokens(o));
+  for (const o of preset.overrides) mergeTokens(t, overridesToTokens(o, preset.config.scheme));
   return t;
 }
 

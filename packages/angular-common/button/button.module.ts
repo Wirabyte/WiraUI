@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { WtButton } from './button.component';
+import { WtButtonDirective } from './button.directive';
 
-/** For NgModule apps. Standalone apps can import `WtButton` directly. */
+/** For NgModule apps: `<wt-button>` and `<button wtButton>` (also read from `pButton`). */
 @NgModule({
-  imports: [WtButton],
-  exports: [WtButton],
+  imports: [WtButton, WtButtonDirective],
+  exports: [WtButton, WtButtonDirective],
 })
 export class WtButtonModule {}

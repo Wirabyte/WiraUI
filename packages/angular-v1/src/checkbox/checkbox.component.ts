@@ -5,17 +5,18 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  HostBinding,
   inject,
   Input,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
 import { WtCheckboxChangeEvent } from './checkbox.types';
 
 /**
- * Checkbox for ngModel and reactive forms, with PrimeNG's two modes:
+ * Checkbox for ngModel and reactive forms, with two modes:
  * `binary` (the model is `trueValue` / `falseValue`) or a group (the model is an array and `value` is added or removed).
  */
 @Component({
@@ -43,6 +44,17 @@ export class WtCheckbox implements ControlValueAccessor {
   @Input() set readonly(v: unknown) { this._readonly = ɵtoBool(v); }
   get readonly(): boolean { return this._readonly; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
+  /** `small` or `large` (also `sm` / `lg`). */
+  @Input() size?: WtSize;
+  @HostBinding('class.wt-checkbox-sm') @HostBinding('class.p-checkbox-sm') get sizeSm(): boolean {
+    return this.sizeKey === 'sm';
+  }
+  @HostBinding('class.wt-checkbox-lg') @HostBinding('class.p-checkbox-lg') get sizeLg(): boolean {
+    return this.sizeKey === 'lg';
+  }
+  get sizeKey(): 'sm' | 'lg' | null {
+    return ɵsize(this.size);
+  }
   get invalid(): boolean { return this._invalid; }
 
   @Output() readonly onChange = new EventEmitter<WtCheckboxChangeEvent>();

@@ -1,0 +1,52 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-progressbar [value]="64"></wt-progressbar>
+        <wt-progressbar [value]="40" [showValue]="false"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="dynamic" [section]="sec['dynamic']">
+      <docs-demo [html]="code['dynamic']" layout="stack">
+        <wt-progressbar id="d-progress" [value]="progress" unit="%"></wt-progressbar>
+        <div class="docs-demo-actions">
+          <wt-button id="d-more" label="+10" size="small" (onClick)="step()"></wt-button>
+          <span class="docs-demo-output">value: <code id="d-progress-value">{{ progress }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="count" [section]="sec['count']">
+      <docs-demo [html]="code['count']" layout="stack">
+        <wt-progressbar id="d-progress-count" [value]="1000" [max]="2500" unit="รายการ"></wt-progressbar>
+        <wt-progressbar [value]="3" [max]="10" text="อัปโหลด 3 จาก 10 ไฟล์"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="content" [section]="sec['content']">
+      <docs-slot-note slot="content"></docs-slot-note>
+      <docs-demo [html]="code['content']" layout="stack">
+        <wt-progressbar id="d-progress-content" [value]="50">
+          <ng-template #content let-value>{{ value }}/100</ng-template>
+        </wt-progressbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="indeterminate" [section]="sec['indeterminate']">
+      <docs-demo [html]="code['indeterminate']" layout="stack">
+        <wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="style" [section]="sec['style']">
+      <docs-demo [html]="code['style']" layout="stack">
+        <wt-progressbar [value]="72" color="#14b8a6" [showValue]="false" style="height: 6px"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

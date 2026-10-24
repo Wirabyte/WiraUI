@@ -40,6 +40,7 @@
     <span>ส่งแล้ว <b id="saved-count">{{ saved }}</b> ครั้ง</span>
     <wt-button id="use-blue" label="ใช้สีน้ำเงิน (TS override)" severity="secondary" (onClick)="useBlue()"></wt-button>
     <wt-button id="use-siam" label="preset Siam (TS)" severity="secondary" (onClick)="useSiam()"></wt-button>
+    <wt-button id="use-en" label="English UI" severity="secondary" (onClick)="useEnglish()"></wt-button>
     <wt-button id="toggle-dark" label="สลับโหมดมืด" severity="secondary" (onClick)="toggleDark()"></wt-button>
     <wt-button id="app-css-wins" label="CSS ของแอปชนะ"></wt-button>
   </section>
@@ -129,5 +130,247 @@
       </div>
     </form>
     <pre id="rf-value">{{ form.getRawValue() | json }}</pre>
+  </section>
+
+  <section id="display" class="pg-gallery">
+    <h2>Tag, Badge, Chip, Avatar, Divider, Skeleton, Progress, Message, Panel, Fieldset</h2>
+    <div class="pg-row">
+      <wt-tag id="tag-primary" value="ใหม่"></wt-tag>
+      <wt-tag value="อนุมัติ" severity="success"></wt-tag>
+      <wt-tag value="ข้อมูล" severity="info"></wt-tag>
+      <wt-tag id="tag-warn" value="รอตรวจ" severity="warning"></wt-tag>
+      <wt-tag value="ปฏิเสธ" severity="danger" rounded></wt-tag>
+      <wt-tag value="รอง" severity="secondary"></wt-tag>
+      <wt-tag value="Contrast" severity="contrast"></wt-tag>
+    </div>
+    <div class="pg-row">
+      <wt-badge id="badge-count" value="8"></wt-badge>
+      <wt-badge value="3" severity="danger"></wt-badge>
+      <wt-badge value="12" severity="success" size="large"></wt-badge>
+      <wt-badge id="badge-dot" severity="warn"></wt-badge>
+      <wt-chip id="chip-remove" label="แอดมิน" removable (onRemove)="removed = removed + 1"></wt-chip>
+      <wt-chip label="ผู้ใช้งาน"></wt-chip>
+      <span>ลบแล้ว <b id="chip-removed">{{ removed }}</b></span>
+    </div>
+    <div class="pg-row">
+      <wt-avatar label="สม"></wt-avatar>
+      <wt-avatar label="AB" shape="circle" size="large"></wt-avatar>
+      <wt-avatar id="avatar-broken" image="/does-not-exist.png" label="WB" shape="circle"></wt-avatar>
+      <wt-avatar-group>
+        <wt-avatar label="A" shape="circle"></wt-avatar>
+        <wt-avatar label="B" shape="circle"></wt-avatar>
+        <wt-avatar label="+3" shape="circle"></wt-avatar>
+      </wt-avatar-group>
+    </div>
+    <wt-divider align="center">หรือ</wt-divider>
+    <div class="pg-row">
+      <wt-skeleton width="8rem" animation="none"></wt-skeleton>
+      <wt-skeleton shape="circle" size="2.5rem" animation="none"></wt-skeleton>
+    </div>
+    <wt-progressbar id="progress" [value]="60"></wt-progressbar>
+    <wt-message id="msg-info" severity="info" text="บันทึกข้อมูลเรียบร้อย"></wt-message>
+    <wt-message id="msg-warn" severity="warn" text="กรุณาตรวจสอบข้อมูลก่อนส่ง" closable></wt-message>
+    <wt-message id="msg-error" severity="error" text="เชื่อมต่อไม่ได้"></wt-message>
+    <wt-panel id="panel" header="รายละเอียด" toggleable [(collapsed)]="panelCollapsed">
+      <p class="pg-p">เนื้อหาในแผง</p>
+      <div wtPanelFooter>ส่วนท้าย</div>
+    </wt-panel>
+    <span>ยุบแผง: <b id="panel-state">{{ panelCollapsed }}</b></span>
+    <wt-fieldset id="fieldset" legend="ที่อยู่" toggleable>
+      <p class="pg-p">เนื้อหาใน fieldset</p>
+    </wt-fieldset>
+  </section>
+
+  <section id="form-extras" class="pg-gallery">
+    <h2>IconField, InputGroup, FloatLabel, ToggleButton, SelectButton, Rating, Password</h2>
+    <div class="pg-fields">
+      <wt-iconfield id="if-new">
+        <wt-inputicon><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5L14 14"></path></svg></wt-inputicon>
+        <input wtInputText placeholder="ค้นหา" />
+      </wt-iconfield>
+      <span id="if-old" class="p-input-icon-left"><i class="pi pi-user"></i><input wtInputText placeholder="แบบเดิม p-input-icon-left" /></span>
+      <wt-inputgroup id="ig">
+        <wt-inputgroup-addon>฿</wt-inputgroup-addon>
+        <input wtInputText placeholder="จำนวนเงิน" />
+        <wt-inputgroup-addon>.00</wt-inputgroup-addon>
+      </wt-inputgroup>
+      <wt-floatlabel id="fl">
+        <input wtInputText id="fl-name" [(ngModel)]="extras.name" />
+        <label for="fl-name">ชื่อเล่น</label>
+      </wt-floatlabel>
+    </div>
+    <div class="pg-row">
+      <wt-togglebutton id="tb" [(ngModel)]="extras.bold" onLabel="ตัวหนา" offLabel="ปกติ"></wt-togglebutton>
+      <wt-selectbutton id="sb" [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="extras.plan"></wt-selectbutton>
+      <wt-rating id="rating" [(ngModel)]="extras.score" ariaLabel="ให้คะแนน"></wt-rating>
+    </div>
+    <wt-password id="pw" [(ngModel)]="extras.pw" toggleMask></wt-password>
+    <pre id="extras-model">{{ extras | json }}</pre>
+  </section>
+
+  <section id="panels" class="pg-gallery">
+    <h2>Toolbar, Accordion, Tabs</h2>
+    <wt-toolbar id="toolbar">
+      <div wtToolbarStart>
+        <wt-button label="เพิ่มรายการ" size="small"></wt-button>
+        <wt-button label="ลบ" severity="danger" size="small" outlined></wt-button>
+      </div>
+      <div wtToolbarEnd><input wtInputText wtSize="small" placeholder="ค้นหา" /></div>
+    </wt-toolbar>
+    <wt-accordion id="acc" [(activeIndex)]="accIndex">
+      <wt-accordion-tab header="ข้อมูลทั่วไป"><p class="pg-p">เนื้อหาส่วนที่ 1</p></wt-accordion-tab>
+      <wt-accordion-tab header="ที่อยู่"><p class="pg-p">เนื้อหาส่วนที่ 2</p></wt-accordion-tab>
+      <wt-accordion-tab header="ปิดใช้งาน" disabled><p class="pg-p">เนื้อหาส่วนที่ 3</p></wt-accordion-tab>
+    </wt-accordion>
+    <span>เปิดอยู่: <b id="acc-index">{{ accIndex }}</b></span>
+    <wt-tabs id="tabs" [(activeIndex)]="tabIndex" ariaLabel="ข้อมูลผู้ใช้">
+      <wt-tab-panel header="ข้อมูลส่วนตัว"><p class="pg-p" id="tab-p1">แท็บที่ 1</p></wt-tab-panel>
+      <wt-tab-panel header="การทำงาน"><p class="pg-p" id="tab-p2">แท็บที่ 2</p></wt-tab-panel>
+      <wt-tab-panel header="ปิดใช้งาน" disabled><p class="pg-p">แท็บที่ 3</p></wt-tab-panel>
+      <wt-tab-panel header="เอกสารแนบ"><p class="pg-p" id="tab-p4">แท็บที่ 4</p></wt-tab-panel>
+    </wt-tabs>
+    <span>แท็บ: <b id="tab-index">{{ tabIndex }}</b></span>
+  </section>
+
+  <section id="numbers" class="pg-gallery">
+    <h2>InputNumber</h2>
+    <div class="pg-fields">
+      <wt-inputnumber id="num-price" [(ngModel)]="num.price" mode="currency" [min]="0" ariaLabel="ราคา"></wt-inputnumber>
+      <wt-inputnumber id="num-qty" [(ngModel)]="num.qty" showButtons [min]="0" [max]="10" [maxFractionDigits]="0" ariaLabel="จำนวน"></wt-inputnumber>
+      <wt-inputnumber id="num-weight" [(ngModel)]="num.weight" showButtons buttonLayout="horizontal" [step]="0.5" [maxFractionDigits]="1" suffix=" กก." ariaLabel="น้ำหนัก"></wt-inputnumber>
+    </div>
+    <pre id="num-model">{{ num | json }}</pre>
+  </section>
+
+  <section id="dates" class="pg-gallery">
+    <h2>DatePicker</h2>
+    <div class="pg-fields">
+      <wt-datepicker id="dp-due" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" showIcon showButtonBar [minDate]="minDate" [maxDate]="maxDate" placeholder="วันที่" ariaLabel="วันครบกำหนด"></wt-datepicker>
+      <wt-datepicker id="dp-time" [(ngModel)]="dates.meeting" dateFormat="dd/mm/yy" showTime showSeconds hourFormat="24" readonlyInput showIcon iconDisplay="input" ariaLabel="เวลานัด"></wt-datepicker>
+      <wt-datepicker id="dp-ro" [(ngModel)]="dates.locked" dateFormat="dd/mm/yy" showTime readonlyInput timeReadonlyInput ariaLabel="เวลาล็อก"></wt-datepicker>
+      <wt-datepicker id="dp-range" [(ngModel)]="dates.stay" selectionMode="range" dateFormat="dd/mm/yy" showClear ariaLabel="ช่วงวันที่"></wt-datepicker>
+      <wt-datepicker id="dp-month" [(ngModel)]="dates.month" view="month" dateFormat="MM yy" [isBudhistYear]="false" ariaLabel="เดือน"></wt-datepicker>
+      <wt-datepicker id="dp-12h" [(ngModel)]="dates.alarm" timeOnly hourFormat="12" ariaLabel="เวลาปลุก"></wt-datepicker>
+    </div>
+    <wt-datepicker id="dp-inline" inline [(ngModel)]="dates.inline"></wt-datepicker>
+    <pre id="dates-model">{{ datesText() }}</pre>
+  </section>
+
+  <section id="overlays" class="pg-gallery">
+    <h2>Dialog, Alert, Confirm, Toast, Tooltip, Popover</h2>
+    <div class="pg-row">
+      <wt-button id="open-dialog" label="เปิด Dialog" (onClick)="dialogOpen = true"></wt-button>
+      <wt-button id="open-alert" label="Alert" severity="success" (onClick)="fireAlert()"></wt-button>
+      <wt-button id="open-question" label="Question" severity="warn" (onClick)="askAlert()"></wt-button>
+      <wt-button id="open-input" label="Input" severity="info" (onClick)="askInput()"></wt-button>
+      <wt-button id="open-confirm" label="Confirm" severity="secondary" (onClick)="askConfirm()"></wt-button>
+      <wt-button id="open-toast" label="Toast" severity="help" (onClick)="showToast()"></wt-button>
+      <wt-button id="tip-target" label="Tooltip" outlined wtTooltip="บันทึกข้อมูล" tooltipPosition="top"></wt-button>
+      <wt-button id="tip-p" label="pTooltip" outlined pTooltip="ข้อความเดิม"></wt-button>
+      <wt-button id="pop-target" label="Popover" outlined (onClick)="op.toggle($event)"></wt-button>
+    </div>
+    <wt-popover #op id="pop"><p id="pop-body" class="pg-p">รายละเอียดอุปกรณ์</p></wt-popover>
+    <wt-dialog
+      id="dlg"
+      header="แก้ไขข้อมูล"
+      [(visible)]="dialogOpen"
+      [style]="{ width: '50vw', 'min-width': '360px' }"
+      [modal]="true"
+      [draggable]="false"
+      [resizable]="false"
+      [dismissableMask]="true"
+      (onHide)="note('dialog:hide')"
+    >
+      <p class="pg-p">เนื้อหาในหน้าต่าง</p>
+      <div class="pg-fields">
+        <input id="dlg-input" wtInputText placeholder="ชื่อ" />
+        <wt-datepicker id="dlg-date" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" ariaLabel="วันที่ในหน้าต่าง"></wt-datepicker>
+      </div>
+      <ng-template wtTemplate="footer">
+        <wt-button id="dlg-toast" label="แจ้งเตือน" text (onClick)="showToast()"></wt-button>
+        <wt-button id="dlg-save" label="บันทึก" (onClick)="dialogOpen = false"></wt-button>
+      </ng-template>
+    </wt-dialog>
+    <wt-confirmdialog></wt-confirmdialog>
+    <wt-toast></wt-toast>
+    <pre id="overlay-log">{{ log.join('
+') }}</pre>
+    <div class="pg-aos">
+      <div id="aos-a" class="pg-card" data-aos="fade-up">data-aos="fade-up"</div>
+      <div id="aos-b" class="pg-card" wtAnimate="zoom-in" [animateDelay]="100">wtAnimate="zoom-in"</div>
+    </div>
+  </section>
+
+  <section id="review" class="pg-gallery">
+    <h2>Sizes, pButton, validation, progress, MeterGroup, tabs, scale</h2>
+    <div class="pg-row" id="sizes">
+      <wt-button id="btn-sm" label="เล็ก" size="small"></wt-button>
+      <wt-button id="btn-md" label="ปกติ"></wt-button>
+      <wt-button id="btn-lg" label="ใหญ่" size="large"></wt-button>
+      <button id="pbtn" pButton type="button" label="ปุ่มเดิม" icon="pi pi-check" class="p-button-sm p-button-danger"></button>
+      <wt-button id="btn-styleclass" label="styleClass" styleClass="p-button-sm p-button-outlined"></wt-button>
+      <wt-checkbox id="cb-sm" [(ngModel)]="review.agree" [binary]="true" size="small" ariaLabel="เล็ก"></wt-checkbox>
+      <wt-checkbox id="cb-lg" [(ngModel)]="review.agree" [binary]="true" size="large" ariaLabel="ใหญ่"></wt-checkbox>
+      <wt-button id="use-sm" label="ขนาด sm" [text]="true" (onClick)="useScale('sm')"></wt-button>
+      <wt-button id="use-reset" label="ขนาดเดิม" [text]="true" (onClick)="useScale(null)"></wt-button>
+    </div>
+    <form id="vform" #vf="ngForm" class="pg-fields" (ngSubmit)="note('vform:' + vf.valid)">
+      <div>
+        <input id="v-email" wtInputText name="email" [(ngModel)]="review.email" required email placeholder="อีเมล" />
+        <wt-field-error id="v-email-err" for="email" label="อีเมล"></wt-field-error>
+      </div>
+      <div>
+        <input id="v-phone" wtInputText name="phone" [(ngModel)]="review.phone" wtThaiPhone placeholder="เบอร์โทร" />
+        <wt-field-error id="v-phone-err" for="phone"></wt-field-error>
+      </div>
+      <div>
+        <input id="v-pw" wtInputText type="password" name="pw" [(ngModel)]="review.pw" placeholder="รหัสผ่าน" />
+      </div>
+      <div>
+        <input id="v-pw2" wtInputText type="password" name="pw2" [(ngModel)]="review.pw2" wtMatch="pw" placeholder="ยืนยันรหัสผ่าน" />
+        <wt-field-error id="v-pw2-err" for="pw2"></wt-field-error>
+      </div>
+      <wt-button id="v-submit" type="submit" label="ส่ง"></wt-button>
+    </form>
+    <wt-progressbar id="pb-count" [value]="1000" [max]="2500" unit="รายการ"></wt-progressbar>
+    <wt-progressbar id="pb-tpl" [value]="50">
+      <ng-template #content let-value>{{ value }}/100</ng-template>
+    </wt-progressbar>
+    <wt-metergroup id="mg" [value]="meters" ariaLabel="พื้นที่จัดเก็บ"></wt-metergroup>
+    <div id="tabs-narrow" style="max-width: 320px">
+      <wt-tabs id="tabs-many" [(activeIndex)]="monthIndex" ariaLabel="เดือน">
+        <wt-tab-panel header="มกราคม">ยอดเดือนมกราคม</wt-tab-panel>
+        <wt-tab-panel header="กุมภาพันธ์">ยอดเดือนกุมภาพันธ์</wt-tab-panel>
+        <wt-tab-panel header="มีนาคม">ยอดเดือนมีนาคม</wt-tab-panel>
+        <wt-tab-panel header="เมษายน">ยอดเดือนเมษายน</wt-tab-panel>
+        <wt-tab-panel header="พฤษภาคม">ยอดเดือนพฤษภาคม</wt-tab-panel>
+        <wt-tab-panel header="มิถุนายน">ยอดเดือนมิถุนายน</wt-tab-panel>
+        <wt-tab-panel header="กรกฎาคม">ยอดเดือนกรกฎาคม</wt-tab-panel>
+        <wt-tab-panel header="สิงหาคม"><span id="tab-aug">ยอดเดือนสิงหาคม</span></wt-tab-panel>
+      </wt-tabs>
+    </div>
+    <wt-button id="open-bottom" label="Dialog ล่าง" [outlined]="true" (onClick)="bottomOpen = true"></wt-button>
+    <wt-dialog id="dlg-bottom" header="ด้านล่าง" [(visible)]="bottomOpen" position="bottom" [modal]="true" [style]="{ width: '20rem' }">
+      <p class="pg-p">position="bottom"</p>
+    </wt-dialog>
+    <wt-button id="tip-link" label="ลิงก์ในทูลทิป" [outlined]="true" [escape]="false" tooltipPosition="top"
+      wtTooltip="ดูรายละเอียด <a id='tip-a' href='https://example.com'>ที่นี่</a>"></wt-button>
+  </section>
+
+  <section id="busy" class="pg-gallery">
+    <wt-progress-spinner id="spinner" style="width: 2rem; height: 2rem"></wt-progress-spinner>
+    <wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>
+  </section>
+
+  <section id="utils" class="pg-gallery">
+    <h2>wiratheme/utils</h2>
+    <div id="utils-grid" class="grid">
+      <div id="utils-col-a" class="col-12 md:col-6"><div id="utils-card" class="surface-card border-round shadow-2 p-3">col-12 md:col-6</div></div>
+      <div id="utils-col-b" class="col-12 md:col-6"><div class="surface-card border-round p-3">col-12 md:col-6</div></div>
+    </div>
+    <div id="utils-flex" class="flex flex-column md:flex-row gap-2 justify-content-between align-items-center mt-3">
+      <span class="text-color-secondary text-sm">flex-column md:flex-row</span>
+      <span id="utils-hide" class="hidden lg:inline font-bold">lg:inline</span>
+    </div>
   </section>
 </main>

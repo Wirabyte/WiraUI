@@ -1,0 +1,36 @@
+<div class="wt-tabs p-tabs p-component">
+  <div class="wt-tabs-nav p-tablist">
+  @if (canPrev()) {
+    <button type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tablist-prev-button" tabindex="-1" aria-hidden="true" (click)="page(-1)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  }
+  <div #list class="wt-tablist p-tablist-tab-list" role="tablist" [attr.aria-label]="ariaLabel() || null" (scroll)="updateArrows()">
+    @for (panel of panels(); track panel; let i = $index) {
+      <button
+        type="button"
+        role="tab"
+        [class]="tabClasses(i)"
+        [id]="baseId + '-tab-' + i"
+        [attr.aria-selected]="i === activeIndex()"
+        [attr.aria-controls]="baseId + '-panel-' + i"
+        [attr.tabindex]="i === activeIndex() ? 0 : -1"
+        [disabled]="panel.disabled()"
+        (click)="select(i, $event)"
+        (keydown)="onKeydown($event, i)"
+      >
+        @if (panel.leftIcon()) {
+          <span [class]="'wt-tab-icon ' + panel.leftIcon()" aria-hidden="true"></span>
+        }
+        {{ panel.header() }}
+      </button>
+    }
+  </div>
+  @if (canNext()) {
+    <button type="button" class="wt-tabs-nav-btn wt-tabs-next p-tablist-next-button" tabindex="-1" aria-hidden="true" (click)="page(1)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  }
+  </div>
+  <div class="wt-tabpanels p-tabpanels"><ng-content></ng-content></div>
+</div>

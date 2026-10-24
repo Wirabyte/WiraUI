@@ -1,0 +1,394 @@
+@use 'mq';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  // Locking scroll (drawer, search) does not shift the layout where gutters are supported.
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--docs-scroll-thumb) transparent;
+}
+html.docs-lock {
+  overflow: hidden;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--docs-page-bg);
+  color: var(--docs-text);
+  font-family: var(--docs-font);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--docs-primary) 28%, transparent);
+}
+
+a {
+  color: var(--docs-primary-soft-text);
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 3px;
+}
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:where(p, li, td) code,
+.docs-chip code {
+  font-family: var(--docs-mono);
+  font-size: 0.84em;
+  padding: 0.12em 0.42em;
+  border-radius: 6px;
+  background: var(--docs-hover);
+  color: var(--docs-text);
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.6em;
+  height: 1.6em;
+  padding: 0 0.4em;
+  font-family: var(--docs-font);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--docs-muted);
+  background: var(--docs-surface);
+  border: 1px solid var(--docs-border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+}
+
+// Element resets go in the `reset` layer (declared first by WiraTheme), so they never beat component styles:
+// an unlayered `button { font: inherit }` made every demo button take the page's 15px / 1.75 text.
+@layer reset {
+  button {
+    font: inherit;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--docs-primary);
+  outline-offset: 2px;
+}
+
+.docs-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.docs-muted {
+  color: var(--docs-muted);
+}
+
+// One scrollbar look for every inner scroll area: standard properties (Firefox, Chromium 121+)
+// and ::-webkit-scrollbar for Safari and older Chromium.
+.docs-scroll,
+.docs-scroll-x,
+.docs-table-wrap,
+.docs-code pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--docs-scroll-thumb) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.docs-scroll {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.docs-scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.docs-scroll::-webkit-scrollbar,
+.docs-scroll-x::-webkit-scrollbar,
+.docs-table-wrap::-webkit-scrollbar,
+.docs-code pre::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.docs-scroll::-webkit-scrollbar-track,
+.docs-scroll-x::-webkit-scrollbar-track,
+.docs-table-wrap::-webkit-scrollbar-track,
+.docs-code pre::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+.docs-scroll::-webkit-scrollbar-thumb,
+.docs-scroll-x::-webkit-scrollbar-thumb,
+.docs-table-wrap::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--docs-scroll-thumb) padding-box;
+}
+.docs-scroll::-webkit-scrollbar-thumb:hover,
+.docs-scroll-x::-webkit-scrollbar-thumb:hover {
+  background-color: var(--docs-scroll-thumb-hover);
+}
+
+docs-icon,
+.docs-icon {
+  display: inline-flex;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.docs-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.docs-inline-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+}
+
+// Logo
+.docs-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--docs-tap);
+  color: var(--docs-text);
+  text-decoration: none;
+  flex: none;
+}
+.docs-logo-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--docs-gradient);
+  box-shadow: 0 4px 12px -4px rgba(30, 122, 224, 0.5);
+}
+.docs-logo-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.docs-logo-mark path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.docs-logo-text {
+  display: none;
+  font-family: var(--docs-display);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@include mq.up(sm) {
+  .docs-logo-text {
+    display: inline;
+  }
+}
+
+// Icon buttons (tap target 40px)
+.docs-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--docs-tap);
+  height: var(--docs-tap);
+  padding: 0;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+  background: var(--docs-surface);
+  color: var(--docs-text);
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.docs-icon-btn:hover,
+.docs-icon-btn.active {
+  background: var(--docs-hover);
+}
+.docs-icon-btn.active {
+  border-color: color-mix(in srgb, var(--docs-primary) 50%, var(--docs-border));
+  color: var(--docs-primary-soft-text);
+}
+.docs-icon-btn-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+.docs-icon-btn-sm .docs-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.docs-link-btn {
+  min-height: 32px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--docs-primary-soft-text);
+  font-size: 13px;
+  cursor: pointer;
+}
+.docs-link-btn:hover {
+  text-decoration: underline;
+}
+
+// TH | EN switch
+.docs-lang {
+  display: inline-flex;
+  flex: none;
+  padding: 3px;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+  background: var(--docs-surface);
+}
+.docs-lang button {
+  min-width: 34px;
+  height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--docs-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.docs-lang button:hover {
+  color: var(--docs-text);
+}
+.docs-lang button.active {
+  background: var(--docs-primary-soft);
+  color: var(--docs-primary-soft-text);
+}
+
+// Copy button: its own flex item, light and quiet
+.docs-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--docs-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+.docs-copy:hover {
+  background: var(--docs-hover);
+  color: var(--docs-text);
+}
+.docs-copy.done {
+  color: var(--docs-success-text);
+}
+.docs-copy .docs-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.docs-soon {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--docs-hover);
+  color: var(--docs-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+// Colour swatches (configurator and landing demo)
+.docs-swatch-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid var(--docs-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--docs-border);
+  cursor: pointer;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+.docs-swatch-btn:hover {
+  transform: scale(1.08);
+}
+.docs-swatch-btn.active {
+  box-shadow: 0 0 0 2px var(--docs-text);
+}
+.docs-swatch-default {
+  background:
+    linear-gradient(135deg, transparent 46%, var(--docs-muted) 46% 54%, transparent 54%),
+    var(--docs-surface);
+}
+
+// Stand-ins for a few icon-font classes, so icon="pi pi-check" in the samples renders without loading a font.
+.pi {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: var(--pi) center / contain no-repeat;
+  mask: var(--pi) center / contain no-repeat;
+}
+$pi-icons: (
+  check: "%3Cpath d='M20 6 9 17l-5-5'/%3E",
+  send: "%3Cpath d='m22 2-7 20-4-9-9-4Z'/%3E%3Cpath d='M22 2 11 13'/%3E",
+  search: "%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E",
+  trash: "%3Cpath d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6'/%3E",
+  bell: "%3Cpath d='M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9'/%3E%3Cpath d='M10.3 21a1.9 1.9 0 0 0 3.4 0'/%3E",
+  plus: "%3Cpath d='M12 5v14M5 12h14'/%3E",
+  user: "%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21a8 8 0 0 1 16 0'/%3E",
+  envelope: "%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E",
+  lock: "%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E",
+  bookmark: "%3Cpath d='M6 3h12v18l-6-4-6 4Z'/%3E",
+  clock: "%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E",
+  calendar: "%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E",
+  calendar-plus: "%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5'/%3E",
+  save: "%3Cpath d='M5 3h11l3 3v15H5Z'/%3E%3Cpath d='M8 3v6h8V3M8 21v-7h8v7'/%3E",
+  image: "%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='9' cy='10' r='2'/%3E%3Cpath d='m21 17-5-5-9 8'/%3E",
+  file: "%3Cpath d='M6 3h8l4 4v14H6Z'/%3E%3Cpath d='M14 3v4h4'/%3E",
+  video: "%3Crect x='3' y='6' width='13' height='12' rx='2'/%3E%3Cpath d='m16 10 5-3v10l-5-3'/%3E",
+);
+@each $name, $path in $pi-icons {
+  .pi-#{$name} {
+    --pi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E#{$path}%3C/svg%3E");
+  }
+}

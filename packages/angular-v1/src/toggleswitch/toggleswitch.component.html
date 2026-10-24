@@ -14,6 +14,8 @@
     (change)="toggle($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-toggleswitch-track" aria-hidden="true"><span class="wt-toggleswitch-handle"></span></span>
+  <span class="wt-toggleswitch-control p-inputswitch p-component" [class.p-inputswitch-checked]="checked" [class.p-disabled]="isDisabled" aria-hidden="true">
+    <span class="wt-toggleswitch-track p-inputswitch-slider"><span class="wt-toggleswitch-handle"></span></span>
+  </span>
   <span *ngIf="label" class="wt-toggleswitch-label">{{ label }}</span>
 </label>

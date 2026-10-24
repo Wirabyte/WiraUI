@@ -1,0 +1,56 @@
+/* wt-progressbar. Shared by wiratheme v1, v2 and v3. Determinate (value of max) or indeterminate. */
+@layer wiratheme.components {
+  /* The height sits on the host, so `style="height: 6px"` on <wt-progressbar> makes a thin bar. */
+  wt-progressbar {
+    display: block;
+    height: var(--wt-progressbar-height);
+  }
+  .wt-progressbar {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    border-radius: var(--wt-progressbar-radius);
+    background: var(--wt-progressbar-bg);
+    font-family: var(--wt-font-family);
+  }
+  .wt-progressbar-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+    transition: width 1s ease-in-out;
+  }
+  .wt-progressbar-label {
+    padding-inline: 0.5em;
+    font-size: var(--wt-progressbar-label-size);
+    font-weight: var(--wt-progressbar-label-weight);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .wt-progressbar-indeterminate .wt-progressbar-value {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    animation: wt-progressbar-indeterminate 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+  }
+  @keyframes wt-progressbar-indeterminate {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(250%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-progressbar-value {
+      transition: none;
+    }
+    .wt-progressbar-indeterminate .wt-progressbar-value {
+      animation-duration: 4s;
+    }
+  }
+}

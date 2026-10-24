@@ -1,0 +1,143 @@
+// Docs chrome uses the Wirabyte brand (wirabyte.com). Its primary colour follows the theme on screen: the
+// --docs-primary* tokens read --wt-primary-color, which the active version (or the landing page) writes on :root,
+// so the theme panel recolours the whole site. Before a theme is applied they fall back to the brand blue.
+// Breakpoints (mobile-first, min-width): sm 576, md 768, lg 992, xl 1200, the same as wiratheme/utils.
+:root {
+  --docs-topbar-h: 60px;
+  --docs-sidebar-w: 272px;
+  --docs-toc-w: 216px;
+  --docs-article-max: 860px;
+  --docs-radius: 10px;
+  --docs-radius-lg: 16px;
+  --docs-radius-xl: 24px;
+  --docs-tap: 40px;
+
+  --docs-font: 'Inter', 'IBM Plex Sans Thai', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --docs-display: 'Inter', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --docs-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --docs-page-bg: #f6f8fc;
+  --docs-ground: #eef2f9;
+  --docs-surface: #ffffff;
+  --docs-overlay: #ffffff;
+  --docs-text: #0d1726;
+  --docs-text-2: #334155;
+  --docs-muted: #556274;
+  --docs-border: #e3e8f1;
+  --docs-border-strong: #cfd7e4;
+  --docs-hover: #eef2f9;
+  --docs-primary: var(--wt-primary-color, #1e7ae0);
+  --docs-primary-hover: color-mix(in srgb, var(--docs-primary) 82%, #000);
+  --docs-primary-contrast: var(--wt-primary-contrast, #ffffff);
+  --docs-primary-soft: color-mix(in srgb, var(--docs-primary) 10%, #ffffff);
+  // Text in the primary colour on light ground: darkened so light primaries (amber, lime) stay readable.
+  --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #000);
+  --docs-accent: #14b8a6;
+  --docs-gradient: linear-gradient(135deg, #1e7ae0 0%, #14b8a6 100%);
+  --docs-brand-text: linear-gradient(100deg, #ff6b6b 0%, #ff9a4d 32%, #3ddbb8 68%, #3fa9f5 100%);
+  --docs-hero-glow:
+    radial-gradient(1200px 600px at 85% -10%, rgba(63, 169, 245, 0.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(61, 219, 184, 0.12), transparent 60%);
+  --docs-grid-line: rgba(13, 23, 38, 0.05);
+
+  --docs-success: #16a34a;
+  --docs-success-bg: #ecfdf3;
+  --docs-success-text: #166534;
+  --docs-info-bg: #eaf3fd;
+  --docs-info-text: #1763c6;
+  --docs-warn: #d97706;
+  --docs-warn-bg: #fff7e6;
+  --docs-warn-text: #92400e;
+  --docs-danger: #dc2626;
+  --docs-danger-bg: #fef1f1;
+  --docs-danger-text: #b42318;
+
+  --docs-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -8px rgba(16, 24, 40, 0.1);
+  --docs-shadow-lg: 0 24px 64px -24px rgba(16, 24, 40, 0.28);
+  /* Ring that marks a dark-only theme in swatches. */
+  --docs-dark-ring: #121c2d;
+
+  --docs-scroll-thumb: rgba(13, 23, 38, 0.22);
+  --docs-scroll-thumb-hover: rgba(13, 23, 38, 0.36);
+
+  // Code blocks stay dark in both modes.
+  --docs-code-bg: #0e1624;
+  --docs-code-bar: #121c2d;
+  --docs-code-border: #1c2839;
+  --docs-code-text: #e8eef7;
+  --docs-code-muted: #98a5b8;
+  --docs-code-thumb: rgba(232, 238, 247, 0.22);
+
+  color-scheme: light;
+}
+
+:root.wt-dark {
+  // Soft dark: the brand's dark page, lifted a touch.
+  --docs-page-bg: #0b1220;
+  --docs-ground: #0a111e;
+  --docs-surface: #0e1624;
+  --docs-overlay: #121c2d;
+  --docs-text: #e8eef7;
+  --docs-text-2: #c3cedd;
+  --docs-muted: #98a5b8;
+  --docs-border: #1c2839;
+  --docs-border-strong: #2a3a52;
+  --docs-hover: #121c2d;
+  --docs-primary: var(--wt-primary-color, #4ea3f7);
+  --docs-primary-hover: color-mix(in srgb, var(--docs-primary) 78%, #ffffff);
+  --docs-primary-contrast: var(--wt-primary-contrast, #ffffff);
+  --docs-primary-soft: color-mix(in srgb, var(--docs-primary) 16%, transparent);
+  --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #ffffff);
+  --docs-accent: #2dd4bf;
+  --docs-gradient: linear-gradient(135deg, #2f8df0 0%, #1fc7b1 100%);
+  --docs-grid-line: rgba(255, 255, 255, 0.04);
+
+  --docs-success-bg: rgba(34, 197, 94, 0.14);
+  --docs-success-text: #86efac;
+  --docs-info-bg: rgba(78, 163, 247, 0.14);
+  --docs-info-text: #7cbcff;
+  --docs-warn-bg: rgba(245, 158, 11, 0.14);
+  --docs-warn-text: #fcd34d;
+  --docs-danger-bg: rgba(248, 113, 113, 0.14);
+  --docs-danger-text: #fca5a5;
+
+  --docs-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  --docs-shadow-lg: 0 24px 64px -24px rgba(0, 0, 0, 0.6);
+  --docs-dark-ring: #2a3a52;
+  --docs-scroll-thumb: rgba(232, 238, 247, 0.2);
+  --docs-scroll-thumb-hover: rgba(232, 238, 247, 0.34);
+
+  // Lifted so code does not read as a hole in the page.
+  --docs-code-bg: #121c2d;
+  --docs-code-bar: #16223a;
+  --docs-code-border: #2a3a52;
+
+  color-scheme: dark;
+}
+
+// A surface picked in the theme panel (Slate, Gray, Zinc …) tints the site's own neutrals too, so the change is
+// felt across the page and not only in the demos. "Theme" keeps the site's palette.
+:root.docs-surface-custom {
+  --docs-page-bg: var(--wt-surface-100);
+  --docs-ground: var(--wt-surface-200);
+  --docs-surface: var(--wt-surface-0);
+  --docs-overlay: var(--wt-surface-0);
+  --docs-text: var(--wt-surface-900);
+  --docs-text-2: var(--wt-surface-700);
+  --docs-muted: var(--wt-surface-500);
+  --docs-border: var(--wt-surface-200);
+  --docs-border-strong: var(--wt-surface-300);
+  --docs-hover: var(--wt-surface-100);
+}
+:root.docs-surface-custom.wt-dark {
+  --docs-page-bg: var(--wt-surface-950);
+  --docs-ground: var(--wt-surface-950);
+  --docs-surface: var(--wt-surface-900);
+  --docs-overlay: var(--wt-surface-800);
+  --docs-text: var(--wt-surface-50);
+  --docs-text-2: var(--wt-surface-200);
+  --docs-muted: var(--wt-surface-400);
+  --docs-border: var(--wt-surface-800);
+  --docs-border-strong: var(--wt-surface-700);
+  --docs-hover: var(--wt-surface-800);
+}

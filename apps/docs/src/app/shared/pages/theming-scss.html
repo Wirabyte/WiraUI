@@ -1,0 +1,80 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">SCSS</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      One file with <code>&#64;use 'wiratheme/theme' with (…)</code>. It is the format the Theme Designer exports and what <code>ng add</code> creates in SCSS projects.
+    </p>
+  } @else {
+    <p class="docs-lead">
+      ตั้งธีมด้วย <code>&#64;use 'wiratheme/theme' with (…)</code> ไฟล์เดียว ซึ่งเป็นรูปแบบเดียวกับที่ Theme Designer export ให้
+      และเป็นสิ่งที่ <code>ng add</code> สร้างให้ในโปรเจค SCSS
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip">Sass 1.58+</span>
+  </div>
+</header>
+
+<docs-section id="theme-file" [title]="{ th: 'ไฟล์ธีม', en: 'The theme file' }">
+  @if (v.major === 1) {
+    @if (en()) {
+      <p>
+        Name a theme with <code>$theme</code> (a theme folder name such as <code>sila-light-teal</code>, <code>arun-blue</code>,
+        <code>sayan-green</code>), or start from a <code>$preset</code> and change only what you need. With no <code>with (…)</code> you get <code>sila-light-teal</code>.
+      </p>
+    } @else {
+      <p>
+        ใส่ชื่อธีมด้วย <code>$theme</code> (ชื่อโฟลเดอร์ธีม เช่น <code>sila-light-teal</code>, <code>arun-blue</code>, <code>sayan-green</code>)
+        หรือเริ่มจาก <code>$preset</code> แล้วปรับเฉพาะค่าที่อยากเปลี่ยน ไม่ใส่ <code>with (…)</code> เลยจะได้ <code>sila-light-teal</code>
+      </p>
+    }
+  } @else {
+    @if (en()) {
+      <p>
+        Set only what you want to change; the rest comes from the preset. With no <code>with (…)</code> you get the version's default (Mali). Give one
+        primary colour and the 50–950 shades are generated with the same formula as the TypeScript side (a test compares both).
+      </p>
+    } @else {
+      <p>
+        ใส่เฉพาะค่าที่อยากเปลี่ยน ที่เหลือมาจาก preset ไม่ใส่ <code>with (…)</code> เลยจะได้ธีมเริ่มต้นของรุ่น (Mali)
+        ใส่สีหลักสีเดียวแล้วระบบสร้างเฉด 50–950 ให้ด้วยสูตรเดียวกับฝั่ง TypeScript (มี test เทียบผลทั้งสองฝั่ง)
+      </p>
+    }
+  }
+  <docs-code [code]="themeCode" lang="scss" file="src/theme/wiratheme.theme.scss"></docs-code>
+</docs-section>
+
+<docs-section id="styles" [title]="{ th: 'เรียกใช้ใน styles.scss', en: 'Load it from styles.scss' }">
+  @if (en()) {
+    <p>The theme file emits <code>&#64;layer wiratheme.tokens</code> and the variables on <code>:root</code>. Put it on the first line of <code>styles.scss</code>.</p>
+  } @else {
+    <p>ไฟล์ธีมปล่อย <code>&#64;layer wiratheme.tokens</code> และตัวแปรบน <code>:root</code> ใส่ไว้บรรทัดแรกของ <code>styles.scss</code></p>
+  }
+  <docs-code [code]="s.SCSS_STYLES" lang="scss" file="src/styles.scss"></docs-code>
+</docs-section>
+
+<docs-section id="api" [title]="{ th: 'ใช้ token ใน SCSS ของ component', en: 'Tokens in component SCSS' }">
+  @if (en()) {
+    <p>The API module gives you <code>token()</code> and the <code>dark</code> and <code>media</code> mixins without emitting the theme again.</p>
+  } @else {
+    <p>โมดูล API มี helper <code>token()</code>, mixin <code>dark</code> และ <code>media</code> โดยไม่ปล่อย CSS ของธีมซ้ำ</p>
+  }
+  <docs-code [code]="s.SCSS_API" lang="scss" file="profile-card.component.scss"></docs-code>
+</docs-section>
+
+<docs-section id="with-ts" [title]="{ th: 'ใช้คู่กับ TypeScript', en: 'Together with TypeScript' }">
+  @if (en()) {
+    <p>
+      Keep the SCSS file as the main theme and adjust a few values with <code>overrides</code> in <code>provideWiraTheme()</code> (what <code>ng add</code> sets up).
+      TS values win through <code>wiratheme.overrides</code>. Loading a theme file and a <code>preset</code> together logs a warning in dev mode.
+    </p>
+  } @else {
+    <p>
+      ใช้ไฟล์ SCSS เป็นธีมหลักแล้ว override บางค่าด้วย <code>overrides</code> ใน <code>provideWiraTheme()</code> ได้ (แบบที่ <code>ng add</code> ตั้งให้)
+      ค่า TS ชนะเพราะอยู่ใน <code>wiratheme.overrides</code> ส่วนการใส่ทั้งไฟล์ธีมและ <code>preset</code> พร้อมกันจะมีคำเตือนใน dev mode
+    </p>
+  }
+  <p><a [routerLink]="link('theming/typescript')">{{ en() ? 'How to write overrides' : 'ดูวิธีเขียน overrides' }}</a></p>
+</docs-section>

@@ -1,0 +1,85 @@
+/* wt-metergroup. Shared by wiratheme v1, v2 and v3. Several values on one bar, with a legend. */
+@layer wiratheme.components {
+  wt-metergroup {
+    display: block;
+  }
+  .wt-metergroup {
+    display: flex;
+    gap: var(--wt-metergroup-gap);
+    color: var(--wt-text);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+  }
+  .wt-metergroup-meters {
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--wt-metergroup-radius);
+    background: var(--wt-metergroup-bg);
+  }
+  .wt-metergroup-meter {
+    flex: none;
+    display: block;
+    border: 0;
+    transition:
+      width var(--wt-transition),
+      height var(--wt-transition);
+  }
+  .wt-metergroup-labels {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-metergroup-labels-horizontal {
+    gap: 0.5rem var(--wt-metergroup-gap);
+  }
+  .wt-metergroup-labels-vertical {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .wt-metergroup-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .wt-metergroup-label-marker {
+    flex: none;
+    display: inline-flex;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+  }
+  .wt-metergroup-label-icon {
+    flex: none;
+    width: 1rem;
+    font-size: 1rem;
+    line-height: 1;
+    text-align: center;
+  }
+  .wt-metergroup-horizontal {
+    flex-direction: column;
+  }
+  .wt-metergroup-horizontal .wt-metergroup-meters {
+    height: var(--wt-metergroup-size);
+  }
+  /* Vertical: the bar fills the host's height (style="height: 20rem" on <wt-metergroup>). */
+  wt-metergroup:has(> .wt-metergroup-vertical) {
+    height: 100%;
+  }
+  .wt-metergroup-vertical {
+    flex-direction: row;
+    height: 100%;
+  }
+  .wt-metergroup-vertical .wt-metergroup-meters {
+    flex-direction: column;
+    width: var(--wt-metergroup-size);
+    height: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-metergroup-meter {
+      transition: none;
+    }
+  }
+}

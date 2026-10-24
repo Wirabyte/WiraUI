@@ -1,0 +1,89 @@
+/* wt-popover. Shared by wiratheme v1, v2 and v3. A card with an arrow under (or, flipped, over) the element that
+   opened it, in the top layer. On phones it keeps its anchor but never gets wider than the screen. */
+@layer wiratheme.components {
+  wt-popover,
+  wt-overlaypanel {
+    display: contents;
+  }
+  .wt-popover {
+    position: fixed;
+    inset: auto;
+    z-index: 1100;
+    box-sizing: border-box;
+    max-width: calc(100vw - 1rem);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 1px solid var(--wt-border);
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-overlay-bg);
+    color: var(--wt-text);
+    box-shadow: var(--wt-shadow-md);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    animation: wt-popover-in 0.12s ease-out;
+  }
+  /* The arrow: a rotated square under the border, at the anchor's middle. */
+  .wt-popover::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--wt-popover-arrow-size) / -2);
+    left: var(--_arrow, 1.25rem);
+    width: var(--wt-popover-arrow-size);
+    height: var(--wt-popover-arrow-size);
+    margin-left: calc(var(--wt-popover-arrow-size) / -2);
+    border: inherit;
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 2px 0 0 0;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+  .wt-popover-flipped::before {
+    top: auto;
+    bottom: calc(var(--wt-popover-arrow-size) / -2);
+    transform: rotate(225deg);
+  }
+  .wt-popover-content {
+    position: relative;
+    padding: var(--wt-popover-padding);
+    max-height: inherit;
+    overflow: auto;
+  }
+  .wt-popover-close {
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+    cursor: pointer;
+    box-shadow: var(--wt-shadow-sm);
+  }
+  .wt-popover-close:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-popover-close svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  @keyframes wt-popover-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-popover {
+      animation: none;
+    }
+  }
+}

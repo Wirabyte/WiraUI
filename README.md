@@ -1,31 +1,80 @@
 # WiraTheme
 
-UI component library + Theme Designer สำหรับ Angular ที่ใช้แทน PrimeNG ในโปรเจคของ Wirabyte
-หน้าตาและวิธีใช้คล้าย PrimeNG แต่เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)
+UI component library + Theme Designer สำหรับ Angular ของ Wirabyte
+API คุ้นมือ เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)
 
-| แพ็กเกจ | Angular | สถานะ |
-|---|---|---|
-| `wiratheme@1` | 15 – 17 | maintenance |
-| `wiratheme@2` | 18 – 20 | active |
-| `wiratheme@3` | 21+ | active (latest) |
+| แพ็กเกจ | Angular | หน้าตา | ธีม | สถานะ |
+|---|---|---|---|---|
+| `wiratheme@1` | 15 – 17 | classic | `sila-light-*`, `sila-dark-*`, `arun-*`, `sayan-*`, `ratri-*`, `md-*` | maintenance |
+| `wiratheme@2` | 18 – 20 | styled | Mali, Sila, Material, Phet | active |
+| `wiratheme@3` | 21+ | styled + ของ WiraTheme | v2 + Wira, Lanna, Siam, Nakhon, Glass | active (latest) |
 
 แต่ละรุ่นถูกล็อกกับช่วง Angular ของตัวเอง ติดตั้งข้ามช่วงไม่ได้ · License: [MIT](LICENSE) ใช้ฟรี
 
+**ย้ายโปรเจคเดิม:** ขนาดและระยะของแต่ละรุ่นตรงกับธีมยุคเดียวกันที่แอปเดิมใช้, DOM มี class `p-*` ของยุคนั้น (`p-button`, `p-card-body`, `p-highlight`, …) และไฟล์ธีมสร้างตัวแปร `--surface-ground`, `--primary-color` (v1) หรือ `--p-primary-color`, `--p-surface-*` (v2/v3) ให้ CSS เดิมของแอปยังใช้ได้ ดูรายละเอียดที่ [DESIGN.md §6.10](DESIGN.md)
+
+```jsonc
+// v1: แทนไฟล์ธีมเดิม ".../themes/lara-light-teal/theme.css" (ชื่อธีมของ WiraTheme ดูตารางเทียบใน DESIGN.md §12.8)
+"node_modules/wiratheme/themes/sila-light-teal/theme.css"
+```
+
 ## Component ที่มีแล้ว
 
-ทุกตัวมีใน v1, v2 และ v3 ใช้ได้ทั้ง NgModule (`WtXxxModule`) และ standalone (`WtXxx`) และหน้าตาเหมือนกันทุกรุ่น
+ทุกตัวมีใน v1, v2 และ v3 ใช้ได้ทั้ง NgModule (`WtXxxModule`) และ standalone (`WtXxx`) CSS ชุดเดียวกันทุกรุ่น ส่วนหน้าตามาจากธีมของรุ่นนั้น (ใส่ preset เดียวกันแล้ว pixel ตรงกันทุกรุ่น)
 
 | Entry point | ใช้แบบนี้ | หมายเหตุ |
 |---|---|---|
-| `wiratheme/button` | `<wt-button label="บันทึก" [action]="save">` | `[action]` แสดง spinner และกันกดซ้ำจนงานเสร็จ |
-| `wiratheme/card` | `<wt-card header="…" subheader="…">` | slot `[wtCardHeader]`, `[wtCardActions]`, `[wtCardFooter]` · `variant` outlined / elevated / glass · `loading` |
+| `wiratheme/button` | `<wt-button label="บันทึก" [action]="save">` | `[action]` แสดง spinner และกันกดซ้ำจนงานเสร็จ · `size="small"`/`"large"` · `<button wtButton>` (อ่าน `pButton` ได้) · `styleClass="p-button-sm p-button-danger"` |
+| `wiratheme/card` | `<wt-card header="…" subheader="…">` | slot `[wtCardHeader]`, `[wtCardActions]`, `[wtCardFooter]` · `variant` outlined / elevated / glass (v3) · `loading` |
 | `wiratheme/inputtext` | `<input wtInputText [(ngModel)]="name">` | `wtSize`, `variant="filled"`, `fluid`, `invalid` |
 | `wiratheme/textarea` | `<textarea wtTextarea autoResize formControlName="note">` | `autoResize` ขยายตามข้อความ รวมค่าที่ตั้งจากโค้ด |
 | `wiratheme/checkbox` | `<wt-checkbox [(ngModel)]="agree" binary label="…">` | `binary` หรือแบบกลุ่ม (array + `value`) |
 | `wiratheme/radiobutton` | `<wt-radiobutton name="plan" value="sci" formControlName="plan">` | กลุ่มเดียวกันใน Reactive Forms อัปเดตกันเอง |
 | `wiratheme/toggleswitch` | `<wt-toggleswitch [(ngModel)]="notify" label="…">` | `trueValue` / `falseValue` |
+| `wiratheme/tag` | `<wt-tag value="อนุมัติ" severity="success" rounded>` | สีทึบหรือสีอ่อนตามธีม, รับ `severity="warning"` แบบเดิมได้ |
+| `wiratheme/badge` | `<wt-badge value="8" severity="danger">` | ไม่ใส่ `value` เป็นจุด, `size` small / large / xlarge |
+| `wiratheme/chip` | `<wt-chip label="แอดมิน" removable (onRemove)="…">` | icon หรือรูป, ปุ่มลบกดได้ด้วยคีย์บอร์ด |
+| `wiratheme/avatar` | `<wt-avatar image="…" label="สม" shape="circle">` | รูปเสียแล้วกลับไปใช้ตัวอักษร, `wt-avatar-group` วางซ้อนกัน |
+| `wiratheme/divider` | `<wt-divider align="center">หรือ</wt-divider>` | แนวนอน/แนวตั้ง, solid / dashed / dotted |
+| `wiratheme/skeleton` | `<wt-skeleton width="10rem">` | `shape="circle"`, `size`, ปิด animation ได้ |
+| `wiratheme/progressbar` | `<wt-progressbar [value]="60">` | `mode="indeterminate"`, ตั้งความสูงด้วย `style` · นับจำนวน `[max]="2500" unit="รายการ"` → `1,000 / 2,500 รายการ` · `text` หรือ template `#content` |
+| `wiratheme/metergroup` | `<wt-metergroup [value]="[{ label: 'แอป', value: 16 }]">` | หลายค่าในแถบเดียวพร้อมคำอธิบาย, `min`/`max`, แนวตั้ง, `labelPosition`, template label / meter / start / end / icon |
+| `wiratheme/progressspinner` | `<wt-progress-spinner style="width: 2rem">` | สีและขนาดเริ่มต้นตามธีม |
+| `wiratheme/message` | `<wt-message severity="warn" text="…" closable [life]="5000">` | `variant` outlined / simple, `size` |
+| `wiratheme/panel` | `<wt-panel header="…" toggleable [(collapsed)]="closed">` | slot `[wtPanelHeader]`, `[wtPanelIcons]`, `[wtPanelFooter]`, เนื้อหาที่ยุบกด tab ไม่ถึง |
+| `wiratheme/fieldset` | `<wt-fieldset legend="ที่อยู่" toggleable>` | ใช้ `<fieldset>` จริง |
+| `wiratheme/iconfield` | `<wt-iconfield><wt-inputicon icon="pi pi-search"></wt-inputicon><input wtInputText></wt-iconfield>` | ไอคอนก่อน input อยู่ซ้าย หลัง input อยู่ขวา, markup เดิม `p-input-icon-left` ใช้ได้ |
+| `wiratheme/inputgroup` | `<wt-inputgroup><wt-inputgroup-addon>฿</wt-inputgroup-addon><input wtInputText></wt-inputgroup>` | ใส่ปุ่มได้, markup เดิม `p-inputgroup` ใช้ได้ |
+| `wiratheme/floatlabel` | `<wt-floatlabel><input wtInputText id="n"><label for="n">ชื่อ</label></wt-floatlabel>` | `variant` over / on / in, markup เดิม `p-float-label` ใช้ได้ |
+| `wiratheme/togglebutton` | `<wt-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา">` | ค่า boolean, ไอคอนเปิด/ปิด |
+| `wiratheme/selectbutton` | `<wt-selectbutton [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="plan">` | `multiple`, `allowEmpty`, `dataKey`, ขึ้นบรรทัดใหม่บนจอแคบ |
+| `wiratheme/rating` | `<wt-rating [(ngModel)]="score">` | ใช้ radio จริง กดลูกศรเลือกได้ |
+| `wiratheme/password` | `<wt-password [(ngModel)]="pw" toggleMask>` | แสดง/ซ่อนรหัส, แถบความแข็งแรงเปิดเป็นแผงใต้ช่องตอนโฟกัส (ไม่ดันเนื้อหา) |
+| `wiratheme/inputnumber` | `<wt-inputnumber [(ngModel)]="price" mode="currency" [min]="0" showButtons>` | แสดง `฿1,234.50` ตอนไม่ได้พิมพ์ ตัวเลขล้วนตอนพิมพ์, รับเลขไทย/ค่าที่วาง, พิมพ์ตัวอักษรไม่ได้ ทศนิยมไม่เกิน `maxFractionDigits` และไม่เกิน `max`, ลูกศรเพิ่ม-ลด, กดปุ่มค้างได้, คีย์บอร์ดตัวเลขบนมือถือ |
+| `wiratheme/datepicker` | `<wt-datepicker [(ngModel)]="due" dateFormat="dd/mm/yy" showIcon showTime>` | ปี พ.ศ. (หรือ `isBudhistYear`), เลือกวัน/ช่วง/หลายวัน/เดือน/ปี, ชม. นาที วินาที กดขึ้นลงหรือพิมพ์ได้, `readonlyInput` กับ `timeReadonlyInput` แยกกัน, เปิดใน top layer ไม่ต้อง `appendTo`, มือถือเป็น bottom sheet |
+| `wiratheme/dialog` | `<wt-dialog header="แก้ไข" [(visible)]="open" [style]="{ width: '50vw' }">` | `<dialog>` แบบ modal ใน top layer, focus ไม่หลุดและกลับที่เดิม, ล็อก scroll, `breakpoints`, `maximizable`, `position`, slot `wtTemplate="footer"` (อ่าน `pTemplate` ได้), มือถือกว้างเต็มจอ |
+| `wiratheme/alert` | `WtAlert.fire('บันทึกแล้ว', '', 'success')` | alert สำเร็จรูปแบบ SweetAlert: ไอคอนเคลื่อนไหว, input + validator, `preConfirm` พร้อม spinner, timer, ปุ่มยืนยันอยู่ขวาเสมอ (`reverseButtons: false` สลับ); `import { WtAlert as Swal }` แล้วโค้ดเดิมใช้ต่อได้ |
+| `wiratheme/confirmdialog` | `<wt-confirmdialog>` + `confirmation.confirm({ message, accept })` | ถามก่อนทำ, รับ `acceptButtonStyleClass="p-button-success"`, ถ้าไม่มี component ในหน้าจะเปิดเป็น alert แทน |
+| `wiratheme/toast` | `<wt-toast>` + `messages.add({ severity: 'success', summary, detail })` | แสดงเหนือ dialog, เส้นนับถอยหลังด้านล่าง (`[showTimer]="false"` ปิด) หยุดตอน hover แล้วนับต่อจากที่เหลือ, ปุ่มปิดอยู่ขวาบนเสมอ, มือถือเต็มความกว้าง |
+| `wiratheme/tooltip` | `<button wtTooltip="บันทึก" tooltipPosition="top">` | รับ `pTooltip` เดิม, แสดงตอนโฟกัสด้วยคีย์บอร์ด, กลับด้านเมื่อไม่พอ, เลื่อนเมาส์ไปบน tooltip ได้ (คลิกลิงก์ข้างในได้; `[autoHide]="true"` ซ่อนทันที) |
+| `wiratheme/popover` | `<wt-popover #op>` + `(click)="op.toggle($event)"` | การ์ดมีลูกศรชี้ปุ่ม, กลับขึ้นบนเมื่อด้านล่างไม่พอ, คลิกข้างนอก/Escape ปิด |
+| `wiratheme/animate` | `provideWtAnimate()` + `<div data-aos="fade-up">` | animate on scroll แบบ AOS ด้วย attribute เดิม หรือ `[wtAnimate]`, เคารพ reduced motion |
+| `wiratheme/api` | `import { ConfirmationService, MessageService } from 'wiratheme/api'` | service และ `WtTemplate` ในที่เดียว ใช้ชื่อเดิมได้ |
+| `wiratheme/toolbar` | `<wt-toolbar><div wtToolbarStart>…</div><div wtToolbarEnd>…</div></wt-toolbar>` | 3 กลุ่ม start / center / end ขึ้นบรรทัดใหม่บนจอแคบ |
+| `wiratheme/accordion` | `<wt-accordion [(activeIndex)]="i"><wt-accordion-tab header="…">` | `multiple`, `[(selected)]`, ปุ่มลูกศรเลื่อนระหว่างหัวข้อ |
+| `wiratheme/tabs` | `<wt-tabs [(activeIndex)]="i"><wt-tab-panel header="…">` | ปุ่มลูกศร/Home/End ข้ามแท็บที่ปิด, แท็บล้นแถวมีปุ่มเลื่อนซ้าย-ขวาแทน scrollbar และเลื่อนแท็บที่เลือกให้เห็นเสมอ |
+| `wiratheme/validation` | `<input wtInputText formControlName="email"><wt-field-error for="email" label="อีเมล">` | ข้อความ error ภาษาไทย/อังกฤษตาม locale, `WtValidators.thaiId` / `thaiPhone` / `match`, directive `wtThaiId` `wtThaiPhone` `wtMatch` |
 
-control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้ว
+control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้วหรือกดส่งฟอร์มแล้ว (ไม่ต้องใส่ class `ng-dirty` เอง)
+
+**ขนาดทั้งระบบ:** `provideWiraTheme({ scale: 'md' })` หรือ `WtThemeService.setScale('sm' | 'md' | 'lg' | px)` ตั้ง font-size ของ root (12 / 14 / 16px) ทุกขนาดใน theme เป็น rem จึงย่อขยายตามกัน ส่วนแต่ละ component มี `size="small"` / `"large"` (หรือ class `p-button-sm`, `p-inputtext-sm`)
+
+**Utility class ในตัว** (`wiratheme/utils`): grid, flex, spacing, sizing, typography และสีตามธีม แบบ mobile-first ชื่อ class แบบที่แอปใช้อยู่แล้ว (`grid`, `col-12 md:col-6`, `flex align-items-center gap-2`, `p-3`) `ng add` ถามว่าจะเพิ่มไหม หรือใส่เอง:
+
+```scss
+@use 'wiratheme/utils';                                   // ทั้งหมด
+@use 'wiratheme/utils' with ($groups: (palette: false));   // ปิดบางกลุ่ม
+```
 
 ## เอกสาร
 

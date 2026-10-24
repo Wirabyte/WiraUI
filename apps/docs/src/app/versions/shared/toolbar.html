@@ -1,0 +1,33 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-toolbar id="d-toolbar" ariaLabel="จัดการเอกสาร">
+          <wt-button wtToolbarStart label="สร้างใหม่" icon="pi pi-plus"></wt-button>
+          <wt-button wtToolbarStart label="ส่งออก" severity="secondary" [outlined]="true"></wt-button>
+          <wt-iconfield wtToolbarCenter>
+            <wt-inputicon icon="pi pi-search"></wt-inputicon>
+            <input wtInputText placeholder="ค้นหา" aria-label="ค้นหา" />
+          </wt-iconfield>
+          <wt-button wtToolbarEnd icon="pi pi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
+        </wt-toolbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="wrap" [section]="sec['wrap']">
+      <docs-demo [html]="code['wrap']" layout="stack">
+        <div style="max-width: 360px">
+          <wt-toolbar id="d-toolbar-wrap">
+            <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
+            <wt-button label="ยกเลิก" severity="secondary" [text]="true"></wt-button>
+            <span wtToolbarEnd>บันทึกอัตโนมัติ · แก้ไขล่าสุด 10:24 น.</span>
+          </wt-toolbar>
+        </div>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

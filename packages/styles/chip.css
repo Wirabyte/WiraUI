@@ -1,0 +1,85 @@
+/* wt-chip. Shared by wiratheme v1, v2 and v3. Label with optional icon or image and a remove button. */
+@layer wiratheme.components {
+  wt-chip {
+    display: inline-flex;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+  /* A removed chip: author display rules would otherwise beat the browser's [hidden]. */
+  wt-chip[hidden] {
+    display: none;
+  }
+  .wt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--wt-chip-gap);
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: var(--wt-chip-padding-y) var(--wt-chip-padding-x);
+    border-radius: var(--wt-chip-radius);
+    background: var(--wt-chip-bg);
+    color: var(--wt-chip-color);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: 1.4;
+  }
+  .wt-chip-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .wt-chip-icon {
+    line-height: 1;
+  }
+  /* An image sits flush with the left edge. */
+  .wt-chip-has-image {
+    padding-left: 0;
+  }
+  .wt-chip-image {
+    flex: none;
+    width: 2em;
+    height: 2em;
+    margin-block: calc(var(--wt-chip-padding-y) * -1);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .wt-chip-remove {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    margin: -0.25em -0.375em -0.25em 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color var(--wt-transition);
+  }
+  .wt-chip-remove:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+  .wt-chip-remove:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-chip-remove svg {
+    width: 0.875em;
+    height: 0.875em;
+  }
+  /* Touch screens get a bigger target without changing the chip's size. */
+  @media (pointer: coarse) {
+    .wt-chip-remove {
+      position: relative;
+    }
+    .wt-chip-remove::after {
+      content: '';
+      position: absolute;
+      inset: -0.5rem;
+    }
+  }
+}

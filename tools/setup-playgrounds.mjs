@@ -30,6 +30,8 @@ for (const v of versions) {
   // (Angular 15's webpack cache keys on package versions and would keep serving stale wiratheme code).
   rmSync(join(app, 'node_modules', 'wiratheme'), { recursive: true, force: true });
   rmSync(join(app, '.angular', 'cache'), { recursive: true, force: true });
+  // The theme file is ng add's output and ng add never overwrites one; drop it so a changed default theme shows up.
+  for (const ext of ['scss', 'css']) rmSync(join(app, 'src', 'theme', `wiratheme.theme.${ext}`), { force: true });
   // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
   run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball}`, app);
   run('npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none', app);
@@ -50,6 +52,38 @@ for (const v of versions) {
       ['WtCheckboxModule', 'wiratheme/checkbox'],
       ['WtRadioButtonModule', 'wiratheme/radiobutton'],
       ['WtToggleSwitchModule', 'wiratheme/toggleswitch'],
+      ['WtTagModule', 'wiratheme/tag'],
+      ['WtBadgeModule', 'wiratheme/badge'],
+      ['WtChipModule', 'wiratheme/chip'],
+      ['WtAvatarModule', 'wiratheme/avatar'],
+      ['WtDividerModule', 'wiratheme/divider'],
+      ['WtSkeletonModule', 'wiratheme/skeleton'],
+      ['WtProgressBarModule', 'wiratheme/progressbar'],
+      ['WtMeterGroupModule', 'wiratheme/metergroup'],
+      ['WtProgressSpinnerModule', 'wiratheme/progressspinner'],
+      ['WtMessageModule', 'wiratheme/message'],
+      ['WtPanelModule', 'wiratheme/panel'],
+      ['WtFieldsetModule', 'wiratheme/fieldset'],
+      ['WtIconFieldModule', 'wiratheme/iconfield'],
+      ['WtInputGroupModule', 'wiratheme/inputgroup'],
+      ['WtFloatLabelModule', 'wiratheme/floatlabel'],
+      ['WtToggleButtonModule', 'wiratheme/togglebutton'],
+      ['WtSelectButtonModule', 'wiratheme/selectbutton'],
+      ['WtRatingModule', 'wiratheme/rating'],
+      ['WtPasswordModule', 'wiratheme/password'],
+      ['WtToolbarModule', 'wiratheme/toolbar'],
+      ['WtAccordionModule', 'wiratheme/accordion'],
+      ['WtTabsModule', 'wiratheme/tabs'],
+      ['WtInputNumberModule', 'wiratheme/inputnumber'],
+      ['WtDatePickerModule', 'wiratheme/datepicker'],
+      ['WtDialogModule', 'wiratheme/dialog'],
+      ['WtAlertModule', 'wiratheme/alert'],
+      ['WtConfirmDialogModule', 'wiratheme/confirmdialog'],
+      ['WtToastModule', 'wiratheme/toast'],
+      ['WtTooltipModule', 'wiratheme/tooltip'],
+      ['WtPopoverModule', 'wiratheme/popover'],
+      ['WtAnimateModule', 'wiratheme/animate'],
+      ['WtValidationModule', 'wiratheme/validation'],
     ];
     const modFile = join(src, 'app.module.ts');
     let mod = readFileSync(modFile, 'utf8');

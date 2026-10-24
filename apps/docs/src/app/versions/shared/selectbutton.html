@@ -1,0 +1,45 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <wt-selectbutton id="d-plan" [options]="plans" optionLabel="label" optionValue="value" [(ngModel)]="plan"></wt-selectbutton>
+        <span class="docs-demo-output">plan: <code id="d-plan-value">{{ plan | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-selectbutton [options]="plans" optionLabel="label" optionValue="value" [(ngModel)]="sizeValue" size="small"></wt-selectbutton>
+        <wt-selectbutton [options]="plans" optionLabel="label" optionValue="value" [(ngModel)]="sizeValue"></wt-selectbutton>
+        <wt-selectbutton [options]="plans" optionLabel="label" optionValue="value" [(ngModel)]="sizeValue" size="large"></wt-selectbutton>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="multiple" [section]="sec['multiple']">
+      <docs-demo [html]="code['multiple']" [ts]="ts['multiple']">
+        <wt-selectbutton id="d-days" [options]="days" [(ngModel)]="workdays" [multiple]="true"></wt-selectbutton>
+        <span class="docs-demo-output">workdays: <code id="d-days-value">{{ workdays | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="required" [section]="sec['required']">
+      <docs-demo [html]="code['required']">
+        <wt-selectbutton id="d-range" [options]="['วัน', 'สัปดาห์', 'เดือน']" [(ngModel)]="range" [allowEmpty]="false"></wt-selectbutton>
+        <span class="docs-demo-output">range: <code id="d-range-value">{{ range | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-selectbutton [options]="formPlans" optionLabel="label" optionValue="value" optionDisabled="disabled" formControlName="plan"></wt-selectbutton>
+        </form>
+        <span class="docs-demo-output">value: <code>{{ form.getRawValue() | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

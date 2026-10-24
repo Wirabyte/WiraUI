@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, inject, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, DoCheck, ElementRef, inject, Input, OnDestroy } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, ɵWtStyleLoader } from 'wiratheme/config';
@@ -12,18 +12,21 @@ import { WtInputSize, WtInputVariant, ɵWT_INPUTTEXT_CSS } from 'wiratheme/input
   selector: 'textarea[wtTextarea]',
   standalone: true,
   host: {
-    class: 'wt-inputtext wt-textarea',
+    class: 'wt-inputtext wt-textarea p-inputtextarea p-inputtext p-component p-element',
     '[class.wt-textarea-autoresize]': 'autoResize',
+    '[class.p-inputtextarea-resizable]': 'autoResize',
     '[class.wt-inputtext-sm]': "wtSize === 'small'",
     '[class.wt-inputtext-lg]': "wtSize === 'large'",
     '[class.wt-inputtext-filled]': "variant === 'filled'",
     '[class.wt-inputtext-fluid]': 'fluid',
     '[class.wt-invalid]': 'invalid',
     '[attr.aria-invalid]': 'invalid || null',
-    '(input)': 'resize()',
+    '[class.wt-filled]': 'filled',
+    '[class.p-filled]': 'filled',
+    '(input)': 'onInput()',
   },
 })
-export class WtTextarea implements AfterViewInit, OnDestroy {
+export class WtTextarea implements AfterViewInit, DoCheck, OnDestroy {
   @Input() set autoResize(v: unknown) { this._autoResize = ɵtoBool(v); }
   get autoResize(): boolean { return this._autoResize; }
   @Input() wtSize?: WtInputSize;
@@ -33,6 +36,8 @@ export class WtTextarea implements AfterViewInit, OnDestroy {
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   get invalid(): boolean { return this._invalid; }
 
+  /** True while the field has a value; floating labels read the `wt-filled` / `p-filled` class. */
+  filled = false;
   private _autoResize = false;
   private _fluid = false;
   private _invalid = false;
@@ -49,6 +54,15 @@ export class WtTextarea implements AfterViewInit, OnDestroy {
     this.resize();
     const changes = this.ngControl && this.ngControl.valueChanges;
     if (changes) this.sub = changes.subscribe(() => setTimeout(() => this.resize()));
+  }
+
+  ngDoCheck(): void {
+    this.filled = !!this.el.nativeElement.value;
+  }
+
+  onInput(): void {
+    this.filled = !!this.el.nativeElement.value;
+    this.resize();
   }
 
   ngOnDestroy(): void {

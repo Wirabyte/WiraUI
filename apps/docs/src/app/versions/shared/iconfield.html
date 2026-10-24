@@ -1,0 +1,20 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-iconfield id="d-iconfield">
+          <wt-inputicon icon="pi pi-search"></wt-inputicon>
+          <input wtInputText placeholder="ค้นหา" aria-label="ค้นหา" />
+        </wt-iconfield>
+        <wt-iconfield>
+          <input wtInputText placeholder="อีเมล" aria-label="อีเมล" />
+          <wt-inputicon icon="pi pi-envelope"></wt-inputicon>
+        </wt-iconfield>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

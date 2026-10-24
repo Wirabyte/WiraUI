@@ -1,0 +1,59 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">TypeScript</h1>
+  @if (en()) {
+    <p class="docs-lead">Override a few values on top of a theme file, or define the whole theme in TypeScript. Every token is typed, so you get autocomplete and typos do not compile.</p>
+  } @else {
+    <p class="docs-lead">override บางค่าทับไฟล์ธีม หรือกำหนดธีมทั้งชุดจาก TypeScript อย่างเดียว token ทุกตัวมี type ครบ จึงมี autocomplete และพิมพ์ผิดจะ compile ไม่ผ่าน</p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+  </div>
+</header>
+
+<docs-section id="overrides" [title]="{ th: 'Overrides ทับไฟล์ธีม', en: 'Overrides on a theme file' }">
+  @if (en()) {
+    <p>
+      The setup <code>ng add</code> creates: the theme comes from a SCSS / CSS file and <code>wiratheme.overrides.ts</code> adjusts a few values. They land in
+      <code>&#64;layer wiratheme.overrides</code>, so they beat the theme file.
+    </p>
+  } @else {
+    <p>แบบที่ <code>ng add</code> ตั้งให้: ธีมหลักมาจากไฟล์ SCSS / CSS แล้วปรับบางค่าในไฟล์ <code>wiratheme.overrides.ts</code> ค่าเหล่านี้ลง <code>&#64;layer wiratheme.overrides</code> จึงชนะไฟล์ธีม</p>
+  }
+  <docs-code [code]="s.TS_OVERRIDES" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="preset" [title]="{ th: 'ธีมจาก TypeScript อย่างเดียว', en: 'A theme in TypeScript only' }">
+  @if (en()) {
+    <p>No theme file at all: start from one of this version's presets and adjust it with <code>definePreset()</code> (the sample uses the preset on this page).</p>
+  } @else {
+    <p>ไม่มีไฟล์ธีมเลย ใช้ preset ของรุ่นนี้เป็นฐานแล้วปรับด้วย <code>definePreset()</code> (ตัวอย่างใช้ preset ที่หน้านี้ใช้อยู่)</p>
+  }
+  <docs-code [code]="presetCode()" lang="ts"></docs-code>
+  <div class="docs-note">
+    <docs-icon name="info"></docs-icon>
+    @if (en()) {
+      <p>Use either a theme file or a <code>preset</code>, not both: each defines every token, and dev mode warns when both are loaded.</p>
+    } @else {
+      <p>เลือกอย่างใดอย่างหนึ่งระหว่างไฟล์ธีมกับ <code>preset</code> ถ้าใส่ทั้งสองอย่าง dev mode จะเตือน เพราะทั้งคู่กำหนด token ครบทุกตัว</p>
+    }
+  </div>
+</docs-section>
+
+<docs-section id="runtime" [title]="{ th: 'เปลี่ยนตอน runtime', en: 'Run-time changes' }">
+  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="palette" title="palette()">
+  @if (en()) {
+    <p>
+      <code>palette('#00a86b')</code> builds the 50–950 shades from one colour (it becomes shade 500), or use a built-in swatch such as
+      <code>palette('&#123;emerald&#125;')</code>. It is the same formula as <code>wt.palette()</code> in Sass, so results match everywhere.
+    </p>
+  } @else {
+    <p>
+      <code>palette('#00a86b')</code> สร้างเฉด 50–950 จากสีเดียว (สีที่ใส่เป็นเฉด 500) หรือใช้ชื่อ swatch ในตัวเช่น <code>palette('&#123;emerald&#125;')</code>
+      สูตรเดียวกับ <code>wt.palette()</code> ฝั่ง Sass ผลจึงตรงกันทุกที่
+    </p>
+  }
+</docs-section>

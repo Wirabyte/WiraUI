@@ -1,0 +1,61 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <input id="d-name" wtInputText [(ngModel)]="name" placeholder="ชื่อ-นามสกุล" />
+        <span class="docs-demo-output">name: <code id="d-value">{{ name | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-fields">
+          <input id="r-name" wtInputText formControlName="name" placeholder="ชื่อ (ต้องกรอก)" />
+          <input id="r-email" wtInputText formControlName="email" type="email" placeholder="อีเมล" />
+        </form>
+        <div class="docs-demo-actions">
+          <wt-button id="r-patch" [label]="en() ? 'Fill sample values' : 'ใส่ค่าตัวอย่าง'" size="small" severity="secondary" (onClick)="patch()"></wt-button>
+          <span class="docs-demo-output">valid: <b id="r-valid">{{ form.valid }}</b></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <input id="d-input-sm" wtInputText wtSize="small" placeholder="เล็ก" aria-label="เล็ก" />
+        <input wtInputText placeholder="ปกติ" aria-label="ปกติ" />
+        <input wtInputText wtSize="large" placeholder="ใหญ่" aria-label="ใหญ่" />
+        <input id="d-input-sm-class" wtInputText class="p-inputtext-sm" placeholder="p-inputtext-sm" aria-label="p-inputtext-sm" />
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="filled" [section]="sec['filled']">
+      <docs-demo [html]="code['filled']">
+        <input wtInputText variant="filled" placeholder="Filled" />
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="fluid" [section]="sec['fluid']">
+      <docs-demo [html]="code['fluid']" layout="stack">
+        <input wtInputText [fluid]="true" placeholder="กว้างเต็มพื้นที่" />
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']">
+        <input wtInputText value="ACC-10234" [disabled]="true" aria-label="disabled" />
+        <input wtInputText value="อ่านอย่างเดียว" [readonly]="true" aria-label="readonly" />
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="invalid" [section]="sec['invalid']">
+      <docs-demo [html]="code['invalid']">
+        <input wtInputText [invalid]="true" placeholder="อีเมล" />
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

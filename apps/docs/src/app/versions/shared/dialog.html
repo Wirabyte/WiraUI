@@ -1,0 +1,110 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <wt-button id="d-dialog-open" label="แก้ไขโปรไฟล์" icon="pi pi-user" (onClick)="visible = true"></wt-button>
+        <span class="docs-demo-output">visible: <code id="d-dialog-visible">{{ visible }}</code> · events: <code id="d-dialog-events">{{ events.join(', ') || '-' }}</code></span>
+        <wt-dialog
+          header="แก้ไขโปรไฟล์"
+          styleClass="d-dialog-basic"
+          [(visible)]="visible"
+          [style]="{ width: '28rem' }"
+          (onShow)="log('show')"
+          (onHide)="log('hide')"
+        >
+          <div class="docs-demo-labelled docs-demo-grow">
+            <label for="profile-name">ชื่อที่แสดง</label>
+            <input wtInputText id="profile-name" [(ngModel)]="name" [fluid]="true" />
+          </div>
+          <ng-template #footer>
+            <wt-button id="d-dialog-cancel" label="ยกเลิก" severity="secondary" [text]="true" (onClick)="visible = false"></wt-button>
+            <wt-button id="d-dialog-save" label="บันทึก" (onClick)="visible = false"></wt-button>
+          </ng-template>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="slots" [section]="sec['slots']">
+      <docs-demo [html]="code['slots']">
+        <wt-button label="ส่งข้อความ" icon="pi pi-send" severity="secondary" (onClick)="slotsVisible = true"></wt-button>
+        <wt-dialog [(visible)]="slotsVisible" [style]="{ width: '26rem' }">
+          <ng-template #header>
+            <span class="docs-dialog-head"><wt-avatar label="ส" shape="circle"></wt-avatar> <b>สมหญิง ใจดี</b></span>
+          </ng-template>
+          <p class="docs-demo-p">ส่งข้อความหาสมาชิกในทีม</p>
+          <wt-footer>
+            <wt-button label="ส่ง" icon="pi pi-send" (onClick)="slotsVisible = false"></wt-button>
+          </wt-footer>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="position" [section]="sec['position']">
+      <docs-demo [html]="code['position']">
+        @for (p of positions; track p) {
+          <wt-button [label]="p" size="small" severity="secondary" [outlined]="true" (onClick)="openAt(p)"></wt-button>
+        }
+        <wt-dialog header="ตำแหน่ง" [(visible)]="posVisible" [position]="position" [style]="{ width: '20rem' }">
+          <p class="docs-demo-p">position="{{ position }}"</p>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="responsive" [section]="sec['responsive']">
+      <docs-demo [html]="code['responsive']">
+        <wt-button label="เปิดรายงาน" icon="pi pi-search" (onClick)="wideVisible = true"></wt-button>
+        <wt-dialog
+          header="รายงานประจำเดือน"
+          [(visible)]="wideVisible"
+          [maximizable]="true"
+          [style]="{ width: '50vw' }"
+          [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        >
+          <p class="docs-demo-p">
+            {{
+              en()
+                ? 'Resize the window: 50vw on large screens, 75vw below 1200px, and the full width on phones. The button next to × fills the screen.'
+                : 'ลองย่อหน้าต่าง: จอใหญ่กว้าง 50vw ต่ำกว่า 1200px กว้าง 75vw และบนมือถือกว้างเต็มจอ ปุ่มข้าง × ขยายเต็มจอ'
+            }}
+          </p>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="modeless" [section]="sec['modeless']">
+      <docs-demo [html]="code['modeless']">
+        <wt-button label="โน้ต (ไม่บังหน้า)" severity="secondary" (onClick)="noteVisible = true"></wt-button>
+        <wt-button label="คลิกพื้นมืดเพื่อปิด" severity="secondary" (onClick)="maskVisible = true"></wt-button>
+        <wt-dialog header="โน้ต" [(visible)]="noteVisible" [modal]="false" [draggable]="true" position="right" [style]="{ width: '18rem' }">
+          <p class="docs-demo-p">{{ en() ? 'Drag me by the header; the page stays usable.' : 'ลากที่หัวเพื่อย้าย หน้ายังใช้งานได้' }}</p>
+        </wt-dialog>
+        <wt-dialog header="รายละเอียด" [(visible)]="maskVisible" [dismissableMask]="true" [style]="{ width: '22rem' }">
+          <p class="docs-demo-p">{{ en() ? 'Click the dimmed page to close.' : 'คลิกที่พื้นมืดเพื่อปิด' }}</p>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="headless" [section]="sec['headless']">
+      <docs-demo [html]="code['headless']">
+        <wt-button label="ดูข้อเสนอ" severity="help" (onClick)="headlessVisible = true"></wt-button>
+        <wt-dialog [(visible)]="headlessVisible" [style]="{ width: '22rem' }">
+          <ng-template #headless>
+            <div class="docs-dialog-promo">
+              <h3>ทดลองใช้แพ็กเกจ Pro ฟรี 14 วัน</h3>
+              <p>ผู้ใช้ไม่จำกัด รายงานขั้นสูง และฝ่ายช่วยเหลือ 24 ชั่วโมง</p>
+              <wt-button label="เริ่มเลย" [fluid]="true" (onClick)="headlessVisible = false"></wt-button>
+              <wt-button label="ไว้ทีหลัง" [text]="true" [fluid]="true" (onClick)="headlessVisible = false"></wt-button>
+            </div>
+          </ng-template>
+        </wt-dialog>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="a11y" [section]="sec['a11y']"></docs-section>
+  </ng-template>
+</docs-component-page>

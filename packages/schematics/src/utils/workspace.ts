@@ -46,11 +46,11 @@ export function parseJsonc(text: string): Json {
 
 export function readJson(tree: Tree, path: string): Json {
   const buf = tree.read(path);
-  if (!buf) throw new SchematicsException(`ไม่พบ ${path} / ${path} not found`);
+  if (!buf) throw new SchematicsException(`${path} not found`);
   try {
     return parseJsonc(buf.toString('utf8'));
   } catch (e) {
-    throw new SchematicsException(`อ่าน ${path} ไม่ได้ / Could not parse ${path}: ${(e as Error).message}`);
+    throw new SchematicsException(`Could not parse ${path}: ${(e as Error).message}`);
   }
 }
 
@@ -66,7 +66,7 @@ export function getProject(tree: Tree, requested?: string): ProjectInfo {
     requested && projects[requested]
       ? requested
       : Object.keys(projects).find((n) => (projects[n].projectType || 'application') === 'application');
-  if (!name) throw new SchematicsException('ไม่พบ application ใน angular.json / No application project in angular.json');
+  if (!name) throw new SchematicsException('No application project in angular.json');
   const p = projects[name];
   const root: string = p.root || '';
   const opts: Json = (buildTarget(p) || {}).options || {};

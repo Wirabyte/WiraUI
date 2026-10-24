@@ -1,0 +1,131 @@
+/* wt-tabs and wt-tab-panel. Shared by wiratheme v1, v2 and v3. A row that runs out of room scrolls sideways
+   (swipe, wheel, or the arrow buttons that appear at an edge with more tabs behind it); no scrollbar is drawn. */
+@layer wiratheme.components {
+  wt-tabs {
+    display: block;
+    min-width: 0;
+  }
+  wt-tab-panel {
+    display: block;
+  }
+  wt-tab-panel[hidden] {
+    display: none;
+  }
+  .wt-tabs {
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  /* The baseline is an inset shadow, not a border: tabs paint their underline over it without a
+     negative margin, so the row never overflows vertically (no stray vertical scrollbar). */
+  .wt-tabs-nav {
+    position: relative;
+  }
+  .wt-tablist {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    box-shadow: inset 0 calc(var(--wt-tabs-border-width) * -1) 0 var(--wt-border);
+  }
+  .wt-tablist::-webkit-scrollbar {
+    display: none;
+  }
+  .wt-tabs-nav-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    padding: 0 0 var(--wt-tabs-border-width);
+    border: 0;
+    background: var(--wt-card-bg);
+    box-shadow: inset 0 calc(var(--wt-tabs-border-width) * -1) 0 var(--wt-border);
+    color: var(--wt-tabs-tab-active-color);
+    cursor: pointer;
+  }
+  .wt-tabs-nav-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: var(--wt-tabs-border-width);
+    width: 0.75rem;
+    pointer-events: none;
+  }
+  .wt-tabs-prev {
+    left: 0;
+  }
+  .wt-tabs-prev::after {
+    left: 100%;
+    background: linear-gradient(to right, var(--wt-card-bg), transparent);
+  }
+  .wt-tabs-next {
+    right: 0;
+  }
+  .wt-tabs-next::after {
+    right: 100%;
+    background: linear-gradient(to left, var(--wt-card-bg), transparent);
+  }
+  .wt-tabs-nav-btn:hover {
+    background: var(--wt-hover-bg);
+  }
+  .wt-tabs-nav-btn svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  .wt-tab {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: var(--wt-tabs-tab-padding-y) var(--wt-tabs-tab-padding-x);
+    border: 0;
+    border-bottom: var(--wt-tabs-border-width) solid transparent;
+    background: transparent;
+    color: var(--wt-tabs-tab-color);
+    font: inherit;
+    font-weight: var(--wt-tabs-tab-weight);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color var(--wt-transition),
+      border-color var(--wt-transition);
+  }
+  .wt-tab:not(:disabled):hover {
+    color: var(--wt-text);
+  }
+  .wt-tab-active,
+  .wt-tab-active:not(:disabled):hover {
+    border-bottom-color: var(--wt-tabs-tab-active-color);
+    color: var(--wt-tabs-tab-active-color);
+  }
+  .wt-tab:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: calc(var(--wt-control-focus-offset) * -1 - 2px);
+    box-shadow: inset var(--wt-control-focus-shadow);
+  }
+  .wt-tab:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-tab-icon {
+    line-height: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-tablist {
+      scroll-behavior: auto;
+    }
+  }
+  .wt-tabpanels {
+    padding: var(--wt-tabs-panel-padding);
+    background: var(--wt-tabs-panel-bg);
+  }
+}

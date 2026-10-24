@@ -1,0 +1,30 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="addon" [section]="sec['addon']">
+      <docs-demo [html]="code['addon']">
+        <wt-inputgroup id="d-inputgroup">
+          <wt-inputgroup-addon><i class="pi pi-user"></i></wt-inputgroup-addon>
+          <input wtInputText placeholder="ชื่อผู้ใช้" aria-label="ชื่อผู้ใช้" />
+        </wt-inputgroup>
+        <wt-inputgroup>
+          <wt-inputgroup-addon>฿</wt-inputgroup-addon>
+          <input wtInputText placeholder="ราคา" aria-label="ราคา" />
+          <wt-inputgroup-addon>.00</wt-inputgroup-addon>
+        </wt-inputgroup>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="button" [section]="sec['button']">
+      <docs-demo [html]="code['button']">
+        <wt-inputgroup>
+          <input wtInputText placeholder="ค้นหาคำสั่งซื้อ" aria-label="ค้นหาคำสั่งซื้อ" />
+          <wt-button label="ค้นหา" icon="pi pi-search"></wt-button>
+        </wt-inputgroup>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

@@ -1,0 +1,50 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-button id="d-tooltip-top" label="บน" wtTooltip="บันทึกแบบร่าง" tooltipPosition="top"></wt-button>
+        <wt-button label="ล่าง" wtTooltip="ส่งออกเป็น Excel" tooltipPosition="bottom"></wt-button>
+        <wt-button label="ซ้าย" wtTooltip="ย้อนกลับ" tooltipPosition="left"></wt-button>
+        <wt-button label="ขวา" wtTooltip="ถัดไป"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="event" [section]="sec['event']">
+      <docs-demo [html]="code['event']">
+        <input
+          id="d-tooltip-focus"
+          wtInputText
+          wtTooltip="กรอกเลขบัตรประชาชน 13 หลัก"
+          tooltipEvent="focus"
+          tooltipPosition="top"
+          placeholder="เลขบัตรประชาชน"
+          aria-label="เลขบัตรประชาชน"
+        />
+        <wt-button label="ช้าหน่อย" severity="secondary" wtTooltip="แสดงหลัง 500ms" [showDelay]="500" [hideDelay]="300"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="html" [section]="sec['html']">
+      <docs-demo [html]="code['html']">
+        <wt-button
+          label="รายละเอียด"
+          severity="secondary"
+          wtTooltip="<b>แพ็กเกจ Pro</b><br>ผู้ใช้ไม่จำกัด · <a href='https://example.com'>ดูราคา</a>"
+          [escape]="false"
+          tooltipPosition="top"
+        ></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="options" [section]="sec['options']">
+      <docs-demo [html]="code['options']">
+        <wt-button [label]="off ? 'tooltip ปิดอยู่' : 'tooltip เปิดอยู่'" severity="secondary" [wtTooltip]="'แสดงแล้ว'" [tooltipDisabled]="off" (onClick)="off = !off"></wt-button>
+        <wt-button label="บรรทัดเดียว" severity="secondary" wtTooltip="ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่" [fitContent]="true" tooltipPosition="top"></wt-button>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

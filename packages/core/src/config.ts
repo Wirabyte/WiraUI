@@ -1,9 +1,25 @@
-import { COMPONENT_TOKENS, ComponentId, DENSITY, DensityId, PRESETS, PresetId, SEMANTIC_DEFAULTS, SEMANTIC_KEYS, SemanticKey, SHADOWS, ShadowId, SURFACES, SurfaceId } from './catalog';
+import {
+  CLASSIC_THEMES,
+  COMPONENT_TOKENS,
+  ComponentId,
+  DENSITY,
+  DensityId,
+  FOCUS_STYLES,
+  FocusRing,
+  MaterialMode,
+  PRESETS,
+  PresetId,
+  Scheme,
+  SEMANTIC_KEYS,
+  SemanticKey,
+  SHADOWS,
+  ShadowId,
+  SURFACES,
+  SurfaceId,
+} from './catalog';
 import { hexToRgb, isHex, isPalette, Palette, rgbToHex, SHADES } from './color';
 
 export type DarkMode = 'none' | 'class' | 'media';
-export type FocusRing = 'ring' | 'outline';
-export type Material = 'solid' | 'glass';
 export type ComponentValues = Partial<Record<ComponentId, Record<string, number | boolean>>>;
 
 /**
@@ -17,6 +33,8 @@ export interface ThemeConfig {
   /** Hand-edited shades; null means "generate from `primary`". */
   primaryShades: Palette | null;
   surface: SurfaceId;
+  /** Text on primary buttons; null keeps the family's choice (white for the classic and styled looks, best contrast for Wira). */
+  primaryContrast: string | null;
   semantic: Record<SemanticKey, string>;
   fontFamily: string;
   fontSize: number;
@@ -28,7 +46,9 @@ export interface ThemeConfig {
   focusRing: FocusRing;
   transition: number;
   darkMode: DarkMode;
-  material: Material;
+  /** `dark` makes the dark colours the only colours (Sayan, Ratri, sila-dark-*); dark mode switching then does nothing. */
+  scheme: Scheme;
+  material: MaterialMode;
   components: ComponentValues;
 }
 
@@ -38,14 +58,15 @@ export function isPresetId(value: unknown): value is PresetId {
 
 export function defaults(preset: PresetId | string = 'wira'): ThemeConfig {
   const id: PresetId = isPresetId(preset) ? preset : 'wira';
-  const p = PRESETS[id];
+  const p: (typeof PRESETS)[PresetId] = PRESETS[id];
   return {
     v: 1,
     preset: id,
     primary: p.primary,
     primaryShades: null,
     surface: p.surface,
-    semantic: { ...SEMANTIC_DEFAULTS },
+    primaryContrast: null,
+    semantic: { ...p.semantic },
     fontFamily: p.fontFamily,
     fontSize: p.fontSize,
     lineHeight: p.lineHeight,
@@ -56,9 +77,27 @@ export function defaults(preset: PresetId | string = 'wira'): ThemeConfig {
     focusRing: p.focusRing,
     transition: p.transition,
     darkMode: 'class',
-    material: 'solid',
+    scheme: p.scheme,
+    material: 'material' in p ? p.material : 'solid',
     components: {},
   };
+}
+
+export function isThemeName(value: unknown): value is string {
+  return typeof value === 'string' && (Object.prototype.hasOwnProperty.call(CLASSIC_THEMES, value) || isPresetId(value));
+}
+
+/** Config of a ready-made theme (`'sila-light-teal'`, `'sayan-blue'`, `'mali'` …). */
+export function themeConfig(name: string): ThemeConfig {
+  if (isPresetId(name)) return defaults(name);
+  const t = CLASSIC_THEMES[name];
+  if (!t) throw new Error(`wiratheme: unknown theme ${name}`);
+  const c = defaults(t.preset);
+  if (t.primary) c.primary = t.primary;
+  if (t.surface) c.surface = t.surface;
+  if (t.scheme) c.scheme = t.scheme;
+  if (t.primaryContrast) c.primaryContrast = t.primaryContrast;
+  return c;
 }
 
 /** Lowercase 6-digit hex for every shade, the form the Sass engine always emits. */
@@ -97,6 +136,7 @@ export function normalize(raw: unknown): ThemeConfig {
     primary: isHex(r['primary']) ? (r['primary'] as string).toLowerCase() : base.primary,
     primaryShades: isPalette(r['primaryShades']) ? canonicalPalette(r['primaryShades'] as Palette) : null,
     surface: pick(r['surface'], (v) => typeof v === 'string' && v in SURFACES, base.surface),
+    primaryContrast: isHex(r['primaryContrast']) ? (r['primaryContrast'] as string).toLowerCase() : null,
     semantic,
     fontFamily: pick(r['fontFamily'], (v) => typeof v === 'string' && v.trim() !== '', base.fontFamily),
     fontSize: pick(r['fontSize'], isNum, base.fontSize),
@@ -105,21 +145,37 @@ export function normalize(raw: unknown): ThemeConfig {
     density: pick(r['density'], (v) => typeof v === 'string' && v in DENSITY, base.density),
     shadow: pick(r['shadow'], (v) => typeof v === 'string' && v in SHADOWS, base.shadow),
     ripple: pick(r['ripple'], (v) => typeof v === 'boolean', base.ripple),
-    focusRing: pick(r['focusRing'], (v) => v === 'ring' || v === 'outline', base.focusRing),
+    focusRing: pick(r['focusRing'], (v) => (FOCUS_STYLES as readonly unknown[]).includes(v), base.focusRing),
     transition: pick(r['transition'], isNum, base.transition),
     darkMode: pick(r['darkMode'], (v) => v === 'none' || v === 'class' || v === 'media', base.darkMode),
+    scheme: pick(r['scheme'], (v) => v === 'light' || v === 'dark', base.scheme),
     material: pick(r['material'], (v) => v === 'solid' || v === 'glass', base.material),
     components,
   };
 }
 
-export const SCALAR_FIELDS = ['primary', 'surface', 'fontFamily', 'fontSize', 'lineHeight', 'radius', 'density', 'shadow', 'focusRing', 'transition', 'material'] as const;
+export const SCALAR_FIELDS = [
+  'primary',
+  'surface',
+  'primaryContrast',
+  'fontFamily',
+  'fontSize',
+  'lineHeight',
+  'radius',
+  'density',
+  'shadow',
+  'focusRing',
+  'transition',
+  'scheme',
+  'material',
+] as const;
 export type ScalarField = (typeof SCALAR_FIELDS)[number];
 
 export interface ThemeDiff {
   primary?: string;
   primaryShades?: Palette;
   surface?: SurfaceId;
+  primaryContrast?: string | null;
   fontFamily?: string;
   fontSize?: number;
   lineHeight?: number;
@@ -128,7 +184,8 @@ export interface ThemeDiff {
   shadow?: ShadowId;
   focusRing?: FocusRing;
   transition?: number;
-  material?: Material;
+  scheme?: Scheme;
+  material?: MaterialMode;
   semantic?: Partial<Record<SemanticKey, string>>;
   components?: ComponentValues;
 }
@@ -141,7 +198,7 @@ export function diff(c: ThemeConfig): ThemeDiff {
   for (const k of SCALAR_FIELDS) if (c[k] !== d[k]) o[k] = c[k];
   if (c.primaryShades) out.primaryShades = c.primaryShades;
   const sem: Partial<Record<SemanticKey, string>> = {};
-  for (const k of SEMANTIC_KEYS) if (c.semantic[k].toLowerCase() !== SEMANTIC_DEFAULTS[k]) sem[k] = c.semantic[k];
+  for (const k of SEMANTIC_KEYS) if (c.semantic[k].toLowerCase() !== d.semantic[k].toLowerCase()) sem[k] = c.semantic[k];
   if (Object.keys(sem).length) out.semantic = sem;
   const comps: ComponentValues = {};
   for (const spec of COMPONENT_TOKENS) {

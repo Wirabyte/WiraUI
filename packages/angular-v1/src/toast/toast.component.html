@@ -1,0 +1,61 @@
+<div
+  #container
+  popover="manual"
+  class="wt-toast p-toast p-component"
+  [ngClass]="'wt-toast-' + position + ' p-toast-' + position + ' ' + (styleClass || '')"
+  [ngStyle]="style || null"
+>
+  <div
+    *ngFor="let item of items; trackBy: trackItem"
+    class="wt-toast-message p-toast-message"
+    [ngClass]="'wt-toast-' + item.severity + ' p-toast-message-' + item.severity + ' ' + (item.message.styleClass || '')"
+    [class.wt-toast-leaving]="item.leaving"
+    [attr.role]="item.severity === 'error' ? 'alert' : 'status'"
+    [attr.aria-live]="item.severity === 'error' ? 'assertive' : 'polite'"
+    aria-atomic="true"
+    (mouseenter)="pause(item)"
+    (mouseleave)="resume(item)"
+  >
+    <ng-container *ngIf="headlessTemplate; else body">
+      <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: item.message, closeFn: item.closeFn }"></ng-container>
+    </ng-container>
+    <ng-template #body>
+      <div class="wt-toast-content p-toast-message-content" [ngClass]="item.message.contentStyleClass || ''">
+        <ng-container *ngIf="messageTemplate; else plain">
+          <ng-container *ngTemplateOutlet="messageTemplate; context: { $implicit: item.message }"></ng-container>
+        </ng-container>
+        <ng-template #plain>
+          <span class="wt-toast-icon p-toast-message-icon" aria-hidden="true">
+            <i *ngIf="item.message.icon; else svgIcon" [class]="item.message.icon"></i>
+            <ng-template #svgIcon>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngSwitch]="item.severity">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path *ngSwitchCase="'success'" d="M7.5 12.5l3 3 6-6.5"></path>
+                <path *ngSwitchCase="'error'" d="M9 9l6 6M15 9l-6 6"></path>
+                <path *ngSwitchCase="'warn'" d="M12 7v6M12 16.5v.5"></path>
+                <path *ngSwitchDefault d="M12 11v6M12 7.5v.5"></path>
+              </svg>
+            </ng-template>
+          </span>
+          <div class="wt-toast-text p-toast-message-text">
+            <div *ngIf="item.message.summary" class="wt-toast-summary p-toast-summary">{{ item.message.summary }}</div>
+            <div *ngIf="item.message.detail || item.message.text" class="wt-toast-detail p-toast-detail">{{ item.message.detail || item.message.text }}</div>
+          </div>
+        </ng-template>
+        <button
+          *ngIf="item.message.closable !== false"
+          type="button"
+          class="wt-toast-close p-toast-icon-close p-link"
+          [attr.aria-label]="t.close"
+          (click)="close(item)"
+        >
+          <i *ngIf="item.message.closeIcon; else closeSvg" [class]="item.message.closeIcon"></i>
+          <ng-template #closeSvg>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+          </ng-template>
+        </button>
+      </div>
+    </ng-template>
+    <div *ngIf="showTimer && !item.message.sticky" class="wt-toast-timer" aria-hidden="true"><span [style.animation-duration.ms]="item.life"></span></div>
+  </div>
+</div>

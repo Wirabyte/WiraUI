@@ -1,0 +1,94 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Components · {{ doc().group }}</p>
+  <h1 class="docs-h1">{{ doc().title }}</h1>
+  <p class="docs-lead">{{ doc().description | loc }}</p>
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ version.major }} · Angular {{ version.angular }}</span>
+    <span class="docs-chip"><code>wiratheme/{{ doc().entry }}</code></span>
+    <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
+  </div>
+  <nav class="docs-tabs" [attr.aria-label]="'page.sections' | t">
+    @for (t of tabs; track t.id) {
+      <a
+        [id]="'tab-' + t.id"
+        [routerLink]="[]"
+        [queryParams]="{ tab: t.id === 'features' ? null : t.id }"
+        queryParamsHandling="merge"
+        [class.active]="tab() === t.id"
+        [attr.aria-current]="tab() === t.id ? 'page' : null"
+        >{{ t.label }}</a
+      >
+    }
+  </nav>
+</header>
+
+@switch (tab()) {
+  @case ('api') {
+    @for (g of doc().api; track g.id) {
+      <docs-section [id]="g.id" [title]="g.title">
+        <docs-api-table [group]="g"></docs-api-table>
+      </docs-section>
+    }
+  }
+  @case ('theming') {
+    <docs-section id="css-variables" title="CSS variables">
+      @if (doc().themingNote; as note) {
+        <p [innerHTML]="note | loc"></p>
+      } @else if (en()) {
+        <p>
+          {{ doc().title }} reads only these CSS variables. The right-hand column shows the live value of the theme on this page (it follows the
+          theme button in the top bar). Themes from SCSS, CSS or TypeScript all end up as this same set of variables.
+        </p>
+      } @else {
+        <p>
+          {{ doc().title }} อ่านค่าจาก CSS variable เหล่านี้เท่านั้น ค่าในคอลัมน์ขวาคือค่าจริงของธีมที่หน้านี้ใช้อยู่ (เปลี่ยนตามปุ่มปรับธีมด้านบน)
+          ธีมที่มาจาก SCSS, CSS หรือ TypeScript สุดท้ายออกมาเป็นตัวแปรชุดเดียวกันนี้
+        </p>
+      }
+      @if (doc().tokens.length) {
+        <docs-token-table [tokens]="doc().tokens"></docs-token-table>
+      }
+    </docs-section>
+    @if (doc().tokens.length) {
+    <docs-section id="override-css" [title]="{ th: 'แก้ด้วย CSS', en: 'Override with CSS' }">
+      @if (en()) {
+        <p>
+          Component CSS lives in <code>&#64;layer wiratheme.components</code>. Your app's CSS is not in a layer, so it always wins, with no
+          <code>!important</code> or <code>::ng-deep</code>.
+        </p>
+      } @else {
+        <p>CSS ของ component อยู่ใน <code>&#64;layer wiratheme.components</code> ส่วน CSS ของแอปไม่อยู่ใน layer จึงชนะทุกครั้งโดยไม่ต้องใช้ <code>!important</code> หรือ <code>::ng-deep</code></p>
+      }
+      <docs-code [code]="cssExample()" lang="css" file="styles.css"></docs-code>
+    </docs-section>
+    }
+    @if (tsExample()) {
+      <docs-section id="override-ts" [title]="{ th: 'แก้ด้วย TypeScript', en: 'Override with TypeScript' }">
+        @if (en()) {
+          <p>Component tokens can be set in <code>overrides</code>. They are fully typed, so a typo does not compile.</p>
+        } @else {
+          <p>token ระดับ component ตั้งได้ใน <code>overrides</code> มี type ครบ พิมพ์ชื่อผิดจะ compile ไม่ผ่าน</p>
+        }
+        <docs-code [code]="tsExample()" lang="ts"></docs-code>
+      </docs-section>
+    }
+    <docs-section id="designer" title="Theme Designer">
+      @if (en()) {
+        <p>
+          Adjust these values on screen and export SCSS, CSS, TypeScript or JSON from the
+          <a [routerLink]="['/', version.id, 'theming', 'designer']">Theme Designer</a>.
+        </p>
+      } @else {
+        <p>
+          ปรับค่าเหล่านี้บนหน้าจอแล้ว export เป็น SCSS, CSS, TypeScript หรือ JSON ได้จาก
+          <a [routerLink]="['/', version.id, 'theming', 'designer']">Theme Designer</a>
+        </p>
+      }
+    </docs-section>
+  }
+  @default {
+    @if (features(); as f) {
+      <ng-container [ngTemplateOutlet]="f.template"></ng-container>
+    }
+  }
+}

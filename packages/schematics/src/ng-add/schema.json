@@ -7,99 +7,183 @@
     "project": {
       "type": "string",
       "description": "Project to set up. Default: the first application in angular.json.",
-      "$default": { "$source": "projectName" }
+      "$default": {
+        "$source": "projectName"
+      }
     },
     "style": {
       "type": "string",
-      "enum": ["auto", "scss", "css"],
+      "enum": [
+        "auto",
+        "scss",
+        "css"
+      ],
       "default": "auto",
       "description": "How the main theme is loaded.",
       "x-prompt": {
-        "message": "ธีมหลักโหลดแบบไหน / How should the main theme be loaded?",
+        "message": "How should the main theme be loaded?",
         "type": "list",
         "items": [
-          { "value": "auto", "label": "ตรวจจากโปรเจค (แนะนำ) / Detect from the project (recommended)" },
-          { "value": "scss", "label": "SCSS: @use 'theme/wiratheme.theme' ใน styles.scss" },
-          { "value": "css", "label": "CSS: ไฟล์ .css ใน angular.json (ใช้กับ CSS, Less และอื่น ๆ)" }
+          {
+            "value": "auto",
+            "label": "Detect from the project (recommended)"
+          },
+          {
+            "value": "scss",
+            "label": "SCSS: @use 'theme/wiratheme.theme' in styles.scss"
+          },
+          {
+            "value": "css",
+            "label": "CSS: a .css file in angular.json (CSS, Less and others)"
+          }
         ]
       }
     },
     "structure": {
       "type": "string",
-      "enum": ["auto", "module", "standalone"],
+      "enum": [
+        "auto",
+        "module",
+        "standalone"
+      ],
       "default": "auto",
       "description": "Where provideWiraTheme() goes.",
       "x-prompt": {
-        "message": "โครงสร้างแอป / App structure?",
+        "message": "App structure?",
         "type": "list",
         "items": [
-          { "value": "auto", "label": "ตรวจจาก main.ts (แนะนำ) / Detect from main.ts (recommended)" },
-          { "value": "module", "label": "NgModule (AppModule)" },
-          { "value": "standalone", "label": "Standalone (app.config.ts)" }
+          {
+            "value": "auto",
+            "label": "Detect from main.ts (recommended)"
+          },
+          {
+            "value": "module",
+            "label": "NgModule (AppModule)"
+          },
+          {
+            "value": "standalone",
+            "label": "Standalone (app.config.ts)"
+          }
         ]
       }
     },
-    "preset": {
+    "theme": {
       "type": "string",
-      "enum": ["wira", "lanna", "siam", "nakhon"],
-      "default": "wira",
+      "default": "auto",
+      "description": "Theme or preset to start from. auto = this wiratheme major's default (v1: sila-light-teal, v2/v3: mali). tools/sync-sources.mjs writes each major's choices into the prompt. Names teams know from other theme sets (lara-light-teal, saga-blue, aura …) are accepted too.",
       "x-prompt": {
-        "message": "Preset?",
+        "message": "Theme?",
         "type": "list",
         "items": [
-          { "value": "wira", "label": "Wira: เรียบ สะอาด / clean default" },
-          { "value": "lanna", "label": "Lanna: นุ่ม โค้งมน / soft, rounded" },
-          { "value": "siam", "label": "Siam: มีมิติ มี ripple / elevated" },
-          { "value": "nakhon", "label": "Nakhon: เหลี่ยม แน่น / sharp, dense" }
+          {
+            "value": "auto",
+            "label": "This version's default"
+          }
         ]
       }
+    },
+    "utils": {
+      "type": "boolean",
+      "default": true,
+      "description": "Add WiraTheme's utility classes (grid, flex, spacing, sizing, colours). They use the class names apps already use (grid, col-12, md:col-6, flex, p-3), so they can replace a separate utility library. Leave out with --utils=false; trim groups later in SCSS.",
+      "x-prompt": "Add WiraTheme utility classes (grid, flex, spacing)?"
     },
     "primary": {
       "type": "string",
       "default": "",
       "description": "Primary colour as hex. Empty keeps the preset's colour.",
-      "x-prompt": "สีหลักเป็น HEX (เว้นว่างเพื่อใช้สีของ preset) / Primary colour hex (empty = preset colour)"
+      "x-prompt": "Primary colour hex (empty = preset colour)"
     },
     "font": {
       "type": "string",
-      "enum": ["auto", "Kanit", "Sarabun", "Prompt", "Noto Sans Thai", "IBM Plex Sans Thai", "Anuphan", "none"],
+      "enum": [
+        "auto",
+        "Kanit",
+        "Sarabun",
+        "Prompt",
+        "Noto Sans Thai",
+        "IBM Plex Sans Thai",
+        "Anuphan",
+        "Inter",
+        "Roboto",
+        "none"
+      ],
       "default": "auto",
       "description": "Thai font. auto = the preset's font; it is not linked again if the app already loads it.",
       "x-prompt": {
-        "message": "ฟอนต์ / Font?",
+        "message": "Font?",
         "type": "list",
         "items": [
-          { "value": "auto", "label": "ของ preset (ข้ามถ้าแอปโหลดไว้แล้ว) / Preset's font (skipped if already loaded)" },
-          "Kanit", "Sarabun", "Prompt", "Noto Sans Thai", "IBM Plex Sans Thai", "Anuphan",
-          { "value": "none", "label": "ไม่ตั้ง / Don't set a font" }
+          {
+            "value": "auto",
+            "label": "Preset's font (skipped if already loaded)"
+          },
+          "Kanit",
+          "Sarabun",
+          "Prompt",
+          "Noto Sans Thai",
+          "IBM Plex Sans Thai",
+          "Anuphan",
+          "Inter",
+          "Roboto",
+          {
+            "value": "none",
+            "label": "Don't set a font"
+          }
         ]
       }
     },
     "locale": {
       "type": "string",
-      "enum": ["th-buddhist", "th-gregorian", "en"],
+      "enum": [
+        "th-buddhist",
+        "th-gregorian",
+        "en"
+      ],
       "default": "th-buddhist",
       "x-prompt": {
-        "message": "ภาษาและปฏิทิน / Language and calendar?",
+        "message": "Language and calendar?",
         "type": "list",
         "items": [
-          { "value": "th-buddhist", "label": "ไทย + พ.ศ." },
-          { "value": "th-gregorian", "label": "ไทย + ค.ศ." },
-          { "value": "en", "label": "English" }
+          {
+            "value": "th-buddhist",
+            "label": "Thai, Buddhist calendar (B.E.)"
+          },
+          {
+            "value": "th-gregorian",
+            "label": "Thai, Gregorian calendar (A.D.)"
+          },
+          {
+            "value": "en",
+            "label": "English"
+          }
         ]
       }
     },
     "darkMode": {
       "type": "string",
-      "enum": ["none", "class", "media"],
+      "enum": [
+        "none",
+        "class",
+        "media"
+      ],
       "default": "none",
       "x-prompt": {
         "message": "Dark mode?",
         "type": "list",
         "items": [
-          { "value": "none", "label": "ปิด / Off" },
-          { "value": "class", "label": "สลับด้วย class .wt-dark / Toggle with .wt-dark" },
-          { "value": "media", "label": "ตามระบบ / Follow the OS setting" }
+          {
+            "value": "none",
+            "label": "Off"
+          },
+          {
+            "value": "class",
+            "label": "Toggle with the .wt-dark class"
+          },
+          {
+            "value": "media",
+            "label": "Follow the OS setting"
+          }
         ]
       }
     },

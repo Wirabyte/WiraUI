@@ -1,0 +1,26 @@
+<div
+  [class]="classes"
+  role="progressbar"
+  aria-valuemin="0"
+  [attr.aria-valuemax]="max"
+  [attr.aria-valuenow]="mode === 'determinate' ? done : null"
+  [attr.aria-valuetext]="mode === 'determinate' && (max !== 100 || text) ? shown : null"
+  [attr.aria-label]="label"
+>
+  <div
+    *ngIf="mode === 'determinate'; else indeterminate"
+    class="wt-progressbar-value p-progressbar-value p-progressbar-value-animate"
+    [style.width.%]="percent"
+    [style.background]="color || null"
+  >
+    <div *ngIf="showValue && percent > 0" class="wt-progressbar-label p-progressbar-label">
+      <ng-container *ngIf="contentTemplate; else plain">
+        <ng-container *ngTemplateOutlet="contentTemplate; context: context"></ng-container>
+      </ng-container>
+      <ng-template #plain>{{ shown }}</ng-template>
+    </div>
+  </div>
+  <ng-template #indeterminate>
+    <div class="wt-progressbar-value p-progressbar-value" [style.background]="color || null"></div>
+  </ng-template>
+</div>

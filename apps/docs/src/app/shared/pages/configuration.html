@@ -1,0 +1,183 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Getting Started</p>
+  <h1 class="docs-h1">{{ en() ? 'Configuration' : 'ตั้งค่า' }}</h1>
+  @if (en()) {
+    <p class="docs-lead">Everything is set once in <code>provideWiraTheme()</code>. What changes at run time goes through <code>WtConfig</code> and <code>WtThemeService</code>.</p>
+  } @else {
+    <p class="docs-lead">ทุกอย่างตั้งที่ <code>provideWiraTheme()</code> ครั้งเดียว ส่วนที่ต้องเปลี่ยนตอนแอปทำงานใช้ <code>WtConfig</code> และ <code>WtThemeService</code></p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+  </div>
+</header>
+
+<docs-section id="provider" title="provideWiraTheme">
+  @if (en()) {
+    <p>Works in NgModules and standalone apps from Angular 15 on. <code>WiraThemeModule.forRoot()</code> is there if you prefer the NgModule style.</p>
+  } @else {
+    <p>ใช้ได้ทั้งใน NgModule และ standalone ตั้งแต่ Angular 15 ส่วน <code>WiraThemeModule.forRoot()</code> มีไว้ให้คนที่คุ้นกับสไตล์ NgModule</p>
+  }
+  <docs-code-tabs [tabs]="providerTabs"></docs-code-tabs>
+</docs-section>
+
+<docs-section id="options" [title]="{ th: 'ตัวเลือก', en: 'Options' }">
+  <div class="docs-table-wrap">
+    <table class="docs-table docs-api">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>{{ 'api.description' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code class="docs-api-name">preset</code></td>
+          <td><code class="docs-api-type">ThemePreset</code></td>
+          <td><span class="docs-muted">–</span></td>
+          <td>{{ en() ? 'The whole theme from TypeScript. Leave it out when the theme comes from a SCSS or CSS file.' : 'ธีมทั้งชุดจาก TypeScript ไม่ต้องใส่ถ้าธีมหลักมาจากไฟล์ SCSS หรือ CSS' }}</td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">overrides</code></td>
+          <td><code class="docs-api-type">ThemeOverrides</code></td>
+          <td><span class="docs-muted">–</span></td>
+          <td>
+            @if (en()) {
+              Changes on top of the main theme; they beat the SCSS / CSS file through <code>&#64;layer wiratheme.overrides</code>.
+            } @else {
+              ค่าที่ปรับทับธีมหลัก ชนะไฟล์ SCSS / CSS ผ่าน <code>&#64;layer wiratheme.overrides</code>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">darkMode</code></td>
+          <td><code class="docs-api-type">'none' | 'class' | 'media'</code></td>
+          <td><code>'class'</code></td>
+          <td>
+            @if (en()) {
+              Dark mode for tokens written from TypeScript: off, toggled with <code>.wt-dark</code> on <code>&lt;html&gt;</code>, or following <code>prefers-color-scheme</code>.
+            } @else {
+              dark mode ของ token ที่ TS เขียน: ปิด, สลับด้วย <code>.wt-dark</code> บน <code>&lt;html&gt;</code> หรือตาม <code>prefers-color-scheme</code>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">darkModeSelector</code></td>
+          <td><code class="docs-api-type">string</code></td>
+          <td><span class="docs-muted">–</span></td>
+          <td>
+            @if (en()) {
+              A class on <code>&lt;html&gt;</code> such as <code>'.my-dark'</code>, <code>'system'</code> (follow the OS) or <code>'none'</code>. When set it wins
+              over <code>darkMode</code>, and <code>setDarkMode()</code> toggles this class instead of <code>.wt-dark</code>. Keep the class your app already uses.
+            } @else {
+              class บน <code>&lt;html&gt;</code> เช่น <code>'.my-dark'</code>, <code>'system'</code> (ตาม OS) หรือ <code>'none'</code> ถ้าตั้งไว้จะชนะ <code>darkMode</code>
+              และ <code>setDarkMode()</code> จะสลับ class นี้แทน <code>.wt-dark</code> ใช้ class เดิมที่แอปใช้อยู่ได้เลย
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">scheme</code></td>
+          <td><code class="docs-api-type">'light' | 'dark'</code></td>
+          <td><span class="docs-muted">{{ en() ? 'from the theme' : 'อ่านจากธีม' }}</span></td>
+          <td>
+            @if (en()) {
+              <code>'dark'</code> when the main theme is dark-only (sayan-*, ratri-*, sila-dark-*), so <code>overrides</code> apply without a dark class.
+              Usually not needed: a TS preset knows it, and SCSS / CSS files write <code>--wt-scheme</code>.
+            } @else {
+              <code>'dark'</code> เมื่อธีมหลักเป็นธีมมืดอย่างเดียว (sayan-*, ratri-*, sila-dark-*) เพื่อให้ <code>overrides</code> มีผลโดยไม่ต้องมี class dark
+              ปกติไม่ต้องตั้ง: preset จาก TS รู้เอง และไฟล์ SCSS / CSS เขียน <code>--wt-scheme</code> ไว้ให้
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">ripple</code></td>
+          <td><code class="docs-api-type">boolean</code></td>
+          <td><span class="docs-muted">{{ en() ? 'from the preset' : 'ตาม preset' }}</span></td>
+          <td>{{ en() ? 'Ink effect on press. Defaults to the preset (on for Material, off otherwise).' : 'เอฟเฟกต์หมึกตอนกดปุ่ม ค่าเริ่มต้นตาม preset (Material เปิด ที่เหลือปิด)' }}</td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">locale</code></td>
+          <td><code class="docs-api-type">'th' | 'en' | WtLocale</code></td>
+          <td><code>'th'</code></td>
+          <td>{{ en() ? 'Language of the text inside components.' : 'ภาษาของข้อความใน component' }}</td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">calendar</code></td>
+          <td><code class="docs-api-type">'buddhist' | 'gregorian'</code></td>
+          <td><code>'buddhist'</code></td>
+          <td>
+            @if (en()) {
+              How dates are shown and typed. Buddhist Era (B.E.) by default; model values stay ordinary <code>Date</code> objects.
+            } @else {
+              การแสดงและพิมพ์วันที่ ค่าเริ่มต้นเป็น พ.ศ. ส่วนค่าใน model ยังเป็น <code>Date</code> ปกติ
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">selector</code></td>
+          <td><code class="docs-api-type">string</code></td>
+          <td><code>':root'</code></td>
+          <td>{{ en() ? 'Element the TypeScript tokens are written to.' : 'element ที่ token จาก TS ไปลง' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</docs-section>
+
+<docs-section id="locale" [title]="{ th: 'ภาษาไทยและ พ.ศ.', en: 'Thai and the Buddhist calendar' }">
+  @if (en()) {
+    <p>The Thai locale and Buddhist calendar are the defaults. To change a few words, call <code>WtConfig.setTranslation()</code> once at app level.</p>
+  } @else {
+    <p>locale <code>th</code> และปฏิทิน พ.ศ. เป็นค่าเริ่มต้น ไม่ต้องตั้งอะไรเพิ่ม ถ้าอยากแก้บางคำใช้ <code>WtConfig.setTranslation()</code> ครั้งเดียวที่ระดับแอป</p>
+  }
+  <docs-code [code]="s.TRANSLATION" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="runtime" title="WtThemeService">
+  @if (en()) {
+    <p>The same service behind this site's theme button and the Theme Designer: change the theme while the app runs, no reload.</p>
+  } @else {
+    <p>service เดียวกับที่ปุ่มปรับธีมบนเว็บนี้และ Theme Designer ใช้ เปลี่ยนธีมตอนแอปทำงานได้โดยไม่ต้อง reload</p>
+  }
+  <div class="docs-table-wrap">
+    <table class="docs-table docs-api">
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>{{ 'api.description' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code class="docs-api-name">setPreset(preset)</code></td><td>{{ en() ? 'Replace the whole TypeScript theme' : 'เปลี่ยนธีมจาก TypeScript ทั้งชุด' }}</td></tr>
+        <tr><td><code class="docs-api-name">setPrimary(hex)</code></td><td>{{ en() ? 'New primary from one colour; every shade and derived token follows' : 'สีหลักใหม่จากสีเดียว ทุกเฉดและ token ที่อ้างถึงเปลี่ยนตาม' }}</td></tr>
+        <tr><td><code class="docs-api-name">patch(changes)</code></td><td>{{ en() ? 'Merge changes into the current overrides' : 'รวม changes เข้ากับ overrides ที่มีอยู่' }}</td></tr>
+        <tr><td><code class="docs-api-name">setOverrides(overrides)</code></td><td>{{ en() ? 'Replace all overrides; an empty object clears them' : 'แทน overrides ทั้งหมด ส่ง object ว่างเพื่อล้าง' }}</td></tr>
+        <tr><td><code class="docs-api-name">setDarkMode(dark)</code> / <code class="docs-api-name">isDarkMode()</code></td><td>{{ en() ? 'Toggle and read the dark class' : 'สลับและอ่านสถานะ class dark' }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="version-check" [title]="{ th: 'ตรวจรุ่นตอนเริ่มแอป', en: 'Version check at start-up' }">
+  @if (en()) {
+    <p>
+      <code>provideWiraTheme()</code> and every component check <code>VERSION.major</code> of <code>&#64;angular/core</code>. Outside {{ v.angular }} they throw
+      and name the <code>wiratheme&#64;</code> major to install instead.
+    </p>
+    <div class="docs-note docs-note-warn">
+      <docs-icon name="alert"></docs-icon>
+      <p>This site runs v1 and v2 on Angular 21 through an internal token (prefixed with <code>ɵ</code>) that is not public API. Real apps must use the major that matches their Angular.</p>
+    </div>
+  } @else {
+    <p>
+      <code>provideWiraTheme()</code> และ constructor ของทุก component ตรวจ <code>VERSION.major</code> ของ <code>&#64;angular/core</code>
+      ถ้าไม่อยู่ในช่วง {{ v.angular }} จะ throw error พร้อมบอกว่าควรติดตั้ง <code>wiratheme&#64;</code> รุ่นไหน
+    </p>
+    <div class="docs-note docs-note-warn">
+      <docs-icon name="alert"></docs-icon>
+      <p>เว็บนี้รัน v1 และ v2 บน Angular 21 ได้เพราะใช้ token ภายใน (ขึ้นต้นด้วย <code>ɵ</code>) ซึ่งไม่ใช่ API สาธารณะ แอปจริงต้องใช้ major ที่ตรงกับ Angular ของตัวเองเสมอ</p>
+    </div>
+  }
+</docs-section>

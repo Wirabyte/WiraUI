@@ -1,0 +1,50 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-togglebutton inputId="d-pin" [(ngModel)]="pinned"></wt-togglebutton>
+        <span class="docs-demo-output">pinned: <code id="d-pin-value">{{ pinned }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-togglebutton [(ngModel)]="sizeValue" size="small" onLabel="เล็ก" offLabel="เล็ก"></wt-togglebutton>
+        <wt-togglebutton [(ngModel)]="sizeValue" onLabel="ปกติ" offLabel="ปกติ"></wt-togglebutton>
+        <wt-togglebutton [(ngModel)]="sizeValue" size="large" onLabel="ใหญ่" offLabel="ใหญ่"></wt-togglebutton>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="labels" [section]="sec['labels']">
+      <docs-demo [html]="code['labels']">
+        <wt-togglebutton
+          [(ngModel)]="following"
+          onLabel="ติดตามแล้ว"
+          offLabel="ติดตาม"
+          onIcon="pi pi-check"
+          offIcon="pi pi-plus"
+        ></wt-togglebutton>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-togglebutton inputId="r-notify" formControlName="notify" onLabel="แจ้งเตือนเปิด" offLabel="แจ้งเตือนปิด"></wt-togglebutton>
+        </form>
+        <span class="docs-demo-output">value: <code id="r-notify-value">{{ form.getRawValue() | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']">
+        <wt-togglebutton [ngModel]="true" [disabled]="true" onLabel="ปิดอยู่"></wt-togglebutton>
+        <wt-togglebutton [invalid]="true" offLabel="Invalid"></wt-togglebutton>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

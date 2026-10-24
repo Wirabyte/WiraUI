@@ -1,6 +1,23 @@
-import { COMPONENT_TOKENS, ComponentTokenSpec, DENSITY, DensityId, PRESETS, SEMANTIC_KEYS, SemanticKey, SHADOWS, ShadowId, SURFACES, SurfaceId } from './catalog';
-import { DarkMode, FocusRing, Material, ThemeConfig } from './config';
+import {
+  COMPONENT_TOKENS,
+  ComponentTokenSpec,
+  DENSITY,
+  DensityId,
+  FAMILY_GENERATION,
+  FocusRing,
+  MaterialMode,
+  PRESETS,
+  SEMANTIC_KEYS,
+  SemanticKey,
+  SHADOWS,
+  ShadowId,
+  SURFACES,
+  SurfaceId,
+} from './catalog';
+import { compatAliases, STYLED_INPUTS } from './compat';
+import { DarkMode, ThemeConfig } from './config';
 import { contrast, generatePalette, Palette, SHADES } from './color';
+import { FAMILIES } from './families';
 
 /** Token name (without `--wt-`) → CSS value. */
 export type TokenMap = Record<string, string>;
@@ -9,6 +26,8 @@ export interface ThemeTokens {
   light: TokenMap;
   /** Only the tokens that differ in dark mode. */
   dark: TokenMap;
+  /** Classic/styled theme variables re-created for migrated apps; keys carry their own `--` (see compat.ts). */
+  compat?: TokenMap;
 }
 
 export const SURFACE_DARK_REF = 'var(--wt-surface-950)';
@@ -20,6 +39,7 @@ export function mergeTokens(target: ThemeTokens, ...sources: ThemeTokens[]): The
   for (const s of sources) {
     Object.assign(target.light, s.light);
     Object.assign(target.dark, s.dark);
+    if (s.compat) target.compat = { ...(target.compat || {}), ...s.compat };
   }
   return target;
 }
@@ -45,36 +65,40 @@ export function surfaceTokens(surface: SurfaceId | Palette): ThemeTokens {
   return { light, dark: {} };
 }
 
+/** `primary-contrast-auto` is the readable text colour; families decide whether to use it or fixed white. */
 export function primaryTokens(p: Palette, surface950: string): ThemeTokens {
   const light: TokenMap = {};
   for (const s of SHADES) light['primary-' + s] = p[s];
-  light['primary-contrast'] = bestOn(p[500], surface950);
-  return { light, dark: { 'primary-contrast': bestOn(p[400], surface950) } };
+  light['primary-contrast-auto'] = bestOn(p[500], surface950);
+  return { light, dark: { 'primary-contrast-auto': bestOn(p[400], surface950) } };
 }
 
 export function semanticTokens(key: SemanticKey, base: string | Palette, surface950: string): ThemeTokens {
   const p = typeof base === 'string' ? generatePalette(base) : base;
   const light: TokenMap = {};
   for (const s of SHADES) light[`${key}-${s}`] = p[s];
-  light[key + '-contrast'] = bestOn(p[600], surface950);
-  return { light, dark: { [key + '-contrast']: bestOn(p[400], surface950) } };
+  light[key + '-contrast-auto'] = bestOn(p[600], surface950);
+  return { light, dark: { [key + '-contrast-auto']: bestOn(p[400], surface950) } };
 }
 
+/** Font size is emitted in rem so an app that scales the root font size scales components too. */
 export function fontTokens(c: { fontFamily?: string; fontSize?: number; lineHeight?: number }): ThemeTokens {
   const light: TokenMap = {};
   if (c.fontFamily !== undefined) light['font-family'] = `'${c.fontFamily}', sans-serif`;
-  if (c.fontSize !== undefined) light['font-size'] = c.fontSize + 'px';
+  if (c.fontSize !== undefined) light['font-size'] = c.fontSize / 16 + 'rem';
   if (c.lineHeight !== undefined) light['line-height'] = String(c.lineHeight);
   return { light, dark: {} };
 }
 
+/** Radius scale in the usual proportions (r = md): xs r/3, sm 2r/3, lg 4r/3, xl 2r. */
 export function radiusTokens(r: number): ThemeTokens {
   return {
     light: {
-      'radius-sm': Math.round(r * 0.66) + 'px',
+      'radius-xs': Math.round(r / 3) + 'px',
+      'radius-sm': Math.round((r * 2) / 3) + 'px',
       'radius-md': r + 'px',
-      'radius-lg': Math.round(r * 1.5) + 'px',
-      'radius-xl': Math.round(r * 2.5) + 'px',
+      'radius-lg': Math.round((r * 4) / 3) + 'px',
+      'radius-xl': r * 2 + 'px',
       'radius-full': '9999px',
     },
     dark: {},
@@ -82,19 +106,7 @@ export function radiusTokens(r: number): ThemeTokens {
 }
 
 export function densityTokens(id: DensityId): ThemeTokens {
-  const d = DENSITY[id];
-  return {
-    light: {
-      'field-padding-y': d.fieldPy + 'px',
-      'field-padding-x': d.fieldPx + 'px',
-      'button-padding-y': d.btnPy + 'px',
-      gap: d.gap + 'px',
-      'density-button-padding-x': d.btnPx + 'px',
-      'density-card-padding': d.cardPad + 'px',
-      'density-row-height': d.row + 'px',
-    },
-    dark: {},
-  };
+  return { light: { density: String(DENSITY[id]) }, dark: {} };
 }
 
 export function shadowTokens(id: ShadowId): ThemeTokens {
@@ -102,126 +114,68 @@ export function shadowTokens(id: ShadowId): ThemeTokens {
   return { light: { 'shadow-sm': s[0], 'shadow-md': s[1], 'shadow-lg': s[2] }, dark: {} };
 }
 
-export function focusRingTokens(mode: FocusRing): ThemeTokens {
-  const ring =
-    mode === 'outline'
-      ? '0 0 0 2px var(--wt-card-bg), 0 0 0 4px var(--wt-primary-color)'
-      : '0 0 0 3px color-mix(in srgb, var(--wt-primary-color) 30%, transparent)';
-  return { light: { 'focus-ring': ring }, dark: {} };
+const RING = '0 0 0 0.2rem var(--wt-focus-ring-color)';
+
+/** Focus styles for buttons/checkboxes/switches (control-*) and text fields (field-*). See FOCUS_STYLES. */
+export function focusTokens(mode: FocusRing): ThemeTokens {
+  const none = { shadow: 'none', outline: 'none', offset: '0px' };
+  const control =
+    mode === 'ring'
+      ? { ...none, shadow: RING }
+      : mode === 'outline'
+        ? { ...none, outline: '1px solid var(--wt-primary-color)', offset: '2px' }
+        : mode === 'bold'
+          ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '2px' }
+          : none;
+  // Fields show focus by turning their 1px border the primary colour, with no ring around them.
+  const field =
+    mode === 'inset'
+        ? { ...none, shadow: 'inset 0 0 0 1px var(--wt-field-focus-border)' }
+        : mode === 'bold'
+          ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '-1px' }
+          : none;
+  return {
+    light: {
+      'control-focus-shadow': control.shadow,
+      'control-focus-outline': control.outline,
+      'control-focus-offset': control.offset,
+      'field-focus-shadow': field.shadow,
+      'field-focus-outline': field.outline,
+      'field-focus-offset': field.offset,
+      'focus-ring-color': 'color-mix(in srgb, var(--wt-primary-color) 24%, transparent)',
+    },
+    dark: { 'focus-ring-color': 'color-mix(in srgb, var(--wt-primary-color) 20%, transparent)' },
+  };
 }
 
 export function transitionTokens(ms: number): ThemeTokens {
   return { light: { transition: ms + 'ms' }, dark: {} };
 }
 
-export function materialTokens(m: Material): ThemeTokens {
-  return { light: { material: m }, dark: {} };
-}
-
-// ---------- tokens that only reference other tokens ----------
-
-const surf = (s: number | string) => `var(--wt-surface-${s})`;
-const prim = (s: number) => `var(--wt-primary-${s})`;
-const soft = (ref: string) => `color-mix(in srgb, ${ref} 16%, var(--wt-surface-900))`;
-
-function derived(): ThemeTokens {
-  const light: TokenMap = {
-    'primary-color': prim(500),
-    'primary-hover': prim(600),
-    'primary-active': prim(700),
-    'primary-soft': prim(50),
-    'primary-soft-text': prim(700),
-    ground: surf(50),
-    'card-bg': surf(0),
-    'overlay-bg': surf(0),
-    text: surf(800),
-    'text-muted': surf(500),
-    border: surf(200),
-    'hover-bg': surf(100),
-    'field-bg': surf(0),
-    'field-border': surf(300),
-    'field-hover-border': surf(400),
-    'field-disabled-bg': surf(100),
-    mask: 'rgba(0, 0, 0, 0.4)',
-    'table-header-bg': surf(50),
-    'glass-bg': 'color-mix(in srgb, var(--wt-surface-0) 60%, transparent)',
-    'glass-blur': '20px',
-    'glass-saturate': '180%',
-    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 65%, transparent)',
-    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.7)',
-    'glass-shadow': '0 8px 32px rgba(15, 23, 42, 0.18)',
-    'primary-gradient': 'linear-gradient(135deg, var(--wt-primary-400), var(--wt-primary-600))',
-    backdrop: 'var(--wt-ground)',
+export function materialTokens(m: MaterialMode): ThemeTokens {
+  if (m !== 'glass') return { light: { material: m }, dark: {} };
+  return {
+    light: {
+      material: m,
+      'card-bg': 'var(--wt-glass-bg)',
+      'card-backdrop': 'blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate))',
+      'card-border-width': '1px',
+      'card-shadow': 'var(--wt-glass-highlight), var(--wt-glass-shadow)',
+      border: 'var(--wt-glass-border)',
+    },
+    dark: { 'card-bg': 'var(--wt-glass-bg)', border: 'var(--wt-glass-border)' },
   };
-  const dark: TokenMap = {
-    'primary-color': prim(400),
-    'primary-hover': prim(300),
-    'primary-active': prim(200),
-    'primary-soft': soft(prim(400)),
-    'primary-soft-text': prim(200),
-    ground: surf(950),
-    'card-bg': surf(900),
-    'overlay-bg': surf(900),
-    text: surf(0),
-    'text-muted': surf(400),
-    border: surf(700),
-    'hover-bg': surf(800),
-    'field-bg': surf(950),
-    'field-border': surf(600),
-    'field-hover-border': surf(500),
-    'field-disabled-bg': surf(800),
-    mask: 'rgba(0, 0, 0, 0.6)',
-    'table-header-bg': surf(800),
-    'glass-bg': 'color-mix(in srgb, var(--wt-surface-900) 50%, transparent)',
-    'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 14%, transparent)',
-    'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.18)',
-    'glass-shadow': '0 8px 32px rgba(0, 0, 0, 0.4)',
-  };
-  for (const k of SEMANTIC_KEYS) {
-    light[k + '-color'] = `var(--wt-${k}-600)`;
-    light[k + '-bg'] = `var(--wt-${k}-50)`;
-    light[k + '-text'] = `var(--wt-${k}-800)`;
-    dark[k + '-color'] = `var(--wt-${k}-400)`;
-    dark[k + '-bg'] = soft(`var(--wt-${k}-400)`);
-    dark[k + '-text'] = `var(--wt-${k}-200)`;
-  }
-  return { light, dark };
 }
 
 // ---------- component tokens ----------
 
-/** Value a component token takes when the theme does not set it. */
-export function componentDefault(spec: ComponentTokenSpec, c: Pick<ThemeConfig, 'preset'>): ThemeTokens {
-  const p = PRESETS[c.preset];
-  switch (spec.css) {
-    case 'button-font-weight':
-      return { light: { [spec.css]: String(p.buttonWeight) }, dark: {} };
-    case 'card-border-width':
-      return componentValue(spec, p.cardBorder);
-    case 'table-stripe-bg':
-    case 'tag-radius':
-      return componentValue(spec, false);
-  }
-  const refs: Record<string, string> = {
-    'button-radius': 'var(--wt-radius-md)',
-    'button-padding-x': 'var(--wt-density-button-padding-x)',
-    'input-radius': 'var(--wt-radius-md)',
-    'card-padding': 'var(--wt-density-card-padding)',
-    'card-radius': 'var(--wt-radius-lg)',
-    'card-body-gap': '8px',
-    'table-row-height': 'var(--wt-density-row-height)',
-    'dialog-radius': 'var(--wt-radius-xl)',
-  };
-  return { light: { [spec.css]: refs[spec.css] }, dark: {} };
-}
-
 /** Tokens for an explicit component value set in the Designer, SCSS `$components` or TS overrides. */
 export function componentValue(spec: ComponentTokenSpec, v: number | boolean | string): ThemeTokens {
   if (spec.css === 'card-border-width') return { light: { [spec.css]: v ? '1px' : '0px' }, dark: {} };
-  if (spec.css === 'tag-radius') return { light: { [spec.css]: v ? 'var(--wt-radius-full)' : 'var(--wt-radius-sm)' }, dark: {} };
+  if (spec.css === 'tag-radius') return { light: { [spec.css]: v ? 'var(--wt-radius-full)' : 'var(--wt-radius-md)' }, dark: {} };
   if (spec.css === 'table-stripe-bg') {
     return v
-      ? { light: { [spec.css]: surf(50) }, dark: { [spec.css]: 'color-mix(in srgb, var(--wt-surface-800) 50%, var(--wt-surface-900))' } }
+      ? { light: { [spec.css]: 'var(--wt-surface-50)' }, dark: { [spec.css]: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))' } }
       : { light: { [spec.css]: 'transparent' }, dark: {} };
   }
   if (typeof v === 'string') return { light: { [spec.css]: v }, dark: {} };
@@ -235,6 +189,9 @@ export function primaryPaletteOf(c: ThemeConfig): Palette {
 }
 
 export function computeTokens(c: ThemeConfig): ThemeTokens {
+  const preset = PRESETS[c.preset];
+  const family = FAMILIES[preset.family];
+  const generation = FAMILY_GENERATION[preset.family];
   const s950 = SURFACES[c.surface][10];
   const t = emptyTokens();
   mergeTokens(
@@ -246,16 +203,33 @@ export function computeTokens(c: ThemeConfig): ThemeTokens {
     radiusTokens(c.radius),
     densityTokens(c.density),
     shadowTokens(c.shadow),
-    focusRingTokens(c.focusRing),
+    focusTokens(c.focusRing),
     transitionTokens(c.transition),
-    materialTokens(c.material),
-    derived()
+    { light: { ...family.light }, dark: { ...family.dark } },
+    materialTokens(c.material)
   );
+  if (c.primaryContrast) {
+    t.light['primary-contrast'] = c.primaryContrast;
+    delete t.dark['primary-contrast'];
+  }
+  // Styled-mode apps may set e.g. --p-card-body-gap themselves; read it first.
+  if (generation === 'styled') {
+    for (const key of Object.keys(STYLED_INPUTS)) t.light[key] = `var(${STYLED_INPUTS[key]}, ${t.light[key]})`;
+  }
   for (const spec of COMPONENT_TOKENS) {
     const group = c.components[spec.id];
     const v = group ? group[spec.key] : undefined;
-    mergeTokens(t, v === undefined ? componentDefault(spec, c) : componentValue(spec, v));
+    if (v !== undefined) mergeTokens(t, componentValue(spec, v));
   }
+  if (c.scheme === 'dark') {
+    t.light = { ...t.light, ...t.dark };
+    t.dark = {};
+  }
+  // Read by WtThemeService (overrides on a dark-only theme) and by `color-scheme` in base.css.
+  t.light['scheme'] = c.scheme;
+  if (c.scheme === 'light') t.dark['scheme'] = 'dark';
+  const compat = compatAliases(generation);
+  if (Object.keys(compat).length) t.compat = compat;
   return t;
 }
 
@@ -274,11 +248,21 @@ export interface CssOptions {
   indent?: string;
 }
 
-export const LAYER_ORDER = '@layer wiratheme.tokens, wiratheme.components, wiratheme.overrides;';
+/**
+ * Cascade order. `reset` comes first so an app's own element resets (`button { font: inherit }` from a normalize,
+ * reboot or preflight file) can sit below the components: wrap them in `@layer reset { … }`. Unlayered app CSS still
+ * wins over everything, as intended for the app's own styles.
+ */
+export const LAYER_ORDER = '@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;';
 
 function decls(map: TokenMap, indent: string): string {
   return Object.keys(map)
     .map((k) => `${indent}--wt-${k}: ${map[k]};`)
+    .join('\n');
+}
+function rawDecls(map: TokenMap, indent: string): string {
+  return Object.keys(map)
+    .map((k) => `${indent}${k}: ${map[k]};`)
     .join('\n');
 }
 
@@ -293,6 +277,7 @@ export function tokensToCss(t: ThemeTokens, o: CssOptions = {}): string {
   lines.push(`${pad}${selector} {`);
   if (o.extra) lines.push(decls(o.extra, i1));
   lines.push(decls(t.light, i1));
+  if (t.compat && Object.keys(t.compat).length) lines.push(rawDecls(t.compat, i1));
   lines.push(`${pad}}`);
   const darkKeys = Object.keys(t.dark);
   if (darkKeys.length && darkMode === 'class') {
@@ -307,7 +292,7 @@ export function tokensToCss(t: ThemeTokens, o: CssOptions = {}): string {
 /** `--wt-x: v; …` for an inline style attribute, with dark values applied when `mode` is dark. */
 export function tokensToStyle(t: ThemeTokens, mode: 'light' | 'dark' = 'light'): string {
   const all: TokenMap = { ...t.light, ...(mode === 'dark' ? t.dark : {}) };
-  return Object.keys(all)
-    .map((k) => `--wt-${k}: ${all[k]}`)
-    .join('; ');
+  const own = Object.keys(all).map((k) => `--wt-${k}: ${all[k]}`);
+  const compat = t.compat ? Object.keys(t.compat).map((k) => `${k}: ${t.compat![k]}`) : [];
+  return own.concat(compat).join('; ');
 }

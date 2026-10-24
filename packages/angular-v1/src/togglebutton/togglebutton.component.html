@@ -1,0 +1,17 @@
+<button
+  type="button"
+  [id]="inputId || null"
+  [class]="classes"
+  [attr.aria-pressed]="checked"
+  [attr.aria-label]="ariaLabel || null"
+  [attr.aria-invalid]="invalid || null"
+  [disabled]="isDisabled"
+  (click)="toggle($event)"
+  (blur)="onTouched()"
+>
+  <span class="wt-togglebutton-content">
+    <span *ngIf="icon && iconPos === 'left'" [class]="'wt-togglebutton-icon p-button-icon p-button-icon-left ' + icon" aria-hidden="true"></span>
+    <span *ngIf="label" class="wt-togglebutton-label p-button-label">{{ label }}</span>
+    <span *ngIf="icon && iconPos === 'right'" [class]="'wt-togglebutton-icon p-button-icon p-button-icon-right ' + icon" aria-hidden="true"></span>
+  </span>
+</button>

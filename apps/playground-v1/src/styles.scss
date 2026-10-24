@@ -1,4 +1,5 @@
 @use 'theme/wiratheme.theme';
+@use 'wiratheme/utils';
 /* You can add global styles to this file, and also import other style files */
 
 /* wiratheme-playground:start */
@@ -67,5 +68,17 @@ body {
 #app-css-wins .wt-btn {
   background: #111111;
   border-color: #111111;
+}
+/* Animate-on-scroll demo: far enough down that it starts below the screen. */
+.pg-aos {
+  display: grid;
+  gap: 1rem;
+  margin-top: 60vh;
+}
+.pg-card {
+  padding: 1.25rem;
+  border: 1px solid var(--wt-border);
+  border-radius: var(--wt-radius-md);
+  background: var(--wt-card-bg);
 }
 /* wiratheme-playground:end */

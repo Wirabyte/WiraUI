@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 368" preserveAspectRatio="xMidYMid slice">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): a lake at dusk. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e3a8a" />
+      <stop offset="0.55" stop-color="#7c3aed" />
+      <stop offset="1" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f766e" />
+      <stop offset="1" stop-color="#0b1220" />
+    </linearGradient>
+  </defs>
+  <rect width="704" height="368" fill="url(#sky)" />
+  <circle cx="520" cy="196" r="54" fill="#fde68a" opacity="0.9" />
+  <path d="M0 250 L120 150 L210 230 L320 120 L440 240 L560 170 L704 250 V368 H0 Z" fill="#312e81" opacity="0.85" />
+  <path d="M0 270 L90 210 L190 260 L300 190 L420 268 L540 220 L704 272 V368 H0 Z" fill="#1e1b4b" />
+  <rect y="282" width="704" height="86" fill="url(#lake)" />
+  <path d="M470 296 H570 M490 312 H550 M505 326 H535" stroke="#fde68a" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+</svg>

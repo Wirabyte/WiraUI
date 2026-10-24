@@ -1,0 +1,51 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="severity" [section]="sec['severity']">
+      <docs-demo [html]="code['severity']" layout="stack">
+        <wt-message text="ระบบจะปิดปรับปรุงคืนนี้ 22:00 น."></wt-message>
+        <wt-message severity="success" text="บันทึกเรียบร้อย"></wt-message>
+        <wt-message severity="warn" text="แผนของคุณจะหมดอายุใน 3 วัน"></wt-message>
+        <wt-message severity="error" text="ชำระเงินไม่สำเร็จ"></wt-message>
+        <wt-message severity="secondary" text="ไม่มีรายการใหม่"></wt-message>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="closable" [section]="sec['closable']">
+      <docs-demo [html]="code['closable']" layout="stack">
+        @if (showClosable) {
+          <wt-message id="d-closable" severity="info" text="กดปุ่มปิดได้" [closable]="true" (onClose)="onClosed()"></wt-message>
+        }
+        @if (showTimed) {
+          <wt-message severity="success" text="ข้อความนี้จะหายใน 4 วินาที" [life]="4000" (onClose)="showTimed = false"></wt-message>
+        }
+        <div class="docs-demo-actions">
+          <span class="docs-demo-output">onClose: <code id="d-closed">{{ closed }}</code></span>
+          @if (!showClosable || !showTimed) {
+            <wt-button [label]="en() ? 'Show again' : 'แสดงอีกครั้ง'" size="small" severity="secondary" [text]="true" (onClick)="showAgain()"></wt-button>
+          }
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']" layout="stack">
+        <wt-message severity="info" variant="outlined" text="Outlined"></wt-message>
+        <wt-message severity="info" variant="simple" text="Simple"></wt-message>
+        <wt-message severity="info" size="small" text="Small"></wt-message>
+        <wt-message severity="info" size="large" text="Large"></wt-message>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="content" [section]="sec['content']">
+      <docs-demo [html]="code['content']" layout="stack">
+        <wt-message severity="warn">
+          <span>อีเมลยังไม่ยืนยัน <b>ตรวจกล่องจดหมายของคุณ</b></span>
+        </wt-message>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

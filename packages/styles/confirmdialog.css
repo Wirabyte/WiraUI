@@ -1,0 +1,45 @@
+/* wt-confirmdialog. Shared by wiratheme v1, v2 and v3. A question in a wt-dialog: an icon beside the message and
+   reject / accept buttons in the footer. On phones the buttons share the row. */
+@layer wiratheme.components {
+  wt-confirmdialog {
+    display: contents;
+  }
+  /* A comfortable default; a width the app sets in [style] wins. */
+  .wt-confirmdialog {
+    width: 30rem;
+  }
+  .wt-confirmdialog-body {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .wt-confirmdialog-icon {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+    color: var(--_icon, var(--wt-text-muted));
+  }
+  .wt-confirmdialog-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .wt-confirmdialog-icon-success { --_icon: var(--wt-success-color); }
+  .wt-confirmdialog-icon-error { --_icon: var(--wt-danger-color); }
+  .wt-confirmdialog-icon-warning { --_icon: var(--wt-warn-color); }
+  .wt-confirmdialog-icon-info { --_icon: var(--wt-info-color); }
+  .wt-confirmdialog-icon-question { --_icon: var(--wt-help-color); }
+  .wt-confirmdialog-message {
+    line-height: 1.6;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 575.98px) {
+    .wt-confirmdialog .wt-dialog-footer > .wt-btn {
+      flex: 1 1 0;
+      min-height: 2.75rem;
+    }
+  }
+}

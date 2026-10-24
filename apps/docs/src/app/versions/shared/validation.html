@@ -1,0 +1,73 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <form id="d-vform" #profileForm="ngForm" class="docs-form-grid" (ngSubmit)="saveTemplate(profileForm.valid)">
+          <div class="docs-form-field">
+            <label for="d-v-email">อีเมล</label>
+            <input wtInputText id="d-v-email" name="email" [(ngModel)]="email" [required]="true" [email]="true" />
+            <wt-field-error id="d-v-email-err" for="email" label="อีเมล"></wt-field-error>
+          </div>
+          <div class="docs-form-field">
+            <label for="d-v-phone">เบอร์โทร</label>
+            <input wtInputText id="d-v-phone" name="phone" [(ngModel)]="phone" wtThaiPhone />
+            <wt-field-error id="d-v-phone-err" for="phone"></wt-field-error>
+          </div>
+          <div class="docs-demo-actions">
+            <wt-button id="d-v-submit" type="submit" label="บันทึก" icon="pi pi-save"></wt-button>
+            <span class="docs-demo-output">submit: <code id="d-v-result">{{ templateResult || '-' }}</code></span>
+          </div>
+        </form>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form id="d-rform" [formGroup]="form" class="docs-form-grid" (ngSubmit)="register()">
+          <div class="docs-form-field">
+            <input wtInputText id="d-r-id" formControlName="thaiId" placeholder="เลขประจำตัวประชาชน" aria-label="เลขประจำตัวประชาชน" />
+            <wt-field-error id="d-r-id-err" for="thaiId" label="เลขประจำตัวประชาชน"></wt-field-error>
+          </div>
+          <div class="docs-form-field">
+            <wt-password inputId="d-r-pass" formControlName="password" [feedback]="false" [fluid]="true" placeholder="รหัสผ่าน" ariaLabel="รหัสผ่าน"></wt-password>
+            <wt-field-error for="password" label="รหัสผ่าน"></wt-field-error>
+          </div>
+          <div class="docs-form-field">
+            <wt-password inputId="d-r-confirm" formControlName="confirm" [feedback]="false" [fluid]="true" placeholder="ยืนยันรหัสผ่าน" ariaLabel="ยืนยันรหัสผ่าน"></wt-password>
+            <wt-field-error id="d-r-confirm-err" for="confirm" label="ยืนยันรหัสผ่าน"></wt-field-error>
+          </div>
+          <div class="docs-demo-actions">
+            <wt-button id="d-r-submit" type="submit" label="สมัคร"></wt-button>
+            <span class="docs-demo-output">valid: <code id="d-r-valid">{{ form.valid }}</code></span>
+          </div>
+        </form>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="messages" [section]="sec['messages']">
+      <docs-demo [html]="code['messages']" layout="stack">
+        <div class="docs-form-field">
+          <input wtInputText id="d-v-code" name="branchCode" [(ngModel)]="branchCode" #codeModel="ngModel" pattern="[0-9]{10}" placeholder="รหัสสาขา" aria-label="รหัสสาขา" />
+          <wt-field-error id="d-v-code-err" [control]="codeModel" [messages]="{ pattern: 'ใช้ตัวเลข 10 หลัก' }" [always]="true"></wt-field-error>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="control" [section]="sec['control']">
+      <docs-demo [html]="code['control']" layout="stack">
+        <div class="docs-form-field">
+          <input wtInputText id="d-v-nick" name="nickname" [(ngModel)]="nickname" #nicknameModel="ngModel" [required]="true" placeholder="ชื่อเล่น" aria-label="ชื่อเล่น" />
+          <wt-field-error id="d-v-nick-err" [control]="nicknameModel" label="ชื่อเล่น"></wt-field-error>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="helpers" [section]="sec['helpers']">
+      <docs-code [code]="helpersCode" lang="ts"></docs-code>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

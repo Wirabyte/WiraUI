@@ -6,71 +6,285 @@
     margin: 0;
     font-family: var(--wt-font-family);
     font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    line-height: var(--wt-control-line-height);
+    color: var(--wt-field-color);
     background: var(--wt-field-bg);
-    border: 1px solid var(--wt-field-border);
+    border: var(--wt-field-border-width) solid var(--wt-field-border);
     border-radius: var(--wt-input-radius);
     padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
+    box-shadow: var(--wt-field-shadow);
     outline: none;
     appearance: none;
     transition:
       border-color var(--wt-transition),
       box-shadow var(--wt-transition),
-      background-color var(--wt-transition);
+      background-color var(--wt-transition),
+      outline-color var(--wt-transition);
   }
   .wt-inputtext::placeholder {
-    color: var(--wt-text-muted);
+    color: var(--wt-field-placeholder);
     opacity: 1;
   }
   .wt-inputtext:enabled:hover {
     border-color: var(--wt-field-hover-border);
   }
   .wt-inputtext:enabled:focus {
-    border-color: var(--wt-primary-color);
-    box-shadow: var(--wt-focus-ring);
+    border-color: var(--wt-field-focus-border);
+    box-shadow: var(--wt-field-focus-shadow);
+    outline: var(--wt-field-focus-outline);
+    outline-offset: var(--wt-field-focus-offset);
   }
   .wt-inputtext:disabled {
     background: var(--wt-field-disabled-bg);
-    color: var(--wt-text-muted);
-    cursor: not-allowed;
-    opacity: 1;
+    color: var(--wt-field-disabled-color);
+    opacity: var(--wt-field-disabled-opacity);
+    cursor: default;
   }
   .wt-inputtext[readonly] {
     background: var(--wt-field-disabled-bg);
   }
   .wt-inputtext-filled {
-    background: var(--wt-hover-bg);
+    background: var(--wt-field-filled-bg);
   }
   .wt-inputtext-filled:enabled:focus {
     background: var(--wt-field-bg);
   }
-  .wt-inputtext-sm {
+  .wt-inputtext-sm,
+  .wt-inputtext.p-inputtext-sm,
+  .p-inputtext-sm .wt-inputtext {
     font-size: calc(var(--wt-font-size) * 0.875);
-    padding: calc(var(--wt-field-padding-y) * 0.75) calc(var(--wt-field-padding-x) * 0.75);
+    padding: calc(var(--wt-field-padding-y) * var(--wt-size-sm-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-sm-scale));
   }
-  .wt-inputtext-lg {
-    font-size: calc(var(--wt-font-size) * 1.125);
-    padding: calc(var(--wt-field-padding-y) * 1.25) calc(var(--wt-field-padding-x) * 1.25);
+  .wt-inputtext-lg,
+  .wt-inputtext.p-inputtext-lg,
+  .p-inputtext-lg .wt-inputtext {
+    font-size: calc(var(--wt-font-size) * var(--wt-size-lg-scale));
+    padding: calc(var(--wt-field-padding-y) * var(--wt-size-lg-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-lg-scale));
   }
   .wt-inputtext-fluid {
     width: 100%;
   }
-  /* Invalid: forced with [invalid], or automatically once a form control is invalid and touched. */
+  /* Invalid: forced with [invalid], or by itself once a form control is invalid and touched, or its form was submitted. */
   .wt-inputtext.wt-invalid,
-  .wt-inputtext.ng-invalid.ng-touched {
+  .wt-inputtext.ng-invalid:is(.ng-touched, form.ng-submitted *) {
     border-color: var(--wt-danger-color);
   }
-  .wt-inputtext.wt-invalid:enabled:focus,
-  .wt-inputtext.ng-invalid.ng-touched:enabled:focus {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--wt-danger-color) 25%, transparent);
+
+  /* Field errors: wt-field-error, and the p-error class existing templates put on <small>. */
+  .wt-field-error,
+  .p-error {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--wt-danger-color);
+    font-family: var(--wt-font-family);
+    font-size: calc(var(--wt-font-size) * 0.875);
+    line-height: 1.4;
+  }
+  wt-field-error[hidden] {
+    display: none;
+  }
+  .wt-inputtext.p-invalid {
+    border-color: var(--wt-danger-color);
   }
 
   .wt-textarea {
     resize: vertical;
+    line-height: var(--wt-line-height);
   }
   .wt-textarea-autoresize {
     resize: none;
     overflow: hidden;
+  }
+
+  /* ---- Icon inside a field: wt-iconfield, and the older .p-input-icon-left / -right markup ---- */
+  .wt-iconfield,
+  .p-input-icon-left,
+  .p-input-icon-right {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+  }
+  .wt-inputicon,
+  .p-input-icon-left > i,
+  .p-input-icon-right > i,
+  .p-input-icon-left > svg,
+  .p-input-icon-right > svg {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.5rem;
+    color: var(--wt-field-placeholder);
+    line-height: 1;
+  }
+  .wt-inputicon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .wt-iconfield > .wt-inputicon:first-child,
+  .p-input-icon-left > i:first-of-type,
+  .p-input-icon-left > svg:first-of-type {
+    left: var(--wt-field-padding-x);
+  }
+  .wt-iconfield > .wt-inputicon:last-child,
+  .p-input-icon-right > i:last-of-type,
+  .p-input-icon-right > svg:last-of-type {
+    right: var(--wt-field-padding-x);
+  }
+  .wt-iconfield > .wt-inputicon:first-child ~ .wt-inputtext,
+  .p-input-icon-left > .wt-inputtext,
+  .p-input-icon-left > .p-inputtext {
+    padding-left: calc(var(--wt-field-padding-x) * 2 + 1rem);
+  }
+  .wt-iconfield > .wt-inputtext:not(:last-child),
+  .p-input-icon-right > .wt-inputtext,
+  .p-input-icon-right > .p-inputtext {
+    padding-right: calc(var(--wt-field-padding-x) * 2 + 1rem);
+  }
+
+  /* ---- Fields, add-ons and buttons joined in one row: wt-inputgroup, and .p-inputgroup ---- */
+  .wt-inputgroup,
+  .p-inputgroup {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+  }
+  .wt-inputgroup-addon,
+  .p-inputgroup-addon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Every short addon (an icon, ฿, @) gets the same width, so fields in a form line up. */
+    min-width: var(--wt-inputgroup-addon-min-width);
+    box-sizing: border-box;
+    padding: var(--wt-field-padding-y) 0.5rem;
+    border: var(--wt-field-border-width) solid var(--wt-field-border);
+    background: var(--wt-field-filled-bg);
+    color: var(--wt-text-muted);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-control-line-height);
+    white-space: nowrap;
+  }
+  .wt-inputgroup > .wt-inputtext,
+  .p-inputgroup > .p-inputtext,
+  .wt-inputgroup > wt-iconfield,
+  .wt-inputgroup > wt-floatlabel {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+  }
+  .wt-inputgroup > wt-iconfield > .wt-inputtext,
+  .wt-inputgroup > wt-floatlabel > .wt-inputtext {
+    width: 100%;
+  }
+  /* Neighbours share one border line; the focused field draws on top. */
+  .wt-inputgroup > :not(:first-child),
+  .p-inputgroup > :not(:first-child) {
+    margin-left: calc(var(--wt-field-border-width) * -1);
+  }
+  .wt-inputgroup > :focus,
+  .wt-inputgroup > :focus-within,
+  .p-inputgroup > :focus,
+  .p-inputgroup > :focus-within {
+    position: relative;
+    z-index: 1;
+  }
+  .wt-inputgroup > *,
+  .wt-inputgroup > * > .wt-inputtext,
+  .wt-inputgroup > wt-button > .wt-btn,
+  .p-inputgroup > *,
+  .p-inputgroup > .p-button {
+    border-radius: 0;
+  }
+  .wt-inputgroup > :first-child,
+  .wt-inputgroup > :first-child > .wt-inputtext,
+  .wt-inputgroup > wt-button:first-child > .wt-btn,
+  .p-inputgroup > :first-child {
+    border-top-left-radius: var(--wt-input-radius);
+    border-bottom-left-radius: var(--wt-input-radius);
+  }
+  .wt-inputgroup > :last-child,
+  .wt-inputgroup > :last-child > .wt-inputtext,
+  .wt-inputgroup > wt-button:last-child > .wt-btn,
+  .p-inputgroup > :last-child {
+    border-top-right-radius: var(--wt-input-radius);
+    border-bottom-right-radius: var(--wt-input-radius);
+  }
+  .wt-inputgroup > wt-button > .wt-btn {
+    height: 100%;
+  }
+
+  /* ---- Floating label: wt-floatlabel (over / on / in), and .p-float-label ---- */
+  .wt-floatlabel,
+  .p-float-label {
+    position: relative;
+    display: block;
+  }
+  .wt-floatlabel > label,
+  .p-float-label > label {
+    position: absolute;
+    top: 50%;
+    left: var(--wt-field-padding-x);
+    margin-top: -0.5em;
+    max-width: calc(100% - var(--wt-field-padding-x) * 2);
+    overflow: hidden;
+    color: var(--wt-field-placeholder);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    transition-property: top, margin, font-size, color, background-color;
+    transition-duration: var(--wt-transition);
+  }
+  .wt-floatlabel > textarea ~ label,
+  .p-float-label > textarea ~ label {
+    top: var(--wt-field-padding-y);
+    margin-top: 0;
+  }
+  /* Floated: the field has focus or a value. :is() keeps the rule if a browser lacks :autofill. */
+  /* Above the field with room for Thai vowels below the line and for the focus ring. */
+  .wt-floatlabel > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label,
+  .p-float-label > :is(:focus, .p-filled, .p-inputwrapper-filled, :autofill) ~ label {
+    top: calc(-1.4em - 0.375rem);
+    margin-top: 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--wt-text-muted);
+  }
+  .wt-floatlabel > :is(:focus, :focus-within) ~ label,
+  .p-float-label > :focus ~ label {
+    color: var(--wt-primary-color);
+  }
+  /* on: the floated label sits on the top border. */
+  .wt-floatlabel-on > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label {
+    top: 0;
+    margin-top: -0.7em;
+    padding: 0 0.25rem;
+    left: calc(var(--wt-field-padding-x) - 0.25rem);
+    background: var(--wt-field-bg);
+  }
+  /* in: the field grows and the floated label sits inside its top edge. */
+  .wt-floatlabel-in > .wt-inputtext {
+    padding-top: calc(var(--wt-field-padding-y) + 0.875rem);
+    padding-bottom: calc(var(--wt-field-padding-y) * 0.5);
+  }
+  .wt-floatlabel-in > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label {
+    top: calc(var(--wt-field-padding-y) * 0.5);
+    line-height: 1.4;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-floatlabel > label,
+    .p-float-label > label {
+      transition: none;
+    }
   }
 }

@@ -52,6 +52,14 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
     expect(got['primary-500']).toBe(cfg.primary);
     expect(got['font-family']).toBe(`'${cfg.fontFamily}', sans-serif`);
     expect(got['radius-md']).toBe(`${cfg.radius}px`);
-    for (const [k, v] of Object.entries(want.light)) if (!/^(primary|success|info|warn|danger|help)-\d+$/.test(k)) expect(got[k], k).toBe(v);
+    // Component defaults now come from the preset family, so a value the prototype left out (because it
+    // equalled the prototype preset's default) may differ; values written in the file must still match.
+    const kebab = (key: string) => key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+    const body = scss.replace(/^\/\/.*$/gm, '');
+    const left = new Set(core.COMPONENT_TOKENS.filter((t) => !body.includes(`${kebab(t.key)}:`)).map((t) => t.css));
+    for (const [k, v] of Object.entries(want.light)) {
+      if (/^(primary|success|info|warn|danger|help)-\d+$/.test(k) || left.has(k)) continue;
+      expect(got[k], k).toBe(v);
+    }
   });
 });

@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
 import { ɵWtRadioAccessor, ɵWtRadioRegistry } from './radio-registry';
 import { WtRadioButtonClickEvent } from './radiobutton.types';
 
@@ -24,6 +24,12 @@ import { WtRadioButtonClickEvent } from './radiobutton.types';
  */
 @Component({
   selector: 'wt-radiobutton',
+  host: {
+    '[class.wt-radiobutton-sm]': "sizeKey() === 'sm'",
+    '[class.p-radiobutton-sm]': "sizeKey() === 'sm'",
+    '[class.wt-radiobutton-lg]': "sizeKey() === 'lg'",
+    '[class.p-radiobutton-lg]': "sizeKey() === 'lg'",
+  },
   standalone: true,
   templateUrl: './radiobutton.component.html',
   styleUrl: './radiobutton.css',
@@ -38,6 +44,9 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   readonly inputId = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
+  /** `small` or `large` (also `sm` / `lg`). */
+  readonly size = input<WtSize>();
+  readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly ariaLabel = input<string>();
 
   readonly onClick = output<WtRadioButtonClickEvent>();

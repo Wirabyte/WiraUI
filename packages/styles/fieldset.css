@@ -1,0 +1,80 @@
+/* wt-fieldset. Shared by wiratheme v1, v2 and v3. A real <fieldset> with a legend; it can collapse. */
+@layer wiratheme.components {
+  wt-fieldset {
+    display: block;
+  }
+  .wt-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0 var(--wt-fieldset-padding) var(--wt-fieldset-padding);
+    border: 1px solid var(--wt-border);
+    border-radius: var(--wt-fieldset-radius);
+    background: var(--wt-card-bg);
+    color: var(--wt-text);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+  }
+  .wt-fieldset-legend {
+    max-width: 100%;
+    margin-inline: calc(var(--wt-fieldset-legend-padding-x) * -0.5);
+    padding: 0;
+    border: var(--wt-fieldset-legend-border-width) solid var(--wt-border);
+    border-radius: var(--wt-fieldset-radius);
+    background: var(--wt-fieldset-legend-bg);
+    color: var(--wt-fieldset-legend-color);
+    font-weight: var(--wt-fieldset-legend-weight);
+  }
+  .wt-fieldset-legend-label {
+    display: block;
+    padding: var(--wt-fieldset-legend-padding-y) var(--wt-fieldset-legend-padding-x);
+  }
+  .wt-fieldset-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: var(--wt-fieldset-legend-padding-y) var(--wt-fieldset-legend-padding-x);
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--wt-transition);
+  }
+  .wt-fieldset-toggle:hover {
+    background: var(--wt-hover-bg);
+  }
+  .wt-fieldset-toggle:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-fieldset-toggle svg {
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  .wt-fieldset-content-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--wt-transition) ease;
+  }
+  .wt-fieldset-collapsed .wt-fieldset-content-container {
+    grid-template-rows: 0fr;
+  }
+  .wt-fieldset-content-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .wt-fieldset-content {
+    padding-top: calc(var(--wt-fieldset-padding) / 2);
+  }
+  /* Collapsed: the box keeps its bottom padding, so the legend on the top border has room below it. */
+  @media (prefers-reduced-motion: reduce) {
+    .wt-fieldset-content-container {
+      transition: none;
+    }
+  }
+}

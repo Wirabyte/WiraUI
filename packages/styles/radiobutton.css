@@ -8,13 +8,24 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     cursor: pointer;
     user-select: none;
     font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
+    font-size: calc(var(--wt-font-size) * var(--_rb-font, 1));
     line-height: var(--wt-line-height);
     color: var(--wt-text);
+  }
+  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wt-radiobutton-sm,
+  .p-radiobutton-sm {
+    --_rb-scale: var(--wt-size-sm-scale);
+    --_rb-font: 0.875;
+  }
+  .wt-radiobutton-lg,
+  .p-radiobutton-lg {
+    --_rb-scale: var(--wt-size-lg-scale);
+    --_rb-font: var(--wt-size-lg-scale);
   }
   .wt-radiobutton-input {
     position: absolute;
@@ -26,49 +37,57 @@
     cursor: inherit;
     z-index: 1;
   }
+  .wt-radiobutton-control {
+    display: inline-flex;
+    flex: none;
+  }
   .wt-radiobutton-box {
     flex: none;
     display: grid;
     place-items: center;
-    width: 1.25em;
-    height: 1.25em;
+    width: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
+    height: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
     box-sizing: border-box;
-    border: 1px solid var(--wt-field-border);
+    border: var(--wt-radio-border-width) solid var(--wt-field-border);
     border-radius: 50%;
     background: var(--wt-field-bg);
+    box-shadow: var(--wt-field-shadow);
     transition:
       background-color var(--wt-transition),
       border-color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      box-shadow var(--wt-transition),
+      outline-color var(--wt-transition);
   }
   .wt-radiobutton-dot {
-    width: 0.5em;
-    height: 0.5em;
+    width: var(--wt-radio-dot-size);
+    height: var(--wt-radio-dot-size);
     border-radius: 50%;
-    background: var(--wt-primary-contrast);
+    background: var(--wt-radio-dot-color);
     transform: scale(0);
     transition: transform var(--wt-transition);
   }
   .wt-radiobutton:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
-    border-color: var(--wt-field-hover-border);
+    border-color: var(--wt-checkbox-hover-border);
   }
   .wt-radiobutton-checked .wt-radiobutton-box,
   .wt-radiobutton-checked:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
-    background: var(--wt-primary-color);
-    border-color: var(--wt-primary-color);
+    background: var(--wt-radio-checked-bg);
+    border-color: var(--wt-radio-checked-border);
   }
   .wt-radiobutton-checked .wt-radiobutton-dot {
     transform: scale(1);
   }
-  .wt-radiobutton-input:focus-visible + .wt-radiobutton-box {
-    box-shadow: var(--wt-focus-ring);
+  .wt-radiobutton-input:focus-visible + .wt-radiobutton-control .wt-radiobutton-box {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
   }
   .wt-radiobutton-disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
+    cursor: default;
+    opacity: var(--wt-disabled-opacity);
   }
   .wt-radiobutton.wt-invalid .wt-radiobutton-box,
-  wt-radiobutton.ng-invalid.ng-touched .wt-radiobutton-box {
+  wt-radiobutton.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-radiobutton-box {
     border-color: var(--wt-danger-color);
   }
 }

@@ -1,4 +1,6 @@
-/* wt-card. Shared by wiratheme v1, v2 and v3. Empty slots collapse, so the body gap only sits between real parts. */
+/* wt-card. Shared by wiratheme v1, v2 and v3. Empty slots collapse, so spacing only sits between real parts.
+   Spacing tokens follow both layouts: v1 presets pad the content and footer (classic),
+   v2/v3 presets put a gap between the parts of the body (styled). */
 @layer wiratheme.components {
   wt-card {
     display: block;
@@ -8,7 +10,9 @@
     color: var(--wt-text);
     border: var(--wt-card-border-width) solid var(--wt-border);
     border-radius: var(--wt-card-radius);
-    box-shadow: var(--wt-shadow-sm);
+    box-shadow: var(--wt-card-shadow);
+    -webkit-backdrop-filter: var(--wt-card-backdrop);
+    backdrop-filter: var(--wt-card-backdrop);
     overflow: hidden;
     font-family: var(--wt-font-family);
     font-size: var(--wt-font-size);
@@ -57,17 +61,18 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: var(--wt-gap);
+    gap: 0.75rem;
+    margin-bottom: var(--wt-card-caption-gap);
   }
   .wt-card-titles {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--wt-card-title-gap);
     min-width: 0;
   }
   .wt-card-title {
-    font-size: calc(var(--wt-font-size) * 1.25);
-    font-weight: 600;
+    font-size: var(--wt-card-title-size);
+    font-weight: var(--wt-card-title-weight);
     line-height: 1.35;
   }
   .wt-card-subtitle {
@@ -76,20 +81,34 @@
   .wt-card-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     flex-shrink: 0;
+  }
+  .wt-card-content {
+    padding: var(--wt-card-content-padding-y) 0;
   }
   .wt-card-footer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
+    padding-top: var(--wt-card-footer-padding-top);
+  }
+
+  /* Buttons inside the wrapper the app projects (<div wtCardFooter>) get the slot's spacing too. */
+  .wt-card-footer > [wtCardFooter]:has(> wt-button, > button, > a, > .wt-btn),
+  .wt-card-actions > [wtCardActions]:has(> wt-button, > button, > a, > .wt-btn) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .wt-card-skeleton {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: var(--wt-card-content-padding-y) 0;
   }
   .wt-card-skeleton span {
     display: block;

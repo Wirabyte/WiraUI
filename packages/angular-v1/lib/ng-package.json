@@ -7,6 +7,7 @@
   "assets": [
     { "glob": "**/*.scss", "input": "theme", "output": "theme" },
     { "glob": "**/*.css", "input": "themes", "output": "themes" },
+    { "glob": "**/*.{scss,css}", "input": "utils", "output": "utils" },
     { "glob": "**/*", "input": "schematics", "output": "schematics" }
   ],
   "allowedNonPeerDependencies": []
