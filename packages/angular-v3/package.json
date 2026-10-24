@@ -1,0 +1,23 @@
+{
+  "name": "@wiratheme-build/angular-v3",
+  "private": true,
+  "description": "Build shell for wiratheme@3 (Angular 21+). Source comes from packages/angular-signal + overlay/, synced by tools/sync-sources.mjs.",
+  "scripts": {
+    "sync": "node ../../tools/sync-sources.mjs v3",
+    "build": "node ../../tools/sync-sources.mjs v3 && ng-packagr -p lib/ng-package.json -c lib/tsconfig.lib.json && node ../../tools/finish-package.mjs v3",
+    "pack": "cd dist && npm pack --pack-destination .."
+  },
+  "devDependencies": {
+    "@angular/common": "21.2.25",
+    "@angular/compiler": "21.2.25",
+    "@angular/compiler-cli": "21.2.25",
+    "@angular/core": "21.2.25",
+    "@angular/forms": "21.2.25",
+    "@angular/platform-browser": "21.2.25",
+    "ng-packagr": "21.2.7",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "typescript": "~5.9.3",
+    "zone.js": "~0.15.0"
+  }
+}

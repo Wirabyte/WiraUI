@@ -1,0 +1,21 @@
+{
+  "name": "wiratheme-monorepo",
+  "private": true,
+  "description": "WiraTheme: Angular UI components and Theme Designer (v1 Angular 15–17, v2 18–20, v3 21+)",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter ./packages/** run build",
+    "build:core": "pnpm --filter @wiratheme/core run build",
+    "build:themes": "pnpm --filter @wiratheme/themes run build",
+    "build:ng": "pnpm --filter \"./packages/angular-v*\" run build",
+    "test": "pnpm -r run test",
+    "sync": "node tools/sync-sources.mjs",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

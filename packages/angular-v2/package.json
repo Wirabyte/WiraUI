@@ -1,0 +1,23 @@
+{
+  "name": "@wiratheme-build/angular-v2",
+  "private": true,
+  "description": "Build shell for wiratheme@2 (Angular 18–20). Source comes from packages/angular-signal + overlay/, synced by tools/sync-sources.mjs.",
+  "scripts": {
+    "sync": "node ../../tools/sync-sources.mjs v2",
+    "build": "node ../../tools/sync-sources.mjs v2 && ng-packagr -p lib/ng-package.json -c lib/tsconfig.lib.json && node ../../tools/finish-package.mjs v2",
+    "pack": "cd dist && npm pack --pack-destination .."
+  },
+  "devDependencies": {
+    "@angular/common": "18.2.14",
+    "@angular/compiler": "18.2.14",
+    "@angular/compiler-cli": "18.2.14",
+    "@angular/core": "18.2.14",
+    "@angular/forms": "18.2.14",
+    "@angular/platform-browser": "18.2.14",
+    "ng-packagr": "18.2.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "typescript": "~5.5.4",
+    "zone.js": "~0.14.10"
+  }
+}

@@ -1,0 +1,328 @@
+/* WiraTheme exporters / importer (prototype).
+   Every exported file embeds the full config on one `wiratheme-config {...}` line,
+   so any of them can be imported back without losing anything. */
+(function (WT) {
+  'use strict';
+
+  const VERSION = '0.1.0-prototype';
+  const PRESET_CLASS = { wira: 'Wira', lanna: 'Lanna', siam: 'Siam', nakhon: 'Nakhon' };
+
+  function stamp() {
+    const d = new Date();
+    const p = (n) => String(n).padStart(2, '0');
+    return `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear() + 543} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  }
+  function configLine(c) {
+    return 'wiratheme-config ' + JSON.stringify(c);
+  }
+  function kebab(s) {
+    return s.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+  }
+  function cssValue(spec, v) {
+    if (spec.type === 'px') return v + 'px';
+    return typeof v === 'string' ? `'${v}'` : String(v);
+  }
+  function tsValue(spec, v) {
+    if (spec.type === 'px') return `'${v}px'`;
+    return typeof v === 'string' ? `'${v}'` : String(v);
+  }
+
+  // ---------- SCSS ----------
+  function toSCSS(c) {
+    const P = WT.primaryPalette(c);
+    const lines = [];
+    lines.push('// ─────────────────────────────────────────────────────────────');
+    lines.push('// WiraTheme · wiratheme.theme.scss');
+    lines.push(`// สร้างโดย WiraTheme Designer ${VERSION} · ${stamp()}`);
+    lines.push("// วิธีใช้: ใส่ @use 'theme/wiratheme.theme'; เป็นบรรทัดแรกของ src/styles.scss");
+    lines.push('// ─────────────────────────────────────────────────────────────');
+    lines.push('// ' + configLine(c));
+    lines.push('');
+    lines.push("@use 'wiratheme/theme' with (");
+    lines.push(`  $preset: '${c.preset}',`);
+    lines.push(`  $primary: (${c.primaryShades ? '' : '                 // สร้างจาก ' + c.primary}`);
+    WT.SHADES.forEach((s) => lines.push(`    ${s}: ${P[s]},`));
+    lines.push('  ),');
+    lines.push(`  $surface: '${c.surface}',`);
+    lines.push('  $semantic: (');
+    Object.keys(WT.SEMANTIC_DEFAULTS).forEach((k) => lines.push(`    ${k}: ${c.semantic[k]},`));
+    lines.push('  ),');
+    lines.push(`  $font-family: ('${c.fontFamily}', sans-serif),`);
+    lines.push(`  $font-size: ${c.fontSize}px,`);
+    lines.push(`  $line-height: ${c.lineHeight},`);
+    lines.push(`  $radius: ${c.radius}px,`);
+    lines.push(`  $density: '${c.density}',            // 'compact' | 'normal' | 'comfortable'`);
+    lines.push(`  $shadow: '${c.shadow}',`);
+    lines.push(`  $focus-ring: '${c.focusRing}',`);
+    lines.push(`  $transition: ${c.transition}ms,`);
+    lines.push(`  $ripple: ${c.ripple},`);
+    lines.push(`  $dark-mode: '${c.darkMode}',           // 'none' | 'class' | 'media'`);
+    const comps = (WT.diff(c).components) || {};
+    const ids = Object.keys(comps);
+    if (ids.length) {
+      lines.push('  $components: (');
+      ids.forEach((id) => {
+        const parts = Object.keys(comps[id]).map((k) => {
+          const spec = WT.COMPONENTS.find((s) => s.id === id && s.key === k);
+          return `${kebab(k)}: ${cssValue(spec, comps[id][k])}`;
+        });
+        lines.push(`    ${id}: (${parts.join(', ')}),`);
+      });
+      lines.push('  ),');
+    } else {
+      lines.push('  $components: (),                // ยังไม่มีค่าที่ต่างจาก preset');
+    }
+    lines.push(');');
+    return lines.join('\n') + '\n';
+  }
+
+  // ---------- CSS ----------
+  function block(map, indent) {
+    return Object.keys(map).map((k) => `${indent}--wt-${k}: ${map[k]};`).join('\n');
+  }
+  function toCSS(c) {
+    const t = WT.computeTokens(c);
+    const out = [];
+    out.push('/* ─────────────────────────────────────────────────────────────');
+    out.push('   WiraTheme · wiratheme.theme.css');
+    out.push(`   สร้างโดย WiraTheme Designer ${VERSION} · ${stamp()}`);
+    out.push('   วิธีใช้: เพิ่มไฟล์นี้ใน angular.json → projects.<app>.architect.build.options.styles');
+    out.push('   ───────────────────────────────────────────────────────────── */');
+    out.push('/* ' + configLine(c) + ' */');
+    out.push('');
+    out.push('@layer wiratheme.tokens, wiratheme.components, wiratheme.overrides;');
+    out.push('');
+    out.push('@layer wiratheme.tokens {');
+    out.push('  :root {');
+    out.push('    --wt-theme-source: css;');
+    out.push(block(t.light, '    '));
+    out.push('  }');
+    if (c.darkMode === 'class') {
+      out.push('');
+      out.push('  :root.wt-dark {');
+      out.push(block(t.dark, '    '));
+      out.push('  }');
+    } else if (c.darkMode === 'media') {
+      out.push('');
+      out.push('  @media (prefers-color-scheme: dark) {');
+      out.push('    :root {');
+      out.push(block(t.dark, '      '));
+      out.push('    }');
+      out.push('  }');
+    }
+    out.push('}');
+    return out.join('\n') + '\n';
+  }
+
+  // ---------- TypeScript ----------
+  function tsBody(c, indent) {
+    const d = WT.diff(c);
+    const sem = [];
+    if (d.primaryShades) {
+      const P = d.primaryShades;
+      sem.push(`primary: { ${WT.SHADES.map((s) => `${s}: '${P[s]}'`).join(', ')} },`);
+    } else if (d.primary) sem.push(`primary: palette('${d.primary}'),`);
+    if (d.surface) sem.push(`surface: '{${d.surface}}',`);
+    if (d.semantic) Object.keys(d.semantic).forEach((k) => sem.push(`${k}: palette('${d.semantic[k]}'),`));
+    if (d.fontFamily) sem.push(`fontFamily: "'${d.fontFamily}', sans-serif",`);
+    if (d.fontSize !== undefined) sem.push(`fontSize: '${d.fontSize}px',`);
+    if (d.lineHeight !== undefined) sem.push(`lineHeight: '${d.lineHeight}',`);
+    if (d.radius !== undefined) sem.push(`radius: '${d.radius}px',`);
+    if (d.density) sem.push(`density: '${d.density}',`);
+    if (d.shadow) sem.push(`shadow: '${d.shadow}',`);
+    if (d.focusRing) sem.push(`focusRing: '${d.focusRing}',`);
+    if (d.transition !== undefined) sem.push(`transition: '${d.transition}ms',`);
+
+    const lines = [];
+    const i1 = indent, i2 = indent + '  ', i3 = indent + '    ';
+    if (sem.length) {
+      lines.push(`${i1}semantic: {`);
+      sem.forEach((s) => lines.push(i2 + s));
+      lines.push(`${i1}},`);
+    }
+    if (d.components) {
+      lines.push(`${i1}components: {`);
+      Object.keys(d.components).forEach((id) => {
+        const parts = Object.keys(d.components[id]).map((k) => {
+          const spec = WT.COMPONENTS.find((s) => s.id === id && s.key === k);
+          return `${k}: ${tsValue(spec, d.components[id][k])}`;
+        });
+        lines.push(`${i2}${id}: { ${parts.join(', ')} },`);
+      });
+      lines.push(`${i1}},`);
+    }
+    if (!lines.length) lines.push(`${i1}// ยังไม่มีค่าที่ต่างจาก preset ${PRESET_CLASS[c.preset]}`);
+    void i3;
+    return lines.join('\n');
+  }
+
+  function usesPalette(c) {
+    const d = WT.diff(c);
+    return Boolean((d.primary && !d.primaryShades) || d.semantic);
+  }
+
+  function toTSOverrides(c) {
+    const imp = usesPalette(c) ? 'defineOverrides, palette' : 'defineOverrides';
+    return [
+      '// WiraTheme · wiratheme.overrides.ts',
+      `// สร้างโดย WiraTheme Designer ${VERSION} · ${stamp()}`,
+      '// ใช้คู่กับไฟล์ธีมหลัก (SCSS/CSS): ค่าในไฟล์นี้จะทับธีมหลักผ่าน @layer wiratheme.overrides',
+      '// ' + configLine(c),
+      '',
+      `import { ${imp} } from 'wiratheme/config';`,
+      '',
+      'export const wiraOverrides = defineOverrides({',
+      tsBody(c, '  '),
+      '});',
+      '',
+    ].join('\n');
+  }
+
+  function toTSPreset(c) {
+    const cls = PRESET_CLASS[c.preset];
+    const imp = usesPalette(c) ? 'definePreset, palette' : 'definePreset';
+    return [
+      '// WiraTheme · wiratheme.preset.ts',
+      `// สร้างโดย WiraTheme Designer ${VERSION} · ${stamp()}`,
+      '// ใช้แบบ TS อย่างเดียว ไม่ต้องมีไฟล์ธีม SCSS/CSS',
+      '// ' + configLine(c),
+      '',
+      `import { ${imp} } from 'wiratheme/config';`,
+      `import { ${cls} } from 'wiratheme/presets';`,
+      '',
+      `export const AppTheme = definePreset(${cls}, {`,
+      tsBody(c, '  '),
+      '});',
+      '',
+    ].join('\n');
+  }
+
+  // ---------- JSON ----------
+  function toJSON(c) {
+    const t = WT.computeTokens(c);
+    return JSON.stringify({ wiratheme: VERSION, createdAt: new Date().toISOString(), config: c, tokens: t }, null, 2) + '\n';
+  }
+
+  // ---------- install instructions ----------
+  const NG = { v1: { range: '15–17', tag: '1' }, v2: { range: '18–20', tag: '2' }, v3: { range: '21+', tag: '3' } };
+
+  function providerBlock(c, format, app) {
+    const opts = [];
+    if (format === 'ts-preset') opts.push('preset: AppTheme,');
+    if (format === 'ts-overrides') opts.push('overrides: wiraOverrides,');
+    opts.push(`darkMode: '${c.darkMode}',`);
+    opts.push(`ripple: ${c.ripple},`);
+    opts.push("locale: 'th',");
+    opts.push("calendar: 'buddhist',");
+    const imports = ["import { provideWiraTheme } from 'wiratheme/config';"];
+    const rel = app === 'module' ? '../theme' : '../theme';
+    if (format === 'ts-preset') imports.push(`import { AppTheme } from '${rel}/wiratheme.preset';`);
+    if (format === 'ts-overrides') imports.push(`import { wiraOverrides } from '${rel}/wiratheme.overrides';`);
+    const provider = ['provideWiraTheme({', ...opts.map((o) => '  ' + o), '})'];
+    if (app === 'module') {
+      return [
+        '// src/app/app.module.ts',
+        ...imports,
+        '',
+        '@NgModule({',
+        '  // declarations, imports, bootstrap เหมือนเดิม',
+        '  providers: [',
+        ...provider.map((l) => '    ' + l + (l === '})' ? ',' : '')),
+        '  ],',
+        '})',
+        'export class AppModule {}',
+      ].join('\n');
+    }
+    return [
+      '// src/app/app.config.ts',
+      ...imports,
+      '',
+      'export const appConfig: ApplicationConfig = {',
+      '  providers: [',
+      ...provider.map((l) => '    ' + l + (l === '})' ? ',' : '')),
+      '  ],',
+      '};',
+    ].join('\n');
+  }
+
+  // Returns [{title, code}] steps for the chosen output.
+  function installSteps(c, format, ng, app) {
+    const v = NG[ng];
+    const steps = [{
+      title: { th: `ติดตั้งแพ็กเกจ (Angular ${v.range} → wiratheme v${v.tag})`, en: `Install the package (Angular ${v.range} → wiratheme v${v.tag})` },
+      code: `ng add wiratheme --defaults\n# หรือ / or\nnpm i wiratheme@${v.tag}`,
+    }];
+    if (format === 'scss') {
+      steps.push({
+        title: { th: 'วางไฟล์ไว้ที่ src/theme/wiratheme.theme.scss แล้ว import ใน styles.scss', en: 'Save as src/theme/wiratheme.theme.scss and import it in styles.scss' },
+        code: "// src/styles.scss  (บรรทัดแรก / first line)\n@use 'theme/wiratheme.theme';",
+      });
+    } else if (format === 'css') {
+      steps.push({
+        title: { th: 'วางไฟล์ไว้ที่ src/theme/wiratheme.theme.css แล้วเพิ่มใน angular.json', en: 'Save as src/theme/wiratheme.theme.css and add it to angular.json' },
+        code: '// angular.json → projects.<app>.architect.build.options\n"styles": [\n  "src/theme/wiratheme.theme.css",\n  "src/styles.css"\n]',
+      });
+    } else if (format === 'ts-overrides') {
+      steps.push({
+        title: { th: 'วางไฟล์ไว้ที่ src/theme/wiratheme.overrides.ts (ใช้คู่กับไฟล์ธีม SCSS/CSS)', en: 'Save as src/theme/wiratheme.overrides.ts (used on top of a SCSS/CSS theme file)' },
+        code: "// ธีมหลักยังมาจาก SCSS/CSS เช่น\n@use 'theme/wiratheme.theme';",
+      });
+    } else if (format === 'ts-preset') {
+      steps.push({
+        title: { th: 'วางไฟล์ไว้ที่ src/theme/wiratheme.preset.ts (ไม่ต้องมีไฟล์ SCSS/CSS)', en: 'Save as src/theme/wiratheme.preset.ts (no SCSS/CSS theme file needed)' },
+        code: '// ไม่ต้อง import ไฟล์ธีมใน styles / no stylesheet import needed',
+      });
+    } else if (format === 'json') {
+      steps.push({
+        title: { th: 'เก็บไฟล์ไว้ใน repo เพื่อเปิดใน Designer อีกครั้ง', en: 'Keep it in the repo to reopen in the Designer later' },
+        code: 'src/theme/wiratheme.theme.json',
+      });
+      return steps;
+    }
+    steps.push({
+      title: { th: app === 'module' ? 'ตั้งค่า provider ใน AppModule' : 'ตั้งค่า provider ใน app.config.ts', en: app === 'module' ? 'Register the provider in AppModule' : 'Register the provider in app.config.ts' },
+      code: providerBlock(c, format, app),
+    });
+    return steps;
+  }
+
+  function readme(c, ng, app) {
+    const v = NG[ng];
+    const sec = (fmt, name) => {
+      const steps = installSteps(c, fmt, ng, app);
+      return [`## ${name}`, '', ...steps.map((s, i) => `${i + 1}. ${s.title.th}\n\n\`\`\`\n${s.code}\n\`\`\`\n`)].join('\n');
+    };
+    return [
+      '# WiraTheme theme pack',
+      '',
+      `สร้างโดย WiraTheme Designer ${VERSION} · ${stamp()}`,
+      `Preset: ${PRESET_CLASS[c.preset]} · สีหลัก ${c.primary} · ฟอนต์ ${c.fontFamily} · Angular ${v.range} (wiratheme v${v.tag}) · ${app === 'module' ? 'NgModule' : 'Standalone'}`,
+      '',
+      'เลือกใช้ **แบบใดแบบหนึ่ง**: SCSS หรือ CSS เป็นธีมหลัก (จะใช้ overrides.ts ทับเพิ่มก็ได้) หรือ preset.ts อย่างเดียว',
+      'ไฟล์ทุกไฟล์มีบรรทัด `wiratheme-config` จึงเปิดกลับใน Designer ได้ (ปุ่ม Import)',
+      '',
+      sec('scss', 'แบบ SCSS'),
+      sec('css', 'แบบ CSS'),
+      sec('ts-overrides', 'แบบ TS overrides (ทับธีมหลัก)'),
+      sec('ts-preset', 'แบบ TS preset (TS อย่างเดียว)'),
+    ].join('\n');
+  }
+
+  // ---------- import ----------
+  function parseImport(text) {
+    const src = String(text || '').trim();
+    if (!src) throw new Error('empty');
+    try {
+      const obj = JSON.parse(src);
+      if (obj && obj.config) return WT.normalize(obj.config);
+      if (obj && obj.preset) return WT.normalize(obj);
+    } catch (e) { /* not plain JSON, look for the embedded line */ }
+    const m = src.match(/wiratheme-config\s+(\{.*\})/);
+    if (!m) throw new Error('no-config');
+    return WT.normalize(JSON.parse(m[1]));
+  }
+
+  Object.assign(WT, {
+    VERSION, PRESET_CLASS, NG, toSCSS, toCSS, toTSOverrides, toTSPreset, toJSON, installSteps, readme, parseImport,
+  });
+})(window.WT);

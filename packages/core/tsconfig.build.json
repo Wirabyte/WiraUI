@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist/esm",
+    "declarationDir": "dist/types",
+    "rootDir": "src",
+    "noPropertyAccessFromIndexSignature": true
+  },
+  "include": ["src"]
+}
