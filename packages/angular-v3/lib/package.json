@@ -1,0 +1,26 @@
+{
+  "name": "wiratheme",
+  "version": "3.0.0-alpha.0",
+  "description": "WiraTheme UI components for Angular 21+: PrimeNG-style API, Thai-first, themable with SCSS, CSS or TypeScript.",
+  "license": "UNLICENSED",
+  "keywords": ["angular", "ui", "components", "theme", "design-tokens", "thai"],
+  "peerDependencies": {
+    "@angular/common": ">=21.0.0 <22.0.0",
+    "@angular/core": ">=21.0.0 <22.0.0",
+    "rxjs": "^7.4.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "sideEffects": false,
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "ng-update": {
+    "migrations": "./schematics/migration.json"
+  }
+}

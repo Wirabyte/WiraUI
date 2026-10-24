@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist",
+  "lib": {
+    "entryFile": "public-api.ts"
+  },
+  "assets": [
+    { "glob": "**/*.scss", "input": "theme", "output": "theme" },
+    { "glob": "**/*.css", "input": "themes", "output": "themes" },
+    { "glob": "**/*", "input": "schematics", "output": "schematics" }
+  ],
+  "allowedNonPeerDependencies": []
+}

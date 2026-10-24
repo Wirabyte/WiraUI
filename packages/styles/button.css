@@ -1,0 +1,185 @@
+/* wt-button. Shared by wiratheme v1, v2 and v3: every version renders the same DOM and classes. */
+@layer wiratheme.components {
+  wt-button {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  wt-button.wt-button-fluid {
+    display: flex;
+  }
+
+  .wt-btn {
+    --_bg: var(--wt-primary-color);
+    --_fg: var(--wt-primary-contrast);
+    --_bd: var(--wt-primary-color);
+    --_hover: var(--wt-primary-hover);
+    --_active: var(--wt-primary-active);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin: 0;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    font-weight: var(--wt-button-font-weight);
+    line-height: var(--wt-line-height);
+    padding: var(--wt-button-padding-y) var(--wt-button-padding-x);
+    border-radius: var(--wt-button-radius);
+    border: 1px solid var(--_bd);
+    background: var(--_bg);
+    color: var(--_fg);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    text-decoration: none;
+    transition:
+      background-color var(--wt-transition),
+      border-color var(--wt-transition),
+      color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-btn:not(:disabled):hover {
+    background: var(--_hover);
+    border-color: var(--_hover);
+  }
+  .wt-btn:not(:disabled):active {
+    background: var(--_active);
+    border-color: var(--_active);
+  }
+  .wt-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--wt-focus-ring);
+  }
+  .wt-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .wt-button-fluid .wt-btn {
+    width: 100%;
+  }
+
+  /* severities */
+  .wt-btn-secondary {
+    --_bg: var(--wt-surface-100);
+    --_fg: var(--wt-text);
+    --_bd: var(--wt-surface-100);
+    --_hover: var(--wt-surface-200);
+    --_active: var(--wt-surface-300);
+  }
+  :root.wt-dark .wt-btn-secondary {
+    --_bg: var(--wt-surface-800);
+    --_bd: var(--wt-surface-800);
+    --_hover: var(--wt-surface-700);
+    --_active: var(--wt-surface-600);
+  }
+  .wt-btn-success { --_bg: var(--wt-success-color); --_bd: var(--wt-success-color); --_fg: var(--wt-success-contrast); --_hover: var(--wt-success-text); --_active: var(--wt-success-text); }
+  .wt-btn-info { --_bg: var(--wt-info-color); --_bd: var(--wt-info-color); --_fg: var(--wt-info-contrast); --_hover: var(--wt-info-text); --_active: var(--wt-info-text); }
+  .wt-btn-warn { --_bg: var(--wt-warn-color); --_bd: var(--wt-warn-color); --_fg: var(--wt-warn-contrast); --_hover: var(--wt-warn-text); --_active: var(--wt-warn-text); }
+  .wt-btn-danger { --_bg: var(--wt-danger-color); --_bd: var(--wt-danger-color); --_fg: var(--wt-danger-contrast); --_hover: var(--wt-danger-text); --_active: var(--wt-danger-text); }
+  .wt-btn-help { --_bg: var(--wt-help-color); --_bd: var(--wt-help-color); --_fg: var(--wt-help-contrast); --_hover: var(--wt-help-text); --_active: var(--wt-help-text); }
+  .wt-btn-contrast { --_bg: var(--wt-text); --_bd: var(--wt-text); --_fg: var(--wt-card-bg); --_hover: var(--wt-text-muted); --_active: var(--wt-text-muted); }
+
+  /* variants */
+  .wt-btn-outlined,
+  .wt-btn-text {
+    color: var(--_bg);
+    background: transparent;
+  }
+  .wt-btn-text {
+    border-color: transparent;
+  }
+  .wt-btn-outlined:not(:disabled):hover,
+  .wt-btn-text:not(:disabled):hover,
+  .wt-btn-outlined:not(:disabled):active,
+  .wt-btn-text:not(:disabled):active {
+    background: color-mix(in srgb, var(--_bg) 10%, transparent);
+    border-color: var(--_bd);
+  }
+  .wt-btn-text:not(:disabled):hover,
+  .wt-btn-text:not(:disabled):active {
+    border-color: transparent;
+  }
+  .wt-btn-secondary.wt-btn-outlined,
+  .wt-btn-secondary.wt-btn-text {
+    color: var(--wt-text);
+  }
+  .wt-btn-secondary.wt-btn-outlined {
+    border-color: var(--wt-field-border);
+  }
+  .wt-btn-raised {
+    box-shadow: var(--wt-shadow-md);
+  }
+
+  /* sizes and shapes */
+  .wt-btn-sm {
+    font-size: calc(var(--wt-font-size) * 0.875);
+    padding: calc(var(--wt-button-padding-y) * 0.6) calc(var(--wt-button-padding-x) * 0.7);
+  }
+  .wt-btn-lg {
+    font-size: calc(var(--wt-font-size) * 1.125);
+    padding: calc(var(--wt-button-padding-y) * 1.3) calc(var(--wt-button-padding-x) * 1.3);
+  }
+  .wt-btn-rounded {
+    border-radius: var(--wt-radius-full);
+  }
+  .wt-btn-icon-only {
+    padding: var(--wt-button-padding-y);
+    aspect-ratio: 1;
+  }
+
+  /* parts */
+  .wt-btn-icon {
+    line-height: 1;
+  }
+  .wt-btn-spinner {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    animation: wt-btn-spin 0.8s linear infinite;
+  }
+  .wt-btn-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.4em;
+    height: 1.4em;
+    padding: 0 0.35em;
+    border-radius: var(--wt-radius-full);
+    background: var(--_fg);
+    color: var(--_bg);
+    font-size: 0.75em;
+    font-weight: 700;
+  }
+  .wt-ripple-ink {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.28;
+    transform: scale(0);
+    animation: wt-ripple 560ms ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes wt-btn-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  @keyframes wt-ripple {
+    to {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-btn,
+    .wt-btn-spinner,
+    .wt-ripple-ink {
+      transition: none;
+      animation-duration: 0.01ms;
+    }
+  }
+}

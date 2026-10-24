@@ -1,0 +1,16 @@
+<button
+  [attr.type]="type"
+  [class]="classes"
+  [disabled]="disabled || busy"
+  [attr.aria-busy]="busy || null"
+  [attr.aria-label]="ariaLabel || null"
+  (click)="handleClick($event)"
+  (pointerdown)="handlePointerDown($event)"
+>
+  <span *ngIf="busy" class="wt-btn-spinner" aria-hidden="true"></span>
+  <span *ngIf="showIcon && iconPos === 'left'" [class]="'wt-btn-icon ' + icon" aria-hidden="true"></span>
+  <span *ngIf="label" class="wt-btn-label">{{ label }}</span>
+  <ng-content></ng-content>
+  <span *ngIf="showIcon && iconPos === 'right'" [class]="'wt-btn-icon ' + icon" aria-hidden="true"></span>
+  <span *ngIf="hasBadge" class="wt-btn-badge">{{ badge }}</span>
+</button>
