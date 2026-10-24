@@ -7,12 +7,16 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "pnpm -r --filter ./packages/** run build",
-    "build:core": "pnpm --filter @wiratheme/core run build",
-    "build:themes": "pnpm --filter @wiratheme/themes run build",
-    "build:ng": "pnpm --filter \"./packages/angular-v*\" run build",
-    "test": "pnpm -r run test",
-    "sync": "node tools/sync-sources.mjs",
+    "build": "pnpm build:core && pnpm build:themes && pnpm build:schematics && pnpm build:ng",
+    "build:core": "pnpm --filter @wiratheme/core build",
+    "build:themes": "pnpm --filter @wiratheme/themes build",
+    "build:schematics": "pnpm --filter @wiratheme/schematics build",
+    "build:ng": "pnpm --filter @wiratheme-build/angular-v1 build && pnpm --filter @wiratheme-build/angular-v2 build && pnpm --filter @wiratheme-build/angular-v3 build",
+    "pack:all": "pnpm build && pnpm --filter \"./packages/angular-v*\" run pack",
+    "test": "pnpm --filter @wiratheme/core test && pnpm --filter @wiratheme/themes test && pnpm --filter @wiratheme/schematics test",
+    "playgrounds": "node tools/setup-playgrounds.mjs",
+    "docs": "node tools/build-docs-packages.mjs && cd apps/docs && npx ng build",
+    "e2e": "pnpm --filter @wiratheme/e2e test",
     "format": "prettier --write ."
   },
   "devDependencies": {

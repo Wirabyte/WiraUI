@@ -75,12 +75,37 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: New Angular ${{ matrix.angular }} app
         run: npx -y @angular/cli@${{ matrix.angular }} new app --defaults --skip-git --skip-tests --routing=false ${{ matrix.flags }}
+      # Install the packed tarball first: Angular CLI 21 cannot `ng add` a file: spec directly.
       - name: ng add wiratheme@${{ matrix.wt }} from the packed tarball
         working-directory: app
-        run: npx ng add "$(ls ../packs/wiratheme-${{ matrix.wt }}.*.tgz)" --defaults --skip-confirmation
+        run: |
+          npm install --no-audit --no-fund "$(ls ../packs/wiratheme-${{ matrix.wt }}.*.tgz)"
+          npx ng add wiratheme --defaults --skip-confirmation
       - name: Build
         working-directory: app
         run: npx ng build
+
+  e2e:
+    name: Playwright (playgrounds v1–v3 + docs site)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build and pack wiratheme v1–v3
+        run: pnpm pack:all
+      - name: npm ci in the apps
+        run: for app in playground-v1 playground-v2 playground-v3 docs; do (cd apps/$app && npm ci --no-audit --no-fund); done
+      - name: ng add + build the playgrounds
+        run: pnpm playgrounds
+      - name: Build the docs site (v1, v2, v3 lazy-loaded on Angular 21)
+        run: pnpm docs
+      - run: pnpm --filter @wiratheme/e2e exec playwright install --with-deps chromium
+      - run: pnpm e2e
 
   version-lock:
     name: wiratheme@1 must not install on Angular 18

@@ -1,0 +1,43 @@
+// ─────────────────────────────────────────────────────────────
+// WiraTheme · wiratheme.theme.scss
+// สร้างโดย ng add wiratheme · 24/10/2569 15:56
+// วิธีใช้: ใส่ @use 'theme/wiratheme.theme'; เป็นบรรทัดแรกของ src/styles.scss
+// ─────────────────────────────────────────────────────────────
+// wiratheme-config {"v":1,"preset":"wira","primary":"#00a86b","primaryShades":null,"surface":"slate","semantic":{"success":"#22c55e","info":"#0ea5e9","warn":"#f59e0b","danger":"#ef4444","help":"#a855f7"},"fontFamily":"Kanit","fontSize":14,"lineHeight":1.6,"radius":6,"density":"normal","shadow":"subtle","ripple":false,"focusRing":"ring","transition":150,"darkMode":"class","material":"solid","components":{}}
+
+@use 'wiratheme/theme' with (
+  $preset: 'wira',
+  $primary: (                 // สร้างจาก #00a86b
+    50: #ebf8f3,
+    100: #cceee1,
+    200: #9edec7,
+    300: #6bcda9,
+    400: #33b989,
+    500: #00a86b,
+    600: #008f5b,
+    700: #00764b,
+    800: #005c3b,
+    900: #00432b,
+    950: #002a1b,
+  ),
+  $surface: 'slate',
+  $semantic: (
+    success: #22c55e,
+    info: #0ea5e9,
+    warn: #f59e0b,
+    danger: #ef4444,
+    help: #a855f7,
+  ),
+  $font-family: ('Kanit', sans-serif),
+  $font-size: 14px,
+  $line-height: 1.6,
+  $radius: 6px,
+  $density: 'normal',            // 'compact' | 'normal' | 'comfortable'
+  $shadow: 'subtle',
+  $focus-ring: 'ring',
+  $transition: 150ms,
+  $ripple: false,
+  $dark-mode: 'class',           // 'none' | 'class' | 'media'
+  $material: 'solid',
+  $components: (),                // ยังไม่มีค่าที่ต่างจาก preset
+);

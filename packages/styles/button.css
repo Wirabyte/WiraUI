@@ -6,6 +6,7 @@
   }
   wt-button.wt-button-fluid {
     display: flex;
+    width: 100%;
   }
 
   .wt-btn {

@@ -21,3 +21,4 @@ packages/angular-v*/dist-docs/
 test-results/
 playwright-report/
 e2e/.cache/
+e2e/tests/__screenshots__/

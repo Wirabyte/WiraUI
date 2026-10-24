@@ -1,0 +1,45 @@
+<main class="pg">
+  <h1>WiraTheme playground</h1>
+  <p class="pg-meta">wiratheme&#64;<span id="wt-major">{{ major }}</span> · Angular <span id="ng-version">{{ ngVersion }}</span></p>
+
+  <section id="gallery" class="pg-gallery">
+    <div class="pg-row">
+      <wt-button id="primary-btn" label="บันทึก"></wt-button>
+      <wt-button label="รอง" severity="secondary"></wt-button>
+      <wt-button label="สำเร็จ" severity="success"></wt-button>
+      <wt-button label="ข้อมูล" severity="info"></wt-button>
+      <wt-button label="เตือน" severity="warn"></wt-button>
+      <wt-button label="อันตราย" severity="danger"></wt-button>
+      <wt-button label="ช่วยเหลือ" severity="help"></wt-button>
+      <wt-button label="Contrast" severity="contrast"></wt-button>
+    </div>
+    <div class="pg-row">
+      <wt-button label="Outlined" outlined></wt-button>
+      <wt-button label="รอง" severity="secondary" outlined></wt-button>
+      <wt-button label="Text" text></wt-button>
+      <wt-button label="อันตราย" severity="danger" text></wt-button>
+      <wt-button label="Raised" raised></wt-button>
+      <wt-button label="Rounded" rounded></wt-button>
+    </div>
+    <div class="pg-row">
+      <wt-button label="เล็ก" size="small"></wt-button>
+      <wt-button label="ปกติ"></wt-button>
+      <wt-button label="ใหญ่" size="large"></wt-button>
+      <wt-button label="แจ้งเตือน" badge="8"></wt-button>
+      <wt-button label="ปิดใช้งาน" disabled></wt-button>
+      <wt-button label="กำลังโหลด" loading></wt-button>
+    </div>
+    <div class="pg-row">
+      <wt-button label="ภาษาไทย ปู่ ปี้ ญี่ ฎีกา" severity="secondary"></wt-button>
+      <wt-button label="ปุ่มเต็มความกว้าง" fluid></wt-button>
+    </div>
+  </section>
+
+  <section class="pg-row pg-controls">
+    <wt-button id="save" label="ส่งใบสมัคร" [action]="save"></wt-button>
+    <span>ส่งแล้ว <b id="saved-count">{{ saved }}</b> ครั้ง</span>
+    <wt-button id="use-blue" label="ใช้สีน้ำเงิน (TS override)" severity="secondary" (onClick)="useBlue()"></wt-button>
+    <wt-button id="toggle-dark" label="สลับโหมดมืด" severity="secondary" (onClick)="toggleDark()"></wt-button>
+    <wt-button id="app-css-wins" label="CSS ของแอปชนะ"></wt-button>
+  </section>
+</main>

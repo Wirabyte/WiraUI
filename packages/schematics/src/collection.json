@@ -3,7 +3,7 @@
   "schematics": {
     "ng-add": {
       "description": "เพิ่ม WiraTheme ลงในแอป Angular / Add WiraTheme to an Angular app",
-      "factory": "./ng-add/index#ngAdd",
+      "factory": "./ng-add/index.cjs#ngAdd",
       "schema": "./ng-add/schema.json",
       "aliases": ["install"]
     }

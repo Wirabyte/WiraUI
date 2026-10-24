@@ -19,10 +19,7 @@
     "@angular/router": "^21.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.16.0",
-    "wiratheme": "file:vendor/wiratheme-3.0.0-alpha.0.tgz",
-    "wiratheme-v1": "file:vendor/wiratheme-v1-1.0.0-alpha.0.tgz",
-    "wiratheme-v2": "file:vendor/wiratheme-v2-2.0.0-alpha.0.tgz"
+    "zone.js": "~0.16.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.28",

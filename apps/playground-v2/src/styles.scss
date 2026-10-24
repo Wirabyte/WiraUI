@@ -1,1 +1,46 @@
+@use 'theme/wiratheme.theme';
 /* You can add global styles to this file, and also import other style files */
+
+/* Playground page layout. Unlayered on purpose: it must beat every WiraTheme layer (see #app-css-wins). */
+html,
+body {
+  margin: 0;
+  background: var(--wt-ground);
+  color: var(--wt-text);
+  font-family: var(--wt-font-family);
+  font-size: var(--wt-font-size);
+  line-height: var(--wt-line-height);
+}
+.pg {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pg h1 {
+  margin: 0;
+  font-size: 1.4em;
+}
+.pg-meta {
+  margin: 0;
+  color: var(--wt-text-muted);
+}
+.pg-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: var(--wt-card-bg);
+  border: 1px solid var(--wt-border);
+  border-radius: var(--wt-radius-lg);
+}
+.pg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+#app-css-wins .wt-btn {
+  background: #111111;
+  border-color: #111111;
+}

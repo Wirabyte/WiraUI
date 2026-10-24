@@ -2,8 +2,8 @@
 // and builds it. Usage: node tools/setup-playgrounds.mjs [v1 v2 v3]
 // Needs packages/angular-<v>/wiratheme-*.tgz (pnpm build:ng, then `pnpm --filter … pack`).
 import { execSync } from 'node:child_process';
-import { copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,8 +22,17 @@ for (const v of versions) {
   if (!tgz) throw new Error(`${v}: no packed tarball in ${shell}; run its "pack" script first`);
   const src = join(app, 'src', 'app');
 
-  // ng add from the tarball: installs it, then runs the package's own ng-add schematic.
-  run(`npx ng add "${join(shell, tgz)}" --skip-confirmation --defaults --dark-mode=class --font=none`, app);
+  // Install the tarball, then `ng add wiratheme` finds it installed and runs its ng-add schematic.
+  // (Angular CLI 21 cannot `ng add` a file: spec directly; real users install by name from the registry.)
+  // WT_NPM lets you swap in a different npm, e.g. WT_NPM="npx -y npm@11" when the global npm is broken.
+  const tarball = relative(app, join(shell, tgz)).split(sep).join('/');
+  // Same version number on every local rebuild, so drop the old copy and the CLI's build cache
+  // (Angular 15's webpack cache keys on package versions and would keep serving stale wiratheme code).
+  rmSync(join(app, 'node_modules', 'wiratheme'), { recursive: true, force: true });
+  rmSync(join(app, '.angular', 'cache'), { recursive: true, force: true });
+  // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
+  run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball}`, app);
+  run('npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none', app);
 
   copyFileSync(join(fixtures, 'app.component.html'), join(src, 'app.component.html'));
   if (v === 'v3') {
