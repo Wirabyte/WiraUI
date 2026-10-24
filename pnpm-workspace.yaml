@@ -1,5 +1,5 @@
-# Playground apps under apps/playground-* are NOT workspace members on purpose:
-# they are plain npm projects so `ng add wiratheme` runs exactly as it would in a real app.
+# Everything under apps/ (playgrounds, docs) is a plain npm project on purpose: those apps
+# install packed wiratheme tarballs exactly as a real app would, not workspace links.
 packages:
   - 'packages/*'
-  - 'apps/docs'
+  - 'e2e'

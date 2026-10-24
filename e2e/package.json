@@ -1,0 +1,11 @@
+{
+  "name": "@wiratheme/e2e",
+  "private": true,
+  "description": "Playwright checks run against apps/playground-v1..v3 (built with ng build).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

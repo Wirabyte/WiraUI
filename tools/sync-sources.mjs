@@ -5,8 +5,10 @@
 //   <comp>/<comp>.css ← packages/styles
 //   theme/, themes/  ← packages/themes/dist        (SCSS module + prebuilt CSS)
 //   schematics/      ← packages/schematics/dist
-// Usage: node tools/sync-sources.mjs v1|v2|v3
-import { cpSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+// Usage: node tools/sync-sources.mjs v1|v2|v3 [--as <package-name>]
+//   --as renames the package and every 'wiratheme/…' import inside it (docs site only: it installs
+//   v1, v2 and v3 side by side, so v1's own imports must not resolve to v3).
+import { cpSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { peerRange, VERSIONS } from './versions.mjs';
@@ -22,12 +24,29 @@ const SOURCES = {
 
 const v = process.argv[2];
 const spec = VERSIONS[v];
-if (!spec) {
-  console.error('usage: node tools/sync-sources.mjs v1|v2|v3');
+const asIndex = process.argv.indexOf('--as');
+const alias = asIndex > 0 ? process.argv[asIndex + 1] : null;
+if (!spec || (asIndex > 0 && !alias)) {
+  console.error('usage: node tools/sync-sources.mjs v1|v2|v3 [--as <package-name>]');
   process.exit(1);
 }
-const lib = pkg(`angular-${v}`, 'lib');
+const lib = alias ? pkg(`angular-${v}`, 'lib-docs') : pkg(`angular-${v}`, 'lib');
 const warnings = [];
+
+if (alias) {
+  // lib-docs starts as a copy of lib's three committed files, renamed and pointed at dist-docs.
+  rmSync(lib, { recursive: true, force: true });
+  for (const f of KEEP) cpSync(pkg(`angular-${v}`, 'lib', f), join(lib, f));
+  const p = JSON.parse(readFileSync(join(lib, 'package.json'), 'utf8'));
+  p.name = alias;
+  delete p.schematics;
+  delete p['ng-add'];
+  delete p['ng-update'];
+  writeFileSync(join(lib, 'package.json'), JSON.stringify(p, null, 2) + '\n');
+  const ng = JSON.parse(readFileSync(join(lib, 'ng-package.json'), 'utf8'));
+  ng.dest = '../dist-docs';
+  writeFileSync(join(lib, 'ng-package.json'), JSON.stringify(ng, null, 2) + '\n');
+}
 
 // The committed lib/package.json must agree with tools/versions.mjs.
 const libPkg = JSON.parse(readFileSync(join(lib, 'package.json'), 'utf8'));
@@ -72,9 +91,25 @@ const copies = [
   [pkg('schematics', 'dist'), join(lib, 'schematics'), 'pnpm --filter @wiratheme/schematics build'],
 ];
 for (const [from, to, fix] of copies) {
+  if (alias && to.endsWith('schematics')) continue;
   if (existsSync(from)) cpSync(from, to, { recursive: true });
   else warnings.push(`${from.slice(root.length + 1)} missing (run: ${fix})`);
 }
 
-console.log(`synced wiratheme@${spec.major} (Angular ${range}) → ${lib.slice(root.length + 1)}`);
+if (alias) {
+  const rewrite = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const file = join(dir, entry);
+      if (statSync(file).isDirectory()) rewrite(file);
+      else if (file.endsWith('.ts')) {
+        const src = readFileSync(file, 'utf8');
+        const out = src.replace(/(['"])wiratheme\//g, `$1${alias}/`);
+        if (out !== src) writeFileSync(file, out);
+      }
+    }
+  };
+  rewrite(lib);
+}
+
+console.log(`synced ${alias || 'wiratheme'}@${spec.major} (Angular ${range}) → ${lib.slice(root.length + 1)}`);
 for (const w of warnings) console.warn('  warning: ' + w);

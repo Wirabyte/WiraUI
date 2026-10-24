@@ -14,6 +14,8 @@ packages/angular-v*/lib/*
 !packages/angular-v*/lib/ng-package.json
 !packages/angular-v*/lib/tsconfig.lib.json
 packages/schematics/src/core/
+packages/angular-v*/lib-docs/
+packages/angular-v*/dist-docs/
 
 # Playwright
 test-results/

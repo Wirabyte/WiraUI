@@ -1,0 +1,13 @@
+<header class="docs-bar">
+  <a routerLink="/" class="docs-brand">WiraTheme</a>
+  <span class="docs-spacer"></span>
+  <label for="docs-version">รุ่น</label>
+  <select id="docs-version" [value]="current" (change)="switchTo($any($event.target).value)">
+    @for (v of versions; track v.id) {
+      <option [value]="v.id">{{ v.label }}</option>
+    }
+  </select>
+</header>
+<main class="docs-main">
+  <router-outlet></router-outlet>
+</main>

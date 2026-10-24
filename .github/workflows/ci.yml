@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NG_CLI_ANALYTICS: 'false'
+
+jobs:
+  build:
+    name: Build and test (Node 24)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Core
+        run: |
+          pnpm --filter @wiratheme/core build
+          pnpm --filter @wiratheme/core test
+          node packages/core/node_modules/typescript-49/bin/tsc -p packages/core/tsconfig.ts49.json
+
+      - name: Themes (SCSS ↔ TypeScript parity on Sass 1.58 and current)
+        run: |
+          pnpm --filter @wiratheme/themes build
+          pnpm --filter @wiratheme/themes test
+
+      - name: Schematics
+        run: pnpm --filter @wiratheme/schematics test
+
+      - name: Build wiratheme v1 (Angular 15), v2 (18), v3 (21)
+        env:
+          CI: 'true'
+        run: |
+          for v in v1 v2 v3; do pnpm --filter @wiratheme-build/angular-$v build; done
+          for v in v1 v2 v3; do (cd packages/angular-$v/dist && npm pack --pack-destination ../../../packs); done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packs
+          path: packs/*.tgz
+
+  install:
+    name: ng add on Angular ${{ matrix.angular }} / Node ${{ matrix.node }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Lowest Node each wiratheme major promises (DESIGN.md §3)
+          - { wt: 1, angular: '15', node: '18', flags: '--style=scss' }
+          - { wt: 1, angular: '17', node: '18', flags: '--style=css --standalone=false' }
+          - { wt: 2, angular: '18', node: '18.19', flags: '--style=scss --standalone=false' }
+          - { wt: 2, angular: '20', node: '20.19', flags: '--style=scss' }
+          - { wt: 3, angular: '21', node: '20.19', flags: '--style=css --zoneless' }
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: packs
+          path: packs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: New Angular ${{ matrix.angular }} app
+        run: npx -y @angular/cli@${{ matrix.angular }} new app --defaults --skip-git --skip-tests --routing=false ${{ matrix.flags }}
+      - name: ng add wiratheme@${{ matrix.wt }} from the packed tarball
+        working-directory: app
+        run: npx ng add "$(ls ../packs/wiratheme-${{ matrix.wt }}.*.tgz)" --defaults --skip-confirmation
+      - name: Build
+        working-directory: app
+        run: npx ng build
+
+  version-lock:
+    name: wiratheme@1 must not install on Angular 18
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: packs
+          path: packs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npx -y @angular/cli@18 new app --defaults --skip-git --skip-tests --skip-install --routing=false --style=css
+      - name: npm install must fail with ERESOLVE
+        working-directory: app
+        run: |
+          npm install --no-audit --no-fund
+          if npm install "$(ls ../packs/wiratheme-1.*.tgz)" > install.log 2>&1; then
+            echo "wiratheme@1 installed on Angular 18, the peer range lock is broken"; exit 1
+          fi
+          grep -q ERESOLVE install.log

@@ -1,0 +1,51 @@
+/* Docs site chrome. The WiraTheme tokens come from wiratheme/themes/wira/wira.css (angular.json). */
+html,
+body {
+  margin: 0;
+  background: var(--wt-ground);
+  color: var(--wt-text);
+  font-family: var(--wt-font-family);
+  font-size: var(--wt-font-size);
+  line-height: var(--wt-line-height);
+}
+
+.demo-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.demo-page h1,
+.demo-page h2 {
+  margin: 0;
+}
+.demo-eyebrow {
+  margin: 0;
+  color: var(--wt-primary-color);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.demo-lead,
+.demo-host {
+  margin: 0;
+  color: var(--wt-text-muted);
+}
+.demo-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  background: var(--wt-card-bg);
+  border: 1px solid var(--wt-border);
+  border-radius: var(--wt-radius-lg);
+}
+.demo-code {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--wt-surface-900);
+  color: var(--wt-surface-50);
+  border-radius: var(--wt-radius-md);
+  font-size: 0.85em;
+  line-height: 1.6;
+}

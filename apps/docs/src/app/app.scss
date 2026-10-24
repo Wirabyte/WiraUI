@@ -1,0 +1,30 @@
+.docs-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--wt-border);
+  background: var(--wt-card-bg);
+}
+.docs-brand {
+  font-weight: 600;
+  font-size: 1.15em;
+  color: var(--wt-primary-color);
+  text-decoration: none;
+}
+.docs-spacer {
+  flex: 1;
+}
+select {
+  font: inherit;
+  color: var(--wt-text);
+  background: var(--wt-field-bg);
+  border: 1px solid var(--wt-field-border);
+  border-radius: var(--wt-radius-md);
+  padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
+}
+.docs-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
