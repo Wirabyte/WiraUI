@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtTabPanel, WtTabs } from './tabs.component';
+import { WtTab, WtTabList, WtTabPanel, WtTabPanels, WtTabs } from './tabs.component';
 
-/** For NgModule apps. Standalone apps can import `WtTabs` and `WtTabPanel` directly. */
+const ALL = [WtTabs, WtTabPanel, WtTabList, WtTab, WtTabPanels];
+
+/** For NgModule apps. Standalone apps can import `WtTabs`, `WtTabPanel` (and `WtTabList`, `WtTab`, `WtTabPanels`) directly. */
 @NgModule({
-  imports: [WtTabs, WtTabPanel],
-  exports: [WtTabs, WtTabPanel],
+  imports: ALL,
+  exports: ALL,
 })
 export class WtTabsModule {}

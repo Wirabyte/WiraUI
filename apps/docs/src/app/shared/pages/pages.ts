@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { DocsState } from '../../core/docs-state';
 import { DocsI18n } from '../../core/i18n';
+import { SampleText, sampleText } from '../../core/sample-text';
 import { NAV_PAGES } from '../../core/nav';
-import { UTILITY_TOPICS } from '../../data/utilities';
+import { UTILITY_TOPICS, UTILITY_WORDS } from '../../data/utilities';
 import { UtilsStylesheet } from '../utils-demo';
 import { DOCS_VERSION } from '../../core/version-theme';
 import { DOC_VERSIONS } from '../../core/versions';
@@ -20,6 +21,15 @@ abstract class DocsTextPage {
   protected readonly versions = DOC_VERSIONS;
   protected readonly s = S;
   protected readonly link = (path: string) => '/' + this.v.id + '/' + path;
+  /** English for the Thai in this page's code samples. */
+  protected get words(): SampleText {
+    return sampleText(S.GUIDE_WORDS);
+  }
+
+  /** A code sample (or a list of code tabs) in the site language; see core/sample-text.ts. */
+  protected local<T>(sample: T): T {
+    return this.en() ? this.words.local(sample) : sample;
+  }
 }
 
 @Component({
@@ -154,6 +164,10 @@ export class UtilitiesPage extends DocsTextPage {
   });
   protected readonly topic = computed(() => UTILITY_TOPICS[this.topicId()] || UTILITY_TOPICS['overview']);
   protected readonly topics = NAV_PAGES.filter((p) => p.path.startsWith('utilities/') && p.path !== 'utilities/overview');
+
+  protected override get words(): SampleText {
+    return sampleText(UTILITY_WORDS);
+  }
 
   constructor() {
     super();

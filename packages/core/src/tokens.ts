@@ -127,13 +127,13 @@ export function focusTokens(mode: FocusRing): ThemeTokens {
         : mode === 'bold'
           ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '2px' }
           : none;
-  // Fields show focus by turning their 1px border the primary colour, with no ring around them.
+  // Fields turn their border the primary colour; ring and outline add a soft halo that follows the field's radius.
   const field =
     mode === 'inset'
-        ? { ...none, shadow: 'inset 0 0 0 1px var(--wt-field-focus-border)' }
-        : mode === 'bold'
-          ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '-1px' }
-          : none;
+      ? { ...none, shadow: 'inset 0 0 0 1px var(--wt-field-focus-border)' }
+      : mode === 'bold'
+        ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '-1px' }
+        : { ...none, shadow: RING };
   return {
     light: {
       'control-focus-shadow': control.shadow,

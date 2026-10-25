@@ -30,6 +30,7 @@ const docs = join(root, 'apps', 'docs');
 const tarballs = readdirSync(vendor).map((f) => `./vendor/${f}`);
 for (const name of ['wiratheme', 'wiratheme-v1', 'wiratheme-v2']) rmSync(join(docs, 'node_modules', name), { recursive: true, force: true });
 rmSync(join(docs, '.angular', 'cache'), { recursive: true, force: true });
-run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarballs.join(' ')}`, docs);
+// chart.js is wiratheme/chart's optional peer; it goes in the same install (a second --no-save install would prune it).
+run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarballs.join(' ')} chart.js@^4.5.1`, docs);
 
 console.log('docs packages:', readdirSync(vendor).join(', '));

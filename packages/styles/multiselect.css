@@ -1,0 +1,73 @@
+/* wt-multiselect. Shared by wiratheme v1, v2 and v3. The field and the list come from wt-select's stylesheet and the
+   check boxes from wt-checkbox's (both loaded with it, including the check-all box's half state); this file adds the
+   chips and the header row. */
+@layer wiratheme.components {
+  wt-multiselect {
+    display: inline-flex;
+    vertical-align: middle;
+    width: var(--wt-select-width);
+    max-width: 100%;
+  }
+  wt-multiselect.wt-select-fluid {
+    display: flex;
+    width: 100%;
+  }
+  .wt-multiselect-chips .wt-multiselect-label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-top: calc(var(--wt-field-padding-y) - 0.125rem);
+    padding-bottom: calc(var(--wt-field-padding-y) - 0.125rem);
+  }
+  .wt-multiselect-chip {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 100%;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--wt-chip-radius);
+    background: var(--wt-chip-bg);
+    color: var(--wt-chip-color);
+    font-size: 0.875em;
+    line-height: 1.25;
+  }
+  .wt-multiselect-chip-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .wt-multiselect-chip-remove {
+    display: inline-grid;
+    place-items: center;
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .wt-multiselect-chip-remove:hover {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  .wt-multiselect-chip-remove svg {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  .wt-multiselect-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .wt-multiselect-header .wt-select-filter-wrap {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .wt-multiselect-toggle-all {
+    flex: none;
+  }
+  .wt-multiselect-check {
+    pointer-events: none;
+  }
+}

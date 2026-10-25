@@ -8,10 +8,10 @@
       <docs-demo [html]="code['basic']">
         <wt-iconfield id="d-iconfield">
           <wt-inputicon icon="pi pi-search"></wt-inputicon>
-          <input wtInputText placeholder="ค้นหา" aria-label="ค้นหา" />
+          <input wtInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
         </wt-iconfield>
         <wt-iconfield>
-          <input wtInputText placeholder="อีเมล" aria-label="อีเมล" />
+          <input wtInputText [placeholder]="tx('อีเมล')" [attr.aria-label]="tx('อีเมล')" />
           <wt-inputicon icon="pi pi-envelope"></wt-inputicon>
         </wt-iconfield>
       </docs-demo>

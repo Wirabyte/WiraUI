@@ -53,9 +53,9 @@
     </table>
   </div>
   @if (en()) {
-    <p>Each component page has a <b>Theming</b> tab listing the tokens it reads, with their live values.</p>
+    <p>Each component page has a <b>Styling</b> tab listing the tokens it reads, with their live values.</p>
   } @else {
-    <p>ดู token ที่แต่ละ component อ่านได้ในแท็บ <b>Theming</b> ของหน้า component นั้น (มีค่าจริงของธีมที่ใช้อยู่ให้ดูด้วย)</p>
+    <p>ดู token ที่แต่ละ component อ่านได้ในแท็บ <b>ปรับแต่ง</b> ของหน้า component นั้น (มีค่าจริงของธีมที่ใช้อยู่ให้ดูด้วย)</p>
   }
 </docs-section>
 
@@ -65,8 +65,8 @@
   } @else {
     <p>WiraTheme ประกาศลำดับ cascade layer ไว้บนสุดของ <code>&lt;head&gt;</code> ให้เอง ไม่ต้องสนลำดับการ import</p>
   }
-  <docs-code [code]="s.LAYER_ORDER" lang="css"></docs-code>
-  <docs-code [code]="s.LAYER_STACK" lang="text" [file]="en() ? 'Who wins' : 'ใครชนะ'"></docs-code>
+  <docs-code [code]="local(s.LAYER_ORDER)" lang="css"></docs-code>
+  <docs-code [code]="local(s.LAYER_STACK)" lang="text" [file]="en() ? 'Who wins' : 'ใครชนะ'"></docs-code>
   @if (en()) {
     <p>The main theme can still come from SCSS, TypeScript overrides always apply on top, and your app's CSS beats both without <code>!important</code>.</p>
   } @else {
@@ -79,7 +79,7 @@
     <a class="docs-next-card" [routerLink]="link('theming/scss')">
       <docs-icon name="code"></docs-icon>
       <b>SCSS</b>
-      <span><code>&#64;use 'wiratheme/theme' with (…)</code>{{ en() ? ', the format the Designer exports' : ' แบบไฟล์ที่ Designer export' }}</span>
+      <span><code>&#64;use 'wiratheme/theme' with (…)</code>{{ en() ? ', the format WiraTheme Studio exports' : ' แบบไฟล์ที่ สตูดิโอธีม export' }}</span>
     </a>
     <a class="docs-next-card" [routerLink]="link('theming/css')">
       <docs-icon name="layers"></docs-icon>
@@ -156,10 +156,10 @@
       (เว็บนี้เริ่มที่ <code>md</code>)
     </p>
   }
-  <docs-code [code]="s.SCALE" lang="ts"></docs-code>
+  <docs-code [code]="local(s.SCALE)" lang="ts"></docs-code>
 </docs-section>
 
 <docs-section id="runtime" [title]="{ th: 'เปลี่ยนธีมตอน runtime', en: 'Changing the theme at run time' }">
   <p>{{ en() ? "The theme button on this site calls the open version's WtThemeService directly." : 'ปุ่มปรับธีมด้านบนของเว็บนี้ใช้ WtThemeService ของรุ่นที่เปิดอยู่ตรง ๆ' }}</p>
-  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+  <docs-code [code]="local(s.TS_RUNTIME)" lang="ts"></docs-code>
 </docs-section>

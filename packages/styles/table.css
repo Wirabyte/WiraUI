@@ -1,0 +1,281 @@
+/* wt-table. Shared by wiratheme v1, v2 and v3. The rows are the app's own markup (header / body templates); these
+   rules style any <th> / <td> inside. Narrow screens scroll sideways (`responsiveLayout="scroll"`) or turn rows into
+   cards (`"stack"`, with `<span class="p-column-title">` labels in the cells). */
+@layer wiratheme.components {
+  wt-table,
+  wt-datatable {
+    display: block;
+    min-width: 0;
+  }
+  .wt-table {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: var(--wt-text);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+  }
+  .wt-table-flex {
+    height: 100%;
+  }
+  .wt-table-header {
+    padding: var(--wt-table-header-padding);
+    border: 1px solid var(--wt-table-border-color);
+    border-width: var(--wt-table-header-border-width);
+    background: var(--wt-table-header-bg);
+    color: var(--wt-text);
+    font-weight: var(--wt-table-header-weight);
+  }
+  .wt-table-footer {
+    padding: var(--wt-table-header-padding);
+    border: 1px solid var(--wt-table-border-color);
+    border-width: 0 0 1px;
+    background: var(--wt-table-header-bg);
+    font-weight: var(--wt-table-header-weight);
+  }
+  .wt-table-wrapper {
+    position: relative;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .wt-table-scrollable .wt-table-wrapper {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .wt-table-flex .wt-table-wrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .wt-table-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  /* ---------- cells ---------- */
+  .wt-table-thead > tr > th {
+    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
+    border: 1px solid var(--wt-table-border-color);
+    border-width: 0 0 1px;
+    background: var(--wt-table-head-bg);
+    color: var(--wt-table-head-color);
+    font-weight: var(--wt-table-head-weight);
+    text-align: start;
+    vertical-align: middle;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-table-scrollable .wt-table-thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .wt-table-tbody > tr {
+    height: var(--wt-table-row-height);
+    background: var(--wt-table-row-bg);
+    color: var(--wt-text);
+    transition: background-color var(--wt-transition);
+  }
+  .wt-table-tbody > tr > td {
+    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
+    border: 1px solid var(--wt-table-border-color);
+    border-width: 0 0 1px;
+    text-align: start;
+    vertical-align: middle;
+  }
+  .wt-table-tfoot > tr > td,
+  .wt-table-tfoot > tr > th {
+    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
+    border: 1px solid var(--wt-table-border-color);
+    border-width: 0 0 1px;
+    background: var(--wt-table-head-bg);
+    color: var(--wt-table-head-color);
+    font-weight: var(--wt-table-head-weight);
+  }
+  /* Striped: per table (stripedRows, p-datatable-striped), or for every table from the theme (table-stripe-bg). */
+  .wt-table-tbody > tr:nth-child(even) {
+    background: var(--wt-table-stripe-bg, transparent);
+  }
+  .wt-table-striped .wt-table-tbody > tr:nth-child(even) {
+    background: var(--wt-table-row-striped-bg);
+  }
+  .wt-table-hoverable .wt-table-tbody > tr:not(.wt-table-empty-row):hover {
+    background: var(--wt-table-row-hover-bg);
+  }
+  .wt-table-tbody > tr.wt-row-selected,
+  .wt-table-hoverable .wt-table-tbody > tr.wt-row-selected:hover {
+    background: var(--wt-table-row-selected-bg);
+    color: var(--wt-table-row-selected-color);
+  }
+  .wt-selectable-row {
+    cursor: pointer;
+  }
+  .wt-selectable-row:focus-visible {
+    outline: 2px solid var(--wt-primary-color);
+    outline-offset: -2px;
+  }
+  .wt-table-gridlines .wt-table-header {
+    border-width: 1px;
+  }
+  .wt-table-gridlines .wt-table-thead > tr > th,
+  .wt-table-gridlines .wt-table-tbody > tr > td,
+  .wt-table-gridlines .wt-table-tfoot > tr > td,
+  .wt-table-gridlines .wt-table-tfoot > tr > th {
+    border-width: 0 1px 1px 0;
+  }
+  .wt-table-gridlines .wt-table-thead > tr > th:first-child,
+  .wt-table-gridlines .wt-table-tbody > tr > td:first-child,
+  .wt-table-gridlines .wt-table-tfoot > tr > :first-child {
+    border-left-width: 1px;
+  }
+  .wt-table-gridlines .wt-table-thead > tr:first-child > th {
+    border-top-width: 1px;
+  }
+  .wt-table-sm .wt-table-thead > tr > th,
+  .wt-table-sm .wt-table-tbody > tr > td,
+  .wt-table-sm .wt-table-tfoot > tr > * {
+    padding: calc(var(--wt-table-cell-padding-y) * 0.5) calc(var(--wt-table-cell-padding-x) * 0.5);
+  }
+  .wt-table-lg .wt-table-thead > tr > th,
+  .wt-table-lg .wt-table-tbody > tr > td,
+  .wt-table-lg .wt-table-tfoot > tr > * {
+    padding: calc(var(--wt-table-cell-padding-y) * 1.25) calc(var(--wt-table-cell-padding-x) * 1.25);
+  }
+  .wt-table-empty {
+    color: var(--wt-text-muted);
+    text-align: center !important;
+  }
+
+  /* ---------- sorting ---------- */
+  .wt-sortable-column {
+    cursor: pointer;
+    user-select: none;
+  }
+  .wt-sortable-column:not(.wt-sorted):hover {
+    background: var(--wt-table-head-hover-bg);
+  }
+  .wt-sortable-column.wt-sorted {
+    background: var(--wt-table-sorted-bg);
+    color: var(--wt-table-sorted-color);
+  }
+  .wt-sortable-column:focus-visible {
+    outline: 2px solid var(--wt-primary-color);
+    outline-offset: -2px;
+  }
+  .wt-sorticon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    margin-left: 0.375rem;
+    vertical-align: middle;
+    color: var(--wt-text-muted);
+  }
+  .wt-sorticon-svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  .wt-sorticon-asc,
+  .wt-sorticon-desc {
+    color: var(--wt-table-sorted-color);
+  }
+  .wt-sorticon-asc .wt-sorticon-down,
+  .wt-sorticon-desc .wt-sorticon-up {
+    opacity: 0.25;
+  }
+  .wt-sorticon-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.25rem;
+    border-radius: 999px;
+    background: var(--wt-table-sorted-color);
+    color: var(--wt-primary-contrast);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .wt-sorticon-badge[hidden] {
+    display: none;
+  }
+
+  /* ---------- checkboxes ---------- */
+  .wt-table-checkbox {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  /* ---------- loading ---------- */
+  .wt-table-mask {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--wt-card-bg) 60%, transparent);
+  }
+  .wt-table-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid var(--wt-primary-color);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: wt-table-spin 0.8s linear infinite;
+  }
+  .wt-table-loading-icon {
+    font-size: 2rem;
+    color: var(--wt-primary-color);
+  }
+  @keyframes wt-table-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .wt-table-paginator .wt-paginator {
+    border-width: 0 0 1px;
+  }
+
+  /* ---------- stack layout ---------- */
+  .wt-table .p-column-title {
+    display: none;
+  }
+  .wt-table-stacked .wt-table-thead > tr > th,
+  .wt-table-stacked .wt-table-tfoot > tr > * {
+    display: none;
+  }
+  .wt-table-stacked .wt-table-tbody > tr {
+    display: block;
+    /* The row height token is for table rows; a card is as tall as its cells. */
+    height: auto;
+    border-bottom: 1px solid var(--wt-table-border-color);
+  }
+  .wt-table-stacked .wt-table-tbody > tr > td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: auto !important;
+    border: 0 !important;
+    text-align: end;
+  }
+  .wt-table-stacked .wt-table-tbody > tr > td > .p-column-title {
+    display: inline-block;
+    flex: none;
+    min-width: 40%;
+    color: var(--wt-text-muted);
+    font-weight: var(--wt-table-head-weight);
+    text-align: start;
+  }
+  .wt-table-stacked .wt-table-tbody > tr.wt-table-empty-row > td {
+    justify-content: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-table-spinner {
+      animation-duration: 2s;
+    }
+  }
+}

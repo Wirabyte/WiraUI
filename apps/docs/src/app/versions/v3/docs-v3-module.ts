@@ -2,6 +2,20 @@ import { inject, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { WtButtonModule } from 'wiratheme/button';
+import { WtSelectModule } from 'wiratheme/select';
+import { WtTableModule } from 'wiratheme/table';
+import { WtPaginatorModule } from 'wiratheme/paginator';
+import { WtMenubarModule } from 'wiratheme/menubar';
+import { WtPanelMenuModule } from 'wiratheme/panelmenu';
+import { WtStepsModule } from 'wiratheme/steps';
+import { WtChartModule } from 'wiratheme/chart';
+import { WtImageModule } from 'wiratheme/image';
+import { WtAutoCompleteModule } from 'wiratheme/autocomplete';
+import { WtMenuModule } from 'wiratheme/menu';
+import { WtTabMenuModule } from 'wiratheme/tabmenu';
+import { WtMultiSelectModule } from 'wiratheme/multiselect';
+import { WtInputMaskModule } from 'wiratheme/inputmask';
+import { WtTimelineModule } from 'wiratheme/timeline';
 import { WtMeterGroupModule } from 'wiratheme/metergroup';
 import { WtValidationModule, WtValidators } from 'wiratheme/validation';
 import { WtDialogModule } from 'wiratheme/dialog';
@@ -84,6 +98,20 @@ import {
   AnimatePageV3,
   MeterGroupPageV3,
   ValidationPageV3,
+  SelectPageV3,
+  TablePageV3,
+  PaginatorPageV3,
+  MenubarPageV3,
+  PanelMenuPageV3,
+  StepsPageV3,
+  ChartPageV3,
+  ImagePageV3,
+  AutoCompletePageV3,
+  MenuPageV3,
+  TabMenuPageV3,
+  MultiSelectPageV3,
+  InputMaskPageV3,
+  TimelinePageV3,
   TextareaPageV3,
   ToggleSwitchPageV3,
 } from './pages-v3';
@@ -131,6 +159,20 @@ import { THEME_V3 } from './theme-v3';
     AnimatePageV3,
     MeterGroupPageV3,
     ValidationPageV3,
+    SelectPageV3,
+    TablePageV3,
+    PaginatorPageV3,
+    MenubarPageV3,
+    PanelMenuPageV3,
+    StepsPageV3,
+    ChartPageV3,
+    ImagePageV3,
+    AutoCompletePageV3,
+    MenuPageV3,
+    TabMenuPageV3,
+    MultiSelectPageV3,
+    InputMaskPageV3,
+    TimelinePageV3,
   ],
   imports: [
     FormsModule,
@@ -176,6 +218,20 @@ import { THEME_V3 } from './theme-v3';
     WtAnimateModule,
     WtMeterGroupModule,
     WtValidationModule,
+    WtSelectModule,
+    WtTableModule,
+    WtPaginatorModule,
+    WtMenubarModule,
+    WtPanelMenuModule,
+    WtStepsModule,
+    WtChartModule,
+    WtImageModule,
+    WtAutoCompleteModule,
+    WtMenuModule,
+    WtTabMenuModule,
+    WtMultiSelectModule,
+    WtInputMaskModule,
+    WtTimelineModule,
     RouterModule.forChild(
       versionRoutes({
         button: ButtonPageV3,
@@ -218,6 +274,20 @@ import { THEME_V3 } from './theme-v3';
         animate: AnimatePageV3,
         metergroup: MeterGroupPageV3,
         validation: ValidationPageV3,
+        select: SelectPageV3,
+        table: TablePageV3,
+        paginator: PaginatorPageV3,
+        menubar: MenubarPageV3,
+        panelmenu: PanelMenuPageV3,
+        steps: StepsPageV3,
+        chart: ChartPageV3,
+        image: ImagePageV3,
+        autocomplete: AutoCompletePageV3,
+        menu: MenuPageV3,
+        tabmenu: TabMenuPageV3,
+        multiselect: MultiSelectPageV3,
+        inputmask: InputMaskPageV3,
+        timeline: TimelinePageV3,
       })
     ),
   ],

@@ -1,43 +1,116 @@
-// Code blocks (dark in both modes) and highlighter tokens. Long lines scroll inside the block.
+// Code blocks: a soft card with a small toolbar (file chip or language switch, copy) over a dark code pane.
+// One-liners (bare) are just the dark pane. Long lines scroll inside the pane.
 
 docs-code,
 .docs-code {
   position: relative;
   display: block;
   margin: 12px 0;
+}
+docs-code-tabs,
+.docs-code:not(.docs-code-bare, .docs-code-headless) {
+  display: block;
+  margin: 14px 0;
+  padding: 4px;
+  border: 1px solid var(--docs-border);
+  border-radius: 14px;
+  background: var(--docs-surface);
+  box-shadow: 0 1px 2px rgb(16 24 40 / 4%);
+}
+docs-code-tabs > .docs-code {
+  margin: 0;
+}
+.docs-code:not(.docs-code-bare) pre,
+.docs-code-bare {
   border: 1px solid var(--docs-code-border);
-  border-radius: var(--docs-radius);
+  border-radius: 10px;
   background: var(--docs-code-bg);
+}
+.docs-code-bare {
   overflow: hidden;
 }
-.docs-code-head {
+
+// The toolbar row: light, on the card itself.
+.docs-code-head,
+.docs-code-tablist {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   min-height: 40px;
-  padding: 0 4px 0 14px;
-  background: var(--docs-code-bar);
-  border-bottom: 1px solid var(--docs-code-border);
-  color: var(--docs-code-muted);
+  padding: 0 0 4px;
+  color: var(--docs-muted);
   font-size: 12px;
 }
 .docs-code-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   min-width: 0;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: var(--docs-ground);
+  color: var(--docs-text-2);
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.docs-code .docs-copy {
-  color: var(--docs-code-muted);
+.docs-code-file::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--docs-primary);
 }
-.docs-code .docs-copy:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--docs-code-text);
+.docs-code-head docs-copy,
+.docs-code-tablist docs-copy {
+  margin-left: auto;
 }
-.docs-code .docs-copy.done {
-  color: #86efac;
+
+// Language switch: a small segmented control.
+.docs-code-tabs-row {
+  display: flex;
+  gap: 2px;
+  min-width: 0;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--docs-ground);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.docs-code-tabs-row::-webkit-scrollbar {
+  display: none;
+}
+.docs-code-tabs-row button {
+  flex: none;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--docs-muted);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+.docs-code-tabs-row button:hover {
+  color: var(--docs-text);
+}
+.docs-code-tabs-row button.active {
+  background: var(--docs-overlay);
+  color: var(--docs-text);
+  box-shadow:
+    0 1px 2px rgb(16 24 40 / 10%),
+    0 0 0 1px var(--docs-border);
+}
+
 .docs-code pre {
   margin: 0;
   padding: 14px 16px;
@@ -71,72 +144,12 @@ docs-code,
   background: rgba(255, 255, 255, 0.08);
   color: var(--docs-code-text);
 }
+.docs-code-row .docs-copy.done {
+  color: #86efac;
+}
 .docs-code-row pre {
   flex: 1;
   min-width: 0;
-}
-
-.docs-code-tablist {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 4px 0 8px;
-  background: var(--docs-code-bar);
-  border: 1px solid var(--docs-code-border);
-  border-bottom: 1px solid var(--docs-code-border);
-  border-radius: var(--docs-radius) var(--docs-radius) 0 0;
-}
-.docs-code-tabs-row {
-  display: flex;
-  flex: 1;
-  gap: 2px;
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.docs-code-tabs-row::-webkit-scrollbar {
-  display: none;
-}
-.docs-code-tablist .docs-copy {
-  color: var(--docs-code-muted);
-}
-.docs-code-tablist .docs-copy:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--docs-code-text);
-}
-.docs-code-tablist .docs-copy.done {
-  color: #86efac;
-}
-.docs-code-tabs-row button {
-  min-height: 40px;
-  padding: 0 12px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  color: var(--docs-code-muted);
-  font-size: 12.5px;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.docs-code-tabs-row button:hover {
-  color: var(--docs-code-text);
-}
-.docs-code-tabs-row button.active {
-  color: #f8fafc;
-  border-bottom-color: var(--docs-primary);
-}
-.docs-code-tablist + .docs-code {
-  margin-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-docs-code-tabs {
-  display: block;
-  margin: 12px 0;
-}
-docs-code-tabs > .docs-code {
-  margin: 0;
 }
 
 @media (min-width: 768px) {

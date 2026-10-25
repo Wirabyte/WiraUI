@@ -1,0 +1,189 @@
+<div
+  #root
+  class="wt-select wt-multiselect p-multiselect p-component"
+  [ngClass]="styleClass || ''"
+  [class.wt-select-open]="open"
+  [class.p-multiselect-open]="open"
+  [class.wt-select-focus]="focused || open"
+  [class.p-focus]="focused || open"
+  [class.wt-select-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-select-invalid]="invalid"
+  [class.p-invalid]="invalid"
+  [class.wt-select-filled]="variant === 'filled'"
+  [class.p-variant-filled]="variant === 'filled'"
+  [class.wt-select-sm]="sizeKey === 'sm'"
+  [class.p-multiselect-sm]="sizeKey === 'sm'"
+  [class.wt-select-lg]="sizeKey === 'lg'"
+  [class.p-multiselect-lg]="sizeKey === 'lg'"
+  [class.wt-select-loading]="loading"
+  [class.wt-multiselect-chips]="chips"
+  [class.p-multiselect-display-chip]="display === 'chip'"
+  (mousedown)="fieldMousedown($event)"
+  (click)="fieldClick($event)"
+>
+  <input
+    #focusInput
+    type="text"
+    class="wt-select-input p-hidden-accessible"
+    role="combobox"
+    readonly
+    inputmode="none"
+    autocomplete="off"
+    [id]="inputId || baseId"
+    [attr.tabindex]="disabled ? -1 : tabindex"
+    [attr.aria-label]="ariaLabel || (ariaLabelledBy ? null : placeholderText || null)"
+    [attr.aria-labelledby]="ariaLabelledBy || null"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="open"
+    [attr.aria-controls]="open ? listId : null"
+    [attr.aria-activedescendant]="filter && showHeader ? null : activeId"
+    [attr.aria-disabled]="disabled || null"
+    [attr.aria-busy]="loading || null"
+    [disabled]="disabled"
+    (keydown)="keydown($event)"
+    (focus)="fieldFocus($event)"
+  />
+  <div class="wt-select-label wt-multiselect-label p-multiselect-label" [class.wt-select-placeholder]="!filled" [class.p-placeholder]="!filled">
+    @if (selectedItemsTemplate) {
+      <ng-container *ngTemplateOutlet="selectedItemsTemplate; context: selectedItemsContext"></ng-container>
+    } @else if (chips) {
+      @for (item of selectedItems; track $index) {
+        <span class="wt-multiselect-chip p-multiselect-chip-item p-chip">
+          <span class="wt-multiselect-chip-label p-chip-label">{{ item.label }}</span>
+          @if (!disabled && !readonly) {
+            <button type="button" class="wt-multiselect-chip-remove p-chip-remove-icon" tabindex="-1" [attr.aria-label]="removeLabel(item)" (click)="remove(item.value, $event)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"></path></svg>
+            </button>
+          }
+        </span>
+      }
+    } @else {
+      {{ labelText || ' ' }}
+    }
+  </div>
+  @if (clearable) {
+    <button type="button" class="wt-select-clear p-multiselect-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+    </button>
+  }
+  <span class="wt-select-dropdown p-multiselect-dropdown" aria-hidden="true">
+    @if (loading) {
+      <span class="wt-select-spinner p-multiselect-loading-icon"></span>
+    } @else if (dropdownIconTemplate) {
+      <ng-container *ngTemplateOutlet="dropdownIconTemplate"></ng-container>
+    } @else {
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"></path></svg>
+    }
+  </span>
+</div>
+
+@if (open) {
+  <div
+    #panel
+    popover="manual"
+    class="wt-select-overlay wt-multiselect-overlay p-multiselect-overlay p-component"
+    [ngClass]="panelStyleClass || ''"
+    [ngStyle]="panelStyle || null"
+    (mousedown)="panelMousedown($event)"
+  >
+    @if (headerTemplate) {
+      <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+    }
+    @if (showHeader && (showToggleAll || filter)) {
+      <div class="wt-select-header wt-multiselect-header p-multiselect-header">
+        @if (showToggleAll) {
+          <span
+            class="wt-checkbox wt-multiselect-toggle-all"
+            role="checkbox"
+            tabindex="-1"
+            [class.wt-checkbox-checked]="allSelected"
+            [attr.aria-checked]="allSelected ? true : someSelected ? 'mixed' : false"
+            [attr.aria-label]="t.selectAll"
+            (click)="toggleAll($event)"
+          >
+            <span class="wt-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="allSelected" aria-hidden="true">
+              <span class="wt-checkbox-box p-checkbox-box" [class.wt-checkbox-mixed]="someSelected">
+                <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+              </span>
+            </span>
+          </span>
+        }
+        @if (filter) {
+          <div class="wt-select-filter-wrap p-iconfield">
+            <input
+              #filterInput
+              type="text"
+              class="wt-inputtext wt-select-filter p-multiselect-filter p-inputtext"
+              role="searchbox"
+              autocomplete="off"
+              [value]="filterText"
+              [attr.placeholder]="filterPlaceholder || null"
+              [attr.aria-label]="ariaFilterLabel || t.search"
+              [attr.aria-controls]="listId"
+              [attr.aria-activedescendant]="activeId"
+              (input)="search($event)"
+              (keydown)="keydown($event)"
+            />
+            <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+          </div>
+        }
+      </div>
+    }
+    <div class="wt-select-list-container p-multiselect-list-container" [style.max-height]="scrollHeight">
+      <ul #listBox class="wt-select-list p-multiselect-list" role="listbox" aria-multiselectable="true" [id]="listId" [attr.aria-label]="ariaLabel || placeholderText || null">
+        @for (item of visible; track $index; let i = $index) {
+          @if (item.group) {
+            <li class="wt-select-group p-multiselect-option-group" role="presentation">
+              @if (groupTemplate) {
+                <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
+              } @else {
+                {{ item.label }}
+              }
+            </li>
+          } @else {
+            <li
+              class="wt-select-option wt-multiselect-option p-multiselect-option"
+              role="option"
+              [id]="optionId(i)"
+              [class.wt-select-option-selected]="isSelected(item)"
+              [class.p-multiselect-option-selected]="isSelected(item)"
+              [class.wt-select-option-active]="i === activeIndex"
+              [class.p-focus]="i === activeIndex"
+              [class.wt-select-option-disabled]="item.disabled || isBlocked(item)"
+              [class.p-disabled]="item.disabled || isBlocked(item)"
+              [attr.aria-selected]="isSelected(item)"
+              [attr.aria-disabled]="item.disabled || isBlocked(item) || null"
+              (click)="toggleItem(item, $event)"
+              (mousemove)="hover(i)"
+            >
+              <span class="wt-checkbox wt-multiselect-check" [class.wt-checkbox-checked]="isSelected(item)" aria-hidden="true">
+                <span class="wt-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="isSelected(item)">
+                  <span class="wt-checkbox-box p-checkbox-box">
+                    <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </span>
+                </span>
+              </span>
+              @if (itemTemplate) {
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, selected: isSelected(item), index: i }"></ng-container>
+              } @else {
+                <span class="wt-select-option-label">{{ item.label || ' ' }}</span>
+              }
+            </li>
+          }
+        } @empty {
+          <li class="wt-select-empty p-multiselect-empty-message" role="option" aria-disabled="true">
+            @if (emptyTemplate) {
+              <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+            } @else {
+              {{ emptyText }}
+            }
+          </li>
+        }
+      </ul>
+    </div>
+    @if (footerTemplate) {
+      <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+    }
+  </div>
+}

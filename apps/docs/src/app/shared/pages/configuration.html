@@ -17,7 +17,7 @@
   } @else {
     <p>ใช้ได้ทั้งใน NgModule และ standalone ตั้งแต่ Angular 15 ส่วน <code>WiraThemeModule.forRoot()</code> มีไว้ให้คนที่คุ้นกับสไตล์ NgModule</p>
   }
-  <docs-code-tabs [tabs]="providerTabs"></docs-code-tabs>
+  <docs-code-tabs [tabs]="local(providerTabs)"></docs-code-tabs>
 </docs-section>
 
 <docs-section id="options" [title]="{ th: 'ตัวเลือก', en: 'Options' }">
@@ -131,14 +131,14 @@
   } @else {
     <p>locale <code>th</code> และปฏิทิน พ.ศ. เป็นค่าเริ่มต้น ไม่ต้องตั้งอะไรเพิ่ม ถ้าอยากแก้บางคำใช้ <code>WtConfig.setTranslation()</code> ครั้งเดียวที่ระดับแอป</p>
   }
-  <docs-code [code]="s.TRANSLATION" lang="ts"></docs-code>
+  <docs-code [code]="local(s.TRANSLATION)" lang="ts"></docs-code>
 </docs-section>
 
 <docs-section id="runtime" title="WtThemeService">
   @if (en()) {
-    <p>The same service behind this site's theme button and the Theme Designer: change the theme while the app runs, no reload.</p>
+    <p>The same service behind this site's theme button and the WiraTheme Studio: change the theme while the app runs, no reload.</p>
   } @else {
-    <p>service เดียวกับที่ปุ่มปรับธีมบนเว็บนี้และ Theme Designer ใช้ เปลี่ยนธีมตอนแอปทำงานได้โดยไม่ต้อง reload</p>
+    <p>service เดียวกับที่ปุ่มปรับธีมบนเว็บนี้และ สตูดิโอธีม ใช้ เปลี่ยนธีมตอนแอปทำงานได้โดยไม่ต้อง reload</p>
   }
   <div class="docs-table-wrap">
     <table class="docs-table docs-api">
@@ -157,7 +157,7 @@
       </tbody>
     </table>
   </div>
-  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+  <docs-code [code]="local(s.TS_RUNTIME)" lang="ts"></docs-code>
 </docs-section>
 
 <docs-section id="version-check" [title]="{ th: 'ตรวจรุ่นตอนเริ่มแอป', en: 'Version check at start-up' }">

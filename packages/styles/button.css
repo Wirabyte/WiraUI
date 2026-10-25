@@ -92,7 +92,8 @@
   .wt-btn-warn { --_bg: var(--wt-warn-color); --_bd: var(--wt-warn-color); --_fg: var(--wt-warn-contrast); --_hover: var(--wt-warn-hover); --_active: var(--wt-warn-active); --_tone: var(--wt-warn-color); }
   .wt-btn-danger { --_bg: var(--wt-danger-color); --_bd: var(--wt-danger-color); --_fg: var(--wt-danger-contrast); --_hover: var(--wt-danger-hover); --_active: var(--wt-danger-active); --_tone: var(--wt-danger-color); }
   .wt-btn-help { --_bg: var(--wt-help-color); --_bd: var(--wt-help-color); --_fg: var(--wt-help-contrast); --_hover: var(--wt-help-hover); --_active: var(--wt-help-active); --_tone: var(--wt-help-color); }
-  .wt-btn-contrast { --_bg: var(--wt-text); --_bd: var(--wt-text); --_fg: var(--wt-card-bg); --_hover: var(--wt-text-muted); --_active: var(--wt-text-muted); --_tone: var(--wt-text); }
+  /* Contrast gets stronger on hover and press, like every other colour (it used to fade, which read as "cancel"). */
+  .wt-btn-contrast { --_bg: var(--wt-text); --_bd: var(--wt-text); --_fg: var(--wt-card-bg); --_hover: var(--wt-button-contrast-hover-bg); --_active: var(--wt-button-contrast-active-bg); --_tone: var(--wt-text); }
 
   /* variants */
   .wt-btn-outlined,

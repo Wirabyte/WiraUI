@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 320 200">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the same school, the large file with more detail. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7dd3fc" />
+      <stop offset="1" stop-color="#e0f2fe" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" fill="url(#sky)" />
+  <circle cx="262" cy="44" r="20" fill="#fde68a" />
+  <g fill="#ffffff" opacity="0.9">
+    <ellipse cx="70" cy="36" rx="22" ry="8" />
+    <ellipse cx="90" cy="30" rx="16" ry="9" />
+    <ellipse cx="190" cy="24" rx="18" ry="6" />
+  </g>
+  <rect y="150" width="320" height="50" fill="#86efac" />
+  <path d="M146 200 154 154h12l8 46Z" fill="#d6d3d1" />
+  <path d="M70 92 160 50l90 42Z" fill="#b91c1c" />
+  <rect x="80" y="92" width="160" height="62" fill="#fef3c7" />
+  <rect x="80" y="122" width="160" height="2" fill="#fcd34d" />
+  <g fill="#38bdf8" stroke="#0369a1" stroke-width="0.6">
+    <rect x="94" y="102" width="22" height="16" />
+    <rect x="128" y="102" width="22" height="16" />
+    <rect x="170" y="102" width="22" height="16" />
+    <rect x="204" y="102" width="22" height="16" />
+    <rect x="94" y="130" width="22" height="16" />
+    <rect x="204" y="130" width="22" height="16" />
+  </g>
+  <rect x="148" y="128" width="24" height="26" fill="#92400e" />
+  <circle cx="160" cy="76" r="7" fill="#fef3c7" stroke="#92400e" stroke-width="1" />
+  <path d="M294 150V70" stroke="#57534e" stroke-width="1.5" />
+  <g>
+    <rect x="295" y="70" width="22" height="2.4" fill="#ef4444" />
+    <rect x="295" y="72.4" width="22" height="2.4" fill="#ffffff" />
+    <rect x="295" y="74.8" width="22" height="4.8" fill="#1e3a8a" />
+    <rect x="295" y="79.6" width="22" height="2.4" fill="#ffffff" />
+    <rect x="295" y="82" width="22" height="2.4" fill="#ef4444" />
+  </g>
+  <g fill="#16a34a">
+    <circle cx="40" cy="128" r="20" />
+    <circle cx="262" cy="134" r="14" />
+  </g>
+  <g fill="#78350f">
+    <rect x="37" y="136" width="6" height="16" />
+    <rect x="259" y="140" width="6" height="12" />
+  </g>
+</svg>

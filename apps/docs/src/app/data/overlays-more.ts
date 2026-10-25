@@ -15,6 +15,29 @@ export const TOAST_DOC: ComponentDoc = {
     th: 'ข้อความแจ้งเตือนสั้น ๆ ที่ลอยขึ้นมุมจอแล้วหายไปเอง วาง <wt-toast> ไว้ครั้งเดียวแล้วเรียก WtMessageService.add() จากที่ไหนก็ได้',
     en: 'Short notices that float in at a corner and go away by themselves. Place <wt-toast> once, then call WtMessageService.add() from anywhere.',
   },
+  english: {
+    'ครั้งเดียว เช่นใน app.component.html': 'once, e.g. in app.component.html',
+    'toast เหนือ dialog': 'Toast over a dialog',
+    'ส่งใบเสนอราคา': 'Send the quote',
+    'toast ขึ้นเหนือ dialog นี้': 'The toast shows above this dialog.',
+    'บันทึกแล้ว': 'Saved',
+    'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย': 'The customer record is saved.',
+    'ส่งแล้ว': 'Sent',
+    'toast ขึ้นเหนือ dialog': 'The toast shows above the dialog.',
+    'ล่างซ้าย': 'Bottom left',
+    'บนกลาง': 'Top center',
+    'ค้างไว้': 'Sticky',
+    'ต้องตรวจสอบ': 'Needs review',
+    'ค้างไว้จนกว่าจะปิด': 'Stays until you close it.',
+    '10 วินาที': '10 seconds',
+    'แสดง 10 วินาที': 'Shown for 10 seconds',
+    'ล้างทั้งหมด': 'Clear all',
+    'แชร์เอกสาร': 'Share a document',
+    'ดู': 'View',
+    'สมหญิงแชร์เอกสาร': 'Sarah shared a document',
+    'รายงานยอดขายเดือนมีนาคม': 'March sales report',
+    'ส': 'S',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -80,10 +103,10 @@ export const TOAST_DOC: ComponentDoc = {
   ts: {
     basic: `private readonly messages = inject(WtMessageService);
 
-save() {
+save(): void {
   this.messages.add({ severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย' });
 }`,
-    severity: `show(severity: string) {
+    severity: `show(severity: string): void {
   this.messages.add({ severity, summary: severity, detail: 'ข้อความตัวอย่าง' });
 }`,
     templates: `this.messages.add({
@@ -163,6 +186,29 @@ export const TOOLTIP_DOC: ComponentDoc = {
   description: {
     th: 'ข้อความอธิบายสั้น ๆ เมื่อชี้หรือโฟกัส ย้ายไปอีกฝั่งเองเมื่อพื้นที่ไม่พอ และเลื่อนตามเมื่อหน้าเลื่อน',
     en: 'A short hint on hover or focus. It flips to the other side when there is no room and follows the page as it scrolls.',
+  },
+  english: {
+    'บน': 'Top',
+    'ล่าง': 'Bottom',
+    'ซ้าย': 'Left',
+    'ขวา': 'Right',
+    'บันทึกแบบร่าง': 'Save draft',
+    'ส่งออกเป็น Excel': 'Export to Excel',
+    'กรอกเลขบัตรประชาชน 13 หลัก': 'Enter the 13-digit national ID',
+    'เลขบัตรประชาชน': 'National ID',
+    'ช้าหน่อย': 'Delayed',
+    'แสดงหลัง 500ms': 'Shows after 500ms',
+    'รายละเอียด': 'Details',
+    'แพ็กเกจ Pro': 'Pro plan',
+    'ผู้ใช้ไม่จำกัด': 'Unlimited users',
+    'ดูราคา': 'See prices',
+    'tooltip ปิดอยู่': 'Tooltip off',
+    'tooltip เปิดอยู่': 'Tooltip on',
+    'แสดงแล้ว': 'Shown',
+    'ปิด tooltip': 'Tooltip off',
+    'ไม่แสดง': 'Not shown',
+    'บรรทัดเดียว': 'One line',
+    'ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่': 'A long hint that should stay on one line',
   },
   sections: {
     import: {
@@ -256,6 +302,19 @@ export const POPOVER_DOC: ComponentDoc = {
   description: {
     th: 'แผงเล็ก ๆ ที่เปิดใต้ปุ่มพร้อมลูกศรชี้ ขึ้นด้านบนเองเมื่อพื้นที่ด้านล่างไม่พอ และปิดเมื่อคลิกข้างนอกหรือกด Esc',
     en: 'A small panel that opens under its button with an arrow pointing at it, flips above when there is no room below, and closes on an outside click or Esc.',
+  },
+  english: {
+    'แชร์': 'Share',
+    'ส่งลิงก์ให้ทีม': 'Send the link to your team',
+    'ลิงก์': 'Link',
+    'เลือกผู้รับผิดชอบ': 'Pick an owner',
+    'สมหญิง': 'Sarah',
+    'กมล': 'Kevin',
+    'ณัฐ': 'Nat',
+    'ปวีณา': 'Paula',
+    'ตัวกรอง': 'Filters',
+    'ชำระแล้ว': 'Paid',
+    'รอจัดส่ง': 'Awaiting shipment',
   },
   sections: {
     import: {
@@ -360,6 +419,9 @@ export const ANIMATE_DOC: ComponentDoc = {
   themingNote: {
     th: 'ไม่มี token ของธีม จังหวะทั้งหมดมาจาก attribute (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) หรือค่าเริ่มต้นของ <code>provideWtAnimate()</code> CSS อยู่ใน <code>@layer wiratheme.utilities</code>',
     en: 'There are no theme tokens: timing comes from the attributes (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) or the <code>provideWtAnimate()</code> defaults. The CSS lives in <code>@layer wiratheme.utilities</code>.',
+  },
+  english: {
+    'หรือ AppModule': 'or AppModule',
   },
   sections: {
     import: {

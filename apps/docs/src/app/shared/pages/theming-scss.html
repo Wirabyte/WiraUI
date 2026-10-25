@@ -3,11 +3,11 @@
   <h1 class="docs-h1">SCSS</h1>
   @if (en()) {
     <p class="docs-lead">
-      One file with <code>&#64;use 'wiratheme/theme' with (…)</code>. It is the format the Theme Designer exports and what <code>ng add</code> creates in SCSS projects.
+      One file with <code>&#64;use 'wiratheme/theme' with (…)</code>. It is the format the WiraTheme Studio exports and what <code>ng add</code> creates in SCSS projects.
     </p>
   } @else {
     <p class="docs-lead">
-      ตั้งธีมด้วย <code>&#64;use 'wiratheme/theme' with (…)</code> ไฟล์เดียว ซึ่งเป็นรูปแบบเดียวกับที่ Theme Designer export ให้
+      ตั้งธีมด้วย <code>&#64;use 'wiratheme/theme' with (…)</code> ไฟล์เดียว ซึ่งเป็นรูปแบบเดียวกับที่ สตูดิโอธีม export ให้
       และเป็นสิ่งที่ <code>ng add</code> สร้างให้ในโปรเจค SCSS
     </p>
   }
@@ -43,7 +43,7 @@
       </p>
     }
   }
-  <docs-code [code]="themeCode" lang="scss" file="src/theme/wiratheme.theme.scss"></docs-code>
+  <docs-code [code]="local(themeCode)" lang="scss" file="src/theme/wiratheme.theme.scss"></docs-code>
 </docs-section>
 
 <docs-section id="styles" [title]="{ th: 'เรียกใช้ใน styles.scss', en: 'Load it from styles.scss' }">
@@ -52,7 +52,7 @@
   } @else {
     <p>ไฟล์ธีมปล่อย <code>&#64;layer wiratheme.tokens</code> และตัวแปรบน <code>:root</code> ใส่ไว้บรรทัดแรกของ <code>styles.scss</code></p>
   }
-  <docs-code [code]="s.SCSS_STYLES" lang="scss" file="src/styles.scss"></docs-code>
+  <docs-code [code]="local(s.SCSS_STYLES)" lang="scss" file="src/styles.scss"></docs-code>
 </docs-section>
 
 <docs-section id="api" [title]="{ th: 'ใช้ token ใน SCSS ของ component', en: 'Tokens in component SCSS' }">
@@ -61,7 +61,7 @@
   } @else {
     <p>โมดูล API มี helper <code>token()</code>, mixin <code>dark</code> และ <code>media</code> โดยไม่ปล่อย CSS ของธีมซ้ำ</p>
   }
-  <docs-code [code]="s.SCSS_API" lang="scss" file="profile-card.component.scss"></docs-code>
+  <docs-code [code]="local(s.SCSS_API)" lang="scss" file="profile-card.component.scss"></docs-code>
 </docs-section>
 
 <docs-section id="with-ts" [title]="{ th: 'ใช้คู่กับ TypeScript', en: 'Together with TypeScript' }">

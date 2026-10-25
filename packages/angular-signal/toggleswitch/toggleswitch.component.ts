@@ -16,7 +16,7 @@ import { WtToggleSwitchChangeEvent } from './toggleswitch.types';
 
 /** On/off switch for ngModel and reactive forms (also known as InputSwitch), with an optional `label`. */
 @Component({
-  selector: 'wt-toggleswitch',
+  selector: 'wt-toggleswitch, wt-toggleSwitch, wt-inputswitch, wt-inputSwitch',
   host: {
     '[class.wt-toggleswitch-sm]': "sizeKey() === 'sm'",
     '[class.p-toggleswitch-sm]': "sizeKey() === 'sm'",

@@ -6,9 +6,9 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-avatar label="ส"></wt-avatar>
+        <wt-avatar [label]="tx('ส')"></wt-avatar>
         <wt-avatar icon="pi pi-user"></wt-avatar>
-        <wt-avatar [image]="image" ariaLabel="สมชาย ใจดี"></wt-avatar>
+        <wt-avatar [image]="image" [ariaLabel]="tx('สมชาย ใจดี')"></wt-avatar>
       </docs-demo>
     </docs-section>
 
@@ -24,9 +24,9 @@
     <docs-section id="group" [section]="sec['group']">
       <docs-demo [html]="code['group']">
         <wt-avatar-group>
-          <wt-avatar label="ส" shape="circle"></wt-avatar>
-          <wt-avatar label="ก" shape="circle"></wt-avatar>
-          <wt-avatar label="ม" shape="circle"></wt-avatar>
+          <wt-avatar [label]="tx('ส')" shape="circle"></wt-avatar>
+          <wt-avatar [label]="tx('ก')" shape="circle"></wt-avatar>
+          <wt-avatar [label]="tx('ม')" shape="circle"></wt-avatar>
           <wt-avatar label="+5" shape="circle"></wt-avatar>
         </wt-avatar-group>
       </docs-demo>

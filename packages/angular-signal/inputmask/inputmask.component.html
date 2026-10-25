@@ -1,0 +1,41 @@
+<input
+  #field
+  class="wt-inputtext wt-inputmask-input p-inputmask p-inputtext p-component"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="style || null"
+  [class.wt-inputtext-sm]="sizeKey === 'sm'"
+  [class.p-inputtext-sm]="sizeKey === 'sm'"
+  [class.wt-inputtext-lg]="sizeKey === 'lg'"
+  [class.p-inputtext-lg]="sizeKey === 'lg'"
+  [class.wt-inputtext-filled]="variant === 'filled'"
+  [class.p-variant-filled]="variant === 'filled'"
+  [class.wt-inputtext-fluid]="fluid"
+  [class.wt-invalid]="invalid"
+  [class.p-invalid]="invalid"
+  [class.wt-filled]="filled"
+  [class.p-filled]="filled"
+  [attr.type]="type"
+  [attr.id]="inputId || null"
+  [attr.name]="name || null"
+  [attr.placeholder]="placeholderText"
+  [attr.title]="title || null"
+  [attr.maxlength]="maxlength || null"
+  [attr.tabindex]="tabindex ?? null"
+  [attr.autocomplete]="autocomplete || null"
+  [attr.inputmode]="inputMode"
+  [attr.aria-label]="ariaLabel || null"
+  [attr.aria-labelledby]="ariaLabelledBy || null"
+  [attr.aria-required]="ariaRequired || required || null"
+  [required]="required"
+  [readOnly]="readonly"
+  [disabled]="disabled"
+  (focus)="focus($event)"
+  (blur)="blur($event)"
+  (input)="input($event)"
+  (keydown)="keydown($event)"
+/>
+@if (clearable) {
+  <button type="button" class="wt-inputmask-clear p-inputmask-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+  </button>
+}

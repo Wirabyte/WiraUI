@@ -12,7 +12,25 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
   selector: 'wt-inputnumber',
   description: {
     th: 'ช่องตัวเลขที่ค่าใน model เป็น number จริง แสดงค่าที่จัดรูปแบบแล้ว (฿1,234.50, 60 กก.) อ่านสิ่งที่พิมพ์หรือวางโดยไม่สน ฿ และจุลภาค แล้วจัดรูปแบบใหม่ตอนออกจากช่อง',
-    en: 'A number field whose model is a real number. It shows the formatted value (฿1,234.50, 60 กก.), reads typed or pasted text ignoring ฿ and commas, and reformats when you leave the field.',
+    en: 'A number field whose model is a real number. It shows the formatted value (฿1,234.50, 60 kg), reads typed or pasted text ignoring ฿ and commas, and reformats when you leave the field.',
+  },
+  english: {
+    'กก.': 'kg',
+    'จำนวน': 'Quantity',
+    'น้ำหนัก': 'Weight',
+    'ราคา': 'Price',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'อัตรา': 'Rate',
+    'ปี': 'Year',
+    'ลด': 'Save',
+    'ส่วนลด': 'Discount',
+    'จำนวนที่นั่ง': 'Seats',
+    'ปริมาณ': 'Volume',
+    'งบประมาณ': 'Budget',
+    'ต้องกรอก': 'Required',
+    'ไม่ใช่': 'not',
   },
   sections: {
     sizes: {
@@ -62,7 +80,7 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       text: {
         th: 'ฟังก์ชันที่ช่องนี้ใช้ export จาก <code>wiratheme/core</code> ใช้จัดรูปแบบตัวเลขในตารางหรือรายงานให้ตรงกับช่องกรอกได้',
-        en: 'The functions behind the field are exported from <code>wiratheme/core</code>, so tables and reports can format numbers the same way.',
+        en: 'The functions behind the field are exported from <code>wiratheme/core</code>, so tables and reports can format numbers the same way. They default to th-TH (hence ฿), and <code>parseNumber()</code> reads Thai digits as well, which is why the sample keeps ๑,๒๓๔.๕๐.',
       },
     },
   },
@@ -94,7 +112,7 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
   ts: {
     basic: `quantity: number | null = 1200;`,
     reactive: `form = new FormGroup({
-  budget: new FormControl<number | null>(50000, [Validators.required, Validators.max(100000)]),
+  budget: new FormControl(50000, [Validators.required, Validators.max(100000)]),
 });`,
     helpers: `import { clampNumber, formatNumber, parseNumber, stepNumber } from 'wiratheme/core';
 

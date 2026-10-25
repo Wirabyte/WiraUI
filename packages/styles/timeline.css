@@ -1,0 +1,112 @@
+/* wt-timeline. Shared by wiratheme v1, v2 and v3. Events along a line: marker and connector in the middle column,
+   content on one side and the optional opposite slot on the other. */
+@layer wiratheme.components {
+  wt-timeline {
+    display: block;
+  }
+  .wt-timeline {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-timeline-event {
+    position: relative;
+    display: flex;
+    min-height: var(--wt-timeline-event-min-height);
+  }
+  .wt-timeline-event:last-child {
+    min-height: 0;
+  }
+  .wt-timeline-event-opposite,
+  .wt-timeline-event-content {
+    flex: 1;
+    min-width: 0;
+    padding: var(--wt-timeline-content-padding);
+  }
+  .wt-timeline-event-separator {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wt-timeline-event-marker {
+    box-sizing: border-box;
+    flex: none;
+    width: var(--wt-timeline-marker-size);
+    height: var(--wt-timeline-marker-size);
+    border: var(--wt-timeline-marker-border-width) solid var(--wt-timeline-marker-border-color);
+    border-radius: 50%;
+    background: var(--wt-timeline-marker-bg);
+  }
+  .wt-timeline-event-connector {
+    flex-grow: 1;
+    width: var(--wt-timeline-connector-size);
+    background: var(--wt-timeline-connector-color);
+  }
+
+  /* Vertical: the opposite side reads towards the line. */
+  .wt-timeline-left .wt-timeline-event-opposite {
+    text-align: right;
+  }
+  .wt-timeline-left .wt-timeline-event-content {
+    text-align: left;
+  }
+  .wt-timeline-right .wt-timeline-event {
+    flex-direction: row-reverse;
+  }
+  .wt-timeline-right .wt-timeline-event-opposite {
+    text-align: left;
+  }
+  .wt-timeline-right .wt-timeline-event-content {
+    text-align: right;
+  }
+  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(odd) .wt-timeline-event-opposite {
+    text-align: right;
+  }
+  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(even) .wt-timeline-event-content {
+    text-align: right;
+  }
+  /* No opposite template: the content takes the whole row (alternate keeps both sides). */
+  .wt-timeline-vertical.wt-timeline-no-opposite:not(.wt-timeline-alternate) .wt-timeline-event-opposite {
+    display: none;
+  }
+
+  /* Horizontal: events side by side, the line across. */
+  .wt-timeline-horizontal {
+    flex-direction: row;
+  }
+  .wt-timeline-horizontal .wt-timeline-event {
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .wt-timeline-horizontal .wt-timeline-event:last-child {
+    flex: 0;
+  }
+  .wt-timeline-horizontal .wt-timeline-event-separator {
+    flex-direction: row;
+  }
+  .wt-timeline-horizontal .wt-timeline-event-connector {
+    width: 100%;
+    height: var(--wt-timeline-connector-size);
+  }
+  .wt-timeline-horizontal .wt-timeline-event-opposite,
+  .wt-timeline-horizontal .wt-timeline-event-content {
+    padding: var(--wt-timeline-horizontal-padding);
+  }
+  .wt-timeline-bottom .wt-timeline-event {
+    flex-direction: column-reverse;
+  }
+  .wt-timeline-horizontal.wt-timeline-alternate .wt-timeline-event:nth-child(even) {
+    flex-direction: column-reverse;
+  }
+  .wt-timeline-horizontal.wt-timeline-no-opposite:not(.wt-timeline-alternate) .wt-timeline-event-opposite {
+    display: none;
+  }
+}

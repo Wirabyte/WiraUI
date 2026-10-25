@@ -35,6 +35,24 @@
     width: 1.125em;
     height: 1.125em;
   }
+  /* wt-messages: a stack of boxes; the summary in bold before the detail. */
+  wt-messages {
+    display: block;
+  }
+  .wt-messages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wt-message-gap);
+  }
+  .wt-messages:empty {
+    display: none;
+  }
+  .wt-messages-summary {
+    font-weight: 600;
+  }
+  .wt-messages-summary + .wt-messages-detail {
+    margin-left: 0.5em;
+  }
   .wt-message-text {
     flex: 1;
     min-width: 0;

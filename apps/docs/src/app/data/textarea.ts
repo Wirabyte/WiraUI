@@ -13,6 +13,18 @@ export const TEXTAREA_DOC: ComponentDoc = {
     th: 'directive ที่แต่ง <textarea> แบบเดียวกับ wtInputText พร้อม autoResize ที่ขยายตามข้อความ รวมถึงค่าที่ตั้งจากโค้ดผ่าน ngModel หรือ form control',
     en: 'Styles a <textarea> like wtInputText, with autoResize that grows with the text, including values set from code through ngModel or a form control.',
   },
+  english: {
+    'ข้อความถึงทีมงาน': 'A note to the team',
+    'ที่อยู่สำหรับจัดส่ง (ขยายตามข้อความ)': 'Delivery address (grows as you type)',
+    'รายละเอียดปัญหา (อย่างน้อย 10 ตัวอักษร)': 'What went wrong (10 characters or more)',
+    'ปิดอยู่': 'Disabled',
+    'ใส่ข้อความ 3 บรรทัด': 'Fill 3 lines',
+    'ขยายตามค่าที่ตั้งจากโค้ดด้วย': 'also grows for values set from code',
+    'เข้าสู่ระบบไม่ได้': 'I cannot sign in',
+    'หลังเปลี่ยนรหัสผ่าน': 'after changing my password',
+    'ลองแล้วทั้งมือถือและคอมพิวเตอร์': 'tried on both phone and computer',
+    'ใช้ token เดียวกับ InputText': 'uses the same tokens as InputText',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -45,10 +57,10 @@ export const TEXTAREA_DOC: ComponentDoc = {
   },
   ts: {
     reactive: `form = new FormGroup({
-  details: new FormControl('', { nonNullable: true, validators: [Validators.minLength(10)] }),
+  details: new FormControl('', Validators.minLength(10)),
 });
 
-fill() {
+fill(): void {
   // autoResize ขยายตามค่าที่ตั้งจากโค้ดด้วย
   this.form.patchValue({ details: 'เข้าสู่ระบบไม่ได้\\nหลังเปลี่ยนรหัสผ่าน\\nลองแล้วทั้งมือถือและคอมพิวเตอร์' });
 }`,

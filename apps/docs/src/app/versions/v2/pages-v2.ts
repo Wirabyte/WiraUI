@@ -40,6 +40,20 @@ import {
   AnimateDemo,
   MeterGroupDemo,
   ValidationDemo,
+  SelectDemo,
+  TableDemo,
+  PaginatorDemo,
+  MenubarDemo,
+  PanelMenuDemo,
+  StepsDemo,
+  ChartDemo,
+  ImageDemo,
+  AutoCompleteDemo,
+  MenuDemo,
+  TabMenuDemo,
+  MultiSelectDemo,
+  InputMaskDemo,
+  TimelineDemo,
 } from '../shared/demos';
 
 // Shared templates compiled against wiratheme@2 components (DocsV2Module imports the v1 modules).
@@ -163,3 +177,45 @@ export class MeterGroupPageV2 extends MeterGroupDemo {}
 
 @Component({ selector: 'docs-validation-v2', templateUrl: '../shared/validation.html', standalone: false })
 export class ValidationPageV2 extends ValidationDemo {}
+
+@Component({ selector: 'docs-select-v2', templateUrl: '../shared/select.html', standalone: false })
+export class SelectPageV2 extends SelectDemo {}
+
+@Component({ selector: 'docs-table-v2', templateUrl: '../shared/table.html', standalone: false })
+export class TablePageV2 extends TableDemo {}
+
+@Component({ selector: 'docs-paginator-v2', templateUrl: '../shared/paginator.html', standalone: false })
+export class PaginatorPageV2 extends PaginatorDemo {}
+
+@Component({ selector: 'docs-menubar-v2', templateUrl: '../shared/menubar.html', standalone: false })
+export class MenubarPageV2 extends MenubarDemo {}
+
+@Component({ selector: 'docs-panelmenu-v2', templateUrl: '../shared/panelmenu.html', standalone: false })
+export class PanelMenuPageV2 extends PanelMenuDemo {}
+
+@Component({ selector: 'docs-steps-v2', templateUrl: '../shared/steps.html', standalone: false })
+export class StepsPageV2 extends StepsDemo {}
+
+@Component({ selector: 'docs-chart-v2', templateUrl: '../shared/chart.html', standalone: false })
+export class ChartPageV2 extends ChartDemo {}
+
+@Component({ selector: 'docs-image-v2', templateUrl: '../shared/image.html', standalone: false })
+export class ImagePageV2 extends ImageDemo {}
+
+@Component({ selector: 'docs-autocomplete-v2', templateUrl: '../shared/autocomplete.html', standalone: false })
+export class AutoCompletePageV2 extends AutoCompleteDemo {}
+
+@Component({ selector: 'docs-menu-v2', templateUrl: '../shared/menu.html', standalone: false })
+export class MenuPageV2 extends MenuDemo {}
+
+@Component({ selector: 'docs-tabmenu-v2', templateUrl: '../shared/tabmenu.html', standalone: false })
+export class TabMenuPageV2 extends TabMenuDemo {}
+
+@Component({ selector: 'docs-multiselect-v2', templateUrl: '../shared/multiselect.html', standalone: false })
+export class MultiSelectPageV2 extends MultiSelectDemo {}
+
+@Component({ selector: 'docs-inputmask-v2', templateUrl: '../shared/inputmask.html', standalone: false })
+export class InputMaskPageV2 extends InputMaskDemo {}
+
+@Component({ selector: 'docs-timeline-v2', templateUrl: '../shared/timeline.html', standalone: false })
+export class TimelinePageV2 extends TimelineDemo {}

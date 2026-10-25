@@ -21,14 +21,14 @@
 
     <docs-section id="multiple" [section]="sec['multiple']">
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']">
-        <wt-selectbutton id="d-days" [options]="days" [(ngModel)]="workdays" [multiple]="true"></wt-selectbutton>
+        <wt-selectbutton id="d-days" [options]="local(days)" [(ngModel)]="workdays" [multiple]="true"></wt-selectbutton>
         <span class="docs-demo-output">workdays: <code id="d-days-value">{{ workdays | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="required" [section]="sec['required']">
       <docs-demo [html]="code['required']">
-        <wt-selectbutton id="d-range" [options]="['วัน', 'สัปดาห์', 'เดือน']" [(ngModel)]="range" [allowEmpty]="false"></wt-selectbutton>
+        <wt-selectbutton id="d-range" [options]="local(['วัน', 'สัปดาห์', 'เดือน'])" [(ngModel)]="range" [allowEmpty]="false"></wt-selectbutton>
         <span class="docs-demo-output">range: <code id="d-range-value">{{ range | json }}</code></span>
       </docs-demo>
     </docs-section>

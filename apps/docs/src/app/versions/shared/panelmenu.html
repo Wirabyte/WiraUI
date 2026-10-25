@@ -1,0 +1,85 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div class="docs-pm-column">
+          <wt-panelmenu id="d-pm-basic" [model]="local(items)"></wt-panelmenu>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="multiple" [section]="sec['multiple']">
+      <docs-demo [html]="code['multiple']" [ts]="ts['multiple']" layout="stack">
+        <div class="docs-pm-pair">
+          <div class="docs-pm-cell">
+            <span class="docs-pm-caption">{{ tx('ทีละหัวข้อ') }} · [multiple]="false"</span>
+            <wt-panelmenu id="d-pm-single" [model]="local(oneAtATime)" [multiple]="false"></wt-panelmenu>
+          </div>
+          <div class="docs-pm-cell">
+            <span class="docs-pm-caption">{{ tx('หลายหัวข้อ') }} · [multiple]="true"</span>
+            <wt-panelmenu id="d-pm-multi" [model]="local(severalAtOnce)" [multiple]="true"></wt-panelmenu>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="links" [section]="sec['links']">
+      <docs-demo [html]="code['links']" [ts]="ts['links']" layout="stack">
+        <div class="docs-pm-column">
+          <wt-panelmenu id="d-pm-links" [model]="local(links)"></wt-panelmenu>
+        </div>
+        <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-pm-command">{{ lastCommand || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="states" [section]="sec['states']">
+      <docs-demo [html]="code['states']" [ts]="ts['states']" layout="stack">
+        <div class="docs-pm-column">
+          <wt-panelmenu id="d-pm-states" [model]="local(accountItems)"></wt-panelmenu>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['templates']" [ts]="ts['templates']" layout="stack">
+        <div class="docs-pm-pair">
+          <wt-panelmenu id="d-pm-template" [model]="local(editorItems)">
+            <ng-template #item let-item let-root="root">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span [class.docs-pm-root]="root">{{ item.label }}</span>
+              @if (item.shortcut) {
+                <kbd class="docs-pm-shortcut">{{ item.shortcut }}</kbd>
+              }
+              @if (item.items) {
+                <i class="pi pi-angle-down docs-pm-end"></i>
+              }
+            </ng-template>
+          </wt-panelmenu>
+          <wt-panelmenu id="d-pm-icon" [model]="local(classItems)">
+            <ng-template #submenuicon>
+              <i class="pi pi-chevron-down"></i>
+            </ng-template>
+          </wt-panelmenu>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="style" [section]="sec['style']">
+      <docs-demo [html]="code['style']" [ts]="ts['style']" layout="stack">
+        <aside class="docs-pm-narrow">
+          <wt-panelmenu id="d-pm-style" [model]="local(compactItems)" [style]="{ width: '100%' }" styleClass="app-sidebar"></wt-panelmenu>
+        </aside>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

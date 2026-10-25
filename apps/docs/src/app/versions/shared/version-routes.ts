@@ -56,6 +56,20 @@ export interface VersionPages {
   animate: Type<unknown>;
   metergroup: Type<unknown>;
   validation: Type<unknown>;
+  select: Type<unknown>;
+  table: Type<unknown>;
+  paginator: Type<unknown>;
+  menubar: Type<unknown>;
+  panelmenu: Type<unknown>;
+  steps: Type<unknown>;
+  chart: Type<unknown>;
+  image: Type<unknown>;
+  autocomplete: Type<unknown>;
+  menu: Type<unknown>;
+  tabmenu: Type<unknown>;
+  multiselect: Type<unknown>;
+  inputmask: Type<unknown>;
+  timeline: Type<unknown>;
 }
 
 /** Same page tree under /v1, /v2 and /v3, so the version dropdown can keep the path. */
@@ -75,7 +89,9 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'theming/scss', component: ThemingScssPage },
         { path: 'theming/css', component: ThemingCssPage },
         { path: 'theming/typescript', component: ThemingTypescriptPage },
-        { path: 'theming/designer', component: DesignerPage },
+        { path: 'theming/studio', component: DesignerPage },
+        // The page was called Theme Designer before; old links still land on it.
+        { path: 'theming/designer', redirectTo: 'theming/studio' },
         { path: 'utilities', pathMatch: 'full', redirectTo: 'utilities/overview' },
         { path: 'utilities/:topic', component: UtilitiesPage },
         { path: 'components/button', component: p.button },
@@ -117,6 +133,20 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/animate', component: p.animate },
         { path: 'components/metergroup', component: p.metergroup },
         { path: 'components/validation', component: p.validation },
+        { path: 'components/select', component: p.select },
+        { path: 'components/table', component: p.table },
+        { path: 'components/paginator', component: p.paginator },
+        { path: 'components/menubar', component: p.menubar },
+        { path: 'components/panelmenu', component: p.panelmenu },
+        { path: 'components/steps', component: p.steps },
+        { path: 'components/chart', component: p.chart },
+        { path: 'components/image', component: p.image },
+        { path: 'components/autocomplete', component: p.autocomplete },
+        { path: 'components/menu', component: p.menu },
+        { path: 'components/tabmenu', component: p.tabmenu },
+        { path: 'components/multiselect', component: p.multiselect },
+        { path: 'components/inputmask', component: p.inputmask },
+        { path: 'components/timeline', component: p.timeline },
         // Old docs URL from Phase 1: the combined forms page is now one page per control.
         { path: 'components/forms', redirectTo: 'components/inputtext' },
         { path: '**', redirectTo: 'getting-started/introduction' },

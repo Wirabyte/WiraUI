@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, computed, DestroyRef, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { DocsState } from '../core/docs-state';
@@ -19,7 +19,6 @@ const OPEN_STORE = 'wiratheme-docs-nav';
   templateUrl: './layout.html',
   host: {
     '(document:keydown)': 'onKey($event)',
-    '(document:click)': 'onDocClick($event)',
   },
 })
 export class DocsLayout {
@@ -47,7 +46,6 @@ export class DocsLayout {
   protected readonly menuOpen = signal(false);
   protected readonly configOpen = signal(false);
   protected readonly searchOpen = signal(false);
-  private readonly configWrap = viewChild<ElementRef<HTMLElement>>('configWrap');
 
   constructor() {
     const sub = this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
@@ -66,8 +64,8 @@ export class DocsLayout {
       sub.unsubscribe();
       this.doc.documentElement.classList.remove('docs-lock');
     });
-    // The page behind the drawer or the search dialog does not scroll.
-    effect(() => this.doc.documentElement.classList.toggle('docs-lock', this.menuOpen() || this.searchOpen()));
+    // The page behind the drawers or the search dialog does not scroll.
+    effect(() => this.doc.documentElement.classList.toggle('docs-lock', this.menuOpen() || this.searchOpen() || this.configOpen()));
   }
 
   protected isOpen(key: string): boolean {
@@ -107,17 +105,8 @@ export class DocsLayout {
       this.openSearch();
       return;
     }
-    if (e.key === 'Escape') {
-      this.configOpen.set(false);
-      this.menuOpen.set(false);
-    }
-  }
-
-  protected onDocClick(e: MouseEvent): void {
-    const wrap = this.configWrap()?.nativeElement;
-    if (this.configOpen() && wrap && e.target instanceof Node && !wrap.contains(e.target) && this.doc.contains(e.target)) {
-      this.configOpen.set(false);
-    }
+    // The theme drawer is a modal dialog: it handles its own Escape and returns focus itself.
+    if (e.key === 'Escape') this.menuOpen.set(false);
   }
 }
 

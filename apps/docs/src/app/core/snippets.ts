@@ -1,17 +1,25 @@
+import { Lang } from './i18n';
 import { DocVersion } from './versions';
 
 /**
- * A code sample: the same in every version, or written twice when the control flow differs:
+ * A code sample for one language: the same in every version, or written twice when the control flow differs:
  * `classic` for v1 / v2 (`*ngIf`, `*ngFor`) and `v3` for v3 (`@if`, `@for`).
  */
-export type Snippet = string | { classic: string; v3: string };
+export type VersionSnippet = string | { classic: string; v3: string };
 
 /**
- * The sample for this version. Samples are written the v3 way; v1 / v2 readers get named slots as
+ * A code sample. Usually written once in Thai and turned English by the page's phrase list (core/sample-text.ts);
+ * `{ th, en }` when the English sample differs in shape, not just in words.
+ */
+export type Snippet = VersionSnippet | { th: VersionSnippet; en: VersionSnippet };
+
+/**
+ * The sample for this version and language. Samples are written the v3 way; v1 / v2 readers get named slots as
  * `<ng-template wtTemplate="footer">`, the form their templates use (v3 keeps `<ng-template #footer>`).
  */
-export function pick(s: Snippet | undefined, v: DocVersion): string {
+export function pick(s: Snippet | undefined, v: DocVersion, lang: Lang = 'th'): string {
   if (!s) return '';
+  if (typeof s !== 'string' && 'th' in s) s = s[lang];
   if (typeof s !== 'string') return v.major === 3 ? s.v3 : s.classic;
   return v.major === 3 ? s : classicSlots(s);
 }
@@ -31,8 +39,8 @@ export interface ImportNames {
 
 const FORMS = "import { FormsModule } from '@angular/forms';\n";
 
-export function ngModuleImport(n: ImportNames): string {
-  return `// app.module.ts หรือ feature module ที่ใช้
+export function ngModuleImport(n: ImportNames, lang: Lang = 'th'): string {
+  return `// ${lang === 'en' ? 'app.module.ts or the feature module that uses it' : 'app.module.ts หรือ feature module ที่ใช้'}
 import { NgModule } from '@angular/core';
 ${n.forms ? FORMS : ''}import { ${n.module} } from 'wiratheme/${n.entry}';
 

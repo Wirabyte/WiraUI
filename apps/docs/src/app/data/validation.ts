@@ -14,6 +14,19 @@ export const VALIDATION_DOC: ComponentDoc = {
     th: 'ช่องที่ไม่ถูกต้องขึ้นสีแดงเองเมื่อถูกแตะแล้วหรือเมื่อกดส่งฟอร์ม และ <wt-field-error> แสดงข้อความภาษาไทยให้ทันที พร้อม validator สำหรับเลขบัตรประชาชน เบอร์โทร และการยืนยันรหัสผ่าน',
     en: 'Invalid fields turn red on their own once touched or once the form is submitted, and <wt-field-error> shows the message in Thai (or English). Validators for Thai ID numbers, phone numbers and matching passwords come with it.',
   },
+  english: {
+    'เบอร์โทร': 'Phone',
+    'เลขประจำตัวประชาชน': 'Thai ID number',
+    'รหัสผ่าน': 'Password',
+    'ยืนยันรหัสผ่าน': 'Confirm password',
+    'สมัคร': 'Sign up',
+    'รหัสสาขา': 'Branch code',
+    'ใช้ตัวเลข 10 หลัก': 'Use 10 digits',
+    'ชื่อเล่น': 'Nickname',
+    'ช่องที่ผิดขึ้นสีแดงและแสดงข้อความแล้ว': 'invalid fields already show red, with their messages',
+    'กรุณากรอกอีเมล': 'Email is required',
+    'ต้องมีอย่างน้อย 8 ตัวอักษร': 'Use at least 8 characters',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -26,7 +39,7 @@ export const VALIDATION_DOC: ComponentDoc = {
       title: { th: 'ฟอร์มแบบ template', en: 'Template forms' },
       text: {
         th: 'ช่องขึ้นสีแดงเองเมื่อถูกแตะแล้วหรือเมื่อกดส่ง ไม่ต้องเช็ก <code>ng-dirty</code> เอง <code>&lt;wt-field-error for="email" label="อีเมล"&gt;</code> แสดง "กรุณากรอกอีเมล" หรือ "รูปแบบอีเมลไม่ถูกต้อง" (เป็นภาษาอังกฤษเมื่อ locale เป็นอังกฤษ) ลองกดบันทึกโดยไม่กรอก',
-        en: 'Fields turn red once touched or once the form is submitted, with no <code>ng-dirty</code> checks to write. <code>&lt;wt-field-error for="email" label="อีเมล"&gt;</code> shows "กรุณากรอกอีเมล" or "รูปแบบอีเมลไม่ถูกต้อง" (English when the locale is English). Try saving it empty.',
+        en: 'Fields turn red once touched or once the form is submitted, with no <code>ng-dirty</code> checks to write. <code>&lt;wt-field-error for="email" label="Email"&gt;</code> shows "Email is required" or "Enter a valid email address" (in Thai when the locale is Thai). Try saving it empty.',
       },
     },
     reactive: {
@@ -92,7 +105,7 @@ export const VALIDATION_DOC: ComponentDoc = {
     basic: `email = '';
 phone = '';
 
-save(form: NgForm) {
+save(form: NgForm): void {
   if (form.invalid) return;   // ช่องที่ผิดขึ้นสีแดงและแสดงข้อความแล้ว
   // บันทึก
 }`,
@@ -117,7 +130,7 @@ validationMessage({ minlength: { requiredLength: 8 } });       // 'ต้อง�
       rows: [
         row('for', 'string', undefined, 'ชื่อ control ในฟอร์มรอบ ๆ (reactive หรือ ngModel)', 'Name of a control in the surrounding form (reactive or ngModel)'),
         row('control', 'AbstractControl | NgModel', undefined, 'control โดยตรง แทน for', 'The control itself, instead of for'),
-        row('label', 'string', undefined, 'ชื่อช่องในข้อความ: กรุณากรอก{label}', 'Field name in messages: กรุณากรอก{label}'),
+        row('label', 'string', undefined, 'ชื่อช่องในข้อความ: กรุณากรอก{label}', 'Field name in messages: {label} is required'),
         row('messages', 'Partial<Record<string, string>>', undefined, 'ข้อความของตัวเองต่อ key ของ error', 'Own words per error key'),
         row('always', 'boolean', 'false', 'แสดงก่อนแตะช่องหรือกดส่ง', 'Show before the field is touched or the form submitted'),
         row('id', 'string', 'สร้างให้ / generated', 'id สำหรับ aria-describedby ของช่อง', 'id for the field\'s aria-describedby'),

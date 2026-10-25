@@ -7,7 +7,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-button id="d-confirm-open" label="ลบลูกค้า" severity="danger" icon="pi pi-trash" (onClick)="remove()"></wt-button>
+        <wt-button id="d-confirm-open" [label]="tx('ลบลูกค้า')" severity="danger" icon="pi pi-trash" (onClick)="remove()"></wt-button>
         <span class="docs-demo-output">result: <code id="d-confirm-result">{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -22,7 +22,7 @@
 
     <docs-section id="key" [section]="sec['key']">
       <docs-demo [html]="code['key']" [ts]="ts['key']">
-        <wt-button label="ยืนยันด้านบน" severity="secondary" (onClick)="askTop()"></wt-button>
+        <wt-button [label]="tx('ยืนยันด้านบน')" severity="secondary" (onClick)="askTop()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -30,14 +30,14 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="message"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['templates']">
-        <wt-button label="คำเชิญเข้าทีม" icon="pi pi-user" (onClick)="invite()"></wt-button>
+        <wt-button [label]="tx('คำเชิญเข้าทีม')" icon="pi pi-user" (onClick)="invite()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="fallback" [section]="sec['fallback']">
       <docs-demo [html]="code['fallback']" [ts]="ts['fallback']">
-        <wt-button label="ถามโดยไม่มีกล่อง" severity="secondary" (onClick)="askNowhere()"></wt-button>
+        <wt-button [label]="tx('ถามโดยไม่มีกล่อง')" severity="secondary" (onClick)="askNowhere()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -48,13 +48,13 @@
     <wt-confirmdialog key="custom" #cd>
       <ng-template #message let-c>
         <div class="docs-confirm-invite">
-          <wt-avatar label="ก" shape="circle" size="large"></wt-avatar>
+          <wt-avatar [label]="tx('ก')" shape="circle" size="large"></wt-avatar>
           <p class="docs-demo-p">{{ c?.message }}</p>
         </div>
       </ng-template>
       <ng-template #footer>
-        <wt-button label="ไว้ก่อน" [text]="true" (onClick)="cd.reject()"></wt-button>
-        <wt-button label="เข้าร่วม" icon="pi pi-check" (onClick)="cd.accept()"></wt-button>
+        <wt-button [label]="tx('ไว้ก่อน')" [text]="true" (onClick)="cd.reject()"></wt-button>
+        <wt-button [label]="tx('เข้าร่วม')" icon="pi pi-check" (onClick)="cd.accept()"></wt-button>
       </ng-template>
     </wt-confirmdialog>
   </ng-template>

@@ -829,6 +829,112 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
   - v1/v2: `wtTemplate="footer"` กับ `*ngIf`
   - v3: `#footer` กับ `@if`
 
+### 12.9 Select, Paginator และ Table (25 ต.ค. 2569)
+
+- **สำรวจก่อนทำ** (21+ แอปของทีม):
+  - `p-dropdown` / `p-select` ใช้ 1,434 ครั้ง
+  - `p-table` ใช้ 947 ครั้งใน 449 ไฟล์ ราว 96% แบ่งหน้า/เรียง/ค้นหาฝั่ง browser มี lazy เฉพาะ Samsen One
+  - CSS ของแอปเขียนทับ `.p-datatable-*` 640 จุด จึงเก็บชื่อ class ของแต่ละยุคไว้
+- **Select** (`wiratheme/select`, `wt-select` หรือ `wt-dropdown`):
+  - **โครงสร้าง:** combobox แบบ select-only ตาม ARIA มี `<input role="combobox">` ที่ซ่อนอยู่รับคีย์บอร์ดและ `<label for>` รายการเปิดใน top layer จึงไม่ต้องใช้ `appendTo`
+  - **ค้นหา:** ไทย/อังกฤษไม่สนตัวพิมพ์ เลขไทยเท่ากับ 0–9 ค้นหลายฟิลด์ได้ด้วย `filterBy="name_th,code"`
+  - **คีย์บอร์ด:** แบบ native select ทั้งลูกศร, Home/End, PageUp/Down, Enter/Space, Esc, Tab เลือกแถวที่ชี้อยู่ และพิมพ์ตัวอักษรเพื่อหาตอนที่ปิดอยู่ได้ คลิก label แค่ focus ไม่เปิดรายการ
+  - **ความสามารถอื่น:** group, `optionDisabled`, `showClear`, `editable`, `loading`, `checkmark`, template item / selectedItem / group / header / footer / empty / emptyfilter / dropdownicon, `dataKey`
+  - **ตรรกะ:** อยู่ใน core (`select.ts`) พร้อม unit test
+- **Paginator** (`wiratheme/paginator`):
+  - ปุ่มหน้า และช่องจำนวนแถวต่อหน้าที่ใช้ `wt-select`
+  - รายงานภาษาไทยค่าเริ่มต้น `กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ` (ข้อความที่แอปใช้มากที่สุด 188 ครั้ง)
+  - บนมือถือซ่อนปุ่มหน้าแรก/สุดท้าย และให้รายงานขึ้นบรรทัดของตัวเอง
+- **Table** (`wiratheme/table`, `wt-table` หรือ `wt-datatable` ตัวเดียวแบบ p-table):
+  - **Template:** รับ `pTemplate="x"`, `wtTemplate="x"` และ `#x`: caption / header / body / footer / emptymessage / summary / loadingbody / paginatorleft / paginatorright / colgroup
+  - **Body context:** `$implicit`, `rowIndex` นับต่อเนื่องข้ามหน้า (`{{ i + 1 }}` แบบเดิม), `columns`
+  - **ลำดับข้อมูล:** ค้นหา (`filterGlobal`, `filter`) → เรียง → แบ่งหน้า
+    - การเรียงใช้ลำดับพจนานุกรมไทย ตัวเลขในข้อความเรียงแบบตัวเลข ช่องว่างไปท้าย
+    - เรียงหลายคอลัมน์ได้ด้วย Ctrl/⌘ และ `removableSort`
+  - **Directive:** `wtSortableColumn` / `pSortableColumn` + `wt-sortIcon`, `wtSelectableRow` / `pSelectableRow`, `wt-tableCheckbox`, `wt-tableHeaderCheckbox` (เลือกทุกแถวที่ค้นหาเหลือ)
+  - **Lazy:** `onLazyLoad` ส่ง `first`, `rows`, `page` (เริ่มที่ 1), การเรียงและตัวกรอง
+  - **Loading:** มี mask และ `loadingbody` ส่วน `showLoader` / `loadingIcon` รับได้
+  - **หน้าตาและเลย์เอาต์:**
+    - `showGridlines` / `stripedRows` / `size` และ class เดิม `p-datatable-sm/-gridlines/-striped`
+    - `scrollable` + `scrollHeight` (หรือ `flex`) พร้อมหัวตารางติดบน
+    - `responsiveLayout="stack"` + `breakpoint` (ใช้ `.p-column-title` แบบเดิม) ส่วนแบบปกติเลื่อนด้านข้างในตัว
+  - **Input ที่รับไว้แต่ไม่ทำอะไร:** `responsive`, `autoLayout`, `resizableColumns`, `reorderableColumns`, `virtualScroll`, `paginatorDropdownAppendTo` … (แอปยังใส่อยู่แต่ไม่มีผล)
+  - **ยังไม่ทำ (แอปใช้แทบไม่มี):** row expansion, cell editing, frozen columns, row group, column filter แบบเมนู, export CSV
+
+### 12.10 Menubar และรอบรีวิวหน้าตา (25 ต.ค. 2569)
+
+- **Menubar** (`wiratheme/menubar`, `wt-menubar`):
+  - **สำรวจ:** แอปส่วนใหญ่ใช้ `p-menubar` เป็นแถบหัวเว็บที่มีแค่ `pTemplate="start"` / `"end"` (ไม่มี model) และวาง `p-menu` popup ไว้ใน end จึงต้องใช้แบบไม่มี model ได้เต็มที่ และรับ `<ng-content>` เป็น end แบบเดิม
+  - **Model:** `MenuItem` แบบเดิม (`label`, `icon`, `items`, `routerLink` + ตัวเลือก router, `url`, `target`, `command`, `disabled`, `visible`, `separator`, `badge`, `escape`, `styleClass` …) export เป็น `MenuItem` จาก `wiratheme/api` และ `WtMenuItem` จาก `wiratheme/config`
+  - **Router:** `@angular/router` เป็น optional peer dependency เพราะ entry นี้ entry เดียวที่ import
+  - **คีย์บอร์ด:** ตาม ARIA menubar มี tab stop เดียว (roving tabindex) ลูกศรซ้าย/ขวาข้ามรายการบนสุด ลง/ขึ้นเปิดเมนูย่อย ขวาในเมนูย่อยไปเมนูของรายการถัดไป Esc ถอยทีละชั้น พิมพ์ตัวอักษรไทยกระโดดได้
+  - **Hover:** `autoDisplay` ค่าเริ่มต้นตามยุค (v1 ต้องคลิกก่อน, v2/v3 hover เปิดเลย) และถ้า hover เปิดอยู่แล้วคลิกจะคงไว้ ไม่ปิดทันที
+  - **จอแคบ:** ที่ `breakpoint` (960px) ลงไปมีปุ่มเมนู รายการเป็นแนวตั้งใต้แถบ เมนูย่อยเปิดในที่
+  - **เมนูย่อยชนขอบขวา:** เปิดไปทางซ้ายแทน
+  - **ตรรกะ:** อยู่ใน core (`menu.ts`) พร้อม unit test
+- **รอบรีวิวหน้าตา:**
+  - **Focus ของช่องกรอก:** เส้นขอบเป็นสีหลัก และในโหมด ring / outline มีวงจาง ๆ ตามมุมโค้งของช่อง
+  - **Select:**
+    - ความกว้างมาตรฐาน `--wt-select-width` (14rem) และไม่เกินกรอบ
+    - ใช้ width คงที่แทน `min-width: min(…, 100%)` เพราะ WebKit คำนวณค่านั้นเกินคอลัมน์ grid
+  - **Select (พฤติกรรม):**
+    - คลิกซ้ำเพื่อปิด แม้กดเมาส์ค้างแบบคนจริง (mousedown ไม่ย้าย focus)
+    - ระหว่าง `loading` เปิดรายการและเปลี่ยนค่าไม่ได้
+  - **Accordion แบบ styled:** เป็นกล่องเดียวมีเส้นคั่นแถว พื้นเดียวกันทั้งหัวและเนื้อหา สีหัวอ่านง่ายขึ้น
+  - **Table:** หัวตารางมีพื้นสีอ่อนเด่นจากแถว
+  - **Fieldset:** legend มีเส้นขอบและพื้นสีของตัวเอง
+  - **Divider:** ข้อความบนเส้นมีมุมโค้ง
+
+### 12.11 ชื่อ tag เดิม, Tabs แบบ value, Menu และ TabMenu (25 ต.ค. 2569)
+
+- **สำรวจ** (นับ tag ในแอปของทีม): `p-calendar` 303, `p-progressSpinner` 191, `p-tabPanel` 161, `p-inputSwitch` 93, `p-menu` 72, `p-tabMenu` 71, `p-tabs`/`p-tablist`/`p-tab` แบบ value 44/44/104
+- **ชื่อ tag เดิม (alias):** `wt-calendar` = DatePicker, `wt-inputSwitch` = ToggleSwitch, `wt-progressSpinner` = ProgressSpinner, `wt-tabView` / `wt-tabPanel` = Tabs แบบ index, `wt-accordionTab` = AccordionTab ทำให้ย้ายแอปได้ด้วยการเปลี่ยน prefix อย่างเดียว (CSS เลือก tag ตัวพิมพ์เล็ก ซึ่ง browser เทียบแบบไม่สนตัวพิมพ์)
+- **Tabs แบบ value:** `<wt-tabs [(value)]>` + `wt-tablist` / `wt-tab value` / `wt-tabpanels` / `wt-tabpanel value` ใช้ได้ทุกรุ่น (v1 ด้วย เพื่อให้ template ใช้ร่วมกันได้)
+  - ถ้ามี `wt-tablist` จะไม่สร้างแถวหัวแท็บจาก panel
+  - `[(value)]` เป็น `any` เพื่อผูกกับ field ที่เป็น string, number หรือ union ของแอปได้ใน strict template
+- **Menu** (`wiratheme/menu`, `wt-menu`):
+  - popup เปิดจากปุ่มด้วย `toggle($event)` อยู่ใน top layer (`appendTo` รับไว้แต่ไม่มีผล) หรือเป็นเมนูข้างแบบ inline
+  - item ที่มี `items` เป็นกลุ่มมีหัวข้อ (ชั้นเดียว)
+  - คีย์บอร์ด: เปิดแล้ว focus รายการแรก ลูกศรข้ามรายการที่ปิด Enter/Space เลือก Esc ปิดแล้วคืน focus ให้ปุ่ม เมนู inline มี tab stop เดียว
+- **TabMenu** (`wiratheme/tabmenu`, `wt-tabmenu` / `wt-tabMenu`):
+  - แท็บจาก menu model มี `[(activeItem)]` ถ้าไม่ใส่ item ที่มี `routerLink` จะดู router แทน
+  - ใช้ stylesheet ของ wt-tabs (โหลดให้เอง) ลูกศรย้าย focus เท่านั้น Enter/Space เปิดแท็บ
+
+### 12.12 MultiSelect, InputMask และ Messages (25 ต.ค. 2569)
+
+- **MultiSelect** (`wiratheme/multiselect`, `wt-multiselect` / `wt-multiSelect`, แอปใช้ 161 ครั้ง):
+  - หน้าตาและ token เดียวกับ Select (โหลด stylesheet ของ select และ checkbox ให้เอง) ค่าเป็น array
+  - ค่าเริ่มต้นตามเดิม: `filter` และ `showToggleAll` เปิดอยู่, `maxSelectedLabels` 3 แล้วแสดง "เลือกแล้ว {0} รายการ" (`selectedItemsLabel`), `defaultLabel` คือ placeholder ชื่อเดิม
+  - `display="chip"` มีปุ่มลบแต่ละค่า, `selectionLimit` ปิดแถวที่เหลือและซ่อนช่องเลือกทั้งหมด, template `selectedItems` ได้ค่าและ `removeChip`
+  - ช่องเลือกทั้งหมดเลือกเฉพาะแถวที่ค้นหาเหลือและไม่ disabled มีขีดเมื่อเลือกบางแถว
+  - คีย์บอร์ด: เลือกแล้วรายการยังเปิดอยู่, Space/Enter เลือกแถวที่ชี้, Ctrl/⌘+A เลือกทั้งหมด, Esc / Tab ปิด
+- **InputMask** (`wiratheme/inputmask`, `wt-inputmask` / `wt-inputMask`, 74 ครั้ง ส่วนใหญ่เลขบัตรประชาชนและโทรศัพท์):
+  - ตรรกะอยู่ใน core (`mask.ts`) พร้อม unit test: `9` `a` `*` และ `?` แบบเดิม `characterPattern` กำหนดตัวอักษร
+  - อ่านข้อความแบบเดียวกับการพิมพ์ทั้งตอนพิมพ์ วาง และค่าจาก model เลขไทยนับเป็น 0–9 mask ที่เป็นตัวเลขล้วนเปิดแป้นตัวเลข (`inputmode="numeric"`)
+  - Backspace / Delete ข้ามขีดที่ mask ใส่ให้ `autoClear` ล้างค่าที่ไม่ครบตอน blur
+  - model: ข้อความที่จัดรูปแล้ว (มี `_` ระหว่างยังไม่ครบ แบบเดิม) หรือเฉพาะตัวที่พิมพ์เมื่อ `[unmask]="true"`
+- **Messages** (`wt-messages` อยู่ใน `wiratheme/message`, 110 ครั้ง):
+  - กล่อง wt-message ซ้อนกันจาก `[(value)]` ปิดแล้วเอาออกจาก array
+  - `enableService` ค่าเริ่มต้น true แบบเดิม: แสดงข้อความจาก `WtMessageService` ที่ `key` ตรงกัน (แอปส่วนใหญ่ปิดด้วย `[enableService]="false"`)
+- **Timeline** (`wiratheme/timeline`, 35 ครั้ง): แนวตั้ง/แนวนอน, `align` left / right / alternate (top / bottom ตอนแนวนอน), template content / opposite / marker ถ้าไม่มี opposite เนื้อหาจะเต็มแถว (ต่างจากเดิมที่เหลือครึ่งเดียว)
+- **Chart** (`wiratheme/chart`, 130 ครั้ง):
+  - ห่อ Chart.js (`chart.js/auto`) เป็น optional peer `>=3 <5` แอปติดตั้ง `chart.js` เองเหมือนเดิม (แอปของทีมใช้ 4.x)
+  - สร้างใหม่เมื่อ `type` / `data` / `options` เปลี่ยน แบบเดิม, `refresh()` สำหรับแก้ data ในที่, `(onDataSelect)`, `[plugins]`, `width` / `height` / `responsive`
+  - ใช้ฟอนต์ (ภาษาไทย) และสีตัวอักษรของธีม เว้นแต่แอปตั้งค่า default ของ Chart.js เองหรือส่งมาใน `options`
+  - ไม่กว้างเกินกรอบแม้ใส่ `width` คงที่
+- **Image** (`wiratheme/image`, 45 ครั้ง ส่วนใหญ่ `[preview]`):
+  - ดูภาพเต็มจอด้วย `<dialog>` แบบ modal (top layer, Esc ปิด, focus กลับปุ่มเดิม, หน้าไม่เลื่อนข้างหลัง) หมุน/ซูม 0.5–1.5
+  - บนจอที่ไม่มี hover ปุ่มดูภาพแสดงเป็นไอคอนเล็กที่มุมตลอด
+- **AutoComplete** (`wiratheme/autocomplete`, 30 ครั้ง):
+  - หน้าตาและ token เดียวกับ Select (ช่องแบบพิมพ์ได้ + ปุ่ม dropdown ตรงที่ลูกศร)
+  - `(completeMethod)` หลัง `delay` (300) และ `minLength` (1), ระหว่างรอมี spinner, ไม่พบแสดงข้อความ
+  - ค่าเป็น option ทั้งก้อนเมื่อเลือก ระหว่างพิมพ์เป็นข้อความแบบเดิม, `forceSelection` ล้างข้อความที่ไม่ได้เลือก (ถ้าตรงกับชื่อ option พอดีจะเลือกให้)
+  - `field` ชื่อเดิมของ `optionLabel`
+  - **ยังไม่ทำ:** `multiple` (แอปใช้ครั้งเดียว)
+- **Accordion แบบ value:** `<wt-accordion [(value)]>` + `wt-accordion-panel value` / `wt-accordion-header` / `wt-accordion-content` (แอปรุ่นใหม่ใช้ 17 ครั้ง) ใช้ได้ทุกรุ่น หน้าตาและคีย์บอร์ดเหมือนแบบ `wt-accordion-tab`, `multiple` แล้วค่าเป็น array
+- **PanelMenu** (`wiratheme/panelmenu`, 18 ครั้ง): เมนูข้างแบบแผงพับได้ ซ้อนได้หลายชั้น สถานะเปิดอยู่ที่ `expanded` ของ item แบบเดิม, `multiple` ค่าเริ่มต้นตามยุค (v1 เปิดหลายแผงได้, v2/v3 ทีละแผง), คีย์บอร์ด ↑↓ ไล่ทุกแถวที่มองเห็น → เปิด ← ปิด/กลับไปแถวแม่
+- **Steps** (`wiratheme/steps`, `p-steps` 10 ครั้ง): ขั้นตอนมีตัวเลขจาก menu model, ขั้นที่ผ่านแล้วเส้นและตัวเลขเป็นสีหลัก, ค่าเริ่มต้น read-only แบบเดิม `[readonly]="false"` คลิก/ลูกศร/Enter เลือกขั้นได้ (`[(activeIndex)]`) **ยังไม่ทำ:** Stepper แบบ value (`p-stepper` 7 ครั้ง)
+
 ---
 
 ## 13. คำถามที่ต้องตัดสินใจ

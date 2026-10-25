@@ -13,6 +13,22 @@ export const CHECKBOX_DOC: ComponentDoc = {
     th: 'ช่องติ๊กที่ใช้ได้ทั้ง ngModel และ Reactive Forms มี 2 โหมด: binary (ค่าเป็น true / false) หรือแบบกลุ่ม (ค่าเป็น array)',
     en: 'A checkbox for ngModel and reactive forms, in two modes: binary (true / false) or a group whose value is an array.',
   },
+  english: {
+    'ยอมรับเงื่อนไขการใช้งาน': 'I accept the terms of use',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'ยินยอมตามนโยบายความเป็นส่วนตัว': 'I agree to the privacy policy',
+    'รับข่าวสารทางอีเมล': 'Email me the newsletter',
+    'ปิดอยู่ (ติ๊กแล้ว)': 'Disabled (checked)',
+    'ปิดอยู่': 'Disabled',
+    'ต้องยอมรับก่อนดำเนินการต่อ': 'Accept to continue',
+    'ติ๊กทั้งหมด': 'Check all',
+    'ข่าวสาร': 'News',
+    'โปรโมชัน': 'Deals',
+    'อัปเดตสินค้า': 'Product updates',
+    'ใช้ได้ตามปกติ': 'works as usual',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -90,11 +106,11 @@ export const CHECKBOX_DOC: ComponentDoc = {
 ];
 selected: string[] = ['deals'];`,
     reactive: `form = new FormGroup({
-  terms: new FormControl(false, { nonNullable: true, validators: [Validators.requiredTrue] }),
-  privacy: new FormControl(false, { nonNullable: true, validators: [Validators.requiredTrue] }),
+  terms: new FormControl(false, Validators.requiredTrue),
+  privacy: new FormControl(false, Validators.requiredTrue),
 });
 
-// form.get('privacy')?.disable() ใช้ได้ตามปกติ`,
+// this.form.controls.privacy.disable() ใช้ได้ตามปกติ`,
   },
   api: [
     {

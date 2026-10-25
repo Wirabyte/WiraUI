@@ -2,6 +2,20 @@ import { inject, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { WtButtonModule } from 'wiratheme-v2/button';
+import { WtSelectModule } from 'wiratheme-v2/select';
+import { WtTableModule } from 'wiratheme-v2/table';
+import { WtPaginatorModule } from 'wiratheme-v2/paginator';
+import { WtMenubarModule } from 'wiratheme-v2/menubar';
+import { WtPanelMenuModule } from 'wiratheme-v2/panelmenu';
+import { WtStepsModule } from 'wiratheme-v2/steps';
+import { WtChartModule } from 'wiratheme-v2/chart';
+import { WtImageModule } from 'wiratheme-v2/image';
+import { WtAutoCompleteModule } from 'wiratheme-v2/autocomplete';
+import { WtMenuModule } from 'wiratheme-v2/menu';
+import { WtTabMenuModule } from 'wiratheme-v2/tabmenu';
+import { WtMultiSelectModule } from 'wiratheme-v2/multiselect';
+import { WtInputMaskModule } from 'wiratheme-v2/inputmask';
+import { WtTimelineModule } from 'wiratheme-v2/timeline';
 import { WtMeterGroupModule } from 'wiratheme-v2/metergroup';
 import { WtValidationModule, WtValidators } from 'wiratheme-v2/validation';
 import { WtDialogModule } from 'wiratheme-v2/dialog';
@@ -84,6 +98,20 @@ import {
   AnimatePageV2,
   MeterGroupPageV2,
   ValidationPageV2,
+  SelectPageV2,
+  TablePageV2,
+  PaginatorPageV2,
+  MenubarPageV2,
+  PanelMenuPageV2,
+  StepsPageV2,
+  ChartPageV2,
+  ImagePageV2,
+  AutoCompletePageV2,
+  MenuPageV2,
+  TabMenuPageV2,
+  MultiSelectPageV2,
+  InputMaskPageV2,
+  TimelinePageV2,
   TextareaPageV2,
   ToggleSwitchPageV2,
 } from './pages-v2';
@@ -131,6 +159,20 @@ import { THEME_V2 } from './theme-v2';
     AnimatePageV2,
     MeterGroupPageV2,
     ValidationPageV2,
+    SelectPageV2,
+    TablePageV2,
+    PaginatorPageV2,
+    MenubarPageV2,
+    PanelMenuPageV2,
+    StepsPageV2,
+    ChartPageV2,
+    ImagePageV2,
+    AutoCompletePageV2,
+    MenuPageV2,
+    TabMenuPageV2,
+    MultiSelectPageV2,
+    InputMaskPageV2,
+    TimelinePageV2,
   ],
   imports: [
     FormsModule,
@@ -176,6 +218,20 @@ import { THEME_V2 } from './theme-v2';
     WtAnimateModule,
     WtMeterGroupModule,
     WtValidationModule,
+    WtSelectModule,
+    WtTableModule,
+    WtPaginatorModule,
+    WtMenubarModule,
+    WtPanelMenuModule,
+    WtStepsModule,
+    WtChartModule,
+    WtImageModule,
+    WtAutoCompleteModule,
+    WtMenuModule,
+    WtTabMenuModule,
+    WtMultiSelectModule,
+    WtInputMaskModule,
+    WtTimelineModule,
     RouterModule.forChild(
       versionRoutes({
         button: ButtonPageV2,
@@ -218,6 +274,20 @@ import { THEME_V2 } from './theme-v2';
         animate: AnimatePageV2,
         metergroup: MeterGroupPageV2,
         validation: ValidationPageV2,
+        select: SelectPageV2,
+        table: TablePageV2,
+        paginator: PaginatorPageV2,
+        menubar: MenubarPageV2,
+        panelmenu: PanelMenuPageV2,
+        steps: StepsPageV2,
+        chart: ChartPageV2,
+        image: ImagePageV2,
+        autocomplete: AutoCompletePageV2,
+        menu: MenuPageV2,
+        tabmenu: TabMenuPageV2,
+        multiselect: MultiSelectPageV2,
+        inputmask: InputMaskPageV2,
+        timeline: TimelinePageV2,
       })
     ),
   ],

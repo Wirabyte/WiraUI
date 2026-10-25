@@ -14,8 +14,8 @@
 
     <docs-section id="icon" [section]="sec['icon']">
       <docs-demo [html]="code['icon']">
-        <wt-chip label="ส่งแล้ว" icon="pi pi-send"></wt-chip>
-        <wt-chip label="สมชาย ใจดี" [image]="image" alt="สมชาย"></wt-chip>
+        <wt-chip [label]="tx('ส่งแล้ว')" icon="pi pi-send"></wt-chip>
+        <wt-chip [label]="tx('สมชาย ใจดี')" [image]="image" [alt]="tx('สมชาย')"></wt-chip>
       </docs-demo>
     </docs-section>
 
@@ -26,7 +26,7 @@
         }
         <span class="docs-demo-output">tags: <code id="d-tags">{{ tags | json }}</code></span>
         @if (tags.length < 3) {
-          <wt-button id="d-reset" [label]="en() ? 'Reset' : 'คืนค่า'" size="small" severity="secondary" [text]="true" (onClick)="resetTags()"></wt-button>
+          <wt-button id="d-reset" [label]="tx('คืนค่า')" size="small" severity="secondary" [text]="true" (onClick)="resetTags()"></wt-button>
         }
       </docs-demo>
     </docs-section>

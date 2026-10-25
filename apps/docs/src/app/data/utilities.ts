@@ -1,3 +1,4 @@
+import { SampleWords } from '../core/sample-text';
 import { Text } from '../core/i18n';
 
 /** One part of a Utilities page. `demo` is plain HTML using the real utility classes (rendered live). */
@@ -421,4 +422,20 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
       },
     ],
   },
+};
+
+/** English for the Thai in the utility demos and code (see core/sample-text.ts). */
+export const UTILITY_WORDS: SampleWords = {
+  'ทั้งชุด': 'the whole set',
+  'หรือเลือกเอง': 'or pick the groups',
+  'ตัดกลุ่มที่ไม่ใช้': 'leave out groups you do not use',
+  'ไม่มี sm: md: lg: xl:': 'no sm: md: lg: xl:',
+  'ไม่ใส่ใน @layer': 'not inside @layer',
+  'หรือ': 'or',
+  'ตัวอักษรเล็ก': 'small text',
+  'ตัดข้อความที่ยาวเกินกล่อง': 'cuts text too long for its box',
+  'ชื่อ': 'First name',
+  'นามสกุล': 'Last name',
+  'รับข่าวสารทางอีเมล': 'Email me the newsletter',
+  'สมัคร': 'Sign up',
 };

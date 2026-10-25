@@ -1,0 +1,39 @@
+/* wt-tabmenu. Shared by wiratheme v1, v2 and v3. The tab row itself comes from wt-tabs' stylesheet (loaded with it);
+   this file only fits a list of links into it. */
+@layer wiratheme.components {
+  wt-tabmenu {
+    display: block;
+    min-width: 0;
+  }
+  .wt-tabmenu {
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-tabmenu-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-tabmenu-item {
+    display: flex;
+    flex: none;
+  }
+  .wt-tabmenu-item > .wt-tab {
+    text-decoration: none;
+  }
+  .wt-tabmenu-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.375rem;
+    border-radius: 999px;
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+}

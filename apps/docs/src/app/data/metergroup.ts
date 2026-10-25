@@ -13,6 +13,20 @@ export const METERGROUP_DOC: ComponentDoc = {
     th: 'หลายค่าบนแถบเดียวพร้อมคำอธิบาย เช่น พื้นที่จัดเก็บที่ใช้ไปแยกตามประเภท สีวนตามสีของธีมเองถ้าไม่กำหนด',
     en: 'Several values on one bar with a legend, such as storage used by type. Colours cycle through the theme\'s own when not set.',
   },
+  english: {
+    'พื้นที่จัดเก็บ': 'Storage',
+    'ใช้ไป': 'Used',
+    'พื้นที่ 200 GB': 'Storage, 200 GB',
+    'ใช้ไปทั้งหมด': 'Used in total',
+    'รูปภาพ': 'Photos',
+    'วิดีโอ': 'Videos',
+    'เอกสาร': 'Documents',
+    'อื่น ๆ': 'Other',
+    'ใช้ไป 96 จาก 200 GB': '96 of 200 GB used',
+    'ระบบ': 'System',
+    'แอป': 'Apps',
+    'สี CSS ใดก็ได้ ไม่ใส่ = สีของธีมวนไป': 'any CSS colour; left out = the theme colours in turn',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: {

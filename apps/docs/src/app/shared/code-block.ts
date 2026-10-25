@@ -65,12 +65,12 @@ export class DocsCopy implements OnDestroy {
   }
 }
 
-/** Highlighted code with a copy button. */
+/** Highlighted code: a soft card with a toolbar (file name, copy) over the dark pane; bare = the pane alone. */
 @Component({
   selector: 'docs-code',
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'docs-code', '[class.docs-code-bare]': 'bare()' },
+  host: { class: 'docs-code', '[class.docs-code-bare]': 'bare()', '[class.docs-code-headless]': 'headless()' },
   template: `
     @if (headless()) {
       <pre><code [innerHTML]="html()"></code></pre>

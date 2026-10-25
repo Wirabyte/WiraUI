@@ -13,6 +13,27 @@ export const RADIOBUTTON_DOC: ComponentDoc = {
     th: 'ตัวเลือกแบบเลือกได้ข้อเดียว ใส่ name เดียวกันทั้งกลุ่มและผูกกับ field หรือ formControlName เดียวกัน แต่ละตัวมี value ของตัวเอง',
     en: 'Single choice. Give every radio in a group the same name and the same field or formControlName; each has its own value.',
   },
+  english: {
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'แนวตั้ง: บรรทัดละตัว': 'stacked: one per line',
+    'แนวนอน: เว้นระยะเท่ากัน ขึ้นบรรทัดใหม่เมื่อแคบ': 'in a row: even gaps, wraps when narrow',
+    'ส่งธรรมดา (3–5 วัน)': 'Standard (3–5 days)',
+    'ส่งด่วน (1–2 วัน)': 'Express (1–2 days)',
+    'รับเองที่สาขา': 'Pick up at a branch',
+    'บัตรเครดิต': 'Credit card',
+    'โอนเงิน': 'Bank transfer',
+    'QR พร้อมเพย์': 'PromptPay QR',
+    'รายเดือน': 'Monthly',
+    'รายปี': 'Yearly',
+    'ปิดอยู่ (เลือกแล้ว)': 'Disabled (selected)',
+    'ปิดอยู่': 'Disabled',
+    'ต้องเลือก 1 ข้อ': 'Pick one',
+    'radio ทุกตัวในกลุ่มใช้ FormControl เดียวกัน เลือกตัวใหม่แล้วตัวเดิมเลิกเลือกเอง':
+      'every radio in the group shares one FormControl; picking a new one clears the old one',
+    'ก็อัปเดตทั้งกลุ่ม': 'updates the whole group too',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -85,7 +106,7 @@ export const RADIOBUTTON_DOC: ComponentDoc = {
   },
   ts: {
     reactive: `form = new FormGroup({
-  billing: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  billing: new FormControl('', Validators.required),
 });
 
 // radio ทุกตัวในกลุ่มใช้ FormControl เดียวกัน เลือกตัวใหม่แล้วตัวเดิมเลิกเลือกเอง

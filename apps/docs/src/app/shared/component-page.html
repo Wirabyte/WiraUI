@@ -16,15 +16,16 @@
         queryParamsHandling="merge"
         [class.active]="tab() === t.id"
         [attr.aria-current]="tab() === t.id ? 'page' : null"
-        >{{ t.label }}</a
       >
+        <docs-icon [name]="t.icon"></docs-icon>{{ t.label | loc }}
+      </a>
     }
   </nav>
 </header>
 
 @switch (tab()) {
   @case ('api') {
-    @for (g of doc().api; track g.id) {
+    @for (g of apiGroups(); track g.id) {
       <docs-section [id]="g.id" [title]="g.title">
         <docs-api-table [group]="g"></docs-api-table>
       </docs-section>
@@ -72,16 +73,16 @@
         <docs-code [code]="tsExample()" lang="ts"></docs-code>
       </docs-section>
     }
-    <docs-section id="designer" title="Theme Designer">
+    <docs-section id="designer" [title]="{ th: 'สตูดิโอธีม', en: 'WiraTheme Studio' }">
       @if (en()) {
         <p>
           Adjust these values on screen and export SCSS, CSS, TypeScript or JSON from the
-          <a [routerLink]="['/', version.id, 'theming', 'designer']">Theme Designer</a>.
+          <a [routerLink]="['/', version.id, 'theming', 'studio']">WiraTheme Studio</a>.
         </p>
       } @else {
         <p>
           ปรับค่าเหล่านี้บนหน้าจอแล้ว export เป็น SCSS, CSS, TypeScript หรือ JSON ได้จาก
-          <a [routerLink]="['/', version.id, 'theming', 'designer']">Theme Designer</a>
+          <a [routerLink]="['/', version.id, 'theming', 'studio']">สตูดิโอธีม (WiraTheme Studio)</a>
         </p>
       }
     </docs-section>

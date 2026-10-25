@@ -12,6 +12,13 @@ export const TAG_DOC: ComponentDoc = {
   module: 'WtTagModule',
   selector: 'wt-tag',
   description: { th: 'ป้ายสั้น ๆ บอกสถานะหรือหมวดหมู่ มีสีตาม severity, แบบมนเต็ม และ icon', en: 'A short label for a status or category, with severity colours, a pill shape and an icon.' },
+  english: {
+    'ใหม่': 'New',
+    'เปิดใช้งาน': 'Active',
+    'ยืนยันแล้ว': 'Verified',
+    'รออนุมัติ 3 รายการ': '3 awaiting approval',
+    "'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')": "'warning' and 'error' work too (= 'warn' and 'danger')",
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic', text: { th: 'ใส่ข้อความด้วย <code>value</code>', en: 'Set the text with <code>value</code>.' } },
@@ -68,6 +75,11 @@ export const BADGE_DOC: ComponentDoc = {
   module: 'WtBadgeModule',
   selector: 'wt-badge',
   description: { th: 'ตัวเลขหรือจุดเล็ก ๆ บอกจำนวนหรือสถานะ ไม่ใส่ค่าจะเป็นจุด', en: 'A small count or dot. Without a value it is a dot.' },
+  english: {
+    'กล่องข้อความ': 'Inbox',
+    'สถานะออนไลน์': 'Online',
+    "'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')": "'warning' and 'error' work too (= 'warn' and 'danger')",
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic', text: { th: '<code>value</code> เป็นตัวเลขหรือข้อความสั้น ๆ ไม่ใส่จะเป็นจุด', en: '<code>value</code> is a number or short text; leave it out for a dot.' } },
@@ -123,6 +135,15 @@ export const CHIP_DOC: ComponentDoc = {
   module: 'WtChipModule',
   selector: 'wt-chip',
   description: { th: 'ข้อมูลชิ้นเล็กแบบเม็ดยา มี icon หรือรูป และลบออกได้', en: 'A compact pill for a piece of data, with an icon or image, and optionally removable.' },
+  english: {
+    'ส่งแล้ว': 'Sent',
+    'สมชาย ใจดี': 'Alex Morgan',
+    'สมชาย': 'Alex',
+    'คืนค่า': 'Reset',
+    'ด่วน': 'Urgent',
+    'ลูกค้าใหม่': 'New customer',
+    'รอโทรกลับ': 'Call back',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic' },
@@ -151,7 +172,7 @@ export const CHIP_DOC: ComponentDoc = {
   ts: {
     removable: `tags = ['ด่วน', 'ลูกค้าใหม่', 'รอโทรกลับ'];
 
-remove(tag: string) {
+remove(tag: string): void {
   this.tags = this.tags.filter((t) => t !== tag);
 }`,
   },
@@ -196,6 +217,12 @@ export const AVATAR_DOC: ComponentDoc = {
   description: {
     th: 'รูปหรือตัวอักษรแทนผู้ใช้ มีขนาด รูปทรง และกลุ่มที่ซ้อนกัน ถ้าโหลดรูปไม่ได้จะแสดง label แทน',
     en: 'A picture or initials for a person, with sizes, shapes and overlapping groups. If the image fails, the label shows instead.',
+  },
+  english: {
+    'ส': 'A',
+    'ก': 'K',
+    'ม': 'M',
+    'สมชาย ใจดี': 'Alex Morgan',
   },
   sections: {
     import: { title: 'Import', text: { th: 'มี <code>WtAvatar</code> และ <code>WtAvatarGroup</code> อยู่ใน <code>WtAvatarModule</code>', en: '<code>WtAvatar</code> and <code>WtAvatarGroup</code> both come with <code>WtAvatarModule</code>.' } },
@@ -322,6 +349,10 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     th: 'แถบความคืบหน้าแบบรู้ค่าหรือไม่รู้ค่า นับเป็นเปอร์เซ็นต์หรือเป็นจำนวนชิ้นเทียบกับ max ความสูงตั้งที่ตัว element ได้เลย',
     en: 'A progress bar, determinate or indeterminate, in percent or as a count against max. Set its height on the element itself.',
   },
+  english: {
+    'รายการ': 'items',
+    'อัปโหลด 3 จาก 10 ไฟล์': 'Uploaded 3 of 10 files',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic', text: { th: '<code>value</code> 0–100 แสดงค่าบนแถบ ปิดด้วย <code>[showValue]="false"</code>', en: '<code>value</code> is 0–100 and shown on the bar; hide it with <code>[showValue]="false"</code>.' } },
@@ -330,7 +361,7 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
       title: { th: 'นับเป็นจำนวน', en: 'Counting items' },
       text: {
         th: '<code>[max]</code> และ <code>unit</code> แสดงเป็นจำนวน เช่น <code>1,000 / 2,500 รายการ</code> ส่วน <code>text</code> แทนข้อความบนแถบทั้งหมด',
-        en: '<code>[max]</code> and <code>unit</code> show a count such as <code>1,000 / 2,500 รายการ</code>; <code>text</code> replaces the label altogether.',
+        en: '<code>[max]</code> and <code>unit</code> show a count such as <code>1,000 / 2,500 items</code>; <code>text</code> replaces the label altogether.',
       },
     },
     content: {
@@ -398,8 +429,17 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   module: 'WtProgressSpinnerModule',
   selector: 'wt-progress-spinner',
   description: { th: 'วงกลมหมุนบอกว่ากำลังโหลด ขนาดตั้งที่ตัว element', en: 'A spinning circle that shows something is loading. Size it on the element.' },
+  english: {
+    'กำลังโหลด': 'Loading',
+  },
   sections: {
-    import: { title: 'Import', text: importText },
+    import: {
+      title: 'Import',
+      text: {
+        th: 'ใช้ได้ทั้ง NgModule (<code>WtProgressSpinnerModule</code>) และ standalone ชื่อ tag ที่แอปใช้อยู่ <code>wt-progressSpinner</code> (และ <code>wt-progressspinner</code>) ใช้ได้เหมือน <code>wt-progress-spinner</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Works as an NgModule (<code>WtProgressSpinnerModule</code>) or standalone. The tag name apps already use, <code>wt-progressSpinner</code> (and <code>wt-progressspinner</code>), works the same as <code>wt-progress-spinner</code>, so moving over is a prefix change.',
+      },
+    },
     basic: { title: 'Basic' },
     custom: {
       title: { th: 'ขนาด เส้น และความเร็ว', en: 'Size, stroke and speed' },

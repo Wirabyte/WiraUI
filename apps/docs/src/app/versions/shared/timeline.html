@@ -1,0 +1,75 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="content"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-timeline id="d-tl-basic" [value]="local(orders)">
+          <ng-template #content let-e let-i="index">{{ i + 1 }}. {{ e.status }}</ng-template>
+        </wt-timeline>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="opposite" [section]="sec['opposite']">
+      <docs-demo [html]="code['opposite']" layout="stack">
+        <wt-timeline id="d-tl-opposite" [value]="local(orders)">
+          <ng-template #opposite let-e>
+            <small class="docs-tl-date">{{ e.date }}</small>
+          </ng-template>
+          <ng-template #content let-e>{{ e.status }}</ng-template>
+        </wt-timeline>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="align" [section]="sec['align']">
+      <docs-demo [html]="code['align']" layout="grid">
+        <wt-timeline id="d-tl-right" [value]="local(orders)" align="right">
+          <ng-template #opposite let-e>
+            <small class="docs-tl-date">{{ e.date }}</small>
+          </ng-template>
+          <ng-template #content let-e>{{ e.status }}</ng-template>
+        </wt-timeline>
+        <wt-timeline id="d-tl-alternate" [value]="local(orders)" align="alternate">
+          <ng-template #opposite let-e>
+            <small class="docs-tl-date">{{ e.date }}</small>
+          </ng-template>
+          <ng-template #content let-e>{{ e.status }}</ng-template>
+        </wt-timeline>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="marker" [section]="sec['marker']">
+      <docs-demo [html]="code['marker']" layout="stack">
+        <wt-timeline id="d-tl-marker" [value]="local(orders)">
+          <ng-template #marker let-e>
+            <span class="docs-tl-marker" [style.background-color]="e.color">
+              <i [class]="e.icon"></i>
+            </span>
+          </ng-template>
+          <ng-template #content let-e>
+            <div class="docs-tl-card">
+              <div class="docs-tl-status">{{ e.status }}</div>
+              <small class="docs-tl-date">{{ e.date }}</small>
+            </div>
+          </ng-template>
+        </wt-timeline>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="horizontal" [section]="sec['horizontal']">
+      <docs-demo [html]="code['horizontal']" layout="stack">
+        <wt-timeline id="d-tl-top" [value]="local(orders)" layout="horizontal" align="top">
+          <ng-template #content let-e>{{ e.status }}</ng-template>
+        </wt-timeline>
+        <wt-timeline id="d-tl-bottom" [value]="local(orders)" layout="horizontal" align="bottom">
+          <ng-template #content let-e>{{ e.status }}</ng-template>
+        </wt-timeline>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

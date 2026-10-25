@@ -1,0 +1,7 @@
+/** `(onPageChange)`: 0-based page, the first row index, rows per page and the page count. */
+export interface WtPageEvent {
+  page: number;
+  first: number;
+  rows: number;
+  pageCount: number;
+}

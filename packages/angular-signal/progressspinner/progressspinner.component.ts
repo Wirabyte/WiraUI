@@ -3,7 +3,7 @@ import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHE
 
 /** Busy indicator: `<wt-progress-spinner style="width: 2rem; height: 2rem">`. The preset sets its default size and colours. */
 @Component({
-  selector: 'wt-progress-spinner',
+  selector: 'wt-progress-spinner, wt-progressspinner, wt-progressSpinner',
   standalone: true,
   templateUrl: './progressspinner.component.html',
   styleUrl: './progressspinner.css',

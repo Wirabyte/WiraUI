@@ -13,3 +13,7 @@ export * from './thai/thai-id';
 export * from './date';
 export * from './datepicker';
 export * from './validation';
+export * from './select';
+export * from './table';
+export * from './menu';
+export * from './mask';

@@ -13,6 +13,20 @@ export const INPUTTEXT_DOC: ComponentDoc = {
     th: 'directive ที่แต่ง <input> จริง ngModel และ formControl ใช้ value accessor เดิมของ Angular จึงทำงานเหมือน input ปกติทุกอย่าง',
     en: 'A directive that styles a real <input>. ngModel and formControl keep Angular\'s own value accessor, so it behaves exactly like a plain input.',
   },
+  english: {
+    'ชื่อ-นามสกุล': 'Full name',
+    'ชื่อ (ต้องกรอก)': 'Name (required)',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'class เดิมก็ได้': 'the old class works too',
+    'กว้างเต็มพื้นที่': 'Full width',
+    'อ่านอย่างเดียว': 'Read only',
+    'ใน form: ขึ้นสีแดงเองเมื่อ control invalid และถูกแตะแล้ว (ng-invalid.ng-touched)':
+      'in a form it turns red on its own once the control is invalid and touched (ng-invalid.ng-touched)',
+    'ใส่ค่าตัวอย่าง': 'Fill sample values',
+    'สมชาย ใจดี': 'Alex Morgan',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -64,8 +78,8 @@ export const INPUTTEXT_DOC: ComponentDoc = {
   },
   ts: {
     reactive: `form = new FormGroup({
-  name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-  email: new FormControl('', { nonNullable: true, validators: [Validators.email] }),
+  name: new FormControl('', Validators.required),
+  email: new FormControl('', Validators.email),
 });`,
   },
   api: [

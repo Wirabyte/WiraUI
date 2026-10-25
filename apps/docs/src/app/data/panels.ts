@@ -10,10 +10,25 @@ export const DIVIDER_DOC: ComponentDoc = {
   module: 'WtDividerModule',
   selector: 'wt-divider',
   description: { th: 'เส้นคั่นเนื้อหาแนวนอนหรือแนวตั้ง ใส่ข้อความกลางเส้นได้', en: 'A horizontal or vertical separator, optionally with content on the line.' },
+  english: {
+    'ส่วนบน': 'Top part',
+    'ส่วนล่าง': 'Bottom part',
+    'ข้อมูลบัญชี': 'Account details',
+    'หรือ': 'or',
+    'ซ้าย': 'Left',
+    'กลาง': 'Middle',
+    'ขวา': 'Right',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic' },
-    content: { title: { th: 'ข้อความบนเส้น', en: 'Content on the line' }, text: { th: 'วางเนื้อหาไว้ข้างใน และเลือกตำแหน่งด้วย <code>align</code>', en: 'Put content inside and place it with <code>align</code>.' } },
+    content: {
+      title: { th: 'ข้อความบนเส้น', en: 'Content on the line' },
+      text: {
+        th: 'วางเนื้อหาไว้ข้างใน และเลือกตำแหน่งด้วย <code>align</code> เนื้อหาอยู่บนพื้นของตัวเองที่มุมมน',
+        en: 'Put content inside and place it with <code>align</code>. It sits on its own background with rounded corners.',
+      },
+    },
     type: { title: { th: 'รูปแบบเส้น', en: 'Line style' } },
     vertical: { title: { th: 'แนวตั้ง', en: 'Vertical' }, text: { th: '<code>layout="vertical"</code> ใช้ในแถว flex', en: '<code>layout="vertical"</code> inside a flex row.' } },
   },
@@ -49,7 +64,9 @@ export const DIVIDER_DOC: ComponentDoc = {
     tok('--wt-divider-color', 'สีเส้น', 'Line colour'),
     tok('--wt-divider-margin', 'ระยะห่างรอบเส้น', 'Space around the line'),
     tok('--wt-divider-padding', 'ระยะของเส้นแนวตั้ง', 'Padding of vertical lines'),
-    tok('--wt-divider-content-padding', 'ระยะรอบข้อความบนเส้น', 'Padding around the content'),
+    tok('--wt-divider-content-padding', 'ระยะซ้ายขวารอบข้อความบนเส้น', 'Horizontal padding around the content'),
+    tok('--wt-divider-content-padding-y', 'ระยะบนล่างรอบข้อความบนเส้น', 'Vertical padding around the content'),
+    tok('--wt-divider-content-radius', 'ความมนของพื้นหลังข้อความบนเส้น', 'Corner radius behind the content'),
     tok('--wt-card-bg', 'พื้นหลังข้อความบนเส้น', 'Background behind the content'),
     tok('--wt-text-muted', 'สีข้อความ', 'Content colour'),
   ],
@@ -64,6 +81,18 @@ export const PANEL_DOC: ComponentDoc = {
   module: 'WtPanelModule',
   selector: 'wt-panel',
   description: { th: 'กล่องที่มีหัวข้อ พับเก็บได้ และมี slot สำหรับหัว ปุ่มบนหัว และส่วนท้าย', en: 'A titled box that can collapse, with slots for the header, header icons and a footer.' },
+  english: {
+    'รายละเอียดคำสั่งซื้อ': 'Order details',
+    'สินค้า 3 รายการ · ชำระแล้ว · จัดส่งภายใน 2 วัน': '3 items · paid · ships within 2 days',
+    'ตัวกรองขั้นสูง': 'Advanced filters',
+    'ช่วงวันที่ สถานะ และผู้รับผิดชอบ': 'Date range, status and owner',
+    'กดที่หัวเพื่อพับ': 'Click the header to collapse',
+    'ทั้งแถบหัวกดได้': 'The whole header bar is clickable',
+    'สมาชิก': 'Members',
+    'สมชาย, กมล, มานี และอีก 2 คน': 'Alex, Kim, Mia and 2 more',
+    'อัปเดตล่าสุด 5 นาทีที่แล้ว': 'Updated 5 minutes ago',
+    'เขียนค่ากลับเมื่อผู้ใช้กดพับหรือกาง': 'is written back when the user collapses or expands it',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic' },
@@ -150,6 +179,12 @@ export const FIELDSET_DOC: ComponentDoc = {
   module: 'WtFieldsetModule',
   selector: 'wt-fieldset',
   description: { th: 'กลุ่มเนื้อหาที่มี legend แบบ <fieldset> พับเก็บได้', en: 'A group of content with a legend, like <fieldset>, that can collapse.' },
+  english: {
+    'ที่อยู่สำหรับจัดส่ง': 'Shipping address',
+    '99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000': '99/1 Sample Road, Sample District, Bangkok 10000',
+    'ข้อมูลเพิ่มเติม': 'More details',
+    'หมายเหตุสำหรับทีมงาน': 'Notes for the team',
+  },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic' },
@@ -187,10 +222,12 @@ export const FIELDSET_DOC: ComponentDoc = {
   tokens: [
     tok('--wt-fieldset-padding', 'ระยะด้านใน', 'Inner padding'),
     tok('--wt-fieldset-radius', 'ความมน', 'Radius'),
-    tok('--wt-fieldset-legend-bg', 'พื้นของ legend', 'Legend background'),
+    tok('--wt-fieldset-legend-bg', 'พื้นของ legend (v2 / v3 มีสีอ่อนของตัวเอง)', 'Legend background (its own tint in v2 / v3)'),
+    tok('--wt-fieldset-legend-border-width', 'ขอบของ legend (v2 / v3 เส้นบาง 1px)', 'Legend border width (a thin 1px line in v2 / v3)'),
     tok('--wt-fieldset-legend-color', 'สีของ legend', 'Legend colour'),
     tok('--wt-fieldset-legend-weight', 'น้ำหนักของ legend', 'Legend weight'),
     tok('--wt-fieldset-legend-padding-x', 'ระยะซ้ายขวาของ legend', 'Legend horizontal padding'),
+    tok('--wt-fieldset-legend-padding-y', 'ระยะบนล่างของ legend', 'Legend vertical padding'),
     tok('--wt-border', 'สีขอบ', 'Border colour'),
   ],
 };
@@ -200,15 +237,45 @@ export const MESSAGE_DOC: ComponentDoc = {
   title: 'Message',
   group: 'Messages',
   entry: 'message',
-  standalone: 'WtMessage',
+  standalone: 'WtMessage, WtMessages',
   module: 'WtMessageModule',
   selector: 'wt-message',
   description: {
     th: 'ข้อความแจ้งในหน้า มีสีตามความหมาย ปิดได้ และหายเองตามเวลาที่ตั้ง',
     en: 'An inline message with severity colours. It can be closable and dismiss itself after a set time.',
   },
+  english: {
+    'ระบบจะปิดปรับปรุงคืนนี้ 22:00 น.': 'Scheduled maintenance tonight at 22:00.',
+    'บันทึกเรียบร้อย': 'Saved',
+    'แผนของคุณจะหมดอายุใน 3 วัน': 'Your plan expires in 3 days',
+    'ชำระเงินไม่สำเร็จ': 'Payment failed',
+    'ไม่มีรายการใหม่': 'Nothing new',
+    'กดปุ่มปิดได้': 'You can close this one',
+    'ข้อความนี้จะหายใน 4 วินาที': 'This one goes away in 4 seconds',
+    'แสดงอีกครั้ง': 'Show again',
+    'อีเมลยังไม่ยืนยัน': 'Email not verified yet.',
+    'ตรวจกล่องจดหมายของคุณ': 'Check your inbox',
+    "'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')": "'warning' and 'error' work too (= 'warn' and 'danger')",
+    'บันทึกแล้ว': 'Saved',
+    'ข้อมูลนักเรียนถูกบันทึกเรียบร้อย': 'The student record is saved.',
+    'ใกล้ครบกำหนด': 'Due soon',
+    'ส่งเอกสารภายในวันศุกร์': 'Send the documents by Friday.',
+    'อัปโหลดไม่สำเร็จ': 'Upload failed',
+    'ไฟล์ใหญ่เกิน 5 MB': 'The file is over 5 MB.',
+    'เหลือ': 'Left',
+    'ส่งแบบฟอร์ม': 'Send the form',
+    'ส่งแบบฟอร์มแล้ว': 'Form sent',
+    'จะได้รับอีเมลยืนยันภายใน 5 นาที': 'A confirmation email arrives within 5 minutes.',
+    'ข้อความที่มี key ตรงกับ <wt-messages key="form">': 'messages with the key of <wt-messages key="form">',
+  },
   sections: {
-    import: { title: 'Import', text: importText },
+    import: {
+      title: 'Import',
+      text: {
+        th: 'ใช้ได้ทั้ง NgModule (<code>WtMessageModule</code> ชื่อ <code>WtMessagesModule</code> ก็ได้) และ standalone (<code>WtMessage</code> สำหรับข้อความเดียว <code>WtMessages</code> สำหรับหลายข้อความ)',
+        en: 'Works as an NgModule (<code>WtMessageModule</code>, also exported as <code>WtMessagesModule</code>) or standalone (<code>WtMessage</code> for one message, <code>WtMessages</code> for several).',
+      },
+    },
     severity: { title: 'Severity', text: { th: 'ค่าเริ่มต้นคือ <code>info</code>', en: 'The default is <code>info</code>.' } },
     closable: {
       title: { th: 'ปิดได้และหายเอง', en: 'Closable and timed' },
@@ -216,6 +283,20 @@ export const MESSAGE_DOC: ComponentDoc = {
     },
     variants: { title: { th: 'รูปแบบและขนาด', en: 'Variants and sizes' } },
     content: { title: { th: 'เนื้อหาเอง', en: 'Custom content' }, text: { th: 'ไม่ใส่ <code>text</code> แล้ววางเนื้อหาไว้ข้างในแทนได้', en: 'Leave out <code>text</code> and put your own content inside.' } },
+    messages: {
+      title: { th: 'หลายข้อความ (wt-messages)', en: 'Several messages (wt-messages)' },
+      text: {
+        th: '<code>wt-messages</code> (อยู่ใน <code>wiratheme/message</code>) แสดงข้อความจาก array <code>[(value)]</code> แต่ละรายการคือ <code>{ severity, summary, detail, closable?, icon?, life? }</code> กดปิดแล้วรายการถูกเอาออกจาก array ให้ · <code>[closable]</code> ค่าเริ่มต้น true · <code>[escape]="false"</code> ให้ summary / detail เป็น HTML (Angular sanitize ให้)',
+        en: '<code>wt-messages</code> (in <code>wiratheme/message</code>) shows the messages of an array bound with <code>[(value)]</code>, each <code>{ severity, summary, detail, closable?, icon?, life? }</code>. Closing one removes it from the array. <code>[closable]</code> defaults to true; <code>[escape]="false"</code> makes summary / detail HTML (sanitised by Angular).',
+      },
+    },
+    service: {
+      title: { th: 'ข้อความจาก MessageService', en: 'Messages from MessageService' },
+      text: {
+        th: '<code>enableService</code> เปิดอยู่เป็นค่าเริ่มต้น (เหมือนเดิม) wt-messages จึงแสดงข้อความที่ส่งด้วย <code>MessageService.add()</code> ที่มี <code>key</code> ตรงกันด้วย แอปส่วนใหญ่จึงตั้ง <code>[enableService]="false"</code> ให้ wt-messages ที่ใช้ array (แบบหัวข้อก่อน) เพราะไม่อย่างนั้นข้อความ toast ที่ไม่ใส่ key จะมาโผล่ที่นี่ด้วย ถ้าตั้งใจใช้ service ให้ใส่ <code>key</code> ทั้งสองฝั่ง แบบตัวอย่างนี้',
+        en: '<code>enableService</code> is on by default (as before), so wt-messages also shows messages sent with <code>MessageService.add()</code> that carry the same <code>key</code>. That is why most apps set <code>[enableService]="false"</code> on an array-driven wt-messages (like the one above): otherwise toast messages sent without a key show up there too. When you do want the service, give both sides a <code>key</code>, as here.',
+      },
+    },
   },
   code: {
     severity: `<wt-message text="ระบบจะปิดปรับปรุงคืนนี้ 22:00 น."></wt-message>
@@ -232,6 +313,32 @@ export const MESSAGE_DOC: ComponentDoc = {
     content: `<wt-message severity="warn">
   <span>อีเมลยังไม่ยืนยัน <b>ตรวจกล่องจดหมายของคุณ</b></span>
 </wt-message>`,
+    messages: `<wt-messages [(value)]="notices" [enableService]="false"></wt-messages>`,
+    service: `<wt-messages key="form"></wt-messages>
+<wt-button label="ส่งแบบฟอร์ม" icon="pi pi-send" (onClick)="sendForm()"></wt-button>`,
+  },
+  ts: {
+    messages: `import { Message } from 'wiratheme/api';
+
+notices: Message[] = [
+  { severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลนักเรียนถูกบันทึกเรียบร้อย' },
+  { severity: 'warn', summary: 'ใกล้ครบกำหนด', detail: 'ส่งเอกสารภายในวันศุกร์', closable: false },
+  { severity: 'error', summary: 'อัปโหลดไม่สำเร็จ', detail: 'ไฟล์ใหญ่เกิน 5 MB' },
+];`,
+    service: `import { MessageService } from 'wiratheme/api';
+
+private readonly messageService = inject(MessageService);
+
+sendForm(): void {
+  // ข้อความที่มี key ตรงกับ <wt-messages key="form">
+  this.messageService.add({
+    key: 'form',
+    severity: 'info',
+    summary: 'ส่งแบบฟอร์มแล้ว',
+    detail: 'จะได้รับอีเมลยืนยันภายใน 5 นาที',
+    life: 5000,
+  });
+}`,
   },
   api: [
     {
@@ -248,6 +355,22 @@ export const MESSAGE_DOC: ComponentDoc = {
       ],
     },
     { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onClose', 'Event | null', undefined, 'ปิดแล้ว (null เมื่อปิดเองตาม life)', 'Closed (null when life ran out)')] },
+    {
+      id: 'api-messages',
+      title: 'Messages',
+      note: { th: 'ของ wt-messages', en: 'On wt-messages.' },
+      rows: [
+        row('value', 'Message[]', '[]', 'ข้อความทั้งหมด ใช้ [(value)] (ปิดแล้วถูกเอาออก)', 'The messages; use [(value)] (closing removes one)'),
+        row('closable', 'boolean', 'true', 'มีปุ่มปิด (ข้อความที่ closable: false ไม่มี)', 'Close buttons (not on messages with closable: false)'),
+        row('enableService', 'boolean', 'true', 'แสดงข้อความจาก MessageService.add() ที่ key ตรงกันด้วย', 'Also show MessageService.add() messages with the same key'),
+        row('key', 'string', undefined, 'key ที่รับจาก MessageService', 'The key it takes from MessageService'),
+        row('escape', 'boolean', 'true', 'false = summary / detail เป็น HTML', 'false = summary / detail are HTML'),
+        row('styleClass · style', 'string · object', undefined, 'class / style ของกล่อง', 'Box class / style'),
+        row('showTransitionOptions · hideTransitionOptions', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ไม่มีผล', 'Accepted so existing templates compile; no effect'),
+        row('valueChange · onClose', 'Message[] · Message', undefined, 'outputs: array หลังปิด · ข้อความที่ถูกปิด', 'Outputs: the array after a close · the closed message'),
+        row('clear()', 'void', undefined, 'method: ลบทุกข้อความ', 'Method: removes every message'),
+      ],
+    },
     { id: 'api-types', title: 'Types', code: `type WtMessageSize = 'small' | 'large';\ntype WtMessageVariant = 'outlined' | 'simple';\n${SEVERITY_TYPE}` },
   ],
   tokens: [

@@ -1,0 +1,37 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-steps id="d-steps-basic" [model]="local(steps)" [activeIndex]="activeIndex"></wt-steps>
+        <div class="docs-steps-actions">
+          <wt-button id="d-steps-back" [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" [disabled]="activeIndex === 0" (onClick)="back()"></wt-button>
+          <wt-button id="d-steps-next" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" [disabled]="activeIndex === steps.length - 1" (onClick)="next()"></wt-button>
+        </div>
+        <span class="docs-demo-output">activeIndex: <code id="d-steps-basic-value">{{ activeIndex }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="interactive" [section]="sec['interactive']">
+      <docs-demo [html]="code['interactive']" [ts]="ts['interactive']" layout="stack">
+        <wt-steps id="d-steps-pick" [model]="local(admission)" [(activeIndex)]="current" [readonly]="false"></wt-steps>
+        <span class="docs-demo-output">
+          activeIndex: <code id="d-steps-pick-value">{{ current }}</code> · {{ tx('ขั้นล่าสุด') }}: <code id="d-steps-command">{{ lastStep || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']" [ts]="ts['disabled']" layout="stack">
+        <wt-steps id="d-steps-disabled" [model]="local(checks)" [(activeIndex)]="checkIndex" [readonly]="false"></wt-steps>
+        <span class="docs-demo-output">activeIndex: <code id="d-steps-disabled-value">{{ checkIndex }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

@@ -357,6 +357,214 @@
       wtTooltip="ดูรายละเอียด <a id='tip-a' href='https://example.com'>ที่นี่</a>"></wt-button>
   </section>
 
+  <section id="select" class="pg-gallery">
+    <h2>Select</h2>
+    <div class="pg-fields">
+      <label for="sel-province-input">จังหวัด</label>
+      <wt-select id="sel-province" inputId="sel-province-input" [options]="provinces" optionLabel="name_th"
+        optionValue="id" optionDisabled="inactive" [(ngModel)]="sel.province" placeholder="เลือกจังหวัด" (onChange)="note('select:' + $event.value)"></wt-select>
+      <wt-select id="sel-search" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="sel.search"
+        [filter]="true" filterBy="name_th,code" [showClear]="true" placeholder="ค้นหาจังหวัด" ariaLabel="ค้นหาจังหวัด"></wt-select>
+      <wt-select id="sel-group" [options]="regions" [group]="true" optionLabel="name" optionValue="name"
+        [(ngModel)]="sel.region" placeholder="เลือกตามภาค" ariaLabel="ตามภาค"></wt-select>
+      <wt-select id="sel-tpl" [options]="provinces" optionLabel="name_th" [(ngModel)]="sel.object" dataKey="id"
+        placeholder="แบบ template" ariaLabel="แบบ template">
+        <ng-template wtTemplate="item" let-p><b class="sel-code">{{ p.code }}</b> {{ p.name_th }}</ng-template>
+        <ng-template wtTemplate="selectedItem" let-p><span class="sel-chosen">{{ p.code }} · {{ p.name_th }}</span></ng-template>
+      </wt-select>
+      <wt-select id="sel-edit" [options]="titles" [editable]="true" [(ngModel)]="sel.title" placeholder="คำนำหน้า"
+        ariaLabel="คำนำหน้า"></wt-select>
+      <wt-select id="sel-loading" [options]="titles" [(ngModel)]="sel.loadingTitle" [showClear]="true" [loading]="isOptionsLoading"
+        placeholder="กำลังโหลด" ariaLabel="กำลังโหลด"></wt-select>
+      <button type="button" id="sel-loading-done" (click)="isOptionsLoading = false">loaded</button>
+    </div>
+    <div class="pg-fields">
+      <label for="ms-clubs-input">ชุมนุม</label>
+      <wt-multiSelect id="ms-clubs" inputId="ms-clubs-input" [options]="clubs" optionLabel="name" optionValue="id" optionDisabled="closed"
+        [(ngModel)]="ms.clubs" placeholder="เลือกชุมนุม" [maxSelectedLabels]="2" (onChange)="note('ms:' + $event.value.length)"></wt-multiSelect>
+      <wt-multiselect id="ms-chips" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="ms.provinces"
+        display="chip" [filter]="false" [showToggleAll]="false" defaultLabel="จังหวัด" ariaLabel="จังหวัด"></wt-multiselect>
+      <wt-multiselect id="ms-limit" [options]="titles" [(ngModel)]="ms.titles" [selectionLimit]="2" placeholder="สูงสุด 2" ariaLabel="สูงสุด 2"
+        selectedItemsLabel="{0} คำนำหน้า" [maxSelectedLabels]="1"></wt-multiselect>
+    </div>
+    <pre id="ms-model">{{ ms | json }}</pre>
+    <div class="pg-fields">
+      <label for="im-id-input">เลขบัตรประชาชน</label>
+      <wt-inputMask id="im-id" inputId="im-id-input" mask="9-9999-99999-99-9" [(ngModel)]="im.id" [unmask]="true"
+        placeholder="เลขบัตร 13 หลัก" (onComplete)="note('im:complete')"></wt-inputMask>
+      <label for="im-phone-input">โทรศัพท์</label>
+      <wt-inputmask id="im-phone" inputId="im-phone-input" mask="999-999-9999" [(ngModel)]="im.phone" [autoClear]="false" [showClear]="true"></wt-inputmask>
+    </div>
+    <pre id="im-model">{{ im | json }}</pre>
+    <div class="pg-fields">
+      <label for="ac-school-input">โรงเรียน</label>
+      <wt-autoComplete id="ac-school" inputId="ac-school-input" [(ngModel)]="ac.school" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
+        optionLabel="name" [delay]="0" [dropdown]="true" placeholder="พิมพ์ชื่อโรงเรียน" (onSelect)="note('ac:' + $any($event.value).name)"></wt-autoComplete>
+      <label for="ac-free-input">คำค้น</label>
+      <wt-autocomplete id="ac-free" inputId="ac-free-input" [(ngModel)]="ac.free" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
+        field="name" [minLength]="2" [delay]="0" [forceSelection]="true" placeholder="อย่างน้อย 2 ตัว"></wt-autocomplete>
+    </div>
+    <pre id="ac-model">{{ ac | json }}</pre>
+    <wt-timeline id="tl" [value]="steps">
+      <ng-template pTemplate="content" let-s><span class="tl-text">{{ s.status }}</span></ng-template>
+    </wt-timeline>
+    <wt-timeline id="tl-alt" [value]="steps" align="alternate">
+      <ng-template #content let-s>{{ s.status }}</ng-template>
+      <ng-template #opposite let-s let-i="index"><small class="tl-when">{{ i + 1 }}. {{ s.date }}</small></ng-template>
+    </wt-timeline>
+    <wt-timeline id="tl-h" [value]="steps" layout="horizontal" align="top">
+      <ng-template #content let-s>{{ s.status }}</ng-template>
+    </wt-timeline>
+    <wt-chart id="ch" #chart type="bar" [data]="chartData" [options]="chartOptions" height="240px" ariaLabel="คะแนนเฉลี่ย"
+      (onDataSelect)="note('chart:' + $any($event.element).index)"></wt-chart>
+    <button type="button" id="ch-pie" (click)="chartType = chartType === 'bar' ? 'pie' : 'bar'">{{ chartType }}</button>
+    <wt-chart id="ch-2" [type]="chartType" [data]="chartData" width="320px" height="200px"></wt-chart>
+    <wt-image id="img" [src]="photo" alt="ภาพโรงเรียน" width="160" [preview]="true" (onImageError)="note('img:error')"></wt-image>
+    <wt-image id="img-broken" src="/does-not-exist.png" alt="ไม่มีภาพ" width="40" (onImageError)="note('img:error')"></wt-image>
+    <wt-messages id="msgs" [(value)]="msgs" [enableService]="false"></wt-messages>
+    <wt-messages id="msgs-service" key="inline"></wt-messages>
+    <button type="button" id="msgs-send" (click)="sendInline()">แจ้งในหน้า</button>
+    <pre id="sel-model">{{ sel | json }}</pre>
+  </section>
+
+  <section id="aliases" class="pg-gallery">
+    <h2>Old tag names and tabs by value</h2>
+    <div class="pg-row">
+      <wt-calendar id="al-calendar" [(ngModel)]="aliasDate" placeholder="วันที่"></wt-calendar>
+      <wt-inputSwitch id="al-switch" [(ngModel)]="aliasOn"></wt-inputSwitch>
+      <wt-progressSpinner id="al-spinner" ariaLabel="กำลังโหลด"></wt-progressSpinner>
+    </div>
+    <wt-tabView id="al-tabview">
+      <wt-tabPanel header="หนึ่ง">แผงหนึ่ง</wt-tabPanel>
+      <wt-tabPanel header="สอง">แผงสอง</wt-tabPanel>
+    </wt-tabView>
+    <wt-accordion id="al-accordion">
+      <wt-accordionTab header="หัวข้อเดิม">เนื้อหาเดิม</wt-accordionTab>
+    </wt-accordion>
+    <wt-accordion id="va" [(value)]="openPanel">
+      <wt-accordion-panel value="fees">
+        <wt-accordion-header>ค่าธรรมเนียม</wt-accordion-header>
+        <wt-accordion-content>ชำระภายในวันที่ 15</wt-accordion-content>
+      </wt-accordion-panel>
+      <wt-accordion-panel value="docs">
+        <wt-accordion-header>เอกสาร</wt-accordion-header>
+        <wt-accordion-content>สำเนาบัตรประชาชน</wt-accordion-content>
+      </wt-accordion-panel>
+      <wt-accordion-panel value="off" [disabled]="true">
+        <wt-accordion-header>ปิดอยู่</wt-accordion-header>
+        <wt-accordion-content>-</wt-accordion-content>
+      </wt-accordion-panel>
+    </wt-accordion>
+    <p>panel: <code id="va-value">{{ openPanel }}</code></p>
+    <wt-accordion id="va-multi" [multiple]="true" [(value)]="openPanels">
+      <wt-accordion-panel value="a"><wt-accordion-header>ก</wt-accordion-header><wt-accordion-content>เนื้อหา ก</wt-accordion-content></wt-accordion-panel>
+      <wt-accordion-panel value="b"><wt-accordion-header>ข</wt-accordion-header><wt-accordion-content>เนื้อหา ข</wt-accordion-content></wt-accordion-panel>
+    </wt-accordion>
+    <p>panels: <code id="va-multi-value">{{ openPanels | json }}</code></p>
+    <wt-tabs id="vt" [(value)]="valueTab" ariaLabel="แท็บตามค่า">
+      <wt-tablist>
+        <wt-tab value="info">ข้อมูล</wt-tab>
+        <wt-tab value="docs">เอกสาร</wt-tab>
+        <wt-tab value="off" [disabled]="true">ปิดอยู่</wt-tab>
+        <wt-tab value="log">ประวัติ</wt-tab>
+      </wt-tablist>
+      <wt-tabpanels>
+        <wt-tabpanel value="info">แผงข้อมูล</wt-tabpanel>
+        <wt-tabpanel value="docs">แผงเอกสาร</wt-tabpanel>
+        <wt-tabpanel value="off">แผงที่ปิด</wt-tabpanel>
+        <wt-tabpanel value="log">แผงประวัติ</wt-tabpanel>
+      </wt-tabpanels>
+    </wt-tabs>
+    <p>tab: <code id="vt-value">{{ valueTab }}</code></p>
+  </section>
+
+  <section id="menubar" class="pg-gallery">
+    <h2>Menubar</h2>
+    <wt-menubar id="mb-main" [model]="menuItems" ariaLabel="เมนูหลัก">
+      <ng-template pTemplate="start"><b id="mb-logo">WiraTheme</b></ng-template>
+      <ng-template pTemplate="end"><button type="button" id="mb-end">ออกจากระบบ</button></ng-template>
+    </wt-menubar>
+    <!-- The way most headers use it: only start / end, no model. -->
+    <wt-menubar id="mb-shell" [style]="{ 'border-radius': 0 }">
+      <ng-template #start><span id="mb-shell-start">ระบบงานทะเบียน</span></ng-template>
+      <ng-template #end><span id="mb-shell-end">ผู้ใช้</span></ng-template>
+    </wt-menubar>
+    <p>last: <code id="mb-log">{{ menuLog }}</code></p>
+    <div class="pg-row">
+      <button type="button" id="mn-open" (click)="popMenu.toggle($event)">เมนูโปรไฟล์</button>
+      <wt-menu #popMenu id="mn-popup" [model]="profileItems" [popup]="true" appendTo="body"></wt-menu>
+    </div>
+    <wt-menu id="mn-side" [model]="sideItems" [style]="{ width: '100%', border: 'none' }"></wt-menu>
+    <wt-steps id="st" [model]="stepItems" [(activeIndex)]="stepIndex" [readonly]="false"></wt-steps>
+    <p>step: <code id="st-index">{{ stepIndex }}</code></p>
+    <wt-steps id="st-ro" [model]="stepItems" [activeIndex]="2"></wt-steps>
+    <wt-panelMenu id="pm" [model]="panelItems" [style]="{ width: '18rem' }"></wt-panelMenu>
+    <wt-panelmenu id="pm-multi" [model]="panelItemsMulti" [multiple]="true"></wt-panelmenu>
+    <wt-tabMenu id="tm" [model]="tabPages" [(activeItem)]="tabPage" [scrollable]="true"></wt-tabMenu>
+    <p>page: <code id="tm-page">{{ tabPage?.label }}</code></p>
+  </section>
+
+  <section id="table" class="pg-gallery">
+    <h2>Table</h2>
+    <wt-table #dt id="tbl-main" [value]="students" dataKey="id" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+      [showCurrentPageReport]="true" currentPageReportTemplate="กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ"
+      [globalFilterFields]="['name', 'room', 'info.club']" [filterDelay]="0" [(selection)]="picked" [tableStyle]="{ 'min-width': '40rem' }"
+      (onSort)="note('sort:' + ($event.field || '-') + ':' + ($event.order || 0))">
+      <ng-template pTemplate="caption">
+        <input id="tbl-search" wtInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+          <th>ลำดับ</th>
+          <th pSortableColumn="name">ชื่อ <wt-sortIcon field="name"></wt-sortIcon></th>
+          <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
+          <th pSortableColumn="info.club">ชุมนุม <wt-sortIcon field="info.club"></wt-sortIcon></th>
+          <th pSortableColumn="score">คะแนน <wt-sortIcon field="score"></wt-sortIcon></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-s let-i="rowIndex">
+        <tr class="tbl-row">
+          <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+          <td class="tbl-no">{{ i + 1 }}</td>
+          <td class="tbl-name">{{ s.name }}</td>
+          <td>{{ s.room }}</td>
+          <td>{{ s.info.club }}</td>
+          <td class="tbl-score">{{ s.score }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="6" class="tbl-empty">ไม่พบข้อมูล</td></tr>
+      </ng-template>
+    </wt-table>
+    <p>เลือก: <b id="tbl-picked">{{ picked.length }}</b></p>
+
+    <wt-table id="tbl-single" [value]="fewStudents" selectionMode="single" [(selection)]="chosen" dataKey="id"
+      [stripedRows]="true" [showGridlines]="true" size="small" responsiveLayout="stack" breakpoint="600px">
+      <ng-template wtTemplate="header">
+        <tr><th>ชื่อ</th><th>ห้อง</th></tr>
+      </ng-template>
+      <ng-template wtTemplate="body" let-s>
+        <tr [pSelectableRow]="s">
+          <td><span class="p-column-title">ชื่อ</span>{{ s.name }}</td>
+          <td><span class="p-column-title">ห้อง</span>{{ s.room }}</td>
+        </tr>
+      </ng-template>
+    </wt-table>
+    <p>ที่เลือก: <b id="tbl-chosen">{{ chosen?.name || '-' }}</b></p>
+
+    <wt-table id="tbl-lazy" [value]="lazyRows" [lazy]="true" [paginator]="true" [rows]="5" [totalRecords]="lazyTotal"
+      [loading]="lazyLoading" (onLazyLoad)="loadLazy($event)">
+      <ng-template wtTemplate="header">
+        <tr><th>#</th><th pSortableColumn="name">ชื่อ <wt-sortIcon field="name"></wt-sortIcon></th></tr>
+      </ng-template>
+      <ng-template wtTemplate="body" let-s let-i="rowIndex">
+        <tr class="lazy-row"><td>{{ i + 1 }}</td><td>{{ s.name }}</td></tr>
+      </ng-template>
+    </wt-table>
+    <pre id="tbl-lazy-log">{{ lazyLog }}</pre>
+  </section>
+
   <section id="busy" class="pg-gallery">
     <wt-progress-spinner id="spinner" style="width: 2rem; height: 2rem"></wt-progress-spinner>
     <wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>

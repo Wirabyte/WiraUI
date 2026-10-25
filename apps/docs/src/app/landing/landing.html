@@ -244,7 +244,7 @@
       </div>
       <div class="lp-feature">
         <span class="lp-feature-icon"><docs-icon name="wand"></docs-icon></span>
-        <h3>Theme Designer</h3>
+        <h3>{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</h3>
         @if (en()) {
           <p>Tune a theme on the web and see it at once, export SCSS / CSS / TS / JSON, and import any of them back to keep editing.</p>
         } @else {
@@ -285,7 +285,7 @@
       </p>
     </div>
     <div class="lp-code">
-      <docs-code [code]="code" lang="html" file="app.component.html"></docs-code>
+      <docs-code [code]="code()" lang="html" file="app.component.html"></docs-code>
     </div>
     <div class="lp-cta lp-cta-center">
       <a class="lp-btn lp-btn-ghost" [routerLink]="link('getting-started/migration')">
@@ -316,7 +316,7 @@
         <b>Theming</b>
         <a [routerLink]="link('theming/overview')">{{ pageTitle('theming/overview') | loc }}</a>
         <a [routerLink]="link('theming/presets')">Presets</a>
-        <a [routerLink]="link('theming/designer')">Theme Designer</a>
+        <a [routerLink]="link('theming/studio')">{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</a>
       </div>
       <div>
         <b>Components</b>

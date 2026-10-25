@@ -15,23 +15,23 @@
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-radiobutton name="demo-size" value="sm" [(ngModel)]="sizeValue" size="small" label="เล็ก"></wt-radiobutton>
-        <wt-radiobutton name="demo-size" value="md" [(ngModel)]="sizeValue" label="ปกติ"></wt-radiobutton>
-        <wt-radiobutton name="demo-size" value="lg" [(ngModel)]="sizeValue" size="large" label="ใหญ่"></wt-radiobutton>
+        <wt-radiobutton name="demo-size" value="sm" [(ngModel)]="sizeValue" size="small" [label]="tx('เล็ก')"></wt-radiobutton>
+        <wt-radiobutton name="demo-size" value="md" [(ngModel)]="sizeValue" [label]="tx('ปกติ')"></wt-radiobutton>
+        <wt-radiobutton name="demo-size" value="lg" [(ngModel)]="sizeValue" size="large" [label]="tx('ใหญ่')"></wt-radiobutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="layout" [section]="sec['layout']">
       <docs-demo [html]="code['layout']" layout="stack">
         <div id="d-radio-stack" class="docs-radio-stack">
-          <wt-radiobutton name="d-delivery" value="standard" [(ngModel)]="delivery" label="ส่งธรรมดา (3–5 วัน)"></wt-radiobutton>
-          <wt-radiobutton name="d-delivery" value="express" [(ngModel)]="delivery" label="ส่งด่วน (1–2 วัน)"></wt-radiobutton>
-          <wt-radiobutton name="d-delivery" value="pickup" [(ngModel)]="delivery" label="รับเองที่สาขา"></wt-radiobutton>
+          <wt-radiobutton name="d-delivery" value="standard" [(ngModel)]="delivery" [label]="tx('ส่งธรรมดา (3–5 วัน)')"></wt-radiobutton>
+          <wt-radiobutton name="d-delivery" value="express" [(ngModel)]="delivery" [label]="tx('ส่งด่วน (1–2 วัน)')"></wt-radiobutton>
+          <wt-radiobutton name="d-delivery" value="pickup" [(ngModel)]="delivery" [label]="tx('รับเองที่สาขา')"></wt-radiobutton>
         </div>
         <div id="d-radio-row" class="docs-radio-row">
-          <wt-radiobutton name="d-payment" value="card" [(ngModel)]="payment" label="บัตรเครดิต"></wt-radiobutton>
-          <wt-radiobutton name="d-payment" value="transfer" [(ngModel)]="payment" label="โอนเงิน"></wt-radiobutton>
-          <wt-radiobutton name="d-payment" value="qr" [(ngModel)]="payment" label="QR พร้อมเพย์"></wt-radiobutton>
+          <wt-radiobutton name="d-payment" value="card" [(ngModel)]="payment" [label]="tx('บัตรเครดิต')"></wt-radiobutton>
+          <wt-radiobutton name="d-payment" value="transfer" [(ngModel)]="payment" [label]="tx('โอนเงิน')"></wt-radiobutton>
+          <wt-radiobutton name="d-payment" value="qr" [(ngModel)]="payment" [label]="tx('QR พร้อมเพย์')"></wt-radiobutton>
         </div>
       </docs-demo>
     </docs-section>
@@ -39,8 +39,8 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-radiobutton id="r-monthly" name="billing" value="monthly" formControlName="billing" label="รายเดือน"></wt-radiobutton>
-          <wt-radiobutton id="r-yearly" name="billing" value="yearly" formControlName="billing" label="รายปี"></wt-radiobutton>
+          <wt-radiobutton id="r-monthly" name="billing" value="monthly" formControlName="billing" [label]="tx('รายเดือน')"></wt-radiobutton>
+          <wt-radiobutton id="r-yearly" name="billing" value="yearly" formControlName="billing" [label]="tx('รายปี')"></wt-radiobutton>
         </form>
         <div class="docs-demo-actions">
           <wt-button id="r-patch" label="patchValue('yearly')" size="small" severity="secondary" (onClick)="patch()"></wt-button>
@@ -60,14 +60,14 @@
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <wt-radiobutton name="d" value="a" [ngModel]="'a'" [disabled]="true" label="ปิดอยู่ (เลือกแล้ว)"></wt-radiobutton>
-        <wt-radiobutton name="d" value="b" [ngModel]="'a'" [disabled]="true" label="ปิดอยู่"></wt-radiobutton>
+        <wt-radiobutton name="d" value="a" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่ (เลือกแล้ว)')"></wt-radiobutton>
+        <wt-radiobutton name="d" value="b" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่')"></wt-radiobutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="invalid" [section]="sec['invalid']">
       <docs-demo [html]="code['invalid']">
-        <wt-radiobutton name="i" value="x" [invalid]="true" label="ต้องเลือก 1 ข้อ"></wt-radiobutton>
+        <wt-radiobutton name="i" value="x" [invalid]="true" [label]="tx('ต้องเลือก 1 ข้อ')"></wt-radiobutton>
       </docs-demo>
     </docs-section>
   </ng-template>

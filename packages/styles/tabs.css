@@ -1,14 +1,19 @@
-/* wt-tabs and wt-tab-panel. Shared by wiratheme v1, v2 and v3. A row that runs out of room scrolls sideways
+/* wt-tabs with wt-tab-panel (by index) or wt-tablist / wt-tab / wt-tabpanels / wt-tabpanel (by value). Shared by wiratheme v1, v2 and v3. A row that runs out of room scrolls sideways
    (swipe, wheel, or the arrow buttons that appear at an edge with more tabs behind it); no scrollbar is drawn. */
 @layer wiratheme.components {
-  wt-tabs {
+  wt-tabs,
+  wt-tabview {
     display: block;
     min-width: 0;
   }
-  wt-tab-panel {
+  wt-tab-panel,
+  wt-tabpanel,
+  wt-tablist,
+  wt-tabpanels {
     display: block;
   }
-  wt-tab-panel[hidden] {
+  wt-tab-panel[hidden],
+  wt-tabpanel[hidden] {
     display: none;
   }
   .wt-tabs {
@@ -99,11 +104,11 @@
       color var(--wt-transition),
       border-color var(--wt-transition);
   }
-  .wt-tab:not(:disabled):hover {
+  .wt-tab:not(:disabled, [aria-disabled='true']):hover {
     color: var(--wt-text);
   }
   .wt-tab-active,
-  .wt-tab-active:not(:disabled):hover {
+  .wt-tab-active:not(:disabled, [aria-disabled='true']):hover {
     border-bottom-color: var(--wt-tabs-tab-active-color);
     color: var(--wt-tabs-tab-active-color);
   }
@@ -112,7 +117,8 @@
     outline-offset: calc(var(--wt-control-focus-offset) * -1 - 2px);
     box-shadow: inset var(--wt-control-focus-shadow);
   }
-  .wt-tab:disabled {
+  .wt-tab:disabled,
+  .wt-tab[aria-disabled='true'] {
     opacity: var(--wt-disabled-opacity);
     cursor: default;
   }

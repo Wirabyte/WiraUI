@@ -1,0 +1,112 @@
+/* wt-steps. Shared by wiratheme v1, v2 and v3. Numbered steps along a line; the current one filled, the ones before it
+   ticked off in the primary colour. Labels wrap under their number on narrow screens. */
+@layer wiratheme.components {
+  wt-steps {
+    display: block;
+  }
+  .wt-steps {
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  .wt-steps-list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-steps-item {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+  }
+  /* The line from the previous step's number to this one's. */
+  .wt-steps-item + .wt-steps-item::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--wt-steps-number-size) / 2);
+    right: 50%;
+    left: -50%;
+    border-top: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+  }
+  .wt-steps-item + .wt-steps-item:is(.wt-steps-item-active, .wt-steps-item-complete)::before {
+    border-top-color: var(--wt-primary-color);
+  }
+  .wt-steps-link {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--wt-steps-gap);
+    min-width: 0;
+    padding: 0 0.25rem;
+    border-radius: var(--wt-radius-md);
+    color: inherit;
+    text-decoration: none;
+  }
+  .wt-steps:not(.wt-steps-readonly) .wt-steps-item:not(.wt-steps-item-disabled) .wt-steps-link {
+    cursor: pointer;
+  }
+  .wt-steps-link:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-steps-number {
+    display: grid;
+    flex: none;
+    place-items: center;
+    box-sizing: border-box;
+    width: var(--wt-steps-number-size);
+    height: var(--wt-steps-number-size);
+    border: var(--wt-steps-number-border-width) solid var(--wt-steps-line-color);
+    border-radius: 50%;
+    background: var(--wt-steps-number-bg);
+    color: var(--wt-steps-number-color);
+    font-weight: 600;
+    transition:
+      background-color var(--wt-transition),
+      border-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-steps-item-complete .wt-steps-number {
+    border-color: var(--wt-primary-color);
+    color: var(--wt-primary-color);
+  }
+  .wt-steps-item-active .wt-steps-number {
+    border-color: var(--wt-primary-color);
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+  }
+  .wt-steps:not(.wt-steps-readonly) .wt-steps-item:not(.wt-steps-item-disabled):not(.wt-steps-item-active) .wt-steps-link:hover .wt-steps-number {
+    border-color: var(--wt-primary-color);
+  }
+  .wt-steps-label {
+    max-width: 100%;
+    color: var(--wt-steps-label-color);
+    font-weight: var(--wt-steps-label-weight);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .wt-steps-item-active .wt-steps-label {
+    color: var(--wt-steps-label-active-color);
+    font-weight: 600;
+  }
+  .wt-steps-item-disabled .wt-steps-link {
+    opacity: var(--wt-disabled-opacity);
+  }
+  @media (max-width: 575.98px) {
+    .wt-steps-label {
+      font-size: 0.8125em;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-steps-number {
+      transition: none;
+    }
+  }
+}

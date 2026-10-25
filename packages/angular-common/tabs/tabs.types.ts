@@ -1,6 +1,16 @@
+/** The `value` of a tab when tabs are written by value. */
+export type WtTabValue = string | number;
+
 export interface WtTabsChangeEvent {
   index: number;
+  /** Tabs by value: the chosen tab's value. */
+  value?: WtTabValue;
   originalEvent: Event;
+}
+
+/** A tab value as an id fragment. */
+export function ɵtabKey(value: WtTabValue | undefined): string {
+  return String(value ?? '').replace(/[^\w-]/g, '_');
 }
 
 /** Next enabled tab for arrow keys, Home and End (wraps around); null for other keys. */

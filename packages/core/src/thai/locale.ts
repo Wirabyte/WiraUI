@@ -23,6 +23,31 @@ export interface WtLocale {
   expand: string;
   collapse: string;
   loading: string;
+  /** Search boxes, e.g. the filter of a select. */
+  search: string;
+  /** Paginator and table: the page report (placeholders {first} {last} {totalRecords} {currentPage} {totalPages} {rows}),
+   *  labels of the page buttons and the rows-per-page box, and the row checkboxes. */
+  pageReport: string;
+  firstPage: string;
+  previousPage: string;
+  nextPage: string;
+  lastPage: string;
+  pageLabel: string;
+  rowsPerPage: string;
+  /** The menu button that shows a menubar's items on narrow screens. */
+  navigation: string;
+  selectAll: string;
+  /** Multi-select field once more are chosen than it lists; {0} is the count. */
+  selectedItemsLabel: string;
+  /** Image preview: the button over the picture and the full-screen toolbar. */
+  previewImage: string;
+  rotateRight: string;
+  rotateLeft: string;
+  zoomIn: string;
+  zoomOut: string;
+  /** The button that lists every suggestion of an autocomplete. */
+  showOptions: string;
+  selectRow: string;
   /** Password field: hint before typing, strength levels, and the show/hide button. */
   passwordPrompt: string;
   /** Default labels of a toggle button. */
@@ -95,6 +120,24 @@ export const TH_LOCALE: WtLocale = {
   expand: 'ขยาย',
   collapse: 'ยุบ',
   loading: 'กำลังโหลด',
+  search: 'ค้นหา',
+  pageReport: 'กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ',
+  firstPage: 'หน้าแรก',
+  previousPage: 'หน้าก่อน',
+  nextPage: 'หน้าถัดไป',
+  lastPage: 'หน้าสุดท้าย',
+  pageLabel: 'หน้า {page}',
+  rowsPerPage: 'จำนวนแถวต่อหน้า',
+  navigation: 'เมนู',
+  selectAll: 'เลือกทั้งหมด',
+  selectedItemsLabel: 'เลือกแล้ว {0} รายการ',
+  previewImage: 'ดูภาพขยาย',
+  rotateRight: 'หมุนขวา',
+  rotateLeft: 'หมุนซ้าย',
+  zoomIn: 'ขยาย',
+  zoomOut: 'ย่อ',
+  showOptions: 'แสดงตัวเลือกทั้งหมด',
+  selectRow: 'เลือกแถวนี้',
   passwordPrompt: 'กรอกรหัสผ่าน',
   yes: 'ใช่',
   no: 'ไม่ใช่',
@@ -156,6 +199,24 @@ export const EN_LOCALE: WtLocale = {
   expand: 'Expand',
   collapse: 'Collapse',
   loading: 'Loading',
+  search: 'Search',
+  pageReport: 'Showing {first} to {last} of {totalRecords} entries',
+  firstPage: 'First page',
+  previousPage: 'Previous page',
+  nextPage: 'Next page',
+  lastPage: 'Last page',
+  pageLabel: 'Page {page}',
+  rowsPerPage: 'Rows per page',
+  navigation: 'Menu',
+  selectAll: 'Select all',
+  selectedItemsLabel: '{0} items selected',
+  previewImage: 'View larger image',
+  rotateRight: 'Rotate right',
+  rotateLeft: 'Rotate left',
+  zoomIn: 'Zoom in',
+  zoomOut: 'Zoom out',
+  showOptions: 'Show all options',
+  selectRow: 'Select this row',
   passwordPrompt: 'Enter a password',
   yes: 'Yes',
   no: 'No',

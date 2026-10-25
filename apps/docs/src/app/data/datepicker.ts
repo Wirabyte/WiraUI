@@ -3,6 +3,19 @@ import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
+/** The English page runs Gregorian, so its third field shows the other era: the Buddhist one Thai apps use. */
+const FORMAT_EN = `<!-- Mar 12, 2026 (the English locale default) -->
+<wt-datepicker name="date" [(ngModel)]="date"></wt-datepicker>
+
+<!-- 12/03/2026 -->
+<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy"></wt-datepicker>
+
+<!-- 12/03/2569: the Buddhist era, the default in Thai apps -->
+<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" calendar="buddhist"></wt-datepicker>
+
+<!-- Thursday 12 Mar 26 -->
+<wt-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wt-datepicker>`;
+
 export const DATEPICKER_DOC: ComponentDoc = {
   id: 'datepicker',
   title: 'DatePicker',
@@ -16,6 +29,40 @@ export const DATEPICKER_DOC: ComponentDoc = {
     th: 'ช่องวันที่และเวลา ปีเป็น พ.ศ. เป็นค่าเริ่มต้น แต่ model เป็น Date แบบ ค.ศ. ปกติเสมอ พิมพ์วันที่ได้หลายแบบ เลือกช่วงหรือหลายวันได้ และบนมือถือเปิดเป็นแผ่นจากด้านล่าง',
     en: 'A date and time field. Years show in the Buddhist era by default while the model stays an ordinary Date. It reads dates typed in many ways, picks ranges or several days, and opens as a bottom sheet on phones.',
   },
+  english: {
+    'วันนัดหมาย': 'Appointment date',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'ค่าเริ่มต้นของ locale': 'Locale default',
+    'กำหนดส่ง': 'Due date',
+    'เช่น 5/4/2569 หรือ 5 เม.ย. 69': 'e.g. 5/4/2026 or 5 Apr 26',
+    'วันที่': 'Date',
+    'เวลาประชุม': 'Meeting time',
+    'เลือกวันจากปฏิทิน พิมพ์เวลาได้': 'pick the day, type the time',
+    'พิมพ์วันที่ได้ เวลาปรับด้วยปุ่มหรือลูกศร': 'type the day, step the time',
+    'เลือกวันจากปฏิทินเท่านั้น แต่พิมพ์เวลาได้': 'the day comes from the calendar only; the time can be typed',
+    'พิมพ์วันที่ได้ แต่เวลาปรับด้วยปุ่มหรือลูกศรเท่านั้น': 'the day can be typed; the time moves only with the buttons or arrow keys',
+    'ช่วงเข้าพัก': 'Stay dates',
+    'วันเข้ากะ': 'Shift days',
+    'เดือน': 'Month',
+    'ปี': 'Year',
+    'เวลาปลุก': 'Alarm time',
+    'วันเข้าพบ': 'Visit date',
+    'ปุ่มข้างช่อง': 'Button beside the field',
+    'icon ในช่อง': 'Icon in the field',
+    'เวลา': 'Time',
+    'ปฏิทินนัดหมาย': 'Appointment calendar',
+    'ปฏิทิน': 'Calendar',
+    'วว/ดด/ปปปป': 'dd/mm/yyyy',
+    'วันเกิด': 'Birthday',
+    'มี field ชื่อ date อยู่แล้ว? ตั้งชื่อ template เป็น #day แทน #date ไม่ให้บังกัน':
+      'Already have a field called date? Name the template #day instead of #date so it does not shadow it',
+    '12 มี.ค. 2026 (แสดงเป็น พ.ศ. 2569)': '12 March 2026',
+    "จาก API: '2026-03-12' หรือ 1773248400000 ก็ใช้ได้": "from an API, '2026-03-12' or 1773248400000 work too",
+    "'12/03/2569'": "'12/03/2026'",
+    'ค.ศ.': 'Gregorian',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -26,7 +73,10 @@ export const DATEPICKER_DOC: ComponentDoc = {
     },
     import: {
       title: 'Import',
-      text: { th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>', en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.' },
+      text: {
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wt-calendar</code> (และ <code>wt-datePicker</code>) ใช้ได้เหมือน <code>wt-datepicker</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wt-calendar</code> (and <code>wt-datePicker</code>), works the same as <code>wt-datepicker</code>, so moving over is a prefix change.',
+      },
     },
     basic: {
       title: 'Basic',
@@ -39,7 +89,7 @@ export const DATEPICKER_DOC: ComponentDoc = {
       title: { th: 'รูปแบบวันที่และ พ.ศ. / ค.ศ.', en: 'Date format and era' },
       text: {
         th: '<code>dateFormat</code> ใช้รูปแบบ <code>dd/mm/yy</code> แบบที่ template เดิมใช้: <code>d</code> <code>dd</code> วัน · <code>m</code> <code>mm</code> เดือน · <code>M</code> <code>MM</code> ชื่อเดือนย่อ / เต็ม · <code>y</code> <code>yy</code> ปี 2 / 4 หลัก · <code>D</code> <code>DD</code> ชื่อวันย่อ / เต็ม · <code>\'ข้อความ\'</code> ค่าเริ่มต้นตาม locale (ไทย <code>d MMMM yyyy</code>) ปีแสดงเป็น พ.ศ. ตาม <code>WtConfig.calendar</code> ใช้ <code>calendar="gregorian"</code> หรือ <code>[isBudhistYear]="false"</code> (สะกด <code>isBuddhistYear</code> ก็ได้) เพื่อแสดง ค.ศ. ส่วน model เป็น Date แบบ ค.ศ. เสมอ',
-        en: '<code>dateFormat</code> uses the <code>dd/mm/yy</code> style existing templates use: <code>d</code> <code>dd</code> day · <code>m</code> <code>mm</code> month · <code>M</code> <code>MM</code> short / long month name · <code>y</code> <code>yy</code> 2- / 4-digit year · <code>D</code> <code>DD</code> short / long day name · <code>\'text\'</code>. The default comes from the locale (Thai <code>d MMMM yyyy</code>). Years show in the Buddhist era per <code>WtConfig.calendar</code>; use <code>calendar="gregorian"</code> or <code>[isBudhistYear]="false"</code> (<code>isBuddhistYear</code> works too) for the Gregorian era. The model is always an ordinary Date.',
+        en: '<code>dateFormat</code> uses the <code>dd/mm/yy</code> style existing templates use: <code>d</code> <code>dd</code> day · <code>m</code> <code>mm</code> month · <code>M</code> <code>MM</code> short / long month name · <code>y</code> <code>yy</code> 2- / 4-digit year · <code>D</code> <code>DD</code> short / long day name · <code>\'text\'</code>. The default comes from the locale (English <code>MMM d, yyyy</code>, Thai <code>d MMMM yyyy</code>). The era follows <code>WtConfig.calendar</code>: Thai apps show the Buddhist era by default, this English page the Gregorian one. Set <code>calendar="buddhist"</code> or <code>"gregorian"</code> per field (the third field here shows B.E. 2569), or use <code>[isBudhistYear]="false"</code> (<code>isBuddhistYear</code> works too). The model is always an ordinary Date.',
       },
     },
     datatype: {
@@ -53,7 +103,7 @@ export const DATEPICKER_DOC: ComponentDoc = {
       title: { th: 'พิมพ์วันที่', en: 'Typing a date' },
       text: {
         th: 'พิมพ์ตรงรูปแบบก็ได้ หรือพิมพ์ตัวเลขเรียง วัน เดือน ปี ตามลำดับของรูปแบบ คั่นด้วยอะไรก็ได้ (<code>12/3/2569</code>, <code>12-03-69</code>) ปีที่ต่ำกว่า 2300 ถือเป็น ค.ศ. (เผื่อพิมพ์ตามความเคยชิน) รับเลขไทยและชื่อเดือนตัวพิมพ์ใดก็ได้ ข้อความที่ใช้ไม่ได้หรืออยู่นอก min / max จะถูกคืนค่าเดิมตอนออกจากช่อง (<code>keepInvalid</code> เก็บข้อความไว้)',
-        en: 'Type the exact format, or numbers in the format\'s day, month and year order with any separator (<code>12/3/2569</code>, <code>12-03-69</code>). A year below 2300 is read as Gregorian, for people typing out of habit. Thai digits and month names in any case work. Text it cannot use, or outside min / max, is put back on blur (<code>keepInvalid</code> keeps it).',
+        en: 'Type the exact format, or numbers in the format\'s day, month and year order with any separator (<code>12/3/2026</code>, <code>12-03-26</code>). With the Buddhist calendar, a year below 2300 is read as Gregorian, for people typing out of habit. Thai digits and month names in any case work. Text it cannot use, or outside min / max, is put back on blur (<code>keepInvalid</code> keeps it).',
       },
     },
     time: {
@@ -82,7 +132,7 @@ export const DATEPICKER_DOC: ComponentDoc = {
       title: { th: 'เลือกเดือน / ปี', en: 'Month and year pickers' },
       text: {
         th: '<code>view="month"</code> หรือ <code>view="year"</code> เลือกแค่เดือนหรือปี หัวของปฏิทินกดไล่ลงไปได้ วัน → เดือน → ปี โดยหน้าปีแสดงทีละทศวรรษตามปีที่แสดง (เช่น 2560 – 2569) 12 ช่อง ปีที่อยู่นอกทศวรรษจะจางลง',
-        en: '<code>view="month"</code> or <code>view="year"</code> picks only a month or a year. The calendar header drills from days to months to years; the year page shows one decade of the displayed era (e.g. 2560 – 2569) in 12 cells, with the years outside it dimmed.',
+        en: '<code>view="month"</code> or <code>view="year"</code> picks only a month or a year. The calendar header drills from days to months to years; the year page shows one decade of the displayed era (e.g. 2020 – 2029, or 2560 – 2569 in the Buddhist era) in 12 cells, with the years outside it dimmed.',
       },
     },
     timeonly: {
@@ -175,7 +225,9 @@ export const DATEPICKER_DOC: ComponentDoc = {
     <span [class.has-event]="events.includes(date.day) && date.selectable">{{ date.day }}</span>
   </ng-template>
 </wt-datepicker>`,
-    format: `<!-- 12 มีนาคม 2569 (ค่าเริ่มต้นของภาษาไทย) -->
+    format: {
+      en: FORMAT_EN,
+      th: `<!-- 12 มีนาคม 2569 (ค่าเริ่มต้นของภาษาไทย) -->
 <wt-datepicker name="date" [(ngModel)]="date"></wt-datepicker>
 
 <!-- 12/03/2569 -->
@@ -186,6 +238,7 @@ export const DATEPICKER_DOC: ComponentDoc = {
 
 <!-- พฤหัสบดี 12 มี.ค. 69 -->
 <wt-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wt-datepicker>`,
+    },
     datatype: `<wt-datepicker name="dueText" [(ngModel)]="dueText" dataType="string" dateFormat="dd/mm/yy"></wt-datepicker>`,
     typing: `<wt-datepicker name="typed" [(ngModel)]="typed" dateFormat="dd/mm/yy" [showOnFocus]="false"
   placeholder="เช่น 5/4/2569 หรือ 5 เม.ย. 69"></wt-datepicker>`,

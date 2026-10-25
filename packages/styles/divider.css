@@ -59,11 +59,12 @@
   .wt-divider-content {
     position: relative;
     z-index: 1;
-    padding: 0 var(--wt-divider-content-padding);
+    padding: var(--wt-divider-content-padding-y) var(--wt-divider-content-padding);
+    border-radius: var(--wt-divider-content-radius);
     background: var(--wt-card-bg);
   }
   .wt-divider-vertical .wt-divider-content {
-    padding: var(--wt-divider-content-padding) 0;
+    padding: var(--wt-divider-content-padding) var(--wt-divider-content-padding-y);
   }
   .wt-divider-content:empty {
     display: none;

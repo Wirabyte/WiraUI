@@ -20,7 +20,7 @@
   } @else {
     <p>แบบที่ <code>ng add</code> ตั้งให้: ธีมหลักมาจากไฟล์ SCSS / CSS แล้วปรับบางค่าในไฟล์ <code>wiratheme.overrides.ts</code> ค่าเหล่านี้ลง <code>&#64;layer wiratheme.overrides</code> จึงชนะไฟล์ธีม</p>
   }
-  <docs-code [code]="s.TS_OVERRIDES" lang="ts"></docs-code>
+  <docs-code [code]="local(s.TS_OVERRIDES)" lang="ts"></docs-code>
 </docs-section>
 
 <docs-section id="preset" [title]="{ th: 'ธีมจาก TypeScript อย่างเดียว', en: 'A theme in TypeScript only' }">
@@ -29,7 +29,7 @@
   } @else {
     <p>ไม่มีไฟล์ธีมเลย ใช้ preset ของรุ่นนี้เป็นฐานแล้วปรับด้วย <code>definePreset()</code> (ตัวอย่างใช้ preset ที่หน้านี้ใช้อยู่)</p>
   }
-  <docs-code [code]="presetCode()" lang="ts"></docs-code>
+  <docs-code [code]="local(presetCode())" lang="ts"></docs-code>
   <div class="docs-note">
     <docs-icon name="info"></docs-icon>
     @if (en()) {
@@ -41,7 +41,7 @@
 </docs-section>
 
 <docs-section id="runtime" [title]="{ th: 'เปลี่ยนตอน runtime', en: 'Run-time changes' }">
-  <docs-code [code]="s.TS_RUNTIME" lang="ts"></docs-code>
+  <docs-code [code]="local(s.TS_RUNTIME)" lang="ts"></docs-code>
 </docs-section>
 
 <docs-section id="palette" title="palette()">

@@ -22,28 +22,28 @@
     @if (en()) {
       <p>
         Files live at <code>wiratheme/themes/&lt;theme&gt;/theme.css</code>, e.g. <code>sila-light-teal</code>, <code>sila-dark-indigo</code>, <code>arun-blue</code>,
-        <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code>. A file exported from the Theme Designer works too.
+        <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code>. A file exported from the WiraTheme Studio works too.
       </p>
     } @else {
       <p>
         ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;ธีม&gt;/theme.css</code> เช่น <code>sila-light-teal</code>, <code>sila-dark-indigo</code>,
-        <code>arun-blue</code>, <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code> หรือใช้ไฟล์ที่ export จาก Theme Designer แทนก็ได้
+        <code>arun-blue</code>, <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
       </p>
     }
   } @else {
     @if (en()) {
       <p>
         Files live at <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (the preset's own colour) or <code>themes/&lt;preset&gt;/&lt;colour&gt;.css</code>,
-        e.g. <code>themes/mali/cyan.css</code>. A file exported from the Theme Designer works too.
+        e.g. <code>themes/mali/cyan.css</code>. A file exported from the WiraTheme Studio works too.
       </p>
     } @else {
       <p>
         ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (สีเริ่มต้นของ preset) หรือ <code>themes/&lt;preset&gt;/&lt;สี&gt;.css</code>
-        เช่น <code>themes/mali/cyan.css</code> หรือใช้ไฟล์ที่ export จาก Theme Designer แทนก็ได้
+        เช่น <code>themes/mali/cyan.css</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
       </p>
     }
   }
-  <docs-code [code]="filesCode" lang="json" file="angular.json"></docs-code>
+  <docs-code [code]="local(filesCode)" lang="json" file="angular.json"></docs-code>
 </docs-section>
 
 <docs-section id="override" [title]="{ th: 'ปรับค่าด้วย CSS ของแอป', en: 'Adjust values from app CSS' }">
@@ -52,7 +52,7 @@
   } @else {
     <p>CSS ของแอปไม่อยู่ใน <code>&#64;layer</code> จึงชนะค่าของธีมเสมอ ตั้งตัวแปรบน <code>:root</code> ครั้งเดียวแล้วมีผลทั้งแอป</p>
   }
-  <docs-code [code]="overrideCode" lang="css" file="src/styles.css"></docs-code>
+  <docs-code [code]="local(overrideCode)" lang="css" file="src/styles.css"></docs-code>
 </docs-section>
 
 <docs-section id="scoped" [title]="{ th: 'ธีมเฉพาะจุด', en: 'Scoped themes' }">
@@ -61,7 +61,7 @@
   } @else {
     <p>ตัวแปร CSS สืบทอดลงไปถึง component ข้างใน ตั้งค่าบน element ที่ครอบไว้ได้เลย</p>
   }
-  <docs-code [code]="s.CSS_SCOPED" lang="css"></docs-code>
+  <docs-code [code]="local(s.CSS_SCOPED)" lang="css"></docs-code>
 </docs-section>
 
 <docs-section id="dark" title="Dark mode">

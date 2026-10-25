@@ -12,5 +12,6 @@ export { defineOverrides, definePreset, palette, themePreset, Wira, Lanna, Siam,
 export type { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WtLocale } from 'wiratheme/core';
 export * from './popup';
 export * from './template';
+export * from './menu-item';
 export * from './scroll-lock';
 export { wtInitializer as ɵwtInitializer } from './initializer';

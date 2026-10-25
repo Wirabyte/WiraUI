@@ -1,0 +1,438 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="body"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-table id="d-tbl-basic" [value]="local(few)" [tableStyle]="{ 'min-width': '32rem' }">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ลำดับ') }}</th>
+              <th>{{ tx('รหัส') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+              <th>{{ tx('คะแนน') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ s.code }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+              <td>{{ s.score }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="paginator" [section]="sec['paginator']">
+      <docs-demo [html]="code['paginator']" layout="stack">
+        <wt-table id="d-tbl-page" [value]="local(students)" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [showCurrentPageReport]="true">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ลำดับ') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr>
+              <td class="d-tbl-no">{{ i + 1 }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="report" [section]="sec['report']">
+      <docs-api-table [group]="placeholders"></docs-api-table>
+      <docs-demo [html]="code['report']" [ts]="ts['report']" layout="stack">
+        <wt-table
+          id="d-tbl-report"
+          [value]="local(students)"
+          [paginator]="true"
+          [rows]="5"
+          [showCurrentPageReport]="true"
+          [currentPageReportTemplate]="tx('หน้า {currentPage} จาก {totalPages} · นักเรียน {totalRecords} คน')"
+        >
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ลำดับ') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sort" [section]="sec['sort']">
+      <docs-demo [html]="code['sort']" layout="stack">
+        <wt-table id="d-tbl-sort" [value]="local(students)" sortField="score" [sortOrder]="-1" [scrollable]="true" scrollHeight="320px">
+          <ng-template #header>
+            <tr>
+              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
+              <th wtSortableColumn="club.name">{{ tx('ชุมนุม') }} <wt-sortIcon field="club.name"></wt-sortIcon></th>
+              <th wtSortableColumn="score">{{ tx('คะแนน') }} <wt-sortIcon field="score"></wt-sortIcon></th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.name }}</td>
+              <td class="d-tbl-room">{{ s.room }}</td>
+              <td class="d-tbl-club">{{ s.club.name }}</td>
+              <td class="d-tbl-score">{{ s.score }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="multisort" [section]="sec['multisort']">
+      <docs-demo [html]="code['multisort']" layout="stack">
+        <wt-table id="d-tbl-multi" [value]="local(students)" sortMode="multiple" [removableSort]="true" [scrollable]="true" scrollHeight="320px">
+          <ng-template #header>
+            <tr>
+              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
+              <th wtSortableColumn="score">{{ tx('คะแนน') }} <wt-sortIcon field="score"></wt-sortIcon></th>
+              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.room }}</td>
+              <td>{{ s.score }}</td>
+              <td>{{ s.name }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="search" [section]="sec['search']">
+      <docs-demo [html]="code['search']" layout="stack">
+        <wt-table #dt id="d-tbl-search" [value]="local(students)" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0" [scrollable]="true" scrollHeight="320px">
+          <ng-template #caption>
+            <wt-iconfield>
+              <wt-inputicon icon="pi pi-search"></wt-inputicon>
+              <input id="d-tbl-search-input" wtInputText [placeholder]="tx('ค้นหานักเรียน')" [attr.aria-label]="tx('ค้นหานักเรียน')" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+            </wt-iconfield>
+          </ng-template>
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('รหัส') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.code }}</td>
+              <td class="d-tbl-name">{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="empty" [section]="sec['empty']">
+      <docs-demo [html]="code['empty']" layout="grid">
+        <wt-table id="d-tbl-empty" [value]="none">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+          <ng-template #emptymessage>
+            <tr>
+              <td colspan="2" class="docs-table-center">{{ tx('ยังไม่มีนักเรียนในห้องนี้') }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <wt-table id="d-tbl-empty-default" [value]="none">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="loading" [section]="sec['loading']">
+      <docs-demo [html]="code['loading']" [ts]="ts['loading']" layout="stack">
+        <div>
+          <wt-button id="d-tbl-reload" icon="pi pi-refresh" [label]="tx('โหลดใหม่')" size="small" severity="secondary" [loading]="isApiLoading" (onClick)="reload()"></wt-button>
+        </div>
+        <div class="docs-demo-fields">
+          <wt-table id="d-tbl-loading-mask" [value]="local(few)" [loading]="isApiLoading">
+            <ng-template #header>
+              <tr>
+                <th>{{ tx('ชื่อ - สกุล') }}</th>
+                <th>{{ tx('ห้อง') }}</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-s>
+              <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.room }}</td>
+              </tr>
+            </ng-template>
+          </wt-table>
+          <wt-table id="d-tbl-loading-body" [value]="local(few)" [loading]="isApiLoading">
+            <ng-template #header>
+              <tr>
+                <th>{{ tx('ชื่อ - สกุล') }}</th>
+                <th>{{ tx('ห้อง') }}</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-s>
+              <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.room }}</td>
+              </tr>
+            </ng-template>
+            <ng-template #loadingbody>
+              @for (n of [1, 2, 3, 4, 5]; track n) {
+                <tr>
+                  <td><wt-skeleton></wt-skeleton></td>
+                  <td><wt-skeleton width="4rem"></wt-skeleton></td>
+                </tr>
+              }
+            </ng-template>
+          </wt-table>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="selection" [section]="sec['selection']">
+      <docs-demo [html]="code['selection']" [ts]="ts['selection']" layout="stack">
+        <wt-table id="d-tbl-single" [value]="local(few)" selectionMode="single" [(selection)]="selectedStudent" dataKey="id">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr [wtSelectableRow]="s" [wtSelectableRowIndex]="i">
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <span class="docs-demo-output">selectedStudent: <code id="d-tbl-single-value">{{ selectedStudent?.name ?? 'null' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="checkbox" [section]="sec['checkbox']">
+      <docs-demo [html]="code['checkbox']" [ts]="ts['checkbox']" layout="stack">
+        <wt-table id="d-tbl-check" [value]="local(few)" [(selection)]="selectedStudents" dataKey="id">
+          <ng-template #header>
+            <tr>
+              <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <span class="docs-demo-output">selectedStudents: <code id="d-tbl-check-count">{{ selectedStudents.length }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="lazy" [section]="sec['lazy']">
+      <docs-demo [html]="code['lazy']" [ts]="ts['lazy']" layout="stack">
+        <wt-table
+          id="d-tbl-lazy"
+          [value]="lazyRows"
+          [lazy]="true"
+          (onLazyLoad)="loadStudents($event)"
+          [paginator]="true"
+          [rows]="10"
+          [totalRecords]="totalRecords"
+          [loading]="isLazyLoading"
+          [showCurrentPageReport]="true"
+        >
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ลำดับ') }}</th>
+              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr>
+              <td class="d-tbl-no">{{ i + 1 }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <span class="docs-demo-output">onLazyLoad: <code id="d-tbl-lazy-log">{{ lazyLog || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="look" [section]="sec['look']">
+      <docs-demo [html]="code['look']" layout="stack">
+        <wt-table id="d-tbl-look" [value]="local(few)" [showGridlines]="true" [stripedRows]="true" size="small">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="scroll" [section]="sec['scroll']">
+      <docs-demo [html]="code['scroll']" layout="stack">
+        <wt-table id="d-tbl-scroll" [value]="local(students)" [scrollable]="true" scrollHeight="240px" [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('รหัส') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+              <th>{{ tx('ชุมนุม') }}</th>
+              <th>{{ tx('คะแนน') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.code }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+              <td>{{ s.club.name }}</td>
+              <td>{{ s.score }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="stack" [section]="sec['stack']">
+      <docs-demo [html]="code['stack']" layout="stack">
+        <wt-table id="d-tbl-stack" [value]="local(few)" responsiveLayout="stack" breakpoint="768px">
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+              <th>{{ tx('คะแนน') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td><span class="p-column-title">{{ tx('ชื่อ - สกุล') }}</span>{{ s.name }}</td>
+              <td><span class="p-column-title">{{ tx('ห้อง') }}</span>{{ s.room }}</td>
+              <td><span class="p-column-title">{{ tx('คะแนน') }}</span>{{ s.score }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="admin" [section]="sec['admin']">
+      <docs-demo [html]="code['admin']" [ts]="ts['admin']" layout="stack">
+        <wt-table
+          #adminTable
+          id="d-tbl-admin"
+          [value]="adminRows"
+          dataKey="id"
+          [paginator]="true"
+          [rows]="10"
+          [rowsPerPageOptions]="[10, 20, 50]"
+          [showCurrentPageReport]="true"
+          [globalFilterFields]="['code', 'name', 'room']"
+          [filterDelay]="0"
+          [tableStyle]="{ 'min-width': '48rem' }"
+        >
+          <ng-template #caption>
+            <div class="docs-table-caption">
+              <wt-iconfield>
+                <wt-inputicon icon="pi pi-search"></wt-inputicon>
+                <input id="d-tbl-admin-search" wtInputText [placeholder]="tx('ค้นหา รหัส ชื่อ ห้อง')" [attr.aria-label]="tx('ค้นหา รหัส ชื่อ ห้อง')" (input)="adminTable.filterGlobal($any($event.target).value, 'contains')" />
+              </wt-iconfield>
+              <wt-button id="d-tbl-admin-add" [label]="tx('เพิ่ม')" icon="pi pi-plus" (onClick)="addStudent()"></wt-button>
+            </div>
+          </ng-template>
+          <ng-template #header>
+            <tr>
+              <th style="width: 4rem">{{ tx('ลำดับ') }}</th>
+              <th wtSortableColumn="code">{{ tx('รหัส') }} <wt-sortIcon field="code"></wt-sortIcon></th>
+              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
+              <th wtSortableColumn="birthDate">{{ tx('วันเกิด') }} <wt-sortIcon field="birthDate"></wt-sortIcon></th>
+              <th>{{ tx('สถานะ') }}</th>
+              <th style="width: 7rem"></th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ s.code }}</td>
+              <td class="d-tbl-name">{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+              <td class="d-tbl-date">{{ thaiDate(s.birthDate) }}</td>
+              <td><wt-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wt-tag></td>
+              <td class="docs-table-actions">
+                <wt-button icon="pi pi-pencil" [rounded]="true" [text]="true" [wtTooltip]="tx('แก้ไข')" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
+                <wt-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" [wtTooltip]="tx('ลบ')" [ariaLabel]="tx('ลบ')" (onClick)="deleteStudent(s)"></wt-button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template #emptymessage>
+            <tr>
+              <td colspan="7" class="docs-table-center">{{ tx('ไม่พบนักเรียนที่ค้นหา') }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-tbl-admin-action">{{ lastAction || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

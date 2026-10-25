@@ -95,7 +95,7 @@
           <td>ToggleSwitch</td>
           <td><code>&lt;wt-toggleswitch&gt;</code></td>
           <td><code>WtToggleSwitchModule</code> · <code>WtToggleSwitch</code></td>
-          <td>{{ en() ? 'Built-in label' : 'มี label ในตัว' }}</td>
+          <td>{{ en() ? 'Built-in label; the tag' : 'มี label ในตัว และ tag' }} <code>&lt;wt-inputSwitch&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}</td>
         </tr>
         <tr>
           <td>{{ en() ? 'Translations' : 'คำแปล' }}</td>
@@ -106,13 +106,19 @@
           <td>Tag · Badge · Chip · Avatar · Divider · Skeleton · ProgressBar · Message · Panel · Fieldset</td>
           <td><code>&lt;wt-tag&gt;</code> · <code>&lt;wt-badge&gt;</code> …</td>
           <td><code>WtTagModule</code> · <code>WtTag</code> …</td>
-          <td>{{ en() ? 'Same pattern; ProgressSpinner uses the tag' : 'รูปแบบเดียวกัน ส่วน ProgressSpinner ใช้ tag' }} <code>&lt;wt-progress-spinner&gt;</code></td>
+          <td>
+            {{ en() ? 'Same pattern; ProgressSpinner uses the tag' : 'รูปแบบเดียวกัน ส่วน ProgressSpinner ใช้ tag' }} <code>&lt;wt-progress-spinner&gt;</code>
+            ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-progressSpinner&gt;</code>)
+          </td>
         </tr>
         <tr>
           <td>DatePicker</td>
           <td><code>&lt;wt-datepicker&gt;</code></td>
           <td><code>WtDatePickerModule</code> · <code>WtDatePicker</code></td>
-          <td>{{ en() ? 'dateFormat="dd/mm/yy" as before; years show in the Buddhist era; no appendTo needed' : 'dateFormat="dd/mm/yy" เหมือนเดิม ปีแสดงเป็น พ.ศ. และไม่ต้องใช้ appendTo' }}</td>
+          <td>
+            {{ en() ? 'dateFormat="dd/mm/yy" as before; years show in the Buddhist era; no appendTo needed; the tag' : 'dateFormat="dd/mm/yy" เหมือนเดิม ปีแสดงเป็น พ.ศ. ไม่ต้องใช้ appendTo และ tag' }}
+            <code>&lt;wt-calendar&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}
+          </td>
         </tr>
         <tr>
           <td>Dialog · ConfirmDialog</td>
@@ -138,19 +144,107 @@
           <td><code>provideWtAnimate()</code></td>
           <td>{{ en() ? 'The data-aos attributes you already use work as they are' : 'attribute data-aos ที่ใช้อยู่ทำงานได้ทันที' }}</td>
         </tr>
-        <tr class="docs-row-soon">
-          <td colspan="3">Select · Table</td>
-          <td>{{ 'nav.soon' | t }}</td>
+        <tr>
+          <td>Select</td>
+          <td><code>&lt;wt-select&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-dropdown</code> / <code>p-select</code>)</td>
+          <td><code>WtSelectModule</code> · <code>WtSelect</code></td>
+          <td>{{ en() ? 'Same option inputs and templates; appendTo, virtualScroll and autoDisplayFirst are accepted and ignored' : 'input ของตัวเลือกและ template ชื่อเดิม ส่วน appendTo, virtualScroll และ autoDisplayFirst รับไว้แต่ไม่มีผล' }}</td>
+        </tr>
+        <tr>
+          <td>Table</td>
+          <td><code>&lt;wt-table&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-table</code>)</td>
+          <td><code>WtTableModule</code> · <code>WtTable</code></td>
+          <td>{{ en() ? 'Templates (pTemplate), pSortableColumn, pSelectableRow and the p-datatable-* classes keep working; row expansion, cell editing, frozen columns, row groups, menu filters and CSV export are not built yet' : 'template (pTemplate), pSortableColumn, pSelectableRow และ class p-datatable-* ใช้ต่อได้ ยังไม่มีแถวขยาย แก้ไขในเซลล์ คอลัมน์ตรึง จัดกลุ่มแถว ตัวกรองแบบเมนู และ export CSV' }}</td>
+        </tr>
+        <tr>
+          <td>Accordion · Tabs</td>
+          <td><code>&lt;wt-accordion-tab&gt;</code> · <code>&lt;wt-tabs&gt;</code> <code>&lt;wt-tab-panel&gt;</code></td>
+          <td><code>WtAccordionModule</code> · <code>WtTabsModule</code></td>
+          <td>
+            {{ en() ? 'The old tags work too:' : 'tag เดิมใช้ได้:' }} <code>&lt;wt-accordionTab&gt;</code>, <code>&lt;wt-tabView&gt;</code> / <code>&lt;wt-tabPanel&gt;</code> ·
+            {{ en() ? 'by value with' : 'แบบ value ใช้' }} <code>wt-accordion-panel</code> / <code>wt-accordion-header</code> / <code>wt-accordion-content</code>
+            {{ en() ? 'and' : 'และ' }} <code>wt-tablist</code> / <code>wt-tab</code> / <code>wt-tabpanels</code>
+          </td>
+        </tr>
+        <tr>
+          <td>MultiSelect</td>
+          <td><code>&lt;wt-multiselect&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-multiSelect&gt;</code>)</td>
+          <td><code>WtMultiSelectModule</code> · <code>WtMultiSelect</code></td>
+          <td>{{ en() ? 'defaultLabel, maxSelectedLabels, selectedItemsLabel, display="chip" and the selectedItems template work as before; appendTo is accepted and ignored' : 'defaultLabel, maxSelectedLabels, selectedItemsLabel, display="chip" และ template selectedItems ใช้ได้เหมือนเดิม ส่วน appendTo รับไว้แต่ไม่มีผล' }}</td>
+        </tr>
+        <tr>
+          <td>AutoComplete</td>
+          <td><code>&lt;wt-autocomplete&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-autoComplete&gt;</code>)</td>
+          <td><code>WtAutoCompleteModule</code> · <code>WtAutoComplete</code></td>
+          <td>{{ en() ? 'suggestions, completeMethod, delay, minLength, dropdown, forceSelection and field (optionLabel) as before; optionValue and multiple are not built yet' : 'suggestions, completeMethod, delay, minLength, dropdown, forceSelection และ field (optionLabel) เหมือนเดิม ยังไม่มี optionValue และ multiple' }}</td>
+        </tr>
+        <tr>
+          <td>InputMask</td>
+          <td><code>&lt;wt-inputmask&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-inputMask&gt;</code>)</td>
+          <td><code>WtInputMaskModule</code> · <code>WtInputMask</code></td>
+          <td>{{ en() ? 'mask, slotChar, autoClear, unmask and onComplete as before; Thai digits count as 0–9' : 'mask, slotChar, autoClear, unmask และ onComplete เหมือนเดิม เลขไทยใช้ได้เหมือน 0–9' }}</td>
+        </tr>
+        <tr>
+          <td>Menubar · Menu · TabMenu</td>
+          <td><code>&lt;wt-menubar&gt;</code> · <code>&lt;wt-menu&gt;</code> · <code>&lt;wt-tabmenu&gt;</code></td>
+          <td><code>WtMenubarModule</code> · <code>WtMenuModule</code> · <code>WtTabMenuModule</code></td>
+          <td>{{ en() ? 'MenuItem models move over unchanged (MenuItem from' : 'model ของ MenuItem ใช้ต่อได้ไม่ต้องแก้ (MenuItem จาก' }} <code>wiratheme/api</code>{{ en() ? '); popups open in the top layer, so appendTo is accepted and ignored' : ') เมนู popup เปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
+        </tr>
+        <tr>
+          <td>PanelMenu · Steps</td>
+          <td><code>&lt;wt-panelmenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-panelMenu&gt;</code>) · <code>&lt;wt-steps&gt;</code></td>
+          <td><code>WtPanelMenuModule</code> · <code>WtStepsModule</code></td>
+          <td>
+            {{ en() ? 'MenuItem models with expanded, multiple, activeIndex and readonly work as before; the value-based Stepper is not built yet' : 'model ของ MenuItem พร้อม expanded, multiple, activeIndex และ readonly ใช้ได้เหมือนเดิม ส่วน Stepper แบบ value ยังไม่มี' }}
+          </td>
+        </tr>
+        <tr>
+          <td>Messages</td>
+          <td><code>&lt;wt-messages&gt;</code></td>
+          <td><code>WtMessagesModule</code> · <code>WtMessages</code></td>
+          <td>{{ en() ? 'enableService is still on by default: set [enableService]="false" when a toast already shows those messages' : 'enableService ยังเปิดเป็นค่าเริ่มต้น ตั้ง [enableService]="false" เมื่อมี toast แสดงข้อความเหล่านั้นอยู่แล้ว' }}</td>
+        </tr>
+        <tr>
+          <td>Chart</td>
+          <td><code>&lt;wt-chart&gt;</code></td>
+          <td><code>WtChartModule</code> · <code>WtChart</code></td>
+          <td>{{ en() ? 'type, data, options, plugins, width and height as before; the app installs chart.js 3 or 4' : 'type, data, options, plugins, width และ height เหมือนเดิม แอปติดตั้ง chart.js 3 หรือ 4 เอง' }}</td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td><code>&lt;wt-image&gt;</code></td>
+          <td><code>WtImageModule</code> · <code>WtImage</code></td>
+          <td>{{ en() ? 'preview, imageClass and onImageError as before; the preview opens in the top layer, so appendTo is accepted and ignored' : 'preview, imageClass และ onImageError เหมือนเดิม ภาพขยายเปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
+        </tr>
+        <tr>
+          <td>Timeline</td>
+          <td><code>&lt;wt-timeline&gt;</code></td>
+          <td><code>WtTimelineModule</code> · <code>WtTimeline</code></td>
+          <td>{{ en() ? 'The content / opposite / marker templates and align / layout as before' : 'template content / opposite / marker และ align / layout เหมือนเดิม' }}</td>
+        </tr>
+        <tr>
+          <td>Paginator</td>
+          <td><code>&lt;wt-paginator&gt;</code></td>
+          <td><code>WtPaginatorModule</code> · <code>WtPaginator</code></td>
+          <td>{{ en() ? 'onPageChange gives a 0-based page; dropdownAppendTo is accepted and ignored' : 'onPageChange ส่ง page ที่เริ่มจาก 0 ส่วน dropdownAppendTo รับไว้แต่ไม่มีผล' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
   @if (en()) {
-    <p>Most changes are just the tag prefix. Work you wait for (saving, submitting) moves to <code>[action]</code>, with no loading flag to keep.</p>
+    <p>
+      Most changes are just the tag prefix, and the older tag names are kept too (<code>wt-calendar</code>, <code>wt-inputSwitch</code>,
+      <code>wt-progressSpinner</code>, <code>wt-accordionTab</code>, <code>wt-tabView</code> / <code>wt-tabPanel</code>). Work you wait for
+      (saving, submitting) moves to <code>[action]</code>, with no loading flag to keep.
+    </p>
   } @else {
-    <p>ส่วนใหญ่เปลี่ยนแค่ prefix ของ tag ส่วนงานที่ต้องรอ (บันทึก, ส่งฟอร์ม) ย้ายไปใช้ <code>[action]</code> แล้วไม่ต้องเขียน flag loading เอง</p>
+    <p>
+      ส่วนใหญ่เปลี่ยนแค่ prefix ของ tag และชื่อ tag แบบเก่าก็ใช้ได้ (<code>wt-calendar</code>, <code>wt-inputSwitch</code>, <code>wt-progressSpinner</code>,
+      <code>wt-accordionTab</code>, <code>wt-tabView</code> / <code>wt-tabPanel</code>) ส่วนงานที่ต้องรอ (บันทึก, ส่งฟอร์ม) ย้ายไปใช้ <code>[action]</code>
+      แล้วไม่ต้องเขียน flag loading เอง
+    </p>
   }
-  <docs-code [code]="afterCode" lang="html" file="WiraTheme"></docs-code>
+  <docs-code [code]="local(afterCode)" lang="html" file="WiraTheme"></docs-code>
 </docs-section>
 
 <docs-section id="css" [title]="{ th: 'CSS เดิมยังใช้ได้', en: 'Your CSS keeps working' }">
@@ -196,7 +290,7 @@
       </tbody>
     </table>
   </div>
-  <docs-code [code]="cssCode" lang="css" [file]="en() ? 'styles.css of the existing app' : 'styles.css ของแอปเดิม'"></docs-code>
+  <docs-code [code]="local(cssCode)" lang="css" [file]="en() ? 'styles.css of the existing app' : 'styles.css ของแอปเดิม'"></docs-code>
 </docs-section>
 
 <docs-section id="theme" [title]="{ th: 'ย้ายธีม', en: 'Moving the theme' }">
@@ -207,7 +301,7 @@
       } @else {
         <li><b>Presets</b> come from <code>wiratheme/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add wiratheme --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
       }
-      <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/designer')">Theme Designer</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
+      <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/studio')">WiraTheme Studio</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
       <li><b>No more <code>::ng-deep</code> or <code>!important</code></b>: app CSS always beats WiraTheme's <code>&#64;layer</code>. Move to tokens such as <code>--wt-card-body-gap</code> as you touch each page.</li>
       <li><b>Utility CSS</b>, grid libraries and Tailwind keep working; WiraTheme ships no utility classes that clash.</li>
     } @else {
@@ -216,7 +310,7 @@
       } @else {
         <li><b>preset</b> มาจาก <code>wiratheme/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add wiratheme --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
       }
-      <li><b>ธีมที่ export จาก designer รุ่นเก่า</b> สร้างใหม่ใน <a [routerLink]="link('theming/designer')">Theme Designer</a> ด้วยสีหลักและฟอนต์เดิม แล้ว export เป็น SCSS หรือ CSS</li>
+      <li><b>ธีมที่ export จาก designer รุ่นเก่า</b> สร้างใหม่ใน <a [routerLink]="link('theming/studio')">สตูดิโอธีม</a> ด้วยสีหลักและฟอนต์เดิม แล้ว export เป็น SCSS หรือ CSS</li>
       <li><b><code>::ng-deep</code> และ <code>!important</code></b> ไม่จำเป็นแล้ว เพราะ CSS ของแอปชนะ <code>&#64;layer</code> ของ WiraTheme เสมอ ค่อย ๆ เปลี่ยนเป็น token เช่น <code>--wt-card-body-gap</code> เมื่อแก้หน้านั้น</li>
       <li><b>utility CSS</b> แบบ grid หรือ Tailwind ใช้ต่อได้ WiraTheme ไม่มีคลาส utility ที่ชนกัน</li>
     }

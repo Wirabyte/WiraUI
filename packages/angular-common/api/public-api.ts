@@ -4,6 +4,7 @@
  * here is often the only change.
  */
 export { WtTemplate } from 'wiratheme/config';
+export type { WtMenuItem, WtMenuItem as MenuItem, WtMenuItemCommandEvent, WtMenuItemCommandEvent as MenuItemCommandEvent } from 'wiratheme/config';
 export { WtSharedModule, WtSharedModule as SharedModule } from './shared.module';
 export {
   WtConfirmationService,

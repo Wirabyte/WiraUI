@@ -62,11 +62,17 @@
   background: var(--docs-hover);
 }
 
+// Examples · Properties · Styling: a segmented control (no underline, no capitals). Scrolls sideways if it ever has to.
 .docs-tabs {
   display: flex;
-  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  gap: 2px;
   margin-top: 24px;
-  border-bottom: 1px solid var(--docs-border);
+  padding: 4px;
+  border: 1px solid var(--docs-border);
+  border-radius: 12px;
+  background: var(--docs-ground);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -74,34 +80,39 @@
   display: none;
 }
 .docs-tabs a {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  gap: 7px;
+  flex: none;
+  min-height: 36px;
   padding: 0 14px;
+  border-radius: 9px;
   color: var(--docs-muted);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+.docs-tabs a .docs-icon {
+  width: 15px;
+  height: 15px;
 }
 .docs-tabs a:hover {
   color: var(--docs-text);
 }
 .docs-tabs a.active {
-  color: var(--docs-primary-soft-text);
+  background: var(--docs-overlay);
+  color: var(--docs-text);
+  font-weight: 600;
+  box-shadow:
+    0 1px 2px rgb(16 24 40 / 10%),
+    0 0 0 1px var(--docs-border);
 }
-.docs-tabs a.active::after {
-  content: '';
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--docs-primary);
+.docs-tabs a.active .docs-icon {
+  color: var(--docs-primary-soft-text);
 }
 
 docs-section,
@@ -411,22 +422,26 @@ a.docs-link-card:hover {
   font-size: 13.5px;
 }
 
-// Live demos
+// Live demos: a soft card. The preview sits inset on a dotted ground; the code (toolbar + dark pane) follows.
 docs-demo,
 .docs-demo {
   display: block;
   margin: 16px 0 8px;
+  padding: 4px;
   border: 1px solid var(--docs-border);
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 16px;
+  background: var(--docs-surface);
+  box-shadow: 0 1px 2px rgb(16 24 40 / 4%);
 }
 .docs-demo-preview {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  padding: 20px 16px;
-  background-color: var(--docs-surface);
+  padding: 22px 16px;
+  border: 1px solid color-mix(in srgb, var(--docs-border) 70%, transparent);
+  border-radius: 12px;
+  background-color: var(--docs-page-bg);
   background-image: radial-gradient(var(--docs-grid-line) 1px, transparent 1px);
   background-size: 16px 16px;
 }
@@ -527,25 +542,83 @@ docs-demo,
   max-width: 520px;
 }
 
-// Code inside a demo shares its frame.
+// Code inside a demo shares its card: no second frame, the toolbar sits right under the preview.
 .docs-demo docs-code-tabs {
   margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 .docs-demo .docs-code-tablist {
-  border-radius: 0;
-  border: 0;
-  border-top: 1px solid var(--docs-border);
+  padding: 4px 0;
 }
-.docs-demo .docs-code {
+
+// Table and Paginator demos
+.docs-table-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.docs-table-center {
+  text-align: center;
+}
+.docs-table-actions {
+  white-space: nowrap;
+}
+.docs-pg-list {
+  display: grid;
+  gap: 2px;
   margin: 0;
-  border: 0;
-  border-radius: 0;
+  padding: 0;
+  list-style: none;
 }
-.docs-demo > .docs-code-tabs > .docs-code {
-  border-top: 1px solid var(--docs-border);
+.docs-pg-list li {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--docs-surface);
+  font-size: 14px;
 }
-.docs-demo .docs-code-tablist + .docs-code {
-  border-top: 0;
+
+// Menubar demos: a brand in the start slot, a row of actions in the end slot, shortcuts in the item template.
+.docs-menubar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-end: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.docs-menubar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-menubar-actions wt-iconfield {
+  display: none;
+  flex: 0 1 12rem;
+  min-width: 0;
+}
+// Like the sample's `hidden sm:block`: the search field shows from 576px up.
+@media (min-width: 576px) {
+  .docs-menubar-actions wt-iconfield {
+    display: block;
+  }
+}
+.docs-menubar-actions input {
+  width: 100%;
+  min-width: 0;
+}
+.docs-menubar-shortcut {
+  margin-left: auto;
+  padding-left: 24px;
+  font-family: inherit;
+  font-size: 0.75em;
+  opacity: 0.7;
 }
 
 // Presets page
@@ -1048,4 +1121,204 @@ docs-demo,
   margin-top: 10px;
   color: var(--docs-muted);
   font-size: 13px;
+}
+
+// Menu and TabMenu demos
+.docs-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 14px;
+  border: 1px solid var(--docs-border);
+  border-radius: 12px;
+  background: var(--docs-surface);
+}
+.docs-menu-brand {
+  font-weight: 600;
+}
+.docs-menu-side {
+  width: 15rem;
+  max-width: 100%;
+  padding: 4px;
+  border-right: 1px solid var(--docs-border);
+  background: var(--docs-surface);
+}
+.docs-menu-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  font-weight: 600;
+}
+.docs-menu-group-label {
+  color: var(--wt-primary-color);
+}
+.docs-menu-badge {
+  margin-left: auto;
+}
+
+// MultiSelect demos
+.docs-ms-code {
+  display: inline-block;
+  min-width: 2.75em;
+  font-weight: 600;
+}
+.docs-ms-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 4px;
+  padding: 0 4px 0 8px;
+  border-radius: 999px;
+  background: var(--wt-chip-bg);
+  color: var(--wt-chip-color);
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.docs-ms-chip button {
+  display: inline-grid;
+  place-items: center;
+  width: 1.1em;
+  height: 1.1em;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+.docs-ms-chip button:hover {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+.docs-ms-placeholder {
+  color: var(--wt-text-muted);
+}
+.docs-ms-note {
+  padding: 6px 12px 0;
+  color: var(--wt-text-muted);
+  font-size: 0.85em;
+}
+.docs-ms-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// InputMask demos
+.docs-im-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px 20px;
+}
+@media (min-width: 640px) {
+  .docs-im-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Timeline demos
+.docs-tl-date {
+  color: var(--wt-text-muted);
+}
+.docs-tl-marker {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  color: #fff;
+}
+.docs-tl-card {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--wt-border);
+  border-radius: 10px;
+  background: var(--wt-card-bg);
+}
+.docs-tl-status {
+  font-weight: 600;
+}
+
+// Messages demos
+
+// Chart demos
+
+// Image demos
+.docs-img-shadow {
+  box-shadow: 0 6px 18px rgb(15 23 42 / 16%);
+}
+.docs-img-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+// AutoComplete demos
+.docs-ac-note {
+  padding: 8px 12px 4px;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-ac-code {
+  display: inline-block;
+  min-width: 2.75rem;
+  margin-right: 8px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+// PanelMenu demos
+.docs-pm-column {
+  width: 100%;
+  max-width: 20rem;
+}
+.docs-pm-narrow {
+  width: 15rem;
+  max-width: 100%;
+}
+.docs-pm-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+@media (min-width: 576px) {
+  .docs-pm-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.docs-pm-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-pm-caption {
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-pm-root {
+  font-weight: 600;
+}
+.docs-pm-shortcut {
+  margin-left: auto;
+  font-family: inherit;
+  opacity: 0.7;
+}
+.docs-pm-end {
+  margin-left: auto;
+}
+
+// Steps demos
+.docs-steps-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
 }

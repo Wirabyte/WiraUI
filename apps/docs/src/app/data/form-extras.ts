@@ -72,6 +72,12 @@ export const INPUTGROUP_DOC: ComponentDoc = {
     th: 'ต่อช่องกรอก ส่วนเสริม (add-on) และปุ่มเป็นแถวเดียวที่ใช้ขอบร่วมกัน',
     en: 'Joins fields, add-ons and buttons into one row with shared borders.',
   },
+  english: {
+    'ชื่อผู้ใช้': 'Username',
+    'ราคา': 'Price',
+    '฿': '$',
+    'ค้นหาคำสั่งซื้อ': 'Search orders',
+  },
   sections: {
     import: { title: 'Import', text: { th: '<code>WtInputGroup</code> และ <code>WtInputGroupAddon</code> อยู่ใน <code>WtInputGroupModule</code>', en: '<code>WtInputGroup</code> and <code>WtInputGroupAddon</code> come with <code>WtInputGroupModule</code>.' } },
     addon: { title: 'Add-on' },
@@ -124,6 +130,9 @@ export const FLOATLABEL_DOC: ComponentDoc = {
     th: 'label ที่อยู่ในช่อง แล้วลอยขึ้นเมื่อโฟกัสหรือมีค่า วาง label ไว้หลังช่องกรอกเสมอ',
     en: 'A label that sits in the field and floats away on focus or once there is a value. The label always comes after the field.',
   },
+  english: {
+    'ชื่อ-นามสกุล': 'Full name',
+  },
   sections: {
     import: { title: 'Import', text: formsImport },
     basic: { title: 'Basic', text: { th: 'label ลอยเมื่อโฟกัสหรือมีค่า (ช่องที่ใช้ <code>wtInputText</code> / <code>wtTextarea</code> ได้ class <code>wt-filled</code> อัตโนมัติ)', en: 'The label floats on focus or once there is a value (<code>wtInputText</code> / <code>wtTextarea</code> add <code>wt-filled</code> for you).' } },
@@ -152,6 +161,16 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
   forms: true,
   selector: 'wt-togglebutton',
   description: { th: 'ปุ่มเปิด / ปิดที่เก็บค่าเป็น boolean มีข้อความและ icon แยกตามสถานะ', en: 'An on / off button holding a boolean, with its own label and icon per state.' },
+  english: {
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'ติดตามแล้ว': 'Following',
+    'ติดตาม': 'Follow',
+    'แจ้งเตือนเปิด': 'Alerts on',
+    'แจ้งเตือนปิด': 'Alerts off',
+    'ปิดอยู่': 'Disabled',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -180,7 +199,7 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
     disabled: `<wt-togglebutton [ngModel]="true" [disabled]="true" onLabel="ปิดอยู่"></wt-togglebutton>
 <wt-togglebutton [invalid]="true" offLabel="Invalid"></wt-togglebutton>`,
   },
-  ts: { reactive: `form = new FormGroup({ notify: new FormControl(true, { nonNullable: true }) });` },
+  ts: { reactive: `form = new FormGroup({ notify: new FormControl(true) });` },
   api: [
     {
       id: 'api-inputs',
@@ -223,6 +242,18 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
   forms: true,
   selector: 'wt-selectbutton',
   description: { th: 'เลือกจากปุ่มที่เรียงติดกัน เลือกได้ข้อเดียวหรือหลายข้อ และขึ้นบรรทัดใหม่เมื่อจอแคบ', en: 'Pick from joined buttons, one or several, wrapping on narrow screens.' },
+  english: {
+    'จ': 'Mon',
+    'อ': 'Tue',
+    'พ': 'Wed',
+    'พฤ': 'Thu',
+    'ศ': 'Fri',
+    'ส': 'Sat',
+    'อา': 'Sun',
+    'วัน': 'Day',
+    'สัปดาห์': 'Week',
+    'เดือน': 'Month',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -268,7 +299,7 @@ workdays = ['จ', 'อ', 'พ', 'พฤ', 'ศ'];`,
   { label: 'Pro', value: 'pro' },
   { label: 'Enterprise', value: 'ent', disabled: true },
 ];
-form = new FormGroup({ plan: new FormControl('free', { nonNullable: true }) });`,
+form = new FormGroup({ plan: new FormControl('free') });`,
   },
   api: [
     {
@@ -322,6 +353,10 @@ export const RATING_DOC: ComponentDoc = {
   forms: true,
   selector: 'wt-rating',
   description: { th: 'ให้คะแนนเป็นดาว ข้างในเป็น radio จริง จึงใช้ปุ่มลูกศรเลือกได้', en: 'A star rating built on real radios, so arrow keys work.' },
+  english: {
+    'ความพึงพอใจ': 'Satisfaction',
+    'คะแนน 1 ถึง 10': 'Score from 1 to 10',
+  },
   sections: {
     import: { title: 'Import', text: formsImport },
     basic: { title: 'Basic' },
@@ -370,6 +405,18 @@ export const PASSWORD_DOC: ComponentDoc = {
     th: 'ช่องรหัสผ่านที่มีแถบวัดความแข็งแรงเปิดเป็นแผงใต้ช่องขณะโฟกัส (ไม่ดันเนื้อหาด้านล่าง) และปุ่มแสดง / ซ่อนรหัส',
     en: 'A password field whose strength meter opens as a panel under it while it has focus (it never pushes the content), with a show / hide toggle.',
   },
+  english: {
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'รหัสผ่าน': 'Password',
+    'ตั้งรหัสอย่างน้อย 8 ตัว': 'Use at least 8 characters',
+    'ง่ายไป': 'Too easy',
+    'พอใช้': 'Fair',
+    'ดีมาก': 'Strong',
+    'รหัสผ่านใหม่': 'New password',
+    'อย่างน้อย 8 ตัวอักษร': 'At least 8 characters',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -413,7 +460,7 @@ export const PASSWORD_DOC: ComponentDoc = {
     placeholder="อย่างน้อย 8 ตัวอักษร"></wt-password>
 </form>`,
   },
-  ts: { reactive: `form = new FormGroup({\n  password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8)] }),\n});` },
+  ts: { reactive: `form = new FormGroup({\n  password: new FormControl('', [Validators.required, Validators.minLength(8)]),\n});` },
   api: [
     {
       id: 'api-inputs',

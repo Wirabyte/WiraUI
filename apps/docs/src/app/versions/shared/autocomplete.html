@@ -1,0 +1,254 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <div class="docs-demo-labelled">
+          <label for="d-ac-province">{{ tx('จังหวัด') }}</label>
+          <wt-autocomplete
+            id="d-ac-basic"
+            inputId="d-ac-province"
+            [(ngModel)]="province"
+            [suggestions]="suggestions"
+            (completeMethod)="search($event)"
+            [optionLabel]="tx('name_th')"
+            [placeholder]="tx('พิมพ์ชื่อจังหวัด')"
+          ></wt-autocomplete>
+        </div>
+        <span class="docs-demo-output">province: <code id="d-ac-value">{{ province | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="delay" [section]="sec['delay']">
+      <docs-demo [html]="code['delay']" [ts]="ts['delay']">
+        <wt-autocomplete
+          id="d-ac-delay"
+          [(ngModel)]="slowProvince"
+          [suggestions]="slowSuggestions"
+          (completeMethod)="searchSlow($event)"
+          [optionLabel]="tx('name_th')"
+          [delay]="500"
+          [minLength]="2"
+          [placeholder]="tx('พิมพ์อย่างน้อย 2 ตัวอักษร')"
+          [ariaLabel]="tx('จังหวัด')"
+        ></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="empty" [section]="sec['empty']">
+      <docs-demo [html]="code['empty']">
+        <wt-autocomplete
+          id="d-ac-empty"
+          [(ngModel)]="emptyProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [emptyMessage]="tx('ไม่พบจังหวัดนี้')"
+          [ariaLabel]="tx('จังหวัด')"
+        ></wt-autocomplete>
+        <wt-autocomplete
+          id="d-ac-noempty"
+          [(ngModel)]="noEmptyProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [showEmptyMessage]="false"
+          [placeholder]="tx('ไม่แสดงรายการเมื่อไม่พบ')"
+          [ariaLabel]="tx('ไม่แสดงรายการเมื่อไม่พบ')"
+        ></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="dropdown" [section]="sec['dropdown']">
+      <docs-demo [html]="code['dropdown']">
+        <wt-autocomplete
+          id="d-ac-dropdown"
+          [(ngModel)]="dropdownProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [dropdown]="true"
+          [placeholder]="tx('กดปุ่มเพื่อดูทั้งหมด')"
+          [ariaLabel]="tx('กดปุ่มเพื่อดูทั้งหมด')"
+        ></wt-autocomplete>
+        <wt-autocomplete
+          id="d-ac-current"
+          [(ngModel)]="currentProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [dropdown]="true"
+          dropdownMode="current"
+          [placeholder]="tx('ปุ่มค้นตามข้อความในช่อง')"
+          [ariaLabel]="tx('ปุ่มค้นตามข้อความในช่อง')"
+        ></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="force" [section]="sec['force']">
+      <docs-demo [html]="code['force']">
+        <wt-autocomplete
+          id="d-ac-force"
+          [(ngModel)]="forceProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [forceSelection]="true"
+          [placeholder]="tx('ต้องเลือกจากรายการ')"
+          [ariaLabel]="tx('ต้องเลือกจากรายการ')"
+        ></wt-autocomplete>
+        <span class="docs-demo-output">province: <code id="d-ac-force-value">{{ forceProvince | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']" [ts]="ts['disabled']">
+        <wt-autocomplete
+          id="d-ac-level"
+          [(ngModel)]="level"
+          [suggestions]="levelSuggestions"
+          (completeMethod)="searchLevels($event)"
+          optionLabel="name"
+          optionDisabled="closed"
+          [autoHighlight]="true"
+          [dropdown]="true"
+          [placeholder]="tx('เลือกระดับชั้น')"
+          [ariaLabel]="tx('เลือกระดับชั้น')"
+        ></wt-autocomplete>
+        <span class="docs-demo-output">level: <code id="d-ac-level-value">{{ level | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="group" [section]="sec['group']">
+      <docs-demo [html]="code['group']" [ts]="ts['group']">
+        <wt-autocomplete
+          id="d-ac-group"
+          [(ngModel)]="regionProvince"
+          [suggestions]="regionSuggestions"
+          (completeMethod)="searchRegions($event)"
+          [group]="true"
+          [optionLabel]="tx('name_th')"
+          [placeholder]="tx('ค้นตามภาค')"
+          [ariaLabel]="tx('ค้นตามภาค')"
+        ></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="look" [section]="sec['look']">
+      <docs-demo [html]="code['look']">
+        <wt-autocomplete
+          id="d-ac-clear"
+          [(ngModel)]="clearProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [showClear]="true"
+          [placeholder]="tx('มีปุ่มล้าง')"
+          [ariaLabel]="tx('มีปุ่มล้าง')"
+        ></wt-autocomplete>
+        <wt-autocomplete
+          [(ngModel)]="filledProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          variant="filled"
+          [placeholder]="tx('แบบพื้นทึบ')"
+          [ariaLabel]="tx('แบบพื้นทึบ')"
+        ></wt-autocomplete>
+        <wt-autocomplete
+          [(ngModel)]="fluidProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [fluid]="true"
+          [placeholder]="tx('กว้างเต็มพื้นที่')"
+          [ariaLabel]="tx('กว้างเต็มพื้นที่')"
+        ></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-autocomplete [(ngModel)]="smallProvince" [suggestions]="suggestions" (completeMethod)="search($event)" [optionLabel]="tx('name_th')" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wt-autocomplete>
+        <wt-autocomplete [(ngModel)]="normalProvince" [suggestions]="suggestions" (completeMethod)="search($event)" [optionLabel]="tx('name_th')" [placeholder]="tx('ปกติ')" [ariaLabel]="tx('ปกติ')"></wt-autocomplete>
+        <wt-autocomplete [(ngModel)]="largeProvince" [suggestions]="suggestions" (completeMethod)="search($event)" [optionLabel]="tx('name_th')" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wt-autocomplete>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['templates']" [ts]="ts['templates']">
+        <wt-autocomplete
+          id="d-ac-tpl"
+          [(ngModel)]="templateProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="searchByCode($event)"
+          [optionLabel]="tx('name_th')"
+          [dropdown]="true"
+          [placeholder]="tx('พิมพ์ชื่อหรือรหัสจังหวัด')"
+          [ariaLabel]="tx('พิมพ์ชื่อหรือรหัสจังหวัด')"
+        >
+          <ng-template #header>
+            <div class="docs-ac-note">{{ tx('เลือกจังหวัด') }}</div>
+          </ng-template>
+          <ng-template #item let-p>
+            <b class="docs-ac-code">{{ p.code }}</b> {{ en() ? p.name_en : p.name_th }}
+          </ng-template>
+          <ng-template #empty>{{ tx('ไม่พบจังหวัดที่ค้นหา') }}</ng-template>
+          <ng-template #footer>
+            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+          </ng-template>
+        </wt-autocomplete>
+        <span class="docs-demo-output">footer: <code id="d-ac-added">{{ added }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="events" [section]="sec['events']">
+      <docs-demo [html]="code['events']" [ts]="ts['events']">
+        <wt-autocomplete
+          id="d-ac-events"
+          [(ngModel)]="eventProvince"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          [optionLabel]="tx('name_th')"
+          [dropdown]="true"
+          [showClear]="true"
+          [ariaLabel]="tx('จังหวัด')"
+          (onSelect)="log('onSelect')"
+          (onUnselect)="log('onUnselect')"
+          (onClear)="log('onClear')"
+          (onDropdownClick)="log('onDropdownClick')"
+          (onFocus)="log('onFocus')"
+          (onBlur)="log('onBlur')"
+          (onShow)="log('onShow')"
+          (onHide)="log('onHide')"
+        ></wt-autocomplete>
+        <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-ac-events-log">{{ lastEvents.join(' · ') || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-autocomplete
+            id="d-ac-form"
+            formControlName="province"
+            [suggestions]="suggestions"
+            (completeMethod)="search($event)"
+            [optionLabel]="tx('name_th')"
+            [placeholder]="tx('จังหวัด')"
+            [ariaLabel]="tx('จังหวัด')"
+          ></wt-autocomplete>
+        </form>
+        <span class="docs-demo-output">valid: <code id="d-ac-form-valid">{{ form.valid }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="notyet" [section]="sec['notyet']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

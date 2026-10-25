@@ -40,6 +40,20 @@ import {
   AnimateDemo,
   MeterGroupDemo,
   ValidationDemo,
+  SelectDemo,
+  TableDemo,
+  PaginatorDemo,
+  MenubarDemo,
+  PanelMenuDemo,
+  StepsDemo,
+  ChartDemo,
+  ImageDemo,
+  AutoCompleteDemo,
+  MenuDemo,
+  TabMenuDemo,
+  MultiSelectDemo,
+  InputMaskDemo,
+  TimelineDemo,
 } from '../shared/demos';
 
 // Shared templates compiled against wiratheme@3 components (DocsV3Module imports the v1 modules).
@@ -163,3 +177,45 @@ export class MeterGroupPageV3 extends MeterGroupDemo {}
 
 @Component({ selector: 'docs-validation-v3', templateUrl: '../shared/validation.html', standalone: false })
 export class ValidationPageV3 extends ValidationDemo {}
+
+@Component({ selector: 'docs-select-v3', templateUrl: '../shared/select.html', standalone: false })
+export class SelectPageV3 extends SelectDemo {}
+
+@Component({ selector: 'docs-table-v3', templateUrl: '../shared/table.html', standalone: false })
+export class TablePageV3 extends TableDemo {}
+
+@Component({ selector: 'docs-paginator-v3', templateUrl: '../shared/paginator.html', standalone: false })
+export class PaginatorPageV3 extends PaginatorDemo {}
+
+@Component({ selector: 'docs-menubar-v3', templateUrl: '../shared/menubar.html', standalone: false })
+export class MenubarPageV3 extends MenubarDemo {}
+
+@Component({ selector: 'docs-panelmenu-v3', templateUrl: '../shared/panelmenu.html', standalone: false })
+export class PanelMenuPageV3 extends PanelMenuDemo {}
+
+@Component({ selector: 'docs-steps-v3', templateUrl: '../shared/steps.html', standalone: false })
+export class StepsPageV3 extends StepsDemo {}
+
+@Component({ selector: 'docs-chart-v3', templateUrl: '../shared/chart.html', standalone: false })
+export class ChartPageV3 extends ChartDemo {}
+
+@Component({ selector: 'docs-image-v3', templateUrl: '../shared/image.html', standalone: false })
+export class ImagePageV3 extends ImageDemo {}
+
+@Component({ selector: 'docs-autocomplete-v3', templateUrl: '../shared/autocomplete.html', standalone: false })
+export class AutoCompletePageV3 extends AutoCompleteDemo {}
+
+@Component({ selector: 'docs-menu-v3', templateUrl: '../shared/menu.html', standalone: false })
+export class MenuPageV3 extends MenuDemo {}
+
+@Component({ selector: 'docs-tabmenu-v3', templateUrl: '../shared/tabmenu.html', standalone: false })
+export class TabMenuPageV3 extends TabMenuDemo {}
+
+@Component({ selector: 'docs-multiselect-v3', templateUrl: '../shared/multiselect.html', standalone: false })
+export class MultiSelectPageV3 extends MultiSelectDemo {}
+
+@Component({ selector: 'docs-inputmask-v3', templateUrl: '../shared/inputmask.html', standalone: false })
+export class InputMaskPageV3 extends InputMaskDemo {}
+
+@Component({ selector: 'docs-timeline-v3', templateUrl: '../shared/timeline.html', standalone: false })
+export class TimelinePageV3 extends TimelineDemo {}

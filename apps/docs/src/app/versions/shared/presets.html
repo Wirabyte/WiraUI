@@ -68,23 +68,23 @@
     <code>{{ state.activePresetId() }}</code>
   </p>
   <div class="docs-preset-preview">
-    <wt-card header="โปรไฟล์" subheader="ข้อมูลบัญชี">
+    <wt-card [header]="tx('โปรไฟล์')" [subheader]="tx('ข้อมูลบัญชี')">
       <div class="docs-demo-fields">
-        <input wtInputText value="สมชาย ใจดี" aria-label="ชื่อ" />
-        <input wtInputText placeholder="อีเมล" aria-label="อีเมล" />
+        <input wtInputText [value]="tx('สมชาย ใจดี')" [attr.aria-label]="tx('ชื่อ')" />
+        <input wtInputText [placeholder]="tx('อีเมล')" [attr.aria-label]="tx('อีเมล')" />
       </div>
       <div class="docs-demo-form">
         <wt-radiobutton name="preset-plan" value="free" [(ngModel)]="plan" label="Free"></wt-radiobutton>
         <wt-radiobutton name="preset-plan" value="pro" [(ngModel)]="plan" label="Pro"></wt-radiobutton>
       </div>
       <div class="docs-demo-form">
-        <wt-checkbox [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไข"></wt-checkbox>
-        <wt-toggleswitch [(ngModel)]="newsletter" label="รับข่าวสาร"></wt-toggleswitch>
+        <wt-checkbox [(ngModel)]="agree" [binary]="true" [label]="tx('ยอมรับเงื่อนไข')"></wt-checkbox>
+        <wt-toggleswitch [(ngModel)]="newsletter" [label]="tx('รับข่าวสาร')"></wt-toggleswitch>
       </div>
       <div wtCardFooter>
-        <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
-        <wt-button label="ยกเลิก" severity="secondary"></wt-button>
-        <wt-button label="ลบบัญชี" severity="danger" [text]="true"></wt-button>
+        <wt-button [label]="tx('บันทึก')" icon="pi pi-check"></wt-button>
+        <wt-button [label]="tx('ยกเลิก')" severity="secondary"></wt-button>
+        <wt-button [label]="tx('ลบบัญชี')" severity="danger" [text]="true"></wt-button>
       </div>
     </wt-card>
     <div class="docs-preset-buttons">

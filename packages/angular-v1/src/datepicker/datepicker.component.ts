@@ -78,7 +78,7 @@ function yearRange(v: string | undefined, calendar: CalendarSystem): [number, nu
  * `timeReadonlyInput` locks the time fields, separately. Opens in the top layer: no appendTo needed.
  */
 @Component({
-  selector: 'wt-datepicker',
+  selector: 'wt-datepicker, wt-datePicker, wt-calendar',
   standalone: true,
   imports: [NgIf, NgFor, NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './datepicker.component.html',

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { DocsI18n } from '../core/i18n';
 import { pick, Snippet } from '../core/snippets';
 import { DOCS_VERSION } from '../core/version-theme';
 import { CodeTab } from './code-tabs';
@@ -20,6 +21,7 @@ import { CodeTab } from './code-tabs';
 })
 export class DocsDemo {
   private readonly version = inject(DOCS_VERSION);
+  private readonly lang = inject(DocsI18n).lang;
   readonly html = input<Snippet>();
   readonly ts = input<Snippet>();
   /** row: wrap items in a line · stack: one per line · grid: two columns on wide screens. */
@@ -27,8 +29,8 @@ export class DocsDemo {
 
   protected readonly tabs = computed<CodeTab[]>(() => {
     const out: CodeTab[] = [];
-    const html = pick(this.html(), this.version);
-    const ts = pick(this.ts(), this.version);
+    const html = pick(this.html(), this.version, this.lang());
+    const ts = pick(this.ts(), this.version, this.lang());
     if (html) out.push({ label: 'HTML', code: html, lang: 'html' });
     if (ts) out.push({ label: 'TS', code: ts, lang: 'ts' });
     return out;

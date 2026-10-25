@@ -1,7 +1,8 @@
 /* wt-toggleswitch (InputSwitch in the classic class names). Shared by wiratheme v1, v2 and v3.
    Native checkbox with role="switch" underneath. The handle may be taller than the track (Material). */
 @layer wiratheme.components {
-  wt-toggleswitch {
+  wt-toggleswitch,
+  wt-inputswitch {
     display: inline-flex;
     vertical-align: middle;
   }
@@ -97,7 +98,7 @@
     opacity: var(--wt-disabled-opacity);
   }
   .wt-toggleswitch.wt-invalid .wt-toggleswitch-track,
-  wt-toggleswitch.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-toggleswitch-track {
+  :is(wt-toggleswitch, wt-inputswitch).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-toggleswitch-track {
     border-color: var(--wt-danger-color);
   }
 }

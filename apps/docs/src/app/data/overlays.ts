@@ -20,6 +20,28 @@ export const DIALOG_DOC: ComponentDoc = {
     th: 'กล่องโต้ตอบที่สร้างจาก <dialog> ของ browser เปิดใน top layer โฟกัสวนอยู่ข้างในและกลับไปที่ปุ่มเดิมเมื่อปิด และล็อกการเลื่อนหน้าระหว่างเปิด',
     en: 'A dialog built on the browser\'s own <dialog>, opened in the top layer. Focus stays inside and returns when it closes, and the page stops scrolling behind it.',
   },
+  english: {
+    'แก้ไขโปรไฟล์': 'Edit profile',
+    'ชื่อที่แสดง': 'Display name',
+    'ส่งข้อความ': 'Send a message',
+    'ส': 'S',
+    'สมหญิง ใจดี': 'Sarah Jones',
+    'ส่งข้อความหาสมาชิกในทีม': 'Message a team member.',
+    'ตำแหน่ง': 'Position',
+    'เปิดรายงาน': 'Open the report',
+    'รายงานประจำเดือน': 'Monthly report',
+    'โน้ต (ไม่บังหน้า)': 'Note (non-modal)',
+    'คลิกพื้นมืดเพื่อปิด': 'Click the mask to close',
+    'โน้ต': 'Note',
+    'รายละเอียด': 'Details',
+    'ดูข้อเสนอ': 'See the offer',
+    'เริ่มเลย': 'Start now',
+    'ไว้ทีหลัง': 'Maybe later',
+    'ทดลองใช้แพ็กเกจ Pro ฟรี 14 วัน': 'Try Pro free for 14 days',
+    'ผู้ใช้ไม่จำกัด รายงานขั้นสูง และฝ่ายช่วยเหลือ 24 ชั่วโมง': 'Unlimited users, advanced reports and 24-hour support.',
+    'ลากที่หัวเพื่อย้าย หน้ายังใช้งานได้': 'Drag me by the header; the page stays usable.',
+    'คลิกที่พื้นมืดเพื่อปิด': 'Click the dimmed page to close.',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -189,6 +211,77 @@ export const ALERT_DOC: ComponentDoc = {
     th: 'กล่องแจ้งเตือนสำเร็จรูปที่เรียกจากโค้ด มี icon เคลื่อนไหว หัวข้อ ข้อความ ช่องกรอก ปุ่มยืนยัน / ปฏิเสธ / ยกเลิก ตัวนับเวลา และคืนผลเป็น Promise',
     en: 'A ready-made alert opened from code: an animated icon, title, text, an optional input, confirm / deny / cancel buttons and a timer, resolving to a Promise.',
   },
+  english: {
+    'สำเร็จ': 'Success',
+    'ผิดพลาด': 'Error',
+    'เตือน': 'Warning',
+    'ข้อมูล': 'Info',
+    'คำถาม': 'Question',
+    'บันทึกแล้ว': 'Saved',
+    'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย': 'The customer record is saved.',
+    'บันทึกไม่สำเร็จ': 'Could not save',
+    'กรุณาลองใหม่อีกครั้ง': 'Please try again.',
+    'ใกล้หมดเวลา': 'Almost out of time',
+    'เหลือเวลาอีก 5 นาที': '5 minutes left.',
+    'มีเวอร์ชันใหม่': 'A new version is out',
+    'รีเฟรชหน้าเพื่อใช้งาน': 'Refresh the page to use it.',
+    'ต้องการความช่วยเหลือ?': 'Need help?',
+    'ติดต่อทีมงานได้ทุกวัน': 'Our team answers every day.',
+    'ลบรายการ': 'Delete item',
+    'ออกจากหน้านี้': 'Leave this page',
+    'สาขา': 'Branch',
+    'สาขา (select)': 'Branch (select)',
+    'ขนาด (radio)': 'Size (radio)',
+    'ความคิดเห็น (textarea)': 'Comment (textarea)',
+    'เงื่อนไข (checkbox)': 'Terms (checkbox)',
+    'ส่งคำขอ': 'Send request',
+    'บันทึกอัตโนมัติ': 'Autosave',
+    'โปรโมชัน': 'Promotion',
+    'ออกจากระบบ': 'Sign out',
+    'คัดลอกลิงก์': 'Copy link',
+    'ซิงก์ข้อมูล': 'Sync data',
+    'เรียกแบบ static': 'Static call',
+    'หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraTheme() ใน app.config.ts / AppModule)': 'or call it from anywhere (needs provideWiraTheme() in app.config.ts / AppModule)',
+    'ลบรายการนี้?': 'Delete this item?',
+    'ลบแล้วกู้คืนไม่ได้': 'This cannot be undone.',
+    'ลบเลย': 'Delete',
+    'ลบแล้ว': 'Deleted',
+    'บันทึกการแก้ไขก่อนออก?': 'Save your changes before leaving?',
+    'ไม่บันทึก': "Don't save",
+    'r.isConfirmed → บันทึก · r.isDenied → ไม่บันทึก · r.isDismissed → อยู่ต่อ': "r.isConfirmed → save · r.isDenied → don't save · r.isDismissed → stay",
+    'ส่งใบเสร็จทางอีเมล': 'Email the receipt',
+    'กรุณากรอกอีเมล': 'Please enter an email',
+    'ส่งแล้ว': 'Sent',
+    'เลือกสาขา': 'Choose a branch',
+    'กรุงเทพฯ': 'Bangkok',
+    'เชียงใหม่': 'Chiang Mai',
+    'ภูเก็ต': 'Phuket',
+    'กรุณาเลือกสาขา': 'Please choose a branch',
+    'ขนาดเสื้อ': 'Shirt size',
+    'ความคิดเห็น': 'Comment',
+    'บอกเราได้เลย': 'Tell us anything',
+    'เงื่อนไขการใช้งาน': 'Terms of use',
+    'ฉันยอมรับเงื่อนไข': 'I accept the terms',
+    'ดำเนินการต่อ': 'Continue',
+    'ต้องยอมรับเงื่อนไขก่อน': 'Please accept the terms first',
+    'ขอใบเสนอราคา': 'Request a quote',
+    'ชื่อบริษัท': 'Company name',
+    'บริษัท ตัวอย่าง จำกัด': 'Example Co., Ltd.',
+    'spinner แสดงระหว่างรอ': 'the spinner shows while it waits',
+    'กลายเป็น r.value': 'becomes r.value',
+    'ส่งคำขอแล้ว': 'Request sent',
+    'เลขที่': 'No.',
+    'บันทึกอัตโนมัติแล้ว': 'Saved automatically',
+    'ส่วนลดสมาชิก': 'Member discount',
+    'ใช้โค้ด <b>WELCOME20</b> รับส่วนลด <b>20%</b> ถึงสิ้นเดือนนี้': 'Use code <b>WELCOME20</b> for <b>20%</b> off until the end of the month',
+    'ใช้โค้ด': 'Use code',
+    'อ่านเงื่อนไข': 'Read the terms',
+    'ออกจากระบบ?': 'Sign out?',
+    'งานที่ยังไม่บันทึกจะหายไป': 'Unsaved work will be lost.',
+    'คัดลอกลิงก์แล้ว': 'Link copied',
+    'object ของ option ที่ใช้อยู่ส่งต่อให้ fire() ได้เลย': 'the option objects you already have go straight to fire()',
+    'true เมื่อยืนยัน หรือค่าที่กรอก / ผลของ preConfirm, false เมื่อปฏิเสธ': 'true on confirm, or the input value / preConfirm result; false on deny',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -286,7 +379,7 @@ export class OrdersComponent {
 // หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraTheme() ใน app.config.ts / AppModule)
 import { WtAlert } from 'wiratheme/alert';
 WtAlert.fire('บันทึกแล้ว', '', 'success');`,
-    question: `async remove() {
+    question: `async remove(): Promise<void> {
   const r = await this.alert.fire({
     title: 'ลบรายการนี้?',
     text: 'ลบแล้วกู้คืนไม่ได้',
@@ -299,7 +392,7 @@ WtAlert.fire('บันทึกแล้ว', '', 'success');`,
   });
   if (r.isConfirmed) this.alert.fire('ลบแล้ว', '', 'success');
 }`,
-    deny: `async leave() {
+    deny: `async leave(): Promise<void> {
   const r = await this.alert.fire({
     title: 'บันทึกการแก้ไขก่อนออก?',
     icon: 'question',
@@ -310,7 +403,7 @@ WtAlert.fire('บันทึกแล้ว', '', 'success');`,
   });
   // r.isConfirmed → บันทึก · r.isDenied → ไม่บันทึก · r.isDismissed → อยู่ต่อ (r.dismiss = 'cancel' | 'esc' | …)
 }`,
-    inputs: `async askEmail() {
+    inputs: `async askEmail(): Promise<void> {
   const { value } = await this.alert.fire({
     title: 'ส่งใบเสร็จทางอีเมล',
     input: 'email',
@@ -321,7 +414,7 @@ WtAlert.fire('บันทึกแล้ว', '', 'success');`,
   if (value) this.alert.fire('ส่งแล้ว', value, 'success');
 }
 
-async askBranch() {
+async askBranch(): Promise<void> {
   const { value } = await this.alert.fire({
     title: 'เลือกสาขา',
     input: 'select',
@@ -331,7 +424,7 @@ async askBranch() {
     inputValidator: (v) => (!v ? 'กรุณาเลือกสาขา' : undefined),
   });
 }`,
-    preconfirm: `async request() {
+    preconfirm: `async request(): Promise<void> {
   const r = await this.alert.fire({
     title: 'ขอใบเสนอราคา',
     input: 'text',
@@ -345,7 +438,7 @@ async askBranch() {
   });
   if (r.isConfirmed) this.alert.fire('ส่งคำขอแล้ว', 'เลขที่ ' + r.value, 'success');
 }`,
-    timer: `autosave() {
+    timer: `autosave(): void {
   this.alert.fire({
     title: 'บันทึกอัตโนมัติแล้ว',
     icon: 'success',
@@ -354,7 +447,7 @@ async askBranch() {
     showConfirmButton: false,
   });
 }`,
-    custom: `promo() {
+    custom: `promo(): void {
   this.alert.fire({
     title: 'ส่วนลดสมาชิก',
     html: 'ใช้โค้ด <b>WELCOME20</b> รับส่วนลด <b>20%</b> ถึงสิ้นเดือนนี้',
@@ -365,18 +458,18 @@ async askBranch() {
     width: '32rem',
   });
 }`,
-    helpers: `async logout() {
+    helpers: `async logout(): Promise<void> {
   if (await this.alert.confirm('ออกจากระบบ?', 'งานที่ยังไม่บันทึกจะหายไป')) {
     // ...
   }
 }
 
 private readonly notify = this.alert.mixin({ icon: 'success', timer: 1500, showConfirmButton: false });
-copied() {
+copied(): void {
   this.notify.fire({ title: 'คัดลอกลิงก์แล้ว' });
 }
 
-async sync() {
+async sync(): Promise<void> {
   this.alert.showLoading();
   await this.api.sync();
   this.alert.close();
@@ -472,6 +565,29 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     th: 'กล่องยืนยันที่เรียกจาก service: วาง <wt-confirmdialog> ไว้ครั้งเดียว แล้วเรียก confirm() พร้อมข้อความ ปุ่ม และ callback',
     en: 'A confirmation asked through a service: place <wt-confirmdialog> once, then call confirm() with the message, buttons and callbacks.',
   },
+  english: {
+    'ลบลูกค้า': 'Delete customer',
+    'ยืนยันด้านบน': 'Confirm at the top',
+    'คำเชิญเข้าทีม': 'Team invitation',
+    'ถามโดยไม่มีกล่อง': 'Ask with no dialog',
+    'ก': 'K',
+    'ไว้ก่อน': 'Not now',
+    'เข้าร่วม': 'Join',
+    'หรือ:': 'or:',
+    'ยืนยันการลบ': 'Confirm delete',
+    'ต้องการลบลูกค้ารายนี้หรือไม่?': 'Delete this customer?',
+    'ลบแล้ว': 'Deleted',
+    'ปิดไป': 'Closed',
+    'บันทึกแบบร่าง': 'Save draft',
+    'บันทึกก่อนออกจากหน้านี้?': 'Save before you leave this page?',
+    'บันทึกแบบร่างแล้ว': 'Draft saved',
+    'กมล ชวนคุณเข้าร่วมทีม "การตลาด"': 'Kevin invited you to the "Marketing" team',
+    'เข้าร่วมแล้ว': 'Joined',
+    'ไม่มี <wt-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน': 'no <wt-confirmdialog key="none"> on the page: it opens as an AlertDialog instead',
+    'ส่งออกไฟล์?': 'Export the file?',
+    'ไฟล์จะถูกส่งไปที่อีเมลของคุณ': 'The file goes to your email.',
+    'ส่งออกแล้ว': 'Exported',
+  },
   sections: {
     import: {
       title: 'Import',
@@ -543,7 +659,7 @@ import { WtConfirmationService, WtConfirmEventType } from 'wiratheme/confirmdial
 export class CustomersComponent {
   private readonly confirmation = inject(WtConfirmationService);
 }`,
-    basic: `remove() {
+    basic: `remove(): void {
   this.confirmation.confirm({
     header: 'ยืนยันการลบ',
     message: 'ต้องการลบลูกค้ารายนี้หรือไม่?',
@@ -557,13 +673,13 @@ export class CustomersComponent {
       (this.result = type === WtConfirmEventType.CANCEL ? 'ปิดไป' : 'ยกเลิก'),
   });
 }`,
-    icons: `ask(icon: string) {
+    icons: `ask(icon: string): void {
   this.confirmation.confirm({ header: 'icon: ' + icon, message: 'ข้อความตัวอย่าง', icon });
 }`,
-    key: `askTop() {
+    key: `askTop(): void {
   this.confirmation.confirm({ key: 'top', header: 'บันทึกแบบร่าง', message: 'บันทึกก่อนออกจากหน้านี้?', icon: 'question' });
 }`,
-    templates: `invite() {
+    templates: `invite(): void {
   this.confirmation.confirm({
     key: 'custom',
     header: 'คำเชิญเข้าทีม',
@@ -571,7 +687,7 @@ export class CustomersComponent {
     accept: () => (this.result = 'เข้าร่วมแล้ว'),
   });
 }`,
-    fallback: `askNowhere() {
+    fallback: `askNowhere(): void {
   // ไม่มี <wt-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน
   this.confirmation.confirm({ key: 'none', header: 'ส่งออกไฟล์?', message: 'ไฟล์จะถูกส่งไปที่อีเมลของคุณ', icon: 'info' });
 }`,

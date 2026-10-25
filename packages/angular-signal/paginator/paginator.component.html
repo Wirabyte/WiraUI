@@ -1,0 +1,62 @@
+@if (visible) {
+  <nav class="wt-paginator p-paginator p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" [attr.aria-label]="ariaLabel || null">
+    @if (startTemplate) {
+      <div class="wt-paginator-start p-paginator-content-start">
+        <ng-container *ngTemplateOutlet="startTemplate; context: templateContext"></ng-container>
+      </div>
+    }
+    @if (showCurrentPageReport) {
+      <span class="wt-paginator-report p-paginator-current" aria-live="polite">{{ report }}</span>
+    }
+    <div class="wt-paginator-nav">
+      @if (showFirstLastIcon) {
+        <button type="button" class="wt-paginator-btn wt-paginator-first p-paginator-first" [class.p-disabled]="atStart" [disabled]="atStart" [attr.aria-label]="t.firstPage" (click)="changePage(0)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.5 4 7.5 8l4 4M4.5 4v8"></path></svg>
+        </button>
+      }
+      <button type="button" class="wt-paginator-btn wt-paginator-prev p-paginator-prev" [class.p-disabled]="atStart" [disabled]="atStart" [attr.aria-label]="t.previousPage" (click)="changePage(info.page - 1)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4 6 8l4 4"></path></svg>
+      </button>
+      @if (showPageLinks) {
+        <span class="wt-paginator-pages p-paginator-pages">
+          @for (p of links; track p) {
+            <button
+              type="button"
+              class="wt-paginator-btn wt-paginator-page p-paginator-page"
+              [class.wt-paginator-page-selected]="p === info.page"
+              [class.p-paginator-page-selected]="p === info.page"
+              [attr.aria-current]="p === info.page ? 'page' : null"
+              [attr.aria-label]="pageAria(p)"
+              (click)="changePage(p)"
+            >{{ p + 1 }}</button>
+          }
+        </span>
+      }
+      <button type="button" class="wt-paginator-btn wt-paginator-next p-paginator-next" [class.p-disabled]="atEnd" [disabled]="atEnd" [attr.aria-label]="t.nextPage" (click)="changePage(info.page + 1)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"></path></svg>
+      </button>
+      @if (showFirstLastIcon) {
+        <button type="button" class="wt-paginator-btn wt-paginator-last p-paginator-last" [class.p-disabled]="atEnd" [disabled]="atEnd" [attr.aria-label]="t.lastPage" (click)="changePage(info.pageCount - 1)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 4l4 4-4 4M11.5 4v8"></path></svg>
+        </button>
+      }
+    </div>
+    @if (rppOptions.length) {
+      <wt-select
+        class="wt-paginator-rpp p-paginator-rpp-dropdown"
+        size="small"
+        [options]="rppOptions"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="rows"
+        (ngModelChange)="changeRows($event)"
+        [ariaLabel]="t.rowsPerPage"
+      ></wt-select>
+    }
+    @if (endTemplate) {
+      <div class="wt-paginator-end p-paginator-content-end">
+        <ng-container *ngTemplateOutlet="endTemplate; context: templateContext"></ng-container>
+      </div>
+    }
+  </nav>
+}

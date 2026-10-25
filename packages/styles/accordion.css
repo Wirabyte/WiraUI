@@ -1,14 +1,24 @@
 /* wt-accordion and wt-accordion-tab. Shared by wiratheme v1, v2 and v3.
-   Styled look: underlined rows with the chevron on the right. Classic look: boxed headers, chevron on the left. */
+   Styled look: one bordered surface with ruled rows, chevron on the right. Classic look: boxed headers, chevron on the left. */
 @layer wiratheme.components {
   wt-accordion,
-  wt-accordion-tab {
+  wt-accordion-tab,
+  wt-accordiontab,
+  wt-accordion-panel,
+  wt-accordionpanel,
+  wt-accordion-header,
+  wt-accordionheader,
+  wt-accordion-content,
+  wt-accordioncontent {
     display: block;
   }
   .wt-accordion {
     display: flex;
     flex-direction: column;
     gap: var(--wt-accordion-gap);
+    border: var(--wt-accordion-border-width) solid var(--wt-border);
+    border-radius: var(--wt-accordion-root-radius);
+    background: var(--wt-accordion-bg);
     font-family: var(--wt-font-family);
     font-size: var(--wt-font-size);
     line-height: var(--wt-line-height);
@@ -16,6 +26,12 @@
   }
   .wt-accordion-tab {
     border-bottom: var(--wt-accordion-panel-border-width) solid var(--wt-border);
+  }
+  /* The surface's own border closes the last row. */
+  wt-accordion-tab:last-child > .wt-accordion-tab,
+  wt-accordiontab:last-child > .wt-accordion-tab,
+  .wt-accordion > .wt-accordion-tab:last-child {
+    border-bottom-width: min(var(--wt-accordion-panel-border-width), calc(1px - var(--wt-accordion-border-width)));
   }
   .wt-accordion-header {
     display: flex;
@@ -89,7 +105,7 @@
     border: var(--wt-accordion-content-border-width) solid var(--wt-border);
     border-top: 0;
     border-radius: 0 0 var(--wt-accordion-radius) var(--wt-accordion-radius);
-    background: var(--wt-card-bg);
+    background: var(--wt-accordion-content-bg);
   }
   @media (prefers-reduced-motion: reduce) {
     .wt-accordion-content-container,

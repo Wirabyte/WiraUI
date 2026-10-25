@@ -13,17 +13,17 @@
     @if (s.demo) {
       @if (s.frame) {
         <div class="docs-demo docs-u-demo">
-          <docs-viewport-demo [html]="s.demo"></docs-viewport-demo>
-          <docs-code-tabs [tabs]="[{ label: 'HTML', code: s.code || s.demo, lang: 'html' }]"></docs-code-tabs>
+          <docs-viewport-demo [html]="local(s.demo)"></docs-viewport-demo>
+          <docs-code-tabs [tabs]="[{ label: 'HTML', code: local(s.code || s.demo), lang: 'html' }]"></docs-code-tabs>
         </div>
       } @else {
         <div class="docs-demo docs-u-demo">
-          <div class="docs-demo-preview docs-demo-stack" [innerHTML]="s.demo | trustHtml"></div>
-          <docs-code-tabs [tabs]="[{ label: 'HTML', code: s.code || s.demo, lang: s.codeLang || 'html' }]"></docs-code-tabs>
+          <div class="docs-demo-preview docs-demo-stack" [innerHTML]="local(s.demo) | trustHtml"></div>
+          <docs-code-tabs [tabs]="[{ label: 'HTML', code: local(s.code || s.demo), lang: s.codeLang || 'html' }]"></docs-code-tabs>
         </div>
       }
     } @else if (s.code) {
-      <docs-code [code]="s.code" [lang]="s.codeLang || 'html'"></docs-code>
+      <docs-code [code]="local(s.code)" [lang]="s.codeLang || 'html'"></docs-code>
     }
     @if (s.classes) {
       <div class="docs-table-wrap">

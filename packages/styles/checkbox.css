@@ -88,6 +88,26 @@
     opacity: 1;
     transform: none;
   }
+  /* Some but not all ticked (a header or check-all box): a filled box with a dash, in the tick's place. */
+  .wt-checkbox-box > .wt-checkbox-icon {
+    grid-area: 1 / 1;
+  }
+  .wt-checkbox-box.wt-checkbox-mixed {
+    background: var(--wt-primary-color);
+    border-color: var(--wt-primary-color);
+  }
+  .wt-checkbox:not(.wt-checkbox-disabled):hover .wt-checkbox-box.wt-checkbox-mixed {
+    background: var(--wt-primary-hover);
+    border-color: var(--wt-primary-hover);
+  }
+  .wt-checkbox-box.wt-checkbox-mixed::after {
+    content: '';
+    grid-area: 1 / 1;
+    width: 50%;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--wt-primary-contrast);
+  }
   .wt-checkbox-input:focus-visible + .wt-checkbox-control .wt-checkbox-box {
     outline: var(--wt-control-focus-outline);
     outline-offset: var(--wt-control-focus-offset);

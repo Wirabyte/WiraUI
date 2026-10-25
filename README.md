@@ -63,6 +63,20 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 | `wiratheme/toolbar` | `<wt-toolbar><div wtToolbarStart>…</div><div wtToolbarEnd>…</div></wt-toolbar>` | 3 กลุ่ม start / center / end ขึ้นบรรทัดใหม่บนจอแคบ |
 | `wiratheme/accordion` | `<wt-accordion [(activeIndex)]="i"><wt-accordion-tab header="…">` | `multiple`, `[(selected)]`, ปุ่มลูกศรเลื่อนระหว่างหัวข้อ |
 | `wiratheme/tabs` | `<wt-tabs [(activeIndex)]="i"><wt-tab-panel header="…">` | ปุ่มลูกศร/Home/End ข้ามแท็บที่ปิด, แท็บล้นแถวมีปุ่มเลื่อนซ้าย-ขวาแทน scrollbar และเลื่อนแท็บที่เลือกให้เห็นเสมอ |
+| `wiratheme/select` | `<wt-select [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="id" [filter]="true">` | ค้นหาไทย/อังกฤษ, group, showClear, editable, template item/selectedItem, คีย์บอร์ดครบ, เปิดใน top layer |
+| `wiratheme/multiselect` | `<wt-multiselect [options]="clubs" optionLabel="name" optionValue="id" [(ngModel)]="ids">` | ช่องเลือกหลายค่า มี checkbox, เลือกทั้งหมด, ค้นหาไทย, `display="chip"`, `maxSelectedLabels`, `selectionLimit` |
+| `wiratheme/inputmask` | `<wt-inputmask mask="9-9999-99999-99-9" [(ngModel)]="id" [unmask]="true">` | ใส่ขีดให้เอง, `autoClear`, `(onComplete)`, เลขไทยใช้ได้, แป้นตัวเลขบนมือถือ |
+| `wiratheme/timeline` | `<wt-timeline [value]="events">` + template content/opposite/marker | แนวตั้ง/แนวนอน, `align` left/right/alternate, ไม่มี opposite แล้วเนื้อหาเต็มแถว |
+| `wiratheme/chart` | `<wt-chart type="bar" [data]="data" [options]="options" height="320px">` | ห่อ Chart.js 3/4 (ติดตั้ง `chart.js` เอง), ใช้ฟอนต์และสีของธีม, `[plugins]`, `(onDataSelect)`, `refresh()` |
+| `wiratheme/image` | `<wt-image [src]="url" alt="…" width="240" [preview]="true">` | ดูภาพเต็มจอใน dialog (top layer) หมุนและซูมได้, Esc ปิด, บนมือถือปุ่มดูภาพแสดงตลอด |
+| `wiratheme/autocomplete` | `<wt-autocomplete [(ngModel)]="v" [suggestions]="found" (completeMethod)="find($event)" optionLabel="name">` | แนะนำระหว่างพิมพ์, `delay`, `minLength`, `dropdown`, `forceSelection`, หน้าตาเดียวกับ Select (ยังไม่มี `multiple`) |
+| `wiratheme/paginator` | `<wt-paginator [first]="first" [rows]="10" [totalRecords]="120" (onPageChange)="…">` | รายงานภาษาไทย, จำนวนแถวต่อหน้า |
+| `wiratheme/menubar` | `<wt-menubar [model]="items">` + template start/end | เมนูย่อยซ้อนได้, `routerLink` / `url` / `command`, คีย์บอร์ดแบบ ARIA menubar, ปุ่มเมนูบนจอแคบ, ใช้เป็นแถบหัวเว็บที่มีแค่ start/end ได้ |
+| `wiratheme/menu` | `<wt-menu #m [model]="items" [popup]="true">` + `(click)="m.toggle($event)"` | แบบ popup (top layer ไม่ต้อง appendTo) หรือเมนูข้าง, กลุ่มมีหัวข้อ, คีย์บอร์ดครบ |
+| `wiratheme/tabmenu` | `<wt-tabmenu [model]="pages" [(activeItem)]="page">` | แท็บจาก menu model, `routerLink` / `command`, เลื่อนด้านข้างเหมือน wt-tabs |
+| `wiratheme/panelmenu` | `<wt-panelmenu [model]="items" [multiple]="true">` | เมนูข้างแบบแผงพับได้ ซ้อนกี่ชั้นก็ได้, เปิดตาม `expanded` ของ item, คีย์บอร์ดลูกศร |
+| `wiratheme/steps` | `<wt-steps [model]="steps" [(activeIndex)]="step">` | ขั้นตอนมีตัวเลข ขั้นที่ผ่านแล้วเป็นสีหลัก, `[readonly]="false"` ให้คลิก/คีย์บอร์ดเลือกขั้นได้ |
+| `wiratheme/table` | `<wt-table #dt [value]="rows" [paginator]="true" [rows]="10">` + template header/body | template แบบ p-table เดิม (`pTemplate`), sort, ค้นหา `dt.filterGlobal`, เลือกแถว/checkbox, lazy, stack บนมือถือ |
 | `wiratheme/validation` | `<input wtInputText formControlName="email"><wt-field-error for="email" label="อีเมล">` | ข้อความ error ภาษาไทย/อังกฤษตาม locale, `WtValidators.thaiId` / `thaiPhone` / `match`, directive `wtThaiId` `wtThaiPhone` `wtMatch` |
 
 control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้วหรือกดส่งฟอร์มแล้ว (ไม่ต้องใส่ class `ng-dirty` เอง)

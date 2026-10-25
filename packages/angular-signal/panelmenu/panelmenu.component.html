@@ -1,0 +1,142 @@
+<div class="wt-panelmenu p-panelmenu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (keydown)="keydown($event)">
+  @for (item of items; track $index; let i = $index) {
+    <div class="wt-panelmenu-panel p-panelmenu-panel" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
+      <div
+        class="wt-panelmenu-header p-panelmenu-header"
+        [class.wt-panelmenu-header-active]="isOpen(item)"
+        [class.p-panelmenu-header-active]="isOpen(item)"
+        [class.wt-panelmenu-disabled]="item.disabled"
+        [class.p-disabled]="item.disabled"
+      >
+        <div class="wt-panelmenu-header-content p-panelmenu-header-content">
+          <ng-container *ngTemplateOutlet="link; context: { $implicit: item, key: keyOf('', i), header: true }"></ng-container>
+        </div>
+      </div>
+      @if (hasSubmenu(item)) {
+        <div
+          class="wt-panelmenu-content-container p-panelmenu-content-container"
+          role="region"
+          [id]="itemId(keyOf('', i)) + '_content'"
+          [attr.aria-labelledby]="itemId(keyOf('', i))"
+          [attr.inert]="isOpen(item) ? null : ''"
+        >
+          <div class="wt-panelmenu-content-inner">
+            <div class="wt-panelmenu-content p-panelmenu-content">
+              <ul class="wt-panelmenu-list p-panelmenu-root-list">
+                <ng-container *ngTemplateOutlet="list; context: { $implicit: visibleOf(item.items), parent: keyOf('', i) }"></ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<ng-template #list let-entries let-parent="parent">
+  @for (child of entries; track $index; let j = $index) {
+    @if (child.separator) {
+      <li class="wt-panelmenu-separator p-menuitem-separator" role="separator"></li>
+    } @else {
+      <li
+        class="wt-panelmenu-item p-panelmenu-item"
+        [ngClass]="child.styleClass || ''"
+        [ngStyle]="child.style || null"
+        [class.wt-panelmenu-item-active]="isOpen(child)"
+        [class.wt-panelmenu-disabled]="child.disabled"
+        [class.p-disabled]="child.disabled"
+      >
+        <div class="wt-panelmenu-item-content p-panelmenu-item-content">
+          <ng-container *ngTemplateOutlet="link; context: { $implicit: child, key: keyOf(parent, j), header: false }"></ng-container>
+        </div>
+        @if (hasSubmenu(child)) {
+          <div class="wt-panelmenu-content-container" [id]="itemId(keyOf(parent, j)) + '_content'" [attr.inert]="isOpen(child) ? null : ''">
+            <div class="wt-panelmenu-content-inner">
+              <ul class="wt-panelmenu-list wt-panelmenu-submenu p-panelmenu-submenu">
+                <ng-container *ngTemplateOutlet="list; context: { $implicit: visibleOf(child.items), parent: keyOf(parent, j) }"></ng-container>
+              </ul>
+            </div>
+          </div>
+        }
+      </li>
+    }
+  }
+</ng-template>
+
+<ng-template #link let-item let-key="key" let-header="header">
+  @if (hasSubmenu(item)) {
+    <button
+      type="button"
+      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [id]="itemId(key)"
+      [attr.data-wt-key]="key"
+      [attr.tabindex]="tabindex ?? null"
+      [attr.title]="item.title || null"
+      [attr.aria-expanded]="isOpen(item)"
+      [attr.aria-controls]="itemId(key) + '_content'"
+      [disabled]="!!item.disabled"
+      (click)="itemClick($event, item, key)"
+    >
+      <ng-container *ngTemplateOutlet="content; context: { $implicit: item, header: header }"></ng-container>
+    </button>
+  } @else if (routed(item)) {
+    <a
+      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [id]="itemId(key)"
+      [attr.data-wt-key]="key"
+      [attr.tabindex]="tabindex ?? null"
+      [attr.title]="item.title || null"
+      [attr.target]="item.target || null"
+      [routerLink]="item.routerLink"
+      [queryParams]="item.queryParams"
+      [queryParamsHandling]="item.queryParamsHandling"
+      [fragment]="item.fragment"
+      [preserveFragment]="!!item.preserveFragment"
+      [skipLocationChange]="!!item.skipLocationChange"
+      [replaceUrl]="!!item.replaceUrl"
+      [state]="item.state"
+      routerLinkActive="wt-panelmenu-link-active p-panelmenu-item-link-active"
+      [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+      (click)="itemClick($event, item, key)"
+    >
+      <ng-container *ngTemplateOutlet="content; context: { $implicit: item, header: header }"></ng-container>
+    </a>
+  } @else {
+    <a
+      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [id]="itemId(key)"
+      [attr.data-wt-key]="key"
+      [attr.href]="hrefOf(item)"
+      [attr.tabindex]="item.disabled ? -1 : tabindex ?? 0"
+      [attr.role]="hrefOf(item) ? null : 'button'"
+      [attr.title]="item.title || null"
+      [attr.target]="item.url ? item.target || null : null"
+      [attr.aria-disabled]="item.disabled || null"
+      (click)="itemClick($event, item, key)"
+      (keydown.enter)="hrefOf(item) ? null : itemClick($event, item, key)"
+    >
+      <ng-container *ngTemplateOutlet="content; context: { $implicit: item, header: header }"></ng-container>
+    </a>
+  }
+</ng-template>
+
+<ng-template #content let-item let-header="header">
+  @if (itemTemplate) {
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, root: header }"></ng-container>
+  } @else {
+    @if (item.icon) {
+      <span [class]="(header ? 'wt-panelmenu-header-icon p-panelmenu-header-icon ' : 'wt-panelmenu-item-icon p-panelmenu-item-icon ') + item.icon" aria-hidden="true"></span>
+    }
+    <span [class]="header ? 'wt-panelmenu-label p-panelmenu-header-label' : 'wt-panelmenu-label p-panelmenu-item-label'">{{ item.label }}</span>
+    @if (item.badge) {
+      <span class="wt-panelmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    }
+    @if (hasSubmenu(item)) {
+      @if (submenuIconTemplate) {
+        <span class="wt-panelmenu-submenu-icon p-panelmenu-submenu-icon"><ng-container *ngTemplateOutlet="submenuIconTemplate"></ng-container></span>
+      } @else {
+        <svg class="wt-panelmenu-submenu-icon p-panelmenu-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
+      }
+    }
+  }
+</ng-template>

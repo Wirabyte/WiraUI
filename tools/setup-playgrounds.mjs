@@ -33,7 +33,8 @@ for (const v of versions) {
   // The theme file is ng add's output and ng add never overwrites one; drop it so a changed default theme shows up.
   for (const ext of ['scss', 'css']) rmSync(join(app, 'src', 'theme', `wiratheme.theme.${ext}`), { force: true });
   // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
-  run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball}`, app);
+  // chart.js is wiratheme/chart's optional peer; it goes in the same install (a second --no-save install would prune it).
+  run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball} chart.js@^4.5.1`, app);
   run('npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none', app);
 
   copyFileSync(join(fixtures, 'app.component.html'), join(src, 'app.component.html'));
@@ -60,6 +61,19 @@ for (const v of versions) {
       ['WtSkeletonModule', 'wiratheme/skeleton'],
       ['WtProgressBarModule', 'wiratheme/progressbar'],
       ['WtMeterGroupModule', 'wiratheme/metergroup'],
+      ['WtSelectModule', 'wiratheme/select'],
+      ['WtTableModule', 'wiratheme/table'],
+      ['WtMenubarModule', 'wiratheme/menubar'],
+      ['WtMenuModule', 'wiratheme/menu'],
+      ['WtTabMenuModule', 'wiratheme/tabmenu'],
+      ['WtMultiSelectModule', 'wiratheme/multiselect'],
+      ['WtInputMaskModule', 'wiratheme/inputmask'],
+      ['WtTimelineModule', 'wiratheme/timeline'],
+      ['WtChartModule', 'wiratheme/chart'],
+      ['WtImageModule', 'wiratheme/image'],
+      ['WtAutoCompleteModule', 'wiratheme/autocomplete'],
+      ['WtPanelMenuModule', 'wiratheme/panelmenu'],
+      ['WtStepsModule', 'wiratheme/steps'],
       ['WtProgressSpinnerModule', 'wiratheme/progressspinner'],
       ['WtMessageModule', 'wiratheme/message'],
       ['WtPanelModule', 'wiratheme/panel'],

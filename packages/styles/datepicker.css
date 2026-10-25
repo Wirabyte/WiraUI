@@ -3,12 +3,14 @@
    is a bottom sheet with 44px days. Months and years have their own grids; the time has fields that take
    up / down buttons, arrow keys and typing. Field styles come from inputtext. */
 @layer wiratheme.components {
-  wt-datepicker {
+  wt-datepicker,
+  wt-calendar {
     display: inline-block;
     vertical-align: middle;
     max-width: 100%;
   }
-  wt-datepicker.wt-datepicker-fluid {
+  wt-datepicker.wt-datepicker-fluid,
+  wt-calendar.wt-datepicker-fluid {
     display: block;
     width: 100%;
   }
@@ -35,7 +37,7 @@
     background: var(--wt-field-bg);
     cursor: pointer;
   }
-  wt-datepicker.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-inputtext {
+  :is(wt-datepicker, wt-calendar).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-inputtext {
     border-color: var(--wt-danger-color);
   }
   .wt-datepicker-has-clear .wt-inputtext {

@@ -23,8 +23,8 @@
 
     <docs-section id="count" [section]="sec['count']">
       <docs-demo [html]="code['count']" layout="stack">
-        <wt-progressbar id="d-progress-count" [value]="1000" [max]="2500" unit="รายการ"></wt-progressbar>
-        <wt-progressbar [value]="3" [max]="10" text="อัปโหลด 3 จาก 10 ไฟล์"></wt-progressbar>
+        <wt-progressbar id="d-progress-count" [value]="1000" [max]="2500" [unit]="tx('รายการ')"></wt-progressbar>
+        <wt-progressbar [value]="3" [max]="10" [text]="tx('อัปโหลด 3 จาก 10 ไฟล์')"></wt-progressbar>
       </docs-demo>
     </docs-section>
 

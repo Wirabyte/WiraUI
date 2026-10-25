@@ -1,7 +1,8 @@
 /* wt-progress-spinner. Shared by wiratheme v1, v2 and v3. SVG ring; the preset decides its size and colours. */
 @layer wiratheme.components {
   /* The size sits on the host, so `style="width: 2rem; height: 2rem"` on <wt-progress-spinner> resizes it. */
-  wt-progress-spinner {
+  wt-progress-spinner,
+  wt-progressspinner {
     display: inline-flex;
     vertical-align: middle;
     width: var(--wt-spinner-size);

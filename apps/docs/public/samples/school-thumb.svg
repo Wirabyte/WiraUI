@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): a school, the small file. -->
+  <rect width="320" height="200" fill="#bae6fd" />
+  <circle cx="262" cy="44" r="20" fill="#fde68a" />
+  <rect y="150" width="320" height="50" fill="#86efac" />
+  <path d="M70 92 160 50l90 42Z" fill="#b91c1c" />
+  <rect x="80" y="92" width="160" height="62" fill="#fef3c7" />
+  <g fill="#38bdf8">
+    <rect x="94" y="104" width="22" height="18" />
+    <rect x="128" y="104" width="22" height="18" />
+    <rect x="170" y="104" width="22" height="18" />
+    <rect x="204" y="104" width="22" height="18" />
+  </g>
+  <rect x="148" y="126" width="24" height="28" fill="#92400e" />
+  <g fill="#16a34a">
+    <circle cx="40" cy="132" r="18" />
+    <circle cx="284" cy="132" r="18" />
+  </g>
+  <g fill="#78350f">
+    <rect x="37" y="138" width="6" height="14" />
+    <rect x="281" y="138" width="6" height="14" />
+  </g>
+</svg>

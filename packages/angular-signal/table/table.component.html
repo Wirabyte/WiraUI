@@ -1,0 +1,111 @@
+<div
+  class="wt-table p-datatable p-component"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="style || null"
+  [class.wt-table-gridlines]="showGridlines"
+  [class.p-datatable-gridlines]="showGridlines"
+  [class.wt-table-striped]="stripedRows"
+  [class.p-datatable-striped]="stripedRows"
+  [class.wt-table-sm]="sizeKey === 'sm'"
+  [class.p-datatable-sm]="sizeKey === 'sm'"
+  [class.wt-table-lg]="sizeKey === 'lg'"
+  [class.p-datatable-lg]="sizeKey === 'lg'"
+  [class.wt-table-hoverable]="rowHover"
+  [class.p-datatable-hoverable]="rowHover"
+  [class.wt-table-scrollable]="scrollable"
+  [class.p-datatable-scrollable]="scrollable"
+  [class.wt-table-flex]="flexScroll"
+  [class.wt-table-stack]="responsiveLayout === 'stack'"
+  [class.wt-table-stacked]="stacked"
+  [class.wt-table-loading]="loading"
+  [attr.aria-busy]="loading || null"
+>
+  @if (showMask) {
+    <div class="wt-table-mask p-datatable-mask p-overlay-mask">
+      @if (loadingIcon) {
+        <i [class]="'wt-table-loading-icon ' + loadingIcon" aria-hidden="true"></i>
+      } @else {
+        <span class="wt-table-spinner" role="status" [attr.aria-label]="t.loading"></span>
+      }
+    </div>
+  }
+  @if (captionTemplate) {
+    <div class="wt-table-header p-datatable-header">
+      <ng-container *ngTemplateOutlet="captionTemplate"></ng-container>
+    </div>
+  }
+  @if (showPaginatorTop) {
+    <wt-paginator
+      class="wt-table-paginator p-datatable-paginator-top"
+      [styleClass]="paginatorStyleClass"
+      [first]="pageFirst"
+      [rows]="rows"
+      [totalRecords]="total"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [showCurrentPageReport]="showCurrentPageReport"
+      [currentPageReportTemplate]="currentPageReportTemplate"
+      [pageLinkSize]="pageLinks"
+      [alwaysShow]="alwaysShowPaginator"
+      [leftTemplate]="paginatorLeftTemplate"
+      [rightTemplate]="paginatorRightTemplate"
+      (onPageChange)="pageChange($event)"
+    ></wt-paginator>
+  }
+  <div class="wt-table-wrapper p-datatable-table-container" [style.max-height]="wrapperMaxHeight">
+    <table class="wt-table-table p-datatable-table" role="table" [ngClass]="tableStyleClass || ''" [ngStyle]="tableStyle || null">
+      @if (colgroupTemplate) {
+        <ng-container *ngTemplateOutlet="colgroupTemplate; context: columnsContext"></ng-container>
+      }
+      @if (headerTemplate) {
+        <thead class="wt-table-thead p-datatable-thead">
+          <ng-container *ngTemplateOutlet="headerTemplate; context: columnsContext"></ng-container>
+        </thead>
+      }
+      <tbody class="wt-table-tbody p-datatable-tbody">
+        @if (showLoadingBody) {
+          <ng-container *ngTemplateOutlet="loadingBodyTemplate; context: columnsContext"></ng-container>
+        } @else {
+          @if (bodyTemplate) {
+            @for (row of pageRows; track trackRow($index, row); let i = $index) {
+              <ng-container *ngTemplateOutlet="bodyTemplate; context: rowContext(row, i)"></ng-container>
+            }
+          }
+          @if (isEmpty && !loading) {
+            @if (emptyTemplate) {
+              <ng-container *ngTemplateOutlet="emptyTemplate; context: columnsContext"></ng-container>
+            } @else {
+              <tr class="wt-table-empty-row"><td class="wt-table-empty" colspan="100">{{ t.emptyMessage }}</td></tr>
+            }
+          }
+        }
+      </tbody>
+      @if (footerTemplate) {
+        <tfoot class="wt-table-tfoot p-datatable-tfoot">
+          <ng-container *ngTemplateOutlet="footerTemplate; context: columnsContext"></ng-container>
+        </tfoot>
+      }
+    </table>
+  </div>
+  @if (showPaginatorBottom) {
+    <wt-paginator
+      class="wt-table-paginator p-datatable-paginator-bottom"
+      [styleClass]="paginatorStyleClass"
+      [first]="pageFirst"
+      [rows]="rows"
+      [totalRecords]="total"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [showCurrentPageReport]="showCurrentPageReport"
+      [currentPageReportTemplate]="currentPageReportTemplate"
+      [pageLinkSize]="pageLinks"
+      [alwaysShow]="alwaysShowPaginator"
+      [leftTemplate]="paginatorLeftTemplate"
+      [rightTemplate]="paginatorRightTemplate"
+      (onPageChange)="pageChange($event)"
+    ></wt-paginator>
+  }
+  @if (summaryTemplate) {
+    <div class="wt-table-footer p-datatable-footer">
+      <ng-container *ngTemplateOutlet="summaryTemplate"></ng-container>
+    </div>
+  }
+</div>

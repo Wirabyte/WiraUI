@@ -39,11 +39,12 @@
     <docs-icon [name]="state.dark() ? 'sun' : 'moon'"></docs-icon>
   </button>
 
-  <div class="docs-config-wrap" #configWrap>
+  <div class="docs-config-wrap">
     <button
       type="button"
       class="docs-icon-btn"
       id="docs-config"
+      #configBtn
       [class.active]="configOpen()"
       (click)="configOpen.set(!configOpen())"
       aria-haspopup="dialog"
@@ -53,7 +54,7 @@
       <docs-icon name="palette"></docs-icon>
     </button>
     @if (configOpen()) {
-      <docs-configurator [version]="version()" (closed)="configOpen.set(false)"></docs-configurator>
+      <docs-configurator [version]="version()" [trigger]="configBtn" (closed)="configOpen.set(false)"></docs-configurator>
     }
   </div>
 
@@ -160,9 +161,6 @@
     </footer>
   </main>
 
-  <aside class="docs-toc-col docs-scroll">
-    <docs-toc></docs-toc>
-  </aside>
 </div>
 
 @if (searchOpen()) {
@@ -177,7 +175,19 @@
         <span class="docs-soon">{{ 'nav.soon' | t }}</span>
       </span>
     } @else {
-      <a class="docs-nav-link" [id]="'nav-' + i.id" [routerLink]="link(i.path)" routerLinkActive="active" ariaCurrentWhenActive="page">{{ i.title | loc }}</a>
+      <a
+        class="docs-nav-link"
+        [id]="'nav-' + i.id"
+        [routerLink]="link(i.path)"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        #rla="routerLinkActive"
+        >{{ i.title | loc }}</a
+      >
+      <!-- The open page lists its sections right under its own item. -->
+      @if (rla.isActive) {
+        <docs-toc></docs-toc>
+      }
     }
   </li>
 </ng-template>

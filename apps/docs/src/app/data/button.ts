@@ -12,6 +12,24 @@ export const BUTTON_DOC: ComponentDoc = {
     th: 'ปุ่มที่มี [action]: ส่งงานที่ต้องรอให้ แล้วปุ่มจะแสดง spinner และกันกดซ้ำเองจนงานเสร็จ ไม่ต้องเขียน flag loading เอง',
     en: 'A button with [action]: give it the work to wait for and it shows a spinner and ignores repeat clicks until the work is done. No loading flag to manage.',
   },
+  english: {
+    'ส่งข้อมูล': 'Submit',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'ดูคำสั่งซื้อ': 'View orders',
+    'แจ้งเตือน': 'Notifications',
+    'ข้อความ': 'Messages',
+    'บันทึกแบบร่าง': 'Save draft',
+    'ปิดอยู่': 'Disabled',
+    'เข้าสู่ระบบ': 'Sign in',
+    'หรือ variant="outlined" / variant="text"': 'or variant="outlined" / variant="text"',
+    'class เดิมก็ได้:': 'the old classes work too:',
+    'บันทึกข้อมูล': 'save the data',
+    '[action] รับตัวฟังก์ชัน จึง bind ไว้ครั้งเดียวให้ this ยังเป็น component': '[action] takes the function itself: bind it once so this stays the component',
+    'คืน Promise หรือ Observable: ระหว่างรอ ปุ่มแสดง spinner และไม่รับการกดซ้ำ':
+      'return a Promise or an Observable: while it runs, the button shows a spinner and ignores repeat clicks',
+  },
   sections: {
     import: { title: 'Import' },
     basic: {
@@ -75,8 +93,8 @@ export const BUTTON_DOC: ComponentDoc = {
     loading: {
       title: { th: 'Loading และ Disabled', en: 'Loading and Disabled' },
       text: {
-        th: 'คุม loading เองด้วย <code>[loading]</code> ก็ได้ ระหว่าง loading ปุ่มจะไม่ส่ง <code>(onClick)</code>',
-        en: 'You can also drive <code>[loading]</code> yourself. While loading, the button does not emit <code>(onClick)</code>.',
+        th: 'แบบที่แอปส่วนใหญ่เขียน: ตัวแปร <code>isApiSaving</code> ตั้งเป็น true ก่อนเรียก API และ false เมื่อเสร็จ ผูกกับ <code>[loading]</code> (หรือ <code>[disabled]</code>) ระหว่าง loading ปุ่มจะไม่ส่ง <code>(onClick)</code>',
+        en: 'The way most apps write it: an <code>isApiSaving</code> flag set to true before the API call and false when it ends, bound to <code>[loading]</code> (or <code>[disabled]</code>). While loading, the button does not emit <code>(onClick)</code>.',
       },
     },
     fluid: { title: 'Fluid' },
@@ -121,20 +139,35 @@ export const BUTTON_DOC: ComponentDoc = {
     badge: `<wt-button label="แจ้งเตือน" icon="pi pi-bell" badge="3"></wt-button>
 <wt-button label="ข้อความ" severity="secondary" badge="12"></wt-button>`,
     action: `<wt-button id="demo-save" label="ส่งข้อมูล" icon="pi pi-send" [action]="save"></wt-button>`,
-    loading: `<wt-button label="กำลังบันทึก" [loading]="true"></wt-button>
+    loading: `<wt-button label="บันทึกแบบร่าง" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
 <wt-button label="ปิดอยู่" [disabled]="true"></wt-button>`,
     fluid: `<wt-button label="เข้าสู่ระบบ" [fluid]="true"></wt-button>`,
   },
   ts: {
-    basic: `save() {
+    basic: `save(): void {
   // บันทึกข้อมูล
 }`,
     action: `export class ProfileComponent {
-  // คืน Promise หรือ Observable: ระหว่างรอ ปุ่มแสดง spinner และไม่รับการกดซ้ำ
-  save = () => this.profileService.save(this.form.value);
+  // [action] รับตัวฟังก์ชัน จึง bind ไว้ครั้งเดียวให้ this ยังเป็น component
+  save = this.saveProfile.bind(this);
 
-  // แบบ Observable ก็ได้
-  // save = () => this.http.put('/api/profile', this.form.value);
+  saveProfile(): Observable<unknown> {
+    // คืน Promise หรือ Observable: ระหว่างรอ ปุ่มแสดง spinner และไม่รับการกดซ้ำ
+    return this.profileService.save(this.profile);
+  }
+}`,
+    loading: `isApiSaving = false;
+
+saveDraft(): void {
+  this.isApiSaving = true;
+  this.profileService.saveDraft(this.profile).subscribe({
+    next: () => {
+      this.isApiSaving = false;
+    },
+    error: () => {
+      this.isApiSaving = false;
+    },
+  });
 }`,
   },
   api: [

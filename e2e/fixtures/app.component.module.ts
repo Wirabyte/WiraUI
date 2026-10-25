@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WIRATHEME_MAJOR } from 'wiratheme';
+import type { MenuItem, Message } from 'wiratheme/api';
 import { definePreset, palette, Siam, WtConfig, WtThemeService } from 'wiratheme/config';
 import { EN_LOCALE } from 'wiratheme/core';
 import { WtAlert, WtAlertService } from 'wiratheme/alert';
@@ -33,6 +34,165 @@ export class AppComponent {
   readonly minDate = new Date(2026, 2, 5);
   dialogOpen = false;
   bottomOpen = false;
+  students = Array.from({ length: 23 }, (_, i) => ({
+    id: i + 1,
+    name: ['กมล', 'ขวัญใจ', 'จิราพร', 'ชยพล', 'ณัฐวุฒิ', 'ธนพร', 'ปิยะ', 'มานี'][i % 8] + ' ' + (i + 1),
+    room: 'ม.' + ((i % 3) + 1) + '/' + ((i % 2) + 1),
+    score: (i * 37) % 100,
+    info: { club: ['ดนตรี', 'กีฬา', 'วิทยาศาสตร์', 'ศิลปะ'][i % 4] },
+  }));
+  fewStudents = this.students.slice(0, 4);
+  clubs = [
+    { id: 1, name: 'ดนตรี' },
+    { id: 2, name: 'กีฬา' },
+    { id: 3, name: 'วิทยาศาสตร์' },
+    { id: 4, name: 'ศิลปะ', closed: true },
+    { id: 5, name: 'คอมพิวเตอร์' },
+  ];
+  ms = { clubs: [2] as number[], provinces: [10, 83] as number[], titles: [] as string[] };
+  im = { id: '', phone: '0812345678' };
+  msgs: Message[] = [
+    { severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลนักเรียน 3 คน' },
+    { severity: 'error', summary: 'ผิดพลาด', detail: 'ไม่พบห้องเรียน', closable: false },
+    { severity: 'warn', detail: 'ใกล้ครบกำหนด' },
+  ];
+  sendInline(): void {
+    this.messages.add({ key: 'inline', severity: 'info', summary: 'แจ้ง', detail: 'ส่งผ่าน service' });
+  }
+  steps = [
+    { status: 'ยื่นใบสมัคร', date: '1 มี.ค.' },
+    { status: 'ตรวจเอกสาร', date: '3 มี.ค.' },
+    { status: 'สอบสัมภาษณ์', date: '10 มี.ค.' },
+    { status: 'ประกาศผล', date: '15 มี.ค.' },
+  ];
+  chartType = 'bar';
+  chartData = {
+    labels: ['ม.1', 'ม.2', 'ม.3'],
+    datasets: [{ label: 'คะแนนเฉลี่ย', data: [72, 65, 81], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'] }],
+  };
+  chartOptions = { animation: false, plugins: { legend: { display: true } } };
+  photo =
+    'data:image/svg+xml;charset=utf-8,' +
+    encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><rect width="320" height="200" fill="#10b981"/><circle cx="160" cy="100" r="60" fill="#fff"/></svg>');
+  schools = [
+    { id: 1, name: 'สตรีศรีน่าน' },
+    { id: 2, name: 'ศรีสวัสดิ์วิทยาคาร' },
+    { id: 3, name: 'น่านนคร' },
+    { id: 4, name: 'สารสาสน์', closed: true },
+    { id: 5, name: 'ทวีธาภิเศก' },
+  ];
+  schoolHits: { id: number; name: string }[] = [];
+  ac = { school: null as unknown, free: null as unknown };
+  findSchool(e: { query: string }): void {
+    const q = e.query.trim();
+    this.schoolHits = this.schools.filter((s) => !q || s.name.includes(q));
+  }
+  aliasDate: Date | null = null;
+  aliasOn = true;
+  valueTab = 'docs';
+  openPanel: string | null = 'fees';
+  openPanels: string[] = ['b'];
+  menuLog = '-';
+  menuItems = [
+    { label: 'หน้าแรก', icon: 'pi pi-home', command: () => this.menuPick('home') },
+    {
+      label: 'นักเรียน',
+      items: [
+        { label: 'รายชื่อ', command: () => this.menuPick('list') },
+        { label: 'นำเข้า', items: [{ label: 'Excel', command: () => this.menuPick('excel') }, { label: 'CSV', command: () => this.menuPick('csv') }] },
+        { separator: true },
+        { label: 'เก็บถาวร', disabled: true },
+      ],
+    },
+    { label: 'รายงาน', badge: '3', items: [{ label: 'สรุปผล', command: () => this.menuPick('summary') }, { label: 'ซ่อนไว้', visible: false }] },
+    { label: 'คู่มือ', url: '#menubar' },
+    { label: 'ปิดอยู่', disabled: true },
+    { label: 'ไม่แสดง', visible: false },
+  ];
+  profileItems = [
+    { label: 'บัญชี', items: [{ label: 'โปรไฟล์', icon: 'pi pi-user', command: () => this.menuPick('profile') }, { label: 'เปลี่ยนรหัสผ่าน', command: () => this.menuPick('password') }] },
+    { separator: true },
+    { label: 'ช่วยเหลือ', url: '#menubar' },
+    { label: 'ปิดอยู่', disabled: true },
+    { label: 'ออกจากระบบ', icon: 'pi pi-sign-out', command: () => this.menuPick('logout') },
+  ];
+  sideItems = [
+    { label: 'หน้าหลัก', command: () => this.menuPick('home') },
+    { label: 'นักเรียน', command: () => this.menuPick('students') },
+    { label: 'ซ่อนไว้', visible: false },
+    { label: 'รายงาน', badge: '2', command: () => this.menuPick('reports') },
+  ];
+  tabPages = [
+    { label: 'ภาพรวม', command: () => this.menuPick('tab:overview') },
+    { label: 'คะแนน', command: () => this.menuPick('tab:scores') },
+    { label: 'ปิดอยู่', disabled: true },
+    { label: 'เวลาเรียน', command: () => this.menuPick('tab:time') },
+  ];
+  tabPage: MenuItem | null = this.tabPages[0];
+  panelItems: MenuItem[] = [
+    {
+      label: 'งานทะเบียน',
+      icon: 'pi pi-book',
+      expanded: true,
+      items: [
+        { label: 'นักเรียน', command: () => this.menuPick('pm:students') },
+        { label: 'รายงาน', items: [{ label: 'รายเดือน', command: () => this.menuPick('pm:monthly') }, { label: 'รายปี', command: () => this.menuPick('pm:yearly') }] },
+        { separator: true },
+        { label: 'ปิดอยู่', disabled: true },
+      ],
+    },
+    { label: 'การเงิน', items: [{ label: 'ค่าเทอม', command: () => this.menuPick('pm:fees') }] },
+    { label: 'ออกจากระบบ', command: () => this.menuPick('pm:logout') },
+  ];
+  panelItemsMulti: MenuItem[] = [
+    { label: 'หนึ่ง', items: [{ label: 'หนึ่ง-ก' }] },
+    { label: 'สอง', items: [{ label: 'สอง-ก' }] },
+  ];
+  stepIndex = 1;
+  stepItems: MenuItem[] = [
+    { label: 'ข้อมูลส่วนตัว', command: () => this.menuPick('st:0') },
+    { label: 'ที่อยู่', command: () => this.menuPick('st:1') },
+    { label: 'เอกสาร', disabled: true },
+    { label: 'ยืนยัน', command: () => this.menuPick('st:3') },
+  ];
+  menuPick(name: string): void {
+    this.menuLog = name;
+  }
+  picked: unknown[] = [];
+  chosen: { name: string } | null = null;
+  lazyRows: unknown[] = [];
+  lazyTotal = 0;
+  lazyLoading = false;
+  lazyLog = '';
+
+  /** A pretend server: pages and sorts on its side, answers after a short wait. */
+  loadLazy(e: { first: number; rows: number; page: number; sortField?: string | null; sortOrder?: number }): void {
+    this.lazyLoading = true;
+    this.lazyLog = `page=${e.page} first=${e.first} rows=${e.rows} sort=${e.sortField || '-'}:${e.sortOrder ?? ''}`;
+    setTimeout(() => {
+      const all = this.students.slice();
+      if (e.sortField === 'name') all.sort((a, b) => a.name.localeCompare(b.name, 'th') * (e.sortOrder || 1));
+      this.lazyRows = all.slice(e.first, e.first + e.rows);
+      this.lazyTotal = all.length;
+      this.lazyLoading = false;
+      this.cdr.markForCheck();
+    }, 150);
+  }
+  provinces = [
+    { id: 10, name_th: 'กรุงเทพมหานคร', code: 'BKK' },
+    { id: 40, name_th: 'ขอนแก่น', code: 'KKC' },
+    { id: 50, name_th: 'เชียงใหม่', code: 'CNX' },
+    { id: 57, name_th: 'เชียงราย', code: 'CEI', inactive: true },
+    { id: 83, name_th: 'ภูเก็ต', code: 'HKT' },
+    { id: 90, name_th: 'สงขลา', code: 'SKA' },
+  ];
+  regions = [
+    { label: 'ภาคเหนือ', items: [{ name: 'เชียงใหม่' }, { name: 'ลำปาง' }] },
+    { label: 'ภาคใต้', items: [{ name: 'ภูเก็ต' }, { name: 'สงขลา' }] },
+  ];
+  titles = ['นาย', 'นาง', 'นางสาว'];
+  sel = { province: null as number | null, search: 83 as number | null, region: null as string | null, object: null as unknown, title: null as string | null, loadingTitle: 'นาย' as string | null };
+  isOptionsLoading = true;
   monthIndex = 0;
   review = { agree: false, email: '', phone: '', pw: '', pw2: '' };
   meters = [

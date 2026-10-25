@@ -6,16 +6,16 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-fieldset legend="ที่อยู่สำหรับจัดส่ง">
-          <p class="docs-demo-p">99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000</p>
+        <wt-fieldset [legend]="tx('ที่อยู่สำหรับจัดส่ง')">
+          <p class="docs-demo-p">{{ tx('99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000') }}</p>
         </wt-fieldset>
       </docs-demo>
     </docs-section>
 
     <docs-section id="toggleable" [section]="sec['toggleable']">
       <docs-demo [html]="code['toggleable']" [ts]="ts['toggleable']" layout="stack">
-        <wt-fieldset id="d-fieldset" legend="ข้อมูลเพิ่มเติม" [toggleable]="true" [(collapsed)]="moreClosed">
-          <p class="docs-demo-p">หมายเหตุสำหรับทีมงาน</p>
+        <wt-fieldset id="d-fieldset" [legend]="tx('ข้อมูลเพิ่มเติม')" [toggleable]="true" [(collapsed)]="moreClosed">
+          <p class="docs-demo-p">{{ tx('หมายเหตุสำหรับทีมงาน') }}</p>
         </wt-fieldset>
         <span class="docs-demo-output">collapsed: <code id="d-fieldset-state">{{ moreClosed }}</code></span>
       </docs-demo>

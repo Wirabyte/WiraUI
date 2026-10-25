@@ -1,0 +1,159 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <div class="docs-demo-labelled">
+          <label for="d-sel-province">{{ tx('จังหวัด') }}</label>
+          <wt-select
+            id="d-sel-basic"
+            inputId="d-sel-province"
+            [(ngModel)]="provinceId"
+            [options]="local(provinces)"
+            [optionLabel]="tx('name_th')"
+            optionValue="id"
+            [placeholder]="tx('เลือกจังหวัด')"
+          ></wt-select>
+        </div>
+        <span class="docs-demo-output">provinceId: <code id="d-sel-value">{{ provinceId | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="filter" [section]="sec['filter']">
+      <docs-demo [html]="code['filter']">
+        <wt-select
+          id="d-sel-filter"
+          [(ngModel)]="searchId"
+          [options]="local(provinces)"
+          [optionLabel]="tx('name_th')"
+          optionValue="id"
+          [filter]="true"
+          [filterBy]="tx('name_th,name_en,code')"
+          [placeholder]="tx('ค้นหาจังหวัด')"
+          [ariaLabel]="tx('ค้นหาจังหวัด')"
+        ></wt-select>
+        <span class="docs-demo-output">searchId: <code id="d-sel-filter-value">{{ searchId | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="clear" [section]="sec['clear']">
+      <docs-demo [html]="code['clear']">
+        <wt-select [(ngModel)]="clearId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [showClear]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="group" [section]="sec['group']">
+      <docs-demo [html]="code['group']" [ts]="ts['group']">
+        <wt-select id="d-sel-group" [(ngModel)]="groupId" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกตามภาค')" [ariaLabel]="tx('ตามภาค')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="disabled" [section]="sec['disabled']">
+      <docs-demo [html]="code['disabled']" [ts]="ts['disabled']">
+        <wt-select id="d-sel-level" [(ngModel)]="levelId" [options]="local(levels)" optionLabel="name" optionValue="id" optionDisabled="closed" [placeholder]="tx('เลือกระดับชั้น')" [ariaLabel]="tx('ระดับชั้น')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['templates']">
+        <wt-select id="d-sel-tpl" [(ngModel)]="province" [options]="local(provinces)" [optionLabel]="tx('name_th')" dataKey="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')">
+          <ng-template #item let-p>
+            <b class="docs-select-code">{{ p.code }}</b> {{ en() ? p.name_en : p.name_th }}
+          </ng-template>
+          <ng-template #selectedItem let-p>
+            <span class="docs-select-chosen">{{ p.code }} · {{ en() ? p.name_en : p.name_th }}</span>
+          </ng-template>
+        </wt-select>
+        <span class="docs-demo-output">province: <code id="d-sel-tpl-value">{{ (en() ? province?.name_en : province?.name_th) ?? '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="moretemplates" [section]="sec['moretemplates']">
+      <docs-demo [html]="code['moretemplates']" [ts]="ts['moretemplates']">
+        <wt-select id="d-sel-more" [(ngModel)]="moreId" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [filter]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')">
+          <ng-template #group let-g>
+            <span class="docs-select-group"><i class="pi pi-map-marker"></i> {{ g.label }}</span>
+          </ng-template>
+          <ng-template #header>
+            <div class="docs-select-note">{{ tx('เลือกได้ 1 จังหวัด') }}</div>
+          </ng-template>
+          <ng-template #footer>
+            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+          </ng-template>
+          <ng-template #emptyfilter>{{ tx('ไม่พบจังหวัดที่ค้นหา') }}</ng-template>
+          <ng-template #dropdownicon>
+            <i class="pi pi-search"></i>
+          </ng-template>
+        </wt-select>
+        <span class="docs-demo-output">footer: <code id="d-sel-more-added">{{ added }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="editable" [section]="sec['editable']">
+      <docs-demo [html]="code['editable']" [ts]="ts['editable']">
+        <wt-select id="d-sel-edit" [(ngModel)]="title" [options]="local(titles)" [editable]="true" [placeholder]="tx('คำนำหน้า')" [ariaLabel]="tx('คำนำหน้า')"></wt-select>
+        <span class="docs-demo-output">title: <code id="d-sel-edit-value">{{ title | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="loading" [section]="sec['loading']">
+      <docs-demo [html]="code['loading']" [ts]="ts['loading']">
+        <wt-select [(ngModel)]="clearId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [loading]="true" [placeholder]="tx('กำลังโหลด…')" [ariaLabel]="tx('จังหวัด')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="checkmark" [section]="sec['checkmark']">
+      <docs-demo [html]="code['checkmark']">
+        <wt-select [(ngModel)]="checkId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [checkmark]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']">
+        <wt-select [(ngModel)]="sizeTitle" [options]="local(titles)" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wt-select>
+        <wt-select [(ngModel)]="sizeTitle" [options]="local(titles)" [placeholder]="tx('ปกติ')" [ariaLabel]="tx('ปกติ')"></wt-select>
+        <wt-select [(ngModel)]="sizeTitle" [options]="local(titles)" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="look" [section]="sec['look']">
+      <docs-demo [html]="code['look']">
+        <wt-select [(ngModel)]="lookId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" [ariaLabel]="tx('กว้างเต็มพื้นที่')"></wt-select>
+        <wt-select [(ngModel)]="lookId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" variant="filled" [placeholder]="tx('แบบพื้นทึบ')" [ariaLabel]="tx('แบบพื้นทึบ')"></wt-select>
+        <div style="--wt-select-width: auto">
+          <wt-select [(ngModel)]="lookId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('กว้างตามค่า')" [ariaLabel]="tx('กว้างตามค่า')"></wt-select>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="invalid" [section]="sec['invalid']">
+      <docs-demo [html]="code['invalid']">
+        <wt-select id="d-sel-required" [(ngModel)]="requiredId" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [required]="true" [placeholder]="tx('จังหวัด (ต้องเลือก)')" [ariaLabel]="tx('จังหวัด')"></wt-select>
+        <wt-select [(ngModel)]="other" [options]="local(provinces)" [optionLabel]="tx('name_th')" [invalid]="true" placeholder="Invalid" ariaLabel="Invalid"></wt-select>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="datakey" [section]="sec['datakey']">
+      <docs-demo [html]="code['datakey']" [ts]="ts['datakey']">
+        <wt-select id="d-sel-key" [(ngModel)]="keyed" [options]="local(provinces)" [optionLabel]="tx('name_th')" dataKey="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')"></wt-select>
+        <wt-button id="d-sel-reload" [label]="tx('โหลดจาก API ใหม่')" size="small" severity="secondary" (onClick)="reload()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="reactive" [section]="sec['reactive']">
+      <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
+        <form [formGroup]="form" class="docs-demo-form">
+          <wt-select formControlName="level" [options]="local(levels)" optionLabel="name" optionValue="id" [placeholder]="tx('ระดับชั้น')" [ariaLabel]="tx('ระดับชั้น')"></wt-select>
+        </form>
+        <span class="docs-demo-output">value: <code>{{ form.getRawValue() | json }}</code> · valid: <code>{{ form.valid }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

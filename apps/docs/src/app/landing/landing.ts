@@ -5,7 +5,8 @@ import { DocsI18n, Text } from '../core/i18n';
 import { navPageOf } from '../core/nav';
 import { DOCS_THEME } from '../core/version-theme';
 import { DOC_VERSIONS, rememberedVersion } from '../core/versions';
-import { MIGRATE_AFTER } from '../shared/pages/samples';
+import { sampleText } from '../core/sample-text';
+import { GUIDE_WORDS, MIGRATE_AFTER } from '../shared/pages/samples';
 
 const STATUS: Record<string, Text> = {
   maintenance: { th: 'maintenance · แก้บั๊ก', en: 'maintenance' },
@@ -32,7 +33,8 @@ export class Landing {
   protected readonly versions = DOC_VERSIONS;
   protected readonly status = STATUS;
   protected readonly start = rememberedVersion();
-  protected readonly code = MIGRATE_AFTER;
+  /** The code sample in the site language (core/sample-text.ts). */
+  protected readonly code = computed(() => (this.en() ? sampleText(GUIDE_WORDS).swap(MIGRATE_AFTER) : MIGRATE_AFTER));
   protected readonly swatches = ['#10b981', '#3b82f6', '#8b5cf6', '#f43f5e', '#f59e0b'];
 
   protected readonly kpis: { label: Text; value: string; delta: string; up: boolean }[] = [

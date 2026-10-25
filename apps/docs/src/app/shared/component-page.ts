@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, contentChild, Directive, 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
-import { ComponentDoc } from '../core/component-doc';
-import { DocsI18n } from '../core/i18n';
+import { ApiGroup, ComponentDoc } from '../core/component-doc';
+import { DocsI18n, Text } from '../core/i18n';
+import { sampleText } from '../core/sample-text';
 import { DOCS_VERSION } from '../core/version-theme';
 
 /** Marks the FEATURES tab content of a component page: `<ng-template docsFeatures>…</ng-template>`. */
@@ -14,7 +15,7 @@ export class DocsFeatures {
 
 export type DocTab = 'features' | 'api' | 'theming';
 
-/** Header, FEATURES / API / THEMING tabs and the generated API and THEMING content of a component page. */
+/** Header, the Examples · Properties · Styling switch and the generated Properties and Styling content of a component page. */
 @Component({
   selector: 'docs-component-page',
   standalone: false,
@@ -29,26 +30,36 @@ export class DocsComponentPage {
   readonly doc = input.required<ComponentDoc>();
   protected readonly features = contentChild(DocsFeatures);
 
-  protected readonly tabs: { id: DocTab; label: string }[] = [
-    { id: 'features', label: 'Features' },
-    { id: 'api', label: 'API' },
-    { id: 'theming', label: 'Theming' },
+  /** Labels only; the ids, the ?tab= values and the anchors stay as they were. */
+  protected readonly tabs: { id: DocTab; label: Text; icon: string }[] = [
+    { id: 'features', label: { th: 'ตัวอย่าง', en: 'Examples' }, icon: 'sparkles' },
+    { id: 'api', label: { th: 'คุณสมบัติ', en: 'Properties' }, icon: 'code' },
+    { id: 'theming', label: { th: 'ปรับแต่ง', en: 'Styling' }, icon: 'palette' },
   ];
   protected readonly tab = toSignal(
     this.route.queryParamMap.pipe(map((p): DocTab => (p.get('tab') === 'api' || p.get('tab') === 'theming' ? (p.get('tab') as DocTab) : 'features'))),
     { initialValue: 'features' as DocTab }
   );
 
+  /** Type declarations in the Properties tab carry comments: English ones on the English site. */
+  protected readonly apiGroups = computed((): ApiGroup[] => {
+    const doc = this.doc();
+    if (!this.en()) return doc.api;
+    const words = sampleText(doc.english);
+    return doc.api.map((g) => (g.code ? { ...g, code: words.swap(g.code) } : g));
+  });
+
   protected readonly cssExample = computed(() => {
     const prefix = '--wt-' + this.tokenPrefix();
     const own = this.doc().tokens.filter((t) => t.name.startsWith(prefix));
     const pickTokens = (own.length ? own : this.doc().tokens).slice(0, 2);
-    return `/* styles.css ของแอป: CSS ที่ไม่อยู่ใน @layer ชนะธีมเสมอ ไม่ต้องใช้ !important */
+    const en = this.en();
+    return `/* ${en ? "The app's styles.css: CSS outside @layer always beats the theme, no !important needed" : 'styles.css ของแอป: CSS ที่ไม่อยู่ใน @layer ชนะธีมเสมอ ไม่ต้องใช้ !important'} */
 :root {
 ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
 }
 
-/* เฉพาะบางส่วนของหน้า: ตัวแปรสืบทอดลงไปถึง component ข้างใน */
+/* ${en ? 'One part of the page only: the variables reach every component inside' : 'เฉพาะบางส่วนของหน้า: ตัวแปรสืบทอดลงไปถึง component ข้างใน'} */
 .promo-banner {
   --wt-primary-color: #e11d48;
   --wt-primary-hover: #be123c;
@@ -56,8 +67,9 @@ ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
   });
 
   protected readonly tsExample = computed(() => {
-    const o = this.doc().overrides;
-    if (!o) return '';
+    const raw = this.doc().overrides;
+    if (!raw) return '';
+    const o = this.en() ? sampleText(this.doc().english).swap(raw) : raw;
     return `// src/theme/wiratheme.overrides.ts
 import { defineOverrides } from 'wiratheme/config';
 

@@ -25,14 +25,6 @@ export interface NavGroup {
   groups?: NavSubgroup[];
 }
 
-const soon = (id: string, title: string, keywords = ''): NavItem => ({
-  id,
-  title,
-  path: 'components/' + id,
-  soon: true,
-  keywords,
-});
-
 export const NAV: NavGroup[] = [
   {
     id: 'getting-started',
@@ -55,7 +47,7 @@ export const NAV: NavGroup[] = [
       { id: 'scss', title: 'SCSS', path: 'theming/scss', keywords: 'sass @use' },
       { id: 'css', title: 'CSS', path: 'theming/css', keywords: 'css variables angular.json' },
       { id: 'typescript', title: 'TypeScript', path: 'theming/typescript', keywords: 'overrides definePreset WtThemeService' },
-      { id: 'designer', title: 'Theme Designer', path: 'theming/designer', keywords: 'designer export figma' },
+      { id: 'studio', title: { th: 'สตูดิโอธีม', en: 'WiraTheme Studio' }, path: 'theming/studio', keywords: 'studio designer theme designer export figma สตูดิโอ' },
     ],
   },
   {
@@ -84,22 +76,25 @@ export const NAV: NavGroup[] = [
         id: 'components/form',
         title: 'Form',
         items: [
+          { id: 'autocomplete', title: 'AutoComplete', path: 'components/autocomplete', keywords: 'autocomplete typeahead suggestions search ค้นหา แนะนำ พิมพ์แล้วแนะนำ' },
           { id: 'checkbox', title: 'Checkbox', path: 'components/checkbox', keywords: 'binary ช่องติ๊ก' },
           { id: 'datepicker', title: 'DatePicker', path: 'components/datepicker', keywords: 'calendar date time พ.ศ. ปฏิทิน วันที่ เวลา' },
           { id: 'floatlabel', title: 'FloatLabel', path: 'components/floatlabel', keywords: 'label floating ป้ายลอย' },
           { id: 'iconfield', title: 'IconField', path: 'components/iconfield', keywords: 'inputicon icon ไอคอน ค้นหา' },
           { id: 'inputgroup', title: 'InputGroup', path: 'components/inputgroup', keywords: 'addon add-on กลุ่มช่องกรอก' },
+          { id: 'inputmask', title: 'InputMask', path: 'components/inputmask', keywords: 'mask pattern format เลขบัตรประชาชน เบอร์โทร รูปแบบ ทะเบียนรถ' },
           { id: 'inputnumber', title: 'InputNumber', path: 'components/inputnumber', keywords: 'number currency ตัวเลข เงิน บาท' },
           { id: 'inputtext', title: 'InputText', path: 'components/inputtext', keywords: 'input text field ช่องกรอก' },
+          { id: 'multiselect', title: 'MultiSelect', path: 'components/multiselect', keywords: 'multiple select checkbox chips เลือกหลายรายการ ตัวเลือก' },
           { id: 'password', title: 'Password', path: 'components/password', keywords: 'strength meter รหัสผ่าน' },
           { id: 'radiobutton', title: 'RadioButton', path: 'components/radiobutton', keywords: 'radio ตัวเลือก' },
           { id: 'rating', title: 'Rating', path: 'components/rating', keywords: 'star ดาว คะแนน' },
+          { id: 'select', title: 'Select', path: 'components/select', keywords: 'dropdown combobox จังหวัด เลือก ค้นหา' },
           { id: 'selectbutton', title: 'SelectButton', path: 'components/selectbutton', keywords: 'segmented ปุ่มเลือก' },
           { id: 'textarea', title: 'Textarea', path: 'components/textarea', keywords: 'autoResize ข้อความยาว' },
           { id: 'togglebutton', title: 'ToggleButton', path: 'components/togglebutton', keywords: 'toggle ปุ่มเปิดปิด' },
           { id: 'toggleswitch', title: 'ToggleSwitch', path: 'components/toggleswitch', keywords: 'switch สวิตช์' },
           { id: 'validation', title: 'Validation', path: 'components/validation', keywords: 'field-error error required ตรวจสอบ ข้อผิดพลาด เลขบัตรประชาชน เบอร์โทร' },
-          soon('select', 'Select', 'dropdown'),
         ],
       },
       { id: 'components/button', title: 'Button', items: [{ id: 'button', title: 'Button', path: 'components/button', keywords: 'action loading ปุ่ม' }] },
@@ -117,6 +112,17 @@ export const NAV: NavGroup[] = [
         ],
       },
       {
+        id: 'components/menu',
+        title: 'Menu',
+        items: [
+          { id: 'menubar', title: 'Menubar', path: 'components/menubar', keywords: 'menu navbar เมนู แถบเมนู header routerLink' },
+          { id: 'menu', title: 'Menu', path: 'components/menu', keywords: 'popup menu profile sidebar side menu เมนู เมนูโปรไฟล์ เมนูข้าง' },
+          { id: 'tabmenu', title: 'TabMenu', path: 'components/tabmenu', keywords: 'tab menu activeItem routerLink แท็บ เมนูแท็บ' },
+          { id: 'panelmenu', title: 'PanelMenu', path: 'components/panelmenu', keywords: 'panel menu side menu sidebar accordion menu เมนูข้าง เมนูพับได้' },
+          { id: 'steps', title: 'Steps', path: 'components/steps', keywords: 'steps wizard progress stepper ขั้นตอน ลำดับขั้น' },
+        ],
+      },
+      {
         id: 'components/display',
         title: 'Display',
         items: [
@@ -124,13 +130,23 @@ export const NAV: NavGroup[] = [
           { id: 'badge', title: 'Badge', path: 'components/badge', keywords: 'count dot ตัวเลข' },
           { id: 'chip', title: 'Chip', path: 'components/chip', keywords: 'pill removable' },
           { id: 'avatar', title: 'Avatar', path: 'components/avatar', keywords: 'avatargroup user profile' },
+          { id: 'image', title: 'Image', path: 'components/image', keywords: 'img picture preview zoom rotate รูป รูปภาพ ขยาย' },
           { id: 'skeleton', title: 'Skeleton', path: 'components/skeleton', keywords: 'loading placeholder' },
           { id: 'progressbar', title: 'ProgressBar', path: 'components/progressbar', keywords: 'progress loading ความคืบหน้า' },
           { id: 'metergroup', title: 'MeterGroup', path: 'components/metergroup', keywords: 'meter storage แถบหลายค่า พื้นที่' },
+          { id: 'timeline', title: 'Timeline', path: 'components/timeline', keywords: 'events history steps ลำดับเหตุการณ์ ประวัติ ไทม์ไลน์' },
           { id: 'progressspinner', title: 'ProgressSpinner', path: 'components/progressspinner', keywords: 'spinner loading' },
         ],
       },
-      { id: 'components/data', title: 'Data', items: [soon('table', 'Table', 'export excel ตาราง')] },
+      {
+        id: 'components/data',
+        title: 'Data',
+        items: [
+          { id: 'table', title: 'Table', path: 'components/table', keywords: 'datatable data table grid ตาราง รายชื่อ แบ่งหน้า เรียง ค้นหา lazy' },
+          { id: 'chart', title: 'Chart', path: 'components/chart', keywords: 'chart.js graph bar line pie doughnut กราฟ แผนภูมิ' },
+          { id: 'paginator', title: 'Paginator', path: 'components/paginator', keywords: 'paging pagination page แบ่งหน้า หน้าถัดไป' },
+        ],
+      },
       {
         id: 'components/overlay',
         title: 'Overlay',

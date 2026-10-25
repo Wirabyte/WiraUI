@@ -13,6 +13,18 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
     th: 'สวิตช์เปิด / ปิดสำหรับ ngModel และ Reactive Forms มี label ในตัว และข้างในเป็น checkbox จริงที่มี role="switch"',
     en: 'An on / off switch for ngModel and reactive forms, with a built-in label. Underneath is a real checkbox with role="switch".',
   },
+  english: {
+    'รับข่าวสารทางอีเมล': 'Email me the newsletter',
+    'เล็ก': 'Small',
+    'ปกติ': 'Normal',
+    'ใหญ่': 'Large',
+    'เปิดใช้งานบัญชี': 'Account active',
+    'แจ้งเตือนทางอีเมล': 'Email alerts',
+    'แจ้งเตือนทาง SMS': 'SMS alerts',
+    'ปิดอยู่ (เปิด)': 'Disabled (on)',
+    'ปิดอยู่': 'Disabled',
+    'สวิตช์เป็นสถานะ disabled ตาม control': 'the switch follows the control and shows disabled',
+  },
   sections: {
     sizes: {
       title: 'Sizes',
@@ -23,7 +35,10 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
     },
     import: {
       title: 'Import',
-      text: { th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>', en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.' },
+      text: {
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wt-inputSwitch</code> (และ <code>wt-toggleSwitch</code>) ใช้ได้เหมือน <code>wt-toggleswitch</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wt-inputSwitch</code> (and <code>wt-toggleSwitch</code>), works the same as <code>wt-toggleswitch</code>, so moving over is a prefix change.',
+      },
     },
     basic: { title: 'Basic' },
     values: {
@@ -53,11 +68,11 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
   },
   ts: {
     reactive: `form = new FormGroup({
-  email: new FormControl(true, { nonNullable: true }),
-  sms: new FormControl(false, { nonNullable: true }),
+  email: new FormControl(true),
+  sms: new FormControl(false),
 });
 
-lockSms() {
+lockSms(): void {
   this.form.controls.sms.disable();   // สวิตช์เป็นสถานะ disabled ตาม control
 }`,
   },

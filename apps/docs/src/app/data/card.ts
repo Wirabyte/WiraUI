@@ -12,6 +12,27 @@ export const CARD_DOC: ComponentDoc = {
     th: 'กล่องเนื้อหาที่มี header / subheader และ slot สำหรับรูป ปุ่มข้างหัวการ์ด และ footer พร้อม variant outlined, elevated, glass และสถานะ loading',
     en: 'A content box with header / subheader and slots for media, header actions and a footer, plus outlined, elevated and glass variants and a loading state.',
   },
+  english: {
+    'โปรไฟล์': 'Profile',
+    'ข้อมูลบัญชี': 'Account details',
+    'สมชาย ใจดี · สมาชิกตั้งแต่ 2566 · แผน Pro': 'Alex Morgan · Member since 2023 · Pro plan',
+    'แผน Pro': 'Pro plan',
+    'รายเดือน': 'Monthly',
+    '฿290 / เดือน': '฿290 / month',
+    '5 โปรเจค · พื้นที่ 50 GB · ผู้ใช้ไม่จำกัด': '5 projects · 50 GB storage · unlimited users',
+    'อัปเกรด': 'Upgrade',
+    'รายละเอียด': 'Details',
+    'ขอบบาง + เงาอ่อน': 'Thin border, soft shadow',
+    'มีขอบ ไม่มีเงา': 'Border, no shadow',
+    'ไม่มีขอบ เงาชัด': 'Shadow, no border',
+    'พื้นกระจก': 'Frosted glass',
+    'ทริปทะเลสาบยามเย็น': 'Lakeside evening trip',
+    '3 วัน 2 คืน · เชียงใหม่': '3 days, 2 nights · Chiang Mai',
+    'ทะเลสาบยามเย็น': 'A lake at dusk',
+    'พักริมทะเลสาบ ล่องเรือชมพระอาทิตย์ตก และอาหารเย็นจากฟาร์มท้องถิ่น': 'Stay by the lake, take a sunset boat ride and have dinner from a local farm.',
+    'ยอดขายเดือนนี้': "This month's sales",
+    '฿128,400 จาก 312 คำสั่งซื้อ': '฿128,400 from 312 orders',
+  },
   sections: {
     import: { title: 'Import' },
     basic: {
@@ -80,9 +101,19 @@ export const CARD_DOC: ComponentDoc = {
 .card-cover { display: block; width: 100%; height: 11.5rem; object-fit: cover; }
 .card-actions { display: flex; gap: 1rem; }
 .card-actions > * { flex: 1 1 0; } -->`,
-    loading: `<wt-card header="ยอดขายเดือนนี้" [loading]="loading">
+    loading: `<wt-card header="ยอดขายเดือนนี้" [loading]="isPageLoading">
   <p>฿128,400 จาก 312 คำสั่งซื้อ</p>
 </wt-card>`,
+  },
+  ts: {
+    loading: `isPageLoading = true;
+
+ngOnInit(): void {
+  this.reportService.getMonthlySales().subscribe((report) => {
+    this.report = report;
+    this.isPageLoading = false;
+  });
+}`,
   },
   api: [
     {

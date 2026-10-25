@@ -1,6 +1,6 @@
 <header class="docs-page-head">
   <p class="docs-eyebrow">Theming</p>
-  <h1 class="docs-h1">Theme Designer</h1>
+  <h1 class="docs-h1">{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</h1>
   @if (en()) {
     <p class="docs-lead">Tune a theme on the web and see it immediately, then export SCSS, CSS, TypeScript or JSON, and import a file again to keep editing.</p>
   } @else {
@@ -15,12 +15,12 @@
 <docs-section id="how" [title]="{ th: 'ทำงานอย่างไร', en: 'How it works' }">
   @if (en()) {
     <p>
-      The Designer only edits tokens, and its preview uses the same <code>WtThemeService</code> as your app, so the preview matches the exported file exactly.
+      WiraTheme Studio only edits tokens, and its preview uses the same <code>WtThemeService</code> as your app, so the preview matches the exported file exactly.
       For a small taste, try the theme button <docs-icon name="palette" class="docs-inline-icon"></docs-icon> in this site's top bar.
     </p>
   } @else {
     <p>
-      Designer เป็นแค่ตัวแก้ token และ preview ใช้ <code>WtThemeService</code> ตัวเดียวกับ runtime สิ่งที่เห็นใน preview จึงตรงกับไฟล์ที่ export 100%
+      สตูดิโอธีม เป็นแค่ตัวแก้ token และ preview ใช้ <code>WtThemeService</code> ตัวเดียวกับ runtime สิ่งที่เห็นใน preview จึงตรงกับไฟล์ที่ export 100%
       ลองดูตัวอย่างเล็ก ๆ ได้จากปุ่มปรับธีม <docs-icon name="palette" class="docs-inline-icon"></docs-icon> บนแถบด้านบนของเว็บนี้
     </p>
   }
@@ -76,14 +76,14 @@
         <tr><td><code>wiratheme.theme.scss</code></td><td><a [routerLink]="link('theming/scss')">SCSS</a> (<code>&#64;use … with</code>)</td></tr>
         <tr><td><code>wiratheme.theme.css</code></td><td><a [routerLink]="link('theming/css')">CSS</a> ({{ en() ? 'in' : 'ใส่ใน' }} <code>angular.json</code>)</td></tr>
         <tr><td><code>wiratheme.preset.ts</code> / <code>wiratheme.overrides.ts</code></td><td><a [routerLink]="link('theming/typescript')">TypeScript</a></td></tr>
-        <tr><td><code>wiratheme.theme.json</code></td><td>{{ en() ? 'Keep it, or open it in the Designer again' : 'เก็บไว้ หรือเปิดใน Designer อีกครั้ง' }}</td></tr>
+        <tr><td><code>wiratheme.theme.json</code></td><td>{{ en() ? 'Keep it, or open it in WiraTheme Studio again' : 'เก็บไว้ หรือเปิดใน สตูดิโอธีม อีกครั้ง' }}</td></tr>
       </tbody>
     </table>
   </div>
   @if (en()) {
     <p>Every file embeds its config in a <code>/* wiratheme-config: … */</code> comment, so any of them can be imported back without losing anything.</p>
   } @else {
-    <p>ทุกไฟล์ฝัง config ไว้ใน comment <code>/* wiratheme-config: … */</code> import ไฟล์ไหนกลับเข้า Designer ก็ได้โดยข้อมูลไม่หาย</p>
+    <p>ทุกไฟล์ฝัง config ไว้ใน comment <code>/* wiratheme-config: … */</code> import ไฟล์ไหนกลับเข้า สตูดิโอธีม ก็ได้โดยข้อมูลไม่หาย</p>
   }
 </docs-section>
 
@@ -92,11 +92,11 @@
     <docs-icon name="figma"></docs-icon>
     @if (en()) {
       <p>
-        <b>Coming soon.</b> The Designer will export tokens as Figma Variables / W3C Design Tokens JSON, and kit variants will be named after component inputs
+        <b>Coming soon.</b> WiraTheme Studio will export tokens as Figma Variables / W3C Design Tokens JSON, and kit variants will be named after component inputs
         (<code>severity</code>, <code>variant</code>, <code>size</code>).
       </p>
     } @else {
-      <p><b>เร็ว ๆ นี้</b> Designer จะ export token เป็น Figma Variables / W3C Design Tokens JSON และ component ใน kit ตั้งชื่อ variant ตาม input ของโค้ด (<code>severity</code>, <code>variant</code>, <code>size</code>)</p>
+      <p><b>เร็ว ๆ นี้</b> สตูดิโอธีม จะ export token เป็น Figma Variables / W3C Design Tokens JSON และ component ใน kit ตั้งชื่อ variant ตาม input ของโค้ด (<code>severity</code>, <code>variant</code>, <code>size</code>)</p>
     }
   </div>
 </docs-section>

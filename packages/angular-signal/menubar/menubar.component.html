@@ -1,0 +1,160 @@
+<div
+  class="wt-menubar p-menubar p-component"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="style || null"
+  [class.wt-menubar-mobile]="mobile"
+  [class.p-menubar-mobile]="mobile"
+  [class.wt-menubar-mobile-active]="mobileActive"
+  [class.p-menubar-mobile-active]="mobileActive"
+  (focusin)="focusIn($event)"
+  (focusout)="focusOut($event)"
+  (mouseenter)="barEnter()"
+  (mouseleave)="barLeave()"
+>
+  @if (startTemplate) {
+    <div class="wt-menubar-start p-menubar-start">
+      <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
+    </div>
+  }
+  @if (mobile && items.length) {
+    <button
+      type="button"
+      class="wt-menubar-button p-menubar-button"
+      [attr.aria-label]="t.navigation"
+      [attr.aria-expanded]="mobileActive"
+      [attr.aria-controls]="rootId"
+      (click)="toggleMobile($event)"
+    >
+      @if (menuIconTemplate) {
+        <ng-container *ngTemplateOutlet="menuIconTemplate"></ng-container>
+      } @else {
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"></path></svg>
+      }
+    </button>
+  }
+  @if (items.length && rootVisible) {
+    <ul
+      class="wt-menubar-root p-menubar-root-list"
+      role="menubar"
+      [id]="rootId"
+      [attr.aria-orientation]="mobile ? 'vertical' : 'horizontal'"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-labelledby]="ariaLabelledBy || null"
+      (keydown)="keydown($event)"
+    >
+      <ng-container *ngTemplateOutlet="list; context: { $implicit: items, parent: '' }"></ng-container>
+    </ul>
+  }
+  @if (endTemplate) {
+    <div class="wt-menubar-end p-menubar-end">
+      <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
+    </div>
+  } @else {
+    <div class="wt-menubar-end wt-menubar-end-projected p-menubar-end"><ng-content></ng-content></div>
+  }
+</div>
+
+<ng-template #list let-entries let-parent="parent">
+  @for (item of entries; track $index; let i = $index) {
+    <ng-container *ngTemplateOutlet="row; context: { $implicit: item, key: keyOf(parent, i) }"></ng-container>
+  }
+</ng-template>
+
+<ng-template #row let-item let-key="key">
+  @if (item.separator) {
+    <li class="wt-menubar-separator p-menubar-separator" role="separator"></li>
+  } @else {
+    <li
+      class="wt-menubar-item p-menubar-item"
+      role="none"
+      [ngClass]="item.styleClass || ''"
+      [ngStyle]="item.style || null"
+      [class.wt-menubar-item-active]="isOpen(key)"
+      [class.p-menubar-item-active]="isOpen(key)"
+      [class.wt-menubar-item-disabled]="item.disabled"
+      [class.p-disabled]="item.disabled"
+      [attr.data-p-active]="isOpen(key)"
+      (mouseenter)="itemEnter(item, key)"
+    >
+      <div class="wt-menubar-item-content p-menubar-item-content">
+        @if (routed(item)) {
+          <a
+            class="wt-menubar-item-link p-menubar-item-link"
+            role="menuitem"
+            [id]="itemId(key)"
+            [attr.data-wt-key]="key"
+            [attr.tabindex]="tabindexOf(key)"
+            [attr.title]="item.title || null"
+            [attr.target]="item.target || null"
+            [attr.data-automationid]="item.automationId || null"
+            [attr.aria-haspopup]="hasSubmenu(item) ? 'menu' : null"
+            [attr.aria-expanded]="hasSubmenu(item) ? isOpen(key) : null"
+            [attr.aria-controls]="hasSubmenu(item) && isOpen(key) ? itemId(key) + '_menu' : null"
+            [routerLink]="item.routerLink"
+            [queryParams]="item.queryParams"
+            [queryParamsHandling]="item.queryParamsHandling"
+            [fragment]="item.fragment"
+            [preserveFragment]="!!item.preserveFragment"
+            [skipLocationChange]="!!item.skipLocationChange"
+            [replaceUrl]="!!item.replaceUrl"
+            [state]="item.state"
+            routerLinkActive="wt-menubar-link-active p-menubar-item-link-active"
+            [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+            (click)="itemClick($event, item, key)"
+          >
+            <ng-container *ngTemplateOutlet="content; context: { $implicit: item, key: key }"></ng-container>
+          </a>
+        } @else {
+          <a
+            class="wt-menubar-item-link p-menubar-item-link"
+            role="menuitem"
+            [id]="itemId(key)"
+            [attr.data-wt-key]="key"
+            [attr.tabindex]="tabindexOf(key)"
+            [attr.href]="hrefOf(item)"
+            [attr.title]="item.title || null"
+            [attr.target]="item.url ? item.target || null : null"
+            [attr.data-automationid]="item.automationId || null"
+            [attr.aria-disabled]="item.disabled || null"
+            [attr.aria-haspopup]="hasSubmenu(item) ? 'menu' : null"
+            [attr.aria-expanded]="hasSubmenu(item) ? isOpen(key) : null"
+            [attr.aria-controls]="hasSubmenu(item) && isOpen(key) ? itemId(key) + '_menu' : null"
+            (click)="itemClick($event, item, key)"
+          >
+            <ng-container *ngTemplateOutlet="content; context: { $implicit: item, key: key }"></ng-container>
+          </a>
+        }
+      </div>
+      @if (hasSubmenu(item) && isOpen(key)) {
+        <ul class="wt-menubar-submenu p-menubar-submenu" role="menu" [id]="itemId(key) + '_menu'" [attr.aria-labelledby]="itemId(key)">
+          <ng-container *ngTemplateOutlet="list; context: { $implicit: visibleOf(item.items), parent: key }"></ng-container>
+        </ul>
+      }
+    </li>
+  }
+</ng-template>
+
+<ng-template #content let-item let-key="key">
+  @if (itemTemplate) {
+    <ng-container *ngTemplateOutlet="itemTemplate; context: itemContext(item, key)"></ng-container>
+  } @else {
+    @if (item.icon) {
+      <span class="wt-menubar-item-icon p-menubar-item-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    }
+    @if (item.escape === false) {
+      <span class="wt-menubar-item-label p-menubar-item-label" [innerHTML]="item.label"></span>
+    } @else {
+      <span class="wt-menubar-item-label p-menubar-item-label">{{ item.label }}</span>
+    }
+    @if (item.badge) {
+      <span class="wt-menubar-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    }
+    @if (hasSubmenu(item)) {
+      @if (submenuIconTemplate) {
+        <span class="wt-menubar-submenu-icon p-menubar-submenu-icon"><ng-container *ngTemplateOutlet="submenuIconTemplate"></ng-container></span>
+      } @else {
+        <svg class="wt-menubar-submenu-icon p-menubar-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
+      }
+    }
+  }
+</ng-template>

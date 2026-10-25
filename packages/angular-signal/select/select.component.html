@@ -1,0 +1,181 @@
+<div
+  #root
+  class="wt-select p-select p-component"
+  [ngClass]="styleClass || ''"
+  [class.wt-select-open]="open"
+  [class.p-select-open]="open"
+  [class.wt-select-focus]="focused || open"
+  [class.p-focus]="focused || open"
+  [class.wt-select-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-select-invalid]="invalid"
+  [class.p-invalid]="invalid"
+  [class.wt-select-filled]="variant === 'filled'"
+  [class.p-variant-filled]="variant === 'filled'"
+  [class.wt-select-sm]="sizeKey === 'sm'"
+  [class.p-select-sm]="sizeKey === 'sm'"
+  [class.wt-select-lg]="sizeKey === 'lg'"
+  [class.p-select-lg]="sizeKey === 'lg'"
+  [class.wt-select-clearable]="clearable"
+  [class.p-select-clearable]="clearable"
+  [class.wt-select-loading]="loading"
+  [class.p-select-loading]="loading"
+  (mousedown)="fieldMousedown($event)"
+  (click)="fieldClick($event)"
+>
+  @if (editable) {
+    <input
+      #focusInput
+      type="text"
+      class="wt-select-label wt-select-editable p-select-label p-inputtext"
+      role="combobox"
+      autocomplete="off"
+      [id]="inputId || baseId"
+      [value]="filled && !selectedItem ? value : (selectedItem?.label ?? '')"
+      [attr.placeholder]="placeholder || null"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-labelledby]="ariaLabelledBy || null"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="open"
+      [attr.aria-controls]="open ? listId : null"
+      [attr.aria-activedescendant]="activeId"
+      [disabled]="disabled"
+      [readOnly]="readonly || loading"
+      [attr.aria-busy]="loading || null"
+      (input)="editInput($event)"
+      (keydown)="keydown($event)"
+      (focus)="fieldFocus($event)"
+    />
+  } @else {
+    <input
+      #focusInput
+      type="text"
+      class="wt-select-input p-hidden-accessible"
+      role="combobox"
+      readonly
+      inputmode="none"
+      autocomplete="off"
+      [id]="inputId || baseId"
+      [attr.tabindex]="disabled ? -1 : tabindex"
+      [attr.aria-label]="ariaLabel || (ariaLabelledBy ? null : labelText || placeholder || null)"
+      [attr.aria-labelledby]="ariaLabelledBy || null"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="open"
+      [attr.aria-controls]="open ? listId : null"
+      [attr.aria-activedescendant]="filter ? null : activeId"
+      [attr.aria-disabled]="disabled || null"
+      [attr.aria-busy]="loading || null"
+      [disabled]="disabled"
+      (keydown)="keydown($event)"
+      (focus)="fieldFocus($event)"
+    />
+    <span class="wt-select-label p-select-label" [class.wt-select-placeholder]="showPlaceholder" [class.p-placeholder]="showPlaceholder" aria-hidden="true">
+      @if (selectedItemTemplate && selectedItem) {
+        <ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: selectedItem.option }"></ng-container>
+      } @else {
+        {{ labelText || ' ' }}
+      }
+    </span>
+  }
+  @if (clearable) {
+    <button type="button" class="wt-select-clear p-select-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+    </button>
+  }
+  <span class="wt-select-dropdown p-select-dropdown" aria-hidden="true">
+    @if (loading) {
+      <span class="wt-select-spinner p-select-loading-icon"></span>
+    } @else if (dropdownIconTemplate) {
+      <ng-container *ngTemplateOutlet="dropdownIconTemplate"></ng-container>
+    } @else {
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"></path></svg>
+    }
+  </span>
+</div>
+
+@if (open) {
+  <div
+    #panel
+    popover="manual"
+    class="wt-select-overlay p-select-overlay p-component"
+    [ngClass]="panelStyleClass || ''"
+    [ngStyle]="panelStyle || null"
+    (mousedown)="panelMousedown($event)"
+  >
+    @if (headerTemplate) {
+      <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+    }
+    @if (filter) {
+      <div class="wt-select-header p-select-header">
+        <div class="wt-select-filter-wrap p-iconfield">
+          <input
+            #filterInput
+            type="text"
+            class="wt-inputtext wt-select-filter p-select-filter p-inputtext"
+            role="searchbox"
+            autocomplete="off"
+            [value]="filterText"
+            [attr.placeholder]="filterPlaceholder || null"
+            [attr.aria-label]="ariaFilterLabel || t.search"
+            [attr.aria-controls]="listId"
+            [attr.aria-activedescendant]="activeId"
+            (input)="search($event)"
+            (keydown)="keydown($event)"
+          />
+          <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+        </div>
+      </div>
+    }
+    <div class="wt-select-list-container p-select-list-container" [style.max-height]="scrollHeight">
+      <ul #listBox class="wt-select-list p-select-list" role="listbox" [id]="listId" [attr.aria-label]="ariaLabel || placeholder || null">
+        @for (item of visible; track $index; let i = $index) {
+          @if (item.group) {
+            <li class="wt-select-group p-select-option-group" role="presentation">
+              @if (groupTemplate) {
+                <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
+              } @else {
+                {{ item.label }}
+              }
+            </li>
+          } @else {
+            <li
+              class="wt-select-option p-select-option"
+              role="option"
+              [id]="optionId(i)"
+              [class.wt-select-option-selected]="isSelected(item)"
+              [class.p-select-option-selected]="isSelected(item)"
+              [class.wt-select-option-active]="i === activeIndex"
+              [class.p-focus]="i === activeIndex"
+              [class.wt-select-option-disabled]="item.disabled"
+              [class.p-disabled]="item.disabled"
+              [attr.aria-selected]="isSelected(item)"
+              [attr.aria-disabled]="item.disabled || null"
+              (click)="pick(item, $event)"
+              (mousemove)="hover(i)"
+            >
+              @if (checkmark) {
+                <svg class="wt-select-check p-select-option-check-icon" [class.wt-select-check-on]="isSelected(item)" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"></path></svg>
+              }
+              @if (itemTemplate) {
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, selected: isSelected(item), index: i }"></ng-container>
+              } @else {
+                <span class="wt-select-option-label">{{ item.label || ' ' }}</span>
+              }
+            </li>
+          }
+        } @empty {
+          <li class="wt-select-empty p-select-empty-message" role="option" aria-disabled="true">
+            @if (emptyTemplate) {
+              <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+            } @else {
+              {{ emptyText }}
+            }
+          </li>
+        }
+      </ul>
+    </div>
+    @if (footerTemplate) {
+      <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+    }
+  </div>
+}

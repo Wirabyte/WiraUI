@@ -197,7 +197,11 @@
     }
   }
 
-  /* Countdown: shrinks over the toast's life and stops while the pointer holds the toast. */
+  /* Countdown: shrinks over the toast's life and stops while the pointer holds the toast. It is the toast's bottom
+     edge: the pale bottom border would otherwise show under it as a thin gap. */
+  .wt-toast-message:has(> .wt-toast-timer) {
+    border-bottom-width: 0;
+  }
   .wt-toast-timer {
     position: absolute;
     right: 0;

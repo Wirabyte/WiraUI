@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtAccordion, WtAccordionTab } from './accordion.component';
+import { WtAccordion, WtAccordionContent, WtAccordionHeader, WtAccordionPanel, WtAccordionTab } from './accordion.component';
 
-/** For NgModule apps. Standalone apps can import `WtAccordion` and `WtAccordionTab` directly. */
+const ALL = [WtAccordion, WtAccordionTab, WtAccordionPanel, WtAccordionHeader, WtAccordionContent];
+
+/** For NgModule apps. Standalone apps can import `WtAccordion` and `WtAccordionTab` (or the panel components) directly. */
 @NgModule({
-  imports: [WtAccordion, WtAccordionTab],
-  exports: [WtAccordion, WtAccordionTab],
+  imports: ALL,
+  exports: ALL,
 })
 export class WtAccordionModule {}

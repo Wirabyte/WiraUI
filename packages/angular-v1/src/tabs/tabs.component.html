@@ -1,5 +1,5 @@
 <div class="wt-tabs p-tabview p-component">
-  <div class="wt-tabs-nav p-tabview-nav-container">
+  <div *ngIf="!valueMode" class="wt-tabs-nav p-tabview-nav-container">
   <button *ngIf="canPrev" type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tabview-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
@@ -25,5 +25,6 @@
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
   </div>
-  <div class="wt-tabpanels p-tabview-panels"><ng-content></ng-content></div>
+  <!-- By value the content is the wt-tablist and wt-tabpanels themselves. -->
+  <div [class]="valueMode ? 'wt-tabs-content' : 'wt-tabpanels p-tabview-panels'"><ng-content></ng-content></div>
 </div>

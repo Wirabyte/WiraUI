@@ -29,7 +29,8 @@ test('runs the wiratheme major built for its Angular version', async ({ page }, 
 });
 
 test('each major starts with its own PrimeNG-era look', async ({ page }, info) => {
-  expect(await lookOf(page)).toEqual(LOOK[major(info)]);
+  // Buttons animate their colours on first paint: wait for the end.
+  await expect.poll(() => lookOf(page)).toEqual(LOOK[major(info)]);
   await expect(page.locator('#gallery')).toHaveScreenshot(`button-gallery-${info.project.name}.png`);
   await page.locator('#toggle-dark button').click();
   await expect(page.locator('html')).toHaveClass(/wt-dark/);
@@ -72,7 +73,7 @@ test('[action] shows a spinner and blocks repeat clicks until the promise settle
 test('a TypeScript preset (definePreset) replaces the theme at runtime', async ({ page }, info) => {
   const btn = page.locator('#primary-btn button');
   const style = () => btn.evaluate((el) => [getComputedStyle(el).backgroundColor, getComputedStyle(el).borderTopLeftRadius].join(' '));
-  expect(await style()).toBe(`${LOOK[major(info)].bg} 6px`);
+  await expect.poll(style).toBe(`${LOOK[major(info)].bg} 6px`);
   await page.locator('#use-siam button').click();
   // Siam radius 4px + the primary from definePreset(Siam, { semantic: { primary: palette('#e11d48') } }).
   await expect.poll(style).toBe('rgb(225, 29, 72) 4px');

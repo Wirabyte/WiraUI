@@ -6,26 +6,26 @@
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']" layout="stack">
-        <wt-message text="ระบบจะปิดปรับปรุงคืนนี้ 22:00 น."></wt-message>
-        <wt-message severity="success" text="บันทึกเรียบร้อย"></wt-message>
-        <wt-message severity="warn" text="แผนของคุณจะหมดอายุใน 3 วัน"></wt-message>
-        <wt-message severity="error" text="ชำระเงินไม่สำเร็จ"></wt-message>
-        <wt-message severity="secondary" text="ไม่มีรายการใหม่"></wt-message>
+        <wt-message [text]="tx('ระบบจะปิดปรับปรุงคืนนี้ 22:00 น.')"></wt-message>
+        <wt-message severity="success" [text]="tx('บันทึกเรียบร้อย')"></wt-message>
+        <wt-message severity="warn" [text]="tx('แผนของคุณจะหมดอายุใน 3 วัน')"></wt-message>
+        <wt-message severity="error" [text]="tx('ชำระเงินไม่สำเร็จ')"></wt-message>
+        <wt-message severity="secondary" [text]="tx('ไม่มีรายการใหม่')"></wt-message>
       </docs-demo>
     </docs-section>
 
     <docs-section id="closable" [section]="sec['closable']">
       <docs-demo [html]="code['closable']" layout="stack">
         @if (showClosable) {
-          <wt-message id="d-closable" severity="info" text="กดปุ่มปิดได้" [closable]="true" (onClose)="onClosed()"></wt-message>
+          <wt-message id="d-closable" severity="info" [text]="tx('กดปุ่มปิดได้')" [closable]="true" (onClose)="onClosed()"></wt-message>
         }
         @if (showTimed) {
-          <wt-message severity="success" text="ข้อความนี้จะหายใน 4 วินาที" [life]="4000" (onClose)="showTimed = false"></wt-message>
+          <wt-message severity="success" [text]="tx('ข้อความนี้จะหายใน 4 วินาที')" [life]="4000" (onClose)="showTimed = false"></wt-message>
         }
         <div class="docs-demo-actions">
           <span class="docs-demo-output">onClose: <code id="d-closed">{{ closed }}</code></span>
           @if (!showClosable || !showTimed) {
-            <wt-button [label]="en() ? 'Show again' : 'แสดงอีกครั้ง'" size="small" severity="secondary" [text]="true" (onClick)="showAgain()"></wt-button>
+            <wt-button [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="showAgain()"></wt-button>
           }
         </div>
       </docs-demo>
@@ -43,8 +43,29 @@
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']" layout="stack">
         <wt-message severity="warn">
-          <span>อีเมลยังไม่ยืนยัน <b>ตรวจกล่องจดหมายของคุณ</b></span>
+          <span>{{ tx('อีเมลยังไม่ยืนยัน') }} <b>{{ tx('ตรวจกล่องจดหมายของคุณ') }}</b></span>
         </wt-message>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="messages" [section]="sec['messages']">
+      <docs-demo [html]="code['messages']" [ts]="ts['messages']" layout="stack">
+        <wt-messages id="d-messages" [(value)]="notices" [enableService]="false"></wt-messages>
+        <div class="docs-demo-actions">
+          <span class="docs-demo-output">{{ tx('เหลือ') }}: <code id="d-messages-count">{{ notices.length }}</code></span>
+          @if (notices.length < 3) {
+            <wt-button id="d-messages-reset" [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="resetNotices()"></wt-button>
+          }
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="service" [section]="sec['service']">
+      <docs-demo [html]="code['service']" [ts]="ts['service']" layout="stack">
+        <wt-messages id="d-messages-service" key="form"></wt-messages>
+        <div>
+          <wt-button id="d-messages-send" [label]="tx('ส่งแบบฟอร์ม')" icon="pi pi-send" (onClick)="sendForm()"></wt-button>
+        </div>
       </docs-demo>
     </docs-section>
   </ng-template>

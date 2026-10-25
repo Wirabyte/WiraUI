@@ -1,4 +1,5 @@
 import { DocVersion } from '../../core/versions';
+import { SampleWords } from '../../core/sample-text';
 
 /** Code shown on the Getting Started and Theming pages (DESIGN.md §5–§8). */
 
@@ -272,8 +273,13 @@ export function firstComponent(v: DocVersion): string {
 }
 
 export const FIRST_COMPONENT_TS = `export class AppComponent {
-  // คืน Promise หรือ Observable: ปุ่มแสดง spinner และกันกดซ้ำจนงานเสร็จ
-  save = () => this.api.saveStudent(this.form.value);
+  // [action] รับตัวฟังก์ชัน จึง bind ไว้ครั้งเดียวให้ this ยังเป็น component
+  save = this.saveStudent.bind(this);
+
+  saveStudent(): Observable<unknown> {
+    // คืน Promise หรือ Observable: ปุ่มแสดง spinner และกันกดซ้ำจนงานเสร็จ
+    return this.studentService.save(this.student);
+  }
 }`;
 
 export const TRANSLATION = `import { inject } from '@angular/core';
@@ -316,3 +322,76 @@ export function migrateCss(v: DocVersion): string {
 /* ทางที่แนะนำต่อจากนี้: ตั้ง token ครั้งเดียว ไม่ต้องใช้ ::ng-deep / !important */
 :root { --wt-card-body-gap: 0; }`;
 }
+
+/** English for the Thai in the samples above (see core/sample-text.ts). */
+export const GUIDE_WORDS: SampleWords = {
+  'ใช้ค่าที่ตรวจพบและค่าเริ่มต้นทั้งหมด ไม่ถามอะไร': 'Take what it detects and every default, no questions asked',
+  'หรือส่งเป็น flag ทีละข้อ': 'or pass each answer as a flag',
+  'ใช้ได้เหมือนกันทุก minor': 'every minor works the same',
+  'รันแบบ zoneless ได้เต็มที่': 'runs fully zoneless',
+  'ถ้าชอบสไตล์ forRoot แบบ NgModule': 'if you prefer the NgModule forRoot style',
+  'ชื่อธีมเดียวกับโฟลเดอร์ธีมที่แอปเดิมใช้อยู่': 'the same name as the theme folder the app already uses',
+  'หรือเริ่มจาก preset ของยุคนี้แล้วปรับเอง': "or start from one of this version's presets and adjust it",
+  'ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้': 'one colour; shades 50–950 are generated',
+  'ตัวอักษรบนปุ่มหลัก': 'text on primary buttons',
+  'ธีมมืดอย่างเดียวแบบ sayan / ratri': 'dark only, like sayan / ratri',
+  'ธีมมืดอย่างเดียว': 'dark only',
+  'ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (mali)': "no with (…) = the version's default theme (mali)",
+  'บรรทัดแรก': 'first line',
+  'ไฟล์ SCSS ของ component ในแอป: โมดูล API ไม่ปล่อย CSS ซ้ำ': 'a component SCSS file in the app: the API module emits no CSS of its own',
+  'ชื่อโฟลเดอร์ธีมเดิมของแอป': "the app's existing theme folder",
+  'หรือ themes/mali/<สี>.css เช่น cyan.css': 'or themes/mali/<colour>.css, e.g. cyan.css',
+  'ตัวแปรชื่อเดิมที่แอปอ่านอยู่มีให้ด้วย:': 'The old variable names the app reads are there too:',
+  '<สี>-<เฉด>': '<colour>-<shade>',
+  'ใช้ต่อได้': 'keep working',
+  'CSS ของแอปไม่อยู่ใน @layer จึงชนะธีมทั้งหมด': "the app's CSS is not in a @layer, so it beats the whole theme",
+  'ตัวอักษรขาวบนปุ่มหลักตามแบรนด์': 'white text on primary buttons, as the brand wants',
+  'dark mode แบบ class: ใส่ .wt-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector)':
+    'class-based dark mode: put .wt-dark on <html> (or the class set in darkModeSelector)',
+  'ทั้งโซน เช่น ฝั่ง admin ใช้สีหลักอีกสี': 'a whole area, e.g. the admin side, in another primary colour',
+  'แพ้ / loses   ': 'loses         ',
+  'ชนะ / wins    ': 'wins          ',
+  'ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)': 'the main theme from SCSS / CSS (or a TS preset)',
+  'CSS ของ component (อ่านแค่ var(--wt-*))': 'component CSS (reads only var(--wt-*))',
+  'utility class (wiratheme/utils) ถ้าเปิดใช้': 'utility classes (wiratheme/utils), if enabled',
+  'overrides จาก TS / WtThemeService': 'overrides from TS / WtThemeService',
+  'CSS ของแอปเอง          ': "your app's CSS         ",
+  'ไม่อยู่ใน layer จึงชนะโดยไม่ต้องใช้ !important': 'not in a layer, so it wins with no !important',
+  '(ng add สร้างไฟล์นี้ให้ เริ่มต้นว่าง)': '(ng add creates it, empty)',
+  'แทน --p-card-body-gap: 0px !important': 'instead of --p-card-body-gap: 0px !important',
+  'ส่วนที่ไม่ได้ระบุ dark มีผลทั้งสองโหมด': 'anything outside dark applies to both modes',
+  'ใช้ TypeScript อย่างเดียว ไม่มีไฟล์ธีม SCSS / CSS': 'TypeScript only, no SCSS / CSS theme file',
+  'ธีมมืดอย่างเดียว ไม่ต้องสลับ class': 'dark only, no class to toggle',
+  'ทุกเฉดและ token ที่อ้างถึงเปลี่ยนตาม': 'every shade, and every token that uses them, follows',
+  'สลับ .wt-dark ที่ <html>': 'toggles .wt-dark on <html>',
+  'ล้าง overrides ทั้งหมด': 'clears every override',
+  "ขนาด UI: 'sm' 12px · 'md' 14px · 'lg' 16px": "UI size: 'sm' 12px · 'md' 14px · 'lg' 16px",
+  '(หรือ WiraThemeModule.forRoot({ ... }) ใน AppModule)': '(or WiraThemeModule.forRoot({ ... }) in AppModule)',
+  'ทุกค่า rem ย่อตาม ทั้ง UI เล็กลงเท่ากัน': 'every rem value follows, so the whole UI shrinks evenly',
+  'เปลี่ยนตอน runtime': 'change it at runtime',
+  'กำหนดเป็น px ก็ได้': 'or a px value',
+  'คืนให้ CSS ของหน้าเว็บกำหนดเอง': "hand it back to the page's CSS",
+  '[action] รับตัวฟังก์ชัน จึง bind ไว้ครั้งเดียวให้ this ยังเป็น component': '[action] takes the function itself: bind it once so this stays the component',
+  'คืน Promise หรือ Observable: ปุ่มแสดง spinner และกันกดซ้ำจนงานเสร็จ':
+    'return a Promise or an Observable: the button shows a spinner and ignores clicks until it is done',
+  "ตั้งครั้งเดียวที่ระดับแอป: locale 'th' มีในตัวแล้ว แก้เฉพาะคำที่อยากเปลี่ยน":
+    "set once for the whole app: the 'th' locale is built in, change only the words you want",
+  'ไม่พบข้อมูลที่ค้นหา': 'Nothing matches your search',
+  'ยอมรับเงื่อนไข': 'I accept the terms',
+  'โปรไฟล์': 'Profile',
+  'CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraTheme มีคลาสเหล่านี้คู่กับ wt-*':
+    "The app's existing CSS for these classes still works: WiraTheme templates carry them next to wt-*",
+  'ตัวแปรชื่อเดิมของธีมมีให้ครบ': "Every variable name of the old theme is there",
+  'ทางที่แนะนำต่อจากนี้: ตั้ง token ครั้งเดียว ไม่ต้องใช้ ::ng-deep / !important': 'From here on: set a token once, no ::ng-deep / !important',
+  'ตัวแปรชื่อเดิมมีให้ และค่าที่แอปตั้งเองก็ยังมีผล': 'The old variable names are there, and values the app sets still apply',
+};
+
+/** Theming → Presets: the preview card and the TypeScript sample. */
+export const PRESET_WORDS: SampleWords = {
+  ...GUIDE_WORDS,
+  'ข้อมูลบัญชี': 'Account details',
+  'สมชาย ใจดี': 'Alex Morgan',
+  'ยอมรับเงื่อนไข': 'I accept the terms',
+  'รับข่าวสาร': 'Get the newsletter',
+  'ลบบัญชี': 'Delete account',
+};

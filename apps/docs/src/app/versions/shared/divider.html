@@ -6,16 +6,16 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <p class="docs-demo-p">ส่วนบน</p>
+        <p class="docs-demo-p">{{ tx('ส่วนบน') }}</p>
         <wt-divider></wt-divider>
-        <p class="docs-demo-p">ส่วนล่าง</p>
+        <p class="docs-demo-p">{{ tx('ส่วนล่าง') }}</p>
       </docs-demo>
     </docs-section>
 
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']" layout="stack">
-        <wt-divider align="left"><b>ข้อมูลบัญชี</b></wt-divider>
-        <wt-divider align="center">หรือ</wt-divider>
+        <wt-divider align="left"><b>{{ tx('ข้อมูลบัญชี') }}</b></wt-divider>
+        <wt-divider align="center">{{ tx('หรือ') }}</wt-divider>
         <wt-divider align="right"><span class="pi pi-check"></span></wt-divider>
       </docs-demo>
     </docs-section>
@@ -30,11 +30,11 @@
     <docs-section id="vertical" [section]="sec['vertical']">
       <docs-demo [html]="code['vertical']" layout="stack">
         <div class="docs-divider-row">
-          <span>ซ้าย</span>
+          <span>{{ tx('ซ้าย') }}</span>
           <wt-divider layout="vertical"></wt-divider>
-          <span>กลาง</span>
-          <wt-divider layout="vertical" align="center">หรือ</wt-divider>
-          <span>ขวา</span>
+          <span>{{ tx('กลาง') }}</span>
+          <wt-divider layout="vertical" align="center">{{ tx('หรือ') }}</wt-divider>
+          <span>{{ tx('ขวา') }}</span>
         </div>
       </docs-demo>
     </docs-section>

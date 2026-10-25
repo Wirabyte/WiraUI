@@ -1,0 +1,55 @@
+<nav class="wt-steps p-steps p-component" [class.wt-steps-readonly]="readonly" [class.p-readonly]="readonly" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+  <ol class="wt-steps-list" (keydown)="keydown($event)">
+    <li
+      *ngFor="let item of items; let i = index; trackBy: trackIndex"
+      class="wt-steps-item p-steps-item"
+      [ngClass]="item.styleClass || ''"
+      [ngStyle]="item.style || null"
+      [class.wt-steps-item-active]="isActive(i)"
+      [class.p-highlight]="isActive(i)"
+      [class.p-steps-current]="isActive(i)"
+      [class.wt-steps-item-complete]="isComplete(i)"
+      [class.wt-steps-item-disabled]="item.disabled"
+      [class.p-disabled]="item.disabled"
+    >
+      <a
+        *ngIf="routed(item); else plain"
+        class="wt-steps-link p-menuitem-link"
+        [id]="itemId(i)"
+        [attr.data-wt-index]="i"
+        [attr.tabindex]="tabindexOf(i)"
+        [attr.aria-current]="isActive(i) ? 'step' : null"
+        [attr.title]="item.title || null"
+        [routerLink]="item.routerLink"
+        [queryParams]="item.queryParams"
+        [fragment]="item.fragment"
+        [replaceUrl]="!!item.replaceUrl"
+        [state]="item.state"
+        (click)="itemClick($event, item, i)"
+      >
+        <ng-container *ngTemplateOutlet="content; context: { $implicit: item, index: i }"></ng-container>
+      </a>
+      <ng-template #plain>
+        <a
+          class="wt-steps-link p-menuitem-link"
+          [id]="itemId(i)"
+          [attr.data-wt-index]="i"
+          [attr.href]="hrefOf(item)"
+          [attr.tabindex]="tabindexOf(i)"
+          [attr.role]="pickable(item) && !hrefOf(item) ? 'button' : null"
+          [attr.aria-current]="isActive(i) ? 'step' : null"
+          [attr.aria-disabled]="item.disabled || null"
+          [attr.title]="item.title || null"
+          (click)="itemClick($event, item, i)"
+        >
+          <ng-container *ngTemplateOutlet="content; context: { $implicit: item, index: i }"></ng-container>
+        </a>
+      </ng-template>
+    </li>
+  </ol>
+</nav>
+
+<ng-template #content let-item let-index="index">
+  <span class="wt-steps-number p-steps-number" aria-hidden="true">{{ index + 1 }}</span>
+  <span class="wt-steps-label p-steps-title">{{ item.label }}</span>
+</ng-template>

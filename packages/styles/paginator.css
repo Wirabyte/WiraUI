@@ -1,0 +1,95 @@
+/* wt-paginator. Shared by wiratheme v1, v2 and v3. Page report, page buttons and rows-per-page box; the parts wrap
+   onto new lines on narrow screens. */
+@layer wiratheme.components {
+  wt-paginator {
+    display: block;
+  }
+  .wt-paginator {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--wt-paginator-gap);
+    padding: var(--wt-paginator-padding);
+    border: var(--wt-paginator-border-width) solid var(--wt-border);
+    background: var(--wt-paginator-bg);
+    color: var(--wt-text);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-control-line-height);
+  }
+  .wt-paginator-nav,
+  .wt-paginator-pages {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--wt-paginator-gap);
+  }
+  .wt-paginator-btn {
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--wt-paginator-btn-size);
+    height: var(--wt-paginator-btn-size);
+    margin: 0;
+    padding: 0 0.25rem;
+    border: 0;
+    border-radius: var(--wt-paginator-btn-radius);
+    background: transparent;
+    color: var(--wt-paginator-btn-color);
+    font: inherit;
+    cursor: pointer;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-paginator-btn svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .wt-paginator-btn:not(:disabled):hover {
+    background: var(--wt-paginator-btn-hover-bg);
+    color: var(--wt-text);
+  }
+  .wt-paginator-btn:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-paginator-btn:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-paginator-page-selected,
+  .wt-paginator-page-selected:not(:disabled):hover {
+    background: var(--wt-paginator-btn-selected-bg);
+    color: var(--wt-paginator-btn-selected-color);
+  }
+  .wt-paginator-report {
+    color: var(--wt-paginator-report-color);
+    font-size: 0.875em;
+    white-space: nowrap;
+  }
+  .wt-paginator-start {
+    margin-right: auto;
+  }
+  .wt-paginator-end {
+    margin-left: auto;
+  }
+  wt-select.wt-paginator-rpp {
+    --wt-select-width: auto;
+    width: auto;
+  }
+  /* Phones: fewer, slightly smaller buttons fit on one line; the report sits on its own line. */
+  @media (max-width: 575.98px) {
+    .wt-paginator {
+      --wt-paginator-btn-size: 2.25rem;
+    }
+    .wt-paginator-report {
+      flex-basis: 100%;
+      text-align: center;
+    }
+    .wt-paginator-first,
+    .wt-paginator-last {
+      display: none;
+    }
+  }
+}

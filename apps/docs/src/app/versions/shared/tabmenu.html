@@ -1,0 +1,36 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-tabmenu id="d-tm-basic" [model]="local(items)" [(activeItem)]="activeItem" [ariaLabel]="tx('ข้อมูลโรงเรียน')"></wt-tabmenu>
+        <span class="docs-demo-output">activeItem: <code id="d-tm-active">{{ activeItem?.label ?? '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="commands" [section]="sec['commands']">
+      <docs-demo [html]="code['commands']" [ts]="ts['commands']" layout="stack">
+        <wt-tabmenu id="d-tm-commands" [model]="local(mailItems)" [(activeItem)]="mailTab" [ariaLabel]="tx('กล่องจดหมาย')"></wt-tabmenu>
+        <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-tm-command">{{ lastCommand || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="router" [section]="sec['router']">
+      <docs-demo [html]="code['router']" [ts]="ts['router']" layout="stack">
+        <wt-tabmenu id="d-tm-router" [model]="local(viewItems)" [ariaLabel]="tx('มุมมอง')"></wt-tabmenu>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="scroll" [section]="sec['scroll']">
+      <docs-demo [html]="code['scroll']" [ts]="ts['scroll']" layout="stack">
+        <wt-tabmenu id="d-tm-scroll" [model]="local(months)" [(activeItem)]="month" [scrollable]="true" [ariaLabel]="tx('เดือน')"></wt-tabmenu>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

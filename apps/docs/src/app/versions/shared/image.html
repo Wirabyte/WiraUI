@@ -1,0 +1,100 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']">
+        <wt-image
+          id="d-img-basic"
+          src="samples/school-thumb.svg"
+          [alt]="tx('อาคารเรียนของโรงเรียน')"
+          width="320"
+          height="200"
+          loading="lazy"
+          imageClass="docs-img-shadow"
+          [imageStyle]="{ 'border-radius': '12px' }"
+        ></wt-image>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="preview" [section]="sec['preview']">
+      <docs-demo [html]="code['preview']" [ts]="ts['preview']" layout="stack">
+        <div>
+          <wt-image
+            id="d-img-preview"
+            src="samples/school-thumb.svg"
+            [alt]="tx('อาคารเรียนของโรงเรียน')"
+            width="320"
+            [preview]="true"
+            (onShow)="logPreview('onShow')"
+            (onHide)="logPreview('onHide')"
+          ></wt-image>
+        </div>
+        <span class="docs-demo-output">
+          previewEvents: <code id="d-img-events">{{ previewEvents.length ? previewEvents.join(', ') : '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="large" [section]="sec['large']">
+      <docs-demo [html]="code['large']">
+        <wt-image
+          id="d-img-large"
+          src="samples/school-thumb.svg"
+          previewImageSrc="samples/school-large.svg"
+          [alt]="tx('อาคารเรียนของโรงเรียน')"
+          width="240"
+          [preview]="true"
+        ></wt-image>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="srcset" [section]="sec['srcset']">
+      <docs-demo [html]="code['srcset']">
+        <wt-image
+          id="d-img-srcset"
+          src="samples/school-thumb.svg"
+          srcSet="samples/school-thumb.svg 320w, samples/school-large.svg 1280w"
+          sizes="(min-width: 768px) 480px, 100vw"
+          [alt]="tx('อาคารเรียนของโรงเรียน')"
+          [preview]="true"
+        ></wt-image>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="preview"></docs-slot-note>
+      <docs-demo [html]="code['templates']">
+        <wt-image id="d-img-templates" src="samples/card-cover.svg" [alt]="tx('ทะเลสาบยามเย็น')" width="320" [preview]="true">
+          <ng-template #indicator>
+            <span class="docs-img-indicator"><i class="pi pi-search"></i> {{ tx('ดูภาพเต็ม') }}</span>
+          </ng-template>
+          <ng-template #preview let-src let-imgClass="class" let-imgStyle="style" let-previewCallback="previewCallback">
+            <img id="d-img-custom-preview" [src]="src" [class]="imgClass" [style]="imgStyle" [alt]="tx('ทะเลสาบยามเย็น')" (click)="previewCallback()" />
+          </ng-template>
+        </wt-image>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="error" [section]="sec['error']">
+      <docs-demo [html]="code['error']" [ts]="ts['error']">
+        <wt-image id="d-img-error" [preview]="true" (onImageError)="useStandIn()">
+          <ng-template #image let-errorCallback="errorCallback">
+            <img [src]="photoSrc" [alt]="tx('รูปนักเรียน')" width="160" height="160" (error)="errorCallback($event)" />
+          </ng-template>
+        </wt-image>
+        <div class="docs-demo-actions">
+          <span class="docs-demo-output">
+            onImageError: <code id="d-img-errors">{{ imageErrors }}</code> · photoSrc: <code id="d-img-src">{{ photoSrc }}</code>
+          </span>
+          <wt-button id="d-img-retry" [label]="tx('ลองอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="retryPhoto()"></wt-button>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>
