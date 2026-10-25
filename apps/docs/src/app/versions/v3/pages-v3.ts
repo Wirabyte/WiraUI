@@ -54,7 +54,36 @@ import {
   MultiSelectDemo,
   InputMaskDemo,
   TimelineDemo,
+  PickListDemo,
+  OrderListDemo,
+  FileUploadDemo,
+  StepperDemo,
+  EditorDemo,
+  RippleDemo,
+  KeyFilterDemo,
 } from '../shared/demos';
+import {
+  SliderDemo,
+  SplitButtonDemo,
+  ListboxDemo,
+  GalleriaDemo,
+  ColorPickerDemo,
+  BreadcrumbDemo,
+  InplaceDemo,
+  BlockUIDemo,
+  ScrollPanelDemo,
+  ScrollerDemo,
+  DrawerDemo,
+  TieredMenuDemo,
+  ContextMenuDemo,
+  TreeDemo,
+  TreeSelectDemo,
+  DragDropDemo,
+} from '../shared/demos-more';
+import { StudioDemo } from '../shared/studio';
+import { NavbarDemo } from '../shared/demos-layout';
+import { AsideMenuDemo } from '../shared/demos-aside';
+import { ImageCropperDemo } from '../shared/demos-cropper';
 
 // Shared templates compiled against wiratheme@3 components (DocsV3Module imports the v1 modules).
 
@@ -219,3 +248,84 @@ export class InputMaskPageV3 extends InputMaskDemo {}
 
 @Component({ selector: 'docs-timeline-v3', templateUrl: '../shared/timeline.html', standalone: false })
 export class TimelinePageV3 extends TimelineDemo {}
+
+@Component({ selector: 'docs-picklist-v3', templateUrl: '../shared/picklist.html', standalone: false })
+export class PickListPageV3 extends PickListDemo {}
+
+@Component({ selector: 'docs-orderlist-v3', templateUrl: '../shared/orderlist.html', standalone: false })
+export class OrderListPageV3 extends OrderListDemo {}
+
+@Component({ selector: 'docs-fileupload-v3', templateUrl: '../shared/fileupload.html', standalone: false })
+export class FileUploadPageV3 extends FileUploadDemo {}
+
+@Component({ selector: 'docs-stepper-v3', templateUrl: '../shared/stepper.html', standalone: false })
+export class StepperPageV3 extends StepperDemo {}
+
+@Component({ selector: 'docs-editor-v3', templateUrl: '../shared/editor.html', standalone: false })
+export class EditorPageV3 extends EditorDemo {}
+
+@Component({ selector: 'docs-ripple-v3', templateUrl: '../shared/ripple.html', standalone: false })
+export class RipplePageV3 extends RippleDemo {}
+
+@Component({ selector: 'docs-keyfilter-v3', templateUrl: '../shared/keyfilter.html', standalone: false })
+export class KeyFilterPageV3 extends KeyFilterDemo {}
+
+@Component({ selector: 'docs-slider-v3', templateUrl: '../shared/slider.html', standalone: false })
+export class SliderPageV3 extends SliderDemo {}
+
+@Component({ selector: 'docs-splitbutton-v3', templateUrl: '../shared/splitbutton.html', standalone: false })
+export class SplitButtonPageV3 extends SplitButtonDemo {}
+
+@Component({ selector: 'docs-listbox-v3', templateUrl: '../shared/listbox.html', standalone: false })
+export class ListboxPageV3 extends ListboxDemo {}
+
+@Component({ selector: 'docs-galleria-v3', templateUrl: '../shared/galleria.html', standalone: false })
+export class GalleriaPageV3 extends GalleriaDemo {}
+
+@Component({ selector: 'docs-colorpicker-v3', templateUrl: '../shared/colorpicker.html', standalone: false })
+export class ColorPickerPageV3 extends ColorPickerDemo {}
+
+@Component({ selector: 'docs-breadcrumb-v3', templateUrl: '../shared/breadcrumb.html', standalone: false })
+export class BreadcrumbPageV3 extends BreadcrumbDemo {}
+
+@Component({ selector: 'docs-inplace-v3', templateUrl: '../shared/inplace.html', standalone: false })
+export class InplacePageV3 extends InplaceDemo {}
+
+@Component({ selector: 'docs-blockui-v3', templateUrl: '../shared/blockui.html', standalone: false })
+export class BlockUIPageV3 extends BlockUIDemo {}
+
+@Component({ selector: 'docs-scrollpanel-v3', templateUrl: '../shared/scrollpanel.html', standalone: false })
+export class ScrollPanelPageV3 extends ScrollPanelDemo {}
+
+@Component({ selector: 'docs-scroller-v3', templateUrl: '../shared/scroller.html', standalone: false })
+export class ScrollerPageV3 extends ScrollerDemo {}
+
+@Component({ selector: 'docs-drawer-v3', templateUrl: '../shared/drawer.html', standalone: false })
+export class DrawerPageV3 extends DrawerDemo {}
+
+@Component({ selector: 'docs-tieredmenu-v3', templateUrl: '../shared/tieredmenu.html', standalone: false })
+export class TieredMenuPageV3 extends TieredMenuDemo {}
+
+@Component({ selector: 'docs-contextmenu-v3', templateUrl: '../shared/contextmenu.html', standalone: false })
+export class ContextMenuPageV3 extends ContextMenuDemo {}
+
+@Component({ selector: 'docs-tree-v3', templateUrl: '../shared/tree.html', standalone: false })
+export class TreePageV3 extends TreeDemo {}
+
+@Component({ selector: 'docs-treeselect-v3', templateUrl: '../shared/treeselect.html', standalone: false })
+export class TreeSelectPageV3 extends TreeSelectDemo {}
+
+@Component({ selector: 'docs-dragdrop-v3', templateUrl: '../shared/dragdrop.html', standalone: false })
+export class DragDropPageV3 extends DragDropDemo {}
+
+@Component({ selector: 'docs-studio-v3', templateUrl: '../shared/studio.html', standalone: false })
+export class StudioPageV3 extends StudioDemo {}
+
+@Component({ selector: 'docs-navbar-v3', templateUrl: '../shared/navbar.html', standalone: false })
+export class NavbarPageV3 extends NavbarDemo {}
+
+@Component({ selector: 'docs-asidemenu-v3', templateUrl: '../shared/asidemenu.html', standalone: false })
+export class AsideMenuPageV3 extends AsideMenuDemo {}
+
+@Component({ selector: 'docs-imagecropper-v3', templateUrl: '../shared/imagecropper.html', standalone: false })
+export class ImageCropperPageV3 extends ImageCropperDemo {}

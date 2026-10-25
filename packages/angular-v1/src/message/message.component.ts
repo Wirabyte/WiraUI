@@ -31,6 +31,10 @@ import { WtMessageSeverity, WtMessageSize, WtMessageVariant } from './message.ty
 export class WtMessage implements OnInit, OnDestroy {
   @Input() severity: WtMessageSeverity = 'info';
   @Input() text?: string;
+  /** `[escape]="false"` shows `text` as HTML (sanitised by Angular). Default true. */
+  @Input() set escape(v: unknown) { this._escape = v === undefined || ɵtoBool(v); }
+  get escape(): boolean { return this._escape; }
+  private _escape = true;
   /** Icon class instead of the built-in icon, e.g. `pi pi-bell`. */
   @Input() icon?: string;
   @Input() set closable(v: unknown) { this._closable = ɵtoBool(v); }
@@ -73,7 +77,20 @@ export class WtMessage implements OnInit, OnDestroy {
   }
 
   /** Our classes plus the classic-era names: the inline message, with danger spelt error. */
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
     const sev = this.sev;
     const c = ['wt-message', 'p-inline-message', 'p-component', 'wt-message-' + sev, 'p-inline-message-' + (sev === 'danger' ? 'error' : sev)];
     if (this.size === 'small') c.push('wt-message-sm');

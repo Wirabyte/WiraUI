@@ -14,3 +14,12 @@ export const importText = {
 export const SEVERITY_TYPE = `type WtSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'help' | 'contrast';
 // 'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')
 type WtSeverityInput = WtSeverity | 'warning' | 'error' | null | undefined;`;
+
+/** The `styleClass` / `style` pair every component takes (style is an object with unquoted keys). */
+export const STYLE_ROW = row(
+  'styleClass · style',
+  'string · object',
+  undefined,
+  "class และ style เพิ่มที่ element นอกสุดของ component (style เป็น object เช่น { width: '20rem' })",
+  "Extra class and style on the component's outer element (style is an object, e.g. { width: '20rem' })"
+);

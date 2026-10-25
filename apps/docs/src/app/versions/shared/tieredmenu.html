@@ -1,0 +1,52 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-tieredMenu id="d-tm-basic" [model]="local(items)" [ariaLabel]="tx('เมนูเอกสาร')"></wt-tieredMenu>
+        <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-tm-command">{{ lastCommand || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="popup" [section]="sec['popup']">
+      <docs-demo [html]="code['popup']" [ts]="ts['basic']">
+        <wt-button id="d-tm-open" [label]="tx('จัดการ')" icon="pi pi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
+        <wt-tieredMenu
+          #manageMenu
+          id="d-tm-popup"
+          [model]="local(items)"
+          [popup]="true"
+          [ariaLabel]="tx('เมนูเอกสาร')"
+          (onShow)="logMenu('onShow')"
+          (onHide)="logMenu('onHide')"
+        ></wt-tieredMenu>
+        <span class="docs-demo-output">
+          {{ tx('สั่งล่าสุด') }}: <code id="d-tm-popup-command">{{ lastCommand || '-' }}</code> · event: <code id="d-tm-events">{{ menuEvents.join(' · ') || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['templates']" [ts]="ts['basic']">
+        <wt-tieredMenu id="d-tm-tpl" [model]="local(items)" [ariaLabel]="tx('เมนูเอกสาร')">
+          <ng-template #item let-item let-hasSubmenu="hasSubmenu">
+            <i [class]="item.icon"></i>
+            <span class="docs-tm-label">{{ item.label }}</span>
+            @if (hasSubmenu) {
+              <small class="docs-tm-count">{{ item.items.length }}</small>
+            }
+          </ng-template>
+          <ng-template #submenuicon>
+            <i class="pi pi-chevron-right docs-tm-arrow"></i>
+          </ng-template>
+        </wt-tieredMenu>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

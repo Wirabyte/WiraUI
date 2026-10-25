@@ -42,6 +42,19 @@
         <wt-multiselect id="d-ms-chips" [(ngModel)]="chipIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" display="chip" [placeholder]="tx('เลือกจังหวัด')"></wt-multiselect>
         <span class="docs-demo-output">value: <code id="d-ms-chips-value">{{ chipIds | json }}</code></span>
       </docs-demo>
+      <docs-demo [html]="code['chipsNarrow']" [ts]="ts['chipsNarrow']">
+        <wt-multiselect
+          id="d-ms-chips-narrow"
+          [(ngModel)]="narrowChipIds"
+          [options]="local(provinces)"
+          [optionLabel]="tx('name_th')"
+          optionValue="id"
+          display="chip"
+          [maxSelectedLabels]="5"
+          [style]="{ width: '14rem', maxWidth: '100%' }"
+        ></wt-multiselect>
+        <span class="docs-demo-output">value: <code id="d-ms-chips-narrow-value">{{ narrowChipIds | json }}</code></span>
+      </docs-demo>
     </docs-section>
 
     <docs-section id="limit" [section]="sec['limit']">

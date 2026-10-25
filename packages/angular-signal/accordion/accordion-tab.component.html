@@ -10,11 +10,22 @@
     (keydown)="onKeydown($event)"
   >
     <svg class="wt-accordion-toggle-icon p-accordionheader-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
-    <span class="wt-accordion-header-text">{{ header() }}</span>
+    <span class="wt-accordion-header-text">
+      @if (headerTemplate(); as t) {
+        <ng-container *ngTemplateOutlet="t"></ng-container>
+      } @else {
+        {{ header() }}
+      }
+    </span>
   </button>
   <div class="wt-accordion-content-container p-accordioncontent" [id]="contentId" role="region" [attr.aria-labelledby]="headerId" [attr.inert]="active() ? null : ''">
     <div class="wt-accordion-content-inner">
-      <div class="wt-accordion-content p-accordioncontent-content"><ng-content></ng-content></div>
+      <div class="wt-accordion-content p-accordioncontent-content">
+        <ng-content></ng-content>
+        @if (contentTemplate() && active()) {
+          <ng-container *ngTemplateOutlet="contentTemplate()"></ng-container>
+        }
+      </div>
     </div>
   </div>
 </div>

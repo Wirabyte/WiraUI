@@ -132,7 +132,8 @@
   }
 
   <main class="docs-main" id="docs-main">
-    <article class="docs-article">
+    <!-- WiraTheme Studio needs the width for its editor and preview side by side. -->
+    <article class="docs-article" [class.docs-article-wide]="path() === 'theming/studio'">
       <router-outlet></router-outlet>
     </article>
 

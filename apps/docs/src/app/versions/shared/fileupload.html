@@ -1,0 +1,106 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-fileupload
+          #fileUpload
+          id="d-fu-basic"
+          name="documents"
+          [multiple]="true"
+          accept="image/*,application/pdf"
+          [maxFileSize]="10485760"
+          [chooseLabel]="tx('เลือกไฟล์')"
+          [uploadLabel]="tx('อัปโหลด')"
+          [cancelLabel]="tx('ยกเลิก')"
+          [customUpload]="true"
+          [disabled]="isApiSaving"
+          (uploadHandler)="uploadDocuments($event, fileUpload)"
+        ></wt-fileupload>
+        <span class="docs-demo-output">{{ tx('ไฟล์ที่ส่งแล้ว') }}: <code id="d-fu-sent">{{ uploadedCount }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="validation" [section]="sec['validation']">
+      <docs-demo [html]="code['validation']" [ts]="ts['validation']" layout="stack">
+        <wt-fileupload
+          id="d-fu-check"
+          name="scores"
+          accept=".xlsx,.xls"
+          [maxFileSize]="1048576"
+          [fileLimit]="3"
+          [multiple]="true"
+          [chooseLabel]="tx('เลือกไฟล์คะแนน')"
+          [cancelLabel]="tx('ล้าง')"
+          [showUploadButton]="false"
+          (onSelect)="picked($event)"
+          (onValidationFail)="rejected($event)"
+        ></wt-fileupload>
+        <span class="docs-demo-output">
+          onSelect: <code id="d-fu-picked">{{ lastPicked || '-' }}</code> · onValidationFail: <code id="d-fu-problem">{{ lastProblem || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="basicmode" [section]="sec['basicmode']">
+      <docs-demo [html]="code['basicmode']" [ts]="ts['basicmode']" layout="stack">
+        <wt-fileupload
+          id="d-fu-single"
+          mode="basic"
+          name="photo"
+          accept="image/*"
+          [maxFileSize]="2097152"
+          [chooseLabel]="tx('เลือกรูปนักเรียน')"
+          (onSelect)="pickPhoto($event)"
+          (onClear)="clearPhoto()"
+        ></wt-fileupload>
+        <span class="docs-demo-output">photo: <code id="d-fu-photo">{{ photo?.name ?? 'null' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="empty"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-fileupload
+          #attachments
+          id="d-fu-tpl"
+          name="attachments"
+          [multiple]="true"
+          accept="image/*,application/pdf"
+          [maxFileSize]="10485760"
+          [chooseLabel]="tx('แนบไฟล์')"
+          [cancelLabel]="tx('ล้างทั้งหมด')"
+          [showUploadButton]="false"
+        >
+          <ng-template #toolbar>
+            <small class="docs-pl-meta">{{ tx('PDF หรือรูป ไม่เกิน 10 MB') }}</small>
+          </ng-template>
+          <ng-template #file let-file let-i="index">
+            <div class="docs-fu-row">
+              <i class="pi pi-file"></i>
+              <span class="docs-fu-name">{{ file.name }}</span>
+              <wt-button icon="pi pi-times" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('นำออก')" (onClick)="attachments.remove($event, i)"></wt-button>
+            </div>
+          </ng-template>
+          <ng-template #empty>
+            <div class="docs-fu-empty">
+              <i class="pi pi-upload"></i>
+              <p>{{ tx('ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่') }}</p>
+            </div>
+          </ng-template>
+        </wt-fileupload>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="server" [section]="sec['server']">
+      <docs-code [code]="$any(code['server'])" lang="html"></docs-code>
+      <docs-code [code]="$any(ts['server'])" lang="ts"></docs-code>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

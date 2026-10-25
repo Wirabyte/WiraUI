@@ -1,4 +1,4 @@
-<label class="wt-toggleswitch" [class.wt-toggleswitch-checked]="checked" [class.wt-toggleswitch-disabled]="isDisabled" [class.wt-invalid]="invalid">
+<label class="wt-toggleswitch" [class]="styleClass || ''" [style]="rootStyle" [class.wt-toggleswitch-checked]="checked" [class.wt-toggleswitch-disabled]="isDisabled" [class.wt-invalid]="invalid">
   <input
     type="checkbox"
     role="switch"

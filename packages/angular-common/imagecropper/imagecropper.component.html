@@ -1,0 +1,119 @@
+<div
+  class="wt-imagecropper"
+  [class.wt-imagecropper-ready]="shown"
+  [class.wt-imagecropper-empty]="!ready"
+  [class.wt-imagecropper-loading]="loading"
+  [class.wt-imagecropper-failed]="failed"
+  [class.wt-imagecropper-disabled]="disabled"
+  [class.wt-imagecropper-round]="roundCropper"
+  [class.wt-imagecropper-dragging]="dragging"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+  role="group"
+  [attr.aria-label]="ariaLabel || t.imageCropper"
+  [attr.aria-busy]="loading || null"
+>
+  <div #viewport class="wt-imagecropper-viewport">
+    <div #frame class="wt-imagecropper-frame">
+      <div
+        #stage
+        class="wt-imagecropper-stage"
+        [class.wt-imagecropper-pannable]="shown && canZoomOut && !disabled"
+        [class.wt-imagecropper-panning]="panning"
+        [style.visibility]="shown ? null : 'hidden'"
+        [style.left.px]="stageX"
+        [style.top.px]="stageY"
+        [style.width.px]="stageW"
+        [style.height.px]="stageH"
+        (pointerdown)="pointerDown($event)"
+      >
+        <canvas
+          #canvas
+          class="wt-imagecropper-canvas"
+          [attr.role]="imageAltText ? 'img' : null"
+          [attr.aria-label]="imageAltText || null"
+          [attr.aria-hidden]="imageAltText ? null : 'true'"
+        ></canvas>
+        <div *ngIf="shown" class="wt-imagecropper-shade" aria-hidden="true">
+          <div class="wt-imagecropper-hole" [style.left.px]="boxX" [style.top.px]="boxY" [style.width.px]="boxW" [style.height.px]="boxH"></div>
+        </div>
+        <div
+          *ngIf="shown"
+          #box
+          class="wt-imagecropper-box"
+          role="group"
+          [attr.tabindex]="disabled ? null : 0"
+          [attr.aria-label]="boxLabel"
+          [attr.aria-describedby]="hintId"
+          [attr.aria-disabled]="disabled || null"
+          [style.left.px]="boxX"
+          [style.top.px]="boxY"
+          [style.width.px]="boxW"
+          [style.height.px]="boxH"
+          (keydown)="boxKey($event)"
+        >
+          <span class="wt-imagecropper-grid" aria-hidden="true"></span>
+          <ng-container *ngIf="resizable">
+            <span *ngFor="let e of edges" [class]="'wt-imagecropper-edge wt-imagecropper-edge-' + e" [attr.data-handle]="e" aria-hidden="true"></span>
+            <span
+              *ngFor="let h of squares"
+              [class]="'wt-imagecropper-handle wt-imagecropper-handle-' + h + (hideResizeSquares ? ' wt-imagecropper-handle-hidden' : '')"
+              [attr.data-handle]="h"
+              aria-hidden="true"
+            ></span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <span [id]="hintId" class="wt-imagecropper-hint">{{ t.cropAreaHint }}</span>
+    <div *ngIf="!ready" class="wt-imagecropper-status" [attr.role]="failed && !loading ? 'alert' : null">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <circle cx="8.5" cy="9.5" r="1.5"></circle>
+        <path d="m21 16-5-5-9 9"></path>
+      </svg>
+      <span *ngIf="loading">{{ t.loading }}</span>
+      <span *ngIf="failed && !loading">{{ t.imageLoadFailed }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="showToolbar && ready" class="wt-imagecropper-toolbar" role="toolbar" [attr.aria-label]="ariaLabel || t.imageCropper">
+    <div class="wt-imagecropper-group wt-imagecropper-group-zoom">
+      <button type="button" [class]="buttonClass('wt-imagecropper-zoom-out')" [disabled]="disabled || !canZoomOut" [attr.aria-label]="t.zoomOut" [attr.title]="t.zoomOut" (click)="zoomOut()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20.5 20.5 16 16"></path></svg>
+      </button>
+      <input
+        type="range"
+        class="wt-imagecropper-zoom"
+        min="0"
+        max="100"
+        step="1"
+        [value]="zoomSlider"
+        [disabled]="disabled"
+        [attr.aria-label]="t.zoom"
+        [attr.aria-valuetext]="zoomPercent + '%'"
+        (input)="zoomSliderInput($event)"
+      />
+      <button type="button" [class]="buttonClass('wt-imagecropper-zoom-in')" [disabled]="disabled || !canZoomIn" [attr.aria-label]="t.zoomIn" [attr.title]="t.zoomIn" (click)="zoomIn()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M11 8v6M20.5 20.5 16 16"></path></svg>
+      </button>
+    </div>
+    <div class="wt-imagecropper-group">
+      <button type="button" [class]="buttonClass('wt-imagecropper-rotate-left')" [disabled]="disabled" [attr.aria-label]="t.rotateLeft" [attr.title]="t.rotateLeft" (click)="rotateLeft()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M4 10a8 8 0 1 1 1.7 7"></path></svg>
+      </button>
+      <button type="button" [class]="buttonClass('wt-imagecropper-rotate-right')" [disabled]="disabled" [attr.aria-label]="t.rotateRight" [attr.title]="t.rotateRight" (click)="rotateRight()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v6h-6"></path><path d="M20 10A8 8 0 1 0 18.3 17"></path></svg>
+      </button>
+      <button type="button" [class]="buttonClass('wt-imagecropper-flip-h')" [disabled]="disabled" [attr.aria-label]="t.flipHorizontal" [attr.title]="t.flipHorizontal" (click)="flipHorizontal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18" stroke-dasharray="2 2.5"></path><path d="M9 7 4 17h5z"></path><path d="M15 7l5 10h-5z"></path></svg>
+      </button>
+      <button type="button" [class]="buttonClass('wt-imagecropper-flip-v')" [disabled]="disabled" [attr.aria-label]="t.flipVertical" [attr.title]="t.flipVertical" (click)="flipVertical()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="2 2.5"></path><path d="M7 9 17 4v5z"></path><path d="M7 15l10 5v-5z"></path></svg>
+      </button>
+      <button type="button" [class]="buttonClass('wt-imagecropper-reset')" [disabled]="disabled" [attr.aria-label]="t.resetCrop" [attr.title]="t.resetCrop" (click)="reset()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v5h5"></path></svg>
+      </button>
+    </div>
+  </div>
+</div>

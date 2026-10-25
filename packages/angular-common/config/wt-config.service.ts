@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Injectable, inject } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { CalendarSystem, EN_LOCALE, TH_LOCALE, WtLocale } from 'wiratheme/core';
-import { WT_OPTIONS } from './options';
+import { WT_OPTIONS, WtDelays } from './options';
 
 /** App-wide settings components read. Shaped like the config service apps already know, so migrating code stays familiar. */
 @Injectable({ providedIn: 'root' })
@@ -11,6 +11,11 @@ export class WtConfig {
   ripple = this.options.ripple ?? this.options.preset?.config.ripple ?? false;
   calendar: CalendarSystem = this.options.calendar ?? 'buddhist';
   translation: WtLocale = resolveLocale(this.options.locale);
+  /** Waits before searching, in ms (`provideWiraTheme({ delays })`); 0 = no wait. */
+  delays: Required<WtDelays> = {
+    autoComplete: Math.max(0, Number(this.options.delays?.autoComplete) || 0),
+    filter: Math.max(0, Number(this.options.delays?.filter) || 0),
+  };
 
   /** Emits after `setTranslation()` so components can refresh their labels. */
   readonly translationChange = new Subject<WtLocale>();

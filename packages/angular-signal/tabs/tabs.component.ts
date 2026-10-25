@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
   booleanAttribute,
@@ -15,10 +16,12 @@ import {
   model,
   output,
   signal,
+  TemplateRef,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtMenuItem, WtTemplate } from 'wiratheme/config';
+import { WtTabMenu } from './tabmenu.component';
 import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WtTabsChangeEvent, WtTabValue } from './tabs.types';
 
 /**
@@ -27,12 +30,15 @@ import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WtTabsChangeE
  *   (`wt-tabview` / `wt-tabpanel` are the same components);
  * - by value: `<wt-tabs [(value)]="tab"><wt-tablist><wt-tab value="info">ข้อมูล</wt-tab></wt-tablist>
  *   <wt-tabpanels><wt-tabpanel value="info">…</wt-tabpanel></wt-tabpanels></wt-tabs>`.
+ * - from a menu model, as links to views or routes: `<wt-tabs [model]="pages" [(activeItem)]="page">` (items take
+ *   `routerLink`, `url`, `command`, `icon`, `badge`, `disabled`; the same as wt-tabmenu).
  * Arrow keys, Home and End move between tabs. A row that runs out of room scrolls sideways, with arrow
  * buttons at the edges that have more tabs behind them.
  */
 @Component({
   selector: 'wt-tabs, wt-tabview, wt-tabView',
   standalone: true,
+  imports: [NgTemplateOutlet, WtTabMenu],
   templateUrl: './tabs.component.html',
   styleUrl: './tabs.css',
   encapsulation: ViewEncapsulation.None,
@@ -47,7 +53,22 @@ export class WtTabs {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly value = model<any>(undefined);
+  /** Tabs as links from a menu model (no panels): `[model]="pages"` + `[(activeItem)]`, like wt-tabmenu. */
+  readonly model = input<WtMenuItem[] | null | undefined>();
+  /** With `[model]`: the current item. Two-way: `[(activeItem)]`. Unset with router links: the active route. */
+  readonly activeItem = model<WtMenuItem | null | undefined>(undefined);
   readonly ariaLabel = input<string>();
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
   /** Accepted for templates written for scrollable tab views: the arrows appear on their own whenever tabs overflow. */
   readonly scrollable = input<unknown>();
   /** Accepted for templates moving over: panels are always rendered, hidden ones with `hidden`. */
@@ -287,6 +308,9 @@ export class WtTabPanels {}
   },
 })
 export class WtTabPanel {
+  private readonly slotTemplates = contentChildren(WtTemplate);
+  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
   readonly header = input<string>();
   /** Icon class before the header, e.g. `pi pi-user`. */
   readonly leftIcon = input<string>();

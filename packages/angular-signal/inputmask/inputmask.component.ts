@@ -8,7 +8,7 @@ import { ɵWtInputMaskBase } from './inputmask.base';
  * The mask types its literals for the user; `(onComplete)` fires once every slot is filled.
  */
 @Component({
-  selector: 'wt-inputmask, wt-inputMask',
+  selector: 'wt-inputmask, wt-inputMask, wt-input-mask',
   standalone: true,
   imports: [NgClass, NgStyle],
   templateUrl: './inputmask.component.html',

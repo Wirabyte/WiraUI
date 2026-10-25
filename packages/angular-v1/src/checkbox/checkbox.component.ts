@@ -20,7 +20,7 @@ import { WtCheckboxChangeEvent } from './checkbox.types';
  * `binary` (the model is `trueValue` / `falseValue`) or a group (the model is an array and `value` is added or removed).
  */
 @Component({
-  selector: 'wt-checkbox',
+  selector: 'wt-checkbox, wt-checkBox, wt-check-box',
   standalone: true,
   imports: [NgIf],
   templateUrl: './checkbox.component.html',
@@ -37,6 +37,16 @@ export class WtCheckbox implements ControlValueAccessor {
   @Input() trueValue: unknown = true;
   @Input() falseValue: unknown = false;
   @Input() ariaLabel?: string;
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() set binary(v: unknown) { this._binary = ɵtoBool(v); }
   get binary(): boolean { return this._binary; }
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }

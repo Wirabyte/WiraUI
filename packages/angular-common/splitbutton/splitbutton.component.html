@@ -1,0 +1,22 @@
+<div class="wt-splitbutton p-splitbutton p-component" [class.wt-splitbutton-disabled]="disabled" [class]="styleClass || ''" [style]="rootStyle" (keydown)="keydown($event)">
+  <button type="button" [class]="mainClass" [disabled]="disabled || buttonDisabled" [attr.aria-label]="ariaLabel || null" (click)="mainClick($event)">
+    <span *ngIf="icon && iconPos === 'left'" [class]="'wt-btn-icon p-button-icon p-button-icon-left ' + icon" aria-hidden="true"></span>
+    <span *ngIf="label" class="wt-btn-label p-button-label">{{ label }}</span>
+    <span *ngIf="icon && iconPos === 'right'" [class]="'wt-btn-icon p-button-icon p-button-icon-right ' + icon" aria-hidden="true"></span>
+  </button>
+  <button
+    type="button"
+    [class]="dropdownClass"
+    [disabled]="disabled || menuButtonDisabled"
+    aria-haspopup="menu"
+    [attr.aria-expanded]="menuOpen"
+    [attr.aria-label]="expandLabel"
+    (click)="dropdownClick($event)"
+  >
+    <span *ngIf="dropdownIcon; else chevron" [class]="'wt-btn-icon ' + dropdownIcon" aria-hidden="true"></span>
+    <ng-template #chevron>
+      <svg class="wt-splitbutton-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path></svg>
+    </ng-template>
+  </button>
+  <wt-menu #menu [model]="model" [popup]="true" [styleClass]="menuStyleClass || ''" [style]="menuStyle || null" (onShow)="shown()" (onHide)="hidden()"></wt-menu>
+</div>

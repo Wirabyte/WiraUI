@@ -8,7 +8,7 @@ import { ɵWtAutoCompleteBase } from './autocomplete.base';
  * optionLabel="name">`. The list opens in the top layer; looks and themes like wt-select.
  */
 @Component({
-  selector: 'wt-autocomplete, wt-autoComplete',
+  selector: 'wt-autocomplete, wt-autoComplete, wt-auto-complete',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './autocomplete.component.html',

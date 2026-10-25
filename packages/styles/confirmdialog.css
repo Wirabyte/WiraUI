@@ -1,7 +1,7 @@
 /* wt-confirmdialog. Shared by wiratheme v1, v2 and v3. A question in a wt-dialog: an icon beside the message and
    reject / accept buttons in the footer. On phones the buttons share the row. */
 @layer wiratheme.components {
-  wt-confirmdialog {
+  :is(wt-confirmdialog, wt-confirm-dialog) {
     display: contents;
   }
   /* A comfortable default; a width the app sets in [style] wins. */

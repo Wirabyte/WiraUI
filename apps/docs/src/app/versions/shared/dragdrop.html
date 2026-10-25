@@ -1,0 +1,61 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div class="docs-dd-lists">
+          <ul id="d-dd-source" class="docs-dd-box">
+            <li class="docs-dd-title">{{ tx('นักเรียนที่ยังไม่มีชุมนุม') }}</li>
+            @for (s of available; track s.id) {
+              <li class="docs-dd-item" wtDraggable="students" dragEffect="move" (onDragStart)="dragStart(s)" (onDragEnd)="dragEnd()">{{ s.name }}</li>
+            }
+          </ul>
+          <ul id="d-dd-club" class="docs-dd-box" wtDroppable="students" dropEffect="move" (onDrop)="dropToClub()">
+            <li class="docs-dd-title">{{ tx('ชุมนุมหุ่นยนต์') }}</li>
+            @for (s of members; track s.id) {
+              <li class="docs-dd-item docs-dd-member">{{ s.name }}</li>
+            } @empty {
+              <li class="docs-dd-hint">{{ tx('ลากชื่อมาวางที่นี่') }}</li>
+            }
+          </ul>
+        </div>
+        <span class="docs-demo-output">onDragStart: <code id="d-dd-starts">{{ dragStarts }}</code> · {{ tx('สมาชิก') }}: <code id="d-dd-members">{{ members.length }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="scope" [section]="sec['scope']">
+      <docs-demo [html]="code['scope']" [ts]="ts['scope']" layout="stack">
+        <div class="docs-demo-actions">
+          <span id="d-dd-teacher-1" class="docs-dd-chip" wtDraggable="teachers" (onDragStart)="dragTeacher(tx('ครูวิชัย'))">{{ tx('ครูวิชัย') }}</span>
+          <span id="d-dd-teacher-2" class="docs-dd-chip" wtDraggable="teachers" (onDragStart)="dragTeacher(tx('ครูหลิน'))">{{ tx('ครูหลิน') }}</span>
+        </div>
+        <div class="docs-dd-slots">
+          <div id="d-dd-adviser" class="docs-dd-slot" wtDroppable="teachers" (onDrop)="setAdviser()">
+            {{ tx('ครูที่ปรึกษา') }}: <b id="d-dd-adviser-name">{{ adviser || tx('วางครูเท่านั้น') }}</b>
+          </div>
+          <div id="d-dd-students-only" class="docs-dd-slot" wtDroppable="students">{{ tx('วางนักเรียนเท่านั้น') }}</div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="handle" [section]="sec['handle']">
+      <docs-demo [html]="code['handle']" [ts]="ts['handle']" layout="stack">
+        <ol id="d-dd-order" class="docs-dd-order">
+          @for (g of groups; track g; let i = $index) {
+            <li wtDroppable="order" (onDrop)="dropAt(i)">
+              <span class="docs-dd-order-item" wtDraggable="order" dragHandle=".docs-dd-handle" [wtDraggableDisabled]="orderLocked" (onDragStart)="dragFrom(i)">
+                <i class="pi pi-bars docs-dd-handle"></i> <span class="docs-dd-group">{{ g }}</span>
+              </span>
+            </li>
+          }
+        </ol>
+        <wt-toggleswitch id="d-dd-lock" name="orderLocked" [(ngModel)]="orderLocked" [label]="tx('ล็อกลำดับ')"></wt-toggleswitch>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

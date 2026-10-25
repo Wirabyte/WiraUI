@@ -16,5 +16,14 @@
         </wt-iconfield>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="position" [section]="sec['position']">
+      <docs-demo [html]="code['position']">
+        <wt-iconfield id="d-iconfield-right" iconPosition="right">
+          <wt-inputicon icon="pi pi-search"></wt-inputicon>
+          <input wtInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
+        </wt-iconfield>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

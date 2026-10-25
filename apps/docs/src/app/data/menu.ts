@@ -399,8 +399,8 @@ export const TABMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTabMenuModule</code>) และ standalone (<code>WtTabMenu</code>) selector <code>wt-tabmenu</code> หรือ <code>wt-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code> แถวแท็บใช้ stylesheet และ token ของ wt-tabs',
-        en: 'Works as an NgModule (<code>WtTabMenuModule</code>) or standalone (<code>WtTabMenu</code>), as <code>wt-tabmenu</code> or <code>wt-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>wiratheme/api</code>. The tab row uses the wt-tabs stylesheet and tokens.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WtTabMenuModule</code>) และ standalone (<code>WtTabMenu</code>) selector <code>wt-tabmenu</code> หรือ <code>wt-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code> แถวแท็บใช้ stylesheet และ token ของ wt-tabs · <code>&lt;wt-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> คือ component เดียวกันนี้ (ดูหน้า Tabs) ตอนนี้ wt-tabmenu อยู่ใน <code>wiratheme/tabs</code> ส่วน import จาก <code>wiratheme/tabmenu</code> ยังใช้ได้เหมือนเดิม',
+        en: 'Works as an NgModule (<code>WtTabMenuModule</code>) or standalone (<code>WtTabMenu</code>), as <code>wt-tabmenu</code> or <code>wt-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>wiratheme/api</code>. The tab row uses the wt-tabs stylesheet and tokens · <code>&lt;wt-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> is this same component (see the Tabs page): wt-tabmenu now lives in <code>wiratheme/tabs</code>, and imports from <code>wiratheme/tabmenu</code> keep working.',
       },
     },
     basic: {

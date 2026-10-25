@@ -1,0 +1,140 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-galleria id="d-gal-basic" [value]="local(photos)" [numVisible]="4" [(activeIndex)]="photoIndex" [containerStyle]="{ maxWidth: '40rem' }">
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
+          </ng-template>
+          <ng-template #thumbnail let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-thumb" />
+          </ng-template>
+        </wt-galleria>
+        <span class="docs-demo-output">activeIndex: <code id="d-gal-index">{{ photoIndex }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="indicators" [section]="sec['indicators']">
+      <docs-demo [html]="code['indicators']" layout="stack">
+        <wt-galleria
+          id="d-gal-dots"
+          [value]="local(photos)"
+          [showThumbnails]="false"
+          [showIndicators]="true"
+          [showIndicatorsOnItem]="true"
+          [showItemNavigators]="true"
+          [circular]="true"
+          [containerStyle]="{ maxWidth: '40rem' }"
+        >
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
+          </ng-template>
+        </wt-galleria>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="caption" [section]="sec['caption']">
+      <docs-demo [html]="code['caption']" layout="stack">
+        <wt-galleria
+          id="d-gal-caption"
+          [value]="local(photos)"
+          [showThumbnails]="false"
+          [showItemNavigators]="true"
+          [showItemNavigatorsOnHover]="true"
+          [showIndicators]="true"
+          [containerStyle]="{ maxWidth: '40rem' }"
+        >
+          <ng-template #header>
+            <h3 class="docs-gal-title">{{ tx('ภาพกิจกรรม') }}</h3>
+          </ng-template>
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
+          </ng-template>
+          <ng-template #caption let-photo>
+            <b class="docs-gal-caption-title">{{ photo.title }}</b>
+            <p class="docs-gal-caption-text">{{ photo.text }}</p>
+          </ng-template>
+        </wt-galleria>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="position" [section]="sec['position']">
+      <docs-demo [html]="code['position']" [ts]="ts['position']" layout="stack">
+        <wt-galleria
+          id="d-gal-side"
+          [value]="local(photos)"
+          [numVisible]="4"
+          [responsiveOptions]="responsiveOptions"
+          thumbnailsPosition="left"
+          verticalThumbnailViewPortHeight="280px"
+          [containerStyle]="{ maxWidth: '40rem' }"
+        >
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
+          </ng-template>
+          <ng-template #thumbnail let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-thumb" />
+          </ng-template>
+        </wt-galleria>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="autoplay" [section]="sec['autoplay']">
+      <docs-demo [html]="code['autoplay']" layout="stack">
+        <wt-galleria
+          #slides
+          id="d-gal-play"
+          [value]="local(photos)"
+          [showThumbnails]="false"
+          [showIndicators]="true"
+          [autoPlay]="true"
+          [circular]="true"
+          [transitionInterval]="3000"
+          [containerStyle]="{ maxWidth: '40rem' }"
+        >
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
+          </ng-template>
+        </wt-galleria>
+        <div class="docs-demo-actions">
+          <wt-button id="d-gal-start" [label]="tx('เล่นสไลด์')" icon="pi pi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wt-button>
+          <wt-button id="d-gal-stop" [label]="tx('หยุด')" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wt-button>
+          <span class="docs-demo-output">isAutoPlayActive(): <code id="d-gal-playing">{{ slides.isAutoPlayActive() }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="fullscreen" [section]="sec['fullscreen']">
+      <docs-demo [html]="code['fullscreen']" [ts]="ts['fullscreen']" layout="stack">
+        <div id="d-gal-grid" class="docs-gal-grid">
+          @for (photo of local(photos); track photo.src; let i = $index) {
+            <button type="button" class="docs-gal-grid-button" (click)="openPhoto(i)">
+              <img [src]="photo.src" [alt]="photo.alt" />
+            </button>
+          }
+        </div>
+        <wt-galleria
+          id="d-gal-full"
+          [value]="local(photos)"
+          [fullScreen]="true"
+          [(visible)]="galleryOpen"
+          [(activeIndex)]="fullIndex"
+          [showThumbnails]="false"
+          [showItemNavigators]="true"
+          [circular]="true"
+        >
+          <ng-template #item let-photo>
+            <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-full" />
+          </ng-template>
+        </wt-galleria>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

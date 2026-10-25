@@ -37,6 +37,13 @@
     line-height: 1;
     font-size: 0.9em;
   }
+  /* Icons put inside the content sit on the text's baseline; lower them to the middle of the letters, as icon
+     fonts are usually aligned, so they line up with the built-in icon. */
+  .wt-tag-label > :is(.pi, .fa, .fas, .far, .fab, .material-icons, i, svg, img) {
+    font-size: 0.9em;
+    line-height: 1;
+    vertical-align: -0.125em;
+  }
   .wt-tag-secondary {
     --_solid: var(--wt-button-secondary-bg);
     --_on-solid: var(--wt-button-secondary-color);

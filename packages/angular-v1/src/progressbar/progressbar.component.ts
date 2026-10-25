@@ -27,7 +27,7 @@ import { ɵprogressPercent, ɵprogressText, WtProgressBarContext, WtProgressBarM
  * Counting items instead: `<wt-progressbar [value]="1000" [max]="2500" unit="รายการ">` shows `1,000 / 2,500 รายการ`.
  */
 @Component({
-  selector: 'wt-progressbar',
+  selector: 'wt-progressbar, wt-progressBar, wt-progress-bar',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './progressbar.component.html',
@@ -49,6 +49,14 @@ export class WtProgressBar implements OnDestroy {
   @Input() mode: WtProgressBarMode = 'determinate';
   /** Bar colour, e.g. `var(--wt-success-color)`. */
   @Input() color?: string;
+  /** Diagonal stripes on the bar. */
+  @Input() set striped(v: unknown) { this._striped = ɵtoBool(v); }
+  get striped(): boolean { return this._striped; }
+  /** Stripes that move, for work in progress (shown still to people who ask for less motion). */
+  @Input() set animated(v: unknown) { this._animated = ɵtoBool(v); }
+  get animated(): boolean { return this._animated; }
+  private _striped = false;
+  private _animated = false;
   @Input() ariaLabel?: string;
 
   @ContentChild('content', { descendants: false }) private contentRef?: unknown;
@@ -87,8 +95,23 @@ export class WtProgressBar implements OnDestroy {
     return { $implicit: this._value, value: this._value, max: this._max, percent: this.percent };
   }
 
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
-    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode} p-progressbar-${this.mode}`;
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
+    const stripes = this._striped || this._animated ? ' wt-progressbar-striped' : '';
+    const moving = this._animated ? ' wt-progressbar-animated' : '';
+    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode} p-progressbar-${this.mode}${stripes}${moving}`;
   }
 
   get label(): string {

@@ -515,10 +515,10 @@ export class StudentListComponent {}
 
 ### P2 — รอบถัดไป
 
-Chart (wrapper ครอบ Chart.js), Image (preview), Timeline, AutoComplete, Stepper, Drawer, Breadcrumb, Tree, TreeSelect, TreeTable, Listbox, Slider, Rating, InputOtp, Knob, ColorPicker, Chip, Carousel, Galleria, DataView, Splitter, ScrollPanel, Inplace, OrderList, PickList, Editor
+ทำแล้ว (§12.12–12.16): Chart, Image, Timeline, AutoComplete, Stepper, Drawer, Breadcrumb, Tree, TreeSelect, Listbox, Slider, Rating, ColorPicker, Chip, Galleria, ScrollPanel, Inplace, OrderList, PickList, Editor, FileUpload, SplitButton, TieredMenu, ContextMenu, BlockUI, Scroller ที่เหลือ: TreeTable, InputOtp, Knob, Carousel, DataView, Splitter
 
 - **Chart (ตัดสินแล้ว):** ครอบ Chart.js แบบเดียวกับ PrimeNG คือ `<wt-chart type="bar" [data]="…" [options]="…">` แอปติดตั้ง `chart.js` เอง (peer dependency แบบ optional) และ component โหลดแบบ lazy สีเริ่มต้นของกราฟ (ตัวอักษร เส้นตาราง palette ของ dataset) อ่านจาก token `--wt-*` จึงเปลี่ยนตามธีมและโหมดมืดเอง
-- **Editor (ยังเลือกอยู่):** ทางที่ผู้ใช้สนใจคือ integrate TinyMCE หรือทำ editor เอง เรื่องที่ต้องรู้: TinyMCE ตั้งแต่รุ่น 7 เปลี่ยน license จาก MIT เป็น GPLv2+ (หรือซื้อ license เชิงพาณิชย์) ส่วนรุ่น 6 ที่ยังเป็น MIT หมดการดูแลแล้ว ซึ่งขัดกับเหตุผลที่ย้ายออกจาก PrimeNG ข้อเสนอ: ทำ `<wt-editor>` ของเราเองบน Tiptap/ProseMirror (MIT) เป็น `ControlValueAccessor` มี toolbar ตามธีม, ตาราง, รูป, วางจาก Word, ฟอนต์ไทย และให้ TinyMCE เป็น adapter เสริมสำหรับโปรเจคที่มี license อยู่แล้ว แอปจะสลับได้โดยไม่แก้ template
+- **Editor (ตัดสินแล้ว):** ทำเองทั้งหมดบน `contenteditable` ไม่พึ่ง TinyMCE (license GPLv2+ ตั้งแต่รุ่น 7) และไม่พึ่ง Tiptap ตามที่ผู้ใช้เลือก รายละเอียดใน §12.15
 
 ---
 
@@ -934,6 +934,83 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **Accordion แบบ value:** `<wt-accordion [(value)]>` + `wt-accordion-panel value` / `wt-accordion-header` / `wt-accordion-content` (แอปรุ่นใหม่ใช้ 17 ครั้ง) ใช้ได้ทุกรุ่น หน้าตาและคีย์บอร์ดเหมือนแบบ `wt-accordion-tab`, `multiple` แล้วค่าเป็น array
 - **PanelMenu** (`wiratheme/panelmenu`, 18 ครั้ง): เมนูข้างแบบแผงพับได้ ซ้อนได้หลายชั้น สถานะเปิดอยู่ที่ `expanded` ของ item แบบเดิม, `multiple` ค่าเริ่มต้นตามยุค (v1 เปิดหลายแผงได้, v2/v3 ทีละแผง), คีย์บอร์ด ↑↓ ไล่ทุกแถวที่มองเห็น → เปิด ← ปิด/กลับไปแถวแม่
 - **Steps** (`wiratheme/steps`, `p-steps` 10 ครั้ง): ขั้นตอนมีตัวเลขจาก menu model, ขั้นที่ผ่านแล้วเส้นและตัวเลขเป็นสีหลัก, ค่าเริ่มต้น read-only แบบเดิม `[readonly]="false"` คลิก/ลูกศร/Enter เลือกขั้นได้ (`[(activeIndex)]`) **ยังไม่ทำ:** Stepper แบบ value (`p-stepper` 7 ครั้ง)
+
+### 12.13 PickList, OrderList, FileUpload และ Stepper แบบ value (25 ต.ค. 2569)
+
+- **PickList / OrderList** (`wiratheme/picklist`, `wiratheme/orderlist`, แอปใช้ 21 / 7 ครั้ง): ตรรกะย้าย/เรียงอยู่ใน core (`picklist.ts`, มี unit test) ย้ายด้วยปุ่ม ลาก (`[dragdrop]`) หรือดับเบิลคลิก เลือกหลายแถวด้วย Ctrl/Shift ค้นหาแยกฝั่ง (`filterBy`, `showSourceFilter` / `showTargetFilter`) แก้ array เดิมในที่แบบเดิมแล้วส่ง `sourceChange` / `targetChange` ต่อ ปุ่มทุกปุ่มมีชื่อภาษาไทยให้ screen reader บนมือถือสองฝั่งเรียงบนลงล่างและลูกศรหมุนตาม
+- **FileUpload** (`wiratheme/fileupload`, 14 ครั้ง): โหมด `advanced` (ลากวาง แสดงรายการ รูป preview ขนาดไฟล์ ปุ่มอัปโหลด/ยกเลิก) และ `basic` (ปุ่มเดียว `auto` ได้) ตรวจ `accept` / `maxFileSize` / `fileLimit` ใน core พร้อมข้อความไทย อัปโหลดเองด้วย XHR (`url`, `name`, `headers`, `withCredentials`, progress) หรือให้แอปทำเอง (`customUpload` + `(uploadHandler)`) ไฟล์ซ้ำ (ชื่อ ขนาด ชนิดเดียวกัน) ไม่ถูกเพิ่มซ้ำ
+- **Stepper แบบ value** (`wiratheme/stepper`, `p-stepper` 7 ครั้ง): `wt-stepper [(value)]` + `wt-step-list` / `wt-step` / `wt-step-panels` / `wt-step-panel` และแนวตั้งด้วย `wt-step-item` template `content` ได้ `activateCallback` แบบเดิม `[linear]` ห้ามข้ามขั้น
+
+### 12.14 Table เชิงลึก (25 ต.ค. 2569)
+
+ไล่ตาม API ของ Table รุ่นที่แอปติดตั้ง (ไฟล์ `.d.ts` ใน node_modules ของแต่ละแอป) แล้วทำส่วนที่ยังขาดทั้งหมดที่แอปเรียกใช้ และส่วนที่เหลือเกือบครบ:
+
+- **คอลัมน์:** ตรึงคอลัมน์ซ้าย/ขวา (`wtFrozenColumn`, `alignFrozen`), ปรับกว้าง (`[resizableColumns]` + `wtResizableColumn`, `columnResizeMode` fit / expand), ลากเรียงคอลัมน์ (`[reorderableColumns]` + `wtReorderableColumn`, `(onColReorder)`)
+- **แถว:** แถวตรึงบนสุด (`frozenValue`), ขยายแถว (`wtRowToggler`, `expandedRowKeys`, `rowExpandMode`), จัดกลุ่มแถว (`rowGroupMode` subheader / rowspan, `groupRowsBy`, template `groupheader` / `groupfooter`), ลากเรียงแถว (`wtReorderableRow` + `wtReorderableRowHandle`, ลูกศรขึ้นลงที่ด้ามจับได้)
+- **เลือก:** radio (`wt-tableRadioButton`), `rowSelectable`, `metaKeySelection`, `selectionPageOnly`, `compareSelectionBy`, `wtSelectableRowDblClick`
+- **กรอง:** ตัวกรองต่อคอลัมน์แบบแถวใต้หัวตาราง (`display="row"`) และแบบเมนู (`display="menu"`) เลือก match mode ได้ เพิ่มเงื่อนไขหลายข้อพร้อม match all / match any (`FilterRule` + `operator` ใน core), โหมดวันที่ (`dateIs`, `dateBefore`, `dateAfter`), `filterDelay`
+- **แก้ไขในตาราง:** แบบเซลล์ (`wtEditableColumn` + `wt-cellEditor`, Enter เก็บ Tab ไปเซลล์ถัดไป Esc ยกเลิก) และแบบทั้งแถว (`editMode="row"`, `wtEditableRow`, `wtInitEditableRow` / `wtSaveEditableRow` / `wtCancelEditableRow`, `editingRowKeys`)
+- **เมนูคลิกขวาที่แถว:** `[contextMenu]` + `wtContextMenuRow` (`pContextMenuRow`), `[(contextMenuSelection)]` แถวนั้นมีกรอบ, `contextMenuSelectionMode` separate / joint, `(onContextMenuSelect)`
+- **อื่น ๆ:** `customSort` + `(sortFunction)`, `stateKey` จำการเรียง/กรอง/หน้า/การเลือก/ความกว้างคอลัมน์ (`stateStorage` session / local), export CSV (`exportFunction`, `csvSeparator`)
+- **ยังไม่ทำ:** virtual scroll ในตาราง (รับ input ไว้ แต่แสดงทุกแถว)
+
+### 12.15 Editor ของเราเอง (25 ต.ค. 2569)
+
+`wiratheme/editor` (`wt-editor`, แอปใช้ 48 ครั้ง) ทำเองทั้งหมดบน `contenteditable` ไม่พึ่ง Quill / Tiptap / TinyMCE หน้าตาแบบ editor สมัยใหม่ (แถบเครื่องมือจัดกลุ่ม ปุ่มไอคอน เมนูลอย) และนิสัยเดิมยังใช้ได้: `[(ngModel)]` (HTML), `formControlName`, `placeholder`, `readonly`, template `header` แบบ Quill (ปุ่ม `ql-bold` ฯลฯ ผูกคำสั่งให้เอง), `(onTextChange)`, `(onInit)`
+
+- **ตั้งเครื่องมือได้ละเอียด:** `toolbar` เป็น preset (`basic` / `standard` / `full` / `none`), array ที่คั่นกลุ่มด้วย `'|'` หรือ array ของกลุ่ม และ `toolOptions` กำหนดรายการในเมนู (ระดับหัวข้อ ขนาด/ชุดฟอนต์ สี สีไฮไลต์ การจัดแนว ขนาดตารางเริ่มต้น การเปิดลิงก์ในแท็บใหม่ protocol ที่ยอมรับ) ตั้งค่าทั้งแอปได้ด้วย `provideEditorOptions()`
+- **ตาราง:** แทรกจากตาราง grid เลือกขนาด เพิ่ม/ลบแถว คอลัมน์ แถวหัวตาราง รวม/แยกเซลล์ ลบตาราง จากเมนูที่ลอยเหนือตาราง
+- **รูปภาพ:** `imageUpload.mode` เป็น `base64` (ฝังในเนื้อหา) หรือ `upload` (ส่งไป `url` ตาม `fieldName` / `method` / `headers` / `withCredentials` แล้วอ่าน URL จาก `responseUrl` หรือให้ฟังก์ชัน `upload(file)` ของแอปคืน URL เอง) ตรวจ `maxSize` / `accept` วาง ลากวาง หรือใส่จาก URL ได้ ปรับกว้าง จัดซ้าย/กลาง/ขวา ใส่คำอธิบาย (alt)
+- **วางข้อความ:** ล้าง style ที่มากับ Word / เว็บ (คงตัวหนา เอียง สี ลิงก์ ตาราง รายการ) มี undo/redo ของเราเอง (core, unit test), นับคำ (`showCount`), แถบเครื่องมือติดด้านบนตอนเลื่อน (`stickyToolbar`), เต็มจอ (top layer), ดูโค้ด HTML
+- ข้อความทุกจุดอยู่ใน `translation.editor` (ไทย/อังกฤษ)
+
+### 12.16 ตรวจความครบเทียบการใช้งานจริง และ component ที่เหลือ (25 ต.ค. 2569)
+
+ตรวจ tag / directive / input / output / template ที่แอปของทีมใช้จริงทุกจุด (26 แอป) เทียบกับ WiraTheme แล้วปิดช่องว่างตามลำดับการใช้งาน:
+
+- **ชื่อ tag ทุกแบบที่แอปเขียน:** camelCase และ kebab-case ของเดิม (`wt-inputNumber`, `wt-radioButton`, `wt-progressBar`, `wt-selectButton`, `wt-input-mask`, `wt-date-picker`, `wt-inputGroup` …) เพราะ Angular แยกตัวพิมพ์ใหญ่เล็กใน selector (CSS ใช้ `:is()` ครอบทุกชื่อ)
+- **`styleClass` / `style` ลงที่ element หลัก** ของ component ที่ขาด 30 กว่าตัว (แอปใช้ 1,397 / 383 ครั้ง), slot template `header` / `footer` / `content` / `icons` ของ Card, Panel, Fieldset, AccordionTab, TabPanel, Toolbar, Popover, input ที่ขาด (`iconPos`, `iconPosition`, `link`, `badgeSeverity`, InputNumber ปุ่มล้างและ class ของช่อง …)
+- **directive:** `pRipple` / `wtRipple`, `pBadge`, `pKeyFilter` (`int`, `num`, `alpha`, regex …), `pInputTextarea` `autoResize`, `wtDraggable` / `wtDroppable` (และ `pDraggable` / `pDroppable`) ลากวางแบบ HTML พร้อม scope
+- **component ใหม่ (เขียนครั้งเดียวใน angular-common ใช้ได้ทุกรุ่น):**
+  - **Slider** (`wiratheme/slider`): ค่าเดียวหรือช่วง (`[range]`), แนวนอน/ตั้ง, ลาก คลิกราง คีย์บอร์ด (ลูกศร Page Up/Down Home/End), `(onChange)` / `(onSlideEnd)`
+  - **SplitButton** (`wiratheme/splitbutton`): ปุ่มหลัก + ลูกศรเปิด wt-menu, severity / outlined / text / size แบบ wt-button, Alt + ↓ เปิดเมนู
+  - **Listbox** (`wiratheme/listbox`): รายการเลือกที่อยู่บนหน้า เลือกเดียว/หลายค่า check box + เลือกทั้งหมด ค้นหา จัดกลุ่ม striped template item / group / header / footer / empty คีย์บอร์ดครบ (Shift + ลูกศร, Ctrl + A, พิมพ์เพื่อกระโดด) **ยังไม่ทำ:** virtual scroll (รับ input ไว้)
+  - **Galleria** (`wiratheme/galleria`): ภาพทีละภาพ ลูกศรบนภาพ จุด (ใต้ภาพหรือบนภาพ) แถบ thumbnail ที่เลื่อนตามภาพปัจจุบัน (`numVisible` + `responsiveOptions`) ล่าง/บน/ซ้าย/ขวา เล่นเอง (หยุดเมื่อชี้) วนรอบ ปัดบนจอสัมผัส ลูกศรคีย์บอร์ด และโหมดเต็มจอเป็น `<dialog>`
+  - **ColorPicker** (`wiratheme/colorpicker`): ช่องสีเปิดแผง (top layer) หรือ `inline` มีพื้นที่ saturation/brightness แถบ hue และช่อง hex ค่าเป็น `#rrggbb` / `{r,g,b}` / `{h,s,b}` ตาม `format` อ่านค่าได้ทุกแบบ (คณิตสีอยู่ใน core `colorpicker.ts` มี unit test)
+  - **Breadcrumb** (`wiratheme/breadcrumb`): menu model + `home` (ไอคอนบ้านให้เองถ้าไม่ระบุ) `routerLink` / `url` / `command` รายการสุดท้ายเป็น `aria-current="page"` ขึ้นบรรทัดใหม่ได้บนจอแคบ
+  - **Inplace** (`wiratheme/inplace`): template display / content (+ `closeCallback`) เปิดแล้วโฟกัสไปที่ช่องแก้ไข Esc / ปุ่มปิดกลับ
+  - **BlockUI** (`wiratheme/blockui`): บังทั้งหน้าเป็น `<dialog>` แบบ modal (หน้า inert เลื่อนไม่ได้) หรือบัง element เดียว (`[target]`) โดยย้ายแผ่นบังเข้าไปข้างใน และทำของเดิมเป็น `inert` + `aria-busy`
+  - **ScrollPanel** (`wiratheme/scrollpanel`): เลื่อนภายในความสูง/ความสูงสูงสุดที่กำหนด scrollbar บางตามสีธีม โฟกัสแล้วเลื่อนด้วยคีย์บอร์ดได้
+  - **Scroller** (`wiratheme/scroller`, ชื่อเดิม `wt-virtualScroller`): virtual scroll วาดเฉพาะแถวที่เห็น + เผื่อ (`numToleratedItems`) แนวตั้ง/นอน `lazy` + `(onLazyLoad)` `appendOnly` `scrollToIndex()` รายการสั้นวาดทั้งหมด **ยังไม่ทำ:** `orientation="both"`
+  - **Drawer** (`wiratheme/drawer`, `wt-sidebar` ก็ได้): แผงจากขอบซ้าย/ขวา/บน/ล่าง/เต็มจอ เป็น `<dialog>` (modal ค่าเริ่มต้น: หน้าหลัง inert โฟกัสอยู่ข้างใน) ปิดด้วยปุ่ม Esc หรือคลิกพื้นหลัง ไหลเข้า-ออกตามขอบ focus กลับปุ่มเดิม
+  - **TieredMenu / ContextMenu** (`wiratheme/tieredmenu`, `wiratheme/contextmenu`): เมนูย่อยซ้อนหลายชั้นเปิดเมื่อชี้ คลิก หรือ → (พลิกไปอีกด้านเมื่อล้นจอ บนมือถือเปิดลงด้านล่างแทน) ContextMenu เปิดตรงตำแหน่งเมาส์จาก `[target]` / `[global]` / `show($event)` และปุ่ม context-menu ของคีย์บอร์ด
+  - **Tree / TreeSelect** (`wiratheme/tree`, `wiratheme/treeselect`): TreeNode แบบเดิม เลือกเดียว / หลายค่า / check box ที่กระจายลงลูกและขึ้นแม่ (มีขีดเมื่อเลือกบางส่วน, `partialSelected` ตั้งให้แบบเดิม) ค้นหาแบบ lenient / strict โหลดลูกตอนเปิด (`leaf: false` + `(onNodeExpand)`) template ตาม `type` ของ node คีย์บอร์ดแบบ tree (↑↓ → ← Enter Space) TreeSelect หน้าตาเดียวกับ Select แสดงเป็นข้อความหรือ chip เปิดแล้วกาง node แม่ของค่าที่เลือก ตรรกะ (ค้นหา การกระจาย check) อยู่ใน core `tree.ts` มี unit test **ยังไม่ทำ:** ลากวาง node และ layout แนวนอนของ Tree, TreeTable
+- token ใหม่ของแต่ละ component อยู่ใน families (หน้าตา classic มีกรอบเพิ่มที่ Breadcrumb / Tree / Drawer) และข้อความใหม่อยู่ใน locale ไทย/อังกฤษ (`previousImage`, `imageOf`, `breadcrumb`, `home`, `colorPicker`, `hue`, `saturationBrightness` …)
+- ทดสอบ: unit core 142, e2e `more.spec.ts` 16 กรณีต่อรุ่น (v1 / v2 / v3 / WebKit) และตรวจภาพที่ 360 / 1280 ทั้งโหมดสว่าง/มืด ไม่มีหน้าล้นแนวนอน
+- **แก้จากการเขียนหน้าเอกสาร:** Editor เปิดตัวหนา/เอียงที่เคอร์เซอร์ (ไม่ได้เลือกข้อความ) แล้วข้อความที่พิมพ์ต่อเป็นตัวหนาจริง (เดิมการตั้ง selection ซ้ำทำให้หาย) และคำสั่งใช้ selection ปัจจุบันก่อน range ที่จำไว้ (ทางลัดทันทีหลัง Shift + ลูกศรไม่ทำกับช่วงเก่า), มี `getEditor()` / `getQuill()`, ปุ่มจัดแนวจาก `select.ql-align` มีไอคอนตามแนวปัจจุบัน; Tree / TreeSelect มี `emptyFilterMessage`; Tree / Listbox / TreeSelect / Galleria ไม่กว้างเกินกรอบเมื่อกำหนดความกว้างด้วย `[style]`; Table แก้ในเซลล์เลือกข้อความเดิมหลังค่าถูกเขียนลงช่อง (ไม่เลือกถ้าเริ่มพิมพ์แล้ว); `WtPanelModule` export `wt-header` / `wt-footer`
+- **ยังเหลือ (ใช้น้อยหรือไม่มีใครใช้):** AutoComplete `multiple`, TreeTable, Carousel, DataView, Splitter, InputOtp, Knob, MegaMenu, SpeedDial, Dock, ConfirmPopup, DynamicDialog
+
+
+### 12.17 รอบรีวิวหน้าเอกสาร: Navbar, Aside Menu, Image Cropper และการรวม component ที่ซ้ำกัน (26 ต.ค. 2569)
+
+ผู้ใช้เปิดหน้าเอกสารไล่ดูทีละหน้าแล้วส่งข้อสังเกต แก้ทั้งหมดในไลบรารี (ไม่ใช่แค่หน้าเว็บ) และเพิ่ม component ที่ทีมต้องเขียนเองอยู่ทุกแอป:
+
+- **ค่า delay แบบเดิม:** `provideWiraTheme({ delays: { autoComplete, filter } })` ค่าเริ่มต้น 0 (ทีมใช้ `delay=0` เสมอ) AutoComplete ไม่ใส่ delay = ค้นทันทีที่กดปุ่ม, Table `filterDelay` และ column filter ใช้ค่าเดียวกัน
+- **Editor ตาราง:** กำหนดจำนวนแถว/คอลัมน์และแถวหัวตารางก่อนแทรก ตารางกว้าง 100% มี `<colgroup>` เป็น % (responsive) ลากเลือกหลายเซลล์ (หรือ Shift + คลิก) แล้วรวมเซลล์ ลากขอบคอลัมน์ปรับความกว้าง แถบเครื่องมือตารางลอยขึ้นเมื่อคลิกในตาราง เพิ่ม/ลบแถวคอลัมน์หลังสร้างแล้วยังรักษาความกว้าง; เมนูรูปแบบมีหัวข้อ 1–6 + ข้อความอ้างอิง + บล็อกโค้ด (`blocks`) แบบ TinyMCE (header แบบ Quill ใช้รายการจาก select ของตัวเอง)
+- **หน้าตา:** แถบหัวกลุ่มของ Select / Listbox ชัดขึ้น, check box เลือกทั้งหมดของ MultiSelect ตรงกับรายการ, chip ที่ล้นช่องรวมเป็น `+N` (ชี้ดูชื่อได้), ปุ่ม toggle switch อยู่กลางราง (ช่องว่างบนเท่าข้าง), ช่องค้นหาทุกตัวมี placeholder เสมอ (แก้ได้), ข้อความ error ชิด input ขึ้น, SplitButton สีรองมีขอบ, ไอคอนใน Tag อยู่กลาง, ปุ่มขึ้นลงของช่องตัวเลขใน filter ถูกซ่อน และ `select.wt-inputtext` มีลูกศร, เส้นในกราฟผสม (bar + line) อยู่บนแท่ง, BlockUI บังส่วนเดียวเป็นแผ่นสีการ์ดเบลอ (อ่านง่ายทั้งสว่างและมืด)
+- **input ใหม่:** Accordion `[gap]` (แยกเป็นการ์ดหรือติดกัน), ProgressBar `[striped]` / `[animated]`, MeterGroup `[reverse]`, Stepper `labelPosition="bottom"` + `subtitle` + `[readonly]`, Table เรียงครั้งที่ 3 = ยกเลิก (`removableSort` เปิดเป็นค่าเริ่มต้น), `stripedRows` ปิดเป็นค่าเริ่มต้น (เปิดเองได้), หัว/ท้ายกลุ่มแถวมีแถบสีและเส้น (`wt-rowgroup-footer`)
+- **รวม component ที่ซ้ำกัน (ตัวเดียวทำได้ทั้งสองแบบ):**
+  - **Stepper ทำงานแบบ Steps ได้:** `<wt-stepper [model]="steps" [(activeIndex)]="i">` (รายการมี `label`, `subtitle`, `disabled`, `command`) `wt-steps` ยังอยู่เพื่อแอปที่ย้ายมา
+  - **Tabs ทำงานแบบ TabMenu ได้:** `<wt-tabs [model]="pages" [(activeItem)]="page">` (แอปใช้ TabMenu 71 จุด) ย้าย TabMenu เข้า entry `wiratheme/tabs` (เดิม tabmenu import จาก tabs จึง import กลับไม่ได้) `wiratheme/tabmenu` เหลือเป็น re-export และ CSS รวมเป็น `tabs.css`
+  - Message แบบมี service (`WtMessageService` + `key`) และไม่มี service (`[(value)]`) มีอยู่แล้วใน `wt-messages`
+- **component ใหม่:**
+  - **Navbar** (`wiratheme/navbar`): แถบบนจาก `[model]` (`routerLink` / `url` / `command`, เมนูย่อยเป็น wt-menu) brand / links / end ทั้งแบบ attribute และ template, `sticky` (มีเงาเมื่อเลื่อน), `variant` solid / glass / transparent, ต่ำกว่า `breakpoint` ลิงก์พับเข้าแผงใต้แถบ เมนูย่อยกางในที่ ปิดด้วย Esc / คลิกนอก / ขยายจอ
+  - **Aside Menu** (`wiratheme/asidemenu`): เมนูด้านข้างแบบที่ Strisrinan และ SP Admission เขียนเอง กลุ่มกางในที่หลายชั้น กลุ่มที่มีหน้าปัจจุบันเปิดเอง (ไม่ต้องใส่ class เอง) `[sections]` หัวข้อไม่พับ, `[(collapsed)]` เหลือแถบไอคอน (ไม่มีไอคอนใช้พยัญชนะแรก) เมนูย่อยเป็น flyout ข้างแถบ, บนมือถือเป็นแผงเลื่อนเข้าพร้อม mask ล็อกการเลื่อนหน้า ปิดเมื่อเลือกหรือเปลี่ยน route; `<wt-navbar [aside]="side">` ปุ่มเมนูของ navbar เปิด/ย่อ aside ให้เอง และบนมือถือย้ายลิงก์ของ navbar เข้าไปเป็นกลุ่มแรก
+  - **Image Cropper** (`wiratheme/imagecropper`, tag `image-cropper` เดิมก็ใช้ได้): รับ `imageFile` / `imageChangedEvent` / `imageURL` / `imageBase64` หมุนรูปตาม EXIF, กรอบตามอัตราส่วน (`aspectRatio` เป็นตัวเลขหรือ `'4/3'`) ขนาดต่ำสุด/สูงสุด/คงที่ กรอบกลม, แถบเครื่องมือซูม หมุน พลิก คืนค่า, Ctrl + ล้อ / pinch ซูม ลากนอกกรอบเลื่อนรูป คีย์บอร์ดครบ, ผลเป็น blob หรือ base64 (png / jpeg / webp / bmp / ico) ปรับขนาดผล (`resizeToWidth` / `resizeToHeight`) จำกัด 16.7 ล้านพิกเซลตามข้อจำกัดของ iOS คณิตกรอบอยู่ใน core `imagecropper.ts` มี unit test
+- **WiraTheme Studio ตัวจริง (ฟรี ไม่มีจ่ายเงิน ไม่ต้องล็อกอิน ทำงานในเบราว์เซอร์ทั้งหมด):** หน้า `theming/studio` ของเว็บเอกสาร แท็บ Primitive (scale สี primary / surface / สถานะ สร้างจากสีหลักหรือแก้ทีละเฉด), Semantic (กลุ่ม token ทั่วไป focus ring ฟอร์ม รายการ ฯลฯ), Component (เลือก component แล้วแก้ token ทุกตัว แยก Light / Dark), Custom (เพิ่ม `--wt-*` เอง) และ Settings (ชื่อ preset ฐาน โหมดมืด ฟอนต์ ขนาด ความหนาแน่น) ทุกช่องแสดงค่าปัจจุบัน อ้างอิง token อื่นได้ (`{field-bg}`) ค้นหาได้ทุกแท็บ undo / redo เห็นผลทั้งเว็บทันที (ผ่าน WtThemeService ของรุ่นนั้น) จำไว้ในเบราว์เซอร์ ดาวน์โหลด SCSS / CSS / TS preset / TS overrides / JSON (เฉพาะที่แก้ หรือทั้งหมด) และ import ไฟล์กลับมาแก้ต่อได้
+- **หน้าเอกสารใหม่:** Navbar, Aside Menu, Image Cropper (ทุกรุ่น)
+- **แก้ระหว่างทาง:** Stepper ที่ step มาจาก loop (`@for`, `*ngFor`, `[model]`) วาดเส้นเชื่อมไม่ขึ้น เพราะแต่ละ step วาดก่อนตัวถัดไปมีอยู่ ตอนนี้วาดใหม่หลังทุก step ลงทะเบียนครบ; flyout ของ Aside Menu บน Safari ไม่ปิดเองเมื่อคลิกข้างใน (Safari ไม่ให้ focus ปุ่มที่ถูกคลิก ส่ง focus ไปที่ nav แทน); แผงมือถือของ Aside Menu ไม่เลื่อนผ่านหน้าตอนโหลด (เลื่อนเฉพาะหลังเปิด/ปิดจริง); งบขนาด bundle ของ playground เป็น 3 / 4 MB เพราะรวมทุก component
+- ทดสอบ: unit core 163, e2e ใหม่ `tweaks.spec.ts` 8, `navbar.spec.ts` 6, `asidemenu.spec.ts` 7, `imagecropper.spec.ts` 8 กรณีต่อรุ่น
 
 ---
 

@@ -1,0 +1,213 @@
+/* wt-stepper and its parts. Shared by wiratheme v1, v2 and v3. Numbered step headers joined by lines (the steps
+   before the current one in the primary colour), the current step's panel below; or, with wt-step-item, a vertical
+   stepper whose panels open under their headers. On phones only the current step keeps its title in the row, so
+   every number fits. */
+@layer wiratheme.components {
+  wt-stepper {
+    display: block;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    color: var(--wt-text);
+  }
+  wt-step-list {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+  wt-step {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  wt-step.wt-step-last {
+    flex: 0 1 auto;
+  }
+  .wt-step-header {
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: var(--wt-steps-gap);
+    min-width: 0;
+    margin: 0;
+    padding: 0.25rem;
+    border: 0;
+    border-radius: var(--wt-radius-md);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .wt-step-header:disabled {
+    cursor: default;
+  }
+  .wt-step-header:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-step-number {
+    display: grid;
+    flex: none;
+    place-items: center;
+    box-sizing: border-box;
+    width: var(--wt-steps-number-size);
+    height: var(--wt-steps-number-size);
+    border: var(--wt-steps-number-border-width) solid var(--wt-steps-line-color);
+    border-radius: 50%;
+    background: var(--wt-steps-number-bg);
+    color: var(--wt-steps-number-color);
+    font-weight: 600;
+    line-height: 1;
+    transition:
+      background-color var(--wt-transition),
+      border-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-step-complete .wt-step-number {
+    border-color: var(--wt-primary-color);
+    color: var(--wt-primary-color);
+  }
+  .wt-step-active .wt-step-number {
+    border-color: var(--wt-primary-color);
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+  }
+  .wt-step-header:not(:disabled):hover .wt-step-number {
+    border-color: var(--wt-primary-color);
+  }
+  .wt-step-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .wt-step-subtitle {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--wt-text-muted);
+    font-size: 0.8125em;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .wt-stepper-readonly .wt-step-header {
+    cursor: default;
+  }
+  .wt-step-title {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--wt-steps-label-color);
+    font-weight: var(--wt-steps-label-weight);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .wt-step-active .wt-step-title {
+    color: var(--wt-steps-label-active-color);
+    font-weight: 600;
+  }
+  .wt-stepper-separator {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 1rem;
+    border-top: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+  }
+  .wt-step-complete > .wt-stepper-separator,
+  .wt-stepper-separator-done {
+    border-color: var(--wt-primary-color);
+  }
+  /* labelPosition="bottom": steps in equal columns, the title and subtitle centred under the number, and the line
+     drawn from number to number behind the titles. */
+  .wt-stepper-label-bottom wt-step-list {
+    align-items: flex-start;
+  }
+  .wt-stepper-label-bottom wt-step-list > wt-step,
+  .wt-stepper-label-bottom wt-step-list > wt-step.wt-step-last {
+    position: relative;
+    flex: 1 1 0;
+    justify-content: center;
+  }
+  .wt-stepper-label-bottom wt-step-list .wt-step-header {
+    flex-direction: column;
+    max-width: 100%;
+    text-align: center;
+  }
+  .wt-stepper-label-bottom wt-step-list .wt-step-text {
+    align-items: center;
+  }
+  .wt-stepper-label-bottom wt-step-list :is(.wt-step-title, .wt-step-subtitle) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .wt-stepper-label-bottom wt-step-list > wt-step > .wt-stepper-separator {
+    position: absolute;
+    top: calc(0.25rem + var(--wt-steps-number-size) / 2 - var(--wt-steps-line-width) / 2);
+    left: calc(50% + var(--wt-steps-number-size) / 2 + 0.5rem);
+    right: calc(-50% + var(--wt-steps-number-size) / 2 + 0.5rem);
+    min-width: 0;
+  }
+  wt-step-panels {
+    display: block;
+    padding: var(--wt-stepper-panel-padding);
+  }
+  wt-step-panel {
+    display: block;
+  }
+  wt-step-panels > wt-step-panel:not(.wt-step-panel-active) {
+    display: none;
+  }
+  .wt-step-panel-content-hidden {
+    display: none;
+  }
+
+  /* ---------- vertical: wt-step-item ---------- */
+  wt-step-item {
+    display: flex;
+    flex-direction: column;
+  }
+  wt-step-item > wt-step {
+    flex: none;
+  }
+  wt-step-panel.wt-step-panel-vertical {
+    display: flex;
+    min-height: 1rem;
+  }
+  .wt-step-panel-vertical > .wt-stepper-separator {
+    flex: none;
+    min-width: 0;
+    margin-left: calc(0.25rem + var(--wt-steps-number-size) / 2 - var(--wt-steps-line-width) / 2);
+    border-top: 0;
+    border-left: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+  }
+  .wt-step-panel-vertical > .wt-stepper-separator.wt-stepper-separator-done {
+    border-left-color: var(--wt-primary-color);
+  }
+  .wt-step-panel-vertical > .wt-step-panel-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.5rem 0 1rem calc(var(--wt-steps-number-size) / 2 + 0.5rem);
+  }
+  .wt-step-panel-vertical:not(:has(> .wt-stepper-separator)) > .wt-step-panel-content {
+    padding-left: calc(0.75rem + var(--wt-steps-number-size));
+  }
+
+  /* Phones: titles of the other steps step aside (still read out), so the numbers and lines fit. */
+  @media (max-width: 575.98px) {
+    wt-step-list > wt-step:not(.wt-step-active) :is(.wt-step-title, .wt-step-subtitle) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-step-number {
+      transition: none;
+    }
+  }
+}

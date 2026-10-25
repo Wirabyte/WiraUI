@@ -52,4 +52,5 @@
 <ng-template #content let-item let-index="index">
   <span class="wt-steps-number p-steps-number" aria-hidden="true">{{ index + 1 }}</span>
   <span class="wt-steps-label p-steps-title">{{ item.label }}</span>
+  <span *ngIf="$any(item).subtitle" class="wt-steps-subtitle">{{ $any(item).subtitle }}</span>
 </ng-template>

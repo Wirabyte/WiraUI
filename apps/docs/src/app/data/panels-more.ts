@@ -1,5 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
-import { importText, row, tok } from './doc-helpers';
+import { importText, row, STYLE_ROW, tok } from './doc-helpers';
 
 export const TOOLBAR_DOC: ComponentDoc = {
   id: 'toolbar',
@@ -29,6 +29,13 @@ export const TOOLBAR_DOC: ComponentDoc = {
         en: 'Add <code>wtToolbarStart</code>, <code>wtToolbarCenter</code> or <code>wtToolbarEnd</code> to each element you place (items in a group are spaced for you). Unmarked content goes to the start group.',
       },
     },
+    templates: {
+      title: { th: 'template ของแต่ละกลุ่ม', en: 'Group templates' },
+      text: {
+        th: 'template <code>start</code>, <code>center</code> และ <code>end</code> (ชื่อเดิม <code>left</code> / <code>right</code> ก็ได้) วางเนื้อหาลงแต่ละกลุ่มแบบที่ template เดิมเขียน',
+        en: 'The <code>start</code>, <code>center</code> and <code>end</code> templates (the older <code>left</code> / <code>right</code> work too) fill each group the way older templates do.',
+      },
+    },
     wrap: {
       title: { th: 'จอแคบ', en: 'Narrow screens' },
       text: { th: 'กลุ่มต่าง ๆ ขึ้นบรรทัดใหม่เองเมื่อพื้นที่ไม่พอ ไม่ต้องเขียน media query (ตัวอย่างนี้จำกัดกว้าง 360px)', en: 'The groups wrap when space runs out, with no media queries to write (this sample is capped at 360px).' },
@@ -44,6 +51,17 @@ export const TOOLBAR_DOC: ComponentDoc = {
   </wt-iconfield>
   <wt-button wtToolbarEnd icon="pi pi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
 </wt-toolbar>`,
+    templates: `<wt-toolbar>
+  <ng-template #start>
+    <wt-button label="สร้างใหม่" icon="pi pi-plus"></wt-button>
+  </ng-template>
+  <ng-template #center>
+    <b>จัดการเอกสาร</b>
+  </ng-template>
+  <ng-template #end>
+    <wt-button icon="pi pi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
+  </ng-template>
+</wt-toolbar>`,
     wrap: `<div style="max-width: 360px">
   <wt-toolbar>
     <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
@@ -56,7 +74,7 @@ export const TOOLBAR_DOC: ComponentDoc = {
     {
       id: 'api-inputs',
       title: 'Inputs',
-      rows: [row('ariaLabel', 'string', undefined, 'ชื่อของแถบสำหรับ screen reader (role="toolbar")', 'Accessible name of the bar (role="toolbar")')],
+      rows: [row('ariaLabel', 'string', undefined, 'ชื่อของแถบสำหรับ screen reader (role="toolbar")', 'Accessible name of the bar (role="toolbar")'), STYLE_ROW],
     },
     {
       id: 'api-slots',
@@ -67,6 +85,7 @@ export const TOOLBAR_DOC: ComponentDoc = {
         row('wtToolbarStart', 'element', undefined, 'กลุ่มต้น (ซ้าย) เนื้อหาที่ไม่ระบุก็มาอยู่ที่นี่', 'Start group (left); unmarked content lands here too'),
         row('wtToolbarCenter', 'element', undefined, 'กลุ่มกลาง', 'Center group'),
         row('wtToolbarEnd', 'element', undefined, 'กลุ่มท้าย (ขวา)', 'End group (right)'),
+        row('start · center · end (left · right)', 'template', undefined, 'template ของแต่ละกลุ่ม (#start, wtTemplate หรือ pTemplate · left / right คือชื่อเดิม)', 'A template per group (#start, wtTemplate or pTemplate · left / right are the older names)'),
       ],
     },
   ],
@@ -115,6 +134,11 @@ export const ACCORDION_DOC: ComponentDoc = {
     'เอกสารภายใน (ต้องมีสิทธิ์)': 'Internal documents (needs permission)',
     'แบบ value': 'value form',
     '[multiple]="true" เป็น array': '[multiple]="true": an array',
+    'สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก': 'Built the first time this tab opens',
+    'ใหม่': 'New',
+    'แยกเป็นการ์ด': 'separate cards',
+    'ต่อเป็นกล่องเดียว': 'one joined box',
+    'ระยะเอง (ตัวเลข = px)': 'your own gap (a number means px)',
   },
   sections: {
     import: {
@@ -143,6 +167,20 @@ export const ACCORDION_DOC: ComponentDoc = {
         en: 'Write each section as a <code>wt-accordion-panel</code> with a <code>value</code>, holding a <code>wt-accordion-header</code> and a <code>wt-accordion-content</code>, and bind the open one with <code>[(value)]</code> (typed any). It works in v1, v2 and v3. With <code>[multiple]="true"</code> the value is an array · <code>[disabled]</code> goes on the panel · <code>(onOpen)</code> / <code>(onClose)</code> carry the <code>value</code> · the keyboard works as in the index form.',
       },
     },
+    templates: {
+      title: { th: 'template ของหัวข้อและเนื้อหาที่สร้างทีหลัง', en: 'Header templates and lazy content' },
+      text: {
+        th: 'template <code>header</code> ใน <code>wt-accordion-tab</code> วาดหัวข้อเอง (ใส่ icon หรือ badge ได้) และ template <code>content</code> สร้างเนื้อหาเมื่อเปิดหัวข้อนั้นครั้งแรก เหมาะกับเนื้อหาหนัก ๆ หรือที่ต้องโหลดข้อมูล เขียนเป็น <code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code> ก็ได้',
+        en: 'A <code>header</code> template in <code>wt-accordion-tab</code> draws the header yourself (with an icon or a badge), and a <code>content</code> template builds the content the first time that tab opens, for heavy content or content that loads data. Write them as <code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>.',
+      },
+    },
+    gap: {
+      title: { th: 'ระยะห่างระหว่างหัวข้อ', en: 'Gap between panels' },
+      text: {
+        th: '<code>[gap]="true"</code> เว้นระยะ 0.75rem และให้แต่ละหัวข้อเป็นการ์ดแยกกัน (ขอบและมุมโค้งย้ายจากกล่องรวมไปอยู่ที่แต่ละหัวข้อ) · <code>gap="1rem"</code> หรือตัวเลข (<code>[gap]="12"</code> หมายถึง px) กำหนดระยะเอง · <code>[gap]="false"</code> ต่อหัวข้อเป็นกล่องเดียว · ไม่ใส่ = ตามธีม (token <code>--wt-accordion-gap</code>) · ใช้ได้ทั้งแบบ index และแบบ value',
+        en: '<code>[gap]="true"</code> leaves 0.75rem between panels and makes each one a separate card (the border and corners move from the outer box to every panel) · <code>gap="1rem"</code>, or a number (<code>[gap]="12"</code> means px), sets your own gap · <code>[gap]="false"</code> joins them into one box · left out, the theme decides (the <code>--wt-accordion-gap</code> token) · it works in the index and the value form.',
+      },
+    },
     keyboard: {
       title: { th: 'คีย์บอร์ด', en: 'Keyboard' },
       text: {
@@ -168,6 +206,29 @@ export const ACCORDION_DOC: ComponentDoc = {
   <wt-accordion-tab header="ประวัติ (ต้องมีสิทธิ์)" [disabled]="true">…</wt-accordion-tab>
 </wt-accordion>
 <wt-button label="เปิดรายละเอียด" (onClick)="detailsOpen = true"></wt-button>`,
+    templates: `<wt-accordion>
+  <wt-accordion-tab>
+    <ng-template #header>
+      <i class="pi pi-truck"></i> การจัดส่ง <wt-badge value="ใหม่" severity="success"></wt-badge>
+    </ng-template>
+    <ng-template #content>
+      <p>สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก</p>
+    </ng-template>
+  </wt-accordion-tab>
+  <wt-accordion-tab header="การชำระเงิน">บัตร โอนเงิน หรือ QR</wt-accordion-tab>
+</wt-accordion>`,
+    gap: `<!-- แยกเป็นการ์ด -->
+<wt-accordion [gap]="true" [(activeIndex)]="gapOpen">
+  <wt-accordion-tab header="การจัดส่ง">จัดส่งภายใน 2 วันทำการ</wt-accordion-tab>
+  <wt-accordion-tab header="การคืนสินค้า">คืนได้ภายใน 30 วัน</wt-accordion-tab>
+  <wt-accordion-tab header="การชำระเงิน">บัตร โอนเงิน หรือ QR</wt-accordion-tab>
+</wt-accordion>
+
+<!-- ระยะเอง (ตัวเลข = px) -->
+<wt-accordion gap="1rem">…</wt-accordion>
+
+<!-- ต่อเป็นกล่องเดียว -->
+<wt-accordion [gap]="false">…</wt-accordion>`,
     value: `<wt-accordion [(value)]="faq" (onOpen)="logPanel('open', $event.value)" (onClose)="logPanel('close', $event.value)">
   <wt-accordion-panel value="apply">
     <wt-accordion-header>การสมัครเรียน</wt-accordion-header>
@@ -197,6 +258,7 @@ log(kind: string, index: number): void {
   this.lastEvent = kind + ' #' + index;
 }`,
     selected: `detailsOpen = false;`,
+    gap: `gapOpen: number | number[] | null = 0;`,
     value: `faq = 'apply';
 faqs = ['apply', 'fees'];   // [multiple]="true" เป็น array
 lastPanel = '';
@@ -214,6 +276,8 @@ logPanel(kind: string, value: unknown): void {
         row('multiple', 'boolean', 'false', 'เปิดได้หลายอันพร้อมกัน', 'Several open at once'),
         row('activeIndex', 'number | number[] | null', 'null', 'หัวข้อที่เปิด (array เมื่อ multiple) ใช้ [(activeIndex)]', 'Open tab(s), an array with multiple; use [(activeIndex)]'),
         row('value', 'any', 'undefined', 'แบบ value: value ของหัวข้อที่เปิด (array เมื่อ multiple) ใช้ [(value)]', 'Value form: the open panel\'s value (an array with multiple); use [(value)]'),
+        row('gap', 'boolean | string | number', undefined, 'ระยะห่างระหว่างหัวข้อ: true = 0.75rem, ข้อความหรือตัวเลข (px) = ระยะนั้น ทั้งสองแบบแยกแต่ละหัวข้อเป็นการ์ด · false = ต่อเป็นกล่องเดียว · ไม่ใส่ = ตามธีม', 'Gap between panels: true = 0.75rem, text or a number (px) = that gap, both making each panel a card · false = one joined box · left out = the theme decides'),
+        STYLE_ROW,
       ],
     },
     {
@@ -234,6 +298,7 @@ logPanel(kind: string, value: unknown): void {
         row('header', 'string', undefined, 'ข้อความบนหัวข้อ', 'Header text'),
         row('disabled', 'boolean', 'false', 'กดเปิด / ปิดไม่ได้', 'Cannot be toggled'),
         row('selected', 'boolean', 'false', 'เปิดอยู่หรือไม่ ใช้ [(selected)]', 'Whether it is open; use [(selected)]'),
+        row('#header · #content (template)', 'template', undefined, 'หัวข้อแบบวาดเอง · เนื้อหาที่สร้างเมื่อเปิดครั้งแรก (wtTemplate / pTemplate ก็ได้)', 'A custom header · content built when first opened (wtTemplate / pTemplate work too)'),
       ],
     },
     {
@@ -258,7 +323,7 @@ logPanel(kind: string, value: unknown): void {
     },
   ],
   tokens: [
-    tok('--wt-accordion-gap', 'ระยะห่างระหว่างหัวข้อ (v1 4px)', 'Gap between tabs (4px in v1)'),
+    tok('--wt-accordion-gap', 'ระยะห่างระหว่างหัวข้อ (v1 4px) [gap] ตั้งค่านี้ที่ตัว accordion', 'Gap between tabs (4px in v1); [gap] sets it on the accordion'),
     tok('--wt-accordion-border-width', 'ขอบของกล่องรวม (v2 / v3 1px, v1 ไม่มี)', 'Border of the outer box (1px in v2 / v3, none in v1)'),
     tok('--wt-accordion-root-radius', 'ความมนของกล่องรวม (v2 / v3)', 'Corner radius of the outer box (v2 / v3)'),
     tok('--wt-accordion-bg', 'พื้นของกล่องรวม (v2 / v3 หัวกับเนื้อหาใช้พื้นนี้)', 'Background of the outer box (headers and content share it in v2 / v3)'),
@@ -287,8 +352,8 @@ export const TABS_DOC: ComponentDoc = {
   module: 'WtTabsModule',
   selector: 'wt-tabs',
   description: {
-    th: 'แท็บสลับเนื้อหา ใช้ปุ่มลูกศรเลือกแท็บได้ และแถวแท็บเลื่อนด้านข้างได้บนมือถือ',
-    en: 'Tabs that switch content, with arrow-key selection and a tab row that scrolls sideways on phones.',
+    th: 'แท็บสลับเนื้อหา ใช้ปุ่มลูกศรเลือกแท็บได้ และแถวแท็บเลื่อนด้านข้างได้บนมือถือ หรือเป็นแถวแท็บที่ลิงก์ไปมุมมองหรือหน้าอื่นจาก menu model',
+    en: 'Tabs that switch content, with arrow-key selection and a tab row that scrolls sideways on phones, or a row of tabs that link to views or pages from a menu model.',
   },
   english: {
     'ข้อมูลลูกค้า': 'Customer details',
@@ -329,6 +394,11 @@ export const TABS_DOC: ComponentDoc = {
     'นางสมศรี ใจดี · 081-234-5678': 'Mary Smith · 081-234-5678',
     'ไม่ใส่ = แท็บแรก': 'unset = the first tab',
     'แบบ value': 'value form',
+    'ข้อความ': 'Messages',
+    'กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน': '3 unread messages in the inbox',
+    'หน่วยที่': 'Unit',
+    'เนื้อหาหน่วยที่': 'Lessons of unit',
+    'หน้าที่เลือก': 'Page picked',
   },
   sections: {
     import: {
@@ -346,6 +416,13 @@ export const TABS_DOC: ComponentDoc = {
         en: 'Write the tabs as <code>wt-tablist</code> / <code>wt-tab</code> and the content as <code>wt-tabpanels</code> / <code>wt-tabpanel</code> with matching <code>value</code>s, and bind the selected tab with <code>[(value)]</code> (typed any, so a string, a number or a union of your own tab names; unset = the first tab). The newer apps use this form a lot, and it works in v1, v2 and v3. Arrows, Home and End select, <code>disabled</code> tabs are skipped, and the edge arrows work as in the index form.',
       },
     },
+    header: {
+      title: { th: 'template ของชื่อแท็บ', en: 'Tab title templates' },
+      text: {
+        th: 'template <code>header</code> ใน <code>wt-tab-panel</code> วาดชื่อแท็บเอง เช่น ใส่ icon หรือจำนวนที่ยังไม่อ่าน (<code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>)',
+        en: 'A <code>header</code> template in <code>wt-tab-panel</code> draws the tab title yourself, with an icon or an unread count (<code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>).',
+      },
+    },
     alias: {
       title: { th: 'ชื่อ tag ที่แอปใช้อยู่', en: 'Tag names apps already use' },
       text: {
@@ -357,8 +434,15 @@ export const TABS_DOC: ComponentDoc = {
     scroll: {
       title: { th: 'แท็บจำนวนมาก', en: 'Many tabs' },
       text: {
-        th: 'แถวแท็บไม่มี scrollbar เมื่อแท็บล้นพื้นที่จะมีปุ่มลูกศรที่ขอบฝั่งที่ยังมีแท็บ และแท็บที่เลือกเลื่อนเข้ามาให้เห็นเอง <code>[scrollable]="true"</code> ของ template เดิมรับไว้ได้ (ไม่ต้องใส่)',
-        en: 'The tab row has no scrollbar. When tabs overflow, arrow buttons appear at the edges that have more tabs, and the selected tab scrolls into view. <code>[scrollable]="true"</code> from existing templates is accepted (not needed).',
+        th: 'แถวแท็บไม่มี scrollbar เมื่อแท็บล้นพื้นที่จะมีปุ่มลูกศรที่ขอบฝั่งที่ยังมีแท็บ และแท็บที่เลือกเลื่อนเข้ามาให้เห็นเอง <code>[scrollable]="true"</code> ของ template เดิมรับไว้ได้ (ไม่ต้องใส่) · แบบ value (<code>wt-tablist</code> ที่มี <code>wt-tab</code> 14 แท็บ ตัวอย่างที่สอง) เลื่อนพร้อมลูกศรแบบเดียวกัน',
+        en: 'The tab row has no scrollbar. When tabs overflow, arrow buttons appear at the edges that have more tabs, and the selected tab scrolls into view. <code>[scrollable]="true"</code> from existing templates is accepted (not needed) · the value form (a <code>wt-tablist</code> of 14 <code>wt-tab</code>s, the second demo) scrolls with the same arrows.',
+      },
+    },
+    model: {
+      title: { th: 'แท็บจาก menu model', en: 'Tabs from a menu model' },
+      text: {
+        th: '<code>&lt;wt-tabs [model]="pages" [(activeItem)]="page"&gt;</code> วาดแถวแท็บเป็นลิงก์จาก menu model โดยไม่มี panel สำหรับสลับมุมมองหรือหน้า เป็น component เดียวกับ wt-tabmenu (ดูหน้า TabMenu) · รายการใช้ <code>routerLink</code>, <code>url</code>, <code>command</code>, <code>icon</code>, <code>badge</code> และ <code>disabled</code> · <code>activeItem</code> เป็น object ตัวเดียวกับใน model ไม่ใส่แล้วรายการ <code>routerLink</code> เลือกแท็บตาม router เอง · เนื้อหาของมุมมองที่เลือก แอปวาดเองใต้แถบ (หรือใช้ <code>&lt;router-outlet&gt;</code>)',
+        en: '<code>&lt;wt-tabs [model]="pages" [(activeItem)]="page"&gt;</code> draws a row of tabs as links from a menu model, with no panels, for switching views or pages; it is the same component as wt-tabmenu (see the TabMenu page) · items take <code>routerLink</code>, <code>url</code>, <code>command</code>, <code>icon</code>, <code>badge</code> and <code>disabled</code> · <code>activeItem</code> is the same object as in the model; left out, <code>routerLink</code> items pick the tab from the router · you draw the picked view under the row yourself (or use a <code>&lt;router-outlet&gt;</code>).',
       },
     },
     keyboard: {
@@ -395,6 +479,15 @@ export const TABS_DOC: ComponentDoc = {
     <wt-tabpanel value="parents">นางสมศรี ใจดี · 081-234-5678</wt-tabpanel>
   </wt-tabpanels>
 </wt-tabs>`,
+    header: `<wt-tabs>
+  <wt-tab-panel>
+    <ng-template #header>
+      <i class="pi pi-envelope"></i> ข้อความ <wt-badge value="3" severity="danger"></wt-badge>
+    </ng-template>
+    กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน
+  </wt-tab-panel>
+  <wt-tab-panel header="โปรไฟล์">ชื่อที่แสดงและรูปโปรไฟล์</wt-tab-panel>
+</wt-tabs>`,
     alias: `<wt-tabView [(activeIndex)]="tab">
   <wt-tabPanel header="ภาพรวม">ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ</wt-tabPanel>
   <wt-tabPanel header="คำสั่งซื้อ">คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้</wt-tabPanel>
@@ -409,6 +502,30 @@ export const TABS_DOC: ComponentDoc = {
   }
 </wt-tabs>`,
     },
+    scrollValue: {
+      classic: `<wt-tabs [(value)]="unit">
+  <wt-tablist>
+    <wt-tab *ngFor="let u of units" [value]="u">หน่วยที่ {{ u }}</wt-tab>
+  </wt-tablist>
+  <wt-tabpanels>
+    <wt-tabpanel *ngFor="let u of units" [value]="u">เนื้อหาหน่วยที่ {{ u }}</wt-tabpanel>
+  </wt-tabpanels>
+</wt-tabs>`,
+      v3: `<wt-tabs [(value)]="unit">
+  <wt-tablist>
+    @for (u of units; track u) {
+      <wt-tab [value]="u">หน่วยที่ {{ u }}</wt-tab>
+    }
+  </wt-tablist>
+  <wt-tabpanels>
+    @for (u of units; track u) {
+      <wt-tabpanel [value]="u">เนื้อหาหน่วยที่ {{ u }}</wt-tabpanel>
+    }
+  </wt-tabpanels>
+</wt-tabs>`,
+    },
+    model: `<wt-tabs [model]="pages" [(activeItem)]="page" ariaLabel="ข้อมูลนักเรียน"></wt-tabs>
+<p>{{ page?.label }}</p>`,
   },
   ts: {
     basic: `tab = 0;
@@ -416,6 +533,17 @@ changed: number | null = null;`,
     value: `section = 'info';   // ไม่ใส่ = แท็บแรก`,
     scroll: `months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
   'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];`,
+    scrollValue: `units = Array.from({ length: 14 }, (_, i) => i + 1);
+unit = 1;`,
+    model: `import { MenuItem } from 'wiratheme/api';
+
+pages: MenuItem[] = [
+  { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card' },
+  { label: 'ผลการเรียน', icon: 'pi pi-chart-line', badge: '2' },
+  { label: 'ผู้ปกครอง', icon: 'pi pi-users' },
+  { label: 'สุขภาพ', icon: 'pi pi-heart', disabled: true },
+];
+page?: MenuItem | null = this.pages[0];`,
   },
   api: [
     {
@@ -425,8 +553,11 @@ changed: number | null = null;`,
       rows: [
         row('activeIndex', 'number', '0', 'แท็บที่เลือก (แบบ index) ใช้ [(activeIndex)]', 'Selected tab (index form); use [(activeIndex)]'),
         row('value', 'any', 'undefined', 'แท็บที่เลือก (แบบ value) ใช้ [(value)] ไม่ใส่ = แท็บแรก', 'Selected tab (value form); use [(value)]; unset = the first tab'),
+        row('model', 'MenuItem[]', undefined, 'แท็บเป็นลิงก์จาก menu model ไม่มี panel (เหมือน wt-tabmenu)', 'Tabs as links from a menu model, no panels (the same as wt-tabmenu)'),
+        row('activeItem', 'MenuItem | null', undefined, 'กับ model: แท็บปัจจุบัน (object ตัวเดียวกับใน model) ใช้ [(activeItem)] ไม่ใส่ = รายการ routerLink ตาม router', 'With model: the current tab (the same object as in the model); use [(activeItem)]; left out, routerLink items follow the router'),
         row('ariaLabel', 'string', undefined, 'ชื่อของแถวแท็บสำหรับ screen reader', 'Accessible name of the tab row'),
         row('scrollable · lazy · selectOnFocus · showNavigators', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ลูกศรที่ขอบขึ้นเองเมื่อแท็บล้น', 'Accepted so existing templates compile; the edge arrows appear on their own'),
+        STYLE_ROW,
       ],
     },
     {
@@ -435,6 +566,7 @@ changed: number | null = null;`,
       note: { th: 'ของ wt-tab-panel (wt-tabPanel / wt-tabpanel)', en: 'On wt-tab-panel (wt-tabPanel / wt-tabpanel).' },
       rows: [
         row('header', 'string', undefined, 'ชื่อแท็บ (แบบ index)', 'Tab title (index form)'),
+        row('#header (template)', 'template', undefined, 'วาดชื่อแท็บเอง เช่น ใส่ icon หรือ badge (wtTemplate / pTemplate ก็ได้)', 'Draw the tab title yourself, with an icon or a badge (wtTemplate / pTemplate work too)'),
         row('leftIcon', 'string', undefined, 'class ของ icon หน้าชื่อแท็บ', 'Icon class before the title'),
         row('disabled', 'boolean', 'false', 'เลือกไม่ได้ และคีย์บอร์ดข้ามไป', 'Cannot be selected; the keyboard skips it'),
         row('value', 'any', undefined, 'แบบ value: value ของ wt-tab ที่แสดงเนื้อหานี้', 'Value form: the value of the wt-tab that shows this panel'),
@@ -457,6 +589,7 @@ changed: number | null = null;`,
       rows: [
         row('activeIndexChange', 'number', undefined, 'แท็บที่เลือกเปลี่ยน (แบบ index)', 'The selected tab changed (index form)'),
         row('valueChange', 'any', undefined, 'แท็บที่เลือกเปลี่ยน (แบบ value)', 'The selected tab changed (value form)'),
+        row('activeItemChange', 'MenuItem', undefined, 'กับ model: ผู้ใช้เลือกแท็บอื่น (คู่ของ [(activeItem)])', 'With model: the user picked another tab (for [(activeItem)])'),
         row('onChange', 'WtTabsChangeEvent', undefined, 'ผู้ใช้เลือกแท็บ (คลิกหรือคีย์บอร์ด)', 'The user picked a tab (click or keyboard)'),
       ],
     },

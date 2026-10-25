@@ -1,6 +1,6 @@
 /* wt-radiobutton. Shared by wiratheme v1, v2 and v3. Same structure as wt-checkbox. */
 @layer wiratheme.components {
-  wt-radiobutton {
+  :is(wt-radiobutton, wt-radio-button) {
     display: inline-flex;
     vertical-align: middle;
   }
@@ -87,7 +87,7 @@
     opacity: var(--wt-disabled-opacity);
   }
   .wt-radiobutton.wt-invalid .wt-radiobutton-box,
-  wt-radiobutton.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-radiobutton-box {
+  :is(wt-radiobutton, wt-radio-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-radiobutton-box {
     border-color: var(--wt-danger-color);
   }
 }

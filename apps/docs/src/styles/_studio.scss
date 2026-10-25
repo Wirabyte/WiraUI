@@ -1,0 +1,506 @@
+// WiraTheme Studio (theming/studio), mobile-first: one column with the preview under the editor; from xl the preview
+// sits beside it. Field grids follow the editor's own width (container queries), not the window's.
+@use 'mq';
+
+.docs-article-wide {
+  max-width: none;
+}
+
+.docs-designer {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin-top: 8px;
+}
+
+// ---------- top bar ----------
+.docs-designer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+.docs-designer-search {
+  display: block;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.docs-designer-search input {
+  width: 100%;
+}
+.docs-designer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+// Redo is Undo mirrored.
+.docs-designer-redo .pi {
+  transform: scaleX(-1);
+}
+.docs-designer-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 26px;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-designer-saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--docs-success-text);
+}
+.docs-designer-saved.is-error {
+  color: var(--docs-warn-text);
+}
+.docs-designer-muted {
+  color: var(--docs-muted);
+}
+.docs-designer-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+.docs-designer-notice > wt-message {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.docs-designer-icon-btn {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--docs-muted);
+  cursor: pointer;
+}
+.docs-designer-icon-btn:hover {
+  background: var(--docs-hover);
+  color: var(--docs-text);
+}
+.docs-designer-icon-btn:focus-visible {
+  outline: 2px solid var(--docs-primary);
+  outline-offset: 1px;
+}
+
+// ---------- download panel ----------
+.docs-designer-export {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius-lg);
+  background: var(--docs-surface);
+}
+.docs-designer-export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-designer-export-bar > * {
+  max-width: 100%;
+}
+// Select buttons wrap instead of pushing the page sideways on phones.
+.docs-designer wt-selectbutton {
+  max-width: 100%;
+  min-width: 0;
+}
+.docs-designer .wt-selectbutton {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.docs-designer-code {
+  margin: 0;
+}
+.docs-designer-code pre {
+  max-height: 360px;
+}
+
+// ---------- editor and preview ----------
+.docs-designer-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  min-width: 0;
+}
+.docs-designer-editor {
+  container-type: inline-size;
+  min-width: 0;
+}
+.docs-designer-editor wt-tabpanel {
+  display: block;
+  min-width: 0;
+}
+.docs-designer-editor wt-tabpanel > * + * {
+  margin-top: 12px;
+}
+.docs-designer-count {
+  display: inline-block;
+  min-width: 20px;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--docs-hover);
+  color: var(--docs-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+}
+.docs-designer-hint {
+  margin: 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.docs-section .docs-designer-hint {
+  margin: 0;
+}
+.docs-designer-empty {
+  margin: 0;
+  padding: 18px 0;
+  color: var(--docs-muted);
+}
+.docs-designer-h {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.docs-designer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+.docs-designer-mono {
+  font-family: var(--docs-mono);
+  font-size: 12.5px;
+}
+.docs-designer-modebar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+// ---------- fields ----------
+.docs-designer-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+}
+.docs-designer-field {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius);
+  background: var(--docs-surface);
+}
+.docs-designer-field.is-changed {
+  border-color: color-mix(in srgb, var(--docs-primary) 45%, var(--docs-border));
+}
+.docs-designer-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.docs-designer-label code {
+  padding: 0;
+  background: none;
+  color: var(--docs-muted);
+  font-size: 11.5px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.docs-designer-name {
+  overflow-wrap: anywhere;
+}
+// A dot after the name: this value differs from the starting preset.
+.docs-designer-field.is-changed .docs-designer-name::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--docs-primary);
+  vertical-align: middle;
+}
+.docs-designer-badge {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--docs-hover);
+  color: var(--docs-muted);
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.docs-designer-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.docs-designer-control > input,
+.docs-designer-control > wt-select {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+.docs-designer-control > wt-select .wt-select,
+.docs-designer-field > wt-select,
+.docs-designer-field > wt-select .wt-select {
+  width: 100%;
+}
+.docs-designer-control > wt-colorpicker {
+  flex: none;
+}
+.docs-designer-warn {
+  color: var(--docs-warn-text);
+  font-size: 12px;
+}
+
+@container (min-width: 540px) {
+  .docs-designer-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// ---------- Primitive ----------
+.docs-designer-scale {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius-lg);
+}
+.docs-designer-scale-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-designer-scale-base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.docs-designer-scale-base > input {
+  width: 8.5rem;
+  min-width: 0;
+}
+.docs-designer-strip {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 11), minmax(0, 1fr));
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+}
+.docs-designer-shades {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+.docs-designer-shades .docs-designer-field {
+  padding: 6px 8px 8px;
+}
+.docs-designer-shades .docs-designer-label code {
+  display: none;
+}
+
+// ---------- Semantic, Component ----------
+.docs-designer-acc-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.docs-designer-comp-head {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.docs-designer-comp-head wt-select,
+.docs-designer-comp-head .wt-select {
+  width: 100%;
+}
+.docs-designer-group {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+@container (min-width: 600px) {
+  .docs-designer-comp-head {
+    grid-template-columns: auto minmax(0, 22rem) auto;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+  }
+}
+
+// ---------- Custom ----------
+.docs-designer-customs {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.docs-designer-custom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius);
+}
+.docs-designer-custom-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.docs-designer-custom-name > input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+.docs-designer-prefix {
+  color: var(--docs-muted);
+  font-family: var(--docs-mono);
+  font-size: 12.5px;
+}
+@container (min-width: 720px) {
+  .docs-designer-custom {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 15rem);
+    align-items: center;
+  }
+}
+
+// ---------- preview: drawn on the theme's own page colours and font ----------
+.docs-designer-preview {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius-lg);
+  background: var(--wt-ground, var(--docs-surface));
+  color: var(--wt-text, var(--docs-text));
+  font-family: var(--wt-font-family, var(--docs-font));
+}
+.docs-designer-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.docs-designer-pv {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.docs-designer-pv-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+.docs-designer-pv-fields {
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-designer-pv-fields > input,
+.docs-designer-pv-fields > wt-select,
+.docs-designer-pv-fields .wt-select {
+  width: 100%;
+  min-width: 0;
+}
+.docs-designer-pv wt-table {
+  display: block;
+  min-width: 0;
+}
+// A dialog drawn with the dialog tokens, so its look can be tuned without opening one.
+.docs-designer-pv-dialog {
+  min-width: 0;
+  border: 1px solid var(--wt-dialog-border);
+  border-radius: var(--wt-dialog-radius);
+  background: var(--wt-dialog-bg);
+  box-shadow: var(--wt-dialog-shadow);
+  color: var(--wt-text);
+}
+.docs-designer-pv-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: var(--wt-dialog-header-padding);
+  font-size: var(--wt-dialog-title-size);
+  font-weight: var(--wt-dialog-title-weight);
+  line-height: 1.3;
+}
+.docs-designer-pv-dialog-head .pi {
+  color: var(--wt-text-muted);
+}
+.docs-section .docs-designer-pv-dialog p,
+.docs-designer-pv-dialog p {
+  margin: 0;
+  padding: var(--wt-dialog-content-padding);
+  color: var(--wt-text-muted);
+}
+.docs-designer-pv-dialog-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: var(--wt-dialog-footer-padding);
+}
+
+@include mq.up(xl) {
+  .docs-designer-main {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  }
+  .docs-designer-preview {
+    position: sticky;
+    top: calc(var(--docs-topbar-h) + 16px);
+    max-height: calc(100vh - var(--docs-topbar-h) - 32px);
+    overflow: auto;
+  }
+}

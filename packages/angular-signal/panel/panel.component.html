@@ -1,11 +1,17 @@
-<div [class]="classes()">
+<div [class]="classes()" [style]="rootStyle()">
   <div class="wt-panel-header p-panel-header" [style.cursor]="toggleable() && toggler() === 'header' ? 'pointer' : null" (click)="headerClick()">
     @if (header()) {
       <span class="wt-panel-title p-panel-title" [id]="titleId">{{ header() }}</span>
     }
-    <ng-content select="[wtPanelHeader]"></ng-content>
+    @if (headerTemplate(); as t) {
+      <ng-container *ngTemplateOutlet="t"></ng-container>
+    }
+    <ng-content select="[wtPanelHeader], wt-header"></ng-content>
     <div class="wt-panel-icons p-panel-icons">
       <ng-content select="[wtPanelIcons]"></ng-content>
+      @if (iconsTemplate(); as t) {
+        <ng-container *ngTemplateOutlet="t"></ng-container>
+      }
       @if (toggleable()) {
         <button
           type="button"
@@ -33,7 +39,12 @@
   >
     <div class="wt-panel-content-inner">
       <div class="wt-panel-content p-panel-content"><ng-content></ng-content></div>
-      <div class="wt-panel-footer p-panel-footer"><ng-content select="[wtPanelFooter]"></ng-content></div>
+      <div class="wt-panel-footer p-panel-footer">
+        <ng-content select="[wtPanelFooter], wt-footer"></ng-content>
+        @if (footerTemplate(); as t) {
+          <ng-container *ngTemplateOutlet="t"></ng-container>
+        }
+      </div>
     </div>
   </div>
 </div>

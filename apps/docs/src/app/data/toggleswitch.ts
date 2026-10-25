@@ -1,4 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
+import { STYLE_ROW } from './doc-helpers';
 
 export const TOGGLESWITCH_DOC: ComponentDoc = {
   id: 'toggleswitch',
@@ -90,6 +91,7 @@ lockSms(): void {
         { name: 'readonly', type: 'boolean', default: 'false', description: { th: 'แสดงค่าแต่สลับไม่ได้', en: 'Shows the value but cannot toggle' } },
         { name: 'invalid', type: 'boolean', default: 'false', description: { th: 'บังคับขึ้นสีแดง', en: 'Forces the error style' } },
         { name: 'ariaLabel', type: 'string', description: { th: 'ชื่อสำหรับ screen reader เมื่อไม่มี label', en: 'Accessible name when there is no label' } },
+        STYLE_ROW,
       ],
     },
     {

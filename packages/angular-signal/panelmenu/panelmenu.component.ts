@@ -5,7 +5,7 @@ import { ɵWtPanelMenuBase } from './panelmenu.base';
 
 /** A side menu of collapsible panels: `<wt-panelmenu [model]="items" [multiple]="true">`. Items take `routerLink`, `url` or `command`. */
 @Component({
-  selector: 'wt-panelmenu, wt-panelMenu',
+  selector: 'wt-panelmenu, wt-panelMenu, wt-panel-menu',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './panelmenu.component.html',

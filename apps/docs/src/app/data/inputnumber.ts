@@ -1,5 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
-import { row, tok } from './doc-helpers';
+import { row, STYLE_ROW, tok } from './doc-helpers';
 
 export const INPUTNUMBER_DOC: ComponentDoc = {
   id: 'inputnumber',
@@ -75,6 +75,13 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
       },
     },
     reactive: { title: 'Reactive Forms' },
+    clear: {
+      title: { th: 'ปุ่มล้าง ปุ่มเพิ่ม / ลด และ input ข้างใน', en: 'Clear button, step buttons and the inner input' },
+      text: {
+        th: '<code>[showClear]="true"</code> เพิ่มปุ่ม × เมื่อมีค่า และส่ง <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> และ <code>incrementButtonClass</code> / <code>decrementButtonClass</code> ตกแต่งปุ่มเพิ่ม / ลด · <code>inputStyleClass</code> / <code>inputStyle</code> ใส่ที่ <code>&lt;input&gt;</code> ข้างใน · <code>autocomplete</code> · <code>(onKeyDown)</code> ได้ทุกปุ่มที่กดในช่อง · tag <code>wt-inputNumber</code> / <code>wt-input-number</code> ก็ใช้ได้',
+        en: '<code>[showClear]="true"</code> adds an × once there is a value and emits <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> and <code>incrementButtonClass</code> / <code>decrementButtonClass</code> style the step buttons · <code>inputStyleClass</code> / <code>inputStyle</code> go on the inner <code>&lt;input&gt;</code> · <code>autocomplete</code> · <code>(onKeyDown)</code> brings every key pressed in the field · the <code>wt-inputNumber</code> / <code>wt-input-number</code> tags work too.',
+      },
+    },
     disabled: { title: { th: 'Disabled, Readonly และ Invalid', en: 'Disabled, Readonly and Invalid' } },
     helpers: {
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
@@ -105,12 +112,29 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
     reactive: `<form [formGroup]="form">
   <wt-inputnumber formControlName="budget" mode="currency" [fluid]="true" ariaLabel="งบประมาณ"></wt-inputnumber>
 </form>`,
+    clear: `<wt-inputnumber name="fee" [(ngModel)]="fee" mode="currency" [showClear]="true" (onClear)="feeCleared()"
+  inputStyleClass="text-right" [inputStyle]="{ width: '10rem' }" autocomplete="off"></wt-inputnumber>
+<wt-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" buttonLayout="horizontal" [min]="1"
+  incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" incrementButtonClass="p-button-success"
+  decrementButtonClass="p-button-danger" (onKeyDown)="keyPressed($event)"></wt-inputnumber>`,
     disabled: `<wt-inputnumber [ngModel]="1500" [disabled]="true"></wt-inputnumber>
 <wt-inputnumber [ngModel]="1500" [readonly]="true"></wt-inputnumber>
 <wt-inputnumber [invalid]="true" placeholder="ต้องกรอก"></wt-inputnumber>`,
   },
   ts: {
     basic: `quantity: number | null = 1200;`,
+    clear: `fee: number | null = 350;
+seats: number | null = 2;
+cleared = 0;
+lastKey = '';
+
+feeCleared(): void {
+  this.cleared++;
+}
+
+keyPressed(event: KeyboardEvent): void {
+  this.lastKey = event.key;
+}`,
     reactive: `form = new FormGroup({
   budget: new FormControl(50000, [Validators.required, Validators.max(100000)]),
 });`,
@@ -147,6 +171,12 @@ clampNumber(120, { max: 100 });                // 100`,
         row('readonly', 'boolean', 'false', 'แสดงค่าแต่แก้ไม่ได้', 'Shows the value but cannot change'),
         row('invalid', 'boolean', 'false', 'บังคับขึ้นสีแดง', 'Forces the error style'),
         row('fluid', 'boolean', 'false', 'กว้างเต็มพื้นที่', 'Full width'),
+        row('showClear', 'boolean', 'false', 'ปุ่ม × เมื่อมีค่า (ส่ง onClear)', 'An × once there is a value (emits onClear)'),
+        row('inputStyleClass · inputStyle', 'string · object', undefined, 'class / style ของ input ข้างใน', 'Class / style of the inner input'),
+        row('incrementButtonClass · decrementButtonClass', 'string', undefined, 'class ของปุ่มเพิ่ม / ลด เช่น p-button-success', 'Step button classes, e.g. p-button-success'),
+        row('incrementButtonIcon · decrementButtonIcon', 'string', undefined, 'class ของ icon บนปุ่มเพิ่ม / ลด', 'Icon classes of the step buttons'),
+        row('autocomplete', 'string', undefined, 'attribute autocomplete ของ input', 'The input autocomplete attribute'),
+        STYLE_ROW,
       ],
     },
     {
@@ -157,6 +187,8 @@ clampNumber(120, { max: 100 });                // 100`,
         row('onInput', 'WtInputNumberInputEvent', undefined, 'พิมพ์ (พร้อมค่าที่อ่านได้)', 'Typed (with the parsed value)'),
         row('onFocus', 'FocusEvent', undefined, 'เข้าช่อง', 'Focused'),
         row('onBlur', 'FocusEvent', undefined, 'ออกจากช่อง', 'Blurred'),
+        row('onClear', 'void', undefined, 'กดปุ่มล้าง', 'The clear button was pressed'),
+        row('onKeyDown', 'KeyboardEvent', undefined, 'กดปุ่มในช่อง', 'A key was pressed in the field'),
       ],
     },
     {

@@ -38,5 +38,20 @@
         <span>{{ tx('สถานะออนไลน์') }} <wt-badge severity="success"></wt-badge></span>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="directive" [section]="sec['directive']">
+      <docs-demo [html]="code['directive']" [ts]="ts['directive']">
+        <span id="d-badge-bell" class="docs-badge-icon" wtBadge [value]="unread" severity="danger" [badgeDisabled]="!unread"><i class="pi pi-bell"></i></span>
+        <span id="d-badge-mail" class="docs-badge-icon" wtBadge severity="success"><i class="pi pi-envelope"></i></span>
+        <span id="d-badge-cal" class="docs-badge-icon" pBadge value="2" badgeSize="large"><i class="pi pi-calendar"></i></span>
+        <wt-button id="d-badge-read" [label]="tx('อ่านทั้งหมด')" severity="secondary" [text]="true" (onClick)="markRead()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="style" [section]="sec['style']">
+      <docs-demo [html]="code['style']">
+        <wt-badge id="d-badge-style" value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wt-badge>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

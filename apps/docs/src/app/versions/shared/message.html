@@ -48,6 +48,13 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="escape" [section]="sec['escape']">
+      <docs-demo [html]="code['escape']" layout="stack">
+        <wt-message id="d-msg-html" severity="warn" [escape]="false" [text]="tx('ส่งเอกสารภายใน <b>วันศุกร์นี้</b>')"></wt-message>
+        <wt-messages id="d-msgs-severity" [value]="[{ summary: tx('ระบบจะปิดปรับปรุงคืนนี้') }]" severity="info" [closable]="false" [enableService]="false"></wt-messages>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="messages" [section]="sec['messages']">
       <docs-demo [html]="code['messages']" [ts]="ts['messages']" layout="stack">
         <wt-messages id="d-messages" [(value)]="notices" [enableService]="false"></wt-messages>

@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -28,7 +29,7 @@ const template = (v: unknown): TemplateRef<unknown> | null => (v instanceof Temp
  * Values are read against `min`–`max` (0–100 by default).
  */
 @Component({
-  selector: 'wt-metergroup',
+  selector: 'wt-metergroup, wt-meterGroup, wt-meter-group',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './metergroup.component.html',
@@ -41,11 +42,22 @@ export class WtMeterGroup {
   readonly min = input(0, { transform: numberAttribute });
   readonly max = input(100, { transform: numberAttribute });
   readonly orientation = input<WtMeterOrientation>('horizontal');
+  /** Fill from the other end: right to left, or (vertical) bottom to top. */
+  readonly reverse = input(false, { transform: booleanAttribute });
   /** Legend before or after the bar. */
   readonly labelPosition = input<WtMeterLabelPosition>('end');
   /** Legend items in a row or a column. */
   readonly labelOrientation = input<WtMeterOrientation>('horizontal');
   readonly styleClass = input<string>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
   readonly ariaLabel = input<string>();
 
   private readonly labelRef = contentChild('label', { descendants: false });
@@ -73,6 +85,7 @@ export class WtMeterGroup {
   readonly classes = computed(() => {
     const o = this.orientation();
     const c = ['wt-metergroup', 'p-metergroup', 'p-component', `wt-metergroup-${o}`, `p-metergroup-${o}`];
+    if (this.reverse()) c.push('wt-metergroup-reverse');
     if (this.styleClass()) c.push(this.styleClass() as string);
     return c.join(' ');
   });

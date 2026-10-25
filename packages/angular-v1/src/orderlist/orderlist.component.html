@@ -1,0 +1,110 @@
+<div
+  class="wt-orderlist p-orderlist p-component"
+  [class.wt-orderlist-wide]="!stacked"
+  [class.wt-orderlist-stacked]="stacked"
+  [class.wt-orderlist-controls-left]="controlsPosition !== 'right'"
+  [class.p-orderlist-controls-left]="controlsPosition !== 'right'"
+  [class.wt-orderlist-controls-right]="controlsPosition === 'right'"
+  [class.p-orderlist-controls-right]="controlsPosition === 'right'"
+  [class.wt-orderlist-striped]="stripedRows"
+  [class.p-orderlist-striped]="stripedRows"
+  [class.wt-orderlist-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-orderlist-dragdrop]="dragdrop && !disabled"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="style || null"
+>
+  <div class="wt-picklist-controls wt-orderlist-controls p-orderlist-controls" role="group">
+    <button type="button" [class]="buttonClass('wt-orderlist-move-up')" [disabled]="!canReorder" [attr.aria-label]="upButtonAriaLabel || t.moveUp" (click)="reorder('up')">
+      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10 8 5.5l4.5 4.5"></path></svg>
+    </button>
+    <button type="button" [class]="buttonClass('wt-orderlist-move-top')" [disabled]="!canReorder" [attr.aria-label]="topButtonAriaLabel || t.moveTop" (click)="reorder('top')">
+      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3h9M3.5 11.5 8 7l4.5 4.5"></path></svg>
+    </button>
+    <button type="button" [class]="buttonClass('wt-orderlist-move-down')" [disabled]="!canReorder" [attr.aria-label]="downButtonAriaLabel || t.moveDown" (click)="reorder('down')">
+      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"></path></svg>
+    </button>
+    <button type="button" [class]="buttonClass('wt-orderlist-move-bottom')" [disabled]="!canReorder" [attr.aria-label]="bottomButtonAriaLabel || t.moveBottom" (click)="reorder('bottom')">
+      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 13h9M3.5 4.5 8 9l4.5-4.5"></path></svg>
+    </button>
+  </div>
+  <div class="wt-picklist-box wt-orderlist-box p-orderlist-list-container">
+    <div *ngIf="hasHeader" class="wt-picklist-header p-orderlist-header" [id]="headerId">
+      <ng-container *ngIf="headerTemplate; else plainHeader">
+        <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+      </ng-container>
+      <ng-template #plainHeader>
+        <div class="wt-picklist-title p-orderlist-title">{{ header }}</div>
+      </ng-template>
+    </div>
+    <div *ngIf="showFilter" class="wt-picklist-filter p-orderlist-filter-container">
+      <ng-container *ngIf="filterTemplate; else plainFilter">
+        <ng-container *ngTemplateOutlet="filterTemplate; context: { options: filterOptions }"></ng-container>
+      </ng-container>
+      <ng-template #plainFilter>
+          <div class="wt-picklist-filter-field p-orderlist-filter">
+            <input
+              type="text"
+              class="wt-inputtext wt-picklist-filter-input p-orderlist-filter-input p-inputtext p-component"
+              role="searchbox"
+              autocomplete="off"
+              [value]="list.query"
+              [disabled]="disabled"
+              [attr.placeholder]="filterPlaceholder || t.search"
+              [attr.aria-label]="ariaFilterLabel || filterPlaceholder || t.search"
+              [attr.aria-controls]="listId"
+              (input)="filterInput($event)"
+            />
+            <svg class="wt-picklist-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+          </div>
+      </ng-template>
+    </div>
+    <ul
+      class="wt-picklist-list wt-orderlist-list p-orderlist-list"
+      [class.wt-picklist-list-focused]="focused"
+      role="listbox"
+      aria-multiselectable="true"
+      [id]="listId"
+      data-wt-list="list"
+      [attr.tabindex]="disabled ? -1 : tabindex"
+      [attr.aria-labelledby]="ariaLabelledBy || (hasHeader ? headerId : null)"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-activedescendant]="activeId"
+      [attr.aria-disabled]="disabled || null"
+      [ngStyle]="listStyles"
+      (focus)="listFocus($event)"
+      (blur)="listBlur($event)"
+      (keydown)="listKeydown($event)"
+    >
+      <ng-container *ngFor="let item of value; let i = index; trackBy: trackAny">
+          <li
+            *ngIf="isVisible(item)"
+            class="wt-picklist-item p-orderlist-item"
+            role="option"
+            [id]="itemId(i)"
+            [attr.data-wt-index]="i"
+            [attr.aria-selected]="isSelected(item)"
+            [class.wt-picklist-item-selected]="isSelected(item)"
+            [class.p-highlight]="isSelected(item)"
+            [class.wt-picklist-item-focused]="isFocused(i)"
+            [class.p-focus]="isFocused(i)"
+            (pointerdown)="pointerDown($event, i)"
+            (click)="itemClick($event, item, i)"
+          >
+            <ng-container *ngIf="itemTemplate; else plainItem">
+              <ng-container *ngTemplateOutlet="itemTemplate; context: itemContext(item, i)"></ng-container>
+            </ng-container>
+            <ng-template #plainItem><span class="wt-picklist-item-label">{{ label(item) }}</span></ng-template>
+          </li>
+      </ng-container>
+      <ng-container *ngIf="isEmpty">
+        <li *ngIf="emptyTemplate; else plainEmpty" class="wt-picklist-empty p-orderlist-empty-message" role="presentation">
+          <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+        </li>
+        <ng-template #plainEmpty>
+          <li *ngIf="emptyText" class="wt-picklist-empty p-orderlist-empty-message" role="presentation">{{ emptyText }}</li>
+        </ng-template>
+      </ng-container>
+    </ul>
+  </div>
+</div>

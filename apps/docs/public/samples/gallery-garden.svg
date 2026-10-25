@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the school garden. -->
+  <rect width="320" height="200" fill="#dcfce7" />
+  <circle cx="270" cy="40" r="20" fill="#fde047" />
+  <rect y="140" width="320" height="60" fill="#65a30d" />
+  <g fill="#78350f">
+    <rect x="20" y="150" width="80" height="30" rx="4" />
+    <rect x="120" y="150" width="80" height="30" rx="4" />
+    <rect x="220" y="150" width="80" height="30" rx="4" />
+  </g>
+  <g fill="#22c55e">
+    <path d="M36 150c0-12 8-18 8-18s8 6 8 18Z" />
+    <path d="M60 150c0-12 8-18 8-18s8 6 8 18Z" />
+    <path d="M136 150c0-12 8-18 8-18s8 6 8 18Z" />
+    <path d="M160 150c0-12 8-18 8-18s8 6 8 18Z" />
+    <path d="M236 150c0-12 8-18 8-18s8 6 8 18Z" />
+    <path d="M260 150c0-12 8-18 8-18s8 6 8 18Z" />
+  </g>
+  <g fill="#f43f5e">
+    <circle cx="84" cy="138" r="5" />
+    <circle cx="184" cy="138" r="5" />
+    <circle cx="284" cy="138" r="5" />
+  </g>
+  <g fill="#15803d">
+    <circle cx="60" cy="80" r="30" />
+    <circle cx="190" cy="70" r="36" />
+  </g>
+  <g fill="#78350f">
+    <rect x="56" y="104" width="8" height="38" />
+    <rect x="186" y="100" width="8" height="42" />
+  </g>
+</svg>

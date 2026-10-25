@@ -1,0 +1,143 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-picklist
+          id="d-pl-basic"
+          [source]="basicSource"
+          [target]="basicTarget"
+          [sourceHeader]="tx('สิทธิ์ทั้งหมด')"
+          [targetHeader]="tx('สิทธิ์ของผู้ใช้')"
+          [sourceStyle]="{ height: '20rem' }"
+          [targetStyle]="{ height: '20rem' }"
+        >
+          <ng-template #item let-p>
+            <div class="docs-pl-name">{{ p.name }}</div>
+            <small class="docs-pl-meta">{{ p.module }}</small>
+          </ng-template>
+        </wt-picklist>
+        <span class="docs-demo-output">userPermissions: <code id="d-pl-basic-value">{{ codesOf(basicTarget) }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="dragdrop" [section]="sec['dragdrop']">
+      <docs-demo [html]="code['dragdrop']" [ts]="ts['dragdrop']" layout="stack">
+        <wt-picklist
+          id="d-pl-drag"
+          [source]="ranks"
+          [target]="flow"
+          [sourceHeader]="tx('ตำแหน่ง')"
+          [targetHeader]="tx('ลำดับการส่งต่อ (เรียงจากบนลงล่าง)')"
+          [dragdrop]="true"
+          [showSourceControls]="false"
+          [sourceStyle]="{ height: '20rem' }"
+          [targetStyle]="{ height: '20rem' }"
+        >
+          <ng-template #item let-r>
+            <div class="docs-pl-name">{{ r.rank }}</div>
+            <small class="docs-pl-meta">{{ r.person || tx('(ยังไม่กำหนดผู้รับผิดชอบ)') }}</small>
+          </ng-template>
+        </wt-picklist>
+        <div class="docs-demo-actions">
+          <wt-button id="d-pl-save" [label]="tx('บันทึก')" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>
+          <span class="docs-demo-output">flow: <code id="d-pl-flow">{{ idsOf(flow) }}</code> · {{ tx('บันทึกแล้ว') }}: <code id="d-pl-saved">{{ savedFlow || '-' }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="filter" [section]="sec['filter']">
+      <docs-demo [html]="code['filter']" layout="stack">
+        <wt-picklist
+          id="d-pl-filter"
+          [source]="filterSource"
+          [target]="filterTarget"
+          [sourceHeader]="tx('สิทธิ์ทั้งหมด')"
+          [targetHeader]="tx('สิทธิ์ของผู้ใช้')"
+          filterBy="name,module"
+          [sourceFilterPlaceholder]="tx('ค้นหาสิทธิ์')"
+          [targetFilterPlaceholder]="tx('ค้นหาสิทธิ์')"
+          [sourceStyle]="{ height: '16rem' }"
+          [targetStyle]="{ height: '16rem' }"
+        >
+          <ng-template #item let-p>
+            {{ p.name }} <small class="docs-pl-meta">· {{ p.module }}</small>
+          </ng-template>
+        </wt-picklist>
+        <span class="docs-demo-output">userPermissions: <code id="d-pl-filter-value">{{ codesOf(filterTarget) }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-picklist
+          id="d-pl-tpl"
+          [source]="moreSource"
+          [target]="moreTarget"
+          filterBy="name"
+          [sourceStyle]="{ height: '16rem' }"
+          [targetStyle]="{ height: '16rem' }"
+        >
+          <ng-template #sourceHeader let-list>{{ tx('สิทธิ์ทั้งหมด') }} ({{ list.length }})</ng-template>
+          <ng-template #targetHeader let-list>{{ tx('สิทธิ์ที่ให้แล้ว') }} ({{ list.length }})</ng-template>
+          <ng-template #item let-p let-selected="selected">
+            <span class="docs-pl-pick"><i [class]="selected ? 'pi pi-check-circle' : 'pi pi-circle'"></i> {{ p.name }}</span>
+          </ng-template>
+          <ng-template #emptymessagetarget>{{ tx('ยังไม่ได้ให้สิทธิ์ใด ๆ') }}</ng-template>
+          <ng-template #emptyfiltermessagesource>{{ tx('ไม่พบสิทธิ์ที่ค้นหา') }}</ng-template>
+        </wt-picklist>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="events" [section]="sec['events']">
+      <docs-demo [html]="code['events']" [ts]="ts['events']" layout="stack">
+        <wt-picklist
+          #pl="wtPickList"
+          id="d-pl-events"
+          [source]="eventSource"
+          [target]="eventTarget"
+          [sourceHeader]="tx('สิทธิ์ทั้งหมด')"
+          [targetHeader]="tx('สิทธิ์ของผู้ใช้')"
+          [sourceStyle]="{ height: '14rem' }"
+          [targetStyle]="{ height: '14rem' }"
+          (onMoveToTarget)="logMove('onMoveToTarget', $event)"
+          (onMoveAllToTarget)="logMove('onMoveAllToTarget', $event)"
+          (onMoveToSource)="logMove('onMoveToSource', $event)"
+          (onMoveAllToSource)="logMove('onMoveAllToSource', $event)"
+          (onTargetReorder)="logMove('onTargetReorder', $event)"
+        >
+          <ng-template #item let-p>{{ p.name }}</ng-template>
+        </wt-picklist>
+        <div class="docs-demo-actions">
+          <wt-button id="d-pl-all-right" [label]="tx('ให้ทุกสิทธิ์')" icon="pi pi-check" (onClick)="pl.moveAllRight()"></wt-button>
+          <wt-button id="d-pl-all-left" [label]="tx('ถอนทุกสิทธิ์')" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>
+        </div>
+        <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-pl-event">{{ lastEvent || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="look" [section]="sec['look']">
+      <docs-demo [html]="code['look']" layout="stack">
+        <wt-picklist
+          id="d-pl-look"
+          [source]="lookSource"
+          [target]="lookTarget"
+          [sourceHeader]="tx('สิทธิ์ทั้งหมด')"
+          [targetHeader]="tx('สิทธิ์ของผู้ใช้')"
+          optionLabel="name"
+          scrollHeight="12rem"
+          [stripedRows]="true"
+          [showSourceControls]="false"
+          [showTargetControls]="false"
+        ></wt-picklist>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

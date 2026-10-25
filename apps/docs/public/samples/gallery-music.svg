@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the music room. -->
+  <rect width="320" height="200" fill="#fce7f3" />
+  <rect y="150" width="320" height="50" fill="#f9a8d4" />
+  <ellipse cx="110" cy="112" rx="46" ry="12" fill="#b45309" />
+  <rect x="64" y="112" width="92" height="40" fill="#d97706" />
+  <ellipse cx="110" cy="152" rx="46" ry="12" fill="#92400e" />
+  <ellipse cx="110" cy="112" rx="40" ry="9" fill="#fef3c7" />
+  <path d="M72 116l14 34M100 118l6 34M128 118l-4 34M150 116l-12 34" stroke="#fde68a" stroke-width="2" />
+  <path d="M150 70l26 26M70 72l22 22" stroke="#57534e" stroke-width="3" stroke-linecap="round" />
+  <g fill="#be185d">
+    <circle cx="220" cy="92" r="9" />
+    <circle cx="256" cy="84" r="9" />
+    <path d="M227 92V44l38-8v48h-6V46l-26 6v40Z" />
+  </g>
+  <g fill="#db2777" opacity="0.7">
+    <circle cx="196" cy="52" r="5" />
+    <path d="M200 52V28h4v24Z" />
+  </g>
+</svg>

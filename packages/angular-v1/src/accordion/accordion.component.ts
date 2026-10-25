@@ -1,8 +1,10 @@
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   ContentChildren,
   ElementRef,
   EventEmitter,
@@ -13,11 +15,12 @@ import {
   OnDestroy,
   Output,
   QueryList,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtAccordionTabEvent } from './accordion.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵaccordionGap, WtAccordionTabEvent } from './accordion.types';
 
 /**
  * Stack of collapsible sections, written either way apps already write them:
@@ -29,14 +32,33 @@ import { WtAccordionTabEvent } from './accordion.types';
 @Component({
   selector: 'wt-accordion',
   standalone: true,
-  template: '<div class="wt-accordion p-accordion p-component"><ng-content></ng-content></div>',
+  template: '<div class="wt-accordion p-accordion p-component" [class]="styleClass || \'\'" [style]="rootStyle"><ng-content></ng-content></div>',
   styleUrls: ['./accordion.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WtAccordion implements AfterContentInit, OnDestroy {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() set multiple(v: unknown) { this._multiple = ɵtoBool(v); }
   get multiple(): boolean { return this._multiple; }
+  /**
+   * Space between the panels: `[gap]="true"` (0.75rem), `gap="1rem"` or `[gap]="12"` (px) makes each panel a card of its
+   * own; `[gap]="false"` joins them. Left out: the theme's look.
+   */
+  @Input() set gap(v: string | number | boolean | null | undefined) { this.gapLength = ɵaccordionGap(v); }
+  @HostBinding('style.--wt-accordion-gap') gapLength: string | null = null;
+  @HostBinding('class.wt-accordion-separated') get separated(): boolean {
+    return !!this.gapLength && parseFloat(this.gapLength) !== 0;
+  }
   /** Two-way: `[(activeIndex)]`. */
   @Input() set activeIndex(v: number | number[] | null) {
     this._activeIndex = v ?? null;
@@ -149,12 +171,22 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
 @Component({
   selector: 'wt-accordion-tab, wt-accordiontab, wt-accordionTab',
   standalone: true,
+  imports: [NgIf, NgTemplateOutlet],
   templateUrl: './accordion-tab.component.html',
   styleUrls: ['./accordion.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WtAccordionTab {
+  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
+  get headerTemplate(): TemplateRef<unknown> | null {
+    return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
+  }
+  @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
+  get contentTemplate(): TemplateRef<unknown> | null {
+    return this.contentRef || ɵfindTemplate(this.slotTemplates, 'content');
+  }
   @Input() header?: string;
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }

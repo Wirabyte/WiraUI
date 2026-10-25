@@ -1,0 +1,39 @@
+<div
+  class="wt-slider p-slider p-component"
+  [class.wt-slider-horizontal]="!vertical"
+  [class.p-slider-horizontal]="!vertical"
+  [class.wt-slider-vertical]="vertical"
+  [class.p-slider-vertical]="vertical"
+  [class.wt-slider-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+  (pointerdown)="trackDown($event)"
+>
+  <span
+    class="wt-slider-range p-slider-range"
+    [style.left.%]="vertical ? null : rangeStart"
+    [style.width.%]="vertical ? null : rangeSize"
+    [style.bottom.%]="vertical ? rangeStart : null"
+    [style.height.%]="vertical ? rangeSize : null"
+  ></span>
+  <span
+    *ngFor="let i of handles"
+    class="wt-slider-handle p-slider-handle"
+    role="slider"
+    [class.wt-slider-handle-start]="range && i === 0"
+    [class.wt-slider-handle-end]="range && i === 1"
+    [style.left.%]="vertical ? null : percent(values[i])"
+    [style.bottom.%]="vertical ? percent(values[i]) : null"
+    [attr.tabindex]="disabled ? null : tabindex"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [attr.aria-valuenow]="values[i]"
+    [attr.aria-orientation]="orientation"
+    [attr.aria-disabled]="disabled || null"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-labelledby]="ariaLabelledBy || null"
+    (pointerdown)="handleDown($event, i)"
+    (keydown)="keydown($event, i)"
+  ></span>
+</div>

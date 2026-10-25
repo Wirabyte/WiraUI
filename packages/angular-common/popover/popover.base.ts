@@ -1,6 +1,20 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, ViewChild } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, ɵWtPopup } from 'wiratheme/config';
+import {
+  ChangeDetectorRef,
+  ContentChild,
+  ContentChildren,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, ɵWtPopup, WtTemplate } from 'wiratheme/config';
 import { WtLocale } from 'wiratheme/core';
 
 /**
@@ -28,6 +42,14 @@ export abstract class ɵWtPopoverBase implements OnDestroy {
 
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
+
+  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+  @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
+  /** A `content` template (`pTemplate="content"` / `#content`), with `let-closeCallback="closeCallback"`. */
+  get contentTemplate(): TemplateRef<unknown> | null {
+    return this.contentRef || ɵfindTemplate(this.slotTemplates, 'content');
+  }
+  readonly contentContext = { closeCallback: () => this.hide() };
 
   @ViewChild('panel') panelRef?: ElementRef<HTMLElement>;
 

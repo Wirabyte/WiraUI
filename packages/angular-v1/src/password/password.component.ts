@@ -58,6 +58,14 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   @Input() inputId?: string;
   @Input() name?: string;
   @Input() autocomplete?: string;
+  /** Classes and styles of the text field inside, as before. */
+  @Input() inputStyleClass?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() inputStyle?: Record<string, any> | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get inputStyleObject(): Record<string, any> | null {
+    return this.inputStyle && typeof this.inputStyle === 'object' ? this.inputStyle : null;
+  }
   @Input() maxLength?: number;
   @Input() ariaLabel?: string;
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
@@ -141,7 +149,20 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
         return this.promptLabel ?? t.passwordPrompt;
     }
   }
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
     const c = ['wt-password', 'p-password', 'p-component', 'p-inputwrapper'];
     if (this._toggleMask) c.push('wt-password-has-toggle', 'p-password-mask');
     if (this.strength) c.push('wt-password-' + this.strength);

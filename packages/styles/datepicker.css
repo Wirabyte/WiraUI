@@ -3,13 +3,13 @@
    is a bottom sheet with 44px days. Months and years have their own grids; the time has fields that take
    up / down buttons, arrow keys and typing. Field styles come from inputtext. */
 @layer wiratheme.components {
-  wt-datepicker,
+  :is(wt-datepicker, wt-date-picker),
   wt-calendar {
     display: inline-block;
     vertical-align: middle;
     max-width: 100%;
   }
-  wt-datepicker.wt-datepicker-fluid,
+  :is(wt-datepicker, wt-date-picker).wt-datepicker-fluid,
   wt-calendar.wt-datepicker-fluid {
     display: block;
     width: 100%;

@@ -1,0 +1,793 @@
+/* wt-editor and wtEditorContent. Shared by wiratheme v1, v2 and v3. A light toolbar of grouped icon buttons over a
+   framed writing area, its menus in the top layer. Content keeps the spacing and class names of values saved with
+   the earlier editor (paragraphs without margins, ql-align-*, ql-indent-*, ql-size-*, ql-font-*), so old and new
+   content look the same in the editor and wherever wtEditorContent shows it. */
+@layer wiratheme.components {
+  wt-editor {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-editor {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    color: var(--wt-text);
+  }
+  .wt-editor-hidden,
+  .wt-editor-file {
+    display: none !important;
+  }
+
+  /* ---------- toolbar ---------- */
+  .wt-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    padding: var(--wt-editor-toolbar-padding);
+    border: 1px solid var(--wt-field-border);
+    border-bottom-color: var(--wt-border);
+    border-radius: var(--wt-editor-radius) var(--wt-editor-radius) 0 0;
+    background: var(--wt-editor-toolbar-bg);
+  }
+  .wt-editor-sticky .wt-editor-toolbar {
+    position: sticky;
+    top: var(--wt-editor-sticky-top, 0px);
+    z-index: 2;
+  }
+  .wt-editor-group,
+  .wt-editor-toolbar .ql-formats {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+  }
+  .wt-editor-group + .wt-editor-group,
+  .wt-editor-toolbar .ql-formats + .ql-formats {
+    margin-left: 0.125rem;
+    padding-left: 0.375rem;
+    border-left: 1px solid var(--wt-border);
+  }
+  .wt-editor-tool,
+  .wt-editor-toolbar .ql-formats > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    box-sizing: border-box;
+    min-width: var(--wt-editor-tool-size);
+    height: var(--wt-editor-tool-size);
+    margin: 0;
+    padding: 0 0.375rem;
+    border: 0;
+    border-radius: var(--wt-editor-tool-radius);
+    background: transparent;
+    color: var(--wt-text);
+    font: inherit;
+    font-size: 0.875em;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-editor-tool:not(:disabled):hover {
+    background: var(--wt-editor-tool-hover-bg);
+  }
+  .wt-editor-tool.wt-editor-tool-on,
+  .wt-editor-tool.wt-editor-tool-open {
+    background: var(--wt-editor-tool-on-bg);
+    color: var(--wt-editor-tool-on-color);
+  }
+  .wt-editor-tool:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-editor-tool:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: -1px;
+  }
+  .wt-editor-icon-wrap,
+  .wt-editor-chevron-wrap {
+    display: inline-flex;
+  }
+  .wt-editor-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .wt-editor-chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+    opacity: 0.7;
+  }
+  .wt-editor-dropdown {
+    justify-content: space-between;
+    padding: 0 0.375rem 0 0.5rem;
+  }
+  .wt-editor-dropdown-label {
+    min-width: 4.5rem;
+    max-width: 9rem;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+  }
+  .wt-editor-heading-mark {
+    font-weight: 700;
+    font-size: 0.875em;
+  }
+  .wt-editor-tool-text {
+    font-size: 0.8125em;
+  }
+  .wt-editor-tool-danger:not(:disabled):hover {
+    background: var(--wt-danger-bg);
+    color: var(--wt-danger-text);
+  }
+
+  /* ---------- writing area ---------- */
+  .wt-editor-body {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .wt-editor-area {
+    position: relative;
+    box-sizing: border-box;
+    min-height: var(--wt-editor-content-min-height);
+    padding: var(--wt-editor-content-padding-y) var(--wt-editor-content-padding-x);
+    border: 1px solid var(--wt-field-border);
+    border-radius: var(--wt-editor-radius);
+    background: var(--wt-field-bg);
+    outline: none;
+    overflow: auto;
+    overscroll-behavior: contain;
+    transition:
+      border-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-editor-toolbar + .wt-editor-body > .wt-editor-area,
+  .wt-editor-toolbar + .wt-editor-body > .wt-editor-source {
+    border-top: 0;
+    border-radius: 0 0 var(--wt-editor-radius) var(--wt-editor-radius);
+  }
+  .wt-editor-focused .wt-editor-area {
+    border-color: var(--wt-primary-color);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-editor-area.wt-editor-empty::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: var(--wt-editor-content-padding-y);
+    right: var(--wt-editor-content-padding-x);
+    left: var(--wt-editor-content-padding-x);
+    color: var(--wt-field-placeholder);
+    pointer-events: none;
+  }
+  .wt-editor-disabled .wt-editor-area {
+    opacity: var(--wt-disabled-opacity);
+  }
+  .wt-editor-readonly .wt-editor-area {
+    background: var(--wt-editor-toolbar-bg);
+  }
+  .wt-editor-source {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: var(--wt-editor-content-min-height);
+    resize: vertical;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+    line-height: 1.5;
+  }
+
+  /* ---------- content: in the editor and in wtEditorContent ---------- */
+  .wt-editor-content {
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    tab-size: 4;
+  }
+  .wt-editor-view {
+    display: block;
+    color: var(--wt-text);
+  }
+  .wt-editor-content::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  .wt-editor-content > :first-child {
+    margin-top: 0;
+  }
+  .wt-editor-content :is(p, ol, ul, pre, blockquote, h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+    padding: 0;
+  }
+  .wt-editor-content h1 {
+    font-size: 2em;
+    line-height: 1.25;
+  }
+  .wt-editor-content h2 {
+    font-size: 1.5em;
+    line-height: 1.3;
+  }
+  .wt-editor-content h3 {
+    font-size: 1.25em;
+  }
+  .wt-editor-content h4 {
+    font-size: 1.1em;
+  }
+  .wt-editor-content :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 600;
+  }
+  .wt-editor-content :is(ol, ul) {
+    padding-left: 1.5em;
+  }
+  .wt-editor-content li > :is(ol, ul) {
+    margin: 0;
+  }
+  .wt-editor-content blockquote {
+    margin: 0.5em 0;
+    padding: 0.25em 0 0.25em 1em;
+    border-left: 4px solid var(--wt-border);
+    color: var(--wt-text-muted);
+  }
+  .wt-editor-content pre {
+    margin: 0.5em 0;
+    padding: 0.75em 1em;
+    border-radius: var(--wt-radius-sm);
+    background: var(--wt-hover-bg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .wt-editor-content code {
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    background: var(--wt-hover-bg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+  }
+  .wt-editor-content pre code {
+    padding: 0;
+    background: none;
+    font-size: inherit;
+  }
+  .wt-editor-content a {
+    color: var(--wt-primary-color);
+    text-decoration: underline;
+  }
+  .wt-editor-content hr {
+    margin: 1em 0;
+    border: 0;
+    border-top: 1px solid var(--wt-border);
+  }
+  .wt-editor-content img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: bottom;
+  }
+  .wt-editor-content img.wt-image-left {
+    float: left;
+    margin: 0.25em 1em 0.5em 0;
+  }
+  .wt-editor-content img.wt-image-right {
+    float: right;
+    margin: 0.25em 0 0.5em 1em;
+  }
+  .wt-editor-content img.wt-image-center {
+    display: block;
+    margin: 0.5em auto;
+  }
+  .wt-editor-content table {
+    margin: 0.5em 0;
+    border-collapse: collapse;
+    max-width: 100%;
+  }
+  .wt-editor-content :is(td, th) {
+    min-width: 2.5em;
+    padding: 0.375em 0.5em;
+    border: 1px solid var(--wt-border);
+    text-align: start;
+    vertical-align: top;
+  }
+  .wt-editor-content th {
+    background: var(--wt-hover-bg);
+    font-weight: 600;
+  }
+  /* Column widths in % (set when the table is made or a column is dragged) are kept: the table follows the page width. */
+  .wt-editor-content table:has(> colgroup) {
+    table-layout: fixed;
+  }
+  .wt-editor-content :is(td, th) {
+    overflow-wrap: anywhere;
+  }
+  /* Cells picked by dragging across them, for merging; the browser's own highlight hides meanwhile. */
+  .wt-editor-area .wt-editor-cell-picked {
+    background: color-mix(in srgb, var(--wt-primary-color) 14%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wt-primary-color) 60%, transparent);
+  }
+  .wt-editor-picking ::selection {
+    background: transparent;
+  }
+  /* A column's right edge resizes it. */
+  .wt-editor-col-resize,
+  .wt-editor-col-resize *,
+  .wt-editor-resizing,
+  .wt-editor-resizing * {
+    cursor: col-resize !important;
+  }
+  .wt-editor-resizing {
+    user-select: none;
+  }
+  .wt-editor-content .ql-align-center {
+    text-align: center;
+  }
+  .wt-editor-content .ql-align-right {
+    text-align: right;
+  }
+  .wt-editor-content .ql-align-justify {
+    text-align: justify;
+  }
+  .wt-editor-content .ql-size-small {
+    font-size: 0.75em;
+  }
+  .wt-editor-content .ql-size-large {
+    font-size: 1.5em;
+  }
+  .wt-editor-content .ql-size-huge {
+    font-size: 2.5em;
+  }
+  .wt-editor-content .ql-font-serif {
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  .wt-editor-content .ql-font-monospace {
+    font-family: Monaco, 'Courier New', monospace;
+  }
+  .wt-editor-content .ql-indent-1 { padding-left: 3em; }
+  .wt-editor-content .ql-indent-2 { padding-left: 6em; }
+  .wt-editor-content .ql-indent-3 { padding-left: 9em; }
+  .wt-editor-content .ql-indent-4 { padding-left: 12em; }
+  .wt-editor-content .ql-indent-5 { padding-left: 15em; }
+  .wt-editor-content .ql-indent-6 { padding-left: 18em; }
+  .wt-editor-content .ql-indent-7 { padding-left: 21em; }
+  .wt-editor-content .ql-indent-8 { padding-left: 24em; }
+  .wt-editor-content li.ql-indent-1 { margin-left: 3em; padding-left: 0; }
+  .wt-editor-content li.ql-indent-2 { margin-left: 6em; padding-left: 0; }
+  .wt-editor-content li.ql-indent-3 { margin-left: 9em; padding-left: 0; }
+  .wt-editor-content li.ql-indent-4 { margin-left: 12em; padding-left: 0; }
+  /* Inside the editor: the picture being edited and pictures still uploading. */
+  .wt-editor-area img.wt-image-selected {
+    outline: 2px solid var(--wt-primary-color);
+    outline-offset: 1px;
+  }
+  .wt-editor-area img.wt-image-uploading {
+    opacity: 0.5;
+    animation: wt-editor-pulse 1.2s ease-in-out infinite;
+  }
+  .wt-editor-area :is(td, th):focus-within {
+    outline: 2px solid color-mix(in srgb, var(--wt-primary-color) 45%, transparent);
+    outline-offset: -2px;
+  }
+
+  /* Picture resize frame. */
+  .wt-editor-image-frame {
+    position: absolute;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+  .wt-editor-image-handle {
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--wt-card-bg);
+    border-radius: 3px;
+    background: var(--wt-primary-color);
+    cursor: nwse-resize;
+    pointer-events: auto;
+    touch-action: none;
+  }
+  .wt-editor-readonly .wt-editor-image-frame,
+  .wt-editor-disabled .wt-editor-image-frame {
+    display: none !important;
+  }
+
+  /* ---------- footer ---------- */
+  .wt-editor-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.375rem 0.125rem 0;
+    font-size: 0.8125em;
+    color: var(--wt-text-muted);
+  }
+  .wt-editor-count {
+    margin-left: auto;
+  }
+  .wt-editor-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--wt-radius-sm);
+    background: var(--wt-danger-bg);
+    color: var(--wt-danger-text);
+  }
+  .wt-editor-notice-close {
+    padding: 0 0.25rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  /* ---------- full screen ---------- */
+  .wt-editor.wt-editor-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0.75rem;
+    border: 0;
+    overflow: hidden;
+    background: var(--wt-ground, var(--wt-card-bg));
+    color: var(--wt-text);
+  }
+  .wt-editor-fullscreen .wt-editor-area,
+  .wt-editor-fullscreen .wt-editor-source {
+    flex: 1 1 auto;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* ---------- menus and balloons (top layer) ---------- */
+  .wt-editor-panel {
+    position: fixed;
+    inset: auto;
+    z-index: 1200;
+    box-sizing: border-box;
+    max-width: min(24rem, calc(100vw - 1rem));
+    margin: 0;
+    padding: 0.375rem;
+    overflow: auto;
+    border: 1px solid var(--wt-border);
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-card-bg);
+    color: var(--wt-text);
+    box-shadow: var(--wt-shadow-md);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+  }
+  .wt-editor-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 11rem;
+  }
+  .wt-editor-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.4375rem 0.625rem;
+    border: 0;
+    border-radius: var(--wt-radius-sm);
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  .wt-editor-menu-item:not(:disabled):hover,
+  .wt-editor-menu-item:focus-visible {
+    background: var(--wt-editor-tool-hover-bg);
+    outline: none;
+  }
+  .wt-editor-menu-item[aria-checked='true'] {
+    background: var(--wt-editor-tool-on-bg);
+    color: var(--wt-editor-tool-on-color);
+  }
+  .wt-editor-menu-item:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-editor-menu-danger {
+    color: var(--wt-danger-color);
+  }
+  .wt-editor-menu-sep {
+    height: 1px;
+    margin: 0.25rem 0;
+    background: var(--wt-border);
+  }
+  .wt-editor-block-1 {
+    font-size: 1.5em;
+    font-weight: 600;
+  }
+  .wt-editor-block-2 {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  .wt-editor-block-3 {
+    font-size: 1.15em;
+    font-weight: 600;
+  }
+  .wt-editor-block-4 {
+    font-size: 1.05em;
+    font-weight: 600;
+  }
+  .wt-editor-block-5 {
+    font-weight: 600;
+  }
+  .wt-editor-block-6 {
+    font-size: 0.875em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  /* Quote and code block shown as they look in the text. */
+  .wt-editor-block-blockquote {
+    border-left: 3px solid var(--wt-border);
+    font-style: italic;
+  }
+  .wt-editor-block-codeBlock {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+  }
+  .wt-editor-palette {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    width: 14.5rem;
+  }
+  .wt-editor-swatches {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.375rem;
+  }
+  .wt-editor-swatch {
+    box-sizing: border-box;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--wt-text) 18%, transparent);
+    border-radius: var(--wt-radius-sm);
+    cursor: pointer;
+  }
+  .wt-editor-palette-none .wt-editor-swatch {
+    width: 1.25rem;
+    flex: none;
+  }
+  .wt-editor-swatch-none {
+    background: linear-gradient(135deg, transparent 45%, var(--wt-danger-color) 45%, var(--wt-danger-color) 55%, transparent 55%), var(--wt-card-bg);
+  }
+  .wt-editor-swatch:hover,
+  .wt-editor-swatch:focus-visible {
+    outline: 2px solid var(--wt-primary-color);
+    outline-offset: 1px;
+  }
+  .wt-editor-custom-color {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875em;
+    cursor: pointer;
+  }
+  .wt-editor-custom-color input {
+    width: 2rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .wt-editor-form,
+  .wt-editor-image-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: min(20rem, calc(100vw - 2.5rem));
+    padding: 0.25rem;
+  }
+  .wt-editor-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.875em;
+  }
+  .wt-editor-field .wt-inputtext {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .wt-editor-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875em;
+  }
+  .wt-editor-form-error {
+    color: var(--wt-danger-color);
+    font-size: 0.875em;
+  }
+  .wt-editor-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .wt-editor-tabs {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--wt-border);
+  }
+  .wt-editor-tab {
+    margin-bottom: -1px;
+    padding: 0.375rem 0.75rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--wt-text-muted);
+    font: inherit;
+    font-size: 0.875em;
+    cursor: pointer;
+  }
+  .wt-editor-tab[aria-selected='true'] {
+    border-bottom-color: var(--wt-primary-color);
+    color: var(--wt-primary-color);
+    font-weight: 600;
+  }
+  .wt-editor-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem 0.75rem;
+    border: 1.5px dashed var(--wt-field-border);
+    border-radius: var(--wt-radius-md);
+    background: none;
+    color: var(--wt-text-muted);
+    font: inherit;
+    font-size: 0.875em;
+    text-align: center;
+    cursor: pointer;
+  }
+  .wt-editor-drop:hover,
+  .wt-editor-drop:focus-visible {
+    border-color: var(--wt-primary-color);
+    color: var(--wt-primary-color);
+    outline: none;
+  }
+  .wt-editor-drop .wt-editor-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .wt-editor-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0.125rem;
+    outline: none;
+  }
+  .wt-editor-grid-row {
+    display: flex;
+    gap: 3px;
+  }
+  .wt-editor-grid-cell {
+    width: 1.125rem;
+    height: 1.125rem;
+    padding: 0;
+    border: 1px solid var(--wt-field-border);
+    border-radius: 2px;
+    background: var(--wt-field-bg);
+    cursor: pointer;
+  }
+  .wt-editor-grid-cell.wt-editor-grid-on {
+    border-color: var(--wt-primary-color);
+    background: color-mix(in srgb, var(--wt-primary-color) 22%, var(--wt-field-bg));
+  }
+  .wt-editor-grid:focus-visible {
+    outline: var(--wt-control-focus-outline);
+  }
+  .wt-editor-grid-label {
+    padding-top: 0.25rem;
+    font-size: 0.8125em;
+    text-align: center;
+    color: var(--wt-text-muted);
+  }
+  /* The insert-table panel: the grid, then the size typed in. */
+  .wt-editor-table-insert {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .wt-editor-table-size {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--wt-border);
+  }
+  .wt-editor-table-size-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+    color: var(--wt-text-muted);
+    font-size: 0.875em;
+  }
+  .wt-editor-table-size-field .wt-inputtext {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+  }
+  .wt-editor-table-size-header,
+  .wt-editor-table-size-insert {
+    grid-column: 1 / -1;
+  }
+  .wt-editor-table-size-insert {
+    justify-self: end;
+  }
+  .wt-editor-balloon {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .wt-editor-balloon-group {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .wt-editor-balloon-group + .wt-editor-balloon-group {
+    padding-left: 0.25rem;
+    border-left: 1px solid var(--wt-border);
+  }
+  .wt-editor-balloon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    max-width: 14rem;
+    padding: 0 0.375rem;
+    color: var(--wt-primary-color);
+    text-decoration: none;
+  }
+  .wt-editor-balloon-url {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .wt-editor-alt {
+    width: 9rem;
+    min-width: 0;
+    height: var(--wt-editor-tool-size);
+    box-sizing: border-box;
+    font-size: 0.875em;
+  }
+  @keyframes wt-editor-pulse {
+    50% {
+      opacity: 0.25;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-editor-tool,
+    .wt-editor-area {
+      transition: none;
+    }
+    .wt-editor-area img.wt-image-uploading {
+      animation: none;
+    }
+  }
+}

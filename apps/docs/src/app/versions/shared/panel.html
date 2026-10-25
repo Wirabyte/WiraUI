@@ -34,5 +34,21 @@
         </wt-panel>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="header"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-panel id="d-panel-tpl" [toggleable]="true">
+          <ng-template #header>
+            <span class="docs-panel-head"><i class="pi pi-chart-bar"></i> <b>{{ tx('สรุปคะแนนสอบ') }}</b></span>
+          </ng-template>
+          <ng-template #icons>
+            <wt-button icon="pi pi-download" [text]="true" [rounded]="true" [ariaLabel]="tx('ส่งออก')"></wt-button>
+          </ng-template>
+          <p class="docs-demo-p">{{ tx('คะแนนเฉลี่ยของห้อง 78.5') }}</p>
+          <ng-template #footer>{{ tx('คำนวณเมื่อ 08:30 น.') }}</ng-template>
+        </wt-panel>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

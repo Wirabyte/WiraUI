@@ -18,7 +18,7 @@ import { WtToggleButtonChangeEvent } from './togglebutton.types';
 
 /** On/off button for a boolean in ngModel or reactive forms: `<wt-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */
 @Component({
-  selector: 'wt-togglebutton',
+  selector: 'wt-togglebutton, wt-toggleButton, wt-toggle-button',
   standalone: true,
   imports: [NgIf],
   templateUrl: './togglebutton.component.html',
@@ -82,7 +82,20 @@ export class WtToggleButton implements ControlValueAccessor, OnDestroy {
     return this.checked ? this.onIcon : this.offIcon;
   }
   /** Our classes plus the classic-era names: a `p-button` that gets `p-highlight` when on. */
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
     const c = ['wt-togglebutton', 'p-button', 'p-togglebutton', 'p-component'];
     if (this.checked) c.push('wt-togglebutton-checked', 'p-highlight');
     if (this._invalid) c.push('wt-invalid');

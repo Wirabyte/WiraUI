@@ -402,6 +402,8 @@ a.docs-link-card:hover {
     border-color 0.15s,
     transform 0.15s,
     box-shadow 0.15s;
+  // Its own layer at rest too, so the text does not jump when the hover lift starts and ends.
+  will-change: transform;
 }
 .docs-next-card:hover {
   border-color: color-mix(in srgb, var(--docs-primary) 50%, var(--docs-border));
@@ -441,7 +443,8 @@ docs-demo,
   padding: 22px 16px;
   border: 1px solid color-mix(in srgb, var(--docs-border) 70%, transparent);
   border-radius: 12px;
-  background-color: var(--docs-page-bg);
+  // The surface components sit on in an app (a card), so light fills such as chips and secondary buttons read as they will.
+  background-color: var(--docs-surface);
   background-image: radial-gradient(var(--docs-grid-line) 1px, transparent 1px);
   background-size: 16px 16px;
 }
@@ -491,8 +494,14 @@ docs-demo,
   align-items: center;
   gap: 12px;
 }
+// Demo text carries no margin of its own (it would add to the demo box's gap): beats `.docs-section p`.
+.docs-section .docs-demo-p,
 .docs-demo-p {
   margin: 0;
+}
+// A divider in a stacked demo keeps only its own margin, as in a page, not the demo box's gap on top.
+.docs-demo-stack > :is(wt-divider, .wt-divider-host) {
+  margin-block: -12px;
 }
 // A demo field with a short caption above it.
 .docs-demo-labelled {
@@ -1090,6 +1099,10 @@ docs-demo,
   font-size: 14px;
   font-weight: 500;
 }
+// The message sits right under its field: only its own small margin, not the grid's gap.
+.docs-form-field > :is(wt-field-error, .p-error) {
+  margin-top: calc(0.25rem - 6px);
+}
 .docs-form-field .wt-inputtext {
   width: 100%;
 }
@@ -1321,4 +1334,536 @@ docs-demo,
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px;
+}
+
+// Stepper demos
+.docs-stp-form {
+  display: grid;
+  gap: 8px;
+  max-width: 28rem;
+}
+.docs-stp-form > label {
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-stp-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--wt-steps-line-color, var(--docs-border));
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.docs-stp-head-active {
+  border-color: var(--wt-primary-color);
+  background: var(--wt-primary-color);
+  color: var(--wt-primary-contrast);
+}
+.docs-stp-head:focus-visible {
+  outline: 2px solid var(--wt-primary-color);
+  outline-offset: 2px;
+}
+// Phones: the other steps show their icon only, as the built-in headers show their number only.
+@media (max-width: 575.98px) {
+  .docs-stp-head:not(.docs-stp-head-active) .docs-stp-head-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+// PickList, OrderList and FileUpload demos
+.docs-pl-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.docs-pl-meta {
+  color: var(--wt-text-muted, var(--docs-muted));
+}
+.docs-pl-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.docs-fu-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-fu-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.docs-fu-empty {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: var(--wt-text-muted, var(--docs-muted));
+  text-align: center;
+}
+.docs-fu-empty p {
+  margin: 0;
+}
+.docs-fu-empty .pi {
+  font-size: 1.75rem;
+}
+
+// Ripple and Badge directive demos
+.docs-rp-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .docs-rp-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.docs-rp-card {
+  padding: 14px 16px;
+  border: 1px solid var(--wt-border, var(--docs-border));
+  border-radius: 12px;
+  background: var(--wt-card-bg, var(--docs-surface));
+  cursor: pointer;
+  user-select: none;
+}
+.docs-rp-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--wt-border, var(--docs-border));
+  border-radius: 12px;
+  background: var(--wt-card-bg, var(--docs-surface));
+  list-style: none;
+}
+.docs-rp-list > li {
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.docs-rp-list > li + li {
+  border-top: 1px solid var(--wt-border, var(--docs-border));
+}
+.docs-badge-icon {
+  display: inline-flex;
+  margin: 0 12px;
+  font-size: 1.5rem;
+}
+
+// Table extras demos
+.docs-tbl-grip {
+  cursor: grab;
+}
+.docs-table-nowrap {
+  white-space: nowrap;
+}
+.docs-table-end {
+  text-align: end;
+}
+.docs-csv {
+  max-width: 100%;
+  max-height: 12rem;
+  margin: 0;
+  padding: 10px 12px;
+  overflow: auto;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+  background: var(--docs-surface);
+  font-size: 12.5px;
+  white-space: pre;
+}
+// ---------- Slider, Listbox, Galleria and the other new pages ----------
+// A fixed demo width ([style] lands on the inner element) still fits a phone.
+.docs-demo-preview :is(.wt-tree, .wt-listbox, .wt-treeselect, .wt-galleria) {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.docs-sl-field {
+  width: 100%;
+}
+.docs-sl-line {
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.docs-sl-line > wt-slider {
+  flex: 0 1 16rem;
+  min-width: 0;
+}
+.docs-lb-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.docs-lb-room {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+.docs-lb-room-teacher {
+  color: var(--docs-muted);
+}
+.docs-lb-check {
+  color: var(--docs-primary);
+}
+.docs-lb-footer {
+  display: block;
+  padding: 8px 12px;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-gal-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+}
+.docs-gal-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+}
+.docs-gal-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+.docs-gal-caption-title {
+  display: block;
+}
+.docs-gal-caption-text {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+.docs-gal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 40rem;
+}
+.docs-gal-grid-button {
+  padding: 0;
+  border: 1px solid var(--docs-border);
+  border-radius: 8px;
+  background: none;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.docs-gal-grid-button img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+}
+.docs-gal-full {
+  display: block;
+  width: min(90vw, 960px);
+  max-height: 80vh;
+  object-fit: contain;
+}
+.docs-bc-sep {
+  color: var(--docs-muted);
+}
+/* Navbar demos: framed like a page, kept under the site's own top bar when they stick. */
+.docs-navbar-demo {
+  --wt-navbar-z-index: 1;
+  width: 100%;
+}
+.docs-navbar-brand {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.docs-navbar-logo {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--docs-gradient);
+  color: #ffffff;
+  font-weight: 800;
+}
+.docs-navbar-frame,
+.docs-navbar-scroll {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius);
+  background: var(--docs-surface);
+  overflow: hidden;
+}
+.docs-navbar-frame {
+  min-height: 20rem;
+}
+.docs-navbar-scroll {
+  height: 16rem;
+  overflow: auto;
+}
+.docs-navbar-page {
+  margin: 0;
+  padding: 12px 16px;
+  color: var(--docs-muted);
+}
+.docs-navbar-filler {
+  min-height: 4rem;
+}
+.docs-navbar-hero {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--docs-radius);
+  background: var(--docs-gradient);
+  color: #ffffff;
+}
+.docs-navbar-hero .wt-navbar {
+  border-radius: var(--docs-radius);
+}
+.docs-navbar-hero .wt-navbar-transparent {
+  --wt-navbar-link-color: #ffffff;
+  --wt-navbar-color: #ffffff;
+}
+.docs-ip-photo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.docs-bu-form {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  width: 100%;
+  max-width: 24rem;
+  padding: 16px;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+}
+.docs-bu-form .wt-inputtext {
+  width: 100%;
+}
+.docs-bu-msg,
+.docs-bu-page-msg {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.docs-bu-page-msg p {
+  margin: 0;
+}
+.docs-scp-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 2;
+}
+.docs-scp-notice {
+  margin: 0 0 8px;
+}
+.docs-scr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--docs-border);
+}
+.docs-scr-odd {
+  background: var(--docs-hover);
+}
+.docs-scr-no {
+  min-width: 3ch;
+  color: var(--docs-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.docs-scr-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.docs-scr-row small {
+  color: var(--docs-muted);
+}
+.docs-scr-day {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  box-sizing: border-box;
+  width: 110px;
+  height: 64px;
+  padding: 0 12px;
+  border-right: 1px solid var(--docs-border);
+}
+.docs-scr-day small {
+  color: var(--docs-muted);
+}
+wt-scroller {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+}
+.docs-dr-person {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.docs-dr-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.docs-dr-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.docs-dr-preview wt-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.docs-tm-label {
+  flex: 1;
+}
+.docs-tm-count {
+  min-width: 1.5em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--docs-hover);
+  color: var(--docs-muted);
+  text-align: center;
+}
+.docs-cm-card {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  max-width: 22rem;
+  padding: 16px;
+  border: 1px dashed var(--docs-border);
+  border-radius: 10px;
+  user-select: none;
+}
+.docs-cm-card small {
+  color: var(--docs-muted);
+}
+.docs-cm-files {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.docs-cm-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: 8px;
+  user-select: none;
+}
+.docs-cm-file-picked {
+  border-color: var(--docs-primary);
+  background: var(--docs-hover);
+}
+.docs-tr-size {
+  margin-left: 8px;
+  color: var(--docs-muted);
+}
+.docs-ts-placeholder {
+  color: var(--docs-muted);
+}
+.docs-dd-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.docs-dd-box {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 9rem;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+  list-style: none;
+}
+.docs-dd-title {
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-dd-item {
+  padding: 8px 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: 8px;
+  background: var(--docs-surface);
+}
+.docs-dd-hint {
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-dd-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: 999px;
+  background: var(--docs-surface);
+}
+.docs-dd-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.docs-dd-slot {
+  padding: 16px;
+  border: 1px dashed var(--docs-border);
+  border-radius: 10px;
+}
+.docs-dd-order {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 20rem;
+  margin: 0;
+  padding-left: 24px;
+}
+.docs-dd-order > li {
+  border-radius: 8px;
+}
+.docs-dd-order-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--docs-border);
+  border-radius: 8px;
+  background: var(--docs-surface);
+}
+.docs-dd-handle {
+  cursor: grab;
 }

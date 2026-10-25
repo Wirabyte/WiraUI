@@ -1,4 +1,13 @@
-<div class="wt-tabs p-tabview p-component">
+<wt-tabmenu
+  *ngIf="model"
+  [model]="model"
+  [activeItem]="activeItem"
+  (activeItemChange)="pickItem($event)"
+  [ariaLabel]="ariaLabel"
+  [styleClass]="styleClass || undefined"
+  [style]="rootStyle"
+></wt-tabmenu>
+<div *ngIf="!model" class="wt-tabs p-tabview p-component" [class]="styleClass || ''" [style]="rootStyle">
   <div *ngIf="!valueMode" class="wt-tabs-nav p-tabview-nav-container">
   <button *ngIf="canPrev" type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tabview-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -18,7 +27,7 @@
       (keydown)="onKeydown($event, i)"
     >
       <span *ngIf="panel.leftIcon" [class]="'wt-tab-icon p-tabview-left-icon ' + panel.leftIcon" aria-hidden="true"></span>
-      <span class="p-tabview-title">{{ panel.header }}</span>
+      <span class="p-tabview-title"><ng-container *ngIf="panel.headerTemplate; else plainTitle"><ng-container *ngTemplateOutlet="panel.headerTemplate"></ng-container></ng-container><ng-template #plainTitle>{{ panel.header }}</ng-template></span>
     </button>
   </div>
   <button *ngIf="canNext" type="button" class="wt-tabs-nav-btn wt-tabs-next p-tabview-nav-next" tabindex="-1" aria-hidden="true" (click)="page(1)">

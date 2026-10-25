@@ -1,6 +1,6 @@
 /* wt-metergroup. Shared by wiratheme v1, v2 and v3. Several values on one bar, with a legend. */
 @layer wiratheme.components {
-  wt-metergroup {
+  :is(wt-metergroup, wt-meter-group) {
     display: block;
   }
   .wt-metergroup {
@@ -65,7 +65,7 @@
     height: var(--wt-metergroup-size);
   }
   /* Vertical: the bar fills the host's height (style="height: 20rem" on <wt-metergroup>). */
-  wt-metergroup:has(> .wt-metergroup-vertical) {
+  :is(wt-metergroup, wt-meter-group):has(> .wt-metergroup-vertical) {
     height: 100%;
   }
   .wt-metergroup-vertical {
@@ -76,6 +76,13 @@
     flex-direction: column;
     width: var(--wt-metergroup-size);
     height: 100%;
+  }
+  /* [reverse]: the parts start at the other end (the legend keeps its order). */
+  .wt-metergroup-reverse.wt-metergroup-horizontal .wt-metergroup-meters {
+    flex-direction: row-reverse;
+  }
+  .wt-metergroup-reverse.wt-metergroup-vertical .wt-metergroup-meters {
+    flex-direction: column-reverse;
   }
   @media (prefers-reduced-motion: reduce) {
     .wt-metergroup-meter {

@@ -1,7 +1,7 @@
 <button
   type="button"
   [id]="inputId() || null"
-  [class]="classes()"
+  [class]="classes()" [style]="rootStyle()"
   [attr.aria-pressed]="checked()"
   [attr.aria-label]="ariaLabel() || null"
   [attr.aria-invalid]="invalid() || null"

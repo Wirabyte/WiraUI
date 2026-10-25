@@ -1,0 +1,76 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <div class="docs-demo-labelled docs-sl-field">
+          <label id="d-sl-volume-label">{{ tx('ระดับเสียงประกาศ') }}</label>
+          <div class="docs-demo-actions docs-sl-line">
+            <wt-slider id="d-sl-basic" name="volume" [(ngModel)]="volume" ariaLabelledBy="d-sl-volume-label" [style]="{ width: '16rem' }"></wt-slider>
+            <code id="d-sl-basic-value">{{ volume }}%</code>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="step" [section]="sec['step']">
+      <docs-demo [html]="code['step']">
+        <div class="docs-demo-labelled docs-sl-field">
+          <label id="d-sl-pass-label">{{ tx('คะแนนผ่าน') }}</label>
+          <div class="docs-demo-actions docs-sl-line">
+            <wt-slider id="d-sl-step" name="passMark" [(ngModel)]="passMark" [min]="40" [max]="80" [step]="5" ariaLabelledBy="d-sl-pass-label" [style]="{ width: '16rem' }"></wt-slider>
+            <code id="d-sl-step-value">{{ passMark }}</code>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="range" [section]="sec['range']">
+      <docs-demo [html]="code['range']" [ts]="ts['range']">
+        <div class="docs-demo-labelled docs-sl-field">
+          <label id="d-sl-range-label">{{ tx('ช่วงคะแนน') }}</label>
+          <div class="docs-demo-actions docs-sl-line">
+            <wt-slider id="d-sl-range" name="scoreRange" [(ngModel)]="scoreRange" [range]="true" ariaLabelledBy="d-sl-range-label" [style]="{ width: '16rem' }"></wt-slider>
+            <code id="d-sl-range-value">{{ scoreRange[0] }} {{ tx('ถึง') }} {{ scoreRange[1] }}</code>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="vertical" [section]="sec['vertical']">
+      <docs-demo [html]="code['vertical']">
+        <wt-slider id="d-sl-vertical" name="brightness" [(ngModel)]="brightness" orientation="vertical" [ariaLabel]="tx('ความสว่างจอ')" [style]="{ height: '10rem' }"></wt-slider>
+        <code id="d-sl-vertical-value">{{ brightness }}</code>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="events" [section]="sec['events']">
+      <docs-demo [html]="code['events']" [ts]="ts['events']">
+        <div class="docs-demo-actions docs-sl-line">
+          <wt-slider
+            id="d-sl-events"
+            name="bellVolume"
+            [(ngModel)]="bellVolume"
+            [step]="10"
+            [ariaLabel]="tx('ระดับเสียงประกาศ')"
+            [disabled]="isApiSaving"
+            (onChange)="slid()"
+            (onSlideEnd)="saveVolume($event)"
+            [style]="{ width: '16rem' }"
+          ></wt-slider>
+          @if (isApiSaving) {
+            <small id="d-sl-saving">{{ tx('กำลังบันทึก…') }}</small>
+          }
+        </div>
+        <span class="docs-demo-output">
+          onChange: <code id="d-sl-changes">{{ slideEvents }}</code> · onSlideEnd → {{ tx('บันทึกแล้ว') }}: <code id="d-sl-saved">{{ savedVolume ?? '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

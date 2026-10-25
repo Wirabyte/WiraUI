@@ -35,6 +35,11 @@ test('sorts by clicking headers (ascending, descending), by dot paths too, with 
   await expect(scoreHead).toHaveAttribute('aria-sort', 'descending');
   await expect(main(page).locator('.tbl-score').first()).toHaveText('96');
   await expect(page.locator('#overlay-log')).toContainText('sort:score:-1');
+  // A third click removes the sort (removableSort is on by default).
+  const firstBefore = await main(page).locator('.tbl-row').first().textContent();
+  await scoreHead.click();
+  await expect(scoreHead).toHaveAttribute('aria-sort', 'none');
+  await expect(main(page).locator('.tbl-row').first()).not.toHaveText(firstBefore || '');
 
   const clubHead = main(page).locator('th', { hasText: 'ชุมนุม' });
   await clubHead.focus();

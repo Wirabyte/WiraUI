@@ -1,0 +1,38 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-breadcrumb id="d-bc-basic" [model]="local(trail)" [home]="home" [homeAriaLabel]="tx('หน้าแรก')" (onItemClick)="pressed($event)"></wt-breadcrumb>
+        <span class="docs-demo-output">
+          onItemClick: <code id="d-bc-pressed">{{ lastPressed || '-' }}</code> · command: <code id="d-bc-view">{{ currentView || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="links" [section]="sec['links']">
+      <docs-code [code]="$any(code['links'])" lang="html"></docs-code>
+      <docs-code [code]="$any(ts['links'])" lang="ts"></docs-code>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-breadcrumb id="d-bc-tpl" [model]="local(trail)" [home]="iconHome" [homeAriaLabel]="tx('หน้าแรก')">
+          <ng-template #item let-item>
+            @if (item.icon) {
+              <i [class]="item.icon"></i>
+            }
+            <span class="docs-bc-label">{{ item.label }}</span>
+          </ng-template>
+          <ng-template #separator><span class="docs-bc-sep">/</span></ng-template>
+        </wt-breadcrumb>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

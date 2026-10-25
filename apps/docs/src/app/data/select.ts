@@ -340,6 +340,7 @@ reload(): void {
         row('onShow · onHide', 'void', undefined, 'รายการเปิด / ปิด', 'List opened / closed'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'เข้า / ออกจากช่อง', 'Field focus / blur'),
         row('onClear', 'Event', undefined, 'กดปุ่มล้าง', 'Clear pressed'),
+        row('onLazyLoad', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ (ไม่ส่ง เพราะไม่มี virtual scroll)', 'Accepted so existing templates compile (never emitted: there is no virtual scroll)'),
       ],
     },
     {

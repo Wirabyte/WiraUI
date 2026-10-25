@@ -19,7 +19,7 @@ import { WtCheckboxChangeEvent } from './checkbox.types';
  * `binary` (the model is `trueValue` / `falseValue`) or a group (the model is an array and `value` is added or removed).
  */
 @Component({
-  selector: 'wt-checkbox',
+  selector: 'wt-checkbox, wt-checkBox, wt-check-box',
   host: {
     '[class.wt-checkbox-sm]': "sizeKey() === 'sm'",
     '[class.p-checkbox-sm]': "sizeKey() === 'sm'",
@@ -48,6 +48,17 @@ export class WtCheckbox implements ControlValueAccessor {
   readonly trueValue = input<unknown>(true);
   readonly falseValue = input<unknown>(false);
   readonly ariaLabel = input<string>();
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
 
   readonly onChange = output<WtCheckboxChangeEvent>();
 

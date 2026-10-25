@@ -1,28 +1,22 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
+  ContentChildren,
   EventEmitter,
   forwardRef,
   HostBinding,
   inject,
   Input,
   Output,
+  QueryList,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {
-  ɵassertSupportedAngular,
-  ɵoptionDisabled,
-  ɵoptionLabel,
-  ɵoptionValue,
-  ɵsameValue,
-  ɵsize,
-  ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtSize,
-} from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtSize, WtTemplate } from 'wiratheme/config';
 import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './selectbutton.types';
 
 /**
@@ -30,9 +24,9 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
  * `<wt-selectbutton [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="plan">`.
  */
 @Component({
-  selector: 'wt-selectbutton',
+  selector: 'wt-selectbutton, wt-selectButton, wt-select-button',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf, NgTemplateOutlet],
   templateUrl: './selectbutton.component.html',
   styleUrls: ['./selectbutton.css'],
   encapsulation: ViewEncapsulation.None,
@@ -40,6 +34,11 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtSelectButton), multi: true }],
 })
 export class WtSelectButton implements ControlValueAccessor {
+  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+  @ContentChild('item', { read: TemplateRef }) protected itemRef?: TemplateRef<unknown>;
+  get itemTemplate(): TemplateRef<unknown> | null {
+    return this.itemRef || ɵfindTemplate(this.slotTemplates, 'item');
+  }
   @Input() options: readonly unknown[] | null | undefined = [];
   @Input() optionLabel?: string;
   @Input() optionValue?: string;
@@ -51,6 +50,8 @@ export class WtSelectButton implements ControlValueAccessor {
   get multiple(): boolean { return this._multiple; }
   /** Clicking the chosen option again clears it. Default true. */
   @Input() set allowEmpty(v: unknown) { this._allowEmpty = v === undefined || ɵtoBool(v); }
+  /** `[unselectable]="true"`: a click on the chosen option keeps it (the older opposite of `allowEmpty`). */
+  @Input() set unselectable(v: unknown) { this._allowEmpty = !ɵtoBool(v); }
   get allowEmpty(): boolean { return this._allowEmpty; }
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
@@ -88,7 +89,20 @@ export class WtSelectButton implements ControlValueAccessor {
   get isDisabled(): boolean {
     return this._disabled || this.formDisabled;
   }
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
     return 'wt-selectbutton p-selectbutton p-buttonset p-component' + (this._invalid ? ' wt-invalid' : '');
   }
 

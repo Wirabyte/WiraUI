@@ -1,6 +1,7 @@
 <button
   [attr.type]="type()"
   [class]="classes()"
+  [style]="rootStyle()"
   [disabled]="disabled() || busy()"
   [attr.aria-busy]="busy() || null"
   [attr.aria-label]="ariaLabel() || null"
@@ -21,6 +22,6 @@
     <span [class]="'wt-btn-icon p-button-icon p-button-icon-right ' + icon()" aria-hidden="true"></span>
   }
   @if (badge() !== undefined && badge() !== null && badge() !== '') {
-    <span class="wt-btn-badge p-badge p-component">{{ badge() }}</span>
+    <span class="wt-btn-badge p-badge p-component" [class]="badgeSeverity() ? 'wt-btn-badge-' + badgeSeverity() + ' p-badge-' + badgeSeverity() : ''">{{ badge() }}</span>
   }
 </button>

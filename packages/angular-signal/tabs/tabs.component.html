@@ -1,4 +1,14 @@
-<div class="wt-tabs p-tabs p-component">
+@if (model()) {
+  <wt-tabmenu
+    [model]="model()"
+    [activeItem]="activeItem()"
+    (activeItemChange)="activeItem.set($event)"
+    [ariaLabel]="ariaLabel()"
+    [styleClass]="styleClass() || undefined"
+    [style]="rootStyle()"
+  ></wt-tabmenu>
+} @else {
+<div class="wt-tabs p-tabs p-component" [class]="styleClass() || ''" [style]="rootStyle()">
   @if (!valueMode()) {
   <div class="wt-tabs-nav p-tablist">
   @if (canPrev()) {
@@ -23,7 +33,11 @@
         @if (panel.leftIcon()) {
           <span [class]="'wt-tab-icon ' + panel.leftIcon()" aria-hidden="true"></span>
         }
-        {{ panel.header() }}
+        @if (panel.headerTemplate(); as t) {
+          <ng-container *ngTemplateOutlet="t"></ng-container>
+        } @else {
+          {{ panel.header() }}
+        }
       </button>
     }
   </div>
@@ -37,3 +51,4 @@
   <!-- By value the content is the wt-tablist and wt-tabpanels themselves. -->
   <div [class]="valueMode() ? 'wt-tabs-content' : 'wt-tabpanels p-tabpanels'"><ng-content></ng-content></div>
 </div>
+}

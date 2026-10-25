@@ -64,8 +64,9 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
   @Input() set optionGroupLabel(v: string | undefined) { this._groupLabel = v; this.rebuild(); }
   @Input() set optionGroupChildren(v: string | undefined) { this._groupChildren = v; this.rebuild(); }
   @Input() dataKey?: string;
-  /** Milliseconds after the last key before asking. Default 300. */
-  @Input() delay = 300;
+  /** Milliseconds after the last key before asking. `0` asks at once. Default: the app's `delays.autoComplete` (0). */
+  @Input() set delay(v: unknown) { this._delay = v === null || v === undefined || v === '' ? null : Math.max(0, Number(v) || 0); }
+  get delay(): number { return this._delay ?? this.config.delays.autoComplete; }
   /** Characters needed before asking. Default 1. */
   @Input() minLength = 1;
   /** On leaving the field, text that is not a picked suggestion is cleared. */
@@ -154,6 +155,7 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
   protected readonly config = inject(WtConfig);
+  private _delay: number | null = null;
   private readonly i18n = ɵrefreshOnTranslation();
   private _suggestions: readonly unknown[] = [];
   private _optionLabel?: string;
@@ -248,7 +250,10 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
       this.loading = false;
       return;
     }
-    this.timer = setTimeout(() => this.ask(event, text), Math.max(0, Number(this.delay) || 0));
+    // No wait: ask on this key, not a task later.
+    const wait = this.delay;
+    if (wait > 0) this.timer = setTimeout(() => this.ask(event, text), wait);
+    else this.ask(event, text);
   }
 
   keydown(event: KeyboardEvent): void {
@@ -393,6 +398,11 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
     this.completeMethod.emit({ originalEvent: event, query });
   }
 
+  /** Opens the list with the current suggestions, as `ac.show()` did. */
+  show(): void {
+    this.showResults();
+  }
+
   private showResults(): void {
     if (this.disabled || this._readonly) return;
     if (!this.items.length && !this._showEmpty) {
@@ -422,7 +432,8 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
 
   /** Closing (Escape, a pick, leaving the field, a click outside) also drops a search still on its way, so a late answer
    *  does not open the list again. */
-  private hide(): void {
+  /** Closes the list. */
+  hide(): void {
     if (this.timer) clearTimeout(this.timer);
     this.timer = null;
     this.searching = false;

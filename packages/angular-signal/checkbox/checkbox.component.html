@@ -1,5 +1,7 @@
 <label
   class="wt-checkbox"
+  [class]="styleClass() || ''"
+  [style]="rootStyle()"
   [class.wt-checkbox-checked]="checked()"
   [class.wt-checkbox-disabled]="isDisabled()"
   [class.wt-invalid]="invalid()"

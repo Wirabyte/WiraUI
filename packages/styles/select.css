@@ -266,11 +266,31 @@
   .wt-select-check-on {
     visibility: visible;
   }
+  /* A group heading is a band of its own: tinted, a rule above (not on the first), smaller text, never hovered. */
   .wt-select-group {
-    padding: var(--wt-select-option-padding-y) var(--wt-select-option-padding-x);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--wt-select-group-padding);
+    border-radius: var(--wt-select-option-radius);
+    background: var(--wt-select-group-bg);
     color: var(--wt-select-group-color);
+    font-size: var(--wt-select-group-size);
     font-weight: var(--wt-select-group-weight);
     cursor: default;
+    user-select: none;
+  }
+  .wt-select-group:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+  .wt-select-group:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: calc(-0.25rem - 1px);
+    right: 0;
+    left: 0;
+    border-top: 1px solid var(--wt-select-group-rule);
   }
   .wt-select-empty {
     padding: var(--wt-select-option-padding-y) var(--wt-select-option-padding-x);

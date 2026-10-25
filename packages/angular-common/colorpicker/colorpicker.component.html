@@ -1,0 +1,79 @@
+<div
+  class="wt-colorpicker p-colorpicker p-component"
+  [class.wt-colorpicker-inline]="inline"
+  [class.p-colorpicker-overlay]="!inline"
+  [class.wt-colorpicker-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+>
+  <button
+    *ngIf="!inline"
+    #preview
+    type="button"
+    class="wt-colorpicker-preview p-colorpicker-preview p-inputtext"
+    [id]="inputId || null"
+    [disabled]="disabled"
+    [attr.tabindex]="tabindex"
+    [attr.aria-label]="(ariaLabel || t.colorPicker) + ' ' + hex"
+    aria-haspopup="dialog"
+    [attr.aria-expanded]="open"
+    (click)="toggle()"
+    (keydown)="previewKeydown($event)"
+  >
+    <span class="wt-colorpicker-preview-color" [style.background-color]="hex" aria-hidden="true"></span>
+  </button>
+  <div
+    *ngIf="inline || open"
+    #panel
+    class="wt-colorpicker-panel p-colorpicker-panel"
+    [attr.popover]="inline ? null : 'manual'"
+    [class.wt-colorpicker-overlay-panel]="!inline"
+    [class.p-colorpicker-panel-inline]="inline"
+    [attr.role]="inline ? 'group' : 'dialog'"
+    [attr.aria-label]="ariaLabel || t.colorPicker"
+  >
+    <div
+      class="wt-colorpicker-area p-colorpicker-color-selector"
+      role="slider"
+      [style.background-color]="hueColor"
+      [attr.tabindex]="disabled ? null : 0"
+      [attr.aria-label]="t.saturationBrightness"
+      [attr.aria-valuetext]="areaText"
+      [attr.aria-disabled]="disabled || null"
+      (pointerdown)="areaDown($event)"
+      (keydown)="areaKey($event)"
+    >
+      <span class="wt-colorpicker-area-handle p-colorpicker-color-handle" [style.left.%]="hsb.s" [style.top.%]="100 - hsb.b" [style.background-color]="hex"></span>
+    </div>
+    <div
+      class="wt-colorpicker-hue p-colorpicker-hue"
+      role="slider"
+      aria-valuemin="0"
+      aria-valuemax="360"
+      [attr.aria-valuenow]="round(hsb.h)"
+      [attr.tabindex]="disabled ? null : 0"
+      [attr.aria-label]="t.hue"
+      [attr.aria-disabled]="disabled || null"
+      (pointerdown)="hueDown($event)"
+      (keydown)="hueKey($event)"
+    >
+      <span class="wt-colorpicker-hue-handle p-colorpicker-hue-handle" [style.left.%]="hsb.h / 3.6" [style.background-color]="hueColor"></span>
+    </div>
+    <div class="wt-colorpicker-footer">
+      <span class="wt-colorpicker-swatch" [style.background-color]="hex" aria-hidden="true"></span>
+      <input
+        type="text"
+        class="wt-inputtext wt-colorpicker-hex"
+        maxlength="7"
+        spellcheck="false"
+        autocomplete="off"
+        [value]="hex"
+        [disabled]="disabled"
+        [attr.aria-label]="'HEX'"
+        (change)="hexInput($event)"
+        (keydown.enter)="hexInput($event)"
+      />
+    </div>
+  </div>
+</div>

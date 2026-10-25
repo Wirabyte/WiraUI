@@ -1,0 +1,85 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-scroller id="d-scr-basic" [items]="local(students)" [itemSize]="40" scrollHeight="20rem">
+          <ng-template #item let-student let-options="options">
+            <div class="docs-scr-row" [class.docs-scr-odd]="options.odd">
+              <span class="docs-scr-no">{{ options.index + 1 }}</span>
+              <span class="docs-scr-name">{{ student.name }}</span>
+              <small>{{ tx('ห้อง') }} {{ student.room }}</small>
+            </div>
+          </ng-template>
+        </wt-scroller>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="horizontal" [section]="sec['horizontal']">
+      <docs-demo [html]="code['horizontal']" [ts]="ts['horizontal']" layout="stack">
+        <wt-scroller id="d-scr-days" [items]="days" [itemSize]="110" orientation="horizontal" scrollWidth="100%">
+          <ng-template #item let-day>
+            <div class="docs-scr-day">
+              <b>{{ tx('วันที่') }} {{ day.no }}</b>
+              <small>{{ day.periods }} {{ tx('คาบ') }}</small>
+            </div>
+          </ng-template>
+        </wt-scroller>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="lazy" [section]="sec['lazy']">
+      <docs-demo [html]="code['lazy']" [ts]="ts['lazy']" layout="stack">
+        <wt-scroller
+          id="d-scr-lazy"
+          [items]="local(lazyStudents)"
+          [itemSize]="40"
+          scrollHeight="20rem"
+          [lazy]="true"
+          [delay]="250"
+          [loading]="isApiLoading"
+          [showLoader]="true"
+          (onLazyLoad)="loadStudents($event)"
+        >
+          <ng-template #item let-student let-options="options">
+            <div class="docs-scr-row">
+              <span class="docs-scr-no">{{ options.index + 1 }}</span>
+              @if (student) {
+                <span class="docs-scr-name">{{ student.name }}</span>
+              } @else {
+                <wt-skeleton width="10rem"></wt-skeleton>
+              }
+            </div>
+          </ng-template>
+        </wt-scroller>
+        <span class="docs-demo-output">
+          onLazyLoad: <code id="d-scr-loads">{{ lazyLoads }}</code> · {{ tx('แถวที่โหลดแล้ว') }}: <code id="d-scr-loaded">{{ loadedCount() }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="methods" [section]="sec['methods']">
+      <docs-demo [html]="code['methods']" [ts]="ts['methods']" layout="stack">
+        <wt-scroller #studentList id="d-scr-methods" [items]="local(students)" [itemSize]="40" scrollHeight="16rem" (onScrollIndexChange)="rowsInView($event)">
+          <ng-template #item let-student let-options="options">
+            <div class="docs-scr-row">
+              <span class="docs-scr-no">{{ options.index + 1 }}</span>
+              <span class="docs-scr-name">{{ student.name }}</span>
+            </div>
+          </ng-template>
+        </wt-scroller>
+        <div class="docs-demo-actions">
+          <wt-button id="d-scr-go" [label]="tx('ไปคนที่ 500')" severity="secondary" (onClick)="studentList.scrollToIndex(499)"></wt-button>
+          <wt-button id="d-scr-top" [label]="tx('กลับขึ้นบน')" severity="secondary" [text]="true" (onClick)="studentList.scrollToIndex(0)"></wt-button>
+          <span class="docs-demo-output">{{ tx('แถวแรกที่เห็น') }}: <code id="d-scr-first">{{ firstInView + 1 }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

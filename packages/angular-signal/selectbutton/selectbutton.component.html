@@ -1,4 +1,4 @@
-<div [class]="classes()" role="group" [attr.aria-labelledby]="ariaLabelledBy() || null">
+<div [class]="classes()" [style]="rootStyle()" role="group" [attr.aria-labelledby]="ariaLabelledBy() || null">
   @for (option of options() || []; track $index) {
     <button
       type="button"
@@ -8,7 +8,11 @@
       (click)="select(option, $index, $event)"
       (blur)="onTouched()"
     >
-      {{ labelOf(option) }}
+      @if (itemTemplate(); as t) {
+        <ng-container *ngTemplateOutlet="t; context: { $implicit: option, index: $index }"></ng-container>
+      } @else {
+        {{ labelOf(option) }}
+      }
     </button>
   }
 </div>

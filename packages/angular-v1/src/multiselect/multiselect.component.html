@@ -61,6 +61,7 @@
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"></path></svg>
           </button>
         </span>
+        <span class="wt-multiselect-more p-multiselect-token" hidden aria-hidden="true"></span>
       </ng-container>
       <ng-template #commaLabel>{{ labelText || ' ' }}</ng-template>
     </ng-template>
@@ -114,7 +115,7 @@
         role="searchbox"
         autocomplete="off"
         [value]="filterText"
-        [attr.placeholder]="filterPlaceholder || null"
+        [attr.placeholder]="filterPlaceholder || t.search"
         [attr.aria-label]="ariaFilterLabel || t.search"
         [attr.aria-controls]="listId"
         [attr.aria-activedescendant]="activeId"

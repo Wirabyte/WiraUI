@@ -1180,7 +1180,7 @@ for (const v of ['v1', 'v3']) {
     await expect(list).toBeVisible();
     await expect(list.getByRole('option', { name: 'มัธยมศึกษาปีที่ 4' })).toHaveAttribute('aria-disabled', 'true');
     await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('Space');
+    await page.keyboard.press(' ');
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
     await expect.poll(() => json(page, '#d-ms-level-value')).toEqual(['k1', 'p1']);
@@ -1879,9 +1879,1620 @@ test('steps page in every version: a read-only progress row, picking by click an
   expect(errors).toEqual([]);
 });
 
+/** Drags with the mouse from one element to the upper part of another (past the few-pixel start threshold). */
+async function dragTo(page: Page, from: ReturnType<Page['locator']>, to: ReturnType<Page['locator']>, steps = 12): Promise<void> {
+  await from.scrollIntoViewIfNeeded();
+  const a = (await from.boundingBox())!;
+  const b = (await to.boundingBox())!;
+  await page.mouse.move(a.x + 24, a.y + a.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(a.x + 40, a.y + a.height / 2 + 12, { steps: 4 });
+  await page.mouse.move(b.x + 24, b.y + 4, { steps });
+}
+
+const noSideScroll = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+
+test('picklist page in every version: buttons, double-click, in place, drag, order, search, templates, events, keyboard, phones', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/picklist`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-picklist')).toHaveClass(/active/);
+
+    // Select, then the middle button; the bound array changes in place. A double-click sends an item across.
+    const basic = page.locator('#d-pl-basic');
+    const source = basic.locator('.wt-picklist-source .wt-picklist-item');
+    const target = basic.locator('.wt-picklist-target .wt-picklist-item');
+    await expect(basic.locator('.wt-picklist-header')).toHaveText(['สิทธิ์ทั้งหมด', 'สิทธิ์ของผู้ใช้']);
+    await expect(target).toHaveCount(1);
+    await source.filter({ hasText: 'บันทึกผลการเรียน' }).click();
+    await expect(source.filter({ hasText: 'บันทึกผลการเรียน' })).toHaveAttribute('aria-selected', 'true');
+    await basic.getByRole('button', { name: 'ย้ายไปปลายทาง', exact: true }).click();
+    await expect(page.locator('#d-pl-basic-value')).toHaveText('student.view, grade.entry');
+    await target.filter({ hasText: 'ดูข้อมูลนักเรียน' }).dblclick();
+    await expect(page.locator('#d-pl-basic-value')).toHaveText('grade.entry');
+    await expect(source).toHaveCount(7);
+    await expect(source.last()).toContainText('ดูข้อมูลนักเรียน');
+
+    // Drag from the positions into the forwarding order (a line marks the drop), then put it in order and save.
+    const drag = page.locator('#d-pl-drag');
+    await expect(page.locator('#d-pl-flow')).toHaveText('11, 15');
+    await dragTo(
+      page,
+      drag.locator('.wt-picklist-source .wt-picklist-item', { hasText: 'หัวหน้ากลุ่มสาระ' }),
+      drag.locator('.wt-picklist-target .wt-picklist-item', { hasText: 'ผู้อำนวยการ' })
+    );
+    await expect(drag.locator('.wt-list-drop-before')).toHaveCount(1);
+    await page.mouse.up();
+    await expect(page.locator('#d-pl-flow')).toHaveText('11, 12, 15');
+    await expect(drag.locator('.wt-list-drop-before, .wt-list-drop-after')).toHaveCount(0);
+    // Esc cancels a drag.
+    await dragTo(
+      page,
+      drag.locator('.wt-picklist-source .wt-picklist-item', { hasText: 'เจ้าหน้าที่การเงิน' }),
+      drag.locator('.wt-picklist-target .wt-picklist-item').first()
+    );
+    await page.keyboard.press('Escape');
+    await page.mouse.up();
+    await expect(page.locator('#d-pl-flow')).toHaveText('11, 12, 15');
+    await drag.locator('.wt-picklist-target .wt-picklist-item', { hasText: 'ผู้อำนวยการ' }).click();
+    await drag.locator('.wt-picklist-target-controls').getByRole('button', { name: 'เลื่อนไปบนสุด' }).click();
+    await expect(page.locator('#d-pl-flow')).toHaveText('15, 11, 12');
+    await expect(drag.locator('.wt-picklist-source-controls')).toHaveCount(0);
+    await page.locator('#d-pl-save button').click();
+    await expect(page.locator('#d-pl-save button')).toHaveClass(/wt-btn-loading/);
+    await expect(page.locator('#d-pl-saved')).toHaveText('15 → 11 → 12', { timeout: 3000 });
+
+    // Search: Thai text, move-all takes only what the search leaves, order buttons wait, no match has its text.
+    const filter = page.locator('#d-pl-filter');
+    const search = filter.locator('.wt-picklist-source').getByRole('searchbox');
+    await expect(search).toHaveAttribute('placeholder', 'ค้นหาสิทธิ์');
+    await search.fill('นักเรียน');
+    const found = filter.locator('.wt-picklist-source .wt-picklist-item');
+    await expect(found).toHaveCount(2);
+    await found.first().click();
+    await expect(filter.locator('.wt-picklist-source-controls').getByRole('button', { name: 'เลื่อนขึ้น' })).toBeDisabled();
+    await filter.getByRole('button', { name: 'ย้ายทั้งหมดไปปลายทาง' }).click();
+    await expect(page.locator('#d-pl-filter-value')).toHaveText('user.manage, student.view, student.edit');
+    await search.fill('zzz');
+    await expect(filter.locator('.wt-picklist-source .wt-picklist-empty')).toHaveText('ไม่พบข้อมูลที่ค้นหา');
+    await search.fill('');
+    await expect(filter.locator('.wt-picklist-source .wt-picklist-item')).toHaveCount(5);
+
+    // Templates: header counts, the selected flag, the empty and no-match texts.
+    const tpl = page.locator('#d-pl-tpl');
+    await expect(tpl.locator('.wt-picklist-header')).toHaveText(['สิทธิ์ทั้งหมด (8)', 'สิทธิ์ที่ให้แล้ว (0)']);
+    await expect(tpl.locator('.wt-picklist-target .wt-picklist-empty')).toHaveText('ยังไม่ได้ให้สิทธิ์ใด ๆ');
+    await tpl.locator('.wt-picklist-source .wt-picklist-item').first().click();
+    await expect(tpl.locator('.wt-picklist-source .wt-picklist-item').first().locator('.pi-check-circle')).toHaveCount(1);
+    await tpl.getByRole('button', { name: 'ย้ายไปปลายทาง', exact: true }).click();
+    await expect(tpl.locator('.wt-picklist-header')).toHaveText(['สิทธิ์ทั้งหมด (7)', 'สิทธิ์ที่ให้แล้ว (1)']);
+    await tpl.locator('.wt-picklist-source').getByRole('searchbox').fill('zzz');
+    await expect(tpl.locator('.wt-picklist-source .wt-picklist-empty')).toHaveText('ไม่พบสิทธิ์ที่ค้นหา');
+
+    // Events and methods: the page's own buttons call moveAllRight() / moveAllLeft().
+    await page.locator('#d-pl-all-right button').click();
+    await expect(page.locator('#d-pl-event')).toHaveText('onMoveAllToTarget: grade.entry, grade.approve, finance.view, finance.refund, user.manage, report.export');
+    await expect(page.locator('#d-pl-events .wt-picklist-target .wt-picklist-item')).toHaveCount(8);
+    await page.locator('#d-pl-all-left button').click();
+    await expect(page.locator('#d-pl-event')).toContainText('onMoveAllToSource: student.view, student.edit');
+
+    // Keyboard: one Tab stop per list; Home, Space, Shift+↓ and Ctrl+A select.
+    const look = page.locator('#d-pl-look');
+    await expect(look.locator('.wt-picklist')).toHaveClass(/wt-picklist-striped/);
+    await expect(look.locator('.wt-picklist-reorder')).toHaveCount(0);
+    const list = look.locator('.wt-picklist-source [role="listbox"]');
+    await list.focus();
+    await page.keyboard.press('Home');
+    await page.keyboard.press(' ');
+    await expect(list.locator('[aria-selected="true"]')).toHaveCount(1);
+    await page.keyboard.press('Shift+ArrowDown');
+    await expect(list.locator('[aria-selected="true"]')).toHaveCount(2);
+    await page.keyboard.press('Control+a');
+    await expect(list.locator('[aria-selected="true"]')).toHaveCount(6);
+    await expect(list).toHaveAttribute('aria-multiselectable', 'true');
+
+    // Phones: the lists stack, nothing scrolls sideways.
+    await page.setViewportSize({ width: 360, height: 800 });
+    await expect(basic.locator('.wt-picklist')).toHaveClass(/wt-picklist-stacked/);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('orderlist page in every version: buttons, onReorder, drag, selection, keyboard, search waits, templates', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/orderlist`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-orderlist')).toHaveClass(/active/);
+
+    // Select, then the order buttons; the array changes in place and (onReorder) fires.
+    const basic = page.locator('#d-ol-basic');
+    const items = basic.locator('.wt-picklist-item');
+    await expect(basic.locator('.wt-picklist-header')).toHaveText('ลำดับวิชาเลือกที่ต้องการ');
+    await expect(items.first()).toContainText('1. หุ่นยนต์เบื้องต้น');
+    await expect(page.locator('#d-ol-order')).toHaveText('1, 2, 3, 4, 5, 6');
+    await expect(basic.getByRole('button', { name: 'เลื่อนขึ้น' })).toBeDisabled();
+    await items.filter({ hasText: 'ดนตรีไทย' }).click();
+    await basic.getByRole('button', { name: 'เลื่อนขึ้น' }).click();
+    await expect(page.locator('#d-ol-order')).toHaveText('1, 3, 2, 4, 5, 6');
+    await expect(items.nth(1)).toContainText('2. ดนตรีไทย');
+    await basic.getByRole('button', { name: 'เลื่อนไปล่างสุด' }).click();
+    await expect(page.locator('#d-ol-order')).toHaveText('1, 2, 4, 5, 6, 3');
+
+    // Drag reorders; the buttons sit on the right; [(selection)] follows clicks and keys; Alt+↓ moves.
+    const drag = page.locator('#d-ol-drag');
+    await expect(drag.locator('.wt-orderlist')).toHaveClass(/wt-orderlist-controls-right/);
+    await dragTo(page, drag.locator('.wt-picklist-item').first(), drag.locator('.wt-picklist-item').nth(3));
+    await page.mouse.up();
+    await expect(page.locator('#d-ol-drag-order')).toHaveText('2, 3, 1, 4, 5, 6');
+    const list = drag.locator('[role="listbox"]');
+    await list.focus();
+    await page.keyboard.press('Home');
+    await page.keyboard.press(' ');
+    await expect(page.locator('#d-ol-selection')).toHaveText('2');
+    await page.keyboard.press('Alt+ArrowDown');
+    await expect(page.locator('#d-ol-drag-order')).toHaveText('3, 2, 1, 4, 5, 6');
+
+    // Search: the header template, order buttons wait while searching, the no-match template.
+    const filter = page.locator('#d-ol-filter');
+    await expect(filter.locator('.wt-picklist-header')).toHaveText('วิชาเลือก (6)');
+    const search = filter.getByRole('searchbox');
+    await expect(search).toHaveAttribute('placeholder', 'ค้นหาวิชา');
+    await search.fill('ดนตรี');
+    await expect(filter.locator('.wt-picklist-item')).toHaveCount(1);
+    await filter.locator('.wt-picklist-item').click();
+    await expect(filter.getByRole('button', { name: 'เลื่อนขึ้น' })).toBeDisabled();
+    await search.fill('zzz');
+    await expect(filter.locator('.wt-picklist-empty')).toHaveText('ไม่พบวิชาที่ค้นหา');
+
+    // optionLabel without a template, stripes; phones put the buttons above the list.
+    const look = page.locator('#d-ol-look');
+    await expect(look.locator('.wt-picklist-item').first()).toHaveText('หุ่นยนต์เบื้องต้น');
+    await expect(look.locator('.wt-orderlist')).toHaveClass(/wt-orderlist-striped/);
+    await page.setViewportSize({ width: 360, height: 800 });
+    await expect(basic.locator('.wt-orderlist')).toHaveClass(/wt-orderlist-stacked/);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVR4nGNk+M9QzwAEjDAGNzYAAEnnAjVB4fKbAAAAAElFTkSuQmCC', 'base64');
+const fakeFile = (name: string, mimeType: string, size: number) => ({ name, mimeType, buffer: Buffer.alloc(size) });
+const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+test('fileupload page in every version: choose, sizes, thumbnails, remove, a pretend upload, drop, checks, basic mode, templates', async ({ page, browserName }) => {
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/fileupload`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-fileupload')).toHaveClass(/active/);
+
+    // Choose files: rows with sizes, a thumbnail for the picture, "pending" badges; remove one.
+    const basic = page.locator('#d-fu-basic');
+    await expect(basic.locator('.wt-fileupload-choose')).toHaveText(/เลือกไฟล์/);
+    await expect(basic.locator('.wt-fileupload-upload')).toBeDisabled();
+    await expect(basic.locator('.wt-fileupload-empty')).toHaveText('ลากไฟล์มาวางที่นี่ หรือกดปุ่มเลือกไฟล์');
+    await basic.locator('input[type="file"]').setInputFiles([
+      fakeFile('ใบรับรองผลการเรียน.pdf', 'application/pdf', 1572864),
+      { name: 'photo.png', mimeType: 'image/png', buffer: PNG },
+    ]);
+    const rows = basic.locator('.wt-fileupload-file');
+    await expect(rows).toHaveCount(2);
+    await expect(rows.first()).toContainText('ใบรับรองผลการเรียน.pdf');
+    await expect(rows.first()).toContainText('1.5 MB');
+    await expect(basic.locator('img.wt-fileupload-thumb')).toHaveCount(1);
+    await expect(basic.locator('.wt-fileupload-badge')).toHaveText(['รออัปโหลด', 'รออัปโหลด']);
+    await basic.getByRole('button', { name: 'ลบ photo.png' }).click();
+    await expect(rows).toHaveCount(1);
+
+    // Upload with customUpload: the buttons lock while "sending", then the page clears the component.
+    await basic.locator('.wt-fileupload-upload').click();
+    await expect(basic.locator('.wt-fileupload-choose')).toBeDisabled();
+    await expect(page.locator('#d-fu-sent')).toHaveText('1', { timeout: 3000 });
+    await expect(rows).toHaveCount(0);
+    await expect(basic.locator('.wt-fileupload-choose')).toBeEnabled();
+
+    // Files dropped on the box (dashed highlight while over it).
+    if (browserName === 'chromium') {
+      const content = basic.locator('.wt-fileupload-content');
+      const dt = await page.evaluateHandle(() => {
+        const d = new DataTransfer();
+        d.items.add(new File(['%PDF'], 'dropped.pdf', { type: 'application/pdf' }));
+        return d;
+      });
+      await content.dispatchEvent('dragenter', { dataTransfer: dt });
+      await expect(content).toHaveClass(/wt-fileupload-highlight/);
+      await content.dispatchEvent('drop', { dataTransfer: dt });
+      await expect(content).not.toHaveClass(/wt-fileupload-highlight/);
+      await expect(rows).toHaveText([/dropped\.pdf/]);
+    }
+
+    // Checks: type and size messages (closable), onSelect gets only the files that passed, then the file limit.
+    const check = page.locator('#d-fu-check');
+    await check.locator('input[type="file"]').setInputFiles([
+      fakeFile('scores.xlsx', XLSX, 2000),
+      fakeFile('big.xlsx', XLSX, 2_000_000),
+      fakeFile('notes.txt', 'text/plain', 10),
+    ]);
+    await expect(check.locator('.wt-fileupload-message')).toHaveText([
+      /big\.xlsx: ไฟล์ใหญ่เกินกำหนด \(ไม่เกิน 1 MB\)/,
+      /notes\.txt: ไม่รองรับไฟล์ชนิดนี้ \(รองรับ \.xlsx, \.xls\)/,
+    ]);
+    await expect(page.locator('#d-fu-picked')).toHaveText('scores.xlsx');
+    await expect(page.locator('#d-fu-problem')).toHaveText('type');
+    await expect(check.locator('.wt-fileupload-file')).toHaveCount(1);
+    await expect(check.locator('.wt-fileupload-upload')).toHaveCount(0);
+    await check.locator('.wt-fileupload-message .wt-message-close').first().click();
+    await expect(check.locator('.wt-fileupload-message')).toHaveCount(1);
+    await check.locator('input[type="file"]').setInputFiles([fakeFile('a.xlsx', XLSX, 100), fakeFile('b.xlsx', XLSX, 200), fakeFile('c.xlsx', XLSX, 300)]);
+    await expect(check.locator('.wt-fileupload-message')).toHaveText([/เลือกไฟล์ได้ไม่เกิน 3 ไฟล์/]);
+    await expect(check.locator('.wt-fileupload-file')).toHaveCount(3);
+    await expect(page.locator('#d-fu-problem')).toHaveText('limit');
+    await expect(check.locator('.wt-fileupload-choose')).toBeDisabled();
+    await check.locator('.wt-fileupload-cancel').click();
+    await expect(check.locator('.wt-fileupload-file')).toHaveCount(0);
+
+    // Basic mode: one button, then the file name and a clear button.
+    const single = page.locator('#d-fu-single');
+    await expect(single.locator('.wt-fileupload-basic')).toBeVisible();
+    await single.locator('input[type="file"]').setInputFiles({ name: 'student-15.png', mimeType: 'image/png', buffer: PNG });
+    await expect(single.locator('.wt-fileupload-chosen')).toHaveText('student-15.png');
+    await expect(page.locator('#d-fu-photo')).toHaveText('student-15.png');
+    await single.getByRole('button', { name: 'ล้าง' }).click();
+    await expect(page.locator('#d-fu-photo')).toHaveText('null');
+
+    // Templates: the empty and toolbar templates, own file rows with a remove button.
+    const tpl = page.locator('#d-fu-tpl');
+    await expect(tpl.locator('.wt-fileupload-empty')).toContainText('ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่');
+    await expect(tpl.locator('.wt-fileupload-header')).toContainText('PDF หรือรูป ไม่เกิน 10 MB');
+    await tpl.locator('input[type="file"]').setInputFiles([fakeFile('id-card.pdf', 'application/pdf', 3000), { name: 'cert.png', mimeType: 'image/png', buffer: PNG }]);
+    await expect(tpl.locator('.docs-fu-row')).toHaveCount(2);
+    await tpl.locator('.docs-fu-row').first().getByRole('button', { name: 'นำออก' }).click();
+    await expect(tpl.locator('.docs-fu-name')).toHaveText(['cert.png']);
+    await tpl.locator('.wt-fileupload-cancel').click();
+    await expect(tpl.locator('.wt-fileupload-empty')).toBeVisible();
+
+    // The url sample is code only: nothing on the page posts files.
+    await expect(page.locator('#server docs-code').first()).toContainText('url="/api/students/import"');
+    await page.setViewportSize({ width: 360, height: 800 });
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('stepper page in every version: panels by value, done steps, keyboard, linear with checks, vertical, progress display, own headers, phones', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/stepper`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-stepper')).toHaveClass(/active/);
+
+    // Basic: numbers by position, Next through activateCallback, done steps, a click on a header.
+    const basic = page.locator('#d-stp-basic');
+    const headers = basic.locator('.wt-step-header');
+    await expect(basic.locator('.wt-step-number')).toHaveText(['1', '2', '3']);
+    await expect(basic.locator('.wt-step-title')).toHaveText(['ข้อมูลพื้นฐาน', 'ที่อยู่', 'ยืนยัน']);
+    await expect(headers.first()).toHaveAttribute('aria-current', 'step');
+    await expect(basic.locator('.wt-step-panel-active')).toContainText('กรอกชื่อ วันเกิด และเลขประจำตัวประชาชน');
+    await page.locator('#d-stp-next-1 button').click();
+    await expect(page.locator('#d-stp-basic-value')).toHaveText('2');
+    await expect(basic.locator('wt-step').first()).toHaveClass(/wt-step-complete/);
+    await expect(basic.locator('.wt-step-panel-active')).toContainText('ที่อยู่ตามทะเบียนบ้านและที่อยู่ปัจจุบัน');
+    await headers.nth(2).click();
+    await expect(page.locator('#d-stp-basic-value')).toHaveText('3');
+    await expect(basic.locator('wt-step.wt-step-complete')).toHaveCount(2);
+    // Keyboard: the current step is the Tab stop; ← moves focus, Enter picks.
+    await expect(basic.locator('.wt-step-header[tabindex="0"]')).toHaveCount(1);
+    await headers.nth(2).focus();
+    await page.keyboard.press('ArrowLeft');
+    await expect(headers.nth(1)).toBeFocused();
+    await page.keyboard.press('Home');
+    await expect(headers.first()).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#d-stp-basic-value')).toHaveText('1');
+
+    // Linear: the other headers are locked; Next waits for the step's data; the last step sends.
+    const linear = page.locator('#d-stp-linear');
+    await expect(linear.locator('.wt-step-header').nth(1)).toBeDisabled();
+    await expect(linear.locator('.wt-step-header').nth(2)).toBeDisabled();
+    await expect(page.locator('#d-stp-linear-next-1 button')).toBeDisabled();
+    await page.locator('#d-stp-name').fill('ด.ญ.ปภาวรินทร์ ศรีสุข');
+    await page.locator('#d-stp-linear-next-1 button').click();
+    await expect(page.locator('#d-stp-linear-value')).toHaveText('2');
+    await expect(linear.locator('.wt-step-header').first()).toBeDisabled();
+    await page.locator('#d-stp-phone').fill('08123');
+    await expect(page.locator('#d-stp-linear-next-2 button')).toBeDisabled();
+    await page.locator('#d-stp-phone').fill('0812345678');
+    await page.locator('#d-stp-linear-next-2 button').click();
+    await expect(page.locator('#d-stp-summary')).toHaveText('ด.ญ.ปภาวรินทร์ ศรีสุข · 0812345678');
+    await page.locator('#d-stp-submit button').click();
+    await expect(page.locator('#d-stp-submit button')).toHaveClass(/wt-btn-loading/);
+    await expect(page.locator('#d-stp-submitted')).toHaveText('ส่งใบสมัครแล้ว', { timeout: 3000 });
+
+    // Vertical: each panel opens under its own header, with the line to the next step.
+    const vertical = page.locator('#d-stp-vertical');
+    await expect(vertical.locator('wt-step-item')).toHaveCount(3);
+    await expect(vertical.locator('wt-step-item').first()).toHaveClass(/wt-step-item-active/);
+    await expect(vertical.locator('wt-step-item').first().locator('.wt-step-panel-content')).toContainText('ปีการศึกษาและภาคเรียนที่จะเปิดรับสมัคร');
+    await expect(vertical.locator('wt-step-panel .wt-stepper-separator')).toHaveCount(2);
+    await vertical.getByRole('button', { name: 'ถัดไป' }).click();
+    await expect(page.locator('#d-stp-vertical-value')).toHaveText('2');
+    await expect(vertical.locator('wt-step-item').nth(1).locator('.wt-step-panel-content')).toContainText('วันเปิด ปิดรับสมัคร และจำนวนที่รับ');
+    await expect(vertical.locator('wt-step-item').first().locator('.wt-step-panel-content')).not.toContainText('ปีการศึกษา');
+
+    // Progress display: every step disabled but not faded; the step before the current one is done.
+    const progress = page.locator('#d-stp-progress');
+    await expect(progress.locator('.wt-step-header:disabled')).toHaveCount(3);
+    await expect(progress.locator('.wt-step-header').nth(1)).toHaveAttribute('aria-current', 'step');
+    await expect(progress.locator('wt-step').first()).toHaveClass(/wt-step-complete/);
+    const shown = await progress.locator('.wt-step-header').nth(2).evaluate((el) => {
+      let o = 1;
+      for (let e: Element | null = el; e && e.tagName !== 'WT-STEPPER'; e = e.parentElement) o *= Number(getComputedStyle(e).opacity);
+      return o;
+    });
+    expect(shown).toBe(1);
+
+    // Own headers from a #content template on wt-step; plain panel content.
+    const own = page.locator('#d-stp-header');
+    await expect(own.locator('.docs-stp-head')).toHaveText(['ข้อมูลผู้ชำระ', 'ช่องทางชำระ', 'ใบเสร็จ']);
+    await own.locator('.docs-stp-head').nth(1).click();
+    await expect(page.locator('#d-stp-header-value')).toHaveText('2');
+    await expect(own.locator('.docs-stp-head').nth(1)).toHaveAttribute('aria-current', 'step');
+    await expect(own.locator('.wt-step-panel-active')).toHaveText('เลือกโอนผ่านธนาคารหรือชำระที่ห้องการเงิน');
+
+    // Phones: only the current step keeps its title in the row (the others are still read out).
+    await page.setViewportSize({ width: 360, height: 800 });
+    const title = (i: number) => basic.locator('.wt-step-title').nth(i).evaluate((el) => el.getBoundingClientRect().width);
+    expect(await title(0)).toBeGreaterThan(20);
+    expect(await title(1)).toBeLessThanOrEqual(1);
+    await expect(basic.locator('.wt-step-title').nth(1)).toHaveText('ที่อยู่');
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+
+    // Steps and Stepper link to each other in the same version.
+    await page.locator('#d-stp-steps-link').click();
+    await expect(page).toHaveURL(new RegExp(`/${v}/components/steps$`));
+    await page.locator('#d-steps-stepper-link').click();
+    await expect(page).toHaveURL(new RegExp(`/${v}/components/stepper$`));
+  }
+  expect(errors).toEqual([]);
+});
+
+for (const v of ['v1', 'v3']) {
+  test(`table extras (${v}): frozen columns, row expansion, row groups, rowspan, column filters, CSV`, async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/table`);
+
+    // Frozen columns stay at the left / right edges while the table scrolls sideways.
+    const frozen = page.locator('#d-tbl-frozen');
+    const wrapper = frozen.locator('.wt-table-wrapper');
+    await wrapper.scrollIntoViewIfNeeded();
+    expect(await wrapper.evaluate((el) => el.scrollWidth - el.clientWidth)).toBeGreaterThan(100);
+    await wrapper.evaluate((el) => (el.scrollLeft = 300));
+    await expect.poll(async () => {
+      const box = (await wrapper.boundingBox())!;
+      const code = (await frozen.locator('.d-tbl-code').first().boundingBox())!;
+      const actions = (await frozen.locator('.d-tbl-actions').first().boundingBox())!;
+      return [Math.round(code.x - box.x), Math.round(box.x + box.width - (actions.x + actions.width))].map((d) => Math.abs(d) <= 2);
+    }).toEqual([true, true]);
+    await expect(frozen.locator('th.wt-frozen-column')).toHaveCount(3);
+
+    // Row expansion: the first row starts open; single mode closes the others; the toggler says so.
+    const expand = page.locator('#d-tbl-expand');
+    const togglers = expand.locator('.d-tbl-toggler');
+    await expect(expand.locator('.d-tbl-expansion')).toHaveText([/ชุมนุม ดนตรีไทย · สถานะ กำลังศึกษา · วันเกิด 1 ม\.ค\. 2555/]);
+    await expect(togglers.first()).toHaveAttribute('aria-expanded', 'true');
+    await expect(togglers.first()).toHaveAttribute('aria-label', 'รายละเอียดของ ด.ช.กิตติพัฒน์ ใจดี');
+    await togglers.nth(1).click();
+    await expect(expand.locator('.d-tbl-expansion')).toHaveText([/ชุมนุม บาสเกตบอล/]);
+    await expect(togglers.first()).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('#d-tbl-expand-log')).toHaveText('onRowExpand: ด.ญ.ปภาวรินทร์ ศรีสุข');
+    await togglers.nth(1).click();
+    await expect(expand.locator('.d-tbl-expansion')).toHaveCount(0);
+    await expect(page.locator('#d-tbl-expand-log')).toHaveText('onRowCollapse: ด.ญ.ปภาวรินทร์ ศรีสุข');
+
+    // Row groups: a header row per room and a footer with the count; rowspan merges the room cells.
+    const group = page.locator('#d-tbl-group');
+    await expect(group.locator('tr.wt-rowgroup-header')).toHaveText([/ห้อง ม\.1\/1/, /ห้อง ม\.1\/2/, /ห้อง ม\.1\/10/, /ห้อง ม\.2\/1/, /ห้อง ม\.2\/3/]);
+    await expect(group.locator('.d-tbl-group-footer').first()).toHaveText('3 คน');
+    const span = page.locator('#d-tbl-span .d-tbl-span-room');
+    await expect(span).toHaveText(['ม.1/1', 'ม.1/2', 'ม.1/10', 'ม.2/1', 'ม.2/3']);
+    await expect(span.first()).toHaveAttribute('rowspan', '3');
+
+    // Column filters: text (after the delay), numbers, the yes / no / any button, and a select in a filter template.
+    const filter = page.locator('#d-tbl-filter');
+    const names = filter.locator('.d-tbl-name');
+    await filter.getByPlaceholder('ค้นหาชื่อ').fill('ด.ญ.');
+    await expect.poll(async () => (await names.allTextContents()).every((n) => n.startsWith('ด.ญ.'))).toBe(true);
+    await filter.locator('.wt-column-filter-clear').click();
+    await expect(filter.getByPlaceholder('ค้นหาชื่อ')).toHaveValue('');
+    await filter.getByPlaceholder('คะแนนขั้นต่ำ').fill('90');
+    await expect.poll(async () => (await filter.locator('.d-tbl-score').allTextContents()).every((s) => Number(s) >= 90)).toBe(true);
+    await filter.locator('.wt-column-filter-clear').click();
+    const paid = filter.locator('.wt-column-filter-bool');
+    await paid.click();
+    await expect(paid).toHaveAttribute('aria-checked', 'true');
+    await expect.poll(async () => [...new Set(await filter.locator('.d-tbl-paid').allTextContents())]).toEqual(['ชำระแล้ว']);
+    await paid.click();
+    await expect(paid).toHaveAttribute('aria-checked', 'false');
+    await expect.poll(async () => [...new Set(await filter.locator('.d-tbl-paid').allTextContents())]).toEqual(['ค้างชำระ']);
+    await paid.click();
+    await expect(paid).toHaveAttribute('aria-checked', 'mixed');
+    await filter.locator('wt-select').click();
+    await page.locator('.wt-select-list').getByRole('option', { name: 'ม.1/10' }).click();
+    await expect.poll(async () => [...new Set(await filter.locator('.d-tbl-room').allTextContents())]).toEqual(['ม.1/10']);
+    await filter.getByPlaceholder('ค้นหาชื่อ').fill('zzz');
+    await expect(filter.locator('tbody')).toContainText('ไม่พบนักเรียนที่ค้นหา', { timeout: 3000 });
+
+    // CSV: toCSV() shows what exportCSV() saves (columns from [columns], exportable: false left out, exportFunction).
+    await page.locator('#d-tbl-export-preview button').click();
+    const csv = page.locator('#d-tbl-csv');
+    await expect(csv).toContainText('"รหัส","ชื่อ - สกุล","ห้อง","คะแนน"');
+    await expect(csv).toContainText('"66001","ด.ช.กิตติพัฒน์ ใจดี","ม.1/1","87.00"');
+    await expect(page.locator('#d-tbl-export-picked button')).toBeDisabled();
+    await page.locator('#d-tbl-export tbody label.wt-checkbox').first().click();
+    await expect(page.locator('#d-tbl-export-picked button')).toBeEnabled();
+    // The export button itself downloads a file; the click must just work.
+    await page.locator('#d-tbl-export-all button').click();
+
+    // Phones: no sideways page scroll, the frozen table scrolls inside its box.
+    await page.setViewportSize({ width: 360, height: 800 });
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('samples of the new pages follow the team style per version', async ({ page }) => {
+  const code = (sel: string) => page.locator(sel).first().locator('pre').first();
+  await page.goto('/v1/components/picklist');
+  await expect(code('#basic docs-demo')).toContainText('<ng-template wtTemplate="item" let-p>');
+  await expect(code('#dragdrop docs-demo')).toContainText('[dragdrop]="true" [showSourceControls]="false" [sourceStyle]="{ height: \'20rem\' }"');
+  await expect(page.locator('.docs-slot-note')).toContainText('pTemplate="item"');
+  await page.goto('/v3/components/picklist');
+  await expect(code('#basic docs-demo')).toContainText('<ng-template #item let-p>');
+  await page.goto('/v2/components/stepper');
+  await expect(code('#basic docs-demo')).toContainText('<ng-template wtTemplate="content" let-activateCallback="activateCallback">');
+  await expect(code('#header docs-demo')).toContainText('<wt-step *ngFor="let s of paymentSteps" [value]="s.value">');
+  await page.goto('/v3/components/stepper');
+  await expect(code('#header docs-demo')).toContainText('@for (s of paymentSteps; track s.value) {');
+  await expect(code('#linear docs-demo')).toContainText('name="studentName" wtInputText [(ngModel)]="studentName"');
+  await page.locator('#linear').getByRole('tab', { name: 'TS' }).click();
+  await expect(page.locator('#linear docs-code')).toContainText('submitApplication(): void {');
+  await page.goto('/v1/components/table');
+  await expect(code('#rowspan docs-demo')).toContainText('<td *ngIf="rowgroup" [attr.rowspan]="rowspan">');
+  await page.goto('/v3/components/table');
+  await expect(code('#rowspan docs-demo')).toContainText('@if (rowgroup) {');
+  await page.locator('#export').getByRole('tab', { name: 'TS' }).click();
+  await expect(page.locator('#export docs-code')).toContainText('exportCell = this.formatCell.bind(this);');
+  await page.goto('/v2/components/fileupload');
+  await expect(code('#basic docs-demo')).toContainText('[multiple]="true"');
+  await expect(code('#basic docs-demo')).toContainText('[customUpload]="true" [disabled]="isApiSaving"');
+});
+
 test('migration table lists PanelMenu and Steps', async ({ page }) => {
   await page.goto('/v1/getting-started/migration');
   for (const name of ['wt-panelmenu', 'wt-steps']) await expect(page.locator('#names')).toContainText(name);
+});
+
+test('migration table lists Stepper, PickList, OrderList and FileUpload, and the table extras', async ({ page }) => {
+  for (const lang of ['th', 'en']) {
+    await page.goto(`/v3/getting-started/migration?lang=${lang}`);
+    for (const name of ['wt-stepper', 'wt-step-panel', 'wt-picklist', 'wt-orderlist', 'wt-fileupload', 'WtFileUploadModule']) {
+      await expect(page.locator('#names')).toContainText(name);
+    }
+    await expect(page.locator('#names')).toContainText('pFrozenColumn');
+  }
+});
+
+test('the new pages at 360px in Thai and English: no sideways scroll, stacked lists, every demo fits', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const lang of ['th', 'en']) {
+    for (const v of ['v1', 'v3']) {
+      for (const p of ['picklist', 'orderlist', 'fileupload', 'stepper', 'table', 'editor', 'ripple', 'keyfilter', 'badge', 'card', 'inputnumber']) {
+        await page.goto(`/${v}/components/${p}?lang=${lang}`);
+        await expect(page.locator('h1')).toBeVisible();
+        expect(await noSideScroll(page), `${lang} /${v}/${p}`).toBeLessThanOrEqual(0);
+        const wide = await page.evaluate(() =>
+          [...document.querySelectorAll('.docs-demo-preview')].filter((d) => d.getBoundingClientRect().right > document.documentElement.clientWidth + 1).length
+        );
+        expect(wide, `${lang} /${v}/${p}`).toBe(0);
+      }
+      await page.goto(`/${v}/components/picklist?lang=${lang}`);
+      await expect(page.locator('#d-pl-basic .wt-picklist')).toHaveClass(/wt-picklist-stacked/);
+    }
+  }
+});
+
+/** Selects the first occurrence of a text inside an element (for editor tests). */
+async function selectText(el: ReturnType<Page['locator']>, text: string): Promise<void> {
+  await el.evaluate((root, t) => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const i = (n.nodeValue || '').indexOf(t);
+      if (i < 0) continue;
+      const r = document.createRange();
+      r.setStart(n, i);
+      r.setEnd(n, i + t.length);
+      getSelection()!.removeAllRanges();
+      getSelection()!.addRange(r);
+      return;
+    }
+    throw new Error('text not found: ' + t);
+  }, text);
+}
+
+const MOD = process.platform === 'darwin' ? 'Meta' : 'Control';
+
+test('editor page in every version: HTML value and null, presets, tool options, the team toolbar, pictures, tables, saved content, readonly, count, API', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/editor`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-editor')).toHaveClass(/active/);
+
+    // The value is HTML; emptied it is null and the save button waits for content; saving shows loading.
+    const basic = page.locator('#d-ed-basic');
+    const area = basic.locator('.wt-editor-area');
+    await expect(area.locator('strong')).toHaveText('ปีการศึกษา 2569');
+    await expect(page.locator('#d-ed-basic-value')).toHaveText('<p>โรงเรียนเปิดรับสมัครนักเรียน <strong>ปีการศึกษา 2569</strong></p>');
+    await area.click();
+    await page.keyboard.press(`${MOD}+End`);
+    await page.keyboard.type(' ประจำปี');
+    await expect(page.locator('#d-ed-basic-value')).toContainText('ประจำปี');
+    await page.locator('#d-ed-save button').click();
+    await expect(page.locator('#d-ed-save button')).toHaveClass(/wt-btn-loading/);
+    await expect(page.locator('#d-ed-saved')).toHaveText('1', { timeout: 3000 });
+    await area.click();
+    await page.keyboard.press(`${MOD}+a`);
+    await page.keyboard.press('Delete');
+    await expect(page.locator('#d-ed-basic-value')).toHaveText('null');
+    await expect(page.locator('#d-ed-save button')).toBeDisabled();
+    await expect(area).toHaveAttribute('data-placeholder', 'พิมพ์เนื้อหาข่าว');
+    // Ctrl+B makes the selected text bold.
+    await page.keyboard.type('ด่วน');
+    await expect(page.locator('#d-ed-basic-value')).toHaveText('<p>ด่วน</p>');
+    await page.keyboard.press('Shift+Home');
+    // The editor keeps the range from selectionchange, which the browser fires a task later.
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => setTimeout(r, 20))));
+    await page.keyboard.press(`${MOD}+b`);
+    await expect(page.locator('#d-ed-basic-value')).toContainText('<strong>ด่วน</strong>');
+
+    // Toolbar presets and an own list of tools.
+    const presets = page.locator('#d-ed-presets');
+    const fullCount = await presets.locator('[data-wt-tool]').count();
+    await page.locator('#d-ed-preset').getByText('basic', { exact: true }).click();
+    await expect(presets.locator('[data-wt-tool]')).toHaveCount(7);
+    expect(fullCount).toBeGreaterThan(20);
+    await page.locator('#d-ed-preset').getByText('none', { exact: true }).click();
+    await expect(presets.locator('.wt-editor-toolbar')).toHaveCount(0);
+    await expect(page.locator('#d-ed-custom .wt-editor-group')).toHaveCount(3);
+    await expect(page.locator('#d-ed-custom [data-wt-tool]')).toHaveCount(7);
+
+    // Tool options: the heading levels, the colours and the table grid.
+    const options = page.locator('#d-ed-options');
+    await options.locator('[data-wt-tool="heading"]').click();
+    await expect(page.locator('.wt-editor-panel [role="menuitemradio"]')).toHaveText(['ย่อหน้า', 'หัวข้อ 2', 'หัวข้อ 3', 'ข้อความอ้างอิง']);
+    await page.keyboard.press('Escape');
+    await options.locator('[data-wt-tool="color"]').click();
+    await expect(page.locator('.wt-editor-panel .wt-editor-swatches .wt-editor-swatch')).toHaveCount(4);
+    await page.keyboard.press('Escape');
+    await options.locator('[data-wt-tool="table"]').click();
+    await expect(page.locator('.wt-editor-panel .wt-editor-grid-row')).toHaveCount(6);
+    await page.keyboard.press('Escape');
+
+    // The team's own toolbar markup: ql-* buttons get icons and actions, selects become menus.
+    const header = page.locator('#d-ed-header');
+    await expect(header.locator('button.ql-bold svg')).toHaveCount(1);
+    await expect(header.locator('select.ql-header')).toBeHidden();
+    await expect(header.locator('.wt-editor-area p.ql-align-center')).toHaveCount(1);
+    await selectText(header.locator('.wt-editor-area'), 'นโยบายการใช้ข้อมูลส่วนบุคคล');
+    await header.locator('button.ql-italic').click();
+    await expect(header.locator('button.ql-italic')).toHaveClass(/ql-active/);
+    await expect(page.locator('#d-ed-header-value')).toContainText('<em>นโยบายการใช้ข้อมูลส่วนบุคคล</em>');
+    await header.locator('[data-wt-tool="heading"]').click();
+    await expect(page.locator('.wt-editor-panel [role="menuitemradio"]')).toHaveText(['หัวข้อ 1', 'หัวข้อ 2', 'ย่อหน้า']);
+    await page.keyboard.press('Escape');
+
+    // Pictures through the app's upload(): a faded picture while it uploads, then the URL; too large is refused.
+    const images = page.locator('#d-ed-images');
+    await images.locator('.wt-editor-area').click();
+    await images.locator('input.wt-editor-file').setInputFiles({ name: 'dot.png', mimeType: 'image/png', buffer: PNG });
+    await expect(images.locator('img.wt-image-uploading')).toHaveCount(1);
+    await expect(images.locator('.wt-editor-area img')).toHaveAttribute('src', /^data:image\/png;base64,/, { timeout: 4000 });
+    await expect(images.locator('img.wt-image-uploading')).toHaveCount(0);
+    await expect(page.locator('#d-ed-image-log')).toHaveText('onImageUpload: dot.png');
+    await images.locator('input.wt-editor-file').setInputFiles({ name: 'big.png', mimeType: 'image/png', buffer: Buffer.alloc(1_200_000, 1) });
+    await expect(images.locator('.wt-editor-notice')).toContainText('big.png: รูปใหญ่เกินกำหนด (ไม่เกิน 1 MB)');
+    await expect(page.locator('#d-ed-image-log')).toHaveText('onImageUploadError: size');
+
+    // Tables: Tab in the last cell adds a row; the table tool inside a table opens its menu.
+    const tables = page.locator('#d-ed-tables');
+    const table = tables.locator('.wt-editor-area table');
+    await expect(table.locator('tr')).toHaveCount(3);
+    await table.locator('tr').last().locator('td').last().click();
+    await page.keyboard.press('Tab');
+    await expect(table.locator('tr')).toHaveCount(4);
+    const cols = await table.locator('tr').first().locator('th, td').count();
+    await tables.locator('[data-wt-tool="table"]').click();
+    await page.locator('.wt-editor-panel [role="menuitem"]', { hasText: 'แทรกคอลัมน์ทางขวา' }).click();
+    await expect(table.locator('tr').first().locator('th, td')).toHaveCount(cols + 1);
+
+    // Saved HTML through wtEditorContent keeps its look; readonly; the word count.
+    const view = page.locator('#d-ed-view');
+    await expect(view).toHaveClass(/wt-editor-content/);
+    expect(await view.locator('.ql-align-center').evaluate((el) => getComputedStyle(el).textAlign)).toBe('center');
+    await expect(view.locator('li')).toHaveCount(2);
+    await expect(page.locator('#d-ed-readonly .wt-editor-area')).toHaveAttribute('contenteditable', 'false');
+    await expect(page.locator('#d-ed-readonly [data-wt-tool="bold"]')).toBeDisabled();
+    const count = page.locator('#d-ed-count .wt-editor-count');
+    const before = await count.textContent();
+    await page.locator('#d-ed-count .wt-editor-area').click();
+    await page.keyboard.press(`${MOD}+End`);
+    await page.keyboard.type(' ทุกวัน');
+    await expect(count).not.toHaveText(before || '');
+    await expect(count).toContainText('คำ');
+
+    // onInit hands over the API: setHTML from a button, focus() through #ed.
+    await expect(page.locator('#d-ed-ready')).toHaveText('true');
+    await page.locator('#d-ed-letter button').click();
+    await expect(page.locator('#d-ed-events .wt-editor-area')).toContainText('เรียน ผู้ปกครอง');
+    await expect(page.locator('#d-ed-event')).toContainText('api');
+    await page.locator('#d-ed-focus button').click();
+    await expect(page.locator('#d-ed-events .wt-editor-area')).toBeFocused();
+
+    // Phones: the toolbar wraps, nothing scrolls sideways.
+    await page.setViewportSize({ width: 360, height: 800 });
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('ripple, keyfilter and the badge directive in every version', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    // Ripple follows the app-wide switch; [wtRippleDisabled] opts one element out.
+    await page.goto(`/${v}/components/ripple`);
+    await expect(page.locator('#nav-ripple')).toHaveClass(/active/);
+    const card = page.locator('#d-rp-card');
+    const sw = page.locator('#d-rp-switch input');
+    // Presses an element and counts the ink right away (ink fades out after 0.6s).
+    const inkAfterPress = async (el: ReturnType<Page['locator']>) => {
+      const b = (await el.boundingBox())!;
+      await page.mouse.move(b.x + 20, b.y + 20);
+      await page.mouse.down();
+      await page.mouse.up();
+      return el.locator('.wt-ripple-ink').count();
+    };
+    // The preset's own ripple setting arrives with the theme, so set the switch both ways explicitly.
+    await page.waitForLoadState('networkidle');
+    await sw.setChecked(true);
+    await expect(sw).toBeChecked();
+    await expect.poll(() => inkAfterPress(card)).toBeGreaterThan(0);
+    await expect.poll(() => inkAfterPress(page.locator('#d-rp-item'))).toBeGreaterThan(0);
+    expect(await inkAfterPress(page.locator('#d-rp-off'))).toBe(0);
+    await sw.setChecked(false);
+    await expect(sw).not.toBeChecked();
+    await expect.poll(() => inkAfterPress(card)).toBe(0);
+
+    // KeyFilter: typed characters that fail never land; validate-only gives the form an error instead.
+    await page.goto(`/${v}/components/keyfilter`);
+    await expect(page.locator('#nav-keyfilter')).toHaveClass(/active/);
+    await page.locator('#d-kf-id').pressSequentially('a1b2-3');
+    await expect(page.locator('#d-kf-id')).toHaveValue('123');
+    await expect(page.locator('#d-kf-id-value')).toHaveText('123');
+    await page.locator('#d-kf-thai').pressSequentially('สมชาย1x');
+    await expect(page.locator('#d-kf-thai')).toHaveValue('สมชาย');
+    await page.locator('#d-kf-color').pressSequentially('1fzA');
+    await expect(page.locator('#d-kf-color')).toHaveValue('1fA');
+    await page.locator('#d-kf-subject').pressSequentially('MA-101x');
+    await expect(page.locator('#d-kf-subject')).toHaveValue('MA-101');
+    // A paste with any refused character is refused whole.
+    const refused = await page.locator('#d-kf-id').evaluate((el) => {
+      const dt = new DataTransfer();
+      dt.setData('text/plain', '45a');
+      const e = new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true });
+      el.dispatchEvent(e);
+      return e.defaultPrevented;
+    });
+    expect(refused).toBe(true);
+    await page.locator('#d-kf-phone').pressSequentially('12345');
+    await expect(page.locator('#d-kf-phone')).toHaveValue('12345');
+    await expect(page.locator('#d-kf-phone-error')).toHaveText('รูปแบบเบอร์โทรไม่ถูกต้อง');
+    await expect(page.locator('#d-kf-phone-valid')).toHaveText('false');
+    await page.locator('#d-kf-phone').fill('0812345678');
+    await expect(page.locator('#d-kf-phone-error')).toHaveCount(0);
+    await expect(page.locator('#d-kf-phone-valid')).toHaveText('true');
+
+    // The badge directive on any element: a count, a dot, a size, hidden with badgeDisabled.
+    await page.goto(`/${v}/components/badge`);
+    await expect(page.locator('#d-badge-bell .wt-badge')).toHaveText('3');
+    await expect(page.locator('#d-badge-bell')).toHaveClass(/wt-overlay-badge/);
+    await expect(page.locator('#d-badge-mail .wt-badge')).toHaveClass(/wt-badge-dot/);
+    await expect(page.locator('#d-badge-cal .wt-badge')).toHaveClass(/wt-badge-lg/);
+    await page.locator('#d-badge-read button').click();
+    await expect(page.locator('#d-badge-bell .wt-badge')).toHaveCount(0);
+    await expect(page.locator('#d-badge-style')).toContainText('new');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('parity on existing pages in every version: templates, tag spellings, style inputs, new inputs and methods', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    // Card: header / title / subtitle / content / footer templates and the wt-header / wt-footer elements.
+    await page.goto(`/${v}/components/card`);
+    const tpl = page.locator('#d-card-tpl');
+    await expect(tpl.locator('.wt-card-title')).toHaveText('ข่าวรับสมัคร');
+    await expect(tpl.locator('.wt-card-subtitle')).toHaveText('ปีการศึกษา 2569');
+    await expect(tpl.locator('.wt-card-content')).toContainText('เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4');
+    await expect(tpl.locator('.wt-card-footer')).toContainText('สมัครเลย');
+    await expect(tpl.locator('.wt-card-header')).toContainText('ปีการศึกษา 2569');
+    await expect(tpl.locator('.wt-card')).toHaveClass(/docs-card-news/);
+    await expect(page.locator('#d-card-elements .wt-card-header')).toContainText('ปิดภาคเรียนวันที่ 1 ตุลาคม');
+    await expect(page.locator('#d-card-elements .wt-card-footer')).toContainText('อัปเดตเมื่อวานนี้');
+
+    // Panel, fieldset, toolbar, accordion and tabs templates.
+    await page.goto(`/${v}/components/panel`);
+    await expect(page.locator('#d-panel-tpl')).toContainText('สรุปคะแนนสอบ');
+    await expect(page.locator('#d-panel-tpl')).toContainText('คำนวณเมื่อ 08:30 น.');
+    await expect(page.locator('#d-panel-tpl').getByRole('button', { name: 'ส่งออก' })).toBeVisible();
+    await page.goto(`/${v}/components/fieldset`);
+    await expect(page.locator('#d-fieldset-tpl legend')).toContainText('ผู้ติดต่อฉุกเฉิน');
+    await page.goto(`/${v}/components/toolbar`);
+    const bar = page.locator('#d-toolbar-tpl');
+    await expect(bar).toContainText('จัดการเอกสาร');
+    await expect(bar.getByRole('button', { name: 'สร้างใหม่' })).toBeVisible();
+    await expect(bar.getByRole('button', { name: 'การแจ้งเตือน' })).toBeVisible();
+    await page.goto(`/${v}/components/accordion`);
+    const acc = page.locator('#d-acc-tpl');
+    await expect(acc).toContainText('การจัดส่ง');
+    await expect(page.locator('#d-acc-lazy')).toHaveCount(0);
+    await acc.getByRole('button', { name: /การจัดส่ง/ }).click();
+    await expect(page.locator('#d-acc-lazy')).toHaveText('สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก');
+    await page.goto(`/${v}/components/tabs`);
+    await expect(page.locator('#d-tabs-header [role="tab"]').first()).toContainText('ข้อความ');
+    await expect(page.locator('#d-tabs-header [role="tab"]').first().locator('.wt-badge')).toHaveText('3');
+
+    // Popover content template closes itself through closeCallback.
+    await page.goto(`/${v}/components/popover`);
+    await page.locator('#d-pop-notify button').click();
+    await expect(page.locator('p.docs-demo-p', { hasText: 'รับการแจ้งเตือนทางอีเมลทุกเช้า' })).toBeVisible();
+    await page.locator('#d-pop-notify-ok button').click();
+    await expect(page.locator('p.docs-demo-p', { hasText: 'รับการแจ้งเตือนทางอีเมลทุกเช้า' })).toHaveCount(0);
+
+    // SelectButton item template with the index, and unselectable keeps the choice.
+    await page.goto(`/${v}/components/selectbutton`);
+    const sb = page.locator('#d-sb-item');
+    await expect(sb).toContainText('1. รายการ');
+    await expect(sb).toContainText('2. ตาราง');
+    await sb.getByText('2. ตาราง').click();
+    await expect(page.locator('#d-sb-item-value')).toHaveText('grid');
+    await sb.getByText('2. ตาราง').click();
+    await expect(page.locator('#d-sb-item-value')).toHaveText('grid');
+
+    // InputNumber: camelCase and kebab tags, showClear with onClear, inner input class / style, step button icons, onKeyDown.
+    await page.goto(`/${v}/components/inputnumber`);
+    const fee = page.locator('#d-num-clear');
+    await expect(fee.locator('input')).toHaveClass(/text-right/);
+    expect(await fee.locator('input').evaluate((el) => (el as HTMLElement).style.width)).toBe('10rem');
+    await expect(fee.locator('input')).toHaveAttribute('autocomplete', 'off');
+    await fee.locator('.wt-inputnumber-clear, [class*="clear"]').first().click();
+    await expect(page.locator('#d-num-cleared')).toHaveText('1');
+    await expect(fee.locator('input')).toHaveValue('');
+    const steps = page.locator('#d-num-steps');
+    await expect(steps.locator('.pi-plus')).toHaveCount(1);
+    await expect(steps.locator('.pi-minus')).toHaveCount(1);
+    await steps.locator('input').press('ArrowUp');
+    await expect(page.locator('#d-num-key')).toHaveText('ArrowUp');
+
+    // IconField iconPosition wins over the markup order.
+    await page.goto(`/${v}/components/iconfield`);
+    const field = page.locator('#d-iconfield-right');
+    const icon = (await field.locator('wt-inputicon').boundingBox())!;
+    const input = (await field.locator('input').boundingBox())!;
+    expect(icon.x).toBeGreaterThan(input.x + input.width / 2);
+
+    // Message text as HTML; wt-messages severity for messages without one.
+    await page.goto(`/${v}/components/message`);
+    await expect(page.locator('#d-msg-html b')).toHaveText('วันศุกร์นี้');
+    await expect(page.locator('#d-msgs-severity wt-message')).toHaveCount(1);
+    await expect(page.locator('#d-msgs-severity .wt-message')).toHaveClass(/info/);
+
+    // Button: link look and badge colour.
+    await page.goto(`/${v}/components/button`);
+    await expect(page.locator('#d-btn-link button')).toHaveClass(/wt-btn-link/);
+    await expect(page.locator('#d-btn-badge .wt-btn-badge')).toHaveClass(/wt-btn-badge-danger/);
+
+    // Properties tabs list the new inputs.
+    await page.goto(`/${v}/components/inputnumber?tab=api`);
+    await expect(page.locator('#api-inputs')).toContainText('incrementButtonIcon');
+    await expect(page.locator('#api-outputs')).toContainText('onKeyDown');
+    await page.goto(`/${v}/components/password?tab=api`);
+    await expect(page.locator('#api-props')).toContainText('unmasked');
+    await page.goto(`/${v}/components/confirmdialog?tab=api`);
+    await expect(page.locator('#api-dialog-methods')).toContainText('onAccept() · onReject()');
+    await page.goto(`/${v}/components/autocomplete?tab=api`);
+    await expect(page.locator('#api-methods')).toContainText('show() · hide()');
+    await page.goto(`/${v}/components/tag?tab=api`);
+    await expect(page.locator('#api-inputs')).toContainText('styleClass · style');
+  }
+  // The migration page lists the tag spellings.
+  await page.goto('/v3/getting-started/migration');
+  await expect(page.locator('#spellings-table')).toContainText('wt-input-number');
+  await expect(page.locator('#spellings-table')).toContainText('wt-inputGroupAddon');
+  await expect(page.locator('#names')).toContainText('wt-editor');
+  expect(errors).toEqual([]);
+});
+
+for (const v of ['v1', 'v3']) {
+  test(`table deep features (${v}): row reorder, radio and meta-key selection, cell and row editing, columns, filter menu, custom sort, state, frozen rows`, async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/table`);
+
+    // Row reorder: ↓ on a focused grip, then a drag from a grip; value changes in place.
+    const reorder = page.locator('#d-tbl-reorder');
+    await reorder.locator('.wt-reorderable-row-handle').first().focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#d-tbl-reorder-order')).toHaveText('2, 1, 3, 4, 5');
+    await expect(page.locator('#d-tbl-reorder-log')).toHaveText('0 → 1');
+    await reorder.scrollIntoViewIfNeeded();
+    const handle = (await reorder.locator('.wt-reorderable-row-handle').nth(4).boundingBox())!;
+    const firstRow = (await reorder.locator('tbody tr').first().boundingBox())!;
+    await page.mouse.move(handle.x + handle.width / 2, handle.y + handle.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(handle.x + handle.width / 2, firstRow.y + 6, { steps: 10 });
+    await expect(reorder.locator('tbody tr').first()).toHaveClass(/wt-row-drop-above/);
+    await page.mouse.up();
+    await expect(page.locator('#d-tbl-reorder-order')).toHaveText('5, 2, 1, 3, 4');
+
+    // Radio selection honours rowSelectable; meta-key selection: click, Ctrl+click, Shift+click.
+    const radio = page.locator('#d-tbl-radio');
+    await expect(radio.locator('tbody tr').nth(3).locator('input[type="radio"]')).toBeDisabled();
+    await radio.locator('tbody tr').nth(1).locator('label.wt-radiobutton').click();
+    await expect(page.locator('#d-tbl-radio-value')).toHaveText('ด.ญ.ปภาวรินทร์ ศรีสุข');
+    const meta = page.locator('#d-tbl-meta tbody tr');
+    await meta.nth(0).click();
+    await meta.nth(2).click();
+    await expect(page.locator('#d-tbl-meta-value')).toHaveText('3');
+    await meta.nth(3).click({ modifiers: ['Control'] });
+    await expect(page.locator('#d-tbl-meta-value')).toHaveText(/^(3, 4|4, 3)$/);
+    await meta.nth(0).click({ modifiers: ['Shift'] });
+    await expect.poll(async () => ((await page.locator('#d-tbl-meta-value').textContent()) || '').split(', ').sort().join(',')).toBe('1,2,3,4');
+
+    // Cell editing: click opens, Enter keeps, Tab moves on, Escape leaves.
+    const cell = page.locator('#d-tbl-celledit');
+    await cell.locator('.d-tbl-edit-score').first().click();
+    const scoreInput = cell.locator('.d-tbl-edit-score').first().locator('input');
+    await expect(scoreInput).toBeFocused();
+    await expect(scoreInput).not.toHaveValue('');
+    await scoreInput.fill('95');
+    await scoreInput.press('Enter');
+    await expect(cell.locator('.d-tbl-edit-score').first()).toHaveText('95');
+    await expect(page.locator('#d-tbl-celledit-log')).toHaveText('score · ด.ช.กิตติพัฒน์ ใจดี');
+    await cell.locator('.d-tbl-edit-name').nth(1).click();
+    await expect(cell.locator('.d-tbl-edit-name').nth(1).locator('input')).toBeVisible();
+    await cell.locator('.d-tbl-edit-name').nth(1).locator('input').press('Tab');
+    await expect(cell.locator('.d-tbl-edit-score').nth(1).locator('input')).toBeVisible();
+    await cell.locator('.d-tbl-edit-score').nth(1).locator('input').press('Escape');
+    await expect(cell.locator('input')).toHaveCount(0);
+
+    // Row editing: save waits while a field is invalid; cancel brings the old values back.
+    const rows = page.locator('#d-tbl-rowedit tbody tr');
+    await rows.nth(0).locator('.d-tbl-row-edit').click();
+    await expect(page.locator('#d-tbl-rowedit-keys')).toContainText('"1": true');
+    const nameInput = rows.nth(0).locator('input[name="name"]');
+    await nameInput.fill('');
+    await rows.nth(0).locator('.d-tbl-row-save').click();
+    await expect(rows.nth(0).locator('input[name="name"]')).toBeVisible();
+    await expect(page.locator('#d-tbl-rowedit-saved')).toHaveText('0');
+    await nameInput.fill('ด.ช.ทดสอบ แก้ไข');
+    await rows.nth(0).locator('.d-tbl-row-save').click();
+    await expect(rows.nth(0).locator('.d-tbl-name')).toHaveText('ด.ช.ทดสอบ แก้ไข');
+    await expect(page.locator('#d-tbl-rowedit-saved')).toHaveText('1');
+    await rows.nth(1).locator('.d-tbl-row-edit').click();
+    await rows.nth(1).locator('input[name="room"]').fill('ม.6/9');
+    await rows.nth(1).locator('.d-tbl-row-cancel').click();
+    await expect(rows.nth(1)).toContainText('ม.2/1');
+    await expect(rows.nth(1).locator('input')).toHaveCount(0);
+
+    // Columns: drag a header edge to resize, drag a header to move it.
+    const cols = page.locator('#d-tbl-cols');
+    await cols.scrollIntoViewIfNeeded();
+    const firstTh = cols.locator('thead th').first();
+    const w0 = (await firstTh.boundingBox())!.width;
+    const grip = (await firstTh.locator('.wt-column-resizer').boundingBox())!;
+    await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(grip.x + grip.width / 2 + 60, grip.y + grip.height / 2, { steps: 6 });
+    await page.mouse.up();
+    expect((await firstTh.boundingBox())!.width).toBeGreaterThan(w0 + 40);
+    await expect(page.locator('#d-tbl-cols-log')).toContainText('onColResize:');
+    const room = (await cols.locator('thead th').nth(2).boundingBox())!;
+    const code = (await cols.locator('thead th').nth(0).boundingBox())!;
+    await page.mouse.move(code.x + 30, code.y + code.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(code.x + 60, code.y + code.height / 2, { steps: 3 });
+    await page.mouse.move(room.x + room.width - 10, room.y + room.height / 2, { steps: 10 });
+    await page.mouse.up();
+    await expect(page.locator('#d-tbl-cols-log')).toHaveText('onColReorder: name, room, code, score');
+    await expect(cols.locator('thead th')).toHaveText(['ชื่อ - สกุล', 'ห้อง', 'รหัส', 'คะแนน']);
+
+    // The filter menu: a text rule, a numeric rule, and two rules set from code with filterRules().
+    const fmenu = page.locator('#d-tbl-fmenu');
+    const overlay = page.locator('.wt-column-filter-overlay');
+    await page.locator('#d-tbl-fmenu-name button').click();
+    await expect(overlay).toBeVisible();
+    await overlay.locator('input').fill('ด.ญ.');
+    await overlay.getByRole('button', { name: 'ตกลง' }).click();
+    await expect.poll(async () => (await fmenu.locator('.d-tbl-name').allTextContents()).every((n) => n.startsWith('ด.ญ.'))).toBe(true);
+    await expect(page.locator('#d-tbl-fmenu-name button')).toHaveClass(/wt-column-filter-active/);
+    await page.locator('#d-tbl-fmenu-name button').click();
+    await overlay.getByRole('button', { name: 'ล้าง' }).click();
+    await expect(fmenu.locator('.d-tbl-name').first()).toHaveText('ด.ช.กิตติพัฒน์ ใจดี');
+    await page.keyboard.press('Escape');
+    await page.locator('#d-tbl-fmenu-score button').click();
+    await overlay.locator('select').first().selectOption('gte');
+    await overlay.locator('input').first().fill('90');
+    await overlay.getByRole('button', { name: 'ตกลง' }).click();
+    await expect.poll(async () => (await fmenu.locator('.d-tbl-score').allTextContents()).every((s) => Number(s) >= 90)).toBe(true);
+    await page.locator('#d-tbl-fmenu-band button').click();
+    await expect.poll(async () => (await fmenu.locator('.d-tbl-score').allTextContents()).every((s) => Number(s) >= 80 && Number(s) < 90)).toBe(true);
+
+    // Custom sort: follow-ups first, not alphabetical.
+    const csort = page.locator('#d-tbl-csort');
+    await csort.locator('th', { hasText: 'สถานะ' }).click();
+    await expect(csort.locator('.d-tbl-status').first()).toHaveText('พักการเรียน');
+    await expect(csort.locator('.d-tbl-status').last()).toHaveText('กำลังศึกษา');
+    await csort.locator('th', { hasText: 'สถานะ' }).click();
+    await expect(csort.locator('.d-tbl-status').first()).toHaveText('กำลังศึกษา');
+
+    // State: page 2 comes back after a reload; clearState() forgets it.
+    const state = page.locator('#d-tbl-state');
+    await state.getByRole('button', { name: 'หน้า 2', exact: true }).click();
+    await expect(state.locator('.d-tbl-name').first()).not.toHaveText('ด.ช.กิตติพัฒน์ ใจดี');
+    const secondPage = await state.locator('.d-tbl-name').first().textContent();
+    await page.reload();
+    await expect(page.locator('#d-tbl-state .d-tbl-name').first()).toHaveText(secondPage || '');
+    await expect(page.locator('#d-tbl-state-restored')).toHaveText('1');
+    await page.locator('#d-tbl-state-clear button').click();
+    await page.reload();
+    await expect(page.locator('#d-tbl-state .d-tbl-name').first()).toHaveText('ด.ช.กิตติพัฒน์ ใจดี');
+
+    // Frozen rows stay under the header while the body scrolls.
+    const frozen = page.locator('#d-tbl-frozenrows');
+    await frozen.scrollIntoViewIfNeeded();
+    await expect(frozen.locator('.d-tbl-total')).toContainText('คะแนนเฉลี่ย');
+    const wrapper = frozen.locator('.wt-table-wrapper');
+    await wrapper.evaluate((el) => (el.scrollTop = 200));
+    await expect.poll(async () => {
+      const head = (await frozen.locator('thead').boundingBox())!;
+      const total = (await frozen.locator('.d-tbl-total').boundingBox())!;
+      return Math.abs(total.y - (head.y + head.height)) <= 3;
+    }).toBe(true);
+
+    await page.setViewportSize({ width: 360, height: 800 });
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('samples of the editor, keyfilter and table deep pages follow the team style per version', async ({ page }) => {
+  const code = (sel: string) => page.locator(`${sel} docs-code`).first();
+  await page.goto('/v1/components/editor');
+  await expect(code('docs-section#header')).toContainText('<ng-template wtTemplate="header">');
+  await expect(code('docs-section#header')).toContainText('<select class="ql-header">');
+  await expect(code('docs-section#basic')).toContainText('[loading]="isApiSaving" [disabled]="!newsBody"');
+  await expect(code('docs-section#basic')).toContainText(`[style]="{ height: '320px' }"`);
+  await page.goto('/v3/components/editor');
+  await expect(code('docs-section#header')).toContainText('<ng-template #header>');
+  await page.locator('docs-section#images').getByRole('tab', { name: 'TS' }).click();
+  await expect(page.locator('docs-section#images docs-code')).toContainText('upload: this.uploadImage.bind(this)');
+  await page.goto('/v2/components/keyfilter');
+  await expect(code('docs-section#validate')).toContainText(`<small *ngIf="phoneModel.hasError('keyfilter')" class="p-error">`);
+  await expect(code('docs-section#validate')).toContainText('[wtValidateOnly]="true"');
+  await page.goto('/v3/components/keyfilter');
+  await expect(code('docs-section#validate')).toContainText("@if (phoneModel.hasError('keyfilter')) {");
+  await page.goto('/v1/components/table');
+  await expect(code('docs-section#rowedit')).toContainText('<button *ngIf="!editing"');
+  await expect(code('docs-section#rowedit')).toContainText('[(ngModel)]="s.name"');
+  await page.goto('/v3/components/table');
+  await expect(code('docs-section#rowedit')).toContainText('@if (!editing) {');
+  await page.locator('docs-section#selectmore').getByRole('tab', { name: 'TS' }).click();
+  await expect(page.locator('docs-section#selectmore docs-code')).toContainText('canPick = this.isEnrolled.bind(this);');
+  await page.goto('/v1/components/card');
+  await expect(code('docs-section#templates')).toContainText('<ng-template wtTemplate="title">');
+  await page.goto('/v3/components/accordion');
+  await expect(page.locator('docs-section#templates')).toContainText('<ng-template #content>');
+});
+
+test('migration page lists Editor, Ripple, KeyFilter and the badge directive, and table rows read as built', async ({ page }) => {
+  for (const lang of ['th', 'en']) {
+    await page.goto(`/v3/getting-started/migration?lang=${lang}`);
+    for (const name of ['wt-editor', 'wtRipple', 'wtKeyFilter', 'wtBadge']) await expect(page.locator('#names')).toContainText(name);
+    await expect(page.locator('#spellings-table tr')).not.toHaveCount(0);
+  }
+  await expect(page.locator('#names')).toContainText('virtual scroll is not built yet');
+});
+
+test('slider, splitbutton, listbox and colorpicker pages in every version', async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  for (const [v, major] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    // Slider: keys move by the step, Home / End jump, a click on the track jumps; a range keeps its handles apart.
+    await page.goto(`/${v}/components/slider`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-slider')).toHaveClass(/active/);
+    const handle = page.locator('#d-sl-basic .wt-slider-handle');
+    await expect(handle).toHaveAttribute('aria-labelledby', 'd-sl-volume-label');
+    await handle.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-sl-basic-value')).toHaveText('61%');
+    await page.keyboard.press('End');
+    await expect(page.locator('#d-sl-basic-value')).toHaveText('100%');
+    const track = (await page.locator('#d-sl-basic .wt-slider').boundingBox())!;
+    await page.mouse.click(track.x + track.width * 0.25, track.y + track.height / 2);
+    await expect(page.locator('#d-sl-basic-value')).toHaveText('25%');
+    await page.locator('#d-sl-step .wt-slider-handle').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-sl-step-value')).toHaveText('55');
+    await page.keyboard.press('Home');
+    await expect(page.locator('#d-sl-step-value')).toHaveText('40');
+    await page.locator('#d-sl-range .wt-slider-handle').first().focus();
+    await page.keyboard.press('End');
+    await expect(page.locator('#d-sl-range-value')).toHaveText('80 ถึง 80');
+    await page.locator('#d-sl-vertical .wt-slider-handle').focus();
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('#d-sl-vertical-value')).toHaveText('41');
+    await expect(page.locator('#d-sl-vertical .wt-slider')).toHaveClass(/wt-slider-vertical/);
+    // onSlideEnd saves; the slider is off while it saves.
+    await page.locator('#d-sl-events .wt-slider-handle').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-sl-saving')).toHaveText('กำลังบันทึก…');
+    await expect(page.locator('#d-sl-saved')).toHaveText('60', { timeout: 3000 });
+    expect(Number(await page.locator('#d-sl-changes').textContent())).toBeGreaterThan(0);
+
+    // SplitButton: the main part saves, the arrow and Alt + ↓ open the menu, Esc gives focus back; parts turn off.
+    await page.goto(`/${v}/components/splitbutton`);
+    const spb = page.locator('#d-spb-basic');
+    await spb.locator('.wt-splitbutton-main').click();
+    await expect(spb.locator('.wt-splitbutton-main')).toBeDisabled();
+    await expect(page.locator('#d-spb-saved')).toHaveText('1', { timeout: 3000 });
+    await spb.locator('.wt-splitbutton-dropdown').click();
+    const menu = page.locator('.wt-menu-overlay');
+    await expect(menu).toBeVisible();
+    await expect(spb.locator('.wt-splitbutton-dropdown')).toHaveAttribute('aria-expanded', 'true');
+    await menu.getByRole('menuitem', { name: 'บันทึกเป็นร่าง' }).click();
+    await expect(page.locator('#d-spb-action')).toHaveText('บันทึกเป็นร่าง');
+    await expect(menu).toHaveCount(0);
+    await spb.locator('.wt-splitbutton-main').focus();
+    await page.keyboard.press('Alt+ArrowDown');
+    await expect(page.locator('.wt-menu-overlay')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.wt-menu-overlay')).toHaveCount(0);
+    await expect(page.locator('#d-spb-main-off .wt-splitbutton-main')).toBeDisabled();
+    await expect(page.locator('#d-spb-main-off .wt-splitbutton-dropdown')).toBeEnabled();
+    await expect(page.locator('#d-spb-menu-off .wt-splitbutton-dropdown')).toBeDisabled();
+    await expect(page.locator('#d-spb-all-off button')).toHaveCount(2);
+    for (const b of await page.locator('#d-spb-all-off button').all()) await expect(b).toBeDisabled();
+    await expect(page.locator('#d-spb-outlined .wt-splitbutton-main')).toHaveClass(/wt-btn-outlined/);
+    await expect(page.locator('#d-spb-icons .wt-splitbutton-dropdown .pi-ellipsis-v')).toHaveCount(1);
+    await page.locator('#d-spb-icons .wt-splitbutton-dropdown').click();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-spb-events')).toHaveText('onMenuShow · onMenuHide');
+
+    // Listbox: pick, skip a closed room with the keys, several with check-all, search two fields, groups, templates.
+    await page.goto(`/${v}/components/listbox`);
+    const lb = page.locator('#d-lb-basic');
+    await lb.getByRole('option', { name: 'ม.1/2' }).click();
+    await expect(page.locator('#d-lb-basic-value')).toHaveText('ม.1/2');
+    await expect(lb.getByRole('option', { name: 'ม.2/1' })).toHaveAttribute('aria-disabled', 'true');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#d-lb-basic-value')).toHaveText('ม.3/1');
+    const multi = page.locator('#d-lb-multi');
+    await expect(page.locator('#d-lb-multi-value')).toHaveText('101');
+    await multi.getByRole('option', { name: 'ม.3/1' }).click();
+    await expect(page.locator('#d-lb-multi-value')).toHaveText('101, 301');
+    await multi.locator('.wt-listbox-toggle-all').click();
+    await expect.poll(async () => ((await page.locator('#d-lb-multi-value').textContent()) || '').split(', ').sort().join(',')).toBe('101,102,202,301,302');
+    await multi.locator('.wt-listbox-toggle-all').click();
+    await expect(page.locator('#d-lb-multi-value')).toHaveText('[]');
+    const search = page.locator('#d-lb-filter input[role="searchbox"]');
+    await expect(search).toHaveAttribute('placeholder', 'ค้นหาห้องหรือครู');
+    await search.fill('ครูวิชัย');
+    await expect(page.locator('#d-lb-filter').getByRole('option')).toHaveText(['ม.1/2']);
+    await expect(page.locator('#d-lb-filter-text')).toHaveText('ครูวิชัย');
+    await search.fill('xyz');
+    await expect(page.locator('#d-lb-filter .wt-listbox-empty')).toHaveText('ไม่พบห้อง');
+    await expect(page.locator('#d-lb-group .docs-lb-group')).toHaveText(['ชั้น ม.1', 'ชั้น ม.2', 'ชั้น ม.3']);
+    await page.locator('#d-lb-group').getByRole('option', { name: 'ม.2/2' }).click();
+    await expect(page.locator('#d-lb-group-value')).toHaveText('ม.2/2');
+    const tpl = page.locator('#d-lb-tpl');
+    await expect(tpl.locator('.docs-lb-room-teacher').first()).toHaveText('ครูสมศรี');
+    await tpl.getByRole('option').nth(0).click();
+    await tpl.getByRole('option').nth(1).click();
+    await expect(page.locator('#d-lb-tpl-footer')).toHaveText('เลือกแล้ว 2 ห้อง');
+    await expect(tpl.locator('.docs-lb-check')).toHaveCount(2);
+    await tpl.getByRole('option').nth(4).dblclick();
+    await expect(page.locator('#d-lb-opened')).toHaveText('ม.3/1');
+
+    // ColorPicker: the swatch opens a panel; a typed hex; Esc gives focus back; inline rgb; hsb; open / close events.
+    await page.goto(`/${v}/components/colorpicker`);
+    const swatch = page.locator('#d-cp-basic .wt-colorpicker-preview');
+    await expect(swatch).toHaveAttribute('id', 'd-cp-school-input');
+    await swatch.click();
+    const panel = page.locator('#d-cp-basic .wt-colorpicker-panel');
+    await expect(panel).toBeVisible();
+    await panel.locator('.wt-colorpicker-hex').fill('#1d4ed8');
+    await panel.locator('.wt-colorpicker-hex').press('Enter');
+    await expect(page.locator('#d-cp-basic-value')).toHaveText('#1d4ed8');
+    expect(Number(await page.locator('#d-cp-changes').textContent())).toBeGreaterThan(0);
+    await page.keyboard.press('Escape');
+    await expect(panel).toHaveCount(0);
+    await expect(swatch).toBeFocused();
+    await page.locator('#d-cp-inline .wt-colorpicker-area').focus();
+    await page.keyboard.press('Shift+ArrowDown');
+    await expect(page.locator('#d-cp-inline-value')).not.toHaveText('rgb(234, 88, 12)');
+    await page.locator('#d-cp-hsb .wt-colorpicker-preview').click();
+    await page.locator('#d-cp-hsb .wt-colorpicker-hex').fill('#ff0000');
+    await page.locator('#d-cp-hsb .wt-colorpicker-hex').press('Enter');
+    await expect(page.locator('#d-cp-hsb-value')).toHaveText('h 0 · s 100 · b 100');
+    await page.keyboard.press('Escape');
+    await page.locator('#d-cp-events .wt-colorpicker-preview').click();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-cp-events-log')).toHaveText('onShow · onHide');
+    await expect(page.locator('#d-cp-disabled .wt-colorpicker-preview')).toBeDisabled();
+  }
+  expect(errors).toEqual([]);
+});
+
+test('galleria, breadcrumb, inplace, blockui and scrollpanel pages in every version', async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const [v] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    // Galleria: thumbnails pick, keys move, dots and arrows wrap, the caption follows, the slide show stops and starts.
+    await page.goto(`/${v}/components/galleria`);
+    await expect(page.locator('#nav-galleria')).toHaveClass(/active/);
+    const gal = page.locator('#d-gal-basic');
+    await expect(gal.locator('.wt-galleria-thumbnail-button')).toHaveCount(5);
+    await gal.locator('.wt-galleria-thumbnail-button').nth(2).click();
+    await expect(page.locator('#d-gal-index')).toHaveText('2');
+    await expect(gal.locator('.wt-galleria-item img')).toHaveAttribute('alt', 'ห้องสมุด');
+    await gal.locator('.wt-galleria-items').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-gal-index')).toHaveText('3');
+    const dots = page.locator('#d-gal-dots');
+    await expect(dots.locator('.wt-galleria-indicator-button')).toHaveCount(5);
+    await dots.locator('.wt-galleria-item-prev').click();
+    await expect(dots.locator('.wt-galleria-item img')).toHaveAttribute('alt', 'สวนเกษตร');
+    await expect(dots.locator('.wt-galleria-indicator-button').nth(4)).toHaveAttribute('aria-current', 'true');
+    await expect(page.locator('#d-gal-caption .docs-gal-title')).toHaveText('ภาพกิจกรรม');
+    await expect(page.locator('#d-gal-caption .docs-gal-caption-title')).toHaveText('วันกีฬาสี');
+    await page.locator('#d-gal-caption .wt-galleria-indicator-button').nth(1).click();
+    await expect(page.locator('#d-gal-caption .docs-gal-caption-title')).toHaveText('งานวันวิทยาศาสตร์');
+    await expect(page.locator('#d-gal-side .wt-galleria-thumbnails')).toBeVisible();
+    await expect(page.locator('#d-gal-playing')).toHaveText('true');
+    await page.locator('#d-gal-stop button').click();
+    await expect(page.locator('#d-gal-playing')).toHaveText('false');
+    await page.locator('#d-gal-start button').click();
+    await expect(page.locator('#d-gal-playing')).toHaveText('true');
+    // Full screen at the photo pressed; Esc closes and focus goes back (opened from the keyboard: WebKit does not focus clicked buttons).
+    await page.locator('#d-gal-grid button').nth(3).focus();
+    await page.keyboard.press('Enter');
+    const mask = page.locator('#d-gal-full dialog.wt-galleria-mask');
+    await expect(mask).toBeVisible();
+    await expect(mask.locator('.wt-galleria-item img')).toHaveAttribute('alt', 'ห้องดนตรี');
+    await mask.locator('.wt-galleria-item-next').click();
+    await expect(mask.locator('.wt-galleria-item img')).toHaveAttribute('alt', 'สวนเกษตร');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-gal-full dialog')).toHaveCount(0);
+    await expect(page.locator('#d-gal-grid button').nth(3)).toBeFocused();
+
+    // Breadcrumb: a labelled trail, the house for home, the current page, commands and onItemClick; own templates.
+    await page.goto(`/${v}/components/breadcrumb`);
+    const bc = page.locator('#d-bc-basic');
+    await expect(bc.locator('nav')).toHaveAttribute('aria-label', 'เส้นทาง');
+    await expect(bc.locator('.wt-breadcrumb-home .wt-breadcrumb-link')).toHaveAttribute('aria-label', 'หน้าแรก');
+    await expect(bc.locator('.wt-breadcrumb-home svg')).toHaveCount(1);
+    await expect(bc.locator('.wt-breadcrumb-separator')).toHaveCount(4);
+    await expect(bc.locator('.wt-breadcrumb-current .wt-breadcrumb-link')).toHaveAttribute('aria-current', 'page');
+    await expect(bc.locator('.wt-breadcrumb-current')).toHaveText('ด.ช.กิตติพัฒน์ ใจดี');
+    await bc.getByText('ห้องเรียน').click();
+    await expect(page.locator('#d-bc-pressed')).toHaveText('ห้องเรียน');
+    await expect(page.locator('#d-bc-view')).toHaveText('ห้องเรียน');
+    await bc.locator('.wt-breadcrumb-home .wt-breadcrumb-link').click();
+    await expect(page.locator('#d-bc-pressed')).toHaveText('หน้าแรก');
+    await expect(page.locator('#d-bc-tpl .docs-bc-sep')).toHaveCount(4);
+    await expect(page.locator('#d-bc-tpl .wt-breadcrumb-home .pi-home')).toHaveCount(1);
+    await expect(page.locator('#d-bc-tpl .docs-bc-label')).toHaveText(['', 'ระบบทะเบียน', 'ห้องเรียน', 'ม.1/1', 'ด.ช.กิตติพัฒน์ ใจดี']);
+    await expect(page.locator('docs-section#links')).toContainText("routerLink: '/reports'");
+
+    // Inplace: the text opens its field with focus, Esc goes back; save, then close; created on open; from code only.
+    await page.goto(`/${v}/components/inplace`);
+    await page.locator('#d-ip-basic .d-ip-name').click();
+    await expect(page.locator('#d-ip-name-input')).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-ip-name-input')).toHaveCount(0);
+    await expect(page.locator('#d-ip-basic .wt-inplace-display')).toBeFocused();
+    await expect(page.locator('#d-ip-events')).toHaveText('onActivate · onDeactivate');
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#d-ip-name-input')).toBeVisible();
+    await page.locator('#d-ip-basic .wt-inplace-close').click();
+    await expect(page.locator('#d-ip-basic .d-ip-name')).toHaveText('ด.ช.กิตติพัฒน์ ใจดี');
+    await page.locator('#d-ip-save .wt-inplace-display').click();
+    await page.locator('#d-ip-nickname-input').fill('ฟ้าใส');
+    await page.locator('#d-ip-nickname-save button').click();
+    await expect(page.locator('#d-ip-nickname-save button')).toHaveClass(/wt-btn-loading|loading/);
+    await expect(page.locator('#d-ip-save .d-ip-nickname')).toHaveText('ฟ้าใส', { timeout: 3000 });
+    await expect(page.locator('#d-ip-saved')).toHaveText('1');
+    await expect(page.locator('#d-ip-photo')).toHaveCount(0);
+    await page.locator('#d-ip-lazy .wt-inplace-display').click();
+    await expect(page.locator('#d-ip-photo')).toBeVisible();
+    await page.locator('#d-ip-note .wt-inplace-display').click();
+    await expect(page.locator('#d-ip-note-input')).toHaveCount(0);
+    await page.locator('#d-ip-note-edit button').click();
+    await expect(page.locator('#d-ip-note-input')).toBeFocused();
+    await expect(page.locator('#d-ip-note-active')).toHaveText('true');
+    await expect(page.locator('#d-ip-disabled .wt-inplace-display')).toHaveAttribute('aria-disabled', 'true');
+
+    // BlockUI: the cover moves into its target and makes it inert while saving; the page cover is a modal dialog.
+    await page.goto(`/${v}/components/blockui`);
+    await page.locator('#d-bu-save button').click();
+    const cover = page.locator('#d-bu-target .wt-blockui');
+    await expect(cover).toBeVisible();
+    await expect(cover).toContainText('กำลังบันทึก');
+    await expect(page.locator('#d-bu-target')).toHaveAttribute('aria-busy', 'true');
+    await expect(page.locator('#d-bu-name')).toHaveAttribute('inert', '');
+    await expect(page.locator('#d-bu-target .wt-blockui')).toHaveCount(0, { timeout: 4000 });
+    await expect(page.locator('#d-bu-saved')).toHaveText('1');
+    await expect(page.locator('#d-bu-name')).not.toHaveAttribute('inert', '');
+    await page.locator('#d-bu-send button').click();
+    await expect(page.locator('dialog.wt-blockui-document')).toBeVisible();
+    await expect(page.locator('dialog.wt-blockui-document')).toContainText('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('dialog.wt-blockui-document')).toBeVisible();
+    await expect(page.locator('dialog.wt-blockui-document')).toHaveCount(0, { timeout: 4000 });
+    await expect(page.locator('#d-bu-sent')).toHaveText('1');
+
+    // ScrollPanel: content scrolls inside a set height, grows up to a max height, scrolls by the step and from code.
+    await page.goto(`/${v}/components/scrollpanel`);
+    const content = page.locator('#d-scp-basic .wt-scrollpanel-content');
+    const size = await content.evaluate((el) => ({ client: el.clientHeight, scroll: el.scrollHeight }));
+    expect(size.scroll).toBeGreaterThan(size.client);
+    await expect(content).toHaveAttribute('aria-label', 'ระเบียบของโรงเรียน');
+    const grow = page.locator('#d-scp-grow .wt-scrollpanel-content');
+    const h0 = (await grow.boundingBox())!.height;
+    for (let i = 0; i < 6; i++) await page.locator('#d-scp-add button').click();
+    await expect(page.locator('#d-scp-grow .docs-scp-notice')).toHaveCount(7);
+    const h1 = (await grow.boundingBox())!.height;
+    expect(h1).toBeGreaterThan(h0);
+    expect(h1).toBeLessThanOrEqual(161);
+    const methods = page.locator('#d-scp-methods .wt-scrollpanel-content');
+    await methods.focus();
+    await page.keyboard.press('ArrowDown');
+    await expect.poll(() => methods.evaluate((el) => el.scrollTop)).toBe(40);
+    await page.locator('#d-scp-top button').click();
+    await expect.poll(() => methods.evaluate((el) => el.scrollTop)).toBe(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('scroller, drawer, tieredmenu and contextmenu pages in every version', async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const [v] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    // Scroller: only rows in view are drawn; horizontal; lazy ranges; scrollToIndex and the rows in view.
+    await page.goto(`/${v}/components/scroller`);
+    await expect(page.locator('#nav-scroller')).toHaveClass(/active/);
+    const rows = page.locator('#d-scr-basic .docs-scr-row');
+    await expect(rows.first()).toContainText('นักเรียนคนที่ 1');
+    expect(await rows.count()).toBeLessThan(60);
+    await page.locator('#d-scr-basic .wt-scroller').evaluate((el) => (el.scrollTop = el.scrollHeight));
+    await expect(page.locator('#d-scr-basic .docs-scr-row').last()).toContainText('นักเรียนคนที่ 1000');
+    expect(await page.locator('#d-scr-basic .docs-scr-row').count()).toBeLessThan(60);
+    expect(await page.locator('#d-scr-days .docs-scr-day').count()).toBeLessThan(60);
+    await expect(page.locator('#d-scr-loads')).not.toHaveText('0', { timeout: 4000 });
+    await expect(page.locator('#d-scr-lazy .docs-scr-name').first()).toHaveText('นักเรียนคนที่ 1');
+    expect(Number(await page.locator('#d-scr-loaded').textContent())).toBeLessThan(200);
+    await page.locator('#d-scr-go button').click();
+    await expect(page.locator('#d-scr-first')).toHaveText('500');
+    await expect(page.locator('#d-scr-methods .docs-scr-name').filter({ hasText: /^นักเรียนคนที่ 500$/ })).toBeVisible();
+    await page.locator('#d-scr-top button').click();
+    await expect(page.locator('#d-scr-first')).toHaveText('1');
+
+    // Drawer: a menu at the left that keeps focus, Esc closes and focus returns; positions; footer save; headless; non-modal.
+    await page.goto(`/${v}/components/drawer`);
+    await page.locator('#d-dr-open button').focus();
+    await page.keyboard.press('Enter');
+    const panel = page.locator('#d-dr-menu .wt-drawer');
+    await expect(panel).toBeVisible();
+    await expect(panel).toHaveClass(/wt-drawer-left/);
+    await expect(page.locator('#d-dr-menu dialog')).toHaveAttribute('aria-labelledby', /wt-drawer-title/);
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-dr-menu dialog')).toHaveCount(0);
+    await expect(page.locator('#d-dr-open button')).toBeFocused();
+    await page.locator('#d-dr-open button').click();
+    await page.locator('#d-dr-menu').getByRole('menuitem', { name: 'นักเรียน' }).click();
+    await expect(page.locator('#d-dr-page')).toHaveText('นักเรียน');
+    await expect(page.locator('#d-dr-menu dialog')).toHaveCount(0);
+    await expect(page.locator('#d-dr-events')).toContainText('onShow · onHide');
+    for (const [btn, side] of [['#d-dr-right', 'right'], ['#d-dr-bottom', 'bottom'], ['#d-dr-full', 'full']] as const) {
+      await page.locator(`${btn} button`).click();
+      await expect(page.locator('#d-dr-notice .wt-drawer')).toHaveClass(new RegExp(`wt-drawer-${side}`));
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#d-dr-notice dialog')).toHaveCount(0);
+    }
+    await page.locator('#d-dr-contact button').click();
+    const form = page.locator('#d-dr-form .wt-drawer');
+    await expect(form.locator('.wt-drawer-title')).toContainText('สมหญิง ใจดี');
+    await expect(form.locator('.wt-drawer-footer')).toBeVisible();
+    await page.locator('#d-dr-save button').click();
+    await expect(page.locator('#d-dr-form dialog')).toHaveCount(0, { timeout: 3000 });
+    await expect(page.locator('#d-dr-saved')).toHaveText('1');
+    await page.locator('#d-dr-preview button').click();
+    await expect(page.locator('#d-dr-headless .docs-dr-preview img')).toBeVisible();
+    await expect(page.locator('#d-dr-headless .wt-drawer-header')).toHaveCount(0);
+    await page.locator('#d-dr-preview-close button').click();
+    await expect(page.locator('#d-dr-headless dialog')).toHaveCount(0);
+    await page.locator('#d-dr-chat button').click();
+    await expect(page.locator('#d-dr-chat-panel dialog')).not.toHaveClass(/wt-drawer-modal/);
+    await page.locator('#d-dr-message').fill('สวัสดีครับ');
+    await expect(page.locator('#d-dr-message')).toHaveValue('สวัสดีครับ');
+    await page.locator('#d-dr-chat-panel .wt-drawer-close').click();
+    await expect(page.locator('#d-dr-chat-panel dialog')).toHaveCount(0);
+
+    // TieredMenu: submenus by click, hover and keys; a disabled item; the popup and its events; item templates.
+    await page.goto(`/${v}/components/tieredmenu`);
+    const tm = page.locator('#d-tm-basic');
+    await tm.getByRole('menuitem', { name: 'เอกสาร' }).click();
+    await expect(tm.getByRole('menuitem', { name: 'สร้างใหม่' })).toBeVisible();
+    await tm.getByRole('menuitem', { name: 'ส่งออก' }).hover();
+    await tm.getByRole('menuitem', { name: 'ไฟล์ PDF' }).click();
+    await expect(page.locator('#d-tm-command')).toHaveText('ไฟล์ PDF');
+    await page.mouse.move(0, 0);
+    await tm.getByRole('menuitem', { name: 'นักเรียน', exact: true }).focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(tm.getByRole('menuitem', { name: 'รายชื่อนักเรียน' })).toBeFocused();
+    await expect(tm.getByRole('menuitem', { name: 'ย้ายห้อง' })).toHaveAttribute('aria-disabled', 'true');
+    await page.keyboard.press('ArrowLeft');
+    await expect(tm.getByRole('menuitem', { name: 'นักเรียน', exact: true })).toBeFocused();
+    await page.locator('#d-tm-open button').click();
+    await expect(page.getByRole('menuitem', { name: 'ตั้งค่า' }).last()).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-tm-open button')).toBeFocused();
+    await expect(page.locator('#d-tm-events')).toHaveText('onShow · onHide');
+    await expect(page.locator('#d-tm-tpl .docs-tm-count')).toHaveText(['4', '2']);
+    await expect(page.locator('#d-tm-tpl .docs-tm-arrow')).toHaveCount(2);
+
+    // ContextMenu: a right-click opens it at the pointer; submenus; opened from code on the row right-clicked.
+    await page.goto(`/${v}/components/contextmenu`);
+    await page.locator('#d-cm-target').scrollIntoViewIfNeeded();
+    const target = (await page.locator('#d-cm-target').boundingBox())!;
+    await page.mouse.click(target.x + 40, target.y + 20, { button: 'right' });
+    const cm = page.locator('.wt-contextmenu');
+    await expect(cm).toBeVisible();
+    expect(Math.abs((await cm.boundingBox())!.x - (target.x + 40))).toBeLessThan(12);
+    await cm.getByRole('menuitem', { name: 'แชร์' }).hover();
+    await cm.getByRole('menuitem', { name: 'ให้ผู้ปกครอง' }).click();
+    await expect(page.locator('#d-cm-command')).toHaveText('ให้ผู้ปกครอง');
+    await expect(page.locator('.wt-contextmenu')).toHaveCount(0);
+    await page.locator('#d-cm-files li').nth(1).click({ button: 'right' });
+    await expect(page.locator('#d-cm-picked')).toHaveText('ตารางสอบ');
+    await expect(page.locator('#d-cm-files li').nth(1)).toHaveClass(/docs-cm-file-picked/);
+    await page.locator('.wt-contextmenu').getByRole('menuitem', { name: 'ลบ' }).click();
+    await expect(page.locator('#d-cm-show-command')).toHaveText('ลบ');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('tree, treeselect and dragdrop pages in every version', async ({ page, browserName }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    // Tree: open nodes with the arrow and the keys; one pick by key; ticks spread down and up; search keeps the path.
+    await page.goto(`/${v}/components/tree`);
+    await expect(page.locator('#nav-tree')).toHaveClass(/active/);
+    const basic = page.locator('#d-tr-basic');
+    const node = (tree: ReturnType<Page['locator']>, name: string) => tree.getByRole('treeitem', { name, exact: true });
+    await expect(basic.getByRole('treeitem')).toHaveCount(3);
+    await node(basic, 'ฝ่ายวิชาการ').locator('.wt-tree-toggler').first().click();
+    await expect(node(basic, 'หลักสูตร')).toBeVisible();
+    await expect(node(basic, 'ฝ่ายวิชาการ')).toHaveAttribute('aria-expanded', 'true');
+    await node(basic, 'ฝ่ายบริหารทั่วไป').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(node(basic, 'ปฏิทินโรงเรียน')).toBeVisible();
+    await page.keyboard.press('ArrowRight');
+    await expect(node(basic, 'ปฏิทินโรงเรียน')).toBeFocused();
+    await page.keyboard.press('ArrowLeft');
+    await expect(node(basic, 'ฝ่ายบริหารทั่วไป')).toBeFocused();
+    const single = page.locator('#d-tr-single');
+    await node(single, 'ฝ่ายงบประมาณ').locator('.wt-tree-node-content').click();
+    await expect(page.locator('#d-tr-picked')).toHaveText('ฝ่ายงบประมาณ');
+    await expect(node(single, 'ฝ่ายงบประมาณ')).toHaveAttribute('aria-selected', 'true');
+    const check = page.locator('#d-tr-check');
+    await node(check, 'ฝ่ายบริหารทั่วไป').locator('.wt-tree-toggler').first().click();
+    await node(check, 'ปฏิทินโรงเรียน').locator('.wt-tree-node-content').click();
+    await expect(node(check, 'ฝ่ายบริหารทั่วไป')).toHaveAttribute('aria-checked', 'mixed');
+    await expect(page.locator('#d-tr-ticked')).toHaveText('1');
+    await node(check, 'ระเบียบการแต่งกาย').locator('.wt-tree-node-content').click();
+    await expect(node(check, 'ฝ่ายบริหารทั่วไป')).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('#d-tr-ticked')).toHaveText('2');
+    await expect(page.locator('#d-tr-ticked-all')).toHaveText('3');
+    const filter = page.locator('#d-tr-filter');
+    await filter.locator('input[role="searchbox"]').fill('ตารางสอบ');
+    await expect(filter.getByRole('treeitem')).toHaveCount(3);
+    await expect(node(filter, 'ตารางสอบกลางภาค')).toBeVisible();
+    await filter.locator('input[role="searchbox"]').fill('zzz');
+    await expect(filter.locator('.wt-tree-empty')).toHaveText('ไม่พบข้อมูลที่ค้นหา');
+    // Lazy children: the arrow shows for leaf: false, the rooms arrive on open.
+    const lazy = page.locator('#d-tr-lazy');
+    await node(lazy, 'ชั้น ม.2').locator('.wt-tree-toggler').first().click();
+    await expect(node(lazy, 'ห้อง ม.2/1')).toBeVisible({ timeout: 3000 });
+    await expect(page.locator('#d-tr-loads')).toHaveText('1');
+    // Templates by type, the context menu on a node, a double-click.
+    const tpl = page.locator('#d-tr-tpl');
+    await expect(tpl.locator('.docs-tr-folder')).toHaveText(['ฝ่ายวิชาการ', 'ฝ่ายบริหารทั่วไป', 'ฝ่ายงบประมาณ']);
+    await node(tpl, 'ฝ่ายงบประมาณ').locator('.wt-tree-toggler').first().click();
+    await expect(node(tpl, 'แผนการใช้งบ').locator('.docs-tr-size')).toHaveText('150 KB');
+    await node(tpl, 'แผนการใช้งบ').locator('.wt-tree-node-content').click({ button: 'right' });
+    await expect(page.locator('.wt-contextmenu')).toBeVisible();
+    await page.locator('.wt-contextmenu').getByRole('menuitem', { name: 'ดาวน์โหลด' }).click();
+    await expect(page.locator('#d-tr-command')).toHaveText('ดาวน์โหลด: แผนการใช้งบ');
+    await node(tpl, 'แผนการใช้งบ').locator('.wt-tree-node-content').dblclick();
+    await expect(page.locator('#d-tr-opened')).toHaveText('แผนการใช้งบ');
+
+    // TreeSelect: a pick closes the panel, reopening shows the path, clear empties it; several as chips; a value template.
+    await page.goto(`/${v}/components/treeselect`);
+    const field = page.locator('#d-ts-basic .wt-treeselect');
+    await expect(field).toContainText('เลือกเอกสาร');
+    await field.click();
+    const overlay = page.locator('.wt-treeselect-overlay');
+    await expect(overlay).toBeVisible();
+    await overlay.getByRole('treeitem', { name: 'ฝ่ายงบประมาณ', exact: true }).locator('.wt-tree-toggler').first().click();
+    await overlay.getByRole('treeitem', { name: 'แผนการใช้งบ', exact: true }).locator('.wt-tree-node-content').click();
+    await expect(page.locator('#d-ts-basic-value')).toHaveText('แผนการใช้งบ');
+    await expect(overlay).toHaveCount(0);
+    await expect(field).toContainText('แผนการใช้งบ');
+    await field.click();
+    await expect(page.locator('.wt-treeselect-overlay').getByRole('treeitem', { name: 'แผนการใช้งบ', exact: true })).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('Escape');
+    await page.locator('#d-ts-basic .wt-select-clear').click();
+    await expect(page.locator('#d-ts-basic-value')).toHaveText('null');
+    await expect(page.locator('#d-ts-cleared')).toHaveText('1');
+    const multi = page.locator('#d-ts-multi .wt-treeselect');
+    await multi.click();
+    await page.locator('.wt-treeselect-overlay').getByRole('treeitem', { name: 'ชั้น ม.1', exact: true }).locator('.wt-tree-node-content').click();
+    await expect(page.locator('#d-ts-multi-count')).toHaveText('2');
+    await page.keyboard.press('Escape');
+    await expect(multi.locator('.wt-multiselect-chip').first()).toBeVisible();
+    await page.locator('#d-ts-tpl .wt-treeselect').click();
+    await page.locator('.wt-treeselect-overlay').getByRole('treeitem', { name: 'ฝ่ายวิชาการ', exact: true }).locator('.wt-tree-node-content').click();
+    await expect(page.locator('#d-ts-tpl .docs-ts-value')).toHaveText('ฝ่ายวิชาการ');
+
+    // DragDrop: same scope drops, another scope does not; handles and the lock. (Synthetic HTML drag is Chromium-only.)
+    await page.goto(`/${v}/components/dragdrop`);
+    await expect(page.locator('#d-dd-source .docs-dd-item').first()).toHaveAttribute('draggable', 'true');
+    if (browserName === 'chromium') {
+      await page.dragAndDrop('#d-dd-source .docs-dd-item >> nth=0', '#d-dd-club');
+      await expect(page.locator('#d-dd-members')).toHaveText('1');
+      await expect(page.locator('#d-dd-club .docs-dd-member')).toHaveText(['ด.ช.กิตติพัฒน์ ใจดี']);
+      await page.dragAndDrop('#d-dd-teacher-1', '#d-dd-adviser');
+      await expect(page.locator('#d-dd-adviser-name')).toHaveText('ครูวิชัย');
+      await page.dragAndDrop('#d-dd-teacher-2', '#d-dd-students-only');
+      await expect(page.locator('#d-dd-adviser-name')).toHaveText('ครูวิชัย');
+      await page.dragAndDrop('#d-dd-order li >> nth=0 >> .docs-dd-handle', '#d-dd-order li >> nth=2');
+      await expect(page.locator('#d-dd-order .docs-dd-group')).toHaveText(['กลุ่มที่ 2', 'กลุ่มที่ 3', 'กลุ่มที่ 1', 'กลุ่มที่ 4']);
+    }
+    await page.locator('#d-dd-lock input').click();
+    await expect(page.locator('#d-dd-order .docs-dd-order-item').first()).not.toHaveAttribute('draggable', 'true');
+  }
+  expect(errors).toEqual([]);
+});
+
+for (const v of ['v1', 'v3']) {
+  test(`table context menu (${v}): a right-click opens it, remembers and outlines the row, joint selects it, commands act on it`, async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto(`/${v}/components/table`);
+    const row = page.locator('#d-tbl-ctx tbody tr').nth(1);
+    await row.scrollIntoViewIfNeeded();
+    await row.click({ button: 'right' });
+    const cm = page.locator('.wt-contextmenu');
+    await expect(cm).toBeVisible();
+    await expect(page.locator('#d-tbl-ctx-row')).toHaveText('ด.ญ.ปภาวรินทร์ ศรีสุข');
+    await expect(page.locator('#d-tbl-ctx-selected')).toHaveText('ด.ญ.ปภาวรินทร์ ศรีสุข');
+    await expect(row).toHaveClass(/wt-row-contextmenu/);
+    await cm.getByRole('menuitem', { name: 'ดูประวัติ' }).click();
+    await expect(page.locator('#d-tbl-ctx-action')).toHaveText('ดูประวัติ: ด.ญ.ปภาวรินทร์ ศรีสุข');
+    await expect(page.locator('.wt-contextmenu')).toHaveCount(0);
+    await page.locator('#d-tbl-ctx tbody tr').nth(3).click({ button: 'right' });
+    await expect(page.locator('#d-tbl-ctx tbody tr').nth(1)).not.toHaveClass(/wt-row-contextmenu/);
+    await page.keyboard.press('Escape');
+    await page.locator('#tab-api').click();
+    await expect(page.locator('#api-selection')).toContainText('contextMenuSelectionMode');
+    await expect(page.locator('#api-directives')).toContainText('[wtContextMenuRow] · [pContextMenuRow]');
+    expect(errors).toEqual([]);
+  });
+}
+
+test('samples of the new component pages follow the team style per version', async ({ page }) => {
+  const code = (sel: string) => page.locator(`${sel} docs-code`).first();
+  await page.goto('/v1/components/listbox');
+  await expect(code('docs-section#templates')).toContainText('<ng-template wtTemplate="item" let-room let-selected="selected">');
+  await expect(code('docs-section#templates')).toContainText('<i *ngIf="selected" class="pi pi-check"></i>');
+  await expect(code('docs-section#multiple')).toContainText('[multiple]="true" [checkbox]="true" [striped]="true"');
+  await page.goto('/v3/components/listbox');
+  await expect(code('docs-section#templates')).toContainText('@if (selected) {');
+  await page.goto('/v2/components/drawer');
+  await expect(code('docs-section#templates')).toContainText('<ng-template wtTemplate="footer">');
+  await expect(code('docs-section#templates')).toContainText('[loading]="isApiSaving"');
+  await page.goto('/v3/components/drawer');
+  await expect(code('docs-section#templates')).toContainText('<ng-template #footer>');
+  await page.goto('/v1/components/galleria');
+  await expect(code('docs-section#fullscreen')).toContainText('*ngFor="let photo of photos; let i = index"');
+  await page.goto('/v3/components/galleria');
+  await expect(code('docs-section#fullscreen')).toContainText('@for (photo of photos; track photo.src; let i = $index) {');
+  await page.goto('/v3/components/tree');
+  await expect(code('docs-section#templates')).toContainText('<ng-template wtTemplate="file" let-node>');
+  await page.locator('docs-section#lazy').getByRole('tab', { name: 'TS' }).click();
+  await expect(page.locator('docs-section#lazy docs-code')).toContainText('loadRooms(event: WtTreeNodeEvent): void {');
+  await page.goto('/v2/components/scroller');
+  await expect(code('docs-section#lazy')).toContainText('<span *ngIf="student; else waiting">');
+  await page.goto('/v1/components/inplace');
+  await expect(code('docs-section#save')).toContainText('<ng-template wtTemplate="content" let-closeCallback="closeCallback">');
+  await page.goto('/v3/components/dragdrop');
+  await expect(code('docs-section#basic')).toContainText('} @empty {');
+  await page.goto('/v3/components/slider');
+  await expect(code('docs-section#events')).toContainText('[disabled]="isApiSaving" (onSlideEnd)="saveVolume($event)"');
+});
+
+test('migration page lists the 16 new components, their tag spellings and the table context menu', async ({ page }) => {
+  for (const lang of ['th', 'en']) {
+    await page.goto(`/v3/getting-started/migration?lang=${lang}`);
+    for (const name of ['wt-slider', 'wt-splitButton', 'wt-listbox', 'wt-galleria', 'wt-colorPicker', 'wt-breadcrumb', 'wt-inplace', 'wt-blockUI', 'wt-scrollPanel', 'wt-scroller', 'wt-drawer', 'wt-tieredMenu', 'wt-contextMenu', 'wt-tree', 'wt-treeSelect', 'WtDragDropModule']) {
+      await expect(page.locator('#names')).toContainText(name);
+    }
+    await expect(page.locator('#names')).toContainText('pContextMenuRow');
+    await expect(page.locator('#spellings-table')).toContainText('wt-split-button');
+    await expect(page.locator('#spellings-table')).toContainText('[pDraggable]');
+  }
+});
+
+test('the 16 new pages at 360px in Thai and English: no sideways scroll, every demo fits', async ({ page }) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 360, height: 800 });
+  const pages = ['slider', 'splitbutton', 'listbox', 'galleria', 'colorpicker', 'breadcrumb', 'inplace', 'blockui', 'scrollpanel', 'scroller', 'drawer', 'tieredmenu', 'contextmenu', 'tree', 'treeselect', 'dragdrop'];
+  for (const lang of ['th', 'en']) {
+    for (const v of ['v1', 'v3']) {
+      for (const p of pages) {
+        await page.goto(`/${v}/components/${p}?lang=${lang}`);
+        await expect(page.locator('h1')).toBeVisible();
+        expect(await noSideScroll(page), `${lang} /${v}/${p}`).toBeLessThanOrEqual(0);
+        const wide = await page.evaluate(() =>
+          [...document.querySelectorAll('.docs-demo-preview')].filter((d) => d.getBoundingClientRect().right > document.documentElement.clientWidth + 1).length
+        );
+        expect(wide, `${lang} /${v}/${p}`).toBe(0);
+      }
+    }
+  }
+  // A drawer is never wider than the phone, and the full-screen gallery fits.
+  await page.goto('/v3/components/drawer');
+  await page.locator('#d-dr-contact button').click();
+  expect((await page.locator('#d-dr-form .wt-drawer').boundingBox())!.width).toBeLessThanOrEqual(360);
 });
 
 test('theme drawer: modal on the right, Escape and the backdrop close it, focus goes back to the button', async ({ page }) => {
@@ -1986,7 +3597,7 @@ test('"On this page" sits under the open page in the sidebar and follows the scr
   // No right-hand column any more: the sections are nested under the page's own sidebar item.
   await expect(page.locator('.docs-toc-col')).toHaveCount(0);
   const toc = page.locator('#nav-card + docs-toc .docs-nav-toc');
-  await expect(toc.locator('a')).toHaveText(['Import', 'Basic', 'Slots', 'Variants', 'Advanced', 'Loading']);
+  await expect(toc.locator('a')).toHaveText(['Import', 'Basic', 'Slots', 'Templates', 'Variants', 'Advanced', 'Loading']);
   await expect(page.locator('.docs-nav-toc')).toHaveCount(1);
   await toc.locator('a', { hasText: 'Variants' }).click();
   await expect(page).toHaveURL(/\/v3\/components\/card#variants$/);
@@ -2013,12 +3624,12 @@ test('phones: the drawer lists the open page sections too', async ({ page }) => 
 });
 
 test('sidebar shows only the section of the current page, and opens others on demand', async ({ page }) => {
-  await page.goto('/v3/components/button');
+  await page.goto('/v3/components/splitbutton');
   await expect(page.locator('#nav-group-theming')).toHaveAttribute('aria-expanded', 'false');
   await expect(page.locator('#nav-theming-overview')).toBeHidden();
   await expect(page.locator('#nav-group-components')).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('#nav-sub-button')).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#nav-button')).toBeVisible();
+  await expect(page.locator('#nav-splitbutton')).toBeVisible();
   await expect(page.locator('#nav-checkbox')).toBeHidden();
 
   await page.locator('#nav-group-theming').click();
@@ -2425,6 +4036,255 @@ test.describe('English samples', () => {
     await expect(page.locator('#interactive')).toContainText('Last step');
     await page.locator('#disabled').getByRole('tab', { name: 'TS' }).click();
     await expect(page.locator('#disabled docs-code')).toContainText("{ label: 'Document check', disabled: true },   // done by the office");
+    expect(errors).toEqual([]);
+  });
+
+  test('picklist and orderlist pages: English items, headers, search, built-in texts and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/v1/components/picklist');
+    const basic = page.locator('#d-pl-basic');
+    await expect(basic.locator('.wt-picklist-header')).toHaveText(['All permissions', 'User permissions']);
+    await expect(basic.locator('.wt-picklist-target .wt-picklist-item')).toHaveText([/View student records\s*Registry/]);
+    await expect(basic.getByRole('button', { name: 'Move to target', exact: true })).toBeVisible();
+    await expect(page.locator('#basic docs-code')).toContainText('sourceHeader="All permissions"');
+    await page.locator('#basic').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('#basic docs-code')).toContainText("name: 'Edit student records', module: 'Registry'");
+    await expect(page.locator('#basic docs-code')).toContainText('// … data from the API');
+    await expect(page.locator('#d-pl-drag .wt-picklist-header')).toHaveText(['Positions', 'Forwarding order (top to bottom)']);
+    await expect(page.locator('#d-pl-drag .wt-picklist-source .wt-picklist-item').last()).toContainText('(no one assigned yet)');
+    const search = page.locator('#d-pl-filter .wt-picklist-source').getByRole('searchbox');
+    await expect(search).toHaveAttribute('placeholder', 'Search permissions');
+    await search.fill('student');
+    await expect(page.locator('#d-pl-filter .wt-picklist-source .wt-picklist-item')).toHaveCount(2);
+    await search.fill('zzz');
+    await expect(page.locator('#d-pl-filter .wt-picklist-source .wt-picklist-empty')).toHaveText('No results found');
+    await expect(page.locator('#d-pl-tpl .wt-picklist-target .wt-picklist-empty')).toHaveText('No permissions granted yet');
+    await page.locator('#d-pl-all-right button').click();
+    await expect(page.locator('#d-pl-all-right button')).toHaveText('Grant all');
+    await expect(page.locator('#d-pl-event')).toHaveText('onMoveAllToTarget: grade.entry, grade.approve, finance.view, finance.refund, user.manage, report.export');
+    await page.locator('#tab-api').click();
+    await expect(page.locator('#api-types docs-code')).toContainText('items: unknown[];        // the items that moved');
+
+    await page.goto('/v3/components/orderlist');
+    const order = page.locator('#d-ol-basic');
+    await expect(order.locator('.wt-picklist-header')).toHaveText('Electives by preference');
+    await expect(order.locator('.wt-picklist-item').first()).toHaveText(/1\. Intro to robotics\s*Mr Wichai/);
+    await expect(order.getByRole('button', { name: 'Move up' })).toBeVisible();
+    await expect(page.locator('#basic docs-code')).toContainText('header="Electives by preference"');
+    await page.locator('#basic').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('#basic docs-code')).toContainText("{ id: 1, name: 'Intro to robotics', teacher: 'Mr Wichai' }");
+    await expect(page.locator('#d-ol-filter .wt-picklist-header')).toHaveText('Electives (6)');
+    await page.locator('#d-ol-filter').getByRole('searchbox').fill('zzz');
+    await expect(page.locator('#d-ol-filter .wt-picklist-empty')).toHaveText('No elective matches');
+    expect(errors).toEqual([]);
+  });
+
+  test('fileupload page: English buttons, hints, badges, messages and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v2/components/fileupload');
+    const basic = page.locator('#d-fu-basic');
+    await expect(basic.locator('.wt-fileupload-header button')).toHaveText([/Choose files/, /Upload/, /Cancel/]);
+    await expect(basic.locator('.wt-fileupload-empty')).toHaveText('Drag and drop files here, or use the Choose button');
+    await basic.locator('input[type="file"]').setInputFiles([fakeFile('report.pdf', 'application/pdf', 1572864)]);
+    await expect(basic.locator('.wt-fileupload-badge')).toHaveText('Pending');
+    await expect(basic.getByRole('button', { name: 'Remove report.pdf' })).toBeVisible();
+    await page.locator('#d-fu-check input[type="file"]').setInputFiles([fakeFile('big.xlsx', XLSX, 2_000_000), fakeFile('report.pdf', 'application/pdf', 10)]);
+    await expect(page.locator('#d-fu-check .wt-fileupload-message')).toHaveText([
+      /big\.xlsx: the file is too large \(the limit is 1 MB\)/,
+      /report\.pdf: this file type is not allowed \(allowed: \.xlsx, \.xls\)/,
+    ]);
+    await expect(page.locator('#d-fu-single .wt-fileupload-choose')).toHaveText(/Choose a student photo/);
+    await expect(page.locator('#d-fu-tpl .wt-fileupload-empty')).toHaveText('Drop certificates or ID copies here');
+    await expect(page.locator('#basic docs-code')).toContainText('chooseLabel="Choose files" uploadLabel="Upload" cancelLabel="Cancel"');
+    await page.locator('#basicmode').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('#basicmode docs-code')).toContainText('// sent with the form on save');
+    await expect(page.locator('#server docs-code').nth(1)).toContainText("summary: 'Imported ' + event.files.length + ' files'");
+    expect(errors).toEqual([]);
+  });
+
+  test('stepper page: English steps, panels, buttons and code in v1 and v3', async ({ page }) => {
+    const errors = collectErrors(page);
+    for (const v of ['v1', 'v3']) {
+      await page.goto(`/${v}/components/stepper`);
+      const basic = page.locator('#d-stp-basic');
+      await expect(basic.locator('.wt-step-title')).toHaveText(['Basics', 'Address', 'Confirm']);
+      await expect(basic.locator('.wt-step-panel-active')).toContainText('Enter the name, date of birth and ID number');
+      await expect(page.locator('#d-stp-next-1 button')).toHaveText('Next');
+      await expect(page.locator('#basic docs-code')).toContainText('<wt-step [value]="1">Basics</wt-step>');
+      await expect(page.locator('#basic docs-code')).toContainText('label="Next"');
+      await expect(page.locator('label[for="d-stp-name"]')).toHaveText("Applicant's full name");
+      await expect(page.locator('#d-stp-progress .wt-step-title')).toHaveText(['Apply', 'Document check', 'Interview', 'Results']);
+      await expect(page.locator('#d-stp-header .docs-stp-head')).toHaveText(['Payer', 'Payment method', 'Receipt']);
+      await page.locator('#header').getByRole('tab', { name: 'TS' }).click();
+      await expect(page.locator('#header docs-code')).toContainText("{ value: 2, label: 'Payment method', icon: 'pi pi-credit-card' }");
+      await expect(page.locator('#d-stp-steps-link')).toHaveText('Open the Steps page');
+    }
+    expect(errors).toEqual([]);
+  });
+
+  test('table extras: English headers, expanded rows, groups, filters and CSV', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/table');
+    await expect(page.locator('#d-tbl-frozen thead th').last()).toHaveText('Actions');
+    await expect(page.locator('#d-tbl-expand .d-tbl-expansion')).toHaveText('Club Thai music · Status Enrolled · Birthday 1 Jan 2012');
+    await expect(page.locator('#d-tbl-expand .d-tbl-toggler').first()).toHaveAttribute('aria-label', 'Details of Liam Smith');
+    await expect(page.locator('#d-tbl-group tr.wt-rowgroup-header').first()).toHaveText('Class 7/1');
+    await expect(page.locator('#d-tbl-group .d-tbl-group-footer').first()).toHaveText('3 students');
+    await expect(page.locator('#d-tbl-filter').getByPlaceholder('Search names')).toBeVisible();
+    await expect(page.locator('#d-tbl-filter wt-select')).toContainText('All classes');
+    await expect(page.locator('#d-tbl-filter .d-tbl-paid').first()).toHaveText('Paid');
+    await page.locator('#d-tbl-export-preview button').click();
+    await expect(page.locator('#d-tbl-csv')).toContainText('"ID","Name","Class","Score"');
+    await expect(page.locator('#d-tbl-csv')).toContainText('"66001","Liam Smith","7/1","87.00"');
+    await expect(page.locator('#rowgroup docs-code')).toContainText('<td colspan="3">Class {{ s.room }}</td>');
+    await page.locator('#export').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('#export docs-code')).toContainText("{ field: 'name', header: 'Name' },");
+    await expect(page.locator('#export docs-code')).toContainText('// left out of the file');
+    await expect(page.locator('#migration')).toContainText('Not built yet: virtual scroll (for very long lists, use wt-scroller).');
+    expect(errors).toEqual([]);
+  });
+
+  test('editor page: English text, built-in labels, menus, messages and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/editor');
+    const area = page.locator('#d-ed-basic .wt-editor-area');
+    await expect(area).toHaveAttribute('data-placeholder', 'Write the news');
+    await expect(area.locator('strong')).toHaveText('for the 2026 school year');
+    await expect(page.locator('#d-ed-save button')).toHaveText('Save');
+    await expect(page.locator('#d-ed-basic [data-wt-tool="bold"]')).toHaveAttribute('aria-label', /^Bold/);
+    await page.locator('#d-ed-options [data-wt-tool="heading"]').click();
+    await expect(page.locator('.wt-editor-panel [role="menuitemradio"]')).toHaveText(['Paragraph', 'Heading 2', 'Heading 3', 'Block quote']);
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#d-ed-header .wt-editor-area h2')).toHaveText('Privacy policy');
+    await expect(page.locator('#d-ed-tables .wt-editor-area th').first()).toHaveText('Subject');
+    await expect(page.locator('#d-ed-view')).toContainText('Teachers’ Day ceremony');
+    await expect(page.locator('#d-ed-count .wt-editor-count')).toContainText('words');
+    const images = page.locator('#d-ed-images');
+    await images.locator('.wt-editor-area').click();
+    await images.locator('input.wt-editor-file').setInputFiles({ name: 'big.png', mimeType: 'image/png', buffer: Buffer.alloc(1_200_000, 1) });
+    await expect(images.locator('.wt-editor-notice')).toContainText('big.png');
+    await expect(images.locator('.wt-editor-notice')).not.toContainText(/[฀-๿]/);
+    await page.locator('#d-ed-letter button').click();
+    await expect(page.locator('#d-ed-events .wt-editor-area')).toContainText('Dear parents');
+    await expect(page.locator('docs-section#basic docs-code')).toContainText('placeholder="Write the news"');
+    await expect(page.locator('docs-section#basic docs-code')).toContainText('<wt-button label="Save"');
+    await expect(page.locator('docs-section#header docs-code')).toContainText('<option value="1">');
+    expect(errors).toEqual([]);
+  });
+
+  test('keyfilter, ripple, badge and card pages: English labels, messages and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v1/components/keyfilter');
+    await expect(page.locator('label[for="d-kf-id"]')).toHaveText('Student ID');
+    await expect(page.locator('label[for="d-kf-subject"]')).toHaveText('Subject code');
+    await page.locator('#d-kf-phone').pressSequentially('12');
+    await expect(page.locator('#d-kf-phone-error')).toHaveText('This phone number is not valid');
+    await expect(page.locator('docs-section#validate docs-code')).toContainText('This phone number is not valid');
+    await page.goto('/v3/components/ripple');
+    await expect(page.locator('#d-rp-switch')).toContainText('Ripple for the whole app');
+    await expect(page.locator('#d-rp-item')).toHaveText('Timetable');
+    await expect(page.locator('#d-rp-off')).toHaveText('No ripple here');
+    await page.goto('/v3/components/badge');
+    await expect(page.locator('#d-badge-read button')).toHaveText('Mark all read');
+    await expect(page.locator('docs-section#directive docs-code')).toContainText('label="Mark all read"');
+    await page.goto('/v2/components/card');
+    await expect(page.locator('#d-card-tpl .wt-card-title')).toHaveText('Admissions news');
+    await expect(page.locator('#d-card-tpl .wt-card-footer')).toContainText('Apply now');
+    await expect(page.locator('docs-section#templates docs-code')).toContainText('<ng-template wtTemplate="title">Admissions news</ng-template>');
+    expect(errors).toEqual([]);
+  });
+
+  test('table deep features: English headers, statuses in the custom order, the score band and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/table');
+    await expect(page.locator('#d-tbl-cols thead th')).toHaveText(['ID', 'Name', 'Class', 'Score']);
+    await expect(page.locator('#d-tbl-radio-value')).not.toContainText(/[฀-๿]/);
+    await expect(page.locator('#d-tbl-fmenu-band button')).toHaveText('Scores 80–89');
+    const csort = page.locator('#d-tbl-csort');
+    await csort.locator('th', { hasText: 'Status' }).click();
+    await expect(csort.locator('.d-tbl-status').first()).toHaveText('On leave');
+    await expect(csort.locator('.d-tbl-status').last()).toHaveText('Enrolled');
+    await expect(page.locator('#d-tbl-frozenrows .d-tbl-total')).toContainText('Average');
+    await page.locator('#d-tbl-fmenu-name button').click();
+    await expect(page.locator('.wt-column-filter-overlay').getByRole('button', { name: 'Apply' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await page.locator('docs-section#customsort').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('docs-section#customsort docs-code')).toContainText("['On leave', 'Moved away', 'Enrolled'];   // follow-ups first");
+    await expect(page.locator('#migration')).toContainText('Not built yet: virtual scroll (for very long lists, use wt-scroller).');
+    await page.goto('/v3/getting-started/migration');
+    await expect(page.locator('#spellings-table')).toContainText('wt-input-number');
+    await expect(page.locator('#spellings-table')).not.toContainText(/[฀-๿]/);
+    expect(errors).toEqual([]);
+  });
+
+  test('new form and button pages: English labels, options, menus and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/slider');
+    await expect(page.locator('#d-sl-volume-label')).toHaveText('Announcement volume');
+    await expect(page.locator('#d-sl-range-value')).toHaveText('60 to 80');
+    await expect(page.locator('docs-section#basic docs-code')).toContainText('<label id="volume-label">Announcement volume</label>');
+    await page.goto('/v1/components/splitbutton');
+    await expect(page.locator('#d-spb-basic .wt-splitbutton-main')).toHaveText('Save');
+    await page.locator('#d-spb-basic .wt-splitbutton-dropdown').click();
+    await expect(page.locator('.wt-menu-overlay').getByRole('menuitem')).toHaveText(['Save as draft', 'Save and forward', 'Delete document']);
+    await page.keyboard.press('Escape');
+    await page.locator('docs-section#basic').getByRole('tab', { name: 'TS' }).click();
+    await expect(page.locator('docs-section#basic docs-code')).toContainText("{ label: 'Save as draft', icon: 'pi pi-file'");
+    await page.goto('/v3/components/listbox');
+    await expect(page.locator('#d-lb-basic').getByRole('option').first()).toHaveText('Class 7/1');
+    await expect(page.locator('#d-lb-tpl .docs-lb-room-teacher').nth(1)).toHaveText('Mr Wichai');
+    await expect(page.locator('#d-lb-tpl-footer')).toHaveText('Picked 0 classes');
+    await expect(page.locator('#d-lb-filter input[role="searchbox"]')).toHaveAttribute('placeholder', 'Search classes or teachers');
+    await page.goto('/v2/components/colorpicker');
+    await expect(page.locator('label[for="d-cp-school-input"]')).toHaveText('School colour');
+    await page.goto('/v3/components/treeselect');
+    await expect(page.locator('#d-ts-basic .wt-treeselect')).toContainText('Choose a document');
+    await page.locator('#d-ts-basic .wt-treeselect').click();
+    await expect(page.locator('.wt-treeselect-overlay').getByRole('treeitem').first()).toHaveAttribute('aria-label', 'Academic affairs');
+    await page.keyboard.press('Escape');
+    expect(errors).toEqual([]);
+  });
+
+  test('new data, media, menu, panel and overlay pages: English demo text and code', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/galleria');
+    await expect(page.locator('#d-gal-caption .docs-gal-caption-title')).toHaveText('Sports day');
+    await expect(page.locator('#d-gal-basic .wt-galleria-item img')).toHaveAttribute('alt', 'Sports day');
+    await page.goto('/v1/components/breadcrumb');
+    await expect(page.locator('#d-bc-basic nav')).toHaveAttribute('aria-label', 'Breadcrumb');
+    await expect(page.locator('#d-bc-basic .wt-breadcrumb-current')).toHaveText('Liam Smith');
+    await expect(page.locator('#d-bc-basic')).toContainText('Registry');
+    await page.goto('/v3/components/inplace');
+    await expect(page.locator('#d-ip-basic .d-ip-name')).toHaveText('Liam Smith');
+    await expect(page.locator('#d-ip-note .d-ip-note-text')).toHaveText('No note yet');
+    await page.goto('/v3/components/scrollpanel');
+    await expect(page.locator('#d-scp-basic li').first()).toHaveText('Arrive before 7:45');
+    await page.goto('/v3/components/scroller');
+    await expect(page.locator('#d-scr-basic .docs-scr-row').first()).toContainText('Student 1');
+    await expect(page.locator('#d-scr-basic .docs-scr-row').first()).toContainText('Class 7/1');
+    await page.goto('/v2/components/drawer');
+    await page.locator('#d-dr-open button').click();
+    await expect(page.locator('#d-dr-menu .wt-drawer-title')).toHaveText('Menu');
+    await expect(page.locator('#d-dr-menu').getByRole('menuitem').first()).toHaveText('Home');
+    await page.keyboard.press('Escape');
+    await page.goto('/v3/components/tieredmenu');
+    await expect(page.locator('#d-tm-basic').getByRole('menuitem').first()).toHaveText('Documents');
+    await page.goto('/v3/components/contextmenu');
+    await expect(page.locator('#d-cm-target')).toContainText('Grade 7 math worksheet');
+    await page.locator('#d-cm-target').click({ button: 'right' });
+    await expect(page.locator('.wt-contextmenu').getByRole('menuitem').first()).toHaveText('Copy');
+    await page.keyboard.press('Escape');
+    await page.goto('/v1/components/tree');
+    await expect(page.locator('#d-tr-basic').getByRole('treeitem').first()).toHaveAttribute('aria-label', 'Academic affairs');
+    await page.goto('/v3/components/blockui');
+    await expect(page.locator('docs-section#target docs-code')).toContainText('<span>Saving</span>');
+    await page.goto('/v3/components/dragdrop');
+    await expect(page.locator('#d-dd-club .docs-dd-title')).toHaveText('Robotics club');
+    await page.goto('/v3/components/table');
+    await page.locator('#d-tbl-ctx tbody tr').first().click({ button: 'right' });
+    await expect(page.locator('.wt-contextmenu').getByRole('menuitem')).toHaveText(['View record', 'Move class', 'Delete']);
+    await page.keyboard.press('Escape');
     expect(errors).toEqual([]);
   });
 

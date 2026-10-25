@@ -1,0 +1,30 @@
+<ng-container *ngIf="blocked">
+  <div
+    *ngIf="onElement; else page"
+    #mask
+    class="wt-blockui p-blockui p-component-overlay p-blockui-enter"
+    [class]="styleClass || ''"
+    tabindex="-1"
+    role="status"
+    [attr.aria-label]="ariaLabel || null"
+  >
+    <ng-container *ngTemplateOutlet="body"></ng-container>
+  </div>
+  <ng-template #page>
+    <dialog
+      #mask
+      class="wt-blockui wt-blockui-document p-blockui p-blockui-document p-component-overlay p-blockui-enter"
+      [class]="styleClass || ''"
+      role="status"
+      [attr.aria-label]="ariaLabel || null"
+      (cancel)="cancel($event)"
+    >
+      <ng-container *ngTemplateOutlet="body"></ng-container>
+    </dialog>
+  </ng-template>
+</ng-container>
+
+<ng-template #body>
+  <ng-content></ng-content>
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</ng-template>

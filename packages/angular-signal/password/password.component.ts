@@ -65,6 +65,12 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   readonly inputId = input<string>();
   readonly name = input<string>();
   readonly autocomplete = input<string>();
+  /** Classes and styles of the text field inside, as before. */
+  readonly inputStyleClass = input<string | null | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly inputStyle = input<Record<string, any> | null | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly inputStyleObject = computed(() => (this.inputStyle() && typeof this.inputStyle() === 'object' ? (this.inputStyle() as Record<string, any>) : null));
   readonly maxLength = input<number | undefined, unknown>(undefined, { transform: (v: unknown) => (v == null || v === '' ? undefined : numberAttribute(v)) });
   readonly ariaLabel = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -80,7 +86,14 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   private readonly autoId = ɵuniqueId('wt-password');
   readonly feedbackId = ɵuniqueId('wt-password-feedback');
   readonly value = signal('');
-  readonly unmasked = signal(false);
+  /** The password shows as text. Readable and settable as a plain property, as before (`pw.unmasked`). */
+  readonly unmaskedState = signal(false);
+  get unmasked(): boolean {
+    return this.unmaskedState();
+  }
+  set unmasked(v: boolean) {
+    this.unmaskedState.set(!!v);
+  }
   private readonly focused = signal(false);
   private readonly formDisabled = signal(false);
   private onModelChange: (value: string) => void = () => {};
@@ -109,7 +122,20 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
         return this.promptLabel() ?? t.passwordPrompt;
     }
   });
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-password', 'p-password', 'p-component', 'p-inputwrapper'];
     if (this.toggleMask()) c.push('wt-password-has-toggle');
     if (this.strength()) c.push('wt-password-' + this.strength());
@@ -125,7 +151,7 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   }
 
   toggleLabel(): string {
-    return this.unmasked() ? this.config.translation.hidePassword : this.config.translation.showPassword;
+    return this.unmaskedState() ? this.config.translation.hidePassword : this.config.translation.showPassword;
   }
 
   onInput(event: Event): void {

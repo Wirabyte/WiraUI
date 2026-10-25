@@ -12,7 +12,7 @@
     --_tb-scale: var(--wt-size-lg-scale);
     --_tb-font: var(--wt-size-lg-scale);
   }
-  wt-togglebutton {
+  :is(wt-togglebutton, wt-toggle-button) {
     display: inline-flex;
     vertical-align: middle;
   }
@@ -79,7 +79,7 @@
     cursor: default;
   }
   .wt-togglebutton.wt-invalid,
-  wt-togglebutton.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-togglebutton {
+  :is(wt-togglebutton, wt-toggle-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-togglebutton {
     border-color: var(--wt-danger-color);
   }
 }

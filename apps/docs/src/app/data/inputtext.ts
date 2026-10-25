@@ -30,7 +30,10 @@ export const INPUTTEXT_DOC: ComponentDoc = {
   sections: {
     import: {
       title: 'Import',
-      text: { th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>', en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.' },
+      text: {
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> attribute <code>pInputText</code> ที่ template เดิมใช้ก็อ่านได้เหมือน <code>wtInputText</code> ทั้งบน <code>&lt;input&gt;</code> และ <code>&lt;textarea&gt;</code>',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>pInputText</code> attribute existing templates use reads the same as <code>wtInputText</code>, on an <code>&lt;input&gt;</code> or a <code>&lt;textarea&gt;</code>.',
+      },
     },
     basic: {
       title: 'Basic',

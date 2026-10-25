@@ -7,6 +7,17 @@ import { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WtLocale
  */
 export type WtScale = 'sm' | 'md' | 'lg' | number;
 
+/**
+ * Waits before searching, in milliseconds, for the whole app. `0` (the default) searches on every key with no wait;
+ * set a pause (say 300) to search once typing stops. A `[delay]` / `[filterDelay]` on the component wins.
+ */
+export interface WtDelays {
+  /** wt-autoComplete: before asking `(completeMethod)`. */
+  autoComplete?: number;
+  /** wt-table: before `filterGlobal()` and the column filters apply. */
+  filter?: number;
+}
+
 export interface WiraThemeOptions {
   /** Whole theme from TypeScript. Leave out when the main theme comes from a SCSS or CSS file. */
   preset?: ThemePreset;
@@ -34,6 +45,8 @@ export interface WiraThemeOptions {
   selector?: string;
   /** Size of the whole UI (sets the root font size). Default: leave the page's own root size alone. */
   scale?: WtScale;
+  /** Waits before searching for the whole app: `{ autoComplete: 300, filter: 300 }`. Default 0 (no wait). */
+  delays?: WtDelays;
 }
 
 export const WT_OPTIONS = new InjectionToken<WiraThemeOptions>('WT_OPTIONS');

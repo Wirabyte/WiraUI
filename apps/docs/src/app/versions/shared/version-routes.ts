@@ -2,7 +2,6 @@ import { Type } from '@angular/core';
 import { Routes } from '@angular/router';
 import {
   ConfigurationPage,
-  DesignerPage,
   InstallationPage,
   IntroductionPage,
   MigrationPage,
@@ -70,6 +69,34 @@ export interface VersionPages {
   multiselect: Type<unknown>;
   inputmask: Type<unknown>;
   timeline: Type<unknown>;
+  picklist: Type<unknown>;
+  orderlist: Type<unknown>;
+  fileupload: Type<unknown>;
+  stepper: Type<unknown>;
+  editor: Type<unknown>;
+  ripple: Type<unknown>;
+  keyfilter: Type<unknown>;
+  slider: Type<unknown>;
+  splitbutton: Type<unknown>;
+  listbox: Type<unknown>;
+  galleria: Type<unknown>;
+  colorpicker: Type<unknown>;
+  breadcrumb: Type<unknown>;
+  inplace: Type<unknown>;
+  blockui: Type<unknown>;
+  scrollpanel: Type<unknown>;
+  scroller: Type<unknown>;
+  drawer: Type<unknown>;
+  tieredmenu: Type<unknown>;
+  contextmenu: Type<unknown>;
+  tree: Type<unknown>;
+  treeselect: Type<unknown>;
+  dragdrop: Type<unknown>;
+  /** WiraTheme Studio: built from the version's own components. */
+  studio: Type<unknown>;
+  navbar: Type<unknown>;
+  asidemenu: Type<unknown>;
+  imagecropper: Type<unknown>;
 }
 
 /** Same page tree under /v1, /v2 and /v3, so the version dropdown can keep the path. */
@@ -89,7 +116,7 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'theming/scss', component: ThemingScssPage },
         { path: 'theming/css', component: ThemingCssPage },
         { path: 'theming/typescript', component: ThemingTypescriptPage },
-        { path: 'theming/studio', component: DesignerPage },
+        { path: 'theming/studio', component: p.studio },
         // The page was called Theme Designer before; old links still land on it.
         { path: 'theming/designer', redirectTo: 'theming/studio' },
         { path: 'utilities', pathMatch: 'full', redirectTo: 'utilities/overview' },
@@ -147,6 +174,32 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/multiselect', component: p.multiselect },
         { path: 'components/inputmask', component: p.inputmask },
         { path: 'components/timeline', component: p.timeline },
+        { path: 'components/picklist', component: p.picklist },
+        { path: 'components/orderlist', component: p.orderlist },
+        { path: 'components/fileupload', component: p.fileupload },
+        { path: 'components/stepper', component: p.stepper },
+        { path: 'components/editor', component: p.editor },
+        { path: 'components/ripple', component: p.ripple },
+        { path: 'components/keyfilter', component: p.keyfilter },
+        { path: 'components/slider', component: p.slider },
+        { path: 'components/splitbutton', component: p.splitbutton },
+        { path: 'components/listbox', component: p.listbox },
+        { path: 'components/galleria', component: p.galleria },
+        { path: 'components/colorpicker', component: p.colorpicker },
+        { path: 'components/breadcrumb', component: p.breadcrumb },
+        { path: 'components/inplace', component: p.inplace },
+        { path: 'components/blockui', component: p.blockui },
+        { path: 'components/scrollpanel', component: p.scrollpanel },
+        { path: 'components/scroller', component: p.scroller },
+        { path: 'components/drawer', component: p.drawer },
+        { path: 'components/tieredmenu', component: p.tieredmenu },
+        { path: 'components/contextmenu', component: p.contextmenu },
+        { path: 'components/tree', component: p.tree },
+        { path: 'components/treeselect', component: p.treeselect },
+        { path: 'components/dragdrop', component: p.dragdrop },
+        { path: 'components/navbar', component: p.navbar },
+        { path: 'components/asidemenu', component: p.asidemenu },
+        { path: 'components/imagecropper', component: p.imagecropper },
         // Old docs URL from Phase 1: the combined forms page is now one page per control.
         { path: 'components/forms', redirectTo: 'components/inputtext' },
         { path: '**', redirectTo: 'getting-started/introduction' },

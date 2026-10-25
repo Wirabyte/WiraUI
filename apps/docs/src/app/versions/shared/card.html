@@ -26,6 +26,30 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="header"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="grid">
+        <wt-card id="d-card-tpl" styleClass="docs-card-news" [style]="{ maxWidth: '26rem' }">
+          <ng-template #header>
+            <div class="docs-demo-cover"><span>{{ tx('ปีการศึกษา 2569') }}</span></div>
+          </ng-template>
+          <ng-template #title>{{ tx('ข่าวรับสมัคร') }}</ng-template>
+          <ng-template #subtitle>{{ tx('ปีการศึกษา 2569') }}</ng-template>
+          <ng-template #content>
+            <p class="docs-demo-p">{{ tx('เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4') }}</p>
+          </ng-template>
+          <ng-template #footer>
+            <wt-button [label]="tx('สมัครเลย')" size="small"></wt-button>
+          </ng-template>
+        </wt-card>
+        <wt-card id="d-card-elements" [header]="tx('ประกาศ')">
+          <wt-header><div class="docs-demo-cover"><span>{{ tx('ปิดภาคเรียนวันที่ 1 ตุลาคม') }}</span></div></wt-header>
+          <p class="docs-demo-p">{{ tx('ปิดภาคเรียนวันที่ 1 ตุลาคม') }}</p>
+          <wt-footer>{{ tx('อัปเดตเมื่อวานนี้') }}</wt-footer>
+        </wt-card>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="variants" [section]="sec['variants']">
       <docs-demo [html]="code['variants']" layout="grid">
         <wt-card header="Default" [subheader]="tx('ขอบบาง + เงาอ่อน')"></wt-card>

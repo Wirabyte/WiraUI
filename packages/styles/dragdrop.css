@@ -1,0 +1,15 @@
+/* wtDraggable / wtDroppable. Shared by wiratheme v1, v2 and v3. The dragged element fades; a drop zone with something
+   over it gets a dashed outline and a tint. */
+@layer wiratheme.components {
+  .wt-draggable[draggable='true'] {
+    cursor: grab;
+  }
+  .wt-draggable-dragging {
+    opacity: 0.5;
+  }
+  .wt-droppable-over {
+    outline: 2px dashed var(--wt-primary-color);
+    outline-offset: -2px;
+    background-color: color-mix(in srgb, var(--wt-primary-color) 8%, transparent);
+  }
+}

@@ -38,7 +38,20 @@ export class WtChip {
 
   private readonly config = inject(WtConfig);
   readonly visible = signal(true);
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-chip', 'p-chip', 'p-component'];
     if (this.image()) c.push('wt-chip-has-image');
     if (this.removable()) c.push('p-chip-removable');

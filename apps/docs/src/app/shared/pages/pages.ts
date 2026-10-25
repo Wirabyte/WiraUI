@@ -143,14 +143,6 @@ export class ThemingTypescriptPage extends DocsTextPage {
   });
 }
 
-@Component({
-  selector: 'docs-designer',
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './designer.html',
-})
-export class DesignerPage extends DocsTextPage {}
-
 /** utilities/:topic: content from data/utilities.ts, demos styled by the real wiratheme/utils CSS. */
 @Component({
   selector: 'docs-utilities',

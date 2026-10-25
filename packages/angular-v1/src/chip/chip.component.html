@@ -1,4 +1,4 @@
-<div [class]="classes">
+<div [class]="classes" [style]="rootStyle">
   <img *ngIf="image" class="wt-chip-image" [src]="image" [alt]="alt || label || ''" (error)="onImageError.emit($event)" />
   <span *ngIf="!image && icon" [class]="'wt-chip-icon p-chip-icon ' + icon" aria-hidden="true"></span>
   <span *ngIf="label" class="wt-chip-label p-chip-text">{{ label }}</span>

@@ -89,6 +89,38 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="clear" [section]="sec['clear']">
+      <docs-demo [html]="code['clear']" [ts]="ts['clear']" layout="stack">
+        <wt-inputNumber
+          id="d-num-clear"
+          name="fee"
+          [(ngModel)]="fee"
+          mode="currency"
+          [showClear]="true"
+          (onClear)="feeCleared()"
+          inputStyleClass="text-right docs-num-input"
+          [inputStyle]="{ width: '10rem' }"
+          autocomplete="off"
+          ariaLabel="fee"
+        ></wt-inputNumber>
+        <wt-input-number
+          id="d-num-steps"
+          name="steps"
+          [(ngModel)]="stepSeats"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          [min]="1"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          incrementButtonClass="p-button-success"
+          decrementButtonClass="p-button-danger"
+          ariaLabel="seats"
+          (onKeyDown)="keyPressed($event)"
+        ></wt-input-number>
+        <span class="docs-demo-output">onClear: <code id="d-num-cleared">{{ cleared }}</code> · onKeyDown: <code id="d-num-key">{{ lastKey || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
         <wt-inputnumber [ngModel]="1500" [disabled]="true" ariaLabel="Disabled"></wt-inputnumber>

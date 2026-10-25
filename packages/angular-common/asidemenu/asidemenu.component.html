@@ -1,0 +1,212 @@
+<div *ngIf="mobile" class="wt-aside-menu-mask" [class.wt-aside-menu-mask-visible]="visible" [class.wt-aside-menu-animated]="animated" aria-hidden="true" (click)="close()"></div>
+
+<nav
+  #panel
+  class="wt-aside-menu"
+  [class]="styleClass || ''"
+  [class.wt-aside-menu-mobile]="mobile"
+  [class.wt-aside-menu-open]="mobile && visible"
+  [class.wt-aside-menu-animated]="animated"
+  [class.wt-aside-menu-collapsed]="rail"
+  [style]="rootStyle"
+  [id]="panelId"
+  tabindex="-1"
+  [attr.aria-label]="navLabel"
+  [attr.inert]="mobile && !visible ? '' : null"
+  (keydown)="keydown($event)"
+>
+  <div class="wt-aside-menu-header">
+    <ng-content select="[wtAsideMenuStart]"></ng-content>
+    <ng-container *ngTemplateOutlet="startTemplate; context: slotContext"></ng-container>
+    <button *ngIf="mobile" #closeButton type="button" class="wt-aside-menu-close" [attr.aria-label]="t.close" (click)="close()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+    </button>
+  </div>
+
+  <div class="wt-aside-menu-body">
+    <ul class="wt-aside-menu-list wt-aside-menu-root" role="list" [class.wt-aside-menu-rail]="rail">
+      <ng-container *ngIf="guestShown">
+        <ng-container *ngTemplateOutlet="entry; context: { $implicit: guestGroup, key: 'g', depth: 0, rail: false }"></ng-container>
+        <li class="wt-aside-menu-separator" aria-hidden="true"></li>
+      </ng-container>
+      <ng-container *ngTemplateOutlet="tree; context: { $implicit: items, parent: '', depth: 0, rail: rail }"></ng-container>
+    </ul>
+  </div>
+
+  <div class="wt-aside-menu-footer">
+    <ng-content select="[wtAsideMenuEnd]"></ng-content>
+    <ng-container *ngTemplateOutlet="endTemplate; context: slotContext"></ng-container>
+    <button
+      *ngIf="showCollapseButton && !mobile"
+      type="button"
+      class="wt-aside-menu-link wt-aside-menu-collapse"
+      [class.wt-aside-menu-link-rail]="rail"
+      [attr.aria-controls]="panelId"
+      [attr.title]="rail ? collapseLabel : null"
+      (click)="toggleCollapsed()"
+    >
+      <svg class="wt-aside-menu-collapse-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 3.5 8l4 4M12.5 4l-4 4 4 4"></path></svg>
+      <span class="wt-aside-menu-label">{{ collapseLabel }}</span>
+    </button>
+  </div>
+</nav>
+
+<!-- A list of items at one level. -->
+<ng-template #tree let-list let-parent="parent" let-depth="depth" let-rail="rail">
+  <ng-container *ngFor="let item of list; let i = index">
+    <ng-container *ngTemplateOutlet="entry; context: { $implicit: item, key: keyOf(parent, i), depth: depth, rail: rail }"></ng-container>
+  </ng-container>
+</ng-template>
+
+<!-- One item: a separator, a section heading, a group (in place, or a flyout on the icon rail), or a link. -->
+<ng-template #entry let-item let-key="key" let-depth="depth" let-rail="rail">
+  <li *ngIf="item.separator" class="wt-aside-menu-separator" aria-hidden="true"></li>
+
+  <li *ngIf="!item.separator && isSection(item, depth)" class="wt-aside-menu-section" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
+    <span class="wt-aside-menu-section-label" [id]="itemId(key) + '_label'">{{ textOf(item) }}</span>
+    <ul class="wt-aside-menu-list" role="list" [attr.aria-labelledby]="itemId(key) + '_label'">
+      <ng-container *ngTemplateOutlet="tree; context: { $implicit: visibleOf(item.items), parent: key, depth: depth + 1, rail: rail }"></ng-container>
+    </ul>
+  </li>
+
+  <li
+    *ngIf="!item.separator && !isSection(item, depth)"
+    class="wt-aside-menu-item"
+    [ngClass]="item.styleClass || ''"
+    [ngStyle]="item.style || null"
+    [class.wt-aside-menu-item-disabled]="item.disabled"
+  >
+    <ng-container *ngIf="hasChildren(item); else leafEntry">
+      <ng-container *ngIf="rail; else inPlace">
+        <button
+          type="button"
+          class="wt-aside-menu-link wt-aside-menu-group wt-aside-menu-link-rail"
+          [class.wt-aside-menu-group-active]="holdsActive(item)"
+          [id]="itemId(key)"
+          [attr.data-wt-key]="key"
+          data-wt-flyout=""
+          [attr.title]="railTitle(item)"
+          [attr.aria-expanded]="flyoutKey === key"
+          [attr.aria-controls]="flyoutKey === key ? flyoutId(key) : null"
+          [attr.data-automationid]="item.automationId || null"
+          [disabled]="!!item.disabled"
+          (click)="railGroupClick($event, item, key)"
+        >
+          <ng-container *ngTemplateOutlet="content; context: { $implicit: item, rail: true, group: true }"></ng-container>
+        </button>
+        <div *ngIf="flyoutKey === key" class="wt-aside-menu-flyout" popover="manual" [id]="flyoutId(key)" (focusout)="flyoutFocusOut($event)">
+          <div class="wt-aside-menu-flyout-title" [id]="flyoutId(key) + '_label'">{{ textOf(item) }}</div>
+          <ul class="wt-aside-menu-list" role="list" [attr.aria-labelledby]="flyoutId(key) + '_label'">
+            <ng-container *ngTemplateOutlet="tree; context: { $implicit: visibleOf(item.items), parent: key, depth: depth + 1, rail: false }"></ng-container>
+          </ul>
+        </div>
+      </ng-container>
+      <ng-template #inPlace>
+        <button
+          type="button"
+          class="wt-aside-menu-link wt-aside-menu-group"
+          [class.wt-aside-menu-group-active]="holdsActive(item)"
+          [id]="itemId(key)"
+          [attr.data-wt-key]="key"
+          [attr.title]="item.title || null"
+          [attr.aria-expanded]="isOpen(item)"
+          [attr.aria-controls]="itemId(key) + '_children'"
+          [attr.data-automationid]="item.automationId || null"
+          [disabled]="!!item.disabled"
+          (click)="groupClick(item, key)"
+        >
+          <ng-container *ngTemplateOutlet="content; context: { $implicit: item, rail: false, group: true }"></ng-container>
+        </button>
+        <div class="wt-aside-menu-children" [class.wt-aside-menu-children-open]="isOpen(item)" [id]="itemId(key) + '_children'" [attr.inert]="isOpen(item) ? null : ''">
+          <div class="wt-aside-menu-children-inner">
+            <ul class="wt-aside-menu-list wt-aside-menu-sublist" role="list">
+              <ng-container *ngTemplateOutlet="tree; context: { $implicit: visibleOf(item.items), parent: key, depth: depth + 1, rail: false }"></ng-container>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-template #leafEntry>
+      <ng-container *ngTemplateOutlet="leaf; context: { $implicit: item, key: key, rail: rail }"></ng-container>
+    </ng-template>
+  </li>
+</ng-template>
+
+<!-- A link: router link, plain link, or a button that runs the command. -->
+<ng-template #leaf let-item let-key="key" let-rail="rail">
+  <a
+    *ngIf="routed(item); else plainLink"
+    class="wt-aside-menu-link"
+    [class.wt-aside-menu-link-rail]="rail"
+    [id]="itemId(key)"
+    [attr.data-wt-key]="key"
+    [attr.title]="rail ? railTitle(item) : item.title || null"
+    [attr.target]="item.target || null"
+    [attr.data-automationid]="item.automationId || null"
+    [routerLink]="item.routerLink"
+    [queryParams]="item.queryParams"
+    [queryParamsHandling]="item.queryParamsHandling"
+    [fragment]="item.fragment"
+    [preserveFragment]="!!item.preserveFragment"
+    [skipLocationChange]="!!item.skipLocationChange"
+    [replaceUrl]="!!item.replaceUrl"
+    [state]="item.state"
+    routerLinkActive="wt-aside-menu-link-active"
+    ariaCurrentWhenActive="page"
+    [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+    (click)="itemClick($event, item, key)"
+  >
+    <ng-container *ngTemplateOutlet="content; context: { $implicit: item, rail: rail, group: false }"></ng-container>
+  </a>
+  <ng-template #plainLink>
+    <a
+      *ngIf="item.url; else commandButton"
+      class="wt-aside-menu-link"
+      [class.wt-aside-menu-link-rail]="rail"
+      [class.wt-aside-menu-link-active]="isActive(item)"
+      [class.wt-aside-menu-link-disabled]="item.disabled"
+      [id]="itemId(key)"
+      [attr.data-wt-key]="key"
+      [attr.href]="hrefOf(item)"
+      [attr.target]="item.target || null"
+      [attr.aria-current]="isActive(item) ? 'page' : null"
+      [attr.aria-disabled]="item.disabled || null"
+      [attr.title]="rail ? railTitle(item) : item.title || null"
+      [attr.data-automationid]="item.automationId || null"
+      (click)="itemClick($event, item, key)"
+    >
+      <ng-container *ngTemplateOutlet="content; context: { $implicit: item, rail: rail, group: false }"></ng-container>
+    </a>
+    <ng-template #commandButton>
+      <button
+        type="button"
+        class="wt-aside-menu-link"
+        [class.wt-aside-menu-link-rail]="rail"
+        [class.wt-aside-menu-link-active]="isActive(item)"
+        [id]="itemId(key)"
+        [attr.data-wt-key]="key"
+        [attr.aria-current]="isActive(item) ? 'page' : null"
+        [attr.title]="rail ? railTitle(item) : item.title || null"
+        [attr.data-automationid]="item.automationId || null"
+        [disabled]="!!item.disabled"
+        (click)="itemClick($event, item, key)"
+      >
+        <ng-container *ngTemplateOutlet="content; context: { $implicit: item, rail: rail, group: false }"></ng-container>
+      </button>
+    </ng-template>
+  </ng-template>
+</ng-template>
+
+<ng-template #content let-item let-rail="rail" let-group="group">
+  <ng-container *ngIf="itemTemplate; else defaultContent">
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, collapsed: rail }"></ng-container>
+  </ng-container>
+  <ng-template #defaultContent>
+    <span *ngIf="item.icon" class="wt-aside-menu-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    <span *ngIf="!item.icon && rail" class="wt-aside-menu-initial" aria-hidden="true">{{ initialOf(item) }}</span>
+    <span *ngIf="item.escape !== false" class="wt-aside-menu-label">{{ item.label }}</span>
+    <span *ngIf="item.escape === false" class="wt-aside-menu-label" [innerHTML]="item.label"></span>
+    <span *ngIf="item.badge" class="wt-aside-menu-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    <svg *ngIf="group && !rail" class="wt-aside-menu-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
+  </ng-template>
+</ng-template>

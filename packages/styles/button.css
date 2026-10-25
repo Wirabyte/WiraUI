@@ -189,6 +189,29 @@
     background: var(--_tone);
     color: var(--wt-card-bg);
   }
+  /* link: a button that reads as a link. */
+  .wt-btn.wt-btn-link {
+    border-color: transparent;
+    background: transparent;
+    color: var(--_tone);
+  }
+  .wt-btn.wt-btn-link:not(:disabled):hover,
+  .wt-btn.wt-btn-link:not(:disabled):active {
+    border-color: transparent;
+    background: transparent;
+    text-decoration: underline;
+  }
+  .wt-btn-badge:is(.wt-btn-badge-success, .wt-btn-badge-info, .wt-btn-badge-warn, .wt-btn-badge-danger, .wt-btn-badge-secondary, .wt-btn-badge-help, .wt-btn-badge-contrast) {
+    background: var(--_badge-bg);
+    color: var(--_badge-fg);
+  }
+  .wt-btn-badge-success { --_badge-bg: var(--wt-success-color); --_badge-fg: var(--wt-success-contrast); }
+  .wt-btn-badge-info { --_badge-bg: var(--wt-info-color); --_badge-fg: var(--wt-info-contrast); }
+  .wt-btn-badge-warn { --_badge-bg: var(--wt-warn-color); --_badge-fg: var(--wt-warn-contrast); }
+  .wt-btn-badge-danger { --_badge-bg: var(--wt-danger-color); --_badge-fg: var(--wt-danger-contrast); }
+  .wt-btn-badge-secondary { --_badge-bg: var(--wt-button-secondary-bg); --_badge-fg: var(--wt-button-secondary-color); }
+  .wt-btn-badge-help { --_badge-bg: var(--wt-help-color); --_badge-fg: var(--wt-help-contrast); }
+  .wt-btn-badge-contrast { --_badge-bg: var(--wt-text); --_badge-fg: var(--wt-card-bg); }
   .wt-ripple-ink {
     position: absolute;
     border-radius: 50%;

@@ -1,26 +1,21 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChild,
+  contentChildren,
   forwardRef,
   inject,
   input,
   output,
   signal,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {
-  ɵassertSupportedAngular,
-  ɵoptionDisabled,
-  ɵoptionLabel,
-  ɵoptionValue,
-  ɵsameValue,
-  ɵsize,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtSize,
-} from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵWT_SKIP_VERSION_CHECK, WtSize, WtTemplate } from 'wiratheme/config';
 import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './selectbutton.types';
 
 /**
@@ -28,7 +23,7 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
  * `<wt-selectbutton [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="plan">`.
  */
 @Component({
-  selector: 'wt-selectbutton',
+  selector: 'wt-selectbutton, wt-selectButton, wt-select-button',
   host: {
     '[class.wt-selectbutton-sm]': "sizeKey() === 'sm'",
     '[class.p-selectbutton-sm]': "sizeKey() === 'sm'",
@@ -36,6 +31,7 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
     '[class.p-selectbutton-lg]': "sizeKey() === 'lg'",
   },
   standalone: true,
+  imports: [NgTemplateOutlet],
   templateUrl: './selectbutton.component.html',
   styleUrl: './selectbutton.css',
   encapsulation: ViewEncapsulation.None,
@@ -43,6 +39,9 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtSelectButton), multi: true }],
 })
 export class WtSelectButton implements ControlValueAccessor {
+  private readonly slotTemplates = contentChildren(WtTemplate);
+  private readonly itemRef = contentChild('item', { read: TemplateRef });
+  readonly itemTemplate = computed(() => this.itemRef() || ɵfindTemplate(this.slotTemplates(), 'item'));
   readonly options = input<readonly unknown[] | null | undefined>([]);
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
@@ -52,6 +51,9 @@ export class WtSelectButton implements ControlValueAccessor {
   readonly multiple = input(false, { transform: booleanAttribute });
   /** Clicking the chosen option again clears it. Default true. */
   readonly allowEmpty = input(true, { transform: booleanAttribute });
+  /** `[unselectable]="true"`: a click on the chosen option keeps it (the older opposite of `allowEmpty`). */
+  readonly unselectable = input<boolean | undefined, unknown>(undefined, { transform: (v: unknown) => (v === undefined ? undefined : booleanAttribute(v)) });
+  private readonly canEmpty = computed(() => (this.unselectable() === undefined ? this.allowEmpty() : !this.unselectable()));
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
@@ -68,7 +70,20 @@ export class WtSelectButton implements ControlValueAccessor {
   onTouched: () => void = () => {};
 
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-selectbutton', 'p-selectbutton', 'p-component'];
     if (this.invalid()) c.push('wt-invalid', 'p-invalid');
     return c.join(' ');
@@ -103,10 +118,10 @@ export class WtSelectButton implements ControlValueAccessor {
     let next: unknown;
     if (this.multiple()) {
       const current = Array.isArray(this.model()) ? (this.model() as unknown[]) : [];
-      if (selected && !this.allowEmpty() && current.length === 1) return;
+      if (selected && !this.canEmpty() && current.length === 1) return;
       next = selected ? current.filter((v) => !ɵsameValue(v, value, this.dataKey())) : [...current, value];
     } else {
-      if (selected && !this.allowEmpty()) return;
+      if (selected && !this.canEmpty()) return;
       next = selected ? null : value;
     }
     this.model.set(next);

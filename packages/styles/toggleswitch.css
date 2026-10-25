@@ -1,7 +1,7 @@
 /* wt-toggleswitch (InputSwitch in the classic class names). Shared by wiratheme v1, v2 and v3.
    Native checkbox with role="switch" underneath. The handle may be taller than the track (Material). */
 @layer wiratheme.components {
-  wt-toggleswitch,
+  :is(wt-toggleswitch, wt-toggle-switch),
   wt-inputswitch {
     display: inline-flex;
     vertical-align: middle;
@@ -44,12 +44,18 @@
     flex: none;
   }
   .wt-toggleswitch-track {
+    /* Track width and height, handle size, and the handle's gap: the same on every side (inside the 1px border),
+       never more than the token; 0 when the handle is taller than the track (Material). */
+    --_tw: calc(var(--wt-switch-width) * var(--_sw-scale, 1));
+    --_th: calc(var(--wt-switch-height) * var(--_sw-scale, 1));
+    --_hs: calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1));
+    --_hg: max(0px, min(var(--wt-switch-handle-gap), calc((var(--_th) - 2px - var(--_hs)) / 2)));
     position: relative;
     flex: none;
     box-sizing: border-box;
-    width: calc(var(--wt-switch-width) * var(--_sw-scale, 1));
-    height: calc(var(--wt-switch-height) * var(--_sw-scale, 1));
-    margin-block: max(0px, calc((calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1)) - calc(var(--wt-switch-height) * var(--_sw-scale, 1))) / 2));
+    width: var(--_tw);
+    height: var(--_th);
+    margin-block: max(0px, calc((var(--_hs) - var(--_th)) / 2));
     border-radius: var(--wt-radius-full);
     border: 1px solid var(--wt-switch-border-color);
     background: var(--wt-switch-track-bg);
@@ -62,9 +68,9 @@
   .wt-toggleswitch-handle {
     position: absolute;
     top: 50%;
-    left: var(--wt-switch-handle-gap);
-    width: calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1));
-    height: calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1));
+    left: var(--_hg);
+    width: var(--_hs);
+    height: var(--_hs);
     border-radius: 50%;
     background: var(--wt-switch-handle-bg);
     box-shadow: var(--wt-switch-handle-shadow);
@@ -86,7 +92,7 @@
   .wt-toggleswitch-checked .wt-toggleswitch-handle {
     background: var(--wt-switch-handle-checked-bg);
     /* inner width (track minus its 1px borders) − handle − both gaps */
-    transform: translate(calc(calc(var(--wt-switch-width) * var(--_sw-scale, 1)) - 2px - calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1)) - 2 * var(--wt-switch-handle-gap)), -50%);
+    transform: translate(calc(var(--_tw) - 2px - var(--_hs) - 2 * var(--_hg)), -50%);
   }
   .wt-toggleswitch-input:focus-visible + .wt-toggleswitch-control .wt-toggleswitch-track {
     outline: var(--wt-control-focus-outline);

@@ -109,6 +109,7 @@ export abstract class ɵWtChartBase implements AfterViewInit, OnDestroy {
 
   /** Redraws with the current data (after changing `data` in place). */
   refresh(): void {
+    this.liftLines(this.chart?.data);
     this.chart?.update();
   }
 
@@ -159,10 +160,31 @@ export abstract class ɵWtChartBase implements AfterViewInit, OnDestroy {
     options.responsive = this._responsive;
     if (options.responsive && (this.height || this.width) && options.maintainAspectRatio === undefined) options.maintainAspectRatio = false;
     this.themeDefaults(options);
+    this.liftLines(this._data);
     this.zone.runOutsideAngular(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.chart = new Chart(canvas, { type: this._type as any, data: this._data || { datasets: [] }, options, plugins: this.plugins || [] });
     });
+  }
+
+  /**
+   * Bars and lines together: Chart.js draws the first dataset on top, so a line after the bars hides behind them.
+   * Unless the app gave any dataset an `order`, lines get the front (order 0) and the rest stay behind (order 1).
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private liftLines(data: any): void {
+    const sets = data?.datasets;
+    if (!Array.isArray(sets)) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const typeOf = (d: any) => (d && d.type) || this._type;
+    const lines = sets.filter((d) => typeOf(d) === 'line');
+    if (!lines.length || lines.length === sets.length || sets.some((d) => d && d.order !== undefined && !d.__wtOrder)) return;
+    for (const d of sets) {
+      if (!d) continue;
+      d.order = typeOf(d) === 'line' ? 0 : 1;
+      // Marks the order as ours, so a later refresh may set it again.
+      Object.defineProperty(d, '__wtOrder', { value: true, enumerable: false, configurable: true });
+    }
   }
 
   /** The theme's font and muted text colour, where neither the app's Chart.js defaults nor its options say otherwise. */

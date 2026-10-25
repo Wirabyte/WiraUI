@@ -62,7 +62,7 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 | `wiratheme/api` | `import { ConfirmationService, MessageService } from 'wiratheme/api'` | service และ `WtTemplate` ในที่เดียว ใช้ชื่อเดิมได้ |
 | `wiratheme/toolbar` | `<wt-toolbar><div wtToolbarStart>…</div><div wtToolbarEnd>…</div></wt-toolbar>` | 3 กลุ่ม start / center / end ขึ้นบรรทัดใหม่บนจอแคบ |
 | `wiratheme/accordion` | `<wt-accordion [(activeIndex)]="i"><wt-accordion-tab header="…">` | `multiple`, `[(selected)]`, ปุ่มลูกศรเลื่อนระหว่างหัวข้อ |
-| `wiratheme/tabs` | `<wt-tabs [(activeIndex)]="i"><wt-tab-panel header="…">` | ปุ่มลูกศร/Home/End ข้ามแท็บที่ปิด, แท็บล้นแถวมีปุ่มเลื่อนซ้าย-ขวาแทน scrollbar และเลื่อนแท็บที่เลือกให้เห็นเสมอ |
+| `wiratheme/tabs` | `<wt-tabs [(activeIndex)]="i"><wt-tab-panel header="…">` · `<wt-tabs [model]="pages" [(activeItem)]="page">` | ปุ่มลูกศร/Home/End ข้ามแท็บที่ปิด, แท็บล้นแถวมีปุ่มเลื่อนซ้าย-ขวาแทน scrollbar และเลื่อนแท็บที่เลือกให้เห็นเสมอ, `[model]` ทำงานแบบ tab menu |
 | `wiratheme/select` | `<wt-select [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="id" [filter]="true">` | ค้นหาไทย/อังกฤษ, group, showClear, editable, template item/selectedItem, คีย์บอร์ดครบ, เปิดใน top layer |
 | `wiratheme/multiselect` | `<wt-multiselect [options]="clubs" optionLabel="name" optionValue="id" [(ngModel)]="ids">` | ช่องเลือกหลายค่า มี checkbox, เลือกทั้งหมด, ค้นหาไทย, `display="chip"`, `maxSelectedLabels`, `selectionLimit` |
 | `wiratheme/inputmask` | `<wt-inputmask mask="9-9999-99999-99-9" [(ngModel)]="id" [unmask]="true">` | ใส่ขีดให้เอง, `autoClear`, `(onComplete)`, เลขไทยใช้ได้, แป้นตัวเลขบนมือถือ |
@@ -73,11 +73,31 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 | `wiratheme/paginator` | `<wt-paginator [first]="first" [rows]="10" [totalRecords]="120" (onPageChange)="…">` | รายงานภาษาไทย, จำนวนแถวต่อหน้า |
 | `wiratheme/menubar` | `<wt-menubar [model]="items">` + template start/end | เมนูย่อยซ้อนได้, `routerLink` / `url` / `command`, คีย์บอร์ดแบบ ARIA menubar, ปุ่มเมนูบนจอแคบ, ใช้เป็นแถบหัวเว็บที่มีแค่ start/end ได้ |
 | `wiratheme/menu` | `<wt-menu #m [model]="items" [popup]="true">` + `(click)="m.toggle($event)"` | แบบ popup (top layer ไม่ต้อง appendTo) หรือเมนูข้าง, กลุ่มมีหัวข้อ, คีย์บอร์ดครบ |
-| `wiratheme/tabmenu` | `<wt-tabmenu [model]="pages" [(activeItem)]="page">` | แท็บจาก menu model, `routerLink` / `command`, เลื่อนด้านข้างเหมือน wt-tabs |
+| `wiratheme/tabmenu` | `<wt-tabmenu [model]="pages" [(activeItem)]="page">` | แท็บจาก menu model, `routerLink` / `command`, เลื่อนด้านข้างเหมือน wt-tabs (ตัวเดียวกับ `wt-tabs [model]`, อยู่ใน `wiratheme/tabs`) |
 | `wiratheme/panelmenu` | `<wt-panelmenu [model]="items" [multiple]="true">` | เมนูข้างแบบแผงพับได้ ซ้อนกี่ชั้นก็ได้, เปิดตาม `expanded` ของ item, คีย์บอร์ดลูกศร |
 | `wiratheme/steps` | `<wt-steps [model]="steps" [(activeIndex)]="step">` | ขั้นตอนมีตัวเลข ขั้นที่ผ่านแล้วเป็นสีหลัก, `[readonly]="false"` ให้คลิก/คีย์บอร์ดเลือกขั้นได้ |
-| `wiratheme/table` | `<wt-table #dt [value]="rows" [paginator]="true" [rows]="10">` + template header/body | template แบบ p-table เดิม (`pTemplate`), sort, ค้นหา `dt.filterGlobal`, เลือกแถว/checkbox, lazy, stack บนมือถือ |
+| `wiratheme/table` | `<wt-table #dt [value]="rows" [paginator]="true" [rows]="10">` + template header/body | template แบบ p-table เดิม (`pTemplate`), sort, ค้นหา `dt.filterGlobal`, ตัวกรองต่อคอลัมน์ (แถว/เมนู หลายเงื่อนไข), เลือกแถว/checkbox/radio, lazy, ตรึงคอลัมน์และแถว, ปรับกว้าง/ลากเรียงคอลัมน์, ลากเรียงแถว, ขยายแถว, จัดกลุ่ม, แก้ไขในเซลล์/ทั้งแถว, `stateKey`, export CSV, stack บนมือถือ |
 | `wiratheme/validation` | `<input wtInputText formControlName="email"><wt-field-error for="email" label="อีเมล">` | ข้อความ error ภาษาไทย/อังกฤษตาม locale, `WtValidators.thaiId` / `thaiPhone` / `match`, directive `wtThaiId` `wtThaiPhone` `wtMatch` |
+| `wiratheme/picklist` / `orderlist` | `<wt-picklist [source]="all" [target]="picked">` · `<wt-orderlist [value]="rows">` | ย้าย/เรียงด้วยปุ่ม ลาก หรือดับเบิลคลิก, เลือกหลายแถว, ค้นหาแยกฝั่ง, บนมือถือเรียงบนลงล่าง |
+| `wiratheme/fileupload` | `<wt-fileupload name="file" url="/api/upload" accept="image/*" [maxFileSize]="2000000">` | ลากวาง, preview รูป, ตรวจชนิด/ขนาด/จำนวนพร้อมข้อความไทย, progress, `customUpload` + `(uploadHandler)`, โหมด `basic` |
+| `wiratheme/stepper` | `<wt-stepper [(value)]="step"><wt-step-list><wt-step [value]="1">…` · `<wt-stepper [model]="steps" [(activeIndex)]="i">` | แบบ value + panel, `linear`, แนวตั้งด้วย `wt-step-item`, `activateCallback`, `[model]` ทำงานแบบ Steps, `labelPosition="bottom"`, `subtitle`, `[readonly]` |
+| `wiratheme/editor` | `<wt-editor [(ngModel)]="html" toolbar="full" [imageUpload]="{ mode: 'upload', url: '/api/images' }">` | ทำเองทั้งหมด: ตาราง (เพิ่ม/ลบแถวคอลัมน์ รวม/แยกเซลล์), รูป base64 หรืออัปโหลดไป URL, ตั้งเครื่องมือ toolbar ได้ละเอียด (`toolbar`, `toolOptions`, `provideEditorOptions()`), วางจาก Word ได้สะอาด, เต็มจอ, ดู HTML, template `header` แบบเดิมใช้ได้ |
+| `wiratheme/slider` | `<wt-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="5">` | ค่าเดียวหรือช่วง (`[range]`), แนวตั้ง, ลาก/คลิก/คีย์บอร์ด |
+| `wiratheme/splitbutton` | `<wt-splitButton label="บันทึก" [model]="more" (onClick)="save()">` | ลูกศรเปิดเมนูคำสั่งอื่น, severity / outlined / size แบบ wt-button |
+| `wiratheme/listbox` | `<wt-listbox [options]="rooms" optionLabel="name" [(ngModel)]="room" [filter]="true">` | เลือกเดียว/หลายค่าพร้อม check box และเลือกทั้งหมด, จัดกลุ่ม, striped, คีย์บอร์ดครบ |
+| `wiratheme/galleria` | `<wt-galleria [value]="photos" [numVisible]="5">` + template item/thumbnail | ลูกศร จุด thumbnail เลื่อนตาม, `responsiveOptions`, เล่นเอง วนรอบ ปัดบนมือถือ, เต็มจอ |
+| `wiratheme/colorpicker` | `<wt-colorPicker [(ngModel)]="color">` | แผงสีใน top layer หรือ `inline`, ช่อง hex, `format` hex / rgb / hsb |
+| `wiratheme/breadcrumb` | `<wt-breadcrumb [model]="trail" [home]="home">` | `routerLink` / `url` / `command`, หน้าปัจจุบันเป็น `aria-current` |
+| `wiratheme/inplace` | `<wt-inplace>` + template display / content | คลิกข้อความแล้วเปิดช่องแก้ไขพร้อมโฟกัส, `closable`, Esc ปิด |
+| `wiratheme/blockui` | `<wt-blockUI [blocked]="isApiSaving">` | บังทั้งหน้า (modal) หรือเฉพาะ `[target]`, ของข้างใต้เป็น inert |
+| `wiratheme/scrollpanel` / `scroller` | `<wt-scrollPanel [style]="{ maxHeight: '12rem' }">` · `<wt-scroller [items]="rows" [itemSize]="40" scrollHeight="20rem">` | scrollbar บางตามธีม · virtual scroll วาดเฉพาะแถวที่เห็น, `lazy` |
+| `wiratheme/drawer` | `<wt-drawer [(visible)]="open" header="เมนู" position="left">` (`wt-sidebar` ก็ได้) | `<dialog>` ใน top layer, โฟกัสอยู่ข้างใน, Esc / คลิกพื้นหลังปิด, ซ้าย ขวา บน ล่าง เต็มจอ |
+| `wiratheme/tieredmenu` / `contextmenu` | `<wt-tieredMenu [model]="items">` · `<wt-contextMenu [model]="items" [target]="box">` | เมนูย่อยหลายชั้น (บนมือถือเปิดลงล่าง), เมนูคลิกขวาตรงตำแหน่งเมาส์ |
+| `wiratheme/tree` / `treeselect` | `<wt-tree [value]="nodes" selectionMode="checkbox" [(selection)]="picked">` · `<wt-treeSelect [options]="nodes" [(ngModel)]="node">` | check box กระจายลงลูกและขึ้นแม่, ค้นหา, โหลดลูกตอนเปิด, คีย์บอร์ดแบบ tree |
+| `wiratheme/navbar` | `<wt-navbar [model]="links" [sticky]="true"><a wtNavbarBrand routerLink="/">…` | แถบบน brand / links / end, เมนูย่อย, solid / glass / transparent, จอแคบพับลิงก์เข้าแผง |
+| `wiratheme/asidemenu` | `<wt-aside-menu #side [model]="menu" [(collapsed)]="mini">` + `<wt-navbar [aside]="side">` | เมนูด้านข้างหลายชั้น กลุ่มของหน้าปัจจุบันเปิดเอง, ย่อเหลือไอคอนพร้อม flyout, มือถือเป็นแผงเลื่อนเข้า |
+| `wiratheme/imagecropper` | `<wt-imagecropper [imageFile]="file" [aspectRatio]="1" (imageCropped)="saved($event)">` | ตัดรูปในตัว: EXIF, อัตราส่วน, ซูม หมุน พลิก, คีย์บอร์ด, ผลเป็น blob / base64 (`image-cropper` เดิมก็ใช้ได้) |
+| `wiratheme/ripple` / `keyfilter` / `dragdrop` | `<button wtButton wtRipple>` · `<input wtInputText pKeyFilter="int">` · `<div wtDraggable="cards">` + `<div wtDroppable="cards">` | อ่านชื่อ `pRipple` / `pKeyFilter` / `pDraggable` / `pDroppable` เดิมได้ |
 
 control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้วหรือกดส่งฟอร์มแล้ว (ไม่ต้องใส่ class `ng-dirty` เอง)
 

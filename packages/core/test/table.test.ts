@@ -56,3 +56,25 @@ describe('paging', () => {
     expect(pageReport('หน้า {currentPage} / {totalPages}', { first: 0, rows: 10, totalRecords: 0 })).toBe('หน้า 0 / 0');
   });
 });
+
+describe('filter rules', () => {
+  it('combines a list of rules with and / or', () => {
+    const rows = [{ n: 1 }, { n: 5 }, { n: 9 }];
+    expect(filterColumns(rows, { n: [{ value: 2, matchMode: 'gte', operator: 'and' }, { value: 8, matchMode: 'lte' }] })).toEqual([{ n: 5 }]);
+    expect(filterColumns(rows, { n: [{ value: 1, matchMode: 'equals', operator: 'or' }, { value: 9, matchMode: 'equals' }] })).toEqual([{ n: 1 }, { n: 9 }]);
+    // Rules without a value do not count.
+    expect(filterColumns(rows, { n: [{ value: null, matchMode: 'equals' }] })).toEqual(rows);
+  });
+});
+
+describe('date filters', () => {
+  it('compares by calendar day, whatever the time', () => {
+    const day = new Date(2026, 9, 25);
+    expect(matchValue(new Date(2026, 9, 25, 15, 30), day, 'dateIs')).toBe(true);
+    expect(matchValue(new Date(2026, 9, 26, 0, 5), day, 'dateIs')).toBe(false);
+    expect(matchValue(new Date(2026, 9, 24, 23, 0), day, 'dateBefore')).toBe(true);
+    expect(matchValue(new Date(2026, 9, 26), day, 'dateAfter')).toBe(true);
+    expect(matchValue(null, day, 'dateIsNot')).toBe(true);
+    expect(matchValue('2026-10-25T08:00:00', day, 'dateIs')).toBe(true);
+  });
+});

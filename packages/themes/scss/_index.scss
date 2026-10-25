@@ -346,7 +346,7 @@ $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
         $light: 'var(--wt-radius-full)';
       }
     } @else if $css == 'table-stripe-bg' {
-      $light: 'transparent';
+      $light: 'var(--wt-table-row-bg)';
       @if $v {
         $light: 'var(--wt-surface-50)';
         $dark: ($css: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))');

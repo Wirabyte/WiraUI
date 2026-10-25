@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   ContentChild,
   ContentChildren,
@@ -44,7 +45,7 @@ const TYPEAHEAD_MS = 600;
  * Picking keeps the list open; Escape, Tab or a click outside closes it.
  */
 @Directive()
-export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, OnDestroy {
+export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, AfterViewChecked, OnDestroy {
   // ---------- the options ----------
   @Input() set options(v: readonly unknown[] | null | undefined) { this._options = v || []; this.rebuild(); }
   get options(): readonly unknown[] { return this._options; }
@@ -108,6 +109,10 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, OnDes
   @Input() set filterBy(v: string | undefined) { this._filterBy = v; this.applyFilter(); }
   @Input() set filterMatchMode(v: WtSelectMatchMode | undefined) { this._matchMode = v || 'contains'; this.applyFilter(); }
   @Input() filterPlaceholder?: string;
+  /** The older spelling of `filterPlaceholder`. */
+  @Input() set filterPlaceHolder(v: string | undefined) {
+    this.filterPlaceholder = v;
+  }
   @Input() ariaFilterLabel?: string;
   @Input() set filterValue(v: string | null | undefined) { this.filterText = v || ''; this.applyFilter(); }
   @Input() set resetFilterOnHide(v: unknown) { this._resetFilter = ɵtoBool(v); }
@@ -165,6 +170,8 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, OnDes
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
+  private chipKey = '';
+  private chipObserver: ResizeObserver | null = null;
   protected readonly doc = inject(DOCUMENT);
   protected readonly config = inject(WtConfig);
   private readonly i18n = ɵrefreshOnTranslation();
@@ -207,6 +214,51 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, OnDes
   ngOnDestroy(): void {
     this.i18n.unsubscribe();
     this.popup?.close();
+    this.chipObserver?.disconnect();
+  }
+
+  /** Chips that do not fit the field hide behind a "+N" chip. Measured after each check, only when something changed. */
+  ngAfterViewChecked(): void {
+    this.fitChips();
+  }
+
+  private fitChips(force = false): void {
+    if (!this.chips) {
+      this.chipKey = '';
+      return;
+    }
+    const label = this.host.querySelector('.wt-multiselect-label') as HTMLElement | null;
+    const more = label?.querySelector('.wt-multiselect-more') as HTMLElement | null;
+    if (!label || !more) return;
+    const chips = Array.from(label.querySelectorAll<HTMLElement>('.wt-multiselect-chip'));
+    const key = `${label.clientWidth}|${chips.map((c) => c.textContent).join('\u0001')}`;
+    if (!force && key === this.chipKey) return;
+    this.chipKey = key;
+    const win = this.doc.defaultView;
+    if (!this.chipObserver && win && 'ResizeObserver' in win) {
+      this.chipObserver = new win.ResizeObserver(() => this.fitChips(true));
+      this.chipObserver.observe(label);
+    }
+    for (const c of chips) c.hidden = false;
+    more.hidden = true;
+    const style = win?.getComputedStyle(label);
+    const limit = label.clientWidth - (parseFloat(style?.paddingRight || '0') || 0);
+    const fits = (el: HTMLElement) => el.offsetLeft + el.offsetWidth <= limit + 0.5;
+    let shown = chips.findIndex((c) => !fits(c));
+    if (shown < 0) return;
+    // Drop chips until the "+N" chip fits after the last one shown; the first chip always shows (it can shrink).
+    shown = Math.max(1, shown);
+    more.hidden = false;
+    for (;;) {
+      chips.forEach((c, i) => (c.hidden = i >= shown));
+      more.textContent = `+${chips.length - shown}`;
+      if (shown <= 1 || fits(more)) break;
+      shown--;
+    }
+    more.title = chips
+      .slice(shown)
+      .map((c) => (c.textContent || '').trim())
+      .join(', ');
   }
 
   // ---------- what the templates read ----------

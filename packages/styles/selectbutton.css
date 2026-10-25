@@ -12,7 +12,7 @@
     --_sb-scale: var(--wt-size-lg-scale);
     --_sb-font: var(--wt-size-lg-scale);
   }
-  wt-selectbutton {
+  :is(wt-selectbutton, wt-select-button) {
     display: inline-flex;
     vertical-align: middle;
     max-width: 100%;
@@ -90,7 +90,7 @@
     cursor: default;
   }
   .wt-selectbutton.wt-invalid,
-  wt-selectbutton.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-selectbutton {
+  :is(wt-selectbutton, wt-select-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-selectbutton {
     border-color: var(--wt-danger-color);
   }
 }

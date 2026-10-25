@@ -41,7 +41,7 @@
     object-fit: cover;
   }
 
-  wt-avatar-group {
+  :is(wt-avatar-group, wt-avatargroup) {
     display: inline-flex;
     align-items: center;
   }

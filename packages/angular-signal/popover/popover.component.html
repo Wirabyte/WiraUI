@@ -10,6 +10,9 @@
   >
     <div class="wt-popover-content p-popover-content">
       <ng-content></ng-content>
+      @if (contentTemplate) {
+        <ng-container *ngTemplateOutlet="contentTemplate; context: contentContext"></ng-container>
+      }
     </div>
     @if (showCloseIcon) {
       <button type="button" class="wt-popover-close p-popover-close-button" [attr.aria-label]="ariaCloseLabel || t.close" (click)="hide()">

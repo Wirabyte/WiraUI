@@ -25,6 +25,8 @@ export abstract class ɵWtMessagesBase implements OnInit, OnDestroy {
   get closable(): boolean { return this._closable; }
   /** Also show messages sent with `WtMessageService.add()` that carry this component's `key`. Default true. */
   @Input() set enableService(v: unknown) { this._service = v === undefined || ɵtoBool(v); }
+  /** Severity of messages that do not give their own. */
+  @Input() severity?: WtMessageSeverity;
   @Input() key?: string;
   /** `false`: summary and detail are HTML (sanitised by Angular). Default true. */
   @Input() set escape(v: unknown) { this._escape = v === undefined || ɵtoBool(v); }
@@ -68,7 +70,7 @@ export abstract class ɵWtMessagesBase implements OnInit, OnDestroy {
   }
 
   severityOf(m: WtToastMessage): WtMessageSeverity {
-    return (m.severity || 'info') as WtMessageSeverity;
+    return (m.severity || this.severity || 'info') as WtMessageSeverity;
   }
   closableOf(m: WtToastMessage): boolean {
     return this._closable && m.closable !== false;

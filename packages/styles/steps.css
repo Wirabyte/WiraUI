@@ -92,6 +92,14 @@
     text-align: center;
     overflow-wrap: anywhere;
   }
+  .wt-steps-subtitle {
+    max-width: 100%;
+    margin-top: -0.25rem;
+    color: var(--wt-text-muted);
+    font-size: 0.8125em;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
   .wt-steps-item-active .wt-steps-label {
     color: var(--wt-steps-label-active-color);
     font-weight: 600;

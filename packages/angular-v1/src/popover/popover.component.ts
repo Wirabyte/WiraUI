@@ -1,4 +1,4 @@
-import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { ɵWtPopoverBase } from './popover.base';
 
@@ -10,7 +10,7 @@ import { ɵWtPopoverBase } from './popover.base';
   selector: 'wt-popover, wt-overlaypanel, wt-overlayPanel',
   standalone: true,
   exportAs: 'wtPopover',
-  imports: [NgIf, NgClass, NgStyle],
+  imports: [NgClass, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.css'],
   encapsulation: ViewEncapsulation.None,

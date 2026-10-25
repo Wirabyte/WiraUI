@@ -1,10 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
+  AfterViewChecked,
   ChangeDetectorRef,
   ContentChild,
   ContentChildren,
   Directive,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -26,13 +28,24 @@ import {
   WtConfig,
   WtTemplate,
 } from 'wiratheme/config';
-import { filterColumns, filterGlobal, FilterMatchMode, FilterMeta, pageInfo, sameValue, SortMeta, sortRows, WtLocale } from 'wiratheme/core';
+import { filterColumns, filterGlobal, FilterMatchMode, FilterMeta, FilterRule, optionField, pageInfo, sameValue, SortMeta, sortRows, WtLocale } from 'wiratheme/core';
 import { WtPageEvent } from 'wiratheme/paginator';
 import {
+  WtTableExportFunction,
+  WtTableExportOptions,
   WtTableFilterEvent,
   WtTableHeaderCheckboxToggleEvent,
   WtTableLazyLoadEvent,
   WtTablePageEvent,
+  WtTableColReorderEvent,
+  WtTableColResizeEvent,
+  WtTableContextMenuSelectEvent,
+  WtTableEditEvent,
+  WtTableRowExpandEvent,
+  WtTableRowGroupMode,
+  WtTableRowReorderEvent,
+  WtTableSortFunctionEvent,
+  WtTableState,
   WtTableRowSelectEvent,
   WtTableSelectionMode,
   WtTableSortEvent,
@@ -52,9 +65,13 @@ const toInt = (v: unknown, fallback: number) => (Number.isFinite(Number(v)) && v
  * markup and components fit in the cells.
  */
 @Directive()
-export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, OnDestroy {
+export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, AfterViewChecked, OnDestroy {
   // ---------- data ----------
-  @Input() set value(v: readonly unknown[] | null | undefined) { this._value = v ? [...v] : []; this.process(); }
+  @Input() set value(v: readonly unknown[] | null | undefined) {
+    this._valueRef = Array.isArray(v) ? (v as unknown[]) : null;
+    this._value = v ? [...v] : [];
+    this.process();
+  }
   get value(): unknown[] { return this._value; }
   /** Field that identifies a row (`"id"`): selection and row tracking compare by it. */
   @Input() dataKey?: string;
@@ -103,8 +120,8 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   @Input() sortMode: WtTableSortMode = 'single';
   @Input() set multiSortMeta(v: SortMeta[] | null | undefined) { this._multi = v ? [...v] : []; this.process(); }
   get multiSortMeta(): SortMeta[] { return this._multi; }
-  /** A third click on a sorted column removes its sort. */
-  @Input() set removableSort(v: unknown) { this._removable = ɵtoBool(v); }
+  /** A third click on a sorted column removes its sort. Default true; `[removableSort]="false"` keeps toggling. */
+  @Input() set removableSort(v: unknown) { this._removable = v === undefined || v === null || ɵtoBool(v); }
   @Input() set defaultSortOrder(v: unknown) { this._defaultOrder = toInt(v, 1) < 0 ? -1 : 1; }
   /** Go back to the first page after sorting. Default true. */
   @Input() set resetPageOnSort(v: unknown) { this._resetOnSort = v === undefined || ɵtoBool(v); }
@@ -112,10 +129,11 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   // ---------- filtering ----------
   /** Fields the global search looks in (dot paths allowed). Default: every top-level field. */
   @Input() globalFilterFields?: string[] | null;
-  /** Wait this long after typing before searching, in ms. Default 300. */
-  @Input() set filterDelay(v: unknown) { this._filterDelay = Math.max(0, toInt(v, 300)); }
-  @Input() set filters(v: Record<string, FilterMeta> | null | undefined) { this._filters = { ...(v || {}) }; this.process(); }
-  get filters(): Record<string, FilterMeta> { return this._filters; }
+  /** Wait this long after typing before searching, in ms. `0` searches at once. Default: the app's `delays.filter` (0). */
+  @Input() set filterDelay(v: unknown) { this._filterDelay = v === null || v === undefined || v === '' ? null : Math.max(0, toInt(v, 0)); }
+  get filterDelay(): number { return this._filterDelay ?? this.config.delays.filter; }
+  @Input() set filters(v: Record<string, FilterRule> | null | undefined) { this._filters = { ...(v || {}) }; this.process(); }
+  get filters(): Record<string, FilterRule> { return this._filters; }
 
   // ---------- selection ----------
   @Input() selectionMode?: WtTableSelectionMode | null;
@@ -129,6 +147,15 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   get selection(): any { return this._selection; }
   /** The header checkbox selects only the rows of the current page. */
   @Input() set selectionPageOnly(v: unknown) { this._pageOnly = ɵtoBool(v); }
+  /** A wt-contextMenu (anything with `show(event)`) opened by a right-click on a `wtContextMenuRow`. */
+  @Input() contextMenu?: { show(event: Event): void } | null;
+  /** Two-way: `[(contextMenuSelection)]`, the row last right-clicked (it gets an outline). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() set contextMenuSelection(v: any) { this._ctxSelection = v; this.notify(); }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get contextMenuSelection(): any { return this._ctxSelection; }
+  /** `'separate'` (default): kept apart from the selection; `'joint'`: a right-click also selects the row. */
+  @Input() contextMenuSelectionMode: 'separate' | 'joint' = 'separate';
 
   // ---------- look ----------
   @Input() styleClass?: string;
@@ -151,23 +178,290 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   @Input() responsiveLayout: 'scroll' | 'stack' = 'scroll';
   @Input() set breakpoint(v: string | undefined) { this._breakpoint = v || '960px'; this.watchStack(); }
 
+  // ---------- row expansion ----------
+  /** Rows open under their `rowexpansion` template, by `dataKey` value: `{ 7: true }`. Kept up to date in place. */
+  @Input() set expandedRowKeys(v: Record<string, boolean> | null | undefined) { this._expandedKeys = v || {}; this.notify(); }
+  get expandedRowKeys(): Record<string, boolean> { return this._expandedKeys; }
+  /** `'multiple'` (default) keeps every opened row open; `'single'` closes the others. */
+  @Input() rowExpandMode: 'multiple' | 'single' = 'multiple';
+
+  // ---------- row groups ----------
+  /** `'subheader'`: a `groupheader` (and `groupfooter`) row around each group; `'rowspan'`: `let-rowgroup="rowgroup" let-rowspan="rowspan"`. */
+  @Input() rowGroupMode?: WtTableRowGroupMode | null;
+  /** Field that groups rows (dot path). Rows of a group must be next to each other (sort by it). */
+  @Input() groupRowsBy?: string;
+
+  // ---------- export ----------
+  /** File name of `exportCSV()`, without `.csv`. Default `download`. */
+  @Input() exportFilename?: string;
+  /** Column property used as the CSV header. Default `header`. */
+  @Input() exportHeader?: string;
+  @Input() csvSeparator = ',';
+  @Input() exportFunction?: WtTableExportFunction;
+
   /** Accepted for templates moving over; they have no effect here. */
   @Input() responsive: unknown;
   @Input() autoLayout: unknown;
-  @Input() resizableColumns: unknown;
-  @Input() reorderableColumns: unknown;
-  @Input() columnResizeMode: unknown;
+  /** Header cells marked `wtResizableColumn` get a grip on their right edge. */
+  @Input() set resizableColumns(v: unknown) { this._resizable = ɵtoBool(v); }
+  get resizableColumns(): boolean { return this._resizable; }
+  /** Header cells marked `wtReorderableColumn` can be dragged sideways; `columns` changes in place. */
+  @Input() set reorderableColumns(v: unknown) { this._reorderable = ɵtoBool(v); }
+  get reorderableColumns(): boolean { return this._reorderable; }
+  /** `'fit'` (default): the next column gives up the width; `'expand'`: the table grows. */
+  @Input() columnResizeMode: 'fit' | 'expand' = 'fit';
   @Input() virtualScroll: unknown;
   @Input() virtualScrollItemSize: unknown;
   @Input() paginatorDropdownAppendTo: unknown;
-  @Input() exportFilename: unknown;
-  @Input() exportHeader: unknown;
-  @Input() stateStorage: unknown;
-  @Input() stateKey: unknown;
-  @Input() metaKeySelection: unknown;
-  @Input() compareSelectionBy: unknown;
-  @Input() customSort: unknown;
   @Input() frozenColumns: unknown;
+
+  // ---------- selection extras ----------
+  /** A click picks only that row and Ctrl / ⌘ + click adds (true), or each click toggles (false, default). Shift + click picks a range. */
+  @Input() set metaKeySelection(v: unknown) { this._metaKey = ɵtoBool(v); }
+  /** `(e) => boolean`: rows it answers false for cannot be selected. */
+  @Input() rowSelectable?: ((e: { data: unknown; index?: number }) => boolean) | null;
+  /** `'deepEquals'` (default: same contents count as the same row) or `'equals'` (the same object only), without `dataKey`. */
+  @Input() compareSelectionBy: 'deepEquals' | 'equals' = 'deepEquals';
+
+  // ---------- custom sort ----------
+  /** The app sorts: `(sortFunction)` gets the rows to sort in place. */
+  @Input() set customSort(v: unknown) { this._customSort = ɵtoBool(v); this.process(); }
+
+  // ---------- column resize and reorder ----------
+
+  /**
+   * Drag on a header cell's grip. On the first drag every column keeps its current width (fixed layout), so the
+   * other columns do not jump.
+   */
+  startColumnResize(th: HTMLElement, event: PointerEvent): void {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const table = th.closest('table') as HTMLTableElement | null;
+    if (!table) return;
+    const row = th.parentElement as HTMLTableRowElement;
+    if (table.style.tableLayout !== 'fixed') {
+      const cells = Array.from(row.children) as HTMLElement[];
+      const widths = cells.map((c) => c.getBoundingClientRect().width);
+      cells.forEach((c, i) => (c.style.width = `${widths[i]}px`));
+      table.style.width = `${widths.reduce((a, b) => a + b, 0)}px`;
+      table.style.minWidth = '0';
+      table.style.tableLayout = 'fixed';
+    }
+    const next = th.nextElementSibling as HTMLElement | null;
+    const startX = event.clientX;
+    const w0 = th.getBoundingClientRect().width;
+    const n0 = next ? next.getBoundingClientRect().width : 0;
+    const t0 = table.getBoundingClientRect().width;
+    const min = 24;
+    let delta = 0;
+    th.classList.add('wt-column-resizing');
+    const move = (e: PointerEvent) => {
+      delta = e.clientX - startX;
+      if (this.columnResizeMode === 'expand' || !next) {
+        delta = Math.max(min - w0, delta);
+        th.style.width = `${w0 + delta}px`;
+        table.style.width = `${t0 + delta}px`;
+      } else {
+        delta = Math.max(min - w0, Math.min(n0 - min, delta));
+        th.style.width = `${w0 + delta}px`;
+        next.style.width = `${n0 - delta}px`;
+      }
+    };
+    const up = () => {
+      this.doc.removeEventListener('pointermove', move, true);
+      this.doc.removeEventListener('pointerup', up, true);
+      this.doc.removeEventListener('pointercancel', up, true);
+      th.classList.remove('wt-column-resizing');
+      if (delta) this.onColResize.emit({ element: th, delta });
+    };
+    this.doc.addEventListener('pointermove', move, true);
+    this.doc.addEventListener('pointerup', up, true);
+    this.doc.addEventListener('pointercancel', up, true);
+  }
+
+  /** Drag a header cell sideways to move its column (a line shows where it lands). */
+  startColumnDrag(th: HTMLElement, event: PointerEvent): void {
+    if (event.button !== 0 || !this._reorderable) return;
+    const row = th.parentElement as HTMLElement;
+    const startX = event.clientX;
+    const startY = event.clientY;
+    let dragging = false;
+    let target: { index: number; after: boolean } | null = null;
+    const cells = () => Array.from(row.children).filter((c) => c.classList.contains('wt-reorderable-column')) as HTMLElement[];
+    const dragIndex = cells().indexOf(th);
+    const clear = () => row.querySelectorAll('.wt-col-drop-before, .wt-col-drop-after').forEach((c) => c.classList.remove('wt-col-drop-before', 'wt-col-drop-after'));
+    const move = (e: PointerEvent) => {
+      if (!dragging && Math.hypot(e.clientX - startX, e.clientY - startY) < 6) return;
+      if (!dragging) {
+        dragging = true;
+        th.classList.add('wt-column-dragging');
+      }
+      e.preventDefault();
+      clear();
+      target = null;
+      cells().forEach((c, i) => {
+        const b = c.getBoundingClientRect();
+        if (e.clientX >= b.left && e.clientX <= b.right) {
+          const after = e.clientX > b.left + b.width / 2;
+          target = { index: i, after };
+          c.classList.add(after ? 'wt-col-drop-after' : 'wt-col-drop-before');
+        }
+      });
+    };
+    const up = () => {
+      this.doc.removeEventListener('pointermove', move, true);
+      this.doc.removeEventListener('pointerup', up, true);
+      this.doc.removeEventListener('pointercancel', up, true);
+      clear();
+      th.classList.remove('wt-column-dragging');
+      if (!dragging) return;
+      // The click that ends the drag must not sort the column.
+      const swallow = (e: Event) => {
+        e.stopPropagation();
+        e.preventDefault();
+      };
+      th.addEventListener('click', swallow, { capture: true, once: true });
+      setTimeout(() => th.removeEventListener('click', swallow, { capture: true }), 0);
+      const t = target as { index: number; after: boolean } | null;
+      if (!t || dragIndex < 0) return;
+      let dropIndex = t.index + (t.after ? 1 : 0);
+      if (dropIndex > dragIndex) dropIndex--;
+      if (dropIndex === dragIndex) return;
+      const cols = this.columns;
+      if (Array.isArray(cols) && cols.length > Math.max(dragIndex, dropIndex)) {
+        const [moved] = cols.splice(dragIndex, 1);
+        cols.splice(dropIndex, 0, moved);
+      }
+      this.onColReorder.emit({ dragIndex, dropIndex, columns: Array.isArray(cols) ? cols : [] });
+      this.notify();
+    };
+    this.doc.addEventListener('pointermove', move, true);
+    this.doc.addEventListener('pointerup', up, true);
+    this.doc.addEventListener('pointercancel', up, true);
+  }
+
+  // ---------- cell editing ----------
+
+  isCellEditing(cell: HTMLElement): boolean {
+    return !!this.editing && this.editing.cell === cell;
+  }
+
+  /** Opens a cell's `input` template (`wt-cellEditor`). Another open cell closes first. */
+  startCellEdit(cell: HTMLElement, data: unknown, field: string, index: number | undefined, event?: Event): void {
+    if (this.editing?.cell === cell) return;
+    if (this.editing) this.completeCellEdit(event);
+    this.editing = { cell, data, field, index };
+    this.onEditInit.emit({ field, data, index, originalEvent: event });
+    this.notify();
+    this.cdr.detectChanges();
+    const focusable = cell.querySelector<HTMLElement>('input, textarea, select, [tabindex]:not([tabindex="-1"]), button');
+    focusable?.focus();
+    if (focusable instanceof HTMLInputElement) {
+      // Select the text once ngModel has written it (a microtask) and the view shows it (the next check); not if the
+      // user has already typed.
+      let typed = false;
+      const onInput = () => (typed = true);
+      focusable.addEventListener('input', onInput, { once: true });
+      Promise.resolve().then(() =>
+        setTimeout(() => {
+          focusable.removeEventListener('input', onInput);
+          if (!typed && this.editing?.cell === cell && this.doc.activeElement === focusable) focusable.select?.();
+        })
+      );
+    }
+    const outside = (e: Event) => {
+      const t = e.target as Node | null;
+      if (this.editing && t && !this.editing.cell.contains(t)) this.completeCellEdit(e);
+    };
+    this.stopOutside?.();
+    this.doc.addEventListener('pointerdown', outside, true);
+    this.stopOutside = () => this.doc.removeEventListener('pointerdown', outside, true);
+  }
+
+  /** Keeps the edited value (Enter, Tab, a click elsewhere); with `next`, Tab moves to the next editable cell. */
+  completeCellEdit(event?: Event, next?: 1 | -1): void {
+    const e = this.editing;
+    if (!e) return;
+    this.closeCellEditor();
+    this.onEditComplete.emit({ field: e.field, data: e.data, index: e.index, originalEvent: event });
+    this.notify();
+    if (next) {
+      const cells = Array.from(this.tableHost.querySelectorAll<HTMLElement>('.wt-editable-column'));
+      const at = cells.indexOf(e.cell);
+      const target = cells[at + next];
+      if (target) target.click();
+      else e.cell.focus();
+    } else {
+      e.cell.focus();
+    }
+  }
+
+  /** Drops the edit (Escape). The app restores the old value in `(onEditCancel)` if it changed the row on the fly. */
+  cancelCellEdit(event?: Event): void {
+    const e = this.editing;
+    if (!e) return;
+    this.closeCellEditor();
+    this.onEditCancel.emit({ field: e.field, data: e.data, index: e.index, originalEvent: event });
+    this.notify();
+    e.cell.focus();
+  }
+
+  private closeCellEditor(): void {
+    this.stopOutside?.();
+    this.stopOutside = null;
+    this.editing = null;
+  }
+
+  // ---------- row editing ----------
+
+  isRowEditing(row: unknown): boolean {
+    const key = this.rowKey(row);
+    return key === null ? this.editingRows.has(row) : !!this._editingKeys[key];
+  }
+
+  /** The row's cell editors show their `input` templates (`pInitEditableRow`). */
+  initRowEdit(row: unknown): void {
+    const key = this.rowKey(row);
+    if (key === null) this.editingRows.add(row);
+    else this._editingKeys[key] = true;
+    this.notify();
+  }
+
+  /** Back to the `output` templates (`pSaveEditableRow`), unless a field in the row is invalid. */
+  saveRowEdit(row: unknown, rowElement?: HTMLElement | null): void {
+    if (rowElement && rowElement.querySelector('.ng-invalid:not(form)')) return;
+    this.endRowEdit(row);
+  }
+
+  /** Back to the `output` templates without keeping anything (`pCancelEditableRow`). */
+  cancelRowEdit(row: unknown): void {
+    this.endRowEdit(row);
+  }
+
+  private endRowEdit(row: unknown): void {
+    const key = this.rowKey(row);
+    if (key === null) this.editingRows.delete(row);
+    else delete this._editingKeys[key];
+    this.notify();
+  }
+
+  // ---------- state ----------
+  /** Keeps paging, sorting, filters, selection and expanded rows under this key, and brings them back next visit. */
+  @Input() stateKey?: string | null;
+  @Input() stateStorage: 'session' | 'local' = 'session';
+
+  // ---------- editing ----------
+  /** `'cell'` (default): a `wtEditableColumn` cell edits on click. `'row'`: rows edit as a whole with the row buttons. */
+  @Input() editMode: 'cell' | 'row' = 'cell';
+  /** Rows being edited, by `dataKey` value: `{ 7: true }`. Kept up to date in place. */
+  @Input() set editingRowKeys(v: Record<string, boolean> | null | undefined) { this._editingKeys = v || {}; this.notify(); }
+  get editingRowKeys(): Record<string, boolean> { return this._editingKeys; }
+
+  // ---------- frozen rows ----------
+  /** Rows kept at the top of the body (under the header) while the rest scrolls; drawn with `frozenbody` (else `body`). */
+  @Input() set frozenValue(v: readonly unknown[] | null | undefined) { this._frozenValue = v ? [...v] : []; this.notify(); }
+  get frozenValue(): unknown[] { return this._frozenValue; }
 
   @Output() readonly onPage = new EventEmitter<WtTablePageEvent>();
   @Output() readonly onSort = new EventEmitter<WtTableSortEvent>();
@@ -176,8 +470,22 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   @Output() readonly onRowSelect = new EventEmitter<WtTableRowSelectEvent>();
   @Output() readonly onRowUnselect = new EventEmitter<WtTableRowSelectEvent>();
   @Output() readonly onHeaderCheckboxToggle = new EventEmitter<WtTableHeaderCheckboxToggleEvent>();
+  @Output() readonly onRowExpand = new EventEmitter<WtTableRowExpandEvent>();
+  @Output() readonly onRowReorder = new EventEmitter<WtTableRowReorderEvent>();
+  @Output() readonly onColResize = new EventEmitter<WtTableColResizeEvent>();
+  @Output() readonly onColReorder = new EventEmitter<WtTableColReorderEvent>();
+  @Output() readonly onEditInit = new EventEmitter<WtTableEditEvent>();
+  @Output() readonly onEditComplete = new EventEmitter<WtTableEditEvent>();
+  @Output() readonly onEditCancel = new EventEmitter<WtTableEditEvent>();
+  @Output() readonly sortFunction = new EventEmitter<WtTableSortFunctionEvent>();
+  @Output() readonly onStateSave = new EventEmitter<WtTableState>();
+  @Output() readonly onStateRestore = new EventEmitter<WtTableState>();
+  @Output() readonly onRowCollapse = new EventEmitter<WtTableRowExpandEvent>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly selectionChange = new EventEmitter<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Output() readonly contextMenuSelectionChange = new EventEmitter<any>();
+  @Output() readonly onContextMenuSelect = new EventEmitter<WtTableContextMenuSelectEvent>();
   @Output() readonly firstChange = new EventEmitter<number>();
   @Output() readonly rowsChange = new EventEmitter<number>();
 
@@ -192,6 +500,11 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   @ContentChild('paginatorleft', { descendants: false }) protected paginatorLeftRef?: unknown;
   @ContentChild('paginatorright', { descendants: false }) protected paginatorRightRef?: unknown;
   @ContentChild('colgroup', { descendants: false }) protected colgroupRef?: unknown;
+  @ContentChild('rowexpansion', { descendants: false }) protected rowExpansionRef?: unknown;
+  @ContentChild('expandedrow', { descendants: false }) protected expandedRowRef?: unknown;
+  @ContentChild('frozenbody', { descendants: false }) protected frozenBodyRef?: unknown;
+  @ContentChild('groupheader', { descendants: false }) protected groupHeaderRef?: unknown;
+  @ContentChild('groupfooter', { descendants: false }) protected groupFooterRef?: unknown;
 
   /** Rows after filtering and sorting (client-side), and the rows of the current page. */
   processed: unknown[] = [];
@@ -208,6 +521,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
   protected readonly config = inject(WtConfig);
+  protected readonly tableHost: HTMLElement = inject(ElementRef).nativeElement;
   private readonly i18n = ɵrefreshOnTranslation();
   private _value: unknown[] = [];
   private _paginator = false;
@@ -223,18 +537,34 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   private _sortField: string | null = null;
   private _sortOrder = 1;
   private _multi: SortMeta[] = [];
-  private _removable = false;
+  private _removable = true;
   private _defaultOrder = 1;
   private _resetOnSort = true;
-  private _filterDelay = 300;
-  private _filters: Record<string, FilterMeta> = {};
+  private _filterDelay: number | null = null;
+  private _filters: Record<string, FilterRule> = {};
   private _selection: unknown = null;
   private _pageOnly = false;
+  private _ctxSelection: unknown = null;
   private _gridlines = false;
   private _striped = false;
   private _rowHover = false;
   private _scrollable = false;
   private _breakpoint = '960px';
+  private _expandedKeys: Record<string, boolean> = {};
+  private _valueRef: unknown[] | null = null;
+  private _resizable = false;
+  private _reorderable = false;
+  private _editingKeys: Record<string, boolean> = {};
+  private readonly editingRows = new Set<unknown>();
+  private editing: { cell: HTMLElement; data: unknown; field: string; index?: number } | null = null;
+  private stopOutside: (() => void) | null = null;
+  private _metaKey = false;
+  private _customSort = false;
+  private _frozenValue: unknown[] = [];
+  private anchorIndex = -1;
+  private restoringState = false;
+  /** Expanded rows of a table without `dataKey`. */
+  private readonly expandedRows = new Set<unknown>();
   private filterTimer: ReturnType<typeof setTimeout> | null = null;
   private stackQuery: MediaQueryList | null = null;
   private readonly onStackChange = () => {
@@ -248,12 +578,23 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   }
 
   ngAfterContentInit(): void {
+    this.restoreState();
     this.initialized = true;
     this.watchStack();
     if (this._lazy && this._lazyOnInit) this.emitLazy();
   }
 
+  /** Frozen rows sit right under the sticky header: their offset follows the header's height. */
+  ngAfterViewChecked(): void {
+    if (!this._frozenValue.length) return;
+    const wrapper = this.tableHost.querySelector('.wt-table-wrapper') as HTMLElement | null;
+    const head = wrapper?.querySelector('thead') as HTMLElement | null;
+    const h = head ? `${head.offsetHeight}px` : '0px';
+    if (wrapper && wrapper.style.getPropertyValue('--_table-head-height') !== h) wrapper.style.setProperty('--_table-head-height', h);
+  }
+
   ngOnDestroy(): void {
+    this.stopOutside?.();
     this.i18n.unsubscribe();
     if (this.filterTimer) clearTimeout(this.filterTimer);
     this.stackQuery?.removeEventListener?.('change', this.onStackChange);
@@ -328,9 +669,58 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   get colgroupTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.colgroupRef) || ɵfindTemplate(this.templates, 'colgroup');
   }
-  /** Context of the body template: `let-row let-i="rowIndex" let-columns="columns"`. rowIndex counts across pages. */
+  /** `rowexpansion`, or `expandedrow` as later templates call it. */
+  get rowExpansionTemplate(): TemplateRef<unknown> | null {
+    return (
+      asTemplate(this.rowExpansionRef) ||
+      asTemplate(this.expandedRowRef) ||
+      ɵfindTemplate(this.templates, 'rowexpansion') ||
+      ɵfindTemplate(this.templates, 'expandedrow')
+    );
+  }
+  get frozenBodyTemplate(): TemplateRef<unknown> | null {
+    return asTemplate(this.frozenBodyRef) || ɵfindTemplate(this.templates, 'frozenbody') || this.bodyTemplate;
+  }
+  /** Context of a frozen row: like the body's, with `frozen: true`. */
+  frozenContext(row: unknown, i: number): Record<string, unknown> {
+    return { $implicit: row, rowIndex: i, columns: this.columns, editing: false, expanded: false, frozen: true };
+  }
+  get groupHeaderTemplate(): TemplateRef<unknown> | null {
+    return this.rowGroupMode === 'subheader' ? asTemplate(this.groupHeaderRef) || ɵfindTemplate(this.templates, 'groupheader') : null;
+  }
+  get groupFooterTemplate(): TemplateRef<unknown> | null {
+    return this.rowGroupMode === 'subheader' ? asTemplate(this.groupFooterRef) || ɵfindTemplate(this.templates, 'groupfooter') : null;
+  }
+  /**
+   * Context of the body template: `let-row let-i="rowIndex" let-columns="columns" let-expanded="expanded"`; rowIndex
+   * counts across pages. In `rowGroupMode="rowspan"`, `rowgroup` is true on a group's first row and `rowspan` its size.
+   */
   rowContext(row: unknown, i: number): Record<string, unknown> {
-    return { $implicit: row, rowIndex: this.pageFirst + i, columns: this.columns, editing: false, expanded: false, rowgroup: false };
+    const spans = this.rowGroupMode === 'rowspan' && !!this.groupRowsBy;
+    const first = spans && this.isGroupStart(i);
+    return {
+      $implicit: row,
+      rowIndex: this.pageFirst + i,
+      columns: this.columns,
+      editing: this.isRowEditing(row),
+      expanded: this.isRowExpanded(row),
+      rowgroup: first,
+      rowspan: first ? this.groupSize(i) : undefined,
+    };
+  }
+  /** The row starts a new group on this page (row groups). */
+  isGroupStart(i: number): boolean {
+    return i === 0 || !this.sameGroup(this.pageRows[i - 1], this.pageRows[i]);
+  }
+  /** The row ends its group on this page. */
+  isGroupEnd(i: number): boolean {
+    return i === this.pageRows.length - 1 || !this.sameGroup(this.pageRows[i], this.pageRows[i + 1]);
+  }
+  /** Rows in the group starting at `i`, on this page. */
+  groupSize(i: number): number {
+    let n = 1;
+    while (i + n < this.pageRows.length && this.sameGroup(this.pageRows[i], this.pageRows[i + n])) n++;
+    return n;
   }
   get columnsContext(): Record<string, unknown> {
     return { $implicit: this.columns, columns: this.columns };
@@ -346,6 +736,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
     this.firstChange.emit(this._first);
     if (rowsChanged) this.rowsChange.emit(this._rows);
     this.onPage.emit({ first: this._first, rows: this._rows });
+    this.saveStateIfKept();
     if (this._lazy) this.emitLazy();
   }
 
@@ -382,6 +773,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
       this._sortOrder = next || this._defaultOrder;
       this.onSort.emit({ field: this._sortField ?? undefined, order: next || undefined });
     }
+    this.saveStateIfKept();
     if (this._resetOnSort && this._first !== 0) {
       this._first = 0;
       this.firstChange.emit(0);
@@ -402,7 +794,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
       this.globalMode = matchMode;
       this.afterFilter();
     };
-    if (this._filterDelay) this.filterTimer = setTimeout(run, this._filterDelay);
+    if (this.filterDelay) this.filterTimer = setTimeout(run, this.filterDelay);
     else run();
   }
 
@@ -411,6 +803,16 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
     const next = { ...this._filters };
     if (value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length)) delete next[field];
     else next[field] = { value, matchMode };
+    this._filters = next;
+    this.afterFilter();
+  }
+
+  /** A column's rules from the filter menu, combined with `operator`; null or no rule with a value removes the filter. */
+  filterRules(field: string, rules: FilterMeta[] | null, operator: 'and' | 'or' = 'and'): void {
+    const next = { ...this._filters };
+    const kept = (rules || []).filter((f) => f.value !== null && f.value !== undefined && f.value !== '');
+    if (!kept.length) delete next[field];
+    else next[field] = kept.map((f, i) => ({ ...f, operator: i === 0 ? operator : f.operator }));
     this._filters = next;
     this.afterFilter();
   }
@@ -442,18 +844,66 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
     return this.sameRow(sel, row);
   }
 
-  toggleRow(row: unknown, event: Event, index: number | undefined, type: 'row' | 'checkbox'): void {
-    const multiple = this.selectionMode === 'multiple' || type === 'checkbox';
+  /** The row the context menu is open for (or was last opened for). */
+  isContextMenuRow(row: unknown): boolean {
+    return this._ctxSelection !== null && this._ctxSelection !== undefined && this.sameRow(this._ctxSelection, row);
+  }
+
+  /** A right-click on a row: remember it, select it in `joint` mode, and open the context menu at the pointer. */
+  rowContextMenu(event: Event, row: unknown, index?: number): void {
+    if (!this.contextMenu) return;
+    if (this.contextMenuSelectionMode === 'joint' && this.selectionMode && !this.isSelected(row) && this.isRowSelectable(row, index)) {
+      this._selection = this.selectionMode === 'multiple' ? [row] : row;
+      this.selectionChange.emit(this._selection);
+      this.onRowSelect.emit({ originalEvent: event, data: row, index, type: 'row' });
+    }
+    this._ctxSelection = row;
+    this.contextMenuSelectionChange.emit(row);
+    this.onContextMenuSelect.emit({ originalEvent: event, data: row, index });
+    this.contextMenu.show(event);
+    this.notify();
+  }
+
+  isRowSelectable(row: unknown, index?: number): boolean {
+    return !this.rowSelectable || this.rowSelectable({ data: row, index });
+  }
+
+  toggleRow(row: unknown, event: Event, index: number | undefined, type: 'row' | 'checkbox' | 'radio'): void {
+    if (!this.isRowSelectable(row, index)) return;
+    const multiple = (this.selectionMode === 'multiple' && type !== 'radio') || type === 'checkbox';
     if (!this.selectionMode && type === 'row') return;
     const was = this.isSelected(row);
-    if (multiple) {
+    const mouse = event as MouseEvent;
+    const meta = !!(mouse && (mouse.ctrlKey || mouse.metaKey));
+    const pageIndex = index === undefined ? -1 : index - this.pageFirst;
+    if (type === 'row' && multiple && mouse && mouse.shiftKey && this.anchorIndex >= 0 && pageIndex >= 0) {
+      // Shift + click: every row between the last click and this one.
+      const [a, b] = this.anchorIndex < pageIndex ? [this.anchorIndex, pageIndex] : [pageIndex, this.anchorIndex];
+      const range = this.pageRows.slice(a, b + 1).filter((r, k) => this.isRowSelectable(r, this.pageFirst + a + k));
+      const keep = meta ? (Array.isArray(this._selection) ? (this._selection as unknown[]) : []).filter((s) => !range.some((r) => this.sameRow(s, r))) : [];
+      this._selection = [...keep, ...range];
+      this.selectionChange.emit(this._selection);
+      this.onRowSelect.emit({ originalEvent: event, data: row, index, type });
+      this.notify();
+      return;
+    }
+    if (pageIndex >= 0) this.anchorIndex = pageIndex;
+    if (type === 'radio') {
+      if (was) return;
+      this._selection = row;
+    } else if (type === 'row' && this._metaKey && !meta) {
+      // metaKeySelection: a plain click picks only this row (a second click on it clears it in single mode).
+      this._selection = multiple ? (was && Array.isArray(this._selection) && this._selection.length === 1 ? [] : [row]) : was ? null : row;
+    } else if (multiple) {
       const list = Array.isArray(this._selection) ? (this._selection as unknown[]) : [];
       this._selection = was ? list.filter((s) => !this.sameRow(s, row)) : [...list, row];
     } else {
       this._selection = was ? null : row;
     }
+    const now = this.isSelected(row);
     this.selectionChange.emit(this._selection);
-    (was ? this.onRowUnselect : this.onRowSelect).emit({ originalEvent: event, data: row, index, type });
+    (now ? this.onRowSelect : this.onRowUnselect).emit({ originalEvent: event, data: row, index, type });
+    this.saveStateIfKept();
     this.notify();
   }
 
@@ -470,7 +920,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
   }
 
   toggleAll(event: Event): void {
-    const rows = this.selectableRows;
+    const rows = this.selectableRows.filter((r) => this.isRowSelectable(r));
     const checked = !this.allSelected;
     const list = Array.isArray(this._selection) ? (this._selection as unknown[]) : [];
     const others = list.filter((s) => !rows.some((r) => this.sameRow(s, r)));
@@ -480,12 +930,234 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
     this.notify();
   }
 
+  // ---------- row expansion ----------
+
+  isRowExpanded(row: unknown): boolean {
+    const key = this.rowKey(row);
+    return key === null ? this.expandedRows.has(row) : !!this._expandedKeys[key];
+  }
+
+  /** Opens or closes a row's `rowexpansion` template; the row toggler button calls this. */
+  toggleRowExpansion(row: unknown, event?: Event): void {
+    const open = !this.isRowExpanded(row);
+    const key = this.rowKey(row);
+    if (open && this.rowExpandMode === 'single') {
+      for (const k of Object.keys(this._expandedKeys)) delete this._expandedKeys[k];
+      this.expandedRows.clear();
+    }
+    if (key === null) {
+      if (open) this.expandedRows.add(row);
+      else this.expandedRows.delete(row);
+    } else if (open) {
+      this._expandedKeys[key] = true;
+    } else {
+      delete this._expandedKeys[key];
+    }
+    (open ? this.onRowExpand : this.onRowCollapse).emit({ originalEvent: event, data: row });
+    this.saveStateIfKept();
+    this.notify();
+  }
+
+  // ---------- export ----------
+
+  /**
+   * Downloads the rows as a CSV file Excel opens with Thai intact (UTF-8 with a byte order mark): the rows the search
+   * and sort leave (all of them with `allValues`, the selection with `selectionOnly`), the `columns` given to the
+   * table (`field`, `header`, `exportable: false` to skip), or every top-level field when there are none.
+   */
+  exportCSV(options: WtTableExportOptions = {}): void {
+    const csv = this.toCSV(options);
+    const win = this.doc.defaultView as (Window & typeof globalThis) | null;
+    if (!win?.URL?.createObjectURL) return;
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+    const url = win.URL.createObjectURL(blob);
+    const a = this.doc.createElement('a');
+    a.href = url;
+    a.download = `${this.exportFilename || 'download'}.csv`;
+    a.style.display = 'none';
+    this.doc.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => win.URL.revokeObjectURL(url), 0);
+  }
+
+  /** The CSV text `exportCSV()` saves (without the byte order mark). */
+  toCSV(options: WtTableExportOptions = {}): string {
+    const sel = this._selection;
+    const rows = options.selectionOnly ? (Array.isArray(sel) ? sel : sel ? [sel] : []) : options.allValues ? this._value : this.processed;
+    type Col = { field?: string; header?: unknown; exportable?: boolean; [k: string]: unknown };
+    let cols: Col[] = ((this.columns || []) as Col[]).filter((c) => c && typeof c === 'object' && c.field && c.exportable !== false);
+    if (!cols.length) {
+      const first = rows.find((r) => r && typeof r === 'object') as Record<string, unknown> | undefined;
+      cols = first ? Object.keys(first).filter((k) => typeof first[k] !== 'object' || first[k] === null).map((k) => ({ field: k, header: k })) : [];
+    }
+    const sep = this.csvSeparator || ',';
+    const quote = (v: unknown) => `"${(v === null || v === undefined ? '' : v instanceof Date ? v.toISOString() : String(v)).replace(/"/g, '""')}"`;
+    const headerKey = this.exportHeader || 'header';
+    const lines = [cols.map((c) => quote(c[headerKey] ?? c.header ?? c.field)).join(sep)];
+    for (const row of rows) {
+      lines.push(
+        cols
+          .map((c) => {
+            const raw = optionField(row, c.field!);
+            return quote(this.exportFunction ? this.exportFunction({ data: raw, field: c.field! }) : raw);
+          })
+          .join(sep)
+      );
+    }
+    return lines.join('\r\n');
+  }
+
+  // ---------- row reorder ----------
+
+  /** Drag from a row's handle (`pReorderableRowHandle`): a line shows where the row lands. */
+  startRowDrag(row: HTMLElement, index: number, event: PointerEvent): void {
+    if (event.button !== 0) return;
+    const tbody = row.parentElement;
+    if (!tbody) return;
+    event.preventDefault();
+    let target: { index: number; below: boolean } | null = null;
+    row.classList.add('wt-row-dragging');
+    const clear = () => tbody.querySelectorAll('.wt-row-drop-above, .wt-row-drop-below').forEach((el) => el.classList.remove('wt-row-drop-above', 'wt-row-drop-below'));
+    const move = (e: PointerEvent) => {
+      const rows = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr[data-wt-row-index]'));
+      clear();
+      target = null;
+      for (const r of rows) {
+        const b = r.getBoundingClientRect();
+        if (e.clientY < b.top || e.clientY > b.bottom) continue;
+        const below = e.clientY > b.top + b.height / 2;
+        target = { index: Number(r.getAttribute('data-wt-row-index')), below };
+        r.classList.add(below ? 'wt-row-drop-below' : 'wt-row-drop-above');
+        break;
+      }
+    };
+    const end = (drop: boolean) => {
+      this.doc.removeEventListener('pointermove', move, true);
+      this.doc.removeEventListener('pointerup', onUp, true);
+      this.doc.removeEventListener('pointercancel', onCancel, true);
+      this.doc.removeEventListener('keydown', onKey, true);
+      clear();
+      row.classList.remove('wt-row-dragging');
+      const t = target;
+      if (drop && t) this.reorderRows(index, t.index + (t.below ? 1 : 0));
+    };
+    const onUp = () => end(true);
+    const onCancel = () => end(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') end(false);
+    };
+    this.doc.addEventListener('pointermove', move, true);
+    this.doc.addEventListener('pointerup', onUp, true);
+    this.doc.addEventListener('pointercancel', onCancel, true);
+    this.doc.addEventListener('keydown', onKey, true);
+  }
+
+  /**
+   * Moves a row, with the same index rules as before: `droppedRowIndex` is the row dropped on (+1 when dropped on its
+   * lower half). `value` is changed in place.
+   */
+  reorderRows(dragIndex: number, droppedRowIndex: number): void {
+    const list = this._valueRef || this._value;
+    if (dragIndex < 0 || dragIndex >= list.length || droppedRowIndex < 0) return;
+    const dropIndex = dragIndex > droppedRowIndex ? droppedRowIndex : droppedRowIndex === 0 ? 0 : droppedRowIndex - 1;
+    if (dropIndex === dragIndex || dropIndex >= list.length) return;
+    const [moved] = list.splice(dragIndex, 1);
+    list.splice(dropIndex, 0, moved);
+    this._value = [...list];
+    this.process();
+    this.onRowReorder.emit({ dragIndex, dropIndex });
+  }
+
+  // ---------- state ----------
+
+  private get storage(): Storage | null {
+    try {
+      const win = this.doc.defaultView;
+      return win ? (this.stateStorage === 'local' ? win.localStorage : win.sessionStorage) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  /** Saves paging, sorting, filters, selection and expanded rows under `stateKey`. */
+  saveState(): void {
+    if (!this.stateKey || this.restoringState) return;
+    const state: WtTableState = {
+      first: this._first,
+      rows: this._rows,
+      sortField: this._sortField,
+      sortOrder: this._sortOrder,
+      multiSortMeta: this._multi.length ? [...this._multi] : undefined,
+      filters: Object.keys(this._filters).length ? { ...this._filters } : undefined,
+      globalFilter: this.globalFilter,
+      selection: this._selection ?? undefined,
+      expandedRowKeys: Object.keys(this._expandedKeys).length ? { ...this._expandedKeys } : undefined,
+    };
+    try {
+      this.storage?.setItem(this.stateKey, JSON.stringify(state));
+    } catch {
+      /* storage full or blocked */
+    }
+    this.onStateSave.emit(state);
+  }
+
+  /** Brings back what `saveState()` kept. Runs on its own when the table starts. */
+  restoreState(): void {
+    if (!this.stateKey) return;
+    let state: WtTableState | null = null;
+    try {
+      const raw = this.storage?.getItem(this.stateKey);
+      state = raw ? (JSON.parse(raw) as WtTableState) : null;
+    } catch {
+      state = null;
+    }
+    if (!state) return;
+    this.restoringState = true;
+    if (typeof state.rows === 'number') this._rows = state.rows;
+    if (typeof state.first === 'number') this._first = state.first;
+    if (state.sortField !== undefined) this._sortField = state.sortField;
+    if (typeof state.sortOrder === 'number') this._sortOrder = state.sortOrder;
+    if (state.multiSortMeta) this._multi = state.multiSortMeta;
+    if (state.filters) this._filters = state.filters;
+    if (state.globalFilter) this.globalFilter = state.globalFilter;
+    if (state.selection !== undefined) {
+      this._selection = state.selection;
+      this.selectionChange.emit(this._selection);
+    }
+    if (state.expandedRowKeys) Object.assign(this._expandedKeys, state.expandedRowKeys);
+    this.process();
+    this.restoringState = false;
+    this.onStateRestore.emit(state);
+  }
+
+  /** Forgets the saved state. */
+  clearState(): void {
+    if (this.stateKey) this.storage?.removeItem(this.stateKey);
+  }
+
+  private saveStateIfKept(): void {
+    if (this.stateKey) this.saveState();
+  }
+
   // ---------- internals ----------
 
   private globalMode: FilterMatchMode = 'contains';
 
+  private rowKey(row: unknown): string | null {
+    if (!this.dataKey || row === null || typeof row !== 'object') return null;
+    const k = optionField(row, this.dataKey);
+    return k === null || k === undefined ? null : String(k);
+  }
+
+  private sameGroup(a: unknown, b: unknown): boolean {
+    if (!this.groupRowsBy) return true;
+    return sameValue(optionField(a, this.groupRowsBy), optionField(b, this.groupRowsBy));
+  }
+
   private sameRow(a: unknown, b: unknown): boolean {
     if (a === b) return true;
+    if (!this.dataKey && this.compareSelectionBy === 'equals') return false;
     return sameValue(a, b, this.dataKey);
   }
 
@@ -494,6 +1166,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
     this.process();
     this.firstChange.emit(0);
     this.onFilter.emit({ filters: { ...this._filters }, globalFilter: this.globalFilter, filteredValue: this.processed });
+    this.saveStateIfKept();
     if (this._lazy) this.emitLazy();
   }
 
@@ -508,7 +1181,16 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, O
       if (this.globalFilter) rows = filterGlobal(rows, this.globalFilter, this.globalFilterFields || [], this.globalMode);
       rows = filterColumns(rows, this._filters);
       const meta = this.sortMode === 'multiple' ? this._multi : this._sortField ? [{ field: this._sortField, order: this._sortOrder }] : [];
-      if (meta.length) rows = sortRows(rows, meta);
+      if (meta.length && this._customSort) {
+        rows = rows.slice();
+        this.sortFunction.emit({
+          data: rows,
+          mode: this.sortMode === 'multiple' ? 'multiple' : 'single',
+          field: this._sortField ?? undefined,
+          order: this._sortOrder,
+          multiSortMeta: this.sortMode === 'multiple' ? [...this._multi] : undefined,
+        });
+      } else if (meta.length) rows = sortRows(rows, meta);
       this.processed = rows;
       if (this._paginator) {
         const info = pageInfo({ first: this._first, rows: this._rows, totalRecords: rows.length });

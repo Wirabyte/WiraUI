@@ -9,7 +9,7 @@
   (keydown)="keydown($event)"
 >
   <div class="wt-popover-content p-overlaypanel-content">
-    <ng-content></ng-content>
+    <ng-content></ng-content><ng-container *ngIf="contentTemplate"><ng-container *ngTemplateOutlet="contentTemplate; context: contentContext"></ng-container></ng-container>
   </div>
   <button
     *ngIf="showCloseIcon"

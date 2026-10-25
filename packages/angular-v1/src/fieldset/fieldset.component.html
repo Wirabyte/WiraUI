@@ -1,4 +1,4 @@
-<fieldset [class]="classes">
+<fieldset [class]="classes" [style]="rootStyle">
   <legend class="wt-fieldset-legend p-fieldset-legend">
     <button
       *ngIf="toggleable; else plainLegend"
@@ -10,10 +10,10 @@
     >
       <svg *ngIf="isCollapsed" class="p-fieldset-toggler" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"></path></svg>
       <svg *ngIf="!isCollapsed" class="p-fieldset-toggler" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10"></path></svg>
-      <span class="p-fieldset-legend-text">{{ legend }}</span>
+      <span class="p-fieldset-legend-text"><ng-container *ngIf="headerTemplate; else legendText"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container></span>
     </button>
     <ng-template #plainLegend>
-      <span class="wt-fieldset-legend-label p-fieldset-legend-text">{{ legend }}</span>
+      <span class="wt-fieldset-legend-label p-fieldset-legend-text"><ng-container *ngIf="headerTemplate; else legendText"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container></span>
     </ng-template>
   </legend>
   <div class="wt-fieldset-content-container p-toggleable-content" [id]="contentId" [attr.inert]="isCollapsed ? '' : null">
@@ -22,3 +22,4 @@
     </div>
   </div>
 </fieldset>
+<ng-template #legendText>{{ legend }}</ng-template>

@@ -37,6 +37,20 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="header" [section]="sec['header']">
+      <docs-demo [html]="code['header']" layout="stack">
+        <wt-tabs id="d-tabs-header">
+          <wt-tab-panel>
+            <ng-template #header>
+              <span class="docs-panel-head"><i class="pi pi-envelope"></i> {{ tx('ข้อความ') }} <wt-badge value="3" severity="danger"></wt-badge></span>
+            </ng-template>
+            {{ tx('กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน') }}
+          </wt-tab-panel>
+          <wt-tab-panel [header]="tx('โปรไฟล์')">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wt-tab-panel>
+        </wt-tabs>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="alias" [section]="sec['alias']">
       <docs-demo [html]="code['alias']" layout="stack">
         <wt-tabView id="d-tabs-alias" [(activeIndex)]="aliasTab">
@@ -64,6 +78,28 @@
             <wt-tab-panel [header]="m">{{ tx('ยอดขายเดือน') }}{{ m }}</wt-tab-panel>
           }
         </wt-tabs>
+      </docs-demo>
+      <docs-demo [html]="code['scrollValue']" [ts]="ts['scrollValue']" layout="stack">
+        <wt-tabs id="d-tabs-scroll-value" [(value)]="unit">
+          <wt-tablist>
+            @for (u of units; track u) {
+              <wt-tab [value]="u">{{ tx('หน่วยที่') }} {{ u }}</wt-tab>
+            }
+          </wt-tablist>
+          <wt-tabpanels>
+            @for (u of units; track u) {
+              <wt-tabpanel [value]="u">{{ tx('เนื้อหาหน่วยที่') }} {{ u }}</wt-tabpanel>
+            }
+          </wt-tabpanels>
+        </wt-tabs>
+        <span class="docs-demo-output">value: <code id="d-tabs-scroll-value-out">{{ unit }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="model" [section]="sec['model']">
+      <docs-demo [html]="code['model']" [ts]="ts['model']" layout="stack">
+        <wt-tabs id="d-tabs-model" [model]="local(pages)" [(activeItem)]="page" [ariaLabel]="tx('ข้อมูลนักเรียน')"></wt-tabs>
+        <span class="docs-demo-output">{{ tx('หน้าที่เลือก') }}: <code id="d-tabs-model-page">{{ page?.label ?? '-' }}</code></span>
       </docs-demo>
     </docs-section>
 

@@ -2,7 +2,7 @@
    its items (nested as deep as needed) opening under it. Styled look: cards with rounded rows; classic look: grey
    boxed headers over a bordered content box. */
 @layer wiratheme.components {
-  wt-panelmenu {
+  :is(wt-panelmenu, wt-panel-menu) {
     display: block;
   }
   .wt-panelmenu {

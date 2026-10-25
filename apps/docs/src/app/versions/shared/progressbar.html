@@ -48,5 +48,13 @@
         <wt-progressbar [value]="72" color="#14b8a6" [showValue]="false" style="height: 6px"></wt-progressbar>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="striped" [section]="sec['striped']">
+      <docs-demo [html]="code['striped']" layout="stack">
+        <wt-progressbar id="d-progress-striped" [value]="45" [striped]="true"></wt-progressbar>
+        <wt-progressbar id="d-progress-animated" [value]="60" [animated]="true" [text]="tx('กำลังนำเข้า')"></wt-progressbar>
+        <wt-progressbar [value]="80" [striped]="true" color="var(--wt-success-color)" [showValue]="false"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

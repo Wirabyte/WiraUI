@@ -15,9 +15,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    // Scrolling after navigation is done in App (a query-only change keeps the page where it is); the router still
+    // records positions for back / forward and applies the header offset to anchors.
     RouterModule.forRoot(routes, {
-      anchorScrolling: 'enabled',
-      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'disabled',
+      scrollPositionRestoration: 'disabled',
       scrollOffset: [0, 76],
     }),
   ],

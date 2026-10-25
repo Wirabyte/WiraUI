@@ -9,7 +9,7 @@ import { WtInputSize, WtInputVariant, ɵWT_INPUTTEXT_CSS } from 'wiratheme/input
  * set from code through ngModel or a form control.
  */
 @Directive({
-  selector: 'textarea[wtTextarea]',
+  selector: 'textarea[wtTextarea], textarea[pTextarea], textarea[wtInputTextarea], textarea[pInputTextarea]',
   standalone: true,
   host: {
     class: 'wt-inputtext wt-textarea p-inputtextarea p-inputtext p-component p-element',

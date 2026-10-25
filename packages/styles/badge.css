@@ -50,4 +50,17 @@
   .wt-badge-danger { --_bg: var(--wt-danger-color); --_fg: var(--wt-danger-contrast); }
   .wt-badge-help { --_bg: var(--wt-help-color); --_fg: var(--wt-help-contrast); }
   .wt-badge-contrast { --_bg: var(--wt-text); --_fg: var(--wt-card-bg); }
+  /* wtBadge / pBadge: a badge on the corner of another element. */
+  .wt-overlay-badge {
+    position: relative;
+  }
+  .wt-overlay-badge > .wt-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0;
+    pointer-events: none;
+  }
 }

@@ -51,6 +51,11 @@
       <thead *ngIf="headerTemplate" class="wt-table-thead p-datatable-thead">
         <ng-container *ngTemplateOutlet="headerTemplate; context: columnsContext"></ng-container>
       </thead>
+      <tbody *ngIf="frozenValue.length && frozenBodyTemplate" class="wt-table-tbody wt-table-frozen-tbody p-datatable-frozen-tbody">
+        <ng-container *ngFor="let row of frozenValue; let i = index">
+          <ng-container *ngTemplateOutlet="frozenBodyTemplate; context: frozenContext(row, i)"></ng-container>
+        </ng-container>
+      </tbody>
       <tbody class="wt-table-tbody p-datatable-tbody">
         <ng-container *ngIf="showLoadingBody; else rowsBody">
           <ng-container *ngTemplateOutlet="loadingBodyTemplate; context: columnsContext"></ng-container>
@@ -58,7 +63,16 @@
         <ng-template #rowsBody>
           <ng-container *ngIf="bodyTemplate">
             <ng-container *ngFor="let row of pageRows; let i = index; trackBy: trackRow">
+              <ng-container *ngIf="groupHeaderTemplate && isGroupStart(i)">
+                <ng-container *ngTemplateOutlet="groupHeaderTemplate; context: rowContext(row, i)"></ng-container>
+              </ng-container>
               <ng-container *ngTemplateOutlet="bodyTemplate; context: rowContext(row, i)"></ng-container>
+              <ng-container *ngIf="rowExpansionTemplate && isRowExpanded(row)">
+                <ng-container *ngTemplateOutlet="rowExpansionTemplate; context: rowContext(row, i)"></ng-container>
+              </ng-container>
+              <ng-container *ngIf="groupFooterTemplate && isGroupEnd(i)">
+                <ng-container *ngTemplateOutlet="groupFooterTemplate; context: rowContext(row, i)"></ng-container>
+              </ng-container>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="isEmpty && !loading">

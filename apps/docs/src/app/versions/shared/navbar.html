@@ -1,0 +1,93 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-navbar id="d-nav-basic" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current ?? local(links)[0]" [ariaLabel]="tx('เมนูหลัก')">
+          <a wtNavbarBrand class="docs-navbar-brand" href="#basic" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+          <button wtNavbarEnd wtButton type="button" [label]="tx('เข้าสู่ระบบ')" size="small"></button>
+        </wt-navbar>
+        <span class="docs-demo-output">
+          {{ tx('เมนูที่เลือก') }}: <code id="d-nav-picked">{{ lastPicked || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="dropdown" [section]="sec['dropdown']">
+      <docs-demo [html]="code['dropdown']" layout="stack">
+        <wt-navbar id="d-nav-dropdown" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current">
+          <a wtNavbarBrand class="docs-navbar-brand" href="#dropdown" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+        </wt-navbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="responsive" [section]="sec['responsive']">
+      <docs-demo [html]="code['responsive']" [ts]="ts['responsive']" layout="stack">
+        <div class="docs-navbar-frame">
+          <wt-navbar id="d-nav-mobile" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current" breakpoint="4000px" (onMenuToggle)="menuToggled($event)">
+            <a wtNavbarBrand class="docs-navbar-brand" href="#responsive" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+          </wt-navbar>
+          <p class="docs-navbar-page">{{ tx('ปุ่มนี้เปิดแผงลิงก์') }}</p>
+        </div>
+        <span class="docs-demo-output">
+          onMenuToggle: <code id="d-nav-open">{{ isMenuOpen }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="variants" [section]="sec['variants']">
+      <docs-demo [html]="code['variants']" layout="stack">
+        <div class="docs-navbar-hero">
+          <wt-navbar id="d-nav-glass" class="docs-navbar-demo" variant="glass" [model]="local(shortLinks)">
+            <span wtNavbarBrand class="docs-navbar-brand">glass</span>
+          </wt-navbar>
+          <wt-navbar id="d-nav-clear" class="docs-navbar-demo" variant="transparent" [model]="local(shortLinks)">
+            <span wtNavbarBrand class="docs-navbar-brand">transparent</span>
+          </wt-navbar>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sticky" [section]="sec['sticky']">
+      <docs-demo [html]="code['sticky']" layout="stack">
+        <div class="docs-navbar-scroll" tabindex="0" [attr.aria-label]="tx('เนื้อหาของหน้า เลื่อนลงเพื่อดูแถบที่ติดอยู่ด้านบน')">
+          <wt-navbar id="d-nav-sticky" class="docs-navbar-demo" [model]="local(shortLinks)" [sticky]="true">
+            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('ศรีน่าน') }}</span>
+          </wt-navbar>
+          <p class="docs-navbar-page">{{ tx('เนื้อหาของหน้า เลื่อนลงเพื่อดูแถบที่ติดอยู่ด้านบน') }}</p>
+          @for (n of paragraphs; track n) {
+            <p class="docs-navbar-page docs-navbar-filler">{{ tx('ย่อหน้าตัวอย่าง') }} {{ n }}</p>
+          }
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="start"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-navbar id="d-nav-tpl" class="docs-navbar-demo" [model]="local(shortLinks)" [activeItem]="current" menuIcon="pi pi-bars" closeIcon="pi pi-times">
+          <ng-template #start>
+            <span class="docs-navbar-logo" aria-hidden="true">W</span>
+            <b class="docs-navbar-brand">{{ tx('โรงเรียนศรีน่าน') }}</b>
+          </ng-template>
+          <ng-template #item let-item>
+            <span>{{ item.label }}</span>
+          </ng-template>
+          <a wtNavbarLinks class="wt-navbar-link" href="#templates" (click)="$event.preventDefault()">{{ tx('ประกาศ') }}</a>
+          <ng-template #end>
+            <button wtButton type="button" icon="pi pi-search" [text]="true" [rounded]="true" [attr.aria-label]="tx('ค้นหา')"></button>
+          </ng-template>
+        </wt-navbar>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="aside" [section]="sec['aside']">
+      <docs-code [code]="$any(code['aside'])" lang="html"></docs-code>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

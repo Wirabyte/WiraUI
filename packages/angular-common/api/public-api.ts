@@ -17,3 +17,4 @@ export { WtMessageService, WtMessageService as MessageService } from 'wiratheme/
 export type { WtToastMessage, WtToastMessage as Message, WtToastMessage as ToastMessageOptions } from 'wiratheme/toast';
 export { WtAlert, WtAlertService } from 'wiratheme/alert';
 export type { WtAlertOptions, WtAlertResult } from 'wiratheme/alert';
+export type { TreeNode } from 'wiratheme/core';

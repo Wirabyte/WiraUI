@@ -1,5 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
-import { row, tok } from './doc-helpers';
+import { row, STYLE_ROW, tok } from './doc-helpers';
 
 const formsImport = {
   th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>',
@@ -29,8 +29,19 @@ export const ICONFIELD_DOC: ComponentDoc = {
   sections: {
     import: { title: 'Import', text: { th: '<code>WtIconField</code> และ <code>WtInputIcon</code> อยู่ใน <code>WtIconFieldModule</code>', en: '<code>WtIconField</code> and <code>WtInputIcon</code> come with <code>WtIconFieldModule</code>.' } },
     basic: { title: { th: 'ซ้ายและขวา', en: 'Left and right' } },
+    position: {
+      title: { th: 'ตั้งด้านของ icon', en: 'Setting the icon side' },
+      text: {
+        th: '<code>iconPosition="left"</code> หรือ <code>"right"</code> บน <code>wt-iconfield</code> ชนะลำดับใน markup แบบที่ template เดิมเขียน (icon อยู่ก่อนช่องแต่ไปอยู่ขวา) tag <code>wt-iconField</code> / <code>wt-inputIcon</code> ก็ใช้ได้',
+        en: '<code>iconPosition="left"</code> or <code>"right"</code> on <code>wt-iconfield</code> wins over the markup order, as older templates write it (the icon first, shown on the right). The <code>wt-iconField</code> / <code>wt-inputIcon</code> tags work too.',
+      },
+    },
   },
   code: {
+    position: `<wt-iconfield iconPosition="right">
+  <wt-inputicon icon="pi pi-search"></wt-inputicon>
+  <input wtInputText placeholder="ค้นหา" />
+</wt-iconfield>`,
     basic: `<wt-iconfield>
   <wt-inputicon icon="pi pi-search"></wt-inputicon>
   <input wtInputText placeholder="ค้นหา" />
@@ -53,8 +64,11 @@ export const ICONFIELD_DOC: ComponentDoc = {
     {
       id: 'api-inputs',
       title: 'Inputs',
-      note: { th: 'ของ wt-inputicon', en: 'On wt-inputicon.' },
-      rows: [row('icon', 'string', undefined, 'class ของ icon (หรือวาง <svg> ไว้ข้างใน)', 'Icon class (or project an <svg>)')],
+      rows: [
+        row('iconPosition (wt-iconfield)', "'left' | 'right'", undefined, 'ด้านของ icon ชนะลำดับใน markup', 'The icon side; wins over the markup order'),
+        row('icon (wt-inputicon)', 'string', undefined, 'class ของ icon (หรือวาง <svg> ไว้ข้างใน)', 'Icon class (or project an <svg>)'),
+        row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wt-iconfield / wt-inputicon', 'Extra class and style on wt-iconfield / wt-inputicon'),
+      ],
     },
   ],
   tokens: fieldTokens,
@@ -108,6 +122,12 @@ export const INPUTGROUP_DOC: ComponentDoc = {
         row('wt-inputgroup-addon', 'element', undefined, 'ข้อความหรือ icon ติดกับช่อง เช่น สกุลเงินหรือหน่วย', 'Text or an icon attached to the field, e.g. a currency or unit'),
       ],
     },
+    {
+      id: 'api-inputs',
+      title: 'Inputs',
+      note: { th: 'tag wt-inputGroup / wt-inputGroupAddon ก็ใช้ได้', en: 'The wt-inputGroup / wt-inputGroupAddon tags work too.' },
+      rows: [row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wt-inputgroup / wt-inputgroup-addon', 'Extra class and style on wt-inputgroup / wt-inputgroup-addon')],
+    },
   ],
   tokens: [
     tok('--wt-field-bg', 'พื้นของช่อง', 'Field background'),
@@ -147,7 +167,7 @@ export const FLOATLABEL_DOC: ComponentDoc = {
 <wt-floatlabel variant="on">…</wt-floatlabel>
 <wt-floatlabel variant="in">…</wt-floatlabel>`,
   },
-  api: [{ id: 'api-inputs', title: 'Inputs', rows: [row('variant', "'over' | 'on' | 'in'", "'over'", 'ตำแหน่งของ label เมื่อลอย', 'Where the floated label sits')] }],
+  api: [{ id: 'api-inputs', title: 'Inputs', rows: [row('variant', "'over' | 'on' | 'in'", "'over'", 'ตำแหน่งของ label เมื่อลอย', 'Where the floated label sits'), STYLE_ROW] }],
   tokens: fieldTokens,
 };
 
@@ -214,6 +234,7 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
         row('disabled', 'boolean', 'false', 'ปิดการใช้', 'Disables it'),
         row('invalid', 'boolean', 'false', 'บังคับขึ้นสีแดง', 'Forces the error style'),
+        STYLE_ROW,
       ],
     },
     { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onChange', 'WtToggleButtonChangeEvent', undefined, 'สลับสถานะ', 'Toggled')] },
@@ -253,6 +274,8 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
     'วัน': 'Day',
     'สัปดาห์': 'Week',
     'เดือน': 'Month',
+    'รายการ': 'List',
+    'ตาราง': 'Grid',
   },
   sections: {
     sizes: {
@@ -267,8 +290,21 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
     multiple: { title: 'Multiple', text: { th: '<code>multiple</code> เก็บค่าเป็น array', en: '<code>multiple</code> keeps an array.' } },
     required: { title: { th: 'ต้องเลือกเสมอ', en: 'Always one selected' }, text: { th: '<code>[allowEmpty]="false"</code> กดซ้ำแล้วไม่ยกเลิกการเลือก', en: '<code>[allowEmpty]="false"</code> keeps the choice when it is clicked again.' } },
     reactive: { title: 'Reactive Forms' },
+    item: {
+      title: { th: 'template ของตัวเลือก และ unselectable', en: 'Option template and unselectable' },
+      text: {
+        th: 'template <code>item</code> ได้ตัวเลือกเป็น <code>let-option</code> และ <code>let-index="index"</code> ใช้วาด icon หรือข้อความเอง · <code>[unselectable]="true"</code> ชื่อเดิมที่ตรงข้ามกับ <code>allowEmpty</code>: กดตัวที่เลือกอยู่แล้วไม่ยกเลิก',
+        en: 'The <code>item</code> template gets the option as <code>let-option</code> and <code>let-index="index"</code> to draw an icon or your own text · <code>[unselectable]="true"</code> is the older opposite of <code>allowEmpty</code>: clicking the chosen option keeps it.',
+      },
+    },
   },
   code: {
+    item: `<wt-selectbutton name="view" [(ngModel)]="view" [options]="views" optionLabel="label" optionValue="value"
+  [unselectable]="true">
+  <ng-template #item let-option let-i="index">
+    <i [class]="option.icon"></i> {{ i + 1 }}. {{ option.label }}
+  </ng-template>
+</wt-selectbutton>`,
     sizes: `<wt-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
   [(ngModel)]="plan" size="small"></wt-selectbutton>
 <wt-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
@@ -292,6 +328,11 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
   { label: 'Team', value: 'team' },
 ];
 plan = 'pro';`,
+    item: `views = [
+  { label: 'รายการ', value: 'list', icon: 'pi pi-bars' },
+  { label: 'ตาราง', value: 'grid', icon: 'pi pi-th-large' },
+];
+view = 'list';`,
     multiple: `days = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];
 workdays = ['จ', 'อ', 'พ', 'พฤ', 'ศ'];`,
     reactive: `plans = [
@@ -313,9 +354,11 @@ form = new FormGroup({ plan: new FormControl('free') });`,
         row('dataKey', 'string', undefined, 'field ที่ใช้เทียบ object', 'Field used to compare objects'),
         row('multiple', 'boolean', 'false', 'เลือกได้หลายข้อ (ค่าเป็น array)', 'Several choices (value is an array)'),
         row('allowEmpty', 'boolean', 'true', 'กดซ้ำเพื่อยกเลิกการเลือกได้', 'Clicking the selected option clears it'),
+        row('unselectable', 'boolean', undefined, 'ชื่อเดิม ตรงข้ามกับ allowEmpty: true = กดซ้ำแล้วไม่ยกเลิก', 'Older name, the opposite of allowEmpty: true = a second click keeps it'),
         row('disabled', 'boolean', 'false', 'ปิดการใช้', 'Disables it'),
         row('invalid', 'boolean', 'false', 'บังคับขึ้นสีแดง', 'Forces the error style'),
         row('ariaLabelledBy', 'string', undefined, 'id ของ label ของกลุ่ม', 'id of the group label'),
+        STYLE_ROW,
       ],
     },
     {
@@ -326,6 +369,13 @@ form = new FormGroup({ plan: new FormControl('free') });`,
         row('onChange', 'WtSelectButtonChangeEvent', undefined, 'ค่าเปลี่ยน', 'Value changed'),
         row('onOptionClick', 'WtSelectButtonOptionClickEvent', undefined, 'กดตัวเลือก', 'An option was clicked'),
       ],
+    },
+    {
+      id: 'api-templates',
+      title: 'Templates',
+      typeLabel: { th: 'context', en: 'Context' },
+      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write it as #item, wtTemplate="item" or pTemplate="item".' },
+      rows: [row('item', '$implicit (option) · index', undefined, 'แต่ละตัวเลือก', 'Each option')],
     },
     {
       id: 'api-types',
@@ -379,6 +429,7 @@ export const RATING_DOC: ComponentDoc = {
         row('readonly', 'boolean', 'false', 'แสดงค่าแต่เปลี่ยนไม่ได้', 'Shows the value but cannot change'),
         row('disabled', 'boolean', 'false', 'ปิดการใช้', 'Disables it'),
         row('ariaLabel', 'string', undefined, 'ชื่อของกลุ่มสำหรับ screen reader', 'Accessible name of the group'),
+        STYLE_ROW,
       ],
     },
     { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onRate', 'WtRatingRateEvent', undefined, 'ผู้ใช้ให้คะแนน', 'The user rated')] },
@@ -478,7 +529,15 @@ export const PASSWORD_DOC: ComponentDoc = {
         row('disabled', 'boolean', 'false', 'ปิดการใช้', 'Disables it'),
         row('invalid', 'boolean', 'false', 'บังคับขึ้นสีแดง', 'Forces the error style'),
         row('fluid', 'boolean', 'false', 'กว้างเต็มพื้นที่', 'Full width'),
+        row('inputStyleClass · inputStyle', 'string · object', undefined, 'class / style ของ input ข้างใน', 'Class / style of the inner input'),
+        STYLE_ROW,
       ],
+    },
+    {
+      id: 'api-props',
+      title: { th: 'property', en: 'Properties' },
+      note: { th: 'อ่านและตั้งผ่าน template reference เช่น #pw', en: 'Read and set through a template reference such as #pw.' },
+      rows: [row('unmasked', 'boolean', 'false', 'แสดงรหัสเป็นตัวอักษร (ตั้งค่าได้เหมือนเดิม: pw.unmasked = true)', 'Shows the password as text (settable as before: pw.unmasked = true)')],
     },
   ],
   tokens: [

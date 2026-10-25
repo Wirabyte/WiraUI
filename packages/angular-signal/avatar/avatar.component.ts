@@ -28,7 +28,20 @@ export class WtAvatar {
   /** The image URL that failed; a different URL gets a fresh chance to load. */
   private readonly failedImage = signal<string | null>(null);
   readonly showImage = computed(() => !!this.image() && this.image() !== this.failedImage());
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-avatar', 'p-avatar', 'p-component'];
     if (this.shape() === 'circle') c.push('wt-avatar-circle', 'p-avatar-circle');
     if (this.size() === 'large') c.push('wt-avatar-lg', 'p-avatar-lg');
@@ -49,7 +62,7 @@ export class WtAvatar {
 
 /** Overlapping row of avatars: `<wt-avatar-group><wt-avatar …></wt-avatar>…</wt-avatar-group>`. */
 @Component({
-  selector: 'wt-avatar-group',
+  selector: 'wt-avatar-group, wt-avatarGroup, wt-avatargroup',
   standalone: true,
   template: '<div class="wt-avatar-group p-avatar-group p-component"><ng-content></ng-content></div>',
   styleUrl: './avatar.css',

@@ -44,6 +44,14 @@ export class WtButton {
   @Input() size?: WtButtonSize;
   /** Extra classes for the <button>; the classic names (`p-button-sm`, `p-button-danger p-button-text`) work as they did. */
   @Input() styleClass?: string;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() badge?: string | number;
   @Input() ariaLabel?: string;
@@ -52,6 +60,11 @@ export class WtButton {
   @Input() set outlined(v: unknown) { this._outlined = toBool(v); }
   get outlined(): boolean { return this._outlined; }
   @Input() set text(v: unknown) { this._text = toBool(v); }
+  /** Drawn as a link. */
+  @Input() set link(v: unknown) { this._link = toBool(v); }
+  /** Colour of the badge: `danger`, `success` … */
+  @Input() badgeSeverity?: string | null;
+  private _link = false;
   get text(): boolean { return this._text; }
   @Input() set raised(v: unknown) { this._raised = toBool(v); }
   get raised(): boolean { return this._raised; }
@@ -97,7 +110,7 @@ export class WtButton {
   /** Our classes plus the classic-era `p-*` names for the same state, so app CSS written for `.p-button` keeps working. */
   get classes(): string {
     const sev = this.severity === 'warning' ? 'warn' : this.severity;
-    const variant = this._outlined ? 'outlined' : this._text ? 'text' : this.variant;
+    const variant = this._link ? 'link' : this._outlined ? 'outlined' : this._text ? 'text' : this.variant;
     const c = ['wt-btn', 'p-button', 'p-component'];
     if (sev !== 'primary') c.push('wt-btn-' + sev, 'p-button-' + (sev === 'warn' ? 'warning' : sev));
     if (variant !== 'solid') c.push('wt-btn-' + variant, 'p-button-' + variant);

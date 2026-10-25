@@ -1,8 +1,8 @@
-<span [class]="classes()">
+<span [class]="classes()" [style]="rootStyle()">
   @if (showButtons() && buttonLayout() === 'horizontal') {
     <button
       type="button"
-      class="wt-inputnumber-button p-inputnumber-decrement-button"
+      class="wt-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
       tabindex="-1"
       aria-hidden="true"
       [disabled]="isDisabled() || readonly() || atMin()"
@@ -11,7 +11,11 @@
       (pointerleave)="stopRepeat()"
       (pointercancel)="stopRepeat()"
     >
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h10"></path></svg>
+      @if (decrementButtonIcon()) {
+        <span [class]="decrementButtonIcon()" aria-hidden="true"></span>
+      } @else {
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h10"></path></svg>
+      }
     </button>
   }
   <input
@@ -26,6 +30,9 @@
     [class.wt-filled]="value() !== null"
     [id]="id()"
     [attr.name]="name() || null"
+    [class]="inputStyleClass() || ''"
+    [style]="inputStyleObject()"
+    [attr.autocomplete]="autocomplete() || null"
     [attr.inputmode]="maxDigits() > 0 ? 'decimal' : 'numeric'"
     [attr.aria-valuenow]="value()"
     [attr.aria-valuemin]="min()"
@@ -42,11 +49,14 @@
     (blur)="blur($event)"
     (keydown)="keydown($event)"
   />
+  @if (showClearButton()) {
+    <button type="button" class="wt-inputnumber-clear p-inputnumber-clear-icon" [attr.aria-label]="clearLabel()" (click)="clear()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m4.5 4.5 7 7M11.5 4.5l-7 7"></path></svg></button>
+  }
   @if (showButtons() && buttonLayout() === 'stacked') {
     <span class="wt-inputnumber-buttons p-inputnumber-button-group">
       <button
         type="button"
-        class="wt-inputnumber-button p-inputnumber-increment-button"
+        class="wt-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
         tabindex="-1"
         aria-hidden="true"
         [disabled]="isDisabled() || readonly() || atMax()"
@@ -55,11 +65,15 @@
         (pointerleave)="stopRepeat()"
         (pointercancel)="stopRepeat()"
       >
+        @if (incrementButtonIcon()) {
+        <span [class]="incrementButtonIcon()" aria-hidden="true"></span>
+      } @else {
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"></path></svg>
+      }
       </button>
       <button
         type="button"
-        class="wt-inputnumber-button p-inputnumber-decrement-button"
+        class="wt-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
         tabindex="-1"
         aria-hidden="true"
         [disabled]="isDisabled() || readonly() || atMin()"
@@ -68,14 +82,18 @@
         (pointerleave)="stopRepeat()"
         (pointercancel)="stopRepeat()"
       >
+        @if (decrementButtonIcon()) {
+        <span [class]="decrementButtonIcon()" aria-hidden="true"></span>
+      } @else {
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"></path></svg>
+      }
       </button>
     </span>
   }
   @if (showButtons() && buttonLayout() === 'horizontal') {
     <button
       type="button"
-      class="wt-inputnumber-button p-inputnumber-increment-button"
+      class="wt-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
       tabindex="-1"
       aria-hidden="true"
       [disabled]="isDisabled() || readonly() || atMax()"
@@ -84,7 +102,11 @@
       (pointerleave)="stopRepeat()"
       (pointercancel)="stopRepeat()"
     >
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+      @if (incrementButtonIcon()) {
+        <span [class]="incrementButtonIcon()" aria-hidden="true"></span>
+      } @else {
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+      }
     </button>
   }
 </span>

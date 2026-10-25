@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -17,11 +17,13 @@ import {
   OnDestroy,
   Output,
   QueryList,
+  TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtMenuItem, WtTemplate } from 'wiratheme/config';
+import { WtTabMenu } from './tabmenu.component';
 import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WtTabsChangeEvent, WtTabValue } from './tabs.types';
 
 /**
@@ -30,13 +32,15 @@ import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WtTabsChangeE
  *   (`wt-tabview` / `wt-tabpanel` are the same components);
  * - by value: `<wt-tabs [(value)]="tab"><wt-tablist><wt-tab value="info">ข้อมูล</wt-tab></wt-tablist>
  *   <wt-tabpanels><wt-tabpanel value="info">…</wt-tabpanel></wt-tabpanels></wt-tabs>`.
+ * - from a menu model, as links to views or routes: `<wt-tabs [model]="pages" [(activeItem)]="page">` (items take
+ *   `routerLink`, `url`, `command`, `icon`, `badge`, `disabled`; the same as wt-tabmenu).
  * Arrow keys, Home and End move between tabs. A row that runs out of room scrolls sideways, with arrow
  * buttons at the edges that have more tabs behind them.
  */
 @Component({
   selector: 'wt-tabs, wt-tabview, wt-tabView',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, NgTemplateOutlet, WtTabMenu],
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.css'],
   encapsulation: ViewEncapsulation.None,
@@ -56,7 +60,21 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
     this.cdr.markForCheck();
   }
   get value(): WtTabValue | undefined { return this._value; }
+  /** Tabs as links from a menu model (no panels): `[model]="pages"` + `[(activeItem)]`, like wt-tabmenu. */
+  @Input() model?: WtMenuItem[] | null;
+  /** With `[model]`: the current item. Two-way: `[(activeItem)]`. Unset with router links: the active route. */
+  @Input() activeItem?: WtMenuItem | null;
   @Input() ariaLabel?: string;
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   /** Accepted for templates written for scrollable tab views: the arrows appear on their own whenever tabs overflow. */
   @Input() scrollable?: unknown;
   /** Accepted for templates moving over: panels are always rendered, hidden ones with `hidden`. */
@@ -69,6 +87,8 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly valueChange = new EventEmitter<any>();
   @Output() readonly onChange = new EventEmitter<WtTabsChangeEvent>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Output() readonly activeItemChange = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => WtTabPanel)) panelList?: QueryList<WtTabPanel>;
   @ContentChild(forwardRef(() => WtTabList)) tabList?: WtTabList;
@@ -156,6 +176,12 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   /** Our classes plus the classic-era names (`p-tabview-nav-link`, `p-highlight`). */
   tabClasses(index: number): string {
     return index === this._activeIndex ? 'wt-tab wt-tab-active p-tabview-nav-link p-highlight' : 'wt-tab p-tabview-nav-link';
+  }
+
+  /** With `[model]`: wt-tabmenu reports the item that was picked. */
+  pickItem(item: WtMenuItem): void {
+    this.activeItem = item;
+    this.activeItemChange.emit(item);
   }
 
   select(index: number, event: Event): void {
@@ -345,6 +371,11 @@ export class WtTabPanels {}
   host: { class: 'wt-tabpanel p-tabview-panel', role: 'tabpanel' },
 })
 export class WtTabPanel {
+  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
+  get headerTemplate(): TemplateRef<unknown> | null {
+    return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
+  }
   @Input() header?: string;
   /** Icon class before the header, e.g. `pi pi-user`. */
   @Input() leftIcon?: string;

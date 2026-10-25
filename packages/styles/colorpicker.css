@@ -1,0 +1,124 @@
+/* wt-colorpicker. Shared by wiratheme v1, v2 and v3. A swatch that opens a panel in the top layer (or the panel on the
+   page, inline): saturation/brightness area, hue strip and a hex field. */
+@layer wiratheme.components {
+  :is(wt-colorpicker, wt-color-picker) {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .wt-colorpicker {
+    display: inline-block;
+  }
+  /* A frame like a field with the colour as a tile inside it: the colour never reaches the frame's rounded edge. */
+  .wt-colorpicker-preview {
+    display: block;
+    box-sizing: border-box;
+    width: var(--wt-colorpicker-preview-size);
+    height: var(--wt-colorpicker-preview-size);
+    padding: 3px;
+    border: var(--wt-field-border-width) solid var(--wt-field-border);
+    border-radius: var(--wt-input-radius);
+    background: var(--wt-field-bg);
+    cursor: pointer;
+  }
+  .wt-colorpicker-preview-color {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: max(2px, calc(var(--wt-input-radius) - 3px));
+    /* A hairline, so white or very light colours still read as a tile. */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  .wt-colorpicker-preview:enabled:hover {
+    border-color: var(--wt-field-hover-border);
+  }
+  .wt-colorpicker-preview:focus-visible {
+    border-color: var(--wt-field-focus-border);
+    outline: var(--wt-field-focus-outline);
+    outline-offset: var(--wt-field-focus-offset);
+    box-shadow: var(--wt-field-focus-shadow);
+  }
+  .wt-colorpicker-preview:disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-colorpicker-panel {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: var(--wt-colorpicker-panel-width);
+    max-width: calc(100vw - 1rem);
+    padding: var(--wt-colorpicker-panel-padding);
+    border: 1px solid var(--wt-border);
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-overlay-bg);
+    color: var(--wt-text);
+  }
+  .wt-colorpicker-overlay-panel {
+    position: fixed;
+    inset: auto;
+    z-index: 1200;
+    margin: 0;
+    box-shadow: var(--wt-shadow-md);
+  }
+  .wt-colorpicker-disabled .wt-colorpicker-panel {
+    opacity: var(--wt-disabled-opacity);
+    pointer-events: none;
+  }
+  .wt-colorpicker-area {
+    position: relative;
+    height: var(--wt-colorpicker-area-height);
+    border-radius: var(--wt-radius-sm);
+    background-image: linear-gradient(to top, #000000, transparent), linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+    cursor: crosshair;
+    touch-action: none;
+    outline: none;
+  }
+  .wt-colorpicker-hue {
+    position: relative;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: linear-gradient(to right, #ff0000 0%, #ffff00 16.67%, #00ff00 33.33%, #00ffff 50%, #0000ff 66.67%, #ff00ff 83.33%, #ff0000 100%);
+    cursor: pointer;
+    touch-action: none;
+    outline: none;
+  }
+  .wt-colorpicker-area-handle,
+  .wt-colorpicker-hue-handle {
+    position: absolute;
+    box-sizing: border-box;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .wt-colorpicker-hue-handle {
+    top: 50%;
+  }
+  .wt-colorpicker-area:focus-visible .wt-colorpicker-area-handle,
+  .wt-colorpicker-hue:focus-visible .wt-colorpicker-hue-handle {
+    box-shadow: 0 0 0 2px var(--wt-field-focus-border), 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  .wt-colorpicker-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .wt-colorpicker-swatch {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--wt-radius-sm);
+    /* An inner hairline instead of a border: the colour does not bleed past a rounded border's edge. */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+  .wt-colorpicker-hex.wt-inputtext {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    text-transform: lowercase;
+  }
+}

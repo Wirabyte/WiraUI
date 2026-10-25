@@ -1,14 +1,29 @@
-<div [class]="classes()" [attr.aria-busy]="loading() || null">
-  <div class="wt-card-header p-card-header"><ng-content select="[wtCardHeader]"></ng-content></div>
+<div [class]="classes()" [style]="rootStyle()" [attr.aria-busy]="loading() || null">
+  <div class="wt-card-header p-card-header">
+    <ng-content select="[wtCardHeader], wt-header"></ng-content>
+    @if (headerTemplate(); as t) {
+      <ng-container *ngTemplateOutlet="t"></ng-container>
+    }
+  </div>
   <div class="wt-card-body p-card-body">
     <div class="wt-card-caption">
-      @if (header() || subheader()) {
+      @if (header() || subheader() || titleTemplate() || subtitleTemplate()) {
         <div class="wt-card-titles p-card-caption">
-          @if (header()) {
-            <div class="wt-card-title p-card-title">{{ header() }}</div>
+          @if (header() || titleTemplate()) {
+            <div class="wt-card-title p-card-title">
+              {{ header() }}
+              @if (titleTemplate(); as t) {
+                <ng-container *ngTemplateOutlet="t"></ng-container>
+              }
+            </div>
           }
-          @if (subheader()) {
-            <div class="wt-card-subtitle p-card-subtitle">{{ subheader() }}</div>
+          @if (subheader() || subtitleTemplate()) {
+            <div class="wt-card-subtitle p-card-subtitle">
+              {{ subheader() }}
+              @if (subtitleTemplate(); as t) {
+                <ng-container *ngTemplateOutlet="t"></ng-container>
+              }
+            </div>
           }
         </div>
       }
@@ -17,7 +32,17 @@
     @if (loading()) {
       <div class="wt-card-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
     }
-    <div class="wt-card-content p-card-content" [hidden]="loading()"><ng-content></ng-content></div>
-    <div class="wt-card-footer p-card-footer"><ng-content select="[wtCardFooter]"></ng-content></div>
+    <div class="wt-card-content p-card-content" [hidden]="loading()">
+      <ng-content></ng-content>
+      @if (contentTemplate(); as t) {
+        <ng-container *ngTemplateOutlet="t"></ng-container>
+      }
+    </div>
+    <div class="wt-card-footer p-card-footer">
+      <ng-content select="[wtCardFooter], wt-footer"></ng-content>
+      @if (footerTemplate(); as t) {
+        <ng-container *ngTemplateOutlet="t"></ng-container>
+      }
+    </div>
   </div>
 </div>

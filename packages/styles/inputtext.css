@@ -25,6 +25,27 @@
     color: var(--wt-field-placeholder);
     opacity: 1;
   }
+  /* A native <select> drawn as a field: its own arrow goes with `appearance: none`, so it gets a chevron here
+     (two small wedges in the muted text colour, so it follows the theme and dark mode). */
+  select.wt-inputtext {
+    padding-inline-end: calc(var(--wt-field-padding-x) + 1.25rem);
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--wt-text-muted) 50%),
+      linear-gradient(135deg, var(--wt-text-muted) 50%, transparent 50%);
+    background-position:
+      calc(100% - var(--wt-field-padding-x) - 0.5rem) 52%,
+      calc(100% - var(--wt-field-padding-x) - 0.1875rem) 52%;
+    background-size:
+      0.3125rem 0.3125rem,
+      0.3125rem 0.3125rem;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  select.wt-inputtext[multiple],
+  select.wt-inputtext[size]:not([size='1']) {
+    padding-inline-end: var(--wt-field-padding-x);
+    background-image: none;
+  }
   .wt-inputtext:enabled:hover {
     border-color: var(--wt-field-hover-border);
   }
@@ -68,6 +89,18 @@
   .wt-inputtext.wt-invalid,
   .wt-inputtext.ng-invalid:is(.ng-touched, form.ng-submitted *) {
     border-color: var(--wt-danger-color);
+  }
+
+  /* Number fields without the browser's tiny up/down buttons (the arrow keys and the wheel still step). */
+  .wt-inputtext[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .wt-inputtext[type='number']::-webkit-inner-spin-button,
+  .wt-inputtext[type='number']::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   /* Field errors: wt-field-error, and the p-error class existing templates put on <small>. */
@@ -145,6 +178,25 @@
   .p-input-icon-right > .p-inputtext {
     padding-right: calc(var(--wt-field-padding-x) * 2 + 1rem);
   }
+  /* iconPosition="left" / "right" wins over the markup order. */
+  .wt-iconfield.wt-iconfield-left > .wt-inputicon {
+    right: auto;
+    left: var(--wt-field-padding-x);
+  }
+  .wt-iconfield.wt-iconfield-right > .wt-inputicon {
+    right: var(--wt-field-padding-x);
+    left: auto;
+  }
+  .wt-iconfield.wt-iconfield-left > .wt-inputicon ~ .wt-inputtext,
+  .wt-iconfield.wt-iconfield-left > .wt-inputtext:not(:last-child) {
+    padding-right: var(--wt-field-padding-x);
+    padding-left: calc(var(--wt-field-padding-x) * 2 + 1rem);
+  }
+  .wt-iconfield.wt-iconfield-right > .wt-inputicon ~ .wt-inputtext,
+  .wt-iconfield.wt-iconfield-right > .wt-inputtext:not(:last-child) {
+    padding-right: calc(var(--wt-field-padding-x) * 2 + 1rem);
+    padding-left: var(--wt-field-padding-x);
+  }
 
   /* ---- Fields, add-ons and buttons joined in one row: wt-inputgroup, and .p-inputgroup ---- */
   .wt-inputgroup,
@@ -174,14 +226,14 @@
   }
   .wt-inputgroup > .wt-inputtext,
   .p-inputgroup > .p-inputtext,
-  .wt-inputgroup > wt-iconfield,
-  .wt-inputgroup > wt-floatlabel {
+  .wt-inputgroup > :is(wt-iconfield, wt-icon-field),
+  .wt-inputgroup > :is(wt-floatlabel, wt-float-label) {
     flex: 1 1 auto;
     width: 1%;
     min-width: 0;
   }
-  .wt-inputgroup > wt-iconfield > .wt-inputtext,
-  .wt-inputgroup > wt-floatlabel > .wt-inputtext {
+  .wt-inputgroup > :is(wt-iconfield, wt-icon-field) > .wt-inputtext,
+  .wt-inputgroup > :is(wt-floatlabel, wt-float-label) > .wt-inputtext {
     width: 100%;
   }
   /* Neighbours share one border line; the focused field draws on top. */

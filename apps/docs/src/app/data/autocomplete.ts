@@ -139,8 +139,8 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
     delay: {
       title: { th: 'เวลารอและจำนวนตัวอักษร', en: 'Delay and minimum length' },
       text: {
-        th: '<code>delay</code> รอกี่ ms หลังพิมพ์ตัวสุดท้ายก่อนส่ง (ค่าเริ่มต้น 300) · <code>minLength</code> ต้องพิมพ์กี่ตัวก่อนส่ง (ค่าเริ่มต้น 1) ระหว่างรอ <code>[suggestions]</code> ช่องแสดง spinner เอง ตัวอย่างนี้จำลอง API ที่ตอบกลับใน 0.7 วินาที',
-        en: '<code>delay</code> is how many ms to wait after the last key before asking (default 300) · <code>minLength</code> how many characters before asking (default 1). While waiting for <code>[suggestions]</code> the field shows a spinner. This sample stands in for an API that answers in 0.7 seconds.',
+        th: '<code>delay</code> รอกี่ ms หลังพิมพ์ตัวสุดท้ายก่อนส่ง (ค่าเริ่มต้น 0 คือส่งทุกครั้งที่พิมพ์ทันที ตั้งทั้งแอปได้ด้วย <code>provideWiraTheme({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> ต้องพิมพ์กี่ตัวก่อนส่ง (ค่าเริ่มต้น 1) ระหว่างรอ <code>[suggestions]</code> ช่องแสดง spinner เอง ตัวอย่างนี้จำลอง API ที่ตอบกลับใน 0.7 วินาที',
+        en: '<code>delay</code> is how many ms to wait after the last key before asking (default 0: ask on every key at once; set it for the whole app with <code>provideWiraTheme({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> how many characters before asking (default 1). While waiting for <code>[suggestions]</code> the field shows a spinner. This sample stands in for an API that answers in 0.7 seconds.',
       },
     },
     empty: {
@@ -358,7 +358,7 @@ log(name: string): void {
       id: 'api-search',
       title: { th: 'Inputs · การค้นหา', en: 'Inputs · search' },
       rows: [
-        row('delay', 'number', '300', 'รอกี่ ms หลังพิมพ์ก่อนส่ง completeMethod', 'Ms to wait after typing before completeMethod'),
+        row('delay', 'number', '0', 'รอกี่ ms หลังพิมพ์ก่อนส่ง completeMethod (0 = ส่งทันที ค่าเริ่มต้นตั้งทั้งแอปได้ที่ provideWiraTheme({ delays }))', 'Ms to wait after typing before completeMethod (0 = at once; the default is set for the app with provideWiraTheme({ delays }))'),
         row('minLength', 'number', '1', 'จำนวนตัวอักษรขั้นต่ำก่อนส่ง', 'Characters needed before asking'),
         row('dropdown', BOOL, 'false', 'ปุ่มแสดงตัวเลือกทั้งหมด', 'A button that shows every option'),
         row('dropdownMode', "'blank' | 'current'", "'blank'", 'ปุ่มส่งคำค้นว่าง หรือข้อความในช่อง', 'The button asks with an empty query, or the current text'),
@@ -408,6 +408,13 @@ log(name: string): void {
         row('header · footer', '—', undefined, 'บน / ล่างของรายการ', 'Above / below the list'),
         row('empty', '—', undefined, 'เมื่อไม่พบ', 'When nothing matches'),
       ],
+    },
+    {
+      id: 'api-methods',
+      title: { th: 'เมธอด', en: 'Methods' },
+      typeLabel: { th: 'คืนค่า', en: 'Returns' },
+      note: { th: 'เรียกผ่าน template reference เช่น #ac', en: 'Call them through a template reference such as #ac.' },
+      rows: [row('show() · hide()', 'void', undefined, 'เปิด / ปิดรายการจากโค้ด', 'Open / close the list from code')],
     },
     {
       id: 'api-types',

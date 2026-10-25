@@ -19,6 +19,11 @@ import { PAGINATOR_DOC, REPORT_PLACEHOLDERS, TABLE_DOC } from '../../data/table'
 import { MENUBAR_DOC } from '../../data/menubar';
 import { PANELMENU_DOC } from '../../data/panelmenu';
 import { STEPS_DOC } from '../../data/steps';
+import { STEPPER_DOC } from '../../data/stepper';
+import { ORDERLIST_DOC, PICKLIST_DOC } from '../../data/picklist';
+import { FILEUPLOAD_DOC } from '../../data/fileupload';
+import { EDITOR_DOC } from '../../data/editor';
+import { KEYFILTER_DOC, RIPPLE_DOC } from '../../data/directives';
 import { CHART_DOC } from '../../data/chart';
 import { IMAGE_DOC } from '../../data/image';
 import { AUTOCOMPLETE_DOC } from '../../data/autocomplete';
@@ -54,7 +59,7 @@ import { Snippet } from '../../core/snippets';
  * so the English demo shows exactly what the English code says.
  */
 
-const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+export const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 abstract class DemoPage {
   protected readonly i18n = inject(DocsI18n);
@@ -85,7 +90,7 @@ abstract class DemoPage {
 }
 
 /** Component pages: the doc data, with the code samples in the site language. */
-abstract class SimpleDemo extends DemoPage {
+export abstract class SimpleDemo extends DemoPage {
   protected abstract readonly doc: ComponentDoc;
   protected get words(): SampleText {
     return sampleText(this.doc.english);
@@ -253,6 +258,11 @@ export abstract class TagDemo extends SimpleDemo {
 
 export abstract class BadgeDemo extends SimpleDemo {
   protected readonly doc = BADGE_DOC;
+  unread = 3;
+
+  markRead(): void {
+    this.unread = 0;
+  }
 }
 
 export abstract class ChipDemo extends SimpleDemo {
@@ -396,6 +406,11 @@ export abstract class SelectButtonDemo extends SimpleDemo {
     { label: 'Enterprise', value: 'ent', disabled: true },
   ];
   form = new FormGroup({ plan: new FormControl('free') });
+  readonly views = [
+    { label: 'รายการ', value: 'list', icon: 'pi pi-bars' },
+    { label: 'ตาราง', value: 'grid', icon: 'pi pi-th-large' },
+  ];
+  view = 'list';
 
   constructor() {
     super();
@@ -442,6 +457,8 @@ export abstract class AccordionDemo extends SimpleDemo {
   faq = 'apply';
   faqs = ['apply', 'fees'];
   lastPanel = '';
+  gapOpen: number | number[] | null = 0;
+  joinedOpen: number | number[] | null = 0;
 
   logPanel(kind: string, value: unknown): void {
     this.lastPanel = kind + ' ' + value;
@@ -459,6 +476,23 @@ export abstract class TabsDemo extends SimpleDemo {
   section = 'info';
   aliasTab = 0;
   months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+  /** 14 tabs written in the value form: the row scrolls with edge arrows too. */
+  readonly units = Array.from({ length: 14 }, (_, i) => i + 1);
+  unit = 1;
+  readonly pages: MenuEntry[] = [
+    { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card' },
+    { label: 'ผลการเรียน', icon: 'pi pi-chart-line', badge: '2' },
+    { label: 'ผู้ปกครอง', icon: 'pi pi-users' },
+    { label: 'สุขภาพ', icon: 'pi pi-heart', disabled: true },
+  ];
+  // activeItem is matched by identity: start from the copy the tabs get (local() gives an English one).
+  page: MenuEntry | null | undefined = null;
+
+  constructor() {
+    super();
+    this.onLang(() => (this.page = this.local(this.pages)[0]));
+    this.page = this.local(this.pages)[0];
+  }
 }
 
 export abstract class InputNumberDemo extends SimpleDemo {
@@ -477,9 +511,21 @@ export abstract class InputNumberDemo extends SimpleDemo {
   discount: number | null = 15;
   seats: number | null = 2;
   volume: number | null = 2.5;
+  fee: number | null = 350;
+  stepSeats: number | null = 2;
+  cleared = 0;
+  lastKey = '';
   form = new FormGroup({
     budget: new FormControl<number | null>(50000, [Validators.required, Validators.max(100000)]),
   });
+
+  feeCleared(): void {
+    this.cleared++;
+  }
+
+  keyPressed(event: KeyboardEvent): void {
+    this.lastKey = event.key;
+  }
 }
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -985,6 +1031,11 @@ function makeStudents(count: number, offset = 0): Student[] {
   });
 }
 
+/** Rows of a group sit together: sorted by room, numbers inside read as numbers (ม.1/2 before ม.1/10). */
+function byRoomOrder(rows: Student[]): Student[] {
+  return [...rows].sort((a, b) => a.room.localeCompare(b.room, 'th', { numeric: true }) || a.id - b.id);
+}
+
 /** Rows as the demos show them: the template passes them through local(), so English names on the English site. */
 export abstract class TableDemo extends SimpleDemo {
   protected readonly doc = TABLE_DOC;
@@ -992,6 +1043,41 @@ export abstract class TableDemo extends SimpleDemo {
   readonly few = makeStudents(5);
   readonly students = makeStudents(23);
   readonly none: Student[] = [];
+  readonly frozenRows = makeStudents(8);
+  readonly byRoom = byRoomOrder(makeStudents(12));
+  /** Students with a paid flag, for the boolean column filter. */
+  readonly paidStudents = makeStudents(23).map((s, i) => ({ ...s, paid: i % 4 !== 1 }));
+  readonly rooms = ['ม.1/1', 'ม.1/2', 'ม.1/10', 'ม.2/1', 'ม.2/3'];
+  readonly exportColumns = [
+    { field: 'code', header: 'รหัส' },
+    { field: 'name', header: 'ชื่อ - สกุล' },
+    { field: 'room', header: 'ห้อง' },
+    { field: 'score', header: 'คะแนน' },
+    { field: 'id', header: 'id', exportable: false },
+  ];
+  /** [exportFunction] takes the function itself, so the method is bound once (as the sample shows). */
+  exportCell = this.formatCell.bind(this);
+  expandedRows: Record<string, boolean> = { 1: true };
+  lastToggle = '';
+  pickedStudents: Student[] = [];
+  csvText = '';
+  reorderRows: Student[] = [];
+  lastMove = '';
+  readonly radioRows = makeStudents(6);
+  leader: Student | null = null;
+  metaPicked: Student[] = [];
+  /** [rowSelectable] takes the function itself, so the method is bound once (as the sample shows). */
+  canPick = this.isEnrolled.bind(this);
+  editRows: Student[] = [];
+  lastEdit = '';
+  rowEditRows: Student[] = [];
+  editingRows: Record<string, boolean> = {};
+  rowsSaved = 0;
+  cols: { field: string; header: string }[] = [];
+  lastColumns = '';
+  restoredCount = 0;
+  totals: { label: string; score: number }[] = [];
+  private clones: Record<number, Student> = {};
   isApiLoading = false;
   selectedStudent: Student | null = null;
   selectedStudents: Student[] = [];
@@ -1018,6 +1104,28 @@ export abstract class TableDemo extends SimpleDemo {
     this.lastAction = '';
     this.selectedStudent = null;
     this.selectedStudents = [];
+    this.expandedRows = { 1: true };
+    this.lastToggle = '';
+    this.pickedStudents = [];
+    this.csvText = '';
+    this.reorderRows = this.local(makeStudents(5));
+    this.lastMove = '';
+    this.leader = null;
+    this.metaPicked = [];
+    this.editRows = this.local(makeStudents(5));
+    this.lastEdit = '';
+    this.rowEditRows = this.local(makeStudents(4));
+    this.editingRows = {};
+    this.clones = {};
+    this.cols = this.local([
+      { field: 'code', header: 'รหัส' },
+      { field: 'name', header: 'ชื่อ - สกุล' },
+      { field: 'room', header: 'ห้อง' },
+      { field: 'score', header: 'คะแนน' },
+    ]);
+    this.lastColumns = '';
+    const scores = this.students.map((s) => s.score);
+    this.totals = [{ label: this.tx('คะแนนเฉลี่ย'), score: Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10 }];
     if (this.lastLazy) this.loadStudents(this.lastLazy);
   }
 
@@ -1070,6 +1178,115 @@ export abstract class TableDemo extends SimpleDemo {
     this.adminRows = this.adminRows.filter((s) => s.id !== student.id);
     this.lastAction = this.tx('ลบ: ') + student.name;
   }
+
+  rowOpened(event: { data: unknown }): void {
+    this.lastToggle = 'onRowExpand: ' + (event.data as Student).name;
+  }
+
+  rowClosed(event: { data: unknown }): void {
+    this.lastToggle = 'onRowCollapse: ' + (event.data as Student).name;
+  }
+
+  /** Students of a room in the grouped rows on screen (the site language's copy). */
+  roomCount(room: string): number {
+    return this.local(this.byRoom).filter((s) => s.room === room).length;
+  }
+
+  formatCell(cell: { data: unknown; field: string }): string {
+    return cell.field === 'score' ? Number(cell.data).toFixed(2) : String(cell.data ?? '');
+  }
+
+  previewCsv(table: { toCSV(): string }): void {
+    this.csvText = table.toCSV();
+  }
+
+  rowMoved(event: { dragIndex: number; dropIndex: number }): void {
+    this.lastMove = event.dragIndex + ' → ' + event.dropIndex;
+  }
+
+  isEnrolled(row: { data: unknown; index?: number }): boolean {
+    return (row.data as Student).status === this.tx('กำลังศึกษา');
+  }
+
+  cellSaved(event: { field: string; data: unknown }): void {
+    this.lastEdit = event.field + ' · ' + (event.data as Student).name;
+  }
+
+  startEdit(student: Student): void {
+    this.clones[student.id] = { ...student };
+  }
+
+  saveRow(student: Student): void {
+    if (!student.name.trim()) return;
+    delete this.clones[student.id];
+    this.rowsSaved++;
+  }
+
+  cancelRow(student: Student): void {
+    Object.assign(student, this.clones[student.id]);
+    delete this.clones[student.id];
+  }
+
+  colResized(event: { delta: number }): void {
+    this.lastColumns = 'onColResize: ' + Math.round(event.delta) + 'px';
+  }
+
+  colMoved(event: { columns: unknown[] }): void {
+    this.lastColumns = 'onColReorder: ' + (event.columns as { field: string }[]).map((c) => c.field).join(', ');
+  }
+
+  scoreBand(table: { filterRules(field: string, rules: { value: unknown; matchMode: 'gte' | 'lt' }[], operator: 'and' | 'or'): void }): void {
+    table.filterRules(
+      'score',
+      [
+        { value: 80, matchMode: 'gte' },
+        { value: 90, matchMode: 'lt' },
+      ],
+      'and'
+    );
+  }
+
+  /** Students who need a follow-up first, not alphabetical (the site language's names). */
+  sortStudents(event: { data: unknown[]; field?: string; order?: number }): void {
+    const order = event.order ?? 1;
+    const statusOrder = this.local(['พักการเรียน', 'ย้ายออก', 'กำลังศึกษา']);
+    (event.data as Student[]).sort((a, b) => {
+      const result =
+        event.field === 'status' ? statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status) : a.room.localeCompare(b.room, 'th', { numeric: true });
+      return result * order;
+    });
+  }
+
+  stateRestored(): void {
+    this.restoredCount++;
+  }
+
+  idsOf(list: { id: number }[]): string {
+    return list.length ? list.map((s) => s.id).join(', ') : '-';
+  }
+
+  /* Context menu: the row last right-clicked is what the commands act on. */
+  ctxSelected: Student | null = null;
+  ctxStudent: Student | null = null;
+  ctxAction = '';
+  readonly studentActions: MenuEntry[] = [
+    { label: 'ดูประวัติ', icon: 'pi pi-eye', command: () => this.ctxView() },
+    { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: () => this.ctxMove() },
+    { separator: true },
+    { label: 'ลบ', icon: 'pi pi-trash', command: () => this.ctxDelete() },
+  ];
+
+  ctxView(): void {
+    this.ctxAction = this.tx('ดูประวัติ') + ': ' + (this.ctxStudent?.name ?? '');
+  }
+
+  ctxMove(): void {
+    this.ctxAction = this.tx('ย้ายห้อง') + ': ' + (this.ctxStudent?.name ?? '');
+  }
+
+  ctxDelete(): void {
+    this.ctxAction = this.tx('ลบ') + ': ' + (this.ctxStudent?.name ?? '');
+  }
 }
 
 export abstract class PaginatorDemo extends SimpleDemo {
@@ -1115,7 +1332,7 @@ export abstract class PaginatorDemo extends SimpleDemo {
 }
 
 /** A menu item as the Menubar demos build it (no wiratheme import here); `local()` hands the components English copies. */
-type MenuEntry = {
+export type MenuEntry = {
   label?: string;
   icon?: string;
   items?: MenuEntry[];
@@ -1361,6 +1578,8 @@ export abstract class MultiSelectDemo extends SimpleDemo {
   provinceIds: number[] = [];
   labelIds: number[] = [10, 50, 40];
   chipIds: number[] = [50, 83];
+  /** A narrow field with five chips: the ones that do not fit collapse into "+N". */
+  narrowChipIds: number[] = [10, 50, 40, 83, 90];
   limitIds: number[] = [];
   allIds: number[] = [];
   allChecked: boolean | null = null;
@@ -1833,6 +2052,8 @@ export abstract class PanelMenuDemo extends SimpleDemo {
 /* ---------- Steps page ---------- */
 export abstract class StepsDemo extends SimpleDemo {
   protected readonly doc = STEPS_DOC;
+  /** For the link to the Stepper page of the same version. */
+  protected readonly version = inject(DOCS_VERSION);
   readonly steps: MenuEntry[] = [{ label: 'กรอกข้อมูล' }, { label: 'อัปโหลดเอกสาร' }, { label: 'ชำระเงิน' }, { label: 'ยืนยัน' }];
   activeIndex = 1;
   readonly admission: MenuEntry[] = [
@@ -1867,5 +2088,379 @@ export abstract class StepsDemo extends SimpleDemo {
 
   go(event: { item?: MenuEntry }): void {
     this.lastStep = event.item?.label ?? '';
+  }
+}
+
+/* ---------- Stepper page ---------- */
+export abstract class StepperDemo extends SimpleDemo {
+  protected readonly doc = STEPPER_DOC;
+  /** For the link to the Steps page of the same version. */
+  protected readonly version = inject(DOCS_VERSION);
+  step = 1;
+  applyStep = 1;
+  studentName = '';
+  parentPhone = '';
+  isApiSaving = false;
+  submitted = false;
+  setupStep = 1;
+  applicationStatus = 'checking';
+  paymentStep = 1;
+  readonly paymentSteps = [
+    { value: 1, label: 'ข้อมูลผู้ชำระ', icon: 'pi pi-user' },
+    { value: 2, label: 'ช่องทางชำระ', icon: 'pi pi-credit-card' },
+    { value: 3, label: 'ใบเสร็จ', icon: 'pi pi-check-circle' },
+  ];
+  enrolStep = 1;
+  stepIndex = 0;
+  lastStep = '';
+  trackIndex = 1;
+  readonly applySteps: MenuEntry[] = [
+    { label: 'เลือกหลักสูตร', subtitle: 'ห้องเรียนพิเศษ', command: (event) => this.stepPicked(event) },
+    { label: 'ข้อมูลผู้ปกครอง', subtitle: 'เบอร์ติดต่อ', command: (event) => this.stepPicked(event) },
+    { label: 'ชำระเงิน', subtitle: 'ปิดชั่วคราว', disabled: true },
+    { label: 'ยืนยัน', command: (event) => this.stepPicked(event) },
+  ];
+  readonly trackSteps: MenuEntry[] = [
+    { label: 'ส่งใบสมัคร', subtitle: '3 พ.ค.' },
+    { label: 'ตรวจเอกสาร', subtitle: '5 พ.ค.' },
+    { label: 'สัมภาษณ์', subtitle: '12 พ.ค.' },
+    { label: 'ประกาศผล', subtitle: '20 พ.ค.' },
+  ];
+
+  stepPicked(event: { item?: MenuEntry }): void {
+    this.lastStep = event.item?.label ?? '';
+  }
+
+  trackBack(): void {
+    this.trackIndex = Math.max(0, this.trackIndex - 1);
+  }
+
+  trackNext(): void {
+    this.trackIndex = Math.min(this.trackSteps.length - 1, this.trackIndex + 1);
+  }
+
+  submitApplication(): void {
+    this.isApiSaving = true;
+    wait(900).then(() => {
+      this.isApiSaving = false;
+      this.submitted = true;
+    });
+  }
+}
+
+/* ---------- PickList and OrderList pages ---------- */
+type Permission = { id: number; code: string; name: string; module: string };
+type FlowRank = { id: number; rank: string; person: string };
+type Elective = { id: number; name: string; teacher: string };
+/** The part of the pick list move events the demos read (no wiratheme import here). */
+type ListMove = { items: unknown[] };
+
+const PERMISSIONS: Permission[] = [
+  { id: 1, code: 'student.view', name: 'ดูข้อมูลนักเรียน', module: 'งานทะเบียน' },
+  { id: 2, code: 'student.edit', name: 'แก้ไขข้อมูลนักเรียน', module: 'งานทะเบียน' },
+  { id: 3, code: 'grade.entry', name: 'บันทึกผลการเรียน', module: 'งานวัดผล' },
+  { id: 4, code: 'grade.approve', name: 'อนุมัติผลการเรียน', module: 'งานวัดผล' },
+  { id: 5, code: 'finance.view', name: 'ดูรายงานการเงิน', module: 'งานการเงิน' },
+  { id: 6, code: 'finance.refund', name: 'คืนเงินค่าธรรมเนียม', module: 'งานการเงิน' },
+  { id: 7, code: 'user.manage', name: 'จัดการผู้ใช้', module: 'ผู้ดูแลระบบ' },
+  { id: 8, code: 'report.export', name: 'ส่งออกรายงาน', module: 'ผู้ดูแลระบบ' },
+];
+
+const RANKS: FlowRank[] = [
+  { id: 11, rank: 'ครูที่ปรึกษาชุมนุม', person: 'นางสาวกานดา ศรีสุข' },
+  { id: 12, rank: 'หัวหน้ากลุ่มสาระ', person: 'นายวิชัย ทองคำ' },
+  { id: 13, rank: 'หัวหน้างานกิจกรรม', person: 'นางพรทิพย์ บุญมา' },
+  { id: 14, rank: 'รองผู้อำนวยการฝ่ายวิชาการ', person: 'นายสมชาย ใจดี' },
+  { id: 15, rank: 'ผู้อำนวยการ', person: 'นางสุนีย์ แสงจันทร์' },
+  { id: 16, rank: 'เจ้าหน้าที่การเงิน', person: '' },
+];
+
+const ELECTIVES: Elective[] = [
+  { id: 1, name: 'หุ่นยนต์เบื้องต้น', teacher: 'ครูวิชัย' },
+  { id: 2, name: 'ภาษาจีนเพื่อการสื่อสาร', teacher: 'ครูหลิน' },
+  { id: 3, name: 'ดนตรีไทย', teacher: 'ครูสมศักดิ์' },
+  { id: 4, name: 'การเขียนโปรแกรมเว็บ', teacher: 'ครูกานดา' },
+  { id: 5, name: 'ศิลปะการทำอาหาร', teacher: 'ครูพรทิพย์' },
+  { id: 6, name: 'บาสเกตบอล', teacher: 'ครูธนา' },
+];
+
+const idList = (list: { id: number }[]) => (list.length ? list.map((x) => x.id).join(', ') : '-');
+
+/**
+ * The lists are changed in place by the components, so each demo gets its own arrays, built again (in the site
+ * language) when the language changes.
+ */
+export abstract class PickListDemo extends SimpleDemo {
+  protected readonly doc = PICKLIST_DOC;
+  basicSource: Permission[] = [];
+  basicTarget: Permission[] = [];
+  ranks: FlowRank[] = [];
+  flow: FlowRank[] = [];
+  filterSource: Permission[] = [];
+  filterTarget: Permission[] = [];
+  moreSource: Permission[] = [];
+  moreTarget: Permission[] = [];
+  eventSource: Permission[] = [];
+  eventTarget: Permission[] = [];
+  lookSource: Permission[] = [];
+  lookTarget: Permission[] = [];
+  isApiSaving = false;
+  savedFlow = '';
+  lastEvent = '';
+
+  constructor() {
+    super();
+    this.resetLists();
+    this.onLang(() => this.resetLists());
+  }
+
+  resetLists(): void {
+    const pick = (ids: number[]) => this.local(PERMISSIONS.filter((p) => ids.includes(p.id)));
+    const rest = (ids: number[]) => this.local(PERMISSIONS.filter((p) => !ids.includes(p.id)));
+    this.basicSource = rest([1]);
+    this.basicTarget = pick([1]);
+    this.ranks = this.local(RANKS.filter((r) => r.id !== 11 && r.id !== 15));
+    this.flow = this.local(RANKS.filter((r) => r.id === 11 || r.id === 15));
+    this.filterSource = rest([7]);
+    this.filterTarget = pick([7]);
+    this.moreSource = rest([]);
+    this.moreTarget = [];
+    this.eventSource = rest([1, 2]);
+    this.eventTarget = pick([1, 2]);
+    this.lookSource = rest([1, 3]);
+    this.lookTarget = pick([1, 3]);
+    this.savedFlow = '';
+    this.lastEvent = '';
+  }
+
+  saveFlow(): void {
+    this.isApiSaving = true;
+    const rankIds = this.flow.map((r) => r.id);
+    wait(900).then(() => {
+      this.isApiSaving = false;
+      this.savedFlow = rankIds.join(' → ');
+    });
+  }
+
+  logMove(name: string, event: ListMove): void {
+    const codes = (event.items as Permission[]).map((p) => p.code);
+    this.lastEvent = name + ': ' + codes.join(', ');
+  }
+
+  /** Outputs under the demos: codes and ids read the same in both languages. */
+  codesOf(list: Permission[]): string {
+    return list.length ? list.map((p) => p.code).join(', ') : '-';
+  }
+
+  idsOf(list: { id: number }[]): string {
+    return idList(list);
+  }
+}
+
+export abstract class OrderListDemo extends SimpleDemo {
+  protected readonly doc = ORDERLIST_DOC;
+  electives: Elective[] = [];
+  dragElectives: Elective[] = [];
+  filterElectives: Elective[] = [];
+  lookElectives: Elective[] = [];
+  selectedElectives: Elective[] = [];
+  order = '';
+
+  constructor() {
+    super();
+    this.resetLists();
+    this.onLang(() => this.resetLists());
+  }
+
+  resetLists(): void {
+    this.electives = this.local([...ELECTIVES]);
+    this.dragElectives = this.local([...ELECTIVES]);
+    this.filterElectives = this.local([...ELECTIVES]);
+    this.lookElectives = this.local([...ELECTIVES]);
+    this.selectedElectives = [];
+    this.reordered();
+  }
+
+  /** The sample types the item; the input's TrackByFunction<unknown> wants `unknown` here. */
+  trackById(index: number, elective: unknown): number {
+    return (elective as Elective).id;
+  }
+
+  reordered(): void {
+    this.order = this.electives.map((e) => e.id).join(', ');
+  }
+
+  idsOf(list: { id: number }[]): string {
+    return idList(list);
+  }
+}
+
+/* ---------- FileUpload page ---------- */
+/** The parts of the file upload component and events the demos use (no wiratheme import here). */
+type FileUploadRef = { clear(): void };
+type FileSelect = { files: File[] };
+
+export abstract class FileUploadDemo extends SimpleDemo {
+  protected readonly doc = FILEUPLOAD_DOC;
+  isApiSaving = false;
+  uploadedCount = 0;
+  lastPicked = '';
+  lastProblem = '';
+  photo: File | null = null;
+
+  /** A pretend upload: the docs page sends nothing anywhere. */
+  uploadDocuments(event: FileSelect, fileUpload: FileUploadRef): void {
+    this.isApiSaving = true;
+    const count = event.files.length;
+    wait(900).then(() => {
+      this.isApiSaving = false;
+      this.uploadedCount += count;
+      fileUpload.clear();
+    });
+  }
+
+  picked(event: FileSelect): void {
+    this.lastPicked = event.files.map((f) => f.name).join(', ');
+  }
+
+  rejected(event: { reason: string }): void {
+    this.lastProblem = event.reason;
+  }
+
+  pickPhoto(event: FileSelect): void {
+    this.photo = event.files[0] ?? null;
+  }
+
+  clearPhoto(): void {
+    this.photo = null;
+  }
+}
+
+/* ---------- Ripple and KeyFilter pages ---------- */
+/** The switch drives the site's own ripple setting (the theme drawer has the same switch). */
+export abstract class RippleDemo extends SimpleDemo {
+  protected readonly doc = RIPPLE_DOC;
+  protected readonly state = inject(DocsState);
+
+  setRipple(on: boolean): void {
+    this.state.setRipple(on);
+  }
+}
+
+export abstract class KeyFilterDemo extends SimpleDemo {
+  protected readonly doc = KEYFILTER_DOC;
+  studentId = '';
+  amount = '';
+  email = '';
+  nameTh = '';
+  color = '';
+  subject = '';
+  readonly subjectChars = /[A-Z0-9-]/;
+  phone = '';
+  readonly phonePattern = /^0\d{9}$/;
+}
+
+/* ---------- Editor page ---------- */
+/** The parts of the editor's API and events the demos use (no wiratheme import here). */
+type EditorApiLike = { setHTML(html: string): void };
+
+export abstract class EditorDemo extends SimpleDemo {
+  protected readonly doc = EDITOR_DOC;
+  newsBody: string | null = null;
+  isApiSaving = false;
+  savedCount = 0;
+  readonly presets = ['basic', 'standard', 'full', 'none'];
+  preset: 'basic' | 'standard' | 'full' | 'none' = 'full';
+  presetBody: string | null = null;
+  customBody: string | null = null;
+  readonly tools = ['bold', 'italic', '|', 'bulletList', 'orderedList', '|', 'link', 'image', 'table'] as const;
+  noticeBody: string | null = null;
+  readonly toolOptions = {
+    headings: [0, 2, 3],
+    colors: ['#1e293b', '#0f766e', '#b91c1c', '#1d4ed8'],
+    highlights: ['#fef9c3', '#dcfce7'],
+    alignments: ['left', 'center', 'right'] as Array<'left' | 'center' | 'right'>,
+    blocks: ['blockquote'] as Array<'blockquote' | 'codeBlock'>,
+    table: { rows: 6, cols: 6, headerRow: true },
+    link: { newTab: true },
+  };
+  policy: string | null = null;
+  imageBody: string | null = null;
+  /** [imageUpload] takes the function itself, so the method is bound once (as the sample shows). */
+  readonly imageUpload = { upload: this.uploadImage.bind(this), maxSize: 1048576 };
+  lastImageEvent = '';
+  timetable: string | null = null;
+  announcement = '';
+  summary: string | null = null;
+  letter: string | null = null;
+  lastEvent = '';
+  editorIsReady = false;
+  private editor: EditorApiLike | null = null;
+
+  constructor() {
+    super();
+    this.resetValues();
+    // The values hold sample text: start again in the new language.
+    this.onLang(() => this.resetValues());
+  }
+
+  resetValues(): void {
+    this.newsBody = this.tx('<p>โรงเรียนเปิดรับสมัครนักเรียน <strong>ปีการศึกษา 2569</strong></p>');
+    this.presetBody = this.tx('<p>ประกาศ</p>');
+    this.customBody = this.tx('<p>ประกาศ</p>');
+    this.noticeBody = this.tx('<h2>จัดกิจกรรมวันไหว้ครู</h2><p>วันพฤหัสบดีที่ 18 มิถุนายน</p>');
+    this.policy = this.tx('<h2>นโยบายการใช้ข้อมูลส่วนบุคคล</h2><p class="ql-align-center">โรงเรียนเก็บข้อมูลเท่าที่จำเป็นต่อการเรียนการสอน</p>');
+    this.imageBody = this.tx('<p>เนื้อหาข่าว</p>');
+    this.timetable = this.tx(
+      '<p>ตารางสอบกลางภาค</p><table style="width: 100%"><colgroup><col style="width: 40%"><col style="width: 35%"><col style="width: 25%"></colgroup>' +
+        '<thead><tr><th>วิชา</th><th>วันสอบ</th><th>ห้องสอบ</th></tr></thead>' +
+        '<tbody><tr><td>คณิตศาสตร์</td><td>จันทร์ 6 ก.ค.</td><td>311</td></tr><tr><td>วิทยาศาสตร์</td><td>อังคาร 7 ก.ค.</td><td>312</td></tr></tbody></table>'
+    );
+    this.announcement = this.tx(
+      '<h2>จัดกิจกรรมวันไหว้ครู</h2><p class="ql-align-center">วันพฤหัสบดีที่ 18 มิถุนายน</p>' + '<ul><li>แต่งกายชุดนักเรียน</li><li>นำพานไหว้ครูของห้อง</li></ul>'
+    );
+    this.summary = this.tx('<p>แต่งกายชุดนักเรียน</p>');
+    this.letter = null;
+    this.lastEvent = '';
+    this.lastImageEvent = '';
+  }
+
+  saveNews(): void {
+    this.isApiSaving = true;
+    wait(900).then(() => {
+      this.isApiSaving = false;
+      this.savedCount++;
+    });
+  }
+
+  /** A pretend upload: reads the picture back as a data URL after a short wait (the docs page sends nothing). */
+  uploadImage(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => wait(600).then(() => resolve(String(reader.result)));
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  imageUploaded(event: { file: File }): void {
+    this.lastImageEvent = 'onImageUpload: ' + event.file.name;
+  }
+
+  imageFailed(event: { reason: string }): void {
+    this.lastImageEvent = 'onImageUploadError: ' + event.reason;
+  }
+
+  editorReady(event: { editor: EditorApiLike }): void {
+    this.editor = event.editor;
+    this.editorIsReady = true;
+  }
+
+  useLetterTemplate(): void {
+    this.editor?.setHTML(this.tx('<p>เรียน ผู้ปกครอง</p><p>ขอเชิญประชุมผู้ปกครองวันเสาร์นี้ เวลา 9.00 น.</p>'));
+  }
+
+  textChanged(event: { source: string; textValue: string }): void {
+    this.lastEvent = event.source + ' · ' + event.textValue.length;
   }
 }

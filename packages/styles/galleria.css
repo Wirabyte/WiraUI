@@ -1,0 +1,363 @@
+/* wt-galleria. Shared by wiratheme v1, v2 and v3. One image at a time with arrows over it, dots under (or on) it and a
+   strip of thumbnails that slides to keep the current one in view. Full screen is a native <dialog> in the top layer. */
+@layer wiratheme.components {
+  wt-galleria {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-galleria {
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    color: var(--wt-text);
+  }
+  .wt-galleria-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wt-galleria-thumbnail-gap);
+    min-width: 0;
+  }
+  .wt-galleria-thumbnails-top .wt-galleria-content {
+    flex-direction: column-reverse;
+  }
+  .wt-galleria-thumbnails-left .wt-galleria-content {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+  .wt-galleria-thumbnails-right .wt-galleria-content {
+    flex-direction: row;
+    align-items: center;
+  }
+  .wt-galleria-items-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .wt-galleria-indicators-top .wt-galleria-items-container {
+    flex-direction: column-reverse;
+  }
+  .wt-galleria-indicators-left .wt-galleria-items-container {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+  .wt-galleria-indicators-right .wt-galleria-items-container {
+    flex-direction: row;
+    align-items: center;
+  }
+  .wt-galleria-indicators-left .wt-galleria-indicators:not(.wt-galleria-indicators-onitem),
+  .wt-galleria-indicators-right .wt-galleria-indicators:not(.wt-galleria-indicators-onitem) {
+    flex-direction: column;
+  }
+  .wt-galleria-items {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: var(--wt-galleria-radius);
+    outline: none;
+    touch-action: pan-y;
+  }
+  .wt-galleria-items:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-galleria-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    animation: wt-galleria-fade 0.3s ease;
+  }
+  .wt-galleria-item img {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-galleria-nav,
+  .wt-galleria-close {
+    display: grid;
+    place-items: center;
+    width: var(--wt-galleria-nav-size);
+    height: var(--wt-galleria-nav-size);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.15s, opacity 0.15s;
+  }
+  .wt-galleria-nav svg,
+  .wt-galleria-close svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .wt-galleria-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    margin: 0 0.5rem;
+    transform: translateY(-50%);
+  }
+  .wt-galleria-item-prev {
+    left: 0;
+  }
+  .wt-galleria-item-next {
+    right: 0;
+  }
+  .wt-galleria-nav:enabled:hover,
+  .wt-galleria-close:hover {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  .wt-galleria-nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .wt-galleria-nav:focus-visible,
+  .wt-galleria-close:focus-visible,
+  .wt-galleria-thumb-nav:focus-visible,
+  .wt-galleria-indicator-button:focus-visible,
+  .wt-galleria-thumbnail-button:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  /* Arrows only while the pointer is over the image; touch screens always show them. */
+  @media (hover: hover) {
+    .wt-galleria-nav-hover .wt-galleria-nav {
+      opacity: 0;
+    }
+    .wt-galleria-nav-hover .wt-galleria-items:hover .wt-galleria-nav,
+    .wt-galleria-nav-hover .wt-galleria-items:focus-within .wt-galleria-nav {
+      opacity: 1;
+    }
+    .wt-galleria-nav-hover .wt-galleria-items:hover .wt-galleria-nav:disabled {
+      opacity: 0.35;
+    }
+  }
+  .wt-galleria-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+  }
+  .wt-galleria-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-galleria-indicators-onitem {
+    position: absolute;
+    right: 0;
+    bottom: 0.5rem;
+    left: 0;
+    z-index: 1;
+  }
+  .wt-galleria-indicators-top .wt-galleria-indicators-onitem {
+    top: 0.5rem;
+    bottom: auto;
+  }
+  .wt-galleria-caption ~ .wt-galleria-indicators-onitem {
+    bottom: 3.25rem;
+  }
+  /* A 1.5rem target around a small dot. */
+  .wt-galleria-indicator-button {
+    display: grid;
+    place-items: center;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .wt-galleria-indicator-button:not(.wt-galleria-indicator-custom)::after {
+    content: '';
+    width: var(--wt-galleria-indicator-size);
+    height: var(--wt-galleria-indicator-size);
+    border-radius: 50%;
+    background: var(--wt-galleria-indicator-bg);
+    transition: background-color 0.15s, transform 0.15s;
+  }
+  .wt-galleria-indicator-button:not(.wt-galleria-indicator-custom):hover::after {
+    transform: scale(1.2);
+  }
+  .wt-galleria-indicator-active .wt-galleria-indicator-button::after {
+    background: var(--wt-galleria-indicator-active-bg);
+  }
+  .wt-galleria-indicators-onitem .wt-galleria-indicator-button::after {
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .wt-galleria-indicators-onitem .wt-galleria-indicator-active .wt-galleria-indicator-button::after {
+    background: #ffffff;
+  }
+  .wt-galleria-thumbnails-content {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .wt-galleria-vertical .wt-galleria-thumbnails {
+    flex: none;
+    width: 6rem;
+  }
+  .wt-galleria-vertical .wt-galleria-thumbnails-content {
+    flex-direction: column;
+  }
+  .wt-galleria-thumbnails-viewport {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .wt-galleria-vertical .wt-galleria-thumbnails-viewport {
+    width: 100%;
+  }
+  .wt-galleria-thumbnails-track {
+    display: flex;
+    transition: transform 0.3s ease;
+  }
+  .wt-galleria-vertical .wt-galleria-thumbnails-track {
+    flex-direction: column;
+    height: 100%;
+  }
+  .wt-galleria-thumbnail {
+    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-width: 0;
+    min-height: 0;
+    padding: 0 calc(var(--wt-galleria-thumbnail-gap) / 2);
+  }
+  .wt-galleria-vertical .wt-galleria-thumbnail {
+    padding: calc(var(--wt-galleria-thumbnail-gap) / 2) 0;
+  }
+  .wt-galleria-thumbnail-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: var(--wt-galleria-thumbnail-radius);
+    background: none;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.15s, border-color 0.15s;
+  }
+  .wt-galleria-thumbnail-button:hover {
+    opacity: 0.85;
+  }
+  .wt-galleria-thumbnail-active .wt-galleria-thumbnail-button {
+    border-color: var(--wt-primary-color);
+    opacity: 1;
+  }
+  .wt-galleria-thumbnail-button img {
+    display: block;
+    width: 100%;
+  }
+  .wt-galleria-thumb-nav {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--wt-text-muted);
+    cursor: pointer;
+  }
+  .wt-galleria-thumb-nav svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .wt-galleria-thumb-nav:enabled:hover {
+    background: var(--wt-hover-bg);
+    color: var(--wt-text);
+  }
+  .wt-galleria-thumb-nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  /* Full screen: the dialog is the dark mask. */
+  .wt-galleria-mask {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 4rem 1rem 1rem;
+    border: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+  }
+  .wt-galleria-mask[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wt-galleria-mask::backdrop {
+    background: transparent;
+  }
+  .wt-galleria-fullscreen {
+    width: min(100%, 60rem);
+    max-height: 100%;
+    color: #ffffff;
+  }
+  .wt-galleria-fullscreen .wt-galleria-item img {
+    max-height: calc(100dvh - 12rem);
+    object-fit: contain;
+  }
+  .wt-galleria-close {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+  }
+  .wt-galleria-fullscreen .wt-galleria-thumb-nav {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .wt-galleria-fullscreen .wt-galleria-thumb-nav:enabled:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+  @keyframes wt-galleria-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-galleria-item {
+      animation: none;
+    }
+    .wt-galleria-thumbnails-track {
+      transition: none;
+    }
+  }
+}

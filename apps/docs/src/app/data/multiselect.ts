@@ -112,8 +112,8 @@ export const MULTISELECT_DOC: ComponentDoc = {
     chips: {
       title: { th: 'แสดงเป็นชิป', en: 'Chips' },
       text: {
-        th: '<code>display="chip"</code> แสดงค่าที่เลือกเป็นชิปพร้อมปุ่ม × สำหรับเอาออกทีละตัว เกิน <code>maxSelectedLabels</code> แล้วก็กลับเป็นข้อความจำนวนเหมือนเดิม',
-        en: '<code>display="chip"</code> shows each choice as a chip with an × to remove it. Past <code>maxSelectedLabels</code> it falls back to the count text.',
+        th: '<code>display="chip"</code> แสดงค่าที่เลือกเป็นชิปพร้อมปุ่ม × สำหรับเอาออกทีละตัว เกิน <code>maxSelectedLabels</code> แล้วก็กลับเป็นข้อความจำนวนเหมือนเดิม · ชิปที่ไม่พอดีช่องรวมเป็นชิป "+N" ท้ายแถว ชี้ที่ชิปนั้นแล้ว tooltip บอกชื่อที่ซ่อนอยู่ ตัวอย่างที่สองเป็นช่องแคบที่ตั้ง <code>[maxSelectedLabels]="5"</code> และเลือกไว้ห้าจังหวัด',
+        en: '<code>display="chip"</code> shows each choice as a chip with an × to remove it. Past <code>maxSelectedLabels</code> it falls back to the count text · chips that do not fit collapse into a "+N" chip at the end, whose tooltip names them. The second demo is a narrow field with <code>[maxSelectedLabels]="5"</code> and five provinces picked.',
       },
     },
     limit: {
@@ -206,6 +206,8 @@ export const MULTISELECT_DOC: ComponentDoc = {
     labels: `${FIELD} [maxSelectedLabels]="2" selectedItemsLabel="เลือกแล้ว {0} จังหวัด"
   defaultLabel="จังหวัดที่ดูแล"></wt-multiselect>`,
     chips: `${FIELD} display="chip" placeholder="เลือกจังหวัด"></wt-multiselect>`,
+    chipsNarrow: `${FIELD} display="chip" [maxSelectedLabels]="5"
+  [style]="{ width: '14rem' }"></wt-multiselect>`,
     limit: `${FIELD} [selectionLimit]="2" placeholder="เลือกได้ไม่เกิน 2 จังหวัด"></wt-multiselect>`,
     toggleall: `${FIELD} placeholder="เลือกจังหวัด"
   (onSelectAllChange)="allChanged($event)"></wt-multiselect>`,
@@ -279,6 +281,7 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-mult
     basic: { th: PROVINCES_TS, en: PROVINCES_TS_EN },
     labels: `provinceIds: number[] = [10, 50, 40];`,
     chips: `provinceIds: number[] = [50, 83];`,
+    chipsNarrow: `provinceIds: number[] = [10, 50, 40, 83, 90];`,
     toggleall: `import { WtMultiSelectSelectAllChangeEvent } from 'wiratheme/multiselect';
 
 allChecked: boolean | null = null;
@@ -355,7 +358,7 @@ log(name: string): void {
         row('filter', BOOL, 'true', 'ช่องค้นหาในรายการ', 'Search box in the list'),
         row('filterBy', 'string', 'optionLabel', 'field ที่ค้น คั่นด้วยจุลภาค', 'Fields to search, comma separated'),
         row('filterMatchMode', "'contains' | 'startsWith' | 'endsWith' | 'equals'", "'contains'", 'วิธีเทียบ', 'How to match'),
-        row('filterPlaceholder · ariaFilterLabel · filterValue', 'string', undefined, 'ช่องค้นหา', 'Search box'),
+        row('filterPlaceholder · filterPlaceHolder · ariaFilterLabel · filterValue', 'string', undefined, 'ช่องค้นหา (filterPlaceHolder คือตัวสะกดเดิม)', 'Search box (filterPlaceHolder is the older spelling)'),
         row('resetFilterOnHide', BOOL, 'false', 'ล้างคำค้นเมื่อปิดรายการ', 'Clear the search on close'),
         row('emptyMessage · emptyFilterMessage', 'string', 'locale', 'ข้อความเมื่อไม่มีตัวเลือก / ค้นไม่เจอ', 'Text with no options / no match'),
         row('appendTo · autoZIndex · baseZIndex · virtualScroll · virtualScrollItemSize · lazy · autofocusFilter · showTransitionOptions · hideTransitionOptions', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ไม่มีผล', 'Accepted so existing templates compile; no effect'),

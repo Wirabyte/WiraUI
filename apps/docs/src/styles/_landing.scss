@@ -61,7 +61,8 @@ docs-landing {
     background-color 0.15s,
     border-color 0.15s,
     transform 0.15s,
-    box-shadow 0.15s;
+    box-shadow 0.15s,
+    filter 0.15s;
 }
 .lp-btn .docs-icon {
   width: 17px;
@@ -71,6 +72,9 @@ docs-landing {
   background: var(--docs-gradient);
   color: #ffffff;
   box-shadow: 0 10px 28px -12px rgba(30, 122, 224, 0.7);
+  // Its own layer at rest too: otherwise the label is drawn on the pixel grid at rest but between pixels while the
+  // hover lift runs, and visibly jumps against the button when the lift starts and ends.
+  will-change: transform;
 }
 .lp-btn-primary:hover {
   filter: brightness(1.06);
@@ -253,6 +257,8 @@ docs-landing {
     border-color 0.15s,
     transform 0.15s,
     box-shadow 0.15s;
+  // Its own layer at rest too, so the text does not jump when the hover lift starts and ends.
+  will-change: transform;
 }
 .lp-version:hover {
   border-color: color-mix(in srgb, var(--docs-primary) 50%, var(--docs-border));

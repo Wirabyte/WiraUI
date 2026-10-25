@@ -1,0 +1,60 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <div class="docs-demo-fields">
+          <div class="docs-demo-labelled">
+            <label for="d-kf-id">{{ tx('รหัสนักเรียน') }}</label>
+            <input id="d-kf-id" name="studentId" wtInputText wtKeyFilter="pint" [(ngModel)]="studentId" />
+          </div>
+          <div class="docs-demo-labelled">
+            <label for="d-kf-amount">{{ tx('จำนวนเงิน (บาท)') }}</label>
+            <input id="d-kf-amount" name="amount" wtInputText wtKeyFilter="money" [(ngModel)]="amount" />
+          </div>
+          <div class="docs-demo-labelled">
+            <label for="d-kf-email">{{ tx('อีเมล') }}</label>
+            <input id="d-kf-email" name="email" wtInputText wtKeyFilter="email" [(ngModel)]="email" />
+          </div>
+          <div class="docs-demo-labelled">
+            <label for="d-kf-thai">{{ tx('ชื่อภาษาไทย') }}</label>
+            <input id="d-kf-thai" name="nameTh" wtInputText wtKeyFilter="thai" [(ngModel)]="nameTh" />
+          </div>
+          <div class="docs-demo-labelled">
+            <label for="d-kf-color">{{ tx('รหัสสี') }}</label>
+            <input id="d-kf-color" name="color" wtInputText wtKeyFilter="hex" [(ngModel)]="color" />
+          </div>
+        </div>
+        <span class="docs-demo-output">studentId: <code id="d-kf-id-value">{{ studentId || '-' }}</code> · nameTh: <code id="d-kf-thai-value">{{ nameTh || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="regex" [section]="sec['regex']">
+      <docs-demo [html]="code['regex']" [ts]="ts['regex']" layout="stack">
+        <div class="docs-demo-labelled">
+          <label for="d-kf-subject">{{ tx('รหัสวิชา') }}</label>
+          <input id="d-kf-subject" name="subject" wtInputText [wtKeyFilter]="subjectChars" [(ngModel)]="subject" />
+        </div>
+        <span class="docs-demo-output">subject: <code id="d-kf-subject-value">{{ subject || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="validate" [section]="sec['validate']">
+      <docs-demo [html]="code['validate']" [ts]="ts['validate']" layout="stack">
+        <div class="docs-demo-labelled">
+          <label for="d-kf-phone">{{ tx('เบอร์โทรศัพท์') }}</label>
+          <input id="d-kf-phone" name="phone" wtInputText #phoneModel="ngModel" [wtKeyFilter]="phonePattern" [wtValidateOnly]="true" [(ngModel)]="phone" />
+          @if (phoneModel.hasError('keyfilter')) {
+            <small id="d-kf-phone-error" class="p-error">{{ tx('รูปแบบเบอร์โทรไม่ถูกต้อง') }}</small>
+          }
+        </div>
+        <span class="docs-demo-output">valid: <code id="d-kf-phone-valid">{{ phoneModel.valid }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

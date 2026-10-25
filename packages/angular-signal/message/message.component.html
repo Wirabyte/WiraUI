@@ -1,4 +1,4 @@
-<div [class]="classes()" [attr.role]="sev() === 'danger' || sev() === 'warn' ? 'alert' : 'status'">
+<div [class]="classes()" [style]="rootStyle()" [attr.role]="sev() === 'danger' || sev() === 'warn' ? 'alert' : 'status'">
   <span class="wt-message-icon p-message-icon" aria-hidden="true">
     @if (icon()) {
       <span [class]="icon()"></span>
@@ -21,7 +21,11 @@
   </span>
   <div class="wt-message-text p-message-text">
     @if (text()) {
-      {{ text() }}
+      @if (escape()) {
+        {{ text() }}
+      } @else {
+        <span [innerHTML]="text()"></span>
+      }
     }
     <ng-content></ng-content>
   </div>

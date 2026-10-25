@@ -33,6 +33,8 @@ const BUILT_IN: [RegExp, string][] = [
 @Directive()
 export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
   /** Matches `confirm({ key })`, for pages with more than one. */
+  /** Accepted for templates moving over: the dialog is always modal. */
+  @Input() modal: unknown;
   @Input() key?: string;
   @Input() header?: string;
   @Input() message?: string;
@@ -203,6 +205,15 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
   }
 
   // ---------- actions (also called from custom footers: `cd.accept()`, `cd.reject()`) ----------
+
+  /** The same as `accept()` (the name custom footers call). */
+  onAccept(): void {
+    this.accept();
+  }
+  /** The same as `reject()`. */
+  onReject(): void {
+    this.reject();
+  }
 
   accept(): void {
     const c = this.confirmation;

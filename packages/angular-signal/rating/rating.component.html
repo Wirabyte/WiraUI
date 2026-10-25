@@ -1,4 +1,4 @@
-<div [class]="classes()" role="radiogroup" [attr.aria-label]="ariaLabel() || null" (mouseleave)="preview(null)">
+<div [class]="classes()" [style]="rootStyle()" role="radiogroup" [attr.aria-label]="ariaLabel() || null" (mouseleave)="preview(null)">
   @for (star of starList(); track star) {
     <label [class]="optionClasses(star)" (mouseenter)="preview(star)">
       <input

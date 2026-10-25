@@ -13,15 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {
-  ɵassertSupportedAngular,
-  ɵsize,
-  ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtSize,
-  ɵWtStyleLoader,
-} from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize, ɵWtStyleLoader } from 'wiratheme/config';
 import {
   acceptsNumberInput,
   acceptsNumberText,
@@ -46,7 +38,7 @@ const optionalNumber = (v: unknown) => (v === null || v === undefined || v === '
  * ArrowUp/ArrowDown step the value; phones get the numeric keypad.
  */
 @Component({
-  selector: 'wt-inputnumber',
+  selector: 'wt-inputnumber, wt-inputNumber, wt-input-number',
   standalone: true,
   templateUrl: './inputnumber.component.html',
   styleUrl: './inputnumber.css',
@@ -91,6 +83,24 @@ export class WtInputNumber implements ControlValueAccessor {
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly fluid = input(false, { transform: booleanAttribute });
 
+  /** Classes and styles of the text field inside, as before. */
+  readonly inputStyleClass = input<string | null | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly inputStyle = input<Record<string, any> | null | undefined>();
+  /** Classic button classes and icon classes for the step buttons (`pi pi-plus`). */
+  readonly incrementButtonClass = input<string | null | undefined>();
+  readonly decrementButtonClass = input<string | null | undefined>();
+  readonly incrementButtonIcon = input<string | null | undefined>();
+  readonly decrementButtonIcon = input<string | null | undefined>();
+  readonly autocomplete = input<string | null | undefined>();
+  /** An × inside the field that empties it. */
+  readonly showClear = input(false, { transform: booleanAttribute });
+  readonly onKeyDown = output<KeyboardEvent>();
+  readonly onClear = output<void>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly inputStyleObject = computed(() => (this.inputStyle() && typeof this.inputStyle() === 'object' ? (this.inputStyle() as Record<string, any>) : null));
+  readonly showClearButton = computed(() => this.showClear() && this.value() !== null && !this.isDisabled() && !this.readonly());
+  private readonly wtConfig = inject(WtConfig);
   readonly onInput = output<WtInputNumberInputEvent>();
   readonly onFocus = output<FocusEvent>();
   readonly onBlur = output<FocusEvent>();
@@ -126,7 +136,20 @@ export class WtInputNumber implements ControlValueAccessor {
   readonly display = computed(() => (this.editing() ? this.draft() : formatNumber(this.value(), this.options())));
   readonly atMin = computed(() => this.min() !== null && this.value() !== null && (this.value() as number) <= (this.min() as number));
   readonly atMax = computed(() => this.max() !== null && this.value() !== null && (this.value() as number) >= (this.max() as number));
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-inputnumber', 'p-inputnumber', 'p-component', 'p-inputwrapper'];
     if (this.showButtons()) {
       c.push('wt-inputnumber-' + this.buttonLayout(), 'p-inputnumber-' + this.buttonLayout());
@@ -203,7 +226,20 @@ export class WtInputNumber implements ControlValueAccessor {
     this.onBlur.emit(event);
   }
 
+  clearLabel(): string {
+    return this.wtConfig.translation.clear;
+  }
+
+  /** Empties the field (the × of `showClear`). */
+  clear(): void {
+    this.value.set(null);
+    if (this.editing()) this.draft.set('');
+    this.onModelChange(null);
+    this.onClear.emit();
+  }
+
   keydown(event: KeyboardEvent): void {
+    this.onKeyDown.emit(event);
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       this.spin(event.key === 'ArrowUp' ? 1 : -1);

@@ -315,6 +315,8 @@ export const POPOVER_DOC: ComponentDoc = {
     'ตัวกรอง': 'Filters',
     'ชำระแล้ว': 'Paid',
     'รอจัดส่ง': 'Awaiting shipment',
+    'ตั้งค่าการแจ้งเตือน': 'Notification settings',
+    'รับการแจ้งเตือนทางอีเมลทุกเช้า': 'Get an email every morning',
   },
   sections: {
     import: {
@@ -328,6 +330,13 @@ export const POPOVER_DOC: ComponentDoc = {
     select: {
       title: { th: 'เลือกจากรายการ', en: 'Pick from a list' },
       text: { th: 'เรียก <code>op.hide()</code> หลังเลือก', en: 'Call <code>op.hide()</code> after a pick.' },
+    },
+    content: {
+      title: { th: 'template content และ closeCallback', en: 'The content template and closeCallback' },
+      text: {
+        th: 'template <code>content</code> (<code>#content</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) ได้ <code>let-closeCallback="closeCallback"</code> ให้ปุ่มข้างในปิดแผงเองได้โดยไม่ต้องใช้ template reference',
+        en: 'A <code>content</code> template (<code>#content</code>, <code>wtTemplate</code> or <code>pTemplate</code>) gets <code>let-closeCallback="closeCallback"</code>, so a button inside closes the panel without a template reference.',
+      },
     },
     options: {
       title: { th: 'ปุ่มปิด', en: 'Close button' },
@@ -357,6 +366,13 @@ export const POPOVER_DOC: ComponentDoc = {
   }
 </wt-popover>`,
     },
+    content: `<wt-button label="ตั้งค่าการแจ้งเตือน" icon="pi pi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
+<wt-popover #notify>
+  <ng-template #content let-closeCallback="closeCallback">
+    <p>รับการแจ้งเตือนทางอีเมลทุกเช้า</p>
+    <wt-button label="ตกลง" size="small" (onClick)="closeCallback()"></wt-button>
+  </ng-template>
+</wt-popover>`,
     options: `<wt-button label="ตัวกรอง" severity="secondary" (onClick)="filters.toggle($event)"></wt-button>
 <wt-popover #filters [showCloseIcon]="true" [dismissable]="false">…</wt-popover>`,
   },

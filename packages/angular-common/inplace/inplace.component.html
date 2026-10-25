@@ -1,0 +1,37 @@
+<div
+  class="wt-inplace p-inplace p-component"
+  [class.wt-inplace-closable]="closable"
+  [class.p-inplace-closable]="closable"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+>
+  <div
+    *ngIf="!active"
+    class="wt-inplace-display p-inplace-display"
+    role="button"
+    [class.wt-inplace-disabled]="disabled"
+    [class.p-disabled]="disabled"
+    [attr.tabindex]="disabled ? null : 0"
+    [attr.aria-disabled]="disabled || null"
+    (click)="displayClick($event)"
+    (keydown)="displayKeydown($event)"
+  >
+    <ng-content select="[pInplaceDisplay], [wtInplaceDisplay]"></ng-content>
+    <ng-container *ngTemplateOutlet="displayTemplate"></ng-container>
+  </div>
+  <div *ngIf="active" class="wt-inplace-content p-inplace-content" (keydown)="contentKeydown($event)">
+    <ng-content select="[pInplaceContent], [wtInplaceContent]"></ng-content>
+    <ng-container *ngTemplateOutlet="contentTemplate; context: { closeCallback: closeCallback }"></ng-container>
+    <button *ngIf="closable" type="button" [class]="closeClass" [attr.aria-label]="closeAriaLabel || t.close" (click)="deactivate($event)">
+      <ng-container *ngIf="closeIconTemplate; else defaultIcon">
+        <ng-container *ngTemplateOutlet="closeIconTemplate"></ng-container>
+      </ng-container>
+      <ng-template #defaultIcon>
+        <span *ngIf="closeIcon; else cross" [class]="'wt-btn-icon ' + closeIcon" aria-hidden="true"></span>
+        <ng-template #cross>
+          <svg class="wt-btn-icon" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+        </ng-template>
+      </ng-template>
+    </button>
+  </div>
+</div>

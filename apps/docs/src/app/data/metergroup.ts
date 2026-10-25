@@ -26,6 +26,8 @@ export const METERGROUP_DOC: ComponentDoc = {
     'ระบบ': 'System',
     'แอป': 'Apps',
     'สี CSS ใดก็ได้ ไม่ใส่ = สีของธีมวนไป': 'any CSS colour; left out = the theme colours in turn',
+    'ปกติ': 'Normal',
+    'เติมจากล่างขึ้นบน': 'fills from the bottom',
   },
   sections: {
     import: { title: 'Import', text: importText },
@@ -58,6 +60,13 @@ export const METERGROUP_DOC: ComponentDoc = {
         en: '<code>orientation="vertical"</code> fills the height of the element, so give it one, e.g. <code>style="height: 20rem"</code>.',
       },
     },
+    reverse: {
+      title: { th: 'เติมจากอีกด้าน', en: 'Reverse' },
+      text: {
+        th: '<code>[reverse]="true"</code> เริ่มเติมช่วงต่าง ๆ จากอีกด้านของแถบ: แนวตั้งเติมจากล่างขึ้นบน (แบบแท็งก์น้ำ) แนวนอนเติมจากขวาไปซ้าย คำอธิบายยังเรียงตามเดิม ตัวอย่างนี้วางแบบปกติไว้คู่กัน',
+        en: '<code>[reverse]="true"</code> fills the parts from the other end of the bar: a vertical meter fills from the bottom up (like a tank), a horizontal one from right to left; the legend keeps its order. The normal one sits beside it here.',
+      },
+    },
     minmax: {
       title: 'Min / Max',
       text: { th: 'นับเป็นหน่วยจริงได้ เช่น GB โดยตั้ง <code>[max]</code> เป็นความจุ', en: 'Count in real units, such as GB, by setting <code>[max]</code> to the capacity.' },
@@ -78,6 +87,11 @@ export const METERGROUP_DOC: ComponentDoc = {
     vertical: `<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical"
   style="height: 20rem"></wt-metergroup>`,
     minmax: `<wt-metergroup [value]="usedGb" [min]="0" [max]="200" ariaLabel="พื้นที่ 200 GB"></wt-metergroup>`,
+    reverse: `<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" style="height: 14rem"></wt-metergroup>
+
+<!-- เติมจากล่างขึ้นบน -->
+<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" [reverse]="true"
+  style="height: 14rem"></wt-metergroup>`,
     template: {
       classic: `<wt-metergroup [value]="storage" labelPosition="start">
   <ng-template wtTemplate="label" let-value let-percentages="percentages">
@@ -135,9 +149,10 @@ usedGb: WtMeterItem[] = [
         row('value', 'WtMeterItem[]', '[]', 'ช่วงต่าง ๆ บนแถบ', 'The parts of the bar'),
         row('min · max', 'number', '0 · 100', 'ช่วงที่ค่านับเทียบ', 'Range the values are read against'),
         row('orientation', "'horizontal' | 'vertical'", "'horizontal'", 'แนวของแถบ (vertical เต็มความสูงของ element)', 'Bar direction (vertical fills the element height)'),
+        row('reverse', 'boolean', 'false', 'เติมจากอีกด้าน: ขวาไปซ้าย หรือ (แนวตั้ง) ล่างขึ้นบน คำอธิบายเรียงเหมือนเดิม', 'Fill from the other end: right to left, or (vertical) bottom to top; the legend keeps its order'),
         row('labelPosition', "'start' | 'end'", "'end'", 'คำอธิบายก่อนหรือหลังแถบ', 'Legend before or after the bar'),
         row('labelOrientation', "'horizontal' | 'vertical'", "'horizontal'", 'คำอธิบายเรียงแถวหรือคอลัมน์', 'Legend in a row or a column'),
-        row('styleClass', 'string', undefined, 'class เพิ่ม', 'Extra class'),
+        row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่ม (style เป็น object)', 'Extra class and style (style is an object)'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader (role="meter")', 'Accessible name (role="meter")'),
       ],
     },

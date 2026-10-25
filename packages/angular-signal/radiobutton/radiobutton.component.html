@@ -1,5 +1,7 @@
 <label
   class="wt-radiobutton"
+  [class]="styleClass() || ''"
+  [style]="rootStyle()"
   [class.wt-radiobutton-checked]="checked()"
   [class.wt-radiobutton-disabled]="isDisabled()"
   [class.wt-invalid]="invalid()"

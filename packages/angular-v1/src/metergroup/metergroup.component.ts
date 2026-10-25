@@ -10,7 +10,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
 import {
   ɵmeterParts,
   WtMeterContext,
@@ -28,7 +28,7 @@ type Parts = ReturnType<typeof ɵmeterParts>;
  * Values are read against `min`–`max` (0–100 by default).
  */
 @Component({
-  selector: 'wt-metergroup',
+  selector: 'wt-metergroup, wt-meterGroup, wt-meter-group',
   standalone: true,
   imports: [NgIf, NgFor, NgTemplateOutlet],
   templateUrl: './metergroup.component.html',
@@ -59,11 +59,23 @@ export class WtMeterGroup {
     return this._max;
   }
   @Input() orientation: WtMeterOrientation = 'horizontal';
+  /** Fill from the other end: right to left, or (vertical) bottom to top. */
+  @Input() set reverse(v: unknown) { this._reverse = ɵtoBool(v); }
+  get reverse(): boolean { return this._reverse; }
+  private _reverse = false;
   /** Legend before or after the bar. */
   @Input() labelPosition: WtMeterLabelPosition = 'end';
   /** Legend items in a row or a column. */
   @Input() labelOrientation: WtMeterOrientation = 'horizontal';
   @Input() styleClass?: string;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() ariaLabel?: string;
 
   @ContentChild('label', { descendants: false }) private labelRef?: unknown;
@@ -106,6 +118,7 @@ export class WtMeterGroup {
   get classes(): string {
     const o = this.orientation;
     const c = ['wt-metergroup', 'p-metergroup', 'p-component', `wt-metergroup-${o}`, `p-metergroup-${o}`];
+    if (this._reverse) c.push('wt-metergroup-reverse');
     if (this.styleClass) c.push(this.styleClass);
     return c.join(' ');
   }

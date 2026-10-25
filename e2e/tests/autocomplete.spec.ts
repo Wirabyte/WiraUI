@@ -10,6 +10,18 @@ test.beforeEach(async ({ page }) => {
   await page.locator('#ac-school').scrollIntoViewIfNeeded();
 });
 
+test('with no delay set it asks on the key itself, with no wait (delay 0 is the default)', async ({ page }) => {
+  await page.locator('#ac-plain').scrollIntoViewIfNeeded();
+  const asked = await page.locator('#ac-plain-input').evaluate((input: HTMLInputElement) => {
+    input.focus();
+    input.value = 'น่าน';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    return (globalThis as unknown as { wtAsked?: string }).wtAsked;
+  });
+  expect(asked).toBe('น่าน');
+  await expect(options(page)).toHaveText(['สตรีศรีน่าน', 'น่านนคร']);
+});
+
 test('typing asks for suggestions; picking one makes the option the value and fills the field', async ({ page }) => {
   const input = page.locator('#ac-school-input');
   await expect(input).toHaveAttribute('role', 'combobox');

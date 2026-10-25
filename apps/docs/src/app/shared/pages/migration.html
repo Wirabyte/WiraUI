@@ -154,7 +154,7 @@
           <td>Table</td>
           <td><code>&lt;wt-table&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-table</code>)</td>
           <td><code>WtTableModule</code> · <code>WtTable</code></td>
-          <td>{{ en() ? 'Templates (pTemplate), pSortableColumn, pSelectableRow and the p-datatable-* classes keep working; row expansion, cell editing, frozen columns, row groups, menu filters and CSV export are not built yet' : 'template (pTemplate), pSortableColumn, pSelectableRow และ class p-datatable-* ใช้ต่อได้ ยังไม่มีแถวขยาย แก้ไขในเซลล์ คอลัมน์ตรึง จัดกลุ่มแถว ตัวกรองแบบเมนู และ export CSV' }}</td>
+          <td>{{ en() ? 'Templates (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, row groups, column filters and their menu (wt-columnFilter), stateKey, exportCSV() and the context menu (pContextMenuRow) keep working, as do the p-datatable-* classes; virtual scroll is not built yet' : 'template (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, การจัดกลุ่มแถว ตัวกรองรายคอลัมน์และเมนูตัวกรอง (wt-columnFilter), stateKey, exportCSV(), เมนูคลิกขวา (pContextMenuRow) และ class p-datatable-* ใช้ต่อได้ ยังไม่มี virtual scroll' }}</td>
         </tr>
         <tr>
           <td>Accordion · Tabs</td>
@@ -195,8 +195,110 @@
           <td><code>&lt;wt-panelmenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-panelMenu&gt;</code>) · <code>&lt;wt-steps&gt;</code></td>
           <td><code>WtPanelMenuModule</code> · <code>WtStepsModule</code></td>
           <td>
-            {{ en() ? 'MenuItem models with expanded, multiple, activeIndex and readonly work as before; the value-based Stepper is not built yet' : 'model ของ MenuItem พร้อม expanded, multiple, activeIndex และ readonly ใช้ได้เหมือนเดิม ส่วน Stepper แบบ value ยังไม่มี' }}
+            {{ en() ? 'MenuItem models with expanded, multiple, activeIndex and readonly work as before; the value-based stepper is the Stepper row below' : 'model ของ MenuItem พร้อม expanded, multiple, activeIndex และ readonly ใช้ได้เหมือนเดิม ส่วนขั้นตอนแบบ value อยู่ในแถว Stepper ด้านล่าง' }}
           </td>
+        </tr>
+        <tr>
+          <td>Stepper</td>
+          <td><code>&lt;wt-stepper&gt;</code> · <code>&lt;wt-step-list&gt;</code> · <code>&lt;wt-step&gt;</code> · <code>&lt;wt-step-panels&gt;</code> · <code>&lt;wt-step-panel&gt;</code> · <code>&lt;wt-step-item&gt;</code></td>
+          <td><code>WtStepperModule</code> · <code>WtStepper</code></td>
+          <td>{{ en() ? '[(value)], [linear] and #content templates with activateCallback work as before' : '[(value)], [linear] และ template #content ที่มี activateCallback ใช้ได้เหมือนเดิม' }}</td>
+        </tr>
+        <tr>
+          <td>PickList · OrderList</td>
+          <td><code>&lt;wt-picklist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-pickList&gt;</code>) · <code>&lt;wt-orderlist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-orderList&gt;</code>)</td>
+          <td><code>WtPickListModule</code> · <code>WtOrderListModule</code></td>
+          <td>{{ en() ? 'source / target / value are changed in place as before; dragdrop, filterBy, the item template and the move events keep their names' : 'source / target / value ถูกเปลี่ยนในที่เดิมเหมือนเดิม dragdrop, filterBy, template item และ event การย้ายชื่อเดิม' }}</td>
+        </tr>
+        <tr>
+          <td>FileUpload</td>
+          <td><code>&lt;wt-fileupload&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-fileUpload&gt;</code>)</td>
+          <td><code>WtFileUploadModule</code> · <code>WtFileUpload</code></td>
+          <td>{{ en() ? 'chooseLabel, maxFileSize, accept, customUpload with uploadHandler, mode="basic", the content / empty templates and clear() work as before; its messages follow the locale' : 'chooseLabel, maxFileSize, accept, customUpload กับ uploadHandler, mode="basic", template content / empty และ clear() ใช้ได้เหมือนเดิม ข้อความแจ้งเป็นภาษาไทย' }}</td>
+        </tr>
+        <tr>
+          <td>Editor</td>
+          <td><code>&lt;wt-editor&gt;</code></td>
+          <td><code>WtEditorModule</code> · <code>WtEditor</code></td>
+          <td>{{ en() ? 'The HTML value (null when empty), [style] height, the header template with ql-* buttons and the stored ql-* classes work as before; nothing else to install' : 'ค่า HTML (ว่างเปล่าคือ null), ความสูงจาก [style], template header ที่มีปุ่ม ql-* และ class ql-* ในเนื้อหาที่บันทึกไว้ใช้ได้เหมือนเดิม ไม่ต้องติดตั้งไลบรารีอื่น' }}</td>
+        </tr>
+        <tr>
+          <td>Ripple · KeyFilter · Badge</td>
+          <td><code>[wtRipple]</code> · <code>[wtKeyFilter]</code> · <code>[wtBadge]</code></td>
+          <td><code>WtRippleModule</code> · <code>WtKeyFilterModule</code> · <code>WtBadgeModule</code></td>
+          <td>{{ en() ? 'pRipple, pKeyFilter (with pValidateOnly) and pBadge keep their attribute names' : 'pRipple, pKeyFilter (พร้อม pValidateOnly) และ pBadge ใช้ชื่อ attribute เดิมได้' }}</td>
+        </tr>
+        <tr>
+          <td>Slider · ColorPicker</td>
+          <td><code>&lt;wt-slider&gt;</code> · <code>&lt;wt-colorPicker&gt;</code></td>
+          <td><code>WtSliderModule</code> · <code>WtColorPickerModule</code></td>
+          <td>{{ en() ? 'ngModel values ([from, to] for a range; hex, rgb or hsb colours), onChange / onSlideEnd and the panel keys work as before' : 'ค่า ngModel (ช่วงเป็น [จาก, ถึง] สีเป็น hex, rgb หรือ hsb), onChange / onSlideEnd และคีย์บอร์ดใช้ได้เหมือนเดิม' }}</td>
+        </tr>
+        <tr>
+          <td>Listbox · TreeSelect</td>
+          <td><code>&lt;wt-listbox&gt;</code> · <code>&lt;wt-treeSelect&gt;</code></td>
+          <td><code>WtListboxModule</code> · <code>WtTreeSelectModule</code></td>
+          <td>{{ en() ? 'Option fields, groups, multiple / checkbox, filter and the item / value templates keep their names; the TreeSelect panel opens in the top layer' : 'ฟิลด์ตัวเลือก กลุ่ม multiple / checkbox ค้นหา และ template item / value ชื่อเดิม แผงของ TreeSelect เปิดใน top layer' }}</td>
+        </tr>
+        <tr>
+          <td>SplitButton</td>
+          <td><code>&lt;wt-splitButton&gt;</code></td>
+          <td><code>WtSplitButtonModule</code> · <code>WtSplitButton</code></td>
+          <td>{{ en() ? 'model, severity and the variants, buttonDisabled / menuButtonDisabled and the menu events work as before; appendTo is not needed' : 'model สีและรูปแบบปุ่ม buttonDisabled / menuButtonDisabled และ event ของเมนูใช้ได้เหมือนเดิม ไม่ต้องใช้ appendTo' }}</td>
+        </tr>
+        <tr>
+          <td>Tree · Scroller</td>
+          <td><code>&lt;wt-tree&gt;</code> · <code>&lt;wt-scroller&gt;</code></td>
+          <td><code>WtTreeModule</code> · <code>WtScrollerModule</code></td>
+          <td>{{ en() ? 'TreeNode (from wiratheme/api), the three selection modes, filter, lazy children and per-type templates; the scroller draws only rows in view, with lazy loading' : 'TreeNode (จาก wiratheme/api) การเลือกทั้งสามแบบ ค้นหา โหลดลูกเมื่อเปิด และ template ตาม type ส่วน scroller วาดเฉพาะแถวที่เห็นและโหลดทีละช่วงได้' }}</td>
+        </tr>
+        <tr>
+          <td>Galleria</td>
+          <td><code>&lt;wt-galleria&gt;</code></td>
+          <td><code>WtGalleriaModule</code> · <code>WtGalleria</code></td>
+          <td>{{ en() ? 'Thumbnails, indicators, item navigators, autoPlay, responsiveOptions, full screen with [(visible)] and the item / thumbnail / caption templates' : 'รูปย่อ จุด ลูกศร autoPlay, responsiveOptions เต็มจอด้วย [(visible)] และ template item / thumbnail / caption' }}</td>
+        </tr>
+        <tr>
+          <td>Breadcrumb · TieredMenu · ContextMenu</td>
+          <td><code>&lt;wt-breadcrumb&gt;</code> · <code>&lt;wt-tieredMenu&gt;</code> · <code>&lt;wt-contextMenu&gt;</code></td>
+          <td><code>WtBreadcrumbModule</code> · <code>WtTieredMenuModule</code> · <code>WtContextMenuModule</code></td>
+          <td>{{ en() ? 'MenuItem models, home, popup / toggle(), target / global and show(event) work as before; menus open in the top layer' : 'model แบบ MenuItem, home, popup / toggle(), target / global และ show(event) ใช้ได้เหมือนเดิม เมนูเปิดใน top layer' }}</td>
+        </tr>
+        <tr>
+          <td>ScrollPanel · Inplace</td>
+          <td><code>&lt;wt-scrollPanel&gt;</code> · <code>&lt;wt-inplace&gt;</code></td>
+          <td><code>WtScrollPanelModule</code> · <code>WtInplaceModule</code></td>
+          <td>{{ en() ? '[style] height, scrollTop() and refresh(); the display / content templates (or pInplaceDisplay / pInplaceContent) and closable' : 'ความสูงจาก [style], scrollTop() และ refresh() ส่วน Inplace ใช้ template display / content (หรือ pInplaceDisplay / pInplaceContent) และ closable' }}</td>
+        </tr>
+        <tr>
+          <td>Drawer · BlockUI</td>
+          <td><code>&lt;wt-drawer&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-sidebar&gt;</code>) · <code>&lt;wt-blockUI&gt;</code></td>
+          <td><code>WtDrawerModule</code> · <code>WtBlockUIModule</code></td>
+          <td>{{ en() ? '[(visible)], position, modal, dismissible, the header / footer templates; [blocked] and [target]; both live in the top layer, so appendTo and the z-index inputs are ignored' : '[(visible)], position, modal, dismissible และ template header / footer ส่วน BlockUI ใช้ [blocked] และ [target] ทั้งสองอยู่ใน top layer จึงไม่ต้องใช้ appendTo และ input ของ z-index' }}</td>
+        </tr>
+        <tr>
+          <td>DragDrop</td>
+          <td><code>[wtDraggable]</code> · <code>[wtDroppable]</code></td>
+          <td><code>WtDragDropModule</code></td>
+          <td>{{ en() ? 'pDraggable, pDroppable, dragHandle, the effects and every event keep their names' : 'pDraggable, pDroppable, dragHandle, effect และ event ทุกตัวใช้ชื่อเดิมได้' }}</td>
+        </tr>
+        <tr>
+          <td>Steps · TabMenu</td>
+          <td><code>&lt;wt-steps&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-stepper [model]&gt;</code>) · <code>&lt;wt-tabMenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-tabs [model]&gt;</code>)</td>
+          <td><code>WtStepsModule</code> · <code>WtStepperModule</code> · <code>WtTabMenuModule</code> · <code>WtTabsModule</code></td>
+          <td>{{ en() ? 'Both old tags keep working; for new code one component does both: wt-stepper draws a steps bar from a menu model, and wt-tabs is a tab menu with [model] and [(activeItem)]' : 'แท็กเดิมยังใช้ได้ทั้งคู่ ส่วนโค้ดใหม่ใช้ component เดียวได้: wt-stepper วาดแถบขั้นตอนจาก menu model และ wt-tabs เป็น tab menu ด้วย [model] และ [(activeItem)]' }}</td>
+        </tr>
+        <tr>
+          <td>{{ en() ? 'Hand-built top bar and side menu' : 'แถบบนและเมนูด้านข้างที่เขียนเอง' }}</td>
+          <td><code>&lt;wt-navbar [aside]="side"&gt;</code> · <code>&lt;wt-aside-menu #side&gt;</code></td>
+          <td><code>WtNavbarModule</code> · <code>WtAsideMenuModule</code></td>
+          <td>{{ en() ? 'A menubar plus hamburger button and a panel-menu sidebar with media queries become two components: the side menu opens the group of the current page, collapses to icons and becomes an off-canvas panel on phones, and the menu button of the navbar drives it' : 'menubar + ปุ่ม hamburger และ sidebar ที่ทำจาก panel menu + media query เปลี่ยนเป็นสอง component: เมนูด้านข้างเปิดกลุ่มของหน้าปัจจุบันเอง ย่อเหลือไอคอนได้ และเป็นแผงเลื่อนเข้าบนมือถือ โดยปุ่มเมนูของ navbar ควบคุมให้' }}</td>
+        </tr>
+        <tr>
+          <td>Image cropper</td>
+          <td><code>&lt;image-cropper&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-imagecropper&gt;</code>)</td>
+          <td><code>WtImageCropperModule</code> · <code>WtImageCropper</code></td>
+          <td>{{ en() ? 'The image-cropper tag apps already use keeps its inputs, outputs and ImageCroppedEvent; the result is a blob by default, so code that reads event.base64 sets output="base64"' : 'แท็ก image-cropper ที่แอปใช้อยู่ใช้ input, output และ ImageCroppedEvent ชื่อเดิม ผลลัพธ์เป็น blob โดยค่าเริ่มต้น โค้ดที่อ่าน event.base64 ให้ตั้ง output="base64"' }}</td>
         </tr>
         <tr>
           <td>Messages</td>
@@ -245,6 +347,54 @@
     </p>
   }
   <docs-code [code]="local(afterCode)" lang="html" file="WiraTheme"></docs-code>
+</docs-section>
+
+<docs-section id="spellings" [title]="{ th: 'ชื่อ tag หลายแบบ', en: 'Tag spellings' }">
+  @if (en()) {
+    <p>
+      Every component takes its tag in the camelCase spelling older templates use and in kebab case, so <code>p-inputNumber</code> becomes
+      <code>wt-inputNumber</code> (or <code>wt-input-number</code>, or <code>wt-inputnumber</code>) with nothing else to change. Directives keep their
+      attribute names too: <code>pInputText</code>, <code>pInputTextarea</code>, <code>pTextarea</code>, <code>pRipple</code>, <code>pKeyFilter</code>,
+      <code>pBadge</code> and <code>pTemplate</code>.
+    </p>
+  } @else {
+    <p>
+      ทุก component รับ tag ได้ทั้งแบบ camelCase ที่ template เดิมใช้และแบบมีขีด ดังนั้น <code>p-inputNumber</code> เปลี่ยนเป็น <code>wt-inputNumber</code>
+      (หรือ <code>wt-input-number</code> หรือ <code>wt-inputnumber</code>) โดยไม่ต้องแก้อย่างอื่น directive ก็ใช้ชื่อ attribute เดิมได้: <code>pInputText</code>,
+      <code>pInputTextarea</code>, <code>pTextarea</code>, <code>pRipple</code>, <code>pKeyFilter</code>, <code>pBadge</code> และ <code>pTemplate</code>
+    </p>
+  }
+  <div class="docs-table-wrap">
+    <table class="docs-table" id="spellings-table">
+      <thead>
+        <tr>
+          <th>{{ en() ? 'Kebab case' : 'แบบมีขีด' }}</th>
+          <th>{{ en() ? 'CamelCase, as before' : 'แบบ camelCase ตามเดิม' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>wt-input-number</code></td><td><code>wt-inputNumber</code></td></tr>
+        <tr><td><code>wt-radio-button</code></td><td><code>wt-radioButton</code></td></tr>
+        <tr><td><code>wt-check-box</code> · <code>wt-checkbox</code></td><td><code>wt-checkBox</code></td></tr>
+        <tr><td><code>wt-toggle-button</code></td><td><code>wt-toggleButton</code></td></tr>
+        <tr><td><code>wt-select-button</code></td><td><code>wt-selectButton</code></td></tr>
+        <tr><td><code>wt-progress-bar</code></td><td><code>wt-progressBar</code></td></tr>
+        <tr><td><code>wt-progress-spinner</code></td><td><code>wt-progressSpinner</code></td></tr>
+        <tr><td><code>wt-input-group</code> · <code>wt-input-group-addon</code></td><td><code>wt-inputGroup</code> · <code>wt-inputGroupAddon</code></td></tr>
+        <tr><td><code>wt-icon-field</code> · <code>wt-input-icon</code></td><td><code>wt-iconField</code> · <code>wt-inputIcon</code></td></tr>
+        <tr><td><code>wt-float-label</code></td><td><code>wt-floatLabel</code></td></tr>
+        <tr><td><code>wt-date-picker</code> · <code>wt-input-mask</code></td><td><code>wt-datePicker</code> · <code>wt-inputMask</code></td></tr>
+        <tr><td><code>wt-meter-group</code> · <code>wt-avatar-group</code></td><td><code>wt-meterGroup</code> · <code>wt-avatarGroup</code></td></tr>
+        <tr><td><code>wt-split-button</code> · <code>wt-color-picker</code></td><td><code>wt-splitButton</code> · <code>wt-colorPicker</code></td></tr>
+        <tr><td><code>wt-listbox</code> · <code>wt-tree-select</code></td><td><code>wt-listBox</code> · <code>wt-treeSelect</code></td></tr>
+        <tr><td><code>wt-tiered-menu</code> · <code>wt-context-menu</code></td><td><code>wt-tieredMenu</code> · <code>wt-contextMenu</code></td></tr>
+        <tr><td><code>wt-scroll-panel</code> · <code>wt-block-ui</code></td><td><code>wt-scrollPanel</code> · <code>wt-blockUI</code></td></tr>
+        <tr><td><code>wt-scroller</code> · <code>wt-drawer</code></td><td><code>wt-virtualScroller</code> · <code>wt-sidebar</code></td></tr>
+        <tr><td><code>[wtDraggable]</code> · <code>[wtDroppable]</code></td><td><code>[pDraggable]</code> · <code>[pDroppable]</code></td></tr>
+        <tr><td><code>textarea[wtTextarea]</code></td><td><code>textarea[pInputTextarea]</code> · <code>[wtInputTextarea]</code> · <code>[pTextarea]</code> · <code>[pInputText]</code></td></tr>
+      </tbody>
+    </table>
+  </div>
 </docs-section>
 
 <docs-section id="css" [title]="{ th: 'CSS เดิมยังใช้ได้', en: 'Your CSS keeps working' }">

@@ -1,5 +1,7 @@
 <label
   class="wt-toggleswitch"
+  [class]="styleClass() || ''"
+  [style]="rootStyle()"
   [class.wt-toggleswitch-checked]="checked()"
   [class.wt-toggleswitch-disabled]="isDisabled()"
   [class.wt-invalid]="invalid()"

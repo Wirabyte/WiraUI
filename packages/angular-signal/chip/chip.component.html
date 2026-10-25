@@ -1,4 +1,4 @@
-<div [class]="classes()">
+<div [class]="classes()" [style]="rootStyle()">
   @if (image()) {
     <img class="wt-chip-image p-chip-image" [src]="image()" [alt]="alt() || label() || ''" (error)="onImageError.emit($event)" />
   } @else if (icon()) {

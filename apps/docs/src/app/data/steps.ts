@@ -68,11 +68,18 @@ export const STEPS_DOC: ComponentDoc = {
         en: 'With <code>[readonly]="false"</code>: the row is one Tab stop (the current step) · <code>←</code> <code>→</code> move between steps · <code>Home</code> / <code>End</code> first / last · <code>Enter</code> / <code>Space</code> pick the step · disabled steps are skipped · the current step has <code>aria-current="step"</code> and pickable steps are <code>role="button"</code>. A read-only row has no Tab stop.',
       },
     },
+    stepper: {
+      title: { th: 'Stepper แบบ value', en: 'The value-based Stepper' },
+      text: {
+        th: 'ถ้าแต่ละขั้นมีเนื้อหาของตัวเอง (ฟอร์มหลายขั้น) ใช้ Stepper (<code>wt-stepper</code>) ซึ่งผูกขั้นปัจจุบันด้วย value และมีแบบ linear กับแนวตั้ง ส่วน wt-steps ยังเป็นแถบขั้นตอนจาก <code>MenuItem[]</code> เหมือนเดิม · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> วาดแถบแบบเดียวกับหน้านี้ได้ (รายการ <code>MenuItem</code> ชุดเดิม พร้อม <code>subtitle</code> และ <code>labelPosition="bottom"</code>) โค้ดใหม่จึงใช้ component เดียวได้ทั้งแถบขั้นตอนและฟอร์มหลายขั้น',
+        en: 'When each step has its own content (a multi-step form), use Stepper (<code>wt-stepper</code>): bound by value, with linear and vertical layouts. wt-steps stays the bar of steps from a <code>MenuItem[]</code> · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> draws the same bar as this page (the same <code>MenuItem</code> items, plus <code>subtitle</code> and <code>labelPosition="bottom"</code>), so new code can use one component for both a bar of steps and a multi-step form.',
+      },
+    },
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-steps&gt;</code> เป็น <code>&lt;wt-steps&gt;</code> input เดิม (<code>model</code>, <code>activeIndex</code>, <code>readonly</code>, <code>styleClass</code>) ใช้ได้เหมือนเดิม และ class <code>p-steps-*</code> อยู่คู่กับ <code>wt-steps-*</code> ส่วน <code>exact</code> รับไว้แต่ไม่มีผล ขั้นตอนแบบ value ที่มีเนื้อหาของแต่ละขั้นในตัวยังไม่มี',
-        en: 'Change <code>&lt;p-steps&gt;</code> to <code>&lt;wt-steps&gt;</code>. The inputs (<code>model</code>, <code>activeIndex</code>, <code>readonly</code>, <code>styleClass</code>) work as before, and the <code>p-steps-*</code> classes sit next to <code>wt-steps-*</code>; <code>exact</code> is accepted and ignored. A value-based stepper that holds each step\'s content is not built yet.',
+        th: 'เปลี่ยน <code>&lt;p-steps&gt;</code> เป็น <code>&lt;wt-steps&gt;</code> input เดิม (<code>model</code>, <code>activeIndex</code>, <code>readonly</code>, <code>styleClass</code>) ใช้ได้เหมือนเดิม และ class <code>p-steps-*</code> อยู่คู่กับ <code>wt-steps-*</code> ส่วน <code>exact</code> รับไว้แต่ไม่มีผล ขั้นตอนแบบ value ที่มีเนื้อหาของแต่ละขั้นในตัว (<code>p-stepper</code>) ย้ายไปที่ Stepper',
+        en: 'Change <code>&lt;p-steps&gt;</code> to <code>&lt;wt-steps&gt;</code>. The inputs (<code>model</code>, <code>activeIndex</code>, <code>readonly</code>, <code>styleClass</code>) work as before, and the <code>p-steps-*</code> classes sit next to <code>wt-steps-*</code>; <code>exact</code> is accepted and ignored. A value-based stepper that holds each step\'s content (<code>p-stepper</code>) moves to Stepper.',
       },
     },
   },

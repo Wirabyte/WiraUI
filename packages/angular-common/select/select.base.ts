@@ -134,6 +134,8 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
 
   @Output() readonly onChange = new EventEmitter<WtSelectChangeEvent>();
   @Output() readonly onFilter = new EventEmitter<WtSelectFilterEvent>();
+  /** Accepted for templates moving over (lists are not loaded lazily). */
+  @Output() readonly onLazyLoad = new EventEmitter<unknown>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
   @Output() readonly onShow = new EventEmitter<void>();

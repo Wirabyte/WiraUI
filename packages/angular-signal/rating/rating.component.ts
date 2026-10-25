@@ -44,7 +44,20 @@ export class WtRating implements ControlValueAccessor {
   readonly interactive = computed(() => !this.isDisabled() && !this.readonly());
   readonly starList = computed(() => Array.from({ length: Math.max(0, this.stars() || 0) }, (_, i) => i + 1));
   readonly shown = computed(() => this.hover() ?? this.value() ?? 0);
-  readonly classes = computed(() => {
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
     const c = ['wt-rating', 'p-rating', 'p-component'];
     if (this.readonly()) c.push('wt-rating-readonly', 'p-readonly');
     if (this.isDisabled()) c.push('wt-rating-disabled', 'p-disabled');

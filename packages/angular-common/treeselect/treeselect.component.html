@@ -1,0 +1,119 @@
+<div
+  #root
+  class="wt-select wt-treeselect p-treeselect p-component"
+  [ngClass]="(styleClass || '') + ' ' + (containerStyleClass || '')"
+  [ngStyle]="rootStyle"
+  [class.wt-select-open]="open"
+  [class.p-treeselect-open]="open"
+  [class.wt-select-focus]="focused || open"
+  [class.p-focus]="focused || open"
+  [class.wt-select-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-select-filled]="variant === 'filled'"
+  [class.p-variant-filled]="variant === 'filled'"
+  [class.wt-select-sm]="sizeKey === 'sm'"
+  [class.wt-select-lg]="sizeKey === 'lg'"
+  [class.wt-select-clearable]="clearable"
+  [class.p-treeselect-clearable]="clearable"
+  [class.wt-select-loading]="loading"
+  [class.wt-multiselect-chips]="chips"
+  [class.p-treeselect-display-chip]="display === 'chip'"
+  (mousedown)="fieldMousedown($event)"
+  (click)="fieldClick($event)"
+>
+  <input
+    #focusInput
+    type="text"
+    class="wt-select-input p-hidden-accessible"
+    role="combobox"
+    readonly
+    inputmode="none"
+    autocomplete="off"
+    [id]="inputId || baseId"
+    [attr.tabindex]="disabled ? -1 : tabindex"
+    [attr.aria-label]="ariaLabel || (ariaLabelledBy ? null : labelText || placeholder || null)"
+    [attr.aria-labelledby]="ariaLabelledBy || null"
+    aria-haspopup="tree"
+    [attr.aria-expanded]="open"
+    [attr.aria-controls]="open ? treeId : null"
+    [attr.aria-disabled]="disabled || null"
+    [attr.aria-busy]="loading || null"
+    [disabled]="disabled"
+    (keydown)="fieldKeydown($event)"
+    (focus)="fieldFocus($event)"
+    (blur)="fieldBlur($event)"
+  />
+  <span
+    class="wt-select-label wt-multiselect-label wt-treeselect-label p-treeselect-label"
+    [ngClass]="labelStyleClass || ''"
+    [class.wt-select-placeholder]="!filled"
+    [class.p-placeholder]="!filled"
+    aria-hidden="true"
+  >
+    <ng-container *ngIf="valueTemplate; else defaultValue">
+      <ng-container *ngTemplateOutlet="valueTemplate; context: { $implicit: value, placeholder: placeholder }"></ng-container>
+    </ng-container>
+    <ng-template #defaultValue>
+      <ng-container *ngIf="chips; else text">
+        <span *ngFor="let node of picked" class="wt-multiselect-chip p-treeselect-chip-item p-chip">
+          <span class="wt-multiselect-chip-label p-chip-label">{{ node.label }}</span>
+          <button type="button" class="wt-multiselect-chip-remove p-chip-remove-icon" tabindex="-1" [attr.aria-label]="t.remove + ' ' + (node.label || '')" (click)="removeChip(node, $event)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"></path></svg>
+          </button>
+        </span>
+      </ng-container>
+      <ng-template #text>{{ labelText || placeholder || ' ' }}</ng-template>
+    </ng-template>
+  </span>
+  <button *ngIf="clearable" type="button" class="wt-select-clear p-treeselect-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+  </button>
+  <span class="wt-select-dropdown p-treeselect-dropdown" aria-hidden="true">
+    <span *ngIf="loading; else chevron" class="wt-select-spinner"></span>
+    <ng-template #chevron>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"></path></svg>
+    </ng-template>
+  </span>
+</div>
+
+<div
+  *ngIf="open"
+  #panel
+  popover="manual"
+  class="wt-select-overlay wt-treeselect-overlay p-treeselect-overlay p-treeselect-panel p-component"
+  [ngClass]="(panelClass || '') + ' ' + (panelStyleClass || '')"
+  [ngStyle]="panelStyle || null"
+  (keydown)="panelKeydown($event)"
+>
+  <ng-container *ngIf="headerTemplate">
+    <ng-container *ngTemplateOutlet="headerTemplate; context: { $implicit: value, options: options }"></ng-container>
+  </ng-container>
+  <wt-tree
+    class="wt-treeselect-tree"
+    styleClass="wt-treeselect-tree-root"
+    [value]="options"
+    [selectionMode]="selectionMode"
+    [selection]="value"
+    [metaKeySelection]="metaKeySelection"
+    [propagateSelectionUp]="propagateSelectionUp"
+    [propagateSelectionDown]="propagateSelectionDown"
+    [dataKey]="dataKey"
+    [filter]="filter"
+    [filterBy]="filterBy"
+    [filterMode]="filterMode"
+    [filterPlaceholder]="filterPlaceholder"
+    [emptyMessage]="emptyMessage"
+    [emptyFilterMessage]="emptyFilterMessage"
+    [scrollHeight]="scrollHeight"
+    [ariaLabel]="ariaLabel || placeholder"
+    (selectionChange)="treeSelectionChange($event)"
+    (onNodeSelect)="onNodeSelect.emit($event)"
+    (onNodeUnselect)="onNodeUnselect.emit($event)"
+    (onNodeExpand)="onNodeExpand.emit($event)"
+    (onNodeCollapse)="onNodeCollapse.emit($event)"
+    (onFilter)="onFilter.emit($event)"
+  ></wt-tree>
+  <ng-container *ngIf="footerTemplate">
+    <ng-container *ngTemplateOutlet="footerTemplate; context: { $implicit: value, options: options }"></ng-container>
+  </ng-container>
+</div>

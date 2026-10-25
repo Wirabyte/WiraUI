@@ -1,7 +1,7 @@
 /* wt-checkbox. Shared by wiratheme v1, v2 and v3. The real <input> covers the whole label (invisible),
    so clicks, keyboard focus and screen readers all use the native control. */
 @layer wiratheme.components {
-  wt-checkbox {
+  :is(wt-checkbox, wt-check-box) {
     display: inline-flex;
     vertical-align: middle;
   }
@@ -118,7 +118,7 @@
     opacity: var(--wt-disabled-opacity);
   }
   .wt-checkbox.wt-invalid .wt-checkbox-box,
-  wt-checkbox.ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-checkbox-box {
+  :is(wt-checkbox, wt-check-box).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-checkbox-box {
     border-color: var(--wt-danger-color);
   }
 }

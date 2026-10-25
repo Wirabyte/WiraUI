@@ -1,0 +1,122 @@
+/* wt-tieredmenu (and wt-contextmenu, which shows one at the pointer). Shared by wiratheme v1, v2 and v3. Items look like
+   wt-menu's; a submenu opens beside its item (flipped when it would leave the window) and below it on phones. */
+@layer wiratheme.components {
+  :is(wt-tieredmenu, wt-tiered-menu) {
+    display: block;
+  }
+  .wt-tieredmenu {
+    box-sizing: border-box;
+    min-width: var(--wt-menu-min-width);
+    max-width: 100%;
+    padding: var(--wt-menu-padding);
+    border: var(--wt-menu-border-width) solid var(--wt-border);
+    border-radius: var(--wt-menu-radius);
+    background: var(--wt-menu-bg);
+    color: var(--wt-menu-item-color);
+  }
+  .wt-tieredmenu-overlay {
+    position: fixed;
+    inset: auto;
+    z-index: 1200;
+    margin: 0;
+    overflow: visible;
+    border-width: var(--wt-menu-overlay-border-width);
+    background: var(--wt-menu-overlay-bg);
+    box-shadow: var(--wt-menu-shadow);
+  }
+  .wt-tieredmenu-disabled {
+    opacity: var(--wt-disabled-opacity);
+    pointer-events: none;
+  }
+  .wt-tieredmenu-root-list,
+  .wt-tieredmenu-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wt-menu-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    outline: none;
+  }
+  .wt-tieredmenu-item {
+    position: relative;
+  }
+  .wt-tieredmenu-item-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--wt-menu-item-padding);
+    border-radius: var(--wt-menu-item-radius);
+    color: var(--wt-menu-item-color);
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+  .wt-tieredmenu-item-link:hover,
+  .wt-tieredmenu-item-active > .wt-tieredmenu-item-content > .wt-tieredmenu-item-link {
+    background: var(--wt-menu-item-hover-bg);
+    color: var(--wt-menu-item-hover-color);
+  }
+  .wt-tieredmenu-item-link:focus-visible {
+    background: var(--wt-menu-item-hover-bg);
+    box-shadow: inset 0 0 0 2px var(--wt-field-focus-border);
+  }
+  .wt-tieredmenu-item-disabled > .wt-tieredmenu-item-content > .wt-tieredmenu-item-link {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-tieredmenu-link-active {
+    color: var(--wt-menu-link-active-color);
+  }
+  .wt-tieredmenu-item-icon {
+    flex: none;
+    color: var(--wt-menu-item-icon-color);
+  }
+  .wt-tieredmenu-item-label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .wt-tieredmenu-submenu-icon {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-left: auto;
+    color: var(--wt-menu-item-icon-color);
+  }
+  .wt-tieredmenu-separator {
+    margin: 0.25rem 0;
+    border-top: 1px solid var(--wt-menu-separator-color);
+  }
+  .wt-tieredmenu-submenu {
+    position: absolute;
+    top: calc(var(--wt-menu-padding) * -1);
+    left: 100%;
+    z-index: 1;
+    box-sizing: border-box;
+    min-width: var(--wt-menu-min-width);
+    padding: var(--wt-menu-padding);
+    border: var(--wt-menu-overlay-border-width) solid var(--wt-border);
+    border-radius: var(--wt-menu-radius);
+    background: var(--wt-menu-overlay-bg);
+    box-shadow: var(--wt-menu-shadow);
+  }
+  .wt-tieredmenu-submenu-flip {
+    right: 100%;
+    left: auto;
+  }
+  /* Phones: no room beside, so a submenu opens below its item, indented. */
+  @media (max-width: 575.98px) {
+    .wt-tieredmenu-submenu {
+      position: static;
+      min-width: 0;
+      padding: 0 0 0 1rem;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .wt-tieredmenu-item-active > .wt-tieredmenu-item-content .wt-tieredmenu-submenu-icon {
+      rotate: 90deg;
+    }
+  }
+}

@@ -41,5 +41,17 @@
         <span class="docs-demo-output">value: <code>{{ form.getRawValue() | json }}</code></span>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="item" [section]="sec['item']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['item']" [ts]="ts['item']">
+        <wt-selectbutton id="d-sb-item" name="view" [(ngModel)]="view" [options]="local(views)" optionLabel="label" optionValue="value" [unselectable]="true">
+          <ng-template #item let-option let-i="index">
+            <span class="docs-panel-head"><i [class]="option.icon"></i> {{ i + 1 }}. {{ option.label }}</span>
+          </ng-template>
+        </wt-selectbutton>
+        <span class="docs-demo-output">view: <code id="d-sb-item-value">{{ view }}</code></span>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

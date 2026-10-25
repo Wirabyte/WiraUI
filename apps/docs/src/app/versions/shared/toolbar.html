@@ -18,6 +18,23 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="start"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-toolbar id="d-toolbar-tpl">
+          <ng-template #start>
+            <wt-button [label]="tx('สร้างใหม่')" icon="pi pi-plus"></wt-button>
+          </ng-template>
+          <ng-template #center>
+            <b>{{ tx('จัดการเอกสาร') }}</b>
+          </ng-template>
+          <ng-template #end>
+            <wt-button icon="pi pi-bell" [ariaLabel]="tx('การแจ้งเตือน')" [text]="true" [rounded]="true"></wt-button>
+          </ng-template>
+        </wt-toolbar>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="wrap" [section]="sec['wrap']">
       <docs-demo [html]="code['wrap']" layout="stack">
         <div style="max-width: 360px">

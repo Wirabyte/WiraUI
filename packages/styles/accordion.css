@@ -27,6 +27,21 @@
   .wt-accordion-tab {
     border-bottom: var(--wt-accordion-panel-border-width) solid var(--wt-border);
   }
+  /* wt-accordion [gap]: each panel a card of its own (the frame moves from the stack to every panel). */
+  .wt-accordion-separated > .wt-accordion {
+    border-width: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .wt-accordion-separated .wt-accordion-tab,
+  .wt-accordion-separated wt-accordion-tab:last-child > .wt-accordion-tab,
+  .wt-accordion-separated wt-accordiontab:last-child > .wt-accordion-tab,
+  .wt-accordion-separated .wt-accordion > .wt-accordion-tab:last-child {
+    overflow: hidden;
+    border: var(--wt-accordion-border-width) solid var(--wt-border);
+    border-radius: var(--wt-accordion-root-radius);
+    background: var(--wt-accordion-bg);
+  }
   /* The surface's own border closes the last row. */
   wt-accordion-tab:last-child > .wt-accordion-tab,
   wt-accordiontab:last-child > .wt-accordion-tab,

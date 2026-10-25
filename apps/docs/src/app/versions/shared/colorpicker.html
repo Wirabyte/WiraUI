@@ -1,0 +1,51 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <div class="docs-demo-labelled">
+          <label for="d-cp-school-input">{{ tx('สีประจำโรงเรียน') }}</label>
+          <div class="docs-demo-actions">
+            <wt-colorPicker id="d-cp-basic" inputId="d-cp-school-input" name="schoolColor" [(ngModel)]="schoolColor" (onChange)="changed()"></wt-colorPicker>
+            <code id="d-cp-basic-value">{{ schoolColor }}</code>
+          </div>
+        </div>
+        <span class="docs-demo-output">onChange: <code id="d-cp-changes">{{ changes }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="inline" [section]="sec['inline']">
+      <docs-demo [html]="code['inline']" [ts]="ts['inline']">
+        <wt-colorPicker id="d-cp-inline" name="noticeColor" [(ngModel)]="noticeColor" format="rgb" [inline]="true" [ariaLabel]="tx('สีป้ายประกาศ')"></wt-colorPicker>
+        <code id="d-cp-inline-value">rgb({{ noticeColor.r }}, {{ noticeColor.g }}, {{ noticeColor.b }})</code>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="format" [section]="sec['format']">
+      <docs-demo [html]="code['format']" [ts]="ts['format']">
+        <wt-colorPicker id="d-cp-hsb" name="headerColor" [(ngModel)]="headerColor" format="hsb" defaultColor="0f766e" [ariaLabel]="tx('สีหัวเกียรติบัตร')"></wt-colorPicker>
+        <code id="d-cp-hsb-value">{{ headerColor ? 'h ' + headerColor.h + ' · s ' + headerColor.s + ' · b ' + headerColor.b : 'null' }}</code>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="events" [section]="sec['events']">
+      <docs-demo [html]="code['events']" [ts]="ts['events']">
+        <wt-colorPicker
+          id="d-cp-events"
+          name="groupColor"
+          [(ngModel)]="groupColor"
+          [ariaLabel]="tx('สีของกลุ่มสาระ')"
+          (onShow)="logPanel('onShow')"
+          (onHide)="logPanel('onHide')"
+        ></wt-colorPicker>
+        <wt-colorPicker id="d-cp-disabled" name="lockedColor" [(ngModel)]="schoolColor" [disabled]="true" [ariaLabel]="tx('สีประจำโรงเรียน')"></wt-colorPicker>
+        <span class="docs-demo-output">event: <code id="d-cp-events-log">{{ panelEvents.join(' · ') || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

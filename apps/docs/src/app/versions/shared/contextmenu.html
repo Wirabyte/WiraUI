@@ -1,0 +1,36 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div #worksheet id="d-cm-target" class="docs-cm-card" tabindex="0">
+          <span><i class="pi pi-file"></i> {{ tx('ใบงานคณิตศาสตร์ ม.1') }}</span>
+          <small>{{ tx('คลิกขวาที่การ์ดนี้') }}</small>
+        </div>
+        <wt-contextMenu id="d-cm-basic" [model]="local(fileActions)" [target]="worksheet"></wt-contextMenu>
+        <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-cm-command">{{ lastCommand || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="show" [section]="sec['show']">
+      <docs-demo [html]="code['show']" [ts]="ts['show']" layout="stack">
+        <ul id="d-cm-files" class="docs-cm-files">
+          @for (file of local(files); track file.id) {
+            <li tabindex="0" class="docs-cm-file" [class.docs-cm-file-picked]="file.id === pickedFile?.id" (contextmenu)="pickFile(file); fileMenu.show($event)">
+              <i class="pi pi-file"></i> {{ file.name }}
+            </li>
+          }
+        </ul>
+        <wt-contextMenu #fileMenu id="d-cm-show" [model]="local(fileActions)"></wt-contextMenu>
+        <span class="docs-demo-output">
+          {{ tx('เลือกอยู่') }}: <code id="d-cm-picked">{{ pickedFile?.name || '-' }}</code> · {{ tx('สั่งล่าสุด') }}: <code id="d-cm-show-command">{{ lastCommand || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

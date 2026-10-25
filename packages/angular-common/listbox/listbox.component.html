@@ -1,0 +1,123 @@
+<div
+  class="wt-listbox p-listbox p-component"
+  [class.wt-listbox-focused]="focused"
+  [class.p-focus]="focused"
+  [class.wt-listbox-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-listbox-striped]="striped"
+  [class.p-listbox-striped]="striped"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+>
+  <div *ngIf="headerTemplate" class="wt-listbox-header-slot p-listbox-header-slot">
+    <ng-container *ngTemplateOutlet="headerTemplate; context: { $implicit: value, options: visible }"></ng-container>
+  </div>
+  <div *ngIf="hasHeader" class="wt-select-header wt-listbox-header p-listbox-header">
+    <span
+      *ngIf="showCheckAll"
+      class="wt-checkbox wt-listbox-toggle-all"
+      role="checkbox"
+      [attr.tabindex]="disabled ? null : 0"
+      [class.wt-checkbox-checked]="allSelected"
+      [attr.aria-checked]="allSelected ? true : someSelected ? 'mixed' : false"
+      [attr.aria-label]="t.selectAll"
+      (click)="toggleAll($event)"
+      (keydown.space)="$event.preventDefault(); toggleAll($event)"
+    >
+      <span class="wt-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="allSelected" aria-hidden="true">
+        <span class="wt-checkbox-box p-checkbox-box" [class.wt-checkbox-mixed]="someSelected">
+          <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+        </span>
+      </span>
+    </span>
+    <div *ngIf="filter" class="wt-select-filter-wrap wt-listbox-filter-wrap p-iconfield">
+      <input
+        type="text"
+        class="wt-inputtext wt-select-filter p-listbox-filter p-inputtext"
+        role="searchbox"
+        autocomplete="off"
+        [value]="query"
+        [disabled]="disabled"
+        [attr.placeholder]="filterPlaceholder || t.search"
+        [attr.aria-label]="ariaFilterLabel || t.search"
+        [attr.aria-controls]="listId"
+        [attr.aria-activedescendant]="activeId"
+        (input)="search($event)"
+        (keydown)="keydown($event)"
+      />
+      <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+    </div>
+  </div>
+  <div
+    class="wt-select-list-container wt-listbox-list-container p-listbox-list-container p-listbox-list-wrapper"
+    [style.max-height]="scrollHeight"
+    [ngClass]="listStyleClass || ''"
+    [ngStyle]="listStyle || null"
+  >
+    <ul
+      #list
+      class="wt-select-list wt-listbox-list p-listbox-list"
+      role="listbox"
+      [id]="listId"
+      [attr.tabindex]="disabled ? null : tabindex"
+      [attr.aria-multiselectable]="multiple || null"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-labelledby]="ariaLabelledBy || null"
+      [attr.aria-activedescendant]="focused ? activeId : null"
+      [attr.aria-disabled]="disabled || null"
+      [attr.aria-readonly]="readonly || null"
+      (focus)="listFocus($event)"
+      (blur)="listBlur($event)"
+      (keydown)="keydown($event)"
+    >
+      <ng-container *ngFor="let item of visible; let i = index">
+        <li *ngIf="item.group; else option" class="wt-select-group wt-listbox-group p-listbox-option-group p-listbox-item-group" role="presentation">
+          <ng-container *ngIf="groupTemplate; else groupLabel">
+            <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
+          </ng-container>
+          <ng-template #groupLabel>{{ item.label }}</ng-template>
+        </li>
+        <ng-template #option>
+          <li
+            class="wt-select-option wt-listbox-option p-listbox-option p-listbox-item"
+            role="option"
+            [id]="optionId(i)"
+            [class.wt-select-option-selected]="isSelected(item)"
+            [class.p-listbox-option-selected]="isSelected(item)"
+            [class.p-highlight]="isSelected(item)"
+            [class.wt-listbox-option-active]="focused && i === activeIndex"
+            [class.p-focus]="focused && i === activeIndex"
+            [class.wt-select-option-disabled]="item.disabled"
+            [class.p-disabled]="item.disabled"
+            [attr.aria-selected]="isSelected(item)"
+            [attr.aria-disabled]="item.disabled || null"
+            (pointerdown)="optionPointerdown($event)"
+            (click)="optionClick($event, item, i)"
+            (dblclick)="optionDblClick($event, item)"
+          >
+            <span *ngIf="multiple && checkbox" class="wt-checkbox wt-listbox-check" [class.wt-checkbox-checked]="isSelected(item)" aria-hidden="true">
+              <span class="wt-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="isSelected(item)">
+                <span class="wt-checkbox-box p-checkbox-box">
+                  <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+                </span>
+              </span>
+            </span>
+            <ng-container *ngIf="itemTemplate; else label">
+              <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, selected: isSelected(item), index: i }"></ng-container>
+            </ng-container>
+            <ng-template #label><span class="wt-select-option-label">{{ item.label || ' ' }}</span></ng-template>
+          </li>
+        </ng-template>
+      </ng-container>
+      <li *ngIf="!visible.length" class="wt-select-empty wt-listbox-empty p-listbox-empty-message" role="option" aria-disabled="true">
+        <ng-container *ngIf="emptyTemplate; else emptyLabel">
+          <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+        </ng-container>
+        <ng-template #emptyLabel>{{ emptyText }}</ng-template>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="footerTemplate" class="wt-listbox-footer p-listbox-footer">
+    <ng-container *ngTemplateOutlet="footerTemplate; context: { $implicit: value, options: visible }"></ng-container>
+  </div>
+</div>

@@ -1,0 +1,153 @@
+<input
+  type="file"
+  class="wt-fileupload-input"
+  tabindex="-1"
+  aria-hidden="true"
+  [attr.accept]="accept || null"
+  [attr.name]="name || null"
+  [multiple]="multiple"
+  [disabled]="disabled"
+  (change)="onFileSelect($event)"
+/>
+@if (basic) {
+  <div class="wt-fileupload wt-fileupload-basic p-fileupload p-fileupload-basic p-component" [class.wt-fileupload-disabled]="disabled" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+    @for (m of msgs; track m; let i = $index) {
+      <wt-message class="wt-fileupload-message" severity="error" [text]="m" [closable]="true" (onClose)="dismissMessage(i)"></wt-message>
+    }
+    <div class="wt-fileupload-basic-row">
+      <button type="button" [class]="buttonClass(chooseStyleClass, 'wt-fileupload-choose p-fileupload-choose')" [disabled]="!canChoose" [attr.tabindex]="tabindex ?? null" (click)="choose()">
+        <ng-container *ngTemplateOutlet="chooseIconTpl"></ng-container>
+        <span class="wt-btn-label p-button-label">{{ chooseText }}</span>
+      </button>
+      @if (hasFiles() && !auto) {
+        <span class="wt-fileupload-chosen p-fileupload-filename">{{ chosenText }}</span>
+        <button type="button" [class]="removeClass()" [disabled]="uploading || disabled" [attr.aria-label]="t.clear" (click)="clear()">
+          <ng-container *ngTemplateOutlet="removeIconTpl"></ng-container>
+        </button>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="wt-fileupload p-fileupload p-fileupload-advanced p-component" [class.wt-fileupload-disabled]="disabled" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+    @if (headerTemplate) {
+      <ng-container *ngTemplateOutlet="headerTemplate; context: context"></ng-container>
+    } @else {
+      <div class="wt-fileupload-header p-fileupload-header p-fileupload-buttonbar">
+        <button type="button" [class]="buttonClass(chooseStyleClass, 'wt-fileupload-choose p-fileupload-choose-button p-fileupload-choose')" [disabled]="!canChoose" [attr.tabindex]="tabindex ?? null" (click)="choose()">
+          <ng-container *ngTemplateOutlet="chooseIconTpl"></ng-container>
+          <span class="wt-btn-label p-button-label">{{ chooseText }}</span>
+        </button>
+        @if (!auto && showUploadButton) {
+          <button type="button" [class]="buttonClass(uploadStyleClass, 'wt-fileupload-upload p-fileupload-upload-button')" [disabled]="!canUpload" (click)="upload()">
+            @if (uploadIcon) {
+              <i [class]="uploadIcon + ' wt-btn-icon'" aria-hidden="true"></i>
+            } @else {
+              <svg class="wt-fileupload-icon wt-btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 11v2.5h11V11"></path></svg>
+            }
+            <span class="wt-btn-label p-button-label">{{ uploadText }}</span>
+          </button>
+        }
+        @if (!auto && showCancelButton) {
+          <button type="button" [class]="buttonClass(cancelStyleClass, 'wt-fileupload-cancel p-fileupload-cancel-button')" [disabled]="!canCancel" (click)="clear()">
+            @if (cancelIcon) {
+              <i [class]="cancelIcon + ' wt-btn-icon'" aria-hidden="true"></i>
+            } @else {
+              <svg class="wt-fileupload-icon wt-btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"></path></svg>
+            }
+            <span class="wt-btn-label p-button-label">{{ cancelText }}</span>
+          </button>
+        }
+        @if (toolbarTemplate) {
+          <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
+        }
+      </div>
+    }
+    <div
+      class="wt-fileupload-content p-fileupload-content"
+      [class.wt-fileupload-highlight]="dragHighlight"
+      [class.p-fileupload-highlight]="dragHighlight"
+      (dragenter)="dragEnter($event)"
+      (dragover)="dragOver($event)"
+      (dragleave)="dragLeave()"
+      (drop)="drop($event)"
+    >
+      @if (uploading) {
+        <div class="wt-fileupload-progress p-progressbar p-component" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="progress" [attr.aria-label]="uploadText">
+          <div class="wt-fileupload-progress-value p-progressbar-value" [style.width.%]="progress"></div>
+        </div>
+      }
+      @for (m of msgs; track m; let i = $index) {
+        <wt-message class="wt-fileupload-message" severity="error" [text]="m" [closable]="true" (onClose)="dismissMessage(i)"></wt-message>
+      }
+      @if (showFileList) {
+        <div class="wt-fileupload-files p-fileupload-file-list p-fileupload-files" role="list">
+          @for (file of files; track file; let i = $index) {
+            @if (fileTemplate) {
+              <ng-container *ngTemplateOutlet="fileTemplate; context: { $implicit: file, index: i, file: file }"></ng-container>
+            } @else {
+              <div class="wt-fileupload-file p-fileupload-file p-fileupload-row" role="listitem">
+                <ng-container *ngTemplateOutlet="fileView; context: { $implicit: file }"></ng-container>
+                <span class="wt-fileupload-badge wt-fileupload-badge-pending p-badge p-badge-warn">{{ t.pending }}</span>
+                <button type="button" [class]="removeClass()" [disabled]="uploading || disabled" [attr.aria-label]="t.remove + ' ' + file.name" (click)="remove($event, i)">
+                  <ng-container *ngTemplateOutlet="removeIconTpl"></ng-container>
+                </button>
+              </div>
+            }
+          }
+        </div>
+      }
+      @if (showUploaded) {
+        <div class="wt-fileupload-files wt-fileupload-uploaded p-fileupload-file-list" role="list">
+          @for (file of uploadedFiles; track file; let i = $index) {
+            <div class="wt-fileupload-file p-fileupload-file" role="listitem">
+              <ng-container *ngTemplateOutlet="fileView; context: { $implicit: file }"></ng-container>
+              <span class="wt-fileupload-badge wt-fileupload-badge-done p-badge p-badge-success">{{ t.completed }}</span>
+              <button type="button" [class]="removeClass()" [disabled]="disabled" [attr.aria-label]="t.remove + ' ' + file.name" (click)="removeUploadedFile(i)">
+                <ng-container *ngTemplateOutlet="removeIconTpl"></ng-container>
+              </button>
+            </div>
+          }
+        </div>
+      }
+      @if (contentTemplate) {
+        <ng-container *ngTemplateOutlet="contentTemplate; context: context"></ng-container>
+      }
+      @if (showEmpty) {
+        <div class="wt-fileupload-empty p-fileupload-empty">
+          @if (emptyTemplate) {
+            <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+          } @else {
+            <svg class="wt-fileupload-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.9-8.9A6 6 0 0 1 17.7 8 4 4 0 0 1 17 18"></path><path d="M12 12v8M9 15l3-3 3 3"></path></svg>
+            <span class="wt-fileupload-empty-text">{{ t.dropFiles }}</span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}
+
+<ng-template #chooseIconTpl>
+  @if (chooseIcon) {
+    <i [class]="chooseIcon + ' wt-btn-icon'" aria-hidden="true"></i>
+  } @else {
+    <svg class="wt-fileupload-icon wt-btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"></path></svg>
+  }
+</ng-template>
+
+<ng-template #removeIconTpl>
+  <svg class="wt-fileupload-icon wt-btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"></path></svg>
+</ng-template>
+
+<ng-template #fileView let-file>
+  @if (isImage(file)) {
+    <img class="wt-fileupload-thumb p-fileupload-file-thumbnail" [src]="urlOf(file)" [attr.width]="previewWidth" alt="" (error)="imageError($event)" />
+  } @else {
+    <span class="wt-fileupload-file-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+    </span>
+  }
+  <div class="wt-fileupload-file-info p-fileupload-file-info">
+    <div class="wt-fileupload-file-name p-fileupload-file-name p-fileupload-filename">{{ file.name }}</div>
+    <div class="wt-fileupload-file-size p-fileupload-file-size">{{ formatSize(file.size) }}</div>
+  </div>
+</ng-template>

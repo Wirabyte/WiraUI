@@ -89,7 +89,13 @@ export const BUTTON_DOC: ComponentDoc = {
         en: '<code>icon</code> takes a class from the icon set your app already uses, such as Font Awesome or any icon font with classes like <code>pi pi-check</code>. Give icon-only buttons an <code>ariaLabel</code> for screen readers.',
       },
     },
-    badge: { title: 'Badge' },
+    badge: {
+      title: 'Badge',
+      text: {
+        th: '<code>badge</code> ตัวเลขหรือข้อความท้ายปุ่ม และ <code>badgeSeverity</code> สีของ badge · <code>[link]="true"</code> ทำให้ปุ่มเป็นแบบลิงก์ · <code>[style]</code> (object) ใส่ที่ตัวปุ่ม',
+        en: '<code>badge</code> puts a count or text at the end and <code>badgeSeverity</code> colours it · <code>[link]="true"</code> makes a link-style button · <code>[style]</code> (an object) goes on the button.',
+      },
+    },
     loading: {
       title: { th: 'Loading และ Disabled', en: 'Loading and Disabled' },
       text: {
@@ -137,7 +143,8 @@ export const BUTTON_DOC: ComponentDoc = {
 <wt-button icon="pi pi-search" ariaLabel="ค้นหา"></wt-button>
 <wt-button icon="pi pi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wt-button>`,
     badge: `<wt-button label="แจ้งเตือน" icon="pi pi-bell" badge="3"></wt-button>
-<wt-button label="ข้อความ" severity="secondary" badge="12"></wt-button>`,
+<wt-button label="ข้อความ" severity="secondary" badge="12" badgeSeverity="danger"></wt-button>
+<wt-button label="ดูคำสั่งซื้อ" [link]="true" [style]="{ minWidth: '8rem' }"></wt-button>`,
     action: `<wt-button id="demo-save" label="ส่งข้อมูล" icon="pi pi-send" [action]="save"></wt-button>`,
     loading: `<wt-button label="บันทึกแบบร่าง" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
 <wt-button label="ปิดอยู่" [disabled]="true"></wt-button>`,
@@ -186,8 +193,11 @@ saveDraft(): void {
         { name: 'rounded', type: 'boolean', default: 'false', description: { th: 'ขอบมนเต็ม', en: 'Fully rounded corners' } },
         { name: 'size', type: "'small' | 'large' | 'sm' | 'lg'", description: { th: 'ขนาดของปุ่ม', en: 'Button size' } },
         { name: 'styleClass', type: 'string', description: { th: 'class เพิ่ม (class ปุ่มแบบเดิมถูกแปลงให้)', en: 'Extra classes (existing button classes are mapped)' } },
+        { name: 'style', type: 'object', description: { th: "style ของปุ่ม เช่น { minWidth: '8rem' }", en: "Button style, e.g. { minWidth: '8rem' }" } },
+        { name: 'link', type: 'boolean', default: 'false', description: { th: 'ปุ่มหน้าตาแบบลิงก์', en: 'A button that looks like a link' } },
         { name: 'fluid', type: 'boolean', default: 'false', description: { th: 'กว้างเต็มพื้นที่', en: 'Full width' } },
         { name: 'badge', type: 'string | number', description: { th: 'ตัวเลขหรือข้อความเล็กท้ายปุ่ม', en: 'Small count or text at the end' } },
+        { name: 'badgeSeverity', type: 'WtSeverityInput', description: { th: 'สีของ badge', en: 'Badge colour' } },
         { name: 'loading', type: 'boolean', default: 'false', description: { th: 'แสดง spinner และกดไม่ได้', en: 'Shows a spinner and blocks clicks' } },
         { name: 'action', type: 'WtButtonAction', description: { th: 'ฟังก์ชันที่คืน Promise หรือ Observable ปุ่มแสดง loading จนงานเสร็จ', en: 'Function returning a Promise or Observable; the button stays loading until it settles' } },
         { name: 'disabled', type: 'boolean', default: 'false', description: { th: 'ปิดการกด', en: 'Disables the button' } },

@@ -24,7 +24,7 @@ import { WtRadioButtonClickEvent } from './radiobutton.types';
  * (and the same ngModel field or formControlName); each one has its own `value`.
  */
 @Component({
-  selector: 'wt-radiobutton',
+  selector: 'wt-radiobutton, wt-radioButton, wt-radio-button',
   standalone: true,
   imports: [NgIf],
   templateUrl: './radiobutton.component.html',
@@ -39,6 +39,16 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   @Input() label?: string;
   @Input() inputId?: string;
   @Input() ariaLabel?: string;
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }

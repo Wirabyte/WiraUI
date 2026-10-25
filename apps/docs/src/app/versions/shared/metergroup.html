@@ -34,6 +34,27 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="reverse" [section]="sec['reverse']">
+      <docs-demo [html]="code['reverse']" [ts]="ts['multiple']">
+        <div class="docs-demo-labelled">
+          <span class="docs-demo-output">{{ tx('ปกติ') }}</span>
+          <wt-metergroup id="d-meter-normal" [value]="local(storage)" orientation="vertical" labelOrientation="vertical" style="height: 14rem" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        </div>
+        <div class="docs-demo-labelled">
+          <span class="docs-demo-output">[reverse]="true"</span>
+          <wt-metergroup
+            id="d-meter-reverse"
+            [value]="local(storage)"
+            orientation="vertical"
+            labelOrientation="vertical"
+            [reverse]="true"
+            style="height: 14rem"
+            [ariaLabel]="tx('พื้นที่จัดเก็บ')"
+          ></wt-metergroup>
+        </div>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="minmax" [section]="sec['minmax']">
       <docs-demo [html]="code['minmax']" [ts]="ts['minmax']" layout="stack">
         <wt-metergroup [value]="local(usedGb)" [min]="0" [max]="200" [ariaLabel]="tx('พื้นที่ 200 GB')"></wt-metergroup>

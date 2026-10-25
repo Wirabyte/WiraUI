@@ -1,4 +1,4 @@
-<div class="wt-progress-spinner p-progressspinner p-component" role="progressbar" aria-busy="true" [attr.aria-label]="label()">
+<div class="wt-progress-spinner p-progressspinner p-component" [class]="styleClass() || ''" [style]="rootStyle()" role="progressbar" aria-busy="true" [attr.aria-label]="label()">
   <svg class="wt-progress-spinner-svg p-progressspinner-spin" viewBox="25 25 50 50" [style.animation-duration]="animationDuration()">
     <circle
       class="wt-progress-spinner-circle p-progressspinner-circle"

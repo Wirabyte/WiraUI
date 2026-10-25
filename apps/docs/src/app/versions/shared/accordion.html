@@ -80,6 +80,40 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="header"></docs-slot-note>
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-accordion id="d-acc-tpl">
+          <wt-accordion-tab>
+            <ng-template #header>
+              <span class="docs-panel-head"><i class="pi pi-truck"></i> {{ tx('การจัดส่ง') }} <wt-badge [value]="tx('ใหม่')" severity="success"></wt-badge></span>
+            </ng-template>
+            <ng-template #content>
+              <p id="d-acc-lazy" class="docs-demo-p">{{ tx('สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก') }}</p>
+            </ng-template>
+          </wt-accordion-tab>
+          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
+        </wt-accordion>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="gap" [section]="sec['gap']">
+      <docs-demo [html]="code['gap']" [ts]="ts['gap']" layout="stack">
+        <span class="docs-demo-output">[gap]="true" · {{ tx('แยกเป็นการ์ด') }}</span>
+        <wt-accordion id="d-accordion-gap" [gap]="true" [(activeIndex)]="gapOpen">
+          <wt-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wt-accordion-tab>
+          <wt-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wt-accordion-tab>
+          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
+        </wt-accordion>
+        <span class="docs-demo-output">[gap]="false" · {{ tx('ต่อเป็นกล่องเดียว') }}</span>
+        <wt-accordion id="d-accordion-joined" [gap]="false" [(activeIndex)]="joinedOpen">
+          <wt-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wt-accordion-tab>
+          <wt-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wt-accordion-tab>
+          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
+        </wt-accordion>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
   </ng-template>
 </docs-component-page>

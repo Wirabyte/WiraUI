@@ -1,0 +1,34 @@
+/* wt-splitbutton. Shared by wiratheme v1, v2 and v3. The main button and the arrow joined into one control; the
+   menu is a wt-menu popup under it. */
+@layer wiratheme.components {
+  :is(wt-splitbutton, wt-split-button) {
+    display: inline-flex;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+  .wt-splitbutton {
+    display: inline-flex;
+    align-items: stretch;
+    max-width: 100%;
+  }
+  .wt-splitbutton > .wt-splitbutton-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .wt-splitbutton > .wt-splitbutton-dropdown {
+    flex: none;
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .wt-splitbutton > .wt-splitbutton-dropdown:not(.wt-btn-outlined):not(.wt-btn-text) {
+    border-left-color: color-mix(in srgb, var(--_fg) 35%, var(--_bg));
+  }
+  .wt-splitbutton-chevron {
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+}

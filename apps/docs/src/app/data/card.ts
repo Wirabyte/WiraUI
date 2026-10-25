@@ -1,4 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
+import { STYLE_ROW } from './doc-helpers';
 
 export const CARD_DOC: ComponentDoc = {
   id: 'card',
@@ -32,6 +33,13 @@ export const CARD_DOC: ComponentDoc = {
     'พักริมทะเลสาบ ล่องเรือชมพระอาทิตย์ตก และอาหารเย็นจากฟาร์มท้องถิ่น': 'Stay by the lake, take a sunset boat ride and have dinner from a local farm.',
     'ยอดขายเดือนนี้': "This month's sales",
     '฿128,400 จาก 312 คำสั่งซื้อ': '฿128,400 from 312 orders',
+    'ข่าวรับสมัคร': 'Admissions news',
+    'ปีการศึกษา 2569': '2026 school year',
+    'เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4': 'Applications are open for grades 7 and 10',
+    'สมัครเลย': 'Apply now',
+    'ประกาศ': 'Notice',
+    'ปิดภาคเรียนวันที่ 1 ตุลาคม': 'Term ends on 1 October',
+    'อัปเดตเมื่อวานนี้': 'Updated yesterday',
   },
   sections: {
     import: { title: 'Import' },
@@ -47,6 +55,13 @@ export const CARD_DOC: ComponentDoc = {
       text: {
         th: 'ใส่ attribute <code>wtCardHeader</code> (ด้านบนสุด เช่น รูป), <code>wtCardActions</code> (ข้างหัวการ์ด) และ <code>wtCardFooter</code> บน element ที่จะวาง ส่วนที่ไม่ได้ใส่จะไม่กินพื้นที่',
         en: 'Add <code>wtCardHeader</code> (top, e.g. an image), <code>wtCardActions</code> (next to the title) or <code>wtCardFooter</code> to the element you place. Unused slots take no space.',
+      },
+    },
+    templates: {
+      title: 'Templates',
+      text: {
+        th: 'template <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> และ <code>footer</code> (เขียนเป็น <code>#name</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot · element <code>&lt;wt-header&gt;</code> และ <code>&lt;wt-footer&gt;</code> วางในการ์ดได้เลยเหมือน <code>wtCardHeader</code> / <code>wtCardFooter</code> · <code>styleClass</code> และ <code>style</code> (object) ใส่ที่กล่องการ์ด',
+        en: 'The <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> and <code>footer</code> templates (as <code>#name</code>, <code>wtTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots · the <code>&lt;wt-header&gt;</code> and <code>&lt;wt-footer&gt;</code> elements go straight into the card like <code>wtCardHeader</code> / <code>wtCardFooter</code> · <code>styleClass</code> and <code>style</code> (an object) go on the card box.',
       },
     },
     variants: {
@@ -83,6 +98,25 @@ export const CARD_DOC: ComponentDoc = {
     <wt-button label="อัปเกรด" size="small"></wt-button>
     <wt-button label="รายละเอียด" size="small" severity="secondary" [text]="true"></wt-button>
   </div>
+</wt-card>`,
+    templates: `<wt-card styleClass="news-card" [style]="{ maxWidth: '26rem' }">
+  <ng-template #header>
+    <div class="cover">ปีการศึกษา 2569</div>
+  </ng-template>
+  <ng-template #title>ข่าวรับสมัคร</ng-template>
+  <ng-template #subtitle>ปีการศึกษา 2569</ng-template>
+  <ng-template #content>
+    <p>เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4</p>
+  </ng-template>
+  <ng-template #footer>
+    <wt-button label="สมัครเลย" size="small"></wt-button>
+  </ng-template>
+</wt-card>
+
+<wt-card header="ประกาศ">
+  <wt-header><div class="cover">ปิดภาคเรียนวันที่ 1 ตุลาคม</div></wt-header>
+  <p>ปิดภาคเรียนวันที่ 1 ตุลาคม</p>
+  <wt-footer>อัปเดตเมื่อวานนี้</wt-footer>
 </wt-card>`,
     variants: `<wt-card header="Default"></wt-card>
 <wt-card header="Outlined" variant="outlined"></wt-card>
@@ -132,6 +166,7 @@ ngOnInit(): void {
           },
         },
         { name: 'loading', type: 'boolean', default: 'false', description: { th: 'แสดง skeleton แทนเนื้อหา', en: 'Shows skeleton lines instead of the content' } },
+        STYLE_ROW,
       ],
     },
     {
@@ -143,6 +178,8 @@ ngOnInit(): void {
         { name: 'wtCardActions', type: 'attribute', description: { th: 'ปุ่มหรือเมนูทางขวาของหัวการ์ด', en: 'Buttons or a menu to the right of the title' } },
         { name: '(default)', type: 'content', description: { th: 'เนื้อหาของการ์ด', en: 'Card content' } },
         { name: 'wtCardFooter', type: 'attribute', description: { th: 'ส่วนท้าย เรียงแนวนอนและขึ้นบรรทัดใหม่เองเมื่อแคบ', en: 'Footer row that wraps on narrow screens' } },
+        { name: 'wt-header · wt-footer', type: 'element', description: { th: 'เหมือน wtCardHeader / wtCardFooter', en: 'Like wtCardHeader / wtCardFooter' } },
+        { name: 'header · title · subtitle · content · footer', type: 'template', description: { th: 'template ของแต่ละส่วน (#name, wtTemplate หรือ pTemplate)', en: 'A template per part (#name, wtTemplate or pTemplate)' } },
       ],
       note: {
         th: 'slot ที่ว่างจะหายไปเอง ระยะห่าง body gap จึงอยู่ระหว่างส่วนที่มีจริงเท่านั้น',

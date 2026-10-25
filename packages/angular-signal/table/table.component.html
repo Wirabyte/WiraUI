@@ -61,13 +61,29 @@
           <ng-container *ngTemplateOutlet="headerTemplate; context: columnsContext"></ng-container>
         </thead>
       }
+      @if (frozenValue.length && frozenBodyTemplate) {
+        <tbody class="wt-table-tbody wt-table-frozen-tbody p-datatable-frozen-tbody">
+          @for (row of frozenValue; track $index; let i = $index) {
+            <ng-container *ngTemplateOutlet="frozenBodyTemplate; context: frozenContext(row, i)"></ng-container>
+          }
+        </tbody>
+      }
       <tbody class="wt-table-tbody p-datatable-tbody">
         @if (showLoadingBody) {
           <ng-container *ngTemplateOutlet="loadingBodyTemplate; context: columnsContext"></ng-container>
         } @else {
           @if (bodyTemplate) {
             @for (row of pageRows; track trackRow($index, row); let i = $index) {
+              @if (groupHeaderTemplate && isGroupStart(i)) {
+                <ng-container *ngTemplateOutlet="groupHeaderTemplate; context: rowContext(row, i)"></ng-container>
+              }
               <ng-container *ngTemplateOutlet="bodyTemplate; context: rowContext(row, i)"></ng-container>
+              @if (rowExpansionTemplate && isRowExpanded(row)) {
+                <ng-container *ngTemplateOutlet="rowExpansionTemplate; context: rowContext(row, i)"></ng-container>
+              }
+              @if (groupFooterTemplate && isGroupEnd(i)) {
+                <ng-container *ngTemplateOutlet="groupFooterTemplate; context: rowContext(row, i)"></ng-container>
+              }
             }
           }
           @if (isEmpty && !loading) {

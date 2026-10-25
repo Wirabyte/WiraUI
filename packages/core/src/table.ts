@@ -6,13 +6,36 @@ export interface SortMeta {
   order: number;
 }
 
-export type FilterMatchMode = SelectMatchMode | 'notContains' | 'notEquals' | 'lt' | 'lte' | 'gt' | 'gte' | 'in';
+export type FilterMatchMode =
+  | SelectMatchMode
+  | 'notContains'
+  | 'notEquals'
+  | 'lt'
+  | 'lte'
+  | 'gt'
+  | 'gte'
+  | 'in'
+  | 'dateIs'
+  | 'dateIsNot'
+  | 'dateBefore'
+  | 'dateAfter';
 
-/** A column filter: `{ value: 'ม.1', matchMode: 'equals' }`. */
+/** Days since the epoch in local time, or null for values that are not dates. */
+function dayOf(v: unknown): number | null {
+  const d = v instanceof Date ? v : typeof v === 'string' || typeof v === 'number' ? new Date(v) : null;
+  if (!d || isNaN(d.getTime())) return null;
+  return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000;
+}
+
+/** A column filter: `{ value: 'ม.1', matchMode: 'equals' }`. In a list of rules, `operator` says how they combine. */
 export interface FilterMeta {
   value: unknown;
   matchMode?: FilterMatchMode;
+  operator?: 'and' | 'or';
 }
+
+/** One column's filter: a single rule, or rules combined by the first rule's `operator` (`and` by default). */
+export type FilterRule = FilterMeta | FilterMeta[];
 
 const collator = typeof Intl !== 'undefined' ? new Intl.Collator('th', { numeric: true, sensitivity: 'base' }) : null;
 const isEmpty = (v: unknown) => v === null || v === undefined || v === '';
@@ -69,6 +92,17 @@ export function matchValue(cell: unknown, filter: unknown, mode: FilterMatchMode
       return !isEmpty(cell) && compareValues(cell, filter) > 0;
     case 'gte':
       return !isEmpty(cell) && compareValues(cell, filter) >= 0;
+    case 'dateIs':
+    case 'dateIsNot':
+    case 'dateBefore':
+    case 'dateAfter': {
+      // Compared by calendar day, so a filter date matches rows with any time on that day.
+      const c = dayOf(cell);
+      const f = dayOf(filter);
+      if (f === null) return true;
+      if (c === null) return mode === 'dateIsNot';
+      return mode === 'dateIs' ? c === f : mode === 'dateIsNot' ? c !== f : mode === 'dateBefore' ? c < f : c > f;
+    }
   }
   if (cell instanceof Date && filter instanceof Date && (mode === 'equals' || mode === 'notEquals')) {
     const same = cell.getTime() === filter.getTime();
@@ -104,10 +138,24 @@ export function filterGlobal<T>(rows: readonly T[], value: string, fields: reado
 }
 
 /** Rows that pass every column filter (`{ grade: { value: 'ม.1', matchMode: 'equals' } }`). */
-export function filterColumns<T>(rows: readonly T[], filters: Readonly<Record<string, FilterMeta | undefined>>): T[] {
-  const active = Object.entries(filters).filter(([, f]) => f && !isEmpty(f.value) && !(Array.isArray(f.value) && !f.value.length));
+const hasValue = (f: FilterMeta | undefined) => !!f && !isEmpty(f.value) && !(Array.isArray(f.value) && !f.value.length);
+
+/** Rows that pass every column filter (`{ grade: { value: 'ม.1', matchMode: 'equals' } }`, or a list of rules). */
+export function filterColumns<T>(rows: readonly T[], filters: Readonly<Record<string, FilterRule | undefined>>): T[] {
+  const active: Array<[string, FilterMeta[], 'and' | 'or']> = [];
+  for (const [field, f] of Object.entries(filters)) {
+    if (!f) continue;
+    const rules = (Array.isArray(f) ? f : [f]).filter(hasValue);
+    if (rules.length) active.push([field, rules, (Array.isArray(f) && f[0]?.operator) || 'and']);
+  }
   if (!active.length) return rows.slice();
-  return rows.filter((row) => active.every(([field, f]) => matchValue(optionField(row, field), f!.value, f!.matchMode || 'contains')));
+  return rows.filter((row) =>
+    active.every(([field, rules, op]) => {
+      const cell = optionField(row, field);
+      const test = (f: FilterMeta) => matchValue(cell, f.value, f.matchMode || 'contains');
+      return op === 'or' ? rules.some(test) : rules.every(test);
+    })
+  );
 }
 
 export interface PageState {

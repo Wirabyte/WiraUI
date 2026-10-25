@@ -59,7 +59,9 @@ test('carries the tab class names of its era', async ({ page }, info) => {
 
 test('on a phone the tab row scrolls inside itself and the toolbar wraps', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  // Components with a breakpoint input (navbar, aside menu) switch layout on the media query's change event, a frame
+  // after the resize.
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   const row = await page.locator('#tabs .wt-tablist').evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth }));
   expect(row.scroll).toBeGreaterThan(row.client);
   const overflow = await page.locator('#panels').evaluate((section) => {

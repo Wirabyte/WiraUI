@@ -115,6 +115,18 @@
           </td>
         </tr>
         <tr>
+          <td><code class="docs-api-name">delays</code></td>
+          <td><code class="docs-api-type">{{ '{' }} autoComplete?: number; filter?: number {{ '}' }}</code></td>
+          <td><code>{{ '{' }} autoComplete: 0, filter: 0 {{ '}' }}</code></td>
+          <td>
+            @if (en()) {
+              Milliseconds to wait after typing before AutoComplete asks for suggestions and before Table filters run. 0 (the default) answers on the key itself. A component's own <code>delay</code> / <code>filterDelay</code> input still wins.
+            } @else {
+              หน่วงกี่มิลลิวินาทีหลังพิมพ์ ก่อน AutoComplete ขอรายการแนะนำ และก่อน Table กรองข้อมูล ค่าเริ่มต้น 0 คือทำทันทีที่กดปุ่ม ถ้าใส่ <code>delay</code> / <code>filterDelay</code> ที่ component จะใช้ค่านั้นแทน
+            }
+          </td>
+        </tr>
+        <tr>
           <td><code class="docs-api-name">selector</code></td>
           <td><code class="docs-api-type">string</code></td>
           <td><code>':root'</code></td>

@@ -30,6 +30,18 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="content" [section]="sec['content']">
+      <docs-demo [html]="code['content']">
+        <wt-button id="d-pop-notify" [label]="tx('ตั้งค่าการแจ้งเตือน')" icon="pi pi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
+        <wt-popover #notify id="d-pop-notify-panel">
+          <ng-template #content let-closeCallback="closeCallback">
+            <p class="docs-demo-p">{{ tx('รับการแจ้งเตือนทางอีเมลทุกเช้า') }}</p>
+            <wt-button id="d-pop-notify-ok" [label]="tx('ตกลง')" size="small" (onClick)="closeCallback()"></wt-button>
+          </ng-template>
+        </wt-popover>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="options" [section]="sec['options']">
       <docs-demo [html]="code['options']">
         <wt-button [label]="tx('ตัวกรอง')" severity="secondary" [outlined]="true" (onClick)="filters.toggle($event)"></wt-button>

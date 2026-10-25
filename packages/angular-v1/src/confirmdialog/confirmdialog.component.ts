@@ -8,7 +8,7 @@ import { ɵWtConfirmDialogBase } from './confirmdialog.base';
  * Custom footers can call `cd.accept()` / `cd.reject()` on `#cd`.
  */
 @Component({
-  selector: 'wt-confirmdialog, wt-confirmDialog',
+  selector: 'wt-confirmdialog, wt-confirmDialog, wt-confirm-dialog',
   standalone: true,
   imports: [NgIf, NgClass, NgSwitch, NgSwitchCase, NgTemplateOutlet, WtDialog],
   templateUrl: './confirmdialog.component.html',

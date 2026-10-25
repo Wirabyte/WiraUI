@@ -13,17 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {
-  ɵassertSupportedAngular,
-  ɵrefreshOnTranslation,
-  ɵsize,
-  ɵtoBool,
-  ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtSize,
-  ɵWtStyleLoader,
-} from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize, ɵWtStyleLoader } from 'wiratheme/config';
 import {
   acceptsNumberInput,
   acceptsNumberText,
@@ -48,7 +38,7 @@ const optionalNumber = (v: unknown): number | null => (v === null || v === undef
  * ArrowUp/ArrowDown step the value; phones get the numeric keypad.
  */
 @Component({
-  selector: 'wt-inputnumber',
+  selector: 'wt-inputnumber, wt-inputNumber, wt-input-number',
   standalone: true,
   imports: [NgIf],
   templateUrl: './inputnumber.component.html',
@@ -98,6 +88,32 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
   get invalid(): boolean { return this._invalid; }
   @Input() set fluid(v: unknown) { this._fluid = ɵtoBool(v); }
 
+  /** Classes and styles of the text field inside, as before. */
+  @Input() inputStyleClass?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() inputStyle?: Record<string, any> | null;
+  /** Classic button classes and icon classes for the step buttons (`pi pi-plus`). */
+  @Input() incrementButtonClass?: string | null;
+  @Input() decrementButtonClass?: string | null;
+  @Input() incrementButtonIcon?: string | null;
+  @Input() decrementButtonIcon?: string | null;
+  @Input() autocomplete?: string | null;
+  /** An × inside the field that empties it. */
+  @Input() set showClear(v: unknown) { this._showClear = ɵtoBool(v); }
+  @Output() readonly onKeyDown = new EventEmitter<KeyboardEvent>();
+  @Output() readonly onClear = new EventEmitter<void>();
+  private _showClear = false;
+  private readonly wtConfig = inject(WtConfig);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get inputStyleObject(): Record<string, any> | null {
+    return this.inputStyle && typeof this.inputStyle === 'object' ? this.inputStyle : null;
+  }
+  get showClearButton(): boolean {
+    return this._showClear && this.value !== null && !this.isDisabled && !this.readonly;
+  }
+  get clearLabel(): string {
+    return this.wtConfig.translation.clear;
+  }
   @Output() readonly onInput = new EventEmitter<WtInputNumberInputEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
@@ -173,7 +189,20 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
     return this._max !== null && this.value !== null && this.value >= this._max;
   }
   /** Our classes plus the classic-era names (`p-inputnumber-buttons-stacked`). */
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   get classes(): string {
+    return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
+  }
+  get baseClasses(): string {
     const c = ['wt-inputnumber', 'p-inputnumber', 'p-component'];
     if (this._showButtons) c.push('wt-inputnumber-' + this.buttonLayout, 'p-inputnumber-buttons-' + this.buttonLayout);
     return c.join(' ');
@@ -237,7 +266,17 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
     this.onBlur.emit(event);
   }
 
+  /** Empties the field (the × of `showClear`). */
+  clear(): void {
+    this.value = null;
+    if (this.editing) this.draft = '';
+    this.onModelChange(null);
+    this.onClear.emit();
+    this.cdr.markForCheck();
+  }
+
   keydown(event: KeyboardEvent): void {
+    this.onKeyDown.emit(event);
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       this.spin(event.key === 'ArrowUp' ? 1 : -1);

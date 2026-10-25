@@ -32,6 +32,11 @@
     </docs-section>
 
     <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="stepper" [section]="sec['stepper']">
+      <p>
+        <a id="d-steps-stepper-link" [routerLink]="['/', version.id, 'components', 'stepper']">{{ en() ? 'Open the Stepper page' : 'ไปหน้า Stepper' }}</a>
+      </p>
+    </docs-section>
     <docs-section id="migration" [section]="sec['migration']"></docs-section>
   </ng-template>
 </docs-component-page>

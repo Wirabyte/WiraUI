@@ -28,7 +28,10 @@ export const TEXTAREA_DOC: ComponentDoc = {
   sections: {
     import: {
       title: 'Import',
-      text: { th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>', en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.' },
+      text: {
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> attribute <code>wtTextarea</code>, <code>wtInputTextarea</code>, <code>pInputTextarea</code> และ <code>pTextarea</code> บน <code>&lt;textarea&gt;</code> ทำงานเหมือนกันทุกตัว (<code>wtInputText</code> / <code>pInputText</code> บน textarea ก็ได้)',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wtTextarea</code>, <code>wtInputTextarea</code>, <code>pInputTextarea</code> and <code>pTextarea</code> attributes on a <code>&lt;textarea&gt;</code> all work the same (so do <code>wtInputText</code> / <code>pInputText</code> on a textarea).',
+      },
     },
     basic: { title: 'Basic' },
     autoresize: {

@@ -1,5 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
-import { importText, row, SEVERITY_TYPE, tok } from './doc-helpers';
+import { importText, row, SEVERITY_TYPE, STYLE_ROW, tok } from './doc-helpers';
 
 export const DIVIDER_DOC: ComponentDoc = {
   id: 'divider',
@@ -57,6 +57,7 @@ export const DIVIDER_DOC: ComponentDoc = {
         row('layout', "'horizontal' | 'vertical'", "'horizontal'", 'แนวของเส้น', 'Orientation'),
         row('type', "'solid' | 'dashed' | 'dotted'", "'solid'", 'รูปแบบเส้น', 'Line style'),
         row('align', "'left' | 'center' | 'right' | 'top' | 'bottom'", undefined, 'ตำแหน่งของเนื้อหาบนเส้น', 'Where the content sits on the line'),
+        STYLE_ROW,
       ],
     },
   ],
@@ -92,6 +93,10 @@ export const PANEL_DOC: ComponentDoc = {
     'สมชาย, กมล, มานี และอีก 2 คน': 'Alex, Kim, Mia and 2 more',
     'อัปเดตล่าสุด 5 นาทีที่แล้ว': 'Updated 5 minutes ago',
     'เขียนค่ากลับเมื่อผู้ใช้กดพับหรือกาง': 'is written back when the user collapses or expands it',
+    'สรุปคะแนนสอบ': 'Exam results',
+    'คะแนนเฉลี่ยของห้อง 78.5': 'Class average 78.5',
+    'ส่งออก': 'Export',
+    'คำนวณเมื่อ 08:30 น.': 'Worked out at 08:30',
   },
   sections: {
     import: { title: 'Import', text: importText },
@@ -104,6 +109,13 @@ export const PANEL_DOC: ComponentDoc = {
       },
     },
     slots: { title: 'Slots', text: { th: 'ใส่ attribute <code>wtPanelHeader</code>, <code>wtPanelIcons</code> หรือ <code>wtPanelFooter</code> บน element ที่จะวาง', en: 'Add <code>wtPanelHeader</code>, <code>wtPanelIcons</code> or <code>wtPanelFooter</code> to the element you place.' } },
+    templates: {
+      title: { th: 'template ของหัว ปุ่ม และส่วนท้าย', en: 'Header, icons and footer templates' },
+      text: {
+        th: 'template <code>header</code>, <code>icons</code> และ <code>footer</code> (<code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot และ element <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code> ก็วางได้ (มากับ <code>WtCardModule</code>)',
+        en: 'The <code>header</code>, <code>icons</code> and <code>footer</code> templates (<code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots, and the <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code> elements fit too (they come with <code>WtCardModule</code>).',
+      },
+    },
   },
   code: {
     basic: `<wt-panel header="รายละเอียดคำสั่งซื้อ">
@@ -121,6 +133,16 @@ export const PANEL_DOC: ComponentDoc = {
   <p>สมชาย, กมล, มานี และอีก 2 คน</p>
   <div wtPanelFooter>อัปเดตล่าสุด 5 นาทีที่แล้ว</div>
 </wt-panel>`,
+    templates: `<wt-panel [toggleable]="true">
+  <ng-template #header>
+    <i class="pi pi-chart-bar"></i> <b>สรุปคะแนนสอบ</b>
+  </ng-template>
+  <ng-template #icons>
+    <wt-button icon="pi pi-download" [text]="true" [rounded]="true" ariaLabel="ส่งออก"></wt-button>
+  </ng-template>
+  <p>คะแนนเฉลี่ยของห้อง 78.5</p>
+  <ng-template #footer>คำนวณเมื่อ 08:30 น.</ng-template>
+</wt-panel>`,
   },
   ts: {
     toggleable: `filtersClosed = true;   // [(collapsed)] เขียนค่ากลับเมื่อผู้ใช้กดพับหรือกาง`,
@@ -134,6 +156,7 @@ export const PANEL_DOC: ComponentDoc = {
         row('toggleable', 'boolean', 'false', 'พับเก็บได้', 'Can collapse'),
         row('collapsed', 'boolean', 'false', 'สถานะพับ ใช้ [(collapsed)] ได้', 'Collapsed state; supports [(collapsed)]'),
         row('toggler', "'icon' | 'header'", "'icon'", 'กดที่ปุ่ม หรือกดทั้งหัว', 'Toggle from the button or the whole header'),
+        STYLE_ROW,
       ],
     },
     {
@@ -154,6 +177,8 @@ export const PANEL_DOC: ComponentDoc = {
         row('wtPanelIcons', 'attribute', undefined, 'ปุ่มทางขวาของหัว', 'Buttons on the right of the header'),
         row('(default)', 'content', undefined, 'เนื้อหา', 'Content'),
         row('wtPanelFooter', 'attribute', undefined, 'ส่วนท้าย', 'Footer'),
+        row('wt-header · wt-footer', 'element', undefined, 'เหมือน wtPanelHeader / wtPanelFooter (มากับ WtCardModule)', 'Like wtPanelHeader / wtPanelFooter (from WtCardModule)'),
+        row('header · icons · footer', 'template', undefined, 'template ของแต่ละส่วน (#name, wtTemplate หรือ pTemplate)', 'A template per part (#name, wtTemplate or pTemplate)'),
       ],
     },
   ],
@@ -184,11 +209,20 @@ export const FIELDSET_DOC: ComponentDoc = {
     '99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000': '99/1 Sample Road, Sample District, Bangkok 10000',
     'ข้อมูลเพิ่มเติม': 'More details',
     'หมายเหตุสำหรับทีมงาน': 'Notes for the team',
+    'ผู้ติดต่อฉุกเฉิน': 'Emergency contact',
+    'นางสมศรี ใจดี · 081-234-5678': 'Mary Smith · 081-234-5678',
   },
   sections: {
     import: { title: 'Import', text: importText },
     basic: { title: 'Basic' },
     toggleable: { title: 'Toggleable', text: { th: '<code>toggleable</code> ให้กดที่ legend เพื่อพับ ผูกสถานะด้วย <code>[(collapsed)]</code>', en: '<code>toggleable</code> lets the legend collapse it; bind the state with <code>[(collapsed)]</code>.' } },
+    header: {
+      title: { th: 'template ของ legend', en: 'Legend template' },
+      text: {
+        th: 'template <code>header</code> วาด legend เอง เช่น ใส่ icon (<code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>)',
+        en: 'A <code>header</code> template draws the legend yourself, with an icon for example (<code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>).',
+      },
+    },
   },
   code: {
     basic: `<wt-fieldset legend="ที่อยู่สำหรับจัดส่ง">
@@ -196,6 +230,12 @@ export const FIELDSET_DOC: ComponentDoc = {
 </wt-fieldset>`,
     toggleable: `<wt-fieldset legend="ข้อมูลเพิ่มเติม" [toggleable]="true" [(collapsed)]="moreClosed">
   <p>หมายเหตุสำหรับทีมงาน</p>
+</wt-fieldset>`,
+    header: `<wt-fieldset>
+  <ng-template #header>
+    <i class="pi pi-phone"></i> ผู้ติดต่อฉุกเฉิน
+  </ng-template>
+  <p>นางสมศรี ใจดี · 081-234-5678</p>
 </wt-fieldset>`,
   },
   ts: { toggleable: `moreClosed = false;` },
@@ -205,8 +245,10 @@ export const FIELDSET_DOC: ComponentDoc = {
       title: 'Inputs',
       rows: [
         row('legend', 'string', undefined, 'หัวข้อของกลุ่ม', 'Group title'),
+        row('#header (template)', 'template', undefined, 'legend แบบวาดเอง (wtTemplate / pTemplate ก็ได้)', 'A custom legend (wtTemplate / pTemplate work too)'),
         row('toggleable', 'boolean', 'false', 'พับเก็บได้', 'Can collapse'),
         row('collapsed', 'boolean', 'false', 'สถานะพับ ใช้ [(collapsed)] ได้', 'Collapsed state; supports [(collapsed)]'),
+        STYLE_ROW,
       ],
     },
     {
@@ -267,6 +309,8 @@ export const MESSAGE_DOC: ComponentDoc = {
     'ส่งแบบฟอร์มแล้ว': 'Form sent',
     'จะได้รับอีเมลยืนยันภายใน 5 นาที': 'A confirmation email arrives within 5 minutes.',
     'ข้อความที่มี key ตรงกับ <wt-messages key="form">': 'messages with the key of <wt-messages key="form">',
+    'ส่งเอกสารภายใน <b>วันศุกร์นี้</b>': 'Send the documents by <b>this Friday</b>',
+    'ระบบจะปิดปรับปรุงคืนนี้': 'The system is down for maintenance tonight',
   },
   sections: {
     import: {
@@ -283,6 +327,13 @@ export const MESSAGE_DOC: ComponentDoc = {
     },
     variants: { title: { th: 'รูปแบบและขนาด', en: 'Variants and sizes' } },
     content: { title: { th: 'เนื้อหาเอง', en: 'Custom content' }, text: { th: 'ไม่ใส่ <code>text</code> แล้ววางเนื้อหาไว้ข้างในแทนได้', en: 'Leave out <code>text</code> and put your own content inside.' } },
+    escape: {
+      title: { th: 'ข้อความเป็น HTML', en: 'Text as HTML' },
+      text: {
+        th: '<code>[escape]="false"</code> แสดง <code>text</code> เป็น HTML (Angular sanitize ให้) แบบที่ template เดิมใช้กับข้อความที่มีตัวหนา ส่วน <code>wt-messages</code> รับ <code>severity</code> เป็นค่าเริ่มต้นของข้อความที่ไม่ได้ใส่ severity',
+        en: '<code>[escape]="false"</code> shows <code>text</code> as HTML (sanitised by Angular), as older templates do for text with bold parts. <code>wt-messages</code> takes a <code>severity</code> used by messages that set none.',
+      },
+    },
     messages: {
       title: { th: 'หลายข้อความ (wt-messages)', en: 'Several messages (wt-messages)' },
       text: {
@@ -314,6 +365,8 @@ export const MESSAGE_DOC: ComponentDoc = {
   <span>อีเมลยังไม่ยืนยัน <b>ตรวจกล่องจดหมายของคุณ</b></span>
 </wt-message>`,
     messages: `<wt-messages [(value)]="notices" [enableService]="false"></wt-messages>`,
+    escape: `<wt-message severity="warn" [escape]="false" text="ส่งเอกสารภายใน <b>วันศุกร์นี้</b>"></wt-message>
+<wt-messages [value]="[{ summary: 'ระบบจะปิดปรับปรุงคืนนี้' }]" severity="info" [closable]="false" [enableService]="false"></wt-messages>`,
     service: `<wt-messages key="form"></wt-messages>
 <wt-button label="ส่งแบบฟอร์ม" icon="pi pi-send" (onClick)="sendForm()"></wt-button>`,
   },
@@ -352,6 +405,8 @@ sendForm(): void {
         row('life', 'number', '0', 'ปิดเองหลังกี่มิลลิวินาที (0 = ไม่ปิดเอง)', 'Closes itself after this many ms (0 = never)'),
         row('size', "'small' | 'large'", undefined, 'ขนาด', 'Size'),
         row('variant', "'outlined' | 'simple'", undefined, 'มีขอบ หรือแบบเรียบไม่มีพื้น', 'Bordered, or plain with no background'),
+        row('escape', 'boolean', 'true', 'false = text เป็น HTML (sanitize ให้)', 'false = text is HTML (sanitised)'),
+        STYLE_ROW,
       ],
     },
     { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onClose', 'Event | null', undefined, 'ปิดแล้ว (null เมื่อปิดเองตาม life)', 'Closed (null when life ran out)')] },
@@ -365,6 +420,7 @@ sendForm(): void {
         row('enableService', 'boolean', 'true', 'แสดงข้อความจาก MessageService.add() ที่ key ตรงกันด้วย', 'Also show MessageService.add() messages with the same key'),
         row('key', 'string', undefined, 'key ที่รับจาก MessageService', 'The key it takes from MessageService'),
         row('escape', 'boolean', 'true', 'false = summary / detail เป็น HTML', 'false = summary / detail are HTML'),
+        row('severity', 'WtSeverityInput', "'info'", 'severity ของข้อความที่ไม่ได้ใส่เอง', 'Severity for messages that set none'),
         row('styleClass · style', 'string · object', undefined, 'class / style ของกล่อง', 'Box class / style'),
         row('showTransitionOptions · hideTransitionOptions', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ไม่มีผล', 'Accepted so existing templates compile; no effect'),
         row('valueChange · onClose', 'Message[] · Message', undefined, 'outputs: array หลังปิด · ข้อความที่ถูกปิด', 'Outputs: the array after a close · the closed message'),

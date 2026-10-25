@@ -23,7 +23,7 @@ import { WtRadioButtonClickEvent } from './radiobutton.types';
  * (and the same ngModel field or formControlName); each one has its own `value`.
  */
 @Component({
-  selector: 'wt-radiobutton',
+  selector: 'wt-radiobutton, wt-radioButton, wt-radio-button',
   host: {
     '[class.wt-radiobutton-sm]': "sizeKey() === 'sm'",
     '[class.p-radiobutton-sm]': "sizeKey() === 'sm'",
@@ -48,6 +48,17 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, É
   readonly size = input<WtSize>();
   readonly sizeKey = computed(() => Éµsize(this.size()));
   readonly ariaLabel = input<string>();
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
 
   readonly onClick = output<WtRadioButtonClickEvent>();
 

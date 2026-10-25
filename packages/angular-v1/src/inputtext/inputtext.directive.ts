@@ -8,7 +8,7 @@ import { WtInputSize, WtInputVariant } from './inputtext.types';
  * the input keeps Angular's own value accessor. Turns red when the control is invalid and touched.
  */
 @Directive({
-  selector: 'input[wtInputText]',
+  selector: 'input[wtInputText], input[pInputText], textarea[wtInputText], textarea[pInputText]',
   standalone: true,
   host: {
     class: 'wt-inputtext p-inputtext p-component p-element',

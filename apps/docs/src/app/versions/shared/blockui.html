@@ -1,0 +1,45 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="target" [section]="sec['target']">
+      <docs-demo [html]="code['target']" [ts]="ts['target']" layout="stack">
+        <div #studentForm id="d-bu-target" class="docs-bu-form">
+          <b>{{ tx('ข้อมูลนักเรียน') }}</b>
+          <label for="d-bu-name">{{ tx('ชื่อ - สกุล') }}</label>
+          <input id="d-bu-name" name="studentName" wtInputText [(ngModel)]="studentName" />
+          <wt-button id="d-bu-inner" [label]="tx('ปุ่มด้านใน')" severity="secondary" [outlined]="true" (onClick)="pressInside()"></wt-button>
+        </div>
+        <wt-blockUI id="d-bu-block" [blocked]="isApiSaving" [target]="studentForm" [ariaLabel]="tx('กำลังบันทึก')">
+          <span class="docs-bu-msg">
+            <wt-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wt-progress-spinner>
+            <span>{{ tx('กำลังบันทึก') }}</span>
+          </span>
+        </wt-blockUI>
+        <div class="docs-demo-actions">
+          <wt-button id="d-bu-save" [label]="tx('บันทึก')" icon="pi pi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>
+          <span class="docs-demo-output">
+            saved: <code id="d-bu-saved">{{ savedCount }}</code> · {{ tx('ปุ่มด้านใน') }}: <code id="d-bu-inner-count">{{ innerPresses }}</code>
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="document" [section]="sec['document']">
+      <docs-demo [html]="code['document']" [ts]="ts['document']">
+        <wt-blockUI id="d-bu-page" [blocked]="isApiSending" [ariaLabel]="tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้')">
+          <span class="docs-bu-page-msg">
+            <wt-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wt-progress-spinner>
+            <p>{{ tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้') }}</p>
+          </span>
+        </wt-blockUI>
+        <wt-button id="d-bu-send" [label]="tx('ส่งผลการเรียน')" icon="pi pi-send" (onClick)="sendGrades()"></wt-button>
+        <span class="docs-demo-output">sent: <code id="d-bu-sent">{{ sentCount }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

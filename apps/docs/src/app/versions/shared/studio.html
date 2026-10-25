@@ -1,0 +1,739 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Theming</p>
+  <h1 class="docs-h1">{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      Tune any token of the theme and watch the whole site follow, then download SCSS, CSS, TypeScript or JSON. Everything runs in your browser: no sign-up, no
+      login, and your theme stays in this browser.
+    </p>
+  } @else {
+    <p class="docs-lead">
+      ปรับ token ตัวไหนของธีมก็ได้แล้วเห็นผลทันทีทั้งเว็บ จากนั้นดาวน์โหลดเป็น SCSS, CSS, TypeScript หรือ JSON ทุกอย่างทำงานในเบราว์เซอร์ ไม่ต้องสมัครหรือเข้าสู่ระบบ
+      และธีมถูกเก็บไว้ในเบราว์เซอร์นี้
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip">{{ en() ? 'Free · runs in your browser' : 'ใช้ฟรี · ทำงานในเบราว์เซอร์' }}</span>
+    <span class="docs-chip docs-chip-quiet" id="studio-base-chip">{{ en() ? 'Starts from' : 'เริ่มจาก' }} <code>{{ theme().base }}</code></span>
+  </div>
+</header>
+
+<docs-section id="editor" [title]="{ th: 'แก้ธีม', en: 'Edit the theme' }">
+  <div class="docs-designer" id="studio">
+    <div class="docs-designer-bar">
+      <wt-iconfield class="docs-designer-search">
+        <wt-inputicon icon="pi pi-search"></wt-inputicon>
+        <input
+          wtInputText
+          id="studio-search"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          [value]="query()"
+          (input)="setQuery($event)"
+          [placeholder]="en() ? 'Search tokens, e.g. field-bg' : 'ค้นหา token เช่น field-bg'"
+          [attr.aria-label]="en() ? 'Search tokens' : 'ค้นหา token'"
+        />
+      </wt-iconfield>
+      <div class="docs-designer-actions">
+        <wt-button
+          id="studio-undo"
+          icon="pi pi-undo"
+          severity="secondary"
+          [text]="true"
+          [disabled]="!state.canUndo()"
+          [ariaLabel]="en() ? 'Undo' : 'ย้อนกลับ'"
+          (onClick)="state.undoStudio()"
+        ></wt-button>
+        <wt-button
+          id="studio-redo"
+          class="docs-designer-redo"
+          icon="pi pi-undo"
+          severity="secondary"
+          [text]="true"
+          [disabled]="!state.canRedo()"
+          [ariaLabel]="en() ? 'Redo' : 'ทำซ้ำ'"
+          (onClick)="state.redoStudio()"
+        ></wt-button>
+        @if (!darkOnly()) {
+          <wt-selectbutton
+            id="studio-mode"
+            size="small"
+            optionLabel="label"
+            optionValue="value"
+            [options]="modeOptions()"
+            [allowEmpty]="false"
+            [ngModel]="state.dark()"
+            (ngModelChange)="state.setDark($event)"
+          ></wt-selectbutton>
+        }
+        <wt-button id="studio-import" icon="pi pi-upload" size="small" [outlined]="true" [label]="en() ? 'Import' : 'นำเข้า'" (onClick)="fileInput.click()"></wt-button>
+        <wt-button
+          id="studio-export"
+          icon="pi pi-download"
+          size="small"
+          [label]="en() ? 'Download' : 'ดาวน์โหลด'"
+          [attr.aria-expanded]="exportOpen()"
+          (onClick)="exportOpen.set(!exportOpen())"
+        ></wt-button>
+        <input #fileInput id="studio-file" type="file" hidden accept=".json,.scss,.css,.ts,.txt" (change)="importFile($event)" />
+      </div>
+    </div>
+
+    <div class="docs-designer-status" aria-live="polite">
+      @if (state.studioTheme()) {
+        <span id="studio-saved" class="docs-designer-saved" [class.is-error]="!state.studioSaved()">
+          <docs-icon [name]="state.studioSaved() ? 'check' : 'alert'"></docs-icon>
+          @if (state.studioSaved()) {
+            {{ en() ? 'Saved in this browser · applied to the whole site' : 'บันทึกในเบราว์เซอร์นี้แล้ว · ใช้กับทั้งเว็บ' }}
+          } @else {
+            {{ en() ? 'This browser does not allow saving: the theme lasts until you close the tab' : 'เบราว์เซอร์นี้ไม่ให้บันทึก ธีมจะอยู่จนกว่าจะปิดแท็บ' }}
+          }
+        </span>
+        <span class="docs-chip docs-chip-quiet" id="studio-changes">{{ changeCount() }} {{ en() ? (changeCount() === 1 ? 'change' : 'changes') : 'ค่าที่แก้' }}</span>
+      } @else {
+        <span class="docs-designer-muted">{{ en() ? 'No changes yet: edit any value below.' : 'ยังไม่ได้แก้อะไร แก้ค่าไหนก็ได้ด้านล่าง' }}</span>
+      }
+    </div>
+
+    @if (notice(); as n) {
+      <div class="docs-designer-notice">
+        <wt-message id="studio-notice" [severity]="n.severity" [text]="n.text"></wt-message>
+        <button type="button" class="docs-designer-icon-btn" [attr.aria-label]="en() ? 'Dismiss' : 'ปิด'" (click)="notice.set(null)"><docs-icon name="x"></docs-icon></button>
+      </div>
+    }
+
+    @if (exportOpen()) {
+      <section class="docs-designer-export" id="studio-export-panel" [attr.aria-label]="en() ? 'Download' : 'ดาวน์โหลด'">
+        <div class="docs-designer-export-bar">
+          <wt-selectbutton
+            id="studio-format"
+            size="small"
+            optionLabel="label"
+            optionValue="value"
+            [options]="formatOptions"
+            [allowEmpty]="false"
+            [ngModel]="format()"
+            (ngModelChange)="format.set($event)"
+          ></wt-selectbutton>
+          @if (format() !== 'preset' && format() !== 'overrides') {
+            <wt-selectbutton
+              id="studio-scope"
+              size="small"
+              optionLabel="label"
+              optionValue="value"
+              [options]="scopeOptions()"
+              [allowEmpty]="false"
+              [ngModel]="scope()"
+              (ngModelChange)="scope.set($event)"
+            ></wt-selectbutton>
+          }
+          <wt-button id="studio-download" icon="pi pi-download" [label]="fileName()" (onClick)="download()"></wt-button>
+        </div>
+        <p class="docs-designer-hint">{{ exportHint() }}</p>
+        <docs-code class="docs-designer-code" [code]="exportText()" [lang]="exportLang()" [file]="fileName()"></docs-code>
+      </section>
+    }
+
+    <div class="docs-designer-main">
+      <div class="docs-designer-editor">
+        <wt-tabs id="studio-tabs" [value]="tab()" (valueChange)="tab.set($event)" [ariaLabel]="en() ? 'Token groups' : 'กลุ่ม token'">
+          <wt-tablist>
+            <wt-tab value="primitive">
+              Primitive
+              @if (counts(); as c) {
+                <span class="docs-designer-count">{{ c.primitive }}</span>
+              }
+            </wt-tab>
+            <wt-tab value="semantic">
+              Semantic
+              @if (counts(); as c) {
+                <span class="docs-designer-count">{{ c.semantic }}</span>
+              }
+            </wt-tab>
+            <wt-tab value="component">
+              Component
+              @if (counts(); as c) {
+                <span class="docs-designer-count">{{ c.component }}</span>
+              }
+            </wt-tab>
+            <wt-tab value="custom">
+              {{ en() ? 'Custom' : 'กำหนดเอง' }}
+              @if (counts(); as c) {
+                <span class="docs-designer-count">{{ c.custom }}</span>
+              }
+            </wt-tab>
+            <wt-tab value="settings">
+              {{ en() ? 'Settings' : 'ตั้งค่า' }}
+              @if (counts(); as c) {
+                <span class="docs-designer-count">{{ c.settings }}</span>
+              }
+            </wt-tab>
+          </wt-tablist>
+          <wt-tabpanels>
+            <!-- ---------- Primitive ---------- -->
+            <wt-tabpanel value="primitive">
+              @if (tab() === 'primitive') {
+                <p class="docs-designer-hint">
+                  {{
+                    en()
+                      ? 'Colour scales 50–950. Pick a base colour to regenerate a scale (palette()), or edit single shades.'
+                      : 'ชุดสี 50–950 เลือกสีหลักเพื่อสร้างทั้งชุดใหม่ด้วย palette() หรือแก้ทีละเฉด'
+                  }}
+                </p>
+                @for (s of scales(); track s.id) {
+                  <section class="docs-designer-scale" [attr.data-scale]="s.id">
+                    <div class="docs-designer-scale-head">
+                      <h3 class="docs-designer-h">{{ s.title }}</h3>
+                      <div class="docs-designer-scale-base">
+                        @if (s.id === 'surface') {
+                          <wt-select
+                            inputId="studio-surface"
+                            optionLabel="label"
+                            optionValue="value"
+                            [options]="surfaceOptions()"
+                            [ngModel]="s.base"
+                            (ngModelChange)="setSurface($event)"
+                            [ariaLabel]="en() ? 'Surface scale' : 'ชุดสีพื้นผิว'"
+                          ></wt-select>
+                          <wt-colorpicker
+                            [ngModel]="hexes()['surface-500'] || ''"
+                            (ngModelChange)="surfaceFrom($event)"
+                            [ariaLabel]="en() ? 'Make the surface scale from a colour' : 'สร้างชุดสีพื้นผิวจากสีเดียว'"
+                          ></wt-colorpicker>
+                        } @else {
+                          <wt-colorpicker [ngModel]="s.base" (ngModelChange)="setBase(s.id, $event)" [ariaLabel]="(en() ? 'Base colour of ' : 'สีหลักของ ') + s.id"></wt-colorpicker>
+                          <input
+                            wtInputText
+                            class="docs-designer-mono"
+                            [id]="'studio-base-' + s.id"
+                            [value]="s.base"
+                            [invalid]="isInvalid('studio-base-' + s.id)"
+                            (change)="setBaseText(s.id, $event)"
+                            [attr.aria-label]="(en() ? 'Base colour of ' : 'สีหลักของ ') + s.id"
+                            spellcheck="false"
+                            autocomplete="off"
+                          />
+                        }
+                        <wt-button
+                          icon="pi pi-refresh"
+                          size="small"
+                          severity="secondary"
+                          [text]="true"
+                          [disabled]="!s.edited"
+                          [label]="en() ? 'Regenerate' : 'สร้างใหม่'"
+                          (onClick)="regenerate(s.id)"
+                        ></wt-button>
+                      </div>
+                    </div>
+                    <div class="docs-designer-strip" [style.--n]="s.all.length" aria-hidden="true">
+                      @for (f of s.all; track f.id) {
+                        <span [style.background]="'var(--wt-' + f.token + ')'" [title]="f.token"></span>
+                      }
+                    </div>
+                    @if (s.open) {
+                      <div class="docs-designer-fields docs-designer-shades">
+                        @for (f of s.fields; track f.id) {
+                          <ng-container *ngTemplateOutlet="field; context: { $implicit: f }"></ng-container>
+                        }
+                      </div>
+                    }
+                    @if (!q()) {
+                      <wt-button
+                        size="small"
+                        severity="secondary"
+                        [text]="true"
+                        [icon]="s.open ? 'pi pi-angle-up' : 'pi pi-angle-down'"
+                        [label]="s.open ? (en() ? 'Hide shades' : 'ซ่อนเฉดสี') : en() ? 'Edit shades' : 'แก้ทีละเฉด'"
+                        (onClick)="toggleScale(s.id)"
+                      ></wt-button>
+                    }
+                  </section>
+                } @empty {
+                  <p class="docs-designer-empty">{{ en() ? 'Nothing on this tab matches.' : 'ไม่มี token ในแท็บนี้ที่ตรงกับคำค้น' }}</p>
+                }
+              }
+            </wt-tabpanel>
+
+            <!-- ---------- Semantic ---------- -->
+            <wt-tabpanel value="semantic">
+              @if (tab() === 'semantic') {
+                <ng-container *ngTemplateOutlet="modeBar; context: { $implicit: semanticHasDark() }"></ng-container>
+                @if (semanticGroups().length) {
+                  <wt-accordion [multiple]="true" [value]="openValue()" (valueChange)="setOpen($event)">
+                    @for (g of semanticGroups(); track g.id) {
+                      <wt-accordion-panel [value]="g.id">
+                        <wt-accordion-header>
+                          <span class="docs-designer-acc-title" [attr.data-group]="g.id">{{ g.title }} <span class="docs-designer-count">{{ g.fields.length }}</span></span>
+                        </wt-accordion-header>
+                        <wt-accordion-content>
+                          <div class="docs-designer-fields">
+                            @for (f of g.fields; track f.id) {
+                              <ng-container *ngTemplateOutlet="field; context: { $implicit: f }"></ng-container>
+                            }
+                          </div>
+                        </wt-accordion-content>
+                      </wt-accordion-panel>
+                    }
+                  </wt-accordion>
+                } @else {
+                  <p class="docs-designer-empty">{{ en() ? 'Nothing on this tab matches.' : 'ไม่มี token ในแท็บนี้ที่ตรงกับคำค้น' }}</p>
+                }
+              }
+            </wt-tabpanel>
+
+            <!-- ---------- Component ---------- -->
+            <wt-tabpanel value="component">
+              @if (tab() === 'component') {
+                @if (componentOptions().length) {
+                  <div class="docs-designer-comp-head">
+                    <label class="docs-designer-label" for="studio-component">{{ en() ? 'Component' : 'Component' }}</label>
+                    <wt-select
+                      inputId="studio-component"
+                      optionLabel="label"
+                      optionValue="value"
+                      [options]="componentOptions()"
+                      [filter]="true"
+                      [ngModel]="activeComponent()"
+                      (ngModelChange)="selectedComp.set($event)"
+                    ></wt-select>
+                    @if (componentPage(); as page) {
+                      <a class="docs-designer-link" [routerLink]="page">{{ en() ? 'See it on its page' : 'ดูในหน้าของ component' }} <docs-icon name="arrowRight"></docs-icon></a>
+                    }
+                  </div>
+                  <ng-container *ngTemplateOutlet="modeBar; context: { $implicit: componentHasDark() }"></ng-container>
+                  @for (g of componentGroups(); track g.id) {
+                    <section class="docs-designer-group" [attr.data-group]="g.id">
+                      <h3 class="docs-designer-h">{{ g.title }} <span class="docs-designer-count">{{ g.fields.length }}</span></h3>
+                      <div class="docs-designer-fields">
+                        @for (f of g.fields; track f.id) {
+                          <ng-container *ngTemplateOutlet="field; context: { $implicit: f }"></ng-container>
+                        }
+                      </div>
+                    </section>
+                  }
+                } @else {
+                  <p class="docs-designer-empty">{{ en() ? 'Nothing on this tab matches.' : 'ไม่มี token ในแท็บนี้ที่ตรงกับคำค้น' }}</p>
+                }
+              }
+            </wt-tabpanel>
+
+            <!-- ---------- Custom ---------- -->
+            <wt-tabpanel value="custom">
+              @if (tab() === 'custom') {
+                <p class="docs-designer-hint">
+                  {{
+                    en()
+                      ? 'Any --wt-* variable: a token of the theme (it wins over the tabs) or one of your own. Values can refer to tokens, e.g. {primary-500}.'
+                      : 'ตัวแปร --wt-* อะไรก็ได้ ทั้ง token ของธีม (ชนะค่าในแท็บอื่น) หรือของคุณเอง ค่าอ้างถึง token อื่นได้ เช่น {primary-500}'
+                  }}
+                </p>
+                <datalist id="studio-token-names">
+                  @for (n of tokenNames(); track n) {
+                    <option [value]="n"></option>
+                  }
+                </datalist>
+                <div class="docs-designer-customs">
+                  @for (r of customRows(); track r.index) {
+                    <div class="docs-designer-custom" [attr.data-row]="r.index">
+                      <div class="docs-designer-custom-name">
+                        <span class="docs-designer-prefix" aria-hidden="true">--wt-</span>
+                        <input
+                          wtInputText
+                          class="docs-designer-mono"
+                          list="studio-token-names"
+                          [id]="'studio-custom-name-' + r.index"
+                          [value]="r.name"
+                          [invalid]="r.badName"
+                          [placeholder]="en() ? 'token-name' : 'ชื่อ-token'"
+                          [attr.aria-label]="en() ? 'Token name' : 'ชื่อ token'"
+                          (change)="setCustom(r, 'name', $any($event.target).value)"
+                          spellcheck="false"
+                          autocomplete="off"
+                        />
+                      </div>
+                      <div class="docs-designer-control">
+                        @if (r.color) {
+                          <wt-colorpicker
+                            [ngModel]="customHex(r)"
+                            (ngModelChange)="setCustom(r, 'value', $event)"
+                            [ariaLabel]="(en() ? 'Colour of ' : 'สีของ ') + r.name"
+                          ></wt-colorpicker>
+                        }
+                        <input
+                          wtInputText
+                          class="docs-designer-mono"
+                          [id]="'studio-custom-value-' + r.index"
+                          [value]="r.value"
+                          [invalid]="r.badValue"
+                          [placeholder]="en() ? 'value, e.g. 12px or {primary-500}' : 'ค่า เช่น 12px หรือ {primary-500}'"
+                          [attr.aria-label]="en() ? 'Value' : 'ค่า'"
+                          (change)="setCustom(r, 'value', $any($event.target).value)"
+                          spellcheck="false"
+                          autocomplete="off"
+                        />
+                      </div>
+                      <div class="docs-designer-control">
+                        <wt-select
+                          optionLabel="label"
+                          optionValue="value"
+                          [options]="customModes()"
+                          [ngModel]="r.mode"
+                          (ngModelChange)="setCustom(r, 'mode', $event)"
+                          [ariaLabel]="en() ? 'Applies in' : 'ใช้ในโหมด'"
+                        ></wt-select>
+                        <wt-button icon="pi pi-trash" severity="danger" [text]="true" [ariaLabel]="en() ? 'Remove' : 'ลบ'" (onClick)="removeCustom(r)"></wt-button>
+                      </div>
+                    </div>
+                  } @empty {
+                    <p class="docs-designer-empty">{{ en() ? 'No custom tokens yet.' : 'ยังไม่มี token ที่กำหนดเอง' }}</p>
+                  }
+                </div>
+                <wt-button id="studio-custom-add" icon="pi pi-plus" [outlined]="true" [label]="en() ? 'Add a token' : 'เพิ่ม token'" (onClick)="addCustom()"></wt-button>
+              }
+            </wt-tabpanel>
+
+            <!-- ---------- Settings ---------- -->
+            <wt-tabpanel value="settings">
+              @if (tab() === 'settings') {
+                <div class="docs-designer-fields docs-designer-settings">
+                  @if (showSetting('name')) {
+                    <div class="docs-designer-field">
+                      <label class="docs-designer-label" for="studio-name">{{ en() ? 'Theme name' : 'ชื่อธีม' }}</label>
+                      <input wtInputText id="studio-name" maxlength="60" [value]="theme().name" [placeholder]="en() ? 'My theme' : 'ธีมของฉัน'" (change)="setName($event)" />
+                    </div>
+                  }
+                  @if (showSetting('base')) {
+                    <div class="docs-designer-field">
+                      <label class="docs-designer-label" for="studio-base">{{ en() ? 'Base preset' : 'preset ตั้งต้น' }}</label>
+                      <wt-select
+                        inputId="studio-base"
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="presetOptions()"
+                        [filter]="presetOptions().length > 8"
+                        [ngModel]="theme().base"
+                        (ngModelChange)="setBasePreset($event)"
+                      ></wt-select>
+                      <small class="docs-designer-hint">{{ en() ? 'Your changes stay on top of the new preset; Reset starts clean.' : 'ค่าที่แก้ไว้ยังอยู่บน preset ใหม่ ถ้าอยากเริ่มใหม่ให้กด เริ่มใหม่' }}</small>
+                    </div>
+                  }
+                  @if (showSetting('mode') && !darkOnly()) {
+                    <div class="docs-designer-field">
+                      <span class="docs-designer-label">{{ en() ? 'Showing' : 'โหมดที่แสดง' }}</span>
+                      <wt-selectbutton
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="modeOptions()"
+                        [allowEmpty]="false"
+                        [ngModel]="state.dark()"
+                        (ngModelChange)="state.setDark($event)"
+                      ></wt-selectbutton>
+                    </div>
+                  }
+                  @if (showSetting('scheme')) {
+                    <div class="docs-designer-field">
+                      <span class="docs-designer-label">{{ en() ? 'Dark colours only' : 'สีมืดอย่างเดียว' }}</span>
+                      <wt-toggleswitch
+                        inputId="studio-scheme"
+                        [ngModel]="darkOnly()"
+                        (ngModelChange)="setConfig('scheme', $event ? 'dark' : 'light')"
+                        [label]="en() ? 'A dark-only theme (no light mode)' : 'ธีมมืดอย่างเดียว ไม่มีโหมดสว่าง'"
+                      ></wt-toggleswitch>
+                    </div>
+                  }
+                  @if (showSetting('darkMode')) {
+                    <div class="docs-designer-field">
+                      <label class="docs-designer-label" for="studio-darkmode">{{ en() ? 'Dark mode in exported files' : 'Dark mode ในไฟล์ที่ export' }}</label>
+                      <wt-select
+                        inputId="studio-darkmode"
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="darkModeOptions()"
+                        [ngModel]="cfg().darkMode"
+                        (ngModelChange)="setConfig('darkMode', $event)"
+                      ></wt-select>
+                    </div>
+                  }
+                  @if (showSetting('font')) {
+                    <ng-container *ngTemplateOutlet="field; context: { $implicit: settingsFields().font }"></ng-container>
+                  }
+                  @if (showSetting('fontSize')) {
+                    <ng-container *ngTemplateOutlet="field; context: { $implicit: settingsFields().fontSize }"></ng-container>
+                  }
+                  @if (showSetting('lineHeight')) {
+                    <ng-container *ngTemplateOutlet="field; context: { $implicit: settingsFields().lineHeight }"></ng-container>
+                  }
+                  @if (showSetting('density')) {
+                    <ng-container *ngTemplateOutlet="field; context: { $implicit: settingsFields().density }"></ng-container>
+                  }
+                  @if (showSetting('scale')) {
+                    <div class="docs-designer-field">
+                      <span class="docs-designer-label">{{ en() ? 'UI size (this site only, not exported)' : 'ขนาด UI (เฉพาะเว็บนี้ ไม่อยู่ในไฟล์)' }}</span>
+                      <wt-selectbutton
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="scaleOptions"
+                        [allowEmpty]="false"
+                        [ngModel]="state.scale()"
+                        (ngModelChange)="state.setScale($event)"
+                      ></wt-selectbutton>
+                    </div>
+                  }
+                  @if (showSetting('ripple')) {
+                    <div class="docs-designer-field">
+                      <span class="docs-designer-label">Ripple</span>
+                      <wt-toggleswitch
+                        inputId="studio-ripple"
+                        [ngModel]="cfg().ripple"
+                        (ngModelChange)="setRipple($event)"
+                        [label]="en() ? 'Ripple on click' : 'วงคลื่นเมื่อกด'"
+                      ></wt-toggleswitch>
+                    </div>
+                  }
+                  @if (showSetting('material') && v.major === 3) {
+                    <div class="docs-designer-field">
+                      <label class="docs-designer-label" for="studio-material">{{ en() ? 'Card material' : 'วัสดุของการ์ด' }}</label>
+                      <wt-select
+                        inputId="studio-material"
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="materialOptions()"
+                        [ngModel]="cfg().material"
+                        (ngModelChange)="setConfig('material', $event)"
+                      ></wt-select>
+                    </div>
+                  }
+                  @if (showSetting('reset')) {
+                    <div class="docs-designer-field">
+                      <span class="docs-designer-label">{{ en() ? 'Reset' : 'เริ่มใหม่' }}</span>
+                      <wt-button
+                        id="studio-reset"
+                        icon="pi pi-refresh"
+                        severity="danger"
+                        [outlined]="true"
+                        [label]="(en() ? 'Back to ' : 'กลับไปเป็น ') + baseName()"
+                        (onClick)="resetAll()"
+                      ></wt-button>
+                    </div>
+                  }
+                </div>
+              }
+            </wt-tabpanel>
+          </wt-tabpanels>
+        </wt-tabs>
+      </div>
+
+      <aside class="docs-designer-preview" id="studio-preview" [attr.aria-label]="en() ? 'Preview' : 'ตัวอย่าง'">
+        <div class="docs-designer-preview-head">
+          <b>{{ en() ? 'Preview' : 'ตัวอย่าง' }}</b>
+          <span class="docs-chip docs-chip-quiet">{{ mode() === 'dark' ? (en() ? 'Dark' : 'มืด') : en() ? 'Light' : 'สว่าง' }}</span>
+        </div>
+        <div class="docs-designer-pv">
+          <div class="docs-designer-pv-row">
+            <wt-button icon="pi pi-check" [label]="en() ? 'Save' : 'บันทึก'"></wt-button>
+            <wt-button severity="secondary" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
+            <wt-button [outlined]="true" [label]="en() ? 'Edit' : 'แก้ไข'"></wt-button>
+            <wt-button severity="danger" [text]="true" [label]="en() ? 'Delete' : 'ลบ'"></wt-button>
+          </div>
+          <div class="docs-designer-pv-fields">
+            <input wtInputText [placeholder]="en() ? 'Full name' : 'ชื่อ - สกุล'" [attr.aria-label]="en() ? 'Full name' : 'ชื่อ - สกุล'" />
+            <wt-select
+              optionLabel="label"
+              optionValue="value"
+              [options]="pvRooms()"
+              [(ngModel)]="pvRoom"
+              [placeholder]="en() ? 'Choose a class' : 'เลือกห้องเรียน'"
+              [ariaLabel]="en() ? 'Class' : 'ห้องเรียน'"
+            ></wt-select>
+          </div>
+          <div class="docs-designer-pv-row">
+            <wt-checkbox [(ngModel)]="pvAgree" [binary]="true" [label]="en() ? 'I agree' : 'ยอมรับเงื่อนไข'"></wt-checkbox>
+            <wt-radiobutton name="studio-pv-plan" value="month" [(ngModel)]="pvPlan" [label]="en() ? 'Monthly' : 'รายเดือน'"></wt-radiobutton>
+            <wt-radiobutton name="studio-pv-plan" value="year" [(ngModel)]="pvPlan" [label]="en() ? 'Yearly' : 'รายปี'"></wt-radiobutton>
+            <wt-toggleswitch [(ngModel)]="pvNotify" [label]="en() ? 'Alerts' : 'แจ้งเตือน'"></wt-toggleswitch>
+          </div>
+          <div class="docs-designer-pv-row">
+            <wt-tag severity="success" [value]="en() ? 'Paid' : 'ชำระแล้ว'"></wt-tag>
+            <wt-tag severity="info" [value]="en() ? 'New' : 'ใหม่'"></wt-tag>
+            <wt-tag severity="warn" [value]="en() ? 'Pending' : 'รอตรวจ'"></wt-tag>
+            <wt-tag severity="danger" [value]="en() ? 'Overdue' : 'ค้างชำระ'"></wt-tag>
+            <wt-tag severity="secondary" [value]="en() ? 'Draft' : 'ร่าง'"></wt-tag>
+          </div>
+          <wt-table [value]="pvStudents()">
+            <ng-template #header>
+              <tr>
+                <th>{{ en() ? 'Name' : 'ชื่อ' }}</th>
+                <th>{{ en() ? 'Class' : 'ห้อง' }}</th>
+                <th>{{ en() ? 'Status' : 'สถานะ' }}</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-s>
+              <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.room }}</td>
+                <td><wt-tag [severity]="s.severity" [value]="s.status"></wt-tag></td>
+              </tr>
+            </ng-template>
+          </wt-table>
+          <div class="docs-designer-pv-dialog" role="group" [attr.aria-label]="en() ? 'Dialog' : 'กล่องโต้ตอบ'">
+            <div class="docs-designer-pv-dialog-head">
+              <span>{{ en() ? 'Save changes?' : 'บันทึกการแก้ไข?' }}</span>
+              <span class="pi pi-times" aria-hidden="true"></span>
+            </div>
+            <p>{{ en() ? 'The class list will be sent to the homeroom teacher.' : 'ระบบจะส่งรายชื่อนักเรียนให้ครูประจำชั้น' }}</p>
+            <div class="docs-designer-pv-dialog-foot">
+              <wt-button severity="secondary" [text]="true" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
+              <wt-button [label]="en() ? 'Confirm' : 'ยืนยัน'"></wt-button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</docs-section>
+
+<docs-section id="files" [title]="{ th: 'ไฟล์ที่ดาวน์โหลดได้', en: 'The files' }">
+  <div class="docs-table-wrap">
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>{{ en() ? 'File' : 'ไฟล์' }}</th>
+          <th>{{ en() ? 'For' : 'ใช้กับ' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>wiratheme.theme.scss</code></td>
+          <td><a [routerLink]="'/' + v.id + '/theming/scss'">SCSS</a> (<code>&#64;use … with</code>)</td>
+        </tr>
+        <tr>
+          <td><code>wiratheme.theme.css</code></td>
+          <td><a [routerLink]="'/' + v.id + '/theming/css'">CSS</a> ({{ en() ? 'light and dark, in' : 'ทั้ง light และ dark ใส่ใน' }} <code>angular.json</code>)</td>
+        </tr>
+        <tr>
+          <td><code>wiratheme.preset.ts</code> / <code>wiratheme.overrides.ts</code></td>
+          <td><a [routerLink]="'/' + v.id + '/theming/typescript'">TypeScript</a></td>
+        </tr>
+        <tr>
+          <td><code>wiratheme.theme.json</code></td>
+          <td>{{ en() ? 'Keep it, or import it here again' : 'เก็บไว้ หรือนำเข้ากลับมาที่นี่อีกครั้ง' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  @if (en()) {
+    <p>
+      <b>Changes only</b> (the default) writes what differs from the preset you started from; <b>Everything</b> writes every value. Every file carries its
+      config on a <code>wiratheme-config</code> line (and your token edits on a <code>wiratheme-studio</code> line), so any of them can be imported back without
+      losing anything.
+    </p>
+  } @else {
+    <p>
+      <b>เฉพาะที่แก้</b> (ค่าเริ่มต้น) เขียนเฉพาะค่าที่ต่างจาก preset ที่เริ่มต้น ส่วน <b>ทั้งหมด</b> เขียนทุกค่า ทุกไฟล์ฝัง config ไว้ในบรรทัด
+      <code>wiratheme-config</code> (และ token ที่แก้ไว้ในบรรทัด <code>wiratheme-studio</code>) จึง import ไฟล์ไหนกลับมาก็ได้โดยข้อมูลไม่หาย
+    </p>
+  }
+</docs-section>
+
+<docs-section id="figma" title="Figma UI Kit">
+  <div class="docs-note">
+    <docs-icon name="figma"></docs-icon>
+    @if (en()) {
+      <p>
+        <b>Coming soon.</b> WiraTheme Studio will export tokens as Figma Variables / W3C Design Tokens JSON, and kit variants will be named after component inputs
+        (<code>severity</code>, <code>variant</code>, <code>size</code>).
+      </p>
+    } @else {
+      <p>
+        <b>เร็ว ๆ นี้</b> สตูดิโอธีม จะ export token เป็น Figma Variables / W3C Design Tokens JSON และ component ใน kit ตั้งชื่อ variant ตาม input ของโค้ด
+        (<code>severity</code>, <code>variant</code>, <code>size</code>)
+      </p>
+    }
+  </div>
+</docs-section>
+
+<datalist id="studio-fonts">
+  @for (font of fontOptions(); track font) {
+    <option [value]="font"></option>
+  }
+</datalist>
+
+<!-- Light / Dark: the same switch as the site's dark mode, so what shows is what is edited. -->
+<ng-template #modeBar let-has>
+  @if (darkOnly()) {
+    <p class="docs-designer-hint">{{ en() ? 'A dark-only theme: one set of values, no light / dark split.' : 'ธีมมืดอย่างเดียว มีค่าชุดเดียว ไม่แยก light / dark' }}</p>
+  } @else if (has) {
+    <div class="docs-designer-modebar">
+      <wt-selectbutton
+        size="small"
+        optionLabel="label"
+        optionValue="value"
+        [options]="modeOptions()"
+        [allowEmpty]="false"
+        [ngModel]="state.dark()"
+        (ngModelChange)="state.setDark($event)"
+      ></wt-selectbutton>
+      <span class="docs-designer-hint">
+        {{
+          mode() === 'dark'
+            ? en()
+              ? 'Editing dark values.'
+              : 'กำลังแก้ค่าของโหมดมืด'
+            : en()
+              ? 'Editing light values; marked fields have their own dark value.'
+              : 'กำลังแก้ค่าของโหมดสว่าง ช่องที่มีป้ายมีค่าโหมดมืดแยก'
+        }}
+      </span>
+    </div>
+  }
+</ng-template>
+
+<ng-template #field let-f>
+  <div class="docs-designer-field" [class.is-changed]="f.changed" [attr.data-field]="f.id" [attr.data-token]="f.token">
+    <label class="docs-designer-label" [for]="f.id">
+      <span class="docs-designer-name">{{ f.label }}</span>
+      @if (f.sub) {
+        <code>{{ f.sub }}</code>
+      }
+      @if (f.dark) {
+        <span class="docs-designer-badge" [title]="en() ? 'Has its own dark value' : 'มีค่าโหมดมืดแยก'">light/dark</span>
+      }
+    </label>
+    <div class="docs-designer-control">
+      @switch (f.kind) {
+        @case ('select') {
+          <wt-select [inputId]="f.id" optionLabel="label" optionValue="value" [options]="f.options" [ngModel]="confValue(f)" (ngModelChange)="chooseConf(f, $event)"></wt-select>
+        }
+        @default {
+          @if (f.kind === 'color') {
+            <wt-colorpicker [ngModel]="hexOf(f)" (ngModelChange)="picked(f, $event)" [ariaLabel]="f.label + ' (' + f.sub + ')'"></wt-colorpicker>
+          }
+          <input
+            wtInputText
+            class="docs-designer-mono"
+            [id]="f.id"
+            [value]="f.value"
+            [invalid]="isInvalid(f.id)"
+            [attr.list]="f.conf === 'fontFamily' ? 'studio-fonts' : null"
+            (input)="typed(f, $event)"
+            (change)="committed(f, $event)"
+            spellcheck="false"
+            autocomplete="off"
+          />
+        }
+      }
+      @if (f.own) {
+        <button type="button" class="docs-designer-icon-btn" [attr.aria-label]="(en() ? 'Reset ' : 'คืนค่า ') + f.label" [title]="en() ? 'Reset' : 'คืนค่า'" (click)="resetField(f)">
+          <docs-icon name="refresh"></docs-icon>
+        </button>
+      }
+    </div>
+    @if (unknownRefs(f); as missing) {
+      @if (missing.length) {
+        <small class="docs-designer-warn">{{ en() ? 'No such token:' : 'ไม่มี token ชื่อ' }} {{ missing.join(', ') }}</small>
+      }
+    }
+  </div>
+</ng-template>

@@ -1,4 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
+import { STYLE_ROW } from './doc-helpers';
 
 export const RADIOBUTTON_DOC: ComponentDoc = {
   id: 'radiobutton',
@@ -130,6 +131,7 @@ size = 'm';`,
         { name: 'disabled', type: 'boolean', default: 'false', description: { th: 'ปิดการใช้', en: 'Disables it' } },
         { name: 'invalid', type: 'boolean', default: 'false', description: { th: 'บังคับขึ้นสีแดง', en: 'Forces the error style' } },
         { name: 'ariaLabel', type: 'string', description: { th: 'ชื่อสำหรับ screen reader', en: 'Accessible name' } },
+        STYLE_ROW,
       ],
     },
     {

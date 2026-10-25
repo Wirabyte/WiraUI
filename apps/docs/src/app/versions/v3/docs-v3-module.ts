@@ -16,6 +16,32 @@ import { WtTabMenuModule } from 'wiratheme/tabmenu';
 import { WtMultiSelectModule } from 'wiratheme/multiselect';
 import { WtInputMaskModule } from 'wiratheme/inputmask';
 import { WtTimelineModule } from 'wiratheme/timeline';
+import { WtPickListModule } from 'wiratheme/picklist';
+import { WtOrderListModule } from 'wiratheme/orderlist';
+import { WtFileUploadModule } from 'wiratheme/fileupload';
+import { WtStepperModule } from 'wiratheme/stepper';
+import { WtEditorModule } from 'wiratheme/editor';
+import { WtRippleModule } from 'wiratheme/ripple';
+import { WtKeyFilterModule } from 'wiratheme/keyfilter';
+import { WtSliderModule } from 'wiratheme/slider';
+import { WtSplitButtonModule } from 'wiratheme/splitbutton';
+import { WtListboxModule } from 'wiratheme/listbox';
+import { WtGalleriaModule } from 'wiratheme/galleria';
+import { WtColorPickerModule } from 'wiratheme/colorpicker';
+import { WtBreadcrumbModule } from 'wiratheme/breadcrumb';
+import { WtInplaceModule } from 'wiratheme/inplace';
+import { WtBlockUIModule } from 'wiratheme/blockui';
+import { WtScrollPanelModule } from 'wiratheme/scrollpanel';
+import { WtScrollerModule } from 'wiratheme/scroller';
+import { WtDrawerModule } from 'wiratheme/drawer';
+import { WtTieredMenuModule } from 'wiratheme/tieredmenu';
+import { WtContextMenuModule } from 'wiratheme/contextmenu';
+import { WtTreeModule } from 'wiratheme/tree';
+import { WtTreeSelectModule } from 'wiratheme/treeselect';
+import { WtDragDropModule } from 'wiratheme/dragdrop';
+import { WtNavbarModule } from 'wiratheme/navbar';
+import { WtAsideMenuModule } from 'wiratheme/asidemenu';
+import { WtImageCropperModule } from 'wiratheme/imagecropper';
 import { WtMeterGroupModule } from 'wiratheme/metergroup';
 import { WtValidationModule, WtValidators } from 'wiratheme/validation';
 import { WtDialogModule } from 'wiratheme/dialog';
@@ -112,6 +138,33 @@ import {
   MultiSelectPageV3,
   InputMaskPageV3,
   TimelinePageV3,
+  PickListPageV3,
+  OrderListPageV3,
+  FileUploadPageV3,
+  StepperPageV3,
+  EditorPageV3,
+  RipplePageV3,
+  KeyFilterPageV3,
+  SliderPageV3,
+  SplitButtonPageV3,
+  ListboxPageV3,
+  GalleriaPageV3,
+  ColorPickerPageV3,
+  BreadcrumbPageV3,
+  InplacePageV3,
+  BlockUIPageV3,
+  ScrollPanelPageV3,
+  ScrollerPageV3,
+  DrawerPageV3,
+  TieredMenuPageV3,
+  ContextMenuPageV3,
+  TreePageV3,
+  TreeSelectPageV3,
+  DragDropPageV3,
+  StudioPageV3,
+  NavbarPageV3,
+  AsideMenuPageV3,
+  ImageCropperPageV3,
   TextareaPageV3,
   ToggleSwitchPageV3,
 } from './pages-v3';
@@ -173,6 +226,33 @@ import { THEME_V3 } from './theme-v3';
     MultiSelectPageV3,
     InputMaskPageV3,
     TimelinePageV3,
+    PickListPageV3,
+    OrderListPageV3,
+    FileUploadPageV3,
+    StepperPageV3,
+    EditorPageV3,
+    RipplePageV3,
+    KeyFilterPageV3,
+    SliderPageV3,
+    SplitButtonPageV3,
+    ListboxPageV3,
+    GalleriaPageV3,
+    ColorPickerPageV3,
+    BreadcrumbPageV3,
+    InplacePageV3,
+    BlockUIPageV3,
+    ScrollPanelPageV3,
+    ScrollerPageV3,
+    DrawerPageV3,
+    TieredMenuPageV3,
+    ContextMenuPageV3,
+    TreePageV3,
+    TreeSelectPageV3,
+    DragDropPageV3,
+    StudioPageV3,
+    NavbarPageV3,
+    AsideMenuPageV3,
+    ImageCropperPageV3,
   ],
   imports: [
     FormsModule,
@@ -232,6 +312,32 @@ import { THEME_V3 } from './theme-v3';
     WtMultiSelectModule,
     WtInputMaskModule,
     WtTimelineModule,
+    WtPickListModule,
+    WtOrderListModule,
+    WtFileUploadModule,
+    WtStepperModule,
+    WtEditorModule,
+    WtRippleModule,
+    WtKeyFilterModule,
+    WtSliderModule,
+    WtSplitButtonModule,
+    WtListboxModule,
+    WtGalleriaModule,
+    WtColorPickerModule,
+    WtBreadcrumbModule,
+    WtInplaceModule,
+    WtBlockUIModule,
+    WtScrollPanelModule,
+    WtScrollerModule,
+    WtDrawerModule,
+    WtTieredMenuModule,
+    WtContextMenuModule,
+    WtTreeModule,
+    WtTreeSelectModule,
+    WtDragDropModule,
+    WtNavbarModule,
+    WtAsideMenuModule,
+    WtImageCropperModule,
     RouterModule.forChild(
       versionRoutes({
         button: ButtonPageV3,
@@ -288,6 +394,33 @@ import { THEME_V3 } from './theme-v3';
         multiselect: MultiSelectPageV3,
         inputmask: InputMaskPageV3,
         timeline: TimelinePageV3,
+        picklist: PickListPageV3,
+        orderlist: OrderListPageV3,
+        fileupload: FileUploadPageV3,
+        stepper: StepperPageV3,
+        editor: EditorPageV3,
+        ripple: RipplePageV3,
+        keyfilter: KeyFilterPageV3,
+        slider: SliderPageV3,
+        splitbutton: SplitButtonPageV3,
+        listbox: ListboxPageV3,
+        galleria: GalleriaPageV3,
+        colorpicker: ColorPickerPageV3,
+        breadcrumb: BreadcrumbPageV3,
+        inplace: InplacePageV3,
+        blockui: BlockUIPageV3,
+        scrollpanel: ScrollPanelPageV3,
+        scroller: ScrollerPageV3,
+        drawer: DrawerPageV3,
+        tieredmenu: TieredMenuPageV3,
+        contextmenu: ContextMenuPageV3,
+        tree: TreePageV3,
+        treeselect: TreeSelectPageV3,
+        dragdrop: DragDropPageV3,
+        studio: StudioPageV3,
+        navbar: NavbarPageV3,
+        asidemenu: AsideMenuPageV3,
+        imagecropper: ImageCropperPageV3,
       })
     ),
   ],

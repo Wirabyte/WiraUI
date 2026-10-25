@@ -20,5 +20,16 @@
         <span class="docs-demo-output">collapsed: <code id="d-fieldset-state">{{ moreClosed }}</code></span>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="header" [section]="sec['header']">
+      <docs-demo [html]="code['header']" layout="stack">
+        <wt-fieldset id="d-fieldset-tpl">
+          <ng-template #header>
+            <span class="docs-panel-head"><i class="pi pi-phone"></i> {{ tx('ผู้ติดต่อฉุกเฉิน') }}</span>
+          </ng-template>
+          <p class="docs-demo-p">{{ tx('นางสมศรี ใจดี · 081-234-5678') }}</p>
+        </wt-fieldset>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

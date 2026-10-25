@@ -176,7 +176,7 @@ export function componentValue(spec: ComponentTokenSpec, v: number | boolean | s
   if (spec.css === 'table-stripe-bg') {
     return v
       ? { light: { [spec.css]: 'var(--wt-surface-50)' }, dark: { [spec.css]: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))' } }
-      : { light: { [spec.css]: 'transparent' }, dark: {} };
+      : { light: { [spec.css]: 'var(--wt-table-row-bg)' }, dark: {} };
   }
   if (typeof v === 'string') return { light: { [spec.css]: v }, dark: {} };
   return { light: { [spec.css]: spec.type === 'px' ? v + 'px' : String(v) }, dark: {} };

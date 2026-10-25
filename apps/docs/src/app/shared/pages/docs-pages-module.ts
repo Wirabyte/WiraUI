@@ -3,7 +3,6 @@ import { DocsSharedModule } from '../docs-shared-module';
 import { DocsVersionShell } from '../version-shell';
 import {
   ConfigurationPage,
-  DesignerPage,
   InstallationPage,
   IntroductionPage,
   MigrationPage,
@@ -26,7 +25,6 @@ import {
     ThemingScssPage,
     ThemingCssPage,
     ThemingTypescriptPage,
-    DesignerPage,
     UtilitiesPage,
   ],
   imports: [DocsSharedModule],

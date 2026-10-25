@@ -719,7 +719,7 @@ export class CustomersComponent {
         row('header · message · icon · acceptLabel · rejectLabel · acceptIcon · rejectIcon', 'string', undefined, 'ค่าเริ่มต้นของข้อความ', 'Default texts'),
         row('acceptVisible · rejectVisible · closable · closeOnEscape · dismissableMask · blockScroll', BOOL, undefined, 'ค่าเริ่มต้นของปุ่มและการปิด', 'Default buttons and closing'),
         row('defaultFocus · position · breakpoints · style · styleClass · maskStyleClass', '…', undefined, 'ค่าเริ่มต้นของการแสดงผล', 'Default look'),
-        row('appendTo · baseZIndex · autoZIndex · draggable · rtl · transitionOptions · focusTrap', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้', 'Accepted so existing templates compile'),
+        row('appendTo · baseZIndex · autoZIndex · draggable · rtl · transitionOptions · focusTrap · modal', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ (กล่องเป็น modal เสมอ)', 'Accepted so existing templates compile (the dialog is always modal)'),
       ],
     },
     {
@@ -727,6 +727,16 @@ export class CustomersComponent {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [row('onHide', 'WtConfirmEventType', undefined, 'ปิดแล้ว พร้อมผล', 'Closed, with the outcome')],
+    },
+    {
+      id: 'api-dialog-methods',
+      title: { th: 'เมธอดของกล่อง', en: 'Dialog methods' },
+      typeLabel: { th: 'คืนค่า', en: 'Returns' },
+      note: { th: 'ผ่าน template reference เช่น #cd ในส่วนท้ายแบบกำหนดเอง', en: 'Through a template reference such as #cd, in a custom footer.' },
+      rows: [
+        row('accept() · reject()', 'void', undefined, 'ยืนยัน / ปฏิเสธ', 'Confirm / reject'),
+        row('onAccept() · onReject()', 'void', undefined, 'ชื่อเดิมของ accept() / reject() ที่ส่วนท้ายเดิมเรียกอยู่', 'The older names of accept() / reject() that existing footers call'),
+      ],
     },
     {
       id: 'api-service',

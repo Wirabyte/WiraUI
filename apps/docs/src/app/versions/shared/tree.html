@@ -1,0 +1,97 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <wt-tree id="d-tr-basic" [value]="local(basicNodes)" [ariaLabel]="tx('เอกสารของโรงเรียน')" [style]="{ width: '24rem' }"></wt-tree>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="selection" [section]="sec['selection']">
+      <docs-demo [html]="code['selection']" [ts]="ts['selection']">
+        <wt-tree
+          id="d-tr-single"
+          [value]="local(selectNodes)"
+          selectionMode="single"
+          [(selection)]="pickedFile"
+          dataKey="key"
+          [ariaLabel]="tx('เอกสารของโรงเรียน')"
+          [style]="{ width: '24rem' }"
+        ></wt-tree>
+        <span class="docs-demo-output">{{ tx('เลือกอยู่') }}: <code id="d-tr-picked">{{ pickedFile?.label || 'null' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="checkbox" [section]="sec['checkbox']">
+      <docs-demo [html]="code['checkbox']" [ts]="ts['checkbox']">
+        <wt-tree
+          id="d-tr-check"
+          [value]="local(checkNodes)"
+          selectionMode="checkbox"
+          [(selection)]="tickedFiles"
+          [ariaLabel]="tx('เอกสารของโรงเรียน')"
+          [style]="{ width: '24rem' }"
+        ></wt-tree>
+        <span class="docs-demo-output">
+          {{ tx('เลือกแล้ว') }} <code id="d-tr-ticked">{{ tickedFileCount() }}</code> {{ tx('ไฟล์') }} · selection: <code id="d-tr-ticked-all">{{ tickedFiles.length }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="filter" [section]="sec['filter']">
+      <docs-demo [html]="code['filter']">
+        <wt-tree
+          id="d-tr-filter"
+          [value]="local(filterNodes)"
+          [filter]="true"
+          filterMode="lenient"
+          [filterPlaceholder]="tx('ค้นหาเอกสาร')"
+          scrollHeight="18rem"
+          [ariaLabel]="tx('เอกสารของโรงเรียน')"
+          [style]="{ width: '24rem' }"
+        ></wt-tree>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="lazy" [section]="sec['lazy']">
+      <docs-demo [html]="code['lazy']" [ts]="ts['lazy']">
+        <wt-tree id="d-tr-lazy" [value]="local(grades)" (onNodeExpand)="loadRooms($event)" [ariaLabel]="tx('ห้องเรียน')" [style]="{ width: '24rem' }"></wt-tree>
+        <span class="docs-demo-output">onNodeExpand: <code id="d-tr-loads">{{ roomLoads }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-slot-note slot="default"></docs-slot-note>
+      <docs-demo [html]="code['templates']" [ts]="ts['templates']">
+        <wt-tree
+          id="d-tr-tpl"
+          [value]="local(templateNodes)"
+          selectionMode="single"
+          [(selection)]="menuNode"
+          [contextMenu]="fileMenu"
+          (onNodeContextMenuSelect)="pickNode($event)"
+          (onNodeDoubleClick)="openFile($event)"
+          [ariaLabel]="tx('เอกสารของโรงเรียน')"
+          [style]="{ width: '24rem' }"
+        >
+          <ng-template wtTemplate="default" let-node>
+            <b class="docs-tr-folder">{{ node.label }}</b>
+          </ng-template>
+          <ng-template wtTemplate="file" let-node>
+            <span class="docs-tr-file">{{ node.label }}</span>
+            <small class="docs-tr-size">{{ node.data }}</small>
+          </ng-template>
+        </wt-tree>
+        <wt-contextMenu #fileMenu id="d-tr-menu" [model]="local(fileActions)"></wt-contextMenu>
+        <span class="docs-demo-output">
+          {{ tx('สั่งล่าสุด') }}: <code id="d-tr-command">{{ lastCommand || '-' }}</code> · onNodeDoubleClick: <code id="d-tr-opened">{{ lastOpened || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

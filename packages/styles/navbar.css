@@ -1,0 +1,345 @@
+/* wt-navbar. Shared by wiratheme v1, v2 and v3. The top bar of an app or website: brand at the start, links in the
+   middle (dropdowns open a wt-menu popup), actions at the end. At and below its breakpoint (an input, watched in JS, so
+   the narrow layout hangs off .wt-navbar-mobile rather than a media query) the links fold behind a menu button and
+   drop down under the bar as a list, submenus expanding in place. */
+@layer wiratheme.components {
+  wt-navbar {
+    position: relative;
+    z-index: var(--wt-navbar-z-index);
+    display: block;
+    max-width: 100%;
+  }
+  wt-navbar.wt-navbar-sticky {
+    position: sticky;
+    top: 0;
+  }
+  /* An open menu stays above bars that come later on the page. */
+  wt-navbar.wt-navbar-menu-open {
+    z-index: calc(var(--wt-navbar-z-index) + 1);
+  }
+
+  .wt-navbar {
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+    border-bottom: var(--wt-navbar-border-width) solid var(--wt-navbar-border-color);
+    background: var(--wt-navbar-bg);
+    color: var(--wt-navbar-color);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    transition:
+      background-color var(--wt-transition),
+      border-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+
+  /* Variants. solid is the base look above. */
+  .wt-navbar-glass {
+    border-bottom-color: var(--wt-glass-border);
+  }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .wt-navbar-glass {
+      background: var(--wt-glass-bg);
+      -webkit-backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
+      backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
+    }
+  }
+  .wt-navbar-transparent {
+    border-bottom-color: transparent;
+    background: transparent;
+  }
+  /* Once the page scrolls (or the menu opens) the transparent bar takes the solid look, so links stay readable. */
+  .wt-navbar-scrolled > .wt-navbar-transparent,
+  .wt-navbar-transparent.wt-navbar-open {
+    border-bottom-color: var(--wt-navbar-border-color);
+    background: var(--wt-navbar-bg);
+  }
+  .wt-navbar-sticky.wt-navbar-scrolled > .wt-navbar {
+    box-shadow: var(--wt-navbar-scrolled-shadow);
+  }
+
+  .wt-navbar-container {
+    display: flex;
+    align-items: center;
+    gap: var(--wt-navbar-gap);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--wt-navbar-max-width);
+    min-height: var(--wt-navbar-height);
+    margin: 0 auto;
+    padding: var(--wt-navbar-padding);
+  }
+  .wt-navbar-start,
+  .wt-navbar-end {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .wt-navbar-start {
+    flex: 0 1 auto;
+    overflow-wrap: anywhere;
+  }
+  .wt-navbar-end {
+    flex: 0 1 auto;
+    margin-inline-start: auto;
+  }
+  .wt-navbar-start:empty,
+  .wt-navbar-end:empty {
+    display: none;
+  }
+  .wt-navbar-start > [wtNavbarBrand] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    border-radius: var(--wt-radius-sm);
+    color: inherit;
+    font-size: var(--wt-navbar-brand-size);
+    font-weight: var(--wt-navbar-brand-weight);
+    text-decoration: none;
+  }
+  .wt-navbar-start > [wtNavbarBrand]:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+
+  /* The links: a row in the bar on wide screens. */
+  .wt-navbar-links {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: var(--wt-navbar-links-justify);
+    gap: var(--wt-navbar-link-gap);
+    min-width: 0;
+  }
+  /* Author display rules would otherwise beat the browser's [hidden]. */
+  .wt-navbar .wt-navbar-links[hidden],
+  .wt-navbar .wt-navbar-sublist[hidden] {
+    display: none;
+  }
+  .wt-navbar-list,
+  .wt-navbar-sublist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-navbar-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--wt-navbar-link-gap);
+    min-width: 0;
+  }
+  .wt-navbar-item {
+    display: flex;
+    min-width: 0;
+  }
+  .wt-navbar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0;
+    padding: var(--wt-navbar-link-padding);
+    border: 0;
+    border-radius: var(--wt-navbar-link-radius);
+    background: transparent;
+    color: var(--wt-navbar-link-color);
+    font: inherit;
+    font-weight: var(--wt-navbar-link-weight);
+    text-align: start;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color var(--wt-transition),
+      color var(--wt-transition);
+  }
+  .wt-navbar-link:where(:not(:disabled, .wt-navbar-link-disabled)):hover,
+  .wt-navbar-dropdown[aria-expanded='true'] {
+    background: var(--wt-navbar-link-hover-bg);
+  }
+  /* The keyboard's place: the hover tint plus the theme's focus outline. */
+  .wt-navbar-link:focus-visible {
+    background: var(--wt-navbar-link-hover-bg);
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  /* The current page (and the dropdown that holds it). */
+  .wt-navbar-link.wt-navbar-link-active {
+    background: var(--wt-navbar-link-active-bg);
+    color: var(--wt-navbar-link-active-color);
+  }
+  .wt-navbar-link:disabled,
+  .wt-navbar-link-disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-navbar-link-icon {
+    flex: none;
+  }
+  .wt-navbar-link-label {
+    min-width: 0;
+  }
+  .wt-navbar-badge {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.375rem;
+    border-radius: 999px;
+    background: var(--wt-primary-color);
+    color: var(--wt-primary-contrast);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .wt-navbar-chevron {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    transition: transform var(--wt-transition);
+  }
+  .wt-navbar-dropdown[aria-expanded='true'] .wt-navbar-chevron {
+    transform: rotate(180deg);
+  }
+  .wt-navbar-separator {
+    align-self: stretch;
+    width: 1px;
+    margin: 0.375rem 0.25rem;
+    background: var(--wt-navbar-border-color);
+  }
+
+  /* The menu button (narrow screens only). */
+  .wt-navbar-toggle {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: var(--wt-navbar-toggle-size);
+    height: var(--wt-navbar-toggle-size);
+    margin: 0;
+    margin-inline-start: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--wt-navbar-toggle-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--wt-transition);
+  }
+  .wt-navbar-toggle:hover,
+  .wt-navbar-open .wt-navbar-toggle {
+    background: var(--wt-navbar-link-hover-bg);
+  }
+  .wt-navbar-toggle:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-navbar-toggle-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  svg.wt-navbar-toggle-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .wt-navbar-toggle ~ .wt-navbar-end {
+    margin-inline-start: 0;
+  }
+  /* Nothing to fold away: no menu button (unless it drives a wt-aside-menu). */
+  .wt-navbar:not(.wt-navbar-has-aside):not(:has(.wt-navbar-links > *)) .wt-navbar-toggle {
+    display: none;
+  }
+  /* With [aside] the menu button comes first, before the brand, as in most admin layouts. */
+  .wt-navbar-has-aside .wt-navbar-toggle {
+    margin-inline-start: 0;
+  }
+  .wt-navbar-has-aside .wt-navbar-toggle ~ .wt-navbar-end {
+    margin-inline-start: auto;
+  }
+
+  /* Narrow screens: the links drop down under the bar as a list. */
+  .wt-navbar-mobile .wt-navbar-start {
+    flex: 1 1 auto;
+  }
+  .wt-navbar-mobile .wt-navbar-links {
+    position: absolute;
+    top: calc(100% + var(--wt-navbar-border-width));
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--wt-menu-gap);
+    box-sizing: border-box;
+    max-height: var(--wt-navbar-panel-max-height);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--wt-navbar-panel-padding);
+    border-bottom: var(--wt-navbar-border-width) solid var(--wt-navbar-border-color);
+    background: var(--wt-navbar-panel-bg);
+    box-shadow: var(--wt-navbar-panel-shadow);
+    color: var(--wt-navbar-color);
+    animation: wt-navbar-panel-in var(--wt-transition) ease-out;
+  }
+  .wt-navbar-mobile .wt-navbar-list,
+  .wt-navbar-sublist {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--wt-menu-gap);
+  }
+  .wt-navbar-sublist {
+    padding-inline-start: 1rem;
+  }
+  .wt-navbar-mobile .wt-navbar-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .wt-navbar-mobile .wt-navbar-link {
+    display: flex;
+    width: 100%;
+    min-height: var(--wt-navbar-panel-item-min-height);
+    padding: var(--wt-menu-item-padding);
+    border-radius: var(--wt-menu-item-radius);
+    white-space: normal;
+  }
+  .wt-navbar-mobile .wt-navbar-link-label {
+    flex: 1 1 auto;
+  }
+  .wt-navbar-mobile .wt-navbar-separator {
+    align-self: auto;
+    width: auto;
+    height: 1px;
+    margin: 0.25rem 0;
+  }
+  @keyframes wt-navbar-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wt-navbar,
+    .wt-navbar-link,
+    .wt-navbar-toggle,
+    .wt-navbar-chevron {
+      transition: none;
+    }
+    .wt-navbar-mobile .wt-navbar-links {
+      animation: none;
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { ɵWtMultiSelectBase } from './multiselect.base';
  * the top layer (no appendTo needed). Looks and themes like wt-select.
  */
 @Component({
-  selector: 'wt-multiselect, wt-multiSelect',
+  selector: 'wt-multiselect, wt-multiSelect, wt-multi-select',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './multiselect.component.html',

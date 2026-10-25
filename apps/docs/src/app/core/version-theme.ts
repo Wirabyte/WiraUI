@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { Lang } from './i18n';
+import { clone, StudioConfig, StudioCore } from './studio-store';
 import { DocVersion, DocVersionId } from './versions';
 
 export interface PresetInfo {
@@ -9,6 +10,8 @@ export interface PresetInfo {
   /** Family the configurator groups by: 'sila-light', 'arun' … ('' for single-name presets). */
   family: string;
   primary: string | null;
+  /** Surface scale id ('slate', 'ink' …). */
+  surface: string | null;
   scheme: 'light' | 'dark';
   ripple: boolean;
   /**
@@ -45,6 +48,12 @@ export interface DocsVersionTheme {
   apply(custom: ThemeCustom, dark: boolean, ripple: boolean | null, scale: DocsScale): void;
   /** Component texts and calendar follow the site language (WtConfig.setTranslation). */
   setLocale(lang: Lang): void;
+  /** The version's own token engine and exporters (`wiratheme/core`), for WiraTheme Studio. */
+  readonly core: StudioCore;
+  /** A fresh copy of a listed theme's config: what the studio starts from and resets to. */
+  config(id: string): StudioConfig;
+  /** Applies a studio config through WtThemeService as a TypeScript preset (token edits are written by DocsState). */
+  applyStudio(config: StudioConfig, name: string, dark: boolean, ripple: boolean | null, scale: DocsScale): void;
 }
 
 export const DOCS_THEME = new InjectionToken<DocsVersionTheme>('DOCS_THEME');
@@ -69,7 +78,7 @@ interface PresetsModule<P> {
 
 interface PresetShape {
   name?: unknown;
-  config?: { preset?: unknown; primary?: unknown; scheme?: unknown; ripple?: unknown };
+  config?: { preset?: unknown; primary?: unknown; surface?: unknown; scheme?: unknown; ripple?: unknown };
 }
 
 const FAMILY_LABEL: Record<string, string> = { md: 'Material' };
@@ -116,6 +125,7 @@ export function versionTheme<P>(
   config: ConfigLike,
   presets: PresetsModule<P>,
   locales: Record<Lang, object>,
+  core: StudioCore,
   opts: { key?: string; defaultId?: string } = {}
 ): DocsVersionTheme {
   const catalog = presets.VERSION_CATALOG[major];
@@ -137,6 +147,7 @@ export function versionTheme<P>(
       name: named ? (p.name as string) : id,
       family: id.includes('-') ? id.slice(0, id.lastIndexOf('-')) : '',
       primary: typeof c.primary === 'string' ? c.primary : null,
+      surface: typeof c.surface === 'string' ? c.surface : null,
       scheme: c.scheme === 'dark' ? 'dark' : 'light',
       ripple: c.ripple === true,
       twin: counterpart(id, c.scheme !== 'dark', ids) !== id,
@@ -170,6 +181,19 @@ export function versionTheme<P>(
     setLocale(lang) {
       config.setTranslation(locales[lang]);
       config.calendar = lang === 'th' ? 'buddhist' : 'gregorian';
+    },
+    core,
+    config(id) {
+      const p = (list.get(id) ?? list.get(defaultPresetId)) as PresetShape;
+      return core.normalize(clone(p.config));
+    },
+    applyStudio(studio, name, dark, ripple, scale) {
+      service.setScale(scale);
+      // The shape definePreset() returns: the whole theme from one config, written to the tokens layer.
+      service.setPreset({ wtPreset: true, name: name || 'Studio', config: studio, overrides: [] } as unknown as P);
+      service.setOverrides({});
+      service.setDarkMode(dark);
+      config.ripple = ripple ?? studio.ripple;
     },
   };
 }

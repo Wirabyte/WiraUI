@@ -1,6 +1,7 @@
 <button
   [attr.type]="type"
   [class]="classes"
+  [style]="rootStyle"
   [disabled]="disabled || busy"
   [attr.aria-busy]="busy || null"
   [attr.aria-label]="ariaLabel || null"
@@ -12,5 +13,5 @@
   <span *ngIf="label" class="wt-btn-label p-button-label">{{ label }}</span>
   <ng-content></ng-content>
   <span *ngIf="showIcon && iconPos === 'right'" [class]="'wt-btn-icon p-button-icon p-button-icon-right ' + icon" aria-hidden="true"></span>
-  <span *ngIf="hasBadge" class="wt-btn-badge p-badge p-component">{{ badge }}</span>
+  <span *ngIf="hasBadge" class="wt-btn-badge p-badge p-component" [class]="badgeSeverity ? 'wt-btn-badge-' + badgeSeverity + ' p-badge-' + badgeSeverity : ''">{{ badge }}</span>
 </button>

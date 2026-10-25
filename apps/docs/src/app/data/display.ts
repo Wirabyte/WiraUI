@@ -1,5 +1,5 @@
 import { ComponentDoc } from '../core/component-doc';
-import { importText, row, SEVERITY_TYPE, tok } from './doc-helpers';
+import { importText, row, SEVERITY_TYPE, STYLE_ROW, tok } from './doc-helpers';
 
 const severities = ['primary', 'secondary', 'success', 'info', 'warn', 'danger', 'help', 'contrast'];
 
@@ -47,6 +47,7 @@ export const TAG_DOC: ComponentDoc = {
         row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
         row('rounded', 'boolean', 'false', 'มนเต็ม (pill)', 'Fully rounded (pill)'),
         row('icon', 'string', undefined, 'class ของ icon หน้าข้อความ', 'Icon class before the text'),
+        STYLE_ROW,
       ],
     },
     { id: 'api-types', title: 'Types', code: SEVERITY_TYPE },
@@ -78,6 +79,8 @@ export const BADGE_DOC: ComponentDoc = {
   english: {
     'กล่องข้อความ': 'Inbox',
     'สถานะออนไลน์': 'Online',
+    'อ่านทั้งหมด': 'Mark all read',
+    'ข้อความที่ยังไม่อ่าน': 'unread messages',
     "'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')": "'warning' and 'error' work too (= 'warn' and 'danger')",
   },
   sections: {
@@ -86,6 +89,20 @@ export const BADGE_DOC: ComponentDoc = {
     severity: { title: 'Severity' },
     sizes: { title: 'Sizes' },
     inline: { title: { th: 'วางคู่กับข้อความ', en: 'Next to text' } },
+    directive: {
+      title: { th: 'Badge ที่มุมของ element (wtBadge)', en: 'A corner badge on any element (wtBadge)' },
+      text: {
+        th: 'directive <code>wtBadge</code> (หรือ <code>pBadge</code>) วาง badge ที่มุมขวาบนของ element ใดก็ได้ เช่น ไอคอนกระดิ่ง รับ <code>value</code> (ไม่ใส่เป็นจุด), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> และ <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> ซ่อน badge ตัวอย่างนี้ซ่อนเมื่อไม่มีข้อความที่ยังไม่อ่าน มาจาก <code>WtBadgeModule</code> ตัวเดียวกัน',
+        en: 'The <code>wtBadge</code> (or <code>pBadge</code>) directive puts a badge on the top-right corner of any element, such as a bell icon. It takes <code>value</code> (a dot when left out), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> and <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> hides it; here it hides once nothing is unread. It comes with the same <code>WtBadgeModule</code>.',
+      },
+    },
+    style: {
+      title: { th: 'class และ style', en: 'Class and style' },
+      text: {
+        th: '<code>styleClass</code> และ <code>style</code> (object) ใส่ที่ตัว badge ใช้ได้กับ component ทุกตัวในหมวด Display',
+        en: '<code>styleClass</code> and <code>style</code> (an object) go on the badge itself; every Display component takes them.',
+      },
+    },
   },
   code: {
     basic: `<wt-badge value="8"></wt-badge>
@@ -96,6 +113,20 @@ export const BADGE_DOC: ComponentDoc = {
 <wt-badge value="6" size="xlarge"></wt-badge>`,
     inline: `<span>กล่องข้อความ <wt-badge value="12" severity="danger"></wt-badge></span>
 <span>สถานะออนไลน์ <wt-badge severity="success"></wt-badge></span>`,
+    directive: `<span class="notify-icon" wtBadge [value]="unread" severity="danger" [badgeDisabled]="!unread">
+  <i class="pi pi-bell"></i>
+</span>
+<span class="notify-icon" wtBadge severity="success"><i class="pi pi-envelope"></i></span>
+<span class="notify-icon" pBadge value="2" badgeSize="large"><i class="pi pi-calendar"></i></span>
+<wt-button label="อ่านทั้งหมด" severity="secondary" [text]="true" (onClick)="markRead()"></wt-button>`,
+    style: `<wt-badge value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wt-badge>`,
+  },
+  ts: {
+    directive: `unread = 3;   // ข้อความที่ยังไม่อ่าน
+
+markRead(): void {
+  this.unread = 0;
+}`,
   },
   api: [
     {
@@ -105,6 +136,19 @@ export const BADGE_DOC: ComponentDoc = {
         row('value', 'string | number', undefined, 'ค่าที่แสดง ไม่ใส่จะเป็นจุด', 'Value to show; a dot when left out'),
         row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
         row('size', "'small' | 'large' | 'xlarge'", undefined, 'ขนาด', 'Size'),
+        STYLE_ROW,
+      ],
+    },
+    {
+      id: 'api-directive',
+      title: { th: 'Directive wtBadge', en: 'The wtBadge directive' },
+      note: { th: 'ใส่บน element ใดก็ได้: wtBadge หรือ pBadge', en: 'On any element: wtBadge or pBadge.' },
+      rows: [
+        row('value', 'string | number', undefined, 'ค่าที่แสดง ไม่ใส่จะเป็นจุด', 'Value to show; a dot when left out'),
+        row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
+        row('size · badgeSize', "'small' | 'large' | 'xlarge'", undefined, 'ขนาด', 'Size'),
+        row('badgeDisabled', 'boolean', 'false', 'ซ่อน badge', 'Hide the badge'),
+        row('badgeStyleClass · badgeStyle', 'string · object', undefined, 'class / style ของตัว badge', 'Class / style of the badge itself'),
       ],
     },
     { id: 'api-types', title: 'Types', code: `type WtBadgeSize = 'small' | 'large' | 'xlarge';\n${SEVERITY_TYPE}` },
@@ -186,6 +230,7 @@ remove(tag: string): void {
         row('image', 'string', undefined, 'URL ของรูปด้านหน้า', 'URL of a leading image'),
         row('alt', 'string', undefined, 'ข้อความแทนรูป', 'Alt text for the image'),
         row('removable', 'boolean', 'false', 'แสดงปุ่มลบ', 'Shows a remove button'),
+        STYLE_ROW,
       ],
     },
     {
@@ -264,6 +309,7 @@ export const AVATAR_DOC: ComponentDoc = {
         row('size', "'normal' | 'large' | 'xlarge'", "'normal'", 'ขนาด', 'Size'),
         row('shape', "'square' | 'circle'", "'square'", 'รูปทรง', 'Shape'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
+        STYLE_ROW,
       ],
     },
     { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onImageError', 'Event', undefined, 'โหลดรูปไม่สำเร็จ', 'Image failed to load')] },
@@ -327,6 +373,7 @@ export const SKELETON_DOC: ComponentDoc = {
         row('height', 'string', "'1rem'", 'ความสูง', 'Height'),
         row('borderRadius', 'string', undefined, 'ความมนของมุม', 'Corner radius'),
         row('animation', "'wave' | 'none'", "'wave'", 'แสงวิ่ง', 'Shimmer'),
+        STYLE_ROW,
       ],
     },
   ],
@@ -352,6 +399,7 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
   english: {
     'รายการ': 'items',
     'อัปโหลด 3 จาก 10 ไฟล์': 'Uploaded 3 of 10 files',
+    'กำลังนำเข้า': 'Importing',
   },
   sections: {
     import: { title: 'Import', text: importText },
@@ -373,6 +421,13 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     },
     indeterminate: { title: 'Indeterminate', text: { th: 'ใช้เมื่อไม่รู้ว่าจะเสร็จเมื่อไร', en: 'For work of unknown length.' } },
     style: { title: { th: 'สีและความสูง', en: 'Colour and height' }, text: { th: 'ความสูงอยู่ที่ host จึงใส่ <code>style="height: 6px"</code> ได้', en: 'The height lives on the host, so <code>style="height: 6px"</code> works.' } },
+    striped: {
+      title: { th: 'ลายทาง', en: 'Stripes' },
+      text: {
+        th: '<code>[striped]="true"</code> ใส่ลายทางเฉียงบนแถบ · <code>[animated]="true"</code> ให้ลายทางเคลื่อนที่ (มีลายทางในตัว ไม่ต้องใส่ striped) เหมาะกับงานที่กำลังทำอยู่ ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นลายทางนิ่ง · ลายทางเป็นอีกชั้นหนึ่ง จึงใช้คู่กับ <code>color</code> ได้ และขนาดลายตั้งด้วย token <code>--wt-progressbar-stripe-size</code>',
+        en: '<code>[striped]="true"</code> lays diagonal stripes over the bar · <code>[animated]="true"</code> makes them move (it brings the stripes itself, no striped needed), for work in progress; people who ask for reduced motion see them still · the stripes are a layer of their own, so they go with <code>color</code>, and the <code>--wt-progressbar-stripe-size</code> token sets their size.',
+      },
+    },
   },
   code: {
     basic: `<wt-progressbar [value]="64"></wt-progressbar>
@@ -386,6 +441,9 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
 </wt-progressbar>`,
     indeterminate: `<wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>`,
     style: `<wt-progressbar [value]="72" color="#14b8a6" [showValue]="false" style="height: 6px"></wt-progressbar>`,
+    striped: `<wt-progressbar [value]="45" [striped]="true"></wt-progressbar>
+<wt-progressbar [value]="60" [animated]="true" text="กำลังนำเข้า"></wt-progressbar>
+<wt-progressbar [value]="80" [striped]="true" color="var(--wt-success-color)" [showValue]="false"></wt-progressbar>`,
   },
   api: [
     {
@@ -399,7 +457,10 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
         row('unit', 'string', "'%'", 'หน่วยต่อท้ายค่า (เมื่อ max ไม่ใช่ 100 แสดงเป็น ค่า / max หน่วย)', 'Unit after the value (with a max other than 100: value / max unit)'),
         row('mode', "'determinate' | 'indeterminate'", "'determinate'", 'รู้ค่าหรือไม่รู้ค่า', 'Known or unknown progress'),
         row('color', 'string', undefined, 'สีของแถบ', 'Bar colour'),
+        row('striped', 'boolean', 'false', 'ลายทางเฉียงบนแถบ', 'Diagonal stripes on the bar'),
+        row('animated', 'boolean', 'false', 'ลายทางที่เคลื่อนที่ (มีลายทางในตัว) นิ่งเมื่อผู้ใช้ตั้งลดการเคลื่อนไหว', 'Moving stripes (stripes included); still for people who ask for reduced motion'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
+        STYLE_ROW,
       ],
     },
     {
@@ -415,6 +476,7 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     tok('--wt-progressbar-radius', 'ความมน', 'Radius'),
     tok('--wt-progressbar-label-size', 'ขนาดตัวเลข', 'Label size'),
     tok('--wt-progressbar-label-weight', 'น้ำหนักตัวเลข', 'Label weight'),
+    tok('--wt-progressbar-stripe-size', 'ขนาดของลายทาง (striped / animated)', 'Size of the stripes (striped / animated)'),
     tok('--wt-primary-color', 'สีแถบ', 'Bar colour'),
     tok('--wt-primary-contrast', 'สีตัวเลขบนแถบ', 'Label colour on the bar'),
   ],
@@ -460,6 +522,7 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
         row('fill', 'string', "'none'", 'สีพื้นในวง', 'Fill inside the circle'),
         row('animationDuration', 'string', "'2s'", 'เวลาหมุนหนึ่งรอบ', 'Time for one turn'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
+        STYLE_ROW,
       ],
     },
   ],

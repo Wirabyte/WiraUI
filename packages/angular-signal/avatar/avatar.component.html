@@ -1,4 +1,4 @@
-<div [class]="classes()" [attr.role]="ariaLabel() ? 'img' : null" [attr.aria-label]="ariaLabel() || null">
+<div [class]="classes()" [style]="rootStyle()" [attr.role]="ariaLabel() ? 'img' : null" [attr.aria-label]="ariaLabel() || null">
   @if (showImage()) {
     <img [src]="image()" [alt]="ariaLabel() || label() || ''" (error)="imageError($event)" />
   } @else if (label()) {

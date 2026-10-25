@@ -52,4 +52,7 @@
 <ng-template #content let-item let-index="index">
   <span class="wt-steps-number p-steps-item-number" aria-hidden="true">{{ index + 1 }}</span>
   <span class="wt-steps-label p-steps-item-label">{{ item.label }}</span>
+  @if ($any(item).subtitle) {
+    <span class="wt-steps-subtitle">{{ $any(item).subtitle }}</span>
+  }
 </ng-template>

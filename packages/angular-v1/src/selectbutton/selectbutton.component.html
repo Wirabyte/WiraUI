@@ -1,4 +1,4 @@
-<div [class]="classes" role="group" [attr.aria-labelledby]="ariaLabelledBy || null">
+<div [class]="classes" [style]="rootStyle" role="group" [attr.aria-labelledby]="ariaLabelledBy || null">
   <button
     *ngFor="let option of options || []; let i = index"
     type="button"
@@ -8,6 +8,7 @@
     (click)="select(option, i, $event)"
     (blur)="onTouched()"
   >
-    <span class="p-button-label">{{ labelOf(option) }}</span>
+    <ng-container *ngIf="itemTemplate; else plainLabel"><ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: option, index: i }"></ng-container></ng-container>
+    <ng-template #plainLabel><span class="p-button-label">{{ labelOf(option) }}</span></ng-template>
   </button>
 </div>

@@ -1,0 +1,167 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div class="docs-demo-labelled">
+          <label for="d-ic-file">{{ tx('เลือกรูป') }}</label>
+          <input id="d-ic-file" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+        </div>
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            id="d-ic-basic"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="1"
+            (imageCropped)="basicCropped($event)"
+            (loadImageFailed)="loadImageFailed()"
+          ></wt-imagecropper>
+        </div>
+        @if (isLoadFailed) {
+          <span id="d-ic-failed" class="docs-demo-output">{{ tx('เปิดรูปไม่ได้') }}</span>
+        }
+        <div class="docs-demo-actions">
+          @if (basicResult?.objectUrl; as url) {
+            <img id="d-ic-basic-preview" [src]="url" [alt]="tx('รูปที่ตัดแล้ว')" [style]="previewStyle" />
+          }
+          <span class="docs-demo-output">imageCropped: <code id="d-ic-basic-size">{{ sizeOf(basicResult) }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="ratio" [section]="sec['ratio']">
+      <docs-demo [html]="code['ratio']" [ts]="ts['ratio']" layout="stack">
+        <wt-selectbutton id="d-ic-ratio" [options]="local(ratios)" optionLabel="label" optionValue="value" [(ngModel)]="ratio" [allowEmpty]="false"></wt-selectbutton>
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            id="d-ic-ratio-cropper"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="ratio"
+            [maintainAspectRatio]="ratio !== 'free'"
+            (imageCropped)="ratioCropped($event)"
+          ></wt-imagecropper>
+        </div>
+        <span class="docs-demo-output">
+          aspectRatio: <code id="d-ic-ratio-value">{{ ratio }}</code> · imageCropped: <code id="d-ic-ratio-size">{{ sizeOf(ratioResult) }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="round" [section]="sec['round']">
+      <docs-demo [html]="code['round']" layout="stack">
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            id="d-ic-round"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="1"
+            [roundCropper]="true"
+            [resizeToWidth]="256"
+            (imageCropped)="avatarCropped($event)"
+          ></wt-imagecropper>
+        </div>
+        <div class="docs-demo-actions">
+          @if (avatarResult?.objectUrl; as url) {
+            <img id="d-ic-avatar" [src]="url" [alt]="tx('รูปโปรไฟล์')" [style]="avatarStyle" />
+          }
+          <span class="docs-demo-output">imageCropped: <code id="d-ic-round-size">{{ sizeOf(avatarResult) }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="output" [section]="sec['output']">
+      <docs-demo [html]="code['output']" [ts]="ts['output']" layout="stack">
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            id="d-ic-output"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="4 / 3"
+            format="jpeg"
+            [imageQuality]="80"
+            [resizeToWidth]="400"
+            [onlyScaleDown]="true"
+            backgroundColor="#ffffff"
+            (imageCropped)="resizedCropped($event)"
+          ></wt-imagecropper>
+        </div>
+        <div class="docs-demo-actions">
+          @if (resizedResult?.objectUrl; as url) {
+            <img id="d-ic-output-preview" [src]="url" [alt]="tx('รูปที่ตัดแล้ว')" [style]="previewStyle" />
+          }
+          <span class="docs-demo-output">
+            {{ sizeOf(resizedResult) }} · jpeg · <code id="d-ic-output-kb">{{ kb(resizedResult) }}</code>
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="tools" [section]="sec['tools']">
+      <docs-demo [html]="code['tools']" [ts]="ts['tools']" layout="stack">
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            #photoCropper
+            id="d-ic-tools"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="16 / 9"
+            [showToolbar]="false"
+            [autoCrop]="false"
+            [(transform)]="transform"
+          ></wt-imagecropper>
+        </div>
+        <div class="docs-demo-actions">
+          <wt-button id="d-ic-rotate-left" [label]="tx('หมุนซ้าย')" icon="pi pi-undo" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateLeft()"></wt-button>
+          <wt-button id="d-ic-rotate-right" [label]="tx('หมุนขวา')" icon="pi pi-refresh" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateRight()"></wt-button>
+          <wt-button id="d-ic-flip" [label]="tx('พลิกแนวนอน')" severity="secondary" [outlined]="true" (onClick)="photoCropper.flipHorizontal()"></wt-button>
+          <wt-button id="d-ic-zoom-in" [label]="tx('ซูมเข้า')" icon="pi pi-plus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomIn()"></wt-button>
+          <wt-button id="d-ic-zoom-out" [label]="tx('ซูมออก')" icon="pi pi-minus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomOut()"></wt-button>
+          <wt-button id="d-ic-reset" [label]="tx('เริ่มใหม่')" severity="secondary" [text]="true" (onClick)="photoCropper.reset()"></wt-button>
+          <wt-button id="d-ic-crop" [label]="tx('ตัดรูป')" icon="pi pi-check" (onClick)="cropNow(photoCropper)"></wt-button>
+        </div>
+        <div class="docs-demo-actions">
+          @if (manualResult?.objectUrl; as url) {
+            <img id="d-ic-tools-preview" [src]="url" [alt]="tx('รูปที่ตัดแล้ว')" [style]="previewStyle" />
+          }
+          <span class="docs-demo-output">
+            transform: <code id="d-ic-transform">{{ transform | json }}</code> · crop(): <code id="d-ic-manual-size">{{ sizeOf(manualResult) }}</code>
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="upload" [section]="sec['upload']">
+      <docs-demo [html]="code['upload']" [ts]="ts['upload']" layout="stack">
+        <div [style]="cropperBoxStyle">
+          <wt-imagecropper
+            id="d-ic-upload"
+            [imageBase64]="samplePhoto"
+            [imageChangedEvent]="imageChangedEvent"
+            [aspectRatio]="1"
+            [resizeToWidth]="512"
+            [onlyScaleDown]="true"
+            (imageCropped)="photoCropped($event)"
+          ></wt-imagecropper>
+        </div>
+        <div class="docs-demo-actions">
+          <wt-button id="d-ic-save" [label]="tx('บันทึกรูป')" icon="pi pi-upload" [loading]="isApiSaving" [disabled]="!photoResult?.blob" (onClick)="savePhoto()"></wt-button>
+          <span class="docs-demo-output">
+            {{ tx('บันทึกแล้ว') }}: <code id="d-ic-saved">{{ savedCount }}</code> {{ tx('ครั้ง') }} · blob: <code id="d-ic-upload-kb">{{ kb(photoResult) }}</code>
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="limits" [section]="sec['limits']">
+      <docs-code [code]="$any(code['limits'])" lang="html"></docs-code>
+      <docs-code [code]="$any(ts['limits'])" lang="ts"></docs-code>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

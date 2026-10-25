@@ -1,0 +1,77 @@
+/* wt-breadcrumb. Shared by wiratheme v1, v2 and v3. A row of links with chevrons between them; it wraps on narrow
+   screens and the last item, the current page, is plain text colour. */
+@layer wiratheme.components {
+  wt-breadcrumb {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-breadcrumb {
+    padding: var(--wt-breadcrumb-padding);
+    border: var(--wt-breadcrumb-border-width) solid var(--wt-border);
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-breadcrumb-bg);
+  }
+  .wt-breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--wt-breadcrumb-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wt-breadcrumb-item {
+    display: flex;
+    min-width: 0;
+  }
+  .wt-breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    border-radius: var(--wt-radius-sm);
+    color: var(--wt-breadcrumb-link-color);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .wt-breadcrumb-link:hover {
+    color: var(--wt-breadcrumb-link-hover-color);
+  }
+  .wt-breadcrumb-link:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-breadcrumb-link-static {
+    cursor: default;
+  }
+  .wt-breadcrumb-current .wt-breadcrumb-link {
+    color: var(--wt-breadcrumb-current-color);
+    font-weight: var(--wt-breadcrumb-current-weight);
+  }
+  .wt-breadcrumb-item-disabled .wt-breadcrumb-link {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-breadcrumb-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .wt-breadcrumb-icon {
+    flex: none;
+  }
+  svg.wt-breadcrumb-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  .wt-breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    color: var(--wt-text-muted);
+  }
+  .wt-breadcrumb-separator svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}

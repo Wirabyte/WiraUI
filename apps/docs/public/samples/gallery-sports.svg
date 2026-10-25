@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
+  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): sports day on the school field. -->
+  <rect width="320" height="200" fill="#bae6fd" />
+  <circle cx="54" cy="40" r="18" fill="#fde68a" />
+  <rect y="110" width="320" height="90" fill="#4ade80" />
+  <path d="M0 150 C80 120 240 120 320 150 V200 H0Z" fill="#ea580c" />
+  <path d="M0 162 C80 134 240 134 320 162 M0 176 C80 150 240 150 320 176 M0 190 C80 166 240 166 320 190" stroke="#ffffff" stroke-width="1.4" fill="none" />
+  <g stroke="#57534e" stroke-width="1.2">
+    <path d="M40 110V64M280 110V64" />
+  </g>
+  <path d="M40 66 160 84 280 66" stroke="#57534e" stroke-width="0.8" fill="none" />
+  <g>
+    <path d="M60 69l6 10 6-8Z" fill="#ef4444" />
+    <path d="M90 74l6 10 6-8Z" fill="#facc15" />
+    <path d="M120 79l6 10 6-8Z" fill="#3b82f6" />
+    <path d="M150 83l6 10 6-8Z" fill="#22c55e" />
+    <path d="M180 82l6 10 6-8Z" fill="#a855f7" />
+    <path d="M210 78l6 10 6-8Z" fill="#ef4444" />
+    <path d="M240 73l6 10 6-8Z" fill="#facc15" />
+  </g>
+  <g fill="#1e3a8a">
+    <circle cx="120" cy="128" r="5" />
+    <path d="M116 134h8l3 14h-14Z" />
+    <circle cx="190" cy="124" r="5" fill="#b91c1c" />
+    <path d="M186 130h8l3 14h-14Z" fill="#b91c1c" />
+  </g>
+</svg>

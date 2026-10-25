@@ -38,11 +38,24 @@ export class WtButton {
   readonly outlined = input(false, { transform: booleanAttribute });
   readonly text = input(false, { transform: booleanAttribute });
   readonly raised = input(false, { transform: booleanAttribute });
+  /** Drawn as a link. */
+  readonly link = input(false, { transform: booleanAttribute });
+  /** Colour of the badge: `danger`, `success` … */
+  readonly badgeSeverity = input<string | null | undefined>();
   readonly rounded = input(false, { transform: booleanAttribute });
   readonly fluid = input(false, { transform: booleanAttribute });
   readonly size = input<WtButtonSize>();
   /** Extra classes for the <button>; the classic names (`p-button-sm`, `p-button-danger p-button-text`) work as they did. */
   readonly styleClass = input<string>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly type = input<'button' | 'submit' | 'reset'>('button');
@@ -60,7 +73,7 @@ export class WtButton {
   /** Our classes plus the styled-era `p-*` names for the same state, so app CSS written for `.p-button` keeps working. */
   readonly classes = computed(() => {
     const sev = this.severity() === 'warning' ? 'warn' : this.severity();
-    const variant = this.outlined() ? 'outlined' : this.text() ? 'text' : this.variant();
+    const variant = this.link() ? 'link' : this.outlined() ? 'outlined' : this.text() ? 'text' : this.variant();
     const c = ['wt-btn', 'p-button', 'p-component'];
     if (sev !== 'primary') c.push('wt-btn-' + sev, 'p-button-' + sev);
     if (variant !== 'solid') c.push('wt-btn-' + variant, 'p-button-' + variant);

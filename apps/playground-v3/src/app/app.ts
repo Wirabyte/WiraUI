@@ -1,13 +1,13 @@
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WIRATHEME_MAJOR } from 'wiratheme';
-import type { MenuItem, Message } from 'wiratheme/api';
+import type { MenuItem, Message, TreeNode } from 'wiratheme/api';
 import { WtButton, WtButtonDirective } from 'wiratheme/button';
 import { WtCard } from 'wiratheme/card';
 import { WtCheckbox } from 'wiratheme/checkbox';
 import { definePreset, palette, Siam, WtConfig, WtThemeService } from 'wiratheme/config';
-import { EN_LOCALE } from 'wiratheme/core';
+import { base64ToFile, EN_LOCALE } from 'wiratheme/core';
 import { WtAlert, WtAlertService } from 'wiratheme/alert';
 import { WtConfirmationService } from 'wiratheme/confirmdialog';
 import { WtMessageService } from 'wiratheme/toast';
@@ -33,7 +33,6 @@ import { WtToggleButton } from 'wiratheme/togglebutton';
 import { WtSelectButton } from 'wiratheme/selectbutton';
 import { WtRating } from 'wiratheme/rating';
 import { WtPassword } from 'wiratheme/password';
-import { WtToolbar } from 'wiratheme/toolbar';
 import { WtAccordion, WtAccordionContent, WtAccordionHeader, WtAccordionPanel, WtAccordionTab } from 'wiratheme/accordion';
 import { WtTab, WtTabList, WtTabPanel, WtTabPanels, WtTabs } from 'wiratheme/tabs';
 import { WtInputNumber } from 'wiratheme/inputnumber';
@@ -60,7 +59,37 @@ import { WtImage } from 'wiratheme/image';
 import { WtAutoComplete } from 'wiratheme/autocomplete';
 import { WtPanelMenu } from 'wiratheme/panelmenu';
 import { WtSteps } from 'wiratheme/steps';
+import { WtPickList } from 'wiratheme/picklist';
+import { WtOrderList } from 'wiratheme/orderlist';
+import { WtFileUpload } from 'wiratheme/fileupload';
+import { WtEditor, WtEditorContent } from 'wiratheme/editor';
+import { WtRipple } from 'wiratheme/ripple';
+import { WtKeyFilter } from 'wiratheme/keyfilter';
+import { WtBadgeDirective } from 'wiratheme/badge';
+import { WtFooter } from 'wiratheme/card';
+import { WtToolbar } from 'wiratheme/toolbar';
+import { WtStep, WtStepItem, WtStepList, WtStepPanel, WtStepPanels, WtStepper } from 'wiratheme/stepper';
 import { WtValidationModule } from 'wiratheme/validation';
+import { WtSlider } from 'wiratheme/slider';
+import { WtSplitButton } from 'wiratheme/splitbutton';
+import { WtListbox } from 'wiratheme/listbox';
+import { WtGalleria } from 'wiratheme/galleria';
+import { WtColorPicker } from 'wiratheme/colorpicker';
+import { WtBreadcrumb } from 'wiratheme/breadcrumb';
+import { WtInplace } from 'wiratheme/inplace';
+import { WtBlockUI } from 'wiratheme/blockui';
+import { WtScrollPanel } from 'wiratheme/scrollpanel';
+import { WtScroller } from 'wiratheme/scroller';
+import { WtDrawer } from 'wiratheme/drawer';
+import { WtTieredMenu } from 'wiratheme/tieredmenu';
+import { WtContextMenu } from 'wiratheme/contextmenu';
+import { WtTree } from 'wiratheme/tree';
+import { WtTreeSelect } from 'wiratheme/treeselect';
+import { WtDraggable, WtDroppable } from 'wiratheme/dragdrop';
+import { WtNavbar } from 'wiratheme/navbar';
+import { WtAsideMenu } from 'wiratheme/asidemenu';
+import { WtImageCropper } from 'wiratheme/imagecropper';
+import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecropper';
 
 @Component({
   selector: 'app-root',
@@ -78,8 +107,25 @@ import { WtValidationModule } from 'wiratheme/validation';
     WtAutoComplete,
     WtPanelMenu,
     WtSteps,
+    WtPickList,
+    WtOrderList,
+    WtFileUpload,
+    WtEditor,
+    WtEditorContent,
+    WtRipple,
+    WtKeyFilter,
+    WtBadgeDirective,
+    WtFooter,
+    WtStepper,
+    WtStepList,
+    WtStep,
+    WtStepPanels,
+    WtStepPanel,
+    WtStepItem,
     ReactiveFormsModule,
     JsonPipe,
+    NgFor,
+    NgIf,
     WtButton,
     WtCard,
     WtInputText,
@@ -133,6 +179,26 @@ import { WtValidationModule } from 'wiratheme/validation';
     WtSelect,
     WtTableModule,
     WtValidationModule,
+    WtSlider,
+    WtSplitButton,
+    WtListbox,
+    WtGalleria,
+    WtColorPicker,
+    WtBreadcrumb,
+    WtInplace,
+    WtBlockUI,
+    WtScrollPanel,
+    WtScroller,
+    WtDrawer,
+    WtTieredMenu,
+    WtContextMenu,
+    WtTree,
+    WtTreeSelect,
+    WtDraggable,
+    WtDroppable,
+    WtNavbar,
+    WtAsideMenu,
+    WtImageCropper,
   ],
   templateUrl: './app.component.html',
 })
@@ -165,6 +231,87 @@ export class App {
     info: { club: ['ดนตรี', 'กีฬา', 'วิทยาศาสตร์', 'ศิลปะ'][i % 4] },
   }));
   fewStudents = this.students.slice(0, 4);
+  plSource = [
+    { id: 1, name: 'ดูข้อมูลนักเรียน' },
+    { id: 2, name: 'แก้ไขข้อมูลนักเรียน' },
+    { id: 3, name: 'อนุมัติคำร้อง' },
+    { id: 4, name: 'ออกรายงาน' },
+    { id: 5, name: 'ตั้งค่าระบบ' },
+  ];
+  plTarget: { id: number; name: string }[] = [];
+  plSource2 = [
+    { id: 1, name: 'คณิตศาสตร์' },
+    { id: 2, name: 'วิทยาศาสตร์' },
+  ];
+  plTarget2: { id: number; name: string }[] = [{ id: 3, name: 'ภาษาไทย' }];
+  olItems = [
+    { id: 1, name: 'ครูประจำชั้น' },
+    { id: 2, name: 'หัวหน้าระดับ' },
+    { id: 3, name: 'รองผู้อำนวยการ' },
+    { id: 4, name: 'ผู้อำนวยการ' },
+  ];
+  olSelected: { id: number; name: string }[] = [];
+  uploadLog = '';
+  deepRows = [
+    { id: 1, name: 'กมล', score: 40 },
+    { id: 2, name: 'ขวัญใจ', score: 75 },
+    { id: 3, name: 'จิราพร', score: 60 },
+    { id: 4, name: 'ชยพล', score: 90 },
+  ];
+  deepCols = [
+    { field: 'name', header: 'ชื่อ' },
+    { field: 'score', header: 'คะแนน' },
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  deepPicked: any = null;
+  deepFrozen = [{ name: 'รวม', score: 265 }];
+  editRows = [
+    { id: 1, name: 'ห้องหนึ่ง' },
+    { id: 2, name: 'ห้องสอง' },
+  ];
+  isDeepSelectable(e: { data: unknown }): boolean {
+    return (e.data as { id: number }).id !== 3;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sortDeep(e: { data: any[]; field?: string; order?: number }): void {
+    const f = e.field || 'name';
+    const o = e.order || 1;
+    e.data.sort((a, b) => (a[f] > b[f] ? 1 : a[f] < b[f] ? -1 : 0) * o);
+    this.note('customsort:' + f);
+  }
+  prNumber: number | null = 12;
+  prRadio = 'a';
+  prOptions = [
+    { label: 'ก', value: 1 },
+    { label: 'ข', value: 2 },
+  ];
+  prChoice: number | null = 1;
+  prDigits = '';
+  prAcValue: unknown = null;
+  prAcItems: string[] = [];
+  editorHtml: string | null = '<p>สวัสดี <strong>คุณครู</strong></p>';
+  editorQuill: string | null = '<p class="ql-align-center">จัดกลาง</p><ol><li data-list="bullet">ข้อหนึ่ง</li></ol>';
+  editorUpload: string | null = null;
+  readonlyHtml = '<p>อ่านอย่างเดียว</p>';
+  viewHtml = '<h2>หัวข้อ</h2><p class="ql-align-center">กึ่งกลาง</p><p class="ql-indent-1">เยื้อง</p><table><tbody><tr><td>ก</td><td>ข</td></tr></tbody></table>';
+  setEditorValue(): void {
+    this.editorHtml = '<h2>ข่าวประชาสัมพันธ์</h2><p class="ql-align-right">ชิดขวา</p>';
+  }
+  stepValue = 1;
+  csv = '';
+  groupStudents = this.students.slice(0, 8).sort((a, b) => a.info.club.localeCompare(b.info.club, 'th') || a.id - b.id);
+  exportCols = [
+    { field: 'name', header: 'ชื่อ' },
+    { field: 'room', header: 'ห้อง' },
+    { field: 'score', header: 'คะแนน' },
+  ];
+  names(list: { name: string }[]): string {
+    return list.map((x) => x.name).join(',');
+  }
+  uploadFiles(event: { files: File[] }, fu: { clear(): void }): void {
+    this.uploadLog = event.files.map((f) => f.name).join(',');
+    fu.clear();
+  }
   clubs = [
     { id: 1, name: 'ดนตรี' },
     { id: 2, name: 'กีฬา' },
@@ -205,7 +352,13 @@ export class App {
     { id: 5, name: 'ทวีธาภิเศก' },
   ];
   schoolHits: { id: number; name: string }[] = [];
-  ac = { school: null as unknown, free: null as unknown };
+
+  /** Records the query on the window as it is asked, so a test can tell it came on the key itself. */
+  findSchoolNow(e: { query: string }): void {
+    (globalThis as unknown as { wtAsked?: string }).wtAsked = e.query;
+    this.findSchool(e);
+  }
+  ac = { school: null as unknown, free: null as unknown, plain: null as unknown };
   findSchool(e: { query: string }): void {
     const q = e.query.trim();
     this.schoolHits = this.schools.filter((s) => !q || s.name.includes(q));
@@ -450,5 +603,195 @@ export class App {
   toggleDisabled(): void {
     if (this.form.enabled) this.form.disable();
     else this.form.enable();
+  }
+
+  sliderValue = 40;
+  sliderRange = [20, 60];
+  splitItems: MenuItem[] = [
+    { label: 'บันทึกเป็นร่าง', command: () => this.note('split:draft') },
+    { label: 'ลบ', command: () => this.note('split:delete') },
+  ];
+  rooms = [
+    { name: 'ม.1/1', code: '101' },
+    { name: 'ม.1/2', code: '102' },
+    { name: 'ม.2/1', code: '201', disabled: true },
+    { name: 'ม.3/1', code: '301' },
+  ];
+  room: { name: string; code: string } | null = null;
+  roomCodes: string[] = [];
+  photos = [
+    { title: 'ภาพ 1', color: '#fca5a5' },
+    { title: 'ภาพ 2', color: '#fdba74' },
+    { title: 'ภาพ 3', color: '#86efac' },
+    { title: 'ภาพ 4', color: '#93c5fd' },
+    { title: 'ภาพ 5', color: '#c4b5fd' },
+  ];
+  photoIndex = 0;
+  galleryFull = false;
+  color = '#6466f1';
+  colorRgb = { r: 16, g: 185, b: 129 };
+  crumbs: MenuItem[] = [{ label: 'นักเรียน', command: () => this.note('crumb:students') }, { label: 'ม.1/1' }, { label: 'สมชาย' }];
+  crumbHome: MenuItem = { command: () => this.note('crumb:home') };
+  blocked = false;
+  pageBlocked = false;
+  numbers = Array.from({ length: 20 }, (_, i) => i + 1);
+  manyRows = Array.from({ length: 1000 }, (_, i) => 'แถวที่ ' + (i + 1));
+  drawerOpen = false;
+  sidebarOpen = false;
+  tieredItems: MenuItem[] = [
+    {
+      label: 'ไฟล์',
+      icon: 'pi pi-file',
+      items: [
+        { label: 'ใหม่', command: () => this.note('tm:new') },
+        { label: 'ส่งออก', items: [{ label: 'PDF', command: () => this.note('tm:pdf') }, { label: 'Excel', command: () => this.note('tm:excel') }] },
+      ],
+    },
+    { separator: true },
+    { label: 'ลบ', icon: 'pi pi-trash', command: () => this.note('tm:delete') },
+    { label: 'ปิดใช้งาน', disabled: true },
+  ];
+  treeNodes: TreeNode[] = this.makeTree();
+  treeNodes2: TreeNode[] = this.makeTree();
+  treePicked: TreeNode[] = [];
+  treeNode: TreeNode | null = null;
+  ctxRoom: { name: string; code: string } | null = null;
+  ctxItems: MenuItem[] = [{ label: 'เปิดห้อง', command: () => this.note('ctx:' + (this.ctxRoom?.name || '')) }];
+
+  makeTree(): TreeNode[] {
+    return [
+      {
+        key: 'a',
+        label: 'ด้านที่ 1 การบริหาร',
+        children: [
+          { key: 'a1', label: 'แผนงาน' },
+          { key: 'a2', label: 'งบประมาณ', children: [{ key: 'a2x', label: 'รายรับ' }, { key: 'a2y', label: 'รายจ่าย' }] },
+        ],
+      },
+      { key: 'b', label: 'ด้านที่ 2 วิชาการ', children: [{ key: 'b1', label: 'หลักสูตร' }] },
+    ];
+  }
+
+  pickedKeys(): string {
+    return this.treePicked
+      .map((n) => n.key)
+      .sort()
+      .join(',');
+  }
+
+  blockPage(): void {
+    this.pageBlocked = true;
+    setTimeout(() => {
+      this.pageBlocked = false;
+      this.cdr.markForCheck();
+    }, 400);
+  }
+
+  stepModel: MenuItem[] = [
+    { label: 'ข้อมูล', subtitle: 'ชื่อและวันเกิด' },
+    { label: 'ที่อยู่' },
+    { label: 'ยืนยัน', command: () => this.note('spm:confirm') },
+  ];
+  stepModelIndex = 0;
+  meterParts = [
+    { label: 'ก', value: 30, color: '#10b981' },
+    { label: 'ข', value: 20, color: '#3b82f6' },
+  ];
+  msMore: string[] = ['101', '102', '301'];
+  tabModelPage: MenuItem | null = this.tabPages[1];
+
+  navLinks: MenuItem[] = [
+    { label: 'หน้าแรก', url: '#nv' },
+    { label: 'ข่าวสาร', url: '#nv', badge: '3' },
+    {
+      label: 'บริการ',
+      items: [
+        { label: 'ตารางเรียน', command: () => this.note('nv:schedule') },
+        { label: 'ผลการเรียน', command: () => this.note('nv:grades') },
+        { label: 'ปิดปรับปรุง', disabled: true },
+      ],
+    },
+    { label: 'เกี่ยวกับเรา', command: () => this.note('nv:about') },
+    { label: 'ซ่อนอยู่', visible: false },
+  ];
+  /** No router on the playground: the current page is marked with [activeItem]. */
+  navActive: MenuItem = this.navLinks[0];
+  navShort: MenuItem[] = [
+    { label: 'บทความ', command: () => this.note('nv:articles') },
+    { label: 'ผลงาน', command: () => this.note('nv:works') },
+  ];
+
+  amItems: MenuItem[] = this.makeAsideItems();
+  amSectionItems: MenuItem[] = this.makeAsideItems();
+  /** No router on the playground: the current page is marked with [activeItem] (รายงาน → สรุปผล). */
+  amActive: MenuItem = (this.amItems[2].items as MenuItem[])[0];
+  amCollapsed = false;
+  amOpen = false;
+  amBarLinks: MenuItem[] = [
+    { label: 'ประกาศ', command: () => this.note('am:bar:news') },
+    { label: 'ติดต่อ', url: '#am' },
+  ];
+
+  makeAsideItems(): MenuItem[] {
+    return [
+      { label: 'แดชบอร์ด', command: () => this.note('am:dashboard') },
+      {
+        label: 'นักเรียน',
+        icon: 'pi pi-users',
+        items: [
+          { label: 'รายชื่อ', command: () => this.note('am:list') },
+          {
+            label: 'นำเข้า',
+            items: [
+              { label: 'Excel', command: () => this.note('am:excel') },
+              { label: 'CSV', command: () => this.note('am:csv') },
+            ],
+          },
+          { label: 'ส่งออก', items: [{ label: 'PDF', command: () => this.note('am:pdf') }] },
+        ],
+      },
+      {
+        label: 'รายงาน',
+        icon: 'pi pi-chart-bar',
+        badge: '2',
+        items: [
+          { label: 'สรุปผล', url: '#am' },
+          { label: 'สถิติ', command: () => this.note('am:stats') },
+        ],
+      },
+      { separator: true },
+      { label: 'ตั้งค่า', command: () => this.note('am:settings') },
+      { label: 'ปิดใช้งาน', icon: 'pi pi-ban', disabled: true },
+      { label: 'ซ่อนอยู่', visible: false },
+    ];
+  }
+
+  // ---------- image cropper (#ic-section) ----------
+  /** A 320 × 200 PNG drawn in the page (the fixture has no network). */
+  icImage = this.cropperTestImage();
+  icFile: Blob | null = this.icImage ? base64ToFile(this.icImage) : null;
+  icBox: CropperPosition | null = null;
+  icRatioBox: CropperPosition | null = null;
+  icCropped: WtImageCroppedEvent | null = null;
+  icRatioSize = '';
+  icFreeSize = '';
+
+  /** Four coloured quarters and a white dot, so turns and mirrors are easy to see. */
+  cropperTestImage(): string {
+    if (typeof document === 'undefined') return '';
+    const canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 200;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+    ['#10b981', '#6366f1', '#f59e0b', '#e11d48'].forEach((color, i) => {
+      ctx.fillStyle = color;
+      ctx.fillRect((i % 2) * 160, Math.floor(i / 2) * 100, 160, 100);
+    });
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(60, 50, 18, 0, Math.PI * 2);
+    ctx.fill();
+    return canvas.toDataURL('image/png');
   }
 }

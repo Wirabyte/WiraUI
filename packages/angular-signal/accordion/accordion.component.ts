@@ -1,8 +1,10 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChild,
   contentChildren,
   ElementRef,
   forwardRef,
@@ -11,10 +13,11 @@ import {
   model,
   output,
   signal,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtAccordionTabEvent } from './accordion.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵaccordionGap, WtAccordionTabEvent } from './accordion.types';
 
 /**
  * Stack of collapsible sections, written either way apps already write them:
@@ -26,13 +29,38 @@ import { WtAccordionTabEvent } from './accordion.types';
 @Component({
   selector: 'wt-accordion',
   standalone: true,
-  template: '<div class="wt-accordion p-accordion p-component"><ng-content></ng-content></div>',
+  template: '<div class="wt-accordion p-accordion p-component" [class]="styleClass() || \'\'" [style]="rootStyle()"><ng-content></ng-content></div>',
   styleUrl: './accordion.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.wt-accordion-separated]': 'separated()',
+    '[style.--wt-accordion-gap]': 'gapLength()',
+  },
 })
 export class WtAccordion {
   readonly multiple = input(false, { transform: booleanAttribute });
+  /**
+   * Space between the panels: `[gap]="true"` (0.75rem), `gap="1rem"` or `[gap]="12"` (px) makes each panel a card of its
+   * own; `[gap]="false"` joins them. Left out: the theme's look.
+   */
+  readonly gap = input<string | number | boolean | null | undefined>();
+  readonly gapLength = computed(() => ɵaccordionGap(this.gap()));
+  readonly separated = computed(() => {
+    const g = this.gapLength();
+    return !!g && parseFloat(g) !== 0;
+  });
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
   /** Two-way: `[(activeIndex)]`. */
   readonly activeIndex = model<number | number[] | null>(null);
   /** Two-way: `[(value)]` with `wt-accordion-panel`: the open panel's value (an array with `multiple`). Typed `any`. */
@@ -112,12 +140,18 @@ export class WtAccordion {
 @Component({
   selector: 'wt-accordion-tab, wt-accordiontab, wt-accordionTab',
   standalone: true,
+  imports: [NgTemplateOutlet],
   templateUrl: './accordion-tab.component.html',
   styleUrl: './accordion.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WtAccordionTab {
+  private readonly slotTemplates = contentChildren(WtTemplate);
+  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
+  private readonly contentRef = contentChild('content', { read: TemplateRef });
+  readonly contentTemplate = computed(() => this.contentRef() || ɵfindTemplate(this.slotTemplates(), 'content'));
   readonly header = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
   /** Two-way: `[(selected)]`. */

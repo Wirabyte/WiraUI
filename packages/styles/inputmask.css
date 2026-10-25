@@ -1,21 +1,21 @@
 /* wt-inputmask. Shared by wiratheme v1, v2 and v3. The field is drawn by wt-inputtext's stylesheet (loaded with it);
    this file places the clear button and carries the form's invalid state from the host to the field. */
 @layer wiratheme.components {
-  wt-inputmask {
+  :is(wt-inputmask, wt-input-mask) {
     position: relative;
     display: inline-flex;
     vertical-align: middle;
     max-width: 100%;
   }
-  wt-inputmask.wt-inputmask-fluid {
+  :is(wt-inputmask, wt-input-mask).wt-inputmask-fluid {
     display: flex;
     width: 100%;
   }
-  wt-inputmask > .wt-inputtext {
+  :is(wt-inputmask, wt-input-mask) > .wt-inputtext {
     flex: 1 1 auto;
     min-width: 0;
   }
-  wt-inputmask:has(> .wt-inputmask-clear) > .wt-inputtext {
+  :is(wt-inputmask, wt-input-mask):has(> .wt-inputmask-clear) > .wt-inputtext {
     padding-right: 2.25rem;
   }
   .wt-inputmask-clear {
@@ -41,7 +41,7 @@
     width: 0.875rem;
     height: 0.875rem;
   }
-  wt-inputmask.ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-inputtext {
+  :is(wt-inputmask, wt-input-mask).ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-inputtext {
     border-color: var(--wt-danger-color);
   }
 }

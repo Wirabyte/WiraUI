@@ -21,7 +21,7 @@ import { ɵprogressPercent, ɵprogressText, WtProgressBarContext, WtProgressBarM
  * Counting items instead: `<wt-progressbar [value]="1000" [max]="2500" unit="รายการ">` shows `1,000 / 2,500 รายการ`.
  */
 @Component({
-  selector: 'wt-progressbar',
+  selector: 'wt-progressbar, wt-progressBar, wt-progress-bar',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './progressbar.component.html',
@@ -40,6 +40,10 @@ export class WtProgressBar {
   readonly mode = input<WtProgressBarMode>('determinate');
   /** Bar colour, e.g. `var(--wt-success-color)`. */
   readonly color = input<string>();
+  /** Diagonal stripes on the bar. */
+  readonly striped = input(false, { transform: booleanAttribute });
+  /** Stripes that move, for work in progress (shown still to people who ask for less motion). */
+  readonly animated = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
 
   private readonly config = inject(WtConfig);
@@ -55,7 +59,24 @@ export class WtProgressBar {
     return ((own instanceof TemplateRef ? own : null) || ɵfindTemplate(this.templates(), 'content')) as TemplateRef<WtProgressBarContext> | null;
   });
   readonly context = computed<WtProgressBarContext>(() => ({ $implicit: this.value() || 0, value: this.value() || 0, max: this.max(), percent: this.percent() }));
-  readonly classes = computed(() => `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode()} p-progressbar-${this.mode()}`);
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  readonly styleClass = input<string | null | undefined>();
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly style = input<Record<string, any> | string | null | undefined>();
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly rootStyle = computed(() => {
+    const s = this.style();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return s && typeof s === 'object' ? (s as Record<string, any>) : null;
+  });
+  readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
+  readonly baseClasses = computed(() => {
+    const stripes = this.striped() || this.animated() ? ' wt-progressbar-striped' : '';
+    const moving = this.animated() ? ' wt-progressbar-animated' : '';
+    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode()} p-progressbar-${this.mode()}${stripes}${moving}`;
+  });
 
   constructor() {
     ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));

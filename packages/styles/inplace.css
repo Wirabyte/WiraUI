@@ -1,0 +1,38 @@
+/* wt-inplace. Shared by wiratheme v1, v2 and v3. Text with a hover tint that turns into its editor on click. */
+@layer wiratheme.components {
+  wt-inplace {
+    display: inline-block;
+    max-width: 100%;
+  }
+  .wt-inplace-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    padding: var(--wt-inplace-padding);
+    border-radius: var(--wt-radius-sm);
+    cursor: pointer;
+    transition: background-color 0.15s;
+  }
+  .wt-inplace-display:not(.wt-inplace-disabled):hover {
+    background: var(--wt-hover-bg);
+  }
+  .wt-inplace-display:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-inplace-disabled {
+    opacity: var(--wt-disabled-opacity);
+    cursor: default;
+  }
+  .wt-inplace-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+  .wt-inplace-close {
+    flex: none;
+  }
+}

@@ -17,7 +17,7 @@ import { WtToggleSwitchChangeEvent } from './toggleswitch.types';
 
 /** On/off switch for ngModel and reactive forms (also known as InputSwitch), with an optional `label`. */
 @Component({
-  selector: 'wt-toggleswitch, wt-toggleSwitch, wt-inputswitch, wt-inputSwitch',
+  selector: 'wt-toggleswitch, wt-toggleSwitch, wt-inputswitch, wt-inputSwitch, wt-toggle-switch',
   standalone: true,
   imports: [NgIf],
   templateUrl: './toggleswitch.component.html',
@@ -33,6 +33,16 @@ export class WtToggleSwitch implements ControlValueAccessor {
   @Input() trueValue: unknown = true;
   @Input() falseValue: unknown = false;
   @Input() ariaLabel?: string;
+  /** Classes for the root element, as before (`styleClass="w-full"`). */
+  @Input() styleClass?: string | null;
+  /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() style?: Record<string, any> | string | null;
+  /** The `style` object for the root (a plain style attribute already styles the host). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get rootStyle(): Record<string, any> | null {
+    return this.style && typeof this.style === 'object' ? this.style : null;
+  }
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
   @Input() set readonly(v: unknown) { this._readonly = ɵtoBool(v); }
