@@ -168,6 +168,14 @@ docs-landing {
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
+// Thai stacks vowels and tone marks above and below the letters: at display sizes the lines need more room, or
+// a lower vowel (ชุ) touches the tone marks of the line below (ที่, เข้า).
+:lang(th) .lp-title {
+  line-height: 1.5;
+}
+:lang(th) .lp-section-head h2 {
+  line-height: 1.45;
+}
 .lp-accent {
   color: var(--docs-primary);
   background: var(--docs-brand-text);

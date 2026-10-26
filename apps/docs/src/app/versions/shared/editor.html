@@ -8,7 +8,7 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <wt-editor id="d-ed-basic" name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" [placeholder]="tx('พิมพ์เนื้อหาข่าว')"></wt-editor>
         <div class="docs-demo-actions">
-          <wt-button id="d-ed-save" [label]="tx('บันทึก')" icon="pi pi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>
+          <wt-button id="d-ed-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>
           <span class="docs-demo-output">saved: <code id="d-ed-saved">{{ savedCount }}</code></span>
         </div>
         <pre id="d-ed-basic-value" class="docs-csv">{{ newsBody ?? 'null' }}</pre>
@@ -137,7 +137,7 @@
           (onTextChange)="textChanged($event)"
         ></wt-editor>
         <div class="docs-demo-actions">
-          <wt-button id="d-ed-letter" [label]="tx('ใส่จดหมายตัวอย่าง')" icon="pi pi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
+          <wt-button id="d-ed-letter" [label]="tx('ใส่จดหมายตัวอย่าง')" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
           <wt-button id="d-ed-focus" [label]="tx('ไปที่เนื้อหา')" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wt-button>
         </div>
         <span class="docs-demo-output">onTextChange: <code id="d-ed-event">{{ lastEvent || '-' }}</code> · onInit: <code id="d-ed-ready">{{ editorIsReady }}</code></span>

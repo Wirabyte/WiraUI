@@ -92,12 +92,12 @@ export const INPLACE_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #content let-closeCallback="closeCallback">
     <input wtInputText name="nickname" [(ngModel)]="nickname" aria-label="ชื่อเล่น" />
-    <wt-button label="บันทึก" icon="pi pi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wt-button>
+    <wt-button label="บันทึก" icon="wi wi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wt-button>
   </ng-template>
 </wt-inplace>`,
-    lazy: `<wt-inplace [closable]="true" closeIcon="pi pi-times">
+    lazy: `<wt-inplace [closable]="true" closeIcon="wi wi-times">
   <ng-template #display>
-    <i class="pi pi-image"></i> ดูรูปอาคาร
+    <i class="wi wi-image"></i> ดูรูปอาคาร
   </ng-template>
   <ng-template #content>
     <img src="photos/school.jpg" alt="อาคารเรียนของโรงเรียน" width="320" />
@@ -111,7 +111,7 @@ export const INPLACE_DOC: ComponentDoc = {
     <textarea wtTextarea name="note" [(ngModel)]="note" rows="3" aria-label="หมายเหตุ"></textarea>
   </ng-template>
 </wt-inplace>
-<wt-button label="แก้ไขหมายเหตุ" icon="pi pi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wt-button>
+<wt-button label="แก้ไขหมายเหตุ" icon="wi wi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wt-button>
 <wt-inplace [disabled]="true">
   <ng-template #display>แก้ไขได้เฉพาะเจ้าหน้าที่</ng-template>
 </wt-inplace>`,

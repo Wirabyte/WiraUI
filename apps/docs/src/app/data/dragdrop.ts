@@ -121,7 +121,7 @@ export const DRAGDROP_DOC: ComponentDoc = {
   @for (g of groups; track g; let i = $index) {
     <li wtDroppable="order" (onDrop)="dropAt(i)">
       <span wtDraggable="order" dragHandle=".drag-handle" [wtDraggableDisabled]="orderLocked" (onDragStart)="dragFrom(i)">
-        <i class="pi pi-bars drag-handle"></i> {{ g }}
+        <i class="wi wi-bars drag-handle"></i> {{ g }}
       </span>
     </li>
   }
@@ -130,7 +130,7 @@ export const DRAGDROP_DOC: ComponentDoc = {
       classic: `<ol class="order-list">
   <li *ngFor="let g of groups; let i = index" wtDroppable="order" (onDrop)="dropAt(i)">
     <span wtDraggable="order" dragHandle=".drag-handle" [wtDraggableDisabled]="orderLocked" (onDragStart)="dragFrom(i)">
-      <i class="pi pi-bars drag-handle"></i> {{ g }}
+      <i class="wi wi-bars drag-handle"></i> {{ g }}
     </span>
   </li>
 </ol>

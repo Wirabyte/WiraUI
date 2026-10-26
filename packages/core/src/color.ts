@@ -62,6 +62,29 @@ export function contrast(a: string, b: string): number {
   return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 }
 
+/** Screen luminance for APCA: plain 2.4 gamma, with a soft clamp near black. */
+function apcaY(hex: string): number {
+  const [r, g, b] = hexToRgb(hex).map((v) => Math.pow(v / 255, 2.4));
+  const y = 0.2126729 * r + 0.7151522 * g + 0.072175 * b;
+  return y < 0.022 ? y + Math.pow(0.022 - y, 1.414) : y;
+}
+
+/**
+ * APCA lightness contrast (Lc, roughly −108 to 106; negative = light text on dark) of `text` on `bg`. Unlike the
+ * WCAG ratio it follows how people see mid-tones, e.g. white reads better than black on teal, blue or red.
+ */
+export function apcaContrast(text: string, bg: string): number {
+  const t = apcaY(text);
+  const b = apcaY(bg);
+  if (Math.abs(b - t) < 0.0005) return 0;
+  if (b > t) {
+    const s = (Math.pow(b, 0.56) - Math.pow(t, 0.57)) * 1.14;
+    return s < 0.1 ? 0 : (s - 0.027) * 100;
+  }
+  const s = (Math.pow(b, 0.65) - Math.pow(t, 0.62)) * 1.14;
+  return s > -0.1 ? 0 : (s + 0.027) * 100;
+}
+
 /** Generates the 50–950 scale from one base colour (the base becomes 500). */
 export function generatePalette(base: string): Palette {
   const out = {} as Palette;

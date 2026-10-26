@@ -112,10 +112,41 @@ $-digits: '0123456789abcdef';
   @return math.div(math.max($l1, $l2) + 0.05, math.min($l1, $l2) + 0.05);
 }
 
-// White or the darkest surface, whichever reads better on $bg (both hex strings), as bestOn().
+// Screen luminance for APCA, as apcaY() in color.ts.
+@function -apca-y($rgb) {
+  $y: 0.2126729 * math.pow(math.div(list.nth($rgb, 1), 255), 2.4) + 0.7151522 * math.pow(math.div(list.nth($rgb, 2), 255), 2.4) +
+    0.072175 * math.pow(math.div(list.nth($rgb, 3), 255), 2.4);
+  @if $y < 0.022 {
+    $y: $y + math.pow(0.022 - $y, 1.414);
+  }
+  @return $y;
+}
+
+// APCA lightness contrast of text on bg, both (r, g, b), as apcaContrast().
+@function wt-apca($text, $bg) {
+  $t: -apca-y($text);
+  $b: -apca-y($bg);
+  @if math.abs($b - $t) < 0.0005 {
+    @return 0;
+  }
+  @if $b > $t {
+    $s: (math.pow($b, 0.56) - math.pow($t, 0.57)) * 1.14;
+    @if $s < 0.1 {
+      @return 0;
+    }
+    @return ($s - 0.027) * 100;
+  }
+  $s: (math.pow($b, 0.65) - math.pow($t, 0.62)) * 1.14;
+  @if $s > -0.1 {
+    @return 0;
+  }
+  @return ($s + 0.027) * 100;
+}
+
+// White or the darkest surface on $bg (both hex strings), as bestOn(): APCA, leaning to white within 5 Lc.
 @function wt-best-on($bg, $surface-950) {
   $bg: wt-rgb($bg);
-  @if wt-contrast((255, 255, 255), $bg) >= wt-contrast(wt-rgb($surface-950), $bg) {
+  @if math.abs(wt-apca((255, 255, 255), $bg)) + 5 >= math.abs(wt-apca(wt-rgb($surface-950), $bg)) {
     @return '#ffffff';
   }
   @return 'var(--wt-surface-950)';

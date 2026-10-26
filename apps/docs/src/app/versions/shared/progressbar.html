@@ -56,5 +56,13 @@
         <wt-progressbar [value]="80" [striped]="true" color="var(--wt-success-color)" [showValue]="false"></wt-progressbar>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="shimmer" [section]="sec['shimmer']">
+      <docs-demo [html]="code['shimmer']" layout="stack">
+        <wt-progressbar id="d-progress-shimmer" [value]="70" [shimmer]="true" [text]="tx('กำลังคัดลอก 7 จาก 10 ไฟล์')"></wt-progressbar>
+        <wt-progressbar id="d-progress-shimmer-success" [value]="45" [shimmer]="true" color="var(--wt-success-color)" [text]="tx('สำรองข้อมูล')"></wt-progressbar>
+        <wt-progressbar id="d-progress-shimmer-busy" mode="indeterminate" [shimmer]="true" style="height: 6px"></wt-progressbar>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

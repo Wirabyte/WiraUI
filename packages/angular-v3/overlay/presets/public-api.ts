@@ -22,5 +22,6 @@ export {
   Siam,
   Nakhon,
   Glass,
+  LL,
 } from 'wiratheme/core';
 export type { ThemePreset } from 'wiratheme/core';

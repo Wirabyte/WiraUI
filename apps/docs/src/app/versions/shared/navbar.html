@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <wt-navbar id="d-nav-basic" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current ?? local(links)[0]" [ariaLabel]="tx('เมนูหลัก')">
-          <a wtNavbarBrand class="docs-navbar-brand" href="#basic" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+          <a wtNavbarBrand class="docs-navbar-brand" href="#basic" (click)="$event.preventDefault()">{{ tx('วิระ') }}</a>
           <button wtNavbarEnd wtButton type="button" [label]="tx('เข้าสู่ระบบ')" size="small"></button>
         </wt-navbar>
         <span class="docs-demo-output">
@@ -19,7 +19,7 @@
     <docs-section id="dropdown" [section]="sec['dropdown']">
       <docs-demo [html]="code['dropdown']" layout="stack">
         <wt-navbar id="d-nav-dropdown" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current">
-          <a wtNavbarBrand class="docs-navbar-brand" href="#dropdown" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+          <a wtNavbarBrand class="docs-navbar-brand" href="#dropdown" (click)="$event.preventDefault()">{{ tx('วิระ') }}</a>
         </wt-navbar>
       </docs-demo>
     </docs-section>
@@ -28,7 +28,7 @@
       <docs-demo [html]="code['responsive']" [ts]="ts['responsive']" layout="stack">
         <div class="docs-navbar-frame">
           <wt-navbar id="d-nav-mobile" class="docs-navbar-demo" [model]="local(links)" [activeItem]="current" breakpoint="4000px" (onMenuToggle)="menuToggled($event)">
-            <a wtNavbarBrand class="docs-navbar-brand" href="#responsive" (click)="$event.preventDefault()">{{ tx('ศรีน่าน') }}</a>
+            <a wtNavbarBrand class="docs-navbar-brand" href="#responsive" (click)="$event.preventDefault()">{{ tx('วิระ') }}</a>
           </wt-navbar>
           <p class="docs-navbar-page">{{ tx('ปุ่มนี้เปิดแผงลิงก์') }}</p>
         </div>
@@ -51,11 +51,60 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="themes" [section]="sec['themes']">
+      <div class="docs-navbar-width">
+        <span id="d-nav-theme-width-label" class="docs-demo-output">{{ tx('ขนาดจอของตัวอย่าง') }}</span>
+        <wt-selectbutton
+          id="d-nav-theme-width"
+          [options]="local(themeWidths)"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="themeWidth"
+          [allowEmpty]="false"
+          ariaLabelledBy="d-nav-theme-width-label"
+        ></wt-selectbutton>
+      </div>
+    </docs-section>
+    @for (t of themes; track t.id) {
+      <docs-section [id]="t.id" [title]="t.title" [text]="t.text" [level]="3">
+        <docs-demo [html]="code[t.id]" [css]="css[t.id]" layout="stack">
+          <div
+            class="docs-navbar-stage"
+            [class.docs-navbar-stage-narrow]="themeWidth === 'narrow'"
+            [class.docs-navbar-photo]="t.variant === 'glass'"
+            [style.background-image]="t.variant === 'glass' ? photo : null"
+          >
+            <wt-navbar
+              [id]="'d-nav-' + t.id"
+              class="docs-navbar-demo"
+              [styleClass]="t.styleClass"
+              [variant]="t.variant"
+              [model]="local(links)"
+              [activeItem]="current ?? local(links)[0]"
+              [breakpoint]="themeWidth === 'narrow' ? '4000px' : '960px'"
+              [ariaLabel]="t.title | loc"
+            >
+              <a wtNavbarBrand class="docs-navbar-brand" [href]="'#' + t.id" (click)="$event.preventDefault()">{{ tx('วิระ') }}</a>
+              <button
+                wtNavbarEnd
+                wtButton
+                type="button"
+                [label]="tx('เข้าสู่ระบบ')"
+                size="small"
+                [outlined]="t.button === 'outlined'"
+                [rounded]="t.button === 'rounded'"
+              ></button>
+            </wt-navbar>
+          </div>
+        </docs-demo>
+      </docs-section>
+    }
+
     <docs-section id="sticky" [section]="sec['sticky']">
       <docs-demo [html]="code['sticky']" layout="stack">
         <div class="docs-navbar-scroll" tabindex="0" [attr.aria-label]="tx('เนื้อหาของหน้า เลื่อนลงเพื่อดูแถบที่ติดอยู่ด้านบน')">
           <wt-navbar id="d-nav-sticky" class="docs-navbar-demo" [model]="local(shortLinks)" [sticky]="true">
-            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('ศรีน่าน') }}</span>
+            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('วิระ') }}</span>
           </wt-navbar>
           <p class="docs-navbar-page">{{ tx('เนื้อหาของหน้า เลื่อนลงเพื่อดูแถบที่ติดอยู่ด้านบน') }}</p>
           @for (n of paragraphs; track n) {
@@ -68,17 +117,17 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="start"></docs-slot-note>
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-navbar id="d-nav-tpl" class="docs-navbar-demo" [model]="local(shortLinks)" [activeItem]="current" menuIcon="pi pi-bars" closeIcon="pi pi-times">
+        <wt-navbar id="d-nav-tpl" class="docs-navbar-demo" [model]="local(shortLinks)" [activeItem]="current" menuIcon="wi wi-bars" closeIcon="wi wi-times">
           <ng-template #start>
             <span class="docs-navbar-logo" aria-hidden="true">W</span>
-            <b class="docs-navbar-brand">{{ tx('โรงเรียนศรีน่าน') }}</b>
+            <b class="docs-navbar-brand">{{ tx('โรงเรียนวิระ') }}</b>
           </ng-template>
           <ng-template #item let-item>
             <span>{{ item.label }}</span>
           </ng-template>
           <a wtNavbarLinks class="wt-navbar-link" href="#templates" (click)="$event.preventDefault()">{{ tx('ประกาศ') }}</a>
           <ng-template #end>
-            <button wtButton type="button" icon="pi pi-search" [text]="true" [rounded]="true" [attr.aria-label]="tx('ค้นหา')"></button>
+            <button wtButton type="button" icon="wi wi-search" [text]="true" [rounded]="true" [attr.aria-label]="tx('ค้นหา')"></button>
           </ng-template>
         </wt-navbar>
       </docs-demo>

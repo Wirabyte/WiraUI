@@ -4,7 +4,7 @@ import type { TokenMap } from './tokens';
 
 /**
  * CSS variables the classic and styled themes define, re-created on top of WiraTheme tokens so app styles written for
- * those themes keep working after migrating (e.g. `background: var(--surface-ground)` in Strisrinan_Apps).
+ * those themes keep working after migrating (e.g. `background: var(--surface-ground)` in an app's own styles).
  * Keys are full custom property names (with their own `--`), emitted next to the `--wt-*` tokens.
  */
 
@@ -141,8 +141,8 @@ export function compatAliases(generation: Generation): TokenMap {
 }
 
 /**
- * Component tokens that read a styled-mode `--p-*` override first, e.g. `--p-card-body-gap: 0px` set by an app
- * (SP Admission V2 does this) still removes the card's body gap.
+ * Component tokens that read a styled-mode `--p-*` override first, so `--p-card-body-gap: 0px` in an app's styles
+ * still removes the card's body gap.
  */
 export const STYLED_INPUTS: Record<string, string> = {
   'card-body-gap': '--p-card-body-gap',

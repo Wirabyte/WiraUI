@@ -90,8 +90,9 @@ test('fileupload: phones get no horizontal scroll and file rows wrap', async ({ 
   await fu(page).locator('input.wt-fileupload-input').setInputFiles([
     png('รายงานผลการเรียนภาคเรียนที่หนึ่งปีการศึกษาสองพันห้าร้อยหกสิบเก้าฉบับสมบูรณ์.png'),
   ]);
-  const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  expect(over).toBeLessThanOrEqual(0);
+  // Measured once the row is in and laid out (a busy WebKit can be a frame behind setInputFiles).
+  await expect(fu(page).locator('.wt-fileupload-file')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
   const row = (await fu(page).locator('.wt-fileupload-file').boundingBox())!;
   expect(row.x + row.width).toBeLessThanOrEqual(360);
 });

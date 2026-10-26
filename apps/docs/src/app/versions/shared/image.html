@@ -69,7 +69,7 @@
       <docs-demo [html]="code['templates']">
         <wt-image id="d-img-templates" src="samples/card-cover.svg" [alt]="tx('ทะเลสาบยามเย็น')" width="320" [preview]="true">
           <ng-template #indicator>
-            <span class="docs-img-indicator"><i class="pi pi-search"></i> {{ tx('ดูภาพเต็ม') }}</span>
+            <span class="docs-img-indicator"><i class="wi wi-search"></i> {{ tx('ดูภาพเต็ม') }}</span>
           </ng-template>
           <ng-template #preview let-src let-imgClass="class" let-imgStyle="style" let-previewCallback="previewCallback">
             <img id="d-img-custom-preview" [src]="src" [class]="imgClass" [style]="imgStyle" [alt]="tx('ทะเลสาบยามเย็น')" (click)="previewCallback()" />

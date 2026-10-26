@@ -258,7 +258,7 @@ ${FIELD} size="large" placeholder="ใหญ่"></wt-autocomplete>`,
   </ng-template>
   <ng-template #empty>ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template #footer>
-    <wt-button label="เพิ่มจังหวัด" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
   </ng-template>
 </wt-autocomplete>`,
       classic: `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="searchByCode($event)"
@@ -271,7 +271,7 @@ ${FIELD} size="large" placeholder="ใหญ่"></wt-autocomplete>`,
   </ng-template>
   <ng-template wtTemplate="empty">ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template wtTemplate="footer">
-    <wt-button label="เพิ่มจังหวัด" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
   </ng-template>
 </wt-autocomplete>`,
     },

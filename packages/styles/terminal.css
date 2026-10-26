@@ -1,0 +1,72 @@
+/* wt-terminal. Shared by wiratheme v1, v2 and v3. A framed box drawn like a field: the welcome text, each command with
+   its answer, and the prompt at the bottom. It scrolls inside its own height and keeps the newest line in view. */
+@layer wiratheme.components {
+  wt-terminal {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-terminal {
+    box-sizing: border-box;
+    height: var(--wt-terminal-height);
+    max-width: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: var(--wt-terminal-padding);
+    border: var(--wt-terminal-border-width) solid var(--wt-terminal-border-color);
+    border-radius: var(--wt-terminal-radius);
+    background: var(--wt-terminal-bg);
+    color: var(--wt-terminal-color);
+    font-family: var(--wt-terminal-font-family);
+    font-size: var(--wt-font-size);
+    line-height: var(--wt-line-height);
+    overflow-wrap: anywhere;
+    cursor: text;
+    transition:
+      border-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-terminal:focus-within {
+    border-color: var(--wt-field-focus-border);
+    box-shadow: var(--wt-field-focus-shadow);
+    outline: var(--wt-field-focus-outline);
+    outline-offset: var(--wt-field-focus-offset);
+  }
+  .wt-terminal-welcome-message {
+    margin-bottom: 0.25rem;
+    white-space: pre-wrap;
+  }
+  .wt-terminal-command-value,
+  .wt-terminal-command-response {
+    white-space: pre-wrap;
+  }
+  .wt-terminal-command-response {
+    margin: var(--wt-terminal-response-margin);
+  }
+  .wt-terminal-command-response:empty {
+    margin: 0;
+  }
+  .wt-terminal-prompt-label {
+    margin-inline-end: var(--wt-terminal-prompt-gap);
+    color: var(--wt-terminal-prompt-color);
+    white-space: pre;
+  }
+  .wt-terminal-prompt {
+    display: flex;
+    align-items: center;
+  }
+  .wt-terminal-prompt-value {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-feature-settings: inherit;
+  }
+  .wt-terminal-prompt-value::-ms-clear {
+    display: none;
+  }
+}

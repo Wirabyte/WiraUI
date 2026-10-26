@@ -121,4 +121,12 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     text-transform: lowercase;
   }
+  /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
+  @media (pointer: coarse) {
+    .wt-colorpicker-hue::after {
+      content: '';
+      position: absolute;
+      inset: -0.5rem 0;
+    }
+  }
 }

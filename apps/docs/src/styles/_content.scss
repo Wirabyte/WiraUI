@@ -20,8 +20,11 @@
   letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
+:lang(th) .docs-h1 {
+  line-height: 1.45;
+}
+// Text runs the full width of the content column, like the demos and code under it.
 .docs-lead {
-  max-width: 720px;
   margin: 12px 0 0;
   color: var(--docs-muted);
   font-size: 1.04rem;
@@ -155,7 +158,6 @@ docs-section,
 .docs-section p,
 .docs-article > p {
   margin: 0 0 12px;
-  max-width: 760px;
 }
 
 .docs-list,
@@ -450,6 +452,9 @@ docs-demo,
 }
 .docs-demo-stack {
   flex-direction: column;
+  // One line: a column never wraps without a fixed height, and in a multi-line flex box the stretched width is not
+  // definite, so a child sized by aspect-ratio and a % width (ImageCompare) would measure 0 tall and spill out.
+  flex-wrap: nowrap;
   align-items: stretch;
   gap: 12px;
 }
@@ -810,9 +815,11 @@ docs-demo,
 .docs-u-box {
   padding: 8px 10px;
   border-radius: 8px;
-  background: var(--docs-primary-soft);
-  color: var(--docs-primary-soft-text);
+  background: var(--docs-tile);
+  box-shadow: inset 0 0 0 1px var(--docs-tile-edge);
+  color: var(--docs-text);
   font-size: 12.5px;
+  font-weight: 600;
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -834,9 +841,9 @@ docs-demo,
   min-width: 96px;
 }
 .docs-u-frame {
-  border: 1px dashed var(--docs-border-strong);
+  border: 1px dashed var(--docs-edge);
   border-radius: 10px;
-  background: var(--docs-ground);
+  background: var(--docs-frame);
 }
 .docs-u-avatar {
   display: grid;
@@ -844,14 +851,14 @@ docs-demo,
   flex: none;
   width: 40px;
   height: 40px;
-  background: var(--docs-gradient);
+  background: var(--docs-gradient-strong);
   color: #ffffff;
   font-weight: 700;
 }
 .docs-u-input {
   min-height: 40px;
   padding: 0 12px;
-  border: 1px solid var(--docs-border-strong);
+  border: 1px solid var(--docs-edge);
   border-radius: 8px;
   background: var(--docs-surface);
   color: var(--docs-text);
@@ -862,7 +869,7 @@ docs-demo,
   padding: 0 16px;
   border: 0;
   border-radius: 8px;
-  background: var(--docs-gradient);
+  background: var(--docs-gradient-strong);
   color: #ffffff;
   font: inherit;
   font-weight: 600;
@@ -911,7 +918,7 @@ docs-demo,
   max-width: none;
   height: 120px;
   margin: 0 auto;
-  border: 1px solid var(--docs-border-strong);
+  border: 1px solid var(--docs-edge);
   border-radius: 10px;
   background: #ffffff;
 }
@@ -1022,9 +1029,11 @@ docs-demo,
   place-items: center;
   min-height: 72px;
   padding: 8px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-tile-edge);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--docs-primary) 8%, var(--docs-surface));
+  background: var(--docs-tile);
+  color: var(--docs-text);
+  font-weight: 600;
   font-size: 12px;
   text-align: center;
   overflow-wrap: anywhere;
@@ -1122,7 +1131,7 @@ docs-demo,
   display: grid;
   gap: 4px;
   padding: 10px 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 10px;
   background: var(--docs-surface);
 }
@@ -1143,7 +1152,7 @@ docs-demo,
   justify-content: space-between;
   gap: 8px;
   padding: 6px 8px 6px 14px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 12px;
   background: var(--docs-surface);
 }
@@ -1154,7 +1163,7 @@ docs-demo,
   width: 15rem;
   max-width: 100%;
   padding: 4px;
-  border-right: 1px solid var(--docs-border);
+  border-right: 1px solid var(--docs-edge);
   background: var(--docs-surface);
 }
 .docs-menu-user {
@@ -1414,7 +1423,7 @@ docs-demo,
 .docs-fu-empty p {
   margin: 0;
 }
-.docs-fu-empty .pi {
+.docs-fu-empty .wi {
   font-size: 1.75rem;
 }
 
@@ -1476,7 +1485,7 @@ docs-demo,
   margin: 0;
   padding: 10px 12px;
   overflow: auto;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 10px;
   background: var(--docs-surface);
   font-size: 12.5px;
@@ -1553,7 +1562,7 @@ docs-demo,
 }
 .docs-gal-grid-button {
   padding: 0;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 8px;
   background: none;
   overflow: hidden;
@@ -1591,7 +1600,7 @@ docs-demo,
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: var(--docs-gradient);
+  background: var(--docs-gradient-strong);
   color: #ffffff;
   font-weight: 800;
 }
@@ -1599,7 +1608,7 @@ docs-demo,
 .docs-navbar-scroll {
   position: relative;
   width: 100%;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: var(--docs-radius);
   background: var(--docs-surface);
   overflow: hidden;
@@ -1625,7 +1634,7 @@ docs-demo,
   width: 100%;
   padding: 16px;
   border-radius: var(--docs-radius);
-  background: var(--docs-gradient);
+  background: var(--docs-gradient-strong);
   color: #ffffff;
 }
 .docs-navbar-hero .wt-navbar {
@@ -1634,6 +1643,68 @@ docs-demo,
 .docs-navbar-hero .wt-navbar-transparent {
   --wt-navbar-link-color: #ffffff;
   --wt-navbar-color: #ffffff;
+}
+// Ready-made themes: the width switch, and a stage per theme. The theme CSS itself is the sample's (demos-layout.ts).
+.docs-navbar-width {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+.docs-navbar-stage {
+  position: relative;
+  width: 100%;
+  border-radius: var(--docs-radius);
+}
+// The bar's own edge, so light bars still show where they end on the white preview (framing only, not the theme).
+.docs-navbar-stage .wt-navbar {
+  border-radius: var(--docs-radius);
+  box-shadow: 0 0 0 1px var(--docs-edge);
+}
+.docs-navbar-stage .wt-navbar.wt-navbar-open {
+  border-radius: var(--docs-radius) var(--docs-radius) 0 0;
+}
+// Narrow: room under the bar for the panel that drops down.
+.docs-navbar-stage-narrow {
+  min-height: 19rem;
+  outline: 1px dashed var(--docs-edge);
+  outline-offset: -1px;
+}
+.docs-navbar-photo {
+  min-height: 16rem;
+  padding: 12px;
+  background-color: #0f172a;
+  background-position: center 20%;
+  background-size: cover;
+}
+.docs-navbar-photo.docs-navbar-stage-narrow {
+  min-height: 21rem;
+}
+// A bar folded by the window's own width (phones): the open panel pushes the code down rather than covering it.
+.docs-navbar-stage:has(.wt-navbar-open) {
+  min-height: 21rem;
+}
+.docs-navbar-photo .wt-navbar {
+  box-shadow: none;
+}
+// Image Cropper: what the (imageCropped) event holds, one field per row.
+.docs-ic-fields {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-ic-fields dt {
+  font-family: var(--docs-mono);
+  font-size: 12.5px;
+}
+.docs-ic-fields dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 .docs-ip-photo {
   display: block;
@@ -1648,7 +1719,7 @@ docs-demo,
   width: 100%;
   max-width: 24rem;
   padding: 16px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 10px;
 }
 .docs-bu-form .wt-inputtext {
@@ -1760,7 +1831,7 @@ wt-scroller {
   width: 100%;
   max-width: 22rem;
   padding: 16px;
-  border: 1px dashed var(--docs-border);
+  border: 1px dashed var(--docs-edge);
   border-radius: 10px;
   user-select: none;
 }
@@ -1781,13 +1852,13 @@ wt-scroller {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 8px;
   user-select: none;
 }
 .docs-cm-file-picked {
   border-color: var(--docs-primary);
-  background: var(--docs-hover);
+  background: var(--docs-tile);
 }
 .docs-tr-size {
   margin-left: 8px;
@@ -1809,7 +1880,8 @@ wt-scroller {
   min-height: 9rem;
   margin: 0;
   padding: 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px dashed var(--docs-edge);
+  background: var(--docs-frame);
   border-radius: 10px;
   list-style: none;
 }
@@ -1819,9 +1891,10 @@ wt-scroller {
 }
 .docs-dd-item {
   padding: 8px 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-tile-edge);
   border-radius: 8px;
-  background: var(--docs-surface);
+  background: var(--docs-tile);
+  color: var(--docs-text);
 }
 .docs-dd-hint {
   color: var(--docs-muted);
@@ -1829,9 +1902,10 @@ wt-scroller {
 }
 .docs-dd-chip {
   padding: 6px 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-tile-edge);
   border-radius: 999px;
-  background: var(--docs-surface);
+  background: var(--docs-tile);
+  color: var(--docs-text);
 }
 .docs-dd-slots {
   display: grid;
@@ -1841,7 +1915,8 @@ wt-scroller {
 }
 .docs-dd-slot {
   padding: 16px;
-  border: 1px dashed var(--docs-border);
+  border: 1px dashed var(--docs-edge);
+  background: var(--docs-frame);
   border-radius: 10px;
 }
 .docs-dd-order {
@@ -1860,10 +1935,369 @@ wt-scroller {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border: 1px solid var(--docs-border);
+  border: 1px solid var(--docs-edge);
   border-radius: 8px;
   background: var(--docs-surface);
 }
 .docs-dd-handle {
   cursor: grab;
+}
+
+// ---------- Icons page (getting-started/icons): wiraicon demos and the gallery ----------
+.docs-wi-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+  font-size: 1.5rem;
+  color: var(--docs-text);
+}
+.docs-wi-weight {
+  display: inline-grid;
+  justify-items: center;
+  gap: 4px;
+}
+.docs-wi-weight small {
+  color: var(--docs-muted);
+  font-size: 12px;
+}
+.docs-wi-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.docs-wi-gallery {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  margin-top: 16px;
+}
+.docs-wi-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  min-width: 0;
+}
+.docs-wi-search {
+  display: block;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.docs-wi-search input {
+  width: 100%;
+}
+.docs-wi-category {
+  flex: 0 1 220px;
+  min-width: 0;
+}
+.docs-wi-category .wt-select {
+  width: 100%;
+}
+.docs-wi-size {
+  display: flex;
+  flex: 1 1 200px;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.docs-wi-size wt-slider {
+  flex: 1 1 auto;
+  min-width: 96px;
+}
+.docs-wi-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.docs-wi-count,
+.docs-section .docs-wi-count {
+  margin: 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-wi-muted {
+  margin: 0;
+  color: var(--docs-muted);
+}
+// The grid: one button per icon, sized by the slider (--docs-wi-size); rows off screen skip layout and paint.
+.docs-wi-grid {
+  --docs-wi-size: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--docs-wi-size) + 64px), 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+.docs-wi-cell {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: calc(var(--docs-wi-size) + 52px);
+  padding: 10px 6px;
+  border: 1px solid var(--docs-border);
+  border-radius: 10px;
+  background: var(--docs-surface);
+  color: var(--docs-text);
+  font: inherit;
+  cursor: pointer;
+  content-visibility: auto;
+  contain-intrinsic-size: auto calc(var(--docs-wi-size) + 52px);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+.docs-wi-cell i {
+  font-size: var(--docs-wi-size);
+}
+.docs-wi-cell span {
+  max-width: 100%;
+  color: var(--docs-muted);
+  font-family: var(--docs-mono);
+  font-size: 11.5px;
+  line-height: 1.35;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.docs-wi-cell:hover {
+  border-color: var(--docs-edge);
+  background: var(--docs-hover);
+}
+.docs-wi-cell:focus-visible {
+  outline: 2px solid var(--docs-primary);
+  outline-offset: 2px;
+}
+.docs-wi-cell.active {
+  border-color: var(--docs-tile-edge);
+  background: var(--docs-tile);
+}
+.docs-wi-cell.active span {
+  color: var(--docs-text);
+}
+// The picked icon: stays in view at the top while the grid scrolls under it.
+.docs-wi-detail {
+  position: sticky;
+  z-index: 2;
+  top: calc(var(--docs-topbar-h) + 8px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--docs-edge);
+  border-radius: var(--docs-radius-lg);
+  background: var(--docs-overlay);
+  box-shadow: var(--docs-shadow);
+}
+.docs-wi-detail-glyph {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  background: var(--docs-tile);
+  color: var(--docs-text);
+  font-size: 44px;
+}
+.docs-wi-detail-body {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-wi-detail-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.docs-wi-detail-head b {
+  font-family: var(--docs-mono);
+  font-size: 15px;
+}
+.docs-wi-detail-close {
+  margin-left: auto;
+}
+.docs-wi-detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+}
+.docs-wi-detail-row > code {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.docs-wi-detail-label {
+  min-width: 6.5rem;
+  color: var(--docs-muted);
+  font-size: 12.5px;
+}
+.docs-wi-aliases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+@include mq.up(sm) {
+  .docs-wi-detail {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+// ---------- Terminal, ImageCompare, Carousel, Splitter, OrganizationChart, InputOtp demos ----------
+// ImageCompare: the same drawn photo twice, the "before" one in black and white, each with a small caption.
+.docs-icmp-pic {
+  position: relative;
+}
+.docs-icmp-old {
+  filter: grayscale(1) contrast(0.95);
+}
+.docs-icmp-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.72);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.docs-icmp-tag-end {
+  right: 10px;
+  left: auto;
+}
+// Carousel: one news card.
+.docs-crs-card {
+  display: grid;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0 6px;
+  overflow: hidden;
+  border: 1px solid var(--docs-edge);
+  border-radius: 12px;
+  background: var(--docs-surface);
+}
+.docs-crs-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.docs-crs-body {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 6px;
+  padding: 10px 12px 14px;
+}
+.docs-crs-title,
+.docs-section .docs-crs-title {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.docs-crs-text,
+.docs-section .docs-crs-text {
+  margin: 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.docs-crs-heading,
+.docs-section .docs-crs-heading {
+  margin: 0 6px 8px;
+  font-size: 16px;
+}
+// Splitter: the panels' content.
+.docs-spl-pane {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 12px 14px;
+  overflow: auto;
+}
+.docs-spl-title,
+.docs-section .docs-spl-title {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+.docs-spl-list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.8;
+}
+// OrganizationChart: a person's box.
+.docs-oc-person {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-width: 7rem;
+  max-width: 11rem;
+  text-align: center;
+}
+.docs-oc-person small {
+  color: var(--docs-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+// InputOtp: the caption and the boxes drawn by the input template.
+.docs-otp-label {
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-otp-box {
+  box-sizing: border-box;
+  width: 2.5rem;
+  height: 2.75rem;
+  border: 1px solid var(--docs-edge);
+  border-radius: 10px;
+  background: var(--docs-surface);
+  color: var(--docs-text);
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+}
+.docs-otp-box:focus-visible {
+  border-color: var(--docs-primary);
+  outline: 2px solid color-mix(in srgb, var(--docs-primary) 35%, transparent);
+  outline-offset: 1px;
+}
+.docs-otp-dash {
+  align-self: center;
+  color: var(--docs-muted);
+  font-weight: 600;
+}
+
+// ProgressSpinner with a label: the classes its sample uses.
+.loading-card {
+  height: 12rem;
+  border: 1px dashed var(--wt-border);
+  border-radius: 12px;
+}
+.sync-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid var(--wt-border);
+  border-radius: 999px;
+}
+.spinner-title,
+.spinner-hint {
+  display: block;
+}
+.spinner-hint {
+  color: var(--wt-text-muted);
 }

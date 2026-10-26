@@ -101,7 +101,7 @@ export const IMAGE_DOC: ComponentDoc = {
   sizes="(min-width: 768px) 480px, 100vw" alt="อาคารเรียนของโรงเรียน" [preview]="true"></wt-image>`,
     templates: `<wt-image src="samples/card-cover.svg" alt="ทะเลสาบยามเย็น" width="320" [preview]="true">
   <ng-template #indicator>
-    <span class="flex align-items-center gap-2"><i class="pi pi-search"></i> ดูภาพเต็ม</span>
+    <span class="flex align-items-center gap-2"><i class="wi wi-search"></i> ดูภาพเต็ม</span>
   </ng-template>
   <!-- คลิกที่รูปเพื่อปิด -->
   <ng-template #preview let-src let-imgClass="class" let-imgStyle="style" let-previewCallback="previewCallback">

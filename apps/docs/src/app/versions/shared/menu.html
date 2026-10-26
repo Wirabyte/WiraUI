@@ -10,7 +10,7 @@
           <span class="docs-menu-brand">WiraSchool</span>
           <wt-button
             id="d-menu-open"
-            icon="pi pi-user"
+            icon="wi wi-user"
             [rounded]="true"
             [text]="true"
             [ariaLabel]="tx('บัญชีของฉัน')"
@@ -55,7 +55,7 @@
         <wt-menu id="d-menu-template" [model]="local(groupItems)" [ariaLabel]="tx('เมนูผู้ใช้')">
           <ng-template #start>
             <div class="docs-menu-user">
-              <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+              <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
               <span>{{ tx('สมหญิง ใจดี') }}</span>
             </div>
           </ng-template>
@@ -70,7 +70,7 @@
             }
           </ng-template>
           <ng-template #end>
-            <wt-button [label]="tx('ออกจากระบบ')" icon="pi pi-sign-out" severity="secondary" [text]="true"></wt-button>
+            <wt-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
           </ng-template>
         </wt-menu>
       </docs-demo>

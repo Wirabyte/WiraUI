@@ -48,6 +48,9 @@
     place-items: center;
     width: calc(var(--wt-checkbox-size) * var(--_cb-scale, 1));
     height: calc(var(--wt-checkbox-size) * var(--_cb-scale, 1));
+    /* Whole pixels, so a size like 17.5px is not snapped to 18 × 17 (same as wt-radiobutton). */
+    width: round(calc(var(--wt-checkbox-size) * var(--_cb-scale, 1)), 2px);
+    height: round(calc(var(--wt-checkbox-size) * var(--_cb-scale, 1)), 2px);
     box-sizing: border-box;
     border: var(--wt-checkbox-border-width) solid var(--wt-field-border);
     border-radius: var(--wt-checkbox-radius);

@@ -62,6 +62,13 @@ const parentOf = (key: string): string => key.split('_').slice(0, -1).join('_');
 /** Space between the bar and a flyout, and the flyout's margin from the window edges, in px. */
 const GAP = 4;
 const MARGIN = 8;
+
+/** A CSS time (`0.2s`, `150ms`) in milliseconds. */
+const cssTime = (v: string): number => {
+  const n = parseFloat(v);
+  return !isFinite(n) ? 0 : /ms\s*$/.test(v) ? n : n * 1000;
+};
+
 /** Thai vowels written before their consonant: the icon rail's initial skips them (เรียน → ร). */
 const LEADING_VOWELS = 'เแโใไ';
 
@@ -82,7 +89,8 @@ const LEADING_VOWELS = 'เแโใไ';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.wt-aside-menu-host-mobile]': 'mobile',
-    '[class.wt-aside-menu-host-collapsed]': 'rail',
+    '[class.wt-aside-menu-host-collapsed]': 'narrow',
+    '[class.wt-aside-menu-host-sliding]': '!!sliding',
   },
 })
 export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
@@ -179,6 +187,11 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
    * it takes its place without sliding across the page.
    */
   animated = false;
+  /**
+   * While the width animates on wide screens: the menu keeps its full layout at full width and the narrowing (or
+   * widening) host clips it, so labels never wrap mid-way. On `'collapse'` the icon rail takes over at the end.
+   */
+  sliding: 'collapse' | 'expand' | null = null;
   /** Key of the rail group whose flyout is open. */
   flyoutKey: string | null = null;
   /** The linked navbar's links, drawn as the first group of the phone panel. */
@@ -204,6 +217,8 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   private router: Router | null = null;
   private routerLooked = false;
   private routerSub: Subscription | null = null;
+  private slideTimer: ReturnType<typeof setTimeout> | null = null;
+  private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
@@ -240,6 +255,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.slideTimer) clearTimeout(this.slideTimer);
     this.i18n.unsubscribe();
     this.query?.removeEventListener?.('change', this.onQuery);
     this.query = null;
@@ -261,8 +277,12 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   get items(): WtMenuItem[] {
     return menuVisible(this._model);
   }
-  /** Wide screens, collapsed: the icon rail. */
+  /** Wide screens, collapsed: the icon rail (once the width has finished narrowing). */
   get rail(): boolean {
+    return this._collapsed && !this.mobile && this.sliding !== 'collapse';
+  }
+  /** Wide screens, collapsed: the host takes the rail's width (it animates there). */
+  get narrow(): boolean {
     return this._collapsed && !this.mobile;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -498,9 +518,32 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     if (collapsed === this._collapsed) return;
     this._collapsed = collapsed;
     this.closeFlyout(false);
+    if (this.initialized && !this.mobile) this.slide(collapsed ? 'collapse' : 'expand');
     this.cdr.markForCheck();
     this.ɵchanges.next();
     if (emit) this.collapsedChange.emit(collapsed);
+  }
+
+  /** Holds the full layout for as long as the host's width transition runs (none with reduced motion). */
+  private slide(direction: 'collapse' | 'expand'): void {
+    if (this.slideTimer) clearTimeout(this.slideTimer);
+    this.slideTimer = null;
+    const win = this.doc.defaultView;
+    const ms = win ? Math.max(0, ...win.getComputedStyle(this.host).transitionDuration.split(',').map(cssTime)) : 0;
+    if (!ms) {
+      this.sliding = null;
+      return;
+    }
+    this.sliding = direction;
+    this.zone.runOutsideAngular(() => {
+      this.slideTimer = setTimeout(() => {
+        this.slideTimer = null;
+        this.zone.run(() => {
+          this.sliding = null;
+          this.cdr.markForCheck();
+        });
+      }, ms + 40);
+    });
   }
 
   /** The open state is kept on any screen; it only shows (and locks the page) on phones. */

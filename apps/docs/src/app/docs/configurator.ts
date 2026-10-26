@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, OnDestroy, output, viewChild } from '@angular/core';
 import { DocsI18n } from '../core/i18n';
 import { DocsState } from '../core/docs-state';
+import { DocsThemeReveal } from '../core/theme-reveal';
 import { DocsScale, presetGroups } from '../core/version-theme';
 
 /** Same swatches as @wiratheme/core PRIMARY_SWATCHES / SURFACES; kept here so the shell needs no wiratheme import. */
@@ -41,7 +42,7 @@ const SURFACES = [
 /**
  * Theme drawer, opened from the top bar: a native modal <dialog> on the right (a full-width sheet on phones), so
  * focus stays inside, Escape closes it and focus goes back to the button that opened it. Cards for colour,
- * surface, preset, UI size and display, under a live preview strip drawn with the theme's own tokens.
+ * surface, preset, UI size and display.
  */
 @Component({
   selector: 'docs-configurator',
@@ -58,7 +59,7 @@ const SURFACES = [
             <b id="docs-studio-title">{{ 'config.title' | t }}</b>
             <span>wiratheme {{ version() }} · <code>{{ state.activePresetId() }}</code></span>
           </div>
-          <button type="button" class="docs-link-btn" id="docs-config-reset" (click)="state.reset()">
+          <button type="button" class="docs-link-btn" id="docs-config-reset" (click)="reveal($event, 'reset')">
             <docs-icon name="refresh"></docs-icon>{{ 'config.reset' | t }}
           </button>
           <!-- Opens with focus on ×, not on Reset, so the first visible ring is not on an action. -->
@@ -66,15 +67,6 @@ const SURFACES = [
             <docs-icon name="x"></docs-icon>
           </button>
         </header>
-
-        <!-- Drawn with the theme's own tokens, so it shows the current choices at a glance. -->
-        <div class="docs-studio-preview" aria-hidden="true">
-          <span class="docs-studio-pv-btn">{{ en() ? 'Save' : 'บันทึก' }}</span>
-          <span class="docs-studio-pv-btn docs-studio-pv-outlined">{{ en() ? 'Cancel' : 'ยกเลิก' }}</span>
-          <span class="docs-studio-pv-input">{{ en() ? 'Search' : 'ค้นหา' }}</span>
-          <span class="docs-studio-pv-tag">{{ en() ? 'Paid' : 'ชำระแล้ว' }}</span>
-          <span class="docs-studio-pv-check"></span>
-        </div>
 
         <div class="docs-studio-body docs-scroll" id="docs-config-panel">
           <section class="docs-studio-card">
@@ -84,7 +76,7 @@ const SURFACES = [
                 type="button"
                 class="docs-swatch-btn docs-swatch-default"
                 [class.active]="!state.custom().primary"
-                (click)="state.update({ primary: null })"
+                (click)="reveal($event, 'primary', null)"
                 [title]="'config.presetColor' | t"
                 [attr.aria-label]="'config.presetColor' | t"
               ></button>
@@ -97,7 +89,7 @@ const SURFACES = [
                   [attr.data-primary]="c.id"
                   [title]="c.id"
                   [attr.aria-label]="c.id"
-                  (click)="state.update({ primary: c.hex })"
+                  (click)="reveal($event, 'primary', c.hex)"
                 ></button>
               }
             </div>
@@ -112,7 +104,7 @@ const SURFACES = [
                 class="docs-config-preset docs-surface-pill"
                 [class.active]="!state.custom().surface"
                 [attr.aria-pressed]="!state.custom().surface"
-                (click)="state.update({ surface: null })"
+                (click)="reveal($event, 'surface', null)"
                 [title]="'config.presetSurface' | t"
               >
                 <span class="docs-surface-dot docs-surface-dot-default" aria-hidden="true"></span>
@@ -125,7 +117,7 @@ const SURFACES = [
                   [class.active]="state.custom().surface === s.id"
                   [attr.aria-pressed]="state.custom().surface === s.id"
                   [attr.data-surface]="s.id"
-                  (click)="state.update({ surface: s.id })"
+                  (click)="reveal($event, 'surface', s.id)"
                 >
                   <span class="docs-surface-dot" [style.background]="s.swatch" aria-hidden="true"></span>
                   {{ s.name }}
@@ -157,7 +149,7 @@ const SURFACES = [
                           [attr.data-preset]="p.id"
                           [title]="p.id"
                           [attr.aria-label]="p.id"
-                          (click)="state.choosePreset(p.id)"
+                          (click)="reveal($event, 'preset', p.id)"
                         ></button>
                       }
                     </span>
@@ -169,7 +161,7 @@ const SURFACES = [
                       class="docs-config-preset"
                       [class.active]="state.activePresetId() === p.id"
                       [attr.data-preset]="p.id"
-                      (click)="state.choosePreset(p.id)"
+                      (click)="reveal($event, 'preset', p.id)"
                     >
                       {{ p.name }}
                     </button>
@@ -193,7 +185,7 @@ const SURFACES = [
                   [class.active]="state.scale() === s"
                   [attr.aria-checked]="state.scale() === s"
                   [attr.data-scale]="s"
-                  (click)="state.setScale(s)"
+                  (click)="reveal($event, 'scale', s)"
                 >
                   <span class="docs-scale-aa" [style.font-size.px]="scalePx[s]">ก</span>
                   {{ s }}
@@ -205,7 +197,7 @@ const SURFACES = [
           <section class="docs-studio-card docs-config-switches">
             <h3>{{ 'config.display' | t }}</h3>
             <label class="docs-switch">
-              <input type="checkbox" role="switch" [checked]="state.dark()" (change)="state.setDark($any($event.target).checked)" />
+              <input type="checkbox" role="switch" [checked]="state.dark()" (change)="reveal($event, 'dark', $any($event.target).checked)" />
               <span class="docs-switch-track"></span>
               {{ 'config.dark' | t }}
             </label>
@@ -229,6 +221,7 @@ const SURFACES = [
 export class DocsConfigurator implements AfterViewInit, OnDestroy {
   protected readonly state = inject(DocsState);
   protected readonly en = inject(DocsI18n).en;
+  private readonly themeReveal = inject(DocsThemeReveal);
   readonly version = input.required<string>();
   /** The top-bar button: focus goes back to it on close (Safari does not focus a clicked button, so no activeElement). */
   readonly trigger = input<HTMLElement | null>(null);
@@ -237,7 +230,10 @@ export class DocsConfigurator implements AfterViewInit, OnDestroy {
   protected readonly surfaces = SURFACES;
   protected readonly scales: DocsScale[] = ['sm', 'md', 'lg'];
   protected readonly scalePx: Record<DocsScale, number> = { sm: 12, md: 14, lg: 16 };
-  protected readonly groups = computed(() => presetGroups(this.state.theme()?.presets || []));
+  protected readonly groups = computed(() => {
+    const t = this.state.theme();
+    return presetGroups([...(t?.presets || []), ...(t?.secretPresets() || [])]);
+  });
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
   private done = false;
 
@@ -252,6 +248,26 @@ export class DocsConfigurator implements AfterViewInit, OnDestroy {
     const d = this.dialog().nativeElement;
     if (d.open) d.close();
     this.trigger()?.focus();
+  }
+
+  /** A choice in the drawer: the new look grows out of the control that was pressed (core/theme-reveal.ts). */
+  protected reveal(event: Event, what: 'reset' | 'primary' | 'surface' | 'preset' | 'scale' | 'dark', value?: unknown): void {
+    this.themeReveal.run(event.currentTarget, () => {
+      switch (what) {
+        case 'reset':
+          return this.state.reset();
+        case 'primary':
+          return this.state.update({ primary: (value as string | null) ?? null });
+        case 'surface':
+          return this.state.update({ surface: (value as string | null) ?? null });
+        case 'preset':
+          return this.state.choosePreset(String(value));
+        case 'scale':
+          return this.state.setScale(value as DocsScale);
+        case 'dark':
+          return this.state.setDark(!!value);
+      }
+    });
   }
 
   /** The ×, the backdrop, the Studio link and Escape. */

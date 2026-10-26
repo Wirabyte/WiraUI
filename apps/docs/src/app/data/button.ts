@@ -85,8 +85,8 @@ export const BUTTON_DOC: ComponentDoc = {
     icons: {
       title: 'Icons',
       text: {
-        th: '<code>icon</code> รับ class ของชุด icon ที่โปรเจคใช้อยู่ เช่น Font Awesome หรือ icon font อื่นที่ใช้ class แบบ <code>pi pi-check</code> ปุ่มที่มีแต่ icon ควรใส่ <code>ariaLabel</code> ให้ screen reader อ่านได้',
-        en: '<code>icon</code> takes a class from the icon set your app already uses, such as Font Awesome or any icon font with classes like <code>pi pi-check</code>. Give icon-only buttons an <code>ariaLabel</code> for screen readers.',
+        th: '<code>icon</code> รับ class ของชุด icon ที่โปรเจคใช้อยู่ เช่น Font Awesome หรือ icon font อื่นที่ใช้ class แบบ <code>wi wi-check</code> ปุ่มที่มีแต่ icon ควรใส่ <code>ariaLabel</code> ให้ screen reader อ่านได้',
+        en: '<code>icon</code> takes a class from the icon set your app already uses, such as Font Awesome or any icon font with classes like <code>wi wi-check</code>. Give icon-only buttons an <code>ariaLabel</code> for screen readers.',
       },
     },
     badge: {
@@ -106,7 +106,7 @@ export const BUTTON_DOC: ComponentDoc = {
     fluid: { title: 'Fluid' },
   },
   code: {
-    basic: `<wt-button label="บันทึก" icon="pi pi-save" (onClick)="save()"></wt-button>`,
+    basic: `<wt-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wt-button>`,
     severity: `<wt-button label="Primary"></wt-button>
 <wt-button label="Secondary" severity="secondary"></wt-button>
 <wt-button label="Success" severity="success"></wt-button>
@@ -132,21 +132,21 @@ export const BUTTON_DOC: ComponentDoc = {
 <wt-button label="ปกติ"></wt-button>
 <wt-button label="ใหญ่" size="large"></wt-button>`,
     },
-    directive: `<button wtButton type="button" label="บันทึก" icon="pi pi-save" (click)="save()"></button>
-<button wtButton type="button" label="ลบ" icon="pi pi-trash" severity="danger" [outlined]="true"
+    directive: `<button wtButton type="button" label="บันทึก" icon="wi wi-save" (click)="save()"></button>
+<button wtButton type="button" label="ลบ" icon="wi wi-trash" severity="danger" [outlined]="true"
   (click)="remove()"></button>
 <a wtButton href="/orders" label="ดูคำสั่งซื้อ" severity="secondary" [text]="true"></a>`,
-    styleclass: `<wt-button label="ลบ" icon="pi pi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
+    styleclass: `<wt-button label="ลบ" icon="wi wi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
 <button wtButton type="button" label="ยกเลิก" class="p-button-text p-button-secondary"></button>`,
-    icons: `<wt-button label="บันทึก" icon="pi pi-check"></wt-button>
-<wt-button label="ส่ง" icon="pi pi-send" iconPos="right"></wt-button>
-<wt-button icon="pi pi-search" ariaLabel="ค้นหา"></wt-button>
-<wt-button icon="pi pi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wt-button>`,
-    badge: `<wt-button label="แจ้งเตือน" icon="pi pi-bell" badge="3"></wt-button>
+    icons: `<wt-button label="บันทึก" icon="wi wi-check"></wt-button>
+<wt-button label="ส่ง" icon="wi wi-send" iconPos="right"></wt-button>
+<wt-button icon="wi wi-search" ariaLabel="ค้นหา"></wt-button>
+<wt-button icon="wi wi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wt-button>`,
+    badge: `<wt-button label="แจ้งเตือน" icon="wi wi-bell" badge="3"></wt-button>
 <wt-button label="ข้อความ" severity="secondary" badge="12" badgeSeverity="danger"></wt-button>
 <wt-button label="ดูคำสั่งซื้อ" [link]="true" [style]="{ minWidth: '8rem' }"></wt-button>`,
-    action: `<wt-button id="demo-save" label="ส่งข้อมูล" icon="pi pi-send" [action]="save"></wt-button>`,
-    loading: `<wt-button label="บันทึกแบบร่าง" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
+    action: `<wt-button id="demo-save" label="ส่งข้อมูล" icon="wi wi-send" [action]="save"></wt-button>`,
+    loading: `<wt-button label="บันทึกแบบร่าง" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
 <wt-button label="ปิดอยู่" [disabled]="true"></wt-button>`,
     fluid: `<wt-button label="เข้าสู่ระบบ" [fluid]="true"></wt-button>`,
   },
@@ -183,7 +183,7 @@ saveDraft(): void {
       title: 'Inputs',
       rows: [
         { name: 'label', type: 'string', description: { th: 'ข้อความบนปุ่ม', en: 'Button text' } },
-        { name: 'icon', type: 'string', description: { th: 'class ของ icon เช่น pi pi-check หรือ fa-solid fa-floppy-disk', en: 'Icon class, e.g. pi pi-check or fa-solid fa-floppy-disk' } },
+        { name: 'icon', type: 'string', description: { th: 'class ของ icon เช่น wi wi-check หรือ fa-solid fa-floppy-disk', en: 'Icon class, e.g. wi wi-check or fa-solid fa-floppy-disk' } },
         { name: 'iconPos', type: "'left' | 'right'", default: "'left'", description: { th: 'ตำแหน่ง icon', en: 'Icon position' } },
         { name: 'severity', type: 'WtButtonSeverity', default: "'primary'", description: { th: "สีตามความหมาย รับ 'warning' ด้วย", en: "Colour by meaning; 'warning' is accepted too" } },
         { name: 'variant', type: "'solid' | 'outlined' | 'text'", default: "'solid'", description: { th: 'รูปแบบของปุ่ม', en: 'Button style' } },

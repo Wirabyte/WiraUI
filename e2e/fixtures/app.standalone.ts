@@ -89,6 +89,16 @@ import { WtDraggable, WtDroppable } from 'wiratheme/dragdrop';
 import { WtNavbar } from 'wiratheme/navbar';
 import { WtAsideMenu } from 'wiratheme/asidemenu';
 import { WtImageCropper } from 'wiratheme/imagecropper';
+import { WtTerminal, WtTerminalService } from 'wiratheme/terminal';
+import { WtImageCompare } from 'wiratheme/imagecompare';
+import { WtCarousel } from 'wiratheme/carousel';
+import { WtSplitter, WtSplitterPanel } from 'wiratheme/splitter';
+import { WtOrganizationChart } from 'wiratheme/organizationchart';
+import { WtKnob } from 'wiratheme/knob';
+import { WtInputOtp } from 'wiratheme/inputotp';
+import { applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme/flow';
+import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WtFlow, WtFlowSelectionChange } from 'wiratheme/flow';
+import { WtI18n, WtLanguageSwitch, WtTranslateLongPipe, WtTranslatePipe } from 'wiratheme/i18n';
 import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecropper';
 
 @Component({
@@ -199,6 +209,18 @@ import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecroppe
     WtNavbar,
     WtAsideMenu,
     WtImageCropper,
+    WtTerminal,
+    WtImageCompare,
+    WtCarousel,
+    WtSplitter,
+    WtSplitterPanel,
+    WtOrganizationChart,
+    WtKnob,
+    WtInputOtp,
+    WtFlowModule,
+    WtLanguageSwitch,
+    WtTranslatePipe,
+    WtTranslateLongPipe,
   ],
   templateUrl: './app.component.html',
 })
@@ -345,11 +367,11 @@ export class App {
     'data:image/svg+xml;charset=utf-8,' +
     encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><rect width="320" height="200" fill="#10b981"/><circle cx="160" cy="100" r="60" fill="#fff"/></svg>');
   schools = [
-    { id: 1, name: 'สตรีศรีน่าน' },
-    { id: 2, name: 'ศรีสวัสดิ์วิทยาคาร' },
-    { id: 3, name: 'น่านนคร' },
-    { id: 4, name: 'สารสาสน์', closed: true },
-    { id: 5, name: 'ทวีธาภิเศก' },
+    { id: 1, name: 'ฟ้าครามดาวเหนือ' },
+    { id: 2, name: 'ฟ้าใสวิทยา' },
+    { id: 3, name: 'ดาวเหนือศึกษา' },
+    { id: 4, name: 'ทะเลหมอกพัฒนา', closed: true },
+    { id: 5, name: 'ใบไม้เขียววิทยาคม' },
   ];
   schoolHits: { id: number; name: string }[] = [];
 
@@ -425,6 +447,7 @@ export class App {
     { label: 'สอง', items: [{ label: 'สอง-ก' }] },
   ];
   stepIndex = 1;
+  stepVerticalIndex = 0;
   stepItems: MenuItem[] = [
     { label: 'ข้อมูลส่วนตัว', command: () => this.menuPick('st:0') },
     { label: 'ที่อยู่', command: () => this.menuPick('st:1') },
@@ -497,6 +520,8 @@ export class App {
     notify: new FormControl(false, { nonNullable: true }),
   });
 
+  /** The page's own texts in Thai and English (wiratheme/i18n). */
+  readonly i18n = this.setupI18n();
   private readonly theme = inject(WtThemeService);
   private readonly config = inject(WtConfig);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -769,6 +794,7 @@ export class App {
   // ---------- image cropper (#ic-section) ----------
   /** A 320 × 200 PNG drawn in the page (the fixture has no network). */
   icImage = this.cropperTestImage();
+  icToolsKind = '';
   icFile: Blob | null = this.icImage ? base64ToFile(this.icImage) : null;
   icBox: CropperPosition | null = null;
   icRatioBox: CropperPosition | null = null;
@@ -793,5 +819,126 @@ export class App {
     ctx.arc(60, 50, 18, 0, Math.PI * 2);
     ctx.fill();
     return canvas.toDataURL('image/png');
+  }
+
+  // ---------- terminal, image compare, carousel, splitter, organization chart, knob, input otp (parity2.spec) ----------
+  private readonly terminal = inject(WtTerminalService);
+  readonly terminalAnswers = this.terminal.commandHandler.subscribe((text) => this.answer(text));
+  icmpValue = 50;
+  crsItems = ['#fca5a5', '#fdba74', '#86efac', '#93c5fd', '#c4b5fd', '#f9a8d4'].map((color, i) => ({ title: 'ข่าว ' + (i + 1), color }));
+  crsResponsive = [
+    { breakpoint: '767px', numVisible: 2, numScroll: 2 },
+    { breakpoint: '575px', numVisible: 1, numScroll: 1 },
+  ];
+  crsPage = 0;
+  crsAutoplay = 0;
+  splSizes: number[] = [];
+  splNestedSizes: number[] = [];
+  ocData: TreeNode[] = this.makeChart();
+  ocData2: TreeNode[] = this.makeChart();
+  ocPicked: TreeNode | null = null;
+  ocMany: TreeNode[] = [];
+  knobValue = 40;
+  knobValue2 = 70;
+  readonly knobForm = new FormGroup({ level: new FormControl(10, { nonNullable: true }) });
+  otpCode = '';
+  otpSecret = '';
+  otpCustom = '';
+
+  /** The terminal's commands: greet and sum; anything else is unknown. */
+  answer(text: string): void {
+    const [name, ...args] = text.trim().split(/\s+/);
+    if (name === 'greet') this.terminal.sendResponse('สวัสดี ' + args.join(' '));
+    else if (name === 'sum') this.terminal.sendResponse(args.reduce((total, n) => total + Number(n), 0));
+    else this.terminal.sendResponse('ไม่รู้จักคำสั่ง: ' + name);
+  }
+
+  /** A made-up school's chart (no real names). */
+  makeChart(): TreeNode[] {
+    return [
+      {
+        label: 'ผู้อำนวยการ',
+        type: 'person',
+        expanded: true,
+        data: { name: 'วิระ ใจดี', title: 'ผู้อำนวยการโรงเรียนวิระ' },
+        children: [
+          { label: 'ฝ่ายวิชาการ', expanded: true, children: [{ label: 'กลุ่มสาระภาษาไทย' }, { label: 'กลุ่มสาระคณิตศาสตร์' }] },
+          { label: 'ฝ่ายบริหารทั่วไป', children: [{ label: 'งานอาคารสถานที่' }] },
+          { label: 'ฝ่ายงบประมาณ', selectable: false },
+        ],
+      },
+    ];
+  }
+
+  ocManyLabels(): string {
+    return this.ocMany.map((n) => n.label).join(',');
+  }
+
+  // ---------- flow (flow.spec) ----------
+  // wt-flow (#flow): two-way binding
+  flowNodes: FlowNode[] = [
+    { id: 'start', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
+    { id: 'wira', type: 'person', position: { x: 280, y: 70 }, ariaLabel: 'วิระ', data: { name: 'วิระ', role: 'ครูประจำชั้น' } },
+    { id: 'check', position: { x: 0, y: 140 }, data: { label: 'ตรวจเอกสาร' } },
+    { id: 'done', type: 'output', position: { x: 300, y: 220 }, data: { label: 'อนุมัติ' } },
+    { id: 'group', type: 'group', position: { x: 520, y: 0 }, width: 220, height: 150, data: { label: 'งานทะเบียน' } },
+    { id: 'child', parentId: 'group', extent: 'parent', position: { x: 30, y: 50 }, data: { label: 'บันทึกผล' } },
+  ];
+  flowEdges: FlowEdge[] = [
+    { id: 'e-start-wira', source: 'start', target: 'wira', label: 'ส่งต่อ' },
+    { id: 'e-start-check', source: 'start', target: 'check', type: 'smoothstep', animated: true },
+    { id: 'e-check-done', source: 'check', target: 'done', type: 'step' },
+  ];
+  flowViewport: FlowViewport = { x: 40, y: 60, zoom: 1 };
+  flowEdgeDefaults: Partial<FlowEdge> = { markerEnd: 'arrowclosed' };
+  flowSel = '';
+  flowSvgSize = 0;
+
+  // ---------- wt-flow (#flow-controlled): the page applies the changes ----------
+  flowCtlNodes: FlowNode[] = [
+    { id: 'a', position: { x: 0, y: 0 }, data: { label: 'ก' } },
+    { id: 'b', position: { x: 200, y: 80 }, data: { label: 'ข' } },
+  ];
+  flowCtlEdges: FlowEdge[] = [{ id: 'ab', source: 'a', target: 'b' }];
+
+  flowNodesText(): string {
+    return this.flowNodes.map((n) => `${n.id}@${Math.round(n.position.x)},${Math.round(n.position.y)}${n.selected ? '*' : ''}`).join(' ');
+  }
+
+  flowEdgesText(): string {
+    return this.flowEdges.map((e) => `${e.source}>${e.target}`).join(' ');
+  }
+
+  flowVpText(): string {
+    const v = this.flowViewport;
+    return `${Math.round(v.x)},${Math.round(v.y)},${v.zoom.toFixed(2)}`;
+  }
+
+  flowSelection(e: WtFlowSelectionChange): string {
+    return e.nodes.map((n) => n.id).join(',') + '|' + e.edges.map((x) => x.id).join(',');
+  }
+
+  flowRoundTrip(flow: WtFlow): void {
+    const json = JSON.stringify(flow.toJSON());
+    this.note('flow:json:' + (flow.fromJSON(json) ? JSON.parse(json).nodes.length : 'failed'));
+  }
+
+  applyFlowNodeChanges(changes: FlowNodeChange[], nodes: FlowNode[]): FlowNode[] {
+    return applyNodeChanges(changes, nodes);
+  }
+
+  applyFlowEdgeChanges(changes: FlowEdgeChange[], edges: FlowEdge[]): FlowEdge[] {
+    return applyEdgeChanges(changes, edges);
+  }
+
+  flowCtlText(): string {
+    return this.flowCtlNodes.map((n) => `${n.id}@${Math.round(n.position.x)},${Math.round(n.position.y)}${n.selected ? '*' : ''}`).join(' ');
+  }
+
+  setupI18n(): WtI18n {
+    const i18n = inject(WtI18n);
+    i18n.add('th', { menu: { home: 'หน้าแรก' } });
+    i18n.add('en', { 'บันทึก': 'Save', 'สวัสดี {name}': 'Hello {name}', menu: { home: 'Home' } });
+    return i18n;
   }
 }

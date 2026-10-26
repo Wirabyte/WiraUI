@@ -26,6 +26,8 @@
     overflow-y: auto;
     border-width: var(--wt-menu-overlay-border-width);
     background: var(--wt-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-menu-shadow);
   }
   .wt-menu-list {

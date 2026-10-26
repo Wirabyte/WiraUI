@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-button id="d-dialog-open" [label]="tx('แก้ไขโปรไฟล์')" icon="pi pi-user" (onClick)="visible = true"></wt-button>
+        <wt-button id="d-dialog-open" [label]="tx('แก้ไขโปรไฟล์')" icon="wi wi-user" (onClick)="visible = true"></wt-button>
         <span class="docs-demo-output">visible: <code id="d-dialog-visible">{{ visible }}</code> · events: <code id="d-dialog-events">{{ events.join(', ') || '-' }}</code></span>
         <wt-dialog
           [header]="tx('แก้ไขโปรไฟล์')"
@@ -31,14 +31,14 @@
 
     <docs-section id="slots" [section]="sec['slots']">
       <docs-demo [html]="code['slots']">
-        <wt-button [label]="tx('ส่งข้อความ')" icon="pi pi-send" severity="secondary" (onClick)="slotsVisible = true"></wt-button>
+        <wt-button [label]="tx('ส่งข้อความ')" icon="wi wi-send" severity="secondary" (onClick)="slotsVisible = true"></wt-button>
         <wt-dialog [(visible)]="slotsVisible" [style]="{ width: '26rem' }">
           <ng-template #header>
             <span class="docs-dialog-head"><wt-avatar [label]="tx('ส')" shape="circle"></wt-avatar> <b>{{ tx('สมหญิง ใจดี') }}</b></span>
           </ng-template>
           <p class="docs-demo-p">{{ tx('ส่งข้อความหาสมาชิกในทีม') }}</p>
           <wt-footer>
-            <wt-button [label]="tx('ส่ง')" icon="pi pi-send" (onClick)="slotsVisible = false"></wt-button>
+            <wt-button [label]="tx('ส่ง')" icon="wi wi-send" (onClick)="slotsVisible = false"></wt-button>
           </wt-footer>
         </wt-dialog>
       </docs-demo>
@@ -57,7 +57,7 @@
 
     <docs-section id="responsive" [section]="sec['responsive']">
       <docs-demo [html]="code['responsive']">
-        <wt-button [label]="tx('เปิดรายงาน')" icon="pi pi-search" (onClick)="wideVisible = true"></wt-button>
+        <wt-button [label]="tx('เปิดรายงาน')" icon="wi wi-search" (onClick)="wideVisible = true"></wt-button>
         <wt-dialog
           [header]="tx('รายงานประจำเดือน')"
           [(visible)]="wideVisible"

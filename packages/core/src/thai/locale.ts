@@ -50,6 +50,8 @@ export interface WtLocale {
   zoomIn: string;
   /** wt-imagecropper */
   imageCropper: string;
+  /** Label of wt-language-switch. */
+  language: string;
   cropArea: string;
   cropAreaHint: string;
   zoom: string;
@@ -140,6 +142,57 @@ export interface WtLocale {
   colorPicker: string;
   hue: string;
   saturationBrightness: string;
+  /** Terminal: the label of its command line. */
+  terminalInput: string;
+  /** Image compare: the label of its divider (a slider). */
+  imageCompare: string;
+  /** Carousel: how screen readers call it and its items, and an item's place (`{0}` of `{1}`). */
+  carousel: string;
+  slide: string;
+  slideOf: string;
+  /** Splitter: the label of a gutter between panels. */
+  resizePanels: string;
+  /** Organization chart: the chart's label. */
+  organizationChart: string;
+  /** One-time code boxes: the group's label and each box's (`{0}` of `{1}`). */
+  oneTimeCode: string;
+  otpCharacter: string;
+  /** wt-flow (a node diagram): role names, keyboard hints, controls, and what screen readers hear as things change. */
+  /** The diagram's accessible name and role description. */
+  flowLabel: string;
+  flowNode: string;
+  flowEdge: string;
+  /** Added to a node's or edge's name while it is selected. */
+  flowSelectedState: string;
+  /** Hints read with the diagram and with each node / edge. */
+  flowPaneHint: string;
+  flowNodeHint: string;
+  flowEdgeHint: string;
+  /** Controls. */
+  flowControls: string;
+  flowZoomIn: string;
+  flowZoomOut: string;
+  flowFitView: string;
+  flowLock: string;
+  flowUnlock: string;
+  flowMiniMap: string;
+  flowNodeToolbar: string;
+  flowUndo: string;
+  flowRedo: string;
+  /** Announcements ({name}, {count}, {x} … are filled in). */
+  flowSelected: string;
+  flowSelectionCleared: string;
+  flowMoved: string;
+  flowMovedMany: string;
+  flowResized: string;
+  flowConnectStart: string;
+  flowConnected: string;
+  flowConnectCancelled: string;
+  flowConnectInvalid: string;
+  flowReconnected: string;
+  flowDeleted: string;
+  flowEdgeFromTo: string;
+  flowZoomLevel: string;
   /**
    * Form error messages, by validator key. `{label}` is the field's name when one is given (`requiredLabel`),
    * `{requiredLength}`, `{min}`, `{max}` come from the error.
@@ -301,6 +354,7 @@ export const TH_LOCALE: WtLocale = {
   rotateLeft: 'หมุนซ้าย',
   zoomIn: 'ขยาย',
   imageCropper: 'ตัดรูปภาพ',
+  language: 'ภาษา',
   cropArea: 'กรอบตัดรูป',
   cropAreaHint: 'ลากหรือใช้ปุ่มลูกศรเพื่อเลื่อนกรอบ กด Alt พร้อมปุ่มลูกศร หรือปุ่ม + และ − เพื่อปรับขนาด',
   zoom: 'ซูม',
@@ -377,6 +431,45 @@ export const TH_LOCALE: WtLocale = {
   colorPicker: 'เลือกสี',
   hue: 'เฉดสี',
   saturationBrightness: 'ความสดและความสว่างของสี',
+  terminalInput: 'พิมพ์คำสั่ง',
+  imageCompare: 'เลื่อนเพื่อเปรียบเทียบภาพ',
+  carousel: 'ภาพสไลด์',
+  slide: 'สไลด์',
+  slideOf: 'รายการที่ {0} จาก {1}',
+  resizePanels: 'ปรับขนาดช่อง',
+  organizationChart: 'ผังองค์กร',
+  oneTimeCode: 'รหัสยืนยัน',
+  otpCharacter: 'ตัวที่ {0} จาก {1}',
+  flowLabel: 'แผนภาพ',
+  flowNode: 'โหนด',
+  flowEdge: 'เส้นเชื่อม',
+  flowSelectedState: 'เลือกอยู่',
+  flowPaneHint: 'ลากเพื่อเลื่อนแผนภาพ ใช้ล้อเมาส์หรือสองนิ้วเพื่อซูม กดปุ่มลูกศรเพื่อเลื่อน กด + หรือ − เพื่อซูม และกด Tab เพื่อไปยังโหนดและเส้นเชื่อม',
+  flowNodeHint: 'กด Enter หรือ Space เพื่อเลือก ปุ่มลูกศรเพื่อย้ายโหนดที่เลือก (กด Shift ค้างเพื่อย้ายทีละมาก) Delete เพื่อลบ C เพื่อเริ่มเชื่อมต่อ และ Escape เพื่อยกเลิก',
+  flowEdgeHint: 'กด Enter หรือ Space เพื่อเลือก และ Delete เพื่อลบ',
+  flowControls: 'เครื่องมือแผนภาพ',
+  flowZoomIn: 'ซูมเข้า',
+  flowZoomOut: 'ซูมออก',
+  flowFitView: 'พอดีหน้าจอ',
+  flowLock: 'ล็อกการแก้ไข',
+  flowUnlock: 'ปลดล็อกการแก้ไข',
+  flowMiniMap: 'แผนที่ย่อ',
+  flowNodeToolbar: 'เครื่องมือของโหนด',
+  flowUndo: 'เลิกทำ',
+  flowRedo: 'ทำซ้ำ',
+  flowSelected: 'เลือก {nodes} โหนด และ {edges} เส้นเชื่อม',
+  flowSelectionCleared: 'ยกเลิกการเลือกแล้ว',
+  flowMoved: 'ย้าย {name} ไปที่ {x}, {y}',
+  flowMovedMany: 'ย้าย {count} โหนดแล้ว',
+  flowResized: 'ปรับขนาด {name} เป็น {width} × {height}',
+  flowConnectStart: 'เริ่มเชื่อมต่อจาก {name} ไปที่โหนดปลายทางแล้วกด Enter หรือกด Escape เพื่อยกเลิก',
+  flowConnected: 'เชื่อม {source} กับ {target} แล้ว',
+  flowConnectCancelled: 'ยกเลิกการเชื่อมต่อ',
+  flowConnectInvalid: 'เชื่อมต่อกับ {name} ไม่ได้',
+  flowReconnected: 'ย้ายเส้นเชื่อมไปที่ {source} กับ {target} แล้ว',
+  flowDeleted: 'ลบ {nodes} โหนด และ {edges} เส้นเชื่อมแล้ว',
+  flowEdgeFromTo: 'จาก {source} ไป {target}',
+  flowZoomLevel: 'ซูม {zoom}%',
   validation: {
     required: 'กรุณากรอกข้อมูลนี้',
     requiredLabel: 'กรุณากรอก{label}',
@@ -527,6 +620,7 @@ export const EN_LOCALE: WtLocale = {
   rotateLeft: 'Rotate left',
   zoomIn: 'Zoom in',
   imageCropper: 'Image cropper',
+  language: 'Language',
   cropArea: 'Crop area',
   cropAreaHint: 'Drag or use the arrow keys to move the box; Alt with the arrow keys, or + and −, resizes it',
   zoom: 'Zoom',
@@ -603,6 +697,45 @@ export const EN_LOCALE: WtLocale = {
   colorPicker: 'Choose a colour',
   hue: 'Hue',
   saturationBrightness: 'Saturation and brightness',
+  terminalInput: 'Command',
+  imageCompare: 'Image comparison',
+  carousel: 'carousel',
+  slide: 'slide',
+  slideOf: '{0} of {1}',
+  resizePanels: 'Resize panels',
+  organizationChart: 'Organization chart',
+  oneTimeCode: 'One-time code',
+  otpCharacter: 'Character {0} of {1}',
+  flowLabel: 'Diagram',
+  flowNode: 'node',
+  flowEdge: 'edge',
+  flowSelectedState: 'selected',
+  flowPaneHint: 'Drag to pan, use the mouse wheel or two fingers to zoom, the arrow keys to pan, + and − to zoom, and Tab to move between nodes and edges',
+  flowNodeHint: 'Enter or Space selects; the arrow keys move the selected nodes (hold Shift for bigger steps); Delete removes; C starts a connection; Escape cancels',
+  flowEdgeHint: 'Enter or Space selects; Delete removes',
+  flowControls: 'Diagram controls',
+  flowZoomIn: 'Zoom in',
+  flowZoomOut: 'Zoom out',
+  flowFitView: 'Fit view',
+  flowLock: 'Lock editing',
+  flowUnlock: 'Unlock editing',
+  flowMiniMap: 'Mini map',
+  flowNodeToolbar: 'Node toolbar',
+  flowUndo: 'Undo',
+  flowRedo: 'Redo',
+  flowSelected: 'Selected {nodes} nodes and {edges} edges',
+  flowSelectionCleared: 'Selection cleared',
+  flowMoved: 'Moved {name} to {x}, {y}',
+  flowMovedMany: 'Moved {count} nodes',
+  flowResized: 'Resized {name} to {width} × {height}',
+  flowConnectStart: 'Connecting from {name}: move to the target node and press Enter, or press Escape to cancel',
+  flowConnected: 'Connected {source} to {target}',
+  flowConnectCancelled: 'Connection cancelled',
+  flowConnectInvalid: 'Cannot connect to {name}',
+  flowReconnected: 'Edge moved to {source} and {target}',
+  flowDeleted: 'Deleted {nodes} nodes and {edges} edges',
+  flowEdgeFromTo: 'From {source} to {target}',
+  flowZoomLevel: 'Zoom {zoom}%',
   validation: {
     required: 'This field is required',
     requiredLabel: '{label} is required',

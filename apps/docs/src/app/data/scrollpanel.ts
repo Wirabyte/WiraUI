@@ -104,11 +104,11 @@ export const SCROLLPANEL_DOC: ComponentDoc = {
     <p>{{ notice }}</p>
   }
 </wt-scrollPanel>
-<wt-button label="เพิ่มประกาศ" icon="pi pi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
+<wt-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
       classic: `<wt-scrollPanel [style]="{ width: '100%', maxHeight: '10rem' }" ariaLabel="ประกาศ">
   <p *ngFor="let notice of notices">{{ notice }}</p>
 </wt-scrollPanel>
-<wt-button label="เพิ่มประกาศ" icon="pi pi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
+<wt-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
     },
     methods: {
       v3: `<wt-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
@@ -118,13 +118,13 @@ export const SCROLLPANEL_DOC: ComponentDoc = {
     }
   </ol>
 </wt-scrollPanel>
-<wt-button label="กลับขึ้นบน" icon="pi pi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
+<wt-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
       classic: `<wt-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
   <ol>
     <li *ngFor="let rule of rules">{{ rule }}</li>
   </ol>
 </wt-scrollPanel>
-<wt-button label="กลับขึ้นบน" icon="pi pi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
+<wt-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
     },
   },
   ts: {

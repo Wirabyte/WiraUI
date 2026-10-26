@@ -38,7 +38,7 @@
   min-width: 0;
 }
 // Redo is Undo mirrored.
-.docs-designer-redo .pi {
+.docs-designer-redo .wi {
   transform: scaleX(-1);
 }
 .docs-designer-status {
@@ -418,7 +418,8 @@
   padding: 14px;
   border: 1px solid var(--docs-border);
   border-radius: var(--docs-radius-lg);
-  background: var(--wt-ground, var(--docs-surface));
+  // The theme's page behind its components: its ground colour, or Glass's colour fields (--wt-backdrop).
+  background: var(--wt-backdrop, var(--wt-ground, var(--docs-surface)));
   color: var(--wt-text, var(--docs-text));
   font-family: var(--wt-font-family, var(--docs-font));
 }
@@ -457,6 +458,68 @@
   display: block;
   min-width: 0;
 }
+// Suggestion fields (font, custom token names): our autocomplete, as wide as the plain fields beside them.
+.docs-designer-ac {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// The preview's own bar: the component picker, the layout switch (wide screens) and the page in a new window.
+.docs-designer-pv-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.docs-designer-pv-pick {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.docs-designer-pv-pick .wt-select {
+  width: 100%;
+}
+// Side by side or wide only means something once the preview sits beside the editor (xl).
+.docs-designer-layout {
+  display: none;
+}
+.docs-designer-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+// A component page in the panel: its live demos only (no header, tabs or code: DOCS_PREVIEW), and no sections
+// that hold no demo (import lines, notes, migration text).
+.docs-designer-pv-page {
+  min-width: 0;
+}
+.docs-designer-pv-page docs-section:not(:has(docs-demo)),
+.docs-designer-pv-page docs-slot-note,
+.docs-designer-pv-page .docs-section > p,
+.docs-designer-pv-page .docs-anchor {
+  display: none;
+}
+.docs-designer-pv-page .docs-section {
+  margin-top: 16px;
+}
+.docs-designer-pv-page .docs-section:first-child {
+  margin-top: 0;
+}
+.docs-designer-pv-page :is(.docs-h2, .docs-h3) {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+}
+.docs-designer-pv-page :is(docs-demo, .docs-demo) {
+  margin: 6px 0 0;
+}
+.docs-designer-pv-page .docs-demo-preview {
+  padding: 16px 12px;
+}
+
 // A dialog drawn with the dialog tokens, so its look can be tuned without opening one.
 .docs-designer-pv-dialog {
   min-width: 0;
@@ -476,7 +539,7 @@
   font-weight: var(--wt-dialog-title-weight);
   line-height: 1.3;
 }
-.docs-designer-pv-dialog-head .pi {
+.docs-designer-pv-dialog-head .wi {
   color: var(--wt-text-muted);
 }
 .docs-section .docs-designer-pv-dialog p,
@@ -496,6 +559,13 @@
 @include mq.up(xl) {
   .docs-designer-main {
     grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  }
+  // Wide preview: editor and preview share the width, so component demos get room.
+  .docs-designer-main.docs-designer-wide {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .docs-designer-layout {
+    display: inline-flex;
   }
   .docs-designer-preview {
     position: sticky;

@@ -9,7 +9,7 @@
         <wt-splitButton
           id="d-spb-basic"
           [label]="tx('บันทึก')"
-          icon="pi pi-save"
+          icon="wi wi-save"
           [model]="local(saveActions)"
           [disabled]="isApiSaving"
           (onClick)="save()"
@@ -22,7 +22,7 @@
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']" [ts]="ts['severity']">
-        <wt-splitButton id="d-spb-secondary" [label]="tx('ส่งออก')" icon="pi pi-download" severity="secondary" [model]="local(exportActions)"></wt-splitButton>
+        <wt-splitButton id="d-spb-secondary" [label]="tx('ส่งออก')" icon="wi wi-download" severity="secondary" [model]="local(exportActions)"></wt-splitButton>
         <wt-splitButton id="d-spb-outlined" [label]="tx('ส่งออก')" severity="success" [outlined]="true" [model]="local(exportActions)"></wt-splitButton>
         <wt-splitButton id="d-spb-text" [label]="tx('ส่งออก')" severity="info" [text]="true" [model]="local(exportActions)"></wt-splitButton>
         <wt-split-button id="d-spb-small" [label]="tx('ส่งออก')" severity="help" [raised]="true" [rounded]="true" size="small" [model]="local(exportActions)"></wt-split-button>
@@ -42,9 +42,9 @@
         <wt-splitButton
           id="d-spb-icons"
           [label]="tx('พิมพ์')"
-          icon="pi pi-print"
+          icon="wi wi-print"
           iconPos="right"
-          dropdownIcon="pi pi-ellipsis-v"
+          dropdownIcon="wi wi-ellipsis-v"
           severity="secondary"
           [model]="local(exportActions)"
           (onMenuShow)="logMenu('onMenuShow')"

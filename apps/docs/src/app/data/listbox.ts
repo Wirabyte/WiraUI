@@ -122,7 +122,7 @@ export const LISTBOX_DOC: ComponentDoc = {
     group: `<wt-listbox name="room" [(ngModel)]="room" [options]="roomGroups" [group]="true" optionLabel="name"
   ariaLabel="ห้องเรียน">
   <ng-template #group let-grade>
-    <i class="pi pi-users"></i> {{ grade.label }}
+    <i class="wi wi-users"></i> {{ grade.label }}
   </ng-template>
 </wt-listbox>`,
     templates: {
@@ -132,7 +132,7 @@ export const LISTBOX_DOC: ComponentDoc = {
     <span class="room-name">{{ room.name }}</span>
     <small class="room-teacher">{{ room.teacher }}</small>
     @if (selected) {
-      <i class="pi pi-check"></i>
+      <i class="wi wi-check"></i>
     }
   </ng-template>
   <ng-template #footer let-value>
@@ -144,7 +144,7 @@ export const LISTBOX_DOC: ComponentDoc = {
   <ng-template wtTemplate="item" let-room let-selected="selected">
     <span class="room-name">{{ room.name }}</span>
     <small class="room-teacher">{{ room.teacher }}</small>
-    <i *ngIf="selected" class="pi pi-check"></i>
+    <i *ngIf="selected" class="wi wi-check"></i>
   </ng-template>
   <ng-template wtTemplate="footer" let-value>
     เลือกแล้ว {{ value?.length || 0 }} ห้อง

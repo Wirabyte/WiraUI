@@ -6,13 +6,13 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-button [label]="tx('บันทึก')" icon="pi pi-save"></wt-button>
+        <wt-button [label]="tx('บันทึก')" icon="wi wi-save"></wt-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="action" [section]="sec['action']">
       <docs-demo [html]="code['action']" [ts]="ts['action']">
-        <wt-button id="demo-save" [label]="tx('ส่งข้อมูล')" icon="pi pi-send" [action]="save"></wt-button>
+        <wt-button id="demo-save" [label]="tx('ส่งข้อมูล')" icon="wi wi-send" [action]="save"></wt-button>
         <span class="docs-demo-output">
           @if (en()) {
             Sent <b id="demo-saved">{{ saved }}</b> {{ saved === 1 ? 'time' : 'times' }}
@@ -63,8 +63,8 @@
 
     <docs-section id="directive" [section]="sec['directive']">
       <docs-demo [html]="code['directive']">
-        <button id="d-btn-directive" wtButton type="button" [label]="tx('บันทึก')" icon="pi pi-save" (click)="clicks = clicks + 1"></button>
-        <button wtButton type="button" [label]="tx('ลบ')" icon="pi pi-trash" severity="danger" [outlined]="true"></button>
+        <button id="d-btn-directive" wtButton type="button" [label]="tx('บันทึก')" icon="wi wi-save" (click)="clicks = clicks + 1"></button>
+        <button wtButton type="button" [label]="tx('ลบ')" icon="wi wi-trash" severity="danger" [outlined]="true"></button>
         <a wtButton href="#directive" [label]="tx('ดูคำสั่งซื้อ')" severity="secondary" [text]="true"></a>
         <span class="docs-demo-output">click: <code id="d-btn-directive-count">{{ clicks }}</code></span>
       </docs-demo>
@@ -72,23 +72,23 @@
 
     <docs-section id="styleclass" [section]="sec['styleclass']">
       <docs-demo [html]="code['styleclass']">
-        <wt-button id="d-btn-styleclass" [label]="tx('ลบ')" icon="pi pi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
+        <wt-button id="d-btn-styleclass" [label]="tx('ลบ')" icon="wi wi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
         <button wtButton type="button" [label]="tx('ยกเลิก')" class="p-button-text p-button-secondary"></button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="icons" [section]="sec['icons']">
       <docs-demo [html]="code['icons']">
-        <wt-button [label]="tx('บันทึก')" icon="pi pi-check"></wt-button>
-        <wt-button [label]="tx('ส่ง')" icon="pi pi-send" iconPos="right"></wt-button>
-        <wt-button icon="pi pi-search" [ariaLabel]="tx('ค้นหา')"></wt-button>
-        <wt-button icon="pi pi-trash" severity="danger" [text]="true" [ariaLabel]="tx('ลบ')"></wt-button>
+        <wt-button [label]="tx('บันทึก')" icon="wi wi-check"></wt-button>
+        <wt-button [label]="tx('ส่ง')" icon="wi wi-send" iconPos="right"></wt-button>
+        <wt-button icon="wi wi-search" [ariaLabel]="tx('ค้นหา')"></wt-button>
+        <wt-button icon="wi wi-trash" severity="danger" [text]="true" [ariaLabel]="tx('ลบ')"></wt-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="badge" [section]="sec['badge']">
       <docs-demo [html]="code['badge']">
-        <wt-button [label]="tx('แจ้งเตือน')" icon="pi pi-bell" badge="3"></wt-button>
+        <wt-button [label]="tx('แจ้งเตือน')" icon="wi wi-bell" badge="3"></wt-button>
         <wt-button id="d-btn-badge" [label]="tx('ข้อความ')" severity="secondary" badge="12" badgeSeverity="danger"></wt-button>
         <wt-button id="d-btn-link" [label]="tx('ดูคำสั่งซื้อ')" [link]="true" [style]="{ minWidth: '8rem' }"></wt-button>
       </docs-demo>
@@ -96,7 +96,7 @@
 
     <docs-section id="loading" [section]="sec['loading']">
       <docs-demo [html]="code['loading']">
-        <wt-button id="d-btn-draft" [label]="tx('บันทึกแบบร่าง')" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
+        <wt-button id="d-btn-draft" [label]="tx('บันทึกแบบร่าง')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
         <wt-button [label]="tx('ปิดอยู่')" [disabled]="true"></wt-button>
       </docs-demo>
     </docs-section>

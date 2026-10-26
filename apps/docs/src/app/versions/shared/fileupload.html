@@ -80,14 +80,14 @@
           </ng-template>
           <ng-template #file let-file let-i="index">
             <div class="docs-fu-row">
-              <i class="pi pi-file"></i>
+              <i class="wi wi-file"></i>
               <span class="docs-fu-name">{{ file.name }}</span>
-              <wt-button icon="pi pi-times" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('นำออก')" (onClick)="attachments.remove($event, i)"></wt-button>
+              <wt-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('นำออก')" (onClick)="attachments.remove($event, i)"></wt-button>
             </div>
           </ng-template>
           <ng-template #empty>
             <div class="docs-fu-empty">
-              <i class="pi pi-upload"></i>
+              <i class="wi wi-upload"></i>
               <p>{{ tx('ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่') }}</p>
             </div>
           </ng-template>

@@ -1,4 +1,4 @@
-import { Type } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
 import { Routes } from '@angular/router';
 import {
   ConfigurationPage,
@@ -97,7 +97,20 @@ export interface VersionPages {
   navbar: Type<unknown>;
   asidemenu: Type<unknown>;
   imagecropper: Type<unknown>;
+  /** Icons (wiraicon): a version page, so its demos use this version's buttons. */
+  icons: Type<unknown>;
+  terminal: Type<unknown>;
+  imagecompare: Type<unknown>;
+  carousel: Type<unknown>;
+  splitter: Type<unknown>;
+  organizationchart: Type<unknown>;
+  knob: Type<unknown>;
+  inputotp: Type<unknown>;
+  flow: Type<unknown>;
 }
+
+/** This version's page components (one per nav id), so WiraTheme Studio can show any component's demos in its preview. */
+export const DOCS_PAGES = new InjectionToken<VersionPages>('DOCS_PAGES');
 
 /** Same page tree under /v1, /v2 and /v3, so the version dropdown can keep the path. */
 export function versionRoutes(p: VersionPages): Routes {
@@ -105,12 +118,14 @@ export function versionRoutes(p: VersionPages): Routes {
     {
       path: '',
       component: DocsVersionShell,
+      providers: [{ provide: DOCS_PAGES, useValue: p }],
       children: [
         { path: '', pathMatch: 'full', redirectTo: 'getting-started/introduction' },
         { path: 'getting-started/introduction', component: IntroductionPage },
         { path: 'getting-started/installation', component: InstallationPage },
         { path: 'getting-started/configuration', component: ConfigurationPage },
         { path: 'getting-started/migration', component: MigrationPage },
+        { path: 'getting-started/icons', component: p.icons },
         { path: 'theming/overview', component: ThemingOverviewPage },
         { path: 'theming/presets', component: p.presets },
         { path: 'theming/scss', component: ThemingScssPage },
@@ -200,6 +215,14 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/navbar', component: p.navbar },
         { path: 'components/asidemenu', component: p.asidemenu },
         { path: 'components/imagecropper', component: p.imagecropper },
+        { path: 'components/terminal', component: p.terminal },
+        { path: 'components/imagecompare', component: p.imagecompare },
+        { path: 'components/carousel', component: p.carousel },
+        { path: 'components/splitter', component: p.splitter },
+        { path: 'components/organizationchart', component: p.organizationchart },
+        { path: 'components/knob', component: p.knob },
+        { path: 'components/inputotp', component: p.inputotp },
+        { path: 'components/flow', component: p.flow },
         // Old docs URL from Phase 1: the combined forms page is now one page per control.
         { path: 'components/forms', redirectTo: 'components/inputtext' },
         { path: '**', redirectTo: 'getting-started/introduction' },

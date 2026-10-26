@@ -152,8 +152,8 @@ export const GALLERIA_DOC: ComponentDoc = {
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-photo" />
   </ng-template>
 </wt-galleria>
-<wt-button label="เล่นสไลด์" icon="pi pi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wt-button>
-<wt-button label="หยุด" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wt-button>`,
+<wt-button label="เล่นสไลด์" icon="wi wi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wt-button>
+<wt-button label="หยุด" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wt-button>`,
     fullscreen: {
       v3: `<div class="photo-grid">
   @for (photo of photos; track photo.src; let i = $index) {

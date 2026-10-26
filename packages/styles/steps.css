@@ -1,5 +1,6 @@
 /* wt-steps. Shared by wiratheme v1, v2 and v3. Numbered steps along a line; the current one filled, the ones before it
-   ticked off in the primary colour. Labels wrap under their number on narrow screens. */
+   ticked off in the primary colour. Labels under their number (default), beside it (labelPosition="right", on phones
+   only the current step keeps its label), or a column of steps (orientation="vertical"). */
 @layer wiratheme.components {
   wt-steps {
     display: block;
@@ -85,6 +86,14 @@
   .wt-steps:not(.wt-steps-readonly) .wt-steps-item:not(.wt-steps-item-disabled):not(.wt-steps-item-active) .wt-steps-link:hover .wt-steps-number {
     border-color: var(--wt-primary-color);
   }
+  .wt-steps-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+    min-width: 0;
+    max-width: 100%;
+  }
   .wt-steps-label {
     max-width: 100%;
     color: var(--wt-steps-label-color);
@@ -94,7 +103,6 @@
   }
   .wt-steps-subtitle {
     max-width: 100%;
-    margin-top: -0.25rem;
     color: var(--wt-text-muted);
     font-size: 0.8125em;
     text-align: center;
@@ -107,9 +115,88 @@
   .wt-steps-item-disabled .wt-steps-link {
     opacity: var(--wt-disabled-opacity);
   }
+  /* ---------- labelPosition="right": each label beside its number, a line filling the space to the next ---------- */
+
+  .wt-steps-label-right .wt-steps-item {
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .wt-steps-label-right .wt-steps-item:last-child {
+    flex: 0 1 auto;
+  }
+  .wt-steps-label-right .wt-steps-item + .wt-steps-item::before {
+    content: none;
+  }
+  .wt-steps-label-right .wt-steps-item:not(:last-child)::after {
+    content: '';
+    flex: 1 1 1.5rem;
+    min-width: 1rem;
+    margin-inline: var(--wt-steps-gap);
+    border-top: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+  }
+  .wt-steps-label-right .wt-steps-item-complete:not(:last-child)::after {
+    border-top-color: var(--wt-primary-color);
+  }
+  .wt-steps-label-right .wt-steps-link,
+  .wt-steps-vertical .wt-steps-link {
+    flex-direction: row;
+    padding: 0.25rem;
+  }
+  .wt-steps-label-right .wt-steps-text,
+  .wt-steps-vertical .wt-steps-text {
+    align-items: flex-start;
+  }
+  .wt-steps-label-right :is(.wt-steps-label, .wt-steps-subtitle),
+  .wt-steps-vertical :is(.wt-steps-label, .wt-steps-subtitle) {
+    text-align: start;
+  }
+
+  /* ---------- orientation="vertical": a column, the line running down between the numbers ---------- */
+
+  .wt-steps-vertical .wt-steps-list {
+    flex-direction: column;
+  }
+  .wt-steps-vertical .wt-steps-item {
+    flex: none;
+    justify-content: flex-start;
+  }
+  .wt-steps-vertical .wt-steps-item:not(:last-child) {
+    padding-bottom: var(--wt-steps-vertical-gap);
+  }
+  .wt-steps-vertical .wt-steps-item + .wt-steps-item::before {
+    content: none;
+  }
+  .wt-steps-vertical .wt-steps-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--wt-steps-number-size) + 0.25rem * 2);
+    bottom: 0.25rem;
+    inset-inline-start: calc(0.25rem + var(--wt-steps-number-size) / 2 - var(--wt-steps-line-width) / 2);
+    border-left: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+  }
+  .wt-steps-vertical .wt-steps-item-complete:not(:last-child)::after {
+    border-left-color: var(--wt-primary-color);
+  }
+  /* The label's first line level with the middle of the number. */
+  .wt-steps-vertical .wt-steps-text {
+    padding-top: max(0px, calc((var(--wt-steps-number-size) - 1lh) / 2));
+  }
+
   @media (max-width: 575.98px) {
     .wt-steps-label {
       font-size: 0.8125em;
+    }
+    /* Beside the numbers there is no room for every label on a phone: only the current step keeps its text
+       (the others stay readable to screen readers). */
+    .wt-steps-label-right .wt-steps-item:not(.wt-steps-item-active) .wt-steps-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
   }
   @media (prefers-reduced-motion: reduce) {

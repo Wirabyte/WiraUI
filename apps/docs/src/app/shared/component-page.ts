@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiGroup, ComponentDoc } from '../core/component-doc';
 import { DocsI18n, Text } from '../core/i18n';
+import { DOCS_PREVIEW } from '../core/preview';
 import { sampleText } from '../core/sample-text';
 import { DOCS_VERSION } from '../core/version-theme';
 
@@ -27,6 +28,8 @@ export class DocsComponentPage {
   protected readonly version = inject(DOCS_VERSION);
   protected readonly en = inject(DocsI18n).en;
   protected readonly host = VERSION.full;
+  /** In the studio's preview: the Examples only, without the page header and tabs. */
+  protected readonly preview = inject(DOCS_PREVIEW, { optional: true }) === true;
   readonly doc = input.required<ComponentDoc>();
   protected readonly features = contentChild(DocsFeatures);
 

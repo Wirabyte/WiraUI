@@ -76,17 +76,17 @@
       <docs-demo [html]="code['moretemplates']" [ts]="ts['moretemplates']">
         <wt-select id="d-sel-more" [(ngModel)]="moreId" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [filter]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('จังหวัด')">
           <ng-template #group let-g>
-            <span class="docs-select-group"><i class="pi pi-map-marker"></i> {{ g.label }}</span>
+            <span class="docs-select-group"><i class="wi wi-map-marker"></i> {{ g.label }}</span>
           </ng-template>
           <ng-template #header>
             <div class="docs-select-note">{{ tx('เลือกได้ 1 จังหวัด') }}</div>
           </ng-template>
           <ng-template #footer>
-            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
           </ng-template>
           <ng-template #emptyfilter>{{ tx('ไม่พบจังหวัดที่ค้นหา') }}</ng-template>
           <ng-template #dropdownicon>
-            <i class="pi pi-search"></i>
+            <i class="wi wi-search"></i>
           </ng-template>
         </wt-select>
         <span class="docs-demo-output">footer: <code id="d-sel-more-added">{{ added }}</code></span>

@@ -1,0 +1,39 @@
+<div
+  class="wt-inputotp p-inputotp p-component"
+  role="group"
+  [class.wt-inputotp-disabled]="disabled"
+  [attr.aria-label]="groupLabel"
+  [attr.aria-labelledby]="ariaLabelledBy || null"
+  [ngStyle]="rootStyle"
+  (focusout)="focusout($event)"
+>
+  <ng-container *ngFor="let i of indexes; trackBy: trackIndex">
+    <input
+      *ngIf="!inputTemplate; else custom"
+      wtInputText
+      class="wt-inputotp-input p-inputotp-input"
+      [ngClass]="styleClass || ''"
+      [wtSize]="inputSize"
+      [variant]="inputVariant"
+      [invalid]="invalid"
+      [attr.type]="mask ? 'password' : 'text'"
+      [attr.inputmode]="integerOnly ? 'numeric' : 'text'"
+      [attr.pattern]="integerOnly ? '[0-9]*' : null"
+      [attr.maxlength]="i === 0 ? length : 1"
+      [attr.autocomplete]="i === 0 ? 'one-time-code' : 'off'"
+      [attr.name]="name || null"
+      [attr.tabindex]="tabindex"
+      [attr.aria-label]="charLabel(i)"
+      [attr.required]="required ? '' : null"
+      [attr.readonly]="readonly ? '' : null"
+      [disabled]="disabled"
+      [value]="tokens[i] || ''"
+      (input)="onInput($event, i)"
+      (keydown)="onKeydown($event, i)"
+      (focus)="onInputFocus($event)"
+      (blur)="onInputBlur($event)"
+      (paste)="onPaste($event, i)"
+    />
+    <ng-template #custom><ng-container *ngTemplateOutlet="inputTemplate; context: contextOf(i)"></ng-container></ng-template>
+  </ng-container>
+</div>

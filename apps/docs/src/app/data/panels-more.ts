@@ -38,33 +38,33 @@ export const TOOLBAR_DOC: ComponentDoc = {
     },
     wrap: {
       title: { th: 'จอแคบ', en: 'Narrow screens' },
-      text: { th: 'กลุ่มต่าง ๆ ขึ้นบรรทัดใหม่เองเมื่อพื้นที่ไม่พอ ไม่ต้องเขียน media query (ตัวอย่างนี้จำกัดกว้าง 360px)', en: 'The groups wrap when space runs out, with no media queries to write (this sample is capped at 360px).' },
+      text: { th: 'กลุ่มต่าง ๆ ขึ้นบรรทัดใหม่เองเมื่อพื้นที่ไม่พอ ไม่ต้องเขียน media query (ตัวอย่างนี้จำกัดกว้าง 300px)', en: 'The groups wrap when space runs out, with no media queries to write (this sample is capped at 300px).' },
     },
   },
   code: {
     basic: `<wt-toolbar ariaLabel="จัดการเอกสาร">
-  <wt-button wtToolbarStart label="สร้างใหม่" icon="pi pi-plus"></wt-button>
+  <wt-button wtToolbarStart label="สร้างใหม่" icon="wi wi-plus"></wt-button>
   <wt-button wtToolbarStart label="ส่งออก" severity="secondary" [outlined]="true"></wt-button>
   <wt-iconfield wtToolbarCenter>
-    <wt-inputicon icon="pi pi-search"></wt-inputicon>
+    <wt-inputicon icon="wi wi-search"></wt-inputicon>
     <input wtInputText placeholder="ค้นหา" />
   </wt-iconfield>
-  <wt-button wtToolbarEnd icon="pi pi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
+  <wt-button wtToolbarEnd icon="wi wi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
 </wt-toolbar>`,
     templates: `<wt-toolbar>
   <ng-template #start>
-    <wt-button label="สร้างใหม่" icon="pi pi-plus"></wt-button>
+    <wt-button label="สร้างใหม่" icon="wi wi-plus"></wt-button>
   </ng-template>
   <ng-template #center>
     <b>จัดการเอกสาร</b>
   </ng-template>
   <ng-template #end>
-    <wt-button icon="pi pi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
+    <wt-button icon="wi wi-bell" ariaLabel="การแจ้งเตือน" [text]="true" [rounded]="true"></wt-button>
   </ng-template>
 </wt-toolbar>`,
-    wrap: `<div style="max-width: 360px">
+    wrap: `<div style="max-width: min(300px, 100%)">
   <wt-toolbar>
-    <wt-button label="บันทึก" icon="pi pi-check"></wt-button>
+    <wt-button label="บันทึก" icon="wi wi-check"></wt-button>
     <wt-button label="ยกเลิก" severity="secondary" [text]="true"></wt-button>
     <span wtToolbarEnd>บันทึกอัตโนมัติ · แก้ไขล่าสุด 10:24 น.</span>
   </wt-toolbar>
@@ -209,7 +209,7 @@ export const ACCORDION_DOC: ComponentDoc = {
     templates: `<wt-accordion>
   <wt-accordion-tab>
     <ng-template #header>
-      <i class="pi pi-truck"></i> การจัดส่ง <wt-badge value="ใหม่" severity="success"></wt-badge>
+      <i class="wi wi-truck"></i> การจัดส่ง <wt-badge value="ใหม่" severity="success"></wt-badge>
     </ng-template>
     <ng-template #content>
       <p>สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก</p>
@@ -460,10 +460,10 @@ export const TABS_DOC: ComponentDoc = {
   <wt-tab-panel header="บันทึก">โทรกลับเรื่องใบกำกับภาษี</wt-tab-panel>
 </wt-tabs>`,
     icons: `<wt-tabs>
-  <wt-tab-panel header="โปรไฟล์" leftIcon="pi pi-user">…</wt-tab-panel>
-  <wt-tab-panel header="อีเมล" leftIcon="pi pi-envelope">…</wt-tab-panel>
-  <wt-tab-panel header="ความปลอดภัย" leftIcon="pi pi-lock" [disabled]="true">…</wt-tab-panel>
-  <wt-tab-panel header="การแจ้งเตือน" leftIcon="pi pi-bell">…</wt-tab-panel>
+  <wt-tab-panel header="โปรไฟล์" leftIcon="wi wi-user">…</wt-tab-panel>
+  <wt-tab-panel header="อีเมล" leftIcon="wi wi-envelope">…</wt-tab-panel>
+  <wt-tab-panel header="ความปลอดภัย" leftIcon="wi wi-lock" [disabled]="true">…</wt-tab-panel>
+  <wt-tab-panel header="การแจ้งเตือน" leftIcon="wi wi-bell">…</wt-tab-panel>
 </wt-tabs>`,
     value: `<wt-tabs [(value)]="section" ariaLabel="ข้อมูลนักเรียน">
   <wt-tablist>
@@ -482,7 +482,7 @@ export const TABS_DOC: ComponentDoc = {
     header: `<wt-tabs>
   <wt-tab-panel>
     <ng-template #header>
-      <i class="pi pi-envelope"></i> ข้อความ <wt-badge value="3" severity="danger"></wt-badge>
+      <i class="wi wi-envelope"></i> ข้อความ <wt-badge value="3" severity="danger"></wt-badge>
     </ng-template>
     กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน
   </wt-tab-panel>
@@ -538,10 +538,10 @@ unit = 1;`,
     model: `import { MenuItem } from 'wiratheme/api';
 
 pages: MenuItem[] = [
-  { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card' },
-  { label: 'ผลการเรียน', icon: 'pi pi-chart-line', badge: '2' },
-  { label: 'ผู้ปกครอง', icon: 'pi pi-users' },
-  { label: 'สุขภาพ', icon: 'pi pi-heart', disabled: true },
+  { label: 'ข้อมูลทั่วไป', icon: 'wi wi-id-card' },
+  { label: 'ผลการเรียน', icon: 'wi wi-chart-line', badge: '2' },
+  { label: 'ผู้ปกครอง', icon: 'wi wi-users' },
+  { label: 'สุขภาพ', icon: 'wi wi-heart', disabled: true },
 ];
 page?: MenuItem | null = this.pages[0];`,
   },

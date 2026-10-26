@@ -8,32 +8,32 @@ const ITEMS_TS = `import { MenuItem } from 'wiratheme/api';
 items: MenuItem[] = [
   {
     label: 'นักเรียน',
-    icon: 'pi pi-users',
+    icon: 'wi wi-users',
     expanded: true,   // เปิดอยู่ตั้งแต่แรก
     items: [
-      { label: 'รายชื่อนักเรียน', icon: 'pi pi-list' },
-      { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus' },
+      { label: 'รายชื่อนักเรียน', icon: 'wi wi-list' },
+      { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus' },
       {
         label: 'นำเข้าข้อมูล',
-        icon: 'pi pi-upload',
+        icon: 'wi wi-upload',
         items: [{ label: 'จากไฟล์ Excel' }, { label: 'จากระบบเดิม' }],
       },
     ],
   },
   {
     label: 'ตารางเรียน',
-    icon: 'pi pi-calendar',
+    icon: 'wi wi-calendar',
     items: [
-      { label: 'ตารางสอนครู', icon: 'pi pi-book' },
-      { label: 'ตารางห้องเรียน', icon: 'pi pi-building' },
+      { label: 'ตารางสอนครู', icon: 'wi wi-book' },
+      { label: 'ตารางห้องเรียน', icon: 'wi wi-building' },
     ],
   },
   {
     label: 'รายงาน',
-    icon: 'pi pi-chart-bar',
+    icon: 'wi wi-chart-bar',
     items: [
-      { label: 'ผลการเรียน', icon: 'pi pi-chart-line' },
-      { label: 'การมาเรียน', icon: 'pi pi-clock' },
+      { label: 'ผลการเรียน', icon: 'wi wi-chart-line' },
+      { label: 'การมาเรียน', icon: 'wi wi-clock' },
     ],
   },
 ];`;
@@ -201,14 +201,14 @@ export const PANELMENU_DOC: ComponentDoc = {
       <kbd class="ml-auto text-xs">{{ item.shortcut }}</kbd>
     }
     @if (item.items) {
-      <i class="pi pi-angle-down ml-auto"></i>
+      <i class="wi wi-angle-down ml-auto"></i>
     }
   </ng-template>
 </wt-panelmenu>
 
 <wt-panelmenu [model]="classItems">
   <ng-template #submenuicon>
-    <i class="pi pi-chevron-down"></i>
+    <i class="wi wi-chevron-down"></i>
   </ng-template>
 </wt-panelmenu>`,
       classic: `<wt-panelmenu [model]="editorItems">
@@ -216,13 +216,13 @@ export const PANELMENU_DOC: ComponentDoc = {
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span [class.font-semibold]="root">{{ item.label }}</span>
     <kbd *ngIf="item.shortcut" class="ml-auto text-xs">{{ item.shortcut }}</kbd>
-    <i *ngIf="item.items" class="pi pi-angle-down ml-auto"></i>
+    <i *ngIf="item.items" class="wi wi-angle-down ml-auto"></i>
   </ng-template>
 </wt-panelmenu>
 
 <wt-panelmenu [model]="classItems">
   <ng-template wtTemplate="submenuicon">
-    <i class="pi pi-chevron-down"></i>
+    <i class="wi wi-chevron-down"></i>
   </ng-template>
 </wt-panelmenu>`,
     },
@@ -238,9 +238,9 @@ severalAtOnce: MenuItem[] = this.sections();
 
 sections(): MenuItem[] {
   return [
-    { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card', expanded: true, items: [{ label: 'ชื่อและที่อยู่' }, { label: 'ผู้ปกครอง' }] },
-    { label: 'การเรียน', icon: 'pi pi-book', items: [{ label: 'ผลการเรียน' }, { label: 'ตารางเรียน' }] },
-    { label: 'การเงิน', icon: 'pi pi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
+    { label: 'ข้อมูลทั่วไป', icon: 'wi wi-id-card', expanded: true, items: [{ label: 'ชื่อและที่อยู่' }, { label: 'ผู้ปกครอง' }] },
+    { label: 'การเรียน', icon: 'wi wi-book', items: [{ label: 'ผลการเรียน' }, { label: 'ตารางเรียน' }] },
+    { label: 'การเงิน', icon: 'wi wi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
   ];
 }`,
     links: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
@@ -251,21 +251,21 @@ private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragmen
 links: MenuItem[] = [
   {
     label: 'หัวข้อในหน้านี้',
-    icon: 'pi pi-list',
+    icon: 'wi wi-list',
     expanded: true,
     items: [
-      { label: 'เปิดหลายหัวข้อ', icon: 'pi pi-hashtag', routerLink: [], fragment: 'multiple', routerLinkActiveOptions: this.sameSection },
-      { label: 'คีย์บอร์ด', icon: 'pi pi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
-      { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+      { label: 'เปิดหลายหัวข้อ', icon: 'wi wi-hashtag', routerLink: [], fragment: 'multiple', routerLinkActiveOptions: this.sameSection },
+      { label: 'คีย์บอร์ด', icon: 'wi wi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
+      { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
     ],
   },
   {
     label: 'คำสั่ง',
-    icon: 'pi pi-cog',
+    icon: 'wi wi-cog',
     expanded: true,
     items: [
-      { label: 'พิมพ์หน้านี้', icon: 'pi pi-print', command: (event) => this.run(event) },
-      { label: 'คัดลอกลิงก์', icon: 'pi pi-copy', command: (event) => this.run(event) },
+      { label: 'พิมพ์หน้านี้', icon: 'wi wi-print', command: (event) => this.run(event) },
+      { label: 'คัดลอกลิงก์', icon: 'wi wi-copy', command: (event) => this.run(event) },
     ],
   },
 ];
@@ -277,45 +277,45 @@ run(event: MenuItemCommandEvent): void {
     states: `accountItems: MenuItem[] = [
   {
     label: 'กล่องข้อความ',
-    icon: 'pi pi-inbox',
+    icon: 'wi wi-inbox',
     badge: '5',
     expanded: true,
     items: [
-      { label: 'ข้อความใหม่', icon: 'pi pi-envelope', badge: '5' },
-      { label: 'ติดดาว', icon: 'pi pi-star' },
+      { label: 'ข้อความใหม่', icon: 'wi wi-envelope', badge: '5' },
+      { label: 'ติดดาว', icon: 'wi wi-star' },
       { separator: true },
-      { label: 'ถังขยะ', icon: 'pi pi-trash', disabled: true },
+      { label: 'ถังขยะ', icon: 'wi wi-trash', disabled: true },
     ],
   },
-  { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false, items: [{ label: 'สิทธิ์ผู้ใช้' }] },   // ไม่แสดง
-  { label: 'รายงานประจำปี', icon: 'pi pi-chart-bar', disabled: true, items: [{ label: 'ปี 2568' }] },
+  { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false, items: [{ label: 'สิทธิ์ผู้ใช้' }] },   // ไม่แสดง
+  { label: 'รายงานประจำปี', icon: 'wi wi-chart-bar', disabled: true, items: [{ label: 'ปี 2568' }] },
 ];`,
     templates: `editorItems: MenuItem[] = [
   {
     label: 'ไฟล์',
-    icon: 'pi pi-file',
+    icon: 'wi wi-file',
     expanded: true,
     items: [
-      { label: 'สร้างใหม่', icon: 'pi pi-plus', shortcut: 'Ctrl+N' },
-      { label: 'บันทึก', icon: 'pi pi-save', shortcut: 'Ctrl+S' },
+      { label: 'สร้างใหม่', icon: 'wi wi-plus', shortcut: 'Ctrl+N' },
+      { label: 'บันทึก', icon: 'wi wi-save', shortcut: 'Ctrl+S' },
     ],
   },
   {
     label: 'แก้ไข',
-    icon: 'pi pi-pencil',
+    icon: 'wi wi-pencil',
     items: [
-      { label: 'คัดลอก', icon: 'pi pi-copy', shortcut: 'Ctrl+C' },
-      { label: 'วาง', icon: 'pi pi-clipboard', shortcut: 'Ctrl+V' },
+      { label: 'คัดลอก', icon: 'wi wi-copy', shortcut: 'Ctrl+C' },
+      { label: 'วาง', icon: 'wi wi-clipboard', shortcut: 'Ctrl+V' },
     ],
   },
 ];
 classItems: MenuItem[] = [
-  { label: 'ห้องเรียน', icon: 'pi pi-building', expanded: true, items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
-  { label: 'กิจกรรม', icon: 'pi pi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
+  { label: 'ห้องเรียน', icon: 'wi wi-building', expanded: true, items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
+  { label: 'กิจกรรม', icon: 'wi wi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
 ];`,
     style: `compactItems: MenuItem[] = [
-  { label: 'ห้องเรียน', icon: 'pi pi-building', items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
-  { label: 'กิจกรรม', icon: 'pi pi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
+  { label: 'ห้องเรียน', icon: 'wi wi-building', items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
+  { label: 'กิจกรรม', icon: 'wi wi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
 ];`,
   },
   api: [

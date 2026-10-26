@@ -94,4 +94,13 @@
       transition: none;
     }
   }
+  /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
+  @media (pointer: coarse) {
+    .wt-slider-handle::after {
+      content: '';
+      position: absolute;
+      inset: -0.5rem;
+      border-radius: 50%;
+    }
+  }
 }

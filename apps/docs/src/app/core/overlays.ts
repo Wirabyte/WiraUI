@@ -33,3 +33,20 @@ export interface DocsValidators {
 }
 
 export const DOCS_VALIDATORS = new InjectionToken<DocsValidators>('DOCS_VALIDATORS');
+
+/** WtTerminalService of the version on screen, for the Terminal demo: commands in, answers out. */
+export interface DocsTerminal {
+  readonly commandHandler: { subscribe(next: (command: string) => void): { unsubscribe(): void } };
+  sendResponse(response: string): void;
+}
+
+export const DOCS_TERMINAL = new InjectionToken<DocsTerminal>('DOCS_TERMINAL');
+
+/** The flow helpers of the version on screen (wiratheme/flow), for the Flow demos that apply changes themselves. */
+export interface DocsFlowKit {
+  applyNodeChanges(changes: any[], nodes: any[]): any[];
+  applyEdgeChanges(changes: any[], edges: any[]): any[];
+  addEdge(edge: any, edges: any[], defaults?: any): any[];
+}
+
+export const DOCS_FLOW = new InjectionToken<DocsFlowKit>('DOCS_FLOW');

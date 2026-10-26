@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { Router, Scroll } from '@angular/router';
 import { filter } from 'rxjs';
@@ -25,6 +25,22 @@ export class App {
       else if (e.anchor) scroller.scrollToAnchor(e.anchor);
       else if (!samePage) scroller.scrollToPosition([0, 0]);
     });
-    inject(DestroyRef).onDestroy(() => sub.unsubscribe());
+    // A small secret: typing "hasu" anywhere outside a text field opens a page no menu links to.
+    const doc = inject(DOCUMENT);
+    let typed = '';
+    const onKey = (e: KeyboardEvent): void => {
+      const target = e.target as HTMLElement | null;
+      if (e.ctrlKey || e.metaKey || e.altKey || e.key?.length !== 1 || target?.closest?.('input, textarea, select, [contenteditable]')) return;
+      typed = (typed + e.key.toLowerCase()).slice(-4);
+      if (typed === 'hasu') {
+        typed = '';
+        void router.navigateByUrl('/ll');
+      }
+    };
+    doc.addEventListener('keydown', onKey);
+    inject(DestroyRef).onDestroy(() => {
+      sub.unsubscribe();
+      doc.removeEventListener('keydown', onKey);
+    });
   }
 }

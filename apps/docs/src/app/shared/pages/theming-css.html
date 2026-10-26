@@ -34,12 +34,12 @@
     @if (en()) {
       <p>
         Files live at <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (the preset's own colour) or <code>themes/&lt;preset&gt;/&lt;colour&gt;.css</code>,
-        e.g. <code>themes/mali/cyan.css</code>. A file exported from the WiraTheme Studio works too.
+        e.g. <code>themes/{{ v.major === 2 ? 'mali' : 'wira' }}/cyan.css</code>. A file exported from the WiraTheme Studio works too.
       </p>
     } @else {
       <p>
         ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (สีเริ่มต้นของ preset) หรือ <code>themes/&lt;preset&gt;/&lt;สี&gt;.css</code>
-        เช่น <code>themes/mali/cyan.css</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
+        เช่น <code>themes/{{ v.major === 2 ? 'mali' : 'wira' }}/cyan.css</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
       </p>
     }
   }

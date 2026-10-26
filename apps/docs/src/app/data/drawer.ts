@@ -97,7 +97,7 @@ export const DRAWER_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="เปิดเมนู" icon="pi pi-bars" (onClick)="menuOpen = true"></wt-button>
+    basic: `<wt-button label="เปิดเมนู" icon="wi wi-bars" (onClick)="menuOpen = true"></wt-button>
 <wt-drawer header="เมนู" [(visible)]="menuOpen">
   <wt-menu [model]="menuItems" [style]="{ width: '100%', border: 'none' }" ariaLabel="เมนู"></wt-menu>
 </wt-drawer>`,
@@ -110,29 +110,29 @@ export const DRAWER_DOC: ComponentDoc = {
   <p>มีการบ้านใหม่ 2 วิชา</p>
   <p>ประกาศวันหยุดเพิ่ม</p>
 </wt-drawer>`,
-    templates: `<wt-button label="แก้ไขข้อมูลติดต่อ" icon="pi pi-pencil" severity="secondary" (onClick)="contactOpen = true"></wt-button>
+    templates: `<wt-button label="แก้ไขข้อมูลติดต่อ" icon="wi wi-pencil" severity="secondary" (onClick)="contactOpen = true"></wt-button>
 <wt-drawer [(visible)]="contactOpen" position="right" [style]="{ width: '24rem' }">
   <ng-template #header>
-    <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+    <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
     <span>สมหญิง ใจดี</span>
   </ng-template>
   <label for="parentPhone">เบอร์โทรผู้ปกครอง</label>
   <input id="parentPhone" name="parentPhone" wtInputText [(ngModel)]="parentPhone" />
   <ng-template #footer>
     <wt-button label="ยกเลิก" severity="secondary" [text]="true" (onClick)="contactOpen = false"></wt-button>
-    <wt-button label="บันทึก" icon="pi pi-check" [loading]="isApiSaving" (onClick)="saveContact()"></wt-button>
+    <wt-button label="บันทึก" icon="wi wi-check" [loading]="isApiSaving" (onClick)="saveContact()"></wt-button>
   </ng-template>
 </wt-drawer>`,
-    headless: `<wt-button label="ตัวอย่างใบประกาศ" icon="pi pi-image" severity="secondary" (onClick)="previewOpen = true"></wt-button>
+    headless: `<wt-button label="ตัวอย่างใบประกาศ" icon="wi wi-image" severity="secondary" (onClick)="previewOpen = true"></wt-button>
 <wt-drawer #preview [(visible)]="previewOpen" position="bottom" [style]="{ height: '16rem' }">
   <ng-template #headless>
     <div class="certificate-preview">
       <img src="samples/card-cover.svg" alt="ตัวอย่างใบประกาศ" />
-      <wt-button icon="pi pi-times" [rounded]="true" [text]="true" ariaLabel="ปิด" (onClick)="preview.hide()"></wt-button>
+      <wt-button icon="wi wi-times" [rounded]="true" [text]="true" ariaLabel="ปิด" (onClick)="preview.hide()"></wt-button>
     </div>
   </ng-template>
 </wt-drawer>`,
-    modal: `<wt-button label="แชตกับครู" icon="pi pi-inbox" severity="secondary" (onClick)="chatOpen = true"></wt-button>
+    modal: `<wt-button label="แชตกับครู" icon="wi wi-inbox" severity="secondary" (onClick)="chatOpen = true"></wt-button>
 <wt-drawer header="แชตกับครู" position="right" [modal]="false" [(visible)]="chatOpen">
   <input name="message" wtInputText [(ngModel)]="message" placeholder="พิมพ์ข้อความ" />
 </wt-drawer>`,
@@ -145,9 +145,9 @@ import { WtMenuItem } from 'wiratheme/menu';
 private readonly router = inject(Router);
 menuOpen = false;
 menuItems: WtMenuItem[] = [
-  { label: 'หน้าแรก', icon: 'pi pi-home', command: () => this.goTo('/') },
-  { label: 'นักเรียน', icon: 'pi pi-users', command: () => this.goTo('/students') },
-  { label: 'ตารางเรียน', icon: 'pi pi-calendar', command: () => this.goTo('/timetable') },
+  { label: 'หน้าแรก', icon: 'wi wi-home', command: () => this.goTo('/') },
+  { label: 'นักเรียน', icon: 'wi wi-users', command: () => this.goTo('/students') },
+  { label: 'ตารางเรียน', icon: 'wi wi-calendar', command: () => this.goTo('/timetable') },
   // …
 ];
 

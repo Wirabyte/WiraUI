@@ -182,6 +182,8 @@
     border: var(--wt-select-overlay-border-width) solid var(--wt-border);
     border-radius: var(--wt-select-overlay-radius);
     background: var(--wt-overlay-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-select-overlay-shadow);
     color: var(--wt-text);
     font-family: var(--wt-font-family);
@@ -245,8 +247,9 @@
     background: var(--wt-select-option-selected-bg);
     color: var(--wt-select-option-selected-color);
   }
+  /* Selected and under the pointer / keyboard: a little more of the theme colour (mixing in the text colour made it muddy). */
   .wt-select-option-selected.wt-select-option-active {
-    background: color-mix(in srgb, var(--wt-select-option-selected-bg) 85%, var(--wt-text));
+    background: color-mix(in srgb, var(--wt-primary-color) 14%, var(--wt-select-option-selected-bg));
   }
   .wt-select-option-disabled {
     opacity: var(--wt-disabled-opacity);

@@ -143,6 +143,8 @@
     border: var(--wt-menubar-submenu-border-width) solid var(--wt-border);
     border-radius: var(--wt-menubar-submenu-radius);
     background: var(--wt-menubar-submenu-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-menubar-submenu-shadow);
     color: var(--wt-menubar-item-color);
   }
@@ -216,6 +218,8 @@
     border: var(--wt-menubar-submenu-border-width) solid var(--wt-border);
     border-radius: var(--wt-menubar-submenu-radius);
     background: var(--wt-menubar-submenu-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-menubar-submenu-shadow);
   }
   .wt-menubar-mobile .wt-menubar-root > .wt-menubar-separator {

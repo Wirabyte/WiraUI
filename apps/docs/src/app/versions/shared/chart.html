@@ -39,7 +39,7 @@
       <docs-demo [html]="code['theme']" [ts]="ts['theme']" layout="stack">
         <wt-chart id="d-chart-theme" type="bar" [data]="local(themeData)" height="260px" [ariaLabel]="tx('รายรับปีนี้เทียบปีที่แล้ว')"></wt-chart>
         <div class="docs-demo-actions">
-          <wt-button id="d-chart-theme-apply" [label]="tx('ใช้สีของธีมตอนนี้')" icon="pi pi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>
+          <wt-button id="d-chart-theme-apply" [label]="tx('ใช้สีของธีมตอนนี้')" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>
           <span class="docs-demo-output">--wt-primary-color: <code id="d-chart-theme-color">{{ themeColor }}</code></span>
         </div>
       </docs-demo>
@@ -92,7 +92,7 @@
           [ariaLabel]="tx('นักเรียนที่มาเรียนรายสัปดาห์')"
         ></wt-chart>
         <div class="docs-demo-actions">
-          <wt-button id="d-chart-add" [label]="tx('เพิ่มสัปดาห์')" icon="pi pi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>
+          <wt-button id="d-chart-add" [label]="tx('เพิ่มสัปดาห์')" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>
           <span class="docs-demo-output">{{ tx('จำนวนจุด') }}: <code id="d-chart-points">{{ points() }}</code></span>
         </div>
       </docs-demo>

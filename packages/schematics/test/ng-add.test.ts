@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 const collection = fileURLToPath(new URL('../dist/collection.json', import.meta.url));
 const runner = new SchematicTestRunner('wiratheme', collection);
 
-/** Shaped like Strisrinan_Apps: Angular 15, NgModule, styles.scss that already imports Kanit and PrimeNG. */
+/** Shaped like a typical v1 app: Angular 15, NgModule, styles.scss that already imports Kanit and PrimeNG. */
 function moduleApp(angular = '^15.2.0'): UnitTestTree {
   const t = new UnitTestTree(new HostTree());
   t.create('package.json', JSON.stringify({ dependencies: { '@angular/core': angular, primeng: '^15.4.0' } }));
@@ -134,10 +134,13 @@ describe('ng add wiratheme', () => {
     await expect(runner.runSchematic('ng-add', { ...base, style: 'css', structure: 'auto', theme: 'mali' }, moduleApp())).rejects.toThrow(
       /wiratheme@1 has no theme "mali"; choose one of: sila-light-blue/
     );
-    const mali = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
-    const maliCss = mali.readContent('src/theme/wiratheme.theme.css');
-    expect(maliCss).toContain('--p-primary-color: var(--wt-primary-color);');
-    expect(maliCss).toContain('--wt-primary-500: #10b981;');
+    // v3 starts from WiraTheme's own Wira preset, which has no --p-* aliases (apps that need them pick mali).
+    const wira = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
+    const wiraCss = wira.readContent('src/theme/wiratheme.theme.css');
+    expect(wiraCss).toContain('--wt-primary-500: #1e7ae0;');
+    expect(wiraCss).not.toContain('--p-primary-color');
+    const mali = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'css', structure: 'auto', theme: 'mali' }, standaloneApp());
+    expect(mali.readContent('src/theme/wiratheme.theme.css')).toContain('--p-primary-color: var(--wt-primary-color);');
   });
 
   it('accepts the theme names teams already know and maps them to WiraTheme names', async () => {

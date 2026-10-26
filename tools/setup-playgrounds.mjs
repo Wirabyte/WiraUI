@@ -35,7 +35,8 @@ for (const v of versions) {
   // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
   // chart.js is wiratheme/chart's optional peer; it goes in the same install (a second --no-save install would prune it).
   run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball} chart.js@^4.5.1`, app);
-  run('npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none', app);
+  // v3's default is Wira; the shared test page checks the styled look and its --p-* names, so v3 installs Mali.
+  run(`npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none${v === 'v3' ? ' --theme=mali' : ''}`, app);
 
   copyFileSync(join(fixtures, 'app.component.html'), join(src, 'app.component.html'));
   if (v === 'v3') {
@@ -90,6 +91,15 @@ for (const v of versions) {
       ['WtNavbarModule', 'wiratheme/navbar'],
       ['WtAsideMenuModule', 'wiratheme/asidemenu'],
       ['WtImageCropperModule', 'wiratheme/imagecropper'],
+      ['WtI18nModule', 'wiratheme/i18n'],
+      ['WtTerminalModule', 'wiratheme/terminal'],
+      ['WtImageCompareModule', 'wiratheme/imagecompare'],
+      ['WtCarouselModule', 'wiratheme/carousel'],
+      ['WtSplitterModule', 'wiratheme/splitter'],
+      ['WtOrganizationChartModule', 'wiratheme/organizationchart'],
+      ['WtKnobModule', 'wiratheme/knob'],
+      ['WtInputOtpModule', 'wiratheme/inputotp'],
+      ['WtFlowModule', 'wiratheme/flow'],
       ['WtInplaceModule', 'wiratheme/inplace'],
       ['WtBlockUIModule', 'wiratheme/blockui'],
       ['WtScrollPanelModule', 'wiratheme/scrollpanel'],

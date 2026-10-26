@@ -31,6 +31,10 @@ export abstract class ɵWtStepsBase {
   get readonly(): boolean {
     return this._readonly;
   }
+  /** Where each step's label goes: under its number (`'bottom'`, default) or beside it (`'right'`, as wt-stepper). */
+  @Input() labelPosition: 'bottom' | 'right' = 'bottom';
+  /** Steps in a row (default) or down a column, each label beside its number (`'vertical'`). */
+  @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
   @Input() styleClass?: string;
   @Input() style?: Record<string, string | number> | null;
   @Input() id?: string;
@@ -95,15 +99,15 @@ export abstract class ɵWtStepsBase {
     this.cdr.markForCheck();
   }
 
-  /** ← / → / Home / End move between steps; Enter or Space picks one. */
+  /** ← / → (↑ / ↓ in a column) / Home / End move between steps; Enter or Space picks one. */
   keydown(event: KeyboardEvent): void {
     if (this._readonly) return;
     const index = Number((event.target as HTMLElement | null)?.closest?.('[data-wt-index]')?.getAttribute('data-wt-index'));
     if (!Number.isFinite(index)) return;
     const items = this.items;
     let next = -1;
-    if (event.key === 'ArrowRight') next = menuStep(items, index, 1);
-    else if (event.key === 'ArrowLeft') next = menuStep(items, index, -1);
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = menuStep(items, index, 1);
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = menuStep(items, index, -1);
     else if (event.key === 'Home') next = menuFirst(items);
     else if (event.key === 'End') next = menuLast(items);
     else if (event.key === 'Enter' || event.key === ' ') {

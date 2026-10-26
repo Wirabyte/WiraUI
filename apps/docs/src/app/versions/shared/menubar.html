@@ -9,10 +9,10 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <wt-menubar id="d-mb-basic" [model]="local(items)" [ariaLabel]="tx('เมนูหลัก')">
           <ng-template #start>
-            <span class="docs-menubar-brand"><i class="pi pi-book"></i> WiraSchool</span>
+            <span class="docs-menubar-brand"><i class="wi wi-book"></i> WiraSchool</span>
           </ng-template>
           <ng-template #end>
-            <wt-button [label]="tx('ออกจากระบบ')" icon="pi pi-sign-out" severity="secondary" [text]="true"></wt-button>
+            <wt-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
           </ng-template>
         </wt-menubar>
       </docs-demo>
@@ -22,16 +22,16 @@
       <docs-demo [html]="code['header']" layout="stack">
         <wt-menubar id="d-mb-header">
           <ng-template #start>
-            <span class="docs-menubar-brand"><i class="pi pi-building"></i> {{ tx('ระบบรับสมัคร') }}</span>
+            <span class="docs-menubar-brand"><i class="wi wi-building"></i> {{ tx('ระบบรับสมัคร') }}</span>
           </ng-template>
           <ng-template #end>
             <div class="docs-menubar-actions">
               <wt-iconfield>
-                <wt-inputicon icon="pi pi-search"></wt-inputicon>
+                <wt-inputicon icon="wi wi-search"></wt-inputicon>
                 <input wtInputText [placeholder]="tx('ค้นหาผู้สมัคร')" [attr.aria-label]="tx('ค้นหาผู้สมัคร')" />
               </wt-iconfield>
-              <wt-button icon="pi pi-bell" [rounded]="true" [text]="true" [ariaLabel]="tx('การแจ้งเตือน')"></wt-button>
-              <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+              <wt-button icon="wi wi-bell" [rounded]="true" [text]="true" [ariaLabel]="tx('การแจ้งเตือน')"></wt-button>
+              <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
             </div>
           </ng-template>
         </wt-menubar>
@@ -69,7 +69,7 @@
               <kbd class="docs-menubar-shortcut">{{ item.shortcut }}</kbd>
             }
             @if (hasSubmenu) {
-              <i [class]="root ? 'pi pi-angle-down' : 'pi pi-angle-right'"></i>
+              <i [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
             }
           </ng-template>
         </wt-menubar>
@@ -83,7 +83,7 @@
             <span class="docs-menubar-brand">WiraSchool</span>
           </ng-template>
           <ng-template #menuicon>
-            <i class="pi pi-bars"></i>
+            <i class="wi wi-bars"></i>
           </ng-template>
         </wt-menubar>
       </docs-demo>

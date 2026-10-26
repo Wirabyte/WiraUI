@@ -22,7 +22,7 @@ export interface DocTreeNode {
 
 /** The school's document folders: a fresh copy each call, since trees open and tick nodes in place. */
 export function schoolFolders(): DocTreeNode[] {
-  const folder = { expandedIcon: 'pi pi-folder-open', collapsedIcon: 'pi pi-folder' };
+  const folder = { expandedIcon: 'wi wi-folder-open', collapsedIcon: 'wi wi-folder' };
   return [
     {
       key: 'a',
@@ -34,8 +34,8 @@ export function schoolFolders(): DocTreeNode[] {
           label: 'หลักสูตร',
           ...folder,
           children: [
-            { key: 'a1x', label: 'หลักสูตรสถานศึกษา', icon: 'pi pi-file-pdf', type: 'file', data: '2.4 MB' },
-            { key: 'a1y', label: 'โครงสร้างรายวิชา', icon: 'pi pi-file-excel', type: 'file', data: '180 KB' },
+            { key: 'a1x', label: 'หลักสูตรสถานศึกษา', icon: 'wi wi-file-pdf', type: 'file', data: '2.4 MB' },
+            { key: 'a1y', label: 'โครงสร้างรายวิชา', icon: 'wi wi-file-excel', type: 'file', data: '180 KB' },
           ],
         },
         {
@@ -43,8 +43,8 @@ export function schoolFolders(): DocTreeNode[] {
           label: 'วัดผลและประเมินผล',
           ...folder,
           children: [
-            { key: 'a2x', label: 'ตารางสอบกลางภาค', icon: 'pi pi-file-pdf', type: 'file', data: '320 KB' },
-            { key: 'a2y', label: 'แบบบันทึกคะแนน', icon: 'pi pi-file-excel', type: 'file', data: '96 KB' },
+            { key: 'a2x', label: 'ตารางสอบกลางภาค', icon: 'wi wi-file-pdf', type: 'file', data: '320 KB' },
+            { key: 'a2y', label: 'แบบบันทึกคะแนน', icon: 'wi wi-file-excel', type: 'file', data: '96 KB' },
           ],
         },
       ],
@@ -54,15 +54,15 @@ export function schoolFolders(): DocTreeNode[] {
       label: 'ฝ่ายบริหารทั่วไป',
       ...folder,
       children: [
-        { key: 'b1', label: 'ปฏิทินโรงเรียน', icon: 'pi pi-calendar', type: 'file', data: '64 KB' },
-        { key: 'b2', label: 'ระเบียบการแต่งกาย', icon: 'pi pi-file-pdf', type: 'file', data: '410 KB' },
+        { key: 'b1', label: 'ปฏิทินโรงเรียน', icon: 'wi wi-calendar', type: 'file', data: '64 KB' },
+        { key: 'b2', label: 'ระเบียบการแต่งกาย', icon: 'wi wi-file-pdf', type: 'file', data: '410 KB' },
       ],
     },
     {
       key: 'c',
       label: 'ฝ่ายงบประมาณ',
       ...folder,
-      children: [{ key: 'c1', label: 'แผนการใช้งบ', icon: 'pi pi-file-excel', type: 'file', data: '150 KB' }],
+      children: [{ key: 'c1', label: 'แผนการใช้งบ', icon: 'wi wi-file-excel', type: 'file', data: '150 KB' }],
     },
   ];
 }
@@ -73,15 +73,15 @@ folders: TreeNode[] = [
   {
     key: 'a',
     label: 'ฝ่ายวิชาการ',
-    expandedIcon: 'pi pi-folder-open',
-    collapsedIcon: 'pi pi-folder',
+    expandedIcon: 'wi wi-folder-open',
+    collapsedIcon: 'wi wi-folder',
     children: [
       {
         key: 'a1',
         label: 'หลักสูตร',
         children: [
-          { key: 'a1x', label: 'หลักสูตรสถานศึกษา', icon: 'pi pi-file-pdf', type: 'file', data: '2.4 MB' },
-          { key: 'a1y', label: 'โครงสร้างรายวิชา', icon: 'pi pi-file-excel', type: 'file', data: '180 KB' },
+          { key: 'a1x', label: 'หลักสูตรสถานศึกษา', icon: 'wi wi-file-pdf', type: 'file', data: '2.4 MB' },
+          { key: 'a1y', label: 'โครงสร้างรายวิชา', icon: 'wi wi-file-excel', type: 'file', data: '180 KB' },
         ],
       },
       // …
@@ -247,7 +247,7 @@ loadRooms(event: WtTreeNodeEvent): void {
   if (node.children) return;
   node.loading = true;
   this.roomService.listRooms(node.key).subscribe((rooms) => {
-    node.children = rooms.map((r) => ({ key: r.code, label: 'ห้อง ' + r.name, icon: 'pi pi-users' }));
+    node.children = rooms.map((r) => ({ key: r.code, label: 'ห้อง ' + r.name, icon: 'wi wi-users' }));
     node.loading = false;
   });
 }`,
@@ -256,9 +256,9 @@ import { WtMenuItem } from 'wiratheme/menu';
 
 // โฟลเดอร์ใช้ template default ไฟล์ใช้ template file
 fileActions: WtMenuItem[] = [
-  { label: 'ดาวน์โหลด', icon: 'pi pi-download', command: (event) => this.run(event) },
-  { label: 'เปลี่ยนชื่อ', icon: 'pi pi-pencil', command: (event) => this.run(event) },
-  { label: 'ลบ', icon: 'pi pi-trash', command: (event) => this.run(event) },
+  { label: 'ดาวน์โหลด', icon: 'wi wi-download', command: (event) => this.run(event) },
+  { label: 'เปลี่ยนชื่อ', icon: 'wi wi-pencil', command: (event) => this.run(event) },
+  { label: 'ลบ', icon: 'wi wi-trash', command: (event) => this.run(event) },
 ];
 
 pickNode(event: WtTreeNodeEvent): void {

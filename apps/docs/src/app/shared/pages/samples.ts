@@ -5,9 +5,9 @@ import { SampleWords } from '../../core/sample-text';
 
 export const NG_ADD = 'ng add wiratheme';
 
-/** Default theme of each major: v1 starts from sila-light-teal, v2 / v3 from Mali. */
+/** Default theme of each major: v1 starts from sila-light-teal, v2 from Mali, v3 from Wira. */
 export function defaultTheme(v: DocVersion): string {
-  return v.major === 1 ? 'sila-light-teal' : 'mali';
+  return v.major === 1 ? 'sila-light-teal' : v.major === 2 ? 'mali' : 'wira';
 }
 
 export function ngAddPrompts(v: DocVersion): string {
@@ -17,7 +17,7 @@ export function ngAddPrompts(v: DocVersion): string {
       ? 'Sila light (default) · Sila dark · Arun light · Sayan dim dark · Ratri dark · Material light · Material dark'
       : v.major === 2
         ? 'Mali: clean, modern (default) · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast'
-        : 'Mali: clean, modern (default) · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast · Wira · Lanna · Siam · Nakhon · Glass';
+        : "Wira: WiraTheme's own look (default) · Lanna: soft, rounded · Siam: elevated, with ripple · Nakhon: sharp, dense · Glass: Liquid Glass, translucent · Mali: clean, modern · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast";
   const row = (q: string, choices?: string) => (choices ? `? ${q.padEnd(48)}› ${choices}` : `? ${q}`);
   return [
     row('How should the main theme be loaded?', 'Detect from the project (recommended) · SCSS · CSS'),
@@ -122,10 +122,10 @@ export function scssTheme(v: DocVersion): string {
 //   $components: (card: (body-gap: 0)),
 // );`;
   }
-  const presets = v.major === 2 ? 'mali · sila · material · phet' : 'mali · sila · material · phet · wira · lanna · siam · nakhon · glass';
+  const presets = v.major === 2 ? 'mali · sila · material · phet' : 'wira · lanna · siam · nakhon · glass · mali · sila · material · phet';
   return `// src/theme/wiratheme.theme.scss
 @use 'wiratheme/theme' with (
-  $preset: 'mali',                      // ${presets}
+  $preset: '${defaultTheme(v)}',${' '.repeat(Math.max(1, 26 - defaultTheme(v).length))}// ${presets}
   $primary: #06b6d4,                    // ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้
   $primary-contrast: #ffffff,           // ตัวอักษรบนปุ่มหลัก
   $scheme: 'light',                     // 'dark' = ธีมมืดอย่างเดียว
@@ -139,7 +139,7 @@ export function scssTheme(v: DocVersion): string {
   )
 );
 
-// @use 'wiratheme/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (mali)`;
+// @use 'wiratheme/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
 }
 
 export const SCSS_STYLES = `// src/styles.scss (บรรทัดแรก)
@@ -163,7 +163,9 @@ export function cssAngularJson(v: DocVersion): string {
   const file =
     v.major === 1
       ? `"node_modules/wiratheme/themes/sila-light-teal/theme.css",   // ชื่อโฟลเดอร์ธีมเดิมของแอป`
-      : `"node_modules/wiratheme/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`;
+      : v.major === 2
+        ? `"node_modules/wiratheme/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`
+        : `"node_modules/wiratheme/themes/wira/theme.css",              // หรือ themes/wira/<สี>.css เช่น cyan.css`;
   return `// angular.json → projects.<app>.architect.build.options
 "styles": [
   ${file}
@@ -267,9 +269,9 @@ theme.setScale(null);    // คืนให้ CSS ของหน้าเว�
 export function firstComponent(v: DocVersion): string {
   return v.major === 1
     ? `<!-- app.component.html -->
-<wt-button label="บันทึก" icon="pi pi-check" [action]="save"></wt-button>`
+<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>`
     : `<!-- app.component.html -->
-<wt-button label="บันทึก" icon="pi pi-check" [action]="save"></wt-button>`;
+<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>`;
 }
 
 export const FIRST_COMPONENT_TS = `export class AppComponent {
@@ -288,7 +290,7 @@ import { WtConfig } from 'wiratheme/config';
 // ตั้งครั้งเดียวที่ระดับแอป: locale 'th' มีในตัวแล้ว แก้เฉพาะคำที่อยากเปลี่ยน
 inject(WtConfig).setTranslation({ emptyMessage: 'ไม่พบข้อมูลที่ค้นหา' });`;
 
-export const MIGRATE_AFTER = `<wt-button label="บันทึก" icon="pi pi-check" [action]="save"></wt-button>
+export const MIGRATE_AFTER = `<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>
 <input wtInputText name="name" [(ngModel)]="name" />
 <wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไข"></wt-checkbox>
 <wt-card header="โปรไฟล์">…</wt-card>`;
@@ -336,11 +338,12 @@ export const GUIDE_WORDS: SampleWords = {
   'ตัวอักษรบนปุ่มหลัก': 'text on primary buttons',
   'ธีมมืดอย่างเดียวแบบ sayan / ratri': 'dark only, like sayan / ratri',
   'ธีมมืดอย่างเดียว': 'dark only',
-  'ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (mali)': "no with (…) = the version's default theme (mali)",
+  'ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น': "no with (…) = the version's default theme",
   'บรรทัดแรก': 'first line',
   'ไฟล์ SCSS ของ component ในแอป: โมดูล API ไม่ปล่อย CSS ซ้ำ': 'a component SCSS file in the app: the API module emits no CSS of its own',
   'ชื่อโฟลเดอร์ธีมเดิมของแอป': "the app's existing theme folder",
   'หรือ themes/mali/<สี>.css เช่น cyan.css': 'or themes/mali/<colour>.css, e.g. cyan.css',
+  'หรือ themes/wira/<สี>.css เช่น cyan.css': 'or themes/wira/<colour>.css, e.g. cyan.css',
   'ตัวแปรชื่อเดิมที่แอปอ่านอยู่มีให้ด้วย:': 'The old variable names the app reads are there too:',
   '<สี>-<เฉด>': '<colour>-<shade>',
   'ใช้ต่อได้': 'keep working',

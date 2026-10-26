@@ -55,8 +55,12 @@ export class WtProgressBar implements OnDestroy {
   /** Stripes that move, for work in progress (shown still to people who ask for less motion). */
   @Input() set animated(v: unknown) { this._animated = ɵtoBool(v); }
   get animated(): boolean { return this._animated; }
+  /** A glossy bar with a band of light sweeping along it now and then, as desktop progress bars do (a still gloss for people who ask for less motion). */
+  @Input() set shimmer(v: unknown) { this._shimmer = ɵtoBool(v); }
+  get shimmer(): boolean { return this._shimmer; }
   private _striped = false;
   private _animated = false;
+  private _shimmer = false;
   @Input() ariaLabel?: string;
 
   @ContentChild('content', { descendants: false }) private contentRef?: unknown;
@@ -111,7 +115,8 @@ export class WtProgressBar implements OnDestroy {
   get baseClasses(): string {
     const stripes = this._striped || this._animated ? ' wt-progressbar-striped' : '';
     const moving = this._animated ? ' wt-progressbar-animated' : '';
-    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode} p-progressbar-${this.mode}${stripes}${moving}`;
+    const shimmer = this._shimmer ? ' wt-progressbar-shimmer' : '';
+    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode} p-progressbar-${this.mode}${stripes}${moving}${shimmer}`;
   }
 
   get label(): string {

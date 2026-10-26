@@ -17,7 +17,7 @@
 
     <docs-section id="question" [section]="sec['question']">
       <docs-demo [html]="code['question']" [ts]="ts['question']">
-        <wt-button id="d-alert-remove" [label]="tx('ลบรายการ')" severity="danger" icon="pi pi-trash" (onClick)="remove()"></wt-button>
+        <wt-button id="d-alert-remove" [label]="tx('ลบรายการ')" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -42,14 +42,14 @@
 
     <docs-section id="preconfirm" [section]="sec['preconfirm']">
       <docs-demo [html]="code['preconfirm']" [ts]="ts['preconfirm']">
-        <wt-button [label]="tx('ส่งคำขอ')" icon="pi pi-send" (onClick)="request()"></wt-button>
+        <wt-button [label]="tx('ส่งคำขอ')" icon="wi wi-send" (onClick)="request()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="timer" [section]="sec['timer']">
       <docs-demo [html]="code['timer']" [ts]="ts['timer']">
-        <wt-button [label]="tx('บันทึกอัตโนมัติ')" icon="pi pi-check" (onClick)="autosave()"></wt-button>
+        <wt-button [label]="tx('บันทึกอัตโนมัติ')" icon="wi wi-check" (onClick)="autosave()"></wt-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>

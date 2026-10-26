@@ -347,18 +347,18 @@ export const POPOVER_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="แชร์" icon="pi pi-send" (onClick)="op.toggle($event)"></wt-button>
+    basic: `<wt-button label="แชร์" icon="wi wi-send" (onClick)="op.toggle($event)"></wt-button>
 <wt-popover #op>
   <p>ส่งลิงก์ให้ทีม</p>
   <input wtInputText value="https://example.com/r/10234" [readonly]="true" [fluid]="true" />
 </wt-popover>`,
     select: {
-      classic: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="pi pi-user"
+      classic: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
   (onClick)="people.toggle($event)"></wt-button>
 <wt-popover #people>
   <button *ngFor="let p of team" type="button" class="person" (click)="owner = p; people.hide()">{{ p }}</button>
 </wt-popover>`,
-      v3: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="pi pi-user"
+      v3: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
   (onClick)="people.toggle($event)"></wt-button>
 <wt-popover #people>
   @for (p of team; track p) {
@@ -366,7 +366,7 @@ export const POPOVER_DOC: ComponentDoc = {
   }
 </wt-popover>`,
     },
-    content: `<wt-button label="ตั้งค่าการแจ้งเตือน" icon="pi pi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
+    content: `<wt-button label="ตั้งค่าการแจ้งเตือน" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
 <wt-popover #notify>
   <ng-template #content let-closeCallback="closeCallback">
     <p>รับการแจ้งเตือนทางอีเมลทุกเช้า</p>

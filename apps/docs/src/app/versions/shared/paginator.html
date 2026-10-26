@@ -55,7 +55,7 @@
       <docs-demo [html]="code['templates']" layout="stack">
         <wt-paginator id="d-pg-slots" [first]="slotFirst" [rows]="10" [totalRecords]="120" (onPageChange)="changeSlots($event)">
           <ng-template #start>
-            <wt-button id="d-pg-reload" icon="pi pi-refresh" [rounded]="true" [text]="true" [ariaLabel]="tx('โหลดใหม่')" (onClick)="reload()"></wt-button>
+            <wt-button id="d-pg-reload" icon="wi wi-refresh" [rounded]="true" [text]="true" [ariaLabel]="tx('โหลดใหม่')" (onClick)="reload()"></wt-button>
           </ng-template>
           <ng-template #end let-p>
             <span id="d-pg-right">{{ tx('หน้า') }} {{ p.page + 1 }} / {{ p.pageCount }}</span>

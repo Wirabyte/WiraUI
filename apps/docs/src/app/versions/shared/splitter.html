@@ -1,0 +1,72 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-splitter id="d-spl" [style]="{ height: '16rem' }">
+          <wt-splitter-panel [size]="30">
+            <div class="docs-spl-pane">
+              <h4 class="docs-spl-title">{{ tx('ห้องเรียน') }}</h4>
+              <ul class="docs-spl-list">
+                @for (room of local(rooms); track room) {
+                  <li>{{ room }}</li>
+                }
+              </ul>
+            </div>
+          </wt-splitter-panel>
+          <wt-splitter-panel [size]="70">
+            <div class="docs-spl-pane">
+              <h4 class="docs-spl-title">{{ tx('รายชื่อนักเรียน') }}</h4>
+              <p class="docs-demo-p">{{ tx('เลือกห้องทางซ้ายเพื่อดูรายชื่อ') }}</p>
+            </div>
+          </wt-splitter-panel>
+        </wt-splitter>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="vertical" [section]="sec['vertical']">
+      <docs-demo [html]="code['vertical']" layout="stack">
+        <wt-splitter id="d-spl-nested" [style]="{ height: '20rem' }">
+          <wt-splitter-panel [size]="25"><div class="docs-spl-pane">{{ tx('เมนู') }}</div></wt-splitter-panel>
+          <wt-splitter-panel [size]="75">
+            <wt-splitter id="d-spl-vertical" layout="vertical">
+              <wt-splitter-panel [size]="65"><div class="docs-spl-pane">{{ tx('เนื้อหา') }}</div></wt-splitter-panel>
+              <wt-splitter-panel [size]="35"><div class="docs-spl-pane">{{ tx('บันทึกย่อ') }}</div></wt-splitter-panel>
+            </wt-splitter>
+          </wt-splitter-panel>
+        </wt-splitter>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="sizes" [section]="sec['sizes']">
+      <docs-demo [html]="code['sizes']" [ts]="ts['sizes']" layout="stack">
+        <wt-splitter
+          id="d-spl-sizes"
+          [(panelSizes)]="sizes"
+          [minSizes]="[20, 30]"
+          [gutterSize]="6"
+          [step]="10"
+          (onResizeEnd)="resized($event)"
+          [style]="{ height: '12rem' }"
+        >
+          <wt-splitter-panel><div class="docs-spl-pane">{{ tx('เมนู') }}</div></wt-splitter-panel>
+          <wt-splitter-panel><div class="docs-spl-pane">{{ tx('ตัวอย่างก่อนพิมพ์') }}</div></wt-splitter-panel>
+        </wt-splitter>
+        <span class="docs-demo-output">
+          panelSizes: <code id="d-spl-sizes-value">{{ roundSizes(sizes) }}</code> · onResizeEnd:
+          <code id="d-spl-resized">{{ lastSizes.length ? lastSizes.join(' / ') : '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="state" [section]="sec['state']">
+      <docs-code [code]="$any(code['state'])" lang="html"></docs-code>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

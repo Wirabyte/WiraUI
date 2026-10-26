@@ -207,7 +207,7 @@ export const EDITOR_DOC: ComponentDoc = {
   },
   code: {
     basic: `<wt-editor name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" placeholder="พิมพ์เนื้อหาข่าว"></wt-editor>
-<wt-button label="บันทึก" icon="pi pi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>`,
+<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>`,
     toolbar: `<wt-selectbutton name="preset" [(ngModel)]="preset" [options]="presets" [allowEmpty]="false"></wt-selectbutton>
 <wt-editor name="presetBody" [(ngModel)]="presetBody" [toolbar]="preset" [style]="{ height: '160px' }"></wt-editor>
 
@@ -228,7 +228,7 @@ export const EDITOR_DOC: ComponentDoc = {
     count: `<wt-editor name="summary" [(ngModel)]="summary" toolbar="basic" [showCount]="true" [style]="{ height: '120px' }"></wt-editor>`,
     events: `<wt-editor #ed="wtEditor" name="letter" [(ngModel)]="letter" toolbar="basic" [style]="{ height: '160px' }"
   (onInit)="editorReady($event)" (onTextChange)="textChanged($event)"></wt-editor>
-<wt-button label="ใส่จดหมายตัวอย่าง" icon="pi pi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
+<wt-button label="ใส่จดหมายตัวอย่าง" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
 <wt-button label="ไปที่เนื้อหา" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wt-button>`,
   },
   ts: {

@@ -256,17 +256,17 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-mult
     moretemplates: `<wt-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="regions" [group]="true"
   optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด">
   <ng-template #group let-g>
-    <i class="pi pi-map-marker"></i> {{ g.label }}
+    <i class="wi wi-map-marker"></i> {{ g.label }}
   </ng-template>
   <ng-template #header>
     <div class="select-note">เลือกได้หลายจังหวัด</div>
   </ng-template>
   <ng-template #footer>
-    <wt-button label="เพิ่มจังหวัด" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
   </ng-template>
   <ng-template #emptyfilter>ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template #dropdownicon>
-    <i class="pi pi-search"></i>
+    <i class="wi wi-search"></i>
   </ng-template>
 </wt-multiselect>`,
     events: `${FIELD} [showClear]="true" placeholder="เลือกจังหวัด"

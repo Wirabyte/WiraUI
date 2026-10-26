@@ -36,6 +36,10 @@
     border: 1px solid var(--_bd);
     background: var(--_bg);
     color: var(--_fg);
+    /* none, except the glass material: a sheen of light inside and a soft lift. */
+    box-shadow: var(--wt-button-shadow);
+    -webkit-backdrop-filter: var(--wt-button-backdrop);
+    backdrop-filter: var(--wt-button-backdrop);
     cursor: pointer;
     white-space: nowrap;
     user-select: none;
@@ -106,6 +110,9 @@
   }
   .wt-btn-text {
     border-color: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
   .wt-btn-outlined:not(:disabled):hover,
   .wt-btn-text:not(:disabled):hover {
@@ -194,6 +201,9 @@
     border-color: transparent;
     background: transparent;
     color: var(--_tone);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
   .wt-btn.wt-btn-link:not(:disabled):hover,
   .wt-btn.wt-btn-link:not(:disabled):active {
@@ -239,6 +249,14 @@
     .wt-ripple-ink {
       transition: none;
       animation-duration: 0.01ms;
+    }
+  }
+  /* Touch screens: small and icon-only buttons are at least 24 × 24 px (WCAG 2.5.8). The button clips its own
+     content (ripple), so it grows a little instead of taking a wider invisible hit area. */
+  @media (pointer: coarse) {
+    .wt-btn {
+      min-width: 24px;
+      min-height: 24px;
     }
   }
 }

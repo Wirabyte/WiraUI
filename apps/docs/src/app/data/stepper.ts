@@ -7,10 +7,10 @@ const BOOL = 'boolean';
 const nav = (back: number | null, next: number | null, indent = '        ') =>
   `${indent}<div class="flex justify-content-between">\n` +
   (back !== null
-    ? `${indent}  <wt-button label="ย้อนกลับ" icon="pi pi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(${back})"></wt-button>\n`
+    ? `${indent}  <wt-button label="ย้อนกลับ" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(${back})"></wt-button>\n`
     : `${indent}  <span></span>\n`) +
   (next !== null
-    ? `${indent}  <wt-button label="ถัดไป" icon="pi pi-chevron-right" iconPos="right" (onClick)="activateCallback(${next})"></wt-button>\n`
+    ? `${indent}  <wt-button label="ถัดไป" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(${next})"></wt-button>\n`
     : '') +
   `${indent}</div>`;
 
@@ -183,8 +183,8 @@ export const STEPPER_DOC: ComponentDoc = {
     steps: {
       title: { th: 'Stepper หรือ Steps', en: 'Stepper or Steps' },
       text: {
-        th: 'Stepper เก็บเนื้อหาของแต่ละขั้นและผูกด้วย value และวาดแถบขั้นตอนจาก <code>MenuItem[]</code> ได้ด้วย <code>[model]</code> + <code>[(activeIndex)]</code> โค้ดใหม่จึงใช้ wt-stepper ตัวเดียวได้ทั้งสองแบบ · Steps (<code>wt-steps</code>) ยังใช้ได้และมีหน้าของตัวเอง แอปที่ใช้อยู่ไม่ต้องย้าย (ค่าเริ่มต้นต่างกันหนึ่งจุด: wt-steps เป็น readonly อยู่แล้ว ส่วน wt-stepper ต้องใส่ <code>[readonly]="true"</code>)',
-        en: 'Stepper holds each step\'s content, is bound by value, and also draws the bar of steps from a <code>MenuItem[]</code> with <code>[model]</code> + <code>[(activeIndex)]</code>, so new code can use wt-stepper for both · Steps (<code>wt-steps</code>) stays, with its own page, and apps that use it need not move (one default differs: wt-steps is read-only by default, wt-stepper needs <code>[readonly]="true"</code>).',
+        th: 'Stepper เก็บเนื้อหาของแต่ละขั้นและผูกด้วย value และวาดแถบขั้นตอนจาก <code>MenuItem[]</code> ได้ด้วย <code>[model]</code> + <code>[(activeIndex)]</code> โค้ดใหม่จึงใช้ wt-stepper ตัวเดียวได้ทั้งสองแบบ · Steps (<code>wt-steps</code>) ยังใช้ได้และมีหน้าของตัวเอง แอปที่ใช้อยู่ไม่ต้องย้าย (ค่าเริ่มต้นต่างกันหนึ่งจุด: wt-steps เป็น readonly อยู่แล้ว ส่วน wt-stepper ต้องใส่ <code>[readonly]="true"</code>) · ทั้งสองตัวจัดวางได้เหมือนกันแล้ว: wt-steps มี <code>labelPosition</code> (<code>\'bottom\'</code> ค่าเริ่มต้น / <code>\'right\'</code>) และ <code>orientation="vertical"</code> ดูหัวข้อการจัดวางในหน้า Steps',
+        en: 'Stepper holds each step\'s content, is bound by value, and also draws the bar of steps from a <code>MenuItem[]</code> with <code>[model]</code> + <code>[(activeIndex)]</code>, so new code can use wt-stepper for both · Steps (<code>wt-steps</code>) stays, with its own page, and apps that use it need not move (one default differs: wt-steps is read-only by default, wt-stepper needs <code>[readonly]="true"</code>) · both now share the same layouts: wt-steps has <code>labelPosition</code> (<code>\'bottom\'</code>, its default, or <code>\'right\'</code>) and <code>orientation="vertical"</code>; see Layout on the Steps page.',
       },
     },
     migration: {
@@ -234,7 +234,7 @@ ${nav(2, null)}
       <ng-template #content let-activateCallback="activateCallback">
         <label for="studentName">ชื่อ - สกุลผู้สมัคร</label>
         <input id="studentName" name="studentName" wtInputText [(ngModel)]="studentName" />
-        <wt-button label="ถัดไป" icon="pi pi-chevron-right" iconPos="right" [disabled]="!studentName.trim()"
+        <wt-button label="ถัดไป" icon="wi wi-chevron-right" iconPos="right" [disabled]="!studentName.trim()"
           (onClick)="activateCallback(2)"></wt-button>
       </ng-template>
     </wt-step-panel>
@@ -243,7 +243,7 @@ ${nav(2, null)}
         <label for="parentPhone">เบอร์โทรผู้ปกครอง</label>
         <input id="parentPhone" name="parentPhone" wtInputText inputmode="tel" [(ngModel)]="parentPhone" />
         <wt-button label="ย้อนกลับ" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-        <wt-button label="ถัดไป" icon="pi pi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10"
+        <wt-button label="ถัดไป" icon="wi wi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10"
           (onClick)="activateCallback(3)"></wt-button>
       </ng-template>
     </wt-step-panel>
@@ -252,7 +252,7 @@ ${nav(2, null)}
         <p>{{ studentName }} · {{ parentPhone }}</p>
         <wt-button label="ย้อนกลับ" severity="secondary" [text]="true" [disabled]="isApiSaving"
           (onClick)="activateCallback(2)"></wt-button>
-        <wt-button label="ส่งใบสมัคร" icon="pi pi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wt-button>
+        <wt-button label="ส่งใบสมัคร" icon="wi wi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wt-button>
       </ng-template>
     </wt-step-panel>
   </wt-step-panels>
@@ -310,9 +310,9 @@ ${nav(2, null)}
     model: `<wt-stepper [model]="applySteps" [(activeIndex)]="stepIndex"></wt-stepper>`,
     readonly: `<wt-stepper [model]="trackSteps" [activeIndex]="trackIndex" [readonly]="true" labelPosition="bottom"></wt-stepper>
 <div class="flex justify-content-between">
-  <wt-button label="ย้อนกลับ" icon="pi pi-chevron-left" severity="secondary" [text]="true"
+  <wt-button label="ย้อนกลับ" icon="wi wi-chevron-left" severity="secondary" [text]="true"
     [disabled]="trackIndex === 0" (onClick)="trackBack()"></wt-button>
-  <wt-button label="ถัดไป" icon="pi pi-chevron-right" iconPos="right"
+  <wt-button label="ถัดไป" icon="wi wi-chevron-right" iconPos="right"
     [disabled]="trackIndex === trackSteps.length - 1" (onClick)="trackNext()"></wt-button>
 </div>`,
   },
@@ -334,9 +334,9 @@ submitApplication(): void {
     progress: `applicationStatus = 'checking';   // จาก API`,
     header: `paymentStep = 1;
 paymentSteps = [
-  { value: 1, label: 'ข้อมูลผู้ชำระ', icon: 'pi pi-user' },
-  { value: 2, label: 'ช่องทางชำระ', icon: 'pi pi-credit-card' },
-  { value: 3, label: 'ใบเสร็จ', icon: 'pi pi-check-circle' },
+  { value: 1, label: 'ข้อมูลผู้ชำระ', icon: 'wi wi-user' },
+  { value: 2, label: 'ช่องทางชำระ', icon: 'wi wi-credit-card' },
+  { value: 3, label: 'ใบเสร็จ', icon: 'wi wi-check-circle' },
 ];`,
     label: `enrolStep = 1;`,
     model: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';

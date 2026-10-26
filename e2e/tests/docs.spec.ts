@@ -26,14 +26,20 @@ const primaryToken = (page: Page) =>
 
 const json = async (page: Page, selector: string) => JSON.parse((await page.locator(selector).textContent()) || 'null');
 
+/** Picks a version in the header's switcher (wiratheme's own select, not a native one). */
+async function pickVersion(page: Page, v: string): Promise<void> {
+  await page.locator('#docs-version').click();
+  await page.locator('.wt-select-list').getByRole('option', { name: new RegExp('^' + v + '\\b') }).click();
+}
+
 test('switches between v1, v2 and v3 with the dropdown, each version working', async ({ page }) => {
   const errors = collectErrors(page);
 
   await page.goto('/v1/components/button');
   for (const [v, major] of VERSIONS) {
-    if (v !== 'v1') await page.locator('#docs-version').selectOption(v);
+    if (v !== 'v1') await pickVersion(page, v);
     await expect(page).toHaveURL(new RegExp(`/${v}/components/button$`));
-    await expect(page.locator('#docs-version')).toHaveValue(v);
+    await expect(page.locator('#docs-version .wt-select-label')).toContainText(v);
     await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
     await expect(page.locator('#doc-host')).toContainText('Angular 21.');
     await expect(page.locator(`[data-wt-version="${v}"] wt-button .wt-btn`).first()).toBeVisible();
@@ -51,7 +57,7 @@ test('switches between v1, v2 and v3 with the dropdown, each version working', a
 test('keeps the page and tab when switching version', async ({ page }) => {
   await page.goto('/v3/components/card?tab=api');
   await expect(page.locator('#tab-api')).toHaveClass(/active/);
-  await page.locator('#docs-version').selectOption('v1');
+  await pickVersion(page, 'v1');
   await expect(page).toHaveURL(/\/v1\/components\/card\?tab=api$/);
   await expect(page.locator('#doc-version')).toContainText('wiratheme@1');
   await expect(page.locator('#tab-api')).toHaveClass(/active/);
@@ -585,7 +591,7 @@ test('theme panel: the clicked swatch is the theme that shows, in light and dark
   await expect(active).toHaveAttribute('data-preset', 'ratri-blue');
   await expect(page.locator('html')).toHaveClass(/wt-dark/);
   // Presets that carry both schemes leave the mode alone.
-  await page.locator('#docs-version').selectOption('v3');
+  await pickVersion(page, 'v3');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@3');
   await page.locator('.docs-preset-card[data-preset="sila"]').click();
   await expect(active).toHaveAttribute('data-preset', 'sila');
@@ -604,7 +610,7 @@ test('the site takes the theme primary colour; favicon and a framework-neutral l
     });
   await page.goto('/v1/components/button');
   await expect.poll(follows).toBe(true);
-  await page.locator('#docs-version').selectOption('v3');
+  await pickVersion(page, 'v3');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@3');
   await expect.poll(follows).toBe(true);
 
@@ -675,9 +681,9 @@ test('lazy-loads only the version being viewed', async ({ page }) => {
   await page.goto('/v3/components/button');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@3');
   // Opening a version's URL directly must also select it in the dropdown.
-  await expect(page.locator('#docs-version')).toHaveValue('v3');
+  await expect(page.locator('#docs-version .wt-select-label')).toContainText('v3');
   const before = chunks.length;
-  await page.locator('#docs-version').selectOption('v1');
+  await pickVersion(page, 'v1');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@1');
   expect(chunks.length).toBeGreaterThan(before);
 });
@@ -701,7 +707,7 @@ test('landing page runs a live v3 sample dashboard and leads into the docs', asy
 
   await page.locator('#lp-start').click();
   await expect(page).toHaveURL(/\/v3\/getting-started\/introduction$/);
-  await expect(page.locator('#docs-version')).toHaveValue('v3');
+  await expect(page.locator('#docs-version .wt-select-label')).toContainText('v3');
   expect(errors).toEqual([]);
 });
 
@@ -728,7 +734,7 @@ test('configurator shows the version presets and themes only that version', asyn
 
   // v3 opens in its own default look, not v2's customised one. (The drawer is modal: close it first.)
   await page.keyboard.press('Escape');
-  await page.locator('#docs-version').selectOption('v3');
+  await pickVersion(page, 'v3');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@3');
   await expect.poll(() => primaryToken(page)).not.toBe(blue);
 });
@@ -1126,7 +1132,7 @@ test('tabmenu page in every version: activeItem, commands, keyboard, tabs that f
 for (const v of ['v1', 'v3']) {
   test(`multiselect page (${v}): ticks, labels, chips, limit, check-all with a search, keyboard, templates, events`, async ({ page }) => {
     const errors = collectErrors(page);
-    const list = page.locator('.wt-multiselect-overlay');
+    const list = page.locator('.wt-multiselect-overlay:visible');
     await page.goto(`/${v}/components/multiselect`);
     await expect(page.locator('#nav-multiselect')).toHaveClass(/active/);
 
@@ -1807,7 +1813,7 @@ test('panelmenu page in every version: panels from expanded, the multiple defaul
     // Templates: the item template draws its own content; submenuicon swaps only the arrow.
     await expect(page.locator('#d-pm-template .docs-pm-shortcut').first()).toHaveText('Ctrl+N');
     await expect(page.locator('#d-pm-template .wt-panelmenu-submenu-icon')).toHaveCount(0);
-    await expect(page.locator('#d-pm-icon .wt-panelmenu-submenu-icon .pi-chevron-down')).toHaveCount(2);
+    await expect(page.locator('#d-pm-icon .wt-panelmenu-submenu-icon .wi-chevron-down')).toHaveCount(2);
   }
   expect(errors).toEqual([]);
 });
@@ -1965,7 +1971,7 @@ test('picklist page in every version: buttons, double-click, in place, drag, ord
     await expect(tpl.locator('.wt-picklist-header')).toHaveText(['สิทธิ์ทั้งหมด (8)', 'สิทธิ์ที่ให้แล้ว (0)']);
     await expect(tpl.locator('.wt-picklist-target .wt-picklist-empty')).toHaveText('ยังไม่ได้ให้สิทธิ์ใด ๆ');
     await tpl.locator('.wt-picklist-source .wt-picklist-item').first().click();
-    await expect(tpl.locator('.wt-picklist-source .wt-picklist-item').first().locator('.pi-check-circle')).toHaveCount(1);
+    await expect(tpl.locator('.wt-picklist-source .wt-picklist-item').first().locator('.wi-check-circle')).toHaveCount(1);
     await tpl.getByRole('button', { name: 'ย้ายไปปลายทาง', exact: true }).click();
     await expect(tpl.locator('.wt-picklist-header')).toHaveText(['สิทธิ์ทั้งหมด (7)', 'สิทธิ์ที่ให้แล้ว (1)']);
     await tpl.locator('.wt-picklist-source').getByRole('searchbox').fill('zzz');
@@ -2687,8 +2693,8 @@ test('parity on existing pages in every version: templates, tag spellings, style
     await expect(page.locator('#d-num-cleared')).toHaveText('1');
     await expect(fee.locator('input')).toHaveValue('');
     const steps = page.locator('#d-num-steps');
-    await expect(steps.locator('.pi-plus')).toHaveCount(1);
-    await expect(steps.locator('.pi-minus')).toHaveCount(1);
+    await expect(steps.locator('.wi-plus')).toHaveCount(1);
+    await expect(steps.locator('.wi-minus')).toHaveCount(1);
     await steps.locator('input').press('ArrowUp');
     await expect(page.locator('#d-num-key')).toHaveText('ArrowUp');
 
@@ -2984,7 +2990,7 @@ test('slider, splitbutton, listbox and colorpicker pages in every version', asyn
     await expect(page.locator('#d-spb-all-off button')).toHaveCount(2);
     for (const b of await page.locator('#d-spb-all-off button').all()) await expect(b).toBeDisabled();
     await expect(page.locator('#d-spb-outlined .wt-splitbutton-main')).toHaveClass(/wt-btn-outlined/);
-    await expect(page.locator('#d-spb-icons .wt-splitbutton-dropdown .pi-ellipsis-v')).toHaveCount(1);
+    await expect(page.locator('#d-spb-icons .wt-splitbutton-dropdown .wi-ellipsis-v')).toHaveCount(1);
     await page.locator('#d-spb-icons .wt-splitbutton-dropdown').click();
     await page.keyboard.press('Escape');
     await expect(page.locator('#d-spb-events')).toHaveText('onMenuShow · onMenuHide');
@@ -3115,7 +3121,7 @@ test('galleria, breadcrumb, inplace, blockui and scrollpanel pages in every vers
     await bc.locator('.wt-breadcrumb-home .wt-breadcrumb-link').click();
     await expect(page.locator('#d-bc-pressed')).toHaveText('หน้าแรก');
     await expect(page.locator('#d-bc-tpl .docs-bc-sep')).toHaveCount(4);
-    await expect(page.locator('#d-bc-tpl .wt-breadcrumb-home .pi-home')).toHaveCount(1);
+    await expect(page.locator('#d-bc-tpl .wt-breadcrumb-home .wi-home')).toHaveCount(1);
     await expect(page.locator('#d-bc-tpl .docs-bc-label')).toHaveText(['', 'ระบบทะเบียน', 'ห้องเรียน', 'ม.1/1', 'ด.ช.กิตติพัฒน์ ใจดี']);
     await expect(page.locator('docs-section#links')).toContainText("routerLink: '/reports'");
 
@@ -3433,7 +3439,7 @@ test('samples of the new component pages follow the team style per version', asy
   const code = (sel: string) => page.locator(`${sel} docs-code`).first();
   await page.goto('/v1/components/listbox');
   await expect(code('docs-section#templates')).toContainText('<ng-template wtTemplate="item" let-room let-selected="selected">');
-  await expect(code('docs-section#templates')).toContainText('<i *ngIf="selected" class="pi pi-check"></i>');
+  await expect(code('docs-section#templates')).toContainText('<i *ngIf="selected" class="wi wi-check"></i>');
   await expect(code('docs-section#multiple')).toContainText('[multiple]="true" [checkbox]="true" [striped]="true"');
   await page.goto('/v3/components/listbox');
   await expect(code('docs-section#templates')).toContainText('@if (selected) {');
@@ -3505,6 +3511,8 @@ test('theme drawer: modal on the right, Escape and the backdrop close it, focus 
   expect(await drawer.evaluate((d) => d.matches(':modal'))).toBe(true);
   await expect(drawer.locator('#docs-studio-title')).toHaveText('ปรับธีม');
   await expect(drawer.locator('.docs-studio-card h3').first()).toHaveText('สี');
+  // No preview strip above the cards any more: the cards start right under the header.
+  await expect(drawer.locator('.docs-studio-preview')).toHaveCount(0);
   const box = await drawer.boundingBox();
   expect(Math.round(box!.x + box!.width)).toBeGreaterThanOrEqual(1270);
   expect(box!.width).toBeLessThanOrEqual(400);
@@ -3577,36 +3585,54 @@ test('each version opens in its own default theme, dark mode picks the dark twin
   await page.locator('#docs-dark').click();
   await expect(active).toHaveAttribute('data-preset', 'sila-light-teal');
 
-  await page.locator('#docs-version').selectOption('v2');
+  await pickVersion(page, 'v2');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@2');
   await expect(active).toHaveAttribute('data-preset', 'mali');
   await page.locator('[data-preset="phet"]').click();
   await expect(active).toHaveAttribute('data-preset', 'phet');
 
   // v3 lists WiraTheme's own presets too, and starts from its own default rather than v2's choice.
-  await page.locator('#docs-version').selectOption('v3');
+  await pickVersion(page, 'v3');
   await expect(page.locator('#doc-version')).toContainText('wiratheme@3');
-  await expect(active).toHaveAttribute('data-preset', 'mali');
+  await expect(active).toHaveAttribute('data-preset', 'wira');
   await expect(page.locator('.docs-preset-card[data-preset="glass"]')).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test('"On this page" sits under the open page in the sidebar and follows the scroll', async ({ page }) => {
-  await page.setViewportSize({ width: 1400, height: 800 });
+test('"On this page" is a sticky column on the right of wide screens; narrower screens keep it under the page in the sidebar', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 800 });
   await page.goto('/v3/components/card');
-  // No right-hand column any more: the sections are nested under the page's own sidebar item.
-  await expect(page.locator('.docs-toc-col')).toHaveCount(0);
-  const toc = page.locator('#nav-card + docs-toc .docs-nav-toc');
+  const aside = page.locator('#docs-toc-aside');
+  const toc = aside.locator('.docs-aside-toc');
+  await expect(aside.locator('.docs-toc-aside-title')).toHaveText('ในหน้านี้');
   await expect(toc.locator('a')).toHaveText(['Import', 'Basic', 'Slots', 'Templates', 'Variants', 'Advanced', 'Loading']);
-  await expect(page.locator('.docs-nav-toc')).toHaveCount(1);
+  // The copy under the page's sidebar item hides while the column shows; the column sits right of the article.
+  await expect(page.locator('#nav-card + docs-toc .docs-nav-toc')).toBeHidden();
+  const article = (await page.locator('.docs-article').boundingBox())!;
+  expect((await aside.boundingBox())!.x).toBeGreaterThanOrEqual(article.x + article.width - 1);
   await toc.locator('a', { hasText: 'Variants' }).click();
   await expect(page).toHaveURL(/\/v3\/components\/card#variants$/);
   await expect(toc.locator('a.active')).toHaveText('Variants');
   await expect(toc.locator('a[aria-current="location"]')).toHaveText('Variants');
+  // Sticky: still in view after scrolling on.
+  await page.mouse.wheel(0, 1500);
+  await expect.poll(async () => (await aside.boundingBox())!.y).toBeLessThan(200);
+  expect((await aside.boundingBox())!.y).toBeGreaterThanOrEqual(0);
   // The Properties tab (id tab-api) brings its own sections.
   await page.locator('#tab-api').click();
   await expect(toc.locator('a')).toHaveText(['Inputs', 'Slots', 'Types']);
-  // Another page swaps the list.
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  // The Studio keeps its own layout: no column, its list stays in the sidebar.
+  await page.goto('/v3/theming/studio');
+  await expect(page.locator('#docs-toc-aside')).toHaveCount(0);
+  await expect(page.locator('#nav-studio + docs-toc .docs-nav-toc')).toBeVisible();
+  // Narrower screens: under the page's own item in the sidebar, as before; another page swaps the list.
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/v3/components/card');
+  await expect(page.locator('#docs-toc-aside')).toBeHidden();
+  const side = page.locator('#nav-card + docs-toc .docs-nav-toc');
+  await expect(side.locator('a')).toHaveText(['Import', 'Basic', 'Slots', 'Templates', 'Variants', 'Advanced', 'Loading']);
+  await expect(page.locator('.docs-nav-toc')).toHaveCount(1);
   await page.locator('#nav-panel').click();
   await expect(page.locator('#nav-card + docs-toc .docs-nav-toc')).toHaveCount(0);
   await expect(page.locator('#nav-panel + docs-toc .docs-nav-toc a').first()).toHaveText('Import');
@@ -3663,7 +3689,7 @@ test.describe('language', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page.locator('#docs-search')).toContainText('Search docs');
 
-    await page.locator('#docs-version').selectOption('v1');
+    await pickVersion(page, 'v1');
     await expect(page.locator('#doc-version')).toContainText('wiratheme@1');
     await expect(page.locator('#lang-en')).toHaveAttribute('aria-pressed', 'true');
     await page.locator('#nav-group-getting-started').click();
@@ -3870,7 +3896,7 @@ test.describe('English samples', () => {
   });
   test('multiselect page: English options, labels and code', async ({ page }) => {
     const errors = collectErrors(page);
-    const list = page.locator('.wt-multiselect-overlay');
+    const list = page.locator('.wt-multiselect-overlay:visible');
     await page.goto('/v3/components/multiselect');
     await expect(page.locator('#d-ms-basic .wt-multiselect-label')).toHaveText('Pick provinces');
     await page.locator('#d-ms-basic').click();
@@ -3905,7 +3931,7 @@ test.describe('English samples', () => {
     await expect(page.locator('#d-tl-basic .wt-timeline-event-content').first()).toHaveText('1. Ordered');
     await expect(page.locator('#d-tl-opposite .wt-timeline-event-opposite').first()).toHaveText('12 Mar 2026 10:30');
     await page.locator('#basic').getByRole('tab', { name: 'TS' }).click();
-    await expect(page.locator('#basic docs-code')).toContainText("{ status: 'Ordered', date: '12 Mar 2026 10:30', icon: 'pi pi-shopping-cart', color: '#6366f1' }");
+    await expect(page.locator('#basic docs-code')).toContainText("{ status: 'Ordered', date: '12 Mar 2026 10:30', icon: 'wi wi-shopping-cart', color: '#6366f1' }");
     expect(errors).toEqual([]);
   });
   test('tabs by value and wt-messages: English demo and code', async ({ page }) => {
@@ -4117,7 +4143,7 @@ test.describe('English samples', () => {
       await expect(page.locator('#d-stp-progress .wt-step-title')).toHaveText(['Apply', 'Document check', 'Interview', 'Results']);
       await expect(page.locator('#d-stp-header .docs-stp-head')).toHaveText(['Payer', 'Payment method', 'Receipt']);
       await page.locator('#header').getByRole('tab', { name: 'TS' }).click();
-      await expect(page.locator('#header docs-code')).toContainText("{ value: 2, label: 'Payment method', icon: 'pi pi-credit-card' }");
+      await expect(page.locator('#header docs-code')).toContainText("{ value: 2, label: 'Payment method', icon: 'wi wi-credit-card' }");
       await expect(page.locator('#d-stp-steps-link')).toHaveText('Open the Steps page');
     }
     expect(errors).toEqual([]);
@@ -4230,7 +4256,7 @@ test.describe('English samples', () => {
     await expect(page.locator('.wt-menu-overlay').getByRole('menuitem')).toHaveText(['Save as draft', 'Save and forward', 'Delete document']);
     await page.keyboard.press('Escape');
     await page.locator('docs-section#basic').getByRole('tab', { name: 'TS' }).click();
-    await expect(page.locator('docs-section#basic docs-code')).toContainText("{ label: 'Save as draft', icon: 'pi pi-file'");
+    await expect(page.locator('docs-section#basic docs-code')).toContainText("{ label: 'Save as draft', icon: 'wi wi-file'");
     await page.goto('/v3/components/listbox');
     await expect(page.locator('#d-lb-basic').getByRole('option').first()).toHaveText('Class 7/1');
     await expect(page.locator('#d-lb-tpl .docs-lb-room-teacher').nth(1)).toHaveText('Mr Wichai');
@@ -4520,4 +4546,1748 @@ test('demo buttons keep their own size: element resets of the page do not reach 
     expect(h, path).toBeGreaterThan(min);
     expect(h, path).toBeLessThan(max);
   }
+});
+
+/* ---------- Navbar themes, Image Cropper options, the studio's component preview, readable demo tiles ---------- */
+
+const NAVBAR_THEMES = [
+  ['theme-dark', 'navbar-dark'],
+  ['theme-primary', 'navbar-primary'],
+  ['theme-soft', 'navbar-soft'],
+  ['theme-gradient', 'navbar-gradient'],
+  ['theme-underline', 'navbar-underline'],
+  ['theme-pill', 'navbar-pill'],
+  ['theme-glass', 'navbar-glass'],
+] as const;
+
+/** The code of one tab (HTML, TS, CSS …) of the first code block in a section. */
+async function codeTab(section: ReturnType<Page['locator']>, label: string): Promise<string> {
+  const tabs = section.locator('docs-code-tabs').first();
+  await expect(tabs.locator('docs-code')).toBeAttached();
+  // One sample has no tab row: the toolbar shows its file name instead, and that sample is the one shown.
+  if (await tabs.locator('.docs-code-tabs-row').count()) {
+    const tab = tabs.locator('.docs-code-tabs-row button', { hasText: label });
+    await tab.click();
+    await expect(tab).toHaveAttribute('aria-selected', 'true');
+  }
+  return tabs.locator('docs-code').innerText();
+}
+
+const css = (el: ReturnType<Page['locator']>, prop: string) => el.evaluate((e, p) => getComputedStyle(e).getPropertyValue(p), prop);
+
+test('navbar page in every version: seven ready-made themes, each live with the HTML and CSS it shows, light and dark', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/navbar`);
+    await expect(page.locator('docs-section#themes h2')).toContainText('ธีมสำเร็จรูป');
+    await expect(page.locator('docs-section[id^="theme-"]')).toHaveCount(NAVBAR_THEMES.length);
+    for (const [id, cls] of NAVBAR_THEMES) {
+      const sec = page.locator(`docs-section#${id}`);
+      await expect(sec.locator('nav.wt-navbar')).toHaveClass(new RegExp(`\\b${cls}\\b`));
+      await expect(sec.locator('a[wtNavbarBrand]')).toHaveText('วิระ');
+      await expect(sec.locator('.docs-code-tabs-row button')).toHaveText(['HTML', 'CSS']);
+      const html = await codeTab(sec, 'HTML');
+      expect(html, id).toContain(`styleClass="${cls}"`);
+      expect(html, id).toContain('<a wtNavbarBrand routerLink="/">วิระ</a>');
+      const sheet = await codeTab(sec, 'CSS');
+      expect(sheet, id).toContain(`.${cls} {`);
+      expect(sheet, id).toContain('--wt-navbar-');
+    }
+
+    // The page wears the CSS its samples show.
+    const nav = (id: string) => page.locator(`docs-section#${id} nav.wt-navbar`);
+    await expect(nav('theme-dark')).toHaveCSS('background-color', 'rgb(15, 23, 42)');
+    await expect(nav('theme-dark')).toHaveCSS('color', 'rgb(248, 250, 252)');
+    const primary600 = await page.evaluate(() => {
+      const probe = document.createElement('i');
+      probe.style.color = 'var(--wt-primary-600)';
+      document.body.appendChild(probe);
+      const c = getComputedStyle(probe).color;
+      probe.remove();
+      return c;
+    });
+    await expect(nav('theme-primary')).toHaveCSS('background-color', primary600);
+    await expect(nav('theme-primary')).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(page.locator('docs-section#theme-primary .wt-navbar-end .wt-btn')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(nav('theme-soft')).toHaveCSS('border-bottom-width', '0px');
+    expect(await css(nav('theme-gradient'), 'background-image')).toContain('linear-gradient');
+    await expect(page.locator('docs-section#theme-gradient .wt-navbar-end .wt-btn')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    const underlined = page.locator('docs-section#theme-underline .wt-navbar-link-active').first();
+    await expect(underlined).toHaveCSS('border-bottom-width', '2px');
+    await expect(underlined).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await expect(page.locator('docs-section#theme-pill .wt-navbar-links')).toHaveCSS('justify-content', 'center');
+    await expect(nav('theme-glass')).toHaveClass(/wt-navbar-glass/);
+    expect(await css(page.locator('docs-section#theme-glass .docs-navbar-stage'), 'background-image')).toContain('url(');
+
+    // Dark mode: the dark bar goes a step darker than the page, the soft bar follows the theme.
+    const soft = await css(nav('theme-soft'), 'background-color');
+    await page.locator('#docs-dark').click();
+    await expect(page.locator('html')).toHaveClass(/wt-dark/);
+    await expect(nav('theme-dark')).toHaveCSS('background-color', 'rgb(2, 6, 23)');
+    await expect.poll(() => css(nav('theme-soft'), 'background-color')).not.toBe(soft);
+    await page.locator('#docs-dark').click();
+    await expect(page.locator('html')).not.toHaveClass(/wt-dark/);
+
+    // "Narrow" folds every theme demo, and each panel takes its bar's colours.
+    await page.locator('#d-nav-theme-width button', { hasText: 'จอแคบ' }).click();
+    for (const [id] of NAVBAR_THEMES) await expect(nav(id)).toHaveClass(/wt-navbar-mobile/);
+    const dark = page.locator('docs-section#theme-dark');
+    await dark.locator('.wt-navbar-toggle').click();
+    await expect(dark.locator('.wt-navbar-links')).toBeVisible();
+    await expect(dark.locator('.wt-navbar-links')).toHaveCSS('background-color', 'rgb(15, 23, 42)');
+    await expect(dark.locator('.wt-navbar-toggle')).toHaveCSS('color', 'rgb(248, 250, 252)');
+    await page.keyboard.press('Escape');
+    await expect(dark.locator('.wt-navbar-links')).toBeHidden();
+    await page.locator('#d-nav-theme-width button', { hasText: 'จอกว้าง' }).click();
+    await expect(nav('theme-dark')).not.toHaveClass(/wt-navbar-mobile/);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('navbar themes at 360px: no sideways scroll, every bar folds and its panel fits the phone in its own colours', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const v of ['v1', 'v3']) {
+    await page.goto(`/${v}/components/navbar`);
+    await expect(page.locator('docs-section[id^="theme-"]')).toHaveCount(NAVBAR_THEMES.length);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    for (const [id] of NAVBAR_THEMES) {
+      const sec = page.locator(`docs-section#${id}`);
+      const nav = sec.locator('nav.wt-navbar');
+      await expect(nav).toHaveClass(/wt-navbar-mobile/);
+      await sec.locator('.wt-navbar-toggle').scrollIntoViewIfNeeded();
+      await sec.locator('.wt-navbar-toggle').click();
+      const panel = sec.locator('.wt-navbar-links');
+      await expect(panel).toBeVisible();
+      const box = (await panel.boundingBox())!;
+      expect(box.x, id).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width, id).toBeLessThanOrEqual(361);
+      // The menu button reads in the bar's own text colour.
+      expect(await css(sec.locator('.wt-navbar-toggle'), 'color'), id).toBe(await css(nav, 'color'));
+      if (id === 'theme-dark' || id === 'theme-primary' || id === 'theme-soft') {
+        // The bar eases its own background for 0.2s as the panel opens, so compare once it has settled.
+        await expect
+          .poll(async () => (await css(panel, 'background-color')) === (await css(nav, 'background-color')), { message: id })
+          .toBe(true);
+      }
+      if (id === 'theme-gradient') expect(await css(panel, 'background-image')).toContain('linear-gradient');
+      expect(await noSideScroll(page), id).toBeLessThanOrEqual(0);
+      await page.keyboard.press('Escape');
+      await expect(panel).toBeHidden();
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+test('image cropper page in every version: chosen toolbar tools, own buttons in the toolbar, blob or base64, app-wide defaults', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/imagecropper`);
+    for (const id of ['toolbar', 'tools-template', 'output-type', 'defaults']) await expect(page.locator(`docs-section#${id} h2`)).toBeVisible();
+    await expect(page.locator('docs-section#basic > p')).toContainText('หมุนรูปแล้วหน้าเว็บจึงไม่ขยับ');
+
+    // Choosing the toolbar tools: zoom | rotate left, rotate right (two groups, nothing else), then turn only, none, all.
+    const bar = page.locator('#d-ic-toolbar .wt-imagecropper-toolbar');
+    const zoomAndTurn = '.wt-imagecropper-zoom-out, .wt-imagecropper-zoom, .wt-imagecropper-zoom-in, .wt-imagecropper-rotate-left, .wt-imagecropper-rotate-right';
+    await expect(bar.locator(zoomAndTurn)).toHaveCount(5);
+    await expect(bar.locator('.wt-imagecropper-flip-h, .wt-imagecropper-flip-v, .wt-imagecropper-reset')).toHaveCount(0);
+    await expect(bar.locator('.wt-imagecropper-group')).toHaveCount(2);
+    await page.locator('#d-ic-toolbar-pick button', { hasText: 'หมุนอย่างเดียว' }).click();
+    await expect(bar.locator('button')).toHaveCount(2);
+    await expect(bar.locator('.wt-imagecropper-rotate-left, .wt-imagecropper-rotate-right')).toHaveCount(2);
+    await expect(bar.locator('.wt-imagecropper-zoom')).toHaveCount(0);
+    await page.locator('#d-ic-toolbar-pick button', { hasText: 'ไม่มี' }).click();
+    await expect(page.locator('#d-ic-toolbar .wt-imagecropper-toolbar')).toHaveCount(0);
+    await page.locator('#d-ic-toolbar-pick button', { hasText: 'ทั้งหมด' }).click();
+    await expect(bar.locator('.wt-imagecropper-flip-h, .wt-imagecropper-flip-v, .wt-imagecropper-reset')).toHaveCount(3);
+    await expect(page.locator('#d-ic-toolbar-value')).toHaveText('"full"');
+
+    // The tools template: the app's own button is the toolbar's last group and crops through let-cropper.
+    const own = page.locator('#d-ic-own-tools .wt-imagecropper-toolbar');
+    await expect(own.locator('.wt-imagecropper-group').last()).toHaveClass(/wt-imagecropper-group-custom/);
+    await expect(own.locator('.wt-imagecropper-group-custom #d-ic-use')).toContainText('ใช้รูปนี้');
+    await page.locator('#d-ic-use button').click();
+    await expect(page.locator('#d-ic-use-size')).toHaveText(/^\d+ × \d+$/);
+    await expect(page.locator('#d-ic-use-preview')).toBeVisible();
+    // toolbar="none" with the app's turn buttons only.
+    const turnOnly = page.locator('#d-ic-rotate-only .wt-imagecropper-toolbar');
+    await expect(turnOnly.locator('button')).toHaveCount(2);
+    await expect(turnOnly.locator('.wt-imagecropper-zoom')).toHaveCount(0);
+    await page.locator('#d-ic-own-right button').click();
+    await expect(page.locator('#d-ic-own-rotate')).toHaveText('90°');
+
+    // Blob or base64, and crop('blob') / crop('base64') for one call.
+    await expect(page.locator('#d-ic-type-blob')).toContainText('Blob · image/png');
+    await expect(page.locator('#d-ic-type-url')).toContainText('blob:');
+    await page.locator('#d-ic-type-pick button', { hasText: 'base64' }).click();
+    await expect(page.locator('#d-ic-type-base64')).toContainText('data:image/png;base64,');
+    await page.locator('#d-ic-crop-blob button').click();
+    await expect(page.locator('#d-ic-type-from')).toHaveText("crop('blob')");
+    await expect(page.locator('#d-ic-type-blob')).toContainText('Blob');
+    await page.locator('#d-ic-crop-base64 button').click();
+    await expect(page.locator('#d-ic-type-from')).toHaveText("crop('base64')");
+    await expect(page.locator('#d-ic-type-base64')).toContainText('data:image/png;base64,');
+    expect(await codeTab(page.locator('docs-section#output-type'), 'TS')).toContain("await cropper.crop('base64');");
+
+    // App-wide defaults: app.config.ts in v3, the NgModule in v1 / v2, and the template that relies on them.
+    const defaults = page.locator('docs-section#defaults docs-code-tabs');
+    await expect(defaults.locator('.docs-code-tabs-row button')).toHaveText([v === 'v3' ? 'app.config.ts' : 'app.module.ts', 'HTML']);
+    await expect(defaults.locator('docs-code')).toContainText(
+      "provideImageCropperOptions({ output: 'base64', format: 'jpeg', imageQuality: 85, toolbar: ['zoom', '|', 'rotate'] })"
+    );
+
+    // Samples follow the team style per version: the tools slot is wtTemplate in v1 / v2 and #tools in v3.
+    const slot = await codeTab(page.locator('docs-section#tools-template'), 'HTML');
+    expect(slot).toContain(v === 'v3' ? '<ng-template #tools let-cropper>' : '<ng-template wtTemplate="tools" let-cropper>');
+    expect(slot).toContain(v === 'v3' ? '@if (photoUrl) {' : '<img *ngIf="photoUrl"');
+
+    // Properties: the new input, the template and the provider.
+    await page.goto(`/${v}/components/imagecropper?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('WtImageCropperToolbar');
+    await expect(page.locator('docs-section#api-templates')).toContainText('$implicit (WtImageCropper)');
+    await expect(page.locator('docs-section#api-providers')).toContainText('provideImageCropperOptions(options)');
+    await expect(page.locator('docs-section#api-types')).toContainText("type WtImageCropperToolbar = 'full' | 'none'");
+  }
+  expect(errors).toEqual([]);
+});
+
+test("studio preview: any component's live demos in the panel, grouped and searchable, remembered, with a wide layout", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/v3/theming/studio');
+  const pick = page.locator('#studio-pv-pick');
+  const list = page.locator('.wt-select-list');
+  const panel = page.locator('#studio-pv-page');
+  await expect(page.locator('#studio-pv-overview')).toBeVisible();
+  await expect(page.locator('#studio-pv-open')).toHaveCount(0);
+
+  // Grouped like the nav, the overview first; Select's demos render in the panel without page header, tabs or code.
+  await pick.click();
+  await expect(list.locator('.wt-select-group').first()).toContainText('สตูดิโอ');
+  await expect(list.locator('.wt-select-group', { hasText: 'Form' })).toHaveCount(1);
+  await expect(list.locator('.wt-select-group', { hasText: 'Overlay' })).toHaveCount(1);
+  await page.locator('.wt-select-filter').fill('Select');
+  await list.getByRole('option', { name: 'Select', exact: true }).click();
+  await expect(panel).toHaveAttribute('data-page', 'select');
+  await expect(page.locator('#studio-pv-overview')).toHaveCount(0);
+  await expect(panel.locator('#d-sel-basic')).toBeVisible();
+  await expect(panel.locator('.docs-page-head, .docs-tabs')).toHaveCount(0);
+  await expect(panel.locator('docs-code:visible')).toHaveCount(0);
+  // Its sections stay out of the studio's own "On this page" list.
+  await expect(page.locator('.docs-nav-toc a', { hasText: /^Basic$/ })).toHaveCount(0);
+  // The demos work in the panel.
+  await panel.locator('#d-sel-basic').click();
+  await list.getByRole('option', { name: 'ขอนแก่น' }).click();
+  await expect(panel.locator('#d-sel-value')).toHaveText('40');
+
+  // DatePicker next, and the choice is remembered after a reload.
+  await pick.click();
+  await page.locator('.wt-select-filter').fill('Date');
+  await list.getByRole('option', { name: 'DatePicker' }).click();
+  await expect(panel).toHaveAttribute('data-page', 'datepicker');
+  await expect(panel.locator('wt-datepicker').first()).toBeVisible();
+  await expect(page.locator('#studio-pv-open')).toHaveAttribute('href', '/v3/components/datepicker');
+  await page.reload();
+  await expect(page.locator('#studio-pv-page')).toHaveAttribute('data-page', 'datepicker');
+  await expect(pick).toContainText('DatePicker');
+
+  // Light / dark still switches what the panel shows.
+  const field = page.locator('#studio-pv-page wt-datepicker input').first();
+  const lightBg = await css(field, 'background-color');
+  await page.locator('#studio-mode button').nth(1).click();
+  await expect(page.locator('html')).toHaveClass(/wt-dark/);
+  await expect.poll(() => css(field, 'background-color')).not.toBe(lightBg);
+  await page.locator('#studio-mode button').nth(0).click();
+  await expect(page.locator('html')).not.toHaveClass(/wt-dark/);
+
+  // Wide preview: editor and preview share the width; remembered too.
+  const preview = page.locator('#studio-preview');
+  const sideWidth = (await preview.boundingBox())!.width;
+  await page.locator('#studio-pv-layout button', { hasText: 'ตัวอย่างกว้าง' }).click();
+  await expect(page.locator('.docs-designer-main')).toHaveClass(/docs-designer-wide/);
+  await expect.poll(async () => (await preview.boundingBox())!.width).toBeGreaterThan(sideWidth + 100);
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  await page.reload();
+  await expect(page.locator('.docs-designer-main')).toHaveClass(/docs-designer-wide/);
+  await page.locator('#studio-pv-layout button', { hasText: 'วางข้างกัน' }).click();
+  await expect(page.locator('.docs-designer-main')).not.toHaveClass(/docs-designer-wide/);
+
+  // Back to the overview.
+  await pick.click();
+  await list.getByRole('option', { name: 'ภาพรวม' }).click();
+  await expect(page.locator('#studio-pv-overview')).toBeVisible();
+  await expect(page.locator('#studio-pv-page')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("studio preview: 'open in new window' opens the chosen page, which follows the studio's edits live", async ({ page, context }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/v3/theming/studio');
+  await page.locator('#studio-pv-pick').click();
+  await page.locator('.wt-select-filter').fill('Button');
+  await page.locator('.wt-select-list').getByRole('option', { name: 'Button', exact: true }).click();
+  await expect(page.locator('#studio-pv-page')).toHaveAttribute('data-page', 'button');
+  const [tab] = await Promise.all([context.waitForEvent('page'), page.locator('#studio-pv-open').click()]);
+  await tab.waitForLoadState();
+  await expect(tab).toHaveURL(/\/v3\/components\/button$/);
+  const button = tab.locator('.docs-demo-preview .wt-btn').first();
+  await expect(button).toBeVisible();
+
+  // A new primary colour in the studio restyles the other tab without a reload; so does dark mode.
+  await page.locator('#studio-base-primary').fill('#e11d48');
+  await page.locator('#studio-base-primary').press('Tab');
+  await expect(page.locator('#studio-pv-page .docs-demo-preview .wt-btn').first()).toHaveCSS('background-color', 'rgb(225, 29, 72)');
+  await expect(button).toHaveCSS('background-color', 'rgb(225, 29, 72)');
+  await page.locator('#studio-mode button').nth(1).click();
+  await expect(tab.locator('html')).toHaveClass(/wt-dark/);
+  await page.locator('#studio-mode button').nth(0).click();
+  await expect(tab.locator('html')).not.toHaveClass(/wt-dark/);
+  // Undo in the studio reaches the other tab too.
+  await page.locator('#studio-undo button').click();
+  await expect(button).not.toHaveCSS('background-color', 'rgb(225, 29, 72)');
+  await tab.close();
+});
+
+test('studio preview at 360px: the chosen component stacks under the editor with no sideways scroll, in every version', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const [v] of VERSIONS) {
+    for (const id of ['select', 'datepicker', 'table']) {
+      await page.goto(`/${v}/theming/studio`);
+      await page.evaluate((c) => localStorage.setItem('wiratheme-docs-studio-preview', c), id);
+      await page.reload();
+      const panel = page.locator('#studio-pv-page');
+      await expect(panel).toHaveAttribute('data-page', id);
+      await expect(panel.locator('docs-demo').first()).toBeVisible();
+      // Side by side / wide only matters next to the editor (xl): hidden on phones.
+      await expect(page.locator('#studio-pv-layout')).toBeHidden();
+      const editor = (await page.locator('.docs-designer-editor').boundingBox())!;
+      const preview = (await page.locator('#studio-preview').boundingBox())!;
+      expect(preview.y).toBeGreaterThan(editor.y + editor.height - 1);
+      expect(await noSideScroll(page), `${v} ${id}`).toBeLessThanOrEqual(0);
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+/** WCAG contrast of two CSS colours (any syntax the browser computes, color-mix results included). */
+const contrastOf = (page: Page, a: string, b: string) =>
+  page.evaluate(
+    ([fg, bg]) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const g = canvas.getContext('2d', { willReadFrequently: true })!;
+      const rgb = (c: string) => {
+        g.fillStyle = '#ffffff';
+        g.fillRect(0, 0, 1, 1);
+        g.fillStyle = c;
+        g.fillRect(0, 0, 1, 1);
+        return [...g.getImageData(0, 0, 1, 1).data].slice(0, 3);
+      };
+      const lum = (c: number[]) =>
+        c
+          .map((x) => x / 255)
+          .map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4))
+          .reduce((sum, x, i) => sum + x * [0.2126, 0.7152, 0.0722][i], 0);
+      const [l1, l2] = [lum(rgb(fg)), lum(rgb(bg))].sort((x, y) => y - x);
+      return (l1 + 0.05) / (l2 + 0.05);
+    },
+    [a, b]
+  );
+
+test('demo tiles read clearly: utilities tiles and frames, and the drag and drop boxes, in light and dark mode', async ({ page }) => {
+  for (const dark of [false, true]) {
+    await page.goto('/v3/utilities/flex');
+    if (dark !== (await page.locator('html').evaluate((h) => h.classList.contains('wt-dark')))) await page.locator('#docs-dark').click();
+    if (dark) await expect(page.locator('html')).toHaveClass(/wt-dark/);
+    else await expect(page.locator('html')).not.toHaveClass(/wt-dark/);
+    const tile = page.locator('docs-section#align .docs-u-box').first();
+    const frame = page.locator('docs-section#align .docs-u-frame').first();
+    const preview = page.locator('docs-section#align .docs-demo-preview');
+    await expect(tile).toBeVisible();
+    const edge = (await css(tile, 'box-shadow')).match(/^(rgba?\([^)]*\)|color\([^)]*\))/)?.[1] || '';
+    expect(edge, 'tile edge').not.toBe('');
+    // Labels at 4.5:1 on the tile, the tile's edge at 3:1 on the frame, the frame's dashed edge at 3:1 on the demo box.
+    expect(await contrastOf(page, await css(tile, 'color'), await css(tile, 'background-color')), `label ${dark}`).toBeGreaterThanOrEqual(4.5);
+    expect(await contrastOf(page, edge, await css(frame, 'background-color')), `tile edge ${dark}`).toBeGreaterThanOrEqual(3);
+    expect(await contrastOf(page, await css(frame, 'border-top-color'), await css(preview, 'background-color')), `frame edge ${dark}`).toBeGreaterThanOrEqual(3);
+    await expect(frame).toHaveCSS('border-top-style', 'dashed');
+
+    await page.goto('/v3/components/dragdrop');
+    const item = page.locator('.docs-dd-item').first();
+    await expect(item).toBeVisible();
+    const box = page.locator('.docs-dd-box').first();
+    expect(await contrastOf(page, await css(item, 'color'), await css(item, 'background-color')), `dd label ${dark}`).toBeGreaterThanOrEqual(4.5);
+    expect(await contrastOf(page, await css(item, 'border-top-color'), await css(box, 'background-color')), `dd edge ${dark}`).toBeGreaterThanOrEqual(3);
+  }
+});
+
+test.describe('English: the new navbar, image cropper and studio parts', () => {
+  test.use({ locale: 'en-US' });
+
+  test('navbar themes and the new image cropper sections read in English, demo and code alike', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/navbar');
+    await expect(page.locator('docs-section#themes h2')).toContainText('Ready-made themes');
+    const dark = page.locator('docs-section#theme-dark');
+    await expect(dark.locator('h3')).toContainText('Dark');
+    await expect(dark.locator('a[wtNavbarBrand]')).toHaveText('Wira');
+    await expect(dark.locator('.wt-navbar-end .wt-btn')).toContainText('Sign in');
+    expect(await codeTab(dark, 'CSS')).toContain('/* styles.css · Dark bar, white text */');
+    expect(await codeTab(dark, 'HTML')).toContain('label="Sign in"');
+    await expect(page.locator('#d-nav-theme-width button', { hasText: 'Narrow' })).toBeVisible();
+    const navThai = (await thaiOnPage(page)).filter((l) => /^#(themes|theme-)/.test(l));
+    expect(navThai).toEqual([]);
+
+    await page.goto('/v3/components/imagecropper');
+    await expect(page.locator('docs-section#toolbar h2')).toContainText('Choosing the toolbar tools');
+    await expect(page.locator('docs-section#output-type h2')).toContainText('Blob or base64 result');
+    await expect(page.locator('docs-section#defaults h2')).toContainText('App-wide defaults');
+    await expect(page.locator('#d-ic-use')).toContainText('Use this photo');
+    await expect(page.locator('#d-ic-toolbar-pick button', { hasText: 'Turn only' })).toBeVisible();
+    const cropThai = (await thaiOnPage(page)).filter((l) => /^#(toolbar|tools-template|output-type|defaults) /.test(l));
+    expect(cropThai).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test('studio preview picker and its buttons speak English', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/v3/theming/studio');
+    await page.locator('#studio-pv-pick').click();
+    await expect(page.locator('.wt-select-list .wt-select-group').first()).toContainText('Studio');
+    await page.locator('.wt-select-list').getByRole('option', { name: 'Overview' }).click();
+    await expect(page.locator('#studio-pv-layout button', { hasText: 'Wide preview' })).toBeVisible();
+    await page.locator('#studio-pv-pick').click();
+    await page.locator('.wt-select-filter').fill('Tag');
+    await page.locator('.wt-select-list').getByRole('option', { name: 'Tag', exact: true }).click();
+    await expect(page.locator('#studio-pv-open')).toContainText('Open in new window');
+    await expect(page.locator('#studio-pv-page')).not.toContainText(THAI_TEXT);
+  });
+});
+
+/* ---------- Steps layouts: labelPosition and orientation ---------- */
+
+/** Where each step's number and text sit (CSS pixels), in order. */
+const stepBoxes = (page: Page, id: string) =>
+  page.locator(`#${id} .wt-steps-item`).evaluateAll((items) =>
+    items.map((li) => {
+      const box = (el: Element | null) => {
+        const r = el!.getBoundingClientRect();
+        return { x: r.x, y: r.y, w: r.width, h: r.height, right: r.right, bottom: r.bottom };
+      };
+      return { item: box(li), number: box(li.querySelector('.wt-steps-number')), text: box(li.querySelector('.wt-steps-text')) };
+    })
+  );
+
+test('steps page in every version: labels under or beside the numbers, a pickable column, both inputs and the token documented', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/steps`);
+    await expect(page.locator('docs-section#layout h2')).toContainText('การจัดวาง');
+    for (const id of ['layout-bottom', 'layout-right', 'layout-vertical']) await expect(page.locator(`docs-section#${id} h3`)).toBeVisible();
+    await expect(page.locator('#d-steps-right .wt-steps-subtitle').first()).toHaveText('ออนไลน์');
+
+    // Default: each label under its number, the steps in one row.
+    const bottom = await stepBoxes(page, 'd-steps-bottom');
+    expect(bottom).toHaveLength(4);
+    for (const s of bottom) expect(s.text.y).toBeGreaterThanOrEqual(s.number.bottom - 1);
+    expect(Math.abs(bottom[3].item.y - bottom[0].item.y)).toBeLessThan(2);
+
+    // labelPosition="right": each label beside its number, still one row; the line after a done step is primary.
+    await expect(page.locator('#d-steps-right nav')).toHaveClass(/wt-steps-label-right/);
+    const right = await stepBoxes(page, 'd-steps-right');
+    for (const s of right) {
+      expect(s.text.x).toBeGreaterThanOrEqual(s.number.right - 1);
+      expect(Math.abs(s.text.y + s.text.h / 2 - (s.number.y + s.number.h / 2))).toBeLessThan(s.number.h);
+    }
+    expect(Math.abs(right[3].number.y - right[0].number.y)).toBeLessThan(2);
+    const primary = await page.evaluate(() => {
+      const probe = document.createElement('i');
+      probe.style.color = 'var(--wt-primary-color)';
+      document.body.appendChild(probe);
+      const c = getComputedStyle(probe).color;
+      probe.remove();
+      return c;
+    });
+    const doneLine = await page
+      .locator('#d-steps-right .wt-steps-item')
+      .first()
+      .evaluate((li) => getComputedStyle(li, '::after').borderTopColor);
+    expect(doneLine).toBe(primary);
+
+    // orientation="vertical": a column, labels beside the numbers, picked by click and by ↑ / ↓ + Enter.
+    await expect(page.locator('#d-steps-vertical nav')).toHaveClass(/wt-steps-vertical/);
+    const column = await stepBoxes(page, 'd-steps-vertical');
+    for (let i = 1; i < column.length; i++) {
+      expect(column[i].number.y).toBeGreaterThan(column[i - 1].number.bottom);
+      expect(Math.abs(column[i].number.x - column[0].number.x)).toBeLessThan(2);
+    }
+    for (const s of column) expect(s.text.x).toBeGreaterThanOrEqual(s.number.right - 1);
+    await expect(page.locator('#d-steps-vertical-value')).toHaveText('1');
+    await page.locator('#d-steps-vertical .wt-steps-link').nth(3).click();
+    await expect(page.locator('#d-steps-vertical-value')).toHaveText('3');
+    // Two-way: the other two layouts follow the same index.
+    await expect(page.locator('#d-steps-right .wt-steps-item').nth(3)).toHaveClass(/wt-steps-item-active/);
+    await expect(page.locator('#d-steps-bottom .wt-steps-item').nth(3)).toHaveClass(/wt-steps-item-active/);
+    await page.locator('#d-steps-vertical .wt-steps-item-active .wt-steps-link').focus();
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('#d-steps-vertical .wt-steps-link').nth(2)).toBeFocused();
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#d-steps-vertical .wt-steps-link').nth(2)).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#d-steps-vertical-value')).toHaveText('2');
+
+    // Samples, Properties and Styling.
+    expect(await codeTab(page.locator('docs-section#layout-right'), 'HTML')).toContain('labelPosition="right"');
+    expect(await codeTab(page.locator('docs-section#layout-vertical'), 'HTML')).toContain(
+      '<wt-steps [model]="enrolSteps" [(activeIndex)]="enrolIndex" orientation="vertical" [readonly]="false"></wt-steps>'
+    );
+    expect(await codeTab(page.locator('docs-section#layout-bottom'), 'TS')).toContain("{ label: 'ส่งใบสมัคร', subtitle: 'ออนไลน์' }");
+    await page.goto(`/${v}/components/steps?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText("'bottom' | 'right'");
+    await expect(page.locator('docs-section#api-inputs')).toContainText("'horizontal' | 'vertical'");
+    await page.goto(`/${v}/components/steps?tab=theming`);
+    await expect(page.locator('docs-section#css-variables')).toContainText('--wt-steps-vertical-gap');
+  }
+  // The Stepper page says the two share the layouts.
+  await page.goto('/v3/components/stepper');
+  await expect(page.locator('docs-section#steps')).toContainText('orientation="vertical"');
+  expect(errors).toEqual([]);
+});
+
+test('steps layouts at 360px: no sideways scroll, beside-the-number keeps only the current label, the column fits', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/steps`);
+    await expect(page.locator('#d-steps-right .wt-steps-item')).toHaveCount(4);
+    expect(await noSideScroll(page), v).toBeLessThanOrEqual(0);
+    // Only the current step shows its label beside the number; the others stay for screen readers.
+    await expect(page.locator('#d-steps-right .wt-steps-item-active .wt-steps-label')).toBeVisible();
+    const hidden = await page
+      .locator('#d-steps-right .wt-steps-item:not(.wt-steps-item-active) .wt-steps-text')
+      .evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+    expect(hidden).toHaveLength(3);
+    expect(Math.max(...hidden)).toBeLessThanOrEqual(1);
+    await expect(page.locator('#d-steps-right .wt-steps-list')).toContainText('รายงานตัว');
+    // The column and the default row fit the phone.
+    for (const id of ['d-steps-vertical', 'd-steps-bottom', 'd-steps-right']) {
+      const boxes = await stepBoxes(page, id);
+      for (const s of boxes) expect(s.item.right, id).toBeLessThanOrEqual(361);
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+test.describe('English: the Steps layouts', () => {
+  test.use({ locale: 'en-US' });
+
+  test('steps layout section reads in English, demo and code alike', async ({ page }) => {
+    await page.goto('/v3/components/steps');
+    await expect(page.locator('docs-section#layout h2')).toContainText('Layout');
+    await expect(page.locator('docs-section#layout-right h3')).toContainText('Beside the number');
+    await expect(page.locator('docs-section#layout-vertical h3')).toContainText('Vertical');
+    await expect(page.locator('#d-steps-right .wt-steps-label').first()).toHaveText('Apply');
+    await expect(page.locator('#d-steps-right .wt-steps-subtitle').first()).toHaveText('Online');
+    expect(await codeTab(page.locator('docs-section#layout-bottom'), 'TS')).toContain("{ label: 'Apply', subtitle: 'Online' }");
+    expect(await codeTab(page.locator('docs-section#layout-bottom'), 'HTML')).toContain('labelPosition="bottom" is the default');
+    const thai = (await thaiOnPage(page)).filter((l) => /^#layout/.test(l));
+    expect(thai).toEqual([]);
+  });
+});
+
+/* ---------- wiraicon: the docs' icons, the Icons page and the theme reveal ---------- */
+
+/** Clipboard writes, recorded (the stub works in every browser, with no permission to grant). */
+const stubClipboard = (page: Page) =>
+  page.evaluate(() => {
+    const copied: string[] = [];
+    (window as unknown as { __copied: string[] }).__copied = copied;
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async (t: string) => void copied.push(t) } });
+  });
+
+test('the docs draw their icons with wiraicon: no pi icon left in the chrome, the demos or the samples', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const path of ['/v3/components/button', '/v1/components/menu', '/v2/components/table', '/v3/components/navbar', '/v1/components/stepper', '/v3/theming/studio']) {
+    await page.goto(path);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('.pi'), path).toHaveCount(0);
+    expect(await page.locator('.wi').count(), path).toBeGreaterThan(0);
+    expect((await page.locator('docs-code').allInnerTexts()).join('\n'), path).not.toContain('pi pi-');
+  }
+  // Chrome icons are wiraicon glyphs too, drawn with its font.
+  const search = page.locator('#docs-search docs-icon i');
+  await expect(search).toHaveClass(/\bwi wi-search\b/);
+  expect(await css(search, 'font-family')).toContain('wiraicon');
+  // Samples write the new prefix.
+  await page.goto('/v3/components/button');
+  await expect(page.locator('docs-section#basic docs-code')).toContainText('icon="wi wi-save"');
+  expect(errors).toEqual([]);
+});
+
+test('icons page in every version: install, usage demos, a searchable gallery of all 424 icons, weights, size, copy and SVG download', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/getting-started/icons`);
+    await expect(page.locator('h1')).toHaveText('ไอคอน');
+    await expect(page.locator('#nav-icons')).toHaveClass(/active/);
+    for (const id of ['install', 'classes', 'weights', 'size', 'buttons', 'component', 'gallery', 'migration', 'license'])
+      await expect(page.locator(`docs-section#${id}`)).toBeAttached();
+    await expect(page.locator('docs-section#install')).toContainText('npm install wiraicon');
+    await expect(page.locator('docs-section#install')).toContainText('node_modules/wiraicon/wiraicon.css');
+    expect(await css(page.locator('#d-wi-classes i').first(), 'font-family')).toContain('wiraicon');
+    await expect(page.locator('#d-wi-weights i').nth(3)).toHaveClass(/\bwi-bold\b/);
+    await expect(page.locator('#d-wi-spin')).toHaveClass(/\bwi-spin\b/);
+    await expect(page.locator('#d-wi-save .wi-save')).toHaveCount(1);
+    await expect(page.locator('#d-wi-component wi-icon svg')).toHaveCount(4);
+    await expect(page.locator('#d-wi-component wi-icon[role="img"]')).toHaveAttribute('aria-label', 'ข้อมูลเพิ่มเติม');
+
+    // The gallery: every icon, then search by name, alias, an old prefixed name and a Thai category.
+    const cells = page.locator('#wi-grid .docs-wi-cell');
+    const search = page.locator('#wi-search');
+    await expect(cells).toHaveCount(424);
+    await expect(page.locator('#wi-count')).toHaveText('424 ไอคอน');
+    await search.fill('floppy');
+    await expect(cells).toHaveCount(1);
+    await expect(cells.first()).toHaveAttribute('data-icon', 'save');
+    await search.fill('pi-times');
+    await expect(cells.first()).toHaveAttribute('data-icon', 'times');
+    await search.fill('ปฏิทิน');
+    await expect(cells).toHaveCount(10);
+    await search.fill('zzzz');
+    await expect(page.locator('#wi-empty')).toBeVisible();
+    await search.fill('');
+    await expect(cells).toHaveCount(424);
+
+    // Category filter.
+    await page.locator('#wi-category').click();
+    await page.locator('.wt-select-list').getByRole('option', { name: 'การศึกษา' }).click();
+    await expect(cells).toHaveCount(10);
+    await page.locator('#wi-category').click();
+    await page.locator('.wt-select-list').getByRole('option', { name: 'ทุกหมวด' }).click();
+    await expect(cells).toHaveCount(424);
+
+    // Weight switch: every cell takes the weight class. Size slider: the glyphs grow.
+    await page.locator('#wi-weight button', { hasText: 'bold' }).click();
+    await expect(cells.first().locator('i')).toHaveClass(/\bwi-bold\b/);
+    const small = (await cells.first().locator('i').boundingBox())!.height;
+    await page.locator('#wi-size .wt-slider-handle').focus();
+    await page.keyboard.press('End');
+    await expect.poll(async () => (await cells.first().locator('i').boundingBox())!.height).toBeGreaterThan(small + 10);
+
+    // An icon's panel: class, component tag, aliases, copy and the SVG of the weight picked.
+    await search.fill('save');
+    await cells.first().click();
+    await expect(page.locator('#wi-detail-name')).toHaveText('save');
+    await expect(page.locator('#wi-detail-class')).toHaveText('<i class="wi wi-save wi-bold"></i>');
+    await expect(page.locator('#wi-detail-tag')).toHaveText('<wi-icon name="save" weight="bold"></wi-icon>');
+    await expect(page.locator('#wi-detail-button')).toHaveText('icon="wi wi-save wi-bold"');
+    await expect(page.locator('#wi-detail-aliases')).toContainText('floppy-disk');
+    await expect(page.locator('#wi-detail-svg')).toHaveAttribute('href', 'wiraicon/svg/bold/save.svg');
+    const svg = await page.request.get('/wiraicon/svg/bold/save.svg');
+    expect(svg.status()).toBe(200);
+    expect(await svg.text()).toContain('<svg');
+    await stubClipboard(page);
+    await page.locator('#wi-copy-class button').click();
+    await expect(page.locator('#wi-copy-class button')).toContainText('คัดลอกแล้ว');
+    await page.locator('#wi-copy-tag button').click();
+    expect(await page.evaluate(() => (window as unknown as { __copied: string[] }).__copied)).toEqual([
+      '<i class="wi wi-save wi-bold"></i>',
+      '<wi-icon name="save" weight="bold"></wi-icon>',
+    ]);
+    await page.locator('#wi-detail-close').click();
+    await expect(page.locator('#wi-detail')).toHaveCount(0);
+
+    // Samples: the team style, and the migration note keeps the old prefix only in its "before" lines.
+    await expect(page.locator('docs-section#buttons docs-code')).toContainText('<wt-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wt-button>');
+    await expect(page.locator('docs-section#component docs-code').first()).toContainText('[spin]="true"');
+    await expect(page.locator('docs-section#migration docs-code')).toContainText('<i class="wi wi-check"></i>');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('icons page at 360px: no sideways scroll, the gallery and the icon panel fit the phone', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto('/v3/getting-started/icons');
+  await expect(page.locator('#wi-grid .docs-wi-cell')).toHaveCount(424);
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  await page.locator('#wi-search').fill('graduation');
+  await page.locator('#wi-grid .docs-wi-cell').first().click();
+  const panel = (await page.locator('#wi-detail').boundingBox())!;
+  expect(panel.x).toBeGreaterThanOrEqual(0);
+  expect(panel.x + panel.width).toBeLessThanOrEqual(361);
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+});
+
+test('theme changes: instant under automation, and a growing sparkle through View Transitions when switched on', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/v3/components/button');
+  // Automation: no transition, so a test can read the new state straight away.
+  await page.locator('#docs-dark').click();
+  expect(await page.evaluate(() => document.documentElement.classList.contains('wt-dark'))).toBe(true);
+  await page.locator('#docs-dark').click();
+  expect(await page.evaluate(() => document.documentElement.classList.contains('wt-dark'))).toBe(false);
+
+  const supported = await page.evaluate(() => typeof (document as unknown as { startViewTransition?: unknown }).startViewTransition === 'function');
+  test.skip(!supported, 'this browser has no View Transitions: theme changes are instant');
+  await page.evaluate(() => localStorage.setItem('wiratheme-docs-reveal', 'on'));
+  await page.reload();
+  await page.locator('#docs-dark').click();
+  await expect(page.locator('html')).toHaveClass(/docs-reveal/);
+  // The mask is big enough to reach the far corner from the button.
+  const size = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--docs-reveal-size')));
+  expect(size).toBeGreaterThan(1500);
+  await expect(page.locator('html')).toHaveClass(/wt-dark/);
+  await expect(page.locator('html')).not.toHaveClass(/docs-reveal/, { timeout: 3000 });
+  // The Theme drawer's choices reveal too.
+  await page.locator('#docs-config').click();
+  await page.locator('dialog.docs-studio [data-primary]').first().click();
+  await expect(page.locator('html')).toHaveClass(/docs-reveal/);
+  await expect(page.locator('html')).not.toHaveClass(/docs-reveal/, { timeout: 3000 });
+  await page.locator('#docs-config-close').click();
+  // People who prefer reduced motion get the change at once.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('#docs-dark').click();
+  expect(await page.evaluate(() => document.documentElement.classList.contains('wt-dark'))).toBe(false);
+  expect(await page.evaluate(() => document.documentElement.classList.contains('docs-reveal'))).toBe(false);
+  expect(errors).toEqual([]);
+});
+
+test.describe('English: the Icons page', () => {
+  test.use({ locale: 'en-US' });
+
+  test('icons page reads in English, demo, gallery and code alike', async ({ page }) => {
+    await page.goto('/v3/getting-started/icons');
+    await expect(page.locator('h1')).toHaveText('Icons');
+    await expect(page.locator('#wi-count')).toHaveText('424 icons');
+    await expect(page.locator('#wi-search')).toHaveAttribute('placeholder', 'Search icons, e.g. save, xmark, calendar');
+    await page.locator('#wi-category').click();
+    await expect(page.locator('.wt-select-list').getByRole('option').first()).toHaveText('All categories');
+    await page.keyboard.press('Escape');
+    await page.locator('#wi-search').fill('calendar');
+    await page.locator('#wi-grid .docs-wi-cell').first().click();
+    await expect(page.locator('#wi-detail-svg')).toContainText('Download SVG');
+    expect(await thaiOnPage(page)).toEqual([]);
+  });
+});
+
+/* ---------- Terminal, ImageCompare, Carousel, Splitter, OrganizationChart, Knob, InputOtp; the header switcher ---------- */
+
+test('terminal page in every version: commands answered through the service, history, clear, Properties', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/terminal`);
+    const term = page.locator('#d-term');
+    await expect(term.locator('.wt-terminal-welcome-message')).toContainText('ยินดีต้อนรับสู่ระบบวิระ');
+    await expect(term.locator('[role="log"]')).toHaveCount(1);
+    const line = term.locator('input.wt-terminal-prompt-value');
+    await expect(line).toHaveAttribute('aria-label', 'พิมพ์คำสั่ง');
+    await line.fill('ทักทาย ทีมวิระ');
+    await line.press('Enter');
+    await expect(term.locator('.wt-terminal-command-response').last()).toHaveText('สวัสดี ทีมวิระ');
+    await expect(page.locator('#d-term-last')).toHaveText('ทักทาย ทีมวิระ');
+    await line.fill('help');
+    await line.press('Enter');
+    await expect(term.locator('.wt-terminal-command-response').last()).toContainText('คำสั่ง: เวลา');
+    // ↑ brings the last command back.
+    await line.press('ArrowUp');
+    await expect(line).toHaveValue('help');
+    // clear empties the screen and never reaches the app.
+    await line.fill('clear');
+    await line.press('Enter');
+    await expect(term.locator('.wt-terminal-command')).toHaveCount(0);
+    await expect(page.locator('#d-term-last')).toHaveText('help');
+    await line.fill('xyz');
+    await line.press('Enter');
+    await expect(term.locator('.wt-terminal-command-response').last()).toHaveText('ไม่รู้จักคำสั่ง: xyz');
+    await page.locator('#d-term-clear button').click();
+    await expect(term.locator('.wt-terminal-command')).toHaveCount(0);
+
+    await page.goto(`/${v}/components/terminal?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('clearCommand');
+    await expect(page.locator('docs-section#api-service')).toContainText('sendResponse(response)');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('imagecompare page in every version: the before picture left of the divider, keys, a drag and [(value)]', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/imagecompare`);
+    const frame = page.locator('#d-icmp .wt-imagecompare');
+    const handle = page.locator('#d-icmp [role="slider"]');
+    await expect(handle).toHaveAttribute('aria-valuenow', '50');
+    await expect(handle).toHaveAttribute('aria-label', 'เทียบภาพก่อนและหลังปรับสี');
+    // The right template (before) shows from the left edge to the divider; the left template (after) fills the rest.
+    const box = (await frame.boundingBox())!;
+    expect((await page.locator('#d-icmp-before').boundingBox())!.x).toBeLessThan(box.x + box.width / 2);
+    expect((await page.locator('#d-icmp-after').boundingBox())!.x).toBeGreaterThan(box.x + box.width / 2);
+    await handle.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(handle).toHaveAttribute('aria-valuenow', '51');
+    await page.keyboard.press('End');
+    await expect(handle).toHaveAttribute('aria-valuenow', '100');
+    await page.keyboard.press('Home');
+    await expect(handle).toHaveAttribute('aria-valuenow', '0');
+
+    // [(value)], step 5, the buttons and a press in the frame.
+    const second = page.locator('#d-icmp-value [role="slider"]');
+    await expect(second).toHaveAttribute('aria-valuenow', '30');
+    await second.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-icmp-value-out')).toHaveText('35');
+    await page.locator('#d-icmp-75 button').click();
+    await expect(second).toHaveAttribute('aria-valuenow', '75');
+    const pressed = page.locator('#d-icmp-value .wt-imagecompare');
+    await pressed.scrollIntoViewIfNeeded();
+    const b = (await pressed.boundingBox())!;
+    await page.mouse.move(b.x + b.width * 0.75, b.y + b.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(b.x + b.width * 0.2, b.y + b.height / 2, { steps: 8 });
+    await page.mouse.up();
+    await expect.poll(async () => Number(await page.locator('#d-icmp-value-out').textContent())).toBeLessThan(25);
+
+    await page.goto(`/${v}/components/imagecompare?tab=api`);
+    await expect(page.locator('docs-section#api-templates')).toContainText('right');
+    await expect(page.locator('docs-section#api-inputs')).toContainText('step');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('carousel page in every version: arrows and bars change page, [(page)] and onPage, templates, ARIA', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/carousel`);
+    const crs = page.locator('#d-crs');
+    // 6 news, 3 in view, 1 per move: 4 pages.
+    await expect(crs.locator('.wt-carousel-indicator')).toHaveCount(4);
+    await expect(crs.locator('.wt-carousel-indicator').first()).toHaveClass(/wt-carousel-indicator-active/);
+    await expect(crs.locator('.wt-carousel')).toHaveAttribute('aria-roledescription', 'ภาพสไลด์');
+    await crs.locator('.wt-carousel-next-button').click();
+    await expect(crs.locator('.wt-carousel-indicator').nth(1)).toHaveClass(/wt-carousel-indicator-active/);
+    await crs.locator('.wt-carousel-indicator-button').nth(3).click();
+    await expect(crs.locator('.wt-carousel-indicator').nth(3)).toHaveClass(/wt-carousel-indicator-active/);
+    await expect(crs.locator('.docs-crs-card').first()).toBeAttached();
+
+    // [(page)] from code, and onPage from the arrows.
+    const paged = page.locator('#d-crs-page');
+    await page.locator('#d-crs-last button').click();
+    await expect(paged.locator('.wt-carousel-indicator').nth(2)).toHaveClass(/wt-carousel-indicator-active/);
+    await expect(page.locator('#d-crs-page-value')).toHaveText('2');
+    await paged.locator('.wt-carousel-prev-button').click();
+    await expect(page.locator('#d-crs-onpage')).toHaveText('1');
+    await expect(page.locator('#d-crs-page-value')).toHaveText('1');
+
+    // Vertical, and the templates with arrows of their own.
+    await expect(page.locator('#d-crs-vert .wt-carousel')).toHaveClass(/wt-carousel-vertical/);
+    const tpl = page.locator('#d-crs-tpl');
+    await expect(tpl.locator('.wt-carousel-header')).toContainText('ข่าวประชาสัมพันธ์');
+    await expect(tpl.locator('.wt-carousel-prev-button .wi-arrow-left')).toHaveCount(1);
+    await expect(tpl.locator('.wt-carousel-next-button')).toHaveAttribute('aria-label', 'ข่าวถัดไป');
+    await page.locator('#d-crs-all button').click();
+    await expect(page.locator('#d-crs-all-count')).toHaveText('1');
+
+    await page.goto(`/${v}/components/carousel?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('autoplayInterval');
+    await expect(page.locator('docs-section#api-templates')).toContainText('previousicon · nexticon');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('splitter page in every version: a gutter by keyboard and by drag, [(panelSizes)], minSizes, nested', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/splitter`);
+    const gutter = page.locator('#d-spl-sizes .wt-splitter-gutter');
+    await expect(gutter).toHaveAttribute('role', 'separator');
+    await expect(gutter).toHaveAttribute('aria-valuenow', /^35(\.0+)?$/);
+    await expect(page.locator('#d-spl-sizes-value')).toHaveText('35 / 65');
+    await gutter.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-spl-sizes-value')).not.toHaveText('35 / 65');
+    // Home: the smallest size of the first panel (minSizes 20).
+    await page.keyboard.press('Home');
+    await expect(page.locator('#d-spl-sizes-value')).toHaveText('20 / 80');
+    await expect(page.locator('#d-spl-resized')).not.toHaveText('-');
+
+    // Dragging the basic gutter widens the first panel.
+    const panels = page.locator('#d-spl > .wt-splitter > .wt-splitter-panel');
+    await page.locator('#d-spl').scrollIntoViewIfNeeded();
+    const before = (await panels.first().boundingBox())!.width;
+    const g = (await page.locator('#d-spl > .wt-splitter > .wt-splitter-gutter').boundingBox())!;
+    await page.mouse.move(g.x + g.width / 2, g.y + g.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(g.x + g.width / 2 + 80, g.y + g.height / 2, { steps: 8 });
+    await page.mouse.up();
+    await expect.poll(async () => (await panels.first().boundingBox())!.width).toBeGreaterThan(before + 40);
+
+    // Nested: the inner splitter runs top to bottom.
+    await expect(page.locator('#d-spl-vertical .wt-splitter-gutter')).toHaveAttribute('aria-orientation', 'horizontal');
+
+    await page.goto(`/${v}/components/splitter?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('stateStorage');
+    await expect(page.locator('docs-section#api-panel')).toContainText('minSize');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('organizationchart page in every version: boxes by type, children only while expanded, selection, folding', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/organizationchart`);
+    await expect(page.locator('#d-oc [role="tree"]')).toHaveAttribute('aria-label', 'ผังองค์กรโรงเรียนวิระ');
+    await expect(page.locator('#d-oc [role="treeitem"]')).toHaveCount(7);
+    const people = page.locator('#d-oc-people .docs-oc-person');
+    await expect(people).toHaveCount(3);
+    await expect(people.first()).toContainText('อรุณี ทองดี');
+
+    // A closed branch shows no children.
+    const single = page.locator('#d-oc-single');
+    await expect(single.locator('.wt-organizationchart-node', { hasText: 'งานการเงิน' })).toBeHidden();
+    await single.locator('.wt-organizationchart-node', { hasText: 'ฝ่ายวิชาการ' }).click();
+    await expect(page.locator('#d-oc-picked')).toHaveText('ฝ่ายวิชาการ');
+    await expect(page.locator('#d-oc-event')).toHaveText('onNodeSelect: ฝ่ายวิชาการ');
+    await expect(single.locator('.wt-organizationchart-node-selected')).toHaveCount(1);
+
+    const multi = page.locator('#d-oc-multi');
+    await multi.locator('.wt-organizationchart-node', { hasText: 'ผู้อำนวยการ' }).click();
+    await multi.locator('.wt-organizationchart-node', { hasText: 'ฝ่ายวิชาการ' }).click();
+    await expect(page.locator('#d-oc-team')).toHaveText('ผู้อำนวยการ, ฝ่ายวิชาการ');
+
+    // Folding: the fold button opens the closed branch and says so.
+    const fold = page.locator('#d-oc-fold');
+    await fold.locator('.wt-organizationchart-node', { hasText: 'ฝ่ายบริหารทั่วไป' }).locator('.wt-organizationchart-node-toggle-button').click();
+    await expect(page.locator('#d-oc-fold-event')).toHaveText('onNodeExpand: ฝ่ายบริหารทั่วไป');
+    await expect(fold.locator('.wt-organizationchart-node', { hasText: 'งานการเงิน' })).toBeVisible();
+
+    await page.goto(`/${v}/components/organizationchart?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('preserveSpace');
+    await expect(page.locator('docs-section#api-templates')).toContainText('togglericon');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('knob page in every version: keys, ngModel and onChange, range and text, read-only, reactive forms', async ({ page }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/knob`);
+    const knob = page.locator('#d-kn [role="slider"]');
+    await expect(knob).toHaveAttribute('aria-valuenow', '40');
+    await expect(knob).toHaveAttribute('aria-label', 'ระดับเสียงประกาศ');
+    await knob.focus();
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('#d-kn-value')).toHaveText('41');
+    await expect(page.locator('#d-kn-change')).toHaveText('41');
+    await page.keyboard.press('PageUp');
+    await expect(knob).toHaveAttribute('aria-valuenow', '51');
+    await page.keyboard.press('End');
+    await expect(knob).toHaveAttribute('aria-valuenow', '100');
+
+    await expect(page.locator('#d-kn-progress [role="slider"]')).toHaveAttribute('aria-valuetext', '60%');
+    await page.locator('#d-kn-temp [role="slider"]').focus();
+    await page.keyboard.press('Home');
+    await expect(page.locator('#d-kn-temp-value')).toHaveText('-10');
+
+    // Read-only keeps its value; disabled says so.
+    const ro = page.locator('#d-kn-ro [role="slider"]');
+    const kept = await ro.getAttribute('aria-valuenow');
+    await ro.focus();
+    await page.keyboard.press('ArrowUp');
+    await expect(ro).toHaveAttribute('aria-valuenow', kept!);
+    await expect(page.locator('#d-kn-off [role="slider"]')).toHaveAttribute('aria-disabled', 'true');
+
+    await page.locator('#d-kn-books [role="slider"]').focus();
+    await page.keyboard.press('ArrowUp');
+    await expect.poll(() => json(page, '#d-kn-form')).toEqual({ books: 7 });
+
+    await page.goto(`/${v}/components/knob?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('valueTemplate');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('inputotp page in every version: typing moves on, digits only, paste spreads, mask, own boxes', async ({ page, browserName }) => {
+  const errors = collectErrors(page);
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/inputotp`);
+    const boxes = page.locator('#d-otp input');
+    await expect(boxes).toHaveCount(6);
+    await expect(page.locator('#d-otp [role="group"]')).toHaveAttribute('aria-labelledby', 'd-otp-label');
+    await expect(boxes.first()).toHaveAttribute('autocomplete', 'one-time-code');
+    await expect(boxes.first()).toHaveAttribute('inputmode', 'numeric');
+    await boxes.first().click();
+    await page.keyboard.type('48a29');
+    await expect(page.locator('#d-otp-value')).toHaveText('4829');
+    await expect(boxes.nth(4)).toBeFocused();
+    await expect(page.locator('#d-otp-verify button')).toBeDisabled();
+    await page.keyboard.type('15');
+    await expect(page.locator('#d-otp-value')).toHaveText('482915');
+    await expect(page.locator('#d-otp-change')).toHaveText('482915');
+    await page.locator('#d-otp-verify button').click();
+    await expect(page.locator('#d-otp-verified')).toHaveText('1');
+
+    // A pasted code spreads across the boxes (paste events with clipboard data: Chromium).
+    if (browserName === 'chromium') {
+      await boxes.first().focus();
+      await boxes.first().evaluate((el) => {
+        const data = new DataTransfer();
+        data.setData('text/plain', '7 3 1 0 6 4');
+        el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true }));
+      });
+      await expect(page.locator('#d-otp-value')).toHaveText('731064');
+    }
+
+    await expect(page.locator('#d-otp-mask input').first()).toHaveAttribute('type', 'password');
+    await expect(page.locator('#d-otp-ro input').first()).toHaveValue('4');
+    await expect(page.locator('#d-otp-off input').first()).toBeDisabled();
+
+    // The input template: six boxes of the app's own, a dash after the third, still moving on as you type.
+    const own = page.locator('#d-otp-own .docs-otp-box');
+    await expect(own).toHaveCount(6);
+    await expect(page.locator('#d-otp-own .docs-otp-dash')).toHaveCount(1);
+    await own.first().click();
+    await page.keyboard.type('123456');
+    await expect(page.locator('#d-otp-own-value')).toHaveText('123456');
+
+    await page.goto(`/${v}/components/inputotp?tab=api`);
+    await expect(page.locator('docs-section#api-inputs')).toContainText('integerOnly');
+    await expect(page.locator('docs-section#api-templates')).toContainText('$implicit (token), events, index');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('the seven new pages at 360px: no sideways scroll, every demo fits (the org chart scrolls in its own box)', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const v of ['v1', 'v3']) {
+    for (const id of ['terminal', 'imagecompare', 'carousel', 'splitter', 'organizationchart', 'knob', 'inputotp']) {
+      await page.goto(`/${v}/components/${id}`);
+      await expect(page.locator('h1')).toBeVisible();
+      await expect(page.locator('.docs-demo-preview').first()).toBeVisible();
+      expect(await noSideScroll(page), `${v} ${id}`).toBeLessThanOrEqual(0);
+    }
+  }
+  // On a phone the carousel shows one card at a time.
+  await page.goto('/v3/components/carousel');
+  await expect(page.locator('#d-crs .wt-carousel-indicator')).toHaveCount(6);
+  expect(errors).toEqual([]);
+});
+
+test('version switcher: our own select listing each version with its Angular range and status, keeping the page, keyboard too', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/v3/components/button?tab=api');
+  const sw = page.locator('#docs-version');
+  await expect(page.locator('select#docs-version, select.docs-version')).toHaveCount(0);
+  await expect(sw.locator('.wt-select-label')).toContainText('v3');
+  await expect(sw.locator('[role="combobox"]')).toHaveAttribute('aria-label', 'รุ่นของ wiratheme');
+  await sw.click();
+  const list = page.locator('.wt-select-list');
+  await expect(list.getByRole('option')).toHaveCount(3);
+  await expect(list.getByRole('option').nth(0)).toContainText('Angular 15–17');
+  await expect(list.getByRole('option').nth(0)).toContainText('แก้เฉพาะบั๊ก');
+  await expect(list.getByRole('option').nth(2)).toContainText('ล่าสุด');
+  await list.getByRole('option', { name: /^v1\b/ }).click();
+  // The same page in the chosen version, with its tab.
+  await expect(page).toHaveURL(/\/v1\/components\/button\?tab=api$/);
+  await expect(page.locator('#doc-version')).toContainText('wiratheme@1');
+  await expect(sw.locator('.wt-select-label')).toContainText('v1');
+  // Keyboard: ↓ opens, End goes to the last version, Enter picks.
+  await sw.locator('[role="combobox"]').focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(list).toBeVisible();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/v3\/components\/button\?tab=api$/);
+  // Phones: it fits, with the version alone.
+  await page.setViewportSize({ width: 360, height: 760 });
+  await expect(sw.locator('.docs-version-range')).toBeHidden();
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  expect(errors).toEqual([]);
+});
+
+test('studio: font and custom token names suggest from our own list, not a browser datalist', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/v3/theming/studio');
+  await expect(page.locator('datalist')).toHaveCount(0);
+  await page.locator('#studio-tabs wt-tab[value="settings"]').click();
+  const font = page.locator('#studio-c-fontFamily');
+  await font.fill('Sara');
+  await page.locator('.wt-select-list').getByRole('option', { name: 'Sarabun', exact: true }).click();
+  await expect
+    .poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--wt-font-family')))
+    .toContain('Sarabun');
+});
+
+test.describe('English: the seven new pages and the switcher', () => {
+  test.use({ locale: 'en-US' });
+
+  test('the seven new pages read in English, demo and code alike', async ({ page }) => {
+    await page.goto('/v3/components/terminal');
+    await expect(page.locator('#d-term .wt-terminal-welcome-message')).toHaveText('Welcome to Wira. Type help to see the commands.');
+    const line = page.locator('#d-term input.wt-terminal-prompt-value');
+    await line.fill('greet team');
+    await line.press('Enter');
+    await expect(page.locator('#d-term .wt-terminal-command-response').last()).toHaveText('Hello team');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/imagecompare');
+    await expect(page.locator('#d-icmp-before')).toHaveText('Before');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/carousel');
+    await expect(page.locator('#d-crs-tpl .wt-carousel-header')).toContainText('School news');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/splitter');
+    await expect(page.locator('#d-spl')).toContainText('Students');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/organizationchart');
+    await expect(page.locator('#d-oc-people .docs-oc-person').first()).toContainText('Arunee Thongdee');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/knob');
+    await expect(page.locator('#d-kn [role="slider"]')).toHaveAttribute('aria-label', 'Announcement volume');
+    expect(await thaiOnPage(page)).toEqual([]);
+
+    await page.goto('/v3/components/inputotp');
+    await expect(page.locator('#d-otp-label')).toHaveText('6-digit code from the SMS');
+    expect(await thaiOnPage(page)).toEqual([]);
+  });
+
+  test('the version switcher speaks English', async ({ page }) => {
+    await page.goto('/v2/components/button');
+    await expect(page.locator('#docs-version [role="combobox"]')).toHaveAttribute('aria-label', 'wiratheme version');
+    await page.locator('#docs-version').click();
+    await expect(page.locator('.wt-select-list').getByRole('option').nth(0)).toContainText('maintenance');
+    await expect(page.locator('.wt-select-list').getByRole('option').nth(2)).toContainText('latest');
+  });
+});
+
+// ---------- Flow (wiratheme/flow) ----------
+
+const flowNode = (page: Page, flow: string, id: string) => page.locator(`#${flow} .wt-flow-node[data-id="${id}"]`);
+
+async function flowCentre(l: ReturnType<Page['locator']>): Promise<{ x: number; y: number }> {
+  const b = (await l.boundingBox())!;
+  return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+}
+
+async function flowDrag(page: Page, from: { x: number; y: number }, to: { x: number; y: number }, steps = 12): Promise<void> {
+  await page.mouse.move(from.x, from.y);
+  await page.mouse.down();
+  await page.mouse.move(to.x, to.y, { steps });
+  await page.mouse.up();
+}
+
+/** Drags from one handle to another (scrolled into view first). */
+async function flowConnect(page: Page, from: ReturnType<Page['locator']>, to: ReturnType<Page['locator']>): Promise<void> {
+  await from.scrollIntoViewIfNeeded();
+  await flowDrag(page, await flowCentre(from), await flowCentre(to));
+}
+
+const FLOW_DEMOS: [string, number, number][] = [
+  ['d-flow-basic', 5, 3],
+  ['d-flow-nodes', 4, 3],
+  ['d-flow-edges', 12, 6],
+  ['d-flow-connect', 5, 1],
+  ['d-flow-ctl', 3, 2],
+  ['d-flow-select', 6, 5],
+  ['d-flow-groups', 6, 3],
+  ['d-flow-notes', 2, 0],
+  ['d-flow-menu', 3, 2],
+  ['d-flow-vp', 2, 1],
+  ['d-flow-layout', 7, 6],
+  ['d-flow-history', 4, 3],
+  ['d-flow-export', 4, 3],
+  ['d-flow-keys', 3, 1],
+];
+
+test('flow page in every version: every demo draws, a drag connects two handles, custom nodes, edge shapes, API tab', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const [v, major] of VERSIONS) {
+    await page.goto(`/${v}/components/flow`);
+    await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
+    await expect(page.locator('#nav-flow')).toHaveClass(/active/);
+    for (const [id, nodes, edges] of FLOW_DEMOS) {
+      await page.locator('#' + id).scrollIntoViewIfNeeded();
+      await expect(page.locator(`#${id} .wt-flow-node`), id).toHaveCount(nodes);
+      await expect(page.locator(`#${id} .wt-flow-edge`), id).toHaveCount(edges);
+    }
+    await expect(page.locator('#d-flow-basic .wt-flow')).toHaveAttribute('aria-label', 'ขั้นตอนอนุมัติคำร้อง');
+    await expect(page.locator('#d-flow-basic .wt-flow-minimap-node')).toHaveCount(5);
+
+    // Quick start: a drag from "check documents" to "ask for more" adds the fourth edge ([autoConnect]).
+    await flowConnect(page, flowNode(page, 'd-flow-basic', 'check').locator('.wt-flow-handle-source'), flowNode(page, 'd-flow-basic', 'more').locator('.wt-flow-handle-target'));
+    await expect(page.locator('#d-flow-basic-edges')).toHaveText('4');
+    await expect(page.locator('#d-flow-basic .wt-flow-edge')).toHaveCount(4);
+
+    // Custom nodes: the decision node has two named ways out, each with its edge.
+    const rule = flowNode(page, 'd-flow-nodes', 'rule');
+    await expect(rule).toHaveClass(/wt-flow-node-decision/);
+    await expect(rule.locator('.wt-flow-handle-source')).toHaveCount(2);
+    await expect(flowNode(page, 'd-flow-nodes', 'hr')).toContainText('เพชร');
+    await expect(page.locator('#d-flow-nodes .wt-flow-edge-label')).toHaveText(['ใช่', 'ไม่']);
+
+    // Edge shapes: a step edge is drawn in straight runs, the animated one is marked, the label button removes its edge.
+    await expect(page.locator('#d-flow-edges .wt-flow-edge[data-id="e3"] .wt-flow-edge-path')).toHaveAttribute('d', /^M[\d.-]+,[\d.-]+ L/);
+    await expect(page.locator('#d-flow-edges .wt-flow-edge[data-id="e4"]')).toHaveClass(/wt-flow-edge-animated/);
+    await expect(page.locator('#d-flow-edges .wt-flow-edge[data-id="e2"] .wt-flow-edge-path')).toHaveAttribute('marker-end', /^url\(#/);
+    await page.locator('#d-flow-edges .flow-edge-remove').click();
+    await expect(page.locator('#d-flow-edges .wt-flow-edge')).toHaveCount(5);
+
+    await page.goto(`/${v}/components/flow?tab=api`);
+    for (const id of ['api-inputs', 'api-outputs', 'api-methods', 'api-templates', 'api-handle', 'api-minimap', 'api-history', 'api-helpers', 'api-types']) {
+      await expect(page.locator(`docs-section#${id}`)).toBeAttached();
+    }
+    await expect(page.locator('docs-section#api-methods')).toContainText('screenToFlowPosition');
+    await expect(page.locator('docs-section#api-helpers')).toContainText('layoutFlow');
+    await page.goto(`/${v}/components/flow?tab=theming`);
+    await expect(page.locator('main')).toContainText('--wt-flow-minimap-mask-stroke');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('flow page in every version: connecting rules, controlled mode, delete rules, toolbar, palette, layout, undo, export, keys', async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/flow`);
+
+    // Connecting: teacher to class works; a second teacher for the same class (connectionLimit 1) does not.
+    await expect(page.locator('#d-flow-connect .wt-flow-edge')).toHaveCount(1);
+    await flowConnect(page, flowNode(page, 'd-flow-connect', 't-arun').locator('.wt-flow-handle-source'), flowNode(page, 'd-flow-connect', 'r-12').locator('.wt-flow-handle-target'));
+    await expect(page.locator('#d-flow-connect-count')).toHaveText('2');
+    await expect(page.locator('#d-flow-connect-last')).toHaveText('เชื่อมแล้ว');
+    await flowConnect(page, flowNode(page, 'd-flow-connect', 't-ratri').locator('.wt-flow-handle-source'), flowNode(page, 'd-flow-connect', 'r-11').locator('.wt-flow-handle-target'));
+    await expect(page.locator('#d-flow-connect-last')).toHaveText('เชื่อมไม่ได้');
+    await expect(page.locator('#d-flow-connect-count')).toHaveText('2');
+    await page.locator('#d-flow-connect-mode').click();
+    await expect(page.locator('#d-flow-connect-mode')).toContainText('loose');
+
+    // Controlled: the page keeps the nodes on their line, so a drag moves sideways only.
+    const mid = flowNode(page, 'd-flow-ctl', 'midterm');
+    await mid.scrollIntoViewIfNeeded();
+    const m = await flowCentre(mid);
+    await flowDrag(page, m, { x: m.x + 60, y: m.y + 50 }, 8);
+    await expect(page.locator('#d-flow-ctl-pos')).toHaveText(/midterm@(2[3-9]\d|[3-9]\d\d),0 /);
+    await expect(page.locator('#d-flow-ctl-log')).toContainText('position');
+
+    // Deleting: a locked task stays (beforeDelete), another goes with its edge.
+    await flowNode(page, 'd-flow-select', 'hall').scrollIntoViewIfNeeded();
+    await flowNode(page, 'd-flow-select', 'hall').click();
+    await expect(page.locator('#d-flow-select-out')).toHaveText('จองหอประชุม');
+    await page.keyboard.press('Delete');
+    await expect(page.locator('#d-flow-select-msg')).toHaveText('งานที่ล็อกไว้ลบไม่ได้');
+    await expect(page.locator('#d-flow-select .wt-flow-node')).toHaveCount(6);
+    await flowNode(page, 'd-flow-select', 'report').click();
+    await page.keyboard.press('Delete');
+    await expect(page.locator('#d-flow-select .wt-flow-node')).toHaveCount(5);
+    await expect(page.locator('#d-flow-select-msg')).toHaveText('ลบแล้ว 1 โหนด 1 เส้น');
+
+    // Node toolbar: shown for the selected note; a swatch recolours it, the bin deletes it.
+    const note = flowNode(page, 'd-flow-notes', 'meeting');
+    await note.scrollIntoViewIfNeeded();
+    await expect(page.locator('#d-flow-notes .flow-swatch')).toHaveCount(0);
+    await note.click();
+    await page.locator('#d-flow-notes .flow-swatch[data-tone="blue"]').click();
+    await expect(note.locator('.flow-note')).toHaveAttribute('data-tone', 'blue');
+    await expect(note.locator('.wt-flow-resize-handle').first()).toBeAttached();
+    await page.locator('#d-flow-notes wt-flow-node-toolbar wt-button button').click();
+    await expect(page.locator('#d-flow-notes .wt-flow-node')).toHaveCount(1);
+
+    // Viewport: the palette adds a node in the middle, the buttons move the view, [(viewport)] follows.
+    await page.locator('#d-flow-pal-default').scrollIntoViewIfNeeded();
+    await page.locator('#d-flow-pal-default').click();
+    await expect(page.locator('#d-flow-vp .wt-flow-node')).toHaveCount(3);
+    await page.locator('#d-flow-vp-start').click();
+    await expect(page.locator('#d-flow-vp-out')).toHaveText(/· 1\.50$/);
+    await page.locator('#d-flow-vp-100').click();
+    await expect(page.locator('#d-flow-vp-out')).toHaveText(/· 1\.00$/);
+
+    // Layout: left to right puts each level further right; top to bottom further down.
+    const x = async (id: string) => (await flowNode(page, 'd-flow-layout', id).boundingBox())!.x;
+    const y = async (id: string) => (await flowNode(page, 'd-flow-layout', id).boundingBox())!.y;
+    await page.locator('#d-flow-layout-lr').scrollIntoViewIfNeeded();
+    await page.locator('#d-flow-layout-lr').click();
+    await expect.poll(async () => (await x('principal')) < (await x('academic')) && (await x('academic')) < (await x('registrar'))).toBe(true);
+    await page.locator('#d-flow-layout-tb').click();
+    await expect.poll(async () => (await y('principal')) < (await y('admin')) && (await y('admin')) < (await y('finance'))).toBe(true);
+
+    // History: a drag is one step; undo puts the node back.
+    const undo = page.locator('#d-flow-undo button');
+    await flowNode(page, 'd-flow-history', 'reading').scrollIntoViewIfNeeded();
+    await expect(undo).toBeDisabled();
+    const before = (await flowNode(page, 'd-flow-history', 'reading').boundingBox())!;
+    await flowDrag(page, await flowCentre(flowNode(page, 'd-flow-history', 'reading')), { x: before.x + before.width / 2 + 70, y: before.y + before.height / 2 }, 8);
+    await expect(undo).toBeEnabled();
+    await undo.click();
+    await expect.poll(async () => Math.round((await flowNode(page, 'd-flow-history', 'reading').boundingBox())!.x)).toBe(Math.round(before.x));
+    await expect(page.locator('#d-flow-redo button')).toBeEnabled();
+
+    // Export: an SVG picture, and JSON that loads back.
+    await page.locator('#d-flow-export-svg').scrollIntoViewIfNeeded();
+    await page.locator('#d-flow-export-svg').click();
+    await expect(page.locator('#d-flow-export-img')).toHaveAttribute('src', /^data:image\/svg\+xml;charset=utf-8,%3Csvg/);
+    await expect.poll(async () => page.locator('#d-flow-export-img').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(100);
+    await page.locator('#d-flow-export-json').click();
+    await expect(page.locator('#d-flow-export-json-out')).toContainText('"nodes"');
+    await expect(page.locator('#d-flow-export-json-out')).toContainText('"viewport"');
+    await page.locator('#d-flow-export-load button').click();
+    await expect(page.locator('#d-flow-export .wt-flow-node')).toHaveCount(4);
+
+    // Keys: Tab to the first node, Enter selects, arrows move it, aria-live tells.
+    const keys = page.locator('#d-flow-keys .wt-flow');
+    await keys.scrollIntoViewIfNeeded();
+    await keys.focus();
+    await page.keyboard.press('Tab');
+    await expect(flowNode(page, 'd-flow-keys', 'a')).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#d-flow-keys-out')).toContainText('a@0,0*');
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#d-flow-keys-out')).toContainText('a@10,0*');
+    await expect(page.locator('#d-flow-keys [aria-live]')).toContainText('ย้าย ยื่นคำร้อง ไปที่ 10, 0');
+
+    // Big diagram: only what is near the view is drawn, all 300 once the switch is off.
+    await page.locator('#d-flow-perf').scrollIntoViewIfNeeded();
+    await expect.poll(async () => Number(await page.locator('#d-flow-perf-drawn').textContent())).toBeGreaterThan(0);
+    expect(await page.locator('#d-flow-perf .wt-flow-node').count()).toBeLessThan(120);
+    await page.locator('#d-flow-perf-only').click();
+    await expect(page.locator('#d-flow-perf .wt-flow-node')).toHaveCount(300);
+    await expect(page.locator('#d-flow-perf-drawn')).toHaveText('300');
+  }
+  expect(errors).toEqual([]);
+});
+
+test('flow page at 360 px: no sideways scroll, each flow and its add-ons stay inside the page', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const v of ['v1', 'v3']) {
+    await page.goto(`/${v}/components/flow`);
+    await expect(page.locator('#d-flow-basic .wt-flow-edge')).toHaveCount(3);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    for (const [id] of FLOW_DEMOS) {
+      const flow = page.locator('#' + id);
+      await flow.scrollIntoViewIfNeeded();
+      const box = (await flow.boundingBox())!;
+      expect(box.x, id).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width, id).toBeLessThanOrEqual(360);
+      // A sensible height on a phone: tall enough to work in, shorter than the screen.
+      expect(box.height, id).toBeGreaterThan(200);
+      expect(box.height, id).toBeLessThan(800);
+      for (const part of ['.wt-flow-controls', '.wt-flow-minimap']) {
+        const add = flow.locator(part);
+        if (!(await add.count())) continue;
+        const b = (await add.boundingBox())!;
+        expect(b.x, `${id} ${part}`).toBeGreaterThanOrEqual(box.x - 1);
+        expect(b.x + b.width, `${id} ${part}`).toBeLessThanOrEqual(box.x + box.width + 1);
+      }
+    }
+    // The wide sample still shows every node: the lower minZoom lets fitView shrink it.
+    const wide = (await page.locator('#d-flow-nodes').boundingBox())!;
+    for (const id of ['request', 'hr', 'head']) {
+      const b = (await flowNode(page, 'd-flow-nodes', id).boundingBox())!;
+      expect(b.x, id).toBeGreaterThanOrEqual(wide.x - 1);
+      expect(b.x + b.width, id).toBeLessThanOrEqual(wide.x + wide.width + 1);
+    }
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test.describe('English: the Flow page', () => {
+  test.use({ locale: 'en-US' });
+
+  test('the Flow page reads in English, demo, add-ons and code alike', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/flow');
+    await expect(page.locator('#d-flow-basic')).toContainText('Submit a request');
+    await expect(page.locator('#d-flow-basic .wt-flow')).toHaveAttribute('aria-label', 'Request approval steps');
+    await expect(page.locator('#d-flow-basic .wt-flow-controls-zoomin')).toHaveAttribute('aria-label', 'Zoom in');
+    await expect(flowNode(page, 'd-flow-nodes', 'request')).toContainText('Leave: 4 days');
+    await expect(page.locator('#d-flow-nodes .wt-flow-edge-label')).toHaveText(['Yes', 'No']);
+    await expect(page.locator('docs-section#keyboard h2')).toContainText('Keyboard, touch and ARIA');
+    await expect(page.locator('#d-flow-keys-table')).toContainText('Select everything');
+    await expect(page.locator('#d-flow-migration')).toContainText('one template per node type');
+    expect(await thaiOnPage(page)).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+});
+
+test('flow page in every version: right-click menus on an edge, a node and the pane, and from the keyboard', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const menu = page.locator('.wt-contextmenu');
+  for (const [v] of VERSIONS) {
+    await page.goto(`/${v}/components/flow`);
+    const flow = page.locator('#d-flow-menu');
+    await flow.scrollIntoViewIfNeeded();
+    await expect(flow.locator('.wt-flow-edge')).toHaveCount(2);
+
+    // An edge: right-click its label, Delete edge.
+    await flow.locator('.wt-flow-edge-label', { hasText: 'ส่งต่อ' }).click({ button: 'right' });
+    await menu.getByRole('menuitem', { name: 'ลบเส้น' }).click();
+    await expect(flow.locator('.wt-flow-edge')).toHaveCount(1);
+    await expect(page.locator('#d-flow-menu-edges')).toHaveText('1');
+    await expect(page.locator('#d-flow-menu-last')).toHaveText('ลบเส้น');
+    // Another edge: the running dashes, then reconnect selects it so its end circles show.
+    await flow.locator('.wt-flow-edge-label', { hasText: 'อนุมัติแล้ว' }).click({ button: 'right' });
+    await menu.getByRole('menuitem', { name: 'สลับเส้นประวิ่ง' }).click();
+    await expect(flow.locator('.wt-flow-edge[data-id="approve-handout"]')).toHaveClass(/wt-flow-edge-animated/);
+    await flow.locator('.wt-flow-edge-label', { hasText: 'อนุมัติแล้ว' }).click({ button: 'right' });
+    await menu.getByRole('menuitem', { name: 'ลากปลายเส้นใหม่' }).click();
+    await expect(flow.locator('.wt-flow-edge[data-id="approve-handout"]')).toHaveClass(/wt-flow-edge-selected/);
+
+    // The pane: Add a node here puts the node's corner at the pointer.
+    const box = (await flow.boundingBox())!;
+    const at = { x: Math.round(box.x + 30), y: Math.round(box.y + box.height - 70) };
+    await page.mouse.click(at.x, at.y, { button: 'right' });
+    await menu.getByRole('menuitem', { name: 'เพิ่มโหนดตรงนี้' }).click();
+    await expect(flow.locator('.wt-flow-node')).toHaveCount(4);
+    const added = (await flow.locator('.wt-flow-node[data-id="step-1"]').boundingBox())!;
+    expect(Math.abs(added.x - at.x)).toBeLessThan(3);
+    expect(Math.abs(added.y - at.y)).toBeLessThan(3);
+
+    // A node: duplicate, then rename.
+    await flow.locator('.wt-flow-node[data-id="approve"]').click({ button: 'right' });
+    await menu.getByRole('menuitem', { name: 'ทำสำเนา' }).click();
+    await expect(flow.locator('.wt-flow-node')).toHaveCount(5);
+    await flow.locator('.wt-flow-node[data-id="approve"]').click({ button: 'right' });
+    await menu.getByRole('menuitem', { name: 'แก้ชื่อ' }).click();
+    await page.locator('#d-flow-rename-input').fill('หัวหน้าฝ่ายอนุมัติ');
+    await page.locator('#d-flow-rename-input').press('Enter');
+    await expect(flow.locator('.wt-flow-node[data-id="approve"]')).toHaveText('หัวหน้าฝ่ายอนุมัติ');
+    await expect(page.locator('#d-flow-rename')).toHaveCount(0);
+
+    // The keyboard: Shift + F10 on a focused node opens the same menu.
+    await flow.locator('.wt-flow-node[data-id="handout"]').focus();
+    await page.keyboard.press('Shift+F10');
+    await menu.getByRole('menuitem', { name: 'ลบโหนด' }).click();
+    await expect(flow.locator('.wt-flow-node[data-id="handout"]')).toHaveCount(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('progressbar page in every version: stripes run forward, shimmer sweeps, and only the gloss stays for reduced motion', async ({ page }) => {
+  const errors = collectErrors(page);
+  const value = (id: string) => page.locator(`#${id} .wt-progressbar-value`);
+  const before = (id: string, prop: string) => value(id).evaluate((el, p) => getComputedStyle(el, '::before').getPropertyValue(p), prop);
+  for (const [v] of VERSIONS) {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto(`/${v}/components/progressbar`);
+    // Moving stripes: forward in a left-to-right page.
+    const stripes = await value('d-progress-animated').evaluate((el) => {
+      const cs = getComputedStyle(el, '::after');
+      return { animationName: cs.animationName, animationDirection: cs.animationDirection };
+    });
+    expect(stripes.animationName).toBe('wt-progressbar-stripes');
+    expect(stripes.animationDirection).toBe('normal');
+
+    // Shimmer: the class, a glossy inset highlight, and the band of light sweeping along.
+    await expect(page.locator('#d-progress-shimmer .wt-progressbar-shimmer, #d-progress-shimmer.wt-progressbar-shimmer')).toHaveCount(1);
+    await expect(page.locator('#d-progress-shimmer')).toContainText('กำลังคัดลอก 7 จาก 10 ไฟล์');
+    expect(await value('d-progress-shimmer').evaluate((el) => getComputedStyle(el).boxShadow)).toContain('inset');
+    expect(await before('d-progress-shimmer', 'animation-name')).toBe('wt-progressbar-shimmer');
+    // It keeps the bar's own colour (checked against the token: in Mali the primary is that same green), and works on
+    // the indeterminate bar too.
+    const success = await value('d-progress-shimmer-success').evaluate((el) => {
+      const probe = el.parentElement!.appendChild(document.createElement('span'));
+      probe.style.backgroundColor = 'var(--wt-success-color)';
+      const want = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return { got: getComputedStyle(el).backgroundColor, want };
+    });
+    expect(success.got).toBe(success.want);
+    expect(await before('d-progress-shimmer-busy', 'animation-name')).toBe('wt-progressbar-shimmer');
+
+    // Reduced motion: the gloss stays, the sweep goes.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    expect(await value('d-progress-shimmer').evaluate((el) => getComputedStyle(el).boxShadow)).toContain('inset');
+    expect(await before('d-progress-shimmer', 'display')).toBe('none');
+  }
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/v3/components/progressbar?tab=api');
+  await expect(page.locator('docs-section#api-inputs')).toContainText('shimmer');
+  expect(errors).toEqual([]);
+});
+
+test('sidebar: nested links sit a short inset from their guide line and keep 24 px taps, in the drawer too', async ({ page }) => {
+  for (const [width, lang] of [
+    [1280, 'th'],
+    [1440, 'en'],
+    [360, 'en'],
+    [360, 'th'],
+  ] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`/v3/components/autocomplete?lang=${lang}`);
+    if (width < 1024) await page.locator('#docs-menu').click();
+    const link = page.locator('#nav-checkbox');
+    await expect(link).toBeVisible();
+    const m = await link.evaluate((a) => {
+      const textLeft = (el: Element) => {
+        const r = document.createRange();
+        r.selectNodeContents(el);
+        return r.getBoundingClientRect().left;
+      };
+      const line = a.closest('.docs-collapse-inner')!.getBoundingClientRect().left;
+      const sub = a.closest('.docs-nav-subgroup')!.querySelector('.docs-nav-sub')!;
+      const groupLine = sub.closest('.docs-collapse-inner')!.getBoundingClientRect().left;
+      return { gap: textLeft(a) - line, height: a.getBoundingClientRect().height, label: textLeft(sub) - line, labelGap: textLeft(sub) - groupLine };
+    });
+    // The text sits about 6 px right of its guide line (was 12), the group label right over that line.
+    expect(m.gap, `${width} ${lang}`).toBeGreaterThanOrEqual(4);
+    expect(m.gap, `${width} ${lang}`).toBeLessThanOrEqual(8);
+    expect(Math.abs(m.label), `${width} ${lang}`).toBeLessThanOrEqual(1);
+    expect(m.labelGap, `${width} ${lang}`).toBeLessThanOrEqual(8);
+    expect(m.height, `${width} ${lang}`).toBeGreaterThanOrEqual(24);
+    // The active page's highlight still starts on the guide line.
+    const active = await page.locator('#nav-autocomplete').evaluate((a) => ({
+      left: a.getBoundingClientRect().left - a.closest('.docs-collapse-inner')!.getBoundingClientRect().left,
+      bar: getComputedStyle(a).borderLeftWidth,
+    }));
+    expect(Math.abs(active.left)).toBeLessThanOrEqual(1);
+    expect(active.bar).toBe('2px');
+  }
+});
+
+test('section text runs the full width of the content column, like the demos under it', async ({ page }) => {
+  for (const [width, lang] of [
+    [1024, 'th'],
+    [1280, 'en'],
+    [1440, 'th'],
+    [1920, 'en'],
+    [360, 'th'],
+  ] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`/v3/components/flow?lang=${lang}`);
+    const demo = (await page.locator('docs-section#edges docs-demo').boundingBox())!;
+    const text = (await page.locator('docs-section#edges > p').boundingBox())!;
+    expect(Math.abs(text.x - demo.x), `${width}`).toBeLessThanOrEqual(1);
+    expect(Math.abs(text.width - demo.width), `${width}`).toBeLessThanOrEqual(2);
+    const lead = (await page.locator('.docs-lead').first().boundingBox())!;
+    expect(Math.abs(lead.width - demo.width), `${width} lead`).toBeLessThanOrEqual(2);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  }
+});
+
+test('sidebar: scrolling the page leaves the sidebar where the reader left it', async ({ page }) => {
+  const errors = collectErrors(page);
+  const bar = page.locator('#docs-sidebar');
+  const top = () => bar.evaluate((el) => Math.round(el.scrollTop));
+  const scrollPage = async () => {
+    for (const y of [900, 1400, 1900, 2400, 1200]) {
+      await page.evaluate((to) => window.scrollTo(0, to), y);
+      await page.waitForTimeout(160);
+    }
+  };
+
+  // No folding animations: the groups opened below are at full height at once.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  // From 1360 px the sections are listed on the right: the sidebar never moves by itself.
+  await page.setViewportSize({ width: 1737, height: 940 });
+  await page.goto('/v3/components/inputtext');
+  await expect(page.locator('#docs-toc-aside .docs-aside-toc')).toBeVisible();
+  // A long sidebar: every group open.
+  await page.locator('#docs-sidebar button[aria-expanded="false"]').evaluateAll((buttons) => buttons.forEach((b) => (b as HTMLButtonElement).click()));
+  await expect.poll(() => bar.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(400);
+  await page.waitForTimeout(300);
+  await bar.evaluate((el) => (el.scrollTop = 300));
+  const left = await top();
+  expect(left).toBeGreaterThan(0);
+  await scrollPage();
+  expect(await top()).toBe(left);
+
+  // Below 1360 the list sits in the sidebar: once the reader scrolls the sidebar, the page's sections leave it alone,
+  // and the wheel over the sidebar scrolls the sidebar, not the page.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/v3/components/inputtext');
+  await expect(page.locator('#nav-inputtext + docs-toc .docs-nav-toc')).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const box = (await bar.boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  const before = await top();
+  await page.mouse.wheel(0, 240);
+  await expect.poll(top).toBeGreaterThan(before);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  const mine = await top();
+  await page.mouse.move(box.x + box.width + 300, box.y + 200);
+  await scrollPage();
+  expect(await top()).toBe(mine);
+  expect(errors).toEqual([]);
+});
+
+test('theme reveal: the header stays solid while the sparkle runs, and see-through after', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/v3/components/button');
+  const supported = await page.evaluate(() => typeof (document as unknown as { startViewTransition?: unknown }).startViewTransition === 'function');
+  test.skip(!supported, 'this browser has no View Transitions: theme changes are instant');
+  await page.evaluate(() => localStorage.setItem('wiratheme-docs-reveal', 'on'));
+  await page.reload();
+  const alpha = (color: string) => {
+    const slash = /\/\s*([\d.]+)/.exec(color);
+    if (slash) return Number(slash[1]);
+    const rgba = /^rgba\([^)]*,\s*([\d.]+)\)$/.exec(color);
+    return rgba ? Number(rgba[1]) : 1;
+  };
+  const header = () =>
+    page.evaluate(() => {
+      const bar = document.querySelector('.docs-topbar')!;
+      return { on: document.documentElement.classList.contains('docs-reveal'), bg: getComputedStyle(bar).backgroundColor, blur: getComputedStyle(bar).getPropertyValue('backdrop-filter') || getComputedStyle(bar).getPropertyValue('-webkit-backdrop-filter') };
+    });
+  // Light to dark, then back: during each reveal the header is opaque.
+  for (let i = 0; i < 2; i++) {
+    await page.locator('#docs-dark').click();
+    const during = await header();
+    expect(during.on).toBe(true);
+    expect(alpha(during.bg)).toBe(1);
+    await expect(page.locator('html')).not.toHaveClass(/docs-reveal/, { timeout: 3000 });
+    const after = await header();
+    expect(alpha(after.bg)).toBeLessThan(1);
+    expect(after.blur).toContain('blur');
+  }
+  await page.evaluate(() => localStorage.removeItem('wiratheme-docs-reveal'));
+  expect(errors).toEqual([]);
+});
+
+test('glass: its colour fields sit behind the site and the page stays readable (no white screen)', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/v3/components/autocomplete');
+  await page.locator('#docs-config').click();
+  await page.locator('#docs-config-panel [data-preset="glass"]').click();
+  await expect(page.locator('html')).toHaveClass(/docs-glass-ground/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#docs-config-panel')).toBeHidden();
+  // The page itself is on top: the heading is what sits under its own centre, and the root is not lifted into a layer.
+  const h1 = page.locator('.docs-article h1');
+  const hit = await h1.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return { inside: !!top && el.contains(top), root: getComputedStyle(document.documentElement).position };
+  });
+  expect(hit).toEqual({ inside: true, root: 'static' });
+  // Back to a plain theme: the colour fields go away.
+  await page.locator('#docs-config').click();
+  await page.locator('#docs-config-panel [data-preset="wira"]').click();
+  await expect(page.locator('html')).not.toHaveClass(/docs-glass-ground/);
+  expect(errors).toEqual([]);
+});
+
+/** Ring and label boxes of a spinner demo. */
+async function spinnerBoxes(page: Page, id: string) {
+  const host = page.locator('#' + id);
+  return {
+    host: (await host.boundingBox())!,
+    ring: (await host.locator('.wt-progress-spinner').boundingBox())!,
+    label: (await host.locator('.wt-progress-spinner-label').boundingBox())!,
+  };
+}
+
+const centreX = (b: { x: number; width: number }) => b.x + b.width / 2;
+const centreY = (b: { y: number; height: number }) => b.y + b.height / 2;
+
+test('progressspinner page in every version: size, colours, a centred label, a label beside the ring, a label template', async ({ page }) => {
+  const errors = collectErrors(page);
+  const color = (id: string, n: number) => page.locator('#' + id).evaluate((el, i) => getComputedStyle(el).getPropertyValue(`--wt-spinner-color-${i}`).trim(), n);
+  const colors = async (id: string) => [await color(id, 1), await color(id, 2), await color(id, 3), await color(id, 4)];
+  for (const [v] of VERSIONS) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`/${v}/components/progressspinner`);
+
+    // size="2rem" sizes the ring. The root size and the box are read together: the theme's font size can land a
+    // moment after the page shows.
+    await expect
+      .poll(() =>
+        page.locator('#d-spin-size').evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          const two = Math.round(2 * parseFloat(getComputedStyle(document.documentElement).fontSize));
+          return Math.round(r.width) === two && Math.round(r.height) === two;
+        }),
+      )
+      .toBe(true);
+    const rem = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
+
+    // Colours: the theme's four, the primary alone, or own colours repeated to fill four.
+    expect(new Set(await colors('d-spin-multi')).size).toBeGreaterThan(2);
+    expect(new Set(await colors('d-spin-single')).size).toBe(1);
+    expect((await colors('d-spin-brand')).map((c) => c.toLowerCase())).toEqual(['#e8668e', '#3b6fd8', '#ff9a2e', '#e8668e']);
+
+    // A loading block: ring over text, both centred in the box, and the text names the progressbar.
+    const block = await spinnerBoxes(page, 'd-spin-block');
+    expect(Math.abs(centreX(block.ring) - centreX(block.host))).toBeLessThan(2);
+    expect(Math.abs(centreX(block.label) - centreX(block.host))).toBeLessThan(2);
+    expect(block.label.y).toBeGreaterThanOrEqual(block.ring.y + block.ring.height - 1);
+    expect(Math.abs(block.ring.y - block.host.y - (block.host.y + block.host.height - (block.label.y + block.label.height)))).toBeLessThan(3);
+    expect(Math.round(block.host.height)).toBe(Math.round(12 * rem));
+    await expect(page.locator('#d-spin-block .wt-progress-spinner-label')).toHaveText('กำลังโหลดข้อมูล…');
+    await expect(page.locator('#d-spin-block [role="progressbar"]')).toHaveAttribute('aria-label', 'กำลังโหลดข้อมูล…');
+
+    // Beside the ring: the text on the ring's line, to its right.
+    const inline = await spinnerBoxes(page, 'd-spin-inline');
+    expect(inline.label.x).toBeGreaterThanOrEqual(inline.ring.x + inline.ring.width - 1);
+    expect(Math.abs(centreY(inline.label) - centreY(inline.ring))).toBeLessThan(3);
+
+    // Own content: a title over a hint, centred under the ring; the name comes from ariaLabel.
+    const tpl = page.locator('#d-spin-template');
+    const ring = (await tpl.locator('.wt-progress-spinner').boundingBox())!;
+    const title = (await tpl.locator('.spinner-title').boundingBox())!;
+    const hint = (await tpl.locator('.spinner-hint').boundingBox())!;
+    expect(title.y).toBeGreaterThanOrEqual(ring.y + ring.height - 1);
+    expect(hint.y).toBeGreaterThanOrEqual(title.y + title.height - 1);
+    expect(Math.abs(centreX(title) - centreX(ring))).toBeLessThan(2);
+    expect(Math.abs(centreX(hint) - centreX(ring))).toBeLessThan(2);
+    await expect(tpl.locator('[role="progressbar"]')).toHaveAttribute('aria-label', 'กำลังเตรียมรายงาน');
+
+    await page.goto(`/${v}/components/progressspinner?tab=api`);
+    for (const name of ['multicolor', 'colors', 'labelPosition', 'size']) await expect(page.locator('docs-section#api-inputs')).toContainText(name);
+    await expect(page.locator('docs-section#api-templates')).toContainText('label');
+    await page.goto(`/${v}/components/progressspinner?tab=theming`);
+    await expect(page.locator('main')).toContainText('--wt-spinner-label-gap');
+
+    // A phone: no sideways scroll, the block and the row fit.
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto(`/${v}/components/progressspinner`);
+    await page.locator('#d-spin-template').scrollIntoViewIfNeeded();
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    for (const sel of ['#d-spin-block', '.sync-row', '#d-spin-template']) {
+      const b = (await page.locator(sel).boundingBox())!;
+      expect(b.x, sel).toBeGreaterThanOrEqual(0);
+      expect(b.x + b.width, sel).toBeLessThanOrEqual(360);
+    }
+    const phone = await spinnerBoxes(page, 'd-spin-block');
+    expect(Math.abs(centreX(phone.ring) - centreX(phone.host))).toBeLessThan(2);
+  }
+  expect(errors).toEqual([]);
+});
+
+test.describe('English: the ProgressSpinner page', () => {
+  test.use({ locale: 'en-US' });
+
+  test('labels, names and code read in English', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/v3/components/progressspinner');
+    await expect(page.locator('#d-spin-block .wt-progress-spinner-label')).toHaveText('Loading data…');
+    await expect(page.locator('#d-spin-block [role="progressbar"]')).toHaveAttribute('aria-label', 'Loading data…');
+    await expect(page.locator('#d-spin-inline .wt-progress-spinner-label')).toHaveText('Syncing 3 items');
+    await expect(page.locator('#d-spin-template .spinner-title')).toHaveText('Preparing the report');
+    await expect(page.locator('#d-spin-template .spinner-hint')).toHaveText('This may take about a minute');
+    await expect(page.locator('docs-section#colors h2')).toContainText('Colours');
+    await expect(page.locator('docs-section#label h2')).toContainText('With a label');
+    expect(await thaiOnPage(page)).toEqual([]);
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.reload();
+    await expect(page.locator('#d-spin-inline .wt-progress-spinner-label')).toHaveText('Syncing 3 items');
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    expect(errors).toEqual([]);
+  });
 });

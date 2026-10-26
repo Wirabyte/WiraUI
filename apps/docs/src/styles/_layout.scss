@@ -62,35 +62,69 @@ docs-layout {
   position: relative;
 }
 
+// The version switcher (wiratheme v3's wt-select): sized and coloured like the other header controls, in either mode
+// and whichever version's theme is on the page. Its list opens in the top layer but inherits these tokens.
 .docs-version-select {
-  position: relative;
+  --wt-field-bg: var(--docs-surface);
+  --wt-field-border: var(--docs-border);
+  --wt-field-border-width: 1px;
+  --wt-field-hover-border: var(--docs-border-strong);
+  --wt-field-focus-border: var(--docs-primary);
+  --wt-field-color: var(--docs-text);
+  --wt-field-shadow: none;
+  --wt-field-padding-y: 0px;
+  --wt-field-padding-x: 10px;
+  --wt-input-radius: 10px;
+  --wt-font-family: var(--docs-font);
+  --wt-font-size: 13px;
+  --wt-text: var(--docs-text);
+  --wt-text-muted: var(--docs-muted);
+  --wt-border: var(--docs-border);
+  --wt-overlay-bg: var(--docs-overlay);
+  --wt-select-overlay-radius: 12px;
+  --wt-select-option-radius: 8px;
+  --wt-select-option-hover-bg: var(--docs-hover);
+  --wt-select-option-selected-bg: var(--docs-primary-soft);
+  --wt-select-option-selected-color: var(--docs-primary-soft-text);
+  // As wide as the chosen version ("v3" on phones), not the select's standard width.
+  --wt-select-width: auto;
   display: inline-flex;
-  align-items: center;
   flex: none;
+  align-items: center;
 }
-.docs-version-select select {
-  appearance: none;
+.docs-version-select wt-select {
+  display: inline-flex;
+}
+.docs-version-select .wt-select {
+  align-items: center;
   height: var(--docs-tap);
-  max-width: 96px;
-  padding: 0 26px 0 10px;
-  border: 1px solid var(--docs-border);
-  border-radius: 10px;
-  background: var(--docs-surface);
-  color: var(--docs-text);
-  font: 500 13px/1 var(--docs-font);
-  text-overflow: ellipsis;
-  cursor: pointer;
+  font-weight: 500;
 }
-.docs-version-select select:hover {
+.docs-version-select .wt-select:hover {
   background: var(--docs-hover);
 }
-.docs-version-select .docs-icon {
-  position: absolute;
-  right: 7px;
-  width: 16px;
-  height: 16px;
-  color: var(--docs-muted);
-  pointer-events: none;
+.docs-version-current {
+  white-space: nowrap;
+}
+// Phones show the version alone; the Angular range joins from sm up.
+.docs-version-range {
+  display: none;
+}
+.docs-version-panel {
+  min-width: 15.5rem;
+}
+.docs-version-option {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  white-space: nowrap;
+}
+@include mq.up(sm) {
+  .docs-version-range {
+    display: inline;
+  }
 }
 
 .docs-body {
@@ -128,10 +162,11 @@ docs-layout {
   margin: 0 0 14px 4px;
 }
 
-// Sidebar tree. Each level sits one step (--docs-nav-step) right of its parent's text start, and its guide line
-// runs down that start: level 0 (icon + section), 1 (group label, or the items of a section without groups),
-// 2 (a group's items), 3 (the open page's own sections).
+// Sidebar tree. Each level's text sits a short inset (--docs-nav-inset) right of its guide line, and the next level's
+// guide line runs down that text start: level 0 (icon + section), 1 (group label, or the items of a section without
+// groups), 2 (a group's items), 3 (the open page's own sections, a full step in to leave room for their dots).
 .docs-sidebar {
+  --docs-nav-inset: 6px;
   --docs-nav-step: 12px;
   --docs-nav-l0: 40px;
 }
@@ -213,7 +248,7 @@ docs-layout {
   margin-left: var(--docs-nav-l0);
 }
 .docs-nav-subgroup > .docs-collapse > .docs-collapse-inner {
-  margin-left: var(--docs-nav-step);
+  margin-left: var(--docs-nav-inset);
 }
 .docs-nav-group > .docs-collapse > .docs-collapse-inner::before,
 .docs-nav-subgroup > .docs-collapse > .docs-collapse-inner::before {
@@ -233,7 +268,7 @@ docs-layout {
   width: 100%;
   min-height: 36px;
   margin: 2px 0 0;
-  padding: 0 6px 0 var(--docs-nav-step);
+  padding: 0 6px 0 var(--docs-nav-inset);
   border: 0;
   background: none;
   color: var(--docs-muted);
@@ -252,14 +287,14 @@ docs-layout {
   margin: 2px 0 6px;
   padding: 0;
 }
-// A link starts on its level's guide line: the active bar covers that line, the text is one step in.
+// A link starts on its level's guide line: the active bar covers that line, the text is a short inset in.
 .docs-nav-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   min-height: var(--docs-tap);
-  padding: 4px 10px 4px calc(var(--docs-nav-step) - 2px);
+  padding: 4px 10px 4px calc(var(--docs-nav-inset) - 2px);
   border-left: 2px solid transparent;
   border-radius: 0 8px 8px 0;
   color: var(--docs-muted);
@@ -364,7 +399,7 @@ a.docs-nav-link.active {
 // The open page's sections, nested under its sidebar item: a soft guide line with a dot on the section in view.
 .docs-sidebar .docs-nav-toc {
   position: relative;
-  margin: 2px 0 8px var(--docs-nav-step);
+  margin: 2px 0 8px var(--docs-nav-inset);
   padding: 0;
 }
 .docs-nav-toc::before {
@@ -427,10 +462,6 @@ a.docs-nav-link.active {
   .docs-pager-next {
     grid-column: 2;
   }
-  .docs-version-select select {
-    max-width: 150px;
-    padding: 0 30px 0 12px;
-  }
 }
 
 @include mq.up(md) {
@@ -446,9 +477,6 @@ a.docs-nav-link.active {
   }
   .docs-sidebar-lang {
     display: none;
-  }
-  .docs-version-select select {
-    max-width: 190px;
   }
   .docs-main {
     padding: 32px 28px;
@@ -506,6 +534,90 @@ a.docs-nav-link.active {
   .docs-pager,
   .docs-footer {
     margin-inline: auto;
+  }
+}
+
+// "On this page" on the right of wide screens (as most docs sites do): sticky, the section in view highlighted. Below
+// 1360px, and on the Studio page (it needs the width), the list stays under the page's own item in the sidebar.
+.docs-toc-aside {
+  display: none;
+}
+.docs-aside-toc {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.docs-aside-toc::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--docs-border);
+}
+.docs-aside-toc a {
+  position: relative;
+  display: block;
+  padding: 5px 8px 5px 14px;
+  border-radius: 0 8px 8px 0;
+  color: var(--docs-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.docs-aside-toc a::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: transparent;
+  transition: background-color 0.15s;
+}
+.docs-aside-toc a:hover {
+  color: var(--docs-text);
+}
+.docs-aside-toc a.active {
+  color: var(--docs-primary-soft-text);
+  font-weight: 500;
+}
+.docs-aside-toc a.active::before {
+  background: var(--docs-primary);
+}
+.docs-aside-toc .docs-nav-toc-sub a {
+  padding-left: 26px;
+}
+.docs-toc-aside-title {
+  margin: 0 0 8px;
+  color: var(--docs-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+@media (min-width: 1360px) {
+  .docs-main-row.docs-has-aside-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 14.5rem;
+    align-items: start;
+    gap: 40px;
+  }
+  .docs-toc-aside {
+    position: sticky;
+    top: calc(var(--docs-topbar-h) + 28px);
+    display: block;
+    max-height: calc(100vh - var(--docs-topbar-h) - 56px);
+    overflow-y: auto;
+    padding: 2px 4px 16px 0;
+  }
+  .docs-body-aside-toc .docs-sidebar docs-toc {
+    display: none;
   }
 }
 

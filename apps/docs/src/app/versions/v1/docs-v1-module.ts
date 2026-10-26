@@ -42,6 +42,15 @@ import { WtDragDropModule } from 'wiratheme-v1/dragdrop';
 import { WtNavbarModule } from 'wiratheme-v1/navbar';
 import { WtAsideMenuModule } from 'wiratheme-v1/asidemenu';
 import { WtImageCropperModule } from 'wiratheme-v1/imagecropper';
+import { WiIconModule } from 'wiraicon/angular';
+import { WtTerminalModule, WtTerminalService } from 'wiratheme-v1/terminal';
+import { WtImageCompareModule } from 'wiratheme-v1/imagecompare';
+import { WtCarouselModule } from 'wiratheme-v1/carousel';
+import { WtSplitterModule } from 'wiratheme-v1/splitter';
+import { WtOrganizationChartModule } from 'wiratheme-v1/organizationchart';
+import { WtKnobModule } from 'wiratheme-v1/knob';
+import { WtInputOtpModule } from 'wiratheme-v1/inputotp';
+import { addEdge, applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme-v1/flow';
 import { WtMeterGroupModule } from 'wiratheme-v1/metergroup';
 import { WtValidationModule, WtValidators } from 'wiratheme-v1/validation';
 import { WtDialogModule } from 'wiratheme-v1/dialog';
@@ -81,7 +90,7 @@ import { WtInputTextModule } from 'wiratheme-v1/inputtext';
 import { WtRadioButtonModule } from 'wiratheme-v1/radiobutton';
 import { WtTextareaModule } from 'wiratheme-v1/textarea';
 import { WtToggleSwitchModule } from 'wiratheme-v1/toggleswitch';
-import { DOCS_OVERLAYS, DOCS_VALIDATORS, DocsOverlays } from '../../core/overlays';
+import { DOCS_FLOW, DOCS_OVERLAYS, DOCS_TERMINAL, DOCS_VALIDATORS, DocsOverlays } from '../../core/overlays';
 import { DocsSharedModule } from '../../shared/docs-shared-module';
 import { DocsPagesModule } from '../../shared/pages/docs-pages-module';
 import { versionRoutes } from '../shared/version-routes';
@@ -165,6 +174,15 @@ import {
   NavbarPageV1,
   AsideMenuPageV1,
   ImageCropperPageV1,
+  IconsPageV1,
+  TerminalPageV1,
+  ImageComparePageV1,
+  CarouselPageV1,
+  SplitterPageV1,
+  OrganizationChartPageV1,
+  KnobPageV1,
+  InputOtpPageV1,
+  FlowPageV1,
   TextareaPageV1,
   ToggleSwitchPageV1,
 } from './pages-v1';
@@ -253,6 +271,15 @@ import { THEME_V1 } from './theme-v1';
     NavbarPageV1,
     AsideMenuPageV1,
     ImageCropperPageV1,
+    IconsPageV1,
+    TerminalPageV1,
+    ImageComparePageV1,
+    CarouselPageV1,
+    SplitterPageV1,
+    OrganizationChartPageV1,
+    KnobPageV1,
+    InputOtpPageV1,
+    FlowPageV1,
   ],
   imports: [
     FormsModule,
@@ -338,6 +365,15 @@ import { THEME_V1 } from './theme-v1';
     WtNavbarModule,
     WtAsideMenuModule,
     WtImageCropperModule,
+    WiIconModule,
+    WtTerminalModule,
+    WtImageCompareModule,
+    WtCarouselModule,
+    WtSplitterModule,
+    WtOrganizationChartModule,
+    WtKnobModule,
+    WtInputOtpModule,
+    WtFlowModule,
     RouterModule.forChild(
       versionRoutes({
         button: ButtonPageV1,
@@ -421,6 +457,15 @@ import { THEME_V1 } from './theme-v1';
         navbar: NavbarPageV1,
         asidemenu: AsideMenuPageV1,
         imagecropper: ImageCropperPageV1,
+        icons: IconsPageV1,
+        terminal: TerminalPageV1,
+        imagecompare: ImageComparePageV1,
+        carousel: CarouselPageV1,
+        splitter: SplitterPageV1,
+        organizationchart: OrganizationChartPageV1,
+        knob: KnobPageV1,
+        inputotp: InputOtpPageV1,
+        flow: FlowPageV1,
       })
     ),
   ],
@@ -436,6 +481,10 @@ import { THEME_V1 } from './theme-v1';
     WtMessageService,
     // The overlay demos open this version's alerts, confirmations and toasts.
     { provide: DOCS_VALIDATORS, useValue: WtValidators },
+    // The Terminal demo talks to this version's terminal service.
+    { provide: DOCS_TERMINAL, useExisting: WtTerminalService },
+    // The Flow demos that apply changes themselves use this version's helpers.
+    { provide: DOCS_FLOW, useValue: { applyNodeChanges, applyEdgeChanges, addEdge } },
     {
       provide: DOCS_OVERLAYS,
       useFactory: (): DocsOverlays => ({

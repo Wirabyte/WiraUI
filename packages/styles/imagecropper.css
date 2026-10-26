@@ -27,11 +27,13 @@
 
   /* ---------- the picture ---------- */
 
-  /* content-box: the aspect ratio applies to the area inside the padding, where the picture goes. */
+  /* content-box: the aspect ratio applies to the area inside the padding, where the picture goes. A set width keeps
+     the full width when max-height caps a tall picture (Firefox otherwise narrows the box through the ratio). */
   .wt-imagecropper-viewport {
     position: relative;
     box-sizing: content-box;
     flex: 1 1 auto;
+    width: calc(100% - var(--_pad) * 2);
     min-height: 0;
     max-height: var(--wt-imagecropper-max-height);
     padding: var(--_pad);
@@ -292,6 +294,8 @@
     flex: 1 1 auto;
     width: 100%;
     min-width: 3rem;
+    /* A 24 px tall box: easier to hit than the bare track (WCAG 2.5.8). */
+    height: 1.5rem;
     margin: 0;
     accent-color: var(--wt-primary-color);
     cursor: pointer;

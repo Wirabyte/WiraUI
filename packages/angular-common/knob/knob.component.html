@@ -1,0 +1,35 @@
+<div
+  class="wt-knob p-knob p-component"
+  [class.wt-knob-disabled]="disabled"
+  [class.p-disabled]="disabled"
+  [class.wt-knob-readonly]="readonly"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+>
+  <svg
+    viewBox="0 0 100 100"
+    role="slider"
+    [style.width.px]="size"
+    [attr.tabindex]="locked ? -1 : tabindex"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [attr.aria-valuenow]="current"
+    [attr.aria-valuetext]="text"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-labelledby]="ariaLabelledBy || null"
+    [attr.aria-disabled]="disabled || null"
+    [attr.aria-readonly]="readonly || null"
+    [attr.aria-required]="required || null"
+    [attr.aria-invalid]="invalid || null"
+    (pointerdown)="pointerdown($event)"
+    (pointermove)="pointermove($event)"
+    (pointerup)="pointerup($event)"
+    (pointercancel)="pointerup($event)"
+    (keydown)="keydown($event)"
+    (blur)="blurred()"
+  >
+    <path class="wt-knob-range p-knob-range" [attr.d]="paths.range" [attr.stroke-width]="strokeWidth" [style.stroke]="rangeColor || null"></path>
+    <path class="wt-knob-value p-knob-value" [attr.d]="paths.value" [attr.stroke-width]="strokeWidth" [style.stroke]="valueColor || null"></path>
+    <text *ngIf="showValue" x="50" y="57" text-anchor="middle" class="wt-knob-text p-knob-text" [style.fill]="textColor || null">{{ text }}</text>
+  </svg>
+</div>

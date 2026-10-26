@@ -2,10 +2,10 @@ import { ComponentDoc } from '../core/component-doc';
 import { row, tok } from './doc-helpers';
 
 const ORDERS_TS = `orders = [
-  { status: 'สั่งซื้อแล้ว', date: '12 มี.ค. 2569 10:30', icon: 'pi pi-shopping-cart', color: '#6366f1' },
-  { status: 'แพ็กสินค้า', date: '12 มี.ค. 2569 14:00', icon: 'pi pi-box', color: '#f59e0b' },
-  { status: 'กำลังจัดส่ง', date: '13 มี.ค. 2569 09:15', icon: 'pi pi-truck', color: '#0ea5e9' },
-  { status: 'ส่งถึงแล้ว', date: '14 มี.ค. 2569 16:45', icon: 'pi pi-check', color: '#10b981' },
+  { status: 'สั่งซื้อแล้ว', date: '12 มี.ค. 2569 10:30', icon: 'wi wi-shopping-cart', color: '#6366f1' },
+  { status: 'แพ็กสินค้า', date: '12 มี.ค. 2569 14:00', icon: 'wi wi-box', color: '#f59e0b' },
+  { status: 'กำลังจัดส่ง', date: '13 มี.ค. 2569 09:15', icon: 'wi wi-truck', color: '#0ea5e9' },
+  { status: 'ส่งถึงแล้ว', date: '14 มี.ค. 2569 16:45', icon: 'wi wi-check', color: '#10b981' },
 ];`;
 
 export const TIMELINE_DOC: ComponentDoc = {

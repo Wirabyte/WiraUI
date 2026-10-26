@@ -7,13 +7,13 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
         <wt-toolbar id="d-toolbar" [ariaLabel]="tx('จัดการเอกสาร')">
-          <wt-button wtToolbarStart [label]="tx('สร้างใหม่')" icon="pi pi-plus"></wt-button>
+          <wt-button wtToolbarStart [label]="tx('สร้างใหม่')" icon="wi wi-plus"></wt-button>
           <wt-button wtToolbarStart [label]="tx('ส่งออก')" severity="secondary" [outlined]="true"></wt-button>
           <wt-iconfield wtToolbarCenter>
-            <wt-inputicon icon="pi pi-search"></wt-inputicon>
+            <wt-inputicon icon="wi wi-search"></wt-inputicon>
             <input wtInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
           </wt-iconfield>
-          <wt-button wtToolbarEnd icon="pi pi-bell" [ariaLabel]="tx('การแจ้งเตือน')" [text]="true" [rounded]="true"></wt-button>
+          <wt-button wtToolbarEnd icon="wi wi-bell" [ariaLabel]="tx('การแจ้งเตือน')" [text]="true" [rounded]="true"></wt-button>
         </wt-toolbar>
       </docs-demo>
     </docs-section>
@@ -23,13 +23,13 @@
       <docs-demo [html]="code['templates']" layout="stack">
         <wt-toolbar id="d-toolbar-tpl">
           <ng-template #start>
-            <wt-button [label]="tx('สร้างใหม่')" icon="pi pi-plus"></wt-button>
+            <wt-button [label]="tx('สร้างใหม่')" icon="wi wi-plus"></wt-button>
           </ng-template>
           <ng-template #center>
             <b>{{ tx('จัดการเอกสาร') }}</b>
           </ng-template>
           <ng-template #end>
-            <wt-button icon="pi pi-bell" [ariaLabel]="tx('การแจ้งเตือน')" [text]="true" [rounded]="true"></wt-button>
+            <wt-button icon="wi wi-bell" [ariaLabel]="tx('การแจ้งเตือน')" [text]="true" [rounded]="true"></wt-button>
           </ng-template>
         </wt-toolbar>
       </docs-demo>
@@ -37,9 +37,9 @@
 
     <docs-section id="wrap" [section]="sec['wrap']">
       <docs-demo [html]="code['wrap']" layout="stack">
-        <div style="max-width: 360px">
+        <div style="max-width: min(300px, 100%)">
           <wt-toolbar id="d-toolbar-wrap">
-            <wt-button [label]="tx('บันทึก')" icon="pi pi-check"></wt-button>
+            <wt-button [label]="tx('บันทึก')" icon="wi wi-check"></wt-button>
             <wt-button [label]="tx('ยกเลิก')" severity="secondary" [text]="true"></wt-button>
             <span wtToolbarEnd>{{ tx('บันทึกอัตโนมัติ · แก้ไขล่าสุด 10:24 น.') }}</span>
           </wt-toolbar>

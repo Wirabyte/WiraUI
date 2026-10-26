@@ -6,30 +6,30 @@ const BOOL = 'boolean';
 const ITEMS_TS = `import { MenuItem } from 'wiratheme/api';
 
 items: MenuItem[] = [
-  { label: 'หน้าแรก', icon: 'pi pi-home' },
+  { label: 'หน้าแรก', icon: 'wi wi-home' },
   {
     label: 'นักเรียน',
-    icon: 'pi pi-users',
+    icon: 'wi wi-users',
     items: [
-      { label: 'รายชื่อนักเรียน', icon: 'pi pi-list' },
-      { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus' },
+      { label: 'รายชื่อนักเรียน', icon: 'wi wi-list' },
+      { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus' },
       { separator: true },
-      { label: 'นำเข้าจาก Excel', icon: 'pi pi-upload' },
+      { label: 'นำเข้าจาก Excel', icon: 'wi wi-upload' },
     ],
   },
   {
     label: 'รายงาน',
-    icon: 'pi pi-chart-bar',
+    icon: 'wi wi-chart-bar',
     items: [
       {
         label: 'ผลการเรียน',
-        icon: 'pi pi-book',
+        icon: 'wi wi-book',
         items: [{ label: 'ภาคเรียนที่ 1' }, { label: 'ภาคเรียนที่ 2' }],
       },
-      { label: 'การมาเรียน', icon: 'pi pi-calendar' },
+      { label: 'การมาเรียน', icon: 'wi wi-calendar' },
     ],
   },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog' },
 ];`;
 
 export const MENUBAR_DOC: ComponentDoc = {
@@ -175,25 +175,25 @@ export const MENUBAR_DOC: ComponentDoc = {
   code: {
     basic: `<wt-menubar [model]="items" ariaLabel="เมนูหลัก">
   <ng-template #start>
-    <span class="flex align-items-center gap-2 font-semibold"><i class="pi pi-book"></i> WiraSchool</span>
+    <span class="flex align-items-center gap-2 font-semibold"><i class="wi wi-book"></i> WiraSchool</span>
   </ng-template>
   <ng-template #end>
-    <wt-button label="ออกจากระบบ" icon="pi pi-sign-out" severity="secondary" [text]="true"></wt-button>
+    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
   </ng-template>
 </wt-menubar>`,
     header: `<!-- ไม่ต้องมี [model] -->
 <wt-menubar>
   <ng-template #start>
-    <span class="flex align-items-center gap-2 font-semibold"><i class="pi pi-building"></i> ระบบรับสมัคร</span>
+    <span class="flex align-items-center gap-2 font-semibold"><i class="wi wi-building"></i> ระบบรับสมัคร</span>
   </ng-template>
   <ng-template #end>
     <div class="flex align-items-center gap-2">
       <wt-iconfield class="hidden sm:block">
-        <wt-inputicon icon="pi pi-search"></wt-inputicon>
+        <wt-inputicon icon="wi wi-search"></wt-inputicon>
         <input wtInputText placeholder="ค้นหาผู้สมัคร" />
       </wt-iconfield>
-      <wt-button icon="pi pi-bell" [rounded]="true" [text]="true" ariaLabel="การแจ้งเตือน"></wt-button>
-      <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+      <wt-button icon="wi wi-bell" [rounded]="true" [text]="true" ariaLabel="การแจ้งเตือน"></wt-button>
+      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
     </div>
   </ng-template>
 </wt-menubar>`,
@@ -211,7 +211,7 @@ export const MENUBAR_DOC: ComponentDoc = {
       <kbd class="ml-auto text-xs">{{ item.shortcut }}</kbd>
     }
     @if (hasSubmenu) {
-      <i [class]="root ? 'pi pi-angle-down' : 'pi pi-angle-right'"></i>
+      <i [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
     }
   </ng-template>
 </wt-menubar>`,
@@ -220,7 +220,7 @@ export const MENUBAR_DOC: ComponentDoc = {
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span>{{ item.label }}</span>
     <kbd *ngIf="item.shortcut" class="ml-auto text-xs">{{ item.shortcut }}</kbd>
-    <i *ngIf="hasSubmenu" [class]="root ? 'pi pi-angle-down' : 'pi pi-angle-right'"></i>
+    <i *ngIf="hasSubmenu" [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
   </ng-template>
 </wt-menubar>`,
     },
@@ -229,7 +229,7 @@ export const MENUBAR_DOC: ComponentDoc = {
     <span class="font-semibold">WiraSchool</span>
   </ng-template>
   <ng-template #menuicon>
-    <i class="pi pi-bars"></i>
+    <i class="wi wi-bars"></i>
   </ng-template>
 </wt-menubar>`,
     auto: `<!-- เปิดเมื่อคลิกเท่านั้น -->
@@ -248,36 +248,36 @@ private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragmen
 links: MenuItem[] = [
   {
     label: 'หัวข้อในหน้านี้',
-    icon: 'pi pi-list',
+    icon: 'wi wi-list',
     items: [
       { label: 'แถบหัวเว็บ', routerLink: [], fragment: 'header', routerLinkActiveOptions: this.sameSection },
       { label: 'คำสั่ง', routerLink: [], fragment: 'commands', routerLinkActiveOptions: this.sameSection },
       { label: 'คีย์บอร์ด', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
     ],
   },
-  { label: 'ลิงก์และ router', icon: 'pi pi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
-  { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+  { label: 'ลิงก์และ router', icon: 'wi wi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
+  { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
 ];`,
     commands: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
 
 fileItems: MenuItem[] = [
   {
     label: 'ไฟล์',
-    icon: 'pi pi-file',
+    icon: 'wi wi-file',
     items: [
-      { label: 'สร้างใหม่', icon: 'pi pi-plus', command: (event) => this.run(event) },
-      { label: 'พิมพ์', icon: 'pi pi-print', command: (event) => this.run(event) },
+      { label: 'สร้างใหม่', icon: 'wi wi-plus', command: (event) => this.run(event) },
+      { label: 'พิมพ์', icon: 'wi wi-print', command: (event) => this.run(event) },
     ],
   },
   {
     label: 'แก้ไข',
-    icon: 'pi pi-pencil',
+    icon: 'wi wi-pencil',
     items: [
-      { label: 'คัดลอก', icon: 'pi pi-copy', command: (event) => this.run(event) },
-      { label: 'วาง', icon: 'pi pi-clipboard', command: (event) => this.run(event) },
+      { label: 'คัดลอก', icon: 'wi wi-copy', command: (event) => this.run(event) },
+      { label: 'วาง', icon: 'wi wi-clipboard', command: (event) => this.run(event) },
     ],
   },
-  { label: 'ช่วยเหลือ', icon: 'pi pi-question-circle', command: (event) => this.run(event) },
+  { label: 'ช่วยเหลือ', icon: 'wi wi-question-circle', command: (event) => this.run(event) },
 ];
 lastCommand = '';
 
@@ -285,19 +285,19 @@ run(event: MenuItemCommandEvent): void {
   this.lastCommand = event.item?.label ?? '';
 }`,
     states: `accountItems: MenuItem[] = [
-  { label: 'กล่องข้อความ', icon: 'pi pi-inbox', badge: '3' },
+  { label: 'กล่องข้อความ', icon: 'wi wi-inbox', badge: '3' },
   {
     label: 'บัญชี',
-    icon: 'pi pi-user',
+    icon: 'wi wi-user',
     items: [
-      { label: 'โปรไฟล์', icon: 'pi pi-user' },
-      { label: 'ความปลอดภัย', icon: 'pi pi-lock', title: 'รหัสผ่านและการยืนยันตัวตน' },
+      { label: 'โปรไฟล์', icon: 'wi wi-user' },
+      { label: 'ความปลอดภัย', icon: 'wi wi-lock', title: 'รหัสผ่านและการยืนยันตัวตน' },
       { separator: true },
-      { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false },   // ไม่แสดง
-      { label: 'ลบบัญชี', icon: 'pi pi-trash', disabled: true },
+      { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false },   // ไม่แสดง
+      { label: 'ลบบัญชี', icon: 'wi wi-trash', disabled: true },
     ],
   },
-  { label: 'รายงาน', icon: 'pi pi-chart-bar', disabled: true },
+  { label: 'รายงาน', icon: 'wi wi-chart-bar', disabled: true },
   { separator: true },
   { label: '<b>ใหม่</b> ห้องสมุด', escape: false },
 ];`,
@@ -305,16 +305,16 @@ run(event: MenuItemCommandEvent): void {
   {
     label: 'ไฟล์',
     items: [
-      { label: 'สร้างใหม่', icon: 'pi pi-plus', shortcut: 'Ctrl+N' },
-      { label: 'บันทึก', icon: 'pi pi-save', shortcut: 'Ctrl+S' },
-      { label: 'พิมพ์', icon: 'pi pi-print', shortcut: 'Ctrl+P' },
+      { label: 'สร้างใหม่', icon: 'wi wi-plus', shortcut: 'Ctrl+N' },
+      { label: 'บันทึก', icon: 'wi wi-save', shortcut: 'Ctrl+S' },
+      { label: 'พิมพ์', icon: 'wi wi-print', shortcut: 'Ctrl+P' },
     ],
   },
   {
     label: 'แก้ไข',
     items: [
-      { label: 'คัดลอก', icon: 'pi pi-copy', shortcut: 'Ctrl+C' },
-      { label: 'วาง', icon: 'pi pi-clipboard', shortcut: 'Ctrl+V' },
+      { label: 'คัดลอก', icon: 'wi wi-copy', shortcut: 'Ctrl+C' },
+      { label: 'วาง', icon: 'wi wi-clipboard', shortcut: 'Ctrl+V' },
     ],
   },
 ];`,

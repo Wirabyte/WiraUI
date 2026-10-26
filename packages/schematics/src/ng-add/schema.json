@@ -70,7 +70,7 @@
     "theme": {
       "type": "string",
       "default": "auto",
-      "description": "Theme or preset to start from. auto = this wiratheme major's default (v1: sila-light-teal, v2/v3: mali). tools/sync-sources.mjs writes each major's choices into the prompt. Names teams know from other theme sets (lara-light-teal, saga-blue, aura …) are accepted too.",
+      "description": "Theme or preset to start from. auto = this wiratheme major's default (v1: sila-light-teal, v2: mali, v3: wira). tools/sync-sources.mjs writes each major's choices into the prompt. Names teams know from other theme sets (lara-light-teal, saga-blue, aura …) are accepted too.",
       "x-prompt": {
         "message": "Theme?",
         "type": "list",

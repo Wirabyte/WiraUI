@@ -114,15 +114,15 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #file let-file let-i="index">
     <div class="flex align-items-center gap-2">
-      <i class="pi pi-file"></i>
+      <i class="wi wi-file"></i>
       <span class="flex-1">{{ file.name }}</span>
-      <wt-button icon="pi pi-times" severity="danger" [text]="true" [rounded]="true" ariaLabel="นำออก"
+      <wt-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" ariaLabel="นำออก"
         (onClick)="attachments.remove($event, i)"></wt-button>
     </div>
   </ng-template>
   <ng-template #empty>
     <div class="text-center">
-      <i class="pi pi-upload"></i>
+      <i class="wi wi-upload"></i>
       <p>ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่</p>
     </div>
   </ng-template>

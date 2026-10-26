@@ -1,4 +1,13 @@
-<div class="wt-progress-spinner p-progress-spinner" [class]="styleClass || ''" [style]="rootStyle" role="progressbar" aria-busy="true" [attr.aria-label]="label">
+<div
+  class="wt-progress-spinner p-progress-spinner"
+  [class]="styleClass || ''"
+  [style]="rootStyle"
+  [style.width]="labelled ? ringSize : null"
+  [style.height]="labelled ? ringSize : null"
+  role="progressbar"
+  aria-busy="true"
+  [attr.aria-label]="ariaText"
+>
   <svg class="wt-progress-spinner-svg p-progress-spinner-svg" viewBox="25 25 50 50" [style.animation-duration]="animationDuration">
     <circle
       class="wt-progress-spinner-circle p-progress-spinner-circle"
@@ -10,4 +19,8 @@
       stroke-miterlimit="10"
     />
   </svg>
+</div>
+<div *ngIf="labelled" class="wt-progress-spinner-label" aria-hidden="true">
+  <ng-container *ngIf="labelTemplate; else plainLabel"><ng-container *ngTemplateOutlet="labelTemplate"></ng-container></ng-container>
+  <ng-template #plainLabel>{{ label }}</ng-template>
 </div>

@@ -129,7 +129,7 @@
         <wt-table #dt id="d-tbl-search" [value]="local(students)" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0" [scrollable]="true" scrollHeight="320px">
           <ng-template #caption>
             <wt-iconfield>
-              <wt-inputicon icon="pi pi-search"></wt-inputicon>
+              <wt-inputicon icon="wi wi-search"></wt-inputicon>
               <input id="d-tbl-search-input" wtInputText [placeholder]="tx('ค้นหานักเรียน')" [attr.aria-label]="tx('ค้นหานักเรียน')" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
             </wt-iconfield>
           </ng-template>
@@ -192,7 +192,7 @@
     <docs-section id="loading" [section]="sec['loading']">
       <docs-demo [html]="code['loading']" [ts]="ts['loading']" layout="stack">
         <div>
-          <wt-button id="d-tbl-reload" icon="pi pi-refresh" [label]="tx('โหลดใหม่')" size="small" severity="secondary" [loading]="isApiLoading" (onClick)="reload()"></wt-button>
+          <wt-button id="d-tbl-reload" icon="wi wi-refresh" [label]="tx('โหลดใหม่')" size="small" severity="secondary" [loading]="isApiLoading" (onClick)="reload()"></wt-button>
         </div>
         <div class="docs-demo-fields">
           <wt-table id="d-tbl-loading-mask" [value]="local(few)" [loading]="isApiLoading">
@@ -399,7 +399,7 @@
               <td>{{ s.status }}</td>
               <td class="docs-table-nowrap">{{ thaiDate(s.birthDate) }}</td>
               <td wtFrozenColumn alignFrozen="right" class="d-tbl-actions">
-                <wt-button icon="pi pi-pencil" [rounded]="true" [text]="true" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
+                <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
               </td>
             </tr>
           </ng-template>
@@ -437,7 +437,7 @@
                   [wtRowToggler]="s"
                   [text]="true"
                   [rounded]="true"
-                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                  [icon]="expanded ? 'wi wi-chevron-down' : 'wi wi-chevron-right'"
                   [attr.aria-label]="tx('รายละเอียดของ') + ' ' + s.name"
                 ></button>
               </td>
@@ -574,17 +574,17 @@
         >
           <ng-template #caption>
             <div class="docs-demo-actions">
-              <wt-button id="d-tbl-export-all" [label]="tx('ส่งออก CSV')" icon="pi pi-download" (onClick)="exportTable.exportCSV()"></wt-button>
+              <wt-button id="d-tbl-export-all" [label]="tx('ส่งออก CSV')" icon="wi wi-download" (onClick)="exportTable.exportCSV()"></wt-button>
               <wt-button
                 id="d-tbl-export-picked"
                 [label]="tx('ส่งออกที่เลือก')"
-                icon="pi pi-download"
+                icon="wi wi-download"
                 severity="secondary"
                 [outlined]="true"
                 [disabled]="!pickedStudents.length"
                 (onClick)="exportTable.exportCSV({ selectionOnly: true })"
               ></wt-button>
-              <wt-button id="d-tbl-export-preview" [label]="tx('ดูข้อความ CSV')" icon="pi pi-file" severity="secondary" [text]="true" (onClick)="previewCsv(exportTable)"></wt-button>
+              <wt-button id="d-tbl-export-preview" [label]="tx('ดูข้อความ CSV')" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(exportTable)"></wt-button>
             </div>
           </ng-template>
           <ng-template #header>
@@ -623,7 +623,7 @@
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
             <tr [wtReorderableRow]="i">
-              <td><span class="pi pi-bars docs-tbl-grip" wtReorderableRowHandle></span></td>
+              <td><span class="wi wi-bars docs-tbl-grip" wtReorderableRowHandle></span></td>
               <td>{{ i + 1 }}</td>
               <td class="d-tbl-name">{{ s.name }}</td>
               <td>{{ s.room }}</td>
@@ -737,10 +737,10 @@
               </td>
               <td class="docs-table-actions">
                 @if (!editing) {
-                  <button type="button" wtButton wtInitEditableRow class="d-tbl-row-edit" icon="pi pi-pencil" [text]="true" [rounded]="true" [attr.aria-label]="tx('แก้ไข')" (click)="startEdit(s)"></button>
+                  <button type="button" wtButton wtInitEditableRow class="d-tbl-row-edit" icon="wi wi-pencil" [text]="true" [rounded]="true" [attr.aria-label]="tx('แก้ไข')" (click)="startEdit(s)"></button>
                 } @else {
-                  <button type="button" wtButton wtSaveEditableRow class="d-tbl-row-save" icon="pi pi-check" [text]="true" [rounded]="true" [attr.aria-label]="tx('บันทึก')" (click)="saveRow(s)"></button>
-                  <button type="button" wtButton wtCancelEditableRow class="d-tbl-row-cancel" icon="pi pi-times" severity="secondary" [text]="true" [rounded]="true" [attr.aria-label]="tx('ยกเลิก')" (click)="cancelRow(s)"></button>
+                  <button type="button" wtButton wtSaveEditableRow class="d-tbl-row-save" icon="wi wi-check" [text]="true" [rounded]="true" [attr.aria-label]="tx('บันทึก')" (click)="saveRow(s)"></button>
+                  <button type="button" wtButton wtCancelEditableRow class="d-tbl-row-cancel" icon="wi wi-times" severity="secondary" [text]="true" [rounded]="true" [attr.aria-label]="tx('ยกเลิก')" (click)="cancelRow(s)"></button>
                 }
               </td>
             </tr>
@@ -931,10 +931,10 @@
           <ng-template #caption>
             <div class="docs-table-caption">
               <wt-iconfield>
-                <wt-inputicon icon="pi pi-search"></wt-inputicon>
+                <wt-inputicon icon="wi wi-search"></wt-inputicon>
                 <input id="d-tbl-admin-search" wtInputText [placeholder]="tx('ค้นหา รหัส ชื่อ ห้อง')" [attr.aria-label]="tx('ค้นหา รหัส ชื่อ ห้อง')" (input)="adminTable.filterGlobal($any($event.target).value, 'contains')" />
               </wt-iconfield>
-              <wt-button id="d-tbl-admin-add" [label]="tx('เพิ่ม')" icon="pi pi-plus" (onClick)="addStudent()"></wt-button>
+              <wt-button id="d-tbl-admin-add" [label]="tx('เพิ่ม')" icon="wi wi-plus" (onClick)="addStudent()"></wt-button>
             </div>
           </ng-template>
           <ng-template #header>
@@ -957,8 +957,8 @@
               <td class="d-tbl-date">{{ thaiDate(s.birthDate) }}</td>
               <td><wt-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wt-tag></td>
               <td class="docs-table-actions">
-                <wt-button icon="pi pi-pencil" [rounded]="true" [text]="true" [wtTooltip]="tx('แก้ไข')" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
-                <wt-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" [wtTooltip]="tx('ลบ')" [ariaLabel]="tx('ลบ')" (onClick)="deleteStudent(s)"></wt-button>
+                <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" [wtTooltip]="tx('แก้ไข')" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
+                <wt-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" [wtTooltip]="tx('ลบ')" [ariaLabel]="tx('ลบ')" (onClick)="deleteStudent(s)"></wt-button>
               </td>
             </tr>
           </ng-template>

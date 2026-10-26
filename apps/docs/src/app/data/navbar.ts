@@ -1,7 +1,235 @@
 import { ComponentDoc } from '../core/component-doc';
+import { Text } from '../core/i18n';
 import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
+
+/**
+ * A ready-made look for the bar: one class for `styleClass` that sets `--wt-navbar-*` tokens (plus a short rule where a
+ * token cannot do it). The live demo applies `css` itself, so what the reader copies is exactly what is on screen.
+ */
+export interface NavbarTheme {
+  /** Section id and anchor. */
+  id: string;
+  styleClass: string;
+  variant: 'solid' | 'glass';
+  /** The sign-in button in the end slot. */
+  button: 'solid' | 'outlined' | 'rounded';
+  title: Text;
+  text: Text;
+  /** The theme: shown in the sample and applied to the live demo. */
+  css: string;
+  /** Shown in the sample only: the reader's own page around the bar. */
+  pageCss?: string;
+}
+
+/** Buttons and badges on a coloured bar: white, with the bar's colour as their text. */
+const whiteButtons = (cls: string, hover: string, active: string, text: string): string => `/* ปุ่มและ badge ในแถบเป็นสีขาว */
+.${cls} .wt-navbar-end,
+.${cls} .wt-navbar-badge {
+  --wt-primary-color: #ffffff;
+  --wt-primary-hover: ${hover};
+  --wt-primary-active: ${active};
+  --wt-primary-contrast: ${text};
+}`;
+
+export const NAVBAR_THEMES: NavbarTheme[] = [
+  {
+    id: 'theme-dark',
+    styleClass: 'navbar-dark',
+    variant: 'solid',
+    button: 'solid',
+    title: { th: 'สีเข้ม', en: 'Dark' },
+    text: {
+      th: 'แถบสีกรมท่าเกือบดำ ตัวอักษรขาว เข้ากับสีแบรนด์ได้ทุกสี และปุ่มสีหลักของธีมเด่นขึ้นบนพื้นเข้ม',
+      en: 'A near-black bar with white text that suits any brand colour; the theme\'s primary button stands out on it.',
+    },
+    css: `/* styles.css · แถบสีเข้ม ตัวอักษรสีขาว */
+.navbar-dark {
+  --wt-navbar-bg: #0f172a;
+  --wt-navbar-color: #f8fafc;
+  --wt-navbar-border-color: #1e293b;
+  --wt-navbar-link-color: #cbd5e1;
+  --wt-navbar-link-hover-bg: rgba(255, 255, 255, 0.08);
+  --wt-navbar-link-active-bg: rgba(255, 255, 255, 0.14);
+  --wt-navbar-link-active-color: #ffffff;
+  --wt-navbar-panel-bg: #0f172a;
+}
+/* โหมดมืด (.wt-dark): เข้มกว่าพื้นหน้าเว็บอีกนิด แถบจึงไม่กลืนไปกับหน้า */
+.wt-dark .navbar-dark {
+  --wt-navbar-bg: #020617;
+  --wt-navbar-panel-bg: #020617;
+}`,
+  },
+  {
+    id: 'theme-primary',
+    styleClass: 'navbar-primary',
+    variant: 'solid',
+    button: 'solid',
+    title: { th: 'สีหลักของธีม', en: 'Primary' },
+    text: {
+      th: 'แถบเป็นเฉดเข้มของสีหลัก (<code>--wt-primary-600</code>) ตัวอักษรขาวจึงอ่านง่าย และกฎสั้น ๆ อีกข้อทำให้ปุ่มกับ badge ในแถบเป็นสีขาว · เปลี่ยนสีหลักของธีมแล้วแถบเปลี่ยนตาม',
+      en: 'The bar takes a deep shade of the primary colour (<code>--wt-primary-600</code>), so white text reads well, and one short rule turns buttons and badges in the bar white · change the theme\'s primary colour and the bar follows.',
+    },
+    css: `/* styles.css · แถบสีหลักของธีม ตัวอักษรสีขาว */
+.navbar-primary {
+  --wt-navbar-bg: var(--wt-primary-600);
+  --wt-navbar-color: #ffffff;
+  --wt-navbar-border-width: 0px;
+  --wt-navbar-border-color: rgba(255, 255, 255, 0.3);
+  --wt-navbar-link-color: #ffffff;
+  --wt-navbar-link-hover-bg: rgba(0, 0, 0, 0.12);
+  --wt-navbar-link-active-bg: rgba(0, 0, 0, 0.24);
+  --wt-navbar-link-active-color: #ffffff;
+  --wt-navbar-panel-bg: var(--wt-primary-600);
+}
+${whiteButtons('navbar-primary', 'var(--wt-primary-50)', 'var(--wt-primary-100)', 'var(--wt-primary-700)')}`,
+  },
+  {
+    id: 'theme-soft',
+    styleClass: 'navbar-soft',
+    variant: 'solid',
+    button: 'solid',
+    title: { th: 'พื้นอ่อน', en: 'Soft tint' },
+    text: {
+      th: 'พื้นเทาอ่อนที่ผสมจากสีตัวอักษรกับสีการ์ด ไม่มีเส้นใต้ ลิงก์ของหน้าปัจจุบันเป็นแผ่นสีการ์ด · ผสมจาก token ของธีม จึงเป็นเทาเข้มเองในโหมดมืด',
+      en: 'A soft grey mixed from the text and card colours, with no line under it; the current page\'s link is a card-coloured tile · it is mixed from theme tokens, so it turns dark grey in dark mode by itself.',
+    },
+    css: `/* styles.css · แถบพื้นเทาอ่อน ไม่มีเส้นใต้ โหมดมืดปรับเอง */
+.navbar-soft {
+  --wt-navbar-bg: color-mix(in srgb, var(--wt-text) 7%, var(--wt-card-bg));
+  --wt-navbar-border-width: 0px;
+  --wt-navbar-link-hover-bg: color-mix(in srgb, var(--wt-text) 8%, transparent);
+  --wt-navbar-link-active-bg: var(--wt-card-bg);
+  --wt-navbar-link-active-color: var(--wt-primary-soft-text);
+  --wt-navbar-panel-bg: color-mix(in srgb, var(--wt-text) 7%, var(--wt-card-bg));
+}`,
+  },
+  {
+    id: 'theme-gradient',
+    styleClass: 'navbar-gradient',
+    variant: 'solid',
+    button: 'solid',
+    title: { th: 'ไล่สี', en: 'Gradient' },
+    text: {
+      th: '<code>--wt-navbar-bg</code> รับ gradient ได้ แถบนี้ไล่จากครามไปม่วง แผงบนจอแคบใช้ gradient เดียวกัน และปุ่มเป็นสีขาว',
+      en: '<code>--wt-navbar-bg</code> takes a gradient: this one runs from indigo to violet, the narrow-screen panel uses the same one, and the buttons are white.',
+    },
+    css: `/* styles.css · แถบไล่สีครามไปม่วง */
+.navbar-gradient {
+  --wt-navbar-bg: linear-gradient(90deg, #4338ca, #7c3aed);
+  --wt-navbar-color: #ffffff;
+  --wt-navbar-border-width: 0px;
+  --wt-navbar-border-color: rgba(255, 255, 255, 0.3);
+  --wt-navbar-link-color: #ffffff;
+  --wt-navbar-link-hover-bg: rgba(0, 0, 0, 0.14);
+  --wt-navbar-link-active-bg: rgba(0, 0, 0, 0.26);
+  --wt-navbar-link-active-color: #ffffff;
+  --wt-navbar-panel-bg: linear-gradient(90deg, #4338ca, #7c3aed);
+}
+${whiteButtons('navbar-gradient', '#eef2ff', '#e0e7ff', '#4338ca')}`,
+  },
+  {
+    id: 'theme-underline',
+    styleClass: 'navbar-underline',
+    variant: 'solid',
+    button: 'outlined',
+    title: { th: 'เส้นใต้ลิงก์', en: 'Underlined links' },
+    text: {
+      th: 'ลิงก์ของหน้าปัจจุบันมีเส้นสีหลักอยู่ใต้ลิงก์แทนแผ่นสี (ชิดขอบล่างของแถบ) ชี้แล้วมีเส้นจาง ๆ · บนจอแคบกลับเป็นแผ่นสีตามปกติ เพราะกฎเส้นใต้ใช้เฉพาะ <code>:not(.wt-navbar-mobile)</code>',
+      en: 'The current page\'s link has a primary line under it instead of a tile (on the bar\'s bottom edge), and hovering shows a faint one · on narrow screens it is a tile again, as the underline rules only apply to <code>:not(.wt-navbar-mobile)</code>.',
+    },
+    css: `/* styles.css · ลิงก์ของหน้าปัจจุบันมีเส้นใต้แทนแผ่นสี */
+.navbar-underline {
+  --wt-navbar-link-active-color: var(--wt-primary-soft-text);
+}
+/* เส้นใต้เฉพาะจอกว้าง */
+.navbar-underline:not(.wt-navbar-mobile) {
+  --wt-navbar-padding: 0px 1rem;
+  --wt-navbar-link-gap: 1rem;
+  --wt-navbar-link-padding: 0.875rem 0.25rem;
+  --wt-navbar-link-radius: 0px;
+  --wt-navbar-link-hover-bg: transparent;
+  --wt-navbar-link-active-bg: transparent;
+}
+.navbar-underline:not(.wt-navbar-mobile) .wt-navbar-link {
+  border-bottom: 2px solid transparent;
+}
+.navbar-underline:not(.wt-navbar-mobile) .wt-navbar-link:hover {
+  border-bottom-color: color-mix(in srgb, currentColor 30%, transparent);
+}
+.navbar-underline:not(.wt-navbar-mobile) .wt-navbar-link.wt-navbar-link-active {
+  border-bottom-color: var(--wt-primary-color);
+}`,
+  },
+  {
+    id: 'theme-pill',
+    styleClass: 'navbar-pill',
+    variant: 'solid',
+    button: 'rounded',
+    title: { th: 'แคปซูลกลางแถบ', en: 'Centred pills' },
+    text: {
+      th: '<code>--wt-navbar-links-justify: center</code> วางลิงก์ไว้กลางแถบ ลิงก์ทรงแคปซูลอยู่บนรางสีเทา หน้าปัจจุบันเป็นสีหลัก และ <code>--wt-navbar-max-width</code> ไม่ให้เนื้อในกว้างเกินไปบนจอใหญ่',
+      en: '<code>--wt-navbar-links-justify: center</code> puts the links in the middle: pill links on a grey track, the current page in the primary colour, and <code>--wt-navbar-max-width</code> keeps the content from spreading on big screens.',
+    },
+    css: `/* styles.css · ลิงก์ทรงแคปซูลอยู่กลางแถบ */
+.navbar-pill {
+  --wt-navbar-max-width: 72rem;
+  --wt-navbar-links-justify: center;
+  --wt-navbar-link-radius: 999px;
+  --wt-navbar-link-padding: 0.375rem 1rem;
+  --wt-navbar-link-active-bg: var(--wt-primary-color);
+  --wt-navbar-link-active-color: var(--wt-primary-contrast);
+}
+/* รางสีเทาใต้ลิงก์ เฉพาะจอกว้าง */
+.navbar-pill:not(.wt-navbar-mobile) .wt-navbar-list {
+  --wt-navbar-link-hover-bg: var(--wt-card-bg);
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--wt-hover-bg);
+}`,
+  },
+  {
+    id: 'theme-glass',
+    styleClass: 'navbar-glass',
+    variant: 'glass',
+    button: 'rounded',
+    title: { th: 'กระจกบนรูป', en: 'Glass over a picture' },
+    text: {
+      th: '<code>variant="glass"</code> บนรูปหัวเว็บ: <code>--wt-glass-bg</code> เป็นสีเข้มโปร่งแสง ตัวอักษรขาวจึงอ่านได้บนรูปทุกแบบ ส่วน <code>--wt-navbar-bg</code> เป็นสีสำรองของเบราว์เซอร์ที่ไม่มี backdrop-filter',
+      en: '<code>variant="glass"</code> over a hero picture: <code>--wt-glass-bg</code> is a see-through dark, so white text reads on any picture, and <code>--wt-navbar-bg</code> is the fallback for browsers without backdrop-filter.',
+    },
+    css: `/* styles.css · แถบกระจกบนรูป ใช้กับ variant="glass" */
+.navbar-glass {
+  --wt-glass-bg: rgba(15, 23, 42, 0.5);
+  --wt-glass-border: rgba(255, 255, 255, 0.2);
+  --wt-navbar-bg: rgba(15, 23, 42, 0.8); /* สีสำรองของเบราว์เซอร์ที่ไม่มี backdrop-filter */
+  --wt-navbar-color: #ffffff;
+  --wt-navbar-border-color: rgba(255, 255, 255, 0.2);
+  --wt-navbar-link-color: #ffffff;
+  --wt-navbar-link-hover-bg: rgba(255, 255, 255, 0.14);
+  --wt-navbar-link-active-bg: rgba(255, 255, 255, 0.22);
+  --wt-navbar-link-active-color: #ffffff;
+  --wt-navbar-panel-bg: rgba(15, 23, 42, 0.94);
+}
+${whiteButtons('navbar-glass', '#f1f5f9', '#e2e8f0', '#0f172a')}`,
+    pageCss: `/* รูปหัวเว็บใต้แถบ (รูปของแอปเอง) */
+.hero {
+  min-height: 20rem;
+  background: #0f172a url('/images/hero.jpg') center / cover;
+}`,
+  },
+];
+
+/** The sample of a theme: the bar from Basic with the theme's class. */
+function themeHtml(t: NavbarTheme): string {
+  const button = t.button === 'outlined' ? ' [outlined]="true"' : t.button === 'rounded' ? ' [rounded]="true"' : '';
+  const bar = `<wt-navbar [model]="links"${t.variant === 'glass' ? ' variant="glass"' : ''} styleClass="${t.styleClass}">
+  <a wtNavbarBrand routerLink="/">วิระ</a>
+  <button wtNavbarEnd wtButton type="button" label="เข้าสู่ระบบ" size="small"${button}></button>
+</wt-navbar>`;
+  return t.variant === 'glass' ? `<header class="hero">\n${bar.replace(/^/gm, '  ')}\n</header>` : bar;
+}
 
 export const NAVBAR_DOC: ComponentDoc = {
   id: 'navbar',
@@ -25,8 +253,8 @@ export const NAVBAR_DOC: ComponentDoc = {
     'เกี่ยวกับเรา': 'About us',
     'ติดต่อ': 'Contact',
     'เข้าสู่ระบบ': 'Sign in',
-    'โรงเรียนศรีน่าน': 'Srinan School',
-    'ศรีน่าน': 'Srinan',
+    'โรงเรียนวิระ': 'Wira School',
+    'วิระ': 'Wira',
     'เมนูที่เลือก': 'Picked',
     'เมนูเปิดอยู่': 'Menu open',
     'เนื้อหาของหน้า เลื่อนลงเพื่อดูแถบที่ติดอยู่ด้านบน': 'Page content. Scroll down: the bar stays at the top.',
@@ -39,6 +267,22 @@ export const NAVBAR_DOC: ComponentDoc = {
     'โปรไฟล์': 'Profile',
     'เมนูหลัก': 'Main menu',
     'แอปที่ไม่ใช้ router บอกหน้าปัจจุบันเอง': 'Apps without a router name the current page themselves',
+    'ปุ่มและ badge ในแถบเป็นสีขาว': 'White buttons and badges on the bar',
+    'โหมดมืด (.wt-dark): เข้มกว่าพื้นหน้าเว็บอีกนิด แถบจึงไม่กลืนไปกับหน้า': 'Dark mode (.wt-dark): a little darker than the page, so the bar does not blend into it',
+    'แถบสีเข้ม ตัวอักษรสีขาว': 'Dark bar, white text',
+    'แถบสีหลักของธีม ตัวอักษรสีขาว': 'A bar in the theme\'s primary colour, white text',
+    'แถบพื้นเทาอ่อน ไม่มีเส้นใต้ โหมดมืดปรับเอง': 'Soft grey bar, no line under it, dark mode follows by itself',
+    'แถบไล่สีครามไปม่วง': 'Indigo to violet bar',
+    'ลิงก์ของหน้าปัจจุบันมีเส้นใต้แทนแผ่นสี': 'The current page\'s link is underlined instead of a tile',
+    'เส้นใต้เฉพาะจอกว้าง': 'Underlines on wide screens only',
+    'ลิงก์ทรงแคปซูลอยู่กลางแถบ': 'Pill links in the middle of the bar',
+    'รางสีเทาใต้ลิงก์ เฉพาะจอกว้าง': 'A grey track under the links, wide screens only',
+    'แถบกระจกบนรูป ใช้กับ variant="glass"': 'Glass bar over a picture, with variant="glass"',
+    'สีสำรองของเบราว์เซอร์ที่ไม่มี backdrop-filter': 'fallback for browsers without backdrop-filter',
+    'รูปหัวเว็บใต้แถบ (รูปของแอปเอง)': 'The picture under the bar (your own)',
+    'ขนาดจอของตัวอย่าง': 'Width of the demos',
+    'จอกว้าง': 'Wide',
+    'จอแคบ': 'Narrow',
   },
   sections: {
     import: {
@@ -83,6 +327,13 @@ export const NAVBAR_DOC: ComponentDoc = {
         en: '<code>[sticky]="true"</code> keeps the bar at the top of whatever scrolls (usually the page); once the page has scrolled, the host gets <code>wt-navbar-scrolled</code> and a shadow (token <code>--wt-navbar-scrolled-shadow</code>) · this demo sticks inside a scrolling box.',
       },
     },
+    themes: {
+      title: { th: 'ธีมสำเร็จรูป', en: 'Ready-made themes' },
+      text: {
+        th: 'คัดลอก HTML และ CSS ของแบบที่ชอบไปใช้ได้ทันที ทุกแบบเป็น class เดียวที่ตั้งค่า token <code>--wt-navbar-*</code> (บางแบบมีกฎสั้น ๆ เพิ่ม เช่น ปุ่มสีขาวบนแถบสี) ส่งเข้า <code>styleClass</code> แล้ววาง CSS ใน <code>styles.css</code> (หรือ <code>styles.scss</code>) ของแอป เพราะต้องเป็น CSS ของทั้งแอปจึงเข้าถึงข้างใน component ได้ · ทุกแบบใช้ได้ทั้งโหมดสว่างและโหมดมืด และบนจอแคบแผงลิงก์ที่พับลงมาใช้สีเดียวกับแถบ (เลือก <b>จอแคบ</b> แล้วกดปุ่มเมนูเพื่อดู) · <code>links</code> เป็นรายการเดียวกับตัวอย่าง Basic',
+        en: 'Copy the HTML and CSS of the one you like. Each theme is one class that sets <code>--wt-navbar-*</code> tokens (a few add a short rule, such as white buttons on a coloured bar): pass it to <code>styleClass</code> and put the CSS in the app\'s <code>styles.css</code> (or <code>styles.scss</code>), since only app-wide CSS reaches inside the component · every theme works in light and dark mode, and on narrow screens the panel that drops down takes the bar\'s colours (pick <b>Narrow</b>, then press the menu button) · <code>links</code> is the same list as in Basic.',
+      },
+    },
     templates: {
       title: { th: 'Slot และ Template', en: 'Slots and templates' },
       text: {
@@ -107,25 +358,25 @@ export const NAVBAR_DOC: ComponentDoc = {
   },
   code: {
     basic: `<wt-navbar [model]="links" [activeItem]="current" ariaLabel="เมนูหลัก">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
   <button wtNavbarEnd wtButton type="button" label="เข้าสู่ระบบ" size="small"></button>
 </wt-navbar>`,
     dropdown: `<wt-navbar [model]="links">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
 </wt-navbar>`,
     responsive: `<wt-navbar [model]="links" breakpoint="768px" (onMenuToggle)="menuToggled($event)">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
 </wt-navbar>`,
     variants: `<wt-navbar [model]="links" variant="glass"></wt-navbar>
 <wt-navbar [model]="links" variant="transparent"></wt-navbar>`,
     sticky: `<wt-navbar [model]="links" [sticky]="true">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
 </wt-navbar>`,
     templates: {
-      v3: `<wt-navbar [model]="links" menuIcon="pi pi-bars" closeIcon="pi pi-times">
+      v3: `<wt-navbar [model]="links" menuIcon="wi wi-bars" closeIcon="wi wi-times">
   <ng-template #start>
     <img src="assets/logo.svg" alt="" width="28" height="28" />
-    <b>โรงเรียนศรีน่าน</b>
+    <b>โรงเรียนวิระ</b>
   </ng-template>
   <ng-template #item let-item>
     @if (item.icon) {
@@ -135,13 +386,13 @@ export const NAVBAR_DOC: ComponentDoc = {
   </ng-template>
   <a wtNavbarLinks class="wt-navbar-link" href="/contact">ติดต่อ</a>
   <ng-template #end>
-    <button wtButton type="button" icon="pi pi-search" [text]="true" [rounded]="true" aria-label="ค้นหา"></button>
+    <button wtButton type="button" icon="wi wi-search" [text]="true" [rounded]="true" aria-label="ค้นหา"></button>
   </ng-template>
 </wt-navbar>`,
-      classic: `<wt-navbar [model]="links" menuIcon="pi pi-bars" closeIcon="pi pi-times">
+      classic: `<wt-navbar [model]="links" menuIcon="wi wi-bars" closeIcon="wi wi-times">
   <ng-template wtTemplate="start">
     <img src="assets/logo.svg" alt="" width="28" height="28" />
-    <b>โรงเรียนศรีน่าน</b>
+    <b>โรงเรียนวิระ</b>
   </ng-template>
   <ng-template wtTemplate="item" let-item>
     <i *ngIf="item.icon" [class]="item.icon"></i>
@@ -149,18 +400,20 @@ export const NAVBAR_DOC: ComponentDoc = {
   </ng-template>
   <a wtNavbarLinks class="wt-navbar-link" href="/contact">ติดต่อ</a>
   <ng-template wtTemplate="end">
-    <button wtButton type="button" icon="pi pi-search" [text]="true" [rounded]="true" aria-label="ค้นหา"></button>
+    <button wtButton type="button" icon="wi wi-search" [text]="true" [rounded]="true" aria-label="ค้นหา"></button>
   </ng-template>
 </wt-navbar>`,
     },
     aside: `<wt-navbar [model]="links" [aside]="side" [sticky]="true">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
 </wt-navbar>
 <div class="layout">
   <wt-aside-menu #side [model]="menu"></wt-aside-menu>
   <main><router-outlet></router-outlet></main>
 </div>`,
+    ...Object.fromEntries(NAVBAR_THEMES.map((t) => [t.id, themeHtml(t)])),
   },
+  css: Object.fromEntries(NAVBAR_THEMES.map((t) => [t.id, t.pageCss ? t.css + '\n\n' + t.pageCss : t.css])),
   ts: {
     basic: `import { WtMenuItem } from 'wiratheme/menu';
 

@@ -13,7 +13,7 @@ const SHELL = {
   width: '100%',
   height: '26rem',
   overflow: 'hidden',
-  border: '1px solid var(--docs-border)',
+  border: '1px solid var(--docs-edge)',
   borderRadius: 'var(--docs-radius)',
   background: 'var(--docs-surface)',
 };
@@ -46,8 +46,8 @@ export abstract class AsideMenuDemo extends SimpleDemo {
     {
       label: 'งานทะเบียน',
       items: [
-        { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', command: (event) => this.go(event) },
-        { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: (event) => this.go(event) },
+        { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', command: (event) => this.go(event) },
+        { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: (event) => this.go(event) },
       ],
     },
     {
@@ -55,7 +55,7 @@ export abstract class AsideMenuDemo extends SimpleDemo {
       items: [
         {
           label: 'ตารางเรียน',
-          icon: 'pi pi-calendar',
+          icon: 'wi wi-calendar',
           items: [
             { label: 'ม.1', command: (event) => this.go(event) },
             { label: 'ม.2', command: (event) => this.go(event) },
@@ -63,7 +63,7 @@ export abstract class AsideMenuDemo extends SimpleDemo {
         },
         {
           label: 'ผลการเรียน',
-          icon: 'pi pi-chart-line',
+          icon: 'wi wi-chart-line',
           items: [
             { label: 'ภาคเรียนที่ 1', command: (event) => this.go(event) },
             { label: 'ภาคเรียนที่ 2', command: (event) => this.go(event) },
@@ -73,14 +73,14 @@ export abstract class AsideMenuDemo extends SimpleDemo {
     },
     {
       label: 'ระบบ',
-      items: [{ label: 'ตั้งค่า', icon: 'pi pi-cog', command: (event) => this.go(event) }],
+      items: [{ label: 'ตั้งค่า', icon: 'wi wi-cog', command: (event) => this.go(event) }],
     },
   ];
   readonly templateMenu: MenuEntry[] = [
-    { label: 'แดชบอร์ด', icon: 'pi pi-home', command: (event) => this.go(event) },
-    { label: 'ประกาศ', icon: 'pi pi-bell', isNew: true, command: (event) => this.go(event) },
-    { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', command: (event) => this.go(event) },
-    { label: 'ตั้งค่า', icon: 'pi pi-cog', command: (event) => this.go(event) },
+    { label: 'แดชบอร์ด', icon: 'wi wi-home', command: (event) => this.go(event) },
+    { label: 'ประกาศ', icon: 'wi wi-bell', isNew: true, command: (event) => this.go(event) },
+    { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', command: (event) => this.go(event) },
+    { label: 'ตั้งค่า', icon: 'wi wi-cog', command: (event) => this.go(event) },
   ];
   readonly navLinks: MenuEntry[] = [
     { label: 'ข่าวสาร', command: (event) => this.go(event) },
@@ -120,19 +120,19 @@ export abstract class AsideMenuDemo extends SimpleDemo {
   private schoolMenu(rail: boolean): MenuEntry[] {
     const noIcon: MenuEntry[] = rail ? [{ label: 'เอกสาร', badge: '3', command: (event) => this.go(event) }] : [];
     return [
-      { label: 'แดชบอร์ด', icon: 'pi pi-home', command: (event) => this.go(event) },
+      { label: 'แดชบอร์ด', icon: 'wi wi-home', command: (event) => this.go(event) },
       {
         label: 'นักเรียน',
-        icon: 'pi pi-users',
+        icon: 'wi wi-users',
         items: [
-          { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', command: (event) => this.go(event) },
-          { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus', command: (event) => this.go(event) },
-          { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: (event) => this.go(event) },
+          { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', command: (event) => this.go(event) },
+          { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus', command: (event) => this.go(event) },
+          { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: (event) => this.go(event) },
         ],
       },
       {
         label: 'ตารางเรียน',
-        icon: 'pi pi-calendar',
+        icon: 'wi wi-calendar',
         items: [
           { label: 'ตารางสอนครู', command: (event) => this.go(event) },
           {
@@ -147,16 +147,16 @@ export abstract class AsideMenuDemo extends SimpleDemo {
       },
       {
         label: 'รายงาน',
-        icon: 'pi pi-chart-bar',
+        icon: 'wi wi-chart-bar',
         items: [
-          { label: 'ผลการเรียน', icon: 'pi pi-chart-line', command: (event) => this.go(event) },
-          { label: 'การมาเรียน', icon: 'pi pi-clock', badge: '5', command: (event) => this.go(event) },
+          { label: 'ผลการเรียน', icon: 'wi wi-chart-line', command: (event) => this.go(event) },
+          { label: 'การมาเรียน', icon: 'wi wi-clock', badge: '5', command: (event) => this.go(event) },
         ],
       },
       ...noIcon,
       { separator: true },
-      { label: 'ตั้งค่า', icon: 'pi pi-cog', command: (event) => this.go(event) },
-      { label: 'สำรองข้อมูล', icon: 'pi pi-save', disabled: true },
+      { label: 'ตั้งค่า', icon: 'wi wi-cog', command: (event) => this.go(event) },
+      { label: 'สำรองข้อมูล', icon: 'wi wi-save', disabled: true },
     ];
   }
 }

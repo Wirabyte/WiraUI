@@ -47,6 +47,10 @@
     place-items: center;
     width: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
     height: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
+    /* Whole, even pixels: a size like 17.5px (1.25rem at 14px) is snapped to 18 × 17 and the circle looks dented,
+       and an odd size leaves the dot half a pixel off centre. Browsers without round() keep the line above. */
+    width: round(calc(var(--wt-radio-size) * var(--_rb-scale, 1)), 2px);
+    height: round(calc(var(--wt-radio-size) * var(--_rb-scale, 1)), 2px);
     box-sizing: border-box;
     border: var(--wt-radio-border-width) solid var(--wt-field-border);
     border-radius: 50%;
@@ -59,8 +63,10 @@
       outline-color var(--wt-transition);
   }
   .wt-radiobutton-dot {
-    width: var(--wt-radio-dot-size);
-    height: var(--wt-radio-dot-size);
+    width: calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1));
+    height: calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1));
+    width: round(calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1)), 2px);
+    height: round(calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1)), 2px);
     border-radius: 50%;
     background: var(--wt-radio-dot-color);
     transform: scale(0);

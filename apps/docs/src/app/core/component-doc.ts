@@ -43,6 +43,8 @@ export interface ComponentDoc extends ImportNames {
   code: Record<string, Snippet>;
   /** TypeScript that goes with a section's template, by section id. */
   ts?: Record<string, Snippet>;
+  /** CSS that goes with a section's template (the app's styles.css), by section id. */
+  css?: Record<string, Snippet>;
   /**
    * English for the Thai in this page's demos and code (Thai → English, see core/sample-text.ts).
    * Code samples get it on their own; demo templates bind the same phrases with `tx()` / `local()`.

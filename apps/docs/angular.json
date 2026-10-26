@@ -60,9 +60,20 @@
                 "glob": "utils.min.css",
                 "input": "node_modules/wiratheme/utils",
                 "output": "wiratheme-utils"
+              },
+              {
+                "glob": "icons.json",
+                "input": "node_modules/wiraicon",
+                "output": "wiraicon"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/wiraicon/svg",
+                "output": "wiraicon/svg"
               }
             ],
             "styles": [
+              "node_modules/wiraicon/wiraicon.css",
               "src/styles.scss"
             ]
           },

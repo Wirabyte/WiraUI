@@ -16,7 +16,7 @@ import {
 } from './catalog';
 import { compatAliases, STYLED_INPUTS } from './compat';
 import { DarkMode, ThemeConfig } from './config';
-import { contrast, generatePalette, Palette, SHADES } from './color';
+import { apcaContrast, generatePalette, Palette, SHADES } from './color';
 import { FAMILIES } from './families';
 
 /** Token name (without `--wt-`) → CSS value. */
@@ -44,9 +44,14 @@ export function mergeTokens(target: ThemeTokens, ...sources: ThemeTokens[]): The
   return target;
 }
 
-/** White or the darkest surface, whichever reads better on `bg`. Same rule as `wt-best-on()` in Sass. */
+/** How much worse (in APCA Lc) white text may read than dark text and still be chosen. */
+const WHITE_LEAN = 5;
+
+/** White or the darkest surface, whichever reads better on `bg` (APCA). Same rule as `wt-best-on()` in Sass. */
 export function bestOn(bg: string, surface950: string): string {
-  return contrast('#ffffff', bg) >= contrast(surface950, bg) ? '#ffffff' : SURFACE_DARK_REF;
+  // APCA, leaning to white (within 5 Lc): solid buttons in teal, blue, red or emerald get white text; light
+  // colours such as amber, lime or yellow keep dark text.
+  return Math.abs(apcaContrast('#ffffff', bg)) + WHITE_LEAN >= Math.abs(apcaContrast(surface950, bg)) ? '#ffffff' : SURFACE_DARK_REF;
 }
 
 export function surfacePalette(surface: SurfaceId | Palette): Record<string, string> {
@@ -152,18 +157,87 @@ export function transitionTokens(ms: number): ThemeTokens {
   return { light: { transition: ms + 'ms' }, dark: {} };
 }
 
+/** A colour of the theme at `pct`% opacity. */
+const see = (token: string, pct: number) => `color-mix(in srgb, var(--wt-${token}) ${pct}%, transparent)`;
+
+/**
+ * Liquid Glass (material `'glass'`): cards, floating layers and buttons are translucent panes that blur and brighten
+ * what is behind them, with a bright rim along their edges and a soft lift. Floating layers use a thicker pane so text
+ * stays readable over anything. The page behind (`--wt-backdrop`, used by `.surface-ground`) gets soft colour fields
+ * from the theme, so there is something for the glass to bend. Without backdrop-filter the panes are simply paler.
+ */
 export function materialTokens(m: MaterialMode): ThemeTokens {
   if (m !== 'glass') return { light: { material: m }, dark: {} };
+  const pane = 'blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate))';
+  const lifted = 'var(--wt-glass-highlight), var(--wt-glass-shadow)';
   return {
     light: {
       material: m,
-      'card-bg': 'var(--wt-glass-bg)',
-      'card-backdrop': 'blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate))',
-      'card-border-width': '1px',
-      'card-shadow': 'var(--wt-glass-highlight), var(--wt-glass-shadow)',
+      'glass-bg': see('surface-0', 52),
+      'glass-blur': '24px',
+      'glass-saturate': '190%',
+      'glass-border': see('surface-0', 75),
+      // Specular rim: bright along the top, a thinner line round the rest, a glow inside the upper edge.
+      'glass-highlight':
+        'inset 0 1px 0.5px rgba(255, 255, 255, 0.95), inset 0 -1px 1px rgba(255, 255, 255, 0.4), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5), inset 0 10px 20px -14px rgba(255, 255, 255, 0.9)',
+      'glass-shadow': '0 12px 32px -10px rgba(15, 23, 42, 0.25), 0 2px 6px rgba(15, 23, 42, 0.08)',
+      backdrop: [
+        `radial-gradient(48rem 32rem at 6% -6%, ${see('primary-300', 55)}, transparent 70%)`,
+        `radial-gradient(40rem 30rem at 104% 8%, ${see('help-300', 45)}, transparent 70%)`,
+        `radial-gradient(44rem 34rem at 62% 108%, ${see('info-200', 60)}, transparent 70%)`,
+        `radial-gradient(30rem 24rem at 22% 78%, ${see('success-200', 40)}, transparent 70%)`,
+        'var(--wt-ground)',
+      ].join(', '),
       border: 'var(--wt-glass-border)',
+      'card-bg': 'var(--wt-glass-bg)',
+      'card-backdrop': pane,
+      'card-border-width': '1px',
+      'card-shadow': lifted,
+      'field-bg': see('surface-0', 68),
+      // Floating layers: a thicker pane.
+      'overlay-bg': see('surface-0', 74),
+      'dialog-bg': see('surface-0', 80),
+      'overlay-backdrop': 'blur(30px) saturate(200%)',
+      'select-overlay-shadow': lifted,
+      'menu-shadow': lifted,
+      'menubar-submenu-shadow': lifted,
+      'datepicker-panel-shadow': lifted,
+      'toast-shadow': lifted,
+      'dialog-shadow': 'var(--wt-glass-highlight), 0 30px 80px -20px rgba(15, 23, 42, 0.45)',
+      // Buttons: capsules with a sheen of light inside and a soft lift; secondary ones are clear glass.
+      'button-radius': '999px',
+      'button-backdrop': 'blur(14px) saturate(180%)',
+      'button-shadow':
+        'inset 0 1px 0.5px rgba(255, 255, 255, 0.6), inset 0 10px 14px -10px rgba(255, 255, 255, 0.55), inset 0 -2px 6px rgba(0, 0, 0, 0.06), 0 4px 12px -4px rgba(15, 23, 42, 0.25)',
+      'button-secondary-bg': see('surface-0', 55),
+      'button-secondary-hover-bg': see('surface-0', 75),
+      'button-secondary-active-bg': see('surface-0', 90),
+      'button-secondary-border': 'var(--wt-glass-border)',
     },
-    dark: { 'card-bg': 'var(--wt-glass-bg)', border: 'var(--wt-glass-border)' },
+    dark: {
+      'glass-bg': see('surface-900', 46),
+      'glass-border': see('surface-0', 16),
+      'glass-highlight':
+        'inset 0 1px 0.5px rgba(255, 255, 255, 0.32), inset 0 -1px 1px rgba(255, 255, 255, 0.08), inset 0 0 0 0.5px rgba(255, 255, 255, 0.12), inset 0 10px 20px -14px rgba(255, 255, 255, 0.25)',
+      'glass-shadow': '0 12px 32px -10px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3)',
+      backdrop: [
+        `radial-gradient(48rem 32rem at 6% -6%, ${see('primary-700', 45)}, transparent 70%)`,
+        `radial-gradient(40rem 30rem at 104% 8%, ${see('help-800', 45)}, transparent 70%)`,
+        `radial-gradient(44rem 34rem at 62% 108%, ${see('info-800', 50)}, transparent 70%)`,
+        'var(--wt-ground)',
+      ].join(', '),
+      border: 'var(--wt-glass-border)',
+      'card-bg': 'var(--wt-glass-bg)',
+      'field-bg': see('surface-900', 55),
+      'overlay-bg': see('surface-800', 72),
+      'dialog-bg': see('surface-800', 78),
+      'dialog-shadow': 'var(--wt-glass-highlight), 0 30px 80px -20px rgba(0, 0, 0, 0.7)',
+      'button-shadow':
+        'inset 0 1px 0.5px rgba(255, 255, 255, 0.35), inset 0 10px 14px -10px rgba(255, 255, 255, 0.25), 0 4px 12px -4px rgba(0, 0, 0, 0.5)',
+      'button-secondary-bg': see('surface-0', 10),
+      'button-secondary-hover-bg': see('surface-0', 16),
+      'button-secondary-active-bg': see('surface-0', 22),
+    },
   };
 }
 

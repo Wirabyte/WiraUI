@@ -1,0 +1,101 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-slot-note slot="item"></docs-slot-note>
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-carousel id="d-crs" [value]="local(news)" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+          <ng-template #item let-news>
+            <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
+          </ng-template>
+        </wt-carousel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="circular" [section]="sec['circular']">
+      <docs-demo [html]="code['circular']" layout="stack">
+        <wt-carousel
+          id="d-crs-circ"
+          [value]="local(news)"
+          [numVisible]="3"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="3000"
+          [responsiveOptions]="responsiveOptions"
+        >
+          <ng-template #item let-news>
+            <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
+          </ng-template>
+        </wt-carousel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="vertical" [section]="sec['vertical']">
+      <docs-demo [html]="code['vertical']" layout="stack">
+        <wt-carousel id="d-crs-vert" [value]="local(news)" orientation="vertical" verticalViewPortHeight="320px" [style]="{ maxWidth: '24rem' }">
+          <ng-template #item let-news>
+            <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
+          </ng-template>
+        </wt-carousel>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="page" [section]="sec['page']">
+      <docs-demo [html]="code['page']" [ts]="ts['page']" layout="stack">
+        <wt-carousel id="d-crs-page" [value]="local(news)" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
+          <ng-template #item let-news>
+            <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
+          </ng-template>
+        </wt-carousel>
+        <div class="docs-demo-actions">
+          <wt-button id="d-crs-first" [label]="tx('หน้าแรก')" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wt-button>
+          <wt-button id="d-crs-last" [label]="tx('หน้าสุดท้าย')" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wt-button>
+          <span class="docs-demo-output">page: <code id="d-crs-page-value">{{ page }}</code> · onPage: <code id="d-crs-onpage">{{ lastPage ?? '-' }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="templates" [section]="sec['templates']">
+      <docs-demo [html]="code['templates']" layout="stack">
+        <wt-carousel
+          id="d-crs-tpl"
+          [value]="local(news)"
+          [numVisible]="3"
+          [numScroll]="3"
+          [responsiveOptions]="responsiveOptions"
+          [prevButtonProps]="local(prevProps)"
+          [nextButtonProps]="local(nextProps)"
+        >
+          <ng-template #header>
+            <h3 class="docs-crs-heading">{{ tx('ข่าวประชาสัมพันธ์') }}</h3>
+          </ng-template>
+          <ng-template #item let-news>
+            <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
+          </ng-template>
+          <ng-template #footer>
+            <wt-button id="d-crs-all" [label]="tx('ดูข่าวทั้งหมด')" icon="wi wi-arrow-right" iconPos="right" [text]="true" (onClick)="openNews()"></wt-button>
+          </ng-template>
+        </wt-carousel>
+        <span class="docs-demo-output">openNews(): <code id="d-crs-all-count">{{ allNews }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>
+
+<!-- One news card for every demo above (the samples write it out in full). -->
+<ng-template #newsCard let-news>
+  <article class="docs-crs-card">
+    <img [src]="news.image" [alt]="news.title" />
+    <div class="docs-crs-body">
+      <wt-tag [value]="news.tag"></wt-tag>
+      <h4 class="docs-crs-title">{{ news.title }}</h4>
+      <p class="docs-crs-text">{{ news.text }}</p>
+    </div>
+  </article>
+</ng-template>

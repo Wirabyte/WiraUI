@@ -139,3 +139,49 @@ test('image cropper: nothing is wider than a phone at 360px', async ({ page }) =
   expect(stage.x + stage.width).toBeLessThanOrEqual(360);
   expect(stage.width).toBeGreaterThan(150);
 });
+
+test('image cropper: [toolbar] picks the buttons and their groups; a tools template adds the app’s own; none hides them', async ({ page }) => {
+  const bar = page.locator('#ic-tools .wt-imagecropper-toolbar');
+  await bar.scrollIntoViewIfNeeded();
+  const groups = bar.locator('.wt-imagecropper-group');
+  await expect(groups).toHaveCount(3);
+  await expect(groups.nth(0)).toHaveClass(/wt-imagecropper-group-zoom/);
+  await expect(groups.nth(0).locator('button, input')).toHaveCount(3);
+  await expect(groups.nth(1).locator('button')).toHaveCount(1);
+  await expect(bar.locator('.wt-imagecropper-rotate-right')).toBeVisible();
+  for (const name of ['rotate-left', 'flip-h', 'flip-v', 'reset']) await expect(bar.locator(`.wt-imagecropper-${name}`)).toHaveCount(0);
+  // The app's own button gets the cropper as its context.
+  await bar.locator('#ic-tools-own').click();
+  await expect(log(page)).toContainText('ic-tools:own');
+  // output="base64" gives a data URL instead of a Blob.
+  await expect(page.locator('#ic-tools-kind')).toHaveText('base64');
+  await expect(page.locator('#ic-none .wt-imagecropper-box')).toBeVisible();
+  await expect(page.locator('#ic-none .wt-imagecropper-toolbar')).toHaveCount(0);
+});
+
+test('image cropper: turning the picture keeps the cropper’s height, so the page does not jump', async ({ page }) => {
+  const free = page.locator('#ic-free');
+  await free.scrollIntoViewIfNeeded();
+  await expect(free.locator('.wt-imagecropper-box')).toBeVisible();
+  const height = async () => Math.round((await free.locator('.wt-imagecropper').boundingBox())!.height);
+  const stage = async () => (await free.locator('.wt-imagecropper-stage').boundingBox())!;
+  const before = await height();
+  const wide = await stage();
+  expect(wide.width).toBeGreaterThan(wide.height);
+  await free.locator('.wt-imagecropper-rotate-right').click();
+  // The turned (tall) picture fits inside the same box, centred.
+  await expect.poll(async () => {
+    const s = await stage();
+    return s.height > s.width;
+  }).toBe(true);
+  expect(await height()).toBe(before);
+  const viewport = (await free.locator('.wt-imagecropper-viewport').boundingBox())!;
+  const tall = await stage();
+  expect(Math.abs(tall.x + tall.width / 2 - (viewport.x + viewport.width / 2))).toBeLessThan(2);
+  await free.locator('.wt-imagecropper-rotate-left').click();
+  await expect.poll(async () => {
+    const s = await stage();
+    return s.width > s.height;
+  }).toBe(true);
+  expect(await height()).toBe(before);
+});

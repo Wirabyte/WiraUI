@@ -96,7 +96,7 @@ test('aside menu collapsed: an icon rail with tooltips; a group opens a flyout b
   await expect.poll(async () => (await host.boundingBox())!.width).toBeLessThan(full / 2);
   await expect(collapse).toHaveAttribute('title', 'ขยายเมนู');
   // The start template is told it is collapsed.
-  await expect(nav.locator('.am-brand')).toHaveText('ร');
+  await expect(nav.locator('.am-brand')).toHaveText('ว');
   // Labels become tooltips and stay the accessible names; an item without an icon shows its first consonant.
   const dashboard = nav.getByRole('button', { name: 'แดชบอร์ด' });
   await expect(dashboard).toHaveAttribute('title', 'แดชบอร์ด');
@@ -247,4 +247,44 @@ test('aside menu: nothing is wider than a phone, closed or open', async ({ page 
   await nav.getByRole('button', { name: 'นักเรียน', exact: true }).click();
   expect(await overflowing(page, '#am')).toEqual([]);
   expect(await nav.locator('.wt-aside-menu-body').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+});
+
+test('aside menu: collapsing and expanding slide over the full layout; labels never wrap mid-way', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  const host = side(page);
+  const nav = host.locator('nav.wt-aside-menu');
+  const collapse = nav.locator('.wt-aside-menu-collapse');
+  const full = (await nav.boundingBox())!.width;
+  /** Lines of the tallest visible label and the panel's width, on each frame for 700 ms. */
+  const sample = () =>
+    page.evaluate(
+      () =>
+        new Promise<{ lines: number; width: number; sliding: boolean }[]>((resolve) => {
+          const panel = document.querySelector('#am-side nav.wt-aside-menu') as HTMLElement;
+          const out: { lines: number; width: number; sliding: boolean }[] = [];
+          const start = performance.now();
+          const tick = () => {
+            const labels = [...panel.querySelectorAll<HTMLElement>('.wt-aside-menu-link:not(.wt-aside-menu-link-rail) .wt-aside-menu-label')];
+            const lines = Math.max(0, ...labels.map((l) => Math.round(l.getBoundingClientRect().height / parseFloat(getComputedStyle(l).lineHeight))));
+            out.push({ lines, width: panel.getBoundingClientRect().width, sliding: panel.classList.contains('wt-aside-menu-sliding') });
+            if (performance.now() - start < 700) requestAnimationFrame(tick);
+            else resolve(out);
+          };
+          tick();
+        }),
+    );
+  const [collapsing] = await Promise.all([sample(), collapse.click()]);
+  expect(collapsing.some((f) => f.sliding)).toBe(true);
+  // While it slides the menu keeps its full width (the host clips it) and every label stays on one line.
+  for (const f of collapsing.filter((f) => f.sliding)) {
+    expect(f.width).toBeCloseTo(full, 0);
+    expect(f.lines).toBeLessThanOrEqual(1);
+  }
+  await expect(nav).toHaveClass(/wt-aside-menu-collapsed/);
+  await expect(nav).not.toHaveClass(/wt-aside-menu-sliding/);
+  const [expanding] = await Promise.all([sample(), collapse.click()]);
+  expect(expanding.some((f) => f.sliding)).toBe(true);
+  for (const f of expanding) expect(f.lines).toBeLessThanOrEqual(1);
+  await expect(nav).not.toHaveClass(/wt-aside-menu-sliding/);
+  await expect.poll(async () => Math.round((await host.boundingBox())!.width)).toBe(Math.round(full));
 });

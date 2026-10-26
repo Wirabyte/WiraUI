@@ -7,19 +7,19 @@ const BOOL = 'boolean';
 const MENU_TS = `import { WtMenuItem, WtMenuItemCommandEvent } from 'wiratheme/menu';
 
 menu: WtMenuItem[] = [
-  { label: 'แดชบอร์ด', icon: 'pi pi-home', command: (event) => this.go(event) },
+  { label: 'แดชบอร์ด', icon: 'wi wi-home', command: (event) => this.go(event) },
   {
     label: 'นักเรียน',
-    icon: 'pi pi-users',
+    icon: 'wi wi-users',
     items: [
-      { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', command: (event) => this.go(event) },
-      { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus', command: (event) => this.go(event) },
-      { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: (event) => this.go(event) },
+      { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', command: (event) => this.go(event) },
+      { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus', command: (event) => this.go(event) },
+      { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: (event) => this.go(event) },
     ],
   },
   {
     label: 'ตารางเรียน',
-    icon: 'pi pi-calendar',
+    icon: 'wi wi-calendar',
     items: [
       { label: 'ตารางสอนครู', command: (event) => this.go(event) },
       {
@@ -34,15 +34,15 @@ menu: WtMenuItem[] = [
   },
   {
     label: 'รายงาน',
-    icon: 'pi pi-chart-bar',
+    icon: 'wi wi-chart-bar',
     items: [
-      { label: 'ผลการเรียน', icon: 'pi pi-chart-line', command: (event) => this.go(event) },
-      { label: 'การมาเรียน', icon: 'pi pi-clock', badge: '5', command: (event) => this.go(event) },
+      { label: 'ผลการเรียน', icon: 'wi wi-chart-line', command: (event) => this.go(event) },
+      { label: 'การมาเรียน', icon: 'wi wi-clock', badge: '5', command: (event) => this.go(event) },
     ],
   },
   { separator: true },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog', command: (event) => this.go(event) },
-  { label: 'สำรองข้อมูล', icon: 'pi pi-save', disabled: true },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog', command: (event) => this.go(event) },
+  { label: 'สำรองข้อมูล', icon: 'wi wi-save', disabled: true },
 ];
 /** แอปที่ไม่ใช้ router บอกหน้าปัจจุบันเอง: กลุ่มที่มีหน้านี้อยู่เปิดเอง */
 currentPage: WtMenuItem | null = this.menu[1].items?.[0] ?? null;
@@ -64,8 +64,8 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     en: 'Side navigation for admin-style apps. On wide screens it is a full-height column that stays beside the content and scrolls on its own; groups expand in place at any depth, and it collapses to an icon rail. On phones it is an off-canvas panel, and with Navbar it makes a ready-made app layout.',
   },
   english: {
-    'ศรีน่าน': 'Srinan',
-    'โรงเรียนศรีน่าน': 'Srinan School',
+    'วิระ': 'Wira',
+    'โรงเรียนวิระ': 'Wira School',
     'เปิดเมนู': 'Open the menu',
     'เมนู': 'Menu',
     'แดชบอร์ด': 'Dashboard',
@@ -186,23 +186,23 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     basic: {
       v3: `<div class="app-layout">
   <wt-aside-menu #side [model]="menu" [activeItem]="currentPage">
-    <a wtAsideMenuStart class="app-brand" routerLink="/">ศรีน่าน</a>
+    <a wtAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
   </wt-aside-menu>
   <main class="app-content">
     <!-- ปุ่มนี้มีเฉพาะจอแคบ -->
     @if (side.mobile) {
-      <wt-button icon="pi pi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
+      <wt-button icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
     }
     <h2>{{ currentPage?.label }}</h2>
   </main>
 </div>`,
       classic: `<div class="app-layout">
   <wt-aside-menu #side [model]="menu" [activeItem]="currentPage">
-    <a wtAsideMenuStart class="app-brand" routerLink="/">ศรีน่าน</a>
+    <a wtAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
   </wt-aside-menu>
   <main class="app-content">
     <!-- ปุ่มนี้มีเฉพาะจอแคบ -->
-    <wt-button *ngIf="side.mobile" icon="pi pi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
+    <wt-button *ngIf="side.mobile" icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
     <h2>{{ currentPage?.label }}</h2>
   </main>
 </div>`,
@@ -215,7 +215,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   <ng-template #start let-collapsed>
     <img src="assets/logo.svg" alt="" width="28" height="28" />
     @if (!collapsed) {
-      <b>โรงเรียนศรีน่าน</b>
+      <b>โรงเรียนวิระ</b>
     }
   </ng-template>
   <ng-template #item let-item let-collapsed="collapsed">
@@ -229,7 +229,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #end let-collapsed>
     <div class="app-user">
-      <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
       @if (!collapsed) {
         <span>ครูสมหญิง ใจดี</span>
       }
@@ -239,7 +239,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
       classic: `<wt-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true">
   <ng-template wtTemplate="start" let-collapsed>
     <img src="assets/logo.svg" alt="" width="28" height="28" />
-    <b *ngIf="!collapsed">โรงเรียนศรีน่าน</b>
+    <b *ngIf="!collapsed">โรงเรียนวิระ</b>
   </ng-template>
   <ng-template wtTemplate="item" let-item let-collapsed="collapsed">
     <i *ngIf="item.icon" class="wt-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
@@ -248,16 +248,16 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   </ng-template>
   <ng-template wtTemplate="end" let-collapsed>
     <div class="app-user">
-      <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
       <span *ngIf="!collapsed">ครูสมหญิง ใจดี</span>
     </div>
   </ng-template>
 </wt-aside-menu>`,
     },
-    mobile: `<wt-button label="เมนู" icon="pi pi-bars" (onClick)="isMenuOpen = true"></wt-button>
+    mobile: `<wt-button label="เมนู" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wt-button>
 <wt-aside-menu [model]="menu" [(visible)]="isMenuOpen" breakpoint="768px"></wt-aside-menu>`,
     navbar: `<wt-navbar [model]="links" [aside]="side" [sticky]="true">
-  <a wtNavbarBrand routerLink="/">ศรีน่าน</a>
+  <a wtNavbarBrand routerLink="/">วิระ</a>
 </wt-navbar>
 <div class="app-layout">
   <wt-aside-menu #side [model]="menu"></wt-aside-menu>
@@ -269,27 +269,27 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   ts: {
     basic: MENU_TS,
     links: `menu: WtMenuItem[] = [
-  { label: 'แดชบอร์ด', icon: 'pi pi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
+  { label: 'แดชบอร์ด', icon: 'wi wi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
   {
     label: 'นักเรียน',
-    icon: 'pi pi-users',
+    icon: 'wi wi-users',
     items: [
       // ต้นทางของลิงก์อื่น จึงเทียบแบบ exact
       { label: 'รายชื่อนักเรียน', routerLink: '/students', routerLinkActiveOptions: { exact: true } },
       { label: 'เพิ่มนักเรียน', routerLink: '/students/new' },
     ],
   },
-  { label: 'ผลการเรียน', icon: 'pi pi-chart-line', routerLink: '/grades', queryParams: { term: '1/2569' } },
-  { label: 'คู่มือ', icon: 'pi pi-book', url: 'https://example.com/guide', target: '_blank' },
-  { label: 'ออกจากระบบ', icon: 'pi pi-sign-out', command: () => this.signOut() },
+  { label: 'ผลการเรียน', icon: 'wi wi-chart-line', routerLink: '/grades', queryParams: { term: '1/2569' } },
+  { label: 'คู่มือ', icon: 'wi wi-book', url: 'https://example.com/guide', target: '_blank' },
+  { label: 'ออกจากระบบ', icon: 'wi wi-sign-out', command: () => this.signOut() },
 ];`,
     collapsed: `isMenuCollapsed = true;   // จำค่าไว้ใช้ครั้งหน้าก็ได้`,
     sections: `menu: WtMenuItem[] = [
   {
     label: 'งานทะเบียน',
     items: [
-      { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', routerLink: '/students' },
-      { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', routerLink: '/students/move' },
+      { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', routerLink: '/students' },
+      { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', routerLink: '/students/move' },
     ],
   },
   {
@@ -297,7 +297,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     items: [
       {
         label: 'ตารางเรียน',
-        icon: 'pi pi-calendar',
+        icon: 'wi wi-calendar',
         items: [
           { label: 'ม.1', routerLink: '/timetable/1' },
           { label: 'ม.2', routerLink: '/timetable/2' },
@@ -305,7 +305,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
       },
       {
         label: 'ผลการเรียน',
-        icon: 'pi pi-chart-line',
+        icon: 'wi wi-chart-line',
         items: [
           { label: 'ภาคเรียนที่ 1', routerLink: '/grades/1' },
           { label: 'ภาคเรียนที่ 2', routerLink: '/grades/2' },
@@ -315,15 +315,15 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   },
   {
     label: 'ระบบ',
-    items: [{ label: 'ตั้งค่า', icon: 'pi pi-cog', routerLink: '/settings' }],
+    items: [{ label: 'ตั้งค่า', icon: 'wi wi-cog', routerLink: '/settings' }],
   },
 ];`,
     templates: `isMenuCollapsed = false;
 menu: WtMenuItem[] = [
-  { label: 'แดชบอร์ด', icon: 'pi pi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
-  { label: 'ประกาศ', icon: 'pi pi-bell', routerLink: '/notices', isNew: true },
-  { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', routerLink: '/students' },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog', routerLink: '/settings' },
+  { label: 'แดชบอร์ด', icon: 'wi wi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
+  { label: 'ประกาศ', icon: 'wi wi-bell', routerLink: '/notices', isNew: true },
+  { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', routerLink: '/students' },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog', routerLink: '/settings' },
 ];`,
     mobile: `isMenuOpen = false;`,
     navbar: `links: WtMenuItem[] = [

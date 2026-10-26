@@ -68,9 +68,9 @@ export const BREADCRUMB_DOC: ComponentDoc = {
   },
   code: {
     basic: `<wt-breadcrumb [model]="trail" [home]="home" homeAriaLabel="หน้าแรก" (onItemClick)="pressed($event)"></wt-breadcrumb>`,
-    links: `<wt-breadcrumb [model]="reportTrail" [home]="{ icon: 'pi pi-home', routerLink: '/' }"></wt-breadcrumb>`,
+    links: `<wt-breadcrumb [model]="reportTrail" [home]="{ icon: 'wi wi-home', routerLink: '/' }"></wt-breadcrumb>`,
     templates: {
-      v3: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'pi pi-home', routerLink: '/' }">
+      v3: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
   <ng-template #item let-item>
     @if (item.icon) {
       <i [class]="item.icon"></i>
@@ -79,7 +79,7 @@ export const BREADCRUMB_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #separator>/</ng-template>
 </wt-breadcrumb>`,
-      classic: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'pi pi-home', routerLink: '/' }">
+      classic: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
   <ng-template wtTemplate="item" let-item>
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span>{{ item.label }}</span>
@@ -95,7 +95,7 @@ import { WtMenuItem } from 'wiratheme/menu';
 home: WtMenuItem = { command: (event) => this.go(event) };
 trail: WtMenuItem[] = [
   { label: 'ระบบทะเบียน', command: (event) => this.go(event) },
-  { label: 'ห้องเรียน', icon: 'pi pi-users', command: (event) => this.go(event) },
+  { label: 'ห้องเรียน', icon: 'wi wi-users', command: (event) => this.go(event) },
   { label: 'ม.1/1', command: (event) => this.go(event) },
   { label: 'ด.ช.กิตติพัฒน์ ใจดี' },
 ];

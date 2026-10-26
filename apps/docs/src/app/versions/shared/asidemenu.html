@@ -17,12 +17,12 @@
           >
             <span wtAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
               <span class="docs-navbar-logo" aria-hidden="true">W</span>
-              {{ tx('ศรีน่าน') }}
+              {{ tx('วิระ') }}
             </span>
           </wt-aside-menu>
           <div [style]="pageStyle">
             @if (basicSide.mobile) {
-              <wt-button id="d-am-basic-open" icon="pi pi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="basicSide.open()"></wt-button>
+              <wt-button id="d-am-basic-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="basicSide.open()"></wt-button>
             }
             <b id="d-am-basic-page">{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('เนื้อหาของหน้าอยู่ตรงนี้') }}</span>
@@ -56,7 +56,7 @@
           </wt-aside-menu>
           <div [style]="pageStyle">
             @if (railSide.mobile) {
-              <wt-button id="d-am-rail-open" icon="pi pi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="railSide.open()"></wt-button>
+              <wt-button id="d-am-rail-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="railSide.open()"></wt-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('กดปุ่มย่อเมนู / ขยายเมนูที่ท้ายเมนู แล้วกดกลุ่มเพื่อเปิดแผงข้างแถบ') }}</span>
@@ -83,7 +83,7 @@
           ></wt-aside-menu>
           <div [style]="pageStyle">
             @if (sectionSide.mobile) {
-              <wt-button id="d-am-sections-open" icon="pi pi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="sectionSide.open()"></wt-button>
+              <wt-button id="d-am-sections-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="sectionSide.open()"></wt-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('ลองกางตารางเรียน แล้วกางผลการเรียน') }}</span>
@@ -109,7 +109,7 @@
             <ng-template #start let-collapsed>
               <span class="docs-navbar-logo" aria-hidden="true" [style.margin-inline]="collapsed ? 'auto' : '0'">W</span>
               @if (!collapsed) {
-                <b class="docs-navbar-brand">{{ tx('โรงเรียนศรีน่าน') }}</b>
+                <b class="docs-navbar-brand">{{ tx('โรงเรียนวิระ') }}</b>
               }
             </ng-template>
             <ng-template #item let-item let-collapsed="collapsed">
@@ -123,7 +123,7 @@
             </ng-template>
             <ng-template #end let-collapsed>
               <div [style]="{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: '8px', minWidth: '0' }">
-                <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+                <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
                 @if (!collapsed) {
                   <span>{{ tx('ครูสมหญิง ใจดี') }}</span>
                 }
@@ -132,7 +132,7 @@
           </wt-aside-menu>
           <div [style]="pageStyle">
             @if (templateSide.mobile) {
-              <wt-button id="d-am-tpl-open" icon="pi pi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="templateSide.open()"></wt-button>
+              <wt-button id="d-am-tpl-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="templateSide.open()"></wt-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">collapsed: <code id="d-am-tpl-collapsed">{{ templateCollapsed }}</code></span>
@@ -143,11 +143,11 @@
 
     <docs-section id="mobile" [section]="sec['mobile']">
       <docs-demo [html]="code['mobile']" [ts]="ts['mobile']">
-        <wt-button id="d-am-phone-open" [label]="tx('เมนู')" icon="pi pi-bars" (onClick)="isMenuOpen = true"></wt-button>
+        <wt-button id="d-am-phone-open" [label]="tx('เมนู')" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wt-button>
         <wt-aside-menu id="d-am-phone" [model]="local(phoneMenu)" [activeItem]="activeIn(local(phoneMenu))" [(visible)]="isMenuOpen" breakpoint="4000px">
           <span wtAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
             <span class="docs-navbar-logo" aria-hidden="true">W</span>
-            {{ tx('ศรีน่าน') }}
+            {{ tx('วิระ') }}
           </span>
         </wt-aside-menu>
         <span class="docs-demo-output">
@@ -160,7 +160,7 @@
       <docs-demo [html]="code['navbar']" [ts]="ts['navbar']" layout="stack">
         <div id="d-am-nav-shell" [style]="shellColumnStyle">
           <wt-navbar id="d-am-navbar" class="docs-navbar-demo" [model]="local(navLinks)" [activeItem]="activeIn(local(navLinks))" [aside]="navSide">
-            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('ศรีน่าน') }}</span>
+            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('วิระ') }}</span>
           </wt-navbar>
           <div [style]="rowStyle">
             <wt-aside-menu

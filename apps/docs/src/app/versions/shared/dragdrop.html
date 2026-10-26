@@ -47,7 +47,7 @@
           @for (g of groups; track g; let i = $index) {
             <li wtDroppable="order" (onDrop)="dropAt(i)">
               <span class="docs-dd-order-item" wtDraggable="order" dragHandle=".docs-dd-handle" [wtDraggableDisabled]="orderLocked" (onDragStart)="dragFrom(i)">
-                <i class="pi pi-bars docs-dd-handle"></i> <span class="docs-dd-group">{{ g }}</span>
+                <i class="wi wi-bars docs-dd-handle"></i> <span class="docs-dd-group">{{ g }}</span>
               </span>
             </li>
           }

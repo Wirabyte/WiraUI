@@ -1,0 +1,124 @@
+<div
+  class="wt-carousel p-carousel p-component"
+  role="region"
+  [attr.aria-roledescription]="t.carousel"
+  [class.wt-carousel-horizontal]="!vertical"
+  [class.p-carousel-horizontal]="!vertical"
+  [class.wt-carousel-vertical]="vertical"
+  [class.p-carousel-vertical]="vertical"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="rootStyle"
+  (mouseenter)="pause(true)"
+  (mouseleave)="pause(false)"
+  (focusin)="pause(true)"
+  (focusout)="pause(false)"
+>
+  <div *ngIf="hasHeader" class="wt-carousel-header p-carousel-header">
+    <ng-content select="wt-header"></ng-content>
+    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+  </div>
+  <div class="wt-carousel-content-container p-carousel-content-container p-carousel-container" [ngClass]="contentClass || ''">
+    <div class="wt-carousel-content p-carousel-content" [attr.aria-live]="live">
+      <button
+        *ngIf="showNavigators"
+        type="button"
+        class="wt-carousel-prev-button p-carousel-prev-button p-carousel-prev"
+        [ngClass]="prevButtonProps?.styleClass || ''"
+        [class.p-disabled]="isBackwardNavDisabled()"
+        [attr.aria-disabled]="isBackwardNavDisabled() || null"
+        [attr.aria-label]="prevButtonProps?.ariaLabel || t.previousPage"
+        (click)="navBackward($event)"
+      >
+        <ng-container *ngIf="previousIconTemplate; else prevIcon"><ng-container *ngTemplateOutlet="previousIconTemplate"></ng-container></ng-container>
+        <ng-template #prevIcon>
+          <span *ngIf="prevButtonProps?.icon; else prevChevron" [class]="prevButtonProps?.icon || ''" aria-hidden="true"></span>
+          <ng-template #prevChevron>
+            <svg *ngIf="!vertical" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 3.5-4.5 4.5 4.5 4.5"></path></svg>
+            <svg *ngIf="vertical" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 9.5 4.5-4.5 4.5 4.5"></path></svg>
+          </ng-template>
+        </ng-template>
+      </button>
+      <div
+        class="wt-carousel-viewport p-carousel-viewport p-carousel-items-content"
+        [style.height]="vertical ? verticalViewPortHeight : null"
+        (pointerdown)="pointerdown($event)"
+        (pointerup)="pointerup($event)"
+        (pointercancel)="pointerup($event)"
+      >
+        <div #itemsContainer class="wt-carousel-item-list p-carousel-item-list p-carousel-items-container" (transitionend)="transitionEnd($event)">
+          <div
+            *ngFor="let e of entries; trackBy: trackEntry"
+            class="wt-carousel-item p-carousel-item"
+            [class.wt-carousel-item-clone]="e.clone"
+            [class.p-carousel-item-clone]="e.clone"
+            [class.wt-carousel-item-active]="inView(e)"
+            [class.p-carousel-item-active]="inView(e)"
+            [class.wt-carousel-item-start]="!e.clone && e.index === first"
+            [class.p-carousel-item-start]="!e.clone && e.index === first"
+            [class.wt-carousel-item-end]="!e.clone && e.index === first + numVisibleNow - 1"
+            [class.p-carousel-item-end]="!e.clone && e.index === first + numVisibleNow - 1"
+            [style.flex-basis.%]="basis"
+            [attr.role]="e.clone ? null : 'group'"
+            [attr.aria-roledescription]="e.clone ? null : t.slide"
+            [attr.aria-label]="e.clone ? null : slideLabel(e)"
+            [attr.aria-hidden]="inView(e) ? null : 'true'"
+            [attr.inert]="inView(e) ? null : ''"
+          >
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: e.item, index: e.index }"></ng-container>
+          </div>
+        </div>
+      </div>
+      <button
+        *ngIf="showNavigators"
+        type="button"
+        class="wt-carousel-next-button p-carousel-next-button p-carousel-next"
+        [ngClass]="nextButtonProps?.styleClass || ''"
+        [class.p-disabled]="isForwardNavDisabled()"
+        [attr.aria-disabled]="isForwardNavDisabled() || null"
+        [attr.aria-label]="nextButtonProps?.ariaLabel || t.nextPage"
+        (click)="navForward($event)"
+      >
+        <ng-container *ngIf="nextIconTemplate; else nextIcon"><ng-container *ngTemplateOutlet="nextIconTemplate"></ng-container></ng-container>
+        <ng-template #nextIcon>
+          <span *ngIf="nextButtonProps?.icon; else nextChevron" [class]="nextButtonProps?.icon || ''" aria-hidden="true"></span>
+          <ng-template #nextChevron>
+            <svg *ngIf="!vertical" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5-4.5 4.5"></path></svg>
+            <svg *ngIf="vertical" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 6.5 4.5 4.5 4.5-4.5"></path></svg>
+          </ng-template>
+        </ng-template>
+      </button>
+    </div>
+    <ul
+      #indicatorContent
+      *ngIf="showIndicators && pageCount > 0"
+      class="wt-carousel-indicator-list p-carousel-indicator-list p-carousel-indicators"
+      [ngClass]="indicatorsContentClass || ''"
+      [ngStyle]="indicatorsContentStyle || null"
+      (keydown)="onIndicatorKeydown($event)"
+      (focusout)="indicatorsFocusout($event)"
+    >
+      <li
+        *ngFor="let i of pages"
+        class="wt-carousel-indicator p-carousel-indicator"
+        [class.wt-carousel-indicator-active]="i === page"
+        [class.p-carousel-indicator-active]="i === page"
+        [class.p-highlight]="i === page"
+        [ngClass]="indicatorStyleClass || ''"
+      >
+        <button
+          type="button"
+          class="wt-carousel-indicator-button p-carousel-indicator-button"
+          [ngStyle]="indicatorStyle || null"
+          [attr.aria-label]="pageLabel(i)"
+          [attr.aria-current]="i === page ? 'page' : null"
+          [attr.tabindex]="dotTabindex(i)"
+          (click)="onDotClick($event, i)"
+        ></button>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="hasFooter" class="wt-carousel-footer p-carousel-footer">
+    <ng-content select="wt-footer"></ng-content>
+    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+  </div>
+</div>

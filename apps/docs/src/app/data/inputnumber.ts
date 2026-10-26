@@ -115,7 +115,7 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
     clear: `<wt-inputnumber name="fee" [(ngModel)]="fee" mode="currency" [showClear]="true" (onClear)="feeCleared()"
   inputStyleClass="text-right" [inputStyle]="{ width: '10rem' }" autocomplete="off"></wt-inputnumber>
 <wt-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" buttonLayout="horizontal" [min]="1"
-  incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" incrementButtonClass="p-button-success"
+  incrementButtonIcon="wi wi-plus" decrementButtonIcon="wi wi-minus" incrementButtonClass="p-button-success"
   decrementButtonClass="p-button-danger" (onKeyDown)="keyPressed($event)"></wt-inputnumber>`,
     disabled: `<wt-inputnumber [ngModel]="1500" [disabled]="true"></wt-inputnumber>
 <wt-inputnumber [ngModel]="1500" [readonly]="true"></wt-inputnumber>

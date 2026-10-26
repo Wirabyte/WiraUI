@@ -95,7 +95,7 @@ export const DIALOG_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="แก้ไขโปรไฟล์" icon="pi pi-user" (onClick)="visible = true"></wt-button>
+    basic: `<wt-button label="แก้ไขโปรไฟล์" icon="wi wi-user" (onClick)="visible = true"></wt-button>
 
 <wt-dialog header="แก้ไขโปรไฟล์" [(visible)]="visible" [style]="{ width: '28rem' }">
   <label for="profile-name">ชื่อที่แสดง</label>
@@ -112,7 +112,7 @@ export const DIALOG_DOC: ComponentDoc = {
   </ng-template>
   <p>ส่งข้อความหาสมาชิกในทีม</p>
   <wt-footer>
-    <wt-button label="ส่ง" icon="pi pi-send" (onClick)="visible = false"></wt-button>
+    <wt-button label="ส่ง" icon="wi wi-send" (onClick)="visible = false"></wt-button>
   </wt-footer>
 </wt-dialog>`,
     position: `<wt-dialog header="ตำแหน่ง" [(visible)]="visible" [position]="position" [style]="{ width: '20rem' }">
@@ -356,7 +356,7 @@ export const ALERT_DOC: ComponentDoc = {
   (onClick)="alert.fire('มีเวอร์ชันใหม่', 'รีเฟรชหน้าเพื่อใช้งาน', 'info')"></wt-button>
 <wt-button label="คำถาม" severity="help"
   (onClick)="alert.fire('ต้องการความช่วยเหลือ?', 'ติดต่อทีมงานได้ทุกวัน', 'question')"></wt-button>`,
-    question: `<wt-button label="ลบรายการ" severity="danger" icon="pi pi-trash" (onClick)="remove()"></wt-button>`,
+    question: `<wt-button label="ลบรายการ" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>`,
     deny: `<wt-button label="ออกจากหน้านี้" severity="secondary" (onClick)="leave()"></wt-button>`,
     inputs: `<wt-button label="อีเมล" (onClick)="askEmail()"></wt-button>
 <wt-button label="สาขา" (onClick)="askBranch()"></wt-button>`,
@@ -606,8 +606,8 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     icons: {
       title: { th: 'icon ในตัว', en: 'Built-in icons' },
       text: {
-        th: '<code>icon</code> เป็น warning, question, info, success หรือ error เพื่อใช้ icon ในตัว ชื่อ class ของ icon ที่ใช้กันทั่วไป (เช่น <code>pi pi-exclamation-triangle</code>) ก็แสดงเป็น icon ในตัวได้แม้ไม่มี icon font',
-        en: '<code>icon</code> takes warning, question, info, success or error for the built-in icons; common icon classes (such as <code>pi pi-exclamation-triangle</code>) are recognised too, even without an icon font.',
+        th: '<code>icon</code> เป็น warning, question, info, success หรือ error เพื่อใช้ icon ในตัว ชื่อ class ของ icon ที่ใช้กันทั่วไป (เช่น <code>wi wi-exclamation-triangle</code>) ก็แสดงเป็น icon ในตัวได้แม้ไม่มี icon font',
+        en: '<code>icon</code> takes warning, question, info, success or error for the built-in icons; common icon classes (such as <code>wi wi-exclamation-triangle</code>) are recognised too, even without an icon font.',
       },
     },
     key: {
@@ -631,7 +631,7 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
   },
   code: {
     basic: `<wt-confirmdialog></wt-confirmdialog>
-<wt-button label="ลบลูกค้า" severity="danger" icon="pi pi-trash" (onClick)="remove()"></wt-button>`,
+<wt-button label="ลบลูกค้า" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>`,
     icons: `<wt-button label="warning" (onClick)="ask('warning')"></wt-button>
 <wt-button label="question" (onClick)="ask('question')"></wt-button>
 <!-- info · success · error -->`,
@@ -646,7 +646,7 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #footer>
     <wt-button label="ไว้ก่อน" [text]="true" (onClick)="cd.reject()"></wt-button>
-    <wt-button label="เข้าร่วม" icon="pi pi-check" (onClick)="cd.accept()"></wt-button>
+    <wt-button label="เข้าร่วม" icon="wi wi-check" (onClick)="cd.accept()"></wt-button>
   </ng-template>
 </wt-confirmdialog>`,
     fallback: `<wt-button label="ถามโดยไม่มีกล่อง" (onClick)="askNowhere()"></wt-button>`,
@@ -663,7 +663,7 @@ export class CustomersComponent {
   this.confirmation.confirm({
     header: 'ยืนยันการลบ',
     message: 'ต้องการลบลูกค้ารายนี้หรือไม่?',
-    icon: 'pi pi-exclamation-triangle',
+    icon: 'wi wi-exclamation-triangle',
     acceptLabel: 'ลบ',
     rejectLabel: 'ยกเลิก',
     acceptButtonStyleClass: 'p-button-danger',

@@ -23,7 +23,7 @@
   <div class="docs-designer" id="studio">
     <div class="docs-designer-bar">
       <wt-iconfield class="docs-designer-search">
-        <wt-inputicon icon="pi pi-search"></wt-inputicon>
+        <wt-inputicon icon="wi wi-search"></wt-inputicon>
         <input
           wtInputText
           id="studio-search"
@@ -39,7 +39,7 @@
       <div class="docs-designer-actions">
         <wt-button
           id="studio-undo"
-          icon="pi pi-undo"
+          icon="wi wi-undo"
           severity="secondary"
           [text]="true"
           [disabled]="!state.canUndo()"
@@ -49,7 +49,7 @@
         <wt-button
           id="studio-redo"
           class="docs-designer-redo"
-          icon="pi pi-undo"
+          icon="wi wi-undo"
           severity="secondary"
           [text]="true"
           [disabled]="!state.canRedo()"
@@ -68,10 +68,10 @@
             (ngModelChange)="state.setDark($event)"
           ></wt-selectbutton>
         }
-        <wt-button id="studio-import" icon="pi pi-upload" size="small" [outlined]="true" [label]="en() ? 'Import' : 'นำเข้า'" (onClick)="fileInput.click()"></wt-button>
+        <wt-button id="studio-import" icon="wi wi-upload" size="small" [outlined]="true" [label]="en() ? 'Import' : 'นำเข้า'" (onClick)="fileInput.click()"></wt-button>
         <wt-button
           id="studio-export"
-          icon="pi pi-download"
+          icon="wi wi-download"
           size="small"
           [label]="en() ? 'Download' : 'ดาวน์โหลด'"
           [attr.aria-expanded]="exportOpen()"
@@ -129,14 +129,14 @@
               (ngModelChange)="scope.set($event)"
             ></wt-selectbutton>
           }
-          <wt-button id="studio-download" icon="pi pi-download" [label]="fileName()" (onClick)="download()"></wt-button>
+          <wt-button id="studio-download" icon="wi wi-download" [label]="fileName()" (onClick)="download()"></wt-button>
         </div>
         <p class="docs-designer-hint">{{ exportHint() }}</p>
         <docs-code class="docs-designer-code" [code]="exportText()" [lang]="exportLang()" [file]="fileName()"></docs-code>
       </section>
     }
 
-    <div class="docs-designer-main">
+    <div class="docs-designer-main" [class.docs-designer-wide]="layout() === 'wide'">
       <div class="docs-designer-editor">
         <wt-tabs id="studio-tabs" [value]="tab()" (valueChange)="tab.set($event)" [ariaLabel]="en() ? 'Token groups' : 'กลุ่ม token'">
           <wt-tablist>
@@ -217,7 +217,7 @@
                           />
                         }
                         <wt-button
-                          icon="pi pi-refresh"
+                          icon="wi wi-refresh"
                           size="small"
                           severity="secondary"
                           [text]="true"
@@ -244,7 +244,7 @@
                         size="small"
                         severity="secondary"
                         [text]="true"
-                        [icon]="s.open ? 'pi pi-angle-up' : 'pi pi-angle-down'"
+                        [icon]="s.open ? 'wi wi-angle-up' : 'wi wi-angle-down'"
                         [label]="s.open ? (en() ? 'Hide shades' : 'ซ่อนเฉดสี') : en() ? 'Edit shades' : 'แก้ทีละเฉด'"
                         (onClick)="toggleScale(s.id)"
                       ></wt-button>
@@ -329,29 +329,26 @@
                       : 'ตัวแปร --wt-* อะไรก็ได้ ทั้ง token ของธีม (ชนะค่าในแท็บอื่น) หรือของคุณเอง ค่าอ้างถึง token อื่นได้ เช่น {primary-500}'
                   }}
                 </p>
-                <datalist id="studio-token-names">
-                  @for (n of tokenNames(); track n) {
-                    <option [value]="n"></option>
-                  }
-                </datalist>
                 <div class="docs-designer-customs">
                   @for (r of customRows(); track r.index) {
                     <div class="docs-designer-custom" [attr.data-row]="r.index">
                       <div class="docs-designer-custom-name">
                         <span class="docs-designer-prefix" aria-hidden="true">--wt-</span>
-                        <input
-                          wtInputText
-                          class="docs-designer-mono"
-                          list="studio-token-names"
-                          [id]="'studio-custom-name-' + r.index"
-                          [value]="r.name"
+                        <!-- Token names as suggestions: our own list, not the browser's datalist popup. -->
+                        <wt-autocomplete
+                          class="docs-designer-ac"
+                          [inputId]="'studio-custom-name-' + r.index"
+                          inputStyleClass="docs-designer-mono"
+                          [ngModel]="r.name"
+                          [suggestions]="nameHits()"
                           [invalid]="r.badName"
                           [placeholder]="en() ? 'token-name' : 'ชื่อ-token'"
-                          [attr.aria-label]="en() ? 'Token name' : 'ชื่อ token'"
+                          [ariaLabel]="en() ? 'Token name' : 'ชื่อ token'"
+                          [fluid]="true"
+                          (completeMethod)="findTokenNames($event)"
+                          (onSelect)="setCustom(r, 'name', asText($event.value))"
                           (change)="setCustom(r, 'name', $any($event.target).value)"
-                          spellcheck="false"
-                          autocomplete="off"
-                        />
+                        ></wt-autocomplete>
                       </div>
                       <div class="docs-designer-control">
                         @if (r.color) {
@@ -383,14 +380,14 @@
                           (ngModelChange)="setCustom(r, 'mode', $event)"
                           [ariaLabel]="en() ? 'Applies in' : 'ใช้ในโหมด'"
                         ></wt-select>
-                        <wt-button icon="pi pi-trash" severity="danger" [text]="true" [ariaLabel]="en() ? 'Remove' : 'ลบ'" (onClick)="removeCustom(r)"></wt-button>
+                        <wt-button icon="wi wi-trash" severity="danger" [text]="true" [ariaLabel]="en() ? 'Remove' : 'ลบ'" (onClick)="removeCustom(r)"></wt-button>
                       </div>
                     </div>
                   } @empty {
                     <p class="docs-designer-empty">{{ en() ? 'No custom tokens yet.' : 'ยังไม่มี token ที่กำหนดเอง' }}</p>
                   }
                 </div>
-                <wt-button id="studio-custom-add" icon="pi pi-plus" [outlined]="true" [label]="en() ? 'Add a token' : 'เพิ่ม token'" (onClick)="addCustom()"></wt-button>
+                <wt-button id="studio-custom-add" icon="wi wi-plus" [outlined]="true" [label]="en() ? 'Add a token' : 'เพิ่ม token'" (onClick)="addCustom()"></wt-button>
               }
             </wt-tabpanel>
 
@@ -510,7 +507,7 @@
                       <span class="docs-designer-label">{{ en() ? 'Reset' : 'เริ่มใหม่' }}</span>
                       <wt-button
                         id="studio-reset"
-                        icon="pi pi-refresh"
+                        icon="wi wi-refresh"
                         severity="danger"
                         [outlined]="true"
                         [label]="(en() ? 'Back to ' : 'กลับไปเป็น ') + baseName()"
@@ -527,68 +524,118 @@
 
       <aside class="docs-designer-preview" id="studio-preview" [attr.aria-label]="en() ? 'Preview' : 'ตัวอย่าง'">
         <div class="docs-designer-preview-head">
-          <b>{{ en() ? 'Preview' : 'ตัวอย่าง' }}</b>
+          <b id="studio-pv-title">{{ en() ? 'Preview' : 'ตัวอย่าง' }}</b>
           <span class="docs-chip docs-chip-quiet">{{ mode() === 'dark' ? (en() ? 'Dark' : 'มืด') : en() ? 'Light' : 'สว่าง' }}</span>
         </div>
-        <div class="docs-designer-pv">
-          <div class="docs-designer-pv-row">
-            <wt-button icon="pi pi-check" [label]="en() ? 'Save' : 'บันทึก'"></wt-button>
-            <wt-button severity="secondary" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
-            <wt-button [outlined]="true" [label]="en() ? 'Edit' : 'แก้ไข'"></wt-button>
-            <wt-button severity="danger" [text]="true" [label]="en() ? 'Delete' : 'ลบ'"></wt-button>
-          </div>
-          <div class="docs-designer-pv-fields">
-            <input wtInputText [placeholder]="en() ? 'Full name' : 'ชื่อ - สกุล'" [attr.aria-label]="en() ? 'Full name' : 'ชื่อ - สกุล'" />
-            <wt-select
-              optionLabel="label"
-              optionValue="value"
-              [options]="pvRooms()"
-              [(ngModel)]="pvRoom"
-              [placeholder]="en() ? 'Choose a class' : 'เลือกห้องเรียน'"
-              [ariaLabel]="en() ? 'Class' : 'ห้องเรียน'"
-            ></wt-select>
-          </div>
-          <div class="docs-designer-pv-row">
-            <wt-checkbox [(ngModel)]="pvAgree" [binary]="true" [label]="en() ? 'I agree' : 'ยอมรับเงื่อนไข'"></wt-checkbox>
-            <wt-radiobutton name="studio-pv-plan" value="month" [(ngModel)]="pvPlan" [label]="en() ? 'Monthly' : 'รายเดือน'"></wt-radiobutton>
-            <wt-radiobutton name="studio-pv-plan" value="year" [(ngModel)]="pvPlan" [label]="en() ? 'Yearly' : 'รายปี'"></wt-radiobutton>
-            <wt-toggleswitch [(ngModel)]="pvNotify" [label]="en() ? 'Alerts' : 'แจ้งเตือน'"></wt-toggleswitch>
-          </div>
-          <div class="docs-designer-pv-row">
-            <wt-tag severity="success" [value]="en() ? 'Paid' : 'ชำระแล้ว'"></wt-tag>
-            <wt-tag severity="info" [value]="en() ? 'New' : 'ใหม่'"></wt-tag>
-            <wt-tag severity="warn" [value]="en() ? 'Pending' : 'รอตรวจ'"></wt-tag>
-            <wt-tag severity="danger" [value]="en() ? 'Overdue' : 'ค้างชำระ'"></wt-tag>
-            <wt-tag severity="secondary" [value]="en() ? 'Draft' : 'ร่าง'"></wt-tag>
-          </div>
-          <wt-table [value]="pvStudents()">
-            <ng-template #header>
-              <tr>
-                <th>{{ en() ? 'Name' : 'ชื่อ' }}</th>
-                <th>{{ en() ? 'Class' : 'ห้อง' }}</th>
-                <th>{{ en() ? 'Status' : 'สถานะ' }}</th>
-              </tr>
-            </ng-template>
-            <ng-template #body let-s>
-              <tr>
-                <td>{{ s.name }}</td>
-                <td>{{ s.room }}</td>
-                <td><wt-tag [severity]="s.severity" [value]="s.status"></wt-tag></td>
-              </tr>
-            </ng-template>
-          </wt-table>
-          <div class="docs-designer-pv-dialog" role="group" [attr.aria-label]="en() ? 'Dialog' : 'กล่องโต้ตอบ'">
-            <div class="docs-designer-pv-dialog-head">
-              <span>{{ en() ? 'Save changes?' : 'บันทึกการแก้ไข?' }}</span>
-              <span class="pi pi-times" aria-hidden="true"></span>
-            </div>
-            <p>{{ en() ? 'The class list will be sent to the homeroom teacher.' : 'ระบบจะส่งรายชื่อนักเรียนให้ครูประจำชั้น' }}</p>
-            <div class="docs-designer-pv-dialog-foot">
-              <wt-button severity="secondary" [text]="true" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
-              <wt-button [label]="en() ? 'Confirm' : 'ยืนยัน'"></wt-button>
-            </div>
-          </div>
+        <!-- Any component's live demos in the panel, the layout of editor and preview, and the page in a tab of its own. -->
+        <div class="docs-designer-pv-bar">
+          <wt-select
+            id="studio-pv-pick"
+            class="docs-designer-pv-pick"
+            [options]="previewOptions()"
+            [group]="true"
+            optionLabel="label"
+            optionValue="value"
+            [filter]="true"
+            filterBy="label"
+            [filterPlaceholder]="en() ? 'Search components' : 'ค้นหา component'"
+            [ngModel]="previewValue()"
+            (ngModelChange)="choosePreview($event)"
+            [ariaLabel]="en() ? 'Component to preview' : 'component ที่แสดงในตัวอย่าง'"
+          ></wt-select>
+          <span id="studio-pv-layout-label" class="docs-designer-sr">{{ en() ? 'Layout' : 'การจัดวาง' }}</span>
+          <wt-selectbutton
+            id="studio-pv-layout"
+            class="docs-designer-layout"
+            size="small"
+            optionLabel="label"
+            optionValue="value"
+            [options]="layoutOptions()"
+            [allowEmpty]="false"
+            [ngModel]="layout()"
+            (ngModelChange)="setLayout($event)"
+            ariaLabelledBy="studio-pv-layout-label"
+          ></wt-selectbutton>
+          @if (previewUrl(); as url) {
+            <a
+              wtButton
+              id="studio-pv-open"
+              [href]="url"
+              target="_blank"
+              rel="noopener"
+              icon="wi wi-external-link"
+              size="small"
+              severity="secondary"
+              [outlined]="true"
+              [label]="en() ? 'Open in new window' : 'เปิดในหน้าต่างใหม่'"
+            ></a>
+          }
         </div>
+        @if (previewComponent(); as page) {
+          <div class="docs-designer-pv-page" id="studio-pv-page" [attr.data-page]="previewValue()">
+            <ng-container *ngComponentOutlet="page; injector: previewInjector"></ng-container>
+          </div>
+        } @else {
+          <div class="docs-designer-pv" id="studio-pv-overview">
+            <div class="docs-designer-pv-row">
+              <wt-button icon="wi wi-check" [label]="en() ? 'Save' : 'บันทึก'"></wt-button>
+              <wt-button severity="secondary" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
+              <wt-button [outlined]="true" [label]="en() ? 'Edit' : 'แก้ไข'"></wt-button>
+              <wt-button severity="danger" [text]="true" [label]="en() ? 'Delete' : 'ลบ'"></wt-button>
+            </div>
+            <div class="docs-designer-pv-fields">
+              <input wtInputText [placeholder]="en() ? 'Full name' : 'ชื่อ - สกุล'" [attr.aria-label]="en() ? 'Full name' : 'ชื่อ - สกุล'" />
+              <wt-select
+                optionLabel="label"
+                optionValue="value"
+                [options]="pvRooms()"
+                [(ngModel)]="pvRoom"
+                [placeholder]="en() ? 'Choose a class' : 'เลือกห้องเรียน'"
+                [ariaLabel]="en() ? 'Class' : 'ห้องเรียน'"
+              ></wt-select>
+            </div>
+            <div class="docs-designer-pv-row">
+              <wt-checkbox [(ngModel)]="pvAgree" [binary]="true" [label]="en() ? 'I agree' : 'ยอมรับเงื่อนไข'"></wt-checkbox>
+              <wt-radiobutton name="studio-pv-plan" value="month" [(ngModel)]="pvPlan" [label]="en() ? 'Monthly' : 'รายเดือน'"></wt-radiobutton>
+              <wt-radiobutton name="studio-pv-plan" value="year" [(ngModel)]="pvPlan" [label]="en() ? 'Yearly' : 'รายปี'"></wt-radiobutton>
+              <wt-toggleswitch [(ngModel)]="pvNotify" [label]="en() ? 'Alerts' : 'แจ้งเตือน'"></wt-toggleswitch>
+            </div>
+            <div class="docs-designer-pv-row">
+              <wt-tag severity="success" [value]="en() ? 'Paid' : 'ชำระแล้ว'"></wt-tag>
+              <wt-tag severity="info" [value]="en() ? 'New' : 'ใหม่'"></wt-tag>
+              <wt-tag severity="warn" [value]="en() ? 'Pending' : 'รอตรวจ'"></wt-tag>
+              <wt-tag severity="danger" [value]="en() ? 'Overdue' : 'ค้างชำระ'"></wt-tag>
+              <wt-tag severity="secondary" [value]="en() ? 'Draft' : 'ร่าง'"></wt-tag>
+            </div>
+            <wt-table [value]="pvStudents()">
+              <ng-template #header>
+                <tr>
+                  <th>{{ en() ? 'Name' : 'ชื่อ' }}</th>
+                  <th>{{ en() ? 'Class' : 'ห้อง' }}</th>
+                  <th>{{ en() ? 'Status' : 'สถานะ' }}</th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-s>
+                <tr>
+                  <td>{{ s.name }}</td>
+                  <td>{{ s.room }}</td>
+                  <td><wt-tag [severity]="s.severity" [value]="s.status"></wt-tag></td>
+                </tr>
+              </ng-template>
+            </wt-table>
+            <div class="docs-designer-pv-dialog" role="group" [attr.aria-label]="en() ? 'Dialog' : 'กล่องโต้ตอบ'">
+              <div class="docs-designer-pv-dialog-head">
+                <span>{{ en() ? 'Save changes?' : 'บันทึกการแก้ไข?' }}</span>
+                <span class="wi wi-times" aria-hidden="true"></span>
+              </div>
+              <p>{{ en() ? 'The class list will be sent to the homeroom teacher.' : 'ระบบจะส่งรายชื่อนักเรียนให้ครูประจำชั้น' }}</p>
+              <div class="docs-designer-pv-dialog-foot">
+                <wt-button severity="secondary" [text]="true" [label]="en() ? 'Cancel' : 'ยกเลิก'"></wt-button>
+                <wt-button [label]="en() ? 'Confirm' : 'ยืนยัน'"></wt-button>
+              </div>
+            </div>
+          </div>
+        }
       </aside>
     </div>
   </div>
@@ -654,11 +701,6 @@
   </div>
 </docs-section>
 
-<datalist id="studio-fonts">
-  @for (font of fontOptions(); track font) {
-    <option [value]="font"></option>
-  }
-</datalist>
 
 <!-- Light / Dark: the same switch as the site's dark mode, so what shows is what is edited. -->
 <ng-template #modeBar let-has>
@@ -710,18 +752,36 @@
           @if (f.kind === 'color') {
             <wt-colorpicker [ngModel]="hexOf(f)" (ngModelChange)="picked(f, $event)" [ariaLabel]="f.label + ' (' + f.sub + ')'"></wt-colorpicker>
           }
-          <input
-            wtInputText
-            class="docs-designer-mono"
-            [id]="f.id"
-            [value]="f.value"
-            [invalid]="isInvalid(f.id)"
-            [attr.list]="f.conf === 'fontFamily' ? 'studio-fonts' : null"
-            (input)="typed(f, $event)"
-            (change)="committed(f, $event)"
-            spellcheck="false"
-            autocomplete="off"
-          />
+          @if (f.conf === 'fontFamily') {
+            <!-- Fonts as suggestions (any font name can still be typed). -->
+            <wt-autocomplete
+              class="docs-designer-ac"
+              [inputId]="f.id"
+              inputStyleClass="docs-designer-mono"
+              [ngModel]="f.value"
+              [suggestions]="fontHits()"
+              [dropdown]="true"
+              [invalid]="isInvalid(f.id)"
+              [ariaLabel]="f.label"
+              [fluid]="true"
+              (completeMethod)="findFonts($event)"
+              (onSelect)="pickText(f, $event.value)"
+              (input)="typed(f, $event)"
+              (change)="committed(f, $event)"
+            ></wt-autocomplete>
+          } @else {
+            <input
+              wtInputText
+              class="docs-designer-mono"
+              [id]="f.id"
+              [value]="f.value"
+              [invalid]="isInvalid(f.id)"
+              (input)="typed(f, $event)"
+              (change)="committed(f, $event)"
+              spellcheck="false"
+              autocomplete="off"
+            />
+          }
         }
       }
       @if (f.own) {

@@ -81,7 +81,7 @@ export const VALIDATION_DOC: ComponentDoc = {
   <input wtInputText id="phone" name="phone" [(ngModel)]="phone" wtThaiPhone />
   <wt-field-error for="phone"></wt-field-error>
 
-  <wt-button type="submit" label="บันทึก" icon="pi pi-save"></wt-button>
+  <wt-button type="submit" label="บันทึก" icon="wi wi-save"></wt-button>
 </form>`,
     reactive: `<form [formGroup]="form" (ngSubmit)="register()">
   <input wtInputText formControlName="thaiId" placeholder="เลขประจำตัวประชาชน" />

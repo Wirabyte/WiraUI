@@ -113,4 +113,15 @@
   .wt-message-contrast { --_c: var(--wt-text); --_bg: var(--wt-text); --_fg: var(--wt-card-bg); }
   /* Without its dark box, contrast text goes back to the page's text colour. */
   .wt-message-contrast:is(.wt-message-outlined, .wt-message-simple) { --_fg: var(--wt-text); }
+  /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
+  @media (pointer: coarse) {
+    .wt-message-close {
+      position: relative;
+    }
+    .wt-message-close::after {
+      content: '';
+      position: absolute;
+      inset: -0.375rem;
+    }
+  }
 }

@@ -188,3 +188,55 @@ test('steps: numbered, the current one marked; picking a step moves activeIndex;
   await ro.locator('.wt-steps-link').nth(0).click();
   await expect(ro.locator('.wt-steps-link').nth(2)).toHaveAttribute('aria-current', 'step');
 });
+
+test('steps layouts: labels beside the numbers with lines between; a column with ↑ ↓; on a phone only the current label shows', async ({ page }) => {
+  const right = page.locator('#st-right');
+  await right.scrollIntoViewIfNeeded();
+  const num = (await right.locator('.wt-steps-number').nth(0).boundingBox())!;
+  const label = (await right.locator('.wt-steps-label').nth(0).boundingBox())!;
+  // Beside: the label starts after its number, on the same line.
+  expect(label.x).toBeGreaterThan(num.x + num.width - 1);
+  expect(Math.abs(label.y + label.height / 2 - (num.y + num.height / 2))).toBeLessThan(6);
+  // A line fills the space to the next step: done (primary) after a completed step, plain after the current one.
+  const lines = await right.locator('.wt-steps-item').evaluateAll((items) => items.map((li) => getComputedStyle(li, '::after').borderTopColor));
+  expect(lines[0]).not.toBe(lines[1]);
+
+  const col = page.locator('#st-vertical');
+  await col.scrollIntoViewIfNeeded();
+  const items = col.locator('.wt-steps-item');
+  const a = (await items.nth(0).boundingBox())!;
+  const b = (await items.nth(1).boundingBox())!;
+  expect(b.y).toBeGreaterThan(a.y + a.height - 1);
+  expect(Math.abs(b.x - a.x)).toBeLessThan(1);
+  const vNum = (await col.locator('.wt-steps-number').nth(0).boundingBox())!;
+  const vLabel = (await col.locator('.wt-steps-label').nth(0).boundingBox())!;
+  expect(vLabel.x).toBeGreaterThan(vNum.x + vNum.width - 1);
+  // The line runs down under the number.
+  const line = await items.nth(0).evaluate((li) => {
+    const s = getComputedStyle(li, '::after');
+    return { content: s.content, width: s.borderLeftWidth };
+  });
+  expect(line.content).not.toBe('none');
+  expect(parseFloat(line.width)).toBeGreaterThan(0);
+  // ↓ / ↑ move between the steps of a column.
+  const links = col.locator('.wt-steps-link');
+  await links.nth(0).focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(links.nth(1)).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(links.nth(1)).toHaveAttribute('aria-current', 'step');
+  await page.keyboard.press('ArrowUp');
+  await expect(links.nth(0)).toBeFocused();
+
+  // A phone: beside-the-number labels give way except the current step's; nothing sticks out.
+  await page.setViewportSize({ width: 360, height: 740 });
+  await right.scrollIntoViewIfNeeded();
+  await expect(right.locator('.wt-steps-item-active .wt-steps-label')).toBeVisible();
+  const hidden = await right.locator('.wt-steps-item:not(.wt-steps-item-active) .wt-steps-text').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+  for (const w of hidden) expect(w).toBeLessThanOrEqual(1);
+  const limit = await page.evaluate(() => document.documentElement.clientWidth);
+  for (const id of ['#st', '#st-right', '#st-vertical']) {
+    const over = await page.locator(id).evaluate((root, max) => [...root.querySelectorAll('*')].filter((el) => el.getBoundingClientRect().right > max + 0.5).length, limit);
+    expect(over, id).toBe(0);
+  }
+});

@@ -4,6 +4,7 @@ import {
   base64ToFile,
   clampCrop,
   clampView,
+  cropperToolbarGroups,
   exifTransform,
   growCrop,
   initialCrop,
@@ -260,5 +261,33 @@ describe('image cropper: output', () => {
     const svg = base64ToFile('data:image/svg+xml,%3Csvg%3E');
     expect(svg.type).toBe('image/svg+xml');
     expect(svg.size).toBe(5);
+  });
+});
+
+describe('cropperToolbarGroups', () => {
+  it('gives the full toolbar by default: zoom tools, then the rest', () => {
+    const full = [
+      ['zoomOut', 'zoomSlider', 'zoomIn'],
+      ['rotateLeft', 'rotateRight', 'flipHorizontal', 'flipVertical', 'reset'],
+    ];
+    expect(cropperToolbarGroups(undefined)).toEqual(full);
+    expect(cropperToolbarGroups('full')).toEqual(full);
+  });
+  it('gives nothing for none or an empty list', () => {
+    expect(cropperToolbarGroups('none')).toEqual([]);
+    expect(cropperToolbarGroups([])).toEqual([]);
+  });
+  it('expands the group names and splits zoom from the rest when no | is given', () => {
+    expect(cropperToolbarGroups(['rotate', 'zoomIn', 'reset'])).toEqual([['zoomIn'], ['rotateLeft', 'rotateRight', 'reset']]);
+    expect(cropperToolbarGroups(['flip'])).toEqual([['flipHorizontal', 'flipVertical']]);
+  });
+  it('keeps the groups and order the app gives with |', () => {
+    expect(cropperToolbarGroups(['rotateRight', 'zoom', '|', 'reset', '|', '|'])).toEqual([
+      ['rotateRight', 'zoomOut', 'zoomSlider', 'zoomIn'],
+      ['reset'],
+    ]);
+  });
+  it('skips unknown names and repeats', () => {
+    expect(cropperToolbarGroups(['zoomIn', 'crop', 'zoom', 'zoomIn'] as never)).toEqual([['zoomIn', 'zoomOut', 'zoomSlider']]);
   });
 });

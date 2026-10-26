@@ -44,6 +44,8 @@ export class WtProgressBar {
   readonly striped = input(false, { transform: booleanAttribute });
   /** Stripes that move, for work in progress (shown still to people who ask for less motion). */
   readonly animated = input(false, { transform: booleanAttribute });
+  /** A glossy bar with a band of light sweeping along it now and then, as desktop progress bars do (a still gloss for people who ask for less motion). */
+  readonly shimmer = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
 
   private readonly config = inject(WtConfig);
@@ -75,7 +77,8 @@ export class WtProgressBar {
   readonly baseClasses = computed(() => {
     const stripes = this.striped() || this.animated() ? ' wt-progressbar-striped' : '';
     const moving = this.animated() ? ' wt-progressbar-animated' : '';
-    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode()} p-progressbar-${this.mode()}${stripes}${moving}`;
+    const shimmer = this.shimmer() ? ' wt-progressbar-shimmer' : '';
+    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode()} p-progressbar-${this.mode()}${stripes}${moving}${shimmer}`;
   });
 
   constructor() {

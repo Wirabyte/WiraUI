@@ -1,0 +1,93 @@
+/* wt-imageCompare. Shared by wiratheme v1, v2 and v3. Two pictures stacked in one box: the `left` one fills it and the
+   `right` one shows from the start edge to the divider. Drag anywhere (mouse, pen or a sideways swipe; up-and-down
+   swipes still scroll the page) or use the keys on the round handle. */
+@layer wiratheme.components {
+  :is(wt-imagecompare, wt-image-compare) {
+    display: block;
+    max-width: 100%;
+  }
+  .wt-imagecompare {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: var(--wt-imagecompare-aspect-ratio);
+    overflow: hidden;
+    border-radius: var(--wt-imagecompare-radius);
+    background: var(--wt-imagecompare-bg);
+    cursor: ew-resize;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .wt-imagecompare-item {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .wt-imagecompare-item > * {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+  }
+  .wt-imagecompare-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+  .wt-imagecompare-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--wt-imagecompare-divider-width);
+    transform: translateX(-50%);
+    background: var(--wt-imagecompare-divider-color);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+  }
+  .wt-imagecompare-handle {
+    position: absolute;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    width: var(--wt-imagecompare-handle-size);
+    height: var(--wt-imagecompare-handle-size);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--wt-imagecompare-handle-bg);
+    color: var(--wt-imagecompare-handle-color);
+    box-shadow: var(--wt-imagecompare-handle-shadow);
+    outline: none;
+    cursor: ew-resize;
+    transition: box-shadow var(--wt-transition);
+  }
+  .wt-imagecompare-handle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .wt-imagecompare-handle:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow), var(--wt-imagecompare-handle-shadow);
+  }
+  .wt-imagecompare-dragging,
+  .wt-imagecompare-dragging .wt-imagecompare-handle {
+    cursor: grabbing;
+  }
+  @media (pointer: coarse) {
+    .wt-imagecompare-handle {
+      width: calc(var(--wt-imagecompare-handle-size) * 1.2);
+      height: calc(var(--wt-imagecompare-handle-size) * 1.2);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-imagecompare-handle {
+      transition: none;
+    }
+  }
+}

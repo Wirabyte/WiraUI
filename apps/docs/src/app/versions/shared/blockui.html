@@ -19,7 +19,7 @@
           </span>
         </wt-blockUI>
         <div class="docs-demo-actions">
-          <wt-button id="d-bu-save" [label]="tx('บันทึก')" icon="pi pi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>
+          <wt-button id="d-bu-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>
           <span class="docs-demo-output">
             saved: <code id="d-bu-saved">{{ savedCount }}</code> · {{ tx('ปุ่มด้านใน') }}: <code id="d-bu-inner-count">{{ innerPresses }}</code>
           </span>
@@ -35,7 +35,7 @@
             <p>{{ tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้') }}</p>
           </span>
         </wt-blockUI>
-        <wt-button id="d-bu-send" [label]="tx('ส่งผลการเรียน')" icon="pi pi-send" (onClick)="sendGrades()"></wt-button>
+        <wt-button id="d-bu-send" [label]="tx('ส่งผลการเรียน')" icon="wi wi-send" (onClick)="sendGrades()"></wt-button>
         <span class="docs-demo-output">sent: <code id="d-bu-sent">{{ sentCount }}</code></span>
       </docs-demo>
     </docs-section>

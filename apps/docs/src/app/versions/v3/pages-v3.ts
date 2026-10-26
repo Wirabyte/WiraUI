@@ -84,6 +84,17 @@ import { StudioDemo } from '../shared/studio';
 import { NavbarDemo } from '../shared/demos-layout';
 import { AsideMenuDemo } from '../shared/demos-aside';
 import { ImageCropperDemo } from '../shared/demos-cropper';
+import { IconsDemo } from '../shared/demos-icons';
+import {
+  CarouselDemo,
+  ImageCompareDemo,
+  InputOtpDemo,
+  KnobDemo,
+  OrganizationChartDemo,
+  SplitterDemo,
+  TerminalDemo,
+} from '../shared/demos-extras';
+import { FlowDemo } from '../shared/demos-flow';
 
 // Shared templates compiled against wiratheme@3 components (DocsV3Module imports the v1 modules).
 
@@ -329,3 +340,30 @@ export class AsideMenuPageV3 extends AsideMenuDemo {}
 
 @Component({ selector: 'docs-imagecropper-v3', templateUrl: '../shared/imagecropper.html', standalone: false })
 export class ImageCropperPageV3 extends ImageCropperDemo {}
+
+@Component({ selector: 'docs-icons-v3', templateUrl: '../shared/icons.html', standalone: false })
+export class IconsPageV3 extends IconsDemo {}
+
+@Component({ selector: 'docs-terminal-v3', templateUrl: '../shared/terminal.html', standalone: false })
+export class TerminalPageV3 extends TerminalDemo {}
+
+@Component({ selector: 'docs-imagecompare-v3', templateUrl: '../shared/imagecompare.html', standalone: false })
+export class ImageComparePageV3 extends ImageCompareDemo {}
+
+@Component({ selector: 'docs-carousel-v3', templateUrl: '../shared/carousel.html', standalone: false })
+export class CarouselPageV3 extends CarouselDemo {}
+
+@Component({ selector: 'docs-splitter-v3', templateUrl: '../shared/splitter.html', standalone: false })
+export class SplitterPageV3 extends SplitterDemo {}
+
+@Component({ selector: 'docs-organizationchart-v3', templateUrl: '../shared/organizationchart.html', standalone: false })
+export class OrganizationChartPageV3 extends OrganizationChartDemo {}
+
+@Component({ selector: 'docs-knob-v3', templateUrl: '../shared/knob.html', standalone: false })
+export class KnobPageV3 extends KnobDemo {}
+
+@Component({ selector: 'docs-inputotp-v3', templateUrl: '../shared/inputotp.html', standalone: false })
+export class InputOtpPageV3 extends InputOtpDemo {}
+
+@Component({ selector: 'docs-flow-v3', templateUrl: '../shared/flow.html', standalone: false })
+export class FlowPageV3 extends FlowDemo {}

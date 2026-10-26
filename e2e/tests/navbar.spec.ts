@@ -41,7 +41,7 @@ test('navbar: a labelled nav, links in a row with the current page marked, brand
       .filter((e) => e.getClientRects().length > 0)
       .map((e) => (e.querySelector('.wt-navbar-link-label') || e).textContent?.trim()),
   );
-  expect(order).toEqual(['ศรีน่าน', 'หน้าแรก', 'ข่าวสาร', 'บริการ', 'เกี่ยวกับเรา', 'เข้าสู่ระบบ']);
+  expect(order).toEqual(['วิระ', 'หน้าแรก', 'ข่าวสาร', 'บริการ', 'เกี่ยวกับเรา', 'เข้าสู่ระบบ']);
   const home = (await nav.getByText('หน้าแรก').boundingBox())!;
   const about = (await nav.getByText('เกี่ยวกับเรา').boundingBox())!;
   expect(Math.abs(home.y - about.y)).toBeLessThan(2);

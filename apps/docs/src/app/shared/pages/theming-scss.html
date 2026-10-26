@@ -33,12 +33,12 @@
   } @else {
     @if (en()) {
       <p>
-        Set only what you want to change; the rest comes from the preset. With no <code>with (…)</code> you get the version's default (Mali). Give one
+        Set only what you want to change; the rest comes from the preset. With no <code>with (…)</code> you get the version's default ({{ v.major === 2 ? 'Mali' : 'Wira' }}). Give one
         primary colour and the 50–950 shades are generated with the same formula as the TypeScript side (a test compares both).
       </p>
     } @else {
       <p>
-        ใส่เฉพาะค่าที่อยากเปลี่ยน ที่เหลือมาจาก preset ไม่ใส่ <code>with (…)</code> เลยจะได้ธีมเริ่มต้นของรุ่น (Mali)
+        ใส่เฉพาะค่าที่อยากเปลี่ยน ที่เหลือมาจาก preset ไม่ใส่ <code>with (…)</code> เลยจะได้ธีมเริ่มต้นของรุ่น ({{ v.major === 2 ? 'Mali' : 'Wira' }})
         ใส่สีหลักสีเดียวแล้วระบบสร้างเฉด 50–950 ให้ด้วยสูตรเดียวกับฝั่ง TypeScript (มี test เทียบผลทั้งสองฝั่ง)
       </p>
     }

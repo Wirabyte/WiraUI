@@ -195,7 +195,7 @@ export const PICKLIST_DOC: ComponentDoc = {
     <small class="text-color-secondary">{{ r.person || '(ยังไม่กำหนดผู้รับผิดชอบ)' }}</small>
   </ng-template>
 </wt-picklist>
-<wt-button label="บันทึก" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>`,
+<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>`,
     filter: `<wt-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" filterBy="name,module" sourceFilterPlaceholder="ค้นหาสิทธิ์"
   targetFilterPlaceholder="ค้นหาสิทธิ์" [sourceStyle]="{ height: '16rem' }" [targetStyle]="{ height: '16rem' }">
@@ -208,7 +208,7 @@ export const PICKLIST_DOC: ComponentDoc = {
   <ng-template #sourceHeader let-list>สิทธิ์ทั้งหมด ({{ list.length }})</ng-template>
   <ng-template #targetHeader let-list>สิทธิ์ที่ให้แล้ว ({{ list.length }})</ng-template>
   <ng-template #item let-p let-selected="selected">
-    <i [class]="selected ? 'pi pi-check-circle' : 'pi pi-circle'"></i> {{ p.name }}
+    <i [class]="selected ? 'wi wi-check-circle' : 'wi wi-circle'"></i> {{ p.name }}
   </ng-template>
   <ng-template #emptymessagetarget>ยังไม่ได้ให้สิทธิ์ใด ๆ</ng-template>
   <ng-template #emptyfiltermessagesource>ไม่พบสิทธิ์ที่ค้นหา</ng-template>
@@ -220,8 +220,8 @@ export const PICKLIST_DOC: ComponentDoc = {
   (onTargetReorder)="logMove('onTargetReorder', $event)">
   <ng-template #item let-p>{{ p.name }}</ng-template>
 </wt-picklist>
-<wt-button label="ให้ทุกสิทธิ์" icon="pi pi-check" (onClick)="pl.moveAllRight()"></wt-button>
-<wt-button label="ถอนทุกสิทธิ์" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>`,
+<wt-button label="ให้ทุกสิทธิ์" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wt-button>
+<wt-button label="ถอนทุกสิทธิ์" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>`,
     look: `<wt-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" optionLabel="name" scrollHeight="12rem" [stripedRows]="true"
   [showSourceControls]="false" [showTargetControls]="false"></wt-picklist>`,

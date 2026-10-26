@@ -211,13 +211,13 @@ export const DATEPICKER_DOC: ComponentDoc = {
   iconDisplay="input"></wt-datepicker>`,
     customicons: `<wt-datepicker name="time" [(ngModel)]="time" [timeOnly]="true" [showIcon]="true" iconDisplay="input">
   <ng-template #inputicon let-clickCallBack="clickCallBack">
-    <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+    <i class="wi wi-clock" (click)="clickCallBack($event)"></i>
   </ng-template>
 </wt-datepicker>
 
 <wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true">
   <ng-template #triggericon>
-    <i class="pi pi-calendar-plus"></i>
+    <i class="wi wi-calendar-plus"></i>
   </ng-template>
 </wt-datepicker>`,
     datetemplate: `<wt-datepicker name="appointment" [(ngModel)]="appointment" [inline]="true">

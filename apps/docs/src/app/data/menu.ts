@@ -156,7 +156,7 @@ export const MENU_DOC: ComponentDoc = {
   code: {
     popup: `<div class="flex align-items-center justify-content-between gap-2">
   <span class="font-semibold">WiraSchool</span>
-  <wt-button icon="pi pi-user" [rounded]="true" [text]="true" ariaLabel="บัญชีของฉัน" (onClick)="profileMenu.toggle($event)"></wt-button>
+  <wt-button icon="wi wi-user" [rounded]="true" [text]="true" ariaLabel="บัญชีของฉัน" (onClick)="profileMenu.toggle($event)"></wt-button>
 </div>
 <wt-menu #profileMenu [model]="profileItems" [popup]="true" ariaLabel="บัญชีของฉัน"></wt-menu>`,
     inline: `<aside class="w-15rem">
@@ -169,7 +169,7 @@ export const MENU_DOC: ComponentDoc = {
       v3: `<wt-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
   <ng-template #start>
     <div class="flex align-items-center gap-2 p-2">
-      <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
       <span class="font-semibold">สมหญิง ใจดี</span>
     </div>
   </ng-template>
@@ -184,13 +184,13 @@ export const MENU_DOC: ComponentDoc = {
     }
   </ng-template>
   <ng-template #end>
-    <wt-button label="ออกจากระบบ" icon="pi pi-sign-out" severity="secondary" [text]="true"></wt-button>
+    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
   </ng-template>
 </wt-menu>`,
       classic: `<wt-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
   <ng-template wtTemplate="start">
     <div class="flex align-items-center gap-2 p-2">
-      <wt-avatar icon="pi pi-user" shape="circle"></wt-avatar>
+      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
       <span class="font-semibold">สมหญิง ใจดี</span>
     </div>
   </ng-template>
@@ -203,7 +203,7 @@ export const MENU_DOC: ComponentDoc = {
     <wt-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge"></wt-badge>
   </ng-template>
   <ng-template wtTemplate="end">
-    <wt-button label="ออกจากระบบ" icon="pi pi-sign-out" severity="secondary" [text]="true"></wt-button>
+    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
   </ng-template>
 </wt-menu>`,
     },
@@ -216,10 +216,10 @@ export const MENU_DOC: ComponentDoc = {
     popup: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
 
 profileItems: MenuItem[] = [
-  { label: 'โปรไฟล์ของฉัน', icon: 'pi pi-user', command: (event) => this.run(event) },
-  { label: 'ตั้งค่าบัญชี', icon: 'pi pi-cog', command: (event) => this.run(event) },
+  { label: 'โปรไฟล์ของฉัน', icon: 'wi wi-user', command: (event) => this.run(event) },
+  { label: 'ตั้งค่าบัญชี', icon: 'wi wi-cog', command: (event) => this.run(event) },
   { separator: true },
-  { label: 'ออกจากระบบ', icon: 'pi pi-sign-out', command: (event) => this.run(event) },
+  { label: 'ออกจากระบบ', icon: 'wi wi-sign-out', command: (event) => this.run(event) },
 ];
 lastCommand = '';
 
@@ -227,46 +227,46 @@ run(event: MenuItemCommandEvent): void {
   this.lastCommand = event.item?.label ?? '';
 }`,
     inline: `sideItems: MenuItem[] = [
-  { label: 'หน้าแรก', icon: 'pi pi-home' },
-  { label: 'นักเรียน', icon: 'pi pi-users' },
-  { label: 'ตารางเรียน', icon: 'pi pi-calendar' },
-  { label: 'รายงาน', icon: 'pi pi-chart-bar' },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+  { label: 'หน้าแรก', icon: 'wi wi-home' },
+  { label: 'นักเรียน', icon: 'wi wi-users' },
+  { label: 'ตารางเรียน', icon: 'wi wi-calendar' },
+  { label: 'รายงาน', icon: 'wi wi-chart-bar' },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog' },
 ];`,
     groups: `groupItems: MenuItem[] = [
   {
     label: 'เอกสาร',
     items: [
-      { label: 'สร้างใหม่', icon: 'pi pi-plus' },
-      { label: 'ค้นหา', icon: 'pi pi-search' },
+      { label: 'สร้างใหม่', icon: 'wi wi-plus' },
+      { label: 'ค้นหา', icon: 'wi wi-search' },
     ],
   },
   {
     label: 'บัญชี',
     items: [
-      { label: 'ตั้งค่า', icon: 'pi pi-cog' },
-      { label: 'ข้อความ', icon: 'pi pi-inbox', badge: '2' },
-      { label: 'ออกจากระบบ', icon: 'pi pi-sign-out' },
+      { label: 'ตั้งค่า', icon: 'wi wi-cog' },
+      { label: 'ข้อความ', icon: 'wi wi-inbox', badge: '2' },
+      { label: 'ออกจากระบบ', icon: 'wi wi-sign-out' },
     ],
   },
 ];`,
     states: `stateItems: MenuItem[] = [
-  { label: 'กล่องข้อความ', icon: 'pi pi-inbox', badge: '5' },
-  { label: 'ส่งออก Excel', icon: 'pi pi-download', title: 'ไฟล์ .xlsx ของหน้านี้' },
+  { label: 'กล่องข้อความ', icon: 'wi wi-inbox', badge: '5' },
+  { label: 'ส่งออก Excel', icon: 'wi wi-download', title: 'ไฟล์ .xlsx ของหน้านี้' },
   { separator: true },
-  { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false },   // ไม่แสดง
-  { label: 'ลบทั้งหมด', icon: 'pi pi-trash', disabled: true },
+  { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false },   // ไม่แสดง
+  { label: 'ลบทั้งหมด', icon: 'wi wi-trash', disabled: true },
 ];`,
     links: `// เทียบ fragment ด้วย: ไฮไลต์เฉพาะหัวข้อที่เปิดอยู่
 private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
 
 linkItems: MenuItem[] = [
-  { label: 'เมนู popup', icon: 'pi pi-hashtag', routerLink: [], fragment: 'popup', routerLinkActiveOptions: this.sameSection },
-  { label: 'คีย์บอร์ด', icon: 'pi pi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
-  { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+  { label: 'เมนู popup', icon: 'wi wi-hashtag', routerLink: [], fragment: 'popup', routerLinkActiveOptions: this.sameSection },
+  { label: 'คีย์บอร์ด', icon: 'wi wi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
+  { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
   { separator: true },
-  { label: 'พิมพ์หน้านี้', icon: 'pi pi-print', command: (event) => this.run(event) },
-  { label: 'คัดลอกลิงก์', icon: 'pi pi-copy', command: (event) => this.run(event) },
+  { label: 'พิมพ์หน้านี้', icon: 'wi wi-print', command: (event) => this.run(event) },
+  { label: 'คัดลอกลิงก์', icon: 'wi wi-copy', command: (event) => this.run(event) },
 ];`,
     methods: `menuEvents: string[] = [];
 
@@ -427,8 +427,8 @@ export const TABMENU_DOC: ComponentDoc = {
     scroll: {
       title: { th: 'แท็บจำนวนมาก', en: 'Many tabs' },
       text: {
-        th: 'เมื่อแท็บล้นพื้นที่จะมีปุ่มลูกศรที่ขอบเอง และแท็บปัจจุบันเลื่อนเข้ามาให้เห็น <code>[scrollable]="true"</code> ของ template เดิมรับไว้ได้ (ไม่ต้องใส่)',
-        en: 'When the tabs overflow, edge arrows appear on their own and the current tab scrolls into view. <code>[scrollable]="true"</code> from existing templates is accepted (not needed).',
+        th: 'เมื่อแท็บล้นพื้นที่จะมีปุ่มลูกศรที่ขอบเอง และแท็บปัจจุบันเลื่อนเข้ามาให้เห็น <code>[scrollable]="true"</code> ของ template เดิมรับไว้ได้ (ไม่ต้องใส่) · ตัวอย่างนี้จำกัดกว้าง 360px ให้แท็บล้น',
+        en: 'When the tabs overflow, edge arrows appear on their own and the current tab scrolls into view. <code>[scrollable]="true"</code> from existing templates is accepted (not needed) · this sample is capped at 360px so the tabs overflow.',
       },
     },
     keyboard: {
@@ -450,25 +450,27 @@ export const TABMENU_DOC: ComponentDoc = {
     basic: `<wt-tabmenu [model]="items" [(activeItem)]="activeItem" ariaLabel="ข้อมูลโรงเรียน"></wt-tabmenu>`,
     commands: `<wt-tabmenu [model]="mailItems" [(activeItem)]="mailTab" ariaLabel="กล่องจดหมาย"></wt-tabmenu>`,
     router: `<wt-tabmenu [model]="viewItems" ariaLabel="มุมมอง"></wt-tabmenu>`,
-    scroll: `<wt-tabmenu [model]="months" [(activeItem)]="month" [scrollable]="true" ariaLabel="เดือน"></wt-tabmenu>`,
+    scroll: `<div style="max-width: min(360px, 100%)">
+  <wt-tabmenu [model]="months" [(activeItem)]="month" [scrollable]="true" ariaLabel="เดือน"></wt-tabmenu>
+</div>`,
   },
   ts: {
     basic: `import { MenuItem } from 'wiratheme/api';
 
 items: MenuItem[] = [
-  { label: 'ภาพรวม', icon: 'pi pi-th-large' },
-  { label: 'นักเรียน', icon: 'pi pi-users' },
-  { label: 'การเงิน', icon: 'pi pi-wallet' },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+  { label: 'ภาพรวม', icon: 'wi wi-th-large' },
+  { label: 'นักเรียน', icon: 'wi wi-users' },
+  { label: 'การเงิน', icon: 'wi wi-wallet' },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog' },
 ];
 activeItem: MenuItem = this.items[0];`,
     commands: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
 
 mailItems: MenuItem[] = [
-  { label: 'ทั้งหมด', icon: 'pi pi-inbox', command: (event) => this.open(event) },
-  { label: 'ยังไม่อ่าน', icon: 'pi pi-envelope', badge: '3', command: (event) => this.open(event) },
-  { label: 'ติดดาว', icon: 'pi pi-star', command: (event) => this.open(event) },
-  { label: 'ถังขยะ', icon: 'pi pi-trash', disabled: true },
+  { label: 'ทั้งหมด', icon: 'wi wi-inbox', command: (event) => this.open(event) },
+  { label: 'ยังไม่อ่าน', icon: 'wi wi-envelope', badge: '3', command: (event) => this.open(event) },
+  { label: 'ติดดาว', icon: 'wi wi-star', command: (event) => this.open(event) },
+  { label: 'ถังขยะ', icon: 'wi wi-trash', disabled: true },
 ];
 mailTab: MenuItem = this.mailItems[0];
 lastCommand = '';
@@ -481,9 +483,9 @@ open(event: MenuItemCommandEvent): void {
 private readonly sameView = { paths: 'exact', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored' };
 
 viewItems: MenuItem[] = [
-  { label: 'การ์ด', icon: 'pi pi-th-large', routerLink: [], queryParams: { view: 'cards' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
-  { label: 'รายการ', icon: 'pi pi-list', routerLink: [], queryParams: { view: 'list' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
-  { label: 'แผนที่', icon: 'pi pi-map-marker', routerLink: [], queryParams: { view: 'map' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+  { label: 'การ์ด', icon: 'wi wi-th-large', routerLink: [], queryParams: { view: 'cards' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+  { label: 'รายการ', icon: 'wi wi-list', routerLink: [], queryParams: { view: 'list' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+  { label: 'แผนที่', icon: 'wi wi-map-marker', routerLink: [], queryParams: { view: 'map' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
 ];`,
     scroll: `months: MenuItem[] = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
   'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'].map((label) => ({ label }));

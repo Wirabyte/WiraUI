@@ -19,6 +19,19 @@
   wt-aside-menu.wt-aside-menu-host-collapsed {
     width: var(--wt-aside-menu-collapsed-width);
   }
+  /* Collapsing or expanding: the menu keeps its full layout at full width while the host's width moves over it, so
+     labels never wrap and spring back mid-way. The host clips it and draws the edge line meanwhile. */
+  wt-aside-menu.wt-aside-menu-host-sliding {
+    overflow: hidden;
+  }
+  wt-aside-menu.wt-aside-menu-host-sliding::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    border-inline-end: var(--wt-aside-menu-border-width) solid var(--wt-aside-menu-border-color);
+    pointer-events: none;
+  }
   /* Phones: the host takes no room in the layout; the panel and its mask are fixed over the page. */
   wt-aside-menu.wt-aside-menu-host-mobile {
     display: contents;
@@ -37,6 +50,27 @@
     font-family: var(--wt-font-family);
     font-size: var(--wt-font-size);
     line-height: var(--wt-line-height);
+  }
+  .wt-aside-menu.wt-aside-menu-sliding {
+    width: var(--wt-aside-menu-width);
+    border-inline-end-color: transparent;
+  }
+  .wt-aside-menu-sliding :is(.wt-aside-menu-label, .wt-aside-menu-section-label) {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  /* Labels, badges and arrows fade out as the menu narrows, and in as it widens. */
+  .wt-aside-menu-sliding-collapse :is(.wt-aside-menu-label, .wt-aside-menu-section-label, .wt-aside-menu-badge, .wt-aside-menu-chevron) {
+    opacity: 0;
+    transition: opacity var(--wt-transition) ease;
+  }
+  .wt-aside-menu-sliding-expand :is(.wt-aside-menu-label, .wt-aside-menu-section-label, .wt-aside-menu-badge, .wt-aside-menu-chevron) {
+    animation: wt-aside-menu-fade-in var(--wt-transition) ease both;
+  }
+  @keyframes wt-aside-menu-fade-in {
+    from {
+      opacity: 0;
+    }
   }
   /* Focused only as a fallback when the panel has nothing focusable. */
   .wt-aside-menu:focus {

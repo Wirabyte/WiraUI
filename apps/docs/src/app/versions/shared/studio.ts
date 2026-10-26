@@ -1,8 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import { computed, DestroyRef, effect, inject, signal, untracked } from '@angular/core';
+import { computed, DestroyRef, effect, inject, Injector, signal, Type, untracked } from '@angular/core';
 import { DocsState } from '../../core/docs-state';
+import { DocsToc } from '../../core/docs-toc';
 import { DocsI18n, Text } from '../../core/i18n';
-import { NAV_PAGES } from '../../core/nav';
+import { NAV, NAV_PAGES } from '../../core/nav';
+import { DOCS_PREVIEW } from '../../core/preview';
 import {
   clone,
   cleanExtras,
@@ -27,6 +29,7 @@ import {
   toDisplay,
 } from '../../core/studio-store';
 import { DOCS_THEME, DOCS_VERSION } from '../../core/version-theme';
+import { DOCS_PAGES } from './version-routes';
 
 /*
  * WiraTheme Studio: every token of the theme on screen, edited live. Like demos.ts, no wiratheme import: the engine
@@ -35,6 +38,8 @@ import { DOCS_THEME, DOCS_VERSION } from '../../core/version-theme';
  */
 
 export type StudioTab = 'primitive' | 'semantic' | 'component' | 'custom' | 'settings';
+/** side: editor | preview (the preview a column at the side) · wide: the two halves of the width. */
+export type StudioLayout = 'side' | 'wide';
 export type ExportFormat = 'scss' | 'css' | 'preset' | 'overrides' | 'json';
 type Mode = 'light' | 'dark';
 type FieldKind = 'color' | 'text' | 'select' | 'bool';
@@ -337,6 +342,31 @@ function toHex(c: [number, number, number, number], under: [number, number, numb
   return '#' + mixed.map(hex).join('');
 }
 
+/** The preview's choice and layout, remembered in this browser. */
+const PREVIEW_STORE = 'wiratheme-docs-studio-preview';
+const LAYOUT_STORE = 'wiratheme-docs-studio-layout';
+
+function readStore(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeStore(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* storage blocked: the choice lasts until the page closes */
+  }
+}
+
+export interface StudioPreviewGroup {
+  label: string;
+  items: StudioOption[];
+}
+
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
@@ -366,6 +396,54 @@ export abstract class StudioDemo {
   private pendingPick: { f: StudioField; hex: string } | null = null;
   private pickFrame = 0;
   private probe: HTMLElement | null = null;
+
+  // ---------- preview: the overview, or any component's demos ----------
+  /** This version's page components by nav id. */
+  private readonly pages = (inject(DOCS_PAGES, { optional: true }) || {}) as unknown as Record<string, Type<unknown> | undefined>;
+  /** 'overview' (the mixed sample below) or the nav id of a component page. */
+  readonly previewId = signal<string>(readStore(PREVIEW_STORE) || 'overview');
+  readonly layout = signal<StudioLayout>(readStore(LAYOUT_STORE) === 'wide' ? 'wide' : 'side');
+  /**
+   * A page shown in the panel gets its own "On this page" list (its sections stay out of the studio's) and leaves out
+   * the page header, the tabs and the code under each demo (DOCS_PREVIEW).
+   */
+  protected readonly previewInjector = Injector.create({
+    providers: [
+      { provide: DOCS_PREVIEW, useValue: true },
+      { provide: DocsToc, useValue: new DocsToc() },
+    ],
+    parent: inject(Injector),
+  });
+  /** The nav entry of the chosen component; null for the overview (or a choice this version does not have). */
+  readonly previewPage = computed(() => {
+    const id = this.previewId();
+    if (id === 'overview' || !this.pages[id]) return null;
+    return NAV_PAGES.find((p) => p.id === id && p.path.startsWith('components/')) || null;
+  });
+  readonly previewValue = computed(() => (this.previewPage() ? this.previewId() : 'overview'));
+  readonly previewComponent = computed(() => {
+    const page = this.previewPage();
+    return page ? this.pages[page.id] || null : null;
+  });
+  /** The chosen component's own page, for "Open in new window" (it follows the studio live, see DocsState). */
+  readonly previewUrl = computed(() => {
+    const page = this.previewPage();
+    return page ? '/' + this.v.id + '/' + page.path : '';
+  });
+  /** Grouped like the site's nav: Form, Button, Panel, Menu, Display, Data, Media, Overlay, Messages, Misc. */
+  readonly previewOptions = computed<StudioPreviewGroup[]>(() => {
+    const groups = NAV.find((g) => g.id === 'components')?.groups || [];
+    return [
+      { label: this.en() ? 'Studio' : 'สตูดิโอ', items: [{ label: this.en() ? 'Overview' : 'ภาพรวม', value: 'overview' }] },
+      ...groups
+        .map((g) => ({ label: g.title, items: g.items.filter((i) => !!this.pages[i.id]).map((i) => ({ label: this.pick(i.title), value: i.id })) }))
+        .filter((g) => g.items.length),
+    ];
+  });
+  readonly layoutOptions = computed<StudioOption[]>(() => [
+    { label: this.en() ? 'Side by side' : 'วางข้างกัน', value: 'side' },
+    { label: this.en() ? 'Wide preview' : 'ตัวอย่างกว้าง', value: 'wide' },
+  ]);
 
   // Preview sample state.
   pvRoom: string | null = null;
@@ -765,7 +843,7 @@ export abstract class StudioDemo {
     const cur = this.cfg().fontFamily;
     return list.includes(cur) ? list : [cur, ...list];
   });
-  readonly presetOptions = computed<StudioOption[]>(() => this.vt.presets.map((p) => ({ label: p.name === p.id ? p.id : `${p.name} (${p.id})`, value: p.id })));
+  readonly presetOptions = computed<StudioOption[]>(() => [...this.vt.presets, ...this.vt.secretPresets()].map((p) => ({ label: p.name === p.id ? p.id : `${p.name} (${p.id})`, value: p.id })));
   readonly densityOptions = computed<StudioOption[]>(() => Object.keys(this.core.DENSITY).map((v) => ({ label: `${v} (×${this.core.DENSITY[v]})`, value: v })));
   readonly darkModeOptions = computed<StudioOption[]>(() => [
     { label: this.en() ? 'Class: .wt-dark on <html>' : 'class: ใส่ .wt-dark ที่ <html>', value: 'class' },
@@ -849,6 +927,30 @@ export abstract class StudioDemo {
       f.id,
       setTimeout(() => this.write(f, value), 350)
     );
+  }
+
+  // ---------- suggestions (wt-autocomplete) for the font and the custom token names ----------
+  readonly fontHits = signal<string[]>([]);
+  readonly nameHits = signal<string[]>([]);
+
+  protected findFonts(event: { query?: string }): void {
+    const q = (event.query || '').trim().toLowerCase();
+    this.fontHits.set(this.fontOptions().filter((font) => font.toLowerCase().includes(q)));
+  }
+
+  protected findTokenNames(event: { query?: string }): void {
+    const q = (event.query || '').trim().toLowerCase().replace(/^--wt-/, '');
+    this.nameHits.set(this.tokenNames().filter((n) => n.includes(q)).slice(0, 50));
+  }
+
+  /** A suggestion picked from the list: applied at once, as a typed value is on change. */
+  protected pickText(f: StudioField, value: unknown): void {
+    clearTimeout(this.timers.get(f.id));
+    this.write(f, this.asText(value));
+  }
+
+  protected asText(value: unknown): string {
+    return typeof value === 'string' ? value : value == null ? '' : String(value);
   }
 
   protected committed(f: StudioField, event: Event): void {
@@ -1299,6 +1401,18 @@ export abstract class StudioDemo {
     lineHeight: this.confField('lineHeight', this.en() ? 'Line height' : 'ระยะบรรทัด'),
     density: this.confField('density', this.en() ? 'Density' : 'ความหนาแน่น'),
   }));
+
+  protected choosePreview(id: unknown): void {
+    const next = typeof id === 'string' && (id === 'overview' || !!this.pages[id]) ? id : 'overview';
+    this.previewId.set(next);
+    writeStore(PREVIEW_STORE, next);
+  }
+
+  protected setLayout(layout: unknown): void {
+    const next: StudioLayout = layout === 'wide' ? 'wide' : 'side';
+    this.layout.set(next);
+    writeStore(LAYOUT_STORE, next);
+  }
 
   // ---------- preview sample data ----------
   readonly pvRooms = computed<StudioOption[]>(() =>

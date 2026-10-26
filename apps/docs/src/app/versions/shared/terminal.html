@@ -1,0 +1,31 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-terminal
+          #term
+          id="d-term"
+          [welcomeMessage]="tx('ยินดีต้อนรับสู่ระบบวิระ พิมพ์ help เพื่อดูคำสั่ง')"
+          [prompt]="tx('วิระ $')"
+          [style]="{ height: '16rem' }"
+        ></wt-terminal>
+        <div class="docs-demo-actions">
+          <wt-button id="d-term-clear" [label]="tx('ล้างหน้าจอ')" icon="wi wi-eraser" severity="secondary" [outlined]="true" (onClick)="term.clear()"></wt-button>
+          <span class="docs-demo-output">{{ tx('คำสั่งล่าสุด') }}: <code id="d-term-last">{{ lastCommand || '-' }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="clear" [section]="sec['clear']">
+      <docs-code [code]="$any(code['clear'])" lang="html"></docs-code>
+    </docs-section>
+
+    <docs-section id="size" [section]="sec['size']"></docs-section>
+    <docs-section id="keyboard" [section]="sec['keyboard']"></docs-section>
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

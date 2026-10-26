@@ -33,9 +33,9 @@ export const TAG_DOC: ComponentDoc = {
     basic: `<wt-tag value="ใหม่"></wt-tag>`,
     severity: severities.map((s) => `<wt-tag value="${s}" severity="${s}"></wt-tag>`).join('\n'),
     pill: `<wt-tag value="เปิดใช้งาน" severity="success" [rounded]="true"></wt-tag>
-<wt-tag value="ยืนยันแล้ว" icon="pi pi-check" severity="info"></wt-tag>`,
+<wt-tag value="ยืนยันแล้ว" icon="wi wi-check" severity="info"></wt-tag>`,
     content: `<wt-tag severity="warn">
-  <span class="pi pi-bell"></span> รออนุมัติ 3 รายการ
+  <span class="wi wi-bell"></span> รออนุมัติ 3 รายการ
 </wt-tag>`,
   },
   api: [
@@ -114,10 +114,10 @@ export const BADGE_DOC: ComponentDoc = {
     inline: `<span>กล่องข้อความ <wt-badge value="12" severity="danger"></wt-badge></span>
 <span>สถานะออนไลน์ <wt-badge severity="success"></wt-badge></span>`,
     directive: `<span class="notify-icon" wtBadge [value]="unread" severity="danger" [badgeDisabled]="!unread">
-  <i class="pi pi-bell"></i>
+  <i class="wi wi-bell"></i>
 </span>
-<span class="notify-icon" wtBadge severity="success"><i class="pi pi-envelope"></i></span>
-<span class="notify-icon" pBadge value="2" badgeSize="large"><i class="pi pi-calendar"></i></span>
+<span class="notify-icon" wtBadge severity="success"><i class="wi wi-envelope"></i></span>
+<span class="notify-icon" pBadge value="2" badgeSize="large"><i class="wi wi-calendar"></i></span>
 <wt-button label="อ่านทั้งหมด" severity="secondary" [text]="true" (onClick)="markRead()"></wt-button>`,
     style: `<wt-badge value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wt-badge>`,
   },
@@ -204,7 +204,7 @@ export const CHIP_DOC: ComponentDoc = {
     basic: `<wt-chip label="Angular"></wt-chip>
 <wt-chip label="TypeScript"></wt-chip>
 <wt-chip label="SCSS"></wt-chip>`,
-    icon: `<wt-chip label="ส่งแล้ว" icon="pi pi-send"></wt-chip>
+    icon: `<wt-chip label="ส่งแล้ว" icon="wi wi-send"></wt-chip>
 <wt-chip label="สมชาย ใจดี" image="assets/avatar.png" alt="สมชาย"></wt-chip>`,
     removable: {
       classic: `<wt-chip *ngFor="let t of tags" [label]="t" [removable]="true" (onRemove)="remove(t)"></wt-chip>`,
@@ -284,7 +284,7 @@ export const AVATAR_DOC: ComponentDoc = {
   },
   code: {
     basic: `<wt-avatar label="ส"></wt-avatar>
-<wt-avatar icon="pi pi-user"></wt-avatar>
+<wt-avatar icon="wi wi-user"></wt-avatar>
 <wt-avatar image="assets/avatar.png" ariaLabel="สมชาย ใจดี"></wt-avatar>`,
     sizes: `<wt-avatar label="A" shape="circle"></wt-avatar>
 <wt-avatar label="B" size="large" shape="circle"></wt-avatar>
@@ -400,6 +400,8 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     'รายการ': 'items',
     'อัปโหลด 3 จาก 10 ไฟล์': 'Uploaded 3 of 10 files',
     'กำลังนำเข้า': 'Importing',
+    'กำลังคัดลอก 7 จาก 10 ไฟล์': 'Copying 7 of 10 files',
+    'สำรองข้อมูล': 'Backing up',
   },
   sections: {
     import: { title: 'Import', text: importText },
@@ -424,8 +426,15 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     striped: {
       title: { th: 'ลายทาง', en: 'Stripes' },
       text: {
-        th: '<code>[striped]="true"</code> ใส่ลายทางเฉียงบนแถบ · <code>[animated]="true"</code> ให้ลายทางเคลื่อนที่ (มีลายทางในตัว ไม่ต้องใส่ striped) เหมาะกับงานที่กำลังทำอยู่ ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นลายทางนิ่ง · ลายทางเป็นอีกชั้นหนึ่ง จึงใช้คู่กับ <code>color</code> ได้ และขนาดลายตั้งด้วย token <code>--wt-progressbar-stripe-size</code>',
-        en: '<code>[striped]="true"</code> lays diagonal stripes over the bar · <code>[animated]="true"</code> makes them move (it brings the stripes itself, no striped needed), for work in progress; people who ask for reduced motion see them still · the stripes are a layer of their own, so they go with <code>color</code>, and the <code>--wt-progressbar-stripe-size</code> token sets their size.',
+        th: '<code>[striped]="true"</code> ใส่ลายทางเฉียงบนแถบ · <code>[animated]="true"</code> ให้ลายทางเคลื่อนที่ (มีลายทางในตัว ไม่ต้องใส่ striped) เหมาะกับงานที่กำลังทำอยู่ ลายเอียงไปข้างหน้าและวิ่งไปทางเดียวกับที่แถบยาวขึ้น (ขวาไปซ้ายในหน้า RTL) ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นลายทางนิ่ง · ลายทางเป็นอีกชั้นหนึ่ง จึงใช้คู่กับ <code>color</code> ได้ และขนาดลายตั้งด้วย token <code>--wt-progressbar-stripe-size</code>',
+        en: '<code>[striped]="true"</code> lays diagonal stripes over the bar · <code>[animated]="true"</code> makes them move (it brings the stripes itself, no striped needed), for work in progress; they lean forward and travel the way the bar grows (right to left on RTL pages), and people who ask for reduced motion see them still · the stripes are a layer of their own, so they go with <code>color</code>, and the <code>--wt-progressbar-stripe-size</code> token sets their size.',
+      },
+    },
+    shimmer: {
+      title: { th: 'แถบเงาวาว', en: 'Shimmer' },
+      text: {
+        th: '<code>[shimmer]="true"</code> ทำให้แถบเงาวาว (ไฮไลต์ด้านใน) และมีแสงวิ่งผ่านแถบทุกราว 2.4 วินาที แบบแถบความคืบหน้าของโปรแกรมบนเดสก์ท็อป บอกผู้ใช้ว่างานยังเดินอยู่แม้ค่ายังไม่ขยับ · แสงวิ่งไปทางที่แถบยาวขึ้น (กลับด้านในหน้า RTL) และใช้คู่กับ <code>color</code>, ลายทาง และ <code>mode="indeterminate"</code> ได้ · ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นแค่ความเงานิ่ง ๆ',
+        en: '<code>[shimmer]="true"</code> gives the bar a gloss (an inner highlight) and a band of light that sweeps along it every 2.4 s or so, like the progress bars of desktop programs, so people see the work is alive even while the value holds still · the light travels the way the bar grows (reversed on RTL pages) and goes with <code>color</code>, stripes and <code>mode="indeterminate"</code> · people who ask for reduced motion see only the still gloss.',
       },
     },
   },
@@ -444,6 +453,9 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     striped: `<wt-progressbar [value]="45" [striped]="true"></wt-progressbar>
 <wt-progressbar [value]="60" [animated]="true" text="กำลังนำเข้า"></wt-progressbar>
 <wt-progressbar [value]="80" [striped]="true" color="var(--wt-success-color)" [showValue]="false"></wt-progressbar>`,
+    shimmer: `<wt-progressbar [value]="70" [shimmer]="true" text="กำลังคัดลอก 7 จาก 10 ไฟล์"></wt-progressbar>
+<wt-progressbar [value]="45" [shimmer]="true" color="var(--wt-success-color)" text="สำรองข้อมูล"></wt-progressbar>
+<wt-progressbar mode="indeterminate" [shimmer]="true" style="height: 6px"></wt-progressbar>`,
   },
   api: [
     {
@@ -459,6 +471,7 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
         row('color', 'string', undefined, 'สีของแถบ', 'Bar colour'),
         row('striped', 'boolean', 'false', 'ลายทางเฉียงบนแถบ', 'Diagonal stripes on the bar'),
         row('animated', 'boolean', 'false', 'ลายทางที่เคลื่อนที่ (มีลายทางในตัว) นิ่งเมื่อผู้ใช้ตั้งลดการเคลื่อนไหว', 'Moving stripes (stripes included); still for people who ask for reduced motion'),
+        row('shimmer', 'boolean', 'false', 'แถบเงาวาวและแสงที่วิ่งผ่านเป็นระยะ (เหลือแค่ความเงาเมื่อผู้ใช้ตั้งลดการเคลื่อนไหว)', 'A glossy bar with a band of light sweeping along it now and then (only the gloss for people who ask for reduced motion)'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
         STYLE_ROW,
       ],
@@ -490,9 +503,20 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   standalone: 'WtProgressSpinner',
   module: 'WtProgressSpinnerModule',
   selector: 'wt-progress-spinner',
-  description: { th: 'วงกลมหมุนบอกว่ากำลังโหลด ขนาดตั้งที่ตัว element', en: 'A spinning circle that shows something is loading. Size it on the element.' },
+  description: {
+    th: 'วงกลมหมุนบอกว่ากำลังโหลด ตั้งขนาด สีเดียวหรือหลายสี และใส่ข้อความใต้วงหรือข้างวงได้ โดยวงกับข้อความจัดอยู่กลางพื้นที่ให้เอง',
+    en: 'A spinning circle that shows something is loading: set its size, one colour or several, and text under or beside the ring, centred for you.',
+  },
   english: {
     'กำลังโหลด': 'Loading',
+    'กำลังโหลดข้อมูล…': 'Loading data…',
+    'กำลังซิงก์ 3 รายการ': 'Syncing 3 items',
+    'กำลังเตรียมรายงาน': 'Preparing the report',
+    'อาจใช้เวลาราว 1 นาที': 'This may take about a minute',
+    'กล่องรอโหลด: วงกับข้อความอยู่กลางพื้นที่ของตัวเอง': 'a loading block: ring and text centred in their own space',
+    'ข้อความข้างวง ในแถวเดียวกับปุ่ม': 'text beside the ring, in a row with a button',
+    'เนื้อหาเองสองบรรทัด': 'own content on two lines',
+    'สีของแบรนด์ (ใส่ได้สูงสุดสี่สี)': 'brand colours (up to four)',
   },
   sections: {
     import: {
@@ -505,13 +529,76 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
     basic: { title: 'Basic' },
     custom: {
       title: { th: 'ขนาด เส้น และความเร็ว', en: 'Size, stroke and speed' },
-      text: { th: 'ขนาดอยู่ที่ host จึงใส่ <code>style="width: 2rem; height: 2rem"</code> ได้', en: 'The size lives on the host, so <code>style="width: 2rem; height: 2rem"</code> works.' },
+      text: {
+        th: '<code>size</code> คือขนาดของวง (<code>size="2rem"</code> หรือตัวเลขเป็น px) และเพราะขนาดอยู่ที่ host จึงใส่ <code>style="width: 3rem; height: 3rem"</code> ก็ได้ · <code>strokeWidth</code> คือความหนาเส้น <code>fill</code> คือสีพื้นในวง และ <code>animationDuration</code> คือเวลาหมุนหนึ่งรอบ',
+        en: '<code>size</code> sizes the ring (<code>size="2rem"</code>, or a number in px), and as the size lives on the host, <code>style="width: 3rem; height: 3rem"</code> works too · <code>strokeWidth</code> is the line width, <code>fill</code> the colour inside the ring, and <code>animationDuration</code> the time for one turn.',
+      },
+    },
+    colors: {
+      title: { th: 'หลากสี', en: 'Colours' },
+      text: {
+        th: '<code>[multicolor]="true"</code> ให้วงเปลี่ยนสีวนตามสีของธีม (primary → info → success → warn) ส่วน <code>[multicolor]="false"</code> ใช้สี primary สีเดียว · ถ้าไม่ใส่ จะเป็นไปตาม preset (บาง preset วนสี่สีอยู่แล้ว บาง preset ใช้สีเดียว) · <code>[colors]</code> ใส่สีเองได้สูงสุดสี่สี เช่นสีของแบรนด์ (ใส่น้อยกว่าสี่สีจะวนซ้ำให้ครบ) · ทั้งหมดเป็นตัวแปร <code>--wt-spinner-color-1</code> ถึง <code>-4</code> ที่ host จึงตั้งด้วย CSS ก็ได้',
+        en: '<code>[multicolor]="true"</code> cycles the ring through the theme’s colours (primary → info → success → warn), and <code>[multicolor]="false"</code> keeps it on the primary colour · left out, the preset decides (some presets already cycle four colours, others use one) · <code>[colors]</code> takes your own, up to four, such as brand colours (fewer repeat to fill four) · all of them are the <code>--wt-spinner-color-1</code> to <code>-4</code> variables on the host, so CSS can set them too.',
+      },
+    },
+    label: {
+      title: { th: 'ข้อความใต้ spinner', en: 'With a label' },
+      text: {
+        th: '<code>label</code> ใส่ข้อความใต้วง แล้ว spinner จัดวงกับข้อความไว้กลางพื้นที่ที่ได้รับเองทั้งแนวนอนและแนวตั้ง จึงเป็นกล่องรอโหลดได้เลยโดยไม่ต้องห่อด้วย div (ให้ความสูงกับมันพอ) · <code>labelPosition="right"</code> วางข้อความข้างวงในบรรทัดเดียว เหมาะกับแถบสถานะหรือแถวที่มีปุ่ม · template <code>label</code> ใส่เนื้อหาเองแทนข้อความ เช่นหัวข้อกับคำอธิบายสองบรรทัด · ข้อความเป็นชื่อของ progressbar สำหรับ screen reader ด้วย เว้นแต่ใส่ <code>ariaLabel</code> (ใส่ไว้เสมอเมื่อใช้ template) · ระยะห่าง สี และขนาดของข้อความตั้งด้วย token <code>--wt-spinner-label-gap</code>, <code>--wt-spinner-label-color</code> และ <code>--wt-spinner-label-size</code>',
+        en: '<code>label</code> puts text under the ring, and the spinner centres ring and text in the space it is given, both ways, so it makes a loading block without a wrapper (give it the height) · <code>labelPosition="right"</code> puts the text beside the ring on one line, for a status strip or a row with a button · a <code>label</code> template replaces the text with your own content, such as a title over a small hint · the text is also the progressbar’s name for screen readers unless <code>ariaLabel</code> is set (always set it with a template) · the <code>--wt-spinner-label-gap</code>, <code>--wt-spinner-label-color</code> and <code>--wt-spinner-label-size</code> tokens set the gap, colour and size of the text.',
+      },
     },
   },
   code: {
     basic: `<wt-progress-spinner ariaLabel="กำลังโหลด"></wt-progress-spinner>`,
-    custom: `<wt-progress-spinner style="width: 2rem; height: 2rem" strokeWidth="6"></wt-progress-spinner>
+    custom: `<wt-progress-spinner size="2rem" strokeWidth="6"></wt-progress-spinner>
 <wt-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wt-progress-spinner>`,
+    colors: `<wt-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังโหลด"></wt-progress-spinner>
+<wt-progress-spinner [multicolor]="false" size="3rem" ariaLabel="กำลังโหลด"></wt-progress-spinner>
+<!-- สีของแบรนด์ (ใส่ได้สูงสุดสี่สี) -->
+<wt-progress-spinner [colors]="brandColors" size="3rem" strokeWidth="4" ariaLabel="กำลังโหลด"></wt-progress-spinner>`,
+    label: `<!-- กล่องรอโหลด: วงกับข้อความอยู่กลางพื้นที่ของตัวเอง -->
+<wt-progress-spinner size="2.5rem" label="กำลังโหลดข้อมูล…" class="loading-card"></wt-progress-spinner>
+
+<!-- ข้อความข้างวง ในแถวเดียวกับปุ่ม -->
+<div class="sync-row">
+  <wt-progress-spinner size="1.25rem" strokeWidth="5" label="กำลังซิงก์ 3 รายการ" labelPosition="right"></wt-progress-spinner>
+  <wt-button label="ยกเลิก" severity="secondary" [text]="true" size="small"></wt-button>
+</div>
+
+<!-- เนื้อหาเองสองบรรทัด -->
+<wt-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังเตรียมรายงาน">
+  <ng-template #label>
+    <strong class="spinner-title">กำลังเตรียมรายงาน</strong>
+    <small class="spinner-hint">อาจใช้เวลาราว 1 นาที</small>
+  </ng-template>
+</wt-progress-spinner>`,
+  },
+  ts: {
+    colors: `brandColors = ['#e8668e', '#3b6fd8', '#ff9a2e'];`,
+  },
+  css: {
+    label: `.loading-card {
+  height: 12rem;
+  border: 1px dashed var(--wt-border);
+  border-radius: 12px;
+}
+.sync-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid var(--wt-border);
+  border-radius: 999px;
+}
+.spinner-title,
+.spinner-hint {
+  display: block;
+}
+.spinner-hint {
+  color: var(--wt-text-muted);
+}`,
   },
   api: [
     {
@@ -521,9 +608,19 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
         row('strokeWidth', 'string', "'2'", 'ความหนาเส้น', 'Stroke width'),
         row('fill', 'string', "'none'", 'สีพื้นในวง', 'Fill inside the circle'),
         row('animationDuration', 'string', "'2s'", 'เวลาหมุนหนึ่งรอบ', 'Time for one turn'),
-        row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
+        row('size', 'string | number', 'token', 'ขนาดของวง เช่น \'3rem\' (ตัวเลข = px)', 'Size of the ring, e.g. \'3rem\' (a number = px)'),
+        row('multicolor', 'boolean', 'preset', 'true: วนสีของธีม (primary, info, success, warn) · false: สี primary สีเดียว', 'true: cycle the theme’s colours (primary, info, success, warn) · false: the primary colour only'),
+        row('colors', 'string[]', undefined, 'สีของตัวเองที่วนไป (สูงสุดสี่สี น้อยกว่านั้นวนซ้ำ)', 'Your own colours to cycle (up to four; fewer repeat)'),
+        row('label', 'string', undefined, 'ข้อความใต้วง (หรือข้างวง) จัดกึ่งกลางให้ และเป็นชื่อสำหรับ screen reader ด้วย', 'Text under (or beside) the ring, centred; also the accessible name'),
+        row('labelPosition', "'bottom' | 'right'", "'bottom'", 'ข้อความใต้วง หรือข้างวงในบรรทัดเดียว', 'Text under the ring, or beside it on one line'),
+        row('ariaLabel', 'string', 'label · locale (loading)', 'ชื่อสำหรับ screen reader', 'Accessible name'),
         STYLE_ROW,
       ],
+    },
+    {
+      id: 'api-templates',
+      title: 'Templates',
+      rows: [row('label', '—', undefined, 'เนื้อหาเองแทนข้อความ (v3: <ng-template #label> · v1 / v2: wtTemplate="label")', 'Own content in place of the text (v3: <ng-template #label> · v1 / v2: wtTemplate="label")')],
     },
   ],
   tokens: [
@@ -532,5 +629,8 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
     tok('--wt-spinner-color-2', 'สีช่วงที่ 2', 'Colour 2'),
     tok('--wt-spinner-color-3', 'สีช่วงที่ 3', 'Colour 3'),
     tok('--wt-spinner-color-4', 'สีช่วงที่ 4', 'Colour 4'),
+    tok('--wt-spinner-label-gap', 'ระยะระหว่างวงกับข้อความ', 'Space between the ring and its label'),
+    tok('--wt-spinner-label-color', 'สีของข้อความ', 'Label colour'),
+    tok('--wt-spinner-label-size', 'ขนาดของข้อความ', 'Label size'),
   ],
 };

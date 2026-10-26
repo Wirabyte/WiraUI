@@ -62,6 +62,8 @@
     border: 1px solid var(--wt-dialog-border);
     border-radius: var(--wt-dialog-radius);
     background: var(--wt-dialog-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     color: var(--wt-text);
     box-shadow: var(--wt-dialog-shadow);
     font-family: var(--wt-font-family);

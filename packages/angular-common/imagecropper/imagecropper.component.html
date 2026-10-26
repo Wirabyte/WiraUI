@@ -77,43 +77,52 @@
     </div>
   </div>
 
-  <div *ngIf="showToolbar && ready" class="wt-imagecropper-toolbar" role="toolbar" [attr.aria-label]="ariaLabel || t.imageCropper">
-    <div class="wt-imagecropper-group wt-imagecropper-group-zoom">
-      <button type="button" [class]="buttonClass('wt-imagecropper-zoom-out')" [disabled]="disabled || !canZoomOut" [attr.aria-label]="t.zoomOut" [attr.title]="t.zoomOut" (click)="zoomOut()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20.5 20.5 16 16"></path></svg>
-      </button>
-      <input
-        type="range"
-        class="wt-imagecropper-zoom"
-        min="0"
-        max="100"
-        step="1"
-        [value]="zoomSlider"
-        [disabled]="disabled"
-        [attr.aria-label]="t.zoom"
-        [attr.aria-valuetext]="zoomPercent + '%'"
-        (input)="zoomSliderInput($event)"
-      />
-      <button type="button" [class]="buttonClass('wt-imagecropper-zoom-in')" [disabled]="disabled || !canZoomIn" [attr.aria-label]="t.zoomIn" [attr.title]="t.zoomIn" (click)="zoomIn()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M11 8v6M20.5 20.5 16 16"></path></svg>
-      </button>
+  <div
+    *ngIf="showToolbar && ready && (toolGroups.length || toolsTemplate)"
+    class="wt-imagecropper-toolbar"
+    role="toolbar"
+    [attr.aria-label]="ariaLabel || t.imageCropper"
+  >
+    <div *ngFor="let group of toolGroups" class="wt-imagecropper-group" [class.wt-imagecropper-group-zoom]="group.zoom">
+      <ng-container *ngFor="let tool of group.tools" [ngSwitch]="tool">
+        <button *ngSwitchCase="'zoomOut'" type="button" [class]="buttonClass('wt-imagecropper-zoom-out')" [disabled]="disabled || !canZoomOut" [attr.aria-label]="t.zoomOut" [attr.title]="t.zoomOut" (click)="zoomOut()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20.5 20.5 16 16"></path></svg>
+        </button>
+        <input
+          *ngSwitchCase="'zoomSlider'"
+          type="range"
+          class="wt-imagecropper-zoom"
+          min="0"
+          max="100"
+          step="1"
+          [value]="zoomSlider"
+          [disabled]="disabled"
+          [attr.aria-label]="t.zoom"
+          [attr.aria-valuetext]="zoomPercent + '%'"
+          (input)="zoomSliderInput($event)"
+        />
+        <button *ngSwitchCase="'zoomIn'" type="button" [class]="buttonClass('wt-imagecropper-zoom-in')" [disabled]="disabled || !canZoomIn" [attr.aria-label]="t.zoomIn" [attr.title]="t.zoomIn" (click)="zoomIn()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M11 8v6M20.5 20.5 16 16"></path></svg>
+        </button>
+        <button *ngSwitchCase="'rotateLeft'" type="button" [class]="buttonClass('wt-imagecropper-rotate-left')" [disabled]="disabled" [attr.aria-label]="t.rotateLeft" [attr.title]="t.rotateLeft" (click)="rotateLeft()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M4 10a8 8 0 1 1 1.7 7"></path></svg>
+        </button>
+        <button *ngSwitchCase="'rotateRight'" type="button" [class]="buttonClass('wt-imagecropper-rotate-right')" [disabled]="disabled" [attr.aria-label]="t.rotateRight" [attr.title]="t.rotateRight" (click)="rotateRight()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v6h-6"></path><path d="M20 10A8 8 0 1 0 18.3 17"></path></svg>
+        </button>
+        <button *ngSwitchCase="'flipHorizontal'" type="button" [class]="buttonClass('wt-imagecropper-flip-h')" [disabled]="disabled" [attr.aria-label]="t.flipHorizontal" [attr.title]="t.flipHorizontal" (click)="flipHorizontal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18" stroke-dasharray="2 2.5"></path><path d="M9 7 4 17h5z"></path><path d="M15 7l5 10h-5z"></path></svg>
+        </button>
+        <button *ngSwitchCase="'flipVertical'" type="button" [class]="buttonClass('wt-imagecropper-flip-v')" [disabled]="disabled" [attr.aria-label]="t.flipVertical" [attr.title]="t.flipVertical" (click)="flipVertical()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="2 2.5"></path><path d="M7 9 17 4v5z"></path><path d="M7 15l10 5v-5z"></path></svg>
+        </button>
+        <button *ngSwitchCase="'reset'" type="button" [class]="buttonClass('wt-imagecropper-reset')" [disabled]="disabled" [attr.aria-label]="t.resetCrop" [attr.title]="t.resetCrop" (click)="reset()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v5h5"></path></svg>
+        </button>
+      </ng-container>
     </div>
-    <div class="wt-imagecropper-group">
-      <button type="button" [class]="buttonClass('wt-imagecropper-rotate-left')" [disabled]="disabled" [attr.aria-label]="t.rotateLeft" [attr.title]="t.rotateLeft" (click)="rotateLeft()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M4 10a8 8 0 1 1 1.7 7"></path></svg>
-      </button>
-      <button type="button" [class]="buttonClass('wt-imagecropper-rotate-right')" [disabled]="disabled" [attr.aria-label]="t.rotateRight" [attr.title]="t.rotateRight" (click)="rotateRight()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v6h-6"></path><path d="M20 10A8 8 0 1 0 18.3 17"></path></svg>
-      </button>
-      <button type="button" [class]="buttonClass('wt-imagecropper-flip-h')" [disabled]="disabled" [attr.aria-label]="t.flipHorizontal" [attr.title]="t.flipHorizontal" (click)="flipHorizontal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18" stroke-dasharray="2 2.5"></path><path d="M9 7 4 17h5z"></path><path d="M15 7l5 10h-5z"></path></svg>
-      </button>
-      <button type="button" [class]="buttonClass('wt-imagecropper-flip-v')" [disabled]="disabled" [attr.aria-label]="t.flipVertical" [attr.title]="t.flipVertical" (click)="flipVertical()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="2 2.5"></path><path d="M7 9 17 4v5z"></path><path d="M7 15l10 5v-5z"></path></svg>
-      </button>
-      <button type="button" [class]="buttonClass('wt-imagecropper-reset')" [disabled]="disabled" [attr.aria-label]="t.resetCrop" [attr.title]="t.resetCrop" (click)="reset()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v5h5"></path></svg>
-      </button>
+    <div *ngIf="toolsTemplate" class="wt-imagecropper-group wt-imagecropper-group-custom">
+      <ng-container *ngTemplateOutlet="toolsTemplate; context: toolsContext"></ng-container>
     </div>
   </div>
 </div>

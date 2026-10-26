@@ -1,0 +1,27 @@
+<div #container class="wt-terminal p-terminal p-component" [ngClass]="styleClass || ''" [ngStyle]="rootStyle">
+  <div *ngIf="welcomeMessage" class="wt-terminal-welcome-message p-terminal-welcome-message">{{ welcomeMessage }}</div>
+  <div class="wt-terminal-command-list p-terminal-command-list p-terminal-content" role="log">
+    <div *ngFor="let c of commands" class="wt-terminal-command p-terminal-command">
+      <ng-container *ngIf="c.text !== null">
+        <span class="wt-terminal-prompt-label p-terminal-prompt-label" aria-hidden="true">{{ prompt }}</span>
+        <span class="wt-terminal-command-value p-terminal-command-value">{{ c.text }}</span>
+      </ng-container>
+      <div class="wt-terminal-command-response p-terminal-command-response p-terminal-response">{{ c.response }}</div>
+    </div>
+  </div>
+  <div class="wt-terminal-prompt p-terminal-prompt p-terminal-prompt-container">
+    <span class="wt-terminal-prompt-label p-terminal-prompt-label" aria-hidden="true">{{ prompt }}</span>
+    <input
+      #input
+      type="text"
+      class="wt-terminal-prompt-value p-terminal-prompt-value p-terminal-input"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      [attr.aria-label]="ariaLabel || t.terminalInput"
+      [value]="command"
+      (input)="typed($event)"
+      (keydown)="handleCommand($event)"
+    />
+  </div>
+</div>

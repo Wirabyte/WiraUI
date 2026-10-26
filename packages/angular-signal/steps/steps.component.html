@@ -1,4 +1,10 @@
-<nav class="wt-steps p-steps p-component" [class.wt-steps-readonly]="readonly" [class.p-readonly]="readonly" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+<nav
+  class="wt-steps p-steps p-component"
+  [class.wt-steps-readonly]="readonly"
+  [class.p-readonly]="readonly"
+  [class.wt-steps-label-right]="labelPosition === 'right' && orientation !== 'vertical'"
+  [class.wt-steps-vertical]="orientation === 'vertical'"
+  [ngClass]="styleClass || ''" [ngStyle]="style || null">
   <ol class="wt-steps-list p-steps-list" (keydown)="keydown($event)">
     @for (item of items; track $index; let i = $index) {
       <li
@@ -51,8 +57,10 @@
 
 <ng-template #content let-item let-index="index">
   <span class="wt-steps-number p-steps-item-number" aria-hidden="true">{{ index + 1 }}</span>
-  <span class="wt-steps-label p-steps-item-label">{{ item.label }}</span>
-  @if ($any(item).subtitle) {
-    <span class="wt-steps-subtitle">{{ $any(item).subtitle }}</span>
-  }
+  <span class="wt-steps-text">
+    <span class="wt-steps-label p-steps-item-label">{{ item.label }}</span>
+    @if ($any(item).subtitle) {
+      <span class="wt-steps-subtitle">{{ $any(item).subtitle }}</span>
+    }
+  </span>
 </ng-template>

@@ -1,3 +1,12 @@
+import { WtFlowModule } from 'wiratheme/flow';
+import { WtTerminalModule } from 'wiratheme/terminal';
+import { WtImageCompareModule } from 'wiratheme/imagecompare';
+import { WtCarouselModule } from 'wiratheme/carousel';
+import { WtSplitterModule } from 'wiratheme/splitter';
+import { WtOrganizationChartModule } from 'wiratheme/organizationchart';
+import { WtKnobModule } from 'wiratheme/knob';
+import { WtInputOtpModule } from 'wiratheme/inputotp';
+import { WtI18nModule } from 'wiratheme/i18n';
 import { WtAsideMenuModule } from 'wiratheme/asidemenu';
 import { WtImageCropperModule } from 'wiratheme/imagecropper';
 import { WtNavbarModule } from 'wiratheme/navbar';
@@ -89,7 +98,7 @@ import { wiraOverrides } from '../theme/wiratheme.overrides';
   declarations: [
     AppComponent
   ],
-  imports: [WtAsideMenuModule, WtImageCropperModule, WtNavbarModule, WtSliderModule, WtSplitButtonModule, WtListboxModule, WtGalleriaModule, WtColorPickerModule, WtBreadcrumbModule, WtInplaceModule, WtBlockUIModule, WtScrollPanelModule, WtScrollerModule, WtDrawerModule, WtTieredMenuModule, WtContextMenuModule, WtTreeModule, WtTreeSelectModule, WtDragDropModule, WtRippleModule, WtKeyFilterModule, WtEditorModule, WtPickListModule, WtOrderListModule, WtFileUploadModule, WtStepperModule, WtStepsModule, WtPanelMenuModule, WtAutoCompleteModule, WtImageModule, WtChartModule, WtInputMaskModule, WtTimelineModule, WtMenuModule, WtTabMenuModule, WtMultiSelectModule, WtMenubarModule, WtTableModule, WtSelectModule, WtMeterGroupModule, WtValidationModule, WtDialogModule, WtAlertModule, WtConfirmDialogModule, WtToastModule, WtTooltipModule, WtPopoverModule, WtAnimateModule, WtDatePickerModule, WtInputNumberModule, WtToolbarModule, WtAccordionModule, WtTabsModule, WtIconFieldModule, WtInputGroupModule, WtFloatLabelModule, WtToggleButtonModule, WtSelectButtonModule, WtRatingModule, WtPasswordModule, WtTagModule, WtBadgeModule, WtChipModule, WtAvatarModule, WtDividerModule, WtSkeletonModule, WtProgressBarModule, WtProgressSpinnerModule, WtMessageModule, WtPanelModule, WtFieldsetModule, FormsModule, ReactiveFormsModule, WtCardModule, WtInputTextModule, WtTextareaModule, WtCheckboxModule, WtRadioButtonModule, WtToggleSwitchModule, WtButtonModule, 
+  imports: [WtFlowModule, WtTerminalModule, WtImageCompareModule, WtCarouselModule, WtSplitterModule, WtOrganizationChartModule, WtKnobModule, WtInputOtpModule, WtI18nModule, WtAsideMenuModule, WtImageCropperModule, WtNavbarModule, WtSliderModule, WtSplitButtonModule, WtListboxModule, WtGalleriaModule, WtColorPickerModule, WtBreadcrumbModule, WtInplaceModule, WtBlockUIModule, WtScrollPanelModule, WtScrollerModule, WtDrawerModule, WtTieredMenuModule, WtContextMenuModule, WtTreeModule, WtTreeSelectModule, WtDragDropModule, WtRippleModule, WtKeyFilterModule, WtEditorModule, WtPickListModule, WtOrderListModule, WtFileUploadModule, WtStepperModule, WtStepsModule, WtPanelMenuModule, WtAutoCompleteModule, WtImageModule, WtChartModule, WtInputMaskModule, WtTimelineModule, WtMenuModule, WtTabMenuModule, WtMultiSelectModule, WtMenubarModule, WtTableModule, WtSelectModule, WtMeterGroupModule, WtValidationModule, WtDialogModule, WtAlertModule, WtConfirmDialogModule, WtToastModule, WtTooltipModule, WtPopoverModule, WtAnimateModule, WtDatePickerModule, WtInputNumberModule, WtToolbarModule, WtAccordionModule, WtTabsModule, WtIconFieldModule, WtInputGroupModule, WtFloatLabelModule, WtToggleButtonModule, WtSelectButtonModule, WtRatingModule, WtPasswordModule, WtTagModule, WtBadgeModule, WtChipModule, WtAvatarModule, WtDividerModule, WtSkeletonModule, WtProgressBarModule, WtProgressSpinnerModule, WtMessageModule, WtPanelModule, WtFieldsetModule, FormsModule, ReactiveFormsModule, WtCardModule, WtInputTextModule, WtTextareaModule, WtCheckboxModule, WtRadioButtonModule, WtToggleSwitchModule, WtButtonModule, 
     BrowserModule
   ],
   providers: [provideWiraTheme({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'class' })],

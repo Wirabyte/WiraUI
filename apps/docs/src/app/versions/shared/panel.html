@@ -28,7 +28,7 @@
       <docs-demo [html]="code['slots']" layout="stack">
         <wt-panel>
           <div wtPanelHeader class="docs-panel-head"><b>{{ tx('สมาชิก') }}</b> <wt-badge value="5"></wt-badge></div>
-          <wt-button wtPanelIcons icon="pi pi-plus" [text]="true" [rounded]="true" [ariaLabel]="tx('เพิ่ม')"></wt-button>
+          <wt-button wtPanelIcons icon="wi wi-plus" [text]="true" [rounded]="true" [ariaLabel]="tx('เพิ่ม')"></wt-button>
           <p class="docs-demo-p">{{ tx('สมชาย, กมล, มานี และอีก 2 คน') }}</p>
           <div wtPanelFooter class="docs-demo-output">{{ tx('อัปเดตล่าสุด 5 นาทีที่แล้ว') }}</div>
         </wt-panel>
@@ -40,10 +40,10 @@
       <docs-demo [html]="code['templates']" layout="stack">
         <wt-panel id="d-panel-tpl" [toggleable]="true">
           <ng-template #header>
-            <span class="docs-panel-head"><i class="pi pi-chart-bar"></i> <b>{{ tx('สรุปคะแนนสอบ') }}</b></span>
+            <span class="docs-panel-head"><i class="wi wi-chart-bar"></i> <b>{{ tx('สรุปคะแนนสอบ') }}</b></span>
           </ng-template>
           <ng-template #icons>
-            <wt-button icon="pi pi-download" [text]="true" [rounded]="true" [ariaLabel]="tx('ส่งออก')"></wt-button>
+            <wt-button icon="wi wi-download" [text]="true" [rounded]="true" [ariaLabel]="tx('ส่งออก')"></wt-button>
           </ng-template>
           <p class="docs-demo-p">{{ tx('คะแนนเฉลี่ยของห้อง 78.5') }}</p>
           <ng-template #footer>{{ tx('คำนวณเมื่อ 08:30 น.') }}</ng-template>

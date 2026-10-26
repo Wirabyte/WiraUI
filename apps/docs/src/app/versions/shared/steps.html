@@ -8,8 +8,8 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <wt-steps id="d-steps-basic" [model]="local(steps)" [activeIndex]="activeIndex"></wt-steps>
         <div class="docs-steps-actions">
-          <wt-button id="d-steps-back" [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" [disabled]="activeIndex === 0" (onClick)="back()"></wt-button>
-          <wt-button id="d-steps-next" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" [disabled]="activeIndex === steps.length - 1" (onClick)="next()"></wt-button>
+          <wt-button id="d-steps-back" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" [disabled]="activeIndex === 0" (onClick)="back()"></wt-button>
+          <wt-button id="d-steps-next" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="activeIndex === steps.length - 1" (onClick)="next()"></wt-button>
         </div>
         <span class="docs-demo-output">activeIndex: <code id="d-steps-basic-value">{{ activeIndex }}</code></span>
       </docs-demo>
@@ -28,6 +28,30 @@
       <docs-demo [html]="code['disabled']" [ts]="ts['disabled']" layout="stack">
         <wt-steps id="d-steps-disabled" [model]="local(checks)" [(activeIndex)]="checkIndex" [readonly]="false"></wt-steps>
         <span class="docs-demo-output">activeIndex: <code id="d-steps-disabled-value">{{ checkIndex }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="layout" [section]="sec['layout']"></docs-section>
+    <docs-section id="layout-bottom" [section]="sec['layout-bottom']" [level]="3">
+      <docs-demo [html]="code['layout-bottom']" [ts]="ts['layout']" layout="stack">
+        <wt-steps id="d-steps-bottom" [model]="local(enrolSteps)" [activeIndex]="enrolIndex"></wt-steps>
+      </docs-demo>
+    </docs-section>
+    <docs-section id="layout-right" [section]="sec['layout-right']" [level]="3">
+      <docs-demo [html]="code['layout-right']" layout="stack">
+        <wt-steps id="d-steps-right" [model]="local(enrolSteps)" [activeIndex]="enrolIndex" labelPosition="right"></wt-steps>
+      </docs-demo>
+    </docs-section>
+    <docs-section id="layout-vertical" [section]="sec['layout-vertical']" [level]="3">
+      <docs-demo [html]="code['layout-vertical']" layout="stack">
+        <wt-steps
+          id="d-steps-vertical"
+          [model]="local(enrolSteps)"
+          [(activeIndex)]="enrolIndex"
+          orientation="vertical"
+          [readonly]="false"
+        ></wt-steps>
+        <span class="docs-demo-output">activeIndex: <code id="d-steps-vertical-value">{{ enrolIndex }}</code></span>
       </docs-demo>
     </docs-section>
 

@@ -1,4 +1,8 @@
+import { computed, inject } from '@angular/core';
+import { pick } from '../../core/snippets';
+import { DOCS_VERSION } from '../../core/version-theme';
 import { IMAGECROPPER_DOC } from '../../data/imagecropper';
+import { CodeTab } from '../../shared/code-tabs';
 import { SimpleDemo, wait } from './demos';
 
 /*
@@ -20,6 +24,21 @@ interface CropperRef {
   crop(output?: 'blob' | 'base64'): Promise<CropResult | null>;
 }
 
+/** The toolbar input, by shape: 'full', 'none' or a list of tools where '|' starts a group. */
+type CropperTool =
+  | 'zoomOut'
+  | 'zoomSlider'
+  | 'zoomIn'
+  | 'rotateLeft'
+  | 'rotateRight'
+  | 'flipHorizontal'
+  | 'flipVertical'
+  | 'reset'
+  | 'zoom'
+  | 'rotate'
+  | 'flip';
+type CropperToolbar = 'full' | 'none' | ReadonlyArray<CropperTool | '|'>;
+
 interface PictureTurn {
   scale?: number;
   rotate?: number;
@@ -31,7 +50,7 @@ interface PictureTurn {
  * The starting picture: a school under the hills, drawn here so the demos show something before a file is chosen
  * (no network, no asset). 1200 × 800, so resizeToWidth has something to scale down.
  */
-function drawSamplePhoto(): string {
+export function drawSamplePhoto(): string {
   if (typeof document === 'undefined') return '';
   const canvas = document.createElement('canvas');
   canvas.width = 1200;
@@ -114,6 +133,7 @@ function drawSamplePhoto(): string {
 
 export abstract class ImageCropperDemo extends SimpleDemo {
   protected readonly doc = IMAGECROPPER_DOC;
+  private readonly version = inject(DOCS_VERSION);
   readonly samplePhoto = drawSamplePhoto();
   readonly ratios = [
     { label: '1:1', value: '1' },
@@ -137,6 +157,43 @@ export abstract class ImageCropperDemo extends SimpleDemo {
   photoResult: CropResult | null = null;
   isApiSaving = false;
   savedCount = 0;
+
+  // Choosing the toolbar tools: one stable value per choice.
+  readonly toolbarChoices = [
+    { label: 'ทั้งหมด', value: 'full' },
+    { label: 'ซูม + หมุน', value: 'zoomRotate' },
+    { label: 'หมุนอย่างเดียว', value: 'rotate' },
+    { label: 'ไม่มี', value: 'none' },
+  ];
+  readonly toolbars: Record<string, CropperToolbar> = {
+    full: 'full',
+    zoomRotate: ['zoom', '|', 'rotateLeft', 'rotateRight'],
+    rotate: ['rotate'],
+    none: 'none',
+  };
+  toolbarChoice = 'zoomRotate';
+
+  // Buttons of the app in the toolbar (template tools).
+  usedResult: CropResult | null = null;
+  ownTransform: PictureTurn = { scale: 1, rotate: 0, flipH: false, flipV: false };
+
+  // Blob or base64.
+  readonly outputKinds = [
+    { label: 'blob', value: 'blob' },
+    { label: 'base64', value: 'base64' },
+  ];
+  outputKind: 'blob' | 'base64' = 'blob';
+  typedResult: CropResult | null = null;
+  typedFrom = 'imageCropped';
+
+  /** App-wide defaults: the provider (app.config.ts in v3, the NgModule in v1 / v2) and the template that uses it. */
+  readonly defaultsTabs = computed<CodeTab[]>(() => {
+    const lang = this.i18n.lang();
+    return [
+      { label: this.version.major === 3 ? 'app.config.ts' : 'app.module.ts', code: pick(this.ts['defaults'], this.version, lang), lang: 'ts' },
+      { label: 'HTML', code: pick(this.code['defaults'], this.version, lang), lang: 'html' },
+    ];
+  });
 
   fileChangeEvent(event: Event): void {
     this.imageChangedEvent = event;
@@ -166,6 +223,37 @@ export abstract class ImageCropperDemo extends SimpleDemo {
   /** [autoCrop]="false": crop() resolves with the result once it is ready. */
   cropNow(cropper: CropperRef): void {
     cropper.crop().then((event) => (this.manualResult = event));
+  }
+
+  /** The tools template: let-cropper is the cropper, so the button crops through it. */
+  usePhoto(cropper: CropperRef): void {
+    cropper.crop().then((event) => (this.usedResult = event));
+  }
+
+  typedCropped(event: CropResult): void {
+    this.typedResult = event;
+    this.typedFrom = 'imageCropped';
+  }
+
+  /** crop('blob') / crop('base64'): the type for this one call, whatever output says. */
+  cropAs(cropper: CropperRef, kind: 'blob' | 'base64'): void {
+    cropper.crop(kind).then((event) => {
+      this.typedResult = event;
+      this.typedFrom = "crop('" + kind + "')";
+    });
+  }
+
+  blobText(result: CropResult | null): string {
+    return result?.blob ? 'Blob · ' + (result.blob.type || '?') + ' · ' + (result.blob.size / 1024).toFixed(1) + ' KB' : '-';
+  }
+
+  urlText(result: CropResult | null): string {
+    return result?.objectUrl ? result.objectUrl.slice(0, 28) + '…' : '-';
+  }
+
+  base64Text(result: CropResult | null): string {
+    const b = result?.base64;
+    return b ? b.slice(0, 30) + '… (' + b.length.toLocaleString('en-US') + ' ' + this.tx('ตัวอักษร') + ')' : '-';
   }
 
   photoCropped(event: CropResult): void {

@@ -17,26 +17,26 @@ const ITEMS_TS = `import { WtMenuItem } from 'wiratheme/menu';
 items: WtMenuItem[] = [
   {
     label: 'เอกสาร',
-    icon: 'pi pi-file',
+    icon: 'wi wi-file',
     items: [
-      { label: 'สร้างใหม่', icon: 'pi pi-plus', command: (event) => this.run(event) },
-      { label: 'ส่งออก', icon: 'pi pi-download', items: [
-        { label: 'ไฟล์ PDF', icon: 'pi pi-file-pdf', command: (event) => this.run(event) },
-        { label: 'ไฟล์ Excel', icon: 'pi pi-file-excel', command: (event) => this.run(event) },
+      { label: 'สร้างใหม่', icon: 'wi wi-plus', command: (event) => this.run(event) },
+      { label: 'ส่งออก', icon: 'wi wi-download', items: [
+        { label: 'ไฟล์ PDF', icon: 'wi wi-file-pdf', command: (event) => this.run(event) },
+        { label: 'ไฟล์ Excel', icon: 'wi wi-file-excel', command: (event) => this.run(event) },
       ] },
       { separator: true },
-      { label: 'พิมพ์', icon: 'pi pi-print', command: (event) => this.run(event) },
+      { label: 'พิมพ์', icon: 'wi wi-print', command: (event) => this.run(event) },
     ],
   },
   {
     label: 'นักเรียน',
-    icon: 'pi pi-users',
+    icon: 'wi wi-users',
     items: [
-      { label: 'รายชื่อนักเรียน', icon: 'pi pi-list', command: (event) => this.run(event) },
-      { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', disabled: true },
+      { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', command: (event) => this.run(event) },
+      { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', disabled: true },
     ],
   },
-  { label: 'ตั้งค่า', icon: 'pi pi-cog', command: (event) => this.run(event) },
+  { label: 'ตั้งค่า', icon: 'wi wi-cog', command: (event) => this.run(event) },
 ];
 lastCommand = '';
 
@@ -127,7 +127,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
   code: {
     basic: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร"></wt-tieredMenu>
 <span>สั่งล่าสุด: {{ lastCommand }}</span>`,
-    popup: `<wt-button label="จัดการ" icon="pi pi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
+    popup: `<wt-button label="จัดการ" icon="wi wi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
 <wt-tieredMenu #manageMenu [model]="items" [popup]="true" ariaLabel="เมนูเอกสาร"></wt-tieredMenu>`,
     templates: {
       v3: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
@@ -139,7 +139,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
     }
   </ng-template>
   <ng-template #submenuicon>
-    <i class="pi pi-chevron-right"></i>
+    <i class="wi wi-chevron-right"></i>
   </ng-template>
 </wt-tieredMenu>`,
       classic: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
@@ -149,7 +149,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
     <small *ngIf="hasSubmenu" class="submenu-count">{{ item.items.length }}</small>
   </ng-template>
   <ng-template wtTemplate="submenuicon">
-    <i class="pi pi-chevron-right"></i>
+    <i class="wi wi-chevron-right"></i>
   </ng-template>
 </wt-tieredMenu>`,
     },
@@ -249,7 +249,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
   },
   code: {
     basic: `<div #worksheet class="file-card" tabindex="0">
-  <i class="pi pi-file"></i> ใบงานคณิตศาสตร์ ม.1
+  <i class="wi wi-file"></i> ใบงานคณิตศาสตร์ ม.1
   <small>คลิกขวาที่การ์ดนี้</small>
 </div>
 <wt-contextMenu [model]="fileActions" [target]="worksheet"></wt-contextMenu>
@@ -258,7 +258,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
       v3: `<ul class="file-list">
   @for (file of files; track file.id) {
     <li tabindex="0" [class.file-picked]="file === pickedFile" (contextmenu)="pickFile(file); fileMenu.show($event)">
-      <i class="pi pi-file"></i> {{ file.name }}
+      <i class="wi wi-file"></i> {{ file.name }}
     </li>
   }
 </ul>
@@ -267,7 +267,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
       classic: `<ul class="file-list">
   <li *ngFor="let file of files" tabindex="0" [class.file-picked]="file === pickedFile"
     (contextmenu)="pickFile(file); fileMenu.show($event)">
-    <i class="pi pi-file"></i> {{ file.name }}
+    <i class="wi wi-file"></i> {{ file.name }}
   </li>
 </ul>
 <wt-contextMenu #fileMenu [model]="fileActions"></wt-contextMenu>
@@ -278,14 +278,14 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
     basic: `import { WtMenuItem } from 'wiratheme/menu';
 
 fileActions: WtMenuItem[] = [
-  { label: 'คัดลอก', icon: 'pi pi-copy', command: (event) => this.run(event) },
-  { label: 'เปลี่ยนชื่อ', icon: 'pi pi-pencil', command: (event) => this.run(event) },
-  { label: 'แชร์', icon: 'pi pi-share-alt', items: [
+  { label: 'คัดลอก', icon: 'wi wi-copy', command: (event) => this.run(event) },
+  { label: 'เปลี่ยนชื่อ', icon: 'wi wi-pencil', command: (event) => this.run(event) },
+  { label: 'แชร์', icon: 'wi wi-share-alt', items: [
     { label: 'ให้ครูในกลุ่มสาระ', command: (event) => this.run(event) },
     { label: 'ให้ผู้ปกครอง', command: (event) => this.run(event) },
   ] },
   { separator: true },
-  { label: 'ลบ', icon: 'pi pi-trash', command: (event) => this.run(event) },
+  { label: 'ลบ', icon: 'wi wi-trash', command: (event) => this.run(event) },
 ];
 lastCommand = '';
 

@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-button id="d-popover-btn" [label]="tx('แชร์')" icon="pi pi-send" (onClick)="op.toggle($event)"></wt-button>
+        <wt-button id="d-popover-btn" [label]="tx('แชร์')" icon="wi wi-send" (onClick)="op.toggle($event)"></wt-button>
         <wt-popover #op id="d-popover">
           <div class="docs-popover-body">
             <p class="docs-demo-p">{{ tx('ส่งลิงก์ให้ทีม') }}</p>
@@ -18,7 +18,7 @@
 
     <docs-section id="select" [section]="sec['select']">
       <docs-demo [html]="code['select']" [ts]="ts['select']">
-        <wt-button id="d-popover-owner" [label]="owner || tx('เลือกผู้รับผิดชอบ')" icon="pi pi-user" severity="secondary" (onClick)="people.toggle($event)"></wt-button>
+        <wt-button id="d-popover-owner" [label]="owner || tx('เลือกผู้รับผิดชอบ')" icon="wi wi-user" severity="secondary" (onClick)="people.toggle($event)"></wt-button>
         <wt-popover #people>
           <div class="docs-popover-list">
             @for (p of local(team); track p) {
@@ -32,7 +32,7 @@
 
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']">
-        <wt-button id="d-pop-notify" [label]="tx('ตั้งค่าการแจ้งเตือน')" icon="pi pi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
+        <wt-button id="d-pop-notify" [label]="tx('ตั้งค่าการแจ้งเตือน')" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
         <wt-popover #notify id="d-pop-notify-panel">
           <ng-template #content let-closeCallback="closeCallback">
             <p class="docs-demo-p">{{ tx('รับการแจ้งเตือนทางอีเมลทุกเช้า') }}</p>

@@ -3,7 +3,10 @@ import { Component, computed, DestroyRef, effect, inject, signal } from '@angula
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { DocsState } from '../core/docs-state';
+import { DocsToc } from '../core/docs-toc';
+import { DocsThemeReveal } from '../core/theme-reveal';
 import { DocsI18n } from '../core/i18n';
+import { UiKey } from '../core/ui-text';
 import { NAV, NAV_PAGES, navPageOf } from '../core/nav';
 import { DOC_VERSIONS, DocVersionId, rememberVersion, versionOfUrl } from '../core/versions';
 
@@ -25,6 +28,7 @@ export class DocsLayout {
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);
   protected readonly state = inject(DocsState);
+  private readonly reveal = inject(DocsThemeReveal);
   protected readonly i18n = inject(DocsI18n);
   protected readonly nav = NAV;
   protected readonly versions = DOC_VERSIONS;
@@ -33,6 +37,9 @@ export class DocsLayout {
   protected readonly version = computed<DocVersionId>(() => versionOfUrl(this.url()) || 'v3');
   /** Path after the version prefix, without query or fragment. */
   protected readonly path = computed(() => this.url().split(/[?#]/)[0].replace(/^\/v[123]\/?/, ''));
+  private readonly toc = inject(DocsToc);
+  /** The right-hand "On this page" column of wide screens: pages with sections, except the Studio (it needs the width). */
+  protected readonly asideToc = computed(() => this.path() !== 'theming/studio' && this.toc.entries().length > 1);
   protected readonly pager = computed(() => {
     const pages = NAV_PAGES.filter((p) => !p.soon);
     const i = pages.findIndex((p) => p.path === this.path());
@@ -78,12 +85,23 @@ export class DocsLayout {
     writeOpen(this.manual());
   }
 
+  /** The header's light / dark button: the new mode grows out of the button (core/theme-reveal.ts). */
+  protected toggleDark(event: Event): void {
+    this.reveal.run(event.currentTarget, () => this.state.setDark(!this.state.dark()));
+  }
+
   protected link(path: string): string {
     return '/' + this.version() + '/' + path;
   }
 
   /** Same page in another version: /v3/components/button?tab=api → /v1/components/button?tab=api. */
+  /** The ui-text key of a version's status ("latest", "active", "maintenance"). */
+  protected statusKey(status: string): UiKey {
+    return ('version.' + status) as UiKey;
+  }
+
   protected switchTo(version: string): void {
+    if (!version || version === this.version()) return;
     const url = this.router.url;
     this.router.navigateByUrl(/^\/v[123]/.test(url) ? url.replace(/^\/v[123]/, '/' + version) : '/' + version);
   }

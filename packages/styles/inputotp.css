@@ -1,0 +1,33 @@
+/* wt-inputOtp. Shared by wiratheme v1, v2 and v3. A row of one-character boxes drawn like text fields (wtInputText);
+   they shrink rather than overflow on a narrow screen. */
+@layer wiratheme.components {
+  :is(wt-inputotp, wt-input-otp) {
+    display: inline-flex;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  .wt-inputotp {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--wt-inputotp-gap);
+    max-width: 100%;
+    min-width: 0;
+  }
+  .wt-inputotp-input.wt-inputtext {
+    flex: 0 1 auto;
+    width: var(--wt-inputotp-input-width);
+    min-width: 0;
+    padding-inline: 0.25rem;
+    text-align: center;
+  }
+  .wt-inputotp-input.wt-inputtext-sm {
+    width: var(--wt-inputotp-input-sm-width);
+  }
+  .wt-inputotp-input.wt-inputtext-lg {
+    width: var(--wt-inputotp-input-lg-width);
+  }
+  :is(wt-inputotp, wt-input-otp).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-inputtext {
+    border-color: var(--wt-danger-color);
+  }
+}

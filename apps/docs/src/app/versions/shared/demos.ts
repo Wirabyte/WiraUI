@@ -104,6 +104,9 @@ export abstract class SimpleDemo extends DemoPage {
   protected get ts(): Record<string, Snippet> {
     return this.words.snippets(this.doc.ts || {}, this.i18n.lang());
   }
+  protected get css(): Record<string, Snippet> {
+    return this.words.snippets(this.doc.css || {}, this.i18n.lang());
+  }
 }
 
 export abstract class ButtonDemo extends SimpleDemo {
@@ -306,6 +309,7 @@ export abstract class ProgressBarDemo extends SimpleDemo {
 
 export abstract class ProgressSpinnerDemo extends SimpleDemo {
   protected readonly doc = PROGRESSSPINNER_DOC;
+  readonly brandColors = ['#e8668e', '#3b6fd8', '#ff9a2e'];
 }
 
 export abstract class DividerDemo extends SimpleDemo {
@@ -407,8 +411,8 @@ export abstract class SelectButtonDemo extends SimpleDemo {
   ];
   form = new FormGroup({ plan: new FormControl('free') });
   readonly views = [
-    { label: 'รายการ', value: 'list', icon: 'pi pi-bars' },
-    { label: 'ตาราง', value: 'grid', icon: 'pi pi-th-large' },
+    { label: 'รายการ', value: 'list', icon: 'wi wi-bars' },
+    { label: 'ตาราง', value: 'grid', icon: 'wi wi-th-large' },
   ];
   view = 'list';
 
@@ -480,10 +484,10 @@ export abstract class TabsDemo extends SimpleDemo {
   readonly units = Array.from({ length: 14 }, (_, i) => i + 1);
   unit = 1;
   readonly pages: MenuEntry[] = [
-    { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card' },
-    { label: 'ผลการเรียน', icon: 'pi pi-chart-line', badge: '2' },
-    { label: 'ผู้ปกครอง', icon: 'pi pi-users' },
-    { label: 'สุขภาพ', icon: 'pi pi-heart', disabled: true },
+    { label: 'ข้อมูลทั่วไป', icon: 'wi wi-id-card' },
+    { label: 'ผลการเรียน', icon: 'wi wi-chart-line', badge: '2' },
+    { label: 'ผู้ปกครอง', icon: 'wi wi-users' },
+    { label: 'สุขภาพ', icon: 'wi wi-heart', disabled: true },
   ];
   // activeItem is matched by identity: start from the copy the tabs get (local() gives an English one).
   page: MenuEntry | null | undefined = null;
@@ -781,7 +785,7 @@ export abstract class ConfirmDialogDemo extends OverlayDemo {
     this.overlays.confirm.confirm(this.local({
       header: 'ยืนยันการลบ',
       message: 'ต้องการลบลูกค้ารายนี้หรือไม่?',
-      icon: 'pi pi-exclamation-triangle',
+      icon: 'wi wi-exclamation-triangle',
       acceptLabel: 'ลบ',
       rejectLabel: 'ยกเลิก',
       acceptButtonStyleClass: 'p-button-danger',
@@ -916,9 +920,9 @@ export abstract class MeterGroupDemo extends SimpleDemo {
     { label: 'อื่น ๆ', value: 8 },
   ];
   readonly storageIcons = [
-    { label: 'รูปภาพ', value: 24, icon: 'pi pi-image' },
-    { label: 'วิดีโอ', value: 16, icon: 'pi pi-video' },
-    { label: 'เอกสาร', value: 12, icon: 'pi pi-file' },
+    { label: 'รูปภาพ', value: 24, icon: 'wi wi-image' },
+    { label: 'วิดีโอ', value: 16, icon: 'wi wi-video' },
+    { label: 'เอกสาร', value: 12, icon: 'wi wi-file' },
   ];
   readonly usedGb = [
     { label: 'ระบบ', value: 40, color: '#64748b' },
@@ -1270,10 +1274,10 @@ export abstract class TableDemo extends SimpleDemo {
   ctxStudent: Student | null = null;
   ctxAction = '';
   readonly studentActions: MenuEntry[] = [
-    { label: 'ดูประวัติ', icon: 'pi pi-eye', command: () => this.ctxView() },
-    { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: () => this.ctxMove() },
+    { label: 'ดูประวัติ', icon: 'wi wi-eye', command: () => this.ctxView() },
+    { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: () => this.ctxMove() },
     { separator: true },
-    { label: 'ลบ', icon: 'pi pi-trash', command: () => this.ctxDelete() },
+    { label: 'ลบ', icon: 'wi wi-trash', command: () => this.ctxDelete() },
   ];
 
   ctxView(): void {
@@ -1344,75 +1348,75 @@ export abstract class MenubarDemo extends SimpleDemo {
   protected readonly doc = MENUBAR_DOC;
   lastCommand = '';
   readonly items: MenuEntry[] = [
-    { label: 'หน้าแรก', icon: 'pi pi-home' },
+    { label: 'หน้าแรก', icon: 'wi wi-home' },
     {
       label: 'นักเรียน',
-      icon: 'pi pi-users',
+      icon: 'wi wi-users',
       items: [
-        { label: 'รายชื่อนักเรียน', icon: 'pi pi-list' },
-        { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus' },
+        { label: 'รายชื่อนักเรียน', icon: 'wi wi-list' },
+        { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus' },
         { separator: true },
-        { label: 'นำเข้าจาก Excel', icon: 'pi pi-upload' },
+        { label: 'นำเข้าจาก Excel', icon: 'wi wi-upload' },
       ],
     },
     {
       label: 'รายงาน',
-      icon: 'pi pi-chart-bar',
+      icon: 'wi wi-chart-bar',
       items: [
-        { label: 'ผลการเรียน', icon: 'pi pi-book', items: [{ label: 'ภาคเรียนที่ 1' }, { label: 'ภาคเรียนที่ 2' }] },
-        { label: 'การมาเรียน', icon: 'pi pi-calendar' },
+        { label: 'ผลการเรียน', icon: 'wi wi-book', items: [{ label: 'ภาคเรียนที่ 1' }, { label: 'ภาคเรียนที่ 2' }] },
+        { label: 'การมาเรียน', icon: 'wi wi-calendar' },
       ],
     },
-    { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+    { label: 'ตั้งค่า', icon: 'wi wi-cog' },
   ];
   /** routerLinkActive compares the fragment too: only the section picked lights up. */
   private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
   readonly links: MenuEntry[] = [
     {
       label: 'หัวข้อในหน้านี้',
-      icon: 'pi pi-list',
+      icon: 'wi wi-list',
       items: [
         { label: 'แถบหัวเว็บ', routerLink: [], fragment: 'header', routerLinkActiveOptions: this.sameSection },
         { label: 'คำสั่ง', routerLink: [], fragment: 'commands', routerLinkActiveOptions: this.sameSection },
         { label: 'คีย์บอร์ด', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
       ],
     },
-    { label: 'ลิงก์และ router', icon: 'pi pi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
-    { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+    { label: 'ลิงก์และ router', icon: 'wi wi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
+    { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
   ];
   readonly fileItems: MenuEntry[] = [
     {
       label: 'ไฟล์',
-      icon: 'pi pi-file',
+      icon: 'wi wi-file',
       items: [
-        { label: 'สร้างใหม่', icon: 'pi pi-plus', command: (event) => this.run(event) },
-        { label: 'พิมพ์', icon: 'pi pi-print', command: (event) => this.run(event) },
+        { label: 'สร้างใหม่', icon: 'wi wi-plus', command: (event) => this.run(event) },
+        { label: 'พิมพ์', icon: 'wi wi-print', command: (event) => this.run(event) },
       ],
     },
     {
       label: 'แก้ไข',
-      icon: 'pi pi-pencil',
+      icon: 'wi wi-pencil',
       items: [
-        { label: 'คัดลอก', icon: 'pi pi-copy', command: (event) => this.run(event) },
-        { label: 'วาง', icon: 'pi pi-clipboard', command: (event) => this.run(event) },
+        { label: 'คัดลอก', icon: 'wi wi-copy', command: (event) => this.run(event) },
+        { label: 'วาง', icon: 'wi wi-clipboard', command: (event) => this.run(event) },
       ],
     },
-    { label: 'ช่วยเหลือ', icon: 'pi pi-question-circle', command: (event) => this.run(event) },
+    { label: 'ช่วยเหลือ', icon: 'wi wi-question-circle', command: (event) => this.run(event) },
   ];
   readonly accountItems: MenuEntry[] = [
-    { label: 'กล่องข้อความ', icon: 'pi pi-inbox', badge: '3' },
+    { label: 'กล่องข้อความ', icon: 'wi wi-inbox', badge: '3' },
     {
       label: 'บัญชี',
-      icon: 'pi pi-user',
+      icon: 'wi wi-user',
       items: [
-        { label: 'โปรไฟล์', icon: 'pi pi-user' },
-        { label: 'ความปลอดภัย', icon: 'pi pi-lock', title: 'รหัสผ่านและการยืนยันตัวตน' },
+        { label: 'โปรไฟล์', icon: 'wi wi-user' },
+        { label: 'ความปลอดภัย', icon: 'wi wi-lock', title: 'รหัสผ่านและการยืนยันตัวตน' },
         { separator: true },
-        { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false },
-        { label: 'ลบบัญชี', icon: 'pi pi-trash', disabled: true },
+        { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false },
+        { label: 'ลบบัญชี', icon: 'wi wi-trash', disabled: true },
       ],
     },
-    { label: 'รายงาน', icon: 'pi pi-chart-bar', disabled: true },
+    { label: 'รายงาน', icon: 'wi wi-chart-bar', disabled: true },
     { separator: true },
     { label: '<b>ใหม่</b> ห้องสมุด', escape: false },
   ];
@@ -1420,16 +1424,16 @@ export abstract class MenubarDemo extends SimpleDemo {
     {
       label: 'ไฟล์',
       items: [
-        { label: 'สร้างใหม่', icon: 'pi pi-plus', shortcut: 'Ctrl+N' },
-        { label: 'บันทึก', icon: 'pi pi-save', shortcut: 'Ctrl+S' },
-        { label: 'พิมพ์', icon: 'pi pi-print', shortcut: 'Ctrl+P' },
+        { label: 'สร้างใหม่', icon: 'wi wi-plus', shortcut: 'Ctrl+N' },
+        { label: 'บันทึก', icon: 'wi wi-save', shortcut: 'Ctrl+S' },
+        { label: 'พิมพ์', icon: 'wi wi-print', shortcut: 'Ctrl+P' },
       ],
     },
     {
       label: 'แก้ไข',
       items: [
-        { label: 'คัดลอก', icon: 'pi pi-copy', shortcut: 'Ctrl+C' },
-        { label: 'วาง', icon: 'pi pi-clipboard', shortcut: 'Ctrl+V' },
+        { label: 'คัดลอก', icon: 'wi wi-copy', shortcut: 'Ctrl+C' },
+        { label: 'วาง', icon: 'wi wi-clipboard', shortcut: 'Ctrl+V' },
       ],
     },
   ];
@@ -1445,51 +1449,51 @@ export abstract class MenuDemo extends SimpleDemo {
   lastCommand = '';
   menuEvents: string[] = [];
   readonly profileItems: MenuEntry[] = [
-    { label: 'โปรไฟล์ของฉัน', icon: 'pi pi-user', command: (event) => this.run(event) },
-    { label: 'ตั้งค่าบัญชี', icon: 'pi pi-cog', command: (event) => this.run(event) },
+    { label: 'โปรไฟล์ของฉัน', icon: 'wi wi-user', command: (event) => this.run(event) },
+    { label: 'ตั้งค่าบัญชี', icon: 'wi wi-cog', command: (event) => this.run(event) },
     { separator: true },
-    { label: 'ออกจากระบบ', icon: 'pi pi-sign-out', command: (event) => this.run(event) },
+    { label: 'ออกจากระบบ', icon: 'wi wi-sign-out', command: (event) => this.run(event) },
   ];
   readonly sideItems: MenuEntry[] = [
-    { label: 'หน้าแรก', icon: 'pi pi-home' },
-    { label: 'นักเรียน', icon: 'pi pi-users' },
-    { label: 'ตารางเรียน', icon: 'pi pi-calendar' },
-    { label: 'รายงาน', icon: 'pi pi-chart-bar' },
-    { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+    { label: 'หน้าแรก', icon: 'wi wi-home' },
+    { label: 'นักเรียน', icon: 'wi wi-users' },
+    { label: 'ตารางเรียน', icon: 'wi wi-calendar' },
+    { label: 'รายงาน', icon: 'wi wi-chart-bar' },
+    { label: 'ตั้งค่า', icon: 'wi wi-cog' },
   ];
   readonly groupItems: MenuEntry[] = [
     {
       label: 'เอกสาร',
       items: [
-        { label: 'สร้างใหม่', icon: 'pi pi-plus' },
-        { label: 'ค้นหา', icon: 'pi pi-search' },
+        { label: 'สร้างใหม่', icon: 'wi wi-plus' },
+        { label: 'ค้นหา', icon: 'wi wi-search' },
       ],
     },
     {
       label: 'บัญชี',
       items: [
-        { label: 'ตั้งค่า', icon: 'pi pi-cog' },
-        { label: 'ข้อความ', icon: 'pi pi-inbox', badge: '2' },
-        { label: 'ออกจากระบบ', icon: 'pi pi-sign-out' },
+        { label: 'ตั้งค่า', icon: 'wi wi-cog' },
+        { label: 'ข้อความ', icon: 'wi wi-inbox', badge: '2' },
+        { label: 'ออกจากระบบ', icon: 'wi wi-sign-out' },
       ],
     },
   ];
   readonly stateItems: MenuEntry[] = [
-    { label: 'กล่องข้อความ', icon: 'pi pi-inbox', badge: '5' },
-    { label: 'ส่งออก Excel', icon: 'pi pi-download', title: 'ไฟล์ .xlsx ของหน้านี้' },
+    { label: 'กล่องข้อความ', icon: 'wi wi-inbox', badge: '5' },
+    { label: 'ส่งออก Excel', icon: 'wi wi-download', title: 'ไฟล์ .xlsx ของหน้านี้' },
     { separator: true },
-    { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false },
-    { label: 'ลบทั้งหมด', icon: 'pi pi-trash', disabled: true },
+    { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false },
+    { label: 'ลบทั้งหมด', icon: 'wi wi-trash', disabled: true },
   ];
   /** routerLinkActive compares the fragment too: only the section picked lights up. */
   private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
   readonly linkItems: MenuEntry[] = [
-    { label: 'เมนู popup', icon: 'pi pi-hashtag', routerLink: [], fragment: 'popup', routerLinkActiveOptions: this.sameSection },
-    { label: 'คีย์บอร์ด', icon: 'pi pi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
-    { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+    { label: 'เมนู popup', icon: 'wi wi-hashtag', routerLink: [], fragment: 'popup', routerLinkActiveOptions: this.sameSection },
+    { label: 'คีย์บอร์ด', icon: 'wi wi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
+    { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
     { separator: true },
-    { label: 'พิมพ์หน้านี้', icon: 'pi pi-print', command: (event) => this.run(event) },
-    { label: 'คัดลอกลิงก์', icon: 'pi pi-copy', command: (event) => this.run(event) },
+    { label: 'พิมพ์หน้านี้', icon: 'wi wi-print', command: (event) => this.run(event) },
+    { label: 'คัดลอกลิงก์', icon: 'wi wi-copy', command: (event) => this.run(event) },
   ];
 
   run(event: { item?: MenuEntry }): void {
@@ -1505,23 +1509,23 @@ export abstract class MenuDemo extends SimpleDemo {
 export abstract class TabMenuDemo extends SimpleDemo {
   protected readonly doc = TABMENU_DOC;
   readonly items: MenuEntry[] = [
-    { label: 'ภาพรวม', icon: 'pi pi-th-large' },
-    { label: 'นักเรียน', icon: 'pi pi-users' },
-    { label: 'การเงิน', icon: 'pi pi-wallet' },
-    { label: 'ตั้งค่า', icon: 'pi pi-cog' },
+    { label: 'ภาพรวม', icon: 'wi wi-th-large' },
+    { label: 'นักเรียน', icon: 'wi wi-users' },
+    { label: 'การเงิน', icon: 'wi wi-wallet' },
+    { label: 'ตั้งค่า', icon: 'wi wi-cog' },
   ];
   readonly mailItems: MenuEntry[] = [
-    { label: 'ทั้งหมด', icon: 'pi pi-inbox', command: (event) => this.open(event) },
-    { label: 'ยังไม่อ่าน', icon: 'pi pi-envelope', badge: '3', command: (event) => this.open(event) },
-    { label: 'ติดดาว', icon: 'pi pi-star', command: (event) => this.open(event) },
-    { label: 'ถังขยะ', icon: 'pi pi-trash', disabled: true },
+    { label: 'ทั้งหมด', icon: 'wi wi-inbox', command: (event) => this.open(event) },
+    { label: 'ยังไม่อ่าน', icon: 'wi wi-envelope', badge: '3', command: (event) => this.open(event) },
+    { label: 'ติดดาว', icon: 'wi wi-star', command: (event) => this.open(event) },
+    { label: 'ถังขยะ', icon: 'wi wi-trash', disabled: true },
   ];
   /** routerLinkActive compares query params: the tab for the page's ?view= lights up. */
   private readonly sameView = { paths: 'exact', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored' };
   readonly viewItems: MenuEntry[] = [
-    { label: 'การ์ด', icon: 'pi pi-th-large', routerLink: [], queryParams: { view: 'cards' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
-    { label: 'รายการ', icon: 'pi pi-list', routerLink: [], queryParams: { view: 'list' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
-    { label: 'แผนที่', icon: 'pi pi-map-marker', routerLink: [], queryParams: { view: 'map' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+    { label: 'การ์ด', icon: 'wi wi-th-large', routerLink: [], queryParams: { view: 'cards' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+    { label: 'รายการ', icon: 'wi wi-list', routerLink: [], queryParams: { view: 'list' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
+    { label: 'แผนที่', icon: 'wi wi-map-marker', routerLink: [], queryParams: { view: 'map' }, queryParamsHandling: 'merge', fragment: 'router', routerLinkActiveOptions: this.sameView },
   ];
   readonly months: MenuEntry[] = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'].map(
     (label) => ({ label })
@@ -1659,10 +1663,10 @@ export abstract class InputMaskDemo extends SimpleDemo {
 export abstract class TimelineDemo extends SimpleDemo {
   protected readonly doc = TIMELINE_DOC;
   readonly orders = [
-    { status: 'สั่งซื้อแล้ว', date: '12 มี.ค. 2569 10:30', icon: 'pi pi-shopping-cart', color: '#6366f1' },
-    { status: 'แพ็กสินค้า', date: '12 มี.ค. 2569 14:00', icon: 'pi pi-box', color: '#f59e0b' },
-    { status: 'กำลังจัดส่ง', date: '13 มี.ค. 2569 09:15', icon: 'pi pi-truck', color: '#0ea5e9' },
-    { status: 'ส่งถึงแล้ว', date: '14 มี.ค. 2569 16:45', icon: 'pi pi-check', color: '#10b981' },
+    { status: 'สั่งซื้อแล้ว', date: '12 มี.ค. 2569 10:30', icon: 'wi wi-shopping-cart', color: '#6366f1' },
+    { status: 'แพ็กสินค้า', date: '12 มี.ค. 2569 14:00', icon: 'wi wi-box', color: '#f59e0b' },
+    { status: 'กำลังจัดส่ง', date: '13 มี.ค. 2569 09:15', icon: 'wi wi-truck', color: '#0ea5e9' },
+    { status: 'ส่งถึงแล้ว', date: '14 มี.ค. 2569 16:45', icon: 'wi wi-check', color: '#10b981' },
   ];
 }
 
@@ -1942,28 +1946,28 @@ export abstract class PanelMenuDemo extends SimpleDemo {
   readonly items: MenuEntry[] = [
     {
       label: 'นักเรียน',
-      icon: 'pi pi-users',
+      icon: 'wi wi-users',
       expanded: true,
       items: [
-        { label: 'รายชื่อนักเรียน', icon: 'pi pi-list' },
-        { label: 'เพิ่มนักเรียน', icon: 'pi pi-user-plus' },
-        { label: 'นำเข้าข้อมูล', icon: 'pi pi-upload', items: [{ label: 'จากไฟล์ Excel' }, { label: 'จากระบบเดิม' }] },
+        { label: 'รายชื่อนักเรียน', icon: 'wi wi-list' },
+        { label: 'เพิ่มนักเรียน', icon: 'wi wi-user-plus' },
+        { label: 'นำเข้าข้อมูล', icon: 'wi wi-upload', items: [{ label: 'จากไฟล์ Excel' }, { label: 'จากระบบเดิม' }] },
       ],
     },
     {
       label: 'ตารางเรียน',
-      icon: 'pi pi-calendar',
+      icon: 'wi wi-calendar',
       items: [
-        { label: 'ตารางสอนครู', icon: 'pi pi-book' },
-        { label: 'ตารางห้องเรียน', icon: 'pi pi-building' },
+        { label: 'ตารางสอนครู', icon: 'wi wi-book' },
+        { label: 'ตารางห้องเรียน', icon: 'wi wi-building' },
       ],
     },
     {
       label: 'รายงาน',
-      icon: 'pi pi-chart-bar',
+      icon: 'wi wi-chart-bar',
       items: [
-        { label: 'ผลการเรียน', icon: 'pi pi-chart-line' },
-        { label: 'การมาเรียน', icon: 'pi pi-clock' },
+        { label: 'ผลการเรียน', icon: 'wi wi-chart-line' },
+        { label: 'การมาเรียน', icon: 'wi wi-clock' },
       ],
     },
   ];
@@ -1974,73 +1978,73 @@ export abstract class PanelMenuDemo extends SimpleDemo {
   readonly links: MenuEntry[] = [
     {
       label: 'หัวข้อในหน้านี้',
-      icon: 'pi pi-list',
+      icon: 'wi wi-list',
       expanded: true,
       items: [
-        { label: 'เปิดหลายหัวข้อ', icon: 'pi pi-hashtag', routerLink: [], fragment: 'multiple', routerLinkActiveOptions: this.sameSection },
-        { label: 'คีย์บอร์ด', icon: 'pi pi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
-        { label: 'คู่มือ router', icon: 'pi pi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
+        { label: 'เปิดหลายหัวข้อ', icon: 'wi wi-hashtag', routerLink: [], fragment: 'multiple', routerLinkActiveOptions: this.sameSection },
+        { label: 'คีย์บอร์ด', icon: 'wi wi-hashtag', routerLink: [], fragment: 'keyboard', routerLinkActiveOptions: this.sameSection },
+        { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
       ],
     },
     {
       label: 'คำสั่ง',
-      icon: 'pi pi-cog',
+      icon: 'wi wi-cog',
       expanded: true,
       items: [
-        { label: 'พิมพ์หน้านี้', icon: 'pi pi-print', command: (event) => this.run(event) },
-        { label: 'คัดลอกลิงก์', icon: 'pi pi-copy', command: (event) => this.run(event) },
+        { label: 'พิมพ์หน้านี้', icon: 'wi wi-print', command: (event) => this.run(event) },
+        { label: 'คัดลอกลิงก์', icon: 'wi wi-copy', command: (event) => this.run(event) },
       ],
     },
   ];
   readonly accountItems: MenuEntry[] = [
     {
       label: 'กล่องข้อความ',
-      icon: 'pi pi-inbox',
+      icon: 'wi wi-inbox',
       badge: '5',
       expanded: true,
       items: [
-        { label: 'ข้อความใหม่', icon: 'pi pi-envelope', badge: '5' },
-        { label: 'ติดดาว', icon: 'pi pi-star' },
+        { label: 'ข้อความใหม่', icon: 'wi wi-envelope', badge: '5' },
+        { label: 'ติดดาว', icon: 'wi wi-star' },
         { separator: true },
-        { label: 'ถังขยะ', icon: 'pi pi-trash', disabled: true },
+        { label: 'ถังขยะ', icon: 'wi wi-trash', disabled: true },
       ],
     },
-    { label: 'ผู้ดูแลระบบ', icon: 'pi pi-shield', visible: false, items: [{ label: 'สิทธิ์ผู้ใช้' }] },
-    { label: 'รายงานประจำปี', icon: 'pi pi-chart-bar', disabled: true, items: [{ label: 'ปี 2568' }] },
+    { label: 'ผู้ดูแลระบบ', icon: 'wi wi-shield', visible: false, items: [{ label: 'สิทธิ์ผู้ใช้' }] },
+    { label: 'รายงานประจำปี', icon: 'wi wi-chart-bar', disabled: true, items: [{ label: 'ปี 2568' }] },
   ];
   readonly editorItems: MenuEntry[] = [
     {
       label: 'ไฟล์',
-      icon: 'pi pi-file',
+      icon: 'wi wi-file',
       expanded: true,
       items: [
-        { label: 'สร้างใหม่', icon: 'pi pi-plus', shortcut: 'Ctrl+N' },
-        { label: 'บันทึก', icon: 'pi pi-save', shortcut: 'Ctrl+S' },
+        { label: 'สร้างใหม่', icon: 'wi wi-plus', shortcut: 'Ctrl+N' },
+        { label: 'บันทึก', icon: 'wi wi-save', shortcut: 'Ctrl+S' },
       ],
     },
     {
       label: 'แก้ไข',
-      icon: 'pi pi-pencil',
+      icon: 'wi wi-pencil',
       items: [
-        { label: 'คัดลอก', icon: 'pi pi-copy', shortcut: 'Ctrl+C' },
-        { label: 'วาง', icon: 'pi pi-clipboard', shortcut: 'Ctrl+V' },
+        { label: 'คัดลอก', icon: 'wi wi-copy', shortcut: 'Ctrl+C' },
+        { label: 'วาง', icon: 'wi wi-clipboard', shortcut: 'Ctrl+V' },
       ],
     },
   ];
   readonly classItems: MenuEntry[] = [
-    { label: 'ห้องเรียน', icon: 'pi pi-building', expanded: true, items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
-    { label: 'กิจกรรม', icon: 'pi pi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
+    { label: 'ห้องเรียน', icon: 'wi wi-building', expanded: true, items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
+    { label: 'กิจกรรม', icon: 'wi wi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
   ];
   readonly compactItems: MenuEntry[] = [
-    { label: 'ห้องเรียน', icon: 'pi pi-building', items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
-    { label: 'กิจกรรม', icon: 'pi pi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
+    { label: 'ห้องเรียน', icon: 'wi wi-building', items: [{ label: 'ม.1' }, { label: 'ม.2' }, { label: 'ม.3' }] },
+    { label: 'กิจกรรม', icon: 'wi wi-star', items: [{ label: 'ชุมนุม' }, { label: 'กีฬาสี' }] },
   ];
 
   sections(): MenuEntry[] {
     return [
-      { label: 'ข้อมูลทั่วไป', icon: 'pi pi-id-card', expanded: true, items: [{ label: 'ชื่อและที่อยู่' }, { label: 'ผู้ปกครอง' }] },
-      { label: 'การเรียน', icon: 'pi pi-book', items: [{ label: 'ผลการเรียน' }, { label: 'ตารางเรียน' }] },
-      { label: 'การเงิน', icon: 'pi pi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
+      { label: 'ข้อมูลทั่วไป', icon: 'wi wi-id-card', expanded: true, items: [{ label: 'ชื่อและที่อยู่' }, { label: 'ผู้ปกครอง' }] },
+      { label: 'การเรียน', icon: 'wi wi-book', items: [{ label: 'ผลการเรียน' }, { label: 'ตารางเรียน' }] },
+      { label: 'การเงิน', icon: 'wi wi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
     ];
   }
 
@@ -2071,6 +2075,14 @@ export abstract class StepsDemo extends SimpleDemo {
     { label: 'รายงานตัว' },
   ];
   checkIndex = 0;
+  /** Layout: one list (with subtitles) and one index for the three layouts, so they move together. */
+  readonly enrolSteps: MenuEntry[] = [
+    { label: 'ส่งใบสมัคร', subtitle: 'ออนไลน์' },
+    { label: 'ตรวจเอกสาร', subtitle: 'ภายใน 3 วัน' },
+    { label: 'สอบข้อเขียน', subtitle: 'ที่โรงเรียน' },
+    { label: 'รายงานตัว', subtitle: 'พร้อมผู้ปกครอง' },
+  ];
+  enrolIndex = 1;
 
   constructor() {
     super();
@@ -2106,9 +2118,9 @@ export abstract class StepperDemo extends SimpleDemo {
   applicationStatus = 'checking';
   paymentStep = 1;
   readonly paymentSteps = [
-    { value: 1, label: 'ข้อมูลผู้ชำระ', icon: 'pi pi-user' },
-    { value: 2, label: 'ช่องทางชำระ', icon: 'pi pi-credit-card' },
-    { value: 3, label: 'ใบเสร็จ', icon: 'pi pi-check-circle' },
+    { value: 1, label: 'ข้อมูลผู้ชำระ', icon: 'wi wi-user' },
+    { value: 2, label: 'ช่องทางชำระ', icon: 'wi wi-credit-card' },
+    { value: 3, label: 'ใบเสร็จ', icon: 'wi wi-check-circle' },
   ];
   enrolStep = 1;
   stepIndex = 0;

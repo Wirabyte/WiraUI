@@ -39,16 +39,16 @@ export const ICONFIELD_DOC: ComponentDoc = {
   },
   code: {
     position: `<wt-iconfield iconPosition="right">
-  <wt-inputicon icon="pi pi-search"></wt-inputicon>
+  <wt-inputicon icon="wi wi-search"></wt-inputicon>
   <input wtInputText placeholder="ค้นหา" />
 </wt-iconfield>`,
     basic: `<wt-iconfield>
-  <wt-inputicon icon="pi pi-search"></wt-inputicon>
+  <wt-inputicon icon="wi wi-search"></wt-inputicon>
   <input wtInputText placeholder="ค้นหา" />
 </wt-iconfield>
 <wt-iconfield>
   <input wtInputText placeholder="อีเมล" />
-  <wt-inputicon icon="pi pi-envelope"></wt-inputicon>
+  <wt-inputicon icon="wi wi-envelope"></wt-inputicon>
 </wt-iconfield>`,
   },
   api: [
@@ -99,7 +99,7 @@ export const INPUTGROUP_DOC: ComponentDoc = {
   },
   code: {
     addon: `<wt-inputgroup>
-  <wt-inputgroup-addon><i class="pi pi-user"></i></wt-inputgroup-addon>
+  <wt-inputgroup-addon><i class="wi wi-user"></i></wt-inputgroup-addon>
   <input wtInputText placeholder="ชื่อผู้ใช้" />
 </wt-inputgroup>
 <wt-inputgroup>
@@ -109,7 +109,7 @@ export const INPUTGROUP_DOC: ComponentDoc = {
 </wt-inputgroup>`,
     button: `<wt-inputgroup>
   <input wtInputText placeholder="ค้นหาคำสั่งซื้อ" />
-  <wt-button label="ค้นหา" icon="pi pi-search"></wt-button>
+  <wt-button label="ค้นหา" icon="wi wi-search"></wt-button>
 </wt-inputgroup>`,
   },
   api: [
@@ -211,7 +211,7 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
 <wt-togglebutton name="pinned" [(ngModel)]="pinned" size="large" onLabel="ใหญ่" offLabel="ใหญ่"></wt-togglebutton>`,
     basic: `<wt-togglebutton name="pinned" [(ngModel)]="pinned"></wt-togglebutton>`,
     labels: `<wt-togglebutton name="following" [(ngModel)]="following" onLabel="ติดตามแล้ว" offLabel="ติดตาม"
-  onIcon="pi pi-check" offIcon="pi pi-plus"></wt-togglebutton>`,
+  onIcon="wi wi-check" offIcon="wi wi-plus"></wt-togglebutton>`,
     reactive: `<form [formGroup]="form">
   <wt-togglebutton formControlName="notify" onLabel="แจ้งเตือนเปิด"
     offLabel="แจ้งเตือนปิด"></wt-togglebutton>
@@ -329,8 +329,8 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
 ];
 plan = 'pro';`,
     item: `views = [
-  { label: 'รายการ', value: 'list', icon: 'pi pi-bars' },
-  { label: 'ตาราง', value: 'grid', icon: 'pi pi-th-large' },
+  { label: 'รายการ', value: 'list', icon: 'wi wi-bars' },
+  { label: 'ตาราง', value: 'grid', icon: 'wi wi-th-large' },
 ];
 view = 'list';`,
     multiple: `days = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];

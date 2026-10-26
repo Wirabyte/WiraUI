@@ -172,12 +172,17 @@ export const PRESETS = {
   lanna: { family: 'wira', label: 'Lanna', primary: '#0d9488', surface: 'stone', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Sarabun', fontSize: 15, lineHeight: 1.7, radius: 12, density: 'comfortable', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 200, scheme: 'light' },
   siam: { family: 'wira', label: 'Siam', primary: '#6366f1', surface: 'gray', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Prompt', fontSize: 14, lineHeight: 1.6, radius: 4, density: 'normal', shadow: 'elevated', ripple: true, focusRing: 'outline', transition: 200, scheme: 'light' },
   nakhon: { family: 'wira', label: 'Nakhon', primary: '#3b82f6', surface: 'zinc', semantic: SEMANTIC_DEFAULTS, fontFamily: 'IBM Plex Sans Thai', fontSize: 13, lineHeight: 1.55, radius: 2, density: 'compact', shadow: 'none', ripple: false, focusRing: 'outline', transition: 100, scheme: 'light' },
+  // Hidden: listed by no version, so no menu or prompt shows it; `$preset: 'll'` or `preset: LL` turns it on.
+  // Candy-pink lotus; semantics after the units: Cerise Bouquet red (danger), DOLLCHESTRA blue (info),
+  // Mira-Cra Park! orange (warn), plus lotus-leaf green (success) and lavender (help).
+  ll: { family: 'wira', label: 'LL', primary: '#e8668e', surface: 'stone', semantic: { success: '#3fae78', info: '#3b6fd8', warn: '#ff9a2e', danger: '#e0344f', help: '#9b7be8' }, fontFamily: 'Itim', fontSize: 15, lineHeight: 1.6, radius: 16, density: 'comfortable', shadow: 'soft', ripple: true, focusRing: 'ring', transition: 200, scheme: 'light' },
   glass: { family: 'wira', label: 'Glass', primary: '#0a84ff', surface: 'slate', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Anuphan', fontSize: 14, lineHeight: 1.6, radius: 14, density: 'normal', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 250, scheme: 'light', material: 'glass' },
 } satisfies Record<string, PresetDefinition>;
 export type PresetId = keyof typeof PRESETS;
 export const PRESET_NAMES = Object.fromEntries(Object.entries(PRESETS).map(([id, p]) => [id, p.label])) as Record<PresetId, string>;
 /** The constant each preset is exported as from `wiratheme/presets` (`'sila-classic'` → `SilaClassic`). */
 export function presetExportName(id: PresetId): string {
+  if (id === 'll') return 'LL';
   return id.replace(/(^|-)([a-z])/g, (_m, _d, c: string) => c.toUpperCase());
 }
 
@@ -235,10 +240,11 @@ export const VERSION_CATALOG: Record<MajorVersion, { presets: PresetId[]; defaul
   },
   2: { presets: ['mali', 'sila', 'material', 'phet'], defaultPreset: 'mali', themes: ['mali', 'sila', 'material', 'phet'], defaultTheme: 'mali' },
   3: {
-    presets: ['mali', 'sila', 'material', 'phet', 'wira', 'lanna', 'siam', 'nakhon', 'glass'],
-    defaultPreset: 'mali',
-    themes: ['mali', 'sila', 'material', 'phet', 'wira', 'lanna', 'siam', 'nakhon', 'glass'],
-    defaultTheme: 'mali',
+    // WiraTheme's own looks first; Wira is the default.
+    presets: ['wira', 'lanna', 'siam', 'nakhon', 'glass', 'mali', 'sila', 'material', 'phet'],
+    defaultPreset: 'wira',
+    themes: ['wira', 'lanna', 'siam', 'nakhon', 'glass', 'mali', 'sila', 'material', 'phet'],
+    defaultTheme: 'wira',
   },
 };
 

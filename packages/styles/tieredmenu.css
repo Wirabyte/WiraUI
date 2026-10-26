@@ -22,6 +22,8 @@
     overflow: visible;
     border-width: var(--wt-menu-overlay-border-width);
     background: var(--wt-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-menu-shadow);
   }
   .wt-tieredmenu-disabled {
@@ -99,6 +101,8 @@
     border: var(--wt-menu-overlay-border-width) solid var(--wt-border);
     border-radius: var(--wt-menu-radius);
     background: var(--wt-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     box-shadow: var(--wt-menu-shadow);
   }
   .wt-tieredmenu-submenu-flip {

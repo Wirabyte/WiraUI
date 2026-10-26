@@ -32,7 +32,7 @@
     type="button"
     class="docs-icon-btn"
     id="docs-dark"
-    (click)="state.setDark(!state.dark())"
+    (click)="toggleDark($event)"
     [attr.aria-pressed]="state.dark()"
     [attr.aria-label]="(state.dark() ? 'top.light' : 'top.dark') | t"
   >
@@ -58,19 +58,32 @@
     }
   </div>
 
-  <label class="docs-version-select">
-    <span class="docs-sr">{{ 'top.version' | t }}</span>
-    <!-- [selected] per option, not [value] on <select>: the options do not exist yet when [value] is first set. -->
-    <select id="docs-version" (change)="switchTo($any($event.target).value)">
-      @for (v of versions; track v.id) {
-        <option [value]="v.id" [selected]="v.id === version()">{{ v.label }}</option>
-      }
-    </select>
-    <docs-icon name="chevronDown"></docs-icon>
-  </label>
+  <!-- The version switcher: wiratheme v3's own select (not the OS list), each version with its Angular range and status. -->
+  <div class="docs-version-select">
+    <wt-select
+      id="docs-version"
+      [options]="versions"
+      optionLabel="label"
+      optionValue="id"
+      [ngModel]="version()"
+      (ngModelChange)="switchTo($event)"
+      [ariaLabel]="'top.version' | t"
+      panelStyleClass="docs-version-panel"
+    >
+      <ng-template #selectedItem let-v>
+        <span class="docs-version-current"><b>{{ v.id }}</b><span class="docs-version-range"> · Angular {{ v.angular }}</span></span>
+      </ng-template>
+      <ng-template #item let-v>
+        <span class="docs-version-option">
+          <span class="docs-version-name"><b>{{ v.id }}</b> · Angular {{ v.angular }}</span>
+          <span class="docs-status" [attr.data-status]="v.status">{{ statusKey(v.status) | t }}</span>
+        </span>
+      </ng-template>
+    </wt-select>
+  </div>
 </header>
 
-<div class="docs-body">
+<div class="docs-body" [class.docs-body-aside-toc]="asideToc()">
   <aside class="docs-sidebar docs-scroll" id="docs-sidebar" [class.open]="menuOpen()">
     <docs-lang-switch class="docs-sidebar-lang" idPrefix="drawer-lang"></docs-lang-switch>
     <nav [attr.aria-label]="'top.menu' | t">
@@ -132,34 +145,46 @@
   }
 
   <main class="docs-main" id="docs-main">
-    <!-- WiraTheme Studio needs the width for its editor and preview side by side. -->
-    <article class="docs-article" [class.docs-article-wide]="path() === 'theming/studio'">
-      <router-outlet></router-outlet>
-    </article>
+    <div class="docs-main-row" [class.docs-has-aside-toc]="asideToc()">
+      <div class="docs-main-col">
+        <!-- WiraTheme Studio needs the width for its editor and preview side by side. -->
+        <article class="docs-article" [class.docs-article-wide]="path() === 'theming/studio'">
+          <router-outlet></router-outlet>
+        </article>
 
-    @if (pager().prev || pager().next) {
-      <nav class="docs-pager" [attr.aria-label]="'pager.label' | t">
-        @if (pager().prev; as p) {
-          <a class="docs-pager-link" id="pager-prev" [routerLink]="link(p.path)">
-            <span><docs-icon name="chevronLeft"></docs-icon>{{ 'pager.prev' | t }}</span>
-            <b>{{ p.title | loc }}</b>
-          </a>
-        } @else {
-          <span></span>
+        @if (pager().prev || pager().next) {
+          <nav class="docs-pager" [attr.aria-label]="'pager.label' | t">
+            @if (pager().prev; as p) {
+              <a class="docs-pager-link" id="pager-prev" [routerLink]="link(p.path)">
+                <span><docs-icon name="chevronLeft"></docs-icon>{{ 'pager.prev' | t }}</span>
+                <b>{{ p.title | loc }}</b>
+              </a>
+            } @else {
+              <span></span>
+            }
+            @if (pager().next; as n) {
+              <a class="docs-pager-link docs-pager-next" id="pager-next" [routerLink]="link(n.path)">
+                <span>{{ 'pager.next' | t }}<docs-icon name="chevronRight"></docs-icon></span>
+                <b>{{ n.title | loc }}</b>
+              </a>
+            }
+          </nav>
         }
-        @if (pager().next; as n) {
-          <a class="docs-pager-link docs-pager-next" id="pager-next" [routerLink]="link(n.path)">
-            <span>{{ 'pager.next' | t }}<docs-icon name="chevronRight"></docs-icon></span>
-            <b>{{ n.title | loc }}</b>
-          </a>
-        }
-      </nav>
-    }
 
-    <footer class="docs-footer">
-      <span>{{ 'footer.license' | t }}</span>
-      <span>{{ 'footer.sample' | t }}</span>
-    </footer>
+        <footer class="docs-footer">
+          <span>{{ 'footer.license' | t }}</span>
+          <span>{{ 'footer.sample' | t }}</span>
+        </footer>
+      </div>
+
+      <!-- Wide screens: "On this page" in its own column on the right (the copy under the page's sidebar item hides). -->
+      @if (asideToc()) {
+        <aside class="docs-toc-aside docs-scroll" id="docs-toc-aside" [attr.aria-label]="'toc.title' | t">
+          <p class="docs-toc-aside-title">{{ 'toc.title' | t }}</p>
+          <docs-toc place="aside"></docs-toc>
+        </aside>
+      }
+    </div>
   </main>
 
 </div>

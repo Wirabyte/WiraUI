@@ -541,3 +541,56 @@ export function base64ToFile(base64: string, type?: string): Blob {
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
   return new Blob([bytes], { type: mime });
 }
+
+/** A built-in button of the cropper's toolbar. */
+export type CropperToolName =
+  | 'zoomOut'
+  | 'zoomSlider'
+  | 'zoomIn'
+  | 'rotateLeft'
+  | 'rotateRight'
+  | 'flipHorizontal'
+  | 'flipVertical'
+  | 'reset';
+/** A tool, or `'zoom'` / `'rotate'` / `'flip'` for its whole group. */
+export type CropperTool = CropperToolName | 'zoom' | 'rotate' | 'flip';
+/**
+ * The toolbar's built-in buttons: `'full'` (every button), `'none'`, or a list of tools in order where `'|'` starts a
+ * new group. Without any `'|'` the zoom tools make one group and the rest another, as in the full toolbar.
+ */
+export type CropperToolbar = 'full' | 'none' | ReadonlyArray<CropperTool | '|'>;
+
+const CROPPER_ZOOM_TOOLS: CropperToolName[] = ['zoomOut', 'zoomSlider', 'zoomIn'];
+const CROPPER_TOOL_SETS: Record<string, CropperToolName[]> = {
+  zoom: CROPPER_ZOOM_TOOLS,
+  rotate: ['rotateLeft', 'rotateRight'],
+  flip: ['flipHorizontal', 'flipVertical'],
+};
+const CROPPER_TOOLS: CropperToolName[] = [...CROPPER_ZOOM_TOOLS, 'rotateLeft', 'rotateRight', 'flipHorizontal', 'flipVertical', 'reset'];
+
+/** The toolbar's groups of buttons for `toolbar`; unknown names are skipped and each button shows once. */
+export function cropperToolbarGroups(toolbar: CropperToolbar | readonly string[] | string | null | undefined): CropperToolName[][] {
+  const t = toolbar ?? 'full';
+  if (t === 'none') return [];
+  if (!Array.isArray(t)) return [CROPPER_ZOOM_TOOLS.slice(), CROPPER_TOOLS.filter((n) => !CROPPER_ZOOM_TOOLS.includes(n))];
+  const groups: CropperToolName[][] = [];
+  const seen = new Set<CropperToolName>();
+  let current: CropperToolName[] = [];
+  for (const entry of t as ReadonlyArray<unknown>) {
+    if (entry === '|') {
+      if (current.length) groups.push(current);
+      current = [];
+      continue;
+    }
+    const names = typeof entry !== 'string' ? [] : CROPPER_TOOL_SETS[entry] ?? (CROPPER_TOOLS.includes(entry as CropperToolName) ? [entry as CropperToolName] : []);
+    for (const n of names) {
+      if (seen.has(n)) continue;
+      seen.add(n);
+      current.push(n);
+    }
+  }
+  if (current.length) groups.push(current);
+  if (t.includes('|')) return groups;
+  const all = groups.flat();
+  return [all.filter((n) => CROPPER_ZOOM_TOOLS.includes(n)), all.filter((n) => !CROPPER_ZOOM_TOOLS.includes(n))].filter((g) => g.length);
+}

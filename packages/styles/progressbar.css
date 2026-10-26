@@ -23,7 +23,8 @@
     color: var(--wt-primary-contrast);
     transition: width 1s ease-in-out;
   }
-  /* [striped] / [animated]: stripes over the fill (a layer of their own, so a `color` gradient stays). */
+  /* [striped] / [animated]: stripes over the fill (a layer of their own, so a `color` gradient stays). They lean
+     forward (/) and travel the way the bar grows, so the bar reads as moving ahead, not backwards. */
   .wt-progressbar-striped .wt-progressbar-value {
     position: relative;
   }
@@ -35,7 +36,7 @@
     position: absolute;
     inset: 0;
     background-image: linear-gradient(
-      45deg,
+      -45deg,
       rgba(255, 255, 255, 0.2) 25%,
       transparent 25%,
       transparent 50%,
@@ -49,6 +50,36 @@
   }
   .wt-progressbar-animated .wt-progressbar-value::after {
     animation: wt-progressbar-stripes 0.8s linear infinite;
+  }
+  .wt-progressbar-animated:dir(rtl) .wt-progressbar-value::after {
+    animation-direction: reverse;
+  }
+  /* [shimmer]: a glossy bar and a band of light that sweeps along it now and then (desktop progress bars). */
+  .wt-progressbar-shimmer .wt-progressbar-value {
+    position: relative;
+    overflow: hidden;
+    /* The sweep's distance is measured in this bar's own width (cqw). */
+    container-type: inline-size;
+    box-shadow:
+      inset 0 0.25em 0.3em -0.15em rgba(255, 255, 255, 0.45),
+      inset 0 -0.2em 0.3em -0.15em rgba(0, 0, 0, 0.12);
+  }
+  .wt-progressbar-shimmer.wt-progressbar-indeterminate .wt-progressbar-value {
+    position: absolute;
+  }
+  .wt-progressbar-shimmer .wt-progressbar-value::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: max(3rem, 35%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55) 50%, transparent);
+    transform: translateX(-100%);
+    animation: wt-progressbar-shimmer 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .wt-progressbar-shimmer:dir(rtl) .wt-progressbar-value::before {
+    inset: 0 0 0 auto;
+    animation-name: wt-progressbar-shimmer-rtl;
   }
   .wt-progressbar-label {
     position: relative;
@@ -68,10 +99,29 @@
   }
   @keyframes wt-progressbar-stripes {
     from {
-      background-position: var(--wt-progressbar-stripe-size) 0;
+      background-position: 0 0;
     }
     to {
-      background-position: 0 0;
+      background-position: var(--wt-progressbar-stripe-size) 0;
+    }
+  }
+  /* The band crosses the bar in the first 60% of the loop, then rests. */
+  @keyframes wt-progressbar-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    60%,
+    100% {
+      transform: translateX(calc(100cqw + 100%));
+    }
+  }
+  @keyframes wt-progressbar-shimmer-rtl {
+    0% {
+      transform: translateX(100%);
+    }
+    60%,
+    100% {
+      transform: translateX(calc(-100cqw - 100%));
     }
   }
   @keyframes wt-progressbar-indeterminate {
@@ -89,8 +139,12 @@
     .wt-progressbar-indeterminate .wt-progressbar-value {
       animation-duration: 4s;
     }
-    .wt-progressbar-animated .wt-progressbar-value::after {
+    .wt-progressbar-animated .wt-progressbar-value::after,
+    .wt-progressbar-shimmer .wt-progressbar-value::before {
       animation: none;
+    }
+    .wt-progressbar-shimmer .wt-progressbar-value::before {
+      display: none;
     }
   }
 }

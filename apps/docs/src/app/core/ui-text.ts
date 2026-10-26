@@ -11,6 +11,9 @@ export const UI = {
   'top.dark': { th: 'ใช้โหมดมืด', en: 'Switch to dark mode' },
   'top.theme': { th: 'ปรับธีม', en: 'Customize theme' },
   'top.version': { th: 'รุ่นของ wiratheme', en: 'wiratheme version' },
+  'version.latest': { th: 'ล่าสุด', en: 'latest' },
+  'version.active': { th: 'ดูแลอยู่', en: 'active' },
+  'version.maintenance': { th: 'แก้เฉพาะบั๊ก', en: 'maintenance' },
   'top.docs': { th: 'เอกสาร', en: 'Docs' },
   'top.install': { th: 'ติดตั้ง', en: 'Install' },
 

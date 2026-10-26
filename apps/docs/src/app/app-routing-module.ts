@@ -9,6 +9,8 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: () => import('./landing/landing-module').then((m) => m.LandingModule),
   },
+  // Linked from nowhere: type "hasu" anywhere on the site.
+  { path: 'll', loadChildren: () => import('./secret/ll').then((m) => m.SECRET_ROUTES) },
   { path: '', loadChildren: () => import('./docs/docs-module').then((m) => m.DocsModule) },
   { path: '**', redirectTo: '' },
 ];

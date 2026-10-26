@@ -1,29 +1,31 @@
-<header class="docs-page-head">
-  <p class="docs-eyebrow">Components · {{ doc().group }}</p>
-  <h1 class="docs-h1">{{ doc().title }}</h1>
-  <p class="docs-lead">{{ doc().description | loc }}</p>
-  <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ version.major }} · Angular {{ version.angular }}</span>
-    <span class="docs-chip"><code>wiratheme/{{ doc().entry }}</code></span>
-    <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
-  </div>
-  <nav class="docs-tabs" [attr.aria-label]="'page.sections' | t">
-    @for (t of tabs; track t.id) {
-      <a
-        [id]="'tab-' + t.id"
-        [routerLink]="[]"
-        [queryParams]="{ tab: t.id === 'features' ? null : t.id }"
-        queryParamsHandling="merge"
-        [class.active]="tab() === t.id"
-        [attr.aria-current]="tab() === t.id ? 'page' : null"
-      >
-        <docs-icon [name]="t.icon"></docs-icon>{{ t.label | loc }}
-      </a>
-    }
-  </nav>
-</header>
+@if (!preview) {
+  <header class="docs-page-head">
+    <p class="docs-eyebrow">Components · {{ doc().group }}</p>
+    <h1 class="docs-h1">{{ doc().title }}</h1>
+    <p class="docs-lead">{{ doc().description | loc }}</p>
+    <div class="docs-meta">
+      <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ version.major }} · Angular {{ version.angular }}</span>
+      <span class="docs-chip"><code>wiratheme/{{ doc().entry }}</code></span>
+      <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
+    </div>
+    <nav class="docs-tabs" [attr.aria-label]="'page.sections' | t">
+      @for (t of tabs; track t.id) {
+        <a
+          [id]="'tab-' + t.id"
+          [routerLink]="[]"
+          [queryParams]="{ tab: t.id === 'features' ? null : t.id }"
+          queryParamsHandling="merge"
+          [class.active]="tab() === t.id"
+          [attr.aria-current]="tab() === t.id ? 'page' : null"
+        >
+          <docs-icon [name]="t.icon"></docs-icon>{{ t.label | loc }}
+        </a>
+      }
+    </nav>
+  </header>
+}
 
-@switch (tab()) {
+@switch (preview ? 'features' : tab()) {
   @case ('api') {
     @for (g of apiGroups(); track g.id) {
       <docs-section [id]="g.id" [title]="g.title">

@@ -33,6 +33,14 @@
   --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #000);
   --docs-accent: #14b8a6;
   --docs-gradient: linear-gradient(135deg, #1e7ae0 0%, #14b8a6 100%);
+  // Demo scaffolding (placeholder tiles, the frames around them, panels drawn by the docs): edges at 3:1 or more
+  // against what they sit on and labels at 4.5:1 or more, in both modes and for any primary colour of the theme panel.
+  // White text sits on --docs-gradient-strong, the brand gradient deepened until white reads on both ends.
+  --docs-gradient-strong: linear-gradient(135deg, #1763c6 0%, #0f766e 100%);
+  --docs-edge: #8391a5;
+  --docs-tile: color-mix(in srgb, var(--docs-primary) 20%, var(--docs-surface));
+  --docs-tile-edge: color-mix(in srgb, var(--docs-primary) 70%, #000);
+  --docs-frame: var(--docs-ground);
   --docs-brand-text: linear-gradient(100deg, #ff6b6b 0%, #ff9a4d 32%, #3ddbb8 68%, #3fa9f5 100%);
   --docs-hero-glow:
     radial-gradient(1200px 600px at 85% -10%, rgba(63, 169, 245, 0.16), transparent 60%),
@@ -89,6 +97,9 @@
   --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #ffffff);
   --docs-accent: #2dd4bf;
   --docs-gradient: linear-gradient(135deg, #2f8df0 0%, #1fc7b1 100%);
+  --docs-edge: #5f6e84;
+  --docs-tile: color-mix(in srgb, var(--docs-primary) 30%, var(--docs-surface));
+  --docs-tile-edge: color-mix(in srgb, var(--docs-primary) 75%, #ffffff);
   --docs-grid-line: rgba(255, 255, 255, 0.04);
 
   --docs-success-bg: rgba(34, 197, 94, 0.14);

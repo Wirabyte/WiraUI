@@ -13,7 +13,7 @@
 
     <docs-section id="popup" [section]="sec['popup']">
       <docs-demo [html]="code['popup']" [ts]="ts['basic']">
-        <wt-button id="d-tm-open" [label]="tx('จัดการ')" icon="pi pi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
+        <wt-button id="d-tm-open" [label]="tx('จัดการ')" icon="wi wi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
         <wt-tieredMenu
           #manageMenu
           id="d-tm-popup"
@@ -41,7 +41,7 @@
             }
           </ng-template>
           <ng-template #submenuicon>
-            <i class="pi pi-chevron-right docs-tm-arrow"></i>
+            <i class="wi wi-chevron-right docs-tm-arrow"></i>
           </ng-template>
         </wt-tieredMenu>
       </docs-demo>

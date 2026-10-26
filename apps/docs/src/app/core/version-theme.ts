@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { Lang } from './i18n';
 import { clone, StudioConfig, StudioCore } from './studio-store';
 import { DocVersion, DocVersionId } from './versions';
+import { hasuUnlocked } from './hasu';
 
 export interface PresetInfo {
   /** Theme name as the package knows it: 'sila-light-teal' (v1), 'mali' (v2 / v3). */
@@ -40,6 +41,8 @@ export interface DocsVersionTheme {
   readonly key: string;
   readonly major: number;
   readonly presets: PresetInfo[];
+  /** Presets the visitor has unlocked (Hasu, after opening the secret page): offered by the theme drawer and the Studio only. */
+  secretPresets(): PresetInfo[];
   readonly defaultPresetId: string;
   /** Preset that `apply` would use, after the light/dark counterpart swap. */
   resolve(custom: ThemeCustom, dark: boolean): string;
@@ -74,6 +77,7 @@ interface PresetsModule<P> {
   VERSION_CATALOG: Record<number, { themes: string[]; defaultTheme: string }>;
   presetsFor(major: 1 | 2 | 3): P[];
   themePreset(name: string): P;
+  PRESET_LIST?: Record<string, P>;
 }
 
 interface PresetShape {
@@ -153,7 +157,24 @@ export function versionTheme<P>(
       twin: counterpart(id, c.scheme !== 'dark', ids) !== id,
     };
   });
-  const info = (id: string) => infos.find((i) => i.id === id);
+  // The hidden `ll` preset, shown as Hasu once unlocked (v2 / v3; v1 keeps its classic themes).
+  const hasu = major >= 2 ? presets.PRESET_LIST?.['ll'] : undefined;
+  let hasuInfo: PresetInfo | undefined;
+  if (hasu) {
+    const c = (hasu as PresetShape).config || {};
+    list.set('ll', hasu);
+    hasuInfo = {
+      id: 'll',
+      name: 'Hasu',
+      family: '',
+      primary: typeof c.primary === 'string' ? c.primary : null,
+      surface: typeof c.surface === 'string' ? c.surface : null,
+      scheme: 'light',
+      ripple: c.ripple === true,
+      twin: false,
+    };
+  }
+  const info = (id: string) => infos.find((i) => i.id === id) ?? (id === 'll' ? hasuInfo : undefined);
 
   const resolve = (custom: ThemeCustom, dark: boolean): string => {
     const id = custom.presetId && list.has(custom.presetId) ? custom.presetId : defaultPresetId;
@@ -165,6 +186,7 @@ export function versionTheme<P>(
     key: opts.key || version,
     major,
     presets: infos,
+    secretPresets: () => (hasuInfo && hasuUnlocked() ? [hasuInfo] : []),
     defaultPresetId,
     resolve,
     info,

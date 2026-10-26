@@ -38,7 +38,7 @@ export const DIVIDER_DOC: ComponentDoc = {
 <p>ส่วนล่าง</p>`,
     content: `<wt-divider align="left"><b>ข้อมูลบัญชี</b></wt-divider>
 <wt-divider align="center">หรือ</wt-divider>
-<wt-divider align="right"><span class="pi pi-check"></span></wt-divider>`,
+<wt-divider align="right"><span class="wi wi-check"></span></wt-divider>`,
     type: `<wt-divider type="dashed"></wt-divider>
 <wt-divider type="dotted"></wt-divider>`,
     vertical: `<div class="flex">
@@ -129,16 +129,16 @@ export const PANEL_DOC: ComponentDoc = {
 </wt-panel>`,
     slots: `<wt-panel>
   <div wtPanelHeader><b>สมาชิก</b> <wt-badge value="5"></wt-badge></div>
-  <wt-button wtPanelIcons icon="pi pi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+  <wt-button wtPanelIcons icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
   <p>สมชาย, กมล, มานี และอีก 2 คน</p>
   <div wtPanelFooter>อัปเดตล่าสุด 5 นาทีที่แล้ว</div>
 </wt-panel>`,
     templates: `<wt-panel [toggleable]="true">
   <ng-template #header>
-    <i class="pi pi-chart-bar"></i> <b>สรุปคะแนนสอบ</b>
+    <i class="wi wi-chart-bar"></i> <b>สรุปคะแนนสอบ</b>
   </ng-template>
   <ng-template #icons>
-    <wt-button icon="pi pi-download" [text]="true" [rounded]="true" ariaLabel="ส่งออก"></wt-button>
+    <wt-button icon="wi wi-download" [text]="true" [rounded]="true" ariaLabel="ส่งออก"></wt-button>
   </ng-template>
   <p>คะแนนเฉลี่ยของห้อง 78.5</p>
   <ng-template #footer>คำนวณเมื่อ 08:30 น.</ng-template>
@@ -233,7 +233,7 @@ export const FIELDSET_DOC: ComponentDoc = {
 </wt-fieldset>`,
     header: `<wt-fieldset>
   <ng-template #header>
-    <i class="pi pi-phone"></i> ผู้ติดต่อฉุกเฉิน
+    <i class="wi wi-phone"></i> ผู้ติดต่อฉุกเฉิน
   </ng-template>
   <p>นางสมศรี ใจดี · 081-234-5678</p>
 </wt-fieldset>`,
@@ -368,7 +368,7 @@ export const MESSAGE_DOC: ComponentDoc = {
     escape: `<wt-message severity="warn" [escape]="false" text="ส่งเอกสารภายใน <b>วันศุกร์นี้</b>"></wt-message>
 <wt-messages [value]="[{ summary: 'ระบบจะปิดปรับปรุงคืนนี้' }]" severity="info" [closable]="false" [enableService]="false"></wt-messages>`,
     service: `<wt-messages key="form"></wt-messages>
-<wt-button label="ส่งแบบฟอร์ม" icon="pi pi-send" (onClick)="sendForm()"></wt-button>`,
+<wt-button label="ส่งแบบฟอร์ม" icon="wi wi-send" (onClick)="sendForm()"></wt-button>`,
   },
   ts: {
     messages: `import { Message } from 'wiratheme/api';

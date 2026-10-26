@@ -301,6 +301,30 @@
           <td>{{ en() ? 'The image-cropper tag apps already use keeps its inputs, outputs and ImageCroppedEvent; the result is a blob by default, so code that reads event.base64 sets output="base64"' : 'แท็ก image-cropper ที่แอปใช้อยู่ใช้ input, output และ ImageCroppedEvent ชื่อเดิม ผลลัพธ์เป็น blob โดยค่าเริ่มต้น โค้ดที่อ่าน event.base64 ให้ตั้ง output="base64"' }}</td>
         </tr>
         <tr>
+          <td>Terminal · ImageCompare</td>
+          <td><code>&lt;wt-terminal&gt;</code> · <code>&lt;wt-imageCompare&gt;</code></td>
+          <td><code>WtTerminalModule</code> · <code>WtImageCompareModule</code></td>
+          <td>{{ en() ? 'TerminalService under its old name (provided in root), welcomeMessage, prompt, ↑ ↓ history and clear; the left / right templates of the compare keep their names' : 'TerminalService ชื่อเดิม (มีที่ root แล้ว) welcomeMessage, prompt, ประวัติด้วย ↑ ↓ และคำสั่ง clear ส่วน template left / right ของการเทียบภาพใช้ชื่อเดิม' }}</td>
+        </tr>
+        <tr>
+          <td>Carousel · Splitter</td>
+          <td><code>&lt;wt-carousel&gt;</code> · <code>&lt;wt-splitter&gt;</code></td>
+          <td><code>WtCarouselModule</code> · <code>WtSplitterModule</code></td>
+          <td>{{ en() ? 'Every carousel input and onPage, with the item / header / footer templates; splitter panels as wt-splitter-panel or the pTemplate="panel" templates, panelSizes, minSizes and stateKey' : 'input ทุกตัวของ carousel และ onPage พร้อม template item / header / footer ส่วน splitter ใช้ช่องเป็น wt-splitter-panel หรือ template pTemplate="panel" แบบเดิม พร้อม panelSizes, minSizes และ stateKey' }}</td>
+        </tr>
+        <tr>
+          <td>OrganizationChart</td>
+          <td><code>&lt;wt-organizationChart&gt;</code></td>
+          <td><code>WtOrganizationChartModule</code> · <code>WtOrganizationChart</code></td>
+          <td>{{ en() ? 'The same TreeNode data, single / multiple selection, collapsible, preserveSpace and templates named after node types' : 'ข้อมูล TreeNode ชุดเดิม เลือกได้กล่องเดียว / หลายกล่อง collapsible, preserveSpace และ template ตามชื่อ type ของกล่อง' }}</td>
+        </tr>
+        <tr>
+          <td>Knob · InputOtp</td>
+          <td><code>&lt;wt-knob&gt;</code> · <code>&lt;wt-inputOtp&gt;</code></td>
+          <td><code>WtKnobModule</code> · <code>WtInputOtpModule</code></td>
+          <td>{{ en() ? 'ngModel and reactive forms, the same inputs and events; the one-time code boxes take paste and SMS autofill, and the input template keeps let-token / let-events' : 'ใช้กับ ngModel และ reactive forms input และ event ชื่อเดิม ช่องรหัสยืนยันรับการวางและรหัสจาก SMS และ template input ยังได้ let-token / let-events' }}</td>
+        </tr>
+        <tr>
           <td>Messages</td>
           <td><code>&lt;wt-messages&gt;</code></td>
           <td><code>WtMessagesModule</code> · <code>WtMessages</code></td>
@@ -390,6 +414,8 @@
         <tr><td><code>wt-tiered-menu</code> · <code>wt-context-menu</code></td><td><code>wt-tieredMenu</code> · <code>wt-contextMenu</code></td></tr>
         <tr><td><code>wt-scroll-panel</code> · <code>wt-block-ui</code></td><td><code>wt-scrollPanel</code> · <code>wt-blockUI</code></td></tr>
         <tr><td><code>wt-scroller</code> · <code>wt-drawer</code></td><td><code>wt-virtualScroller</code> · <code>wt-sidebar</code></td></tr>
+        <tr><td><code>wt-image-compare</code> · <code>wt-organization-chart</code></td><td><code>wt-imageCompare</code> · <code>wt-organizationChart</code></td></tr>
+        <tr><td><code>wt-input-otp</code> · <code>wt-splitter-panel</code></td><td><code>wt-inputOtp</code> · <code>wt-splitterPanel</code></td></tr>
         <tr><td><code>[wtDraggable]</code> · <code>[wtDroppable]</code></td><td><code>[pDraggable]</code> · <code>[pDroppable]</code></td></tr>
         <tr><td><code>textarea[wtTextarea]</code></td><td><code>textarea[pInputTextarea]</code> · <code>[wtInputTextarea]</code> · <code>[pTextarea]</code> · <code>[pInputText]</code></td></tr>
       </tbody>

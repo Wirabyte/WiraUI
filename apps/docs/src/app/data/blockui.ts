@@ -70,12 +70,12 @@ export const BLOCKUI_DOC: ComponentDoc = {
   <wt-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wt-progress-spinner>
   <span>กำลังบันทึก</span>
 </wt-blockUI>
-<wt-button label="บันทึก" icon="pi pi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>`,
+<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>`,
     document: `<wt-blockUI [blocked]="isApiSending" ariaLabel="กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้">
   <wt-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wt-progress-spinner>
   <p>กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้</p>
 </wt-blockUI>
-<wt-button label="ส่งผลการเรียน" icon="pi pi-send" (onClick)="sendGrades()"></wt-button>`,
+<wt-button label="ส่งผลการเรียน" icon="wi wi-send" (onClick)="sendGrades()"></wt-button>`,
   },
   ts: {
     target: `studentName = 'ด.ช.กิตติพัฒน์ ใจดี';

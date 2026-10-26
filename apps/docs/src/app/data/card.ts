@@ -92,7 +92,7 @@ export const CARD_DOC: ComponentDoc = {
 </wt-card>`,
     slots: `<wt-card header="แผน Pro" subheader="รายเดือน">
   <div wtCardHeader class="cover">฿290 / เดือน</div>
-  <wt-button wtCardActions icon="pi pi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+  <wt-button wtCardActions icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
   <p>5 โปรเจค · พื้นที่ 50 GB · ผู้ใช้ไม่จำกัด</p>
   <div wtCardFooter>
     <wt-button label="อัปเกรด" size="small"></wt-button>

@@ -143,10 +143,10 @@ const ADMIN_HTML = `<wt-table #dt [value]="students" dataKey="id" [paginator]="t
   <ng-template #caption>
     <div class="flex flex-wrap align-items-center justify-content-between gap-2">
       <wt-iconfield>
-        <wt-inputicon icon="pi pi-search"></wt-inputicon>
+        <wt-inputicon icon="wi wi-search"></wt-inputicon>
         <input wtInputText placeholder="ค้นหา รหัส ชื่อ ห้อง" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
       </wt-iconfield>
-      <wt-button label="เพิ่ม" icon="pi pi-plus" (onClick)="addStudent()"></wt-button>
+      <wt-button label="เพิ่ม" icon="wi wi-plus" (onClick)="addStudent()"></wt-button>
     </div>
   </ng-template>
   <ng-template #header>
@@ -169,8 +169,8 @@ const ADMIN_HTML = `<wt-table #dt [value]="students" dataKey="id" [paginator]="t
       <td>{{ thaiDate(s.birthDate) }}</td>
       <td><wt-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wt-tag></td>
       <td>
-        <wt-button icon="pi pi-pencil" [rounded]="true" [text]="true" wtTooltip="แก้ไข" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
-        <wt-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" wtTooltip="ลบ" ariaLabel="ลบ" (onClick)="deleteStudent(s)"></wt-button>
+        <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" wtTooltip="แก้ไข" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
+        <wt-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" wtTooltip="ลบ" ariaLabel="ลบ" (onClick)="deleteStudent(s)"></wt-button>
       </td>
     </tr>
   </ng-template>
@@ -552,7 +552,7 @@ ${HEAD_BODY}
     search: `<wt-table #dt [value]="students" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0">
   <ng-template #caption>
     <wt-iconfield>
-      <wt-inputicon icon="pi pi-search"></wt-inputicon>
+      <wt-inputicon icon="wi wi-search"></wt-inputicon>
       <input wtInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
     </wt-iconfield>
   </ng-template>
@@ -718,7 +718,7 @@ ${NAME_ROOM}
       <td>{{ s.status }}</td>
       <td>{{ thaiDate(s.birthDate) }}</td>
       <td wtFrozenColumn alignFrozen="right">
-        <wt-button icon="pi pi-pencil" [rounded]="true" [text]="true" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
+        <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
       </td>
     </tr>
   </ng-template>
@@ -737,7 +737,7 @@ ${NAME_ROOM}
     <tr>
       <td>
         <button type="button" wtButton [wtRowToggler]="s" [text]="true" [rounded]="true"
-          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [attr.aria-label]="'รายละเอียดของ ' + s.name"></button>
+          [icon]="expanded ? 'wi wi-chevron-down' : 'wi wi-chevron-right'" [attr.aria-label]="'รายละเอียดของ ' + s.name"></button>
       </td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
@@ -853,10 +853,10 @@ ${NAME_ROOM}
   exportFilename="students" [exportFunction]="exportCell" [scrollable]="true" scrollHeight="240px">
   <ng-template #caption>
     <div class="flex flex-wrap gap-2">
-      <wt-button label="ส่งออก CSV" icon="pi pi-download" (onClick)="dt.exportCSV()"></wt-button>
-      <wt-button label="ส่งออกที่เลือก" icon="pi pi-download" severity="secondary" [outlined]="true"
+      <wt-button label="ส่งออก CSV" icon="wi wi-download" (onClick)="dt.exportCSV()"></wt-button>
+      <wt-button label="ส่งออกที่เลือก" icon="wi wi-download" severity="secondary" [outlined]="true"
         [disabled]="!pickedStudents.length" (onClick)="dt.exportCSV({ selectionOnly: true })"></wt-button>
-      <wt-button label="ดูข้อความ CSV" icon="pi pi-file" severity="secondary" [text]="true" (onClick)="previewCsv(dt)"></wt-button>
+      <wt-button label="ดูข้อความ CSV" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(dt)"></wt-button>
     </div>
   </ng-template>
   <ng-template #header>
@@ -890,7 +890,7 @@ ${NAME_ROOM}
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
     <tr [wtReorderableRow]="i">
-      <td><span class="pi pi-bars" wtReorderableRowHandle></span></td>
+      <td><span class="wi wi-bars" wtReorderableRowHandle></span></td>
       <td>{{ i + 1 }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
@@ -985,12 +985,12 @@ ${NAME_ROOM}
       </td>
       <td>
         @if (!editing) {
-          <button type="button" wtButton wtInitEditableRow icon="pi pi-pencil" [text]="true" [rounded]="true"
+          <button type="button" wtButton wtInitEditableRow icon="wi wi-pencil" [text]="true" [rounded]="true"
             aria-label="แก้ไข" (click)="startEdit(s)"></button>
         } @else {
-          <button type="button" wtButton wtSaveEditableRow icon="pi pi-check" [text]="true" [rounded]="true"
+          <button type="button" wtButton wtSaveEditableRow icon="wi wi-check" [text]="true" [rounded]="true"
             aria-label="บันทึก" (click)="saveRow(s)"></button>
-          <button type="button" wtButton wtCancelEditableRow icon="pi pi-times" severity="secondary" [text]="true"
+          <button type="button" wtButton wtCancelEditableRow icon="wi wi-times" severity="secondary" [text]="true"
             [rounded]="true" aria-label="ยกเลิก" (click)="cancelRow(s)"></button>
         }
       </td>
@@ -1024,11 +1024,11 @@ ${NAME_ROOM}
         </wt-cellEditor>
       </td>
       <td>
-        <button *ngIf="!editing" type="button" wtButton wtInitEditableRow icon="pi pi-pencil" [text]="true"
+        <button *ngIf="!editing" type="button" wtButton wtInitEditableRow icon="wi wi-pencil" [text]="true"
           [rounded]="true" aria-label="แก้ไข" (click)="startEdit(s)"></button>
-        <button *ngIf="editing" type="button" wtButton wtSaveEditableRow icon="pi pi-check" [text]="true"
+        <button *ngIf="editing" type="button" wtButton wtSaveEditableRow icon="wi wi-check" [text]="true"
           [rounded]="true" aria-label="บันทึก" (click)="saveRow(s)"></button>
-        <button *ngIf="editing" type="button" wtButton wtCancelEditableRow icon="pi pi-times" severity="secondary"
+        <button *ngIf="editing" type="button" wtButton wtCancelEditableRow icon="wi wi-times" severity="secondary"
           [text]="true" [rounded]="true" aria-label="ยกเลิก" (click)="cancelRow(s)"></button>
       </td>
     </tr>
@@ -1342,10 +1342,10 @@ selectedStudent: Student | null = null;
 menuStudent: Student | null = null;   // แถวที่คลิกขวาล่าสุด
 lastAction = '';
 studentActions: WtMenuItem[] = [
-  { label: 'ดูประวัติ', icon: 'pi pi-eye', command: () => this.viewStudent() },
-  { label: 'ย้ายห้อง', icon: 'pi pi-share-alt', command: () => this.moveStudent() },
+  { label: 'ดูประวัติ', icon: 'wi wi-eye', command: () => this.viewStudent() },
+  { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: () => this.moveStudent() },
   { separator: true },
-  { label: 'ลบ', icon: 'pi pi-trash', command: () => this.deleteStudent() },
+  { label: 'ลบ', icon: 'wi wi-trash', command: () => this.deleteStudent() },
 ];
 
 viewStudent(): void {
@@ -1693,7 +1693,7 @@ export const PAGINATOR_DOC: ComponentDoc = {
   (onPageChange)="changePage($event)"></wt-paginator>`,
     templates: `<wt-paginator [first]="first" [rows]="10" [totalRecords]="120" (onPageChange)="changePage($event)">
   <ng-template #start>
-    <wt-button icon="pi pi-refresh" [rounded]="true" [text]="true" ariaLabel="โหลดใหม่" (onClick)="reload()"></wt-button>
+    <wt-button icon="wi wi-refresh" [rounded]="true" [text]="true" ariaLabel="โหลดใหม่" (onClick)="reload()"></wt-button>
   </ng-template>
   <ng-template #end let-p>
     <span>หน้า {{ p.page + 1 }} / {{ p.pageCount }}</span>

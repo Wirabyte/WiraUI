@@ -335,7 +335,9 @@ $-spacing: (
   @include -rule('', bg-black, (background-color: #000000));
   @include -rule('', bg-transparent, (background-color: transparent));
   @include -rule('', border-primary, (border-color: var(--wt-primary-color)));
-  @each $name, $token in (ground: ground, section: card-bg, card: card-bg, overlay: overlay-bg, hover: hover-bg) {
+  // The page ground takes the theme's backdrop: the ground colour, or the colour fields behind Liquid Glass.
+  @include -rule('', surface-ground, (background: var(--wt-backdrop)));
+  @each $name, $token in (section: card-bg, card: card-bg, overlay: overlay-bg, hover: hover-bg) {
     @include -rule('', 'surface-#{$name}', (background-color: var(--wt-#{$token})));
   }
   @include -rule('', surface-border, (border-color: var(--wt-border)));

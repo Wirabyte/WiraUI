@@ -1,0 +1,37 @@
+<div
+  class="wt-imagecompare p-imagecompare p-component"
+  [class.wt-imagecompare-dragging]="dragging"
+  [class.wt-imagecompare-rtl]="rtl"
+  [ngClass]="styleClass || ''"
+  [ngStyle]="rootStyle"
+  (pointerdown)="pointerdown($event)"
+  (pointermove)="pointermove($event)"
+  (pointerup)="pointerup($event)"
+  (pointercancel)="pointerup($event)"
+>
+  <div class="wt-imagecompare-item wt-imagecompare-left">
+    <ng-container *ngTemplateOutlet="leftTemplate"></ng-container>
+  </div>
+  <div class="wt-imagecompare-item wt-imagecompare-right" [style.clip-path]="clip">
+    <ng-container *ngTemplateOutlet="rightTemplate"></ng-container>
+  </div>
+  <div class="wt-imagecompare-divider" aria-hidden="true" [style.left.%]="edge"></div>
+  <div
+    class="wt-imagecompare-handle p-imagecompare-slider"
+    role="slider"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-orientation="horizontal"
+    [style.left.%]="edge"
+    [attr.tabindex]="tabindex"
+    [attr.aria-valuenow]="value"
+    [attr.aria-valuetext]="valueText"
+    [attr.aria-label]="label"
+    [attr.aria-labelledby]="ariaLabelledby || null"
+    (keydown)="keydown($event)"
+  >
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M7.5 5.5 3 10l4.5 4.5M12.5 5.5 17 10l-4.5 4.5"></path>
+    </svg>
+  </div>
+</div>

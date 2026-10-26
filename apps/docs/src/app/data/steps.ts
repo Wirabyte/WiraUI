@@ -31,6 +31,15 @@ export const STEPS_DOC: ComponentDoc = {
     'เจ้าหน้าที่ทำให้': 'done by the office',
     'ขั้นล่าสุด': 'Last step',
     'ลำดับของขั้น (เริ่มที่ 0)': 'step index (0-based)',
+    'แต่ละขั้น': 'each step',
+    'ออนไลน์': 'Online',
+    'ภายใน 3 วัน': 'Within 3 days',
+    'ที่โรงเรียน': 'At the school',
+    'พร้อมผู้ปกครอง': 'With a parent',
+    'labelPosition="bottom" เป็นค่าเริ่มต้น ไม่ต้องใส่': 'labelPosition="bottom" is the default; no need to write it',
+    'ชื่อขั้นและ subtitle อยู่ข้างหมายเลข': 'label and subtitle beside the number',
+    'แนวตั้ง เลือกขั้นได้ ใช้ ↑ ↓ ได้ด้วย': 'a column that can be picked, ↑ ↓ too',
+    'เปลี่ยนเมื่อเลือกขั้นในแบบแนวตั้ง': 'changes when a step is picked in the column',
   },
   sections: {
     import: {
@@ -61,18 +70,46 @@ export const STEPS_DOC: ComponentDoc = {
         en: 'A step with <code>disabled: true</code> cannot be picked and the arrow keys skip it; <code>visible: false</code> hides a step. Try <code>→</code> from the first step.',
       },
     },
+    layout: {
+      title: { th: 'การจัดวาง', en: 'Layout' },
+      text: {
+        th: 'wt-steps จัดวางได้แบบเดียวกับ Stepper แล้ว: <code>labelPosition</code> วางชื่อขั้นไว้ใต้หมายเลข (<code>\'bottom\'</code> ค่าเริ่มต้น) หรือข้างหมายเลข (<code>\'right\'</code>) และ <code>orientation="vertical"</code> เรียงขั้นเป็นคอลัมน์ · ทั้งสามตัวอย่างใช้ <code>enrolSteps</code> ชุดเดียวกัน (มี <code>subtitle</code>) และ <code>enrolIndex</code> ตัวเดียวกัน ลองเลือกขั้นในแบบแนวตั้งแล้วดูอีกสองแบบเปลี่ยนตาม · บนมือถือ (กว้างน้อยกว่า 576px) แบบข้างหมายเลขแสดงชื่อเฉพาะขั้นปัจจุบัน',
+        en: 'wt-steps now lays out the way Stepper does: <code>labelPosition</code> puts each label under its number (<code>\'bottom\'</code>, the default) or beside it (<code>\'right\'</code>), and <code>orientation="vertical"</code> stacks the steps in a column · the three demos share one <code>enrolSteps</code> list (with <code>subtitle</code>) and one <code>enrolIndex</code>: pick a step in the column and watch the other two follow · on phones (narrower than 576px) the beside-the-number layout shows only the current step\'s label.',
+      },
+    },
+    'layout-bottom': {
+      title: { th: 'ใต้หมายเลข (ค่าเริ่มต้น)', en: 'Under the number (default)' },
+      text: {
+        th: '<code>labelPosition="bottom"</code>: แต่ละขั้นกว้างเท่ากัน ชื่อขั้นและ <code>subtitle</code> อยู่ใต้หมายเลข และเส้นเชื่อมลากจากหมายเลขถึงหมายเลข · บนจอแคบชื่อขั้นตัดขึ้นบรรทัดใหม่ใต้หมายเลข',
+        en: '<code>labelPosition="bottom"</code>: the steps take equal columns, the label and <code>subtitle</code> sit under the number, and the line runs from number to number · on narrow screens the labels wrap under their numbers.',
+      },
+    },
+    'layout-right': {
+      title: { th: 'ข้างหมายเลข', en: 'Beside the number' },
+      text: {
+        th: '<code>labelPosition="right"</code> วางชื่อขั้นและ <code>subtitle</code> ไว้ข้างหมายเลข แล้วเส้นยาวเต็มช่องจนถึงขั้นถัดไป เส้นหลังขั้นที่ผ่านแล้วเป็นสีหลัก · จอแคบกว่า 576px แสดงชื่อเฉพาะขั้นปัจจุบัน ขั้นอื่นซ่อนชื่อไว้แต่โปรแกรมอ่านจอยังอ่านได้',
+        en: '<code>labelPosition="right"</code> puts the label and <code>subtitle</code> beside the number, with a line filling the space to the next step; the line after a completed step is in the primary colour · below 576px only the current step shows its label; the others hide theirs, though screen readers still read them.',
+      },
+    },
+    'layout-vertical': {
+      title: { th: 'แนวตั้ง', en: 'Vertical' },
+      text: {
+        th: '<code>orientation="vertical"</code> เรียงขั้นเป็นคอลัมน์ ชื่อขั้นอยู่ข้างหมายเลข และเส้นลากลงระหว่างหมายเลข เหมาะกับแถบด้านข้างหรือจอมือถือ ระยะระหว่างขั้นตั้งด้วย token <code>--wt-steps-vertical-gap</code> · กับ <code>[readonly]="false"</code> ปุ่ม <code>↑</code> <code>↓</code> เลื่อนระหว่างขั้นได้เหมือน <code>←</code> <code>→</code> · ตัวอย่างนี้เลือกขั้นได้และผูกด้วย <code>[(activeIndex)]</code>',
+        en: '<code>orientation="vertical"</code> stacks the steps in a column, each label beside its number, with the line running down between the numbers: for a side panel or a phone. The token <code>--wt-steps-vertical-gap</code> sets the space between steps · with <code>[readonly]="false"</code>, <code>↑</code> <code>↓</code> move between steps as <code>←</code> <code>→</code> do · this demo can be picked and is bound with <code>[(activeIndex)]</code>.',
+      },
+    },
     keyboard: {
       title: { th: 'คีย์บอร์ดและ ARIA', en: 'Keyboard and ARIA' },
       text: {
-        th: 'ใช้คีย์บอร์ดได้เมื่อ <code>[readonly]="false"</code>: ทั้งแถวเป็นจุด Tab จุดเดียว (ขั้นปัจจุบัน) · <code>←</code> <code>→</code> เลื่อนระหว่างขั้น · <code>Home</code> / <code>End</code> ขั้นแรก / สุดท้าย · <code>Enter</code> / <code>Space</code> เลือกขั้นนั้น · ข้ามขั้นที่ disabled · ขั้นปัจจุบันมี <code>aria-current="step"</code> และขั้นที่เลือกได้เป็น <code>role="button"</code> แบบ readonly ไม่มีจุด Tab',
-        en: 'With <code>[readonly]="false"</code>: the row is one Tab stop (the current step) · <code>←</code> <code>→</code> move between steps · <code>Home</code> / <code>End</code> first / last · <code>Enter</code> / <code>Space</code> pick the step · disabled steps are skipped · the current step has <code>aria-current="step"</code> and pickable steps are <code>role="button"</code>. A read-only row has no Tab stop.',
+        th: 'ใช้คีย์บอร์ดได้เมื่อ <code>[readonly]="false"</code>: ทั้งแถวเป็นจุด Tab จุดเดียว (ขั้นปัจจุบัน) · <code>←</code> <code>→</code> เลื่อนระหว่างขั้น (แนวตั้งใช้ <code>↑</code> <code>↓</code> ได้ด้วย) · <code>Home</code> / <code>End</code> ขั้นแรก / สุดท้าย · <code>Enter</code> / <code>Space</code> เลือกขั้นนั้น · ข้ามขั้นที่ disabled · ขั้นปัจจุบันมี <code>aria-current="step"</code> และขั้นที่เลือกได้เป็น <code>role="button"</code> แบบ readonly ไม่มีจุด Tab',
+        en: 'With <code>[readonly]="false"</code>: the row is one Tab stop (the current step) · <code>←</code> <code>→</code> move between steps (<code>↑</code> <code>↓</code> too in a column) · <code>Home</code> / <code>End</code> first / last · <code>Enter</code> / <code>Space</code> pick the step · disabled steps are skipped · the current step has <code>aria-current="step"</code> and pickable steps are <code>role="button"</code>. A read-only row has no Tab stop.',
       },
     },
     stepper: {
       title: { th: 'Stepper แบบ value', en: 'The value-based Stepper' },
       text: {
-        th: 'ถ้าแต่ละขั้นมีเนื้อหาของตัวเอง (ฟอร์มหลายขั้น) ใช้ Stepper (<code>wt-stepper</code>) ซึ่งผูกขั้นปัจจุบันด้วย value และมีแบบ linear กับแนวตั้ง ส่วน wt-steps ยังเป็นแถบขั้นตอนจาก <code>MenuItem[]</code> เหมือนเดิม · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> วาดแถบแบบเดียวกับหน้านี้ได้ (รายการ <code>MenuItem</code> ชุดเดิม พร้อม <code>subtitle</code> และ <code>labelPosition="bottom"</code>) โค้ดใหม่จึงใช้ component เดียวได้ทั้งแถบขั้นตอนและฟอร์มหลายขั้น',
-        en: 'When each step has its own content (a multi-step form), use Stepper (<code>wt-stepper</code>): bound by value, with linear and vertical layouts. wt-steps stays the bar of steps from a <code>MenuItem[]</code> · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> draws the same bar as this page (the same <code>MenuItem</code> items, plus <code>subtitle</code> and <code>labelPosition="bottom"</code>), so new code can use one component for both a bar of steps and a multi-step form.',
+        th: 'ถ้าแต่ละขั้นมีเนื้อหาของตัวเอง (ฟอร์มหลายขั้น) ใช้ Stepper (<code>wt-stepper</code>) ซึ่งผูกขั้นปัจจุบันด้วย value และมีแบบ linear กับแนวตั้ง ส่วน wt-steps ยังเป็นแถบขั้นตอนจาก <code>MenuItem[]</code> เหมือนเดิม · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> วาดแถบแบบเดียวกับหน้านี้ได้ (รายการ <code>MenuItem</code> ชุดเดิม พร้อม <code>subtitle</code> และ <code>labelPosition="bottom"</code>) โค้ดใหม่จึงใช้ component เดียวได้ทั้งแถบขั้นตอนและฟอร์มหลายขั้น · ตอนนี้ทั้งสองตัวจัดวางได้เหมือนกัน: <code>labelPosition</code> แบบ <code>\'bottom\'</code> / <code>\'right\'</code> และแนวตั้ง (ดูหัวข้อการจัดวาง) ต่างกันแค่ค่าเริ่มต้น wt-steps วางชื่อใต้หมายเลข ส่วน wt-stepper วางข้างหมายเลข',
+        en: 'When each step has its own content (a multi-step form), use Stepper (<code>wt-stepper</code>): bound by value, with linear and vertical layouts. wt-steps stays the bar of steps from a <code>MenuItem[]</code> · <code>&lt;wt-stepper [model]="steps" [(activeIndex)]="activeIndex" [readonly]="true"&gt;</code> draws the same bar as this page (the same <code>MenuItem</code> items, plus <code>subtitle</code> and <code>labelPosition="bottom"</code>), so new code can use one component for both a bar of steps and a multi-step form · both now share the same layouts: <code>labelPosition</code> <code>\'bottom\'</code> / <code>\'right\'</code> and a vertical column (see Layout); only the defaults differ: wt-steps puts the label under the number, wt-stepper beside it.',
       },
     },
     migration: {
@@ -86,13 +123,19 @@ export const STEPS_DOC: ComponentDoc = {
   code: {
     basic: `<wt-steps [model]="steps" [activeIndex]="activeIndex"></wt-steps>
 <div class="flex justify-content-between">
-  <wt-button label="ย้อนกลับ" icon="pi pi-chevron-left" severity="secondary" [text]="true"
+  <wt-button label="ย้อนกลับ" icon="wi wi-chevron-left" severity="secondary" [text]="true"
     [disabled]="activeIndex === 0" (onClick)="back()"></wt-button>
-  <wt-button label="ถัดไป" icon="pi pi-chevron-right" iconPos="right"
+  <wt-button label="ถัดไป" icon="wi wi-chevron-right" iconPos="right"
     [disabled]="activeIndex === steps.length - 1" (onClick)="next()"></wt-button>
 </div>`,
     interactive: `<wt-steps [model]="admission" [(activeIndex)]="current" [readonly]="false"></wt-steps>`,
     disabled: `<wt-steps [model]="checks" [(activeIndex)]="checkIndex" [readonly]="false"></wt-steps>`,
+    'layout-bottom': `<!-- labelPosition="bottom" เป็นค่าเริ่มต้น ไม่ต้องใส่ -->
+<wt-steps [model]="enrolSteps" [activeIndex]="enrolIndex"></wt-steps>`,
+    'layout-right': `<!-- ชื่อขั้นและ subtitle อยู่ข้างหมายเลข -->
+<wt-steps [model]="enrolSteps" [activeIndex]="enrolIndex" labelPosition="right"></wt-steps>`,
+    'layout-vertical': `<!-- แนวตั้ง เลือกขั้นได้ ใช้ ↑ ↓ ได้ด้วย -->
+<wt-steps [model]="enrolSteps" [(activeIndex)]="enrolIndex" orientation="vertical" [readonly]="false"></wt-steps>`,
   },
   ts: {
     basic: `import { MenuItem } from 'wiratheme/api';
@@ -133,6 +176,15 @@ go(event: MenuItemCommandEvent): void {
   { label: 'รายงานตัว' },
 ];
 checkIndex = 0;`,
+    layout: `import { MenuItem } from 'wiratheme/api';
+
+enrolSteps: MenuItem[] = [
+  { label: 'ส่งใบสมัคร', subtitle: 'ออนไลน์' },
+  { label: 'ตรวจเอกสาร', subtitle: 'ภายใน 3 วัน' },
+  { label: 'สอบข้อเขียน', subtitle: 'ที่โรงเรียน' },
+  { label: 'รายงานตัว', subtitle: 'พร้อมผู้ปกครอง' },
+];
+enrolIndex = 1;   // เปลี่ยนเมื่อเลือกขั้นในแบบแนวตั้ง`,
   },
   api: [
     {
@@ -142,6 +194,8 @@ checkIndex = 0;`,
         row('model', 'MenuItem[]', '[]', 'ขั้นตอนทั้งหมด', 'The steps'),
         row('activeIndex', 'number', '0', 'ขั้นปัจจุบัน (เริ่มที่ 0) ใช้ [(activeIndex)] ได้', 'The current step (0-based); [(activeIndex)] works'),
         row('readonly', BOOL, 'true', 'แสดงอย่างเดียว กดเลือกไม่ได้ (false = เลือกด้วยคลิกหรือคีย์บอร์ด)', 'Display only (false = pick by click or keyboard)'),
+        row('labelPosition', "'bottom' | 'right'", "'bottom'", 'ชื่อขั้น (และ subtitle) อยู่ใต้หรือข้างหมายเลข · right บนจอแคบกว่า 576px แสดงชื่อเฉพาะขั้นปัจจุบัน', 'Label (and subtitle) under or beside the number · right shows only the current label below 576px'),
+        row('orientation', "'horizontal' | 'vertical'", "'horizontal'", 'แถวหรือคอลัมน์ แนวตั้งวางชื่อข้างหมายเลขและใช้ ↑ ↓ ได้', 'A row or a column; vertical puts labels beside the numbers and takes ↑ ↓'),
         row('styleClass · style', 'string · object', undefined, 'class / style ของแถบ', 'Bar class / style'),
         row('id', 'string', undefined, 'id ของแถบ ใช้นำหน้า id ของแต่ละขั้น', 'Bar id; prefixes the step ids'),
         row('exact', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ไม่มีผล', 'Accepted so existing templates compile; no effect'),
@@ -159,6 +213,7 @@ checkIndex = 0;`,
       note: { th: 'field ของ MenuItem ที่ wt-steps ใช้', en: 'The MenuItem fields wt-steps reads.' },
       rows: [
         row('label', 'string', undefined, 'ชื่อขั้น', 'Step label'),
+        row('subtitle', 'string', undefined, 'บรรทัดเล็กใต้ชื่อขั้น', 'A smaller line under the label'),
         row('command', '(event: MenuItemCommandEvent) => void', undefined, 'ทำงานเมื่อเลือกขั้นนี้', 'Runs when the step is picked'),
         row('routerLink · queryParams · fragment · replaceUrl · state', 'unknown', undefined, 'ลิงก์ของ router เมื่อเลือกขั้นนี้', 'A router link followed on pick'),
         row('url', 'string', undefined, 'ลิงก์ธรรมดา (href) เมื่อเลือกขั้นนี้', 'A plain link (href) followed on pick'),
@@ -175,7 +230,10 @@ interface MenuItemCommandEvent {
   originalEvent?: Event;
   item?: MenuItem;
   index?: number;   // ลำดับของขั้น (เริ่มที่ 0)
-}`,
+}
+
+// nav: .wt-steps-label-right (labelPosition="right") · .wt-steps-vertical (orientation="vertical")
+// แต่ละขั้น: .wt-steps-number + .wt-steps-text (.wt-steps-label, .wt-steps-subtitle)`,
     },
   ],
   tokens: [
@@ -186,6 +244,7 @@ interface MenuItemCommandEvent {
     tok('--wt-steps-line-width', 'ความหนาเส้นเชื่อมระหว่างขั้น', 'Width of the line between steps'),
     tok('--wt-steps-line-color', 'สีเส้นเชื่อมและขอบวงกลม (ขั้นที่ยังไม่ถึง)', 'Line and circle border colour (steps not reached)'),
     tok('--wt-steps-gap', 'ระยะระหว่างหมายเลขกับชื่อขั้น', 'Gap between the number and the label'),
+    tok('--wt-steps-vertical-gap', 'ระยะระหว่างขั้นในแนวตั้ง (orientation="vertical")', 'Space between steps in a column (orientation="vertical")'),
     tok('--wt-steps-label-color', 'สีชื่อขั้น', 'Label colour'),
     tok('--wt-steps-label-weight', 'น้ำหนักตัวอักษรชื่อขั้น', 'Label font weight'),
     tok('--wt-steps-label-active-color', 'สีชื่อขั้นปัจจุบัน', 'Current step label colour'),

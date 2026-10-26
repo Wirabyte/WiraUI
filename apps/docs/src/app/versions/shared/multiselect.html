@@ -132,17 +132,17 @@
       <docs-demo [html]="code['moretemplates']" [ts]="ts['moretemplates']">
         <wt-multiselect id="d-ms-more" [(ngModel)]="moreIds" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')">
           <ng-template #group let-g>
-            <span class="docs-ms-group"><i class="pi pi-map-marker"></i> {{ g.label }}</span>
+            <span class="docs-ms-group"><i class="wi wi-map-marker"></i> {{ g.label }}</span>
           </ng-template>
           <ng-template #header>
             <div class="docs-ms-note">{{ tx('เลือกได้หลายจังหวัด') }}</div>
           </ng-template>
           <ng-template #footer>
-            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="pi pi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
           </ng-template>
           <ng-template #emptyfilter>{{ tx('ไม่พบจังหวัดที่ค้นหา') }}</ng-template>
           <ng-template #dropdownicon>
-            <i class="pi pi-search"></i>
+            <i class="wi wi-search"></i>
           </ng-template>
         </wt-multiselect>
         <span class="docs-demo-output">footer: <code id="d-ms-more-added">{{ added }}</code></span>

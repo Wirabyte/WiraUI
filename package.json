@@ -7,13 +7,14 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "pnpm build:core && pnpm build:themes && pnpm build:schematics && pnpm build:ng",
+    "build": "pnpm build:core && pnpm build:themes && pnpm build:schematics && pnpm build:ng && pnpm build:icons",
     "build:core": "pnpm --filter @wiratheme/core build",
     "build:themes": "pnpm --filter @wiratheme/themes build",
     "build:schematics": "pnpm --filter @wiratheme/schematics build",
+    "build:icons": "pnpm --filter @wiratheme-build/icons build",
     "build:ng": "pnpm --filter @wiratheme-build/angular-v1 build && pnpm --filter @wiratheme-build/angular-v2 build && pnpm --filter @wiratheme-build/angular-v3 build",
-    "pack:all": "pnpm build && pnpm --filter \"./packages/angular-v*\" run pack",
-    "test": "pnpm --filter @wiratheme/core test && pnpm --filter @wiratheme/themes test && pnpm --filter @wiratheme/schematics test",
+    "pack:all": "pnpm build && pnpm --filter \"./packages/angular-v*\" run pack && pnpm --filter @wiratheme-build/icons run pack",
+    "test": "pnpm --filter @wiratheme/core test && pnpm --filter @wiratheme/themes test && pnpm --filter @wiratheme/schematics test && pnpm --filter @wiratheme-build/icons test",
     "playgrounds": "node tools/setup-playgrounds.mjs",
     "docs": "node tools/build-docs-packages.mjs && cd apps/docs && npx ng build",
     "e2e": "pnpm --filter @wiratheme/e2e test",

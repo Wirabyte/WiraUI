@@ -7,7 +7,7 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 |---|---|---|---|---|
 | `wiratheme@1` | 15 – 17 | classic | `sila-light-*`, `sila-dark-*`, `arun-*`, `sayan-*`, `ratri-*`, `md-*` | maintenance |
 | `wiratheme@2` | 18 – 20 | styled | Mali, Sila, Material, Phet | active |
-| `wiratheme@3` | 21+ | styled + ของ WiraTheme | v2 + Wira, Lanna, Siam, Nakhon, Glass | active (latest) |
+| `wiratheme@3` | 21+ | ของ WiraTheme (ค่าเริ่มต้น **Wira**) + styled | Wira, Lanna, Siam, Nakhon, Glass (Liquid Glass) + ของ v2 | active (latest) |
 
 แต่ละรุ่นถูกล็อกกับช่วง Angular ของตัวเอง ติดตั้งข้ามช่วงไม่ได้ · License: [MIT](LICENSE) ใช้ฟรี
 
@@ -96,7 +96,16 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 | `wiratheme/tree` / `treeselect` | `<wt-tree [value]="nodes" selectionMode="checkbox" [(selection)]="picked">` · `<wt-treeSelect [options]="nodes" [(ngModel)]="node">` | check box กระจายลงลูกและขึ้นแม่, ค้นหา, โหลดลูกตอนเปิด, คีย์บอร์ดแบบ tree |
 | `wiratheme/navbar` | `<wt-navbar [model]="links" [sticky]="true"><a wtNavbarBrand routerLink="/">…` | แถบบน brand / links / end, เมนูย่อย, solid / glass / transparent, จอแคบพับลิงก์เข้าแผง |
 | `wiratheme/asidemenu` | `<wt-aside-menu #side [model]="menu" [(collapsed)]="mini">` + `<wt-navbar [aside]="side">` | เมนูด้านข้างหลายชั้น กลุ่มของหน้าปัจจุบันเปิดเอง, ย่อเหลือไอคอนพร้อม flyout, มือถือเป็นแผงเลื่อนเข้า |
-| `wiratheme/imagecropper` | `<wt-imagecropper [imageFile]="file" [aspectRatio]="1" (imageCropped)="saved($event)">` | ตัดรูปในตัว: EXIF, อัตราส่วน, ซูม หมุน พลิก, คีย์บอร์ด, ผลเป็น blob / base64 (`image-cropper` เดิมก็ใช้ได้) |
+| `wiratheme/imagecropper` | `<wt-imagecropper [imageFile]="file" [aspectRatio]="1" (imageCropped)="saved($event)">` | ตัดรูปในตัว: EXIF, อัตราส่วน, ซูม หมุน พลิก, คีย์บอร์ด, ผลเป็น blob / base64 (`output` หรือทั้งแอปด้วย `provideImageCropperOptions()`), เลือกปุ่มบนแถบเครื่องมือ (`[toolbar]`) และเพิ่มปุ่มเอง (template `tools`), ความสูงคงที่ตอนหมุน (`image-cropper` เดิมก็ใช้ได้) |
+| `wiratheme/terminal` | `<wt-terminal welcomeMessage="…" prompt="$">` + `WtTerminalService` | หน้าจอพิมพ์คำสั่งแบบ console ประวัติ ↑ / ↓ คำสั่ง clear |
+| `wiratheme/imagecompare` | `<wt-imageCompare>` + template `left` / `right` | เทียบภาพก่อน / หลัง ลากเส้นแบ่งด้วยเมาส์ นิ้ว หรือคีย์บอร์ด `[(value)]` |
+| `wiratheme/carousel` | `<wt-carousel [value]="items" [numVisible]="3" [responsiveOptions]="…">` | ทีละหน้า ลูกศร แถบหน้า ปัด วนรอบ เล่นเอง (หยุดเมื่อชี้) แนวตั้ง |
+| `wiratheme/splitter` | `<wt-splitter [panelSizes]="[30, 70]">` + `<wt-splitter-panel>` | ช่องปรับขนาดได้ ซ้อนกันได้ คีย์บอร์ด ขนาดต่ำสุด จำขนาดใน storage |
+| `wiratheme/organizationchart` | `<wt-organizationChart [value]="tree" selectionMode="single">` | ผังองค์กรจาก TreeNode เส้นเชื่อม CSS เลือก ย่อ / ขยาย template ตามชนิด |
+| `wiratheme/knob` | `<wt-knob [(ngModel)]="value" [min]="0" [max]="100">` | ปุ่มหมุนแบบหน้าปัด ลาก กด คีย์บอร์ด ใช้กับฟอร์ม |
+| `wiratheme/inputotp` | `<wt-inputOtp [(ngModel)]="code" [length]="6" [integerOnly]="true">` | ช่องรหัส OTP ทีละตัว วางรหัสทั้งชุด รหัสจาก SMS ซ่อนตัวอักษร |
+| `wiratheme/flow` | `<wt-flow [(nodes)]="nodes" [(edges)]="edges" (connect)="…">` + `<wt-flow-handle>`, `<wt-flow-background>`, `<wt-flow-minimap>`, `<wt-flow-controls>` | แผนภาพ node / เส้นเชื่อมระดับ React Flow เขียนเองทั้งหมด: ลาก ซูม เลือกหลายตัว ลากเชื่อม เส้น 5 แบบ ป้าย ลูกศร กลุ่ม ปรับขนาด toolbar minimap จัดเรียงอัตโนมัติ undo / redo export SVG / JSON คีย์บอร์ดและจอสัมผัสครบ |
+| `wiratheme/i18n` | `provideWtI18n({ messages: { en: { 'บันทึก': 'Save' } } })` · `{{ 'บันทึก' \| t }}` · `<wt-language-switch>` | เปลี่ยนภาษาของแอปเอง: key เป็นข้อความภาษาหลักหรือ id, `{name}` แทนค่า, โหลด dictionary ทีหลังได้, จำภาษาที่เลือก, `<html lang>` และข้อความในตัว component เปลี่ยนตาม |
 | `wiratheme/ripple` / `keyfilter` / `dragdrop` | `<button wtButton wtRipple>` · `<input wtInputText pKeyFilter="int">` · `<div wtDraggable="cards">` + `<div wtDroppable="cards">` | อ่านชื่อ `pRipple` / `pKeyFilter` / `pDraggable` / `pDroppable` เดิมได้ |
 
 control ทุกตัวรองรับ `ngModel`, `formControlName`, `formControl`, `disable()` และขึ้นสีแดงเองเมื่อ invalid และถูกแตะแล้วหรือกดส่งฟอร์มแล้ว (ไม่ต้องใส่ class `ng-dirty` เอง)
@@ -109,6 +118,17 @@ control ทุกตัวรองรับ `ngModel`, `formControlName`, `form
 @use 'wiratheme/utils';                                   // ทั้งหมด
 @use 'wiratheme/utils' with ($groups: (palette: false));   // ปิดบางกลุ่ม
 ```
+
+## Icon: `wiraicon`
+
+แพ็กเกจ icon ของเราเอง ติดตั้งแยกได้ไม่ต้องมี wiratheme: 424 icon × 5 น้ำหนัก (thin, light, regular, bold, fill) ชื่อตามที่ทีมเขียนอยู่ (`times`, `exclamation-triangle`, `cog` …) และชื่อแบบ Font Awesome / Phosphor ใช้แทนกันได้ ตัวภาพจาก Phosphor Icons (MIT)
+
+```html
+<i class="wi wi-check"></i>  <i class="wi wi-trash wi-bold"></i>  <wt-button icon="wi wi-save" label="บันทึก"></wt-button>
+<wi-icon name="info-circle" weight="fill" [size]="20"></wi-icon>   <!-- import { WiIcon } from 'wiraicon/angular' -->
+```
+
+ใส่ `node_modules/wiraicon/wiraicon.css` ใน `styles` ของ angular.json (font ของแต่ละน้ำหนักโหลดเมื่อถูกใช้เท่านั้น) ดูรายละเอียดใน [packages/icons/config/README.md](packages/icons/config/README.md)
 
 ## เอกสาร
 

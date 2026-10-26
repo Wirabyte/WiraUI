@@ -15,7 +15,7 @@ export interface ProjectInfo {
 type Json = Record<string, any>;
 
 /**
- * angular.json may hold comments and trailing commas (the CLI accepts both; Strisrinan_Apps has one).
+ * angular.json may hold comments and trailing commas (the CLI accepts both, and real projects have them).
  * Strips them outside strings, then parses as plain JSON.
  */
 export function parseJsonc(text: string): Json {

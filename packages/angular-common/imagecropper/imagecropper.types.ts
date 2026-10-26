@@ -1,4 +1,5 @@
-import type { CropDimensions, CropperPosition } from 'wiratheme/core';
+import { InjectionToken, Provider } from '@angular/core';
+import type { CropDimensions, CropperPosition, CropperTool, CropperToolbar } from 'wiratheme/core';
 
 export type { CropDimensions, CropperPosition } from 'wiratheme/core';
 
@@ -43,6 +44,37 @@ export interface WtLoadedImage {
   original: { size: CropDimensions };
   transformed: { size: CropDimensions };
   exifTransform: { rotate: number; flip: boolean };
+}
+
+/** A built-in toolbar button, or `'zoom'` / `'rotate'` / `'flip'` for its whole group. */
+export type WtImageCropperTool = CropperTool;
+/**
+ * The toolbar's built-in buttons: `'full'` (default), `'none'`, or a list such as `['zoom', '|', 'rotateLeft', 'reset']`
+ * where `'|'` starts a new group. Without `'|'` the zoom tools make one group and the rest another.
+ */
+export type WtImageCropperToolbar = CropperToolbar;
+
+/**
+ * App-wide defaults for every wt-imagecropper: `provideImageCropperOptions({ output: 'base64', format: 'jpeg' })`.
+ * An input set on the component wins.
+ */
+export interface WtImageCropperOptions {
+  /** `'blob'` (default) or `'base64'`. */
+  output?: 'blob' | 'base64';
+  /** Default `'png'`. */
+  format?: WtImageCropperFormat;
+  /** 0–100, for jpeg and webp. Default 92. */
+  imageQuality?: number;
+  /** Default `'full'`. */
+  toolbar?: WtImageCropperToolbar;
+  /** Default 10. */
+  maxZoom?: number;
+}
+
+export const WT_IMAGE_CROPPER_OPTIONS = new InjectionToken<WtImageCropperOptions>('WT_IMAGE_CROPPER_OPTIONS');
+
+export function provideImageCropperOptions(options: WtImageCropperOptions): Provider {
+  return { provide: WT_IMAGE_CROPPER_OPTIONS, useValue: options };
 }
 
 // The names apps already use for these types, so moving over only changes the import path.

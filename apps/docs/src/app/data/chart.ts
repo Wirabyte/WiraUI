@@ -177,7 +177,7 @@ export const CHART_DOC: ComponentDoc = {
     stacked: `<wt-chart type="bar" [data]="genderData" [options]="stackedOptions" height="240px" ariaLabel="นักเรียนแยกตามชั้นและเพศ"></wt-chart>`,
     mixed: `<wt-chart type="bar" [data]="targetData" height="280px" ariaLabel="ยอดขายเทียบเป้าหมาย"></wt-chart>`,
     theme: `<wt-chart type="bar" [data]="themeData" height="260px" ariaLabel="รายรับปีนี้เทียบปีที่แล้ว"></wt-chart>
-<wt-button label="ใช้สีของธีมตอนนี้" icon="pi pi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>`,
+<wt-button label="ใช้สีของธีมตอนนี้" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>`,
     click: `<wt-chart type="bar" [data]="scoreData" [options]="scoreOptions" height="260px" ariaLabel="คะแนนเฉลี่ยรายวิชา"
   (onDataSelect)="pick($event)"></wt-chart>
 <p>ที่เลือก: {{ picked }}</p>`,
@@ -190,7 +190,7 @@ export const CHART_DOC: ComponentDoc = {
 <wt-chart type="bar" [data]="salesData" width="480px" height="200px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wt-chart>`,
     refresh: `<wt-chart #attendanceChart="wtChart" type="line" [data]="attendance" height="240px"
   ariaLabel="นักเรียนที่มาเรียนรายสัปดาห์"></wt-chart>
-<wt-button label="เพิ่มสัปดาห์" icon="pi pi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>`,
+<wt-button label="เพิ่มสัปดาห์" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>`,
   },
   ts: {
     basic: `import { ChartData } from 'chart.js';

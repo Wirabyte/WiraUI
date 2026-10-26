@@ -6,10 +6,10 @@ const BOOL = 'boolean';
 const ACTIONS_TS = `import { WtMenuItem } from 'wiratheme/menu';
 
 saveActions: WtMenuItem[] = [
-  { label: 'บันทึกเป็นร่าง', icon: 'pi pi-file', command: (event) => this.run(event) },
-  { label: 'บันทึกและส่งต่อ', icon: 'pi pi-send', command: (event) => this.run(event) },
+  { label: 'บันทึกเป็นร่าง', icon: 'wi wi-file', command: (event) => this.run(event) },
+  { label: 'บันทึกและส่งต่อ', icon: 'wi wi-send', command: (event) => this.run(event) },
   { separator: true },
-  { label: 'ลบเอกสาร', icon: 'pi pi-trash', command: (event) => this.run(event) },
+  { label: 'ลบเอกสาร', icon: 'wi wi-trash', command: (event) => this.run(event) },
 ];
 lastAction = '';
 
@@ -91,15 +91,15 @@ export const SPLITBUTTON_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-splitButton label="บันทึก" icon="pi pi-save" [model]="saveActions" [disabled]="isApiSaving" (onClick)="save()"></wt-splitButton>`,
-    severity: `<wt-splitButton label="ส่งออก" icon="pi pi-download" severity="secondary" [model]="exportActions"></wt-splitButton>
+    basic: `<wt-splitButton label="บันทึก" icon="wi wi-save" [model]="saveActions" [disabled]="isApiSaving" (onClick)="save()"></wt-splitButton>`,
+    severity: `<wt-splitButton label="ส่งออก" icon="wi wi-download" severity="secondary" [model]="exportActions"></wt-splitButton>
 <wt-splitButton label="ส่งออก" severity="success" [outlined]="true" [model]="exportActions"></wt-splitButton>
 <wt-splitButton label="ส่งออก" severity="info" [text]="true" [model]="exportActions"></wt-splitButton>
 <wt-splitButton label="ส่งออก" severity="help" [raised]="true" [rounded]="true" size="small" [model]="exportActions"></wt-splitButton>`,
     disabled: `<wt-splitButton label="อนุมัติ" [model]="reviewActions" [buttonDisabled]="true"></wt-splitButton>
 <wt-splitButton label="อนุมัติ" [model]="reviewActions" [menuButtonDisabled]="true"></wt-splitButton>
 <wt-splitButton label="อนุมัติ" [model]="reviewActions" [disabled]="true"></wt-splitButton>`,
-    icons: `<wt-splitButton label="พิมพ์" icon="pi pi-print" iconPos="right" dropdownIcon="pi pi-ellipsis-v" severity="secondary"
+    icons: `<wt-splitButton label="พิมพ์" icon="wi wi-print" iconPos="right" dropdownIcon="wi wi-ellipsis-v" severity="secondary"
   [model]="exportActions" (onMenuShow)="logMenu('onMenuShow')" (onMenuHide)="logMenu('onMenuHide')"></wt-splitButton>`,
   },
   ts: {
@@ -115,8 +115,8 @@ save(): void {
   });
 }`,
     severity: `exportActions: WtMenuItem[] = [
-  { label: 'ไฟล์ PDF', icon: 'pi pi-file-pdf' },
-  { label: 'ไฟล์ Excel', icon: 'pi pi-file-excel' },
+  { label: 'ไฟล์ PDF', icon: 'wi wi-file-pdf' },
+  { label: 'ไฟล์ Excel', icon: 'wi wi-file-excel' },
 ];`,
     icons: `menuEvents: string[] = [];
 
@@ -124,8 +124,8 @@ logMenu(name: string): void {
   this.menuEvents = [...this.menuEvents.slice(-3), name];
 }`,
     disabled: `reviewActions: WtMenuItem[] = [
-  { label: 'ส่งกลับแก้ไข', icon: 'pi pi-undo' },
-  { label: 'ไม่อนุมัติ', icon: 'pi pi-times' },
+  { label: 'ส่งกลับแก้ไข', icon: 'wi wi-undo' },
+  { label: 'ไม่อนุมัติ', icon: 'wi wi-times' },
 ];`,
   },
   api: [

@@ -1,0 +1,513 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-flow
+          id="d-flow-basic"
+          [(nodes)]="basicNodes"
+          [(edges)]="basicEdges"
+          [fitView]="true"
+          [autoConnect]="true"
+          [defaultEdgeOptions]="edgeDefaults"
+          [ariaLabel]="tx('ขั้นตอนอนุมัติคำร้อง')"
+          style="height: 24rem"
+        >
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+          <wt-flow-controls position="bottom-left"></wt-flow-controls>
+          <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
+        </wt-flow>
+        <span class="docs-demo-output">
+          {{ tx('โหนด') }}: <code id="d-flow-basic-nodes">{{ basicNodes.length }}</code> · {{ tx('เส้น') }}:
+          <code id="d-flow-basic-edges">{{ basicEdges.length }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="nodes" [section]="sec['nodes']">
+      <docs-demo [html]="code['nodes']" [ts]="ts['nodes']" [css]="css['nodes']" layout="stack">
+        <wt-flow
+          id="d-flow-nodes"
+          [(nodes)]="leaveNodes"
+          [(edges)]="leaveEdges"
+          [fitView]="true"
+          [autoConnect]="true"
+          [minZoom]="0.3"
+          [ariaLabel]="tx('ขั้นตอนการลา')"
+          style="height: 22rem"
+        >
+          <ng-template wtFlowNode="request" let-node>
+            <div class="wt-flow-node-box flow-card">
+              <i class="wi wi-calendar" aria-hidden="true"></i>
+              <span>
+                <strong>{{ node.data.name }}</strong>
+                <small>{{ tx('ขอลา') }} {{ node.data.days }} {{ tx('วัน') }}</small>
+              </span>
+              <wt-flow-handle type="source" position="right"></wt-flow-handle>
+            </div>
+          </ng-template>
+          <ng-template wtFlowNode="decision" let-node>
+            <div class="wt-flow-node-box flow-card flow-decision">
+              <wt-flow-handle type="target" position="left"></wt-flow-handle>
+              <i class="wi wi-question-circle" aria-hidden="true"></i>
+              <strong>{{ node.data.question }}</strong>
+              <wt-flow-handle type="source" position="right" id="yes" [style.top.%]="30"></wt-flow-handle>
+              <wt-flow-handle type="source" position="right" id="no" [style.top.%]="70"></wt-flow-handle>
+            </div>
+          </ng-template>
+          <ng-template wtFlowNode="person" let-node>
+            <div class="wt-flow-node-box flow-card">
+              <wt-flow-handle type="target" position="left"></wt-flow-handle>
+              <span class="flow-avatar"><i class="wi wi-user" aria-hidden="true"></i></span>
+              <span>
+                <strong>{{ node.data.name }}</strong>
+                <small>{{ node.data.role }}</small>
+              </span>
+            </div>
+          </ng-template>
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="edges" [section]="sec['edges']">
+      <docs-demo [html]="code['edges']" [ts]="ts['edges']" [css]="css['edges']" layout="stack">
+        <wt-flow
+          id="d-flow-edges"
+          [(nodes)]="shapeNodes"
+          [(edges)]="shapeEdges"
+          [fitView]="true"
+          [autoConnect]="true"
+          [ariaLabel]="tx('เส้นเชื่อมแต่ละแบบ')"
+          style="height: 30rem"
+        >
+          <ng-template wtFlowEdgeLabel="removable" let-edge>
+            <span class="flow-edge-chip">
+              {{ edge.label }}
+              <button type="button" class="flow-edge-remove" [attr.aria-label]="tx('ลบเส้นนี้')" (click)="removeEdge(edge.id)">
+                <i class="wi wi-times" aria-hidden="true"></i>
+              </button>
+            </span>
+          </ng-template>
+          <wt-flow-background variant="lines" [gap]="24"></wt-flow-background>
+        </wt-flow>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="connecting" [section]="sec['connecting']">
+      <docs-demo [html]="code['connecting']" [ts]="ts['connecting']" layout="stack">
+        <wt-flow
+          id="d-flow-connect"
+          [(nodes)]="assignNodes"
+          [(edges)]="assignEdges"
+          [fitView]="true"
+          connectionLineType="smoothstep"
+          [connectionMode]="connectionMode"
+          [isValidConnection]="canConnect"
+          (connect)="assign($event)"
+          (connectEnd)="connectEnded($event)"
+          [ariaLabel]="tx('ครูประจำชั้น')"
+          style="height: 22rem"
+        >
+          <ng-template wtFlowNode="teacher" let-node>
+            <div class="wt-flow-node-box flow-card">
+              <i class="wi wi-chalkboard" aria-hidden="true"></i>
+              <strong>{{ node.data.label }}</strong>
+              <wt-flow-handle type="source" position="right"></wt-flow-handle>
+            </div>
+          </ng-template>
+          <ng-template wtFlowNode="room" let-node>
+            <div class="wt-flow-node-box flow-card">
+              <wt-flow-handle type="target" position="left" [connectionLimit]="1"></wt-flow-handle>
+              <i class="wi wi-school" aria-hidden="true"></i>
+              <strong>{{ node.data.label }}</strong>
+            </div>
+          </ng-template>
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+        <div class="docs-demo-actions">
+          <wt-button
+            id="d-flow-connect-mode"
+            label="connectionMode: {{ connectionMode }}"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="toggleMode()"
+          ></wt-button>
+          <span class="docs-demo-output">
+            {{ tx('ล่าสุด') }}: <code id="d-flow-connect-last">{{ lastConnect }}</code> · {{ tx('เส้น') }}:
+            <code id="d-flow-connect-count">{{ assignEdges.length }}</code>
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="controlled" [section]="sec['controlled']">
+      <docs-demo [html]="code['controlled']" [ts]="ts['controlled']" layout="stack">
+        <wt-flow
+          id="d-flow-ctl"
+          [nodes]="termNodes"
+          [edges]="termEdges"
+          [applyChanges]="false"
+          [fitView]="true"
+          [fitViewOptions]="{ maxZoom: 1 }"
+          [minZoom]="0.3"
+          (nodeChanges)="onNodeChanges($event)"
+          (edgeChanges)="onEdgeChanges($event)"
+          [ariaLabel]="tx('ปฏิทินภาคเรียน')"
+          style="height: 16rem"
+        >
+          <wt-flow-background variant="lines" [gap]="40"></wt-flow-background>
+        </wt-flow>
+        <span class="docs-demo-output">
+          {{ tx('การเปลี่ยนแปลงล่าสุด') }}: <code id="d-flow-ctl-log">{{ lastChanges }}</code> ·
+          <code id="d-flow-ctl-pos">{{ termText() }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="selection" [section]="sec['selection']">
+      <docs-demo [html]="code['selection']" [ts]="ts['selection']" [css]="css['selection']" layout="stack">
+        <wt-flow
+          id="d-flow-select"
+          [(nodes)]="taskNodes"
+          [(edges)]="taskEdges"
+          [fitView]="true"
+          [selectionOnDrag]="true"
+          selectionMode="partial"
+          [beforeDelete]="confirmDelete"
+          (selectionChange)="selectionChanged($event)"
+          (delete)="deleted($event)"
+          [ariaLabel]="tx('เตรียมงานสัมมนา')"
+          style="height: 22rem"
+        >
+          <ng-template wtFlowNode let-node>
+            <div class="wt-flow-node-box flow-task">
+              <wt-flow-handle type="target" position="top"></wt-flow-handle>
+              {{ node.data.label }}
+              @if (node.data.locked) {
+                <i class="wi wi-lock" [attr.aria-label]="tx('ล็อกไว้')"></i>
+              }
+              <wt-flow-handle type="source" position="bottom"></wt-flow-handle>
+            </div>
+          </ng-template>
+        </wt-flow>
+        <span class="docs-demo-output">
+          {{ tx('ที่เลือก') }}: <code id="d-flow-select-out">{{ selectedLabels }}</code>
+          @if (deleteMessage) {
+            · <span id="d-flow-select-msg">{{ deleteMessage }}</span>
+          }
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="groups" [section]="sec['groups']">
+      <docs-demo [html]="code['groups']" [ts]="ts['groups']" layout="stack">
+        <wt-flow
+          id="d-flow-groups"
+          [(nodes)]="groupNodes"
+          [(edges)]="groupEdges"
+          [fitView]="true"
+          [minZoom]="0.3"
+          [ariaLabel]="tx('งานของโรงเรียน')"
+          style="height: 22rem"
+        >
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+          <wt-flow-controls position="bottom-left" [showInteractive]="false"></wt-flow-controls>
+        </wt-flow>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="toolbar" [section]="sec['toolbar']">
+      <docs-demo [html]="code['toolbar']" [ts]="ts['toolbar']" [css]="css['toolbar']" layout="stack">
+        <wt-flow
+          id="d-flow-notes"
+          #board
+          [(nodes)]="noteNodes"
+          [fitView]="true"
+          [fitViewOptions]="{ padding: '56px' }"
+          [ariaLabel]="tx('ป้ายประกาศ')"
+          style="height: 22rem"
+        >
+          <ng-template wtFlowNode="note" let-node>
+            <div class="wt-flow-node-box flow-note" [attr.data-tone]="node.data.tone">
+              {{ node.data.text }}
+              <wt-flow-node-toolbar position="top">
+                <button type="button" class="flow-swatch" data-tone="yellow" [attr.aria-label]="tx('สีเหลือง')" (click)="recolor(board, node.id, 'yellow')"></button>
+                <button type="button" class="flow-swatch" data-tone="green" [attr.aria-label]="tx('สีเขียว')" (click)="recolor(board, node.id, 'green')"></button>
+                <button type="button" class="flow-swatch" data-tone="blue" [attr.aria-label]="tx('สีฟ้า')" (click)="recolor(board, node.id, 'blue')"></button>
+                <wt-button
+                  icon="wi wi-trash"
+                  severity="danger"
+                  [text]="true"
+                  [rounded]="true"
+                  [ariaLabel]="tx('ลบโน้ต')"
+                  (onClick)="removeNote(board, node.id)"
+                ></wt-button>
+              </wt-flow-node-toolbar>
+              <wt-flow-node-resizer [minWidth]="140" [minHeight]="72"></wt-flow-node-resizer>
+            </div>
+          </ng-template>
+          <wt-flow-background variant="cross" [gap]="28"></wt-flow-background>
+        </wt-flow>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="contextmenu" [section]="sec['contextmenu']">
+      <docs-demo [html]="code['contextmenu']" [ts]="ts['contextmenu']" layout="stack">
+        <wt-flow
+          id="d-flow-menu"
+          #sheet
+          [(nodes)]="menuNodes"
+          [(edges)]="menuEdges"
+          [fitView]="true"
+          [autoConnect]="true"
+          [minZoom]="0.3"
+          (edgeContextMenu)="openEdgeMenu($event, sheet, menu)"
+          (nodeContextMenu)="openNodeMenu($event, sheet, menu)"
+          (paneContextMenu)="openPaneMenu($event, sheet, menu)"
+          (keydown)="menuKey($event, sheet, menu)"
+          [ariaLabel]="tx('ขั้นตอนเบิกพัสดุ')"
+          style="height: 22rem"
+        >
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+        <wt-contextMenu #menu id="d-flow-menu-cm" [model]="menuItems"></wt-contextMenu>
+        @if (renaming) {
+          <div class="docs-demo-actions" id="d-flow-rename">
+            <input wtInputText id="d-flow-rename-input" [(ngModel)]="newName" [attr.aria-label]="tx('ชื่อใหม่')" (keydown.enter)="saveName(sheet)" />
+            <wt-button id="d-flow-rename-save" [label]="tx('บันทึก')" (onClick)="saveName(sheet)"></wt-button>
+          </div>
+        }
+        <span class="docs-demo-output">
+          {{ tx('ล่าสุด') }}: <code id="d-flow-menu-last">{{ lastAction }}</code> · {{ tx('โหนด') }}:
+          <code id="d-flow-menu-nodes">{{ menuNodes.length }}</code> · {{ tx('เส้น') }}: <code id="d-flow-menu-edges">{{ menuEdges.length }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="viewport" [section]="sec['viewport']">
+      <docs-demo [html]="code['viewport']" [ts]="ts['viewport']" layout="stack">
+        <div class="flow-palette" role="group" [attr.aria-label]="tx('ลากไปวาง หรือแตะเพื่อเพิ่ม')">
+          <button type="button" class="flow-palette-item" id="d-flow-pal-input" draggable="true" (dragstart)="pick($event, 'input')" (click)="addAtCentre(view, canvas, 'input')">
+            <i class="wi wi-play-circle" aria-hidden="true"></i>{{ tx('เริ่ม') }}
+          </button>
+          <button type="button" class="flow-palette-item" id="d-flow-pal-default" draggable="true" (dragstart)="pick($event, 'default')" (click)="addAtCentre(view, canvas, 'default')">
+            <i class="wi wi-stack" aria-hidden="true"></i>{{ tx('ขั้นตอน') }}
+          </button>
+          <button type="button" class="flow-palette-item" id="d-flow-pal-output" draggable="true" (dragstart)="pick($event, 'output')" (click)="addAtCentre(view, canvas, 'output')">
+            <i class="wi wi-flag" aria-hidden="true"></i>{{ tx('จบ') }}
+          </button>
+        </div>
+        <div #canvas>
+          <wt-flow
+            id="d-flow-vp"
+            #view
+            [(nodes)]="viewNodes"
+            [(edges)]="viewEdges"
+            [(viewport)]="viewport"
+            [minZoom]="0.25"
+            [maxZoom]="3"
+            [panOnScroll]="panOnScroll"
+            (dragover)="allowDrop($event)"
+            (drop)="drop($event, view)"
+            [ariaLabel]="tx('แบบฟอร์มออนไลน์')"
+            style="height: 22rem"
+          >
+            <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+            <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
+          </wt-flow>
+        </div>
+        <div class="docs-demo-actions">
+          <wt-button id="d-flow-vp-fit" [label]="tx('พอดีจอ')" icon="wi wi-expand" (onClick)="view.fitView({ duration: 300 })"></wt-button>
+          <wt-button id="d-flow-vp-100" label="100%" severity="secondary" (onClick)="view.zoomTo(1, { duration: 300 })"></wt-button>
+          <wt-button id="d-flow-vp-start" [label]="tx('ไปที่จุดเริ่ม')" icon="wi wi-target" severity="secondary" (onClick)="goToStart(view)"></wt-button>
+          <span class="docs-flow-switch">
+            <wt-toggleswitch [(ngModel)]="panOnScroll" inputId="d-flow-vp-scroll"></wt-toggleswitch>
+            <label for="d-flow-vp-scroll">{{ tx('ล้อเมาส์เลื่อนภาพ') }}</label>
+          </span>
+        </div>
+        <span class="docs-demo-output">{{ tx('มุมมอง') }}: <code id="d-flow-vp-out">{{ viewportText() }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="layout" [section]="sec['layout']">
+      <docs-demo [html]="code['layout']" [ts]="ts['layout']" layout="stack">
+        <wt-flow id="d-flow-layout" #chart [(nodes)]="chartNodes" [(edges)]="chartEdges" [fitView]="true" [minZoom]="0.3" [ariaLabel]="tx('โครงสร้างโรงเรียน')" style="height: 26rem">
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+        <div class="docs-demo-actions">
+          <wt-button id="d-flow-layout-tb" [label]="tx('บนลงล่าง')" icon="wi wi-sitemap" (onClick)="chart.layout({ direction: 'TB' })"></wt-button>
+          <wt-button id="d-flow-layout-lr" [label]="tx('ซ้ายไปขวา')" icon="wi wi-arrow-right" severity="secondary" (onClick)="chart.layout({ direction: 'LR' })"></wt-button>
+          <wt-button
+            id="d-flow-layout-tree"
+            [label]="tx('แบบต้นไม้')"
+            icon="wi wi-tree-view"
+            severity="secondary"
+            (onClick)="chart.layout({ algorithm: 'tree', direction: 'TB' })"
+          ></wt-button>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="history" [section]="sec['history']">
+      <docs-demo [html]="code['history']" [ts]="ts['history']" layout="stack">
+        <wt-flow
+          id="d-flow-history"
+          wtFlowHistory
+          #history="wtFlowHistory"
+          [(nodes)]="libraryNodes"
+          [(edges)]="libraryEdges"
+          [fitView]="true"
+          [autoConnect]="true"
+          [ariaLabel]="tx('แผนผังห้องสมุด')"
+          style="height: 22rem"
+        >
+          <wt-flow-panel position="top-right">
+            <span class="docs-flow-panel-buttons">
+              <wt-button
+                id="d-flow-undo"
+                icon="wi wi-undo"
+                [ariaLabel]="tx('เลิกทำ')"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="!history.canUndo"
+                (onClick)="history.undo()"
+              ></wt-button>
+              <wt-button
+                id="d-flow-redo"
+                icon="wi wi-redo"
+                [ariaLabel]="tx('ทำซ้ำ')"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="!history.canRedo"
+                (onClick)="history.redo()"
+              ></wt-button>
+            </span>
+          </wt-flow-panel>
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="export" [section]="sec['export']">
+      <docs-demo [html]="code['export']" [ts]="ts['export']" layout="stack">
+        <wt-flow id="d-flow-export" #admission [(nodes)]="admitNodes" [(edges)]="admitEdges" [fitView]="true" [minZoom]="0.3" [ariaLabel]="tx('ขั้นตอนรับสมัคร')" style="height: 18rem">
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+        <div class="docs-demo-actions">
+          <wt-button id="d-flow-export-svg" [label]="tx('ส่งออก SVG')" icon="wi wi-file-image" (onClick)="exportSvg(admission)"></wt-button>
+          <wt-button id="d-flow-export-json" label="JSON" icon="wi wi-code" severity="secondary" (onClick)="exportJson(admission)"></wt-button>
+          <wt-button
+            id="d-flow-export-load"
+            [label]="tx('โหลดกลับ')"
+            icon="wi wi-upload"
+            severity="secondary"
+            [disabled]="!json"
+            (onClick)="admission.fromJSON(json)"
+          ></wt-button>
+        </div>
+        @if (svgUrl) {
+          <img id="d-flow-export-img" class="docs-flow-export-img" [src]="svgUrl" [alt]="tx('ภาพที่ส่งออก')" />
+        }
+        @if (json) {
+          <pre id="d-flow-export-json-out" class="docs-flow-json">{{ json }}</pre>
+        }
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="keyboard" [section]="sec['keyboard']">
+      <div class="docs-table-wrap">
+        <table class="docs-table" id="d-flow-keys-table">
+          <thead>
+            <tr>
+              <th>{{ tx('คีย์') }}</th>
+              <th>{{ tx('ทำอะไร') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (k of flowKeys; track k.keys) {
+              <tr>
+                <td><code>{{ tx(k.keys) }}</code></td>
+                <td>{{ k.text | loc }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <docs-demo [html]="code['keyboard']" [ts]="ts['keyboard']" layout="stack">
+        <wt-flow
+          id="d-flow-keys"
+          [(nodes)]="keyNodes"
+          [(edges)]="keyEdges"
+          [fitView]="true"
+          [fitViewOptions]="{ maxZoom: 1 }"
+          [ariaLabel]="tx('ลองด้วยคีย์บอร์ด')"
+          style="height: 16rem"
+        >
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+        </wt-flow>
+        <span class="docs-demo-output"><code id="d-flow-keys-out">{{ keyText() }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="performance" [section]="sec['performance']">
+      <docs-demo [html]="code['performance']" [ts]="ts['performance']" layout="stack">
+        <wt-flow
+          id="d-flow-perf"
+          [(nodes)]="perfNodes"
+          [(edges)]="perfEdges"
+          [onlyRenderVisibleElements]="onlyVisible"
+          [defaultViewport]="{ x: 24, y: 24, zoom: 0.8 }"
+          [minZoom]="0.2"
+          (init)="countDrawn()"
+          (moveEnd)="countDrawn()"
+          (nodesInitialized)="countDrawn()"
+          [ariaLabel]="tx('แผนภาพ 300 โหนด')"
+          style="height: 24rem"
+        >
+          <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
+          <wt-flow-controls position="bottom-left"></wt-flow-controls>
+          <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
+        </wt-flow>
+        <div class="docs-demo-actions">
+          <span class="docs-flow-switch">
+            <wt-toggleswitch [(ngModel)]="onlyVisible" (ngModelChange)="countDrawn()" inputId="d-flow-perf-only"></wt-toggleswitch>
+            <label for="d-flow-perf-only">{{ tx('วาดเฉพาะส่วนที่เห็น') }}</label>
+          </span>
+          <span class="docs-demo-output">
+            {{ tx('วาดอยู่') }} <code id="d-flow-perf-drawn">{{ drawn() }}</code> {{ tx('จาก') }} 300
+          </span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']">
+      <div class="docs-table-wrap">
+        <table class="docs-table" id="d-flow-migration">
+          <thead>
+            <tr>
+              <th>ngx-vflow</th>
+              <th>WiraTheme</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of migrationRows; track r.from) {
+              <tr>
+                <td><code>{{ r.from }}</code></td>
+                <td>
+                  <code>{{ r.to }}</code>
+                  @if (r.note) {
+                    <br /><small>{{ r.note | loc }}</small>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

@@ -117,11 +117,11 @@ const THEME_LABELS = {
   sila: 'Sila: bold, roomy',
   material: 'Material: Material Design',
   phet: 'Phet: sharp, high contrast',
-  wira: 'Wira: WiraTheme clean',
+  wira: "Wira: WiraTheme's own look",
   lanna: 'Lanna: soft, rounded',
   siam: 'Siam: elevated, with ripple',
   nakhon: 'Nakhon: sharp, dense',
-  glass: 'Glass: frosted, translucent',
+  glass: 'Glass: Liquid Glass, translucent',
 };
 const CLASSIC_FAMILIES = [
   [/^sila-light-/, 'Sila light'],

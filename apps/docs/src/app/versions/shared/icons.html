@@ -1,0 +1,216 @@
+<header class="docs-page-head">
+  <p class="docs-eyebrow">Getting Started</p>
+  <h1 class="docs-h1">{{ en() ? 'Icons' : 'ไอคอน' }}</h1>
+  @if (en()) {
+    <p class="docs-lead">
+      wiraicon is WiraTheme's own icon set: 424 icons in five weights, as CSS classes, SVG files and an Angular component. The main names are the
+      ones teams already write, so moving over only changes the prefix.
+    </p>
+  } @else {
+    <p class="docs-lead">
+      wiraicon คือชุดไอคอนของ WiraTheme เอง 424 ไอคอน 5 น้ำหนักเส้น ใช้ได้ทั้งเป็น class, ไฟล์ SVG และ component ของ Angular ชื่อหลักตรงกับชื่อที่ทีมใช้อยู่
+      การย้ายมาใช้จึงเปลี่ยนแค่ prefix
+    </p>
+  }
+  <div class="docs-meta">
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip"><code>wiraicon</code></span>
+    <span class="docs-chip docs-chip-quiet">{{ en() ? '424 icons · 5 weights · MIT' : '424 ไอคอน · 5 น้ำหนักเส้น · MIT' }}</span>
+  </div>
+</header>
+
+<docs-section id="install" [section]="sec['install']">
+  <docs-code [code]="code('install')" lang="bash" [bare]="true"></docs-code>
+  <docs-code [code]="code('styles')" lang="json" file="angular.json"></docs-code>
+  <docs-code-tabs [tabs]="importTabs()"></docs-code-tabs>
+</docs-section>
+
+<docs-section id="classes" [section]="sec['classes']">
+  <docs-demo [html]="code('classes')">
+    <span class="docs-wi-row" id="d-wi-classes">
+      <i class="wi wi-check"></i>
+      <i class="wi wi-times"></i>
+      <i class="wi wi-search"></i>
+      <i class="wi wi-bell"></i>
+      <i class="wi wi-calendar"></i>
+      <i class="wi wi-users"></i>
+      <i class="wi wi-graduation-cap"></i>
+      <i class="wi wi-file-excel"></i>
+    </span>
+  </docs-demo>
+</docs-section>
+
+<docs-section id="weights" [section]="sec['weights']">
+  <docs-demo [html]="code('weights')">
+    <span class="docs-wi-row" id="d-wi-weights">
+      @for (w of weights; track w) {
+        <span class="docs-wi-weight">
+          <i [class]="'wi wi-heart' + (w === 'regular' ? '' : ' wi-' + w)"></i>
+          <small>{{ w === 'regular' ? tx('ปกติ') : w }}</small>
+        </span>
+      }
+    </span>
+  </docs-demo>
+</docs-section>
+
+<docs-section id="size" [section]="sec['size']">
+  <docs-demo [html]="code('size')" layout="stack">
+    <span class="docs-wi-row">
+      <i class="wi wi-star wi-fill" style="font-size: 2rem; color: var(--wt-warn-color)"></i>
+      <i class="wi wi-bell" style="font-size: 1.5rem; color: var(--wt-primary-color)"></i>
+      <i id="d-wi-spin" class="wi wi-spinner wi-spin" style="font-size: 1.5rem"></i>
+    </span>
+    <ul class="docs-wi-list">
+      <li><i class="wi wi-home wi-fw"></i> {{ tx('หน้าแรก') }}</li>
+      <li><i class="wi wi-users wi-fw"></i> {{ tx('นักเรียน') }}</li>
+      <li><i class="wi wi-cog wi-fw"></i> {{ tx('ตั้งค่า') }}</li>
+    </ul>
+  </docs-demo>
+</docs-section>
+
+<docs-section id="buttons" [section]="sec['buttons']">
+  <docs-demo [html]="code('buttons')">
+    <wt-button id="d-wi-save" [label]="tx('บันทึก')" icon="wi wi-save"></wt-button>
+    <wt-button [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wt-button>
+    <wt-button icon="wi wi-trash wi-bold" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('ลบ')"></wt-button>
+  </docs-demo>
+</docs-section>
+
+<docs-section id="component" [section]="sec['component']">
+  <docs-demo [html]="code('component')">
+    <span class="docs-wi-row" id="d-wi-component">
+      <wi-icon name="check"></wi-icon>
+      <wi-icon name="trash" weight="bold" [size]="24" color="var(--wt-danger-color)"></wi-icon>
+      <wi-icon name="info-circle" [size]="24" [label]="tx('ข้อมูลเพิ่มเติม')"></wi-icon>
+      <wi-icon name="spinner" [size]="24" [spin]="true"></wi-icon>
+    </span>
+  </docs-demo>
+  <docs-code [code]="code('provide')" lang="ts"></docs-code>
+</docs-section>
+
+<docs-section id="gallery" [section]="sec['gallery']">
+  <div class="docs-wi-gallery" id="wi-gallery">
+    <div class="docs-wi-tools">
+      <wt-iconfield class="docs-wi-search">
+        <wt-inputicon icon="wi wi-search"></wt-inputicon>
+        <input
+          wtInputText
+          id="wi-search"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          [value]="query()"
+          (input)="search($event)"
+          [placeholder]="tx('ค้นหาไอคอน เช่น save, xmark, ปฏิทิน')"
+          [attr.aria-label]="tx('ค้นหาไอคอน เช่น save, xmark, ปฏิทิน')"
+        />
+      </wt-iconfield>
+      <wt-select
+        id="wi-category"
+        class="docs-wi-category"
+        [options]="categoryOptions()"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="category()"
+        (ngModelChange)="setCategory($event)"
+        [ariaLabel]="tx('หมวด')"
+      ></wt-select>
+      <span id="wi-weight-label" class="docs-wi-sr">{{ tx('น้ำหนักเส้น') }}</span>
+      <wt-selectbutton
+        id="wi-weight"
+        size="small"
+        [options]="weightOptions()"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="weight()"
+        (ngModelChange)="setWeight($event)"
+        [allowEmpty]="false"
+        ariaLabelledBy="wi-weight-label"
+      ></wt-selectbutton>
+      <span class="docs-wi-size">
+        <span id="wi-size-label">{{ tx('ขนาด') }} <code>{{ size() }}px</code></span>
+        <wt-slider
+          id="wi-size"
+          [ngModel]="size()"
+          (ngModelChange)="setSize($event)"
+          [min]="16"
+          [max]="64"
+          [step]="4"
+          ariaLabelledBy="wi-size-label"
+        ></wt-slider>
+      </span>
+    </div>
+
+    @if (picked(); as p) {
+      <section class="docs-wi-detail" id="wi-detail" [attr.aria-label]="p.name">
+        <span class="docs-wi-detail-glyph" aria-hidden="true"><i [class]="pickedClass()"></i></span>
+        <div class="docs-wi-detail-body">
+          <div class="docs-wi-detail-head">
+            <b id="wi-detail-name">{{ p.name }}</b>
+            <span class="docs-chip docs-chip-quiet">{{ pickedCategory() }}</span>
+            <button type="button" class="docs-icon-btn docs-wi-detail-close" id="wi-detail-close" [attr.aria-label]="tx('ปิด')" (click)="picked.set(null)">
+              <docs-icon name="x"></docs-icon>
+            </button>
+          </div>
+          <div class="docs-wi-detail-row">
+            <span class="docs-wi-detail-label">class</span>
+            <code id="wi-detail-class">{{ classCode() }}</code>
+            <docs-copy id="wi-copy-class" [text]="classCode()"></docs-copy>
+          </div>
+          <div class="docs-wi-detail-row">
+            <span class="docs-wi-detail-label">component</span>
+            <code id="wi-detail-tag">{{ tagCode() }}</code>
+            <docs-copy id="wi-copy-tag" [text]="tagCode()"></docs-copy>
+          </div>
+          <div class="docs-wi-detail-row">
+            <span class="docs-wi-detail-label">wt-button</span>
+            <code id="wi-detail-button">{{ buttonCode() }}</code>
+            <docs-copy id="wi-copy-button" [text]="buttonCode()"></docs-copy>
+          </div>
+          <div class="docs-wi-detail-row">
+            <span class="docs-wi-detail-label">{{ tx('ชื่อแทน') }}</span>
+            <span class="docs-wi-aliases" id="wi-detail-aliases">
+              @for (a of p.aliases; track a) {
+                <code>{{ a }}</code>
+              } @empty {
+                <span class="docs-wi-muted">{{ tx('ไม่มี') }}</span>
+              }
+            </span>
+          </div>
+          <a wtButton id="wi-detail-svg" [href]="svgHref()" [attr.download]="p.name + '.svg'" icon="wi wi-download" size="small" severity="secondary" [outlined]="true" [label]="tx('ดาวน์โหลด SVG')"></a>
+        </div>
+      </section>
+    }
+
+    @if (data()) {
+      <p class="docs-wi-count" id="wi-count" aria-live="polite">{{ visible().length }} {{ tx('ไอคอน') }}</p>
+      <div class="docs-wi-grid" id="wi-grid" [style]="gridStyle()">
+        @for (icon of visible(); track icon.name) {
+          <button
+            type="button"
+            class="docs-wi-cell"
+            [class.active]="picked()?.name === icon.name"
+            [attr.data-icon]="icon.name"
+            [attr.aria-pressed]="picked()?.name === icon.name"
+            (click)="pickIcon(icon)"
+          >
+            <i [class]="'wi wi-' + icon.name + weightClass()" aria-hidden="true"></i>
+            <span>{{ icon.name }}</span>
+          </button>
+        } @empty {
+          <p class="docs-wi-muted" id="wi-empty">{{ tx('ไม่พบไอคอนที่ค้นหา') }}</p>
+        }
+      </div>
+    } @else if (failed()) {
+      <p class="docs-wi-muted" id="wi-failed">{{ tx('โหลดรายการไอคอนไม่ได้') }}</p>
+    } @else {
+      <p class="docs-wi-muted">{{ tx('กำลังโหลดรายการไอคอน') }}</p>
+    }
+  </div>
+</docs-section>
+
+<docs-section id="migration" [section]="sec['migration']">
+  <docs-code [code]="code('migration')" lang="html"></docs-code>
+</docs-section>
+
+<docs-section id="license" [section]="sec['license']"></docs-section>

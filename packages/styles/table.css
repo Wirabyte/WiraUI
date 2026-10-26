@@ -559,4 +559,15 @@
       animation-duration: 2s;
     }
   }
+  /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
+  @media (pointer: coarse) {
+    .wt-reorderable-row-handle {
+      position: relative;
+    }
+    .wt-reorderable-row-handle::after {
+      content: '';
+      position: absolute;
+      inset: 0 -0.5rem;
+    }
+  }
 }

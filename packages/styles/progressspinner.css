@@ -9,6 +9,37 @@
     height: var(--wt-spinner-size);
     max-width: 100%;
   }
+  /* With a label: ring and text in a column, centred in the space the spinner is given (a loading block needs no
+     wrapper of its own); labelPosition="right" puts the text beside the ring, inline. */
+  :is(wt-progress-spinner, wt-progressspinner).wt-progress-spinner-host-labelled {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--wt-spinner-label-gap);
+    width: auto;
+    height: auto;
+    text-align: center;
+  }
+  :is(wt-progress-spinner, wt-progressspinner).wt-progress-spinner-host-right {
+    display: inline-flex;
+    flex-direction: row;
+    text-align: start;
+  }
+  .wt-progress-spinner-host-labelled > .wt-progress-spinner {
+    flex: none;
+    width: var(--wt-spinner-size);
+    height: var(--wt-spinner-size);
+    max-width: 100%;
+  }
+  .wt-progress-spinner-label {
+    min-width: 0;
+    color: var(--wt-spinner-label-color);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-spinner-label-size);
+    line-height: var(--wt-line-height);
+    overflow-wrap: anywhere;
+  }
   .wt-progress-spinner {
     position: relative;
     display: inline-block;

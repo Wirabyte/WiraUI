@@ -1,0 +1,26 @@
+{
+  "name": "@wiratheme-build/icons",
+  "private": true,
+  "description": "Build shell for wiraicon: WiraTheme's icon set (built on Phosphor Icons, MIT) as CSS classes, SVG files, data modules and an Angular component. Installs on its own, without wiratheme.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs --check",
+    "pack": "cd dist && npm pack --pack-destination .."
+  },
+  "devDependencies": {
+    "@angular/common": "15.2.10",
+    "@angular/compiler": "15.2.10",
+    "@angular/compiler-cli": "15.2.10",
+    "@angular/core": "15.2.10",
+    "@angular/platform-browser": "15.2.10",
+    "@phosphor-icons/core": "2.1.1",
+    "ng-packagr": "15.2.2",
+    "rxjs": "~7.8.0",
+    "svg2ttf": "6.1.0",
+    "svgicons2svgfont": "16.0.0",
+    "tslib": "^2.3.0",
+    "ttf2woff2": "8.0.1",
+    "typescript": "~4.9.5",
+    "zone.js": "~0.12.0"
+  }
+}

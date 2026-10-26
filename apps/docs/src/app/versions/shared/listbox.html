@@ -75,7 +75,7 @@
           [style]="{ width: '16rem' }"
         >
           <ng-template #group let-grade>
-            <span class="docs-lb-group"><i class="pi pi-users"></i> {{ grade.label }}</span>
+            <span class="docs-lb-group"><i class="wi wi-users"></i> {{ grade.label }}</span>
           </ng-template>
         </wt-listbox>
         <span class="docs-demo-output">ngModel: <code id="d-lb-group-value">{{ groupRoom?.name || 'null' }}</code></span>
@@ -102,7 +102,7 @@
               <small class="docs-lb-room-teacher">{{ room.teacher }}</small>
             </span>
             @if (selected) {
-              <i class="pi pi-check docs-lb-check"></i>
+              <i class="wi wi-check docs-lb-check"></i>
             }
           </ng-template>
           <ng-template #footer let-value>

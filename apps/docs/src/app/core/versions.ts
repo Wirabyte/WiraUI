@@ -52,10 +52,10 @@ export const DOC_VERSIONS: DocVersion[] = [
     angular: '21+',
     label: 'v3 · Angular 21+',
     status: 'latest',
-    look: { th: 'Mali, Sila, Material, Phet + ธีมใหม่ของ WiraTheme', en: 'Mali, Sila, Material, Phet + new WiraTheme themes' },
+    look: { th: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet', en: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet' },
     lookDetail: {
-      th: 'preset ของ v2 (Mali เป็นค่าเริ่มต้น, Sila, Material, Phet) พร้อมธีมของ WiraTheme เอง: Wira, Lanna, Siam, Nakhon และ Glass แบบ Liquid Glass',
-      en: "v2's presets (Mali by default, Sila, Material, Phet) plus WiraTheme's own: Wira, Lanna, Siam, Nakhon and the Liquid Glass theme Glass.",
+      th: 'ธีมของ WiraTheme เอง: Wira (ค่าเริ่มต้น), Lanna, Siam, Nakhon และ Glass แบบ Liquid Glass พร้อม preset ของ v2 (Mali, Sila, Material, Phet)',
+      en: "WiraTheme's own themes: Wira (the default), Lanna, Siam, Nakhon and the Liquid Glass theme Glass, plus v2's presets (Mali, Sila, Material, Phet).",
     },
     api: 'input() / model() / output() + Signal Forms',
     controlFlow: '@if / @for',

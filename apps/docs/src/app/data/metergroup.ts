@@ -131,9 +131,9 @@ export const METERGROUP_DOC: ComponentDoc = {
   { label: 'อื่น ๆ', value: 8 },
 ];`,
     icons: `storageIcons: WtMeterItem[] = [
-  { label: 'รูปภาพ', value: 24, icon: 'pi pi-image' },
-  { label: 'วิดีโอ', value: 16, icon: 'pi pi-video' },
-  { label: 'เอกสาร', value: 12, icon: 'pi pi-file' },
+  { label: 'รูปภาพ', value: 24, icon: 'wi wi-image' },
+  { label: 'วิดีโอ', value: 16, icon: 'wi wi-video' },
+  { label: 'เอกสาร', value: 12, icon: 'wi wi-file' },
 ];`,
     minmax: `// ใช้ไป 96 จาก 200 GB
 usedGb: WtMeterItem[] = [

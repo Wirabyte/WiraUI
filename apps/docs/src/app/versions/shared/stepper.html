@@ -19,7 +19,7 @@
                 <p class="docs-demo-p">{{ tx('กรอกชื่อ วันเกิด และเลขประจำตัวประชาชน') }}</p>
                 <div class="docs-steps-actions">
                   <span></span>
-                  <wt-button id="d-stp-next-1" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
+                  <wt-button id="d-stp-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -27,8 +27,8 @@
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ที่อยู่ตามทะเบียนบ้านและที่อยู่ปัจจุบัน') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button id="d-stp-back-2" [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                  <wt-button id="d-stp-next-2" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
+                  <wt-button id="d-stp-back-2" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
+                  <wt-button id="d-stp-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -36,7 +36,7 @@
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ตรวจข้อมูลอีกครั้งก่อนส่งใบสมัคร') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button id="d-stp-back-3" [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
+                  <wt-button id="d-stp-back-3" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -62,7 +62,7 @@
                   <input id="d-stp-name" name="studentName" wtInputText [(ngModel)]="studentName" />
                   <div class="docs-steps-actions">
                     <span></span>
-                    <wt-button id="d-stp-linear-next-1" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" [disabled]="!studentName.trim()" (onClick)="activateCallback(2)"></wt-button>
+                    <wt-button id="d-stp-linear-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="!studentName.trim()" (onClick)="activateCallback(2)"></wt-button>
                   </div>
                 </div>
               </ng-template>
@@ -74,7 +74,7 @@
                   <input id="d-stp-phone" name="parentPhone" wtInputText inputmode="tel" [(ngModel)]="parentPhone" />
                   <div class="docs-steps-actions">
                     <wt-button id="d-stp-linear-back-2" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                    <wt-button id="d-stp-linear-next-2" [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10" (onClick)="activateCallback(3)"></wt-button>
+                    <wt-button id="d-stp-linear-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10" (onClick)="activateCallback(3)"></wt-button>
                   </div>
                 </div>
               </ng-template>
@@ -84,7 +84,7 @@
                 <p class="docs-demo-p" id="d-stp-summary">{{ studentName }} · {{ parentPhone }}</p>
                 <div class="docs-steps-actions">
                   <wt-button id="d-stp-linear-back-3" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" [disabled]="isApiSaving" (onClick)="activateCallback(2)"></wt-button>
-                  <wt-button id="d-stp-submit" [label]="tx('ส่งใบสมัคร')" icon="pi pi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wt-button>
+                  <wt-button id="d-stp-submit" [label]="tx('ส่งใบสมัคร')" icon="wi wi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -109,7 +109,7 @@
                 <p class="docs-demo-p">{{ tx('ปีการศึกษาและภาคเรียนที่จะเปิดรับสมัคร') }}</p>
                 <div class="docs-steps-actions">
                   <span></span>
-                  <wt-button [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
+                  <wt-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -120,8 +120,8 @@
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('วันเปิด ปิดรับสมัคร และจำนวนที่รับ') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                  <wt-button [label]="tx('ถัดไป')" icon="pi pi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
+                  <wt-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
+                  <wt-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -132,7 +132,7 @@
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ตรวจทานแล้วเปิดให้ผู้สมัครเข้าใช้งาน') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
+                  <wt-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
                 </div>
               </ng-template>
             </wt-step-panel>
@@ -217,11 +217,11 @@
       <docs-demo [html]="code['readonly']" [ts]="ts['readonly']" layout="stack">
         <wt-stepper id="d-stp-readonly" [model]="local(trackSteps)" [activeIndex]="trackIndex" [readonly]="true" labelPosition="bottom"></wt-stepper>
         <div class="docs-steps-actions">
-          <wt-button id="d-stp-track-back" [label]="tx('ย้อนกลับ')" icon="pi pi-chevron-left" severity="secondary" [text]="true" [disabled]="trackIndex === 0" (onClick)="trackBack()"></wt-button>
+          <wt-button id="d-stp-track-back" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" [disabled]="trackIndex === 0" (onClick)="trackBack()"></wt-button>
           <wt-button
             id="d-stp-track-next"
             [label]="tx('ถัดไป')"
-            icon="pi pi-chevron-right"
+            icon="wi wi-chevron-right"
             iconPos="right"
             [disabled]="trackIndex === trackSteps.length - 1"
             (onClick)="trackNext()"

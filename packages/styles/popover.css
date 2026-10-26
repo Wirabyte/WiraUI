@@ -17,6 +17,8 @@
     border: 1px solid var(--wt-border);
     border-radius: var(--wt-radius-md);
     background: var(--wt-overlay-bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     color: var(--wt-text);
     box-shadow: var(--wt-shadow-md);
     font-family: var(--wt-font-family);

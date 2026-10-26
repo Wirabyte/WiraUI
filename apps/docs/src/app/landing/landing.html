@@ -144,7 +144,7 @@
 
         <div class="lp-demo-grid">
           <wt-card [header]="en() ? 'Monthly revenue' : 'รายได้รายเดือน'" [subheader]="en() ? 'Thousand baht, last 12 months' : 'พันบาท ย้อนหลัง 12 เดือน'" class="lp-chart-card">
-            <wt-button wtCardActions label="Export" icon="pi pi-send" size="small" text></wt-button>
+            <wt-button wtCardActions label="Export" icon="wi wi-send" size="small" text></wt-button>
             <div class="lp-chart" role="img" [attr.aria-label]="en() ? 'Revenue rising from 62 to 128 thousand baht' : 'รายได้เพิ่มจาก 62 เป็น 128 พันบาท'">
               @for (b of bars(); track $index) {
                 <div class="lp-chart-col">
@@ -192,7 +192,7 @@
               </div>
             </form>
             <div wtCardFooter class="lp-form-footer">
-              <wt-button id="lp-submit" [label]="en() ? 'Sign up' : 'สมัคร'" icon="pi pi-send" [action]="submit" [disabled]="form.invalid"></wt-button>
+              <wt-button id="lp-submit" [label]="en() ? 'Sign up' : 'สมัคร'" icon="wi wi-send" [action]="submit" [disabled]="form.invalid"></wt-button>
               @if (submitted) {
                 <span class="lp-form-done" id="lp-submitted"><docs-icon name="check"></docs-icon>{{ en() ? 'Thanks! You are signed up (sample).' : 'สมัครเรียบร้อย (ตัวอย่าง)' }}</span>
               } @else if (form.invalid) {

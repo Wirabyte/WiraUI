@@ -42,7 +42,7 @@
         <wt-tabs id="d-tabs-header">
           <wt-tab-panel>
             <ng-template #header>
-              <span class="docs-panel-head"><i class="pi pi-envelope"></i> {{ tx('ข้อความ') }} <wt-badge value="3" severity="danger"></wt-badge></span>
+              <span class="docs-panel-head"><i class="wi wi-envelope"></i> {{ tx('ข้อความ') }} <wt-badge value="3" severity="danger"></wt-badge></span>
             </ng-template>
             {{ tx('กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน') }}
           </wt-tab-panel>
@@ -63,10 +63,10 @@
     <docs-section id="icons" [section]="sec['icons']">
       <docs-demo [html]="code['icons']" layout="stack">
         <wt-tabs id="d-tabs-icons">
-          <wt-tab-panel [header]="tx('โปรไฟล์')" leftIcon="pi pi-user">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('อีเมล')" leftIcon="pi pi-envelope">{{ tx('อีเมลหลักและอีเมลสำรอง') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('ความปลอดภัย')" leftIcon="pi pi-lock" [disabled]="true">{{ tx('รหัสผ่านและการยืนยันตัวตน') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('การแจ้งเตือน')" leftIcon="pi pi-bell">{{ tx('เลือกช่องทางรับการแจ้งเตือน') }}</wt-tab-panel>
+          <wt-tab-panel [header]="tx('โปรไฟล์')" leftIcon="wi wi-user">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wt-tab-panel>
+          <wt-tab-panel [header]="tx('อีเมล')" leftIcon="wi wi-envelope">{{ tx('อีเมลหลักและอีเมลสำรอง') }}</wt-tab-panel>
+          <wt-tab-panel [header]="tx('ความปลอดภัย')" leftIcon="wi wi-lock" [disabled]="true">{{ tx('รหัสผ่านและการยืนยันตัวตน') }}</wt-tab-panel>
+          <wt-tab-panel [header]="tx('การแจ้งเตือน')" leftIcon="wi wi-bell">{{ tx('เลือกช่องทางรับการแจ้งเตือน') }}</wt-tab-panel>
         </wt-tabs>
       </docs-demo>
     </docs-section>

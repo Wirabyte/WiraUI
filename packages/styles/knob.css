@@ -1,0 +1,61 @@
+/* wt-knob. Shared by wiratheme v1, v2 and v3. A round dial drawn in SVG: the track, the filled arc and the value in the
+   middle. Press or drag on it (mouse, pen, touch) or focus it and use the keys. */
+@layer wiratheme.components {
+  wt-knob {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  .wt-knob {
+    display: inline-block;
+    max-width: 100%;
+  }
+  .wt-knob svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    outline-color: transparent;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+      outline-color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-knob svg:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: var(--wt-control-focus-offset);
+    box-shadow: var(--wt-control-focus-shadow);
+  }
+  .wt-knob-range {
+    fill: none;
+    stroke: var(--wt-knob-range-color);
+    transition: stroke 0.1s ease-in;
+  }
+  .wt-knob-value {
+    fill: none;
+    stroke: var(--wt-knob-value-color);
+  }
+  .wt-knob-text {
+    fill: var(--wt-knob-text-color);
+    font-family: var(--wt-font-family);
+    font-size: var(--wt-knob-text-size);
+    text-anchor: middle;
+  }
+  .wt-knob-disabled {
+    opacity: var(--wt-disabled-opacity);
+  }
+  .wt-knob-disabled svg,
+  .wt-knob-readonly svg {
+    cursor: default;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wt-knob svg,
+    .wt-knob-range {
+      transition: none;
+    }
+  }
+}

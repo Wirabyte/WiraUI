@@ -48,6 +48,8 @@
     border-color: color-mix(in srgb, var(--_c) var(--wt-toast-border-mix), transparent);
     border-radius: var(--wt-toast-radius);
     background: var(--_bg);
+    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
+    backdrop-filter: var(--wt-overlay-backdrop);
     color: var(--_fg);
     box-shadow: var(--wt-toast-shadow);
     -webkit-backdrop-filter: blur(var(--wt-toast-blur));

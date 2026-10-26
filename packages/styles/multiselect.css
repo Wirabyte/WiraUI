@@ -90,4 +90,15 @@
   .wt-multiselect-check {
     pointer-events: none;
   }
+  /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
+  @media (pointer: coarse) {
+    .wt-multiselect-chip-remove {
+      position: relative;
+    }
+    .wt-multiselect-chip-remove::after {
+      content: '';
+      position: absolute;
+      inset: -0.5rem;
+    }
+  }
 }

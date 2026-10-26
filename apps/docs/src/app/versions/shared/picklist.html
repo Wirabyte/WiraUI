@@ -44,7 +44,7 @@
           </ng-template>
         </wt-picklist>
         <div class="docs-demo-actions">
-          <wt-button id="d-pl-save" [label]="tx('บันทึก')" icon="pi pi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>
+          <wt-button id="d-pl-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>
           <span class="docs-demo-output">flow: <code id="d-pl-flow">{{ idsOf(flow) }}</code> · {{ tx('บันทึกแล้ว') }}: <code id="d-pl-saved">{{ savedFlow || '-' }}</code></span>
         </div>
       </docs-demo>
@@ -85,7 +85,7 @@
           <ng-template #sourceHeader let-list>{{ tx('สิทธิ์ทั้งหมด') }} ({{ list.length }})</ng-template>
           <ng-template #targetHeader let-list>{{ tx('สิทธิ์ที่ให้แล้ว') }} ({{ list.length }})</ng-template>
           <ng-template #item let-p let-selected="selected">
-            <span class="docs-pl-pick"><i [class]="selected ? 'pi pi-check-circle' : 'pi pi-circle'"></i> {{ p.name }}</span>
+            <span class="docs-pl-pick"><i [class]="selected ? 'wi wi-check-circle' : 'wi wi-circle'"></i> {{ p.name }}</span>
           </ng-template>
           <ng-template #emptymessagetarget>{{ tx('ยังไม่ได้ให้สิทธิ์ใด ๆ') }}</ng-template>
           <ng-template #emptyfiltermessagesource>{{ tx('ไม่พบสิทธิ์ที่ค้นหา') }}</ng-template>
@@ -113,8 +113,8 @@
           <ng-template #item let-p>{{ p.name }}</ng-template>
         </wt-picklist>
         <div class="docs-demo-actions">
-          <wt-button id="d-pl-all-right" [label]="tx('ให้ทุกสิทธิ์')" icon="pi pi-check" (onClick)="pl.moveAllRight()"></wt-button>
-          <wt-button id="d-pl-all-left" [label]="tx('ถอนทุกสิทธิ์')" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>
+          <wt-button id="d-pl-all-right" [label]="tx('ให้ทุกสิทธิ์')" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wt-button>
+          <wt-button id="d-pl-all-left" [label]="tx('ถอนทุกสิทธิ์')" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>
         </div>
         <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-pl-event">{{ lastEvent || '-' }}</code></span>
       </docs-demo>
