@@ -20,8 +20,8 @@ test('grid columns stack on phones and sit side by side from md up', async ({ pa
   expect(Math.abs((await box(page, '#utils-col-a')) - (await box(page, '#utils-grid')))).toBeLessThan(1);
   expect(await style(page, '#utils-flex', 'flex-direction')).toBe('column');
   await expect(page.locator('#utils-hide')).toBeHidden();
-  // Nothing on the page is wider than a phone screen.
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  // Nothing on the page is wider than a phone screen (polled: the navbar and aside menu switch a frame after a resize).
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
 test('spacing, colours and radii follow the theme tokens', async ({ page }) => {

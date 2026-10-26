@@ -564,10 +564,15 @@
     .wt-reorderable-row-handle {
       position: relative;
     }
+    /* Wider than the grip, and at least 24px tall whatever the icon font's line box comes to (17px on Linux). */
     .wt-reorderable-row-handle::after {
       content: '';
       position: absolute;
-      inset: 0 -0.5rem;
+      top: 50%;
+      right: -0.5rem;
+      left: -0.5rem;
+      height: max(100%, 24px);
+      translate: 0 -50%;
     }
   }
 }

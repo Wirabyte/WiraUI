@@ -76,7 +76,8 @@ $presets: (
   'lanna': ('family': 'wira', 'label': 'Lanna', 'primary': '#0d9488', 'surface': 'stone', 'semantic': ('success': '#22c55e', 'info': '#0ea5e9', 'warn': '#f59e0b', 'danger': '#ef4444', 'help': '#a855f7'), 'font-family': 'Sarabun', 'font-size': 15, 'line-height': 1.7, 'radius': 12, 'density': 'comfortable', 'shadow': 'soft', 'ripple': false, 'focus-ring': 'ring', 'transition': 200, 'scheme': 'light'),
   'siam': ('family': 'wira', 'label': 'Siam', 'primary': '#6366f1', 'surface': 'gray', 'semantic': ('success': '#22c55e', 'info': '#0ea5e9', 'warn': '#f59e0b', 'danger': '#ef4444', 'help': '#a855f7'), 'font-family': 'Prompt', 'font-size': 14, 'line-height': 1.6, 'radius': 4, 'density': 'normal', 'shadow': 'elevated', 'ripple': true, 'focus-ring': 'outline', 'transition': 200, 'scheme': 'light'),
   'nakhon': ('family': 'wira', 'label': 'Nakhon', 'primary': '#3b82f6', 'surface': 'zinc', 'semantic': ('success': '#22c55e', 'info': '#0ea5e9', 'warn': '#f59e0b', 'danger': '#ef4444', 'help': '#a855f7'), 'font-family': 'IBM Plex Sans Thai', 'font-size': 13, 'line-height': 1.55, 'radius': 2, 'density': 'compact', 'shadow': 'none', 'ripple': false, 'focus-ring': 'outline', 'transition': 100, 'scheme': 'light'),
-  'll': ('family': 'wira', 'label': 'LL', 'primary': '#e8668e', 'surface': 'stone', 'semantic': ('success': '#3fae78', 'info': '#3b6fd8', 'warn': '#ff9a2e', 'danger': '#e0344f', 'help': '#9b7be8'), 'font-family': 'Itim', 'font-size': 15, 'line-height': 1.6, 'radius': 16, 'density': 'comfortable', 'shadow': 'soft', 'ripple': true, 'focus-ring': 'ring', 'transition': 200, 'scheme': 'light'),
+  'll': ('family': 'wira', 'label': 'LL', 'primary': '#b8172f', 'surface': 'stone', 'semantic': ('success': '#3f9e6b', 'info': '#3b6fd8', 'warn': '#e8a317', 'danger': '#e0445c', 'help': '#9b7be8'), 'font-family': 'Noto Sans Thai Looped', 'font-size': 15, 'line-height': 1.65, 'radius': 4, 'density': 'comfortable', 'shadow': 'subtle', 'ripple': false, 'focus-ring': 'ring', 'transition': 200, 'scheme': 'light'),
+  'kawaii': ('family': 'wira', 'label': 'WiraKawaii', 'primary': '#ee5b5b', 'surface': 'slate', 'semantic': ('success': '#1fb48a', 'info': '#3a9fde', 'warn': '#f5893a', 'danger': '#d3303f', 'help': '#8b7cf6'), 'font-family': 'Itim', 'font-size': 15, 'line-height': 1.6, 'radius': 16, 'density': 'comfortable', 'shadow': 'soft', 'ripple': true, 'focus-ring': 'ring', 'transition': 200, 'scheme': 'light'),
   'glass': ('family': 'wira', 'label': 'Glass', 'primary': '#0a84ff', 'surface': 'slate', 'semantic': ('success': '#22c55e', 'info': '#0ea5e9', 'warn': '#f59e0b', 'danger': '#ef4444', 'help': '#a855f7'), 'font-family': 'Anuphan', 'font-size': 14, 'line-height': 1.6, 'radius': 14, 'density': 'normal', 'shadow': 'soft', 'ripple': false, 'focus-ring': 'ring', 'transition': 250, 'scheme': 'light', 'material': 'glass'),
 );
 
@@ -7459,6 +7460,14 @@ $materials: (
       'button-secondary-hover-bg': 'color-mix(in srgb, var(--wt-surface-0) 75%, transparent)',
       'button-secondary-active-bg': 'color-mix(in srgb, var(--wt-surface-0) 90%, transparent)',
       'button-secondary-border': 'var(--wt-glass-border)',
+      'glass-solid': 'var(--wt-surface-0)',
+      'slider-handle-bg': 'var(--wt-glass-solid)',
+      'steps-number-bg': 'var(--wt-glass-solid)',
+      'timeline-marker-bg': 'var(--wt-glass-solid)',
+      'organizationchart-toggle-bg': 'var(--wt-glass-solid)',
+      'flow-node-bg': 'var(--wt-glass-solid)',
+      'flow-handle-border': 'var(--wt-glass-solid)',
+      'flow-resizer-handle-bg': 'var(--wt-glass-solid)',
     ),
     dark: (
       'glass-bg': 'color-mix(in srgb, var(--wt-surface-900) 46%, transparent)',
@@ -7476,6 +7485,7 @@ $materials: (
       'button-secondary-bg': 'color-mix(in srgb, var(--wt-surface-0) 10%, transparent)',
       'button-secondary-hover-bg': 'color-mix(in srgb, var(--wt-surface-0) 16%, transparent)',
       'button-secondary-active-bg': 'color-mix(in srgb, var(--wt-surface-0) 22%, transparent)',
+      'glass-solid': 'var(--wt-surface-900)',
     ),
   ),
 );

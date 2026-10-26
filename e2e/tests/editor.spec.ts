@@ -295,6 +295,12 @@ test('editor images uploaded to a URL: a placeholder while uploading, then the s
 });
 
 test('editor paste: markup from other programs is cleaned, scripts and handlers removed, plain lines become paragraphs', async ({ page }) => {
+  const fakePaste = await page.evaluate(() => {
+    const dt = new DataTransfer();
+    dt.setData('text/plain', 'x');
+    return new ClipboardEvent('paste', { clipboardData: dt }).clipboardData?.getData('text/plain') === 'x';
+  });
+  test.skip(!fakePaste, 'this browser drops the data of a hand-made paste event (Firefox); a real paste carries it');
   await caretAtEnd(page, area(page));
   await area(page).evaluate((el) => {
     const dt = new DataTransfer();

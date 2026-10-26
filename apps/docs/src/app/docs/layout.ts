@@ -106,7 +106,8 @@ export class DocsLayout {
     this.router.navigateByUrl(/^\/v[123]/.test(url) ? url.replace(/^\/v[123]/, '/' + version) : '/' + version);
   }
 
-  protected openSearch(): void {
+  /** Also called by the 404 page's search button. */
+  openSearch(): void {
     this.configOpen.set(false);
     this.searchOpen.set(true);
   }

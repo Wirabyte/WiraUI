@@ -2,7 +2,8 @@ import { InjectionToken } from '@angular/core';
 import { Lang } from './i18n';
 import { clone, StudioConfig, StudioCore } from './studio-store';
 import { DocVersion, DocVersionId } from './versions';
-import { hasuUnlocked } from './hasu';
+import { ensureFont } from './preset-fonts';
+import { HASU, KAWAII, Secret } from './secrets';
 
 export interface PresetInfo {
   /** Theme name as the package knows it: 'sila-light-teal' (v1), 'mali' (v2 / v3). */
@@ -82,7 +83,7 @@ interface PresetsModule<P> {
 
 interface PresetShape {
   name?: unknown;
-  config?: { preset?: unknown; primary?: unknown; surface?: unknown; scheme?: unknown; ripple?: unknown };
+  config?: { preset?: unknown; primary?: unknown; surface?: unknown; scheme?: unknown; ripple?: unknown; fontFamily?: unknown };
 }
 
 const FAMILY_LABEL: Record<string, string> = { md: 'Material' };
@@ -157,24 +158,31 @@ export function versionTheme<P>(
       twin: counterpart(id, c.scheme !== 'dark', ids) !== id,
     };
   });
-  // The hidden `ll` preset, shown as Hasu once unlocked (v2 / v3; v1 keeps its classic themes).
-  const hasu = major >= 2 ? presets.PRESET_LIST?.['ll'] : undefined;
-  let hasuInfo: PresetInfo | undefined;
-  if (hasu) {
-    const c = (hasu as PresetShape).config || {};
-    list.set('ll', hasu);
-    hasuInfo = {
-      id: 'll',
-      name: 'Hasu',
-      family: '',
-      primary: typeof c.primary === 'string' ? c.primary : null,
-      surface: typeof c.surface === 'string' ? c.surface : null,
-      scheme: 'light',
-      ripple: c.ripple === true,
-      twin: false,
-    };
+  // The hidden presets, each listed once its own secret page was opened (v2 / v3; v1 keeps its classic themes).
+  const secrets: { secret: Secret; info: PresetInfo }[] = [];
+  for (const [secret, name] of [
+    [HASU, 'Hasu'],
+    [KAWAII, 'WiraKawaii'],
+  ] as const) {
+    const preset = major >= 2 ? presets.PRESET_LIST?.[secret.preset] : undefined;
+    if (!preset) continue;
+    const c = (preset as PresetShape).config || {};
+    list.set(secret.preset, preset);
+    secrets.push({
+      secret,
+      info: {
+        id: secret.preset,
+        name,
+        family: '',
+        primary: typeof c.primary === 'string' ? c.primary : null,
+        surface: typeof c.surface === 'string' ? c.surface : null,
+        scheme: 'light',
+        ripple: c.ripple === true,
+        twin: false,
+      },
+    });
   }
-  const info = (id: string) => infos.find((i) => i.id === id) ?? (id === 'll' ? hasuInfo : undefined);
+  const info = (id: string) => infos.find((i) => i.id === id) ?? secrets.find((s) => s.info.id === id)?.info;
 
   const resolve = (custom: ThemeCustom, dark: boolean): string => {
     const id = custom.presetId && list.has(custom.presetId) ? custom.presetId : defaultPresetId;
@@ -186,7 +194,7 @@ export function versionTheme<P>(
     key: opts.key || version,
     major,
     presets: infos,
-    secretPresets: () => (hasuInfo && hasuUnlocked() ? [hasuInfo] : []),
+    secretPresets: () => secrets.filter((s) => s.secret.unlocked()).map((s) => s.info),
     defaultPresetId,
     resolve,
     info,
@@ -194,6 +202,7 @@ export function versionTheme<P>(
       const id = resolve(custom, dark);
       service.setScale(scale);
       service.setPreset(list.get(id) as P);
+      ensureFont((list.get(id) as PresetShape | undefined)?.config?.fontFamily);
       service.setOverrides({});
       if (custom.surface) service.patch({ semantic: { surface: `{${custom.surface}}` } });
       if (custom.primary) service.setPrimary(custom.primary);
@@ -213,6 +222,7 @@ export function versionTheme<P>(
       service.setScale(scale);
       // The shape definePreset() returns: the whole theme from one config, written to the tokens layer.
       service.setPreset({ wtPreset: true, name: name || 'Studio', config: studio, overrides: [] } as unknown as P);
+      ensureFont((studio as { fontFamily?: unknown }).fontFamily);
       service.setOverrides({});
       service.setDarkMode(dark);
       config.ripple = ripple ?? studio.ripple;

@@ -2,6 +2,7 @@ import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { Router, Scroll } from '@angular/router';
 import { filter } from 'rxjs';
+import { SECRETS } from './core/secrets';
 
 @Component({
   selector: 'app-root',
@@ -25,16 +26,19 @@ export class App {
       else if (e.anchor) scroller.scrollToAnchor(e.anchor);
       else if (!samePage) scroller.scrollToPosition([0, 0]);
     });
-    // A small secret: typing "hasu" anywhere outside a text field opens a page no menu links to.
+    // Small secrets: typing a secret's word anywhere outside a text field opens its page, which no menu links to.
     const doc = inject(DOCUMENT);
     let typed = '';
     const onKey = (e: KeyboardEvent): void => {
       const target = e.target as HTMLElement | null;
       if (e.ctrlKey || e.metaKey || e.altKey || e.key?.length !== 1 || target?.closest?.('input, textarea, select, [contenteditable]')) return;
-      typed = (typed + e.key.toLowerCase()).slice(-4);
-      if (typed === 'hasu') {
+      typed = (typed + e.key.toLowerCase()).slice(-8);
+      const found = SECRETS.find((s) => typed.endsWith(s.word));
+      if (found) {
         typed = '';
-        void router.navigateByUrl('/ll');
+        found.grantPass();
+        // Typed on the 404 page of that very address: the router must match it again, now with the pass.
+        void router.navigateByUrl(found.path, { onSameUrlNavigation: 'reload' });
       }
     };
     doc.addEventListener('keydown', onKey);

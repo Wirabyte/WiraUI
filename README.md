@@ -130,6 +130,14 @@ control ทุกตัวรองรับ `ngModel`, `formControlName`, `form
 
 ใส่ `node_modules/wiraicon/wiraicon.css` ใน `styles` ของ angular.json (font ของแต่ละน้ำหนักโหลดเมื่อถูกใช้เท่านั้น) ดูรายละเอียดใน [packages/icons/config/README.md](packages/icons/config/README.md)
 
+## Figma UI Kit
+
+plugin สำหรับ Figma desktop สร้าง UI Kit จาก token จริงของ preset ที่เลือก ได้แก่ variables (Light / Dark), text / effect styles, component พร้อม variant ตาม input ในโค้ด (severity, variant, size) และ wiraicon ครบชุด พร้อมไฟล์ token แบบ W3C Design Tokens วิธี build และติดตั้งดูที่ [packages/figma/README.md](packages/figma/README.md)
+
+```bash
+pnpm build:figma      # แล้ว Import plugin from manifest… → packages/figma/dist/manifest.json
+```
+
 ## เอกสาร
 
 - [DESIGN.md](DESIGN.md) สถาปัตยกรรม, ระบบธีม, versioning และลำดับงาน

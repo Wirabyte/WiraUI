@@ -1,97 +1,135 @@
 import { DOCUMENT, NgFor } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink, Routes } from '@angular/router';
 import { WtButtonModule } from 'wiratheme/button';
 import { WtCheckboxModule } from 'wiratheme/checkbox';
 import { provideWiraTheme } from 'wiratheme/config';
-import { computeTokens } from 'wiratheme/core';
+import { computeTokens, ThemeConfig } from 'wiratheme/core';
 import { LL } from 'wiratheme/presets';
 import { WtProgressBarModule } from 'wiratheme/progressbar';
 import { WtTagModule } from 'wiratheme/tag';
 import { WtToggleSwitchModule } from 'wiratheme/toggleswitch';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
-import { hasuUnlocked, unlockHasu } from '../core/hasu';
-import { LL_LOGO_DECOS, LL_LOGO_STILL_SVG } from './ll-logo';
+import { HASU } from '../core/secrets';
 
-const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=M+PLUS+Rounded+1c:wght@800&family=Itim&display=swap';
+const FONTS =
+  'https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Serif+Thai:wght@400;600;700' +
+  '&family=Noto+Sans+Thai+Looped:wght@400;500;600;700&display=swap';
 
-/** A page no menu links to (type "hasu" anywhere on the site): the sticker logo and the hidden LL preset. */
+/** Lotus (hasu): three petals and two side leaves. */
+const LOTUS =
+  'M0,-30 C12,-18 13,2 0,14 C-13,2 -12,-18 0,-30Z M0,14 C-6,-4 -22,-14 -32,-10 C-30,6 -14,16 0,14Z M0,14 C6,-4 22,-14 32,-10 C30,6 14,16 0,14Z';
+
+interface Unit {
+  id: string;
+  name: string;
+  color: string;
+}
+const UNITS: Unit[] = [
+  { id: 'cerise', name: 'Cerise Bouquet', color: '#e5487a' },
+  { id: 'dollchestra', name: 'DOLLCHESTRA', color: '#3a6fd8' },
+  { id: 'miracra', name: 'Mira-Cra Park!', color: '#f2a900' },
+  { id: 'edel', name: 'Edel Note', color: '#b8963e' },
+];
+
+/** A page no menu links to (type "hasu" anywhere on the site): the hidden LL preset, in the club's own look. */
 @Component({
-  selector: 'docs-secret-ll',
+  selector: 'docs-secret-hasu',
   standalone: true,
   imports: [NgFor, FormsModule, RouterLink, WtButtonModule, WtCheckboxModule, WtProgressBarModule, WtTagModule, WtToggleSwitchModule],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <main class="docs-ll">
-      <div class="docs-ll-glow" aria-hidden="true"></div>
-      <div class="docs-ll-rings" aria-hidden="true"><i></i><i></i><i></i></div>
-      <span class="docs-ll-pill"><span aria-hidden="true">✦</span> ความลับเล็ก ๆ · a little secret</span>
-      <div class="docs-ll-logo">
-        <div class="docs-ll-logo-still" [innerHTML]="logo"></div>
-        <span
-          *ngFor="let d of decos"
-          [class]="'docs-ll-deco ' + d.cls"
-          [style.left.%]="d.left"
-          [style.top.%]="d.top"
-          [style.width.%]="d.width"
-          [innerHTML]="d.svg"
-        ></span>
-      </div>
-      <h1 class="docs-ll-title">สวัสดีจากดอกบัว ♡</h1>
-      <p class="docs-ll-lead">
-        เจอหน้าลับแล้ว! ในไลบรารีมีธีมซ่อนชื่อ <b>LL</b> โทนชมพูดอกบัวกับสีของแต่ละยูนิต ไม่มีเมนูไหนแสดง เปิดใช้ได้ด้วยชื่ออย่างเดียว
-        <span lang="en">You found it. WiraTheme hides a preset called LL; nothing lists it, only its name turns it on.</span>
-      </p>
-      <p class="docs-ll-unlocked" role="status">
-        ♡ ปลดล็อก preset <b>Hasu</b> ในแผงแต่งธีมกับ Studio ของเว็บนี้แล้ว{{ wasUnlocked ? '' : ' (ครั้งแรก!)' }}
-        <span lang="en">Hasu is now in this site's theme panel and Studio.</span>
-      </p>
+    <main class="docs-hasu">
+      <a class="docs-hasu-home" routerLink="/">← กลับหน้าแรก</a>
+      <header class="docs-hasu-mast">
+        <svg class="docs-hasu-lotus" viewBox="-36 -34 72 52" aria-hidden="true"><path [attr.d]="lotus" /></svg>
+        <div>
+          <p class="docs-hasu-logo" lang="ja">ウィラテーマ<span>蓮のプリセット</span></p>
+          <p class="docs-hasu-logo-en">WIRATHEME · HASU PRESET · LL</p>
+        </div>
+      </header>
 
-      <section class="docs-ll-preview" #preview aria-label="LL preset">
-        <div class="docs-ll-row">
-          <wt-button label="บันทึก" icon="wi wi-heart"></wt-button>
-          <wt-button label="ยกเลิก" severity="secondary"></wt-button>
-          <wt-button label="ลองดู" [outlined]="true"></wt-button>
-          <wt-button label="ลบ" severity="danger" [text]="true"></wt-button>
+      <div class="docs-hasu-head">
+        <h1 class="docs-hasu-title">SECRET</h1>
+        <span class="docs-hasu-chip" lang="ja">ひみつ</span>
+      </div>
+
+      <section class="docs-hasu-panel">
+        <p class="docs-hasu-lead">
+          เจอหน้าลับแล้ว ในไลบรารีมีธีมซ่อนชื่อ <b>LL</b> สีแดงของโรงเรียนบนกระดาษสีครีม ตัวอักษรไทยแบบมีหัว ไม่มีเมนูไหนแสดง เปิดใช้ได้ด้วยชื่ออย่างเดียว
+          <span lang="en">You found it. WiraTheme hides a preset called LL; nothing lists it, only its name turns it on.</span>
+        </p>
+        <p class="docs-hasu-unlocked" role="status">
+          ปลดล็อก preset <b>Hasu</b> ในแผงแต่งธีมกับ Studio ของเว็บนี้แล้ว{{ wasUnlocked ? '' : ' (ครั้งแรก!)' }}
+          <span lang="en">Hasu is now in this site's theme panel and Studio.</span>
+        </p>
+
+        <div class="docs-hasu-units" role="radiogroup" aria-label="ยูนิต · Units">
+          <button
+            *ngFor="let u of units"
+            type="button"
+            role="radio"
+            class="docs-hasu-unit"
+            [id]="'hasu-unit-' + u.id"
+            [attr.aria-checked]="unit === u"
+            [style.--docs-hasu-unit]="u.color"
+            (click)="pickUnit(u)"
+          >
+            <span class="docs-hasu-unit-face" aria-hidden="true">
+              <svg viewBox="-36 -34 72 52"><path [attr.d]="lotus" /></svg>
+            </span>
+            <span class="docs-hasu-unit-name">{{ u.name }}</span>
+            <span class="docs-hasu-unit-dot" aria-hidden="true"></span>
+          </button>
         </div>
-        <div class="docs-ll-row">
-          <wt-tag value="蓮ノ空"></wt-tag>
-          <wt-tag value="Cerise Bouquet" severity="danger"></wt-tag>
-          <wt-tag value="DOLLCHESTRA" severity="info"></wt-tag>
-          <wt-tag value="Mira-Cra Park!" severity="warn"></wt-tag>
-          <wt-tag value="Edel Note" styleClass="docs-ll-edel"></wt-tag>
+        <p class="docs-hasu-hint">แตะยูนิตเพื่อลองสีของยูนิตนั้นในตัวอย่าง แตะซ้ำเพื่อกลับเป็นสีแดง <span lang="en">Tap a unit to try its colour; tap again for the crimson.</span></p>
+
+        <div class="docs-hasu-grid">
+          <section class="docs-hasu-preview" [style]="previewStyle" aria-label="LL preset">
+            <div class="docs-hasu-row">
+              <wt-button label="บันทึก" icon="wi wi-heart"></wt-button>
+              <wt-button label="ยกเลิก" severity="secondary"></wt-button>
+              <wt-button label="ลองดู" [outlined]="true"></wt-button>
+              <wt-button label="ลบ" severity="danger" [text]="true"></wt-button>
+            </div>
+            <div class="docs-hasu-row">
+              <wt-tag value="蓮ノ空"></wt-tag>
+              <wt-tag value="Cerise Bouquet" severity="danger"></wt-tag>
+              <wt-tag value="DOLLCHESTRA" severity="info"></wt-tag>
+              <wt-tag value="Mira-Cra Park!" severity="warn"></wt-tag>
+              <wt-tag value="Edel Note" styleClass="docs-hasu-edel"></wt-tag>
+            </div>
+            <div class="docs-hasu-row">
+              <wt-checkbox [(ngModel)]="cheer" [binary]="true" inputId="hasu-cheer" label="เชียร์ทุกวัน"></wt-checkbox>
+              <wt-toggleswitch [(ngModel)]="practice" inputId="hasu-practice"></wt-toggleswitch>
+              <label for="hasu-practice">ซ้อมหลังเลิกเรียน</label>
+            </div>
+            <wt-progressBar [value]="105"></wt-progressBar>
+          </section>
+          <div class="docs-hasu-name">
+            <span class="docs-hasu-label">PRESET</span>
+            <p class="docs-hasu-name-box"><ruby>LL<rt lang="ja">はす</rt></ruby></p>
+            <code>&#64;use 'wiratheme/theme' with ($preset: 'll');</code>
+            <code>provideWiraTheme(&#123; preset: LL &#125;)  // import &#123; LL &#125; from 'wiratheme/presets'</code>
+          </div>
         </div>
-        <div class="docs-ll-row">
-          <wt-checkbox [(ngModel)]="cheer" [binary]="true" inputId="ll-cheer" label="เชียร์ทุกวัน"></wt-checkbox>
-          <wt-toggleswitch [(ngModel)]="sparkle" inputId="ll-sparkle"></wt-toggleswitch>
-          <label for="ll-sparkle">ประกายวิบวับ</label>
-        </div>
-        <wt-progressBar [value]="105"></wt-progressBar>
       </section>
-
-      <div class="docs-ll-code">
-        <code>&#64;use 'wiratheme/theme' with ($preset: 'll');</code>
-        <code>provideWiraTheme(&#123; preset: LL &#125;)  // import &#123; LL &#125; from 'wiratheme/presets'</code>
-      </div>
-
-      <div class="docs-ll-actions">
-        <a class="docs-ll-btn docs-ll-btn-main" href="ll/wiratheme-logo.svg" download="wiratheme-logo.svg">ดาวน์โหลดโลโก้ (SVG)</a>
-        <a class="docs-ll-btn" routerLink="/">กลับหน้าแรก</a>
-      </div>
     </main>
   `,
   styles: [
     `
-      /* The site keeps a scrollbar gutter: on this dark page it (and the scrollbar in it) goes dark too. */
-      html.docs-ll-open {
-        background: #15111c;
-        color-scheme: dark;
+      /* The site keeps a scrollbar gutter: it takes the paper colour too. */
+      html.docs-hasu-open {
+        background: #f3efe4;
+        color-scheme: light;
       }
-      .docs-ll {
-        position: relative;
-        isolation: isolate;
+      /* Paper, crimson and serif, framed like a club notice board. */
+      .docs-hasu {
+        --docs-hasu-red: #b8172f;
+        --docs-hasu-ink: #2b2523;
+        --docs-hasu-pink: #f7e1dc;
+        --docs-hasu-line: #dcc3bd;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -99,262 +137,312 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
         min-height: 100vh;
         min-height: 100dvh;
         box-sizing: border-box;
-        padding: 3rem 1rem 4rem;
-        overflow: hidden;
-        background: #15111c;
-        color: #e9e3f5;
-        font-family: 'IBM Plex Sans Thai', Inter, sans-serif;
+        padding: 1rem 1rem 4rem;
+        background: #f3efe4;
+        color: var(--docs-hasu-ink);
+        font-family: 'Noto Serif Thai', 'Shippori Mincho', serif;
         text-align: center;
       }
-      .docs-ll-glow {
-        position: absolute;
-        inset: -20% -10% auto;
-        z-index: -1;
-        height: 80%;
-        background:
-          radial-gradient(40% 50% at 20% 30%, rgba(120, 194, 255, 0.22), transparent 70%),
-          radial-gradient(35% 45% at 50% 20%, rgba(215, 156, 242, 0.24), transparent 70%),
-          radial-gradient(40% 50% at 82% 32%, rgba(245, 143, 185, 0.24), transparent 70%);
-        filter: blur(30px);
+      .docs-hasu > * {
+        width: min(72rem, 100%);
+        box-sizing: border-box;
       }
-      .docs-ll-rings {
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        display: grid;
-        place-items: center;
-        pointer-events: none;
-      }
-      .docs-ll-rings i {
-        grid-area: 1 / 1;
-        width: min(1300px, 180vw);
-        aspect-ratio: 1;
-        border: 1px solid rgba(233, 227, 245, 0.08);
-        border-radius: 50%;
-      }
-      .docs-ll-rings i:nth-child(2) {
-        width: min(1000px, 140vw);
-      }
-      .docs-ll-rings i:nth-child(3) {
-        width: min(700px, 100vw);
-      }
-      .docs-ll-pill {
-        padding: 0.25rem 0.875rem;
-        border-radius: 999px;
-        background: rgba(245, 143, 185, 0.14);
-        color: #f9a8c9;
+      .docs-hasu-home {
+        color: inherit;
         font-size: 0.875rem;
+        text-align: start;
+        text-decoration: none;
+        opacity: 0.75;
       }
-      /* Only transforms on their own layers move: the big logo is painted once and never again. */
-      .docs-ll-logo {
-        position: relative;
-        width: min(860px, 100%);
-        will-change: transform;
-        animation: docs-ll-float 5s ease-in-out infinite;
+      .docs-hasu-home:hover {
+        opacity: 1;
       }
-      .docs-ll-logo svg {
-        display: block;
-        width: 100%;
-        height: auto;
-        overflow: visible;
+      .docs-hasu-home:focus-visible,
+      .docs-hasu-unit:focus-visible {
+        outline: 2px solid var(--docs-hasu-red);
+        outline-offset: 3px;
       }
-      .docs-ll-deco {
-        position: absolute;
-        display: block;
-        aspect-ratio: 1;
-        will-change: transform;
-        pointer-events: none;
+      .docs-hasu-mast {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid var(--docs-hasu-line);
+        text-align: start;
       }
-      .docs-ll-deco.ll-star {
-        animation: docs-ll-twinkle 2.6s ease-in-out infinite;
+      .docs-hasu-lotus {
+        flex: none;
+        width: 3.25rem;
+        fill: var(--docs-hasu-red);
       }
-      .docs-ll-deco.ll-star-b {
-        animation-delay: -1.3s;
+      .docs-hasu-logo,
+      .docs-hasu-logo-en,
+      .docs-hasu-title,
+      .docs-hasu-chip,
+      .docs-hasu-unit-name,
+      .docs-hasu-label,
+      .docs-hasu-name-box {
+        font-family: 'Shippori Mincho', serif;
       }
-      .docs-ll-deco.ll-heart {
-        animation: docs-ll-beat 1.4s ease-in-out infinite;
-      }
-      .docs-ll-deco.ll-plus {
-        animation: docs-ll-spin 9s linear infinite;
-      }
-      .docs-ll-deco.ll-plus-b {
-        animation-duration: 12s;
-        animation-direction: reverse;
-      }
-      .docs-ll-unlocked {
+      .docs-hasu-logo {
         margin: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 999px;
-        background: rgba(232, 102, 142, 0.14);
-        color: #f9b8cf;
-        font-size: 0.9375rem;
+        color: var(--docs-hasu-red);
+        font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: 0.04em;
       }
-      .docs-ll-unlocked span {
-        display: block;
-        font-size: 0.8125rem;
-        opacity: 0.8;
+      .docs-hasu-logo span {
+        margin-inline-start: 0.4em;
+        font-size: 0.62em;
+        font-weight: 700;
       }
-      .docs-ll-title {
+      .docs-hasu-logo-en {
+        margin: 0.25rem 0 0;
+        color: var(--docs-hasu-red);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+      }
+      .docs-hasu-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+      .docs-hasu-title {
         margin: 0;
-        background: linear-gradient(90deg, #78c2ff, #a6a4ff, #d79cf2, #f58fb9);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        font-family: Fredoka, 'IBM Plex Sans Thai', sans-serif;
-        font-size: clamp(1.75rem, 5vw, 3rem);
-        line-height: 1.2;
+        font-size: clamp(2.5rem, 9vw, 4.5rem);
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.04em;
       }
-      .docs-ll-lead {
-        max-width: 40rem;
-        margin: 0;
-        color: #bdb3cf;
-        line-height: 1.7;
+      .docs-hasu-chip {
+        padding: 0.25rem 1.25rem;
+        background: var(--docs-hasu-ink);
+        color: #ffffff;
+        font-weight: 700;
+        letter-spacing: 0.3em;
       }
-      .docs-ll-lead span {
+      /* Double rules round a soft pink board. */
+      .docs-hasu-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: clamp(1rem, 3vw, 2rem);
+        border: 1px solid var(--docs-hasu-line);
+        outline: 1px solid var(--docs-hasu-line);
+        outline-offset: 4px;
+        background: var(--docs-hasu-pink);
+      }
+      .docs-hasu-lead {
+        max-width: 46rem;
+        margin: 0 auto;
+        line-height: 1.8;
+      }
+      .docs-hasu-lead span,
+      .docs-hasu-hint span,
+      .docs-hasu-unlocked span {
         display: block;
         margin-top: 0.25rem;
         font-size: 0.875em;
+        opacity: 0.75;
+      }
+      .docs-hasu-unlocked {
+        align-self: center;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--docs-hasu-red);
+        background: #ffffff;
+        color: var(--docs-hasu-red);
+      }
+      .docs-hasu-units {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        width: min(44rem, 100%);
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0.75rem;
+        border: 1px solid var(--docs-hasu-line);
+        background: #ffffff;
+      }
+      @media (min-width: 640px) {
+        .docs-hasu-units {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      /* A member-card frame: the colour face, the name down the right edge, a dot in the corner. */
+      .docs-hasu-unit {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        aspect-ratio: 4 / 5;
+        padding: 0.375rem;
+        border: 1px solid var(--docs-hasu-line);
+        background: #ffffff;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        transition: box-shadow 0.2s, translate 0.2s;
+      }
+      .docs-hasu-unit:hover {
+        translate: 0 -2px;
+        box-shadow: 0 6px 16px -10px rgba(43, 37, 35, 0.5);
+      }
+      .docs-hasu-unit[aria-checked='true'] {
+        border-color: var(--docs-hasu-unit);
+        box-shadow: inset 0 0 0 2px var(--docs-hasu-unit);
+      }
+      .docs-hasu-unit-face {
+        display: grid;
+        place-items: center;
+        background: color-mix(in srgb, var(--docs-hasu-unit) 16%, #ffffff);
+      }
+      .docs-hasu-unit-face svg {
+        width: 62%;
+        fill: var(--docs-hasu-unit);
+      }
+      .docs-hasu-unit-name {
+        padding: 0.25rem 0.125rem 1.25rem;
+        writing-mode: vertical-rl;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .docs-hasu-unit-dot {
+        position: absolute;
+        right: 0.55rem;
+        bottom: 0.55rem;
+        width: 0.5rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--docs-hasu-unit);
+      }
+      .docs-hasu-hint {
+        margin: -0.5rem 0 0;
+        font-size: 0.875rem;
         opacity: 0.8;
       }
-      .docs-ll-preview {
+      .docs-hasu-grid {
+        display: grid;
+        gap: 1.25rem;
+        align-items: start;
+      }
+      @media (min-width: 900px) {
+        .docs-hasu-grid {
+          grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        }
+      }
+      /* The preview wears the preset (its tokens are set on it); the page around keeps its own look. */
+      .docs-hasu-preview {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        width: min(36rem, 100%);
-        box-sizing: border-box;
         padding: 1.25rem;
-        border-radius: 1.25rem;
+        border: 1px solid var(--docs-hasu-line);
         background: var(--wt-card-bg);
         color: var(--wt-text);
         font-family: var(--wt-font-family);
-        box-shadow: 0 20px 60px -20px rgba(245, 143, 185, 0.45);
         text-align: start;
       }
-      /* Edel Note: gold and silver, as its emblem; the preset has no gold of its own. */
-      .docs-ll-edel {
-        background: linear-gradient(90deg, #f3d77c, #e6e8ec);
-        color: #5c4a12;
-      }
-      .docs-ll-row {
+      .docs-hasu-row {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 0.5rem;
       }
-      .docs-ll-code {
+      /* Edel Note: gold and silver, as its emblem; the preset has no gold of its own. */
+      .docs-hasu-edel {
+        background: linear-gradient(90deg, #f3d77c, #e6e8ec);
+        color: #5c4a12;
+      }
+      .docs-hasu-name {
         display: flex;
         flex-direction: column;
-        gap: 0.375rem;
-        max-width: 100%;
+        gap: 0.75rem;
+        min-width: 0;
+        text-align: start;
       }
-      .docs-ll-code code {
+      .docs-hasu-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+      }
+      .docs-hasu-name-box {
+        margin: 0;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--docs-hasu-ink);
+        background: #ffffff;
+        font-size: 2.5rem;
+        text-align: center;
+        letter-spacing: 0.3em;
+      }
+      .docs-hasu-name-box rt {
+        font-size: 0.75rem;
+        letter-spacing: 0.4em;
+      }
+      .docs-hasu-name code {
         overflow-x: auto;
         padding: 0.375rem 0.75rem;
-        border-radius: 0.5rem;
-        background: rgba(233, 227, 245, 0.08);
-        color: #e9e3f5;
+        border: 1px solid var(--docs-hasu-line);
+        background: #ffffff;
         font-family: 'JetBrains Mono', monospace;
         font-size: 0.8125rem;
         white-space: nowrap;
       }
-      .docs-ll-actions {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-      }
-      .docs-ll-btn {
-        padding: 0.625rem 1.25rem;
-        border: 1px solid rgba(233, 227, 245, 0.25);
-        border-radius: 999px;
-        color: #e9e3f5;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      .docs-ll-btn:hover {
-        background: rgba(233, 227, 245, 0.08);
-      }
-      .docs-ll-btn-main {
-        border-color: transparent;
-        background: linear-gradient(90deg, #e8668e, #b77be0);
-        color: #ffffff;
-      }
-      .docs-ll-btn:focus-visible {
-        outline: 2px solid #f9a8c9;
-        outline-offset: 3px;
-      }
-      /* A bare translate gets snapped to whole pixels now and then (a 1px hop every few frames); the hair of rotation
-         keeps every frame on the sub-pixel path. */
-      @keyframes docs-ll-float {
-        0%,
-        100% {
-          transform: translateY(0) rotate(0.01deg);
-        }
-        50% {
-          transform: translateY(-10px) rotate(0.01deg);
-        }
-      }
-      @keyframes docs-ll-twinkle {
-        50% {
-          transform: scale(0.82) rotate(12deg);
-        }
-      }
-      @keyframes docs-ll-beat {
-        15%,
-        45% {
-          transform: scale(1.14);
-        }
-        30% {
-          transform: scale(1);
-        }
-      }
-      @keyframes docs-ll-spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
       @media (prefers-reduced-motion: reduce) {
-        .docs-ll-logo,
-        .docs-ll-deco {
-          animation: none;
+        .docs-hasu-unit {
+          transition: none;
         }
       }
     `,
   ],
 })
-export class SecretLL implements AfterViewInit, OnDestroy {
-  @ViewChild('preview', { static: true }) protected previewRef?: ElementRef<HTMLElement>;
-  private readonly sanitizer = inject(DomSanitizer);
-  readonly logo = this.sanitizer.bypassSecurityTrustHtml(LL_LOGO_STILL_SVG);
-  readonly decos = LL_LOGO_DECOS.map((d) => ({ ...d, svg: this.sanitizer.bypassSecurityTrustHtml(d.svg) }));
-  /** Whether Hasu was already unlocked before this visit; opening the page unlocks it. */
-  readonly wasUnlocked = hasuUnlocked();
-  cheer = true;
-  sparkle = true;
+export class SecretHasu implements OnInit, OnDestroy {
   private readonly doc = inject(DOCUMENT);
+  readonly lotus = LOTUS;
+  readonly units = UNITS;
+  /** Whether Hasu was already unlocked before this visit; opening the page unlocks it. */
+  readonly wasUnlocked = HASU.unlocked();
+  /** The unit whose colour the preview wears; none keeps the preset's crimson. */
+  unit: Unit | null = null;
+  previewStyle: Record<string, string> = {};
+  cheer = true;
+  practice = true;
   private fontLink: HTMLLinkElement | null = null;
 
   constructor() {
-    unlockHasu();
+    HASU.unlock();
   }
 
-  ngAfterViewInit(): void {
-    // The preview card wears the LL preset; the rest of the page keeps the site's theme.
-    const el = this.previewRef?.nativeElement;
-    if (el) for (const [k, v] of Object.entries(computeTokens(LL.config).light)) el.style.setProperty(`--wt-${k}`, String(v));
+  ngOnInit(): void {
+    this.restyle();
     this.fontLink = this.doc.createElement('link');
     this.fontLink.rel = 'stylesheet';
     this.fontLink.href = FONTS;
     this.doc.head.appendChild(this.fontLink);
-    this.doc.documentElement.classList.add('docs-ll-open');
+    this.doc.documentElement.classList.add('docs-hasu-open');
   }
 
   ngOnDestroy(): void {
     this.fontLink?.remove();
-    this.doc.documentElement.classList.remove('docs-ll-open');
+    this.doc.documentElement.classList.remove('docs-hasu-open');
+  }
+
+  pickUnit(unit: Unit): void {
+    this.unit = this.unit === unit ? null : unit;
+    this.restyle();
+  }
+
+  private restyle(): void {
+    const config: ThemeConfig = { ...LL.config, ...(this.unit ? { primary: this.unit.color } : {}) };
+    const style: Record<string, string> = {};
+    for (const [k, v] of Object.entries(computeTokens(config).light)) style[`--wt-${k}`] = String(v);
+    this.previewStyle = style;
   }
 }
 
 export const SECRET_ROUTES: Routes = [
-  { path: '', component: SecretLL, title: 'WiraTheme ♡', providers: [provideWiraTheme({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
+  { path: '', component: SecretHasu, title: 'WiraTheme · 蓮', providers: [provideWiraTheme({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
 ];

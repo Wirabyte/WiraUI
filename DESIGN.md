@@ -1057,12 +1057,51 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **แก้ระหว่างทดสอบในเบราว์เซอร์จริง:** node แบบ template หดเหลือความกว้างเนื้อหา (`width: max-content`), Shift + ลูกศรย้าย ×100, กดลูกศรเร็วกว่ารอบวาด, กล่องเลือกในโหมดคุมเองบน WebKit, resizer วัดจากตำแหน่งเก่า, handle ถูก resizer ทับ, ป้ายเส้นอยู่ใต้ node, วงจุดปลายเส้นตอนเลือก
 - e2e `flow.spec.ts` 14 กรณีต่อรุ่น (v1 / v2 / v3 / WebKit) ทั้งชุด component ผ่าน 1151 ข้อ
 
+### 12.22 Figma UI Kit (26 ต.ค. 2569)
+
+ผู้ใช้ให้เริ่มทำ Figma UI Kit (ข้อ 13.8) ในเวลาที่มี ไม่มีการเชื่อม Figma API ในเครื่องมือที่ใช้ จึงทำเป็น **plugin แบบ development** (`packages/figma`) ให้ designer รันใน Figma desktop แล้ว plugin สร้าง kit ลงไฟล์เอง
+- **token มาจากธีมจริง:** `scripts/build.mjs` โหลด `theme.css` ของ preset v3 ทุกตัวลง Chromium แล้วอ่าน `--wt-*` ทุกตัวตามที่เบราว์เซอร์คำนวณ ทั้ง `:root` และ `:root.wt-dark` ได้ค่าสีจริงหลัง var() / color-mix() และ px หลัง rem / calc() รวมถึงเงา สีที่ CSS ผสมตอนใช้งาน (ขอบ outlined, tint ตอน hover, พื้น tag, ขอบ message) คำนวณเพิ่มเป็นกลุ่ม `kit/…` และได้ไฟล์ W3C Design Tokens ต่อ preset / mode ด้วย
+- **ใน Figma:** variables 848 ตัว (Light / Dark; แพลนฟรีแยก Dark เป็นอีก collection), text styles ตามฟอนต์ของ preset, effect styles ของเงาและวงโฟกัส, หน้า Foundations / Components / Icons มี component set 15 ชุด (Button 216 variant, InputText, Select, Checkbox, RadioButton, ToggleSwitch, Tag, Badge, Avatar, Message, Toast, Tab, Step, Accordion, Table cell) และชิ้นเดี่ยว (Select panel, Chip, ProgressBar, Slider, Tooltip, Card, Dialog, Menu, Breadcrumb, Paginator, Navbar, Aside menu, ตารางตัวอย่าง) ทุกค่าผูกกับ variable และ wiraicon 424 ตัวเป็น component สำหรับ property Icon glyph
+- **ตรวจ:** type-check กับ `@figma/plugin-typings` และรันกับ Figma API จำลองครบ 9 preset ซึ่งบังคับกฎที่ Figma ตรวจตอนรันจริง (ฟอนต์ต้องโหลดก่อน, FILL เฉพาะใน auto layout, field ที่ผูกตัวแปรได้, ข้อความที่ผูก property ต้องแก้ผ่าน `setProperties`) ส่วนหน้าตาต้องดูใน Figma เอง
+- preset ที่ซ่อน (ไม่อยู่ใน `VERSION_CATALOG`) ไม่อยู่ใน plugin
+
+### 12.23 เว็บเอกสาร: หน้า 404, ฟอนต์ของ preset และ CI (26 ต.ค. 2569)
+
+- **หน้า 404 (`apps/docs/src/app/shared/not-found.ts`):** เดิมที่อยู่ที่ไม่มีจริงจะเด้งไปหน้าแรก (หรือหน้าบทนำถ้าอยู่ใต้ /vN) ตอนนี้มีหน้าของตัวเอง
+  - ใต้ /v1–/v3 อยู่ในโครงเอกสาร (sidebar, ค้นหา, เลือกรุ่น) ที่อื่นแสดงเดี่ยวพร้อมหัวเล็ก ๆ
+  - ภาพเป็นแผนภาพแบบ Flow ที่เส้นเชื่อมหลุดและแกว่ง (มีการหมุนเล็กน้อยกัน Firefox ปัดพิกเซล)
+  - แสดงที่อยู่ที่เปิด มีปุ่มกลับหน้าแรก / เอกสาร / ค้นหา
+  - เสนอหน้าที่ชื่อใกล้ที่สุดด้วย edit distance ที่นับตัวอักษรสลับเป็นหนึ่ง (`buton` → Button, `tabel` → Table) ถ้าไม่ใกล้เลยเสนอหน้าที่เปิดบ่อย
+  - title เป็น "ไม่พบหน้านี้ · WiraTheme" รองรับไทย / อังกฤษ มือถือ และโหมดมืด
+- **Glass:** ชิ้นเล็กที่วางทับเส้น (หัวจับ Slider, เลขของ Steps, จุดของ Timeline, ปุ่มพับของ OrganizationChart, node และ handle ของ Flow) เคยเป็นกระจกโปร่งจนเห็นเส้นทะลุ ตอนนี้ใช้ token ใหม่ `glass-solid` (surface-0 / surface-900 ในโหมดมืด)
+- **ฟอนต์ของ preset (`core/preset-fonts.ts`):** เว็บโหลดเองแค่ Inter, IBM Plex Sans Thai, JetBrains Mono, Kanit preset ที่ใช้ฟอนต์อื่น (Sarabun, Prompt, Anuphan, Roboto …) จึงเคยแสดงด้วยฟอนต์ระบบ ซึ่ง metrics ทำให้ข้อความไม่ตรงแนวไอคอน ตอนนี้โหลดจาก Google Fonts ครั้งแรกที่ preset หรือ Studio ใช้
+- **บทเรียนเรื่องฟอนต์ไทยในปุ่ม:** วัดจาก pixel จริง ไม่ใช่ canvas metrics ฟอนต์ไทยมีเชิงทุกตัวที่ลอง (Noto Serif Thai, Taviraj, Trirong, Pridi) วางตัวอักษรสูงกว่า Kanit 1–1.7px ข้างไอคอน ส่วนแบบมีหัว sans (Noto Sans Thai Looped, Sarabun) วางเหมือน Kanit
+- **CI (`.github/workflows/ci.yml`):** ไม่เคยผ่านเพราะสองจุดหยุดตั้งแต่ต้น
+  1. `npm pack --pack-destination packs` ทั้งที่ยังไม่มีโฟลเดอร์ `packs` (ENOENT)
+  2. ขั้น build เว็บเอกสารเรียก `pnpm docs` ซึ่งเป็นคำสั่งของ pnpm เอง (เปิดหน้า npm) แทน script ต้องเป็น `pnpm run docs`
+
+  ปรับโครงใหม่:
+  - job `apps` build playground กับเว็บเอกสารครั้งเดียว แล้ว job `e2e` แบบ matrix รัน component / docs × Chromium / WebKit / Firefox ขนานกัน
+  - ติดตั้ง browser ให้ครบ (เดิมติดตั้งแค่ Chromium แต่รันทุก project)
+  - เลือก runner ได้ด้วย repository variable `WT_RUNNER` (เช่น `self-hosted` แบบโปรเจคอื่นของ Wirabyte)
+  - แถว Angular 21 / Node 20.19 ของ `ng add` ใช้ npm 11 เพราะ npm ที่มากับ Node 20.19 พังใน `ng new` ("reading 'edgesOut'")
+- **ลองทุก job ใน Linux ก่อน push (Docker, image `mcr.microsoft.com/playwright` รุ่นเดียวกับ e2e และ `node:<รุ่นต่ำสุด>`):** เพราะ Firefox ของ Playwright เปิดบนเครื่อง Windows นี้ไม่ได้ ชุด Firefox จึงไม่เคยรันมาก่อน ผลที่เจอ:
+  - **บั๊กจริง:**
+    - ใน Firefox การลากปรับความกว้างคอลัมน์ไปเรียงคอลัมน์นั้นด้วย เพราะ click ที่ตามมาไปลงที่หัวคอลัมน์ แก้ด้วยการกลืน click นั้นแบบเดียวกับการลากย้ายคอลัมน์
+    - การกดหัวคอลัมน์เพื่อลากย้ายเริ่มเลือกข้อความ ปิดค่าเริ่มต้นของการกดแล้ว focus เอง และห้าม dragstart / selectstart ระหว่างกด
+    - View Transition ที่ browser ข้าม (เครื่องช้า) ทำให้ `ready` / `updateCallbackDone` reject จนกลายเป็น error จึงรับไว้ด้วย
+  - **เรื่องของชุดทดสอบ:**
+    - Firefox ทิ้งข้อมูลของ paste event ที่สร้างเอง จึงตรวจก่อนว่าข้อมูลอยู่ไหม
+    - Firefox รายงาน font ที่โหลดไม่ทันตอนเปลี่ยนหน้าภายใต้ที่อยู่ของหน้า จึงกรองจากข้อความด้วย
+    - ตาราง Firefox กว้างกว่า จุดปล่อยของการลากจึงหลุดจอ แก้ให้อยู่ในหน้าต่าง
+    - หน้า Studio โหลดยังไม่เสร็จแล้ว reload ทันที
+
 ---
 
 ## 13. คำถามที่ต้องตัดสินใจ
 
 1. **License (ตัดสินแล้ว):** MIT ใช้ฟรีทุกรุ่นแบบ PrimeNG ยุคเดิม ไม่มี license ขายและไม่มีรุ่น LTS แบบเสียเงิน (ไฟล์ `LICENSE` ที่ root ถูก copy เข้าทุกแพ็กเกจ) ส่วนช่องทาง publish ยังเหลือเลือกระหว่าง npm สาธารณะ (`wiratheme` ยังว่าง) ซึ่งเข้ากับ MIT ที่สุด หรือ private registry
-8. **Figma UI Kit (วางแผนแล้ว):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
+8. **Figma UI Kit (เริ่มแล้ว, ดู 12.22):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
 2. **โดเมนของเว็บแนะนำ** เช่น `wiratheme.wirabyte.com` และ host ที่ไหน (มีโปรเจค NodeJS Web Hosting อยู่แล้ว หรือใช้ Cloudflare Pages)
 3. **PrimeFlex (ตัดสินแล้ว):** ทำ utility ของ WiraTheme เองในตัว (`wiratheme/utils`, 6.11) ชื่อ class เดิม เปิด/ปิดได้
 4. **Icon:** พึ่ง primeicons/Font Awesome ต่อไป หรือทำ `@wiratheme/icons` (ตอนนี้ icon ที่ใช้ภายใน component เป็น SVG inline จึงไม่บังคับ dependency)

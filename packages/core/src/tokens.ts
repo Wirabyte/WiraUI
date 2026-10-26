@@ -213,6 +213,16 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
       'button-secondary-hover-bg': see('surface-0', 75),
       'button-secondary-active-bg': see('surface-0', 90),
       'button-secondary-border': 'var(--wt-glass-border)',
+      'glass-solid': 'var(--wt-surface-0)',
+      // Small parts drawn over a line (the slider's track, the steps' and timeline's connectors, a flow's edges, the
+      // org chart's links) are solid: through glass the line would show across them.
+      'slider-handle-bg': 'var(--wt-glass-solid)',
+      'steps-number-bg': 'var(--wt-glass-solid)',
+      'timeline-marker-bg': 'var(--wt-glass-solid)',
+      'organizationchart-toggle-bg': 'var(--wt-glass-solid)',
+      'flow-node-bg': 'var(--wt-glass-solid)',
+      'flow-handle-border': 'var(--wt-glass-solid)',
+      'flow-resizer-handle-bg': 'var(--wt-glass-solid)',
     },
     dark: {
       'glass-bg': see('surface-900', 46),
@@ -237,6 +247,7 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
       'button-secondary-bg': see('surface-0', 10),
       'button-secondary-hover-bg': see('surface-0', 16),
       'button-secondary-active-bg': see('surface-0', 22),
+      'glass-solid': 'var(--wt-surface-900)',
     },
   };
 }

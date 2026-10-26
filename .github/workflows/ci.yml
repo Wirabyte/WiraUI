@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -12,14 +13,18 @@ concurrency:
 env:
   NG_CLI_ANALYTICS: 'false'
 
+# Every job runs on GitHub's ubuntu-latest unless the repository variable WT_RUNNER names another runner label, e.g.
+# `self-hosted` for the Wirabyte runner the other projects use (Settings → Secrets and variables → Actions →
+# Variables). Nothing else in this file changes for it.
+
 jobs:
   build:
     name: Build and test (Node 24)
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -43,8 +48,12 @@ jobs:
         env:
           CI: 'true'
         run: |
+          mkdir -p packs
           for v in v1 v2 v3; do pnpm --filter @wiratheme-build/angular-$v build; done
           for v in v1 v2 v3; do (cd packages/angular-$v/dist && npm pack --pack-destination ../../../packs); done
+
+      - name: Build wiraicon
+        run: pnpm --filter @wiratheme-build/icons test
 
       - uses: actions/upload-artifact@v4
         with:
@@ -54,7 +63,7 @@ jobs:
   install:
     name: ng add on Angular ${{ matrix.angular }} / Node ${{ matrix.node }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
@@ -64,15 +73,18 @@ jobs:
           - { wt: 1, angular: '17', node: '18', flags: '--style=css --standalone=false' }
           - { wt: 2, angular: '18', node: '18.19', flags: '--style=scss --standalone=false' }
           - { wt: 2, angular: '20', node: '20.19', flags: '--style=scss' }
-          - { wt: 3, angular: '21', node: '20.19', flags: '--style=css --zoneless' }
+          # The npm that ships with Node 20.19 fails inside `ng new` for Angular 21 ("reading 'edgesOut'"): npm 11 there.
+          - { wt: 3, angular: '21', node: '20.19', npm: '11', flags: '--style=css --zoneless' }
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: packs
           path: packs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node }}
+      - if: matrix.npm
+        run: npm install -g npm@${{ matrix.npm }}
       - name: New Angular ${{ matrix.angular }} app
         run: npx -y @angular/cli@${{ matrix.angular }} new app --defaults --skip-git --skip-tests --routing=false ${{ matrix.flags }}
       # Install the packed tarball first: Angular CLI 21 cannot `ng add` a file: spec directly.
@@ -85,38 +97,16 @@ jobs:
         working-directory: app
         run: npx ng build
 
-  e2e:
-    name: Playwright (playgrounds v1–v3 + docs site)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Build and pack wiratheme v1–v3
-        run: pnpm pack:all
-      - name: npm ci in the apps
-        run: for app in playground-v1 playground-v2 playground-v3 docs; do (cd apps/$app && npm ci --no-audit --no-fund); done
-      - name: ng add + build the playgrounds
-        run: pnpm playgrounds
-      - name: Build the docs site (v1, v2, v3 lazy-loaded on Angular 21)
-        run: pnpm docs
-      - run: pnpm --filter @wiratheme/e2e exec playwright install --with-deps chromium
-      - run: pnpm e2e
-
   version-lock:
     name: wiratheme@1 must not install on Angular 18
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: packs
           path: packs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '24'
       - run: npx -y @angular/cli@18 new app --defaults --skip-git --skip-tests --skip-install --routing=false --style=css
@@ -128,3 +118,74 @@ jobs:
             echo "wiratheme@1 installed on Angular 18, the peer range lock is broken"; exit 1
           fi
           grep -q ERESOLVE install.log
+
+  # The apps the browsers test (playgrounds v1–v3 built with `ng add` from the packed tarballs, and the docs site),
+  # built once and shared with the e2e jobs below.
+  apps:
+    name: Build the playgrounds and the docs site
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build and pack wiratheme v1–v3 and wiraicon
+        run: pnpm pack:all
+      - name: npm ci in the apps
+        run: for app in playground-v1 playground-v2 playground-v3 docs; do (cd apps/$app && npm ci --no-audit --no-fund); done
+      - name: ng add + build the playgrounds
+        run: pnpm run playgrounds
+      # `pnpm docs` would be pnpm's own command (it opens the package page): the script needs `pnpm run`.
+      - name: Build the docs site (v1, v2, v3 lazy-loaded on Angular 21)
+        run: pnpm run docs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apps
+          path: |
+            apps/playground-v1/dist
+            apps/playground-v2/dist
+            apps/playground-v3/dist
+            apps/docs/dist
+          retention-days: 3
+
+  e2e:
+    name: Playwright · ${{ matrix.name }}
+    needs: apps
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # v2 and v1 compare against the screenshots v3 writes, so they run in the same job.
+          - { name: 'components · Chromium (v3, v2, v1)', browser: chromium, projects: '--project=v3 --project=v2 --project=v1' }
+          - { name: 'components · WebKit', browser: webkit, projects: '--project=v3-webkit' }
+          - { name: 'components · Firefox', browser: firefox, projects: '--project=v3-firefox' }
+          - { name: 'docs · Chromium', browser: chromium, projects: '--project=docs' }
+          - { name: 'docs · WebKit', browser: webkit, projects: '--project=docs-webkit' }
+          - { name: 'docs · Firefox', browser: firefox, projects: '--project=docs-firefox' }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --filter @wiratheme/e2e
+      - uses: actions/download-artifact@v4
+        with:
+          name: apps
+          path: apps
+      # The system libraries need root: on a self-hosted runner install them once by hand (npx playwright install-deps).
+      - name: Install ${{ matrix.browser }}
+        run: pnpm --filter @wiratheme/e2e exec playwright install ${{ runner.environment == 'github-hosted' && '--with-deps' || '' }} ${{ matrix.browser }}
+      - name: Test
+        run: pnpm --filter @wiratheme/e2e exec playwright test ${{ matrix.projects }}
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.browser }}-${{ strategy.job-index }}
+          path: e2e/test-results
+          retention-days: 7

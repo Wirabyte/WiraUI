@@ -173,9 +173,15 @@ export const PRESETS = {
   siam: { family: 'wira', label: 'Siam', primary: '#6366f1', surface: 'gray', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Prompt', fontSize: 14, lineHeight: 1.6, radius: 4, density: 'normal', shadow: 'elevated', ripple: true, focusRing: 'outline', transition: 200, scheme: 'light' },
   nakhon: { family: 'wira', label: 'Nakhon', primary: '#3b82f6', surface: 'zinc', semantic: SEMANTIC_DEFAULTS, fontFamily: 'IBM Plex Sans Thai', fontSize: 13, lineHeight: 1.55, radius: 2, density: 'compact', shadow: 'none', ripple: false, focusRing: 'outline', transition: 100, scheme: 'light' },
   // Hidden: listed by no version, so no menu or prompt shows it; `$preset: 'll'` or `preset: LL` turns it on.
-  // Candy-pink lotus; semantics after the units: Cerise Bouquet red (danger), DOLLCHESTRA blue (info),
-  // Mira-Cra Park! orange (warn), plus lotus-leaf green (success) and lavender (help).
-  ll: { family: 'wira', label: 'LL', primary: '#e8668e', surface: 'stone', semantic: { success: '#3fae78', info: '#3b6fd8', warn: '#ff9a2e', danger: '#e0344f', help: '#9b7be8' }, fontFamily: 'Itim', fontSize: 15, lineHeight: 1.6, radius: 16, density: 'comfortable', shadow: 'soft', ripple: true, focusRing: 'ring', transition: 200, scheme: 'light' },
+  // Hasu: school crimson on warm paper, a looped Thai face (classic, and centred beside icons: the Thai serifs ride
+  // high in a control) and square-ish corners; semantics after the units: Cerise
+  // Bouquet red (danger), DOLLCHESTRA blue (info), Mira-Cra Park! yellow (warn), plus lotus-leaf green (success)
+  // and lavender (help).
+  ll: { family: 'wira', label: 'LL', primary: '#b8172f', surface: 'stone', semantic: { success: '#3f9e6b', info: '#3b6fd8', warn: '#e8a317', danger: '#e0445c', help: '#9b7be8' }, fontFamily: 'Noto Sans Thai Looped', fontSize: 15, lineHeight: 1.65, radius: 4, density: 'comfortable', shadow: 'subtle', ripple: false, focusRing: 'ring', transition: 200, scheme: 'light' },
+  // Hidden too, and unrelated to LL: the cute sticker-logo look in Wirabyte's own colours (the coral of its W, the
+  // mint-to-sky of its B, on cool slate), a rounded Thai face, soft and round. `$preset: 'kawaii'` or
+  // `preset: WiraKawaii`.
+  kawaii: { family: 'wira', label: 'WiraKawaii', primary: '#ee5b5b', surface: 'slate', semantic: { success: '#1fb48a', info: '#3a9fde', warn: '#f5893a', danger: '#d3303f', help: '#8b7cf6' }, fontFamily: 'Itim', fontSize: 15, lineHeight: 1.6, radius: 16, density: 'comfortable', shadow: 'soft', ripple: true, focusRing: 'ring', transition: 200, scheme: 'light' },
   glass: { family: 'wira', label: 'Glass', primary: '#0a84ff', surface: 'slate', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Anuphan', fontSize: 14, lineHeight: 1.6, radius: 14, density: 'normal', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 250, scheme: 'light', material: 'glass' },
 } satisfies Record<string, PresetDefinition>;
 export type PresetId = keyof typeof PRESETS;
@@ -183,6 +189,7 @@ export const PRESET_NAMES = Object.fromEntries(Object.entries(PRESETS).map(([id,
 /** The constant each preset is exported as from `wiratheme/presets` (`'sila-classic'` → `SilaClassic`). */
 export function presetExportName(id: PresetId): string {
   if (id === 'll') return 'LL';
+  if (id === 'kawaii') return 'WiraKawaii';
   return id.replace(/(^|-)([a-z])/g, (_m, _d, c: string) => c.toUpperCase());
 }
 

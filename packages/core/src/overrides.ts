@@ -128,6 +128,8 @@ export const Nakhon = makePreset('nakhon');
 export const Glass = makePreset('glass');
 /** ♡ */
 export const LL = makePreset('ll');
+/** ฅ^•ﻌ•^ฅ */
+export const WiraKawaii = makePreset('kawaii');
 export const PRESET_LIST: Record<PresetId, ThemePreset> = {
   'sila-classic': SilaClassic,
   arun: Arun,
@@ -144,6 +146,7 @@ export const PRESET_LIST: Record<PresetId, ThemePreset> = {
   nakhon: Nakhon,
   glass: Glass,
   ll: LL,
+  kawaii: WiraKawaii,
 };
 
 /** A ready-made theme as a preset, e.g. `themePreset('sila-light-teal')` or `themePreset('sayan-green')`. */

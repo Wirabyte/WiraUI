@@ -273,6 +273,14 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       this.doc.removeEventListener('pointerup', up, true);
       this.doc.removeEventListener('pointercancel', up, true);
       th.classList.remove('wt-column-resizing');
+      // The click that ends a resize must not sort the column. Chromium sends it to the grip (which ignores it), but
+      // Firefox sends it to the header cell when the pointer is let go beside the grip.
+      const swallow = (e: Event) => {
+        e.stopPropagation();
+        e.preventDefault();
+      };
+      th.addEventListener('click', swallow, { capture: true, once: true });
+      setTimeout(() => th.removeEventListener('click', swallow, { capture: true }), 0);
       if (delta) this.onColResize.emit({ element: th, delta });
     };
     this.doc.addEventListener('pointermove', move, true);
@@ -291,6 +299,15 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     const cells = () => Array.from(row.children).filter((c) => c.classList.contains('wt-reorderable-column')) as HTMLElement[];
     const dragIndex = cells().indexOf(th);
     const clear = () => row.querySelectorAll('.wt-col-drop-before, .wt-col-drop-after').forEach((c) => c.classList.remove('wt-col-drop-before', 'wt-col-drop-after'));
+    // Firefox starts selecting the header's text on the press and then never reports the release, so the drop never
+    // comes. Holding back the press's default stops that (the click still follows and still sorts when the pointer
+    // did not move); the header is focused by hand, as the press would have done. A native drag or selection that
+    // starts anyway is refused while the press lasts.
+    event.preventDefault();
+    th.focus({ preventScroll: true });
+    const noNative = (e: Event) => e.preventDefault();
+    this.doc.addEventListener('dragstart', noNative, true);
+    this.doc.addEventListener('selectstart', noNative, true);
     const move = (e: PointerEvent) => {
       if (!dragging && Math.hypot(e.clientX - startX, e.clientY - startY) < 6) return;
       if (!dragging) {
@@ -313,6 +330,8 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       this.doc.removeEventListener('pointermove', move, true);
       this.doc.removeEventListener('pointerup', up, true);
       this.doc.removeEventListener('pointercancel', up, true);
+      this.doc.removeEventListener('dragstart', noNative, true);
+      this.doc.removeEventListener('selectstart', noNative, true);
       clear();
       th.classList.remove('wt-column-dragging');
       if (!dragging) return;

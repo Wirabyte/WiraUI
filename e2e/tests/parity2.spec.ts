@@ -556,7 +556,8 @@ test.describe('input otp', () => {
         const data = new DataTransfer();
         data.setData('text/plain', '123 456');
         const event = new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true });
-        if (!event.clipboardData) return false;
+        // Firefox drops the data of a hand-made paste event (a real paste carries it): nothing to check there.
+        if (event.clipboardData?.getData('text/plain') !== '123 456') return false;
         el.dispatchEvent(event);
         return true;
       } catch {

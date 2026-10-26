@@ -10,12 +10,15 @@ const VERSIONS = [
 // Thai is the default for Thai browsers; most tests run as one. English is covered explicitly below.
 test.use({ locale: 'th-TH' });
 
-/** Uncaught errors and console errors. Web-font requests are left out so an offline run still passes. */
+/**
+ * Uncaught errors and console errors. Web-font requests are left out so an offline run still passes; Firefox reports
+ * a font download cut short by the next navigation under the page's own address, so the message is checked too.
+ */
 function collectErrors(page: Page): string[] {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => {
-    if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)\.com/.test(m.location().url)) errors.push(m.text());
+    if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)\.com|downloadable font/.test(`${m.location().url} ${m.text()}`)) errors.push(m.text());
   });
   return errors;
 }
@@ -2599,15 +2602,16 @@ test('ripple, keyfilter and the badge directive in every version', async ({ page
     await expect(page.locator('#d-kf-color')).toHaveValue('1fA');
     await page.locator('#d-kf-subject').pressSequentially('MA-101x');
     await expect(page.locator('#d-kf-subject')).toHaveValue('MA-101');
-    // A paste with any refused character is refused whole.
+    // A paste with any refused character is refused whole (where a hand-made paste event keeps its data: not Firefox).
     const refused = await page.locator('#d-kf-id').evaluate((el) => {
       const dt = new DataTransfer();
       dt.setData('text/plain', '45a');
       const e = new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true });
+      if (e.clipboardData?.getData('text/plain') !== '45a') return null;
       el.dispatchEvent(e);
       return e.defaultPrevented;
     });
-    expect(refused).toBe(true);
+    if (refused !== null) expect(refused).toBe(true);
     await page.locator('#d-kf-phone').pressSequentially('12345');
     await expect(page.locator('#d-kf-phone')).toHaveValue('12345');
     await expect(page.locator('#d-kf-phone-error')).toHaveText('รูปแบบเบอร์โทรไม่ถูกต้อง');
@@ -4855,6 +4859,8 @@ test('studio preview at 360px: the chosen component stacks under the editor with
   for (const [v] of VERSIONS) {
     for (const id of ['select', 'datepicker', 'table']) {
       await page.goto(`/${v}/theming/studio`);
+      // Let the page finish loading first: Firefox reports the chunk a reload cuts off as an error.
+      await expect(page.locator('.docs-designer-editor')).toBeVisible();
       await page.evaluate((c) => localStorage.setItem('wiratheme-docs-studio-preview', c), id);
       await page.reload();
       const panel = page.locator('#studio-pv-page');
@@ -6119,7 +6125,16 @@ test('sidebar: scrolling the page leaves the sidebar where the reader left it', 
   await page.mouse.wheel(0, 240);
   await expect.poll(top).toBeGreaterThan(before);
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
-  const mine = await top();
+  // WebKit animates the wheel: wait until the column stops before noting where the reader left it.
+  let mine = await top();
+  await expect
+    .poll(async () => {
+      const was = mine;
+      await page.waitForTimeout(150);
+      mine = await top();
+      return mine === was;
+    })
+    .toBe(true);
   await page.mouse.move(box.x + box.width + 300, box.y + 200);
   await scrollPage();
   expect(await top()).toBe(mine);
@@ -6128,11 +6143,11 @@ test('sidebar: scrolling the page leaves the sidebar where the reader left it', 
 
 test('theme reveal: the header stays solid while the sparkle runs, and see-through after', async ({ page }) => {
   const errors = collectErrors(page);
+  // Set before the page opens: a reload right after it would cut off its lazy chunks (WebKit and Firefox report that).
+  await page.addInitScript(() => localStorage.setItem('wiratheme-docs-reveal', 'on'));
   await page.goto('/v3/components/button');
   const supported = await page.evaluate(() => typeof (document as unknown as { startViewTransition?: unknown }).startViewTransition === 'function');
   test.skip(!supported, 'this browser has no View Transitions: theme changes are instant');
-  await page.evaluate(() => localStorage.setItem('wiratheme-docs-reveal', 'on'));
-  await page.reload();
   const alpha = (color: string) => {
     const slash = /\/\s*([\d.]+)/.exec(color);
     if (slash) return Number(slash[1]);
@@ -6159,6 +6174,24 @@ test('theme reveal: the header stays solid while the sparkle runs, and see-throu
   expect(errors).toEqual([]);
 });
 
+test('theme reveal on the home page too: the light / dark button grows the new mode out of itself', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.addInitScript(() => localStorage.setItem('wiratheme-docs-reveal', 'on'));
+  await page.goto('/');
+  const supported = await page.evaluate(() => typeof (document as unknown as { startViewTransition?: unknown }).startViewTransition === 'function');
+  test.skip(!supported, 'this browser has no View Transitions: theme changes are instant');
+  const html = page.locator('html');
+  const dark = await html.evaluate((el) => el.classList.contains('wt-dark'));
+  await page.locator('#lp-dark').click();
+  expect(await html.evaluate((el) => el.classList.contains('docs-reveal'))).toBe(true);
+  await expect(html).not.toHaveClass(/docs-reveal/, { timeout: 3000 });
+  expect(await html.evaluate((el) => el.classList.contains('wt-dark'))).toBe(!dark);
+  await page.locator('#lp-dark').click();
+  await expect(html).not.toHaveClass(/docs-reveal/, { timeout: 3000 });
+  await page.evaluate(() => localStorage.removeItem('wiratheme-docs-reveal'));
+  expect(errors).toEqual([]);
+});
+
 test('glass: its colour fields sit behind the site and the page stays readable (no white screen)', async ({ page }) => {
   const errors = collectErrors(page);
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -6180,6 +6213,131 @@ test('glass: its colour fields sit behind the site and the page stays readable (
   await page.locator('#docs-config').click();
   await page.locator('#docs-config-panel [data-preset="wira"]').click();
   await expect(page.locator('html')).not.toHaveClass(/docs-glass-ground/);
+  expect(errors).toEqual([]);
+});
+
+test('secret pages: "hasu" and "kawaii" each open only their own page; the address alone is a 404', async ({ page, context }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const primary = (sel: string) => page.locator(sel).evaluate((el) => getComputedStyle(el).getPropertyValue('--wt-primary-color').trim().toLowerCase());
+  const drawerSecrets = async () => {
+    await page.goto('/v3/components/button');
+    await page.locator('#docs-config').click();
+    await expect(page.locator('#docs-config-panel [data-preset="wira"]')).toBeVisible();
+    const ids = await page.locator('#docs-config-panel [data-preset="ll"], #docs-config-panel [data-preset="kawaii"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-preset')));
+    await page.keyboard.press('Escape');
+    return ids;
+  };
+
+  // The addresses alone show the 404 page, like any unknown address; nothing is unlocked yet.
+  for (const path of ['/ll', '/kawaii']) {
+    await page.goto(path);
+    await expect(page.locator('.docs-nf-title')).toBeVisible();
+    await expect(page.locator('docs-secret-hasu, docs-secret-kawaii')).toHaveCount(0);
+  }
+  expect(await drawerSecrets()).toEqual([]);
+
+  // "hasu": the club's look, with the LL preset; a unit lends its colour to the preview, a second tap gives it back.
+  await page.goto('/');
+  await page.keyboard.type('hasu');
+  await expect(page).toHaveURL(/\/ll$/);
+  await expect(page.locator('main.docs-hasu h1')).toHaveText('SECRET');
+  await expect(page.locator('html')).toHaveClass(/docs-hasu-open/);
+  await expect.poll(() => primary('.docs-hasu-preview')).toBe('#b8172f');
+  const blue = page.locator('#hasu-unit-dollchestra');
+  await blue.click();
+  await expect(blue).toHaveAttribute('aria-checked', 'true');
+  await expect.poll(() => primary('.docs-hasu-preview')).toBe('#3a6fd8');
+  await blue.click();
+  await expect.poll(() => primary('.docs-hasu-preview')).toBe('#b8172f');
+  // Nothing on it points at the other secret.
+  await expect(page.locator('main')).not.toContainText(/kawaii/i);
+  // The pass lasts for this tab, a reload included; phones get no sideways scroll.
+  await page.reload();
+  await expect(page.locator('main.docs-hasu')).toBeVisible();
+  await page.setViewportSize({ width: 360, height: 800 });
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  // Leaving tidies the page colour away. Finding Hasu unlocks Hasu only, and does not open /kawaii.
+  await page.locator('.docs-hasu-home').click();
+  await expect(page.locator('html')).not.toHaveClass(/docs-hasu-open/);
+  expect(await drawerSecrets()).toEqual(['ll']);
+  await page.goto('/kawaii');
+  await expect(page.locator('.docs-nf-title')).toBeVisible();
+
+  // "kawaii": the sticker logo and the WiraKawaii preset, with nothing of Hasu.
+  await page.keyboard.type('kawaii');
+  await expect(page).toHaveURL(/\/kawaii$/);
+  await expect(page.locator('.docs-kawaii-logo-still svg')).toBeVisible();
+  await expect(page.locator('html')).toHaveClass(/docs-kawaii-open/);
+  await expect.poll(() => primary('.docs-kawaii-preview')).toBe('#ee5b5b');
+  await expect(page.locator('main')).not.toContainText(/[Hh]asu|蓮|\bLL\b/);
+  // Its float turns a little: a bare slide steps a whole pixel at a time in Firefox.
+  const float = await page.evaluate(() => {
+    for (const sheet of document.styleSheets) {
+      try {
+        for (const rule of sheet.cssRules) if (rule instanceof CSSKeyframesRule && rule.name === 'docs-kawaii-float') return [...rule.cssRules].map((k) => (k as CSSKeyframeRule).style.transform).join(' ');
+      } catch {
+        // Cross-origin sheet (the fonts).
+      }
+    }
+    return '';
+  });
+  expect(float).toMatch(/rotate\(-?0\.[3-9]\d*deg\)/);
+  await expect(page.locator('a[download="wiratheme-logo.svg"]')).toHaveAttribute('href', 'kawaii/wiratheme-logo.svg');
+  const logo = await page.request.get('/kawaii/wiratheme-logo.svg');
+  expect(logo.ok()).toBe(true);
+  await page.setViewportSize({ width: 360, height: 800 });
+  expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  expect(await drawerSecrets()).toEqual(['ll', 'kawaii']);
+
+  // Another tab with only an address: home.
+  const other = await context.newPage();
+  await other.goto('/kawaii');
+  await expect(other.locator('.docs-nf-title')).toBeVisible();
+  await expect(other.locator('docs-secret-kawaii')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('404: unknown addresses get a page of their own, in the docs shell or on its own, with close pages to try', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  // Inside a version: the docs shell stays (sidebar, search), the address is kept, and a typo finds its page.
+  await page.goto('/v3/components/buton');
+  await expect(page).toHaveURL(/\/v3\/components\/buton$/);
+  await expect(page.locator('.docs-nf-title')).toHaveText('ไม่พบหน้านี้');
+  await expect(page).toHaveTitle(/ไม่พบหน้านี้/);
+  await expect(page.locator('.docs-nf-address code')).toHaveText('/v3/components/buton');
+  await expect(page.locator('.docs-nf-suggest a').first()).toHaveAttribute('href', '/v3/components/button');
+  await page.goto('/v2/components/tabel');
+  await expect(page.locator('.docs-nf-suggest a').first()).toHaveAttribute('href', '/v2/components/table');
+  await page.locator('#docs-nf-search').click();
+  await expect(page.getByRole('dialog', { name: 'ค้นหาเอกสาร' })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await page.locator('.docs-nf-suggest a').first().click();
+  await expect(page).toHaveURL(/\/v2\/components\/table$/);
+
+  // Anywhere else: on its own with a small header, in English too; popular pages when nothing is close.
+  await page.goto('/nothing-here?lang=en');
+  await expect(page.locator('.docs-nf-title')).toHaveText('Page not found');
+  await expect(page).toHaveTitle(/Page not found/);
+  await expect(page.locator('.docs-nf-bar .docs-logo')).toBeVisible();
+  await expect(page.locator('#docs-nf-search')).toHaveCount(0);
+  await expect(page.locator('.docs-nf-suggest h2')).toHaveText('Popular pages');
+  await expect(page.locator('.docs-nf-suggest a')).toHaveCount(4);
+  await page.locator('#docs-nf-home').click();
+  await expect(page).toHaveURL(/\/$/);
+
+  // Phones: no sideways scroll, and each button takes a full row.
+  await page.setViewportSize({ width: 360, height: 800 });
+  for (const path of ['/v3/components/buton', '/nothing-here']) {
+    await page.goto(path);
+    await expect(page.locator('.docs-nf-title')).toBeVisible();
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
+    const row = (await page.locator('.docs-nf-actions').boundingBox())!;
+    expect((await page.locator('#docs-nf-home').boundingBox())!.width).toBeGreaterThan(row.width - 1);
+  }
   expect(errors).toEqual([]);
 });
 

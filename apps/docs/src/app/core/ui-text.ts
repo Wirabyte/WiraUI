@@ -25,6 +25,16 @@ export const UI = {
   'footer.sample': { th: 'ชื่อและข้อมูลในตัวอย่างทั้งหมดเป็นข้อมูลสมมติ', en: 'All names and figures in the examples are made up.' },
   'toc.title': { th: 'ในหน้านี้', en: 'On this page' },
 
+  'notfound.title': { th: 'ไม่พบหน้านี้', en: 'Page not found' },
+  'notfound.lead': { th: 'ลิงก์อาจพิมพ์ผิด หรือหน้านี้ย้ายไปแล้ว ลองไปต่อจากตรงนี้ได้เลย', en: 'The link may be mistyped, or the page has moved. Carry on from here.' },
+  'notfound.address': { th: 'ที่อยู่ที่เปิด', en: 'You asked for' },
+  'notfound.art': { th: 'แผนภาพที่เส้นเชื่อมหลุดจากหน้าที่หา', en: 'A diagram whose link to the page has come unplugged' },
+  'notfound.home': { th: 'กลับหน้าแรก', en: 'Back to home' },
+  'notfound.docs': { th: 'เปิดเอกสาร', en: 'Open the docs' },
+  'notfound.search': { th: 'ค้นหาเอกสาร', en: 'Search the docs' },
+  'notfound.suggest': { th: 'หรือคุณหมายถึงหน้าเหล่านี้', en: 'Maybe you meant' },
+  'notfound.popular': { th: 'หน้าที่เปิดบ่อย', en: 'Popular pages' },
+
   'search.dialog': { th: 'ค้นหาเอกสาร', en: 'Search docs' },
   'search.placeholder': { th: 'ค้นหา component หรือหน้าเอกสาร…', en: 'Search components and pages…' },
   'search.empty': { th: 'ไม่พบหน้าที่ตรงกับ', en: 'No pages match' },

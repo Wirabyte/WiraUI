@@ -10,7 +10,12 @@ export const REVEAL_STORE = 'wiratheme-docs-reveal';
  */
 const SPARKLE_REACH = 1 / 0.38;
 
-type ViewTransitionDoc = Document & { startViewTransition?: (update: () => void) => { finished: Promise<void> } };
+interface ViewTransition {
+  finished: Promise<void>;
+  ready?: Promise<void>;
+  updateCallbackDone?: Promise<void>;
+}
+type ViewTransitionDoc = Document & { startViewTransition?: (update: () => void) => ViewTransition };
 
 /**
  * A theme change (dark / light, a colour, a surface, a preset, the UI size) shown as a View Transition: the new look
@@ -44,7 +49,7 @@ export class DocsThemeReveal {
     root.style.setProperty('--docs-reveal-size', `${size}px`);
     root.classList.add('docs-reveal');
     this.running = true;
-    let transition: { finished: Promise<void> };
+    let transition: ViewTransition;
     try {
       // The browser calls back outside Angular: run the change in the zone, so the page re-renders before the new
       // look is captured.
@@ -54,6 +59,10 @@ export class DocsThemeReveal {
       change();
       return;
     }
+    // A skipped transition (the browser gave up on a slow update, or the tab was hidden) rejects ready and
+    // updateCallbackDone as well: nothing to do about those, so they must not surface as errors.
+    transition.ready?.catch(() => undefined);
+    transition.updateCallbackDone?.catch(() => undefined);
     // finished rejects when the browser skips the transition: either way the change is done, so just tidy up.
     transition.finished.then(
       () => this.done(),

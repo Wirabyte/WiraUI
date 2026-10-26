@@ -18,7 +18,7 @@
       type="button"
       class="docs-icon-btn"
       id="lp-dark"
-      (click)="state.setDark(!state.dark())"
+      (click)="toggleDark($event)"
       [attr.aria-pressed]="state.dark()"
       [attr.aria-label]="(state.dark() ? 'top.light' : 'top.dark') | t"
     >
@@ -107,7 +107,7 @@
             type="button"
             class="docs-swatch-btn docs-swatch-default"
             [class.active]="!state.custom().primary"
-            (click)="setPrimary(null)"
+            (click)="setPrimary(null, $event)"
             [attr.aria-label]="'config.presetColor' | t"
           ></button>
           @for (c of swatches; track c) {
@@ -116,14 +116,14 @@
               class="docs-swatch-btn"
               [style.background]="c"
               [class.active]="state.custom().primary === c"
-              (click)="setPrimary(c)"
+              (click)="setPrimary(c, $event)"
               [attr.aria-label]="c"
             ></button>
           }
           <button
             type="button"
             class="docs-icon-btn docs-icon-btn-sm"
-            (click)="state.setDark(!state.dark())"
+            (click)="toggleDark($event)"
             [attr.aria-label]="(state.dark() ? 'top.light' : 'top.dark') | t"
           >
             <docs-icon [name]="state.dark() ? 'sun' : 'moon'"></docs-icon>

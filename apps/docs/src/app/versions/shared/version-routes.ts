@@ -11,6 +11,7 @@ import {
   ThemingTypescriptPage,
   UtilitiesPage,
 } from '../../shared/pages/pages';
+import { DocsNotFound } from '../../shared/not-found';
 import { DocsVersionShell } from '../../shared/version-shell';
 
 /** Pages each version module declares itself, because they render that version's components. */
@@ -225,7 +226,7 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/flow', component: p.flow },
         // Old docs URL from Phase 1: the combined forms page is now one page per control.
         { path: 'components/forms', redirectTo: 'components/inputtext' },
-        { path: '**', redirectTo: 'getting-started/introduction' },
+        { path: '**', component: DocsNotFound, data: { notFound: true } },
       ],
     },
   ];

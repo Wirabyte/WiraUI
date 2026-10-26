@@ -1,0 +1,14 @@
+{
+  "name": "@wiratheme-build/figma",
+  "private": true,
+  "description": "WiraTheme UI Kit for Figma: a development plugin that builds the kit (variables, styles, components, icons) in a Figma file from the real WiraTheme tokens.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node scripts/build.mjs && tsc -p tsconfig.json --noEmit && node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "1.142.0",
+    "typescript": "~5.9.3"
+  }
+}

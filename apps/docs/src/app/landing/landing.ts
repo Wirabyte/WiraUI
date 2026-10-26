@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DocsState } from '../core/docs-state';
 import { DocsI18n, Text } from '../core/i18n';
 import { navPageOf } from '../core/nav';
+import { DocsThemeReveal } from '../core/theme-reveal';
 import { DOCS_THEME } from '../core/version-theme';
 import { DOC_VERSIONS, rememberedVersion } from '../core/versions';
 import { sampleText } from '../core/sample-text';
@@ -29,6 +30,7 @@ const REVENUE = [62, 70, 66, 78, 84, 80, 92, 98, 94, 108, 116, 128];
 export class Landing {
   protected readonly state = inject(DocsState);
   protected readonly i18n = inject(DocsI18n);
+  private readonly reveal = inject(DocsThemeReveal);
   protected readonly en = this.i18n.en;
   protected readonly versions = DOC_VERSIONS;
   protected readonly status = STATUS;
@@ -92,7 +94,12 @@ export class Landing {
     return navPageOf(path)?.title ?? path;
   }
 
-  protected setPrimary(hex: string | null): void {
-    this.state.update({ primary: hex });
+  /** Light / dark and the colour swatches grow out of the button pressed, as in the docs header (core/theme-reveal.ts). */
+  protected toggleDark(event: Event): void {
+    this.reveal.run(event.currentTarget, () => this.state.setDark(!this.state.dark()));
+  }
+
+  protected setPrimary(hex: string | null, event: Event): void {
+    this.reveal.run(event.currentTarget, () => this.state.update({ primary: hex }));
   }
 }

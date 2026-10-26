@@ -11,7 +11,8 @@ function collectErrors(page: Page): string[] {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => {
-    if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)\.com/.test(m.location().url)) errors.push(m.text());
+    // Firefox reports a font download cut short by navigation under the page's address: check the message too.
+    if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)\.com|downloadable font/.test(`${m.location().url} ${m.text()}`)) errors.push(m.text());
   });
   return errors;
 }

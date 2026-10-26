@@ -43,8 +43,11 @@ export class DocsTocNav {
   private timer?: ReturnType<typeof setTimeout>;
   /** The reader scrolled the column (wheel, touch, scrollbar, keys) since this page opened. */
   private readerScrolled = false;
-  /** The next scroll event of the column is our own reveal(). */
-  private ownScroll = false;
+  /**
+   * Where our own reveal() put the column, until its scroll event comes. The browser sends one scroll event per frame,
+   * so a reader's wheel in the same frame shares it: only a column still exactly where we left it is our own doing.
+   */
+  private ownTop: number | null = null;
 
   constructor() {
     const win = this.doc.defaultView;
@@ -54,11 +57,22 @@ export class DocsTocNav {
       const bar = this.bar();
       if (!bar) return;
       const mark = () => {
-        if (this.ownScroll) this.ownScroll = false;
-        else this.readerScrolled = true;
+        const own = this.ownTop !== null && Math.abs(bar.scrollTop - this.ownTop) < 1;
+        this.ownTop = null;
+        if (!own) this.readerScrolled = true;
       };
-      this.zone.runOutsideAngular(() => bar.addEventListener('scroll', mark, { passive: true }));
-      destroyRef.onDestroy(() => bar.removeEventListener('scroll', mark));
+      // The wheel and a finger on the column are the reader's for sure, whatever the scroll events say.
+      const reader = () => (this.readerScrolled = true);
+      this.zone.runOutsideAngular(() => {
+        bar.addEventListener('scroll', mark, { passive: true });
+        bar.addEventListener('wheel', reader, { passive: true });
+        bar.addEventListener('touchmove', reader, { passive: true });
+      });
+      destroyRef.onDestroy(() => {
+        bar.removeEventListener('scroll', mark);
+        bar.removeEventListener('wheel', reader);
+        bar.removeEventListener('touchmove', reader);
+      });
     });
     const onScroll = () => {
       if (this.timer !== undefined) return;
@@ -123,7 +137,7 @@ export class DocsTocNav {
     if (!by) return;
     const before = bar.scrollTop;
     bar.scrollTop += by;
-    // Its scroll event comes later: mark it as ours, so it does not count as the reader's.
-    if (bar.scrollTop !== before) this.ownScroll = true;
+    // Its scroll event comes later: remember where we put it, so that scroll does not count as the reader's.
+    if (bar.scrollTop !== before) this.ownTop = bar.scrollTop;
   }
 }

@@ -87,7 +87,9 @@ test('columns: drag the grip to resize, drag the header to reorder', async ({ pa
   const after = (await th.boundingBox())!;
   expect(after.width).toBeGreaterThan(before.width + 25);
   const score = (await deep(page).locator('th.deep-th').nth(1).boundingBox())!;
-  await dragTo(page, deep(page).locator('th.deep-th').first(), { x: score.x + score.width - 8, y: score.y + score.height / 2 });
+  // Drop on the right half of the next header, inside the window (Firefox lays the wider table past its edge).
+  const right = Math.min(score.x + score.width - 8, page.viewportSize()!.width - 4);
+  await dragTo(page, deep(page).locator('th.deep-th').first(), { x: right, y: score.y + score.height / 2 });
   await expect(log(page)).toContainText('colreorder:0>1');
   await expect(deep(page).locator('th.deep-th').first()).toContainText('คะแนน');
 });

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        margin: 0;
+        padding: 16px;
+        font: 12px/1.5 Inter, system-ui, sans-serif;
+        color: var(--figma-color-text, #222);
+        background: var(--figma-color-bg, #fff);
+      }
+      h1 {
+        margin: 0 0 4px;
+        font-size: 14px;
+      }
+      p {
+        margin: 0 0 12px;
+        color: var(--figma-color-text-secondary, #666);
+      }
+      .presets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .preset {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        border: 1px solid var(--figma-color-border, #ddd);
+        border-radius: 6px;
+        background: none;
+        color: inherit;
+        font: inherit;
+        text-align: start;
+        cursor: pointer;
+      }
+      .preset[aria-pressed='true'] {
+        border-color: var(--figma-color-border-brand-strong, #0d99ff);
+        box-shadow: inset 0 0 0 1px var(--figma-color-border-brand-strong, #0d99ff);
+      }
+      .preset i {
+        flex: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+      }
+      .preset small {
+        display: block;
+        color: var(--figma-color-text-secondary, #666);
+      }
+      label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin: 4px 0;
+      }
+      button.go {
+        width: 100%;
+        margin-top: 12px;
+        padding: 8px;
+        border: 0;
+        border-radius: 6px;
+        background: var(--figma-color-bg-brand, #0d99ff);
+        color: var(--figma-color-text-onbrand, #fff);
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.go:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      #log {
+        margin-top: 12px;
+        white-space: pre-wrap;
+        color: var(--figma-color-text-secondary, #666);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WiraTheme UI Kit</h1>
+    <p>Builds variables (light / dark), text and effect styles, components and icons from the WiraTheme tokens of the chosen preset.</p>
+    <div class="presets" id="presets" role="group" aria-label="Preset"></div>
+    <label><input type="checkbox" id="opt-components" checked /> Components</label>
+    <label><input type="checkbox" id="opt-icons" checked /> Icons (all 424, regular weight)</label>
+    <button class="go" id="go" type="button">Build the kit</button>
+    <div id="log" role="status"></div>
+    <script>
+      const PRESETS = /*PRESETS*/[];
+      let chosen = (PRESETS.find((p) => p.isDefault) || PRESETS[0] || {}).id;
+      const box = document.getElementById('presets');
+      const draw = () => {
+        box.innerHTML = '';
+        for (const p of PRESETS) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'preset';
+          b.setAttribute('aria-pressed', String(p.id === chosen));
+          const c = p.primary || [0.5, 0.5, 0.5, 1];
+          b.innerHTML = `<i style="background: rgb(${c[0] * 255}, ${c[1] * 255}, ${c[2] * 255})"></i><span>${p.label}<small>${p.font}</small></span>`;
+          b.onclick = () => {
+            chosen = p.id;
+            draw();
+          };
+          box.appendChild(b);
+        }
+      };
+      draw();
+      const log = document.getElementById('log');
+      const go = document.getElementById('go');
+      go.onclick = () => {
+        go.disabled = true;
+        log.textContent = '';
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: 'build',
+              options: { preset: chosen, components: document.getElementById('opt-components').checked, icons: document.getElementById('opt-icons').checked },
+            },
+          },
+          '*',
+        );
+      };
+      onmessage = (e) => {
+        const m = e.data.pluginMessage;
+        if (!m) return;
+        if (m.type === 'progress') log.textContent += m.text + '\n';
+        if (m.type === 'done' || m.type === 'error') {
+          log.textContent += (m.type === 'error' ? 'Error: ' : '') + m.text + '\n';
+          go.disabled = false;
+        }
+      };
+    </script>
+  </body>
+</html>

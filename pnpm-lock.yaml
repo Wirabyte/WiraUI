@@ -156,6 +156,15 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@18.19.130)(less@4.9.1)(sass@1.106.1)
 
+  packages/figma:
+    devDependencies:
+      '@figma/plugin-typings':
+        specifier: 1.142.0
+        version: 1.142.0
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+
   packages/icons:
     devDependencies:
       '@angular/common':
@@ -946,6 +955,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@figma/plugin-typings@1.142.0':
+    resolution: {integrity: sha512-Loa9P4bUZi/pQejic8OYQSU4Zz9izJdIiDUkkKddq5Bfc5JPRV6pCeg3C8owovbX9lKshaFym86PlMhKZgLeBw==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -3504,6 +3516,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
+
+  '@figma/plugin-typings@1.142.0': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:

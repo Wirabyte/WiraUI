@@ -23,5 +23,6 @@ export {
   Nakhon,
   Glass,
   LL,
+  WiraKawaii,
 } from 'wiratheme/core';
 export type { ThemePreset } from 'wiratheme/core';
