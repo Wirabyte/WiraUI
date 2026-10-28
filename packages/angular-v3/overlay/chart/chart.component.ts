@@ -39,9 +39,10 @@ import {
   ChartValueFormat,
   chartMovesValues,
   chartSwapTypes,
+  chartVariants,
   formatChartValue,
 } from 'wiratheme/core';
-import { WT_CHART_KINDS } from './chart.icons';
+import { WT_CHART_KINDS, WT_CHART_LOOKS } from './chart.icons';
 import { WtChartClickEvent, WtChartLegend, WtChartTipRow, WtChartToggleEvent, WtChartZoomEvent } from './chart.types';
 
 /** The theme's chart colours (`--wt-chart-1` … `-10`), so charts follow the preset and dark mode. */
@@ -62,8 +63,8 @@ const BY_LABELS: ChartType[] = ['funnel', 'unit', 'sunburst'];
 const GHOST_MS = 480;
 const ALIASES: Record<string, ChartType> = { donut: 'doughnut', bubble: 'scatter', radialbar: 'radialBar', polararea: 'polarArea', gauge: 'radialBar' };
 const WORDS = {
-  th: { toolbar: 'เครื่องมือของกราฟ', zoomIn: 'ซูมเข้า', zoomOut: 'ซูมออก', reset: 'ดูทั้งหมด', download: 'ดาวน์โหลด', kinds: 'แบบของกราฟ', back: 'ย้อนกลับ' },
-  en: { toolbar: 'Chart tools', zoomIn: 'Zoom in', zoomOut: 'Zoom out', reset: 'Show all', download: 'Download', kinds: 'Chart type', back: 'Back' },
+  th: { toolbar: 'เครื่องมือของกราฟ', zoomIn: 'ซูมเข้า', zoomOut: 'ซูมออก', reset: 'ดูทั้งหมด', download: 'ดาวน์โหลด', kinds: 'แบบของกราฟ', looks: 'ลักษณะ', back: 'ย้อนกลับ' },
+  en: { toolbar: 'Chart tools', zoomIn: 'Zoom in', zoomOut: 'Zoom out', reset: 'Show all', download: 'Download', kinds: 'Chart type', looks: 'Look', back: 'Back' },
 };
 /** Charts that share a `group`, to show the tooltip at the same label together. */
 const GROUPS = new Map<string, Set<WtChart>>();
@@ -137,6 +138,8 @@ export class WtChart {
    * (`['bar', 'line', 'area']`). The chart moves to the new kind with a cross-fade.
    */
   readonly swap = input<boolean | ChartType[] | null | undefined>();
+  /** A look picker over the chart for kinds with several looks (heatmap, stream, funnel, box plot, …). */
+  readonly looks = input(false, { transform: booleanAttribute });
   /** Dots on line points; default when there are 40 or fewer. */
   readonly points = input<boolean | undefined, unknown>(undefined, { transform: (v) => (v === undefined || v === null ? undefined : booleanAttribute(v)) });
   readonly grid = input(true, { transform: booleanAttribute });
@@ -202,9 +205,13 @@ export class WtChart {
   readonly zoomChange = output<WtChartZoomEvent | null>();
   /** The type switcher picked another kind. */
   readonly typeChange = output<ChartType>();
+  /** The look picker picked another look. */
+  readonly variantChange = output<string>();
 
   /** The kind drawn: `type`, or what the switcher picked. */
   readonly kind = linkedSignal<ChartType>(() => this.type());
+  /** The look drawn: `variant`, or what the picker picked. */
+  readonly chosenLook = linkedSignal<string | undefined>(() => this.variant() || undefined);
 
   readonly id = `wt-chart-${++uid}`;
   /** Series (pie: slices) hidden from the legend. */
@@ -285,6 +292,15 @@ export class WtChart {
         if (!set!.size) GROUPS.delete(name);
       });
     });
+    // The app changed [type] or [variant]: move over the way the switcher does.
+    let seen: [ChartType, string | null | undefined] | null = null;
+    effect(() => {
+      const now: [ChartType, string | null | undefined] = [this.type(), this.variant()];
+      const before = seen;
+      seen = now;
+      if (!before || (before[0] === now[0] && before[1] === now[1])) return;
+      untracked(() => this.transition(() => undefined, before[0] !== now[0]));
+    });
     // Move to new data (or grow in the first time) over a few frames.
     effect(() => {
       const target = this.target();
@@ -322,6 +338,17 @@ export class WtChart {
     return list.length > 1 ? list : [];
   });
   readonly kindsInfo = WT_CHART_KINDS;
+  /** Looks the picker offers for the kind drawn (none: no picker), and the one drawn. */
+  readonly lookList = computed(() => (this.looks() ? chartVariants(this.kind()) : []));
+  readonly activeLook = computed(() => {
+    const list = chartVariants(this.kind());
+    const now = this.chosenLook();
+    return now && list.includes(now) ? now : list[0];
+  });
+  lookName(look: string): string {
+    const name = WT_CHART_LOOKS[look];
+    return name ? (this.language().toLowerCase().startsWith('th') ? name.th : name.en) : look;
+  }
   readonly words = computed(() => (this.language().toLowerCase().startsWith('th') ? WORDS.th : WORDS.en));
   readonly isHorizontal = computed(() => this.horizontal() || this.opt().indexAxis === 'y');
   readonly isStacked = computed(() => this.stacked() || !!this.opt().scales?.x?.stacked || !!this.opt().scales?.y?.stacked);
@@ -406,7 +433,7 @@ export class WtChart {
       endAngle: this.endAngle() ?? (optionalNumber(o.circumference) !== undefined ? (this.startAngle() ?? optionalNumber(o.rotation) ?? 0) + Number(o.circumference) : undefined),
       annotations: this.shiftedNotes(),
       colorRanges: this.colorRanges() || undefined,
-      variant: this.variant() || undefined,
+      variant: this.chosenLook() || undefined,
       bins: this.bins(),
       focus: this.focus() || undefined,
     };
@@ -663,7 +690,11 @@ export class WtChart {
       this.hoverKey.set(chartHit(m, x, y)?.key ?? null);
       return;
     }
-    if (this.isRound()) return;
+    if (this.isRound()) {
+      // Slices and rings light up as the pointer enters them; empty space around them lets go.
+      if (!(event.target as Element | null)?.closest?.('.wt-chart-slice, .wt-chart-ring, .wt-chart-track')) this.hovered.set(null);
+      return;
+    }
     if (this.isCells()) {
       const cell = m.hover.find((h) => x >= h.x && x <= h.x + h.w && y >= h.y && y <= h.y + h.h);
       this.hoveredSeries.set(cell?.series ?? null);
@@ -881,6 +912,26 @@ export class WtChart {
   /** The type switcher: draw the same data as another kind, cross-fading from the old drawing. */
   setKind(next: ChartType): void {
     if (next === this.kind()) return;
+    this.transition(() => {
+      this.kind.set(next);
+      this.typeChange.emit(next);
+    });
+  }
+
+  /** The look picker: draw the same kind another way, cross-fading. */
+  setLook(next: string): void {
+    if (next === this.activeLook()) return;
+    this.transition(() => {
+      this.chosenLook.set(next);
+      this.variantChange.emit(next);
+    }, false);
+  }
+
+  /**
+   * A new kind or look: the old drawing stays on top a moment, fading out, while the new one comes in under it as the
+   * first time. `fresh` also forgets what the legend hid, the zoom and a sunburst's drill (they belong to the old kind).
+   */
+  private transition(apply: () => void, fresh = true): void {
     const svg = this.svgRef()?.nativeElement;
     const body = this.body()?.nativeElement;
     const motion = this.browser && this.animate() && !this.host.ownerDocument.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -897,12 +948,13 @@ export class WtChart {
       setTimeout(() => ghost.remove(), GHOST_MS);
     }
     this.leave();
-    this.hidden.set(new Set());
-    this.focus.set(null);
-    this.zoomed.set(null);
-    this.kind.set(next);
-    this.typeChange.emit(next);
-    // Come in fresh, as the first time.
+    if (fresh) {
+      this.hidden.set(new Set());
+      this.focus.set(null);
+      this.zoomed.set(null);
+    }
+    apply();
+    // Come in as the first time.
     this.frame.set(null);
     this.animateTo(this.target());
   }

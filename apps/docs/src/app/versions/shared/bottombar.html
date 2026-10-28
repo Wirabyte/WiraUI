@@ -1,0 +1,37 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div class="docs-phone" id="d-bb-basic">
+          <div class="docs-phone-screen">{{ tx(tabs[tab].label) }}</div>
+          <wt-bottombar [model]="local(tabs)" [(activeIndex)]="tab" [fixed]="false" (onItemClick)="picked($event)"></wt-bottombar>
+        </div>
+        <span class="docs-demo-output">{{ tx('รายการที่เลือก') }}: <code id="d-bb-last">{{ last }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="looks" [section]="sec['looks']">
+      <docs-demo [html]="code['looks']" layout="stack">
+        <div class="docs-demo-grid">
+          <div class="docs-phone" id="d-bb-pill">
+            <div class="docs-phone-screen">{{ tx(tabs[pillTab].label) }}</div>
+            <wt-bottombar [model]="local(tabs)" look="pill" [(activeIndex)]="pillTab" [fixed]="false"></wt-bottombar>
+          </div>
+          <div class="docs-phone" id="d-bb-fab">
+            <div class="docs-phone-screen">{{ tx(tabs[fabTab].label) }}</div>
+            <wt-bottombar [model]="local(tabs)" look="fab" [action]="local(action)" [(activeIndex)]="fabTab" [fixed]="false" (onItemClick)="picked($event)"></wt-bottombar>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="scroll" [section]="sec['scroll']">
+      <docs-code [code]="$any(code['scroll'])" lang="html"></docs-code>
+      <docs-code [code]="$any(css['scroll'])" lang="css"></docs-code>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

@@ -193,6 +193,16 @@ test('chart page (WiraTheme’s own): bars, legend toggling, tooltip, keyboard, 
   await expect(doughnut.locator('.wt-chart-slice')).toHaveCount(5);
   await expect(doughnut.locator('.wt-chart-center-value')).toHaveText('1,130 คน');
   await expect(doughnut.locator('.wt-chart-value').first()).toHaveText('37%');
+  // Pointing at a slice lights it; moving off it onto empty space (still inside the chart) lets go.
+  await doughnut.scrollIntoViewIfNeeded();
+  const ring = (await doughnut.locator('svg.wt-chart-svg').boundingBox())!;
+  const label = (await doughnut.locator('.wt-chart-value').first().boundingBox())!;
+  await page.mouse.move(label.x + label.width / 2, label.y + label.height / 2);
+  await expect(doughnut.locator('.wt-chart-tooltip')).toBeVisible();
+  await expect(doughnut.locator('.wt-chart-slice.wt-chart-dim')).toHaveCount(4);
+  await page.mouse.move(ring.x + 4, ring.y + 4);
+  await expect(doughnut.locator('.wt-chart-tooltip')).toHaveCount(0);
+  await expect(doughnut.locator('.wt-chart-slice.wt-chart-dim')).toHaveCount(0);
 
   // Stacked, across, mixed with a right axis, radar, scatter, Chart.js data.
   await expect(page.locator('#d-wc-stacked .wt-chart-value')).toHaveText(['260', '255', '239']);
@@ -310,9 +320,19 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
   await one.locator('[data-kind="unit"]').click();
   await expect(one.locator('.wt-chart-shape')).toHaveCount(100);
 
+  // The page's own control drives [type]: the chart moves over with the same cross-fade.
+  const own = page.locator('#d-wc-own');
+  await page.locator('#d-wc-own-kind').getByText('เส้น').click();
+  await expect(own.locator('.wt-chart-ghost')).toHaveCount(1);
+  await expect(own.locator('.wt-chart-line')).toHaveCount(2);
+  await expect(own.locator('.wt-chart-ghost')).toHaveCount(0, { timeout: 3000 });
+
+  // The built-in look picker: the look drawn is checked.
+  await expect(page.locator('#d-wc-stream [data-look="silhouette"]')).toHaveAttribute('aria-checked', 'true');
+
   // Stream: four layers; as shares the axis reads 0–100%.
   await expect(page.locator('#d-wc-stream .wt-chart-stream')).toHaveCount(4);
-  await page.locator('#d-wc-stream-look').getByText('สัดส่วน').click();
+  await page.locator('#d-wc-stream [data-look="expand"]').click();
   await expect(page.locator('#d-wc-stream .wt-chart-tick').filter({ hasText: '100%' })).toHaveCount(1);
 
   // Waterfall: a bar and a value per step, the falls signed.
@@ -321,7 +341,7 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
 
   // Dumbbell: two dots a row; arrows instead.
   await expect(page.locator('#d-wc-dumbbell circle.wt-chart-shape')).toHaveCount(10);
-  await page.locator('#d-wc-dumbbell-look').getByText('ลูกศร').click();
+  await page.locator('#d-wc-dumbbell [data-look="arrow"]').click();
   await expect(page.locator('#d-wc-dumbbell path.wt-chart-shape')).toHaveCount(5);
 
   // Timeline: a bar per task on a date axis.
@@ -333,19 +353,19 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
   await expect(funnel.locator('.wt-chart-shape')).toHaveCount(5);
   await funnel.locator('.wt-chart-shape').nth(1).hover();
   await expect(funnel.locator('.wt-chart-tooltip-row')).toHaveCount(3);
-  await page.locator('#d-wc-funnel-look').getByText('พีระมิด').click();
+  await page.locator('#d-wc-funnel [data-look="pyramid"]').click();
   await expect(funnel.locator('path.wt-chart-shape')).toHaveCount(5);
 
   // Box plot: a median per class; violins.
   await expect(page.locator('#d-wc-boxplot .wt-chart-median')).toHaveCount(4);
-  await page.locator('#d-wc-boxplot-look').getByText('ไวโอลิน').click();
+  await page.locator('#d-wc-boxplot [data-look="violin"]').click();
   await expect(page.locator('#d-wc-boxplot path.wt-chart-shape')).toHaveCount(4);
 
   // Histogram: the mean marked.
   await expect(page.locator('#d-wc-histogram .wt-chart-reference-label')).toContainText('ค่าเฉลี่ย');
 
   // Heatmap: a honeycomb.
-  await page.locator('#d-wc-heatmap-look').getByText('รังผึ้ง').click();
+  await page.locator('#d-wc-heatmap [data-look="hex"]').click();
   await expect(page.locator('#d-wc-heatmap path.wt-chart-cell')).toHaveCount(25);
 
   // Sunburst: a click goes into a node, the middle says where, Escape comes back.
@@ -361,11 +381,11 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
 
   // Units: a waffle of 100, or 50 people.
   await expect(page.locator('#d-wc-unit .wt-chart-shape')).toHaveCount(100);
-  await page.locator('#d-wc-unit-look').getByText('รูปคน').click();
+  await page.locator('#d-wc-unit [data-look="people"]').click();
   await expect(page.locator('#d-wc-unit .wt-chart-shape')).toHaveCount(50);
 
   // Slope: up green, down red, the same grey.
-  await page.locator('#d-wc-slope-look').getByText('เน้นขึ้นลง').click();
+  await page.locator('#d-wc-slope [data-look="highlight"]').click();
   await expect(page.locator('#d-wc-slope path.wt-chart-line-shape')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
@@ -415,6 +435,97 @@ test('error page in every version: codes, formal and kawaii looks, buttons that 
   await page.goto('/v3/components/errorpage?lang=en');
   await expect(page.locator('#d-ep-basic .wt-ep-title')).toHaveText('Page not found');
   await expect(page.locator('#d-ep-k404 .wt-ep-title')).toHaveText('Oops! This page wandered off');
+  expect(errors).toEqual([]);
+});
+
+test('dock, site footer and bottom bar: every version, magnify, windows, keys, folding columns, the middle button', async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  for (const v of ['v1', 'v2', 'v3']) {
+    await page.goto(`/${v}/components/dock`);
+    await expect(page.locator('h1').first()).toHaveText('Dock');
+    await expect(page.locator('#d-dock-basic .wt-dock-item')).toHaveCount(6);
+    await page.goto(`/${v}/components/sitefooter`);
+    await expect(page.locator('#d-ft-basic .wt-site-footer-heading')).toHaveCount(3);
+    await page.goto(`/${v}/components/bottombar`);
+    await expect(page.locator('#d-bb-basic .wt-bottombar-item')).toHaveCount(4);
+  }
+
+  // Dock: the position, the icon under the pointer swelling, an app's window and dot, the keys.
+  await page.goto('/v3/components/dock');
+  await page.locator('#d-dock-position').getByText('ซ้าย').click();
+  await expect(page.locator('#d-dock-basic .wt-dock')).toHaveClass(/wt-dock-left/);
+  const mac = page.locator('#d-dock-mac');
+  await mac.scrollIntoViewIfNeeded();
+  const icon = mac.locator('.wt-dock-item').nth(3);
+  const shelf = mac.locator('.wt-dock-list-container');
+  const shelfHeight = (await shelf.boundingBox())!.height;
+  const at = (await icon.boundingBox())!;
+  await page.mouse.move(at.x + at.width / 2 - 30, at.y + at.height / 2);
+  await page.mouse.move(at.x + at.width / 2, at.y + at.height / 2, { steps: 4 });
+  await expect.poll(async () => (await icon.boundingBox())!.width).toBeGreaterThan(at.width * 1.3);
+  // The shelf keeps its height; the icon grows up out of it.
+  expect((await shelf.boundingBox())!.height).toBeCloseTo(shelfHeight, 0);
+  await expect.poll(async () => (await icon.locator('.wt-dock-action').boundingBox())!.height).toBeGreaterThan(shelfHeight);
+  await mac.locator('.wt-dock-item').nth(6).locator('.wt-dock-action').click();
+  await expect(mac.locator('.docs-window[data-app="terminal"]')).toBeVisible();
+  await expect(mac.locator('.wt-dock-item').nth(6)).toHaveClass(/wt-dock-item-active/);
+  await mac.locator('.docs-window[data-app="terminal"] .docs-dot-close').click();
+  await expect(mac.locator('.docs-window[data-app="terminal"]')).toHaveCount(0);
+  // A window drags by its title bar.
+  const files = mac.locator('.docs-window[data-app="files"]');
+  const was = (await files.boundingBox())!;
+  const bar = (await files.locator('.docs-window-bar').boundingBox())!;
+  await page.mouse.move(bar.x + bar.width / 2, bar.y + bar.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(bar.x + bar.width / 2 + 60, bar.y + bar.height / 2 + 40, { steps: 6 });
+  await page.mouse.up();
+  const now = (await files.boundingBox())!;
+  expect(Math.round(now.x - was.x)).toBe(60);
+  expect(Math.round(now.y - was.y)).toBe(40);
+  await mac.locator('.wt-dock-action').first().focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(mac.locator('.wt-dock-action').nth(1)).toBeFocused();
+  await page.keyboard.press('End');
+  await expect(mac.locator('.wt-dock-action').last()).toBeFocused();
+
+  // The taskbar: the start menu opens an app; the window in front has the long bar.
+  const win = page.locator('#d-dock-win');
+  await win.scrollIntoViewIfNeeded();
+  await page.locator('#d-dock-startbtn').click();
+  await expect(page.locator('#d-dock-start')).toBeVisible();
+  await page.locator('#d-dock-start .docs-win-pin').first().click();
+  await expect(win.locator('.docs-window[data-app="files"]')).toBeVisible();
+  await expect(win.locator('.wt-dock-item').first()).toHaveClass(/wt-dock-item-current/);
+
+  // Site footer: the copyright, links, columns folding on a narrow width, the centred look (a wide window, so the first
+  // footer has room for its columns; the footer measures itself, not the window).
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/v3/components/sitefooter');
+  const ft = page.locator('#d-ft-basic');
+  await expect(ft.locator('.wt-site-footer-copyright')).toContainText(`© ${new Date().getFullYear()} WiraTheme`);
+  await expect(ft.locator('.wt-site-footer-top')).toBeVisible();
+  await ft.locator('.wt-site-footer-link').first().click();
+  await expect(page.locator('#d-ft-last')).toHaveText('คอมโพเนนต์');
+  const narrow = page.locator('#d-ft-narrow');
+  await expect(narrow.locator('.wt-site-footer-list').first()).toBeHidden();
+  await narrow.locator('.wt-site-footer-heading').first().click();
+  await expect(narrow.locator('.wt-site-footer-list').first()).toBeVisible();
+  await expect(narrow.locator('.wt-site-footer-heading').first()).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#d-ft-centered .wt-site-footer-main')).toHaveCSS('flex-direction', 'column');
+
+  // Bottom bar: picking an item, its badge, the pill's names, the middle button between the halves.
+  await page.goto('/v3/components/bottombar');
+  const bb = page.locator('#d-bb-basic');
+  await bb.locator('.wt-bottombar-item').nth(2).click();
+  await expect(bb.locator('.wt-bottombar-item').nth(2)).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('#d-bb-last')).toHaveText('2: ข้อความ');
+  await expect(bb.locator('.wt-bottombar-badge')).toHaveText('3');
+  await expect(page.locator('#d-bb-pill .wt-bottombar-item-active .wt-bottombar-label')).toBeVisible();
+  const fab = page.locator('#d-bb-fab');
+  await expect(fab.locator('.wt-bottombar-inner > *').nth(2)).toHaveClass(/wt-bottombar-fab-slot/);
+  await fab.locator('.wt-bottombar-fab').click();
+  await expect(page.locator('#d-bb-last')).toHaveText('-1: สร้างโพสต์');
   expect(errors).toEqual([]);
 });
 

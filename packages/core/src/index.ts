@@ -9,6 +9,7 @@ export * from './exporters';
 export * from './number';
 export * from './thai/locale';
 export * from './errorpage';
+export * from './dock';
 export * from './thai/buddhist';
 export * from './thai/thai-id';
 export * from './thai/text';

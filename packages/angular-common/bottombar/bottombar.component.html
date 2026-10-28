@@ -1,0 +1,54 @@
+<nav [ngClass]="classes" [ngStyle]="rootStyle" [attr.aria-label]="name">
+  <div class="wt-bottombar-inner">
+    <ng-container *ngFor="let item of items; let i = index">
+      <a
+        *ngIf="hasRoute(item); else plain"
+        class="wt-bottombar-item"
+        [class.wt-bottombar-item-active]="i === current"
+        [class.wt-bottombar-item-disabled]="item.disabled"
+        [ngClass]="item.styleClass || ''"
+        [routerLink]="item.routerLink"
+        [queryParams]="item.queryParams"
+        [fragment]="item.fragment"
+        [attr.aria-current]="i === current ? 'page' : null"
+        [attr.data-index]="i"
+        (click)="pick(item, i, $event)"
+      >
+        <ng-container *ngTemplateOutlet="itemTemplate || plainItem; context: { $implicit: item, active: i === current, index: i }"></ng-container>
+      </a>
+      <ng-template #plain>
+        <a
+          class="wt-bottombar-item"
+          [class.wt-bottombar-item-active]="i === current"
+          [class.wt-bottombar-item-disabled]="item.disabled"
+          [ngClass]="item.styleClass || ''"
+          [attr.href]="item.url && !item.disabled ? item.url : null"
+          [attr.target]="item.target || null"
+          [attr.role]="item.url ? null : 'button'"
+          [attr.tabindex]="item.url ? null : 0"
+          [attr.aria-current]="i === current ? 'page' : null"
+          [attr.aria-disabled]="item.disabled ? true : null"
+          [attr.data-index]="i"
+          (click)="pick(item, i, $event)"
+          (keydown.enter)="!item.url && pick(item, i, $event)"
+          (keydown.space)="!item.url && pick(item, i, $event)"
+        >
+          <ng-container *ngTemplateOutlet="itemTemplate || plainItem; context: { $implicit: item, active: i === current, index: i }"></ng-container>
+        </a>
+      </ng-template>
+      <span *ngIf="showFab && i === fabAfter" class="wt-bottombar-fab-slot">
+        <button type="button" class="wt-bottombar-fab" [attr.aria-label]="action?.label || null" [attr.title]="action?.label || null" (click)="pick(action!, -1, $event)">
+          <span class="wt-bottombar-fab-icon" [ngClass]="action?.icon || ''" aria-hidden="true"></span>
+        </button>
+      </span>
+    </ng-container>
+  </div>
+</nav>
+
+<ng-template #plainItem let-item>
+  <span class="wt-bottombar-icon-wrap">
+    <span class="wt-bottombar-icon" [ngClass]="item.icon || ''" aria-hidden="true"></span>
+    <span *ngIf="item.badge" class="wt-bottombar-badge">{{ item.badge }}</span>
+  </span>
+  <span class="wt-bottombar-label">{{ item.label }}</span>
+</ng-template>

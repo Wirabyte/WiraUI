@@ -70,6 +70,9 @@ export interface WtLocale {
     codes: Record<string, { title: string; description: string }>;
     kawaii: Record<WtErrorKind, { title: string; description: string }>;
   };
+  /** wt-site-footer: the back-to-top button and the words after the copyright. wt-bottombar: its label. */
+  siteFooter: { backToTop: string; rights: string };
+  bottombar: string;
   /** Multi-select field once more are chosen than it lists; {0} is the count. */
   selectedItemsLabel: string;
   /** Image preview: the button over the picture and the full-screen toolbar. */
@@ -435,6 +438,8 @@ export const TH_LOCALE: WtLocale = {
       down: { title: 'ขอพักปรับปรุงแป๊บนึง', description: 'กำลังแต่งตัวให้สวยขึ้น กลับมาใหม่เร็ว ๆ นี้นะ' },
     },
   },
+  siteFooter: { backToTop: 'กลับขึ้นด้านบน', rights: 'สงวนลิขสิทธิ์' },
+  bottombar: 'เมนูหลัก',
   selectedItemsLabel: 'เลือกแล้ว {0} รายการ',
   previewImage: 'ดูภาพขยาย',
   rotateRight: 'หมุนขวา',
@@ -759,6 +764,8 @@ export const EN_LOCALE: WtLocale = {
       down: { title: 'Taking a little break', description: 'Getting a makeover. Back very soon!' },
     },
   },
+  siteFooter: { backToTop: 'Back to top', rights: 'All rights reserved.' },
+  bottombar: 'Main menu',
   selectedItemsLabel: '{0} items selected',
   previewImage: 'View larger image',
   rotateRight: 'Rotate right',

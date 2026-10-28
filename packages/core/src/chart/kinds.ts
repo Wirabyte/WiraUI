@@ -1293,6 +1293,26 @@ function segmentDistance(x: number, y: number, a: { x: number; y: number }, b: {
   return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
 }
 
+/** The looks (`variant`) of each kind, the default first; kinds with one look have none. */
+export const CHART_VARIANTS: Partial<Record<ChartType, string[]>> = {
+  heatmap: ['square', 'circle', 'hex'],
+  stream: ['silhouette', 'wiggle', 'expand'],
+  waterfall: ['bars', 'steps'],
+  dumbbell: ['dots', 'arrow', 'range'],
+  timeline: ['bars', 'thin'],
+  funnel: ['funnel', 'bars', 'pyramid'],
+  boxplot: ['box', 'violin', 'points'],
+  histogram: ['bars', 'density'],
+  sunburst: ['sunburst', 'icicle'],
+  unit: ['waffle', 'dots', 'people'],
+  slope: ['lines', 'highlight'],
+};
+
+/** The looks of a kind (the chart's look picker), the default first. */
+export function chartVariants(type: ChartType): string[] {
+  return CHART_VARIANTS[type] ?? [];
+}
+
 /** Kinds whose values do not move from the old to the new (raw values, ranges, nodes, units): they come in with their shapes' own entrance. */
 export function chartMovesValues(type: ChartType): boolean {
   return !['timeline', 'boxplot', 'histogram', 'sunburst', 'unit', 'dumbbell', 'slope', 'scatter'].includes(type);

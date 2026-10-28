@@ -53,6 +53,9 @@ import { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } from 'wirathem
 import { WtEmptyStateModule } from 'wiratheme-v2/emptystate';
 import { WtResultModule } from 'wiratheme-v2/result';
 import { WtErrorPageModule } from 'wiratheme-v2/errorpage';
+import { WtDockModule } from 'wiratheme-v2/dock';
+import { WtSiteFooterModule } from 'wiratheme-v2/sitefooter';
+import { WtBottomBarModule } from 'wiratheme-v2/bottombar';
 import { WtThaiModule } from 'wiratheme-v2/thai';
 import { WtInputOtpModule } from 'wiratheme-v2/inputotp';
 import { addEdge, applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme-v2/flow';
@@ -192,6 +195,9 @@ import {
   EmptyStatePageV2,
   ResultPageV2,
   ErrorPagePageV2,
+  DockPageV2,
+  FooterPageV2,
+  BottomBarPageV2,
   ThaiPageV2,
   PickStudentV2,
   TextareaPageV2,
@@ -295,6 +301,9 @@ import { THEME_V2 } from './theme-v2';
     EmptyStatePageV2,
     ResultPageV2,
     ErrorPagePageV2,
+    DockPageV2,
+    FooterPageV2,
+    BottomBarPageV2,
     ThaiPageV2,
     PickStudentV2,
   ],
@@ -392,6 +401,9 @@ import { THEME_V2 } from './theme-v2';
     WtEmptyStateModule,
     WtResultModule,
     WtErrorPageModule,
+    WtDockModule,
+    WtSiteFooterModule,
+    WtBottomBarModule,
     WtThaiModule,
     WtInputOtpModule,
     WtFlowModule,
@@ -491,6 +503,9 @@ import { THEME_V2 } from './theme-v2';
         emptystate: EmptyStatePageV2,
         result: ResultPageV2,
         errorpage: ErrorPagePageV2,
+        dock: DockPageV2,
+        footer: FooterPageV2,
+        bottombar: BottomBarPageV2,
         thai: ThaiPageV2,
       })
     ),

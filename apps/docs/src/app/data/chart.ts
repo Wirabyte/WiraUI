@@ -125,6 +125,9 @@ export const CHART_DOC: ComponentDoc = {
     'เงินบริจาค': 'Donations',
     'ค่าสาธารณูปโภค': 'Utilities',
     'สาธารณูปโภค': 'Utilities',
+    'พื้นที่': 'Area',
+    'สตรีม': 'Stream',
+    'ตารางสี': 'Heatmap',
     'ค่ากิจกรรม': 'Activities',
     'ซ่อมอาคาร': 'Repairs',
     'คงเหลือ': 'Left over',
@@ -233,6 +236,13 @@ export const CHART_DOC: ComponentDoc = {
       text: {
         th: '<code>[swap]="true"</code> เพิ่มปุ่มเลือกแบบกราฟมุมขวาบน มีเฉพาะแบบที่ข้อมูลชุดนั้นแสดงได้ (หลายชุดต่อป้าย: แท่ง เส้น พื้นที่ สตรีม เรดาร์ heatmap ความชัน ดัมเบล treemap · ชุดเดียว: เพิ่มวงกลม โดนัท กรวย หน่วย) หรือระบุเองเช่น <code>[swap]="[\'bar\', \'line\', \'area\']"</code> · เปลี่ยนแล้วกราฟเดิมจางหายขณะกราฟใหม่โตขึ้นมา · <code>(typeChange)</code> บอกแบบที่เลือก',
         en: '<code>[swap]="true"</code> adds a type switcher top right, offering only the kinds the data can be drawn as (several series per label: bar, line, area, stream, radar, heatmap, slope, dumbbell, treemap · one series: also pie, doughnut, funnel, units), or name them, <code>[swap]="[\'bar\', \'line\', \'area\']"</code> · the old chart fades out while the new one grows in · <code>(typeChange)</code> says which.',
+      },
+    },
+    dynamic: {
+      title: { th: 'เปลี่ยนแบบจากหน้าของแอป', en: 'Switching from your own page' },
+      text: {
+        th: 'ทำกราฟที่เปลี่ยนแบบได้ 3 ทาง: (1) ปุ่มในกราฟเอง <code>[swap]="true"</code> เปลี่ยนแบบ และ <code>[looks]="true"</code> เปลี่ยนลักษณะ (ใช้ในทุกตัวอย่างของหน้านี้) · (2) ปุ่มหรือเมนูของแอปเองผูกกับ <code>[type]</code> / <code>[variant]</code> แบบด้านล่าง กราฟเปลี่ยนแบบพร้อม animation เหมือนปุ่มในกราฟ · (3) <code>(typeChange)</code> / <code>(variantChange)</code> บอกสิ่งที่ผู้ใช้เลือก เก็บไว้ (เช่นใน localStorage) แล้วส่งกลับเข้า <code>[type]</code> ครั้งต่อไป',
+        en: 'Three ways to a chart that switches: (1) its own buttons, <code>[swap]="true"</code> for the kind and <code>[looks]="true"</code> for the look (every sample on this page uses them) · (2) your page’s own buttons or menus bound to <code>[type]</code> / <code>[variant]</code>, as below; the chart moves over with the same animation · (3) <code>(typeChange)</code> / <code>(variantChange)</code> say what people picked: keep it (localStorage, say) and pass it back to <code>[type]</code> next time.',
       },
     },
     stream: {
@@ -432,17 +442,19 @@ export const CHART_DOC: ComponentDoc = {
 <wt-chart type="doughnut" [labels]="channels" [series]="applicants" [startAngle]="-90" [endAngle]="90" legend="bottom"></wt-chart>`,
     swap: `<wt-chart type="bar" [labels]="months" [series]="money" [swap]="true" format="compact" (typeChange)="kind = $event"></wt-chart>
 <wt-chart type="doughnut" [labels]="channels" [series]="applicants" [swap]="true"></wt-chart>`,
-    stream: `<wt-chart type="stream" [labels]="months" [series]="clubs" variant="silhouette"></wt-chart>`,
-    waterfall: `<wt-chart type="waterfall" [labels]="budgetSteps" [series]="budgetFlow" format="compact" variant="bars"></wt-chart>`,
-    dumbbell: `<wt-chart type="dumbbell" [labels]="subjects" [series]="beforeAfter" variant="dots" height="300"></wt-chart>`,
-    timeline: `<wt-chart type="timeline" [series]="project" variant="bars" height="300"></wt-chart>`,
-    funnel: `<wt-chart type="funnel" [labels]="steps" [series]="admissions" variant="funnel" height="320"></wt-chart>`,
-    boxplot: `<wt-chart type="boxplot" [labels]="classes" [series]="scores" variant="box" yTitle="คะแนน"></wt-chart>`,
-    histogram: `<wt-chart type="histogram" [series]="heights" variant="bars" xTitle="ส่วนสูง (ซม.)"></wt-chart>`,
-    sunburst: `<wt-chart type="sunburst" [series]="budget" variant="sunburst" format="compact" height="360"></wt-chart>`,
-    unit: `<wt-chart type="unit" [labels]="travel" [series]="travelCounts" variant="waffle" height="300"></wt-chart>`,
-    slope: `<wt-chart type="slope" [labels]="['2568', '2569']" [series]="yearScores" variant="lines" height="320"></wt-chart>`,
-    heatmap: `<wt-chart type="heatmap" [labels]="days" [series]="library" variant="square" height="260"></wt-chart>
+    dynamic: `<wt-selectbutton [options]="kinds" optionLabel="label" optionValue="value" [(ngModel)]="kind"></wt-selectbutton>
+<wt-chart [type]="kind" [labels]="months" [series]="money" format="compact"></wt-chart>`,
+    stream: `<wt-chart type="stream" [labels]="months" [series]="clubs" variant="silhouette" [looks]="true"></wt-chart>`,
+    waterfall: `<wt-chart type="waterfall" [labels]="budgetSteps" [series]="budgetFlow" format="compact" variant="bars" [looks]="true"></wt-chart>`,
+    dumbbell: `<wt-chart type="dumbbell" [labels]="subjects" [series]="beforeAfter" variant="dots" [looks]="true" height="300"></wt-chart>`,
+    timeline: `<wt-chart type="timeline" [series]="project" variant="bars" [looks]="true" height="300"></wt-chart>`,
+    funnel: `<wt-chart type="funnel" [labels]="steps" [series]="admissions" variant="funnel" [looks]="true" height="320"></wt-chart>`,
+    boxplot: `<wt-chart type="boxplot" [labels]="classes" [series]="scores" variant="box" [looks]="true" yTitle="คะแนน"></wt-chart>`,
+    histogram: `<wt-chart type="histogram" [series]="heights" variant="bars" [looks]="true" xTitle="ส่วนสูง (ซม.)"></wt-chart>`,
+    sunburst: `<wt-chart type="sunburst" [series]="budget" variant="sunburst" [looks]="true" format="compact" height="360"></wt-chart>`,
+    unit: `<wt-chart type="unit" [labels]="travel" [series]="travelCounts" variant="waffle" [looks]="true" height="300"></wt-chart>`,
+    slope: `<wt-chart type="slope" [labels]="['2568', '2569']" [series]="yearScores" variant="lines" [looks]="true" height="320"></wt-chart>`,
+    heatmap: `<wt-chart type="heatmap" [labels]="days" [series]="library" variant="square" [looks]="true" height="260"></wt-chart>
 <wt-chart type="heatmap" [labels]="days" [series]="library" [colorRanges]="ranges" height="260"></wt-chart>`,
     treemap: `<wt-chart type="treemap" [labels]="departments" [series]="budgets" format="compact" height="340"></wt-chart>`,
     sparkline: `<div class="kpis">
@@ -549,6 +561,16 @@ ranges: WtChartColorRange[] = [
   { from: 21, to: 45, color: '#f59e0b', name: 'ปานกลาง' },
   { from: 46, to: 100, color: '#ef4444', name: 'แน่น' },
 ];`,
+    dynamic: `import { WtChartType } from 'wiratheme/chart';
+
+kind: WtChartType = 'bar';
+kinds = [
+  { label: 'แท่ง', value: 'bar' },
+  { label: 'เส้น', value: 'line' },
+  { label: 'พื้นที่', value: 'area' },
+  { label: 'สตรีม', value: 'stream' },
+  { label: 'ตารางสี', value: 'heatmap' },
+];`,
     stream: `clubs: WtChartSeries[] = [
   { name: 'ชมรมดนตรี', data: [30, 42, 38, 55, 48, 62] },
   { name: 'ชมรมกีฬา', data: [45, 40, 52, 48, 60, 58] },
@@ -645,6 +667,7 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
         ),
         row('variant', 'string', undefined, 'ลักษณะของแต่ละแบบ (ดูในแต่ละหัวข้อ เช่น heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')', 'The look of a kind (see each section, e.g. heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')'),
         row('swap', "boolean | WtChartType[]", undefined, '(Beta) ปุ่มสลับแบบกราฟ: true คือทุกแบบที่ข้อมูลแสดงได้', '(Beta) A type switcher: true offers every kind the data can be drawn as'),
+        row('looks', BOOL, 'false', 'ปุ่มเลือกลักษณะของแบบที่มีหลายลักษณะ', 'A look picker for kinds with several looks'),
         row('bins', 'number', 'auto', 'จำนวนช่วงของฮิสโตแกรม', 'Histogram bins'),
         row('labels', 'string[]', undefined, 'ป้ายของแกน (ชิ้นของวงกลม)', 'Axis labels (pie slices)'),
         row('series', 'WtChartSeries[]', undefined, '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }', '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }'),
@@ -701,6 +724,7 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
         row('seriesToggle', 'WtChartToggleEvent', undefined, '{ index, name, hidden } เมื่อ legend ซ่อน / แสดง', '{ index, name, hidden } when the legend hides / shows'),
         row('zoomChange', 'WtChartZoomEvent | null', undefined, '{ from, to } ช่วงป้ายที่ซูม (null: ดูทั้งหมด)', '{ from, to } labels zoomed into (null: all)'),
         row('typeChange', 'WtChartType', undefined, 'แบบที่เลือกจากปุ่มสลับแบบกราฟ', 'The kind picked in the type switcher'),
+        row('variantChange', 'string', undefined, 'ลักษณะที่เลือกจากปุ่มเลือกลักษณะ', 'The look picked in the look picker'),
       ],
     },
     {

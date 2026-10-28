@@ -1,0 +1,123 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-selectbutton id="d-dock-position" [options]="local(positions)" optionLabel="label" optionValue="value" [(ngModel)]="position" [allowEmpty]="false"></wt-selectbutton>
+        <div class="docs-desk docs-desk-basic" id="d-dock-basic">
+          <wt-dock [model]="local(basicApps)" [position]="position" ariaLabel="Dock"></wt-dock>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="mac" [section]="sec['mac']">
+      <docs-demo [html]="code['mac']" [ts]="ts['mac']" [css]="css['mac']" layout="stack">
+        <div class="docs-desk docs-desk-mac" id="d-dock-mac">
+          <div class="docs-mac-bar">
+            <span class="docs-mac-logo" aria-hidden="true">W</span>
+            <wt-menubar [model]="local(menus)" styleClass="docs-mac-menu"></wt-menubar>
+            <span class="docs-mac-tray" aria-hidden="true">
+              <i class="wi wi-wifi"></i><i class="wi wi-battery"></i><i class="wi wi-search"></i><span>{{ time }}</span>
+            </span>
+          </div>
+          @for (w of windows('mac'); track w.id) {
+            <section class="docs-window docs-window-mac" [attr.data-app]="w.id" [style.left.px]="place('mac', w.id).x" [style.top.px]="place('mac', w.id).y" [style.z-index]="z('mac', w.id)" (pointerdown)="launch('mac', w.id)">
+              <header class="docs-window-bar" (pointerdown)="drag('mac', w.id, $event)">
+                <button type="button" class="docs-window-dot docs-dot-close" [attr.aria-label]="'close ' + w.id" (click)="$event.stopPropagation(); close('mac', w.id)"></button>
+                <span class="docs-window-dot docs-dot-min"></span><span class="docs-window-dot docs-dot-max"></span>
+                <span class="docs-window-title">{{ tx(w.label) }}</span>
+              </header>
+              <div class="docs-window-body">
+                <ng-container *ngTemplateOutlet="appBody; context: { $implicit: w }"></ng-container>
+              </div>
+            </section>
+          }
+          <wt-dock [model]="local(macApps)" ariaLabel="Dock">
+            <ng-template wtTemplate="item" let-item>
+              <span class="docs-app" [style.background]="item.color"><i [class]="item.icon"></i></span>
+            </ng-template>
+          </wt-dock>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="windows" [section]="sec['windows']">
+      <docs-demo [html]="code['windows']" layout="stack">
+        <div class="docs-desk docs-desk-win" id="d-dock-win">
+          @for (w of windows('win'); track w.id) {
+            <section class="docs-window docs-window-win" [attr.data-app]="w.id" [style.left.px]="place('win', w.id).x" [style.top.px]="place('win', w.id).y" [style.z-index]="z('win', w.id)" (pointerdown)="launch('win', w.id)">
+              <header class="docs-window-bar" (pointerdown)="drag('win', w.id, $event)">
+                <i [class]="w.icon" aria-hidden="true"></i>
+                <span class="docs-window-title">{{ tx(w.label) }}</span>
+                <span class="docs-win-buttons" aria-hidden="true"><i class="wi wi-minus"></i><i class="wi wi-window-maximize"></i></span>
+                <button type="button" class="docs-win-close" [attr.aria-label]="'close ' + w.id" (click)="$event.stopPropagation(); close('win', w.id)"><i class="wi wi-times"></i></button>
+              </header>
+              <div class="docs-window-body">
+                <ng-container *ngTemplateOutlet="appBody; context: { $implicit: w }"></ng-container>
+              </div>
+            </section>
+          }
+          @if (startOpen) {
+            <div class="docs-win-start" id="d-dock-start">
+              <div class="docs-win-search"><i class="wi wi-search"></i> {{ tx('ค้นหาแอป การตั้งค่า และเอกสาร') }}</div>
+              <p class="docs-win-start-title">{{ tx('แอปที่ปักหมุด') }}</p>
+              <div class="docs-win-pinned">
+                @for (a of pinned(); track a.id) {
+                  <button type="button" class="docs-win-pin" (click)="launch('win', a.id)">
+                    <span class="docs-app" [style.background]="a.color"><i [class]="a.icon"></i></span>
+                    <span>{{ tx(a.label) }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+          <wt-dock [model]="local(winApps)" look="windows" ariaLabel="Taskbar">
+            <ng-template wtTemplate="start">
+              <button type="button" class="docs-win-startbtn" id="d-dock-startbtn" [attr.aria-expanded]="startOpen" aria-label="Start" (click)="startOpen = !startOpen">
+                <i class="wi wi-th-large"></i>
+              </button>
+            </ng-template>
+            <ng-template wtTemplate="item" let-item>
+              <span class="docs-app docs-app-small" [style.background]="item.color"><i [class]="item.icon"></i></span>
+            </ng-template>
+            <ng-template wtTemplate="end">
+              <span class="docs-win-tray" aria-hidden="true"><i class="wi wi-wifi"></i><i class="wi wi-volume-up"></i><i class="wi wi-battery"></i></span>
+              <span class="docs-win-clock">{{ time }}<br />{{ date }}</span>
+            </ng-template>
+          </wt-dock>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="a11y" [section]="sec['a11y']"></docs-section>
+  </ng-template>
+</docs-component-page>
+
+<ng-template #appBody let-w>
+  @switch (w.id) {
+    @case ('terminal') {
+      <pre class="docs-app-terminal">wira@school ~ % ng add wiratheme
+✔ Installed wiratheme 3.0.0
+wira@school ~ % <span class="docs-caret"></span></pre>
+    }
+    @case ('photos') {
+      <div class="docs-app-photos">
+        @for (g of [1, 2, 3, 4, 5, 6]; track g) {
+          <span [class]="'docs-photo docs-photo-' + g"></span>
+        }
+      </div>
+    }
+    @default {
+      <ul class="docs-app-files">
+        <li><i class="wi wi-folder"></i> {{ tx('เอกสาร') }}</li>
+        <li><i class="wi wi-folder"></i> {{ tx('ดาวน์โหลด') }}</li>
+        <li><i class="wi wi-images"></i> {{ tx('ภาพกิจกรรม') }}</li>
+        <li><i class="wi wi-file"></i> {{ tx('รายงานผลการเรียน.pdf') }}</li>
+        <li><i class="wi wi-file"></i> {{ tx('ตารางสอน.xlsx') }}</li>
+      </ul>
+    }
+  }
+</ng-template>

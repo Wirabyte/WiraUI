@@ -1,5 +1,33 @@
 import type { ChartType } from 'wiratheme/core';
 
+/** The look picker's names. */
+export const WT_CHART_LOOKS: Record<string, { th: string; en: string }> = {
+  square: { th: 'สี่เหลี่ยม', en: 'Squares' },
+  circle: { th: 'วงกลม', en: 'Circles' },
+  hex: { th: 'รังผึ้ง', en: 'Honeycomb' },
+  silhouette: { th: 'สมมาตร', en: 'Silhouette' },
+  wiggle: { th: 'ลื่นไหล', en: 'Wiggle' },
+  expand: { th: 'สัดส่วน', en: 'Shares' },
+  bars: { th: 'แท่ง', en: 'Bars' },
+  steps: { th: 'ขั้นบันได', en: 'Steps' },
+  dots: { th: 'จุด', en: 'Dots' },
+  arrow: { th: 'ลูกศร', en: 'Arrows' },
+  range: { th: 'ช่วง', en: 'Range' },
+  thin: { th: 'เส้นบาง', en: 'Thin' },
+  funnel: { th: 'กรวย', en: 'Funnel' },
+  pyramid: { th: 'พีระมิด', en: 'Pyramid' },
+  box: { th: 'กล่อง', en: 'Box' },
+  violin: { th: 'ไวโอลิน', en: 'Violin' },
+  points: { th: 'จุดข้อมูล', en: 'Points' },
+  density: { th: 'ความหนาแน่น', en: 'Density' },
+  sunburst: { th: 'ซันเบิร์สต์', en: 'Sunburst' },
+  icicle: { th: 'ไอซิเคิล', en: 'Icicle' },
+  waffle: { th: 'วาฟเฟิล', en: 'Waffle' },
+  people: { th: 'รูปคน', en: 'People' },
+  lines: { th: 'เส้น', en: 'Lines' },
+  highlight: { th: 'เน้นขึ้นลง', en: 'Up and down' },
+};
+
 /** The type switcher's buttons: a 24 × 24 stroked icon and a name per kind. */
 export const WT_CHART_KINDS: Record<ChartType, { icon: string; th: string; en: string }> = {
   bar: { icon: 'M5 20V11M10 20V5M15 20v-7M20 20V8', th: 'แท่ง', en: 'Bar' },

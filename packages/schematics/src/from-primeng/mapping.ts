@@ -63,6 +63,7 @@ export const WT_MODULES: Record<string, string[]> = {
   datepicker: ['WtDatePickerModule'],
   dialog: ['WtDialogModule'],
   divider: ['WtDividerModule'],
+  dock: ['WtDockModule'],
   dragdrop: ['WtDragDropModule'],
   drawer: ['WtDrawerModule'],
   editor: ['WtEditorModule'],
@@ -177,7 +178,7 @@ export const WT_TAGS = new Set(
   (
     'accordion accordionTab accordiontab accordion-tab accordion-panel accordion-header accordion-content autoComplete autocomplete ' +
     'avatar avatarGroup avatar-group badge blockUI breadcrumb button calendar card carousel cellEditor chart checkbox chip colorPicker ' +
-    'columnFilter confirmDialog contextMenu datePicker datepicker dialog divider drawer dropdown editor fieldset fileUpload floatLabel ' +
+    'columnFilter confirmDialog contextMenu datePicker datepicker dialog divider dock drawer dropdown editor fieldset fileUpload floatLabel ' +
     'galleria iconField image imageCompare inplace inputGroup inputGroupAddon inputIcon inputMask inputNumber inputOtp inputSwitch ' +
     'knob listbox listBox menu menubar message messages meterGroup multiSelect orderList organizationChart overlayPanel paginator ' +
     'panel panelMenu password pickList popover progressBar progressSpinner radioButton rating scrollPanel scroller select selectButton ' +
@@ -191,7 +192,7 @@ export const WT_TAGS = new Set(
 );
 
 /** PrimeNG tags with no WiraTheme counterpart yet: left as they are and reported. */
-export const NOT_YET = ['cascadeSelect', 'chips', 'confirmPopup', 'dataView', 'dock', 'megaMenu', 'scrollTop', 'speedDial', 'treeTable', 'triStateCheckbox'];
+export const NOT_YET = ['cascadeSelect', 'chips', 'confirmPopup', 'dataView', 'megaMenu', 'scrollTop', 'speedDial', 'treeTable', 'triStateCheckbox'];
 
 /** The WiraTheme name of a PrimeNG module or class name (`DropdownModule` → `WtSelectModule`). */
 export function wtName(primeName: string): string {

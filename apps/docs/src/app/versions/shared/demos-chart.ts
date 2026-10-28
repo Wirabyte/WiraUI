@@ -95,33 +95,15 @@ export abstract class ChartDemo extends SimpleDemo {
   zoomText = 'null';
   swapped = '-';
 
-  /** The look picked in each section, and the looks to pick from. */
-  look: Record<string, string> = {
-    heatmap: 'square',
-    stream: 'silhouette',
-    waterfall: 'bars',
-    dumbbell: 'dots',
-    timeline: 'bars',
-    funnel: 'funnel',
-    boxplot: 'box',
-    histogram: 'bars',
-    sunburst: 'sunburst',
-    unit: 'waffle',
-    slope: 'lines',
-  };
-  readonly looks: Record<string, { label: string; value: string }[]> = {
-    heatmap: [{ label: 'สี่เหลี่ยม', value: 'square' }, { label: 'วงกลม', value: 'circle' }, { label: 'รังผึ้ง', value: 'hex' }],
-    stream: [{ label: 'สมมาตร', value: 'silhouette' }, { label: 'ลื่นไหล', value: 'wiggle' }, { label: 'สัดส่วน', value: 'expand' }],
-    waterfall: [{ label: 'แท่ง', value: 'bars' }, { label: 'ขั้นบันได', value: 'steps' }],
-    dumbbell: [{ label: 'จุด', value: 'dots' }, { label: 'ลูกศร', value: 'arrow' }, { label: 'ช่วง', value: 'range' }],
-    timeline: [{ label: 'แท่ง', value: 'bars' }, { label: 'เส้นบาง', value: 'thin' }],
-    funnel: [{ label: 'กรวย', value: 'funnel' }, { label: 'แท่ง', value: 'bars' }, { label: 'พีระมิด', value: 'pyramid' }],
-    boxplot: [{ label: 'กล่อง', value: 'box' }, { label: 'ไวโอลิน', value: 'violin' }, { label: 'จุดข้อมูล', value: 'points' }],
-    histogram: [{ label: 'แท่ง', value: 'bars' }, { label: 'ความหนาแน่น', value: 'density' }],
-    sunburst: [{ label: 'ซันเบิร์สต์', value: 'sunburst' }, { label: 'ไอซิเคิล', value: 'icicle' }],
-    unit: [{ label: 'วาฟเฟิล', value: 'waffle' }, { label: 'จุด', value: 'dots' }, { label: 'รูปคน', value: 'people' }],
-    slope: [{ label: 'เส้น', value: 'lines' }, { label: 'เน้นขึ้นลง', value: 'highlight' }],
-  };
+  /** The dynamic sample: the app's own control picks the kind. */
+  ownKind = 'bar';
+  readonly ownKinds = [
+    { label: 'แท่ง', value: 'bar' },
+    { label: 'เส้น', value: 'line' },
+    { label: 'พื้นที่', value: 'area' },
+    { label: 'สตรีม', value: 'stream' },
+    { label: 'ตารางสี', value: 'heatmap' },
+  ];
   readonly clubs: Series[] = [
     { name: 'ชมรมดนตรี', data: [30, 42, 38, 55, 48, 62] },
     { name: 'ชมรมกีฬา', data: [45, 40, 52, 48, 60, 58] },

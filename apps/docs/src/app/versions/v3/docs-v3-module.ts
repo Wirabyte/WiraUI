@@ -53,6 +53,9 @@ import { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } from 'wirathem
 import { WtEmptyStateModule } from 'wiratheme/emptystate';
 import { WtResultModule } from 'wiratheme/result';
 import { WtErrorPageModule } from 'wiratheme/errorpage';
+import { WtDockModule } from 'wiratheme/dock';
+import { WtSiteFooterModule } from 'wiratheme/sitefooter';
+import { WtBottomBarModule } from 'wiratheme/bottombar';
 import { WtThaiModule } from 'wiratheme/thai';
 import { WtChartModule } from 'wiratheme/chart';
 import { WtInputOtpModule } from 'wiratheme/inputotp';
@@ -193,6 +196,9 @@ import {
   EmptyStatePageV3,
   ResultPageV3,
   ErrorPagePageV3,
+  DockPageV3,
+  FooterPageV3,
+  BottomBarPageV3,
   ThaiPageV3,
   PickStudentV3,
   ChartPageV3,
@@ -297,6 +303,9 @@ import { THEME_V3 } from './theme-v3';
     EmptyStatePageV3,
     ResultPageV3,
     ErrorPagePageV3,
+    DockPageV3,
+    FooterPageV3,
+    BottomBarPageV3,
     ThaiPageV3,
     PickStudentV3,
     ChartPageV3,
@@ -395,6 +404,9 @@ import { THEME_V3 } from './theme-v3';
     WtEmptyStateModule,
     WtResultModule,
     WtErrorPageModule,
+    WtDockModule,
+    WtSiteFooterModule,
+    WtBottomBarModule,
     WtThaiModule,
     WtChartModule,
     WtInputOtpModule,
@@ -495,6 +507,9 @@ import { THEME_V3 } from './theme-v3';
         emptystate: EmptyStatePageV3,
         result: ResultPageV3,
         errorpage: ErrorPagePageV3,
+        dock: DockPageV3,
+        footer: FooterPageV3,
+        bottombar: BottomBarPageV3,
         thai: ThaiPageV3,
         chart: ChartPageV3,
       })

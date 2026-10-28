@@ -99,6 +99,7 @@ import {
 import { FlowDemo } from '../shared/demos-flow';
 import { ExcelDemo } from '../shared/demos-excel';
 import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
+import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
 import { ThaiDemo } from '../shared/demos-thai';
 
 // Shared templates compiled against wiratheme@1 components (DocsV1Module imports the v1 modules).
@@ -384,6 +385,15 @@ export class ResultPageV1 extends ResultDemo {}
 
 @Component({ selector: 'docs-errorpage-v1', templateUrl: '../shared/errorpage.html', standalone: false })
 export class ErrorPagePageV1 extends ErrorPageDemo {}
+
+@Component({ selector: 'docs-dock-v1', templateUrl: '../shared/dock.html', standalone: false })
+export class DockPageV1 extends DockDemo {}
+
+@Component({ selector: 'docs-footer-v1', templateUrl: '../shared/footer.html', standalone: false })
+export class FooterPageV1 extends FooterDemo {}
+
+@Component({ selector: 'docs-bottombar-v1', templateUrl: '../shared/bottombar.html', standalone: false })
+export class BottomBarPageV1 extends BottomBarDemo {}
 
 @Component({ selector: 'docs-thai-v1', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV1 extends ThaiDemo {}

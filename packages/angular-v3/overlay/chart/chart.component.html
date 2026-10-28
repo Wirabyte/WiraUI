@@ -1,5 +1,5 @@
 <div [class]="classes()" [style]="rootStyle()" [style.font-family]="font() || null" [style.--wt-chart-font-size]="fontSize() + 'px'">
-  @if (heading() || subtitle() || toolbar() || swapKinds().length) {
+  @if (heading() || subtitle() || toolbar() || swapKinds().length || lookList().length) {
     <div class="wt-chart-head">
       <div class="wt-chart-heading">
         @if (heading()) {
@@ -9,6 +9,21 @@
           <div class="wt-chart-subtitle">{{ subtitle() }}</div>
         }
       </div>
+      @if (lookList().length) {
+        <div class="wt-chart-looks" role="radiogroup" [attr.aria-label]="words().looks">
+          @for (l of lookList(); track l) {
+            <button
+              type="button"
+              role="radio"
+              class="wt-chart-look-item"
+              [class.wt-chart-look-on]="activeLook() === l"
+              [attr.aria-checked]="activeLook() === l"
+              [attr.data-look]="l"
+              (click)="setLook(l)"
+            >{{ lookName(l) }}</button>
+          }
+        </div>
+      }
       @if (swapKinds().length) {
         <div class="wt-chart-swap" role="radiogroup" [attr.aria-label]="words().kinds">
           @for (t of swapKinds(); track t) {

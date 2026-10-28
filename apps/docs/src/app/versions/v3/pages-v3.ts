@@ -99,6 +99,7 @@ import {
 import { FlowDemo } from '../shared/demos-flow';
 import { ExcelDemo } from '../shared/demos-excel';
 import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
+import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
 import { ThaiDemo } from '../shared/demos-thai';
 import { ChartDemo } from '../shared/demos-chart';
 
@@ -385,6 +386,15 @@ export class ResultPageV3 extends ResultDemo {}
 
 @Component({ selector: 'docs-errorpage-v3', templateUrl: '../shared/errorpage.html', standalone: false })
 export class ErrorPagePageV3 extends ErrorPageDemo {}
+
+@Component({ selector: 'docs-dock-v3', templateUrl: '../shared/dock.html', standalone: false })
+export class DockPageV3 extends DockDemo {}
+
+@Component({ selector: 'docs-footer-v3', templateUrl: '../shared/footer.html', standalone: false })
+export class FooterPageV3 extends FooterDemo {}
+
+@Component({ selector: 'docs-bottombar-v3', templateUrl: '../shared/bottombar.html', standalone: false })
+export class BottomBarPageV3 extends BottomBarDemo {}
 
 @Component({ selector: 'docs-thai-v3', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV3 extends ThaiDemo {}

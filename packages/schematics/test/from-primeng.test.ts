@@ -89,7 +89,8 @@ import { Table, TableModule } from 'primeng/table';
 @Component({
   selector: 'app-students',
   template: \`<p-table #dt [value]="rows"><ng-template pTemplate="body" let-r><tr><td>{{ r.name }}</td></tr></ng-template></p-table>
-<p-dock></p-dock>\`,
+<p-dock [model]="apps"></p-dock>
+<p-speedDial></p-speedDial>\`,
 })
 export class StudentsComponent {
   @ViewChild('dt') dt!: Table;
@@ -135,7 +136,9 @@ export class StudentsComponent {
     expect(cmp).toContain('options = { Table: 1 };');
     expect(cmp).toContain('<wt-table #dt [value]="rows">');
     expect(cmp).toContain('</wt-table>');
-    expect(cmp).toContain('<p-dock></p-dock>');
+    expect(cmp).toContain('<wt-dock [model]="apps"></wt-dock>');
+    // Tags with nothing to move to yet stay as they are.
+    expect(cmp).toContain('<p-speedDial></p-speedDial>');
   });
 
   it('renames tags in templates, keeping PrimeNG attributes and classes', async () => {

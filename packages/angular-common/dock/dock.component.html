@@ -1,0 +1,83 @@
+<div [ngClass]="classes" [ngStyle]="rootStyle" [style.--wt-dock-item-size.px]="itemSize" [attr.data-position]="position" [attr.data-look]="look">
+  <div class="wt-dock-list-container p-dock-list-container">
+    <span class="wt-dock-spacer" aria-hidden="true"></span>
+    <div class="wt-dock-center">
+      <div *ngIf="startTemplate" class="wt-dock-start">
+        <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
+      </div>
+      <ul
+        #list
+        class="wt-dock-list p-dock-list"
+        role="menu"
+        [attr.aria-orientation]="vertical ? 'vertical' : 'horizontal'"
+        [attr.aria-label]="ariaLabel || null"
+        [attr.aria-labelledby]="ariaLabelledBy || null"
+        (focusin)="focusIn($event)"
+        (focusout)="focusOut($event)"
+        (keydown)="key($event)"
+      >
+        <ng-container *ngFor="let item of items; let i = index">
+          <li *ngIf="item.separator; else entry" class="wt-dock-separator p-dock-separator" role="separator"></li>
+          <ng-template #entry>
+            <li
+              class="wt-dock-item p-dock-item"
+              role="none"
+              [attr.data-index]="i"
+              [class.wt-dock-item-active]="item['active']"
+              [class.wt-dock-item-current]="item['current']"
+              [class.wt-dock-item-disabled]="item.disabled"
+              [class.p-disabled]="item.disabled"
+              [class.wt-dock-bounce]="bouncing === i"
+              [ngClass]="item.styleClass || ''"
+              [ngStyle]="item.style || null"
+            >
+              <a
+                *ngIf="hasRoute(item); else plain"
+                class="wt-dock-action p-dock-item-link"
+                role="menuitem"
+                [routerLink]="item.routerLink"
+                [queryParams]="item.queryParams"
+                [fragment]="item.fragment"
+                [attr.target]="item.target || null"
+                [attr.tabindex]="tabIndexOf(i)"
+                [attr.aria-label]="item.label || null"
+                [attr.title]="item.title || null"
+                (click)="pick(item, i, $event)"
+              >
+                <ng-container *ngTemplateOutlet="itemTemplate || plainItem; context: { $implicit: item, index: i }"></ng-container>
+              </a>
+              <ng-template #plain>
+                <a
+                  class="wt-dock-action p-dock-item-link"
+                  role="menuitem"
+                  [attr.href]="item.url && !item.disabled ? item.url : null"
+                  [attr.target]="item.target || null"
+                  [attr.tabindex]="tabIndexOf(i)"
+                  [attr.aria-label]="item.label || null"
+                  [attr.aria-disabled]="item.disabled ? true : null"
+                  [attr.title]="item.title || null"
+                  (click)="pick(item, i, $event)"
+                >
+                  <ng-container *ngTemplateOutlet="itemTemplate || plainItem; context: { $implicit: item, index: i }"></ng-container>
+                </a>
+              </ng-template>
+              <span *ngIf="item.label" class="wt-dock-tip" aria-hidden="true">{{ item.label }}</span>
+              <span class="wt-dock-dot" aria-hidden="true"></span>
+            </li>
+          </ng-template>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="wt-dock-end">
+      <ng-container *ngIf="endTemplate">
+        <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #plainItem let-item>
+  <img *ngIf="item.image" class="wt-dock-image" [src]="item.image" alt="" draggable="false" />
+  <span *ngIf="!item.image && item.icon" class="wt-dock-icon" [ngClass]="item.icon"></span>
+  <span *ngIf="item.badge" class="wt-dock-badge">{{ item.badge }}</span>
+</ng-template>

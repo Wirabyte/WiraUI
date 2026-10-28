@@ -1,0 +1,96 @@
+<footer [ngClass]="classes" [ngStyle]="rootStyle" [attr.aria-label]="ariaLabel || null">
+  <div class="wt-site-footer-main">
+    <div class="wt-site-footer-brand" *ngIf="brandTemplate || brand || logo || description || socials.length">
+      <ng-container *ngIf="brandTemplate; else ownBrand">
+        <ng-container *ngTemplateOutlet="brandTemplate"></ng-container>
+      </ng-container>
+      <ng-template #ownBrand>
+        <div class="wt-site-footer-name" *ngIf="brand || logo">
+          <img *ngIf="logo" class="wt-site-footer-logo" [src]="logo" alt="" />
+          <span *ngIf="brand">{{ brand }}</span>
+        </div>
+        <p class="wt-site-footer-description" *ngIf="description">{{ description }}</p>
+      </ng-template>
+      <ul class="wt-site-footer-social" *ngIf="socials.length">
+        <li *ngFor="let s of socials">
+          <ng-container *ngTemplateOutlet="link; context: { $implicit: s, cls: 'wt-site-footer-social-link', icon: true }"></ng-container>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="wt-site-footer-links" *ngIf="links.length">
+      <li *ngFor="let l of links">
+        <ng-container *ngTemplateOutlet="link; context: { $implicit: l, cls: 'wt-site-footer-link' }"></ng-container>
+      </li>
+    </ul>
+
+    <nav class="wt-site-footer-columns" *ngIf="columns.length" [attr.aria-label]="ariaLabel || null">
+      <div class="wt-site-footer-column" *ngFor="let c of columns; let i = index" [class.wt-site-footer-column-open]="open.has(i)">
+        <button type="button" class="wt-site-footer-heading" [attr.aria-expanded]="open.has(i)" (click)="toggle(i)">
+          <span>{{ c.label }}</span>
+          <svg class="wt-site-footer-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <ul class="wt-site-footer-list">
+          <li *ngFor="let l of c.items">
+            <ng-container *ngTemplateOutlet="link; context: { $implicit: l, cls: 'wt-site-footer-link' }"></ng-container>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="wt-site-footer-end" *ngIf="endTemplate">
+      <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
+    </div>
+  </div>
+
+  <div class="wt-site-footer-bottom" *ngIf="copyrightText || legals.length || bottomTemplate || showTop">
+    <span class="wt-site-footer-copyright" *ngIf="copyrightText">{{ copyrightText }} {{ words.rights }}</span>
+    <ul class="wt-site-footer-legal" *ngIf="legals.length">
+      <li *ngFor="let l of legals">
+        <ng-container *ngTemplateOutlet="link; context: { $implicit: l, cls: 'wt-site-footer-legal-link' }"></ng-container>
+      </li>
+    </ul>
+    <ng-container *ngIf="bottomTemplate">
+      <ng-container *ngTemplateOutlet="bottomTemplate"></ng-container>
+    </ng-container>
+    <button *ngIf="showTop" type="button" class="wt-site-footer-top" (click)="top()">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+      <span>{{ words.backToTop }}</span>
+    </button>
+  </div>
+</footer>
+
+<ng-template #link let-item let-cls="cls" let-icon="icon">
+  <a
+    *ngIf="hasRoute(item); else plain"
+    [ngClass]="[cls, item.styleClass || '']"
+    [routerLink]="item.routerLink"
+    [queryParams]="item.queryParams"
+    [fragment]="item.fragment"
+    [attr.target]="item.target || null"
+    [attr.aria-label]="icon ? item.label || item.title || null : null"
+    [attr.title]="icon ? item.label || item.title || null : item.title || null"
+    (click)="pick(item, $event)"
+  >
+    <span *ngIf="item.icon" class="wt-site-footer-icon" [ngClass]="item.icon" aria-hidden="true"></span>
+    <span *ngIf="!icon">{{ item.label }}</span>
+  </a>
+  <ng-template #plain>
+    <a
+      [ngClass]="[cls, item.styleClass || '']"
+      [attr.href]="item.url && !item.disabled ? item.url : null"
+      [attr.target]="item.target || null"
+      [attr.rel]="item.target === '_blank' ? 'noopener' : null"
+      [attr.aria-label]="icon ? item.label || item.title || null : null"
+      [attr.aria-disabled]="item.disabled ? true : null"
+      [attr.title]="icon ? item.label || item.title || null : item.title || null"
+      [attr.tabindex]="!item.url ? 0 : null"
+      [attr.role]="!item.url ? 'button' : null"
+      (click)="pick(item, $event)"
+      (keydown.enter)="!item.url && pick(item, $event)"
+    >
+      <span *ngIf="item.icon" class="wt-site-footer-icon" [ngClass]="item.icon" aria-hidden="true"></span>
+      <span *ngIf="!icon">{{ item.label }}</span>
+    </a>
+  </ng-template>
+</ng-template>

@@ -209,6 +209,8 @@
   .wt-chart-value {
     fill: var(--wt-chart-value-color);
     font-weight: 600;
+    /* Over a slice or bar: the pointer goes through to it. */
+    pointer-events: none;
     transition: opacity var(--wt-transition);
   }
   /* Values wait until the marks have grown in. */
@@ -419,8 +421,51 @@
     border-radius: var(--wt-radius-md);
     background: var(--wt-chart-track);
   }
-  .wt-chart-swap + .wt-chart-toolbar {
+  .wt-chart-swap + .wt-chart-toolbar,
+  .wt-chart-looks + .wt-chart-swap,
+  .wt-chart-looks + .wt-chart-toolbar {
     margin-left: 0;
+  }
+  /* The look picker: words in the same kind of pill as the switcher. */
+  .wt-chart-looks {
+    display: inline-flex;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    gap: 0.125rem;
+    min-width: 0;
+    margin-left: auto;
+    padding: 0.1875rem;
+    border-radius: var(--wt-radius-md);
+    background: var(--wt-chart-track);
+  }
+  .wt-chart-look-item {
+    min-height: 1.75rem;
+    padding: 0.125rem 0.625rem;
+    border: 0;
+    border-radius: var(--wt-radius-sm);
+    background: transparent;
+    color: var(--wt-chart-toolbar-color);
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background var(--wt-transition),
+      color var(--wt-transition),
+      box-shadow var(--wt-transition);
+  }
+  .wt-chart-look-item:hover {
+    color: var(--wt-chart-title-color);
+  }
+  .wt-chart-look-on {
+    background: var(--wt-chart-tooltip-bg);
+    box-shadow: var(--wt-chart-tooltip-shadow);
+    color: var(--wt-chart-mark-color);
+  }
+  .wt-chart-look-item:focus-visible {
+    outline: var(--wt-control-focus-outline);
+    outline-offset: 0;
+    box-shadow: var(--wt-control-focus-shadow);
   }
   .wt-chart-swap-item {
     display: inline-flex;

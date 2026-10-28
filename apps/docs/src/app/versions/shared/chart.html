@@ -18,6 +18,13 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="dynamic" [section]="sec['dynamic']">
+      <docs-demo [html]="code['dynamic']" [ts]="ts['dynamic']" layout="stack">
+        <wt-selectbutton id="d-wc-own-kind" [options]="local(ownKinds)" optionLabel="label" optionValue="value" [(ngModel)]="ownKind" [allowEmpty]="false"></wt-selectbutton>
+        <wt-chart id="d-wc-own" [type]="ownKind" [labels]="local(months)" [series]="local(money)" format="compact"></wt-chart>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="line" [section]="sec['line']">
       <docs-demo [html]="code['line']" [ts]="ts['line']" layout="stack">
         <wt-chart id="d-wc-line" type="line" [labels]="local(months)" [series]="local(visitors)" [smooth]="true" format="compact"></wt-chart>
@@ -98,8 +105,7 @@
 
     <docs-section id="heatmap" [section]="sec['heatmap']">
       <docs-demo [html]="code['heatmap']" [ts]="ts['heatmap']" layout="stack">
-        <wt-selectbutton id="d-wc-heatmap-look" [options]="local(looks['heatmap'])" optionLabel="label" optionValue="value" [(ngModel)]="look['heatmap']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-heatmap" type="heatmap" [labels]="local(days)" [series]="library" [variant]="look['heatmap']" height="260"></wt-chart>
+        <wt-chart id="d-wc-heatmap" type="heatmap" [labels]="local(days)" [series]="library" [looks]="true" height="260"></wt-chart>
         <wt-chart id="d-wc-heatranges" type="heatmap" [labels]="local(days)" [series]="library" [colorRanges]="local(ranges)" height="260"></wt-chart>
       </docs-demo>
     </docs-section>
@@ -112,71 +118,61 @@
 
     <docs-section id="stream" [section]="sec['stream']">
       <docs-demo [html]="code['stream']" [ts]="ts['stream']" layout="stack">
-        <wt-selectbutton id="d-wc-stream-look" [options]="local(looks['stream'])" optionLabel="label" optionValue="value" [(ngModel)]="look['stream']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-stream" type="stream" [labels]="local(months)" [series]="local(clubs)" [variant]="look['stream']"></wt-chart>
+        <wt-chart id="d-wc-stream" type="stream" [labels]="local(months)" [series]="local(clubs)" [looks]="true"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="waterfall" [section]="sec['waterfall']">
       <docs-demo [html]="code['waterfall']" [ts]="ts['waterfall']" layout="stack">
-        <wt-selectbutton id="d-wc-waterfall-look" [options]="local(looks['waterfall'])" optionLabel="label" optionValue="value" [(ngModel)]="look['waterfall']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-waterfall" type="waterfall" [labels]="local(budgetSteps)" [series]="budgetFlow" format="compact" [variant]="look['waterfall']"></wt-chart>
+        <wt-chart id="d-wc-waterfall" type="waterfall" [labels]="local(budgetSteps)" [series]="budgetFlow" format="compact" [looks]="true"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="dumbbell" [section]="sec['dumbbell']">
       <docs-demo [html]="code['dumbbell']" [ts]="ts['dumbbell']" layout="stack">
-        <wt-selectbutton id="d-wc-dumbbell-look" [options]="local(looks['dumbbell'])" optionLabel="label" optionValue="value" [(ngModel)]="look['dumbbell']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-dumbbell" type="dumbbell" [labels]="local(subjects)" [series]="local(beforeAfter)" [variant]="look['dumbbell']" height="300"></wt-chart>
+        <wt-chart id="d-wc-dumbbell" type="dumbbell" [labels]="local(subjects)" [series]="local(beforeAfter)" [looks]="true" height="300"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="timeline" [section]="sec['timeline']">
       <docs-demo [html]="code['timeline']" [ts]="ts['timeline']" layout="stack">
-        <wt-selectbutton id="d-wc-timeline-look" [options]="local(looks['timeline'])" optionLabel="label" optionValue="value" [(ngModel)]="look['timeline']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-timeline" type="timeline" [series]="local(project)" [variant]="look['timeline']" height="300"></wt-chart>
+        <wt-chart id="d-wc-timeline" type="timeline" [series]="local(project)" [looks]="true" height="300"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="funnel" [section]="sec['funnel']">
       <docs-demo [html]="code['funnel']" [ts]="ts['funnel']" layout="stack">
-        <wt-selectbutton id="d-wc-funnel-look" [options]="local(looks['funnel'])" optionLabel="label" optionValue="value" [(ngModel)]="look['funnel']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-funnel" type="funnel" [labels]="local(steps)" [series]="admissions" [variant]="look['funnel']" height="320"></wt-chart>
+        <wt-chart id="d-wc-funnel" type="funnel" [labels]="local(steps)" [series]="admissions" [looks]="true" height="320"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="boxplot" [section]="sec['boxplot']">
       <docs-demo [html]="code['boxplot']" [ts]="ts['boxplot']" layout="stack">
-        <wt-selectbutton id="d-wc-boxplot-look" [options]="local(looks['boxplot'])" optionLabel="label" optionValue="value" [(ngModel)]="look['boxplot']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-boxplot" type="boxplot" [labels]="local(classes)" [series]="local(scores)" [variant]="look['boxplot']" [yTitle]="tx('คะแนน')"></wt-chart>
+        <wt-chart id="d-wc-boxplot" type="boxplot" [labels]="local(classes)" [series]="local(scores)" [looks]="true" [yTitle]="tx('คะแนน')"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="histogram" [section]="sec['histogram']">
       <docs-demo [html]="code['histogram']" [ts]="ts['histogram']" layout="stack">
-        <wt-selectbutton id="d-wc-histogram-look" [options]="local(looks['histogram'])" optionLabel="label" optionValue="value" [(ngModel)]="look['histogram']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-histogram" type="histogram" [series]="local(heights)" [variant]="look['histogram']" [xTitle]="tx('ส่วนสูง (ซม.)')"></wt-chart>
+        <wt-chart id="d-wc-histogram" type="histogram" [series]="local(heights)" [looks]="true" [xTitle]="tx('ส่วนสูง (ซม.)')"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sunburst" [section]="sec['sunburst']">
       <docs-demo [html]="code['sunburst']" [ts]="ts['sunburst']" layout="stack">
-        <wt-selectbutton id="d-wc-sunburst-look" [options]="local(looks['sunburst'])" optionLabel="label" optionValue="value" [(ngModel)]="look['sunburst']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-sunburst" type="sunburst" [series]="local(budgetSeries)" [variant]="look['sunburst']" format="compact" height="360"></wt-chart>
+        <wt-chart id="d-wc-sunburst" type="sunburst" [series]="local(budgetSeries)" [looks]="true" format="compact" height="360"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="unit" [section]="sec['unit']">
       <docs-demo [html]="code['unit']" [ts]="ts['unit']" layout="stack">
-        <wt-selectbutton id="d-wc-unit-look" [options]="local(looks['unit'])" optionLabel="label" optionValue="value" [(ngModel)]="look['unit']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-unit" type="unit" [labels]="local(travel)" [series]="local(travelCounts)" [variant]="look['unit']" height="300"></wt-chart>
+        <wt-chart id="d-wc-unit" type="unit" [labels]="local(travel)" [series]="local(travelCounts)" [looks]="true" height="300"></wt-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="slope" [section]="sec['slope']">
       <docs-demo [html]="code['slope']" [ts]="ts['slope']" layout="stack">
-        <wt-selectbutton id="d-wc-slope-look" [options]="local(looks['slope'])" optionLabel="label" optionValue="value" [(ngModel)]="look['slope']" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-slope" type="slope" [labels]="years2" [series]="local(yearScores)" [variant]="look['slope']" height="320"></wt-chart>
+        <wt-chart id="d-wc-slope" type="slope" [labels]="years2" [series]="local(yearScores)" [looks]="true" height="320"></wt-chart>
       </docs-demo>
     </docs-section>
 

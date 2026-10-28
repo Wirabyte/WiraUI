@@ -1,0 +1,49 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-site-footer
+          id="d-ft-basic"
+          brand="WiraTheme"
+          [description]="tx('ชุด UI สำหรับ Angular ที่เข้าใจงานไทย')"
+          [model]="local(columns)"
+          [social]="local(social)"
+          [legal]="local(legal)"
+          [backToTop]="true"
+          (onItemClick)="clicked($event)"
+        ></wt-site-footer>
+        <span class="docs-demo-output">{{ tx('ลิงก์ที่กดล่าสุด') }}: <code id="d-ft-last">{{ last }}</code></span>
+        <div class="docs-narrow" id="d-ft-narrow">
+          <wt-site-footer brand="WiraTheme" [model]="local(columns)" [social]="local(social)" [legal]="local(legal)" (onItemClick)="clicked($event)"></wt-site-footer>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="looks" [section]="sec['looks']">
+      <docs-demo [html]="code['looks']" layout="stack">
+        <wt-site-footer id="d-ft-simple" look="simple" brand="WiraTheme" [model]="local(links)" [social]="local(social)" (onItemClick)="clicked($event)"></wt-site-footer>
+        <wt-site-footer id="d-ft-centered" look="centered" brand="WiraTheme" [model]="local(links)" [social]="local(social)" [legal]="local(legal)" (onItemClick)="clicked($event)"></wt-site-footer>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="slots" [section]="sec['slots']">
+      <docs-demo [html]="code['slots']" layout="stack">
+        <wt-site-footer id="d-ft-slots" brand="WiraTheme" [model]="local(columns)" (onItemClick)="clicked($event)">
+          <ng-template wtTemplate="end">
+            <div class="docs-newsletter">
+              <label for="d-ft-news">{{ tx('รับข่าวสารทางอีเมล') }}</label>
+              <wt-inputgroup>
+                <input wtInputText id="d-ft-news" type="email" placeholder="you@example.com" />
+                <wt-button [label]="tx('สมัคร')"></wt-button>
+              </wt-inputgroup>
+            </div>
+          </ng-template>
+        </wt-site-footer>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

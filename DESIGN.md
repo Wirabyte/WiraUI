@@ -1096,6 +1096,12 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
     - ตาราง Firefox กว้างกว่า จุดปล่อยของการลากจึงหลุดจอ แก้ให้อยู่ในหน้าต่าง
     - หน้า Studio โหลดยังไม่เสร็จแล้ว reload ทันที
 
+### 12.26 Dock, SiteFooter, BottomBar (28 ต.ค. 2569)
+
+- **Dock** (`wiratheme/dock`, ทุกรุ่น): เดิมไม่ได้ทำเพราะไม่มีแอปใช้ ผู้ใช้ขอเพื่อทำหน้าจอแบบ Windows / macOS · API แบบ `p-dock` (`model`, `position`, `pTemplate="item"`) · `look="mac"`: ไอคอนขยายตามระยะจากเมาส์แบบ cosine (`dockScale` ใน core) ตั้ง `--wt-dock-scale` ที่แต่ละไอคอนนอก change detection ความกว้างไอคอนเปลี่ยนจริงให้ไอคอนข้าง ๆ ขยับ เด้งเมื่อคลิก จุดใต้แอปที่ `active` ย่อไอคอนเองเมื่อกล่องแคบ (ResizeObserver) · `look="windows"`: taskbar เต็มความกว้าง ไอคอนกลาง ช่อง `start` / `end` ขีดใต้แอปที่เปิด ขีดยาวสำหรับ `current` · หน้า docs มีหน้าจอตัวอย่างแบบ mac (แถบเมนู หน้าต่าง) และแบบ Windows (ปุ่ม Start เมนู Start ถาดนาฬิกา) · schematic ย้าย `p-dock` → `wt-dock` แล้ว
+- **SiteFooter** (`wiratheme/sitefooter`): ชื่อ tag `wt-site-footer` เพราะ `wt-footer` คือ slot ท้ายของ card และ dialog อยู่แล้ว (แทน `p-footer`) ถ้าใช้ชื่อเดียวกัน dialog จะมี footer ทั้งเว็บโผล่ · คอลัมน์ลิงก์พับเป็น accordion ด้วย container query จึงพับตามความกว้างของ footer เองไม่ใช่จอ
+- **BottomBar** (`wiratheme/bottombar`): รายการที่เลือกตาม `activeIndex` หรือ route (ตรงที่สุดชนะ) · `pill` รายการที่เลือกขยาย (flex-grow) · `fab` รอยเว้าทำด้วย mask บน `::before` ปุ่มจึงไม่ถูกตัด · `hideOnScroll` ฟัง scroll นอก change detection · `env(safe-area-inset-bottom)`
+
 ### 12.25 ErrorPage (28 ต.ค. 2569)
 
 - **`wt-error-page`** (`wiratheme/errorpage`, ทุกรุ่น, อยู่ใน angular-common แบบ @Input): หน้าข้อผิดพลาดสำเร็จรูปของรหัส 400–599 · `core/errorpage.ts` แยกรหัสเป็นกลุ่ม (`httpErrorKind`: auth forbidden missing time busy server gateway down request) และเลือกปุ่ม (`httpErrorActions`) · ข้อความอยู่ใน locale `errorPage` (แบบทางการต่อรหัส 17 ตัว + `4xx` / `5xx` กลาง, แบบ kawaii ต่อกลุ่ม) · แบบทางการ: ไอคอนในกรอบสีอ่อน คำว่า “ข้อผิดพลาด” และรหัสตัวใหญ่ไล่สี · แบบ kawaii: ตัวการ์ตูนหูแมวถือป้ายรหัสสีหลักของธีม ท่าทางตามกลุ่ม (เครื่องหมายคำถาม กุญแจ มึนหัว หลับ เหงื่อตก ปลั๊กหลุด) ขยับตัว กะพริบตา ประกายระยิบ นิ่งเมื่อลดการเคลื่อนไหว ปุ่มทรงกลมกดยุบ · ปุ่มส่ง `(action)` ก่อนทำงาน `preventDefault()` เพื่อใช้ router แทน · `reference` สำหรับแจ้งฝ่ายช่วยเหลือ · `fullPage` สำหรับ route `**`

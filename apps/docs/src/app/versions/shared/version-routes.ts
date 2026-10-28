@@ -112,6 +112,9 @@ export interface VersionPages {
   emptystate: Type<unknown>;
   result: Type<unknown>;
   errorpage: Type<unknown>;
+  dock: Type<unknown>;
+  footer: Type<unknown>;
+  bottombar: Type<unknown>;
   thai: Type<unknown>;
   /** WiraTheme's own chart: wiratheme@3 only. */
   chart?: Type<unknown>;
@@ -235,6 +238,9 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/emptystate', component: p.emptystate },
         { path: 'components/result', component: p.result },
         { path: 'components/errorpage', component: p.errorpage },
+        { path: 'components/dock', component: p.dock },
+        { path: 'components/sitefooter', component: p.footer },
+        { path: 'components/bottombar', component: p.bottombar },
         { path: 'components/thai', component: p.thai },
         // Pages only some versions have: the others fall through to the 404 below.
         // v1 / v2 have no chart of their own: their old Chart address goes to ChartJS.
