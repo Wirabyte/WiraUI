@@ -1,6 +1,6 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NAV_PAGES, NavPage } from '../core/nav';
+import { NavPage, navPagesFor } from '../core/nav';
 
 /** Ctrl+K dialog: filters the page list on the client and opens the chosen page in the current version. */
 @Component({
@@ -70,7 +70,8 @@ export class DocsSearch {
 
   protected readonly results = computed(() => {
     const terms = this.query().toLowerCase().split(/\s+/).filter(Boolean);
-    if (!terms.length) return NAV_PAGES;
+    const pages = navPagesFor(this.version());
+    if (!terms.length) return pages;
     // Both languages are searchable whatever the site language is.
     const titles = (p: NavPage) => (typeof p.title === 'string' ? p.title : `${p.title.th} ${p.title.en}`).toLowerCase();
     const hay = (p: NavPage) => `${titles(p)} ${p.group} ${p.keywords || ''}`.toLowerCase();
@@ -80,7 +81,7 @@ export class DocsSearch {
       const base = title.startsWith(terms[0]) ? 0 : title.includes(terms[0]) ? 1 : (p.keywords || '').toLowerCase().includes(terms[0]) ? 2 : 3;
       return base + (p.soon ? 10 : 0);
     };
-    return NAV_PAGES.filter((p) => terms.every((t) => hay(p).includes(t))).sort((a, b) => rank(a) - rank(b));
+    return pages.filter((p) => terms.every((t) => hay(p).includes(t))).sort((a, b) => rank(a) - rank(b));
   });
 
   constructor() {

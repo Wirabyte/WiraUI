@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dist = fileURLToPath(new URL('../dist', import.meta.url));
-for (const f of ['collection.json', 'migration.json', 'ng-add/schema.json']) {
+for (const f of ['collection.json', 'migration.json', 'ng-add/schema.json', 'from-primeng/schema.json']) {
   cpSync(fileURLToPath(new URL(`../src/${f}`, import.meta.url)), join(dist, f));
 }
 

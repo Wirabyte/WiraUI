@@ -42,6 +42,15 @@ describe('preset families', () => {
     }
   });
 
+  it('never puts two lengths in one calc() (invalid CSS, the whole declaration drops)', () => {
+    for (const name of [...PRESET_IDS, ...Object.keys(CLASSIC_THEMES)]) {
+      const t = computeTokens(themeConfig(name));
+      for (const map of [t.light, t.dark]) {
+        for (const [key, value] of Object.entries(map)) expect(/calc\([^()]*\d(?:rem|px|em|%)\s+-?\d/.test(value), `${name}: --wt-${key}: ${value}`).toBe(false);
+      }
+    }
+  });
+
   it('gives each PrimeNG era its own metrics', () => {
     const lara15 = computeTokens(defaults('sila-classic')).light;
     const mali = computeTokens(defaults('mali')).light;

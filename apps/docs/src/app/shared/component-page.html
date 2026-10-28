@@ -1,6 +1,6 @@
 @if (!preview) {
   <header class="docs-page-head">
-    <p class="docs-eyebrow">Components · {{ doc().group }}</p>
+    <p class="docs-eyebrow">{{ eyebrow() }}</p>
     <h1 class="docs-h1">{{ doc().title }}</h1>
     <p class="docs-lead">{{ doc().description | loc }}</p>
     <div class="docs-meta">
@@ -8,6 +8,23 @@
       <span class="docs-chip"><code>wiratheme/{{ doc().entry }}</code></span>
       <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
     </div>
+    @for (r of doc().requires || []; track r.install) {
+      <aside class="docs-requires" id="doc-requires">
+        <p class="docs-requires-text">
+          <docs-icon name="download"></docs-icon>
+          <span>
+            {{ en() ? 'Needs' : 'ต้องติดตั้ง' }}
+            @if (r.url) {
+              <a [href]="r.url" target="_blank" rel="noopener">{{ r.name }}</a>
+            } @else {
+              <b>{{ r.name }}</b>
+            }
+            {{ en() ? 'in the app first' : 'ในแอปก่อน' }}@if (r.note) {<span> · </span><span [innerHTML]="r.note | loc"></span>}
+          </span>
+        </p>
+        <docs-code [code]="r.install" lang="bash"></docs-code>
+      </aside>
+    }
     <nav class="docs-tabs" [attr.aria-label]="'page.sections' | t">
       @for (t of tabs; track t.id) {
         <a

@@ -87,7 +87,7 @@
   <aside class="docs-sidebar docs-scroll" id="docs-sidebar" [class.open]="menuOpen()">
     <docs-lang-switch class="docs-sidebar-lang" idPrefix="drawer-lang"></docs-lang-switch>
     <nav [attr.aria-label]="'top.menu' | t">
-      @for (g of nav; track g.id) {
+      @for (g of nav(); track g.id) {
         <div class="docs-nav-group" [class.open]="isOpen(g.id)">
           <button
             type="button"

@@ -21,6 +21,14 @@ export const DIALOG_DOC: ComponentDoc = {
     en: 'A dialog built on the browser\'s own <dialog>, opened in the top layer. Focus stays inside and returns when it closes, and the page stops scrolling behind it.',
   },
   english: {
+    'ม.1/1': 'Class 7/1',
+    'เลือกหัวหน้าห้อง': 'Pick the class leader',
+    'หัวหน้าห้อง': 'Class leader',
+    'ยกเลิก': 'Cancelled',
+    'หน้าที่เปิด dialog': 'the page that opens the dialog',
+    'component ที่อยู่ใน dialog': 'the component in the dialog',
+    'หรือ ref.onClose.subscribe(…)': 'or ref.onClose.subscribe(…)',
+    'ห้อง': 'Class',
     'แก้ไขโปรไฟล์': 'Edit profile',
     'ชื่อที่แสดง': 'Display name',
     'ส่งข้อความ': 'Send a message',
@@ -86,6 +94,13 @@ export const DIALOG_DOC: ComponentDoc = {
       title: 'Headless',
       text: { th: '<code>#headless</code> วาดทั้งกล่องเอง ส่วนการเปิดปิด โฟกัส และ top layer ยังทำงานเหมือนเดิม', en: '<code>#headless</code> draws the whole box yourself; opening, focus and the top layer still work.' },
     },
+    service: {
+      title: { th: 'เปิดจากโค้ด (WtDialogService)', en: 'Opening from code (WtDialogService)' },
+      text: {
+        th: '<code>WtDialogService.open(Component, config)</code> เปิด component ของแอปใน dialog โดยไม่ต้องเขียน <code>&lt;wt-dialog&gt;</code> ในหน้า · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (component ของปุ่มท้าย), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · ใน component ที่เปิด: <code>inject(WtDialogConfig).data</code> และ <code>inject(WtDialogRef).close(ผลลัพธ์)</code> · ผลลัพธ์กลับมาทาง <code>ref.onClose</code> หรือ <code>await ref.result</code> (ปิดด้วย X / Esc / คลิกพื้นหลังได้ <code>undefined</code>) · เปิดซ้อนกันได้ · <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> ชื่อเดิมก็ import ได้',
+        en: '<code>WtDialogService.open(Component, config)</code> opens a component of yours in a dialog, with no <code>&lt;wt-dialog&gt;</code> in the page · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (a component for the buttons), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · in the opened component: <code>inject(WtDialogConfig).data</code> and <code>inject(WtDialogRef).close(result)</code> · the result comes back through <code>ref.onClose</code> or <code>await ref.result</code> (closing with X / Esc / the mask gives <code>undefined</code>) · dialogs stack · the old names <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> import too.',
+      },
+    },
     a11y: {
       title: { th: 'การเข้าถึงและคีย์บอร์ด', en: 'Accessibility and keyboard' },
       text: {
@@ -133,10 +148,45 @@ export const DIALOG_DOC: ComponentDoc = {
     </div>
   </ng-template>
 </wt-dialog>`,
+    service: `<wt-button label="เลือกหัวหน้าห้อง" icon="wi wi-users" (onClick)="pickLeader()"></wt-button>
+<p>หัวหน้าห้อง: {{ leader }}</p>`,
   },
   ts: {
     basic: `visible = false;
 name = 'สมหญิง ใจดี';`,
+    service: `import { Component, inject } from '@angular/core';
+import { WtButton } from 'wiratheme/button';
+import { WtDialogConfig, WtDialogRef, WtDialogService } from 'wiratheme/dialog';
+
+// หน้าที่เปิด dialog
+export class ClassroomPage {
+  private readonly dialogs = inject(WtDialogService);
+  leader = '-';
+
+  async pickLeader(): Promise<void> {
+    const ref = this.dialogs.open(PickStudent, { header: 'เลือกหัวหน้าห้อง', width: '26rem', data: { room: 'ม.1/1' } });
+    const student = await ref.result;           // หรือ ref.onClose.subscribe(…)
+    this.leader = student ? student.name : 'ยกเลิก';
+  }
+}
+
+// component ที่อยู่ใน dialog
+@Component({
+  selector: 'app-pick-student',
+  imports: [WtButton],
+  template: \`
+    <p>ห้อง {{ config.data.room }}</p>
+    @for (s of students; track s.id) {
+      <wt-button [label]="s.name" [text]="true" (onClick)="ref.close(s)"></wt-button>
+    }
+    <wt-button label="ยกเลิก" severity="secondary" (onClick)="ref.close()"></wt-button>
+  \`,
+})
+export class PickStudent {
+  readonly ref = inject(WtDialogRef<Student>);
+  readonly config = inject(WtDialogConfig<{ room: string }>);
+  readonly students = STUDENTS;
+}`,
   },
   api: [
     {

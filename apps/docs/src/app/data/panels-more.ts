@@ -4,7 +4,7 @@ import { importText, row, STYLE_ROW, tok } from './doc-helpers';
 export const TOOLBAR_DOC: ComponentDoc = {
   id: 'toolbar',
   title: 'Toolbar',
-  group: 'Panel',
+  group: 'Layout',
   entry: 'toolbar',
   standalone: 'WtToolbar',
   module: 'WtToolbarModule',

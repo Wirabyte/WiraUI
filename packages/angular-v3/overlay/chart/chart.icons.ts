@@ -1,0 +1,26 @@
+import type { ChartType } from 'wiratheme/core';
+
+/** The type switcher's buttons: a 24 × 24 stroked icon and a name per kind. */
+export const WT_CHART_KINDS: Record<ChartType, { icon: string; th: string; en: string }> = {
+  bar: { icon: 'M5 20V11M10 20V5M15 20v-7M20 20V8', th: 'แท่ง', en: 'Bar' },
+  line: { icon: 'M3 17l5-6 4 3 8-9', th: 'เส้น', en: 'Line' },
+  area: { icon: 'M3 18l5-7 4 3 8-8v12H3Z', th: 'พื้นที่', en: 'Area' },
+  pie: { icon: 'M12 3a9 9 0 1 0 9 9h-9ZM15 2.6A8 8 0 0 1 21.4 9H15Z', th: 'วงกลม', en: 'Pie' },
+  doughnut: { icon: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z', th: 'โดนัท', en: 'Doughnut' },
+  polarArea: { icon: 'M12 12V3a9 9 0 0 1 8 5ZM12 12l6 6a8.5 8.5 0 0 1-12 0ZM12 12H5a7 7 0 0 1 7-7', th: 'วงกลมรัศมี', en: 'Polar area' },
+  radialBar: { icon: 'M12 3a9 9 0 1 1-9 9M12 7a5 5 0 1 1-5 5', th: 'วงแหวน', en: 'Radial bar' },
+  radar: { icon: 'M12 3l8.5 6.2-3.2 10H6.7l-3.2-10ZM12 8l4 3-1.5 5h-5L8 11Z', th: 'เรดาร์', en: 'Radar' },
+  scatter: { icon: 'M7 16h.01M11 11h.01M16 13h.01M14 7h.01M19 6h.01M5 20V4M5 20h15', th: 'จุด', en: 'Scatter' },
+  heatmap: { icon: 'M4 4h4v4H4ZM10 4h4v4h-4ZM16 4h4v4h-4ZM4 10h4v4H4ZM10 10h4v4h-4ZM16 10h4v4h-4ZM4 16h4v4H4ZM10 16h4v4h-4ZM16 16h4v4h-4Z', th: 'ตารางสี', en: 'Heatmap' },
+  treemap: { icon: 'M3 4h10v16H3ZM15 4h6v7h-6ZM15 13h6v7h-6Z', th: 'Treemap', en: 'Treemap' },
+  stream: { icon: 'M3 8c3-3 6 1 9-1s6-3 9-2M3 12c3-4 6 2 9-1s6-5 9-2M3 16c3-2 6 2 9 0s6-3 9-1', th: 'สตรีม', en: 'Stream' },
+  waterfall: { icon: 'M4 20V8h3v12M9 8V5h3v5M14 10v4h3v-4M19 20V14', th: 'น้ำตก', en: 'Waterfall' },
+  dumbbell: { icon: 'M4 7a2 2 0 1 0 4 0 2 2 0 0 0-4 0M16 7a2 2 0 1 0 4 0 2 2 0 0 0-4 0M8 7h8M4 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0M12 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0M8 17h4', th: 'ดัมเบล', en: 'Dumbbell' },
+  timeline: { icon: 'M4 6h9M8 12h11M6 18h7M4 3v18', th: 'ไทม์ไลน์', en: 'Timeline' },
+  funnel: { icon: 'M3 4h18l-6 8v6l-6 3v-9Z', th: 'กรวย', en: 'Funnel' },
+  boxplot: { icon: 'M12 3v4M12 17v4M9 3h6M9 21h6M7 7h10v10H7ZM7 12h10', th: 'กล่อง', en: 'Box plot' },
+  histogram: { icon: 'M4 20V13h4v7M8 20V7h4v13M12 20V10h4v10M16 20v-5h4v5', th: 'ฮิสโตแกรม', en: 'Histogram' },
+  sunburst: { icon: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18ZM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 3v5M21 12h-5M12 16v5', th: 'ซันเบิร์สต์', en: 'Sunburst' },
+  unit: { icon: 'M5 5h3v3H5ZM10.5 5h3v3h-3ZM16 5h3v3h-3ZM5 10.5h3v3H5ZM10.5 10.5h3v3h-3ZM16 10.5h3v3h-3ZM5 16h3v3H5Z', th: 'หน่วย', en: 'Units' },
+  slope: { icon: 'M5 4v16M19 4v16M5 7l14 6M5 15l14-8', th: 'ความชัน', en: 'Slope' },
+};

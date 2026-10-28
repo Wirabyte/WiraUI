@@ -1,19 +1,21 @@
 import { ComponentDoc } from '../core/component-doc';
-import { row, tok } from './doc-helpers';
+import { row, STYLE_ROW, tok } from './doc-helpers';
 
-const MONTHS = `['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.']`;
+const BOOL = 'boolean';
+
+export const CHART_MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'];
 
 export const CHART_DOC: ComponentDoc = {
   id: 'chart',
   title: 'Chart',
-  group: 'Data',
+  group: 'Charts',
   entry: 'chart',
   standalone: 'WtChart',
   module: 'WtChartModule',
   selector: 'wt-chart',
   description: {
-    th: 'กราฟแท่ง เส้น วงกลม และแบบอื่น ๆ ด้วย Chart.js ใช้ฟอนต์และสีตัวอักษรของธีมให้เอง และไม่กว้างเกินกล่องที่อยู่',
-    en: 'Bar, line, pie and other charts drawn by Chart.js. They take the theme\'s font and text colour, and never get wider than their container.',
+    th: 'กราฟของ WiraTheme เอง วาดด้วย SVG ไม่ต้องติดตั้ง Chart.js: แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น (โค้ง ขั้นบันได) พื้นที่ไล่สี วงกลม โดนัท วงแหวนและเกจ วงกลมแบบรัศมี เรดาร์ จุด/ฟอง heatmap และ treemap ผสมกันได้ มีกราฟจิ๋ว คำอธิบายบนกราฟ แถบเครื่องมือซูม และกราฟที่ชี้ไปด้วยกัน ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ภาษาไทยไม่เพี้ยน) ตัวเลขแบบเงินบาท เปอร์เซ็นต์ หรือหน่วยไทย (พัน หมื่น แสน ล้าน) legend ซ่อนแสดงได้ tooltip ตามเมาส์หรือคีย์บอร์ด เคลื่อนไหวเมื่อข้อมูลเปลี่ยน และ export เป็น PNG / SVG / CSV ได้ · มีเฉพาะ wiratheme@3 (v1 / v2 ใช้ ChartJS)',
+    en: 'WiraTheme’s own chart, drawn in SVG with no Chart.js: bars (grouped, stacked, across), lines (smooth, steps), fading areas, pie, doughnut, radial bars and gauges, polar area, radar, scatter / bubble, heatmap and treemap, mixed as you like, plus sparklines, annotations, a zoom toolbar and charts that point together. Text is real text in the page’s font (Thai shapes properly), values read as baht, percents or Thai units (พัน, หมื่น, แสน, ล้าน), the legend hides and shows series, the tooltip follows the pointer or the keyboard, data changes animate, and charts export as PNG, SVG or CSV · wiratheme@3 only (v1 / v2: ChartJS).',
   },
   english: {
     'ม.ค.': 'Jan',
@@ -22,364 +24,714 @@ export const CHART_DOC: ComponentDoc = {
     'เม.ย.': 'Apr',
     'พ.ค.': 'May',
     'มิ.ย.': 'Jun',
-    'จ.': 'Mon',
-    'อ.': 'Tue',
-    'พ.': 'Wed',
-    'พฤ.': 'Thu',
-    'ศ.': 'Fri',
-    'ส.': 'Sat',
-    'อา.': 'Sun',
     'รายรับ': 'Income',
-    'รายจ่าย': 'Expenses',
-    'รายรับและรายจ่ายรายเดือน': 'Monthly income and expenses',
-    'ผู้เข้าชมเว็บไซต์': 'Website visitors',
-    'ผู้เข้าชมรายวัน': 'Daily visitors',
-    'อาหาร': 'Food',
-    'เดินทาง': 'Travel',
-    'อุปกรณ์การเรียน': 'School supplies',
-    'อื่น ๆ': 'Other',
-    'ค่าใช้จ่ายตามหมวด': 'Spending by category',
+    'รายจ่าย': 'Spending',
+    'กำไร': 'Profit',
+    'รายรับรายจ่าย ภาคเรียนที่ 2/2569': 'Income and spending, semester 2/2569',
+    'หน่วย: บาท': 'In baht',
+    'ผู้เข้าชม': 'Visitors',
+    'สมัครเรียน': 'Applications',
+    'เป้าหมาย': 'Target',
     'ม.1': 'Grade 7',
     'ม.2': 'Grade 8',
     'ม.3': 'Grade 9',
     'ชาย': 'Boys',
     'หญิง': 'Girls',
-    'นักเรียนแยกตามชั้นและเพศ': 'Students by grade and gender',
-    "แท่งแนวนอน (indexAxis: 'y') และซ้อนกัน (stacked)": "horizontal bars (indexAxis: 'y'), stacked",
+    'นักเรียนแต่ละชั้น': 'Students per grade',
     'ยอดขาย': 'Sales',
-    'เป้าหมาย': 'Target',
-    'ยอดขายเทียบเป้าหมาย': 'Sales against target',
-    'type ของแต่ละ dataset ทับ type ของกราฟได้: แท่งกับเส้นในกราฟเดียว': "each dataset's type overrides the chart's: bars and a line in one chart",
-    'ปีนี้': 'This year',
-    'ปีที่แล้ว': 'Last year',
-    'รายรับปีนี้เทียบปีที่แล้ว': 'Income this year against last year',
-    'ใช้สีของธีมตอนนี้': 'Use the current theme colours',
-    'object ใหม่ กราฟจึงสร้างใหม่ด้วยสีของธีมตอนนี้ (เช่น หลังเปลี่ยนธีมหรือโหมดมืด)':
-      'a new object, so the chart is built again with the current theme colours (after a theme or dark-mode change, say)',
-    'คณิตศาสตร์': 'Math',
+    'อัตราเติบโต': 'Growth',
+    'ช่องทางที่ผู้สมัครรู้จักโรงเรียน': 'How applicants heard of the school',
+    'เพื่อน / ครอบครัว': 'Friends / family',
+    'โซเชียลมีเดีย': 'Social media',
+    'เว็บไซต์': 'Website',
+    'ป้ายประกาศ': 'Posters',
+    'อื่น ๆ': 'Other',
+    'ผู้สมัคร': 'Applicants',
+    'ทักษะ': 'Skills',
+    'ฟัง': 'Listening',
+    'พูด': 'Speaking',
+    'อ่าน': 'Reading',
+    'เขียน': 'Writing',
+    'คิดวิเคราะห์': 'Reasoning',
+    'ห้อง ม.1/1': 'Class 7/1',
+    'ค่าเฉลี่ยระดับชั้น': 'Grade average',
+    'ชั่วโมงอ่านหนังสือ': 'Reading hours',
+    'คะแนนสอบ': 'Exam score',
+    'นักเรียน': 'Students',
+    'สุ่มข้อมูลใหม่': 'New random data',
+    'คลิกล่าสุด': 'Last click',
+    'ดาวน์โหลด PNG': 'Download PNG',
+    'ดาวน์โหลด SVG': 'Download SVG',
+    'คน': 'people',
+    ' คน': ' people',
+    'งบประมาณ': 'Budget',
+    'บาท': 'Baht',
+    'จ.': 'Mon',
+    'อ.': 'Tue',
+    'พ.': 'Wed',
+    'พฤ.': 'Thu',
+    'ศ.': 'Fri',
+    'ส่งงาน': 'Homework in',
+    'เข้าเรียน': 'Attendance',
+    'กิจกรรม': 'Activities',
+    'การเข้าเรียนวันนี้': 'Attendance today',
+    'ผู้ใช้ห้องสมุด': 'Library visitors',
+    'ว่าง': 'Quiet',
+    'ปานกลาง': 'Busy',
+    'แน่น': 'Full',
+    'วิชาการ': 'Academic',
+    'กิจการนักเรียน': 'Student affairs',
+    'อาคารสถานที่': 'Buildings',
+    'บุคลากร': 'Staff',
+    'เทคโนโลยี': 'Technology',
+    'งบกลาง': 'Central fund',
+    'ค่าเทอม': 'Tuition',
+    'ปิดภาคเรียน': 'Break',
+    'สูงสุด': 'Peak',
+    'ช่วงเป้าหมาย': 'Target range',
+    'ผู้เข้าชมรายวัน': 'Daily visitors',
+    'ลากบนกราฟเพื่อซูม': 'Drag across the chart to zoom',
+    'คะแนนเฉลี่ย': 'Average score',
+    'เดิม': 'Before',
+    'สมมาตร': 'Silhouette',
+    'ลื่นไหล': 'Wiggle',
+    'สัดส่วน': 'Shares',
+    'แท่ง': 'Bars',
+    'ขั้นบันได': 'Steps',
+    'จุด': 'Dots',
+    'ลูกศร': 'Arrows',
+    'ช่วง': 'Range',
+    'เส้นบาง': 'Thin',
+    'กรวย': 'Funnel',
+    'พีระมิด': 'Pyramid',
+    'กล่อง': 'Box',
+    'ไวโอลิน': 'Violin',
+    'จุดข้อมูล': 'Points',
+    'ความหนาแน่น': 'Density',
+    'สี่เหลี่ยม': 'Squares',
+    'วงกลม': 'Circles',
+    'รังผึ้ง': 'Honeycomb',
+    'ซันเบิร์สต์': 'Sunburst',
+    'ไอซิเคิล': 'Icicle',
+    'วาฟเฟิล': 'Waffle',
+    'รูปคน': 'People',
+    'เส้น': 'Lines',
+    'เน้นขึ้นลง': 'Up and down',
+    'ชมรมดนตรี': 'Music club',
+    'ชมรมกีฬา': 'Sports club',
+    'ชมรมศิลปะ': 'Art club',
+    'ชมรมวิทย์': 'Science club',
+    'งบต้นปี': 'Opening budget',
+    'เงินบริจาค': 'Donations',
+    'ค่าสาธารณูปโภค': 'Utilities',
+    'สาธารณูปโภค': 'Utilities',
+    'ค่ากิจกรรม': 'Activities',
+    'ซ่อมอาคาร': 'Repairs',
+    'คงเหลือ': 'Left over',
+    'คณิตศาสตร์': 'Maths',
     'วิทยาศาสตร์': 'Science',
     'ภาษาไทย': 'Thai',
     'ภาษาอังกฤษ': 'English',
     'สังคมศึกษา': 'Social studies',
-    'คะแนนเฉลี่ย': 'Average score',
-    'คะแนนเฉลี่ยรายวิชา': 'Average score by subject',
-    'คลิกที่แท่ง': 'Click a bar',
-    'ที่เลือก': 'Picked',
-    'ประถม': 'Primary',
-    'มัธยมต้น': 'Lower secondary',
-    'มัธยมปลาย': 'Upper secondary',
-    'นักเรียนแยกตามระดับชั้น': 'Students by level',
-    '1,250 คน': '1,250 students',
-    'ค่าที่ส่งให้ปลั๊กอินตาม id': 'options for the plugin, by its id',
-    'ปลั๊กอินที่เขียนเอง: ตัวเลขกลางโดนัท ไม่ต้องลงแพ็กเกจเพิ่ม': 'a plugin of your own: a number in the middle of the doughnut, no extra package',
-    'กว้างเต็มกล่อง สูง 200px': 'full width, 200px tall',
-    'กว้าง 480px แต่ไม่เกินกล่องที่อยู่ (จอแคบหดตาม)': '480px wide, never wider than its container (it shrinks on narrow screens)',
-    'สัปดาห์': 'Week',
-    'นักเรียนที่มาเรียน': 'Students present',
-    'นักเรียนที่มาเรียนรายสัปดาห์': 'Students present each week',
-    'เพิ่มสัปดาห์': 'Add a week',
-    'จำนวนจุด': 'Points',
-    'แก้ data ที่เดิม แล้วสั่งวาดใหม่': 'change the data in place, then redraw',
-    'ของ Chart.js: { datasetIndex, index, element }': "Chart.js's: { datasetIndex, index, element }",
-    'ทุก element ของ dataset ที่คลิก': 'every element of the dataset clicked',
+    'ก่อนเรียน': 'Before',
+    'หลังเรียน': 'After',
+    'วางแผน': 'Plan',
+    'ออกแบบ': 'Design',
+    'พัฒนา': 'Build',
+    'ทดสอบ': 'Test',
+    'เปิดใช้': 'Launch',
+    'เก็บความต้องการ': 'Requirements',
+    'ออกแบบหน้าจอ': 'Screens',
+    'ทบทวนแบบ': 'Review',
+    'เขียนโค้ด': 'Coding',
+    'ทดสอบระบบ': 'Testing',
+    'เปิดใช้งาน': 'Go live',
+    'โครงการ': 'Project',
+    'เข้าชมเว็บไซต์': 'Visited the site',
+    'ดูหลักสูตร': 'Read a course',
+    'กรอกใบสมัคร': 'Filled the form',
+    'ส่งเอกสาร': 'Sent documents',
+    'ชำระเงิน': 'Paid',
+    'ม.4/1': 'Class 10/1',
+    'ม.4/2': 'Class 10/2',
+    'ม.4/3': 'Class 10/3',
+    'ม.4/4': 'Class 10/4',
+    'คะแนน': 'Score',
+    'ส่วนสูง (ซม.)': 'Height (cm)',
+    'ส่วนสูง': 'Height',
+    'คณิต': 'Maths',
+    'วิทย์': 'Science',
+    'ภาษา': 'Languages',
+    'ฟิสิกส์': 'Physics',
+    'เคมี': 'Chemistry',
+    'ชีวะ': 'Biology',
+    'กีฬา': 'Sports',
+    'ทัศนศึกษา': 'Trips',
+    'ซ่อมบำรุง': 'Upkeep',
+    'ก่อสร้าง': 'Building',
+    'ไฟฟ้า': 'Power',
+    'น้ำประปา': 'Water',
+    'เดิน': 'Walk',
+    'จักรยาน': 'Bicycle',
+    'รถรับส่ง': 'School bus',
+    'รถผู้ปกครอง': 'Parents’ car',
+    'รถสาธารณะ': 'Public transport',
+    'การเดินทางมาโรงเรียน': 'How students get to school',
   },
   sections: {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtChartModule</code>) และ standalone (<code>WtChart</code>) และอ้างถึงด้วย <code>#c="wtChart"</code> ได้ wt-chart วาดด้วย Chart.js (โหลด <code>chart.js/auto</code> ซึ่งมีกราฟครบทุกแบบ) แอปต้องติดตั้ง Chart.js 3 หรือ 4 เองด้วย <code>npm install chart.js</code> เป็น peer dependency แบบไม่บังคับ แอปที่ไม่ใช้กราฟจึงไม่ต้องลง',
-        en: 'Works as an NgModule (<code>WtChartModule</code>) or standalone (<code>WtChart</code>), and is exported as <code>#c="wtChart"</code>. wt-chart draws with Chart.js (it loads <code>chart.js/auto</code>, which has every chart type). The app installs Chart.js 3 or 4 itself with <code>npm install chart.js</code>: it is an optional peer dependency, so apps without charts never need it.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WtChartModule</code>) และ standalone (<code>WtChart</code>) · ไม่ต้องติดตั้งอะไรเพิ่ม · กราฟที่วาดด้วย Chart.js อยู่ที่ <code>wiratheme/chartjs</code> (<code>&lt;wt-chartjs&gt;</code>) ใช้คู่กันในแอปเดียวได้',
+        en: 'Works as an NgModule (<code>WtChartModule</code>) or standalone (<code>WtChart</code>) · nothing else to install · the Chart.js chart is <code>wiratheme/chartjs</code> (<code>&lt;wt-chartjs&gt;</code>); both can live in one app.',
       },
     },
     basic: {
-      title: { th: 'กราฟแท่ง', en: 'Bar chart' },
+      title: 'Basic',
       text: {
-        th: '<code>type</code> ชนิดกราฟ <code>[data]</code> คือ <code>{ labels, datasets }</code> ของ Chart.js และ <code>[options]</code> คือ options ของ Chart.js ส่ง object ใหม่เมื่อไหร่กราฟก็สร้างใหม่ (ถ้าแก้ข้อมูลที่เดิม ดูหัวข้อ refresh) <code>height</code> ทำให้กราฟกว้างเต็มกล่องและสูงตามนั้น',
-        en: '<code>type</code> picks the chart, <code>[data]</code> is Chart.js\'s <code>{ labels, datasets }</code> and <code>[options]</code> its options. A new object rebuilds the chart (to change data in place, see refresh). With <code>height</code>, the chart fills the width at that height.',
+        th: '<code>[labels]</code> คือป้ายของแกน และ <code>[series]</code> คือชุดข้อมูล <code>{ name, data }</code> (ค่าละหนึ่งตัวต่อป้าย <code>null</code> คือไม่มีค่า) · สีมาจากธีม (<code>--wt-chart-1</code> คือสีหลักของ preset) จึงเข้ากับทุก preset และโหมดมืด · กว้างเต็มพื้นที่ สูง 320px (เปลี่ยนด้วย <code>height</code>) และวาดใหม่เมื่อขนาดเปลี่ยน · ชี้หรือแตะดู tooltip คลิก legend เพื่อซ่อน / แสดงชุดข้อมูล',
+        en: '<code>[labels]</code> are the axis labels and <code>[series]</code> the data sets, <code>{ name, data }</code> (one value per label, <code>null</code> for none) · colours come from the theme (<code>--wt-chart-1</code> is the preset’s primary), so every preset and dark mode fit · it fills the width at 320px high (<code>height</code> changes it) and redraws when the size changes · point or tap for the tooltip, click the legend to hide or show a series.',
       },
     },
     line: {
-      title: { th: 'กราฟเส้น', en: 'Line chart' },
+      title: { th: 'เส้นและพื้นที่', en: 'Lines and areas' },
       text: {
-        th: '<code>type="line"</code> · <code>fill: true</code> ระบายสีใต้เส้น และ <code>tension</code> ทำให้เส้นโค้ง',
-        en: '<code>type="line"</code> · <code>fill: true</code> shades the area under the line and <code>tension</code> curves it.',
+        th: '<code>type="line"</code> หรือ <code>"area"</code> · <code>smooth</code> เส้นโค้งที่ไม่เกินจุดข้อมูล · ในแต่ละชุด <code>dashed</code> เส้นประ, <code>fill</code> ระบายใต้เส้น, <code>smooth</code> เฉพาะชุด · <code>stacked</code> พื้นที่ซ้อนกัน · เส้นตามแนวเมาส์และจุดของทุกชุดขึ้นพร้อมกัน',
+        en: '<code>type="line"</code> or <code>"area"</code> · <code>smooth</code> curves that never overshoot the data · per series: <code>dashed</code>, <code>fill</code> under the line, its own <code>smooth</code> · <code>stacked</code> stacks areas · a guide line follows the pointer and every series’ point lights up together.',
+      },
+    },
+    bars: {
+      title: { th: 'แท่งซ้อนและแนวนอน', en: 'Stacked and horizontal bars' },
+      text: {
+        th: '<code>stacked</code> ซ้อนทุกชุด หรือใส่ <code>stack</code> ให้ชุดที่ซ้อนกัน (กลุ่มอื่นวางข้างกัน) · <code>horizontal</code> แท่งแนวนอน ป้ายยาว ๆ อ่านง่าย · <code>showValues</code> แสดงค่าบนแท่ง · ปลายแท่งมนเฉพาะด้านนอกของกอง (<code>barRadius</code>)',
+        en: '<code>stacked</code> stacks every series, or give the series that stack together a <code>stack</code> key (other groups stand side by side) · <code>horizontal</code> bars run across, easy with long labels · <code>showValues</code> writes the values · only the outer end of a stack is rounded (<code>barRadius</code>).',
+      },
+    },
+    mixed: {
+      title: { th: 'แท่งกับเส้น และแกนขวา', en: 'Bars with a line, and a right axis' },
+      text: {
+        th: 'ชุดข้อมูลใส่ <code>type: \'line\'</code> ในกราฟแท่งได้ และ <code>axis: \'right\'</code> ใช้แกนขวาที่มีสเกลของตัวเอง · <code>rightFormat</code> รูปแบบตัวเลขของแกนขวา (เช่น เปอร์เซ็นต์) · เส้นวาดทับแท่งเสมอ',
+        en: 'A series can be <code>type: \'line\'</code> in a bar chart, and <code>axis: \'right\'</code> puts it on a right axis with its own scale · <code>rightFormat</code> formats that axis (percent, say) · lines are always drawn over the bars.',
       },
     },
     pie: {
       title: { th: 'วงกลมและโดนัท', en: 'Pie and doughnut' },
       text: {
-        th: '<code>type="pie"</code> หรือ <code>"doughnut"</code> ใช้ข้อมูลชุดเดียวกัน สีของแต่ละชิ้นเป็น array ใน <code>backgroundColor</code>',
-        en: '<code>type="pie"</code> or <code>"doughnut"</code> take the same data; each slice\'s colour is an entry of the <code>backgroundColor</code> array.',
+        th: 'ใช้ชุดข้อมูลชุดเดียว แต่ละค่าคือหนึ่งชิ้น · โดนัทแสดงผลรวมตรงกลาง (<code>centerValue</code> / <code>centerLabel</code> เปลี่ยนได้, <code>cutout</code> ขนาดรู) · <code>showValues</code> แสดงเปอร์เซ็นต์บนชิ้นที่ใหญ่พอ · legend ด้านขวา (ขึ้นไปอยู่ใต้กราฟเมื่อจอแคบ) คลิกเพื่อซ่อนชิ้น ชิ้นที่ชี้อยู่ขยับออกมาเล็กน้อย',
+        en: 'One series; each value is a slice · a doughnut shows the total in the middle (<code>centerValue</code> / <code>centerLabel</code> change it, <code>cutout</code> sizes the hole) · <code>showValues</code> writes percents on slices big enough · the legend sits on the right (under the chart on narrow screens) and hides slices; the slice under the pointer moves out a little.',
       },
     },
-    stacked: {
-      title: { th: 'แท่งแนวนอนและซ้อนกัน', en: 'Horizontal and stacked' },
+    radar: {
+      title: { th: 'เรดาร์และจุด', en: 'Radar and scatter' },
       text: {
-        th: '<code>indexAxis: \'y\'</code> ใน options ทำให้แท่งเป็นแนวนอน และ <code>stacked: true</code> ที่แกนทั้งสองทำให้ dataset ซ้อนกัน',
-        en: '<code>indexAxis: \'y\'</code> in the options lays the bars sideways, and <code>stacked: true</code> on both axes stacks the datasets.',
+        th: '<code>type="radar"</code> เทียบหลายด้านในรูปใยแมงมุม · <code>type="scatter"</code> รับข้อมูลเป็น <code>{ x, y }</code> และ <code>r</code> ทำเป็นฟอง (bubble) · ชี้ที่จุดเพื่อดูค่า x และ y',
+        en: '<code>type="radar"</code> compares several sides as a web · <code>type="scatter"</code> takes <code>{ x, y }</code> points, and <code>r</code> makes bubbles · point at a dot to read its x and y.',
       },
     },
-    mixed: {
-      title: { th: 'แท่งกับเส้นในกราฟเดียว', en: 'Bars and a line together' },
+    swap: {
+      title: { th: 'สลับแบบกราฟ (Beta)', en: 'Switch the chart type (Beta)' },
       text: {
-        th: 'ใส่ <code>type</code> ที่ dataset ได้ ทับ type ของกราฟ เช่น ยอดขายเป็นแท่งและเป้าหมายเป็นเส้น',
-        en: 'A dataset can carry its own <code>type</code>, overriding the chart\'s: sales as bars and the target as a line.',
+        th: '<code>[swap]="true"</code> เพิ่มปุ่มเลือกแบบกราฟมุมขวาบน มีเฉพาะแบบที่ข้อมูลชุดนั้นแสดงได้ (หลายชุดต่อป้าย: แท่ง เส้น พื้นที่ สตรีม เรดาร์ heatmap ความชัน ดัมเบล treemap · ชุดเดียว: เพิ่มวงกลม โดนัท กรวย หน่วย) หรือระบุเองเช่น <code>[swap]="[\'bar\', \'line\', \'area\']"</code> · เปลี่ยนแล้วกราฟเดิมจางหายขณะกราฟใหม่โตขึ้นมา · <code>(typeChange)</code> บอกแบบที่เลือก',
+        en: '<code>[swap]="true"</code> adds a type switcher top right, offering only the kinds the data can be drawn as (several series per label: bar, line, area, stream, radar, heatmap, slope, dumbbell, treemap · one series: also pie, doughnut, funnel, units), or name them, <code>[swap]="[\'bar\', \'line\', \'area\']"</code> · the old chart fades out while the new one grows in · <code>(typeChange)</code> says which.',
       },
     },
-    theme: {
-      title: { th: 'สีจากธีม', en: 'Theme colours' },
+    stream: {
+      title: { th: 'สตรีม', en: 'Stream' },
       text: {
-        th: 'อ่านสีของธีมจาก CSS variable ด้วย <code>getComputedStyle</code> เช่น <code>--wt-primary-color</code> และ <code>--wt-primary-300</code> แล้วใส่ใน dataset สีเปลี่ยนเมื่อเปลี่ยนธีมหรือโหมดมืด จึงสร้าง data ใหม่ตอนนั้น (ลองเปลี่ยนธีมที่ปุ่มด้านบนของเว็บ แล้วกดปุ่มในตัวอย่าง)',
-        en: 'Read theme colours from CSS variables with <code>getComputedStyle</code>, such as <code>--wt-primary-color</code> and <code>--wt-primary-300</code>, and put them in the datasets. They change with the theme or dark mode, so build new data then (change the theme with the button at the top of the site, then press the button in the sample).',
+        th: '<code>type="stream"</code> พื้นที่ซ้อนกันรอบเส้นกลาง เห็นทั้งยอดรวมและแต่ละชุดที่ไหลไปตามเวลา ชื่อชุดอยู่ในช่วงที่หนาที่สุด · <code>variant</code>: <code>\'silhouette\'</code> สมมาตรรอบกลาง · <code>\'wiggle\'</code> ลดการแกว่งให้อ่านง่าย · <code>\'expand\'</code> เป็นสัดส่วน 0–100%',
+        en: '<code>type="stream"</code>: stacked areas around a middle line, showing the whole and each series flowing over time; names sit where a layer is thickest · <code>variant</code>: <code>\'silhouette\'</code> even about the middle · <code>\'wiggle\'</code> least sway · <code>\'expand\'</code> shares, 0–100%.',
       },
     },
-    click: {
-      title: { th: 'คลิกที่ข้อมูล', en: 'Click on data' },
+    waterfall: {
+      title: { th: 'น้ำตก (waterfall)', en: 'Waterfall' },
       text: {
-        th: '<code>(onDataSelect)</code> ส่ง <code>{ originalEvent, element, dataset }</code> เมื่อคลิกที่แท่ง จุด หรือชิ้น <code>element.index</code> คือลำดับใน <code>labels</code> และ <code>element.datasetIndex</code> คือ dataset ที่คลิก',
-        en: '<code>(onDataSelect)</code> brings <code>{ originalEvent, element, dataset }</code> when a bar, point or slice is clicked: <code>element.index</code> is the position in <code>labels</code> and <code>element.datasetIndex</code> the dataset clicked.',
+        th: '<code>type="waterfall"</code> แต่ละค่าคือการเปลี่ยนแปลงจากยอดก่อนหน้า ขึ้นสีเขียว ลงสีแดง ค่า <code>null</code> คือแท่งยอดรวม ณ จุดนั้น · <code>variant</code>: <code>\'bars\'</code> แท่งลอยต่อกันด้วยเส้นประ · <code>\'steps\'</code> เส้นยอดสะสมแบบขั้นบันไดบนแท่งจาง ๆ',
+        en: '<code>type="waterfall"</code>: each value is a change from the running total, up in green and down in red; a <code>null</code> draws the total there · <code>variant</code>: <code>\'bars\'</code> floating bars joined by dashed lines · <code>\'steps\'</code> the running total as steps over pale bars.',
       },
     },
-    plugins: {
-      title: { th: 'ปลั๊กอิน', en: 'Plugins' },
+    dumbbell: {
+      title: { th: 'ดัมเบล (ก่อน–หลัง)', en: 'Dumbbell (before and after)' },
       text: {
-        th: '<code>[plugins]</code> รับปลั๊กอินของ Chart.js สำหรับกราฟนี้ เขียนเองเป็น object สั้น ๆ ได้ไม่ต้องลงแพ็กเกจ ตัวอย่างนี้วาดตัวเลขกลางโดนัท และรับค่าจาก <code>options.plugins.centerText</code> ตาม <code>id</code> ของปลั๊กอิน',
-        en: '<code>[plugins]</code> takes Chart.js plugins for this chart. A short object of your own works, with no package to install: this one draws a number in the middle of the doughnut and reads its text from <code>options.plugins.centerText</code>, by the plugin\'s <code>id</code>.',
+        th: '<code>type="dumbbell"</code> สองชุดแรกคือค่าเริ่มและค่าจบของแต่ละแถว · <code>variant</code>: <code>\'dots\'</code> เส้นไล่สีจากชุดแรกไปชุดสอง · <code>\'arrow\'</code> ลูกศรเขียวเมื่อเพิ่ม แดงเมื่อลด · <code>\'range\'</code> แถบช่วงจาง ๆ · tooltip บอกส่วนต่าง',
+        en: '<code>type="dumbbell"</code>: the first two series are where each row starts and ends · <code>variant</code>: <code>\'dots\'</code> a line fading from the first colour to the second · <code>\'arrow\'</code> green when it went up, red when down · <code>\'range\'</code> a pale range bar · the tooltip gives the difference.',
       },
     },
-    size: {
-      title: { th: 'ขนาดและ responsive', en: 'Size and responsive' },
+    timeline: {
+      title: { th: 'ไทม์ไลน์ (Gantt)', en: 'Timeline (Gantt)' },
       text: {
-        th: '<code>responsive</code> เปิดเป็นค่าเริ่มต้น: ไม่ใส่ขนาด กราฟกว้างเต็มกล่องตามสัดส่วนของ Chart.js ใส่ <code>height</code> เพื่อกำหนดความสูง หรือ <code>width</code> เพื่อจำกัดความกว้าง กราฟไม่กว้างเกินกล่องที่อยู่ จอแคบจึงหดตาม <code>[responsive]="false"</code> ใช้ขนาดตายตัว',
-        en: '<code>responsive</code> is on by default: with no size the chart fills the width at Chart.js\'s aspect ratio. Give a <code>height</code> to set the height, or a <code>width</code> to cap the width. A chart never gets wider than its container, so it shrinks on narrow screens. <code>[responsive]="false"</code> keeps a fixed size.',
+        th: '<code>type="timeline"</code> ข้อมูลเป็น <code>{ row, start, end, name?, color? }</code> (วันที่ ข้อความ ISO หรือตัวเลข) แกนเวลาเลือกช่วงวัน สัปดาห์ หรือเดือนให้เอง (ภาษาไทยเป็นปี พ.ศ.) งานที่ซ้อนกันในแถวเดียวแยกเป็นช่องย่อย · <code>variant</code>: <code>\'bars\'</code> ชื่ออยู่ในแท่ง · <code>\'thin\'</code> แท่งบางหัวท้ายกลม ชื่ออยู่ด้านบน',
+        en: '<code>type="timeline"</code>: data are <code>{ row, start, end, name?, color? }</code> (dates, ISO text or numbers); the time axis picks days, weeks or months (Thai years in Thai), and work that overlaps on a row takes lanes · <code>variant</code>: <code>\'bars\'</code> names inside · <code>\'thin\'</code> slim bars with round ends, names above.',
       },
     },
-    refresh: {
-      title: { th: 'แก้ข้อมูลแล้ววาดใหม่ (refresh)', en: 'Change data, then refresh' },
+    funnel: {
+      title: { th: 'กรวย (funnel)', en: 'Funnel' },
       text: {
-        th: 'ถ้าแก้ <code>data</code> ที่เดิม (push ค่าใหม่) กราฟยังไม่รู้ ให้เรียก <code>refresh()</code> ผ่าน template reference <code>#attendanceChart="wtChart"</code> หรือ <code>@ViewChild</code> ส่วนการส่ง object ใหม่ให้ <code>[data]</code> สร้างกราฟใหม่เอง',
-        en: 'When you change <code>data</code> in place (pushing a value), the chart does not know: call <code>refresh()</code> through a template reference, <code>#attendanceChart="wtChart"</code>, or <code>@ViewChild</code>. Passing a new object to <code>[data]</code> rebuilds the chart on its own.',
+        th: '<code>type="funnel"</code> ขั้นที่เล็กลงเรื่อย ๆ ในแต่ละขั้นมีค่าและสัดส่วนจากขั้นแรก tooltip บอกสัดส่วนจากขั้นก่อน · <code>variant</code>: <code>\'funnel\'</code> ขอบโค้งต่อกัน · <code>\'bars\'</code> แท่งกลางพร้อม % ที่เหลือระหว่างขั้น · <code>\'pyramid\'</code> สามเหลี่ยมแบ่งตามค่า',
+        en: '<code>type="funnel"</code>: stages getting smaller, each with its value and its share of the first; the tooltip adds the share of the previous one · <code>variant</code>: <code>\'funnel\'</code> smooth joined sides · <code>\'bars\'</code> centred bars with the share kept between them · <code>\'pyramid\'</code> a triangle cut by value.',
       },
     },
-    migration: {
-      title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
+    boxplot: {
+      title: { th: 'Box plot', en: 'Box plot' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-chart&gt;</code> เป็น <code>&lt;wt-chart&gt;</code> input เดิมใช้ได้ทั้งหมด (type, data, options, plugins, width, height, responsive) และ <code>(onDataSelect)</code> ส่งค่าแบบเดิม Chart.js ยังเป็นของแอปเอง (3 หรือ 4) ส่วน <code>generateLegend()</code> มีไว้ให้โค้ดเดิม',
-        en: 'Change <code>&lt;p-chart&gt;</code> to <code>&lt;wt-chart&gt;</code>. Every existing input works (type, data, options, plugins, width, height, responsive) and <code>(onDataSelect)</code> sends the same value. Chart.js stays the app\'s own (3 or 4); <code>generateLegend()</code> is kept for existing code.',
+        th: '<code>type="boxplot"</code> การกระจายของค่าในแต่ละป้าย ส่งค่าดิบเป็น array (คำนวณควอไทล์และค่าผิดปกติให้) หรือ <code>{ min, q1, median, q3, max }</code> · <code>variant</code>: <code>\'box\'</code> กล่อง หนวด และจุดผิดปกติ · <code>\'violin\'</code> รูปทรงของการกระจาย · <code>\'points\'</code> ทุกค่าเป็นจุดบนกล่องจาง ๆ · <code>[horizontal]="true"</code> วางแนวนอน',
+        en: '<code>type="boxplot"</code>: how values spread per label; pass raw values (quartiles and outliers are worked out) or <code>{ min, q1, median, q3, max }</code> · <code>variant</code>: <code>\'box\'</code> box, whiskers and outliers · <code>\'violin\'</code> the shape of the spread · <code>\'points\'</code> every value as a dot over a light box · <code>[horizontal]="true"</code> lays it across.',
+      },
+    },
+    histogram: {
+      title: { th: 'ฮิสโตแกรม', en: 'Histogram' },
+      text: {
+        th: '<code>type="histogram"</code> ส่งค่าดิบ แล้วนับเป็นช่วงที่ขอบเป็นเลขกลม (<code>bins</code> กำหนดจำนวนช่วง) ชุดเดียวมีเส้นค่าเฉลี่ยให้ หลายชุดซ้อนกันแบบโปร่ง · <code>variant</code>: <code>\'bars\'</code> · <code>\'density\'</code> เส้นโค้งไล่สี',
+        en: '<code>type="histogram"</code>: pass raw values and they are counted into bins with round edges (<code>bins</code> sets how many); one series gets a mean line, several overlap see-through · <code>variant</code>: <code>\'bars\'</code> · <code>\'density\'</code> a smooth fading curve.',
+      },
+    },
+    sunburst: {
+      title: { th: 'ซันเบิร์สต์และไอซิเคิล', en: 'Sunburst and icicle' },
+      text: {
+        th: '<code>type="sunburst"</code> ข้อมูลเป็นลำดับชั้น <code>{ name, value?, children? }</code> วงในคือชั้นบน คลิกชิ้นที่มีลูกเพื่อเจาะลงไป คลิกตรงกลาง (หรือ Esc) เพื่อย้อนกลับ ตรงกลางบอกชิ้นที่ชี้อยู่ · <code>variant</code>: <code>\'sunburst\'</code> · <code>\'icicle\'</code> เป็นคอลัมน์ซ้อนจากซ้ายไปขวา · <code>startAngle</code> / <code>endAngle</code> ทำครึ่งวงได้',
+        en: '<code>type="sunburst"</code>: a hierarchy of <code>{ name, value?, children? }</code>, the top level innermost; click a node with children to go in, the middle (or Esc) to come back out; the middle shows the node pointed at · <code>variant</code>: <code>\'sunburst\'</code> · <code>\'icicle\'</code> stacked columns from left to right · <code>startAngle</code> / <code>endAngle</code> make a half one.',
+      },
+    },
+    unit: {
+      title: { th: 'หน่วย (waffle / รูปคน)', en: 'Units (waffle, people)' },
+      text: {
+        th: '<code>type="unit"</code> สัดส่วนเป็นจำนวนหน่วยที่นับได้ ปัดเศษให้รวมครบพอดี · <code>variant</code>: <code>\'waffle\'</code> 100 ช่อง ช่องละ 1% · <code>\'dots\'</code> เป็นจุด · <code>\'people\'</code> 50 รูปคน รูปละ 2% · ชี้ที่หมวดใดหมวดนั้นเด่นขึ้น',
+        en: '<code>type="unit"</code>: shares as units you can count, rounded so they add up exactly · <code>variant</code>: <code>\'waffle\'</code> 100 squares, 1% each · <code>\'dots\'</code> as dots · <code>\'people\'</code> 50 figures, 2% each · pointing at a group lifts it.',
+      },
+    },
+    slope: {
+      title: { th: 'ความชัน (slope)', en: 'Slope' },
+      text: {
+        th: '<code>type="slope"</code> แต่ละชุดเป็นเส้นจากป้ายแรกไปป้ายสุดท้าย (มักเป็นก่อน–หลัง) ชื่อและค่าอยู่ข้างปลายเส้นโดยไม่ทับกัน · <code>variant</code>: <code>\'lines\'</code> สีตามชุด · <code>\'highlight\'</code> เพิ่มขึ้นสีเขียว ลดลงสีแดง เท่าเดิมสีเทา',
+        en: '<code>type="slope"</code>: each series is a line from the first label to the last (often before and after), names and values beside the ends without overlapping · <code>variant</code>: <code>\'lines\'</code> in the series’ colours · <code>\'highlight\'</code> up green, down red, no change grey.',
+      },
+    },
+    curves: {
+      title: { th: 'พื้นที่ไล่สีและเส้นขั้นบันได', en: 'Fading areas and step lines' },
+      text: {
+        th: 'พื้นที่ใต้เส้นไล่สีจางลงด้านล่างให้เอง (<code>[gradient]="false"</code> เป็นสีเรียบ) · <code>curve</code>: <code>\'straight\'</code>, <code>\'smooth\'</code> หรือ <code>\'step\'</code> เส้นขั้นบันไดสำหรับค่าที่เปลี่ยนเป็นช่วง ๆ เช่นราคาหรืออัตรา (ใส่ในแต่ละชุดได้)',
+        en: 'Areas fade down from the line’s colour on their own (<code>[gradient]="false"</code> fills them flat) · <code>curve</code>: <code>\'straight\'</code>, <code>\'smooth\'</code> or <code>\'step\'</code>, steps for values that change in jumps such as prices or rates (per series too).',
+      },
+    },
+    gauge: {
+      title: { th: 'วงแหวนความคืบหน้าและเกจ', en: 'Radial bars and gauges' },
+      text: {
+        th: '<code>type="radialBar"</code> หนึ่งวงต่อหนึ่งป้าย ค่าคือส่วนของ <code>max</code> (ค่าเริ่มต้น 100 ใส่เป็นเปอร์เซ็นต์ได้เลย) ตรงกลางแสดงวงที่ชี้อยู่ · <code>startAngle</code> / <code>endAngle</code> (องศาตามเข็มนาฬิกาจาก 12 นาฬิกา) ทำเป็นครึ่งวงกลมแบบเกจ ใช้กับโดนัทและวงกลมได้ด้วย',
+        en: '<code>type="radialBar"</code> draws a ring per label, each value out of <code>max</code> (default 100, so percents read as they are); the middle shows the ring under the pointer · <code>startAngle</code> / <code>endAngle</code> (degrees clockwise from 12 o’clock) make a half circle gauge, and work for doughnuts and pies too.',
+      },
+    },
+    polar: {
+      title: { th: 'วงกลมแบบรัศมี', en: 'Polar area' },
+      text: {
+        th: '<code>type="polarArea"</code> ทุกชิ้นกว้างเท่ากัน ความยาวรัศมีบอกค่า มีวงบอกระดับ ใช้เทียบหลายหมวดที่ค่าห่างกันมาก',
+        en: '<code>type="polarArea"</code>: every slice is as wide as the others and its length shows the value, with rings for the scale; good for comparing categories of very different sizes.',
+      },
+    },
+    heatmap: {
+      title: 'Heatmap',
+      text: {
+        th: '<code>type="heatmap"</code> ตารางสี: ชุดข้อมูลหนึ่งชุดคือหนึ่งแถว ป้ายคือคอลัมน์ ค่ามากสีเข้ม ตัวเลขอยู่ในช่องเมื่อมีที่พอ · <code>variant</code>: <code>\'square\'</code> · <code>\'circle\'</code> วงกลมโตตามค่า · <code>\'hex\'</code> รังผึ้ง · <code>[colorRanges]="[{ from, to, color, name }]"</code> ให้สีตามช่วงค่า และ legend แสดง / ซ่อนแต่ละช่วงได้',
+        en: '<code>type="heatmap"</code>: a grid of colour, a row per series and a column per label, darker for more, the numbers inside where they fit · <code>variant</code>: <code>\'square\'</code> · <code>\'circle\'</code> circles sized by value · <code>\'hex\'</code> a honeycomb · <code>[colorRanges]="[{ from, to, color, name }]"</code> colours by range instead, and the legend shows and hides each range.',
+      },
+    },
+    treemap: {
+      title: 'Treemap',
+      text: {
+        th: '<code>type="treemap"</code> กล่องขนาดตามค่า เห็นสัดส่วนของหลายรายการพร้อมกัน ชื่อและค่าอยู่ในกล่องเมื่อมีที่พอ · หลายชุดข้อมูลจัดเป็นกลุ่มตามชุด สีเดียวกันในกลุ่ม',
+        en: '<code>type="treemap"</code>: boxes sized by value, to see the shares of many items at once; names and values sit inside where they fit · several series group into a block each, in the series’ colour.',
+      },
+    },
+    sparkline: {
+      title: { th: 'กราฟจิ๋ว (sparkline)', en: 'Sparklines' },
+      text: {
+        th: '<code>[sparkline]="true"</code> ไม่มีแกน เส้นตาราง หรือ legend เส้นเต็มกล่อง สูง 48px ใช้วางข้างตัวเลขในการ์ดสรุป tooltip ยังใช้ได้',
+        en: '<code>[sparkline]="true"</code>: no axes, grid or legend, the line filling a 48px box; made to sit beside a number in a summary card. The tooltip still works.',
+      },
+    },
+    annotations: {
+      title: { th: 'คำอธิบายบนกราฟ', en: 'Annotations' },
+      text: {
+        th: '<code>[annotations]</code>: <code>y</code> เส้นหรือแถบ (<code>to</code>) ที่ค่าหนึ่ง · <code>x</code> เส้นหรือแถบที่ป้าย (ชื่อป้ายหรือลำดับ) · <code>points</code> จุดที่มีป้ายชื่อ · แกนรวมค่าเหล่านี้ให้เห็นเสมอ',
+        en: '<code>[annotations]</code>: <code>y</code> lines or bands (<code>to</code>) at values · <code>x</code> lines or bands at labels (by text or index) · <code>points</code> marked points with a label · the axis always takes these values in.',
+      },
+    },
+    toolbar: {
+      title: { th: 'แถบเครื่องมือ ซูม และดาวน์โหลด', en: 'Toolbar, zoom and download' },
+      text: {
+        th: '<code>[toolbar]="true"</code> ปุ่มมุมขวาบน: ซูมเข้า / ออก / ดูทั้งหมด และดาวน์โหลด PNG, SVG หรือ CSV (เปิดใน Excel ภาษาไทยไม่เพี้ยน) · ลากบนกราฟแท่ง เส้น หรือพื้นที่เพื่อซูมไปช่วงนั้น (<code>[zoom]</code> เปิด / ปิดแยกได้) · <code>(zoomChange)</code> บอกช่วงที่ซูม',
+        en: '<code>[toolbar]="true"</code> adds buttons top right: zoom in / out / show all, and download as PNG, SVG or CSV (Excel opens it with Thai intact) · drag across a bar, line or area chart to zoom into those labels (<code>[zoom]</code> turns this on or off by itself) · <code>(zoomChange)</code> says where.',
+      },
+    },
+    sync: {
+      title: { th: 'กราฟที่ชี้ไปด้วยกัน', en: 'Synced charts' },
+      text: {
+        th: 'กราฟที่ใส่ <code>group</code> เดียวกันแสดง tooltip ที่ป้ายเดียวกันพร้อมกัน ชี้กราฟหนึ่งแล้วกราฟอื่นในกลุ่มตาม เหมาะกับแดชบอร์ดที่วางหลายกราฟตามเดือนเดียวกัน',
+        en: 'Charts with the same <code>group</code> show the tooltip at the same label together: point at one and the others follow. Made for dashboards with several charts over the same months.',
+      },
+    },
+    format: {
+      title: { th: 'ตัวเลขและฟอนต์', en: 'Numbers and fonts' },
+      text: {
+        th: '<code>format</code>: <code>\'number\'</code> 1,234.5 · <code>\'integer\'</code> · <code>\'percent\'</code> (0.12 → 12%) · <code>\'currency\'</code> ฿1,234 (<code>currency</code> เปลี่ยนสกุลเงิน) · <code>\'compact\'</code> 1.2 พัน / 2.5 แสน / 98.8 ล้าน (ภาษาอังกฤษเป็น 1.2K / 98.8M) หรือฟังก์ชันของแอปเอง · <code>decimals</code>, <code>prefix</code>, <code>suffix</code> · <code>font</code> และ <code>fontSize</code> เปลี่ยนฟอนต์ของทั้งกราฟได้ทันที (ค่าเริ่มต้นคือฟอนต์ของธีม) · ภาษาของตัวเลขตามแอป หรือกำหนดด้วย <code>lang</code>',
+        en: '<code>format</code>: <code>\'number\'</code> 1,234.5 · <code>\'integer\'</code> · <code>\'percent\'</code> (0.12 → 12%) · <code>\'currency\'</code> ฿1,234 (<code>currency</code> picks another) · <code>\'compact\'</code> 1.2 พัน / 2.5 แสน / 98.8 ล้าน (1.2K / 98.8M in English), or a function of your own · <code>decimals</code>, <code>prefix</code>, <code>suffix</code> · <code>font</code> and <code>fontSize</code> change the whole chart’s font at once (the theme’s font by default) · numbers follow the app’s language, or <code>lang</code>.',
+      },
+    },
+    extras: {
+      title: { th: 'เส้นอ้างอิง ชื่อแกน และหัวเรื่อง', en: 'Reference lines, axis titles and a heading' },
+      text: {
+        th: '<code>[referenceLines]="[{ value: 400, label: \'เป้าหมาย\' }]"</code> เส้นประที่ค่าหนึ่ง (แกนรวมค่านี้ให้เห็นเสมอ) · <code>xTitle</code>, <code>yTitle</code>, <code>y2Title</code> ชื่อแกน · <code>title</code> และ <code>subtitle</code> หัวเรื่องเหนือกราฟ (เป็นชื่อของกราฟสำหรับโปรแกรมอ่านจอด้วย) · <code>min</code>, <code>max</code>, <code>beginAtZero</code> กำหนดช่วงแกน',
+        en: '<code>[referenceLines]="[{ value: 400, label: \'Target\' }]"</code> draws a dashed line at a value (the axis always takes it in) · <code>xTitle</code>, <code>yTitle</code>, <code>y2Title</code> name the axes · <code>title</code> and <code>subtitle</code> head the chart (the title is also its name for screen readers) · <code>min</code>, <code>max</code>, <code>beginAtZero</code> set the axis.',
+      },
+    },
+    live: {
+      title: { th: 'ข้อมูลที่เปลี่ยน และเหตุการณ์', en: 'Changing data and events' },
+      text: {
+        th: 'ส่ง array ใหม่เข้า <code>[series]</code> แล้วแท่งและเส้นเคลื่อนจากค่าเดิมไปค่าใหม่ แกนปรับตาม (<code>[animate]="false"</code> ปิด; ผู้ที่ขอให้ลดการเคลื่อนไหวได้แบบนิ่งเอง) · <code>(pointClick)</code> ส่ง <code>{ series, seriesName, index, label, value }</code> เมื่อคลิกหรือกด Enter · <code>(seriesToggle)</code> เมื่อ legend ซ่อน / แสดง',
+        en: 'Pass a new array to <code>[series]</code> and the bars and lines move from the old values to the new, the axis following (<code>[animate]="false"</code> turns it off; people who ask for less motion get it still) · <code>(pointClick)</code> sends <code>{ series, seriesName, index, label, value }</code> on a click or Enter · <code>(seriesToggle)</code> when the legend hides or shows one.',
+      },
+    },
+    chartjs: {
+      title: { th: 'ย้ายจาก ChartJS', en: 'Moving from ChartJS' },
+      text: {
+        th: '<code>[data]</code> แบบ Chart.js (<code>{ labels, datasets }</code>) ใช้ได้เลย: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (สีเดียวหรือสีละชิ้น), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · <code>[options]</code> ส่วนที่เข้าใจ: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · จึงเปลี่ยนแค่ tag จาก <code>wt-chartjs</code> (หรือ <code>p-chart</code> เดิม) เป็น <code>wt-chart</code> แล้วถอด chart.js ออกได้ · ถ้าต้องใช้ปลั๊กอินหรือกราฟแบบที่ไม่มีที่นี่ ใช้ <code>wt-chartjs</code> ต่อได้ในแอปเดียวกัน',
+        en: 'Chart.js-shaped <code>[data]</code> (<code>{ labels, datasets }</code>) works as it is: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (one colour or one per slice), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · the <code>[options]</code> it understands: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · so changing the tag from <code>wt-chartjs</code> (or the old <code>p-chart</code>) to <code>wt-chart</code> lets chart.js go · for plugins or chart kinds missing here, keep <code>wt-chartjs</code> in the same app.',
+      },
+    },
+    export: {
+      title: { th: 'บันทึกเป็นรูป', en: 'Save as a picture' },
+      text: {
+        th: '<code>#c="wtChart"</code> แล้ว <code>c.download(\'รายงาน\')</code> บันทึกเป็น PNG (<code>\'svg\'</code> เป็น SVG) · <code>c.toPNG(scale)</code> คืน data URL, <code>c.toSVG()</code> คืนข้อความ SVG ที่ใส่สีและฟอนต์ไว้ในตัว (แนบอีเมล ใส่รายงาน PDF) · รูปใช้ฟอนต์ที่ติดตั้งในเครื่อง ไม่ใช่ web font',
+        en: '<code>#c="wtChart"</code>, then <code>c.download(\'report\')</code> saves a PNG (<code>\'svg\'</code> for SVG) · <code>c.toPNG(scale)</code> returns a data URL and <code>c.toSVG()</code> SVG text with the colours and fonts written in (for e-mail, PDF reports) · pictures use fonts installed on the machine, not web fonts.',
+      },
+    },
+    a11y: {
+      title: { th: 'คีย์บอร์ดและโปรแกรมอ่านจอ', en: 'Keyboard and screen readers' },
+      text: {
+        th: 'กราฟกด Tab เข้าได้ · <code>←</code> <code>→</code> (แท่งแนวนอนใช้ <code>↑</code> <code>↓</code>) เลื่อนทีละป้ายพร้อม tooltip และอ่านค่าออกเสียง · <code>Home</code> / <code>End</code> · <code>Enter</code> ส่ง <code>(pointClick)</code> · <code>Esc</code> ปิด tooltip · มีตารางข้อมูลซ่อนไว้ให้โปรแกรมอ่านจอ และ legend เป็นปุ่มที่บอกสถานะ (aria-pressed)',
+        en: 'The chart takes Tab · <code>←</code> <code>→</code> (<code>↑</code> <code>↓</code> for bars across) move label by label with the tooltip, read aloud · <code>Home</code> / <code>End</code> · <code>Enter</code> sends <code>(pointClick)</code> · <code>Esc</code> closes the tooltip · a hidden data table gives screen readers the numbers, and the legend items are buttons that say their state (aria-pressed).',
       },
     },
   },
   code: {
-    basic: `<wt-chart type="bar" [data]="salesData" height="280px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wt-chart>`,
-    line: `<wt-chart type="line" [data]="visitData" [options]="visitOptions" height="280px" ariaLabel="ผู้เข้าชมรายวัน"></wt-chart>`,
-    pie: `<wt-chart type="pie" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wt-chart>
-<wt-chart type="doughnut" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wt-chart>`,
-    stacked: `<wt-chart type="bar" [data]="genderData" [options]="stackedOptions" height="240px" ariaLabel="นักเรียนแยกตามชั้นและเพศ"></wt-chart>`,
-    mixed: `<wt-chart type="bar" [data]="targetData" height="280px" ariaLabel="ยอดขายเทียบเป้าหมาย"></wt-chart>`,
-    theme: `<wt-chart type="bar" [data]="themeData" height="260px" ariaLabel="รายรับปีนี้เทียบปีที่แล้ว"></wt-chart>
-<wt-button label="ใช้สีของธีมตอนนี้" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>`,
-    click: `<wt-chart type="bar" [data]="scoreData" [options]="scoreOptions" height="260px" ariaLabel="คะแนนเฉลี่ยรายวิชา"
-  (onDataSelect)="pick($event)"></wt-chart>
-<p>ที่เลือก: {{ picked }}</p>`,
-    plugins: `<wt-chart type="doughnut" [data]="levelData" [options]="levelOptions" [plugins]="[centerText]" height="260px"
-  ariaLabel="นักเรียนแยกตามระดับชั้น"></wt-chart>`,
-    size: `<!-- กว้างเต็มกล่อง สูง 200px -->
-<wt-chart type="line" [data]="visitData" height="200px" ariaLabel="ผู้เข้าชมรายวัน"></wt-chart>
-
-<!-- กว้าง 480px แต่ไม่เกินกล่องที่อยู่ (จอแคบหดตาม) -->
-<wt-chart type="bar" [data]="salesData" width="480px" height="200px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wt-chart>`,
-    refresh: `<wt-chart #attendanceChart="wtChart" type="line" [data]="attendance" height="240px"
-  ariaLabel="นักเรียนที่มาเรียนรายสัปดาห์"></wt-chart>
-<wt-button label="เพิ่มสัปดาห์" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>`,
+    import: `import { WtChart } from 'wiratheme/chart';`,
+    basic: `<wt-chart type="bar" [labels]="months" [series]="money" format="currency"></wt-chart>`,
+    line: `<wt-chart type="line" [labels]="months" [series]="visitors" [smooth]="true" format="compact"></wt-chart>
+<wt-chart type="area" [labels]="months" [series]="money" [stacked]="true" format="compact"></wt-chart>`,
+    bars: `<wt-chart type="bar" [labels]="grades" [series]="students" [stacked]="true" [showValues]="true"></wt-chart>
+<wt-chart type="bar" [labels]="channels" [series]="applicants" [horizontal]="true" [showValues]="true" height="260"></wt-chart>`,
+    mixed: `<wt-chart type="bar" [labels]="months" [series]="salesAndGrowth" format="compact" rightFormat="percent"
+  yTitle="ยอดขาย" y2Title="อัตราเติบโต"></wt-chart>`,
+    pie: `<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [showValues]="true" suffix=" คน"></wt-chart>
+<wt-chart type="pie" [labels]="channels" [series]="applicants" legend="bottom"></wt-chart>`,
+    radar: `<wt-chart type="radar" [labels]="skills" [series]="skillScores" [max]="5"></wt-chart>
+<wt-chart type="scatter" [series]="readingVsScore" xTitle="ชั่วโมงอ่านหนังสือ" yTitle="คะแนนสอบ"></wt-chart>`,
+    curves: `<wt-chart type="area" [labels]="months" [series]="money" format="compact"></wt-chart>
+<wt-chart type="line" [labels]="years" [series]="tuition" curve="step" format="currency"></wt-chart>`,
+    gauge: `<wt-chart type="radialBar" [labels]="['การเข้าเรียนวันนี้']" [series]="[{ data: [87] }]" [startAngle]="-90" [endAngle]="90"></wt-chart>
+<wt-chart type="radialBar" [labels]="['ส่งงาน', 'เข้าเรียน', 'กิจกรรม']" [series]="[{ data: [76, 92, 58] }]" legend="bottom"></wt-chart>`,
+    polar: `<wt-chart type="polarArea" [labels]="channels" [series]="applicants"></wt-chart>
+<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [startAngle]="-90" [endAngle]="90" legend="bottom"></wt-chart>`,
+    swap: `<wt-chart type="bar" [labels]="months" [series]="money" [swap]="true" format="compact" (typeChange)="kind = $event"></wt-chart>
+<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [swap]="true"></wt-chart>`,
+    stream: `<wt-chart type="stream" [labels]="months" [series]="clubs" variant="silhouette"></wt-chart>`,
+    waterfall: `<wt-chart type="waterfall" [labels]="budgetSteps" [series]="budgetFlow" format="compact" variant="bars"></wt-chart>`,
+    dumbbell: `<wt-chart type="dumbbell" [labels]="subjects" [series]="beforeAfter" variant="dots" height="300"></wt-chart>`,
+    timeline: `<wt-chart type="timeline" [series]="project" variant="bars" height="300"></wt-chart>`,
+    funnel: `<wt-chart type="funnel" [labels]="steps" [series]="admissions" variant="funnel" height="320"></wt-chart>`,
+    boxplot: `<wt-chart type="boxplot" [labels]="classes" [series]="scores" variant="box" yTitle="คะแนน"></wt-chart>`,
+    histogram: `<wt-chart type="histogram" [series]="heights" variant="bars" xTitle="ส่วนสูง (ซม.)"></wt-chart>`,
+    sunburst: `<wt-chart type="sunburst" [series]="budget" variant="sunburst" format="compact" height="360"></wt-chart>`,
+    unit: `<wt-chart type="unit" [labels]="travel" [series]="travelCounts" variant="waffle" height="300"></wt-chart>`,
+    slope: `<wt-chart type="slope" [labels]="['2568', '2569']" [series]="yearScores" variant="lines" height="320"></wt-chart>`,
+    heatmap: `<wt-chart type="heatmap" [labels]="days" [series]="library" variant="square" height="260"></wt-chart>
+<wt-chart type="heatmap" [labels]="days" [series]="library" [colorRanges]="ranges" height="260"></wt-chart>`,
+    treemap: `<wt-chart type="treemap" [labels]="departments" [series]="budgets" format="compact" height="340"></wt-chart>`,
+    sparkline: `<div class="kpis">
+  <div class="kpi">
+    <span>ผู้เข้าชม</span>
+    <strong>30,400</strong>
+    <wt-chart type="area" [labels]="months" [series]="visitors.slice(0, 1)" [sparkline]="true"></wt-chart>
+  </div>
+  <!-- … -->
+</div>`,
+    annotations: `<wt-chart type="line" [labels]="months" [series]="visitors.slice(0, 1)" [annotations]="notes" format="compact"></wt-chart>`,
+    toolbar: `<wt-chart
+  type="area"
+  [labels]="days30"
+  [series]="daily"
+  [toolbar]="true"
+  fileName="visitors"
+  (zoomChange)="zoomed = $event"
+></wt-chart>`,
+    sync: `<wt-chart group="school" type="line" [labels]="months" [series]="visitors.slice(0, 1)" height="200"></wt-chart>
+<wt-chart group="school" type="bar" [labels]="months" [series]="money" format="compact" height="200"></wt-chart>`,
+    format: `<wt-chart type="bar" [labels]="months" [series]="money" format="compact" font="Sarabun" [fontSize]="14"></wt-chart>
+<wt-chart type="line" [labels]="months" [series]="visitors" format="number" suffix=" คน" [decimals]="0"></wt-chart>`,
+    extras: `<wt-chart
+  type="line"
+  title="รายรับรายจ่าย ภาคเรียนที่ 2/2569"
+  subtitle="หน่วย: บาท"
+  [labels]="months"
+  [series]="money"
+  [referenceLines]="[{ value: 400000, label: 'งบประมาณ' }]"
+  format="compact"
+  yTitle="บาท"
+></wt-chart>`,
+    live: `<wt-button label="สุ่มข้อมูลใหม่" icon="wi wi-refresh" (onClick)="shuffle()"></wt-button>
+<wt-chart type="bar" [labels]="months" [series]="live" (pointClick)="clicked($event)"></wt-chart>
+<p>คลิกล่าสุด: {{ lastClick }}</p>`,
+    chartjs: `<!-- เดิม: <wt-chartjs type="bar" [data]="data" [options]="options"> -->
+<wt-chart type="bar" [data]="data" [options]="options"></wt-chart>`,
+    export: `<wt-chart #c="wtChart" type="doughnut" [labels]="channels" [series]="applicants"></wt-chart>
+<wt-button label="ดาวน์โหลด PNG" icon="wi wi-download" (onClick)="c.download('applicants')"></wt-button>
+<wt-button label="ดาวน์โหลด SVG" severity="secondary" [outlined]="true" (onClick)="c.download('applicants', 'svg')"></wt-button>`,
   },
   ts: {
-    basic: `import { ChartData } from 'chart.js';
+    basic: `import { WtChartSeries } from 'wiratheme/chart';
 
-salesData: ChartData<'bar'> = {
-  labels: ${MONTHS},
-  datasets: [
-    { label: 'รายรับ', data: [52, 61, 70, 66, 74, 80], backgroundColor: '#3b82f6' },
-    { label: 'รายจ่าย', data: [40, 45, 52, 48, 55, 58], backgroundColor: '#f59e0b' },
-  ],
-};`,
-    line: `import { ChartData, ChartOptions } from 'chart.js';
+months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'];
+money: WtChartSeries[] = [
+  { name: 'รายรับ', data: [420000, 380000, 510000, 465000, 530000, 610000] },
+  { name: 'รายจ่าย', data: [310000, 295000, 340000, 360000, 330000, 390000] },
+];`,
+    line: `visitors: WtChartSeries[] = [
+  { name: 'ผู้เข้าชม', data: [12500, 18200, 15800, 24100, 21900, 30400] },
+  { name: 'สมัครเรียน', data: [820, 1340, 1210, 2050, 1890, 2610], smooth: false, dashed: true },
+];`,
+    bars: `grades = ['ม.1', 'ม.2', 'ม.3'];
+students: WtChartSeries[] = [
+  { name: 'ชาย', data: [132, 120, 115] },
+  { name: 'หญิง', data: [128, 135, 124] },
+];
+channels = ['เพื่อน / ครอบครัว', 'โซเชียลมีเดีย', 'เว็บไซต์', 'ป้ายประกาศ', 'อื่น ๆ'];
+applicants: WtChartSeries[] = [{ name: 'ผู้สมัคร', data: [420, 365, 210, 95, 40] }];`,
+    mixed: `salesAndGrowth: WtChartSeries[] = [
+  { name: 'ยอดขาย', data: [1200000, 1350000, 1280000, 1520000, 1610000, 1790000] },
+  { name: 'อัตราเติบโต', type: 'line', axis: 'right', data: [0.04, 0.125, -0.052, 0.188, 0.059, 0.112] },
+];`,
+    radar: `skills = ['ฟัง', 'พูด', 'อ่าน', 'เขียน', 'คิดวิเคราะห์'];
+skillScores: WtChartSeries[] = [
+  { name: 'ห้อง ม.1/1', data: [4.2, 3.6, 4.5, 3.1, 3.9] },
+  { name: 'ค่าเฉลี่ยระดับชั้น', data: [3.8, 3.4, 3.9, 3.3, 3.5], dashed: true },
+];
+readingVsScore: WtChartSeries[] = [
+  { name: 'นักเรียน', data: [{ x: 2, y: 54 }, { x: 4, y: 61 }, { x: 5, y: 66, r: 9 } /* … */] },
+];`,
+    live: `import { WtChartClickEvent, WtChartSeries } from 'wiratheme/chart';
 
-visitData: ChartData<'line'> = {
-  labels: ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'],
-  datasets: [
-    {
-      label: 'ผู้เข้าชมเว็บไซต์',
-      data: [320, 410, 380, 460, 520, 280, 240],
-      borderColor: '#10b981',
-      backgroundColor: 'rgba(16, 185, 129, 0.15)',
-      fill: true,
-      tension: 0.35,
-    },
-  ],
-};
-visitOptions: ChartOptions<'line'> = {
-  scales: { y: { beginAtZero: true } },
-};`,
-    pie: `spendData: ChartData<'pie'> = {
-  labels: ['อาหาร', 'เดินทาง', 'อุปกรณ์การเรียน', 'อื่น ๆ'],
-  datasets: [{ data: [4200, 1800, 1200, 600], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#a855f7'] }],
-};`,
-    stacked: `genderData: ChartData<'bar'> = {
-  labels: ['ม.1', 'ม.2', 'ม.3'],
-  datasets: [
-    { label: 'ชาย', data: [118, 124, 109], backgroundColor: '#3b82f6' },
-    { label: 'หญิง', data: [126, 119, 131], backgroundColor: '#ec4899' },
-  ],
-};
-// แท่งแนวนอน (indexAxis: 'y') และซ้อนกัน (stacked)
-stackedOptions: ChartOptions<'bar'> = {
-  indexAxis: 'y',
-  scales: { x: { stacked: true }, y: { stacked: true } },
-};`,
-    mixed: `// type ของแต่ละ dataset ทับ type ของกราฟได้: แท่งกับเส้นในกราฟเดียว
-targetData: ChartData<'bar' | 'line'> = {
-  labels: ${MONTHS},
-  datasets: [
-    { type: 'bar', label: 'ยอดขาย', data: [48, 55, 62, 58, 71, 76], backgroundColor: '#3b82f6' },
-    { type: 'line', label: 'เป้าหมาย', data: [50, 55, 60, 65, 70, 75], borderColor: '#f43f5e', backgroundColor: '#f43f5e', tension: 0.3 },
-  ],
-};`,
-    theme: `themeData = this.themeChartData();
+live: WtChartSeries[] = [{ name: 'ผู้เข้าชม', data: this.random() }];
+lastClick = '-';
 
-useThemeColors(): void {
-  // object ใหม่ กราฟจึงสร้างใหม่ด้วยสีของธีมตอนนี้ (เช่น หลังเปลี่ยนธีมหรือโหมดมืด)
-  this.themeData = this.themeChartData();
+shuffle(): void {
+  this.live = [{ name: 'ผู้เข้าชม', data: this.random() }];   // a new array: the chart moves to it
 }
 
-themeChartData(): ChartData<'bar'> {
-  const css = getComputedStyle(document.documentElement);
-  return {
-    labels: ${MONTHS},
-    datasets: [
-      { label: 'ปีนี้', data: [52, 61, 70, 66, 74, 80], backgroundColor: css.getPropertyValue('--wt-primary-color').trim() },
-      { label: 'ปีที่แล้ว', data: [45, 50, 58, 60, 63, 69], backgroundColor: css.getPropertyValue('--wt-primary-300').trim() },
+clicked(e: WtChartClickEvent): void {
+  this.lastClick = \`\${e.label}: \${e.value}\`;
+}
+
+private random(): number[] {
+  return this.months.map(() => Math.round(200 + Math.random() * 800));
+}`,
+    curves: `years = ['2564', '2565', '2566', '2567', '2568', '2569'];
+tuition: WtChartSeries[] = [{ name: 'ค่าเทอม', data: [12000, 12000, 13500, 13500, 15000, 15000] }];`,
+    heatmap: `import { WtChartColorRange, WtChartSeries } from 'wiratheme/chart';
+
+days = ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.'];
+library: WtChartSeries[] = [
+  { name: '08:00', data: [12, 18, 9, 22, 14] },
+  { name: '10:00', data: [35, 41, 28, 39, 30] },
+  { name: '12:00', data: [58, 64, 49, 61, 70] },
+  { name: '14:00', data: [27, 33, 25, 38, 21] },
+  { name: '16:00', data: [44, 19, 52, 17, 8] },
+];
+ranges: WtChartColorRange[] = [
+  { from: 0, to: 20, color: '#22c55e', name: 'ว่าง' },
+  { from: 21, to: 45, color: '#f59e0b', name: 'ปานกลาง' },
+  { from: 46, to: 100, color: '#ef4444', name: 'แน่น' },
+];`,
+    stream: `clubs: WtChartSeries[] = [
+  { name: 'ชมรมดนตรี', data: [30, 42, 38, 55, 48, 62] },
+  { name: 'ชมรมกีฬา', data: [45, 40, 52, 48, 60, 58] },
+  { name: 'ชมรมศิลปะ', data: [20, 28, 35, 30, 26, 40] },
+  { name: 'ชมรมวิทย์', data: [15, 18, 22, 30, 36, 33] },
+];`,
+    waterfall: `budgetSteps = ['งบต้นปี', 'ค่าเทอม', 'เงินบริจาค', 'ค่าสาธารณูปโภค', 'ค่ากิจกรรม', 'ซ่อมอาคาร', 'คงเหลือ'];
+// A change per step; null draws the total there.
+budgetFlow: WtChartSeries[] = [{ data: [500000, 320000, 85000, -140000, -210000, -180000, null] }];`,
+    dumbbell: `subjects = ['คณิตศาสตร์', 'วิทยาศาสตร์', 'ภาษาไทย', 'ภาษาอังกฤษ', 'สังคมศึกษา'];
+beforeAfter: WtChartSeries[] = [
+  { name: 'ก่อนเรียน', data: [42, 48, 61, 39, 55] },
+  { name: 'หลังเรียน', data: [68, 71, 66, 58, 52] },
+];`,
+    timeline: `project: WtChartSeries[] = [
+  {
+    name: 'โครงการ',
+    data: [
+      { row: 'วางแผน', start: '2026-05-01', end: '2026-05-10', name: 'เก็บความต้องการ' },
+      { row: 'ออกแบบ', start: '2026-05-08', end: '2026-05-24', name: 'ออกแบบหน้าจอ' },
+      { row: 'ออกแบบ', start: '2026-05-20', end: '2026-05-28', name: 'ทบทวนแบบ' },
+      { row: 'พัฒนา', start: '2026-05-22', end: '2026-06-25', name: 'เขียนโค้ด' },
+      // …
     ],
-  };
-}`,
-    click: `import { ChartData, ChartOptions } from 'chart.js';
-import { WtChartDataSelectEvent } from 'wiratheme/chart';
-
-scoreData: ChartData<'bar'> = {
-  labels: ['คณิตศาสตร์', 'วิทยาศาสตร์', 'ภาษาไทย', 'ภาษาอังกฤษ', 'สังคมศึกษา'],
-  datasets: [{ label: 'คะแนนเฉลี่ย', data: [72, 68, 81, 75, 70], backgroundColor: '#6366f1' }],
-};
-scoreOptions: ChartOptions<'bar'> = {
-  plugins: { legend: { display: false } },
-  scales: { y: { beginAtZero: true, max: 100 } },
-};
-picked = 'คลิกที่แท่ง';
-
-pick(event: WtChartDataSelectEvent): void {
-  const { datasetIndex, index } = event.element as { datasetIndex: number; index: number };
-  this.picked = this.scoreData.labels![index] + ': ' + this.scoreData.datasets[datasetIndex].data[index];
-}`,
-    plugins: `import { ChartData, Plugin } from 'chart.js';
-
-levelData: ChartData<'doughnut'> = {
-  labels: ['ประถม', 'มัธยมต้น', 'มัธยมปลาย'],
-  datasets: [{ data: [520, 410, 320], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'] }],
-};
-levelOptions = {
-  cutout: '65%',
-  plugins: {
-    legend: { position: 'bottom' },
-    centerText: { text: '1,250 คน' },   // ค่าที่ส่งให้ปลั๊กอินตาม id
   },
-};
+];`,
+    funnel: `steps = ['เข้าชมเว็บไซต์', 'ดูหลักสูตร', 'กรอกใบสมัคร', 'ส่งเอกสาร', 'ชำระเงิน'];
+admissions: WtChartSeries[] = [{ data: [12000, 6400, 2100, 1450, 980] }];`,
+    boxplot: `classes = ['ม.4/1', 'ม.4/2', 'ม.4/3', 'ม.4/4'];
+// Raw scores per class: quartiles, whiskers and outliers are worked out.
+scores: WtChartSeries[] = [{ name: 'คะแนน', data: [[55, 62, 71, 48, /* … */], /* … */] }];`,
+    histogram: `// 200 raw values, counted into bins.
+heights: WtChartSeries[] = [{ name: 'ส่วนสูง', data: [158.2, 163.9, 151.4, /* … */] }];`,
+    sunburst: `import { WtChartNode, WtChartSeries } from 'wiratheme/chart';
 
-// ปลั๊กอินที่เขียนเอง: ตัวเลขกลางโดนัท ไม่ต้องลงแพ็กเกจเพิ่ม
-centerText: Plugin<'doughnut', { text: string }> = {
-  id: 'centerText',
-  afterDraw(chart, _args, options) {
-    const { ctx, chartArea } = chart;
-    ctx.save();
-    ctx.font = '600 18px ' + (chart.options.font?.family ?? 'sans-serif');
-    ctx.fillStyle = String(chart.options.color ?? '#333');
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(options.text, (chartArea.left + chartArea.right) / 2, (chartArea.top + chartArea.bottom) / 2);
-    ctx.restore();
+budgetTree: WtChartNode[] = [
+  {
+    name: 'วิชาการ',
+    children: [
+      { name: 'คณิต', value: 900000 },
+      { name: 'วิทย์', children: [{ name: 'ฟิสิกส์', value: 420000 }, { name: 'เคมี', value: 380000 }, { name: 'ชีวะ', value: 300000 }] },
+      { name: 'ภาษา', value: 650000 },
+    ],
   },
+  // …
+];
+budget: WtChartSeries[] = [{ name: 'งบประมาณ', data: this.budgetTree }];`,
+    unit: `travel = ['เดิน', 'จักรยาน', 'รถรับส่ง', 'รถผู้ปกครอง', 'รถสาธารณะ'];
+travelCounts: WtChartSeries[] = [{ name: 'การเดินทางมาโรงเรียน', data: [120, 85, 210, 340, 95] }];`,
+    slope: `yearScores: WtChartSeries[] = [
+  { name: 'คณิตศาสตร์', data: [52, 61] },
+  { name: 'วิทยาศาสตร์', data: [58, 63] },
+  { name: 'ภาษาไทย', data: [66, 64] },
+  { name: 'ภาษาอังกฤษ', data: [45, 54] },
+  { name: 'สังคมศึกษา', data: [60, 60] },
+];`,
+    treemap: `departments = ['บุคลากร', 'วิชาการ', 'อาคารสถานที่', 'กิจการนักเรียน', 'เทคโนโลยี', 'งบกลาง'];
+budgets: WtChartSeries[] = [{ name: 'งบประมาณ', data: [4800000, 3200000, 2100000, 1400000, 1100000, 900000] }];`,
+    annotations: `import { WtChartAnnotations } from 'wiratheme/chart';
+
+notes: WtChartAnnotations = {
+  y: [{ value: 20000, to: 26000, label: 'ช่วงเป้าหมาย', color: '#16a34a' }],
+  x: [{ at: 'เม.ย.', to: 'พ.ค.', label: 'ปิดภาคเรียน' }],
+  points: [{ at: 'มิ.ย.', value: 30400, label: 'สูงสุด' }],
 };`,
-    refresh: `import { ChartData } from 'chart.js';
-import { WtChart } from 'wiratheme/chart';
-
-attendance: ChartData<'line'> = {
-  labels: ['สัปดาห์ 1', 'สัปดาห์ 2', 'สัปดาห์ 3', 'สัปดาห์ 4', 'สัปดาห์ 5'],
-  datasets: [{ label: 'นักเรียนที่มาเรียน', data: [1180, 1204, 1192, 1215, 1198], borderColor: '#10b981', tension: 0.3 }],
+    toolbar: `days30 = Array.from({ length: 30 }, (_, i) => String(i + 1));
+daily: WtChartSeries[] = [{ name: 'ผู้เข้าชมรายวัน', data: [/* 30 values */] }];
+zoomed: WtChartZoomEvent | null = null;`,
+    chartjs: `data = {
+  labels: ['ม.ค.', 'ก.พ.', 'มี.ค.'],
+  datasets: [
+    { label: 'รายรับ', data: [42, 38, 51], backgroundColor: '#0f766e' },
+    { label: 'รายจ่าย', data: [31, 29, 34], backgroundColor: '#f59e0b' },
+  ],
 };
-
-addWeek(chart: WtChart): void {
-  // แก้ data ที่เดิม แล้วสั่งวาดใหม่
-  const week = this.attendance.labels!.length + 1;
-  this.attendance.labels!.push('สัปดาห์ ' + week);
-  this.attendance.datasets[0].data.push(1150 + ((week * 37) % 80));
-  chart.refresh();
-}`,
+options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } };`,
+  },
+  css: {
+    sparkline: `.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1rem; }
+.kpi { display: grid; gap: 0.25rem; padding: 1rem; border: 1px solid var(--wt-border); border-radius: var(--wt-radius-lg); }
+.kpi strong { font-size: 1.5rem; }`,
   },
   api: [
     {
-      id: 'api-inputs',
-      title: 'Inputs',
-      note: {
-        th: 'เปลี่ยน type, data หรือ options เป็นค่าใหม่เมื่อไหร่ กราฟสร้างใหม่ทั้งหมด',
-        en: 'A new type, data or options value rebuilds the chart.',
-      },
+      id: 'api-data',
+      title: { th: 'Inputs · ข้อมูล', en: 'Inputs · data' },
       rows: [
-        row('type', "'bar' | 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar' | 'bubble' | 'scatter'", "'bar'", 'ชนิดกราฟ', 'Chart type'),
-        row('data', 'ChartData', undefined, '{ labels, datasets } ของ Chart.js (แก้ที่เดิมแล้วเรียก refresh())', "Chart.js's { labels, datasets } (after changes in place, call refresh())"),
-        row('options', 'ChartOptions', undefined, 'options ของ Chart.js', 'Chart.js options'),
-        row('plugins', 'Plugin[]', '[]', 'ปลั๊กอินของ Chart.js สำหรับกราฟนี้', 'Chart.js plugins for this chart'),
-        row('width · height', 'string', undefined, "เช่น '480px', '100%' · มี height แล้วกราฟ responsive กว้างเต็มกล่องที่ความสูงนั้น", "e.g. '480px', '100%' · with a height, a responsive chart fills the width at that height"),
-        row('responsive', 'boolean', 'true', 'ปรับขนาดตามกล่อง (false = ขนาดตายตัว)', 'Resize with the container (false = fixed size)'),
-        row('ariaLabel · ariaLabelledBy', 'string', undefined, 'ชื่อของกราฟ (canvas เป็น role="img")', 'Name of the chart (the canvas is role="img")'),
-        row('styleClass · style', 'string · object', undefined, 'class / style ของกล่องกราฟ', 'Chart box class / style'),
+        row(
+          'type',
+          "'bar' | 'line' | 'area' | 'pie' | 'doughnut' | 'polarArea' | 'radialBar' | 'radar' | 'scatter' | 'heatmap' | 'treemap' | 'stream' | 'waterfall' | 'dumbbell' | 'timeline' | 'funnel' | 'boxplot' | 'histogram' | 'sunburst' | 'unit' | 'slope'",
+          "'bar'",
+          'แบบของกราฟ',
+          'Kind of chart'
+        ),
+        row('variant', 'string', undefined, 'ลักษณะของแต่ละแบบ (ดูในแต่ละหัวข้อ เช่น heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')', 'The look of a kind (see each section, e.g. heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')'),
+        row('swap', "boolean | WtChartType[]", undefined, '(Beta) ปุ่มสลับแบบกราฟ: true คือทุกแบบที่ข้อมูลแสดงได้', '(Beta) A type switcher: true offers every kind the data can be drawn as'),
+        row('bins', 'number', 'auto', 'จำนวนช่วงของฮิสโตแกรม', 'Histogram bins'),
+        row('labels', 'string[]', undefined, 'ป้ายของแกน (ชิ้นของวงกลม)', 'Axis labels (pie slices)'),
+        row('series', 'WtChartSeries[]', undefined, '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }', '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }'),
+        row('data · options', 'Chart.js data · options', undefined, 'ข้อมูลแบบ Chart.js แทน labels / series', 'Chart.js-shaped data instead of labels / series'),
+      ],
+    },
+    {
+      id: 'api-look',
+      title: { th: 'Inputs · หน้าตา', en: 'Inputs · look' },
+      rows: [
+        row('title · subtitle', 'string', undefined, 'หัวเรื่องเหนือกราฟ', 'Heading above the chart'),
+        row('height', 'number | string', "'320px'", 'ความสูงของพื้นที่วาด (วงกลม 280px)', 'Height of the drawing (pie 280px)'),
+        row('legend', "'top' | 'bottom' | 'right' | 'none'", "'bottom' (วงกลม 'right')", 'ตำแหน่ง legend', 'Where the legend goes'),
+        row('font · fontSize', 'string · number', 'ฟอนต์ของธีม · 12', 'ฟอนต์ของทุกข้อความในกราฟ', 'Font of every text in the chart'),
+        row('horizontal · stacked · smooth', BOOL, 'false', 'แท่งแนวนอน · ซ้อน · เส้นโค้ง', 'Bars across · stacked · smooth lines'),
+        row('curve', "'straight' | 'smooth' | 'step'", "'straight'", 'รูปแบบเส้น (ชนะ smooth)', 'How lines go from point to point (wins over smooth)'),
+        row('gradient', BOOL, 'true', 'พื้นที่ใต้เส้นไล่สีจางลง', 'Areas fade down from the line’s colour'),
+        row('sparkline', BOOL, 'false', 'กราฟจิ๋ว ไม่มีแกน เส้นตาราง และ legend (สูง 48px)', 'A small chart with no axes, grid or legend (48px tall)'),
+        row('startAngle · endAngle', 'number', '0 · 360', 'มุมเริ่มและจบของวงกลม โดนัท และ radial bar (-90 · 90 คือครึ่งวง)', 'Where pies, doughnuts and radial bars start and end (-90 · 90 is a half circle)'),
+        row('colorRanges', '{ from, to, color, name? }[]', undefined, 'สีของ heatmap ตามช่วงค่า', 'Heatmap colours by value range'),
+        row('toolbar', BOOL, 'false', 'ปุ่มซูมและดาวน์โหลด PNG / SVG / CSV', 'Zoom buttons and PNG / SVG / CSV download'),
+        row('zoom', BOOL, 'toolbar', 'ลากบนกราฟเพื่อซูม (แท่ง เส้น พื้นที่)', 'Drag across to zoom (bar, line, area)'),
+        row('group', 'string', undefined, 'กราฟในกลุ่มเดียวกันแสดง tooltip พร้อมกัน', 'Charts in one group show the tooltip together'),
+        row('fileName', 'string', "'chart'", 'ชื่อไฟล์ที่ดาวน์โหลดจากแถบเครื่องมือ', 'Name of the toolbar’s downloads'),
+        row('showValues · points · grid', BOOL, 'false · auto · true', 'ค่าบนกราฟ · จุดบนเส้น · เส้นตาราง', 'Values on the marks · dots on lines · grid lines'),
+        row('colors', 'string[]', 'theme', 'สีของชุดที่ไม่ได้กำหนดสี', 'Colours for series without one'),
+        row('barRadius · cutout', 'number', '4 · 0.62', 'มุมมนของแท่ง (px) · ขนาดรูโดนัท', 'Rounded bar ends (px) · doughnut hole'),
+        row('centerValue · centerLabel', 'string', 'ผลรวม · รวม', 'ข้อความกลางโดนัท', 'Text in the doughnut’s middle'),
+        row('tooltip · animate', BOOL, 'true', 'tooltip · การเคลื่อนไหว', 'Tooltip · animation'),
+        row('emptyMessage', 'string', 'locale', 'ข้อความเมื่อไม่มีข้อมูล', 'Shown when there is no data'),
+        row('ariaLabel', 'string', 'title', 'ชื่อของกราฟสำหรับโปรแกรมอ่านจอ', 'The chart’s name for screen readers'),
+        STYLE_ROW,
+      ],
+    },
+    {
+      id: 'api-axes',
+      title: { th: 'Inputs · แกนและตัวเลข', en: 'Inputs · axes and numbers' },
+      rows: [
+        row('format · rightFormat', "'number' | 'integer' | 'percent' | 'currency' | 'compact' | (v) => string", "'number'", 'รูปแบบตัวเลข (แกนซ้าย / ขวา tooltip ค่าบนกราฟ)', 'How numbers read (left / right axis, tooltip, labels)'),
+        row('currency · decimals · prefix · suffix · lang', 'string · number', "'THB'", 'สกุลเงิน · ทศนิยม · ข้อความหน้า / หลัง · ภาษาของตัวเลข', 'Currency · decimals · text before / after · language of numbers'),
+        row('min · max · beginAtZero', 'number · boolean', 'auto', 'ช่วงของแกนค่า', 'Value axis range'),
+        row('rightMin · rightMax', 'number', 'auto', 'ช่วงของแกนขวา', 'Right axis range'),
+        row('xTitle · yTitle · y2Title', 'string', undefined, 'ชื่อแกน', 'Axis titles'),
+        row('referenceLines', '{ value, to?, label?, color?, axis?, dashed? }[]', undefined, 'เส้นอ้างอิงที่ค่าหนึ่ง (to: แถบ)', 'Lines at given values (to: a band)'),
+        row('annotations', '{ y?, x?, points? }', undefined, 'เส้นและแถบที่ค่าหรือป้าย และจุดที่มีป้ายชื่อ', 'Lines and bands at values or labels, and labelled points'),
       ],
     },
     {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onDataSelect', 'WtChartDataSelectEvent', undefined, 'คลิกที่แท่ง จุด หรือชิ้น', 'A bar, point or slice was clicked')],
+      rows: [
+        row('pointClick', 'WtChartClickEvent', undefined, '{ series, seriesName, index, label, value, originalEvent }', '{ series, seriesName, index, label, value, originalEvent }'),
+        row('seriesToggle', 'WtChartToggleEvent', undefined, '{ index, name, hidden } เมื่อ legend ซ่อน / แสดง', '{ index, name, hidden } when the legend hides / shows'),
+        row('zoomChange', 'WtChartZoomEvent | null', undefined, '{ from, to } ช่วงป้ายที่ซูม (null: ดูทั้งหมด)', '{ from, to } labels zoomed into (null: all)'),
+        row('typeChange', 'WtChartType', undefined, 'แบบที่เลือกจากปุ่มสลับแบบกราฟ', 'The kind picked in the type switcher'),
+      ],
     },
     {
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน template reference เช่น #c="wtChart" หรือ @ViewChild(WtChart)', en: 'Call them through a template reference such as #c="wtChart", or @ViewChild(WtChart).' },
+      note: { th: 'เรียกผ่าน #c="wtChart"', en: 'Call them through #c="wtChart".' },
       rows: [
-        row('refresh()', 'void', undefined, 'วาดใหม่ด้วย data ปัจจุบัน (หลังแก้ที่เดิม)', 'Redraw with the current data (after changes in place)'),
-        row('reinit()', 'void', undefined, 'สร้างกราฟใหม่ทั้งหมด', 'Build the chart again from scratch'),
-        row('getCanvas()', 'HTMLCanvasElement | null', undefined, 'canvas ของกราฟ', 'The chart canvas'),
-        row('getBase64Image()', 'string | null', undefined, 'กราฟเป็นรูป PNG แบบ data URL', 'The chart as a PNG data URL'),
-        row('chart', 'Chart | null', undefined, 'instance ของ Chart.js (property)', 'The Chart.js instance (a property)'),
+        row("download(fileName = 'chart', 'png' | 'svg' | 'csv')", 'Promise<void>', undefined, 'บันทึกเป็นไฟล์', 'Save as a file'),
+        row('toCSV()', 'string', undefined, 'ตัวเลขเป็น CSV แถวละป้าย คอลัมน์ละชุด', 'The numbers as CSV, a row per label and a column per series'),
+        row('toPNG(scale = 2, background?)', 'Promise<string>', undefined, 'PNG เป็น data URL', 'PNG as a data URL'),
+        row('toSVG()', 'string', undefined, 'SVG ที่ใส่สีและฟอนต์ไว้ในตัว', 'SVG with colours and fonts written in'),
+        row('refresh()', 'void', undefined, 'วาดใหม่ (หลังแก้ series ในที่เดิม)', 'Draw again (after changing series in place)'),
       ],
     },
-    {
-      id: 'api-types',
-      title: 'Types',
-      code: `import { WtChartDataSelectEvent } from 'wiratheme/chart';
-
-interface WtChartDataSelectEvent {
-  originalEvent: MouseEvent;
-  element: unknown;     // ของ Chart.js: { datasetIndex, index, element }
-  dataset: unknown[];   // ทุก element ของ dataset ที่คลิก
-}`,
-    },
   ],
-  themingNote: {
-    th: 'wt-chart ไม่มี token ของตัวเอง ตอนสร้างกราฟจะอ่านตัวแปรด้านล่างแล้วใช้เป็นฟอนต์ของกราฟ (ภาษาไทยด้วย) สีตัวอักษร และสีเส้น เว้นแต่แอปตั้ง <code>Chart.defaults</code> เองหรือส่ง <code>font</code> / <code>color</code> / <code>borderColor</code> มาใน options ส่วนสีของ dataset เป็นค่าของ Chart.js ใช้สีของธีมได้โดยอ่านตัวแปร เช่น <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wt-primary-color\')</code> (ดูหัวข้อสีจากธีมในแท็บตัวอย่าง) และสร้าง data ใหม่หลังเปลี่ยนธีม',
-    en: 'wt-chart has no tokens of its own. When it builds a chart it reads the variables below and uses them for the chart\'s font (Thai included), text colour and line colour, unless the app set <code>Chart.defaults</code> itself or passes <code>font</code> / <code>color</code> / <code>borderColor</code> in the options. Dataset colours are Chart.js values: use the theme\'s by reading a variable, e.g. <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wt-primary-color\')</code> (see Theme colours on the Examples tab), and build new data after a theme change.',
-  },
   tokens: [
-    tok('--wt-font-family', 'ฟอนต์ของกราฟ (ป้าย แกน คำอธิบาย)', 'Chart font (labels, axes, legend)'),
-    tok('--wt-text-muted', 'สีตัวอักษรของกราฟ', 'Chart text colour'),
-    tok('--wt-border', 'สีเส้นตารางและเส้นขอบ', 'Grid and border line colour'),
-    tok('--wt-primary-color', 'สีหลัก ใช้ใน dataset ได้ (อ่านด้วย getComputedStyle)', 'The primary colour, for datasets (read it with getComputedStyle)'),
+    tok('--wt-chart-1 … --wt-chart-10', 'สีของชุดข้อมูลตามลำดับ (1 คือสีหลักของธีม)', 'Series colours in order (1 is the theme’s primary)'),
+    tok('--wt-chart-font-family · -font-size', 'ฟอนต์และขนาดของข้อความในกราฟ', 'Font and size of the chart’s text'),
+    tok('--wt-chart-text · -title-color · -title-size · -title-weight', 'สีข้อความ · หัวเรื่อง', 'Text colour · heading'),
+    tok('--wt-chart-grid · -axis · -crosshair', 'เส้นตาราง · เส้นศูนย์ · เส้นตามเมาส์', 'Grid · zero line · pointer guide'),
+    tok('--wt-chart-line-width · -area-opacity · -dot-fill', 'ความหนาของเส้น · ความทึบของพื้นที่ · สีในจุด', 'Line width · area opacity · dot fill'),
+    tok('--wt-chart-dim-opacity', 'ความจางของชุดอื่นเมื่อชี้ที่ legend', 'How faint other series get while one is pointed at'),
+    tok('--wt-chart-value-color · -value-inside-color · -slice-border', 'ค่าบนกราฟ · ค่าบนชิ้นวงกลม · ขอบชิ้น', 'Values · values on slices · slice edges'),
+    tok('--wt-chart-reference-color · -center-size · -legend-color', 'เส้นอ้างอิง · ข้อความกลางโดนัท · legend', 'Reference lines · doughnut middle · legend'),
+    tok('--wt-chart-tooltip-bg · -color · -border · -radius · -shadow · -padding', 'tooltip', 'Tooltip'),
+    tok('--wt-chart-gradient-from · -gradient-to', 'ความทึบบนสุดและล่างสุดของพื้นที่ไล่สี', 'Opacity at the top and bottom of a fading area'),
+    tok('--wt-chart-track', 'รางของ radial bar', 'Radial bar track'),
+    tok('--wt-chart-band-opacity · -mark-color', 'ความทึบของแถบคำอธิบาย · สีจุดที่มีป้าย', 'Annotation band opacity · marked point colour'),
+    tok('--wt-chart-selection · -toolbar-color', 'กรอบที่ลากเพื่อซูม · ปุ่มในแถบเครื่องมือ', 'Zoom selection · toolbar buttons'),
+    tok('--wt-chart-up · -down · -total · -muted', 'เพิ่มขึ้น · ลดลง · ยอดรวม (waterfall, ดัมเบล, ความชัน) · เส้นต่อและข้อความรอง', 'Up · down · totals (waterfall, dumbbell, slope) · joints and quiet text'),
+    tok('--wt-chart-gap', 'ระยะระหว่างหัวเรื่อง กราฟ และ legend', 'Gap between heading, chart and legend'),
   ],
 };

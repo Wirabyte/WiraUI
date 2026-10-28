@@ -40,16 +40,16 @@ export default defineConfig({
       ignoreSnapshots: true,
       use: { ...devices['Desktop Safari'], viewport: { width: 1000, height: 800 }, baseURL: url('playground-v3') },
     },
-    { name: 'docs', testMatch: /(docs|studio)\.spec\.ts$/, use: { baseURL: url('docs') } },
+    { name: 'docs', testMatch: /(docs|studio|excel|additions)\.spec\.ts$/, use: { baseURL: url('docs') } },
     // The docs site must work in all three engines (scroll areas, sticky headers, layout).
     {
       name: 'docs-firefox',
-      testMatch: /(docs|studio)\.spec\.ts$/,
+      testMatch: /(docs|studio|excel|additions)\.spec\.ts$/,
       use: { ...devices['Desktop Firefox'], viewport: { width: 1000, height: 800 }, baseURL: url('docs') },
     },
     {
       name: 'docs-webkit',
-      testMatch: /(docs|studio)\.spec\.ts$/,
+      testMatch: /(docs|studio|excel|additions)\.spec\.ts$/,
       use: { ...devices['Desktop Safari'], viewport: { width: 1000, height: 800 }, baseURL: url('docs') },
     },
   ],

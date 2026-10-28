@@ -11,7 +11,7 @@ const ORDERS_TS = `orders = [
 export const TIMELINE_DOC: ComponentDoc = {
   id: 'timeline',
   title: 'Timeline',
-  group: 'Display',
+  group: 'Data',
   entry: 'timeline',
   standalone: 'WtTimeline',
   module: 'WtTimelineModule',

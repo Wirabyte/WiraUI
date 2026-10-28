@@ -8,7 +8,7 @@ import { WtPaginatorModule } from 'wiratheme-v1/paginator';
 import { WtMenubarModule } from 'wiratheme-v1/menubar';
 import { WtPanelMenuModule } from 'wiratheme-v1/panelmenu';
 import { WtStepsModule } from 'wiratheme-v1/steps';
-import { WtChartModule } from 'wiratheme-v1/chart';
+import { WtChartJsModule } from 'wiratheme-v1/chartjs';
 import { WtImageModule } from 'wiratheme-v1/image';
 import { WtAutoCompleteModule } from 'wiratheme-v1/autocomplete';
 import { WtMenuModule } from 'wiratheme-v1/menu';
@@ -49,11 +49,16 @@ import { WtCarouselModule } from 'wiratheme-v1/carousel';
 import { WtSplitterModule } from 'wiratheme-v1/splitter';
 import { WtOrganizationChartModule } from 'wiratheme-v1/organizationchart';
 import { WtKnobModule } from 'wiratheme-v1/knob';
+import { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } from 'wiratheme-v1/excel';
+import { WtEmptyStateModule } from 'wiratheme-v1/emptystate';
+import { WtResultModule } from 'wiratheme-v1/result';
+import { WtErrorPageModule } from 'wiratheme-v1/errorpage';
+import { WtThaiModule } from 'wiratheme-v1/thai';
 import { WtInputOtpModule } from 'wiratheme-v1/inputotp';
 import { addEdge, applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme-v1/flow';
 import { WtMeterGroupModule } from 'wiratheme-v1/metergroup';
 import { WtValidationModule, WtValidators } from 'wiratheme-v1/validation';
-import { WtDialogModule } from 'wiratheme-v1/dialog';
+import { WtDialogModule, WtDialogService } from 'wiratheme-v1/dialog';
 import { WtAlert, WtAlertModule, WtAlertService } from 'wiratheme-v1/alert';
 import { WtConfirmationService, WtConfirmDialogModule } from 'wiratheme-v1/confirmdialog';
 import { WtMessageService, WtToastModule } from 'wiratheme-v1/toast';
@@ -90,7 +95,7 @@ import { WtInputTextModule } from 'wiratheme-v1/inputtext';
 import { WtRadioButtonModule } from 'wiratheme-v1/radiobutton';
 import { WtTextareaModule } from 'wiratheme-v1/textarea';
 import { WtToggleSwitchModule } from 'wiratheme-v1/toggleswitch';
-import { DOCS_FLOW, DOCS_OVERLAYS, DOCS_TERMINAL, DOCS_VALIDATORS, DocsOverlays } from '../../core/overlays';
+import { DOCS_DIALOGS, DOCS_EXCEL, DOCS_FLOW, DOCS_OVERLAYS, DOCS_TERMINAL, DOCS_VALIDATORS, DocsOverlays } from '../../core/overlays';
 import { DocsSharedModule } from '../../shared/docs-shared-module';
 import { DocsPagesModule } from '../../shared/pages/docs-pages-module';
 import { versionRoutes } from '../shared/version-routes';
@@ -139,7 +144,7 @@ import {
   MenubarPageV1,
   PanelMenuPageV1,
   StepsPageV1,
-  ChartPageV1,
+  ChartJsPageV1,
   ImagePageV1,
   AutoCompletePageV1,
   MenuPageV1,
@@ -183,6 +188,12 @@ import {
   KnobPageV1,
   InputOtpPageV1,
   FlowPageV1,
+  ExcelPageV1,
+  EmptyStatePageV1,
+  ResultPageV1,
+  ErrorPagePageV1,
+  ThaiPageV1,
+  PickStudentV1,
   TextareaPageV1,
   ToggleSwitchPageV1,
 } from './pages-v1';
@@ -236,7 +247,7 @@ import { THEME_V1 } from './theme-v1';
     MenubarPageV1,
     PanelMenuPageV1,
     StepsPageV1,
-    ChartPageV1,
+    ChartJsPageV1,
     ImagePageV1,
     AutoCompletePageV1,
     MenuPageV1,
@@ -280,6 +291,12 @@ import { THEME_V1 } from './theme-v1';
     KnobPageV1,
     InputOtpPageV1,
     FlowPageV1,
+    ExcelPageV1,
+    EmptyStatePageV1,
+    ResultPageV1,
+    ErrorPagePageV1,
+    ThaiPageV1,
+    PickStudentV1,
   ],
   imports: [
     FormsModule,
@@ -331,7 +348,7 @@ import { THEME_V1 } from './theme-v1';
     WtMenubarModule,
     WtPanelMenuModule,
     WtStepsModule,
-    WtChartModule,
+    WtChartJsModule,
     WtImageModule,
     WtAutoCompleteModule,
     WtMenuModule,
@@ -372,6 +389,10 @@ import { THEME_V1 } from './theme-v1';
     WtSplitterModule,
     WtOrganizationChartModule,
     WtKnobModule,
+    WtEmptyStateModule,
+    WtResultModule,
+    WtErrorPageModule,
+    WtThaiModule,
     WtInputOtpModule,
     WtFlowModule,
     RouterModule.forChild(
@@ -422,7 +443,7 @@ import { THEME_V1 } from './theme-v1';
         menubar: MenubarPageV1,
         panelmenu: PanelMenuPageV1,
         steps: StepsPageV1,
-        chart: ChartPageV1,
+        chartjs: ChartJsPageV1,
         image: ImagePageV1,
         autocomplete: AutoCompletePageV1,
         menu: MenuPageV1,
@@ -466,6 +487,11 @@ import { THEME_V1 } from './theme-v1';
         knob: KnobPageV1,
         inputotp: InputOtpPageV1,
         flow: FlowPageV1,
+        excel: ExcelPageV1,
+        emptystate: EmptyStatePageV1,
+        result: ResultPageV1,
+        errorpage: ErrorPagePageV1,
+        thai: ThaiPageV1,
       })
     ),
   ],
@@ -485,6 +511,11 @@ import { THEME_V1 } from './theme-v1';
     { provide: DOCS_TERMINAL, useExisting: WtTerminalService },
     // The Flow demos that apply changes themselves use this version's helpers.
     { provide: DOCS_FLOW, useValue: { applyNodeChanges, applyEdgeChanges, addEdge } },
+    // The Excel demos build files with this version's wiratheme/excel.
+    { provide: DOCS_EXCEL, useValue: { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } },
+    // The Dialog page's service sample: this module's WtDialogService opens this version's picker.
+    WtDialogService,
+    { provide: DOCS_DIALOGS, useFactory: () => { const dialogs = inject(WtDialogService); return { pickStudent: (config: object) => dialogs.open(PickStudentV1, config).result }; } },
     {
       provide: DOCS_OVERLAYS,
       useFactory: (): DocsOverlays => ({

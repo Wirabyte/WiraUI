@@ -50,3 +50,19 @@ export interface DocsFlowKit {
 }
 
 export const DOCS_FLOW = new InjectionToken<DocsFlowKit>('DOCS_FLOW');
+
+/** The Excel functions of the version on screen (wiratheme/excel). */
+export interface DocsExcelKit {
+  downloadExcel(source: any, options?: any): Promise<void>;
+  downloadRowsAsExcel(rows: readonly any[], columns: readonly any[], options?: any, download?: any): Promise<void>;
+  excelSheetFromRows(rows: readonly any[], columns: readonly any[], options?: any): any;
+}
+
+export const DOCS_EXCEL = new InjectionToken<DocsExcelKit>('DOCS_EXCEL');
+
+/** Opens the version's student picker through its WtDialogService; resolves with the student, or undefined. */
+export interface DocsDialogKit {
+  pickStudent(config: any): Promise<unknown>;
+}
+
+export const DOCS_DIALOGS = new InjectionToken<DocsDialogKit>('DOCS_DIALOGS');

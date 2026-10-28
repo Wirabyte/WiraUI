@@ -6,7 +6,7 @@ const BOOL = 'boolean';
 export const TOAST_DOC: ComponentDoc = {
   id: 'toast',
   title: 'Toast',
-  group: 'Messages',
+  group: 'Feedback',
   entry: 'toast',
   standalone: 'WtToast, WtTemplate',
   module: 'WtToastModule',
@@ -423,7 +423,7 @@ owner = '';`,
 export const ANIMATE_DOC: ComponentDoc = {
   id: 'animate',
   title: 'Animate on scroll',
-  group: 'Misc',
+  group: 'Helpers',
   entry: 'animate',
   standalone: 'WtAnimate',
   module: 'WtAnimateModule',

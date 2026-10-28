@@ -77,7 +77,7 @@ const MENU_WORDS = {
 export const TIEREDMENU_DOC: ComponentDoc = {
   id: 'tieredmenu',
   title: 'TieredMenu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'tieredmenu',
   standalone: 'WtTieredMenu',
   module: 'WtTieredMenuModule',
@@ -207,7 +207,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
 export const CONTEXTMENU_DOC: ComponentDoc = {
   id: 'contextmenu',
   title: 'ContextMenu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'contextmenu',
   standalone: 'WtContextMenu',
   module: 'WtContextMenuModule',

@@ -41,7 +41,7 @@ items: MenuItem[] = [
 export const PANELMENU_DOC: ComponentDoc = {
   id: 'panelmenu',
   title: 'PanelMenu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'panelmenu',
   standalone: 'WtPanelMenu',
   module: 'WtPanelMenuModule',

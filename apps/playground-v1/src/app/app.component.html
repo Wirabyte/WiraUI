@@ -418,10 +418,10 @@
     <wt-timeline id="tl-h" [value]="steps" layout="horizontal" align="top">
       <ng-template #content let-s>{{ s.status }}</ng-template>
     </wt-timeline>
-    <wt-chart id="ch" #chart type="bar" [data]="chartData" [options]="chartOptions" height="240px" ariaLabel="คะแนนเฉลี่ย"
-      (onDataSelect)="note('chart:' + $any($event.element).index)"></wt-chart>
+    <wt-chartjs id="ch" #chart type="bar" [data]="chartData" [options]="chartOptions" height="240px" ariaLabel="คะแนนเฉลี่ย"
+      (onDataSelect)="note('chart:' + $any($event.element).index)"></wt-chartjs>
     <button type="button" id="ch-pie" (click)="chartType = chartType === 'bar' ? 'pie' : 'bar'">{{ chartType }}</button>
-    <wt-chart id="ch-2" [type]="chartType" [data]="chartData" width="320px" height="200px"></wt-chart>
+    <wt-chartjs id="ch-2" [type]="chartType" [data]="chartData" width="320px" height="200px"></wt-chartjs>
     <wt-image id="img" [src]="photo" alt="ภาพโรงเรียน" width="160" [preview]="true" (onImageError)="note('img:error')"></wt-image>
     <wt-image id="img-broken" src="/does-not-exist.png" alt="ไม่มีภาพ" width="40" (onImageError)="note('img:error')"></wt-image>
     <wt-messages id="msgs" [(value)]="msgs" [enableService]="false"></wt-messages>

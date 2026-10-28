@@ -31,6 +31,17 @@ export interface DocSectionText {
   text?: Text;
 }
 
+/** A library the app installs itself before the component works: shown with its command at the top of the page. */
+export interface DocRequirement {
+  /** The library as people know it: 'Chart.js'. */
+  name: string;
+  /** The command: 'npm install chart.js'. */
+  install: string;
+  url?: string;
+  /** Which versions, and what for. */
+  note?: Text;
+}
+
 export interface ComponentDoc extends ImportNames {
   id: string;
   title: string;
@@ -56,4 +67,6 @@ export interface ComponentDoc extends ImportNames {
   themingNote?: Text;
   /** Component tokens settable from TypeScript: `components.<key>` in overrides. */
   overrides?: string;
+  /** Libraries the app installs itself for this component. */
+  requires?: DocRequirement[];
 }

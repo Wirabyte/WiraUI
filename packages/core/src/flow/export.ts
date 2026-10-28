@@ -1,8 +1,8 @@
 /** wt-flow: saving and loading a diagram as JSON, and drawing it as a standalone SVG. */
-import { collectMarkers, FLOW_MARKER_REF, FLOW_MARKER_VIEWBOX, getEdgeEnds, markerId, markerShape, normalizeMarker } from './edges';
+import { collectMarkers, FLOW_MARKER_REF, FLOW_MARKER_VIEWBOX, getEdgeEnds, markerId, markerLength, markerShape, normalizeMarker } from './edges';
 import { absolutePositions, nodeLookup, nodeSize, sortNodesParentsFirst } from './graph';
 import type { FlowSizeLookup } from './graph';
-import { fmt, getEdgePath } from './paths';
+import { fmt, getEdgePathWithRoom } from './paths';
 import { FLOW_DEFAULT_VIEWPORT, normalizeViewport } from './viewport';
 import type { FlowEdge, FlowJSON, FlowNode, FlowNodeHandles, FlowViewport } from './types';
 
@@ -183,7 +183,8 @@ export function flowToSvg(nodes: readonly FlowNode[], edges: readonly FlowEdge[]
       { node: t, rect: rects.get(t.id) as { x: number; y: number; width: number; height: number }, handles: options.handles ? options.handles.get(t.id) : null }
     );
     const type = e.type || options.defaultEdgeType || 'default';
-    const [path, lx, ly] = getEdgePath(type, ends, e.pathOptions || {});
+    // Curved edges leave room for their arrowheads, as on screen.
+    const [path, lx, ly] = getEdgePathWithRoom(type, ends, e.pathOptions || {}, { start: markerLength(e.markerStart), end: markerLength(e.markerEnd) });
     for (const [px, py] of [
       [ends.sourceX, ends.sourceY],
       [ends.targetX, ends.targetY],

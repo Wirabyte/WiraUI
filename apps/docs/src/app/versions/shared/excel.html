@@ -1,0 +1,46 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-code [code]="$any(code['import'])" lang="ts"></docs-code>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']">
+        <wt-button id="d-xl-basic" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="download()"></wt-button>
+        <span class="docs-demo-output">{{ tx('ไฟล์ล่าสุด') }}: <code id="d-xl-file">{{ lastFile || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="styles" [section]="sec['styles']">
+      <docs-demo [html]="code['styles']" [ts]="ts['styles']">
+        <wt-button id="d-xl-styles" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="downloadStyles()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="merge" [section]="sec['merge']">
+      <docs-demo [html]="code['merge']" [ts]="ts['merge']">
+        <wt-button id="d-xl-merge" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="downloadTimetable()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="formulas" [section]="sec['formulas']">
+      <docs-demo [html]="code['formulas']" [ts]="ts['formulas']">
+        <wt-button id="d-xl-formulas" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="downloadReceipt()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="report" [section]="sec['report']">
+      <docs-demo [html]="code['report']" [ts]="ts['report']">
+        <wt-button id="d-xl-report" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="downloadReport()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="workbook" [section]="sec['workbook']">
+      <docs-demo [html]="code['workbook']" [ts]="ts['workbook']">
+        <wt-button id="d-xl-workbook" [label]="tx('ดาวน์โหลด')" icon="wi wi-file-excel" (onClick)="downloadWorkbook()"></wt-button>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="limits" [section]="sec['limits']"></docs-section>
+  </ng-template>
+</docs-component-page>

@@ -13,6 +13,7 @@ const WIRAICON: Record<string, string> = {
   palette: 'palette',
   rocket: 'rocket',
   grid: 'th-large',
+  layout: 'objects-column',
   chevronDown: 'chevron-down',
   chevronRight: 'chevron-right',
   chevronLeft: 'chevron-left',

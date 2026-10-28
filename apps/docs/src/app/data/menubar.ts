@@ -35,7 +35,7 @@ items: MenuItem[] = [
 export const MENUBAR_DOC: ComponentDoc = {
   id: 'menubar',
   title: 'Menubar',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'menubar',
   standalone: 'WtMenubar',
   module: 'WtMenubarModule',

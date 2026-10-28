@@ -7,7 +7,7 @@ import { DocsToc } from '../core/docs-toc';
 import { DocsThemeReveal } from '../core/theme-reveal';
 import { DocsI18n } from '../core/i18n';
 import { UiKey } from '../core/ui-text';
-import { NAV, NAV_PAGES, navPageOf } from '../core/nav';
+import { navFor, navPageOf, navPagesFor } from '../core/nav';
 import { DOC_VERSIONS, DocVersionId, rememberVersion, versionOfUrl } from '../core/versions';
 
 const OPEN_STORE = 'wiratheme-docs-nav';
@@ -30,18 +30,19 @@ export class DocsLayout {
   protected readonly state = inject(DocsState);
   private readonly reveal = inject(DocsThemeReveal);
   protected readonly i18n = inject(DocsI18n);
-  protected readonly nav = NAV;
   protected readonly versions = DOC_VERSIONS;
 
   private readonly url = signal(this.router.url);
   protected readonly version = computed<DocVersionId>(() => versionOfUrl(this.url()) || 'v3');
+  /** The sidebar of the version on screen (pages it lacks, such as Chart in v1 / v2, are left out). */
+  protected readonly nav = computed(() => navFor(this.version()));
   /** Path after the version prefix, without query or fragment. */
   protected readonly path = computed(() => this.url().split(/[?#]/)[0].replace(/^\/v[123]\/?/, ''));
   private readonly toc = inject(DocsToc);
   /** The right-hand "On this page" column of wide screens: pages with sections, except the Studio (it needs the width). */
   protected readonly asideToc = computed(() => this.path() !== 'theming/studio' && this.toc.entries().length > 1);
   protected readonly pager = computed(() => {
-    const pages = NAV_PAGES.filter((p) => !p.soon);
+    const pages = navPagesFor(this.version()).filter((p) => !p.soon);
     const i = pages.findIndex((p) => p.path === this.path());
     return i < 0 ? { prev: null, next: null } : { prev: pages[i - 1] || null, next: pages[i + 1] || null };
   });
@@ -103,6 +104,12 @@ export class DocsLayout {
   protected switchTo(version: string): void {
     if (!version || version === this.version()) return;
     const url = this.router.url;
+    // A page the other version does not have: its introduction, which lists what it has.
+    const page = navPageOf(this.path());
+    if (page && page.since && Number(version.slice(1)) < page.since) {
+      this.router.navigateByUrl('/' + version + '/getting-started/introduction');
+      return;
+    }
     this.router.navigateByUrl(/^\/v[123]/.test(url) ? url.replace(/^\/v[123]/, '/' + version) : '/' + version);
   }
 

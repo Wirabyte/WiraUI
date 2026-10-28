@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { WtDialogConfig, WtDialogRef } from 'wiratheme/dialog';
 import {
   ButtonDemo,
   CardDemo,
@@ -32,6 +33,7 @@ import {
   InputNumberDemo,
   DatePickerDemo,
   DialogDemo,
+  PickStudentBase,
   AlertDemo,
   ConfirmDialogDemo,
   ToastDemo,
@@ -46,7 +48,7 @@ import {
   MenubarDemo,
   PanelMenuDemo,
   StepsDemo,
-  ChartDemo,
+  ChartJsDemo,
   ImageDemo,
   AutoCompleteDemo,
   MenuDemo,
@@ -95,6 +97,10 @@ import {
   TerminalDemo,
 } from '../shared/demos-extras';
 import { FlowDemo } from '../shared/demos-flow';
+import { ExcelDemo } from '../shared/demos-excel';
+import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
+import { ThaiDemo } from '../shared/demos-thai';
+import { ChartDemo } from '../shared/demos-chart';
 
 // Shared templates compiled against wiratheme@3 components (DocsV3Module imports the v1 modules).
 
@@ -236,8 +242,8 @@ export class PanelMenuPageV3 extends PanelMenuDemo {}
 @Component({ selector: 'docs-steps-v3', templateUrl: '../shared/steps.html', standalone: false })
 export class StepsPageV3 extends StepsDemo {}
 
-@Component({ selector: 'docs-chart-v3', templateUrl: '../shared/chart.html', standalone: false })
-export class ChartPageV3 extends ChartDemo {}
+@Component({ selector: 'docs-chartjs-v3', templateUrl: '../shared/chartjs.html', standalone: false })
+export class ChartJsPageV3 extends ChartJsDemo {}
 
 @Component({ selector: 'docs-image-v3', templateUrl: '../shared/image.html', standalone: false })
 export class ImagePageV3 extends ImageDemo {}
@@ -367,3 +373,29 @@ export class InputOtpPageV3 extends InputOtpDemo {}
 
 @Component({ selector: 'docs-flow-v3', templateUrl: '../shared/flow.html', standalone: false })
 export class FlowPageV3 extends FlowDemo {}
+
+@Component({ selector: 'docs-excel-v3', templateUrl: '../shared/excel.html', standalone: false })
+export class ExcelPageV3 extends ExcelDemo {}
+
+@Component({ selector: 'docs-emptystate-v3', templateUrl: '../shared/emptystate.html', standalone: false })
+export class EmptyStatePageV3 extends EmptyStateDemo {}
+
+@Component({ selector: 'docs-result-v3', templateUrl: '../shared/result.html', standalone: false })
+export class ResultPageV3 extends ResultDemo {}
+
+@Component({ selector: 'docs-errorpage-v3', templateUrl: '../shared/errorpage.html', standalone: false })
+export class ErrorPagePageV3 extends ErrorPageDemo {}
+
+@Component({ selector: 'docs-thai-v3', templateUrl: '../shared/thai.html', standalone: false })
+export class ThaiPageV3 extends ThaiDemo {}
+
+// wiratheme@3 only.
+@Component({ selector: 'docs-chart-v3', templateUrl: '../shared/chart.html', standalone: false })
+export class ChartPageV3 extends ChartDemo {}
+
+/** What the Dialog page's WtDialogService sample opens (this version's dialog ref and config). */
+@Component({ selector: 'docs-pick-student-v3', templateUrl: '../shared/dialog-pick.html', standalone: false })
+export class PickStudentV3 extends PickStudentBase {
+  protected readonly ref = inject(WtDialogRef);
+  protected readonly config = inject(WtDialogConfig);
+}

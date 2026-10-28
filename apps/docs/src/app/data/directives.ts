@@ -6,7 +6,7 @@ const BOOL = 'boolean';
 export const RIPPLE_DOC: ComponentDoc = {
   id: 'ripple',
   title: 'Ripple',
-  group: 'Misc',
+  group: 'Helpers',
   entry: 'ripple',
   standalone: 'WtRipple',
   module: 'WtRippleModule',

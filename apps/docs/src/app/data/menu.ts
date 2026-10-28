@@ -36,7 +36,7 @@ interface MenuItemCommandEvent {
 export const MENU_DOC: ComponentDoc = {
   id: 'menu',
   title: 'Menu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'menu',
   standalone: 'WtMenu',
   module: 'WtMenuModule',
@@ -354,7 +354,7 @@ logMenu(name: string): void {
 export const TABMENU_DOC: ComponentDoc = {
   id: 'tabmenu',
   title: 'TabMenu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'tabmenu',
   standalone: 'WtTabMenu',
   module: 'WtTabMenuModule',

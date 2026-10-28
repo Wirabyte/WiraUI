@@ -4,7 +4,7 @@ import { row, tok } from './doc-helpers';
 export const IMAGE_DOC: ComponentDoc = {
   id: 'image',
   title: 'Image',
-  group: 'Display',
+  group: 'Media',
   entry: 'image',
   standalone: 'WtImage',
   module: 'WtImageModule',

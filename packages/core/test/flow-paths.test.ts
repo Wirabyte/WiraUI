@@ -5,6 +5,8 @@ import {
   getBezierPath,
   getEdgeCenter,
   getEdgePath,
+  getEdgePathWithRoom,
+  markerLength,
   getSimpleBezierPath,
   getSmoothStepPath,
   getStepPath,
@@ -255,5 +257,36 @@ describe('flow paths: by edge type', () => {
   it('gives custom and missing types the bezier', () => {
     expect(getEdgePath('my-edge', ends)).toEqual(getBezierPath(ends));
     expect(getEdgePath(undefined, ends)).toEqual(getBezierPath(ends));
+  });
+});
+
+describe('room for arrowheads', () => {
+  const ends = { sourceX: 200, sourceY: 0, sourcePosition: 'bottom' as const, targetX: 0, targetY: 110, targetPosition: 'top' as const };
+
+  it('measures an arrowhead from the marker settings', () => {
+    expect(markerLength('arrowclosed')).toBeCloseTo((14 * 11) / 20 + 2);
+    expect(markerLength({ type: 'arrow', width: 20 })).toBeCloseTo(13);
+    expect(markerLength(null)).toBe(0);
+    expect(markerLength('dot' as never)).toBe(0);
+  });
+
+  it('ends a curve straight into the target along its handle, as long as the arrowhead', () => {
+    const [d, lx, ly] = getEdgePathWithRoom('default', ends, {}, { end: 10 });
+    // A curve to 10 px above the target, then straight down into it.
+    expect(d).toMatch(/^M200,0 C[^L]+ 0,100 L0,110$/);
+    expect(d.startsWith(getBezierPath({ ...ends, targetY: 100 })[0])).toBe(true);
+    // The label stays in the middle of the whole edge.
+    expect([lx, ly]).toEqual(getBezierPath(ends).slice(1, 3));
+    // At the source too.
+    const [both] = getEdgePathWithRoom('simplebezier', ends, {}, { start: 8, end: 8 });
+    expect(both).toMatch(/^M200,0 L200,8 C[^L]+ 0,102 L0,110$/);
+  });
+
+  it('leaves straight and right-angled edges, and never takes more than a third of a short edge', () => {
+    expect(getEdgePathWithRoom('smoothstep', ends, {}, { end: 10 })[0]).toBe(getEdgePath('smoothstep', ends)[0]);
+    expect(getEdgePathWithRoom('straight', ends, {}, { end: 10 })[0]).toBe(getEdgePath('straight', ends)[0]);
+    expect(getEdgePathWithRoom('default', ends, {}, {})[0]).toBe(getEdgePath('default', ends)[0]);
+    const short = { ...ends, targetX: 200, targetY: 15 };
+    expect(getEdgePathWithRoom('default', short, {}, { end: 20 })[0]).toMatch(/ 200,10 L200,15$/);
   });
 });

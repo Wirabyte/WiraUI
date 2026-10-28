@@ -610,6 +610,45 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="excel" [section]="sec['excel']">
+      <docs-demo [html]="code['excel']" [ts]="ts['excel']" layout="stack">
+        <wt-table #excelTable id="d-tbl-excel" [value]="local(excelStudents)" [columns]="local(excelColumns)" exportFilename="students">
+          <ng-template #caption>
+            <div class="docs-demo-actions">
+              <wt-button id="d-tbl-excel-plain" [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" (onClick)="exportExcel(excelTable)"></wt-button>
+              <wt-button
+                id="d-tbl-excel-report"
+                [label]="tx('รายงาน Excel')"
+                icon="wi wi-download"
+                severity="secondary"
+                [outlined]="true"
+                (onClick)="exportExcel(excelTable, excelReport())"
+              ></wt-button>
+            </div>
+          </ng-template>
+          <ng-template #header>
+            <tr>
+              <th>{{ tx('รหัส') }}</th>
+              <th>{{ tx('ชื่อ - สกุล') }}</th>
+              <th>{{ tx('ห้อง') }}</th>
+              <th>{{ tx('วันเกิด') }}</th>
+              <th>{{ tx('คะแนน') }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-s>
+            <tr>
+              <td>{{ s.code }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.room }}</td>
+              <td class="docs-table-nowrap">{{ thaiDate(s.birthDate) }}</td>
+              <td>{{ s.score }}</td>
+            </tr>
+          </ng-template>
+        </wt-table>
+        <span class="docs-demo-output">{{ tx('ไฟล์ล่าสุด') }}: <code id="d-tbl-excel-file">{{ lastExcel || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="reorder" [section]="sec['reorder']">
       <docs-demo [html]="code['reorder']" [ts]="ts['reorder']" layout="stack">
         <wt-table id="d-tbl-reorder" [value]="reorderRows" (onRowReorder)="rowMoved($event)">

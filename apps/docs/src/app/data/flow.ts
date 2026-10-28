@@ -115,7 +115,7 @@ interface WtFlowEdge<T = any> {
 export const FLOW_DOC: ComponentDoc = {
   id: 'flow',
   title: 'Flow',
-  group: 'Diagram',
+  group: 'Charts',
   entry: 'flow',
   standalone: 'WtFlow, WtFlowHandle, WtFlowNodeTemplate, WtFlowBackground, WtFlowControls, WtFlowMinimap',
   module: 'WtFlowModule',

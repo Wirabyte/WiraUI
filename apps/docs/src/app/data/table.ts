@@ -248,6 +248,17 @@ export const TABLE_DOC: ComponentDoc = {
     'ต้องติดตามก่อน': 'follow-ups first',
     'ล่าสุด:': 'Last event:',
     'ข้อความของแต่ละเซลล์ในไฟล์: คะแนนมีทศนิยมสองตำแหน่ง': "each cell's text in the file: scores get two decimals",
+    // Excel export
+    'ส่งออก Excel': 'Export Excel',
+    'รายงาน Excel': 'Excel report',
+    'รายงานคะแนนสอบ': 'Exam score report',
+    'ภาคเรียนที่ 2/2569': 'Semester 2/2569',
+    'ค่าเฉลี่ย': 'Average',
+    'ผ่าน (70 ขึ้นไป)': 'Passed (70 or more)',
+    'ไฟล์ล่าสุด': 'Last file',
+    'Date: ในไฟล์เป็นวันที่จริง': 'Date: a real date in the file',
+    'คะแนนต่ำกว่า 70 เป็นตัวแดง': 'scores under 70 in red',
+    'นับคนที่ผ่านด้วยสูตร': 'count the passes with a formula',
   },
   description: {
     th: 'ตารางข้อมูลที่แบ่งหน้า เรียง ค้นหา และเลือกแถวได้ในตัว เรียงตามพจนานุกรมไทย ค้นด้วยเลขไทยได้ แถวและเซลล์มาจาก template ของแอปเอง จึงใส่ component อะไรในเซลล์ก็ได้',
@@ -399,6 +410,13 @@ export const TABLE_DOC: ComponentDoc = {
       text: {
         th: '<code>dt.exportCSV()</code> ดาวน์โหลดแถวที่ค้นหาและเรียงอยู่ · <code>{ selectionOnly: true }</code> เฉพาะแถวที่เลือก · <code>{ allValues: true }</code> ทุกแถวโดยไม่สนคำค้น · คอลัมน์มาจาก <code>[columns]</code> (<code>{ field, header }</code> ใส่ <code>exportable: false</code> เพื่อข้าม) หรือทุก field ชั้นบนเมื่อไม่มี · <code>exportFilename</code> ชื่อไฟล์ไม่ต้องมี .csv (ค่าเริ่มต้น download) · <code>exportHeader</code> property ของคอลัมน์ที่ใช้เป็นหัว (ค่าเริ่มต้น header) · <code>csvSeparator</code> (ค่าเริ่มต้น ,) · <code>[exportFunction]</code> แปลงข้อความของแต่ละเซลล์ · ไฟล์เป็น UTF-8 ที่มี BOM เปิดใน Excel แล้วภาษาไทยไม่เพี้ยน · <code>dt.toCSV()</code> คืนข้อความ CSV (ปุ่มดูข้อความในตัวอย่างนี้)',
         en: '<code>dt.exportCSV()</code> downloads the rows the search and sort leave · <code>{ selectionOnly: true }</code> only the selected rows · <code>{ allValues: true }</code> every row, whatever the search · the columns come from <code>[columns]</code> (<code>{ field, header }</code>, with <code>exportable: false</code> to skip one) or every top-level field when there are none · <code>exportFilename</code> is the file name without .csv (default download) · <code>exportHeader</code> is the column property used as the header (default header) · <code>csvSeparator</code> (default ,) · <code>[exportFunction]</code> turns each cell into its text · the file is UTF-8 with a byte order mark, so Excel shows Thai correctly · <code>dt.toCSV()</code> returns the CSV text (the preview button in this example).',
+      },
+    },
+    excel: {
+      title: { th: 'ส่งออก Excel', en: 'Excel export' },
+      text: {
+        th: '<code>dt.exportExcel()</code> ดาวน์โหลดไฟล์ .xlsx จริงโดยไม่ต้องติดตั้ง library เพิ่ม เลือกแถวและคอลัมน์แบบเดียวกับ CSV (<code>selectionOnly</code>, <code>allValues</code>, <code>[columns]</code>, <code>[exportFunction]</code>) แต่ตัวเลขยังเป็นตัวเลข วันที่เป็นวันที่ และเลขที่ขึ้นต้นด้วย 0 ไม่หาย · ค่าเริ่มต้น: หัวตารางตัวหนามีพื้นสี ตรึงไว้ตอนเลื่อน มีปุ่มกรอง มีเส้นตาราง กว้างตามเนื้อหา และพิมพ์หัวซ้ำทุกหน้า · ตัวเลือก: <code>title</code> / <code>subtitle</code> (รวมเซลล์ให้เอง), <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code> / <code>rowStyle</code> ใส่สีตามเงื่อนไข, <code>totals</code> แถวรวมเป็นสูตร SUBTOTAL ที่คิดตามตัวกรอง (<code>sum</code> <code>average</code> <code>count</code> <code>min</code> <code>max</code>), <code>fontName</code> / <code>fontSize</code>, <code>calendar: \'buddhist\'</code> แสดงปี พ.ศ. และ <code>customize(sheet, at)</code> เพิ่มแถว รวมเซลล์ (<code>colSpan</code> / <code>rowSpan</code>) หรือใส่สูตรเอง (<code>at.column(\'score\')</code> คืนตัวอักษรคอลัมน์) · สไตล์เป็น object แบบแบน: <code>{ bold, italic, color, fill, fontName, fontSize, border, align, valign, wrap, format }</code> · คอลัมน์ใส่ <code>exportFormat</code> (เช่น <code>\'#,##0.00\'</code>), <code>exportWidth</code>, <code>exportStyle</code>, <code>exportTotal</code> ได้ · <code>dt.toExcel()</code> คืนไฟล์เป็น bytes และ <code>dt.toExcelSheet()</code> คืนเป็น sheet ไว้รวมหลายตารางในไฟล์เดียว (ดูหน้า Excel)',
+        en: '<code>dt.exportExcel()</code> downloads a real .xlsx file with no extra library. Rows and columns are picked as for CSV (<code>selectionOnly</code>, <code>allValues</code>, <code>[columns]</code>, <code>[exportFunction]</code>), but numbers stay numbers, dates stay dates and leading zeros survive · by default the header is bold and shaded, stays in view while scrolling, has filter buttons and prints on every page, cells have borders and columns fit their content · options: <code>title</code> / <code>subtitle</code> (merged for you), <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code> / <code>rowStyle</code> for colours by condition, <code>totals</code> as SUBTOTAL formulas that follow the filter (<code>sum</code> <code>average</code> <code>count</code> <code>min</code> <code>max</code>), <code>fontName</code> / <code>fontSize</code>, <code>calendar: \'buddhist\'</code> for Buddhist years, and <code>customize(sheet, at)</code> to add rows, merge cells (<code>colSpan</code> / <code>rowSpan</code>) or write formulas (<code>at.column(\'score\')</code> gives the column letter) · a style is a flat object: <code>{ bold, italic, color, fill, fontName, fontSize, border, align, valign, wrap, format }</code> · columns may carry <code>exportFormat</code> (e.g. <code>\'#,##0.00\'</code>), <code>exportWidth</code>, <code>exportStyle</code> and <code>exportTotal</code> · <code>dt.toExcel()</code> returns the file as bytes and <code>dt.toExcelSheet()</code> as a sheet, to put several tables in one file (see the Excel page).',
       },
     },
     reorder: {
@@ -879,6 +897,32 @@ ${NAME_ROOM}
   </ng-template>
 </wt-table>
 <pre>{{ csvText }}</pre>`,
+    excel: `<wt-table #dt [value]="students" [columns]="excelColumns" exportFilename="students">
+  <ng-template #caption>
+    <div class="flex flex-wrap gap-2">
+      <wt-button label="ส่งออก Excel" icon="wi wi-file-excel" (onClick)="dt.exportExcel()"></wt-button>
+      <wt-button label="รายงาน Excel" icon="wi wi-download" severity="secondary" [outlined]="true" (onClick)="dt.exportExcel(report)"></wt-button>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th>รหัส</th>
+      <th>ชื่อ - สกุล</th>
+      <th>ห้อง</th>
+      <th>วันเกิด</th>
+      <th>คะแนน</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-s>
+    <tr>
+      <td>{{ s.code }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.room }}</td>
+      <td>{{ s.born | date: 'd/M/yyyy' }}</td>
+      <td>{{ s.score }}</td>
+    </tr>
+  </ng-template>
+</wt-table>`,
     reorder: `<wt-table [value]="students" (onRowReorder)="rowMoved($event)">
   <ng-template #header>
     <tr>
@@ -1250,6 +1294,36 @@ formatCell(cell: { data: unknown; field: string }): string {
 previewCsv(table: WtTable): void {
   this.csvText = table.toCSV();
 }`,
+    excel: `import { WtTableExcelOptions } from 'wiratheme/table';
+
+excelColumns = [
+  { field: 'code', header: 'รหัส' },
+  { field: 'name', header: 'ชื่อ - สกุล' },
+  { field: 'room', header: 'ห้อง' },
+  { field: 'born', header: 'วันเกิด' },   // Date: ในไฟล์เป็นวันที่จริง
+  { field: 'score', header: 'คะแนน', exportFormat: '0.00' },
+];
+
+report: WtTableExcelOptions = {
+  fileName: 'score-report',
+  title: 'รายงานคะแนนสอบ',
+  subtitle: 'ภาคเรียนที่ 2/2569',
+  headerStyle: { fill: '#0f766e', color: '#ffffff', align: 'center' },
+  striped: true,
+  calendar: 'buddhist',
+  totals: { score: 'average' },
+  totalLabel: 'ค่าเฉลี่ย',
+  // คะแนนต่ำกว่า 70 เป็นตัวแดง
+  cellStyle: ({ field, value }) => (field === 'score' && Number(value) < 70 ? { color: '#dc2626', bold: true } : null),
+  // นับคนที่ผ่านด้วยสูตร
+  customize: (sheet, at) => {
+    const score = at.column('score');
+    sheet.rows.push([], [
+      { value: 'ผ่าน (70 ขึ้นไป)', colSpan: 4, style: { align: 'right' } },
+      { formula: \`COUNTIF(\${score}\${at.firstRow}:\${score}\${at.lastRow},">=70")\` },
+    ]);
+  },
+};`,
     reorder: `import { WtTableRowReorderEvent } from 'wiratheme/table';
 
 lastMove = '';
@@ -1464,6 +1538,8 @@ async deleteStudent(student: Student): Promise<void> {
         row('exportHeader', 'string', "'header'", 'property ของคอลัมน์ที่ใช้เป็นหัวของไฟล์', 'Column property used as the file header'),
         row('csvSeparator', 'string', "','", 'ตัวคั่นระหว่างเซลล์', 'Cell separator'),
         row('exportFunction', '(cell: { data, field }) => unknown', undefined, 'ข้อความของแต่ละเซลล์ในไฟล์', 'Each cell\'s text in the file'),
+        row('columns[].exportFormat · exportWidth', 'string · number', undefined, 'Excel: รูปแบบตัวเลขของคอลัมน์ (\'#,##0.00\', \'0%\', \'dd/mm/yyyy\') · ความกว้างเป็นตัวอักษร', "Excel: the column's number format ('#,##0.00', '0%', 'dd/mm/yyyy') · width in characters"),
+        row('columns[].exportStyle · exportTotal', "ExcelStyle · 'sum' | 'average' | 'count' | 'min' | 'max' | value", undefined, 'Excel: สไตล์ของเซลล์ในคอลัมน์ · ค่าในแถวรวม', 'Excel: style of the column\'s cells · what the total row shows'),
         row('editMode · editingRowKeys', "'cell' | 'row' · Record<string, boolean>", "'cell' · {}", 'แก้ไขทีละเซลล์หรือทั้งแถว และแถวที่กำลังแก้ (ตาม dataKey)', 'Edit cell by cell or whole rows, and the rows being edited (by dataKey)'),
         row('resizableColumns · columnResizeMode', "boolean · 'fit' | 'expand'", "false · 'fit'", 'ลากขอบหัวคอลัมน์เพื่อปรับความกว้าง', 'Drag header edges to resize'),
         row('reorderableColumns', BOOL, 'false', 'ลากหัวคอลัมน์เพื่อย้าย (columns เปลี่ยนในที่เดิม)', 'Drag headers to move columns (columns changes in place)'),
@@ -1523,6 +1599,8 @@ async deleteStudent(student: Student): Promise<void> {
         row('clear()', 'void', undefined, 'ล้างคำค้น ตัวกรอง การเรียง และกลับหน้าแรก', 'Clear search, filters and sort, back to page 1'),
         row('exportCSV(options?)', 'void', undefined, 'ดาวน์โหลด CSV (UTF-8 มี BOM) { selectionOnly } เฉพาะที่เลือก { allValues } ไม่สนคำค้น', 'Download a CSV (UTF-8 with a BOM); { selectionOnly } the selection, { allValues } ignore the search'),
         row('toCSV(options?)', 'string', undefined, 'ข้อความ CSV แบบเดียวกับ exportCSV()', 'The CSV text exportCSV() saves'),
+        row('exportExcel(options?)', 'Promise<void>', undefined, 'ดาวน์โหลด .xlsx ที่มีหัวตาราง สไตล์ แถวรวม และสูตร (WtTableExcelOptions)', 'Download an .xlsx with a styled header, totals and formulas (WtTableExcelOptions)'),
+        row('toExcel(options?) · toExcelSheet(options?)', 'Promise<Uint8Array> · ExcelSheet', undefined, 'ไฟล์ .xlsx เป็น bytes (เช่น อัปโหลด) · ตารางเป็น sheet ไว้รวมหลายตารางใน buildExcel()', 'The .xlsx as bytes (to upload, say) · the table as a sheet, for several tables in one buildExcel()'),
         row('toggleRowExpansion(row)', 'void', undefined, 'เปิด / ปิดแถวขยายจากโค้ด', 'Open / close a row from code'),
         row("filterRules(field, rules, 'and' | 'or')", 'void', undefined, 'ตั้งหลายเงื่อนไขให้คอลัมน์เดียว (null ลบ)', 'Set several rules on one column (null removes them)'),
         row('initRowEdit(row) · saveRowEdit(row, rowElement?) · cancelRowEdit(row)', 'void', undefined, 'เริ่ม / เก็บ / ยกเลิกการแก้ไขทั้งแถว', 'Start / keep / cancel editing a row'),

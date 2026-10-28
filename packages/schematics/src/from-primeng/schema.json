@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "WiraThemeFromPrimeNg",
+  "title": "Move PrimeNG code to WiraTheme",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Folder to migrate, e.g. src/app/admin. Default: the whole workspace."
+    },
+    "templates": {
+      "type": "boolean",
+      "default": true,
+      "description": "Rename <p-…> tags in templates to <wt-…> as well as the imports."
+    }
+  }
+}

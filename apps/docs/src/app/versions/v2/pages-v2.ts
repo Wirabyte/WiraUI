@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { WtDialogConfig, WtDialogRef } from 'wiratheme-v2/dialog';
 import {
   ButtonDemo,
   CardDemo,
@@ -32,6 +33,7 @@ import {
   InputNumberDemo,
   DatePickerDemo,
   DialogDemo,
+  PickStudentBase,
   AlertDemo,
   ConfirmDialogDemo,
   ToastDemo,
@@ -46,7 +48,7 @@ import {
   MenubarDemo,
   PanelMenuDemo,
   StepsDemo,
-  ChartDemo,
+  ChartJsDemo,
   ImageDemo,
   AutoCompleteDemo,
   MenuDemo,
@@ -95,6 +97,9 @@ import {
   TerminalDemo,
 } from '../shared/demos-extras';
 import { FlowDemo } from '../shared/demos-flow';
+import { ExcelDemo } from '../shared/demos-excel';
+import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
+import { ThaiDemo } from '../shared/demos-thai';
 
 // Shared templates compiled against wiratheme@2 components (DocsV2Module imports the v1 modules).
 
@@ -236,8 +241,8 @@ export class PanelMenuPageV2 extends PanelMenuDemo {}
 @Component({ selector: 'docs-steps-v2', templateUrl: '../shared/steps.html', standalone: false })
 export class StepsPageV2 extends StepsDemo {}
 
-@Component({ selector: 'docs-chart-v2', templateUrl: '../shared/chart.html', standalone: false })
-export class ChartPageV2 extends ChartDemo {}
+@Component({ selector: 'docs-chartjs-v2', templateUrl: '../shared/chartjs.html', standalone: false })
+export class ChartJsPageV2 extends ChartJsDemo {}
 
 @Component({ selector: 'docs-image-v2', templateUrl: '../shared/image.html', standalone: false })
 export class ImagePageV2 extends ImageDemo {}
@@ -367,3 +372,25 @@ export class InputOtpPageV2 extends InputOtpDemo {}
 
 @Component({ selector: 'docs-flow-v2', templateUrl: '../shared/flow.html', standalone: false })
 export class FlowPageV2 extends FlowDemo {}
+
+@Component({ selector: 'docs-excel-v2', templateUrl: '../shared/excel.html', standalone: false })
+export class ExcelPageV2 extends ExcelDemo {}
+
+@Component({ selector: 'docs-emptystate-v2', templateUrl: '../shared/emptystate.html', standalone: false })
+export class EmptyStatePageV2 extends EmptyStateDemo {}
+
+@Component({ selector: 'docs-result-v2', templateUrl: '../shared/result.html', standalone: false })
+export class ResultPageV2 extends ResultDemo {}
+
+@Component({ selector: 'docs-errorpage-v2', templateUrl: '../shared/errorpage.html', standalone: false })
+export class ErrorPagePageV2 extends ErrorPageDemo {}
+
+@Component({ selector: 'docs-thai-v2', templateUrl: '../shared/thai.html', standalone: false })
+export class ThaiPageV2 extends ThaiDemo {}
+
+/** What the Dialog page's WtDialogService sample opens (this version's dialog ref and config). */
+@Component({ selector: 'docs-pick-student-v2', templateUrl: '../shared/dialog-pick.html', standalone: false })
+export class PickStudentV2 extends PickStudentBase {
+  protected readonly ref = inject(WtDialogRef);
+  protected readonly config = inject(WtDialogConfig);
+}

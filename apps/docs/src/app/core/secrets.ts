@@ -1,7 +1,8 @@
 // Two small secrets, unrelated to each other: typing "hasu" opens /ll, typing "kawaii" opens /kawaii. Finding one
-// says nothing about the other. Typing the word gives this tab a pass (the address alone does not match, so it goes
-// home like any unknown address); opening the page unlocks that page's hidden preset in the theme drawer and the
-// Studio, remembered in this browser only.
+// says nothing about the other. Only typing the word opens the page: it gives a pass held in memory for that one visit,
+// so the address typed, pasted, bookmarked or reloaded shows the 404 page like any unknown address, and leaving the
+// page drops the pass (Back does not return to it). Opening the page unlocks that page's hidden preset in the theme
+// drawer and the Studio, remembered in this browser only.
 
 export interface Secret {
   /** The word to type. */
@@ -13,14 +14,16 @@ export interface Secret {
   unlocked(): boolean;
   unlock(): void;
   grantPass(): void;
+  /** Leaving the page: the next visit needs the word again. */
+  dropPass(): void;
   /** The route's guard. */
   hasPass(): boolean;
 }
 
 function secret(word: string, path: string, preset: string): Secret {
   const unlockKey = `wiratheme-docs-${word}`;
-  const passKey = `wiratheme-docs-${word}-pass`;
-  let passInMemory = false;
+  // In memory only: a reload or a typed address starts without it.
+  let pass = false;
   return {
     word,
     path,
@@ -40,20 +43,13 @@ function secret(word: string, path: string, preset: string): Secret {
       }
     },
     grantPass() {
-      passInMemory = true;
-      try {
-        sessionStorage.setItem(passKey, '1');
-      } catch {
-        // Blocked storage: the pass lasts until the page reloads.
-      }
+      pass = true;
+    },
+    dropPass() {
+      pass = false;
     },
     hasPass() {
-      if (passInMemory) return true;
-      try {
-        return sessionStorage.getItem(passKey) === '1';
-      } catch {
-        return false;
-      }
+      return pass;
     },
   };
 }

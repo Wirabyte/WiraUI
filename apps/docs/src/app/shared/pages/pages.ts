@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 import { DocsState } from '../../core/docs-state';
 import { DocsI18n } from '../../core/i18n';
 import { SampleText, sampleText } from '../../core/sample-text';
-import { NAV_PAGES } from '../../core/nav';
+import { NAV_PAGES, navPageOf, navPagesFor } from '../../core/nav';
 import { UTILITY_TOPICS, UTILITY_WORDS } from '../../data/utilities';
 import { UtilsStylesheet } from '../utils-demo';
 import { DOCS_VERSION } from '../../core/version-theme';
@@ -39,7 +39,9 @@ abstract class DocsTextPage {
   templateUrl: './introduction.html',
 })
 export class IntroductionPage extends DocsTextPage {
-  protected readonly components = NAV_PAGES.filter((p) => p.path.startsWith('components/'));
+  protected readonly components = navPagesFor(this.v.major)
+    .filter((p) => p.sections.includes('components') || p.sections.includes('layout/components'))
+    .map((p) => (p.sections.includes('layout/components') ? { ...p, group: 'Components · Layout' } : p));
 }
 
 @Component({
@@ -155,6 +157,8 @@ export class UtilitiesPage extends DocsTextPage {
     initialValue: 'overview',
   });
   protected readonly topic = computed(() => UTILITY_TOPICS[this.topicId()] || UTILITY_TOPICS['overview']);
+  /** Where the page sits in the sidebar: grid and flex are Layout, colours and type are Utilities. */
+  protected readonly eyebrow = computed(() => navPageOf('utilities/' + this.topic().id)?.group || 'Utilities');
   protected readonly topics = NAV_PAGES.filter((p) => p.path.startsWith('utilities/') && p.path !== 'utilities/overview');
 
   protected override get words(): SampleText {

@@ -54,7 +54,7 @@ import { WtMultiSelect } from 'wiratheme/multiselect';
 import { WtInputMask } from 'wiratheme/inputmask';
 import { WtMessages } from 'wiratheme/message';
 import { WtTimeline } from 'wiratheme/timeline';
-import { WtChart } from 'wiratheme/chart';
+import { WtChartJs } from 'wiratheme/chartjs';
 import { WtImage } from 'wiratheme/image';
 import { WtAutoComplete } from 'wiratheme/autocomplete';
 import { WtPanelMenu } from 'wiratheme/panelmenu';
@@ -112,7 +112,7 @@ import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecroppe
     WtInputMask,
     WtMessages,
     WtTimeline,
-    WtChart,
+    WtChartJs,
     WtImage,
     WtAutoComplete,
     WtPanelMenu,

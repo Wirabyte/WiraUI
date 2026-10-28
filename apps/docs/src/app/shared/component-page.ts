@@ -7,6 +7,7 @@ import { DocsI18n, Text } from '../core/i18n';
 import { DOCS_PREVIEW } from '../core/preview';
 import { sampleText } from '../core/sample-text';
 import { DOCS_VERSION } from '../core/version-theme';
+import { navPageOf } from '../core/nav';
 
 /** Marks the FEATURES tab content of a component page: `<ng-template docsFeatures>…</ng-template>`. */
 @Directive({ selector: 'ng-template[docsFeatures]', standalone: false })
@@ -31,6 +32,8 @@ export class DocsComponentPage {
   /** In the studio's preview: the Examples only, without the page header and tabs. */
   protected readonly preview = inject(DOCS_PREVIEW, { optional: true }) === true;
   readonly doc = input.required<ComponentDoc>();
+  /** Where the page sits in the sidebar: `Components · Form`, `Layout · Components`, `Utilities · Helpers`. */
+  protected readonly eyebrow = computed(() => navPageOf('components/' + this.doc().id)?.group || 'Components · ' + this.doc().group);
   protected readonly features = contentChild(DocsFeatures);
 
   /** Labels only; the ids, the ?tab= values and the anchors stay as they were. */

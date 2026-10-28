@@ -33,7 +33,7 @@ for (const v of versions) {
   // The theme file is ng add's output and ng add never overwrites one; drop it so a changed default theme shows up.
   for (const ext of ['scss', 'css']) rmSync(join(app, 'src', 'theme', `wiratheme.theme.${ext}`), { force: true });
   // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
-  // chart.js is wiratheme/chart's optional peer; it goes in the same install (a second --no-save install would prune it).
+  // chart.js is wiratheme/chartjs's optional peer; it goes in the same install (a second --no-save install would prune it).
   run(`${process.env.WT_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball} chart.js@^4.5.1`, app);
   // v3's default is Wira; the shared test page checks the styled look and its --p-* names, so v3 installs Mali.
   run(`npx ng add wiratheme --skip-confirmation --defaults --dark-mode=class --font=none${v === 'v3' ? ' --theme=mali' : ''}`, app);
@@ -70,7 +70,7 @@ for (const v of versions) {
       ['WtMultiSelectModule', 'wiratheme/multiselect'],
       ['WtInputMaskModule', 'wiratheme/inputmask'],
       ['WtTimelineModule', 'wiratheme/timeline'],
-      ['WtChartModule', 'wiratheme/chart'],
+      ['WtChartJsModule', 'wiratheme/chartjs'],
       ['WtImageModule', 'wiratheme/image'],
       ['WtAutoCompleteModule', 'wiratheme/autocomplete'],
       ['WtPanelMenuModule', 'wiratheme/panelmenu'],
