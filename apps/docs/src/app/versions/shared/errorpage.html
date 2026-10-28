@@ -1,0 +1,47 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <wt-error-page id="d-ep-basic" code="404" (action)="picked($event)"></wt-error-page>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="codes" [section]="sec['codes']">
+      <docs-demo [html]="code['codes']" [ts]="ts['codes']" layout="stack">
+        <wt-selectbutton id="d-ep-look" [options]="local(looks)" optionLabel="label" optionValue="value" [(ngModel)]="look" [allowEmpty]="false"></wt-selectbutton>
+        <wt-selectbutton id="d-ep-code" [options]="codes" [(ngModel)]="status" [allowEmpty]="false"></wt-selectbutton>
+        <wt-error-page id="d-ep-pick" [code]="status" [look]="look" (action)="picked($event)"></wt-error-page>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="kawaii" [section]="sec['kawaii']">
+      <docs-demo [html]="code['kawaii']" layout="stack">
+        <div class="docs-demo-grid">
+          <wt-error-page id="d-ep-k404" code="404" look="kawaii" (action)="picked($event)"></wt-error-page>
+          <wt-error-page id="d-ep-k403" code="403" look="kawaii" (action)="picked($event)"></wt-error-page>
+          <wt-error-page id="d-ep-k503" code="503" look="kawaii" (action)="picked($event)"></wt-error-page>
+          <wt-error-page id="d-ep-k429" code="429" look="kawaii" (action)="picked($event)"></wt-error-page>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="actions" [section]="sec['actions']">
+      <docs-demo [html]="code['actions']" [ts]="ts['actions']" layout="stack">
+        <wt-error-page id="d-ep-actions" code="503" [actions]="['retry']" reference="REQ-7F3A-2026" [title]="tx('ระบบลงทะเบียนปิดชั่วคราว')" (action)="picked($event)">
+          <wt-button wtErrorAction [label]="tx('ติดต่อฝ่ายช่วยเหลือ')" severity="secondary" [outlined]="true"></wt-button>
+          {{ tx('เปิดอีกครั้งวันจันทร์ที่ 3 พฤศจิกายน 2569 เวลา 08:00 น.') }}
+        </wt-error-page>
+        <span class="docs-demo-output">{{ tx('ปุ่มที่กดล่าสุด') }}: <code id="d-ep-last">{{ last }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="route" [section]="sec['route']">
+      <docs-code [code]="$any(code['route'])" lang="html"></docs-code>
+      <docs-code [code]="$any(ts['route'])" lang="ts"></docs-code>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

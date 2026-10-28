@@ -4,7 +4,7 @@ import { row, STYLE_ROW, tok } from './doc-helpers';
 export const TERMINAL_DOC: ComponentDoc = {
   id: 'terminal',
   title: 'Terminal',
-  group: 'Misc',
+  group: 'Display',
   entry: 'terminal',
   standalone: 'WtTerminal',
   module: 'WtTerminalModule',

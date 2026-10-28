@@ -4,7 +4,7 @@ import { row, STYLE_ROW, tok } from './doc-helpers';
 export const BREADCRUMB_DOC: ComponentDoc = {
   id: 'breadcrumb',
   title: 'Breadcrumb',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'breadcrumb',
   standalone: 'WtBreadcrumb',
   module: 'WtBreadcrumbModule',

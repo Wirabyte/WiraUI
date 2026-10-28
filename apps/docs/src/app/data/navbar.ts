@@ -234,7 +234,7 @@ function themeHtml(t: NavbarTheme): string {
 export const NAVBAR_DOC: ComponentDoc = {
   id: 'navbar',
   title: 'Navbar',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'navbar',
   standalone: 'WtNavbar',
   module: 'WtNavbarModule',

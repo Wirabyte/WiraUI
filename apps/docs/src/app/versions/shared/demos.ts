@@ -11,7 +11,7 @@ import { INPUTNUMBER_DOC } from '../../data/inputnumber';
 import { DATEPICKER_DOC } from '../../data/datepicker';
 import { ALERT_DOC, CONFIRMDIALOG_DOC, DIALOG_DOC } from '../../data/overlays';
 import { ANIMATE_DOC, POPOVER_DOC, TOAST_DOC, TOOLTIP_DOC } from '../../data/overlays-more';
-import { DOCS_OVERLAYS, DOCS_VALIDATORS } from '../../core/overlays';
+import { DOCS_DIALOGS, DOCS_OVERLAYS, DOCS_VALIDATORS } from '../../core/overlays';
 import { METERGROUP_DOC } from '../../data/metergroup';
 import { VALIDATION_DOC } from '../../data/validation';
 import { SELECT_DOC } from '../../data/select';
@@ -24,7 +24,7 @@ import { ORDERLIST_DOC, PICKLIST_DOC } from '../../data/picklist';
 import { FILEUPLOAD_DOC } from '../../data/fileupload';
 import { EDITOR_DOC } from '../../data/editor';
 import { KEYFILTER_DOC, RIPPLE_DOC } from '../../data/directives';
-import { CHART_DOC } from '../../data/chart';
+import { CHARTJS_DOC } from '../../data/chartjs';
 import { IMAGE_DOC } from '../../data/image';
 import { AUTOCOMPLETE_DOC } from '../../data/autocomplete';
 import { MENU_DOC, TABMENU_DOC } from '../../data/menu';
@@ -580,6 +580,29 @@ export abstract class DatePickerDemo extends SimpleDemo {
   }
 }
 
+/**
+ * The component the Dialog page's service sample opens. Each version declares a subclass that injects its own
+ * WtDialogRef and WtDialogConfig (this file imports no wiratheme).
+ */
+export abstract class PickStudentBase extends SimpleDemo {
+  protected readonly doc = DIALOG_DOC;
+  protected abstract readonly ref: { close(result?: unknown): void };
+  protected abstract readonly config: { data?: unknown };
+  readonly students = makeStudents(4);
+
+  get room(): string {
+    return (this.config.data as { room?: string } | undefined)?.room ?? '';
+  }
+
+  pick(student: Student): void {
+    this.ref.close(student);
+  }
+
+  cancel(): void {
+    this.ref.close();
+  }
+}
+
 export abstract class DialogDemo extends SimpleDemo {
   protected readonly doc = DIALOG_DOC;
   visible = false;
@@ -593,6 +616,9 @@ export abstract class DialogDemo extends SimpleDemo {
   maskVisible = false;
   headlessVisible = false;
   events: string[] = [];
+  /** The service sample: who was picked in the dialog the service opened. */
+  leader = '-';
+  private readonly dialogs = inject(DOCS_DIALOGS, { optional: true });
 
   constructor() {
     super();
@@ -603,6 +629,12 @@ export abstract class DialogDemo extends SimpleDemo {
   openAt(position: string): void {
     this.position = position;
     this.posVisible = true;
+  }
+
+  async pickLeader(): Promise<void> {
+    if (!this.dialogs) return;
+    const student = (await this.dialogs.pickStudent({ header: this.tx('เลือกหัวหน้าห้อง'), width: '26rem', data: { room: 'ม.1/1' } })) as Student | undefined;
+    this.leader = student ? student.name : this.tx('ยกเลิก');
   }
 
   log(event: string): void {
@@ -1065,6 +1097,16 @@ export abstract class TableDemo extends SimpleDemo {
   lastToggle = '';
   pickedStudents: Student[] = [];
   csvText = '';
+  /** The Excel demo's rows: birthdays as real dates, so the file gets dates. */
+  readonly excelStudents = makeStudents(8).map((s) => ({ ...s, born: new Date(s.birthDate + 'T00:00:00') }));
+  readonly excelColumns = [
+    { field: 'code', header: 'รหัส' },
+    { field: 'name', header: 'ชื่อ - สกุล' },
+    { field: 'room', header: 'ห้อง' },
+    { field: 'born', header: 'วันเกิด' },
+    { field: 'score', header: 'คะแนน', exportFormat: '0.00' },
+  ];
+  lastExcel = '';
   reorderRows: Student[] = [];
   lastMove = '';
   readonly radioRows = makeStudents(6);
@@ -1202,6 +1244,33 @@ export abstract class TableDemo extends SimpleDemo {
 
   previewCsv(table: { toCSV(): string }): void {
     this.csvText = table.toCSV();
+  }
+
+  async exportExcel(table: { exportExcel(options?: object): Promise<void> }, options?: { fileName?: string }): Promise<void> {
+    await table.exportExcel(options);
+    this.lastExcel = (options?.fileName || 'students') + '.xlsx';
+  }
+
+  /** The report sample's options, in the site language. */
+  excelReport(): { fileName: string; [option: string]: unknown } {
+    return {
+      fileName: 'score-report',
+      title: this.tx('รายงานคะแนนสอบ'),
+      subtitle: this.tx('ภาคเรียนที่ 2/2569'),
+      headerStyle: { fill: '#0f766e', color: '#ffffff', align: 'center' },
+      striped: true,
+      calendar: this.en() ? 'gregorian' : 'buddhist',
+      totals: { score: 'average' },
+      totalLabel: this.tx('ค่าเฉลี่ย'),
+      cellStyle: (cell: { field: string; value: unknown }) => (cell.field === 'score' && Number(cell.value) < 70 ? { color: '#dc2626', bold: true } : null),
+      customize: (sheet: { rows: unknown[][] }, at: { firstRow: number; lastRow: number; column(field: string): string }) => {
+        const score = at.column('score');
+        sheet.rows.push([], [
+          { value: this.tx('ผ่าน (70 ขึ้นไป)'), colSpan: 4, style: { align: 'right' } },
+          { formula: `COUNTIF(${score}${at.firstRow}:${score}${at.lastRow},">=70")` },
+        ]);
+      },
+    };
   }
 
   rowMoved(event: { dragIndex: number; dropIndex: number }): void {
@@ -1682,8 +1751,8 @@ type ChartLike = {
 };
 const CHART_MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'];
 
-export abstract class ChartDemo extends SimpleDemo {
-  protected readonly doc = CHART_DOC;
+export abstract class ChartJsDemo extends SimpleDemo {
+  protected readonly doc = CHARTJS_DOC;
   readonly salesData: ChartDataLike = {
     labels: CHART_MONTHS,
     datasets: [

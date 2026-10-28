@@ -105,6 +105,13 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="service" [section]="sec['service']">
+      <docs-demo [html]="code['service']" [ts]="ts['service']">
+        <wt-button id="d-dlg-service" [label]="tx('เลือกหัวหน้าห้อง')" icon="wi wi-user" (onClick)="pickLeader()"></wt-button>
+        <span class="docs-demo-output">{{ tx('หัวหน้าห้อง') }}: <code id="d-dlg-leader">{{ leader }}</code></span>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="a11y" [section]="sec['a11y']"></docs-section>
   </ng-template>
 </docs-component-page>

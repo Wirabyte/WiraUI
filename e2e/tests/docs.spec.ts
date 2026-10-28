@@ -1,5 +1,15 @@
 import { expect, Page, test } from '@playwright/test';
 
+/** The pages in one version's sidebar (v1 / v2 leave out the v3-only ones), components with their API and Styling tabs. */
+async function versionPaths(page: Page, v: string): Promise<string[]> {
+  await page.goto(`/${v}/getting-started/introduction`);
+  await expect(page.locator('#nav-introduction')).toBeAttached();
+  const nav = await page.locator('a.docs-nav-link').evaluateAll((links) =>
+    links.map((a) => (a.getAttribute('href') || '').replace(/^\/v[123]\//, '')).filter(Boolean)
+  );
+  return nav.flatMap((p) => (p.startsWith('components/') ? [p, p + '?tab=api', p + '?tab=theming'] : [p]));
+}
+
 // The docs site is one Angular 21 NgModule app that lazy-loads wiratheme v1, v2 and v3, in Thai and English.
 const VERSIONS = [
   ['v1', '1'],
@@ -1418,9 +1428,9 @@ test('chart page in every version: every chart draws, a click picks a bar, refre
   const ids = ['bar', 'line', 'pie', 'doughnut', 'stacked', 'mixed', 'theme', 'click', 'plugin', 'size-full', 'size-fixed', 'refresh'];
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto(`/${v}/components/chart`);
+    await page.goto(`/${v}/components/chartjs`);
     await expect(page.locator('#doc-version')).toContainText(`wiratheme@${major}`);
-    await expect(page.locator('#nav-chart')).toHaveClass(/active/);
+    await expect(page.locator('#nav-chartjs')).toHaveClass(/active/);
 
     // Every chart has drawn something on its canvas.
     for (const id of ids) {
@@ -1443,8 +1453,8 @@ test('chart page in every version: every chart draws, a click picks a bar, refre
     }
     await expect(page.locator('#d-chart-bar canvas')).toHaveAttribute('aria-label', 'รายรับและรายจ่ายรายเดือน');
     // height="280px": the chart fills the width at that height; width="480px" caps the width.
-    expect(Math.round((await page.locator('#d-chart-bar .wt-chart').boundingBox())!.height)).toBe(280);
-    expect(Math.round((await page.locator('#d-chart-size-fixed .wt-chart').boundingBox())!.width)).toBe(480);
+    expect(Math.round((await page.locator('#d-chart-bar .wt-chartjs').boundingBox())!.height)).toBe(280);
+    expect(Math.round((await page.locator('#d-chart-size-fixed .wt-chartjs').boundingBox())!.width)).toBe(480);
 
     // Theme colours come from the CSS variables of the theme on screen.
     const primary = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--wt-primary-color').trim());
@@ -3956,7 +3966,7 @@ test.describe('English samples', () => {
 
   test('chart page: English data in the code, the picked bar and the buttons', async ({ page }) => {
     const errors = collectErrors(page);
-    await page.goto('/v3/components/chart');
+    await page.goto('/v3/components/chartjs');
     await expect(page.locator('#d-chart-bar canvas')).toHaveAttribute('aria-label', 'Monthly income and expenses');
     await page.locator('#basic').getByRole('tab', { name: 'TS' }).click();
     await expect(page.locator('#basic docs-code')).toContainText("labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']");
@@ -4341,17 +4351,14 @@ test.describe('English samples', () => {
       /^#helpers code: parseNumber\('๑,๒๓๔\.๕๐'\)/,
       // Typing Thai letters into a car plate is what this sample shows.
       /^#thai code: <wt-inputmask name="plate" .*characterPattern="\[ก-ฮ\]"/,
+      // Baht in Thai words and Thai digits are what the Thai pipes page shows.
+      /^#baht demo: [ก-๙]+$/,
+      /^#numbers demo: [๐-๙]+ [A-Za-z]+ [๐-๙]+$/,
     ];
-    await page.goto('/v3/getting-started/introduction');
-    await expect(page.locator('#nav-introduction')).toBeAttached();
-    const navPaths = await page.locator('a.docs-nav-link').evaluateAll((links) =>
-      links.map((a) => (a.getAttribute('href') || '').replace(/^\/v[123]\//, '')).filter(Boolean)
-    );
-    const paths = navPaths.flatMap((p) => (p.startsWith('components/') ? [p, p + '?tab=api', p + '?tab=theming'] : [p]));
     const problems: string[] = [];
     let navs = 0;
     for (const v of versions) {
-      for (const p of paths) {
+      for (const p of await versionPaths(page, v)) {
         const url = `/${v}/${p}`;
         // Client-side navigation, with a full load now and then (WebKit limits history calls).
         if (++navs % 40 === 0) await page.goto(url);
@@ -4465,13 +4472,9 @@ test('responsive sweep: no horizontal overflow (and no other library name) on an
   const versions = full ? ['v1', 'v2', 'v3'] : ['v3'];
 
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/v3/getting-started/introduction');
-  await expect(page.locator('#nav-introduction')).toBeAttached();
-  const navPaths = await page.locator('a.docs-nav-link').evaluateAll((links) =>
-    links.map((a) => (a.getAttribute('href') || '').replace(/^\/v[123]\//, '')).filter(Boolean)
-  );
-  expect(navPaths.length).toBeGreaterThan(20);
-  const paths = navPaths.flatMap((p) => (p.startsWith('components/') ? [p, p + '?tab=api', p + '?tab=theming'] : [p]));
+  const pathsOf: Record<string, string[]> = {};
+  for (const v of versions) pathsOf[v] = await versionPaths(page, v);
+  expect(pathsOf['v3'].length).toBeGreaterThan(20);
 
   const overflow = () =>
     page.evaluate(async () => {
@@ -4526,7 +4529,7 @@ test('responsive sweep: no horizontal overflow (and no other library name) on an
       for (const o of await overflow()) problems.push(`${lang} ${width} / ${o}`);
     }
     for (const v of versions) {
-      for (const p of paths) {
+      for (const p of pathsOf[v]) {
         await go(`/${v}/${p}`);
         for (const width of widths) {
           await page.setViewportSize({ width, height: 900 });
@@ -6252,9 +6255,7 @@ test('secret pages: "hasu" and "kawaii" each open only their own page; the addre
   await expect.poll(() => primary('.docs-hasu-preview')).toBe('#b8172f');
   // Nothing on it points at the other secret.
   await expect(page.locator('main')).not.toContainText(/kawaii/i);
-  // The pass lasts for this tab, a reload included; phones get no sideways scroll.
-  await page.reload();
-  await expect(page.locator('main.docs-hasu')).toBeVisible();
+  // Phones get no sideways scroll.
   await page.setViewportSize({ width: 360, height: 800 });
   expect(await noSideScroll(page)).toBeLessThanOrEqual(0);
   await page.setViewportSize({ width: 1280, height: 900 });
@@ -6262,6 +6263,22 @@ test('secret pages: "hasu" and "kawaii" each open only their own page; the addre
   await page.locator('.docs-hasu-home').click();
   await expect(page.locator('html')).not.toHaveClass(/docs-hasu-open/);
   expect(await drawerSecrets()).toEqual(['ll']);
+  await page.goto('/kawaii');
+  await expect(page.locator('.docs-nf-title')).toBeVisible();
+  // Only typing the word opens a page: its address again (typed, reloaded, or Back) is a 404, even in this tab.
+  await page.goto('/ll');
+  await expect(page.locator('.docs-nf-title')).toBeVisible();
+  await page.keyboard.type('hasu');
+  await expect(page.locator('main.docs-hasu')).toBeVisible();
+  await page.reload();
+  await expect(page.locator('.docs-nf-title')).toBeVisible();
+  await page.keyboard.type('hasu');
+  await expect(page.locator('main.docs-hasu')).toBeVisible();
+  await page.locator('.docs-hasu-home').click();
+  await expect(page).toHaveURL(/\/$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/ll$/);
+  await expect(page.locator('.docs-nf-title')).toBeVisible();
   await page.goto('/kawaii');
   await expect(page.locator('.docs-nf-title')).toBeVisible();
 

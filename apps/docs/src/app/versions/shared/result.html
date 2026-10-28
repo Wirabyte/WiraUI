@@ -1,0 +1,59 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="status" [section]="sec['status']">
+      <docs-demo [html]="code['status']" layout="stack">
+        <wt-result
+          id="d-rs-success"
+          status="success"
+          [title]="tx('ส่งใบสมัครเรียบร้อยแล้ว')"
+          [subtitle]="tx('เลขที่ใบสมัคร 69-000123 ระบบส่งอีเมลยืนยันไปที่ wira@example.com แล้ว')"
+        >
+          <wt-button wtResultExtra [label]="tx('ดูใบสมัคร')"></wt-button>
+          <wt-button wtResultExtra [label]="tx('กลับหน้าแรก')" severity="secondary" [outlined]="true"></wt-button>
+        </wt-result>
+        <div class="docs-demo-grid">
+          <wt-result id="d-rs-error" status="error"></wt-result>
+          <wt-result id="d-rs-info" status="info"></wt-result>
+          <wt-result id="d-rs-warning" status="warning"></wt-result>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="codes" [section]="sec['codes']">
+      <docs-demo [html]="code['codes']" layout="stack">
+        <div class="docs-demo-grid">
+          <wt-result id="d-rs-403" status="403">
+            <wt-button wtResultExtra [label]="tx('ติดต่อผู้ดูแลระบบ')" severity="secondary" [outlined]="true"></wt-button>
+          </wt-result>
+          <wt-result id="d-rs-404" status="404">
+            <wt-button wtResultExtra [label]="tx('กลับหน้าแรก')" icon="wi wi-house"></wt-button>
+          </wt-result>
+          <wt-result id="d-rs-500" status="500">
+            <wt-button wtResultExtra [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true"></wt-button>
+          </wt-result>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="extra" [section]="sec['extra']">
+      <docs-demo [html]="code['extra']" layout="stack">
+        <wt-result id="d-rs-extra" status="error" [title]="tx('ชำระเงินไม่สำเร็จ')" [subtitle]="tx('บัตรถูกปฏิเสธโดยธนาคาร')">
+          <wt-button wtResultExtra [label]="tx('ลองอีกครั้ง')" icon="wi wi-refresh"></wt-button>
+          <wt-button wtResultExtra [label]="tx('กลับหน้าแรก')" severity="secondary" [outlined]="true"></wt-button>
+          <p>{{ tx('ยอดที่ต้องชำระ 3,500.00 บาท') }}</p>
+        </wt-result>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="custom" [section]="sec['custom']">
+      <docs-demo [html]="code['custom']" layout="stack">
+        <wt-result id="d-rs-icon" status="warning" icon="wi wi-wrench" [title]="tx('กำลังปิดปรับปรุงระบบ')" [subtitle]="tx('เปิดให้ใช้งานอีกครั้งเวลา 06:00 น.')"></wt-result>
+        <wt-result id="d-rs-noicon" status="success" [showIcon]="false" [title]="tx('ส่งใบสมัครเรียบร้อยแล้ว')" subtitle=""></wt-result>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

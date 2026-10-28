@@ -1,0 +1,103 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wt-chartjs id="d-chart-bar" type="bar" [data]="local(salesData)" height="280px" [ariaLabel]="tx('รายรับและรายจ่ายรายเดือน')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="line" [section]="sec['line']">
+      <docs-demo [html]="code['line']" [ts]="ts['line']" layout="stack">
+        <wt-chartjs id="d-chart-line" type="line" [data]="local(visitData)" [options]="visitOptions" height="280px" [ariaLabel]="tx('ผู้เข้าชมรายวัน')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="pie" [section]="sec['pie']">
+      <docs-demo [html]="code['pie']" [ts]="ts['pie']" layout="grid">
+        <wt-chartjs id="d-chart-pie" type="pie" [data]="local(spendData)" height="260px" [ariaLabel]="tx('ค่าใช้จ่ายตามหมวด')"></wt-chartjs>
+        <wt-chartjs id="d-chart-doughnut" type="doughnut" [data]="local(spendData)" height="260px" [ariaLabel]="tx('ค่าใช้จ่ายตามหมวด')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="stacked" [section]="sec['stacked']">
+      <docs-demo [html]="code['stacked']" [ts]="ts['stacked']" layout="stack">
+        <wt-chartjs id="d-chart-stacked" type="bar" [data]="local(genderData)" [options]="stackedOptions" height="240px" [ariaLabel]="tx('นักเรียนแยกตามชั้นและเพศ')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="mixed" [section]="sec['mixed']">
+      <docs-demo [html]="code['mixed']" [ts]="ts['mixed']" layout="stack">
+        <wt-chartjs id="d-chart-mixed" type="bar" [data]="local(targetData)" height="280px" [ariaLabel]="tx('ยอดขายเทียบเป้าหมาย')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="theme" [section]="sec['theme']">
+      <docs-demo [html]="code['theme']" [ts]="ts['theme']" layout="stack">
+        <wt-chartjs id="d-chart-theme" type="bar" [data]="local(themeData)" height="260px" [ariaLabel]="tx('รายรับปีนี้เทียบปีที่แล้ว')"></wt-chartjs>
+        <div class="docs-demo-actions">
+          <wt-button id="d-chart-theme-apply" [label]="tx('ใช้สีของธีมตอนนี้')" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>
+          <span class="docs-demo-output">--wt-primary-color: <code id="d-chart-theme-color">{{ themeColor }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="click" [section]="sec['click']">
+      <docs-demo [html]="code['click']" [ts]="ts['click']" layout="stack">
+        <wt-chartjs
+          id="d-chart-click"
+          type="bar"
+          [data]="local(scoreData)"
+          [options]="scoreOptions"
+          height="260px"
+          [ariaLabel]="tx('คะแนนเฉลี่ยรายวิชา')"
+          (onDataSelect)="pick($event)"
+        ></wt-chartjs>
+        <span class="docs-demo-output">{{ tx('ที่เลือก') }}: <code id="d-chart-picked">{{ picked || tx('คลิกที่แท่ง') }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="plugins" [section]="sec['plugins']">
+      <docs-demo [html]="code['plugins']" [ts]="ts['plugins']" layout="stack">
+        <wt-chartjs
+          id="d-chart-plugin"
+          type="doughnut"
+          [data]="local(levelData)"
+          [options]="local(levelOptions)"
+          [plugins]="[centerText]"
+          height="260px"
+          [ariaLabel]="tx('นักเรียนแยกตามระดับชั้น')"
+        ></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="size" [section]="sec['size']">
+      <docs-demo [html]="code['size']" layout="stack">
+        <wt-chartjs id="d-chart-size-full" type="line" [data]="local(visitData)" height="200px" [ariaLabel]="tx('ผู้เข้าชมรายวัน')"></wt-chartjs>
+        <wt-chartjs id="d-chart-size-fixed" type="bar" [data]="local(salesData)" width="480px" height="200px" [ariaLabel]="tx('รายรับและรายจ่ายรายเดือน')"></wt-chartjs>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="refresh" [section]="sec['refresh']">
+      <docs-demo [html]="code['refresh']" [ts]="ts['refresh']" layout="stack">
+        <wt-chartjs
+          #attendanceChart="wtChartJs"
+          id="d-chart-refresh"
+          type="line"
+          [data]="local(attendance)"
+          height="240px"
+          [ariaLabel]="tx('นักเรียนที่มาเรียนรายสัปดาห์')"
+        ></wt-chartjs>
+        <div class="docs-demo-actions">
+          <wt-button id="d-chart-add" [label]="tx('เพิ่มสัปดาห์')" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>
+          <span class="docs-demo-output">{{ tx('จำนวนจุด') }}: <code id="d-chart-points">{{ points() }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="migration" [section]="sec['migration']"></docs-section>
+  </ng-template>
+</docs-component-page>

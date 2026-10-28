@@ -4,7 +4,7 @@ import { importText, row, SEVERITY_TYPE, STYLE_ROW, tok } from './doc-helpers';
 export const DIVIDER_DOC: ComponentDoc = {
   id: 'divider',
   title: 'Divider',
-  group: 'Panel',
+  group: 'Layout',
   entry: 'divider',
   standalone: 'WtDivider',
   module: 'WtDividerModule',
@@ -277,7 +277,7 @@ export const FIELDSET_DOC: ComponentDoc = {
 export const MESSAGE_DOC: ComponentDoc = {
   id: 'message',
   title: 'Message',
-  group: 'Messages',
+  group: 'Feedback',
   entry: 'message',
   standalone: 'WtMessage, WtMessages',
   module: 'WtMessageModule',

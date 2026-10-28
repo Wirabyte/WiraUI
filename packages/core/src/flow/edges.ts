@@ -92,6 +92,12 @@ export function markerId(prefix: string, m: FlowResolvedMarker): string {
  */
 export const FLOW_MARKER_VIEWBOX = '0 0 20 20';
 export const FLOW_MARKER_REF = { x: 17, y: 10 };
+
+/** How far back from the end of its edge an arrowhead reaches, in px (a little more, so the curve joins behind it). */
+export function markerLength(marker: FlowMarker | null | undefined): number {
+  const m = normalizeMarker(marker);
+  return m ? (m.width * (FLOW_MARKER_REF.x - 6)) / 20 + 2 : 0;
+}
 export function markerShape(type: 'arrow' | 'arrowclosed'): string {
   return type === 'arrowclosed' ? 'M6,4.5 L17,10 L6,15.5 Z' : 'M7,4.5 L17,10 L7,15.5';
 }

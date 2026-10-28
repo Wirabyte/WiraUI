@@ -1,0 +1,46 @@
+<div class="wt-result" [class]="styleClass || ''" [style]="rootStyle" [attr.data-status]="status">
+  <ng-container *ngIf="shown">
+    <span *ngIf="!isCode; else code" class="wt-result-mark" aria-hidden="true">
+      <i *ngIf="icon; else mark" [ngClass]="icon"></i>
+      <ng-template #mark>
+        <svg viewBox="0 0 48 48" focusable="false" [ngSwitch]="status">
+          <path *ngSwitchCase="'success'" d="m14 24.5 7 7 13-14"></path>
+          <path *ngSwitchCase="'error'" d="m16 16 16 16m0-16L16 32"></path>
+          <g *ngSwitchCase="'warning'">
+            <path d="M24 13v14"></path>
+            <circle class="wt-result-dot" cx="24" cy="34.5" r="2.6"></circle>
+          </g>
+          <g *ngSwitchDefault>
+            <path d="M24 21v14"></path>
+            <circle class="wt-result-dot" cx="24" cy="13.5" r="2.6"></circle>
+          </g>
+        </svg>
+      </ng-template>
+    </span>
+    <ng-template #code>
+      <svg class="wt-result-art" viewBox="0 0 240 110" aria-hidden="true" focusable="false" [ngSwitch]="status">
+        <text class="wt-rs-digit" x="52" y="92" text-anchor="middle">{{ status === '500' ? '5' : '4' }}</text>
+        <circle class="wt-rs-soft" cx="120" cy="60" r="38"></circle>
+        <g *ngSwitchCase="'403'">
+          <path class="wt-rs-shackle" d="M108 56v-8a12 12 0 0 1 24 0v8"></path>
+          <rect class="wt-rs-accent-fill" x="102" y="55" width="36" height="28" rx="6"></rect>
+          <circle class="wt-rs-paper-fill" cx="120" cy="66" r="3.5"></circle>
+          <path class="wt-rs-paper-line" d="M120 68v7"></path>
+        </g>
+        <g *ngSwitchCase="'500'">
+          <path class="wt-rs-accent-fill" d="M126 30 106 63h13l-6 27 22-36h-13z"></path>
+        </g>
+        <g *ngSwitchDefault>
+          <circle class="wt-rs-ring" cx="120" cy="60" r="24"></circle>
+          <path class="wt-rs-accent-fill" d="m132 48-8 16-16 8 8-16z"></path>
+          <circle class="wt-rs-paper-fill" cx="120" cy="60" r="2.5"></circle>
+        </g>
+        <text class="wt-rs-digit" x="188" y="92" text-anchor="middle">{{ status === '403' ? '3' : status === '500' ? '0' : '4' }}</text>
+      </svg>
+    </ng-template>
+  </ng-container>
+  <p *ngIf="titleText" class="wt-result-title">{{ titleText }}</p>
+  <p *ngIf="subtitleText" class="wt-result-subtitle">{{ subtitleText }}</p>
+  <div class="wt-result-extra"><ng-content select="[wtResultExtra]"></ng-content></div>
+  <div class="wt-result-content"><ng-content></ng-content></div>
+</div>

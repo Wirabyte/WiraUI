@@ -6,7 +6,7 @@ const BOOL = 'boolean';
 export const STEPS_DOC: ComponentDoc = {
   id: 'steps',
   title: 'Steps',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'steps',
   standalone: 'WtSteps',
   module: 'WtStepsModule',

@@ -18,7 +18,7 @@ export const SCHOOL_RULES = [
 export const SCROLLPANEL_DOC: ComponentDoc = {
   id: 'scrollpanel',
   title: 'ScrollPanel',
-  group: 'Panel',
+  group: 'Layout',
   entry: 'scrollpanel',
   standalone: 'WtScrollPanel',
   module: 'WtScrollPanelModule',

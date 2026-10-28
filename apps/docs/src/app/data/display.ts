@@ -333,7 +333,7 @@ export const AVATAR_DOC: ComponentDoc = {
 export const SKELETON_DOC: ComponentDoc = {
   id: 'skeleton',
   title: 'Skeleton',
-  group: 'Display',
+  group: 'Feedback',
   entry: 'skeleton',
   standalone: 'WtSkeleton',
   module: 'WtSkeletonModule',
@@ -387,7 +387,7 @@ export const SKELETON_DOC: ComponentDoc = {
 export const PROGRESSBAR_DOC: ComponentDoc = {
   id: 'progressbar',
   title: 'ProgressBar',
-  group: 'Display',
+  group: 'Feedback',
   entry: 'progressbar',
   standalone: 'WtProgressBar',
   module: 'WtProgressBarModule',
@@ -498,7 +498,7 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
 export const PROGRESSSPINNER_DOC: ComponentDoc = {
   id: 'progressspinner',
   title: 'ProgressSpinner',
-  group: 'Display',
+  group: 'Feedback',
   entry: 'progressspinner',
   standalone: 'WtProgressSpinner',
   module: 'WtProgressSpinnerModule',

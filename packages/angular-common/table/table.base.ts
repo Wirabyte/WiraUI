@@ -28,9 +28,29 @@ import {
   WtConfig,
   WtTemplate,
 } from 'wiratheme/config';
-import { filterColumns, filterGlobal, FilterMatchMode, FilterMeta, FilterRule, optionField, pageInfo, sameValue, SortMeta, sortRows, WtLocale } from 'wiratheme/core';
+import {
+  buildExcel,
+  EXCEL_MIME,
+  ExcelSheet,
+  excelSheetFromRows,
+  ExcelTableColumn,
+  ExcelValue,
+  filterColumns,
+  filterGlobal,
+  FilterMatchMode,
+  FilterMeta,
+  FilterRule,
+  optionField,
+  pageInfo,
+  sameValue,
+  SortMeta,
+  sortRows,
+  WtLocale,
+} from 'wiratheme/core';
 import { WtPageEvent } from 'wiratheme/paginator';
 import {
+  WtTableExcelColumn,
+  WtTableExcelOptions,
   WtTableExportFunction,
   WtTableExportOptions,
   WtTableFilterEvent,
@@ -986,33 +1006,14 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
    */
   exportCSV(options: WtTableExportOptions = {}): void {
     const csv = this.toCSV(options);
-    const win = this.doc.defaultView as (Window & typeof globalThis) | null;
-    if (!win?.URL?.createObjectURL) return;
-    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
-    const url = win.URL.createObjectURL(blob);
-    const a = this.doc.createElement('a');
-    a.href = url;
-    a.download = `${this.exportFilename || 'download'}.csv`;
-    a.style.display = 'none';
-    this.doc.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => win.URL.revokeObjectURL(url), 0);
+    this.download(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' }), `${this.exportFilename || 'download'}.csv`);
   }
 
   /** The CSV text `exportCSV()` saves (without the byte order mark). */
   toCSV(options: WtTableExportOptions = {}): string {
-    const sel = this._selection;
-    const rows = options.selectionOnly ? (Array.isArray(sel) ? sel : sel ? [sel] : []) : options.allValues ? this._value : this.processed;
-    type Col = { field?: string; header?: unknown; exportable?: boolean; [k: string]: unknown };
-    let cols: Col[] = ((this.columns || []) as Col[]).filter((c) => c && typeof c === 'object' && c.field && c.exportable !== false);
-    if (!cols.length) {
-      const first = rows.find((r) => r && typeof r === 'object') as Record<string, unknown> | undefined;
-      cols = first ? Object.keys(first).filter((k) => typeof first[k] !== 'object' || first[k] === null).map((k) => ({ field: k, header: k })) : [];
-    }
+    const { rows, cols, headerKey } = this.exportSource(options);
     const sep = this.csvSeparator || ',';
     const quote = (v: unknown) => `"${(v === null || v === undefined ? '' : v instanceof Date ? v.toISOString() : String(v)).replace(/"/g, '""')}"`;
-    const headerKey = this.exportHeader || 'header';
     const lines = [cols.map((c) => quote(c[headerKey] ?? c.header ?? c.field)).join(sep)];
     for (const row of rows) {
       lines.push(
@@ -1025,6 +1026,79 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       );
     }
     return lines.join('\r\n');
+  }
+
+  /**
+   * Downloads the rows as an Excel file (.xlsx), the same rows and columns as `exportCSV()` but with Thai, leading
+   * zeros, numbers and dates kept as they are, and styled like a report: a bold header that stays in view with filter
+   * buttons, borders, widths from the content, and whatever `options` add (title, colours, totals, merged cells,
+   * formulas through `customize`). No library needed.
+   */
+  async exportExcel(options: WtTableExcelOptions = {}): Promise<void> {
+    const bytes = await this.toExcel(options);
+    this.download(new Blob([bytes as BlobPart], { type: EXCEL_MIME }),`${options.fileName || this.exportFilename || 'download'}.xlsx`);
+  }
+
+  /** The .xlsx file `exportExcel()` saves, e.g. to upload it instead. */
+  toExcel(options: WtTableExcelOptions = {}): Promise<Uint8Array> {
+    return buildExcel({
+      sheets: [this.toExcelSheet(options), ...(options.sheets || [])],
+      fontName: options.fontName,
+      fontSize: options.fontSize,
+      calendar: options.calendar,
+      dateFormat: options.dateFormat,
+    });
+  }
+
+  /** The table as one sheet, to put several tables in one workbook with `buildExcel()` from `wiratheme/excel`. */
+  toExcelSheet(options: WtTableExcelOptions = {}): ExcelSheet {
+    const { rows, cols, headerKey } = this.exportSource(options);
+    const columns: ExcelTableColumn[] = cols.map((c) => {
+      const col = c as WtTableExcelColumn & Record<string, unknown>;
+      const header = col[headerKey] ?? col.header ?? col.field;
+      return {
+        field: col.field!,
+        header: header === null || header === undefined ? '' : String(header),
+        width: col.exportWidth,
+        format: col.exportFormat,
+        style: col.exportStyle,
+        total: col.exportTotal,
+      };
+    });
+    const exportFunction = this.exportFunction;
+    return excelSheetFromRows(rows, columns, {
+      totalLabel: this.t.total,
+      ...options,
+      value: exportFunction ? (_row, field, raw) => exportFunction({ data: raw, field }) as ExcelValue : undefined,
+    });
+  }
+
+  /** The rows and columns an export writes (see `exportCSV()`), and the column key that names the header. */
+  private exportSource(options: WtTableExportOptions): { rows: unknown[]; cols: { field?: string; header?: unknown; [k: string]: unknown }[]; headerKey: string } {
+    const sel = this._selection;
+    const rows = options.selectionOnly ? (Array.isArray(sel) ? sel : sel ? [sel] : []) : options.allValues ? this._value : this.processed;
+    type Col = { field?: string; header?: unknown; exportable?: boolean; [k: string]: unknown };
+    let cols: Col[] = ((this.columns || []) as Col[]).filter((c) => c && typeof c === 'object' && c.field && c.exportable !== false);
+    if (!cols.length) {
+      const first = rows.find((r) => r && typeof r === 'object') as Record<string, unknown> | undefined;
+      cols = first ? Object.keys(first).filter((k) => typeof first[k] !== 'object' || first[k] === null || first[k] instanceof Date).map((k) => ({ field: k, header: k })) : [];
+    }
+    return { rows, cols, headerKey: this.exportHeader || 'header' };
+  }
+
+  /** Saves a blob through a temporary link. */
+  private download(blob: Blob, name: string): void {
+    const win = this.doc.defaultView as (Window & typeof globalThis) | null;
+    if (!win?.URL?.createObjectURL) return;
+    const url = win.URL.createObjectURL(blob);
+    const a = this.doc.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.style.display = 'none';
+    this.doc.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => win.URL.revokeObjectURL(url), 0);
   }
 
   // ---------- row reorder ----------

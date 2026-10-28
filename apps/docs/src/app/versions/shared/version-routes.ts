@@ -62,7 +62,7 @@ export interface VersionPages {
   menubar: Type<unknown>;
   panelmenu: Type<unknown>;
   steps: Type<unknown>;
-  chart: Type<unknown>;
+  chartjs: Type<unknown>;
   image: Type<unknown>;
   autocomplete: Type<unknown>;
   menu: Type<unknown>;
@@ -108,6 +108,13 @@ export interface VersionPages {
   knob: Type<unknown>;
   inputotp: Type<unknown>;
   flow: Type<unknown>;
+  excel: Type<unknown>;
+  emptystate: Type<unknown>;
+  result: Type<unknown>;
+  errorpage: Type<unknown>;
+  thai: Type<unknown>;
+  /** WiraTheme's own chart: wiratheme@3 only. */
+  chart?: Type<unknown>;
 }
 
 /** This version's page components (one per nav id), so WiraTheme Studio can show any component's demos in its preview. */
@@ -182,7 +189,7 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/menubar', component: p.menubar },
         { path: 'components/panelmenu', component: p.panelmenu },
         { path: 'components/steps', component: p.steps },
-        { path: 'components/chart', component: p.chart },
+        { path: 'components/chartjs', component: p.chartjs },
         { path: 'components/image', component: p.image },
         { path: 'components/autocomplete', component: p.autocomplete },
         { path: 'components/menu', component: p.menu },
@@ -224,6 +231,14 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/knob', component: p.knob },
         { path: 'components/inputotp', component: p.inputotp },
         { path: 'components/flow', component: p.flow },
+        { path: 'components/excel', component: p.excel },
+        { path: 'components/emptystate', component: p.emptystate },
+        { path: 'components/result', component: p.result },
+        { path: 'components/errorpage', component: p.errorpage },
+        { path: 'components/thai', component: p.thai },
+        // Pages only some versions have: the others fall through to the 404 below.
+        // v1 / v2 have no chart of their own: their old Chart address goes to ChartJS.
+        p.chart ? { path: 'components/chart', component: p.chart } : { path: 'components/chart', redirectTo: 'components/chartjs' },
         // Old docs URL from Phase 1: the combined forms page is now one page per control.
         { path: 'components/forms', redirectTo: 'components/inputtext' },
         { path: '**', component: DocsNotFound, data: { notFound: true } },

@@ -1,3 +1,12 @@
+/** What wt-empty-state shows: no data yet, nothing found, an empty inbox or folder, a failed load, no connection. */
+export type WtEmptyStateType = 'nodata' | 'search' | 'inbox' | 'folder' | 'error' | 'offline';
+
+/** What wt-result reports: the outcome of a task, or a page that cannot be shown. */
+export type WtResultStatus = 'success' | 'error' | 'info' | 'warning' | '403' | '404' | '500';
+
+/** wt-error-page: what kind of failure a status code is (picks the picture and the kawaii text). */
+export type WtErrorKind = 'request' | 'auth' | 'forbidden' | 'missing' | 'time' | 'busy' | 'server' | 'gateway' | 'down';
+
 /** UI strings components read. Keys follow the translation object shape apps already use, so migrating apps can reuse theirs. */
 export interface WtLocale {
   code: string;
@@ -41,6 +50,26 @@ export interface WtLocale {
   collapseMenu: string;
   expandMenu: string;
   selectAll: string;
+  /** Label of the total row in an exported table. */
+  total: string;
+  /** wt-empty-state: the title and the line under it, per type. */
+  emptyState: Record<WtEmptyStateType, { title: string; description: string }>;
+  /** wt-result: the title and the line under it, per status. */
+  result: Record<WtResultStatus, { title: string; description: string }>;
+  /**
+   * wt-error-page: the word before the code, the buttons, the reference line, the formal text per status code (any code
+   * not listed takes `4xx` / `5xx`) and the kawaii text per kind.
+   */
+  errorPage: {
+    error: string;
+    home: string;
+    back: string;
+    retry: string;
+    signIn: string;
+    reference: string;
+    codes: Record<string, { title: string; description: string }>;
+    kawaii: Record<WtErrorKind, { title: string; description: string }>;
+  };
   /** Multi-select field once more are chosen than it lists; {0} is the count. */
   selectedItemsLabel: string;
   /** Image preview: the button over the picture and the full-screen toolbar. */
@@ -348,6 +377,64 @@ export const TH_LOCALE: WtLocale = {
   collapseMenu: 'ย่อเมนู',
   expandMenu: 'ขยายเมนู',
   selectAll: 'เลือกทั้งหมด',
+  total: 'รวม',
+  emptyState: {
+    nodata: { title: 'ยังไม่มีข้อมูล', description: 'ข้อมูลที่เพิ่มจะแสดงที่นี่' },
+    search: { title: 'ไม่พบสิ่งที่ค้นหา', description: 'ลองใช้คำค้นอื่น หรือล้างตัวกรอง' },
+    inbox: { title: 'ไม่มีรายการใหม่', description: 'รายการที่เข้ามาใหม่จะแสดงที่นี่' },
+    folder: { title: 'ยังไม่มีไฟล์', description: 'อัปโหลดหรือลากไฟล์มาวางเพื่อเริ่มต้น' },
+    error: { title: 'โหลดข้อมูลไม่สำเร็จ', description: 'เกิดข้อผิดพลาดระหว่างโหลด โปรดลองใหม่อีกครั้ง' },
+    offline: { title: 'ไม่ได้เชื่อมต่ออินเทอร์เน็ต', description: 'ตรวจสอบการเชื่อมต่อแล้วลองใหม่อีกครั้ง' },
+  },
+  result: {
+    success: { title: 'ทำรายการสำเร็จ', description: '' },
+    error: { title: 'ทำรายการไม่สำเร็จ', description: 'โปรดตรวจสอบข้อมูลแล้วลองใหม่อีกครั้ง' },
+    info: { title: 'แจ้งเพื่อทราบ', description: '' },
+    warning: { title: 'โปรดตรวจสอบก่อนดำเนินการต่อ', description: '' },
+    '403': { title: 'ไม่มีสิทธิ์เข้าถึงหน้านี้', description: 'บัญชีของคุณไม่มีสิทธิ์ดูหน้านี้ ติดต่อผู้ดูแลระบบหากคิดว่าเป็นความผิดพลาด' },
+    '404': { title: 'ไม่พบหน้านี้', description: 'หน้าที่เปิดอาจถูกย้ายหรือลบไปแล้ว ตรวจสอบที่อยู่อีกครั้ง' },
+    '500': { title: 'ระบบขัดข้อง', description: 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์ โปรดลองใหม่ในอีกสักครู่' },
+  },
+  errorPage: {
+    error: 'ข้อผิดพลาด',
+    home: 'กลับหน้าแรก',
+    back: 'ย้อนกลับ',
+    retry: 'ลองอีกครั้ง',
+    signIn: 'เข้าสู่ระบบ',
+    reference: 'รหัสอ้างอิง',
+    codes: {
+      '400': { title: 'คำขอไม่ถูกต้อง', description: 'ระบบไม่เข้าใจคำขอนี้ ตรวจสอบข้อมูลแล้วลองใหม่อีกครั้ง' },
+      '401': { title: 'ต้องเข้าสู่ระบบก่อน', description: 'หน้านี้สำหรับผู้ที่เข้าสู่ระบบแล้ว หรือการเข้าสู่ระบบหมดอายุ โปรดเข้าสู่ระบบอีกครั้ง' },
+      '403': { title: 'ไม่มีสิทธิ์เข้าถึงหน้านี้', description: 'บัญชีของคุณไม่มีสิทธิ์ดูหน้านี้ ติดต่อผู้ดูแลระบบหากคิดว่าเป็นความผิดพลาด' },
+      '404': { title: 'ไม่พบหน้านี้', description: 'หน้าที่เปิดอาจถูกย้ายหรือลบไปแล้ว ตรวจสอบที่อยู่อีกครั้ง' },
+      '405': { title: 'ไม่รองรับการทำรายการนี้', description: 'หน้านี้ไม่รับคำขอแบบที่ส่งมา' },
+      '408': { title: 'หมดเวลารอ', description: 'การเชื่อมต่อใช้เวลานานเกินไป ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง' },
+      '409': { title: 'ข้อมูลขัดแย้งกัน', description: 'ข้อมูลนี้ถูกแก้ไขไปแล้วระหว่างนั้น โหลดข้อมูลล่าสุดแล้วลองใหม่อีกครั้ง' },
+      '410': { title: 'หน้านี้ถูกลบแล้ว', description: 'หน้าที่เปิดไม่มีให้บริการแล้ว' },
+      '413': { title: 'ข้อมูลใหญ่เกินไป', description: 'ไฟล์หรือข้อมูลที่ส่งมีขนาดเกินกำหนด ลดขนาดแล้วลองใหม่อีกครั้ง' },
+      '415': { title: 'ไม่รองรับไฟล์ชนิดนี้', description: 'เลือกไฟล์ชนิดอื่นแล้วลองใหม่อีกครั้ง' },
+      '422': { title: 'ข้อมูลไม่ถูกต้อง', description: 'บางช่องยังไม่ถูกต้อง ตรวจสอบแล้วส่งใหม่อีกครั้ง' },
+      '429': { title: 'มีคำขอมากเกินไป', description: 'คุณทำรายการถี่เกินไป รอสักครู่แล้วลองใหม่อีกครั้ง' },
+      '500': { title: 'ระบบขัดข้อง', description: 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์ โปรดลองใหม่ในอีกสักครู่' },
+      '501': { title: 'ยังไม่รองรับ', description: 'ระบบยังไม่รองรับการทำรายการนี้' },
+      '502': { title: 'เชื่อมต่อระบบปลายทางไม่ได้', description: 'เซิร์ฟเวอร์ได้รับคำตอบที่ไม่ถูกต้องจากระบบอื่น โปรดลองใหม่ในอีกสักครู่' },
+      '503': { title: 'ปิดปรับปรุงชั่วคราว', description: 'ระบบกำลังปรับปรุงหรือมีผู้ใช้มาก โปรดกลับมาใหม่ในอีกสักครู่' },
+      '504': { title: 'ระบบตอบช้าเกินไป', description: 'ระบบปลายทางไม่ตอบกลับในเวลาที่กำหนด โปรดลองใหม่ในอีกสักครู่' },
+      '4xx': { title: 'ทำรายการไม่ได้', description: 'คำขอนี้ไม่สามารถดำเนินการได้ ตรวจสอบแล้วลองใหม่อีกครั้ง' },
+      '5xx': { title: 'ระบบขัดข้อง', description: 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์ โปรดลองใหม่ในอีกสักครู่' },
+    },
+    kawaii: {
+      request: { title: 'เอ๊ะ ไม่ค่อยเข้าใจเลย', description: 'คำขอนี้แปลก ๆ นิดหน่อย ลองตรวจดูอีกทีนะ' },
+      auth: { title: 'ขอดูบัตรหน่อยนะ', description: 'เข้าสู่ระบบก่อนแล้วค่อยเข้ามาเล่นด้วยกัน' },
+      forbidden: { title: 'ตรงนี้ห้ามเข้านะ', description: 'ประตูนี้ล็อกไว้ ถ้าคิดว่าควรเข้าได้ ลองถามผู้ดูแลดูน้า' },
+      missing: { title: 'อุ๊ย! หาหน้านี้ไม่เจอ', description: 'หน้านี้อาจหลงทางไปแล้ว ลองกลับไปตั้งต้นที่หน้าแรกกันนะ' },
+      time: { title: 'รอนานจนเผลอหลับ', description: 'เน็ตช้านิดนึง ลองใหม่อีกทีนะ' },
+      busy: { title: 'ใจเย็น ๆ ก่อนน้า', description: 'กดถี่จนเหนื่อยแล้ว พักหายใจสักครู่แล้วค่อยลองใหม่' },
+      server: { title: 'ระบบมึนหัวนิดหน่อย', description: 'มีอะไรผิดพลาดหลังบ้าน เดี๋ยวก็หาย ลองใหม่อีกสักครู่นะ' },
+      gateway: { title: 'สายหลุดไปแป๊บนึง', description: 'ระบบคุยกันไม่รู้เรื่อง ลองใหม่อีกสักครู่นะ' },
+      down: { title: 'ขอพักปรับปรุงแป๊บนึง', description: 'กำลังแต่งตัวให้สวยขึ้น กลับมาใหม่เร็ว ๆ นี้นะ' },
+    },
+  },
   selectedItemsLabel: 'เลือกแล้ว {0} รายการ',
   previewImage: 'ดูภาพขยาย',
   rotateRight: 'หมุนขวา',
@@ -614,6 +701,64 @@ export const EN_LOCALE: WtLocale = {
   collapseMenu: 'Collapse menu',
   expandMenu: 'Expand menu',
   selectAll: 'Select all',
+  total: 'Total',
+  emptyState: {
+    nodata: { title: 'No data yet', description: 'What you add will show up here' },
+    search: { title: 'No results found', description: 'Try other words or clear the filters' },
+    inbox: { title: 'Nothing new', description: 'New items will show up here' },
+    folder: { title: 'No files yet', description: 'Upload or drop files to get started' },
+    error: { title: 'Could not load the data', description: 'Something went wrong while loading. Please try again.' },
+    offline: { title: 'You are offline', description: 'Check your connection and try again' },
+  },
+  result: {
+    success: { title: 'Done', description: '' },
+    error: { title: 'Something went wrong', description: 'Please check the details and try again.' },
+    info: { title: 'For your information', description: '' },
+    warning: { title: 'Please check before you go on', description: '' },
+    '403': { title: 'You do not have access', description: 'Your account cannot open this page. Ask an administrator if this looks wrong.' },
+    '404': { title: 'Page not found', description: 'It may have moved or been removed. Check the address.' },
+    '500': { title: 'Something went wrong on our side', description: 'The server ran into an error. Please try again in a moment.' },
+  },
+  errorPage: {
+    error: 'Error',
+    home: 'Go to the home page',
+    back: 'Go back',
+    retry: 'Try again',
+    signIn: 'Sign in',
+    reference: 'Reference',
+    codes: {
+      '400': { title: 'Bad request', description: 'The request could not be understood. Check the details and try again.' },
+      '401': { title: 'Please sign in', description: 'This page is for signed-in users, or your sign-in has expired. Sign in again to go on.' },
+      '403': { title: 'You do not have access', description: 'Your account cannot open this page. Ask an administrator if this looks wrong.' },
+      '404': { title: 'Page not found', description: 'It may have moved or been removed. Check the address.' },
+      '405': { title: 'Not allowed here', description: 'This page does not take that kind of request.' },
+      '408': { title: 'The request timed out', description: 'The connection took too long. Check your internet and try again.' },
+      '409': { title: 'Changed in the meantime', description: 'Someone changed this while you were working. Load the latest and try again.' },
+      '410': { title: 'This page is gone', description: 'The page you opened is no longer available.' },
+      '413': { title: 'Too large', description: 'The file or data sent is over the size limit. Make it smaller and try again.' },
+      '415': { title: 'File type not supported', description: 'Pick another kind of file and try again.' },
+      '422': { title: 'Some details are not right', description: 'A few fields need another look. Check them and send again.' },
+      '429': { title: 'Too many requests', description: 'That was a lot in a short time. Wait a moment and try again.' },
+      '500': { title: 'Something went wrong on our side', description: 'The server ran into an error. Please try again in a moment.' },
+      '501': { title: 'Not supported yet', description: 'This is not something the system can do yet.' },
+      '502': { title: 'Could not reach the service', description: 'The server got a bad answer from another system. Please try again in a moment.' },
+      '503': { title: 'Down for maintenance', description: 'The system is being updated or is very busy. Please come back in a little while.' },
+      '504': { title: 'The service took too long', description: 'Another system did not answer in time. Please try again in a moment.' },
+      '4xx': { title: 'That did not work', description: 'This request cannot be carried out. Check it and try again.' },
+      '5xx': { title: 'Something went wrong on our side', description: 'The server ran into an error. Please try again in a moment.' },
+    },
+    kawaii: {
+      request: { title: 'Hmm, that looks odd', description: 'Something about this request is a bit off. Give it another look?' },
+      auth: { title: 'Show me your pass, please', description: 'Sign in first, then come on in and play.' },
+      forbidden: { title: 'No entry here!', description: 'This door is locked. If you should be inside, ask an admin nicely.' },
+      missing: { title: 'Oops! This page wandered off', description: 'It got lost somewhere. Let’s start again from the home page.' },
+      time: { title: 'I waited so long I dozed off', description: 'The connection is a little slow. Try once more?' },
+      busy: { title: 'Easy there!', description: 'So many taps, I am out of breath. Take a little break and try again.' },
+      server: { title: 'Feeling a bit dizzy', description: 'Something went wrong behind the scenes. It will pass, try again soon.' },
+      gateway: { title: 'Something came unplugged', description: 'Our systems are not talking right now. Try again in a moment.' },
+      down: { title: 'Taking a little break', description: 'Getting a makeover. Back very soon!' },
+    },
+  },
   selectedItemsLabel: '{0} items selected',
   previewImage: 'View larger image',
   rotateRight: 'Rotate right',

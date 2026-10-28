@@ -1,0 +1,9 @@
+<p class="docs-dialog-pick-room">{{ tx('ห้อง') }} {{ local(room) }}</p>
+<ul class="docs-dialog-pick">
+  @for (s of local(students); track s.id) {
+    <li>
+      <wt-button [id]="'d-dlg-pick-' + s.id" [label]="s.name" icon="wi wi-user" [text]="true" (onClick)="pick(s)"></wt-button>
+    </li>
+  }
+</ul>
+<wt-button id="d-dlg-pick-cancel" [label]="tx('ยกเลิก')" severity="secondary" [outlined]="true" (onClick)="cancel()"></wt-button>

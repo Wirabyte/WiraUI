@@ -14,19 +14,19 @@ import {
 } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtChartDataSelectEvent } from './chart.types';
+import { WtChartJsDataSelectEvent } from './chartjs.types';
 
 /** Chart.js's own defaults: when an app has not changed them, charts take the theme's font and colours instead. */
 const CHARTJS_FONT = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 const CHARTJS_COLOR = '#666';
 
 /**
- * What wt-chart does, shared by the v1 and v2/v3 templates: a canvas with a Chart.js chart, rebuilt when `type`, `data`
+ * What wt-chartjs does (and wt-chart in wiratheme v1 / v2), shared by the v1 and v2/v3 templates: a canvas with a Chart.js chart, rebuilt when `type`, `data`
  * or `options` change. Charts pick up the theme's font (Thai included) and text colour unless the app set Chart.js
  * defaults itself or passes its own in `options`. Needs `chart.js` (3 or 4) installed in the app.
  */
 @Directive()
-export abstract class ɵWtChartBase implements AfterViewInit, OnDestroy {
+export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
   /** `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `bubble`, `scatter`. */
   @Input() set type(v: string | undefined) {
     this._type = v || 'bar';
@@ -75,7 +75,7 @@ export abstract class ɵWtChartBase implements AfterViewInit, OnDestroy {
   @Input() style?: Record<string, string | number> | null;
 
   /** A click on a bar, point or slice. */
-  @Output() readonly onDataSelect = new EventEmitter<WtChartDataSelectEvent>();
+  @Output() readonly onDataSelect = new EventEmitter<WtChartJsDataSelectEvent>();
 
   @ViewChild('canvas') protected canvasRef?: ElementRef<HTMLCanvasElement>;
 

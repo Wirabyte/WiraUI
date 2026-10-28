@@ -5,7 +5,17 @@
       "description": "Add WiraTheme to an Angular app",
       "factory": "./ng-add/index.cjs#ngAdd",
       "schema": "./ng-add/schema.json",
-      "aliases": ["install"]
+      "aliases": [
+        "install"
+      ]
+    },
+    "from-primeng": {
+      "description": "Move PrimeNG imports and <p-…> tags in this workspace to WiraTheme (try --dry-run first)",
+      "factory": "./from-primeng/index.cjs#fromPrimeng",
+      "schema": "./from-primeng/schema.json",
+      "aliases": [
+        "primeng"
+      ]
     }
   }
 }

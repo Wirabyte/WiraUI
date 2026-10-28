@@ -1,0 +1,57 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="date" [section]="sec['date']">
+      <docs-demo [html]="code['date']" [ts]="ts['date']" layout="stack">
+        <dl class="docs-pipe-list">
+          <dt>wtDate</dt><dd id="d-th-medium">{{ born | wtDate }}</dd>
+          <dt>'short'</dt><dd id="d-th-short">{{ born | wtDate: 'short' }}</dd>
+          <dt>'long'</dt><dd id="d-th-long">{{ born | wtDate: 'long' }}</dd>
+          <dt>'full'</dt><dd id="d-th-full">{{ born | wtDate: 'full' }}</dd>
+          <dt>'dateTime'</dt><dd id="d-th-datetime">{{ sentAt | wtDate: 'dateTime' }}</dd>
+          <dt>pattern</dt><dd id="d-th-pattern">{{ sentAt | wtDate: tx("EEEE d MMM yy 'เวลา' HH:mm") }}</dd>
+          <dt>'2012-05-14'</dt><dd id="d-th-text">{{ '2012-05-14' | wtDate: 'long' }}</dd>
+        </dl>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="calendar" [section]="sec['calendar']">
+      <docs-demo [html]="code['calendar']" layout="stack">
+        <dl class="docs-pipe-list">
+          <dt>'gregorian'</dt><dd id="d-th-gregorian">{{ born | wtDate: 'long' : 'gregorian' }}</dd>
+          <dt>'en'</dt><dd id="d-th-en">{{ born | wtDate: 'long' : null : 'en' }}</dd>
+        </dl>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="timeago" [section]="sec['timeago']">
+      <docs-demo [html]="code['timeago']" layout="stack">
+        <dl class="docs-pipe-list">
+          <dt>sentAt</dt><dd id="d-th-ago">{{ sentAt | wtTimeAgo }}</dd>
+          <dt>yesterday</dt><dd id="d-th-yesterday">{{ yesterday | wtTimeAgo }}</dd>
+        </dl>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="baht" [section]="sec['baht']">
+      <docs-demo [html]="code['baht']" [ts]="ts['baht']" layout="stack">
+        <wt-inputnumber id="d-th-amount" [(ngModel)]="amount" mode="decimal" [minFractionDigits]="2" [ariaLabel]="tx('จำนวนเงิน')"></wt-inputnumber>
+        <p id="d-th-baht" class="docs-pipe-out">{{ amount | wtBahtText }}</p>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="numbers" [section]="sec['numbers']">
+      <docs-demo [html]="code['numbers']" layout="stack">
+        <dl class="docs-pipe-list">
+          <dt>wtThaiPhone</dt><dd id="d-th-phone">{{ '0812345678' | wtThaiPhone }}</dd>
+          <dt>+66</dt><dd id="d-th-phone2">{{ '+66 2 123 4567' | wtThaiPhone }}</dd>
+          <dt>wtThaiId</dt><dd id="d-th-id">{{ '1103702345679' | wtThaiId }}</dd>
+          <dt>wtThaiDigits</dt><dd id="d-th-digits">{{ born | wtDate: 'long' | wtThaiDigits }}</dd>
+        </dl>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

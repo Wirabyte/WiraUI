@@ -4,7 +4,7 @@ import { row, STYLE_ROW, tok } from './doc-helpers';
 export const SPLITTER_DOC: ComponentDoc = {
   id: 'splitter',
   title: 'Splitter',
-  group: 'Panel',
+  group: 'Layout',
   entry: 'splitter',
   standalone: 'WtSplitter',
   module: 'WtSplitterModule',

@@ -54,7 +54,7 @@ go(event: WtMenuItemCommandEvent): void {
 export const ASIDEMENU_DOC: ComponentDoc = {
   id: 'asidemenu',
   title: 'Aside Menu',
-  group: 'Menu',
+  group: 'Navigation',
   entry: 'asidemenu',
   standalone: 'WtAsideMenu',
   module: 'WtAsideMenuModule',

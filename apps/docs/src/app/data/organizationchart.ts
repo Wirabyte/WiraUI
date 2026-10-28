@@ -77,7 +77,7 @@ chart: TreeNode[] = [
 export const ORGANIZATIONCHART_DOC: ComponentDoc = {
   id: 'organizationchart',
   title: 'OrganizationChart',
-  group: 'Data',
+  group: 'Charts',
   entry: 'organizationchart',
   standalone: 'WtOrganizationChart',
   module: 'WtOrganizationChartModule',

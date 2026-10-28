@@ -6,6 +6,8 @@ export interface NavItem {
   /** Path after the version prefix, e.g. 'components/button'. */
   path: string;
   soon?: boolean;
+  /** The first wiratheme major that has the page (Chart, WiraTheme's own: 3); older versions leave it out. */
+  since?: number;
   /** Extra words the Ctrl+K search matches (either language). */
   keywords?: string;
 }
@@ -51,21 +53,63 @@ export const NAV: NavGroup[] = [
       { id: 'studio', title: { th: 'สตูดิโอธีม', en: 'WiraTheme Studio' }, path: 'theming/studio', keywords: 'studio designer theme designer export figma สตูดิโอ' },
     ],
   },
+  // Laying a page out: the grid / flex / spacing classes and the components that divide space.
+  {
+    id: 'layout',
+    title: 'Layout',
+    icon: 'layout',
+    groups: [
+      {
+        id: 'layout/classes',
+        title: 'Classes',
+        items: [
+          { id: 'utilities-grid', title: 'Grid', path: 'utilities/grid', keywords: 'col responsive gutter คอลัมน์' },
+          { id: 'utilities-flex', title: 'Flex', path: 'utilities/flex', keywords: 'flexbox justify align gap order' },
+          { id: 'utilities-spacing', title: 'Spacing', path: 'utilities/spacing', keywords: 'padding margin ระยะห่าง' },
+          { id: 'utilities-sizing', title: 'Sizing', path: 'utilities/sizing', keywords: 'width height ขนาด' },
+          { id: 'utilities-misc', title: { th: 'ตำแหน่งและ overflow', en: 'Position and overflow' }, path: 'utilities/misc', keywords: 'position z-index overflow cursor opacity' },
+          { id: 'utilities-forms', title: { th: 'จัด layout ฟอร์ม', en: 'Form layout' }, path: 'utilities/forms', keywords: 'field formgrid' },
+        ],
+      },
+      {
+        id: 'layout/components',
+        title: 'Components',
+        items: [
+          { id: 'divider', title: 'Divider', path: 'components/divider', keywords: 'separator เส้นคั่น' },
+          { id: 'splitter', title: 'Splitter', path: 'components/splitter', keywords: 'splitter split panes resize layout แบ่งช่อง ปรับขนาด ลากแบ่ง' },
+          { id: 'toolbar', title: 'Toolbar', path: 'components/toolbar', keywords: 'actions bar แถบเครื่องมือ' },
+          { id: 'scrollpanel', title: 'ScrollPanel', path: 'components/scrollpanel', keywords: 'scroll panel scrollbar กล่องเลื่อน แถบเลื่อน' },
+        ],
+      },
+    ],
+  },
+  // Not components: styling classes, and functions, pipes and directives that help them.
   {
     id: 'utilities',
     title: 'Utilities',
     icon: 'layers',
-    items: [
-      { id: 'utilities-overview', title: { th: 'ภาพรวม', en: 'Overview' }, path: 'utilities/overview', keywords: 'utility class utils เปิด ปิด' },
-      { id: 'utilities-grid', title: 'Grid', path: 'utilities/grid', keywords: 'col responsive gutter คอลัมน์' },
-      { id: 'utilities-flex', title: 'Flex', path: 'utilities/flex', keywords: 'flexbox justify align gap order' },
-      { id: 'utilities-spacing', title: 'Spacing', path: 'utilities/spacing', keywords: 'padding margin ระยะห่าง' },
-      { id: 'utilities-sizing', title: 'Sizing', path: 'utilities/sizing', keywords: 'width height ขนาด' },
-      { id: 'utilities-typography', title: 'Typography', path: 'utilities/typography', keywords: 'text font ตัวอักษร' },
-      { id: 'utilities-colors', title: { th: 'สี', en: 'Colours' }, path: 'utilities/colors', keywords: 'color colour palette surface bg' },
-      { id: 'utilities-borders', title: { th: 'เส้นขอบและเงา', en: 'Borders and shadows' }, path: 'utilities/borders', keywords: 'border radius shadow' },
-      { id: 'utilities-misc', title: { th: 'ตำแหน่งและอื่น ๆ', en: 'Position and more' }, path: 'utilities/misc', keywords: 'position z-index overflow cursor opacity' },
-      { id: 'utilities-forms', title: { th: 'จัด layout ฟอร์ม', en: 'Form layout' }, path: 'utilities/forms', keywords: 'field formgrid' },
+    groups: [
+      {
+        id: 'utilities/classes',
+        title: 'Styling',
+        items: [
+          { id: 'utilities-overview', title: { th: 'ภาพรวม', en: 'Overview' }, path: 'utilities/overview', keywords: 'utility class utils เปิด ปิด' },
+          { id: 'utilities-typography', title: 'Typography', path: 'utilities/typography', keywords: 'text font ตัวอักษร' },
+          { id: 'utilities-colors', title: { th: 'สี', en: 'Colours' }, path: 'utilities/colors', keywords: 'color colour palette surface bg' },
+          { id: 'utilities-borders', title: { th: 'เส้นขอบและเงา', en: 'Borders and shadows' }, path: 'utilities/borders', keywords: 'border radius shadow' },
+        ],
+      },
+      {
+        id: 'utilities/helpers',
+        title: 'Helpers',
+        items: [
+          { id: 'excel', title: 'Excel', path: 'components/excel', keywords: 'excel xlsx spreadsheet export workbook sheet merge formula style xlsx sheetjs exceljs ส่งออก ไฟล์ เอ็กเซล รวมเซลล์ สูตร รายงาน' },
+          { id: 'thai', title: { th: 'Pipe ภาษาไทย', en: 'Thai pipes' }, path: 'components/thai', keywords: 'thai pipe date buddhist พ.ศ. bahttext baht text phone id digits time ago วันที่ เงินเป็นตัวอักษร บาทถ้วน เบอร์โทร เลขบัตร เลขไทย ที่ผ่านมา' },
+          { id: 'animate', title: 'Animate on scroll', path: 'components/animate', keywords: 'data-aos scroll animation เคลื่อนไหว' },
+          { id: 'ripple', title: 'Ripple', path: 'components/ripple', keywords: 'ripple pRipple ink material คลื่น' },
+          { id: 'dragdrop', title: 'DragDrop', path: 'components/dragdrop', keywords: 'drag drop draggable droppable pDraggable ลากวาง' },
+        ],
+      },
     ],
   },
   {
@@ -121,20 +165,16 @@ export const NAV: NavGroup[] = [
         items: [
           { id: 'accordion', title: 'Accordion', path: 'components/accordion', keywords: 'collapse faq หัวข้อพับ' },
           { id: 'card', title: 'Card', path: 'components/card', keywords: 'glass การ์ด' },
-          { id: 'divider', title: 'Divider', path: 'components/divider', keywords: 'separator เส้นคั่น' },
           { id: 'fieldset', title: 'Fieldset', path: 'components/fieldset', keywords: 'legend group' },
           { id: 'inplace', title: 'Inplace', path: 'components/inplace', keywords: 'inplace edit in place click to edit แก้ไขในที่ คลิกเพื่อแก้ไข' },
           { id: 'panel', title: 'Panel', path: 'components/panel', keywords: 'collapse toggleable พับ' },
-          { id: 'scrollpanel', title: 'ScrollPanel', path: 'components/scrollpanel', keywords: 'scroll panel scrollbar กล่องเลื่อน แถบเลื่อน' },
-          { id: 'splitter', title: 'Splitter', path: 'components/splitter', keywords: 'splitter split panes resize layout แบ่งช่อง ปรับขนาด ลากแบ่ง' },
           { id: 'stepper', title: 'Stepper', path: 'components/stepper', keywords: 'stepper wizard multi-step form linear vertical steps ขั้นตอน ฟอร์มหลายขั้น ทีละขั้น' },
           { id: 'tabs', title: 'Tabs', path: 'components/tabs', keywords: 'tabview tabpanel แท็บ' },
-          { id: 'toolbar', title: 'Toolbar', path: 'components/toolbar', keywords: 'actions bar แถบเครื่องมือ' },
         ],
       },
       {
         id: 'components/menu',
-        title: 'Menu',
+        title: 'Navigation',
         items: [
           { id: 'breadcrumb', title: 'Breadcrumb', path: 'components/breadcrumb', keywords: 'breadcrumb trail path เส้นทาง ตำแหน่งหน้า' },
           { id: 'menubar', title: 'Menubar', path: 'components/menubar', keywords: 'menu navbar เมนู แถบเมนู header routerLink' },
@@ -149,6 +189,29 @@ export const NAV: NavGroup[] = [
         ],
       },
       {
+        id: 'components/data',
+        title: 'Data',
+        items: [
+          { id: 'table', title: 'Table', path: 'components/table', keywords: 'datatable data table grid ตาราง รายชื่อ แบ่งหน้า เรียง ค้นหา lazy frozen expansion row group column filter export csv excel xlsx context menu คอลัมน์ตรึง แถวขยาย จัดกลุ่ม ตัวกรอง ส่งออก คลิกขวา' },
+          { id: 'paginator', title: 'Paginator', path: 'components/paginator', keywords: 'paging pagination page แบ่งหน้า หน้าถัดไป' },
+          { id: 'tree', title: 'Tree', path: 'components/tree', keywords: 'tree treeview hierarchy folders checkbox ลำดับชั้น โฟลเดอร์ ต้นไม้' },
+          { id: 'picklist', title: 'PickList', path: 'components/picklist', keywords: 'pick list transfer dual list permissions drag drop ย้ายรายการ สิทธิ์ ลำดับผู้อนุมัติ ลากวาง' },
+          { id: 'orderlist', title: 'OrderList', path: 'components/orderlist', keywords: 'order list reorder sort drag drop เรียงลำดับ จัดลำดับ ลากวาง' },
+          { id: 'timeline', title: 'Timeline', path: 'components/timeline', keywords: 'events history steps ลำดับเหตุการณ์ ประวัติ ไทม์ไลน์' },
+          { id: 'scroller', title: 'Scroller', path: 'components/scroller', keywords: 'virtual scroller virtual scroll long list รายการยาว เลื่อนเร็ว' },
+        ],
+      },
+      {
+        id: 'components/charts',
+        title: 'Charts',
+        items: [
+          { id: 'chart', title: 'Chart', path: 'components/chart', since: 3, keywords: 'chart wirachart graph svg bar line area pie doughnut radar scatter bubble dashboard no chart.js กราฟ แผนภูมิ แดชบอร์ด กราฟแท่ง กราฟเส้น กราฟวงกลม' },
+          { id: 'chartjs', title: 'ChartJS', path: 'components/chartjs', keywords: 'chart.js chartjs graph bar line pie doughnut plugins canvas p-chart กราฟ แผนภูมิ' },
+          { id: 'organizationchart', title: 'OrganizationChart', path: 'components/organizationchart', keywords: 'organization chart org chart hierarchy tree ผังองค์กร โครงสร้างองค์กร ผังบุคลากร' },
+          { id: 'flow', title: 'Flow', path: 'components/flow', keywords: 'flow diagram node editor flowchart workflow graph edges handles minimap vflow ngx-vflow แผนภาพ ผังงาน ขั้นตอนงาน เส้นเชื่อม โหนด ผังองค์กร ลากเชื่อม' },
+        ],
+      },
+      {
         id: 'components/display',
         title: 'Display',
         items: [
@@ -156,39 +219,30 @@ export const NAV: NavGroup[] = [
           { id: 'badge', title: 'Badge', path: 'components/badge', keywords: 'count dot ตัวเลข' },
           { id: 'chip', title: 'Chip', path: 'components/chip', keywords: 'pill removable' },
           { id: 'avatar', title: 'Avatar', path: 'components/avatar', keywords: 'avatargroup user profile' },
-          { id: 'image', title: 'Image', path: 'components/image', keywords: 'img picture preview zoom rotate รูป รูปภาพ ขยาย' },
-          { id: 'skeleton', title: 'Skeleton', path: 'components/skeleton', keywords: 'loading placeholder' },
-          { id: 'progressbar', title: 'ProgressBar', path: 'components/progressbar', keywords: 'progress loading ความคืบหน้า' },
           { id: 'metergroup', title: 'MeterGroup', path: 'components/metergroup', keywords: 'meter storage แถบหลายค่า พื้นที่' },
-          { id: 'timeline', title: 'Timeline', path: 'components/timeline', keywords: 'events history steps ลำดับเหตุการณ์ ประวัติ ไทม์ไลน์' },
+          { id: 'terminal', title: 'Terminal', path: 'components/terminal', keywords: 'terminal console command line cli คำสั่ง คอนโซล หน้าจอคำสั่ง' },
+        ],
+      },
+      {
+        id: 'components/feedback',
+        title: 'Feedback',
+        items: [
+          { id: 'message', title: 'Message', path: 'components/message', keywords: 'alert inline notice ข้อความแจ้ง' },
+          { id: 'toast', title: 'Toast', path: 'components/toast', keywords: 'notification snackbar แจ้งเตือน' },
+          { id: 'progressbar', title: 'ProgressBar', path: 'components/progressbar', keywords: 'progress loading ความคืบหน้า' },
           { id: 'progressspinner', title: 'ProgressSpinner', path: 'components/progressspinner', keywords: 'spinner loading' },
-        ],
-      },
-      {
-        id: 'components/data',
-        title: 'Data',
-        items: [
-          { id: 'table', title: 'Table', path: 'components/table', keywords: 'datatable data table grid ตาราง รายชื่อ แบ่งหน้า เรียง ค้นหา lazy frozen expansion row group column filter export csv context menu คอลัมน์ตรึง แถวขยาย จัดกลุ่ม ตัวกรอง ส่งออก คลิกขวา' },
-          { id: 'chart', title: 'Chart', path: 'components/chart', keywords: 'chart.js graph bar line pie doughnut กราฟ แผนภูมิ' },
-          { id: 'paginator', title: 'Paginator', path: 'components/paginator', keywords: 'paging pagination page แบ่งหน้า หน้าถัดไป' },
-          { id: 'organizationchart', title: 'OrganizationChart', path: 'components/organizationchart', keywords: 'organization chart org chart hierarchy tree ผังองค์กร โครงสร้างองค์กร ผังบุคลากร' },
-          { id: 'picklist', title: 'PickList', path: 'components/picklist', keywords: 'pick list transfer dual list permissions drag drop ย้ายรายการ สิทธิ์ ลำดับผู้อนุมัติ ลากวาง' },
-          { id: 'orderlist', title: 'OrderList', path: 'components/orderlist', keywords: 'order list reorder sort drag drop เรียงลำดับ จัดลำดับ ลากวาง' },
-          { id: 'tree', title: 'Tree', path: 'components/tree', keywords: 'tree treeview hierarchy folders checkbox ลำดับชั้น โฟลเดอร์ ต้นไม้' },
-          { id: 'scroller', title: 'Scroller', path: 'components/scroller', keywords: 'virtual scroller virtual scroll long list รายการยาว เลื่อนเร็ว' },
-        ],
-      },
-      {
-        id: 'components/diagram',
-        title: 'Diagram',
-        items: [
-          { id: 'flow', title: 'Flow', path: 'components/flow', keywords: 'flow diagram node editor flowchart workflow graph edges handles minimap vflow ngx-vflow แผนภาพ ผังงาน ขั้นตอนงาน เส้นเชื่อม โหนด ผังองค์กร ลากเชื่อม' },
+          { id: 'skeleton', title: 'Skeleton', path: 'components/skeleton', keywords: 'loading placeholder' },
+          { id: 'blockui', title: 'BlockUI', path: 'components/blockui', keywords: 'block ui blockui overlay loading busy บังหน้า ระหว่างบันทึก' },
+          { id: 'emptystate', title: 'EmptyState', path: 'components/emptystate', keywords: 'empty state no data nothing found placeholder blank slate ไม่มีข้อมูล ว่าง ไม่พบ ค้นไม่เจอ' },
+          { id: 'result', title: 'Result', path: 'components/result', keywords: 'result success error 404 403 500 not found forbidden server error สำเร็จ ไม่สำเร็จ ไม่พบหน้า ไม่มีสิทธิ์ ระบบขัดข้อง' },
+          { id: 'errorpage', title: 'ErrorPage', path: 'components/errorpage', keywords: 'error page 404 403 401 500 503 4xx 5xx not found maintenance kawaii template หน้าข้อผิดพลาด ไม่พบหน้า ปิดปรับปรุง ระบบขัดข้อง น่ารัก' },
         ],
       },
       {
         id: 'components/media',
         title: 'Media',
         items: [
+          { id: 'image', title: 'Image', path: 'components/image', keywords: 'img picture preview zoom rotate รูป รูปภาพ ขยาย' },
           { id: 'carousel', title: 'Carousel', path: 'components/carousel', keywords: 'carousel slider slideshow news cards ภาพสไลด์ ข่าวประชาสัมพันธ์ เลื่อน แบนเนอร์' },
           { id: 'galleria', title: 'Galleria', path: 'components/galleria', keywords: 'galleria gallery carousel slideshow photos อัลบั้ม ภาพกิจกรรม สไลด์' },
           { id: 'imagecompare', title: 'ImageCompare', path: 'components/imagecompare', keywords: 'image compare before after slider เทียบภาพ ก่อนหลัง เปรียบเทียบรูป' },
@@ -200,30 +254,11 @@ export const NAV: NavGroup[] = [
         title: 'Overlay',
         items: [
           { id: 'alert', title: 'AlertDialog', path: 'components/alert', keywords: 'alert fire popup แจ้งเตือน กล่องข้อความ' },
-          { id: 'blockui', title: 'BlockUI', path: 'components/blockui', keywords: 'block ui blockui overlay loading busy บังหน้า ระหว่างบันทึก' },
           { id: 'confirmdialog', title: 'ConfirmDialog', path: 'components/confirmdialog', keywords: 'confirm confirmation ยืนยัน' },
           { id: 'dialog', title: 'Dialog', path: 'components/dialog', keywords: 'modal popup กล่องโต้ตอบ' },
           { id: 'drawer', title: 'Drawer', path: 'components/drawer', keywords: 'drawer sidebar side panel offcanvas เมนูข้าง แผงข้าง' },
           { id: 'popover', title: 'Popover', path: 'components/popover', keywords: 'overlaypanel dropdown panel' },
           { id: 'tooltip', title: 'Tooltip', path: 'components/tooltip', keywords: 'hint title คำอธิบาย' },
-        ],
-      },
-      {
-        id: 'components/messages',
-        title: 'Messages',
-        items: [
-          { id: 'message', title: 'Message', path: 'components/message', keywords: 'alert inline notice ข้อความแจ้ง' },
-          { id: 'toast', title: 'Toast', path: 'components/toast', keywords: 'notification snackbar แจ้งเตือน' },
-        ],
-      },
-      {
-        id: 'components/misc',
-        title: 'Misc',
-        items: [
-          { id: 'animate', title: 'Animate on scroll', path: 'components/animate', keywords: 'data-aos scroll animation เคลื่อนไหว' },
-          { id: 'dragdrop', title: 'DragDrop', path: 'components/dragdrop', keywords: 'drag drop draggable droppable pDraggable ลากวาง' },
-          { id: 'ripple', title: 'Ripple', path: 'components/ripple', keywords: 'ripple pRipple ink material คลื่น' },
-          { id: 'terminal', title: 'Terminal', path: 'components/terminal', keywords: 'terminal console command line cli คำสั่ง คอนโซล หน้าจอคำสั่ง' },
         ],
       },
     ],
@@ -244,4 +279,24 @@ export const NAV_PAGES: NavPage[] = NAV.flatMap((g) => [
 
 export function navPageOf(path: string): NavPage | undefined {
   return NAV_PAGES.find((p) => p.path === path);
+}
+
+/** Whether a page is in a version ('v1' … 'v3' or the major). */
+export function inVersion(item: { since?: number }, version: string | number): boolean {
+  const major = typeof version === 'number' ? version : Number(String(version).replace(/^v/, '')) || 3;
+  return !item.since || major >= item.since;
+}
+
+/** The sidebar of one version: pages it does not have are left out. */
+export function navFor(version: string | number): NavGroup[] {
+  return NAV.map((g) => ({
+    ...g,
+    items: g.items?.filter((i) => inVersion(i, version)),
+    groups: g.groups?.map((s) => ({ ...s, items: s.items.filter((i) => inVersion(i, version)) })).filter((s) => s.items.length),
+  }));
+}
+
+/** NAV_PAGES of one version. */
+export function navPagesFor(version: string | number): NavPage[] {
+  return NAV_PAGES.filter((p) => inVersion(p, version));
 }

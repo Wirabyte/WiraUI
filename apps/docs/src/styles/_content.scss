@@ -36,6 +36,53 @@
   gap: 8px;
   margin-top: 18px;
 }
+/* Chart page: summary cards with a sparkline. */
+.docs-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+.docs-kpi {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid var(--docs-border);
+  border-radius: 12px;
+  background: var(--docs-surface);
+  span {
+    color: var(--docs-muted);
+    font-size: 13px;
+  }
+  strong {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+}
+
+/* A library the page's component needs: its install command under the chips. */
+.docs-requires {
+  margin-top: 18px;
+  padding: 14px 16px 2px;
+  border: 1px solid var(--docs-border);
+  border-left: 3px solid var(--docs-primary);
+  border-radius: 12px;
+  background: var(--docs-info-bg);
+}
+.docs-requires-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  docs-icon {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--docs-primary);
+  }
+}
 .docs-chip {
   display: inline-flex;
   align-items: center;
@@ -465,6 +512,29 @@ docs-demo,
 }
 .docs-demo-preview > * {
   max-width: 100%;
+}
+/* Thai pipes page: what each pipe writes, as name / result pairs. */
+.docs-pipe-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  /* The small code name and the result share one baseline per row. */
+  align-items: baseline;
+  gap: 6px 16px;
+  margin: 0;
+  width: 100%;
+}
+.docs-pipe-list dt {
+  color: var(--docs-muted);
+  font-family: var(--docs-mono, monospace);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.docs-pipe-list dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.docs-pipe-out {
+  margin: 0;
 }
 .docs-demo-output {
   color: var(--docs-muted);

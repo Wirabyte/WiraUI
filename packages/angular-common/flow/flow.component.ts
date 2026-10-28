@@ -57,6 +57,7 @@ import {
   getDescendants,
   getEdgeEnds,
   getEdgePath,
+  getEdgePathWithRoom,
   getElementsToRemove,
   getIntersectingNodes,
   getViewportForBounds,
@@ -70,6 +71,7 @@ import {
   keyMatches,
   layoutFlow,
   layoutTree,
+  markerLength,
   markerShape,
   multiKeyHeld,
   nearestHandle,
@@ -1140,7 +1142,11 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       );
       if (view && !isEdgeVisible({ x: ends.sourceX, y: ends.sourceY }, { x: ends.targetX, y: ends.targetY }, view, 200 / this.vp.zoom)) continue;
       const type = e.type || 'default';
-      const [path, lx, ly] = getEdgePath(BUILTIN_EDGES.has(type) ? type : 'default', ends, e.pathOptions || {});
+      // Curved edges stop short of an arrowhead and run straight into it, so it stays on the line however the curve bends.
+      const [path, lx, ly] = getEdgePathWithRoom(BUILTIN_EDGES.has(type) ? type : 'default', ends, e.pathOptions || {}, {
+        start: markerLength(e.markerStart),
+        end: markerLength(e.markerEnd),
+      });
       const v = this.edgeViews.get(raw.id) || this.newEdgeView(raw.id);
       const selected = !!raw.selected;
       v.edge = raw;

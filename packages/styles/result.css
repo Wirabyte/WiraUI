@@ -1,0 +1,131 @@
+/* wt-result. Shared by wiratheme v1, v2 and v3. The end of a task, or a page that cannot be shown: a large status mark
+   (or the 403 / 404 / 500 code drawn with a picture for its 0), a title, a muted line, a row of actions and an optional
+   details box, all centred. */
+@layer wiratheme.components {
+  wt-result {
+    display: block;
+  }
+  .wt-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--wt-result-gap);
+    padding: var(--wt-result-padding);
+    text-align: center;
+    font-family: var(--wt-font-family);
+  }
+  .wt-result-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--wt-result-icon-box);
+    height: var(--wt-result-icon-box);
+    margin-bottom: 0.75rem;
+    border-radius: 50%;
+    color: var(--wt-info-color);
+    background: var(--wt-info-bg);
+    font-size: calc(var(--wt-result-icon-box) * 0.45);
+    line-height: 1;
+  }
+  .wt-result[data-status='success'] .wt-result-mark {
+    color: var(--wt-success-color);
+    background: var(--wt-success-bg);
+  }
+  .wt-result[data-status='error'] .wt-result-mark {
+    color: var(--wt-danger-color);
+    background: var(--wt-danger-bg);
+  }
+  .wt-result[data-status='warning'] .wt-result-mark {
+    color: var(--wt-warn-color);
+    background: var(--wt-warn-bg);
+  }
+  .wt-result-mark svg {
+    width: 60%;
+    height: 60%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .wt-result-mark .wt-result-dot {
+    fill: currentColor;
+    stroke: none;
+  }
+  .wt-result-art {
+    display: block;
+    width: var(--wt-result-art-width);
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+    overflow: visible;
+  }
+  .wt-rs-digit {
+    fill: var(--wt-result-code-color);
+    font-family: var(--wt-font-family);
+    font-size: 88px;
+    font-weight: 700;
+  }
+  .wt-rs-soft {
+    fill: var(--wt-result-art-soft);
+  }
+  .wt-rs-ring {
+    fill: var(--wt-result-art-paper);
+    stroke: var(--wt-result-art-accent);
+    stroke-width: 4;
+  }
+  .wt-rs-shackle {
+    fill: none;
+    stroke: var(--wt-result-art-accent);
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+  .wt-rs-accent-fill {
+    fill: var(--wt-result-art-accent);
+    stroke: var(--wt-result-art-accent);
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+  .wt-rs-paper-fill {
+    fill: var(--wt-result-art-paper);
+  }
+  .wt-rs-paper-line {
+    stroke: var(--wt-result-art-paper);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .wt-result-title {
+    margin: 0;
+    color: var(--wt-result-title-color);
+    font-size: var(--wt-result-title-size);
+    font-weight: var(--wt-result-title-weight);
+    line-height: var(--wt-line-height);
+  }
+  .wt-result-subtitle {
+    margin: 0;
+    max-width: 36rem;
+    color: var(--wt-result-description-color);
+    line-height: var(--wt-line-height);
+  }
+  .wt-result-extra {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--wt-result-actions-gap);
+    margin-top: 1rem;
+  }
+  .wt-result-content {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 40rem;
+    margin-top: 1rem;
+    padding: var(--wt-result-content-padding);
+    border-radius: var(--wt-result-content-radius);
+    background: var(--wt-result-content-bg);
+    text-align: start;
+  }
+  .wt-result-extra:empty,
+  .wt-result-content:empty {
+    display: none;
+  }
+}

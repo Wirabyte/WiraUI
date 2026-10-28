@@ -237,6 +237,43 @@ export const FLOW_EDGE_TYPES: readonly string[] = ['default', 'bezier', 'straigh
  * The path for an edge of `type` (unknown types, such as custom templates, get the bezier the template can use or
  * ignore). `options` carries `curvature`, `borderRadius` and `offset`.
  */
+/**
+ * `getEdgePath()` with room for arrowheads. A marker is drawn along the path's last (or first) few pixels, turned only
+ * to the very end's direction, so on a curve that still bends there the line sticks out of the arrow's side. Curved
+ * edges therefore stop `room.end` px before the target, out along its handle, and run straight in (the same at the
+ * source with `room.start`): the arrowhead lies on a straight piece, and the curve meets it without a kink because it
+ * already ends in that direction. Straight and right-angled edges already end straight and are left as they are.
+ */
+export function getEdgePathWithRoom(
+  type: string | null | undefined,
+  p: FlowPathParams,
+  options: { curvature?: number; borderRadius?: number; offset?: number } = {},
+  room: { start?: number; end?: number } = {}
+): FlowPathResult {
+  const curved = !type || type === 'default' || type === 'bezier' || type === 'simplebezier';
+  const span = Math.hypot(p.targetX - p.sourceX, p.targetY - p.sourceY);
+  // Never more than a third of the edge each, so short edges keep a curve.
+  const start = curved ? Math.min(Math.max(0, room.start || 0), span / 3) : 0;
+  const end = curved ? Math.min(Math.max(0, room.end || 0), span / 3) : 0;
+  if (!start && !end) return getEdgePath(type, p, options);
+  const ds = positionVector(p.sourcePosition || 'bottom');
+  const dt = positionVector(p.targetPosition || 'top');
+  const inner: FlowPathParams = {
+    ...p,
+    sourceX: p.sourceX + ds.x * start,
+    sourceY: p.sourceY + ds.y * start,
+    targetX: p.targetX + dt.x * end,
+    targetY: p.targetY + dt.y * end,
+  };
+  const [path] = getEdgePath(type, inner, options);
+  // The label stays where it is without arrowheads: the middle of the whole edge.
+  const [, lx, ly] = getEdgePath(type, p, options);
+  let d = path;
+  if (start) d = `M${fmt(p.sourceX)},${fmt(p.sourceY)} L${d.slice(1)}`;
+  if (end) d += ` L${fmt(p.targetX)},${fmt(p.targetY)}`;
+  return [d, lx, ly, Math.abs(lx - p.sourceX), Math.abs(ly - p.sourceY)];
+}
+
 export function getEdgePath(type: string | null | undefined, p: FlowPathParams, options: { curvature?: number; borderRadius?: number; offset?: number } = {}): FlowPathResult {
   switch (type) {
     case 'straight':

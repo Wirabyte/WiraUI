@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import type { Observable } from 'rxjs';
-import type { FilterMatchMode, FilterMeta, FilterRule, SortMeta } from 'wiratheme/core';
+import type { ExcelSheet, ExcelStyle, ExcelTableOptions, ExcelTotal, FilterMatchMode, FilterMeta, FilterRule, SortMeta } from 'wiratheme/core';
 
 export type { FilterMatchMode, FilterMeta, FilterRule, SortMeta };
 export type WtTableSelectionMode = 'single' | 'multiple';
@@ -63,6 +63,39 @@ export interface WtTableExportOptions {
 
 /** `[exportFunction]`: the text a cell exports as. */
 export type WtTableExportFunction = (cell: { data: unknown; field: string }) => unknown;
+
+/**
+ * `dt.exportExcel({ title: 'รายงาน', totals: { amount: 'sum' } })`: which rows (as for CSV), how the sheet looks
+ * (title, header style, stripes, borders, colours per cell or row, totals, frozen header, filter buttons, `customize` for
+ * anything else) and the workbook's font and dates. Columns may carry `exportWidth`, `exportFormat`, `exportStyle` and
+ * `exportTotal` next to `field` and `header`.
+ */
+export interface WtTableExcelOptions extends WtTableExportOptions, Omit<ExcelTableOptions, 'value'> {
+  /** File name without `.xlsx`. Default `[exportFilename]`, then `download`. */
+  fileName?: string;
+  /** Font of the workbook, e.g. `'TH Sarabun New'` with `fontSize: 16`. Default Calibri 11. */
+  fontName?: string;
+  fontSize?: number;
+  /** `'buddhist'` shows dates with พ.ศ. years. */
+  calendar?: 'gregorian' | 'buddhist';
+  /** Number format of dates, e.g. `'d mmm yyyy'`. */
+  dateFormat?: string;
+  /** More sheets after the table's, e.g. a summary or another table's `toExcelSheet()`. */
+  sheets?: ExcelSheet[];
+}
+
+/** The export keys a column of `[columns]` may carry for Excel. */
+export interface WtTableExcelColumn {
+  field?: string;
+  header?: unknown;
+  exportable?: boolean;
+  /** Characters. */
+  exportWidth?: number;
+  /** Number format: `'#,##0.00'`, `'0%'`, `'dd/mm/yyyy'`. */
+  exportFormat?: string;
+  exportStyle?: ExcelStyle;
+  exportTotal?: ExcelTotal | string | number;
+}
 
 export type WtTableRowGroupMode = 'subheader' | 'rowspan';
 

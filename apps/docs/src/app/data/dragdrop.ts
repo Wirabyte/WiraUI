@@ -6,7 +6,7 @@ const BOOL = 'boolean';
 export const DRAGDROP_DOC: ComponentDoc = {
   id: 'dragdrop',
   title: 'DragDrop',
-  group: 'Misc',
+  group: 'Helpers',
   entry: 'dragdrop',
   standalone: 'WtDraggable, WtDroppable',
   module: 'WtDragDropModule',

@@ -6,7 +6,7 @@ const BOOL = 'boolean';
 export const BLOCKUI_DOC: ComponentDoc = {
   id: 'blockui',
   title: 'BlockUI',
-  group: 'Overlay',
+  group: 'Feedback',
   entry: 'blockui',
   standalone: 'WtBlockUI',
   module: 'WtBlockUIModule',

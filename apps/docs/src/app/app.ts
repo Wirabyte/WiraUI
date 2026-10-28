@@ -1,6 +1,6 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
-import { Router, Scroll } from '@angular/router';
+import { NavigationEnd, Router, Scroll } from '@angular/router';
 import { filter } from 'rxjs';
 import { SECRETS } from './core/secrets';
 
@@ -42,8 +42,14 @@ export class App {
       }
     };
     doc.addEventListener('keydown', onKey);
+    // Leaving a secret page ends its pass: coming back (Back, a link, the address) needs the word again.
+    const leave = router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe((e) => {
+      const path = e.urlAfterRedirects.split(/[?#]/)[0];
+      for (const s of SECRETS) if (path !== s.path && !path.startsWith(s.path + '/')) s.dropPass();
+    });
     inject(DestroyRef).onDestroy(() => {
       sub.unsubscribe();
+      leave.unsubscribe();
       doc.removeEventListener('keydown', onKey);
     });
   }
