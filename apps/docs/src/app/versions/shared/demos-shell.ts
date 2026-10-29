@@ -81,30 +81,42 @@ export abstract class DockDemo extends SimpleDemo {
   /** Drag a window by its title bar, kept on its desktop (below the top bar on the mac). */
   drag(os: Os, id: string, event: PointerEvent): void {
     if (event.button !== 0 || (event.target as Element | null)?.closest?.('button')) return;
-    const bar = event.currentTarget as HTMLElement;
-    const win = bar.closest<HTMLElement>('.docs-window');
+    const win = (event.currentTarget as HTMLElement).closest<HTMLElement>('.docs-window');
     const desk = win?.parentElement;
     if (!win || !desk) return;
     event.preventDefault();
+    const doc = win.ownerDocument;
     const from = this.place(os, id);
-    const start = { x: event.clientX, y: event.clientY, left: from.x, top: from.y };
+    const start = { x: event.clientX, y: event.clientY, left: from.x, top: from.y, pointer: event.pointerId };
     const top = os === 'mac' ? 36 : 0;
-    const move = (e: PointerEvent) => {
+    const to = (e: PointerEvent) => {
       const x = Math.min(Math.max(start.left + e.clientX - start.x, 80 - win.offsetWidth), desk.clientWidth - 80);
       const y = Math.min(Math.max(start.top + e.clientY - start.y, top), desk.clientHeight - 64);
       this.pos[os + id] = { x, y };
     };
-    const stop = () => {
-      bar.removeEventListener('pointermove', move);
-      bar.removeEventListener('pointerup', stop);
-      bar.removeEventListener('pointercancel', stop);
+    // Like the dialog's drag: listening on the document, only moves with the button still held, and the window
+    // lands where the button is let go (a stray move cannot leave it somewhere else).
+    const move = (e: PointerEvent) => {
+      if (e.pointerId === start.pointer && e.buttons & 1) to(e);
+    };
+    const stop = (e: PointerEvent) => {
+      if (e.pointerId !== start.pointer) return;
+      if (e.type === 'pointerup') to(e);
+      doc.removeEventListener('pointermove', move);
+      doc.removeEventListener('pointerup', stop);
+      doc.removeEventListener('pointercancel', stop);
       win.classList.remove('docs-window-dragging');
     };
-    bar.setPointerCapture?.(event.pointerId);
     win.classList.add('docs-window-dragging');
-    bar.addEventListener('pointermove', move);
-    bar.addEventListener('pointerup', stop);
-    bar.addEventListener('pointercancel', stop);
+    doc.addEventListener('pointermove', move);
+    doc.addEventListener('pointerup', stop);
+    doc.addEventListener('pointercancel', stop);
+  }
+
+  /** A window's place on its desktop, as a `translate` (moving it repaints, nothing is laid out again). */
+  shift(os: Os, id: string): string {
+    const p = this.place(os, id);
+    return `${p.x}px ${p.y}px`;
   }
 
   close(os: Os, id: string): void {

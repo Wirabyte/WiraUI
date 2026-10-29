@@ -24,7 +24,7 @@
             </span>
           </div>
           @for (w of windows('mac'); track w.id) {
-            <section class="docs-window docs-window-mac" [attr.data-app]="w.id" [style.left.px]="place('mac', w.id).x" [style.top.px]="place('mac', w.id).y" [style.z-index]="z('mac', w.id)" (pointerdown)="launch('mac', w.id)">
+            <section class="docs-window docs-window-mac" [attr.data-app]="w.id" [style.translate]="shift('mac', w.id)" [style.z-index]="z('mac', w.id)" (pointerdown)="launch('mac', w.id)">
               <header class="docs-window-bar" (pointerdown)="drag('mac', w.id, $event)">
                 <button type="button" class="docs-window-dot docs-dot-close" [attr.aria-label]="'close ' + w.id" (click)="$event.stopPropagation(); close('mac', w.id)"></button>
                 <span class="docs-window-dot docs-dot-min"></span><span class="docs-window-dot docs-dot-max"></span>
@@ -48,7 +48,7 @@
       <docs-demo [html]="code['windows']" layout="stack">
         <div class="docs-desk docs-desk-win" id="d-dock-win">
           @for (w of windows('win'); track w.id) {
-            <section class="docs-window docs-window-win" [attr.data-app]="w.id" [style.left.px]="place('win', w.id).x" [style.top.px]="place('win', w.id).y" [style.z-index]="z('win', w.id)" (pointerdown)="launch('win', w.id)">
+            <section class="docs-window docs-window-win" [attr.data-app]="w.id" [style.translate]="shift('win', w.id)" [style.z-index]="z('win', w.id)" (pointerdown)="launch('win', w.id)">
               <header class="docs-window-bar" (pointerdown)="drag('win', w.id, $event)">
                 <i [class]="w.icon" aria-hidden="true"></i>
                 <span class="docs-window-title">{{ tx(w.label) }}</span>

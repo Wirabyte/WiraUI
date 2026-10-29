@@ -2433,6 +2433,9 @@ wt-scroller {
 }
 .docs-window {
   position: absolute;
+  /* Placed by `translate` from the corner. */
+  top: 0;
+  left: 0;
   width: min(22rem, 72%);
   overflow: hidden;
   border-radius: 12px;

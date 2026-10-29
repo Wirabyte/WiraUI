@@ -600,6 +600,8 @@ test.describe('input otp', () => {
 
 test('nothing in these sections is wider than a phone; scroll boxes keep their content inside', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
+  // Parts that fold from a listener (the aside menu) catch up in the next frame or two; WebKit a frame later.
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   for (const id of ['#term-section', '#icmp-section', '#crs-section', '#spl-section', '#oc-section', '#kn-section', '#otp-section']) {
     const out = await page.locator(id).evaluate((section) => {
       const limit = document.documentElement.clientWidth;
