@@ -75,43 +75,54 @@ jobs:
           - { wt: 2, angular: '20', node: '20.19', flags: '--style=scss' }
           # The npm that ships with Node 20.19 fails inside `ng new` for Angular 21 ("reading 'edgesOut'"): npm 11 there.
           - { wt: 3, angular: '21', node: '20.19', npm: '11', flags: '--style=css --zoneless' }
+    # No checkout here, so everything goes in runner.temp, which every job starts empty. A self-hosted runner keeps
+    # the workspace between jobs: there it still holds another job's checkout (whose package.json makes setup-node v5
+    # turn on pnpm caching without pnpm) and the `app` of the previous matrix entry.
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: packs
-          path: packs
+          path: ${{ runner.temp }}/packs
       - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      # Into runner.temp, not -g: on a self-hosted runner -g would change the cached Node 20.19 for the next jobs.
       - if: matrix.npm
-        run: npm install -g npm@${{ matrix.npm }}
+        run: |
+          npm install -g --prefix "$RUNNER_TEMP/npm" npm@${{ matrix.npm }}
+          echo "$RUNNER_TEMP/npm/bin" >> "$GITHUB_PATH"
       - name: New Angular ${{ matrix.angular }} app
+        working-directory: ${{ runner.temp }}
         run: npx -y @angular/cli@${{ matrix.angular }} new app --defaults --skip-git --skip-tests --routing=false ${{ matrix.flags }}
       # Install the packed tarball first: Angular CLI 21 cannot `ng add` a file: spec directly.
       - name: ng add wiratheme@${{ matrix.wt }} from the packed tarball
-        working-directory: app
+        working-directory: ${{ runner.temp }}/app
         run: |
           npm install --no-audit --no-fund "$(ls ../packs/wiratheme-${{ matrix.wt }}.*.tgz)"
           npx ng add wiratheme --defaults --skip-confirmation
       - name: Build
-        working-directory: app
+        working-directory: ${{ runner.temp }}/app
         run: npx ng build
 
   version-lock:
     name: wiratheme@1 must not install on Angular 18
     needs: build
     runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    # In runner.temp for the same reason as the job above.
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: packs
-          path: packs
+          path: ${{ runner.temp }}/packs
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
-      - run: npx -y @angular/cli@18 new app --defaults --skip-git --skip-tests --skip-install --routing=false --style=css
+          package-manager-cache: false
+      - working-directory: ${{ runner.temp }}
+        run: npx -y @angular/cli@18 new app --defaults --skip-git --skip-tests --skip-install --routing=false --style=css
       - name: npm install must fail with ERESOLVE
-        working-directory: app
+        working-directory: ${{ runner.temp }}/app
         run: |
           npm install --no-audit --no-fund
           if npm install "$(ls ../packs/wiratheme-1.*.tgz)" > install.log 2>&1; then
