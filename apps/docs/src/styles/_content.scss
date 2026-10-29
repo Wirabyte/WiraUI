@@ -581,9 +581,14 @@ docs-demo,
 // A demo field with a short caption above it.
 .docs-demo-labelled {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start;
   gap: 6px;
   min-width: 0;
+}
+/* A native file input is as wide as its button and "no file" text, wider on Linux than here: it may shrink. */
+.docs-demo-labelled > input[type='file'] {
+  max-width: 100%;
 }
 .docs-demo-labelled > label {
   color: var(--docs-muted);
