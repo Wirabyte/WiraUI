@@ -147,8 +147,16 @@ test('tooltip: the pointer can move onto it and click its link', async ({ page }
   await target.hover();
   const tip = page.locator('.wt-tooltip');
   await expect(tip).toBeVisible();
-  const box = await tip.boundingBox();
-  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2, { steps: 4 });
+  const box = (await tip.boundingBox())!;
+  // The tooltip sits over the middle of wt-button, which this page stretches across the row: along the row to under
+  // it, then up. Resting over the gap between the two keeps it (the gap belongs to the tooltip).
+  const host = (await page.locator('#tip-link').boundingBox())!;
+  const x = box.x + box.width / 2;
+  await page.mouse.move(x, host.y + host.height / 2, { steps: 4 });
+  await page.mouse.move(x, (host.y + box.y + box.height) / 2);
+  await page.waitForTimeout(400);
+  await expect(tip).toBeVisible();
+  await page.mouse.move(x, box.y + box.height / 2, { steps: 4 });
   await page.waitForTimeout(400);
   await expect(tip).toBeVisible();
   await expect(tip.locator('a')).toHaveAttribute('href', 'https://example.com');

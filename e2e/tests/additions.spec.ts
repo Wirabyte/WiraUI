@@ -1,4 +1,4 @@
-import { expect, Page, test } from '@playwright/test';
+import { expect, Locator, Page, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 // The docs pages of the components added after the coverage review: EmptyState, Result, the Thai pipes (v1–v3) and
@@ -15,6 +15,17 @@ function collectErrors(page: Page): string[] {
     if (m.type() === 'error' && !/fonts\.(googleapis|gstatic)\.com|downloadable font/.test(`${m.location().url} ${m.text()}`)) errors.push(m.text());
   });
   return errors;
+}
+
+/**
+ * The middle of an element on the screen, measured by the page: WebKit's `boundingBox()` of SVG text can be far off
+ * (a doughnut's label came out 230px left of where it is drawn), so the pointer sent there misses it.
+ */
+function middleOf(locator: Locator): Promise<{ x: number; y: number }> {
+  return locator.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+  });
 }
 
 for (const v of VERSIONS) {
@@ -180,7 +191,13 @@ test('chart page (WiraTheme’s own): bars, legend toggling, tooltip, keyboard, 
   await page.keyboard.press('Enter');
   await expect(page.locator('#d-wc-click')).toHaveText(/^มิ\.ย\.: \d+$/);
   const before = await page.locator('#d-wc-click').textContent();
+  const table = page.locator('#d-wc-live .wt-chart-sr table');
+  const drawn = await table.textContent();
   await page.locator('#d-wc-shuffle button').click();
+  await expect(table).not.toHaveText(drawn!);
+  // The pointer goes out of the way first: the button sits just above the chart, and when focusing scrolls the
+  // chart under a pointer left there, Chromium sends a move that takes the label the keys chose.
+  await page.mouse.move(0, 0);
   await live.focus();
   await page.keyboard.press('End');
   await page.keyboard.press('Enter');
@@ -196,8 +213,8 @@ test('chart page (WiraTheme’s own): bars, legend toggling, tooltip, keyboard, 
   // Pointing at a slice lights it; moving off it onto empty space (still inside the chart) lets go.
   await doughnut.scrollIntoViewIfNeeded();
   const ring = (await doughnut.locator('svg.wt-chart-svg').boundingBox())!;
-  const label = (await doughnut.locator('.wt-chart-value').first().boundingBox())!;
-  await page.mouse.move(label.x + label.width / 2, label.y + label.height / 2);
+  const label = await middleOf(doughnut.locator('.wt-chart-value').first());
+  await page.mouse.move(label.x, label.y);
   await expect(doughnut.locator('.wt-chart-tooltip')).toBeVisible();
   await expect(doughnut.locator('.wt-chart-slice.wt-chart-dim')).toHaveCount(4);
   await page.mouse.move(ring.x + 4, ring.y + 4);
@@ -322,8 +339,16 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
 
   // The page's own control drives [type]: the chart moves over with the same cross-fade.
   const own = page.locator('#d-wc-own');
+  // The old drawing lives half a second: note that it came, instead of racing to see it (slow runners miss it).
+  await own.evaluate((el) => {
+    const w = window as unknown as { ghostSeen: boolean };
+    w.ghostSeen = false;
+    new MutationObserver(() => {
+      if (el.querySelector('.wt-chart-ghost')) w.ghostSeen = true;
+    }).observe(el, { childList: true, subtree: true });
+  });
   await page.locator('#d-wc-own-kind').getByText('เส้น').click();
-  await expect(own.locator('.wt-chart-ghost')).toHaveCount(1);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { ghostSeen: boolean }).ghostSeen)).toBe(true);
   await expect(own.locator('.wt-chart-line')).toHaveCount(2);
   await expect(own.locator('.wt-chart-ghost')).toHaveCount(0, { timeout: 3000 });
 
@@ -371,7 +396,9 @@ test('chart page: the type switcher and the newer kinds, each in its looks', asy
   // Sunburst: a click goes into a node, the middle says where, Escape comes back.
   const sun = page.locator('#d-wc-sunburst');
   await expect(sun.locator('.wt-chart-center-label')).toHaveText('รวม');
-  await sun.locator('text.wt-chart-text', { hasText: 'อาคารสถานที่' }).click({ force: true });
+  await sun.scrollIntoViewIfNeeded();
+  const node = await middleOf(sun.locator('text.wt-chart-text', { hasText: 'อาคารสถานที่' }));
+  await page.mouse.click(node.x, node.y);
   await expect(sun.locator('.wt-chart-center-back')).toBeVisible();
   await page.mouse.move(0, 0);
   await expect(sun.locator('.wt-chart-center-label')).toHaveText('อาคารสถานที่');

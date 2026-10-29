@@ -11,6 +11,10 @@ function distOf(app: string): string {
 const PORTS: Record<string, number> = { 'playground-v1': 4301, 'playground-v2': 4302, 'playground-v3': 4303, docs: 4310 };
 const url = (app: string) => `http://127.0.0.1:${PORTS[app]}`;
 
+// Firefox and WebKit run the same tests more slowly (WebKit on the Linux runners about three times slower than
+// Chromium): a test that goes through every version needs more than the default 30 seconds there.
+const OTHER_ENGINE_TIMEOUT = 120_000;
+
 export default defineConfig({
   testDir: './tests',
   // One baseline per screenshot name for ALL versions. Names with the project in them hold each major's
@@ -30,12 +34,14 @@ export default defineConfig({
     // Components in the other two engines: behaviour and layout only (font rendering differs, so no pixel baselines).
     {
       name: 'v3-firefox',
+      timeout: OTHER_ENGINE_TIMEOUT,
       testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/,
       ignoreSnapshots: true,
       use: { ...devices['Desktop Firefox'], viewport: { width: 1000, height: 800 }, baseURL: url('playground-v3') },
     },
     {
       name: 'v3-webkit',
+      timeout: OTHER_ENGINE_TIMEOUT,
       testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/,
       ignoreSnapshots: true,
       use: { ...devices['Desktop Safari'], viewport: { width: 1000, height: 800 }, baseURL: url('playground-v3') },
@@ -44,11 +50,13 @@ export default defineConfig({
     // The docs site must work in all three engines (scroll areas, sticky headers, layout).
     {
       name: 'docs-firefox',
+      timeout: OTHER_ENGINE_TIMEOUT,
       testMatch: /(docs|studio|excel|additions)\.spec\.ts$/,
       use: { ...devices['Desktop Firefox'], viewport: { width: 1000, height: 800 }, baseURL: url('docs') },
     },
     {
       name: 'docs-webkit',
+      timeout: OTHER_ENGINE_TIMEOUT,
       testMatch: /(docs|studio|excel|additions)\.spec\.ts$/,
       use: { ...devices['Desktop Safari'], viewport: { width: 1000, height: 800 }, baseURL: url('docs') },
     },

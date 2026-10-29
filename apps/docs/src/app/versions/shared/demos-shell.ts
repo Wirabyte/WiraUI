@@ -86,7 +86,8 @@ export abstract class DockDemo extends SimpleDemo {
     const desk = win?.parentElement;
     if (!win || !desk) return;
     event.preventDefault();
-    const start = { x: event.clientX, y: event.clientY, left: win.offsetLeft, top: win.offsetTop };
+    const from = this.place(os, id);
+    const start = { x: event.clientX, y: event.clientY, left: from.x, top: from.y };
     const top = os === 'mac' ? 36 : 0;
     const move = (e: PointerEvent) => {
       const x = Math.min(Math.max(start.left + e.clientX - start.x, 80 - win.offsetWidth), desk.clientWidth - 80);

@@ -2410,6 +2410,8 @@ test('migration table lists Stepper, PickList, OrderList and FileUpload, and the
 });
 
 test('the new pages at 360px in Thai and English: no sideways scroll, stacked lists, every demo fits', async ({ page }) => {
+  // 44 page loads plus the picklists: three times the usual time for one test, in whichever engine.
+  test.setTimeout(test.info().timeout * 3);
   await page.setViewportSize({ width: 360, height: 800 });
   for (const lang of ['th', 'en']) {
     for (const v of ['v1', 'v3']) {
@@ -4344,7 +4346,8 @@ test.describe('English samples', () => {
 
   /** Every component page (demos and the three tabs) and every guide page, in English. Thai stays only where it is the point. */
   test('no Thai left in demos or code on the English site', async ({ page, browserName }) => {
-    test.setTimeout(600_000);
+    // Every page, tab and version: CI runners are slower than a desktop, and the site keeps growing.
+    test.setTimeout(1_800_000);
     const versions = browserName === 'chromium' ? ['v1', 'v2', 'v3'] : ['v3'];
     // Reading Thai digits is what this sample shows.
     const allowed = [
@@ -4466,7 +4469,8 @@ test('utility classes are live on the Utilities pages', async ({ page }) => {
  * Firefox and WebKit run a smaller sample. One page, client-side navigation, so it stays quick.
  */
 test('responsive sweep: no horizontal overflow (and no other library name) on any page', async ({ page, browserName }) => {
-  test.setTimeout(600_000);
+  // Every page at every width, in both languages: CI runners are slower than a desktop, and the site keeps growing.
+  test.setTimeout(1_800_000);
   const full = browserName === 'chromium';
   const widths = full ? [360, 768, 1024, 1440] : [360, 1440];
   const versions = full ? ['v1', 'v2', 'v3'] : ['v3'];
@@ -4477,9 +4481,10 @@ test('responsive sweep: no horizontal overflow (and no other library name) on an
   expect(pathsOf['v3'].length).toBeGreaterThan(20);
 
   const overflow = () =>
-    page.evaluate(async () => {
-      // A menubar folds into its menu button from a media-query listener: give it a frame after a resize.
-      if (document.querySelector('wt-menubar')) await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    page.evaluate(async (inside) => {
+      // After a resize, parts that measure their box (a menubar folding into its button, a chart drawn at its width)
+      // catch up in the next frame or two (WebKit a frame later than Chromium): judge the page once they have.
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       const vw = document.documentElement.clientWidth;
       const clipped = (el: Element) => {
         for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
@@ -4492,6 +4497,9 @@ test('responsive sweep: no horizontal overflow (and no other library name) on an
       if (/primeng/i.test(document.body.innerText + document.title)) out.push('names the other UI library');
       if (document.documentElement.scrollWidth > window.innerWidth) out.push('page ' + document.documentElement.scrollWidth);
       for (const el of document.body.querySelectorAll('*')) {
+        // The shapes inside an svg only in Chromium: Firefox's box for a stroked curve is wider than what it paints (a
+        // gauge's arc that fits the phone measured 14px past it), so the other engines check the svg itself.
+        if (!inside && el instanceof SVGElement && el.ownerSVGElement) continue;
         const r = el.getBoundingClientRect();
         if (r.width && r.height && r.right > vw + 1 && getComputedStyle(el).visibility !== 'hidden' && !clipped(el)) {
           out.push(`${el.tagName.toLowerCase()}.${(el.getAttribute('class') || '').split(' ')[0]} → ${Math.round(r.right)}`);
@@ -4499,7 +4507,7 @@ test('responsive sweep: no horizontal overflow (and no other library name) on an
         }
       }
       return out;
-    });
+    }, full);
 
   // Client-side navigation keeps the sweep fast; a full load every 40 pages stays under WebKit's
   // limit of 100 history calls per 10 seconds (the router adds its own replaceState).

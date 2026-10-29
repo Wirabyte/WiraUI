@@ -22,6 +22,36 @@
   .wt-tooltip-hoverable {
     pointer-events: auto;
   }
+  /* A see-through strip over the gap to the target (GAP in the directive), so a pointer crossing it is already on
+     the tooltip: no race with the moment the tooltip gives it to get there. */
+  .wt-tooltip-hoverable::before {
+    content: '';
+    position: absolute;
+  }
+  .wt-tooltip-hoverable.wt-tooltip-top::before {
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 8px;
+  }
+  .wt-tooltip-hoverable.wt-tooltip-bottom::before {
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 8px;
+  }
+  .wt-tooltip-hoverable.wt-tooltip-left::before {
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 8px;
+  }
+  .wt-tooltip-hoverable.wt-tooltip-right::before {
+    top: 0;
+    right: 100%;
+    bottom: 0;
+    width: 8px;
+  }
   .wt-tooltip-fit {
     max-width: calc(100vw - 1rem);
     white-space: nowrap;

@@ -2376,7 +2376,8 @@ wt-scroller {
 .docs-desk {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  /* clip, not hidden: nothing (a focused icon, a dragged window) can scroll the desk and shift what is on it. */
+  overflow: clip;
   width: 100%;
   border-radius: 14px;
   color: #18181b;

@@ -142,6 +142,9 @@
   }
   .wt-chart-svg {
     display: block;
+    /* Drawn at the measured width; until a narrower box is measured (the frame after a resize) it scales down
+       instead of pushing the page sideways. */
+    max-width: 100%;
     overflow: visible;
     font-family: inherit;
     border-radius: var(--wt-radius-sm);

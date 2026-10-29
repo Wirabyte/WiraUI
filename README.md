@@ -1,7 +1,21 @@
-# WiraTheme
+<p align="center">
+  <img src="apps/docs/public/favicon.svg" width="88" height="88" alt="WiraTheme" />
+</p>
 
-UI component library + Theme Designer สำหรับ Angular ของ Wirabyte
-API คุ้นมือ เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)
+<h1 align="center">WiraTheme</h1>
+
+<p align="center">
+  UI component library + Theme Designer สำหรับ Angular ของ Wirabyte<br />
+  API คุ้นมือ เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)
+</p>
+
+<p align="center">
+  <a href="https://github.com/Wirabyte/WiraTheme/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Wirabyte/WiraTheme/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
+  <img alt="Angular 15–21" src="https://img.shields.io/badge/Angular-15%E2%80%9321-dd0031?logo=angular&amp;logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&amp;logoColor=white" />
+  <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-16a34a" />
+  <img alt="Thai first: Buddhist dates, Thai ID, Thai fonts" src="https://img.shields.io/badge/Thai--first-%E0%B8%9E.%E0%B8%A8.%20%C2%B7%20%E0%B9%80%E0%B8%A5%E0%B8%82%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%20%C2%B7%20%E0%B8%9F%E0%B8%AD%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%97%E0%B8%A2-0d9488" />
+</p>
 
 | แพ็กเกจ | Angular | หน้าตา | ธีม | สถานะ |
 |---|---|---|---|---|
@@ -18,7 +32,7 @@ API คุ้นมือ เขียนเองทั้งหมด แล�
 "node_modules/wiratheme/themes/sila-light-teal/theme.css"
 ```
 
-## Component ที่มีแล้ว
+## 🧩 Component ที่มีแล้ว
 
 ทุกตัวมีใน v1, v2 และ v3 ใช้ได้ทั้ง NgModule (`WtXxxModule`) และ standalone (`WtXxx`) CSS ชุดเดียวกันทุกรุ่น ส่วนหน้าตามาจากธีมของรุ่นนั้น (ใส่ preset เดียวกันแล้ว pixel ตรงกันทุกรุ่น)
 
@@ -128,7 +142,7 @@ control ทุกตัวรองรับ `ngModel`, `formControlName`, `form
 @use 'wiratheme/utils' with ($groups: (palette: false));   // ปิดบางกลุ่ม
 ```
 
-## Icon: `wiraicon`
+## ✨ Icon: `wiraicon`
 
 แพ็กเกจ icon ของเราเอง ติดตั้งแยกได้ไม่ต้องมี wiratheme: 424 icon × 5 น้ำหนัก (thin, light, regular, bold, fill) ชื่อตามที่ทีมเขียนอยู่ (`times`, `exclamation-triangle`, `cog` …) และชื่อแบบ Font Awesome / Phosphor ใช้แทนกันได้ ตัวภาพจาก Phosphor Icons (MIT)
 
@@ -139,7 +153,7 @@ control ทุกตัวรองรับ `ngModel`, `formControlName`, `form
 
 ใส่ `node_modules/wiraicon/wiraicon.css` ใน `styles` ของ angular.json (font ของแต่ละน้ำหนักโหลดเมื่อถูกใช้เท่านั้น) ดูรายละเอียดใน [packages/icons/config/README.md](packages/icons/config/README.md)
 
-## Figma UI Kit
+## 🎨 Figma UI Kit
 
 plugin สำหรับ Figma desktop สร้าง UI Kit จาก token จริงของ preset ที่เลือก ได้แก่ variables (Light / Dark), text / effect styles, component พร้อม variant ตาม input ในโค้ด (severity, variant, size) และ wiraicon ครบชุด พร้อมไฟล์ token แบบ W3C Design Tokens วิธี build และติดตั้งดูที่ [packages/figma/README.md](packages/figma/README.md)
 
@@ -147,12 +161,12 @@ plugin สำหรับ Figma desktop สร้าง UI Kit จาก token �
 pnpm build:figma      # แล้ว Import plugin from manifest… → packages/figma/dist/manifest.json
 ```
 
-## เอกสาร
+## 📚 เอกสาร
 
 - [DESIGN.md](DESIGN.md) สถาปัตยกรรม, ระบบธีม, versioning และลำดับงาน
 - [prototype/theme-designer](prototype/theme-designer/index.html) ต้นแบบ Theme Designer
 
-## โครง repo
+## 🗂️ โครง repo
 
 ```
 packages/core            @wiratheme/core: token engine, exporters, Thai utils (TypeScript ล้วน)
@@ -166,7 +180,7 @@ apps/docs                เว็บแนะนำ (Angular 21, NgModule, โ�
 apps/playground-v*       แอปทดสอบของแต่ละรุ่น (npm project แยก)
 ```
 
-## พัฒนา
+## 🛠️ พัฒนา
 
 ใช้ Node 24 LTS (ดู `.nvmrc`) และ pnpm 9
 
