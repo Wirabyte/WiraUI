@@ -30,31 +30,31 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  WtConfig,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
-import { menuHasSubmenu, menuVisible, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  WuConfig,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
+import { menuHasSubmenu, menuVisible, WuLocale } from 'wiraui/core';
 
-/** Context of the `start` / `end` templates: `<ng-template wtTemplate="start" let-collapsed>`. */
-export interface WtAsideMenuSlotContext {
+/** Context of the `start` / `end` templates: `<ng-template wuTemplate="start" let-collapsed>`. */
+export interface WuAsideMenuSlotContext {
   $implicit: boolean;
   collapsed: boolean;
 }
 
-/** Context of the `item` template: `<ng-template wtTemplate="item" let-item let-collapsed="collapsed">`. */
-export interface WtAsideMenuItemContext {
-  $implicit: WtMenuItem;
+/** Context of the `item` template: `<ng-template wuTemplate="item" let-item let-collapsed="collapsed">`. */
+export interface WuAsideMenuItemContext {
+  $implicit: WuMenuItem;
   collapsed: boolean;
 }
 
-/** What a wt-navbar linked with `[aside]` hands over: its links, shown at the top of the phone panel. */
-export interface ɵWtAsideMenuGuest {
-  readonly items: WtMenuItem[];
+/** What a wu-navbar linked with `[aside]` hands over: its links, shown at the top of the phone panel. */
+export interface ɵWuAsideMenuGuest {
+  readonly items: WuMenuItem[];
   readonly navLabel: string;
-  readonly activeItem?: WtMenuItem | null;
+  readonly activeItem?: WuMenuItem | null;
 }
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
@@ -73,29 +73,29 @@ const cssTime = (v: string): number => {
 const LEADING_VOWELS = 'เแโใไ';
 
 /**
- * Side navigation for admin-style apps: `<wt-aside-menu [model]="menu">` next to the page content. Items with `items`
+ * Side navigation for admin-style apps: `<wu-aside-menu [model]="menu">` next to the page content. Items with `items`
  * expand in place at any depth; the groups that hold the current page start open. `[(collapsed)]` narrows it to an
  * icon rail whose groups open as flyouts beside it. At and below `breakpoint` it becomes an off-canvas panel with a
- * mask (`[(visible)]`, `open()` / `close()` / `toggle()`). A wt-navbar with `[aside]="thisMenu"` drives it.
+ * mask (`[(visible)]`, `open()` / `close()` / `toggle()`). A wu-navbar with `[aside]="thisMenu"` drives it.
  */
 @Component({
-  selector: 'wt-aside-menu',
+  selector: 'wu-aside-menu',
   standalone: true,
-  exportAs: 'wtAsideMenu',
+  exportAs: 'wuAsideMenu',
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './asidemenu.component.html',
   styleUrls: ['./asidemenu.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.wt-aside-menu-host-mobile]': 'mobile',
-    '[class.wt-aside-menu-host-collapsed]': 'narrow',
-    '[class.wt-aside-menu-host-sliding]': '!!sliding',
+    '[class.wu-aside-menu-host-mobile]': 'mobile',
+    '[class.wu-aside-menu-host-collapsed]': 'narrow',
+    '[class.wu-aside-menu-host-sliding]': '!!sliding',
   },
 })
-export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
+export class WuAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   /** The menu. Items take `routerLink`, `url` or `command`, plus `icon`, `badge`, `disabled`, `visible`, `expanded`, `separator`. */
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v || [];
     if (this.initialized) {
       this.closeFlyout(false);
@@ -103,18 +103,18 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     }
     this.cdr.markForCheck();
   }
-  get model(): WtMenuItem[] {
+  get model(): WuMenuItem[] {
     return this._model;
   }
   /**
    * The item marked as the current page when it is not a router link (a `url` or `command` item). Router links are
    * marked by the router (`routerLinkActive`, default `{ exact: false }`; pass `routerLinkActiveOptions` per item).
    */
-  @Input() set activeItem(v: WtMenuItem | null | undefined) {
+  @Input() set activeItem(v: WuMenuItem | null | undefined) {
     this._activeItem = v || null;
     if (this.initialized) this.revealActive();
   }
-  get activeItem(): WtMenuItem | null {
+  get activeItem(): WuMenuItem | null {
     return this._activeItem;
   }
   /** Several groups open at once. Default true; false folds the open siblings of a group that opens. */
@@ -170,15 +170,15 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   @Output() readonly visibleChange = new EventEmitter<boolean>();
   @Output() readonly collapsedChange = new EventEmitter<boolean>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('start', { descendants: false }) protected startRef?: unknown;
   @ContentChild('end', { descendants: false }) protected endRef?: unknown;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ViewChild('panel', { static: true }) protected panelRef?: ElementRef<HTMLElement>;
   @ViewChild('closeButton') protected closeRef?: ElementRef<HTMLButtonElement>;
 
-  readonly baseId = ɵuniqueId('wt-aside-menu');
-  /** Emits when the mode, the open state or the collapsed state changes (a linked wt-navbar re-renders its button). */
+  readonly baseId = ɵuniqueId('wu-aside-menu');
+  /** Emits when the mode, the open state or the collapsed state changes (a linked wu-navbar re-renders its button). */
   readonly ɵchanges = new Subject<void>();
   /** At or below `breakpoint`: an off-canvas panel. */
   mobile = false;
@@ -195,10 +195,10 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   /** Key of the rail group whose flyout is open. */
   flyoutKey: string | null = null;
   /** The linked navbar's links, drawn as the first group of the phone panel. */
-  readonly guestGroup: WtMenuItem = { label: '', items: [] };
+  readonly guestGroup: WuMenuItem = { label: '', items: [] };
 
-  private _model: WtMenuItem[] = [];
-  private _activeItem: WtMenuItem | null = null;
+  private _model: WuMenuItem[] = [];
+  private _activeItem: WuMenuItem | null = null;
   private _multiple = true;
   private _sections = false;
   private _collapsed = false;
@@ -208,9 +208,9 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   private initialized = false;
   private pendingFocus = false;
   private opener: HTMLElement | null = null;
-  private guest: ɵWtAsideMenuGuest | null = null;
+  private guest: ɵWuAsideMenuGuest | null = null;
   private query: MediaQueryList | null = null;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private flyoutAnchor: HTMLElement | null = null;
   private stopOpen: (() => void) | null = null;
   private unlockScroll: (() => void) | null = null;
@@ -223,14 +223,14 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
   private readonly injector = inject(Injector);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly onQuery = (): void => {
     this.zone.run(() => this.applyQuery(false));
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -247,8 +247,8 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     if (!panel || !this.mobile || !this._visible) return;
     const usable = (el: Element | null | undefined): el is HTMLElement => el instanceof HTMLElement && !el.closest('[inert]');
     const target = [
-      panel.querySelector('.wt-aside-menu-body [aria-current="page"]'),
-      panel.querySelector('.wt-aside-menu-body [data-wt-key]:not(:disabled):not([aria-disabled="true"])'),
+      panel.querySelector('.wu-aside-menu-body [aria-current="page"]'),
+      panel.querySelector('.wu-aside-menu-body [data-wu-key]:not(:disabled):not([aria-disabled="true"])'),
       this.closeRef?.nativeElement,
     ].find(usable);
     (target || panel).focus();
@@ -271,10 +271,10 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this._model);
   }
   /** Wide screens, collapsed: the icon rail (once the width has finished narrowing). */
@@ -298,7 +298,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   get collapseLabel(): string {
     return this._collapsed ? this.t.expandMenu : this.t.collapseMenu;
   }
-  get slotContext(): WtAsideMenuSlotContext {
+  get slotContext(): WuAsideMenuSlotContext {
     return { $implicit: this.rail, collapsed: this.rail };
   }
   get startTemplate(): TemplateRef<unknown> | null {
@@ -320,16 +320,16 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     return items.length > 0;
   }
 
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return menuVisible(items);
   }
-  hasChildren(item: WtMenuItem): boolean {
+  hasChildren(item: WuMenuItem): boolean {
     return menuHasSubmenu(item);
   }
-  isSection(item: WtMenuItem, depth: number): boolean {
+  isSection(item: WuMenuItem, depth: number): boolean {
     return this._sections && depth === 0 && menuHasSubmenu(item);
   }
-  isOpen(item: WtMenuItem): boolean {
+  isOpen(item: WuMenuItem): boolean {
     return !!item.expanded && menuHasSubmenu(item);
   }
   keyOf(parent: string, index: number): string {
@@ -341,34 +341,34 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   flyoutId(key: string): string {
     return `${this.baseId}_${key}_flyout`;
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  isActive(item: WtMenuItem): boolean {
+  isActive(item: WuMenuItem): boolean {
     if (this._activeItem && item === this._activeItem) return true;
     const guestActive = this.guest?.activeItem;
     return !!guestActive && item === guestActive;
   }
   /** A group with the current page somewhere inside it. */
-  holdsActive(item: WtMenuItem): boolean {
-    const walk = (list: WtMenuItem[] | undefined): boolean =>
+  holdsActive(item: WuMenuItem): boolean {
+    const walk = (list: WuMenuItem[] | undefined): boolean =>
       menuVisible(list).some((it) => (menuHasSubmenu(it) ? walk(it.items) : this.isActive(it) || this.routeActive(it)));
     return walk(item.items);
   }
   /** The label as plain text (`escape: false` labels are HTML). */
-  textOf(item: WtMenuItem): string {
+  textOf(item: WuMenuItem): string {
     const label = item.label || '';
     return item.escape === false ? label.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : label;
   }
   /** Tooltip on the icon rail: the label. */
-  railTitle(item: WtMenuItem): string | null {
+  railTitle(item: WuMenuItem): string | null {
     return this.textOf(item) || item.title || null;
   }
   /** What the icon rail shows for an item without an icon: its first letter (the consonant, for Thai). */
-  initialOf(item: WtMenuItem): string {
+  initialOf(item: WuMenuItem): string {
     const chars = Array.from(this.textOf(item));
     const first = chars.find((c) => c.trim() !== '' && !LEADING_VOWELS.includes(c)) || '';
     return first.toLocaleUpperCase();
@@ -399,8 +399,8 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     this.applyCollapsed(!this._collapsed, true);
   }
 
-  /** Called by a wt-navbar's `[aside]`: its links join the phone panel. */
-  ɵattachGuest(guest: ɵWtAsideMenuGuest | null): void {
+  /** Called by a wu-navbar's `[aside]`: its links join the phone panel. */
+  ɵattachGuest(guest: ɵWuAsideMenuGuest | null): void {
     this.guest = guest;
     if (guest && this.initialized) this.revealActive();
     this.cdr.markForCheck();
@@ -409,7 +409,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   // ---------- template events ----------
 
   /** A link or command item: runs the command; on phones the panel closes, in the rail the flyout closes. */
-  itemClick(event: MouseEvent, item: WtMenuItem, key: string): void {
+  itemClick(event: MouseEvent, item: WuMenuItem, key: string): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -427,13 +427,13 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   /** A group in the full menu: opens or closes in place. */
-  groupClick(item: WtMenuItem, key: string): void {
+  groupClick(item: WuMenuItem, key: string): void {
     if (item.disabled) return;
     this.setExpanded(item, key, !item.expanded);
   }
 
   /** A group on the icon rail: its flyout opens beside the bar (a second click closes it). */
-  railGroupClick(event: MouseEvent, item: WtMenuItem, key: string): void {
+  railGroupClick(event: MouseEvent, item: WuMenuItem, key: string): void {
     if (item.disabled) return;
     if (this.flyoutKey === key) this.closeFlyout(false);
     else this.openFlyout(event.currentTarget as HTMLElement, key);
@@ -460,14 +460,14 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   keydown(event: KeyboardEvent): void {
     if (event.key === 'Tab') return this.trapTab(event);
     const target = event.target as HTMLElement | null;
-    const row = target?.closest?.('[data-wt-key]') as HTMLElement | null;
-    const key = row?.getAttribute('data-wt-key');
+    const row = target?.closest?.('[data-wu-key]') as HTMLElement | null;
+    const key = row?.getAttribute('data-wu-key');
     if (!row || !key) return;
-    const flyout = row.closest('.wt-aside-menu-flyout');
-    const scope: ParentNode | null = flyout || this.panelRef?.nativeElement.querySelector('.wt-aside-menu-body') || null;
+    const flyout = row.closest('.wu-aside-menu-flyout');
+    const scope: ParentNode | null = flyout || this.panelRef?.nativeElement.querySelector('.wu-aside-menu-body') || null;
     if (!scope) return;
-    const rows = Array.from(scope.querySelectorAll<HTMLElement>('[data-wt-key]')).filter(
-      (el) => !el.closest('[inert]') && (!!flyout || !el.closest('.wt-aside-menu-flyout')) && !el.matches(':disabled, [aria-disabled="true"]'),
+    const rows = Array.from(scope.querySelectorAll<HTMLElement>('[data-wu-key]')).filter(
+      (el) => !el.closest('[inert]') && (!!flyout || !el.closest('.wu-aside-menu-flyout')) && !el.matches(':disabled, [aria-disabled="true"]'),
     );
     const at = rows.indexOf(row);
     const go = (i: number) => {
@@ -496,14 +496,14 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
       case 'ArrowRight':
         if (!item || item.disabled || !menuHasSubmenu(item)) return;
         event.preventDefault();
-        if (row.hasAttribute('data-wt-flyout')) {
+        if (row.hasAttribute('data-wu-flyout')) {
           if (this.flyoutKey !== key) this.openFlyout(row, key);
         } else if (!item.expanded) this.setExpanded(item, key, true);
         else this.focusFirstChild(key);
         return;
       case 'ArrowLeft': {
         event.preventDefault();
-        if (item && menuHasSubmenu(item) && item.expanded && !row.hasAttribute('data-wt-flyout')) return this.setExpanded(item, key, false);
+        if (item && menuHasSubmenu(item) && item.expanded && !row.hasAttribute('data-wu-flyout')) return this.setExpanded(item, key, false);
         const parent = parentOf(key);
         if (parent && parent === this.flyoutKey) return this.closeFlyout(true);
         if (parent) this.focusKey(parent);
@@ -620,7 +620,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  private setExpanded(item: WtMenuItem, key: string, open: boolean): void {
+  private setExpanded(item: WuMenuItem, key: string, open: boolean): void {
     if (open && !this._multiple) {
       for (const other of this.siblingsOf(key)) if (other !== item && other.expanded) other.expanded = false;
     }
@@ -635,10 +635,10 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     this.cdr.detectChanges();
     const panel = this.doc.getElementById(this.flyoutId(key));
     if (!panel) return;
-    this.popup = new ɵWtPopup(anchor, panel, {
+    this.popup = new ɵWuPopup(anchor, panel, {
       sheet: false,
-      sheetClass: 'wt-aside-menu-flyout-sheet',
-      modalClass: 'wt-aside-menu-flyout-modal',
+      sheetClass: 'wu-aside-menu-flyout-sheet',
+      modalClass: 'wu-aside-menu-flyout-modal',
       onOutside: () => this.closeFlyout(false),
       onEscape: () => this.closeFlyout(true),
       onPosition: (_popup, rect) => this.placeBeside(panel, rect),
@@ -692,14 +692,14 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   private focusFirstChild(key: string): void {
     this.cdr.detectChanges();
     const box = this.doc.getElementById(this.itemId(key) + '_children');
-    box?.querySelector<HTMLElement>('[data-wt-key]:not(:disabled):not([aria-disabled="true"])')?.focus();
+    box?.querySelector<HTMLElement>('[data-wu-key]:not(:disabled):not([aria-disabled="true"])')?.focus();
   }
 
   /** The item a key points at: `"2_0"` in the model, `"g_1"` in the navbar's links. */
-  private itemAt(key: string): WtMenuItem | undefined {
+  private itemAt(key: string): WuMenuItem | undefined {
     const parts = key.split('_');
-    let item: WtMenuItem | undefined;
-    let list: WtMenuItem[];
+    let item: WuMenuItem | undefined;
+    let list: WuMenuItem[];
     if (parts[0] === 'g') {
       parts.shift();
       item = this.guestGroup;
@@ -713,7 +713,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     return item;
   }
 
-  private siblingsOf(key: string): WtMenuItem[] {
+  private siblingsOf(key: string): WuMenuItem[] {
     const parent = parentOf(key);
     if (!parent) return this.guest ? [this.guestGroup, ...this.items] : this.items;
     return menuVisible(this.itemAt(parent)?.items);
@@ -721,7 +721,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
 
   /** Opens every group on the way to the current page (router link or `activeItem`). */
   private revealActive(): void {
-    const walk = (list: WtMenuItem[] | undefined): boolean => {
+    const walk = (list: WuMenuItem[] | undefined): boolean => {
       let found = false;
       for (const it of menuVisible(list)) {
         if (menuHasSubmenu(it)) {
@@ -739,7 +739,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   /** Whether a router link points at the current URL. The router is looked up only once a router link shows up. */
-  private routeActive(item: WtMenuItem): boolean {
+  private routeActive(item: WuMenuItem): boolean {
     if (!this.routed(item)) return false;
     const router = this.routerOrNull();
     if (!router) return false;
@@ -752,7 +752,7 @@ export class WtAsideMenu implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  private matchOptions(item: WtMenuItem): IsActiveMatchOptions {
+  private matchOptions(item: WuMenuItem): IsActiveMatchOptions {
     const o = item.routerLinkActiveOptions;
     if (o && typeof o === 'object' && 'paths' in o) return o as IsActiveMatchOptions;
     const exact = !!(o && o.exact);

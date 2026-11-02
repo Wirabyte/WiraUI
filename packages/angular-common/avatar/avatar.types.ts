@@ -1,2 +1,2 @@
-export type WtAvatarSize = 'normal' | 'large' | 'xlarge';
-export type WtAvatarShape = 'square' | 'circle';
+export type WuAvatarSize = 'normal' | 'large' | 'xlarge';
+export type WuAvatarShape = 'square' | 'circle';

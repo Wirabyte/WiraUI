@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { WIRATHEME_MAJOR } from 'wiratheme';
-import type { MenuItem, Message, TreeNode } from 'wiratheme/api';
-import { definePreset, palette, Siam, WtConfig, WtThemeService } from 'wiratheme/config';
-import { base64ToFile, EN_LOCALE } from 'wiratheme/core';
-import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecropper';
-import { WtI18n } from 'wiratheme/i18n';
-import { WtAlert, WtAlertService } from 'wiratheme/alert';
-import { WtConfirmationService } from 'wiratheme/confirmdialog';
-import { WtMessageService } from 'wiratheme/toast';
-import { WtTerminalService } from 'wiratheme/terminal';
-import { applyEdgeChanges, applyNodeChanges } from 'wiratheme/flow';
-import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WtFlow, WtFlowSelectionChange } from 'wiratheme/flow';
+import { WIRAUI_MAJOR } from 'wiraui';
+import type { MenuItem, Message, TreeNode } from 'wiraui/api';
+import { definePreset, palette, Siam, WuConfig, WuThemeService } from 'wiraui/config';
+import { base64ToFile, EN_LOCALE } from 'wiraui/core';
+import type { CropperPosition, WuImageCroppedEvent } from 'wiraui/imagecropper';
+import { WuI18n } from 'wiraui/i18n';
+import { WuAlert, WuAlertService } from 'wiraui/alert';
+import { WuConfirmationService } from 'wiraui/confirmdialog';
+import { WuMessageService } from 'wiraui/toast';
+import { WuTerminalService } from 'wiraui/terminal';
+import { applyEdgeChanges, applyNodeChanges } from 'wiraui/flow';
+import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WuFlow, WuFlowSelectionChange } from 'wiraui/flow';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, 
   standalone: false,
 })
 export class AppComponent {
-  readonly major = WIRATHEME_MAJOR;
+  readonly major = WIRAUI_MAJOR;
   readonly ngVersion = VERSION.full;
   saved = 0;
   removed = 0;
@@ -171,7 +171,7 @@ export class AppComponent {
 
   /** Records the query on the window as it is asked, so a test can tell it came on the key itself. */
   findSchoolNow(e: { query: string }): void {
-    (globalThis as unknown as { wtAsked?: string }).wtAsked = e.query;
+    (globalThis as unknown as { wuAsked?: string }).wuAsked = e.query;
     this.findSchool(e);
   }
   ac = { school: null as unknown, free: null as unknown, plain: null as unknown };
@@ -314,14 +314,14 @@ export class AppComponent {
     notify: new FormControl(false, { nonNullable: true }),
   });
 
-  /** The page's own texts in Thai and English (wiratheme/i18n). */
+  /** The page's own texts in Thai and English (wiraui/i18n). */
   readonly i18n = this.setupI18n();
-  private readonly theme = inject(WtThemeService);
-  private readonly config = inject(WtConfig);
+  private readonly theme = inject(WuThemeService);
+  private readonly config = inject(WuConfig);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly alert = inject(WtAlertService);
-  private readonly confirmation = inject(WtConfirmationService);
-  private readonly messages = inject(WtMessageService);
+  private readonly alert = inject(WuAlertService);
+  private readonly confirmation = inject(WuConfirmationService);
+  private readonly messages = inject(WuMessageService);
 
   readonly save = () =>
     new Promise<void>((resolve) =>
@@ -338,7 +338,7 @@ export class AppComponent {
 
   /** Through the static facade, as code that called a global alert function does. */
   askAlert(): void {
-    WtAlert.fire({
+    WuAlert.fire({
       title: 'ลบรายการนี้?',
       text: 'กู้คืนไม่ได้',
       icon: 'warning',
@@ -592,7 +592,7 @@ export class AppComponent {
   icFile: Blob | null = this.icImage ? base64ToFile(this.icImage) : null;
   icBox: CropperPosition | null = null;
   icRatioBox: CropperPosition | null = null;
-  icCropped: WtImageCroppedEvent | null = null;
+  icCropped: WuImageCroppedEvent | null = null;
   icRatioSize = '';
   icFreeSize = '';
 
@@ -616,7 +616,7 @@ export class AppComponent {
   }
 
   // ---------- terminal, image compare, carousel, splitter, organization chart, knob, input otp (parity2.spec) ----------
-  private readonly terminal = inject(WtTerminalService);
+  private readonly terminal = inject(WuTerminalService);
   readonly terminalAnswers = this.terminal.commandHandler.subscribe((text) => this.answer(text));
   icmpValue = 50;
   crsItems = ['#fca5a5', '#fdba74', '#86efac', '#93c5fd', '#c4b5fd', '#f9a8d4'].map((color, i) => ({ title: 'ข่าว ' + (i + 1), color }));
@@ -669,7 +669,7 @@ export class AppComponent {
   }
 
   // ---------- flow (flow.spec) ----------
-  // wt-flow (#flow): two-way binding
+  // wu-flow (#flow): two-way binding
   flowNodes: FlowNode[] = [
     { id: 'start', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
     { id: 'wira', type: 'person', position: { x: 280, y: 70 }, ariaLabel: 'วิระ', data: { name: 'วิระ', role: 'ครูประจำชั้น' } },
@@ -688,7 +688,7 @@ export class AppComponent {
   flowSel = '';
   flowSvgSize = 0;
 
-  // ---------- wt-flow (#flow-controlled): the page applies the changes ----------
+  // ---------- wu-flow (#flow-controlled): the page applies the changes ----------
   flowCtlNodes: FlowNode[] = [
     { id: 'a', position: { x: 0, y: 0 }, data: { label: 'ก' } },
     { id: 'b', position: { x: 200, y: 80 }, data: { label: 'ข' } },
@@ -708,11 +708,11 @@ export class AppComponent {
     return `${Math.round(v.x)},${Math.round(v.y)},${v.zoom.toFixed(2)}`;
   }
 
-  flowSelection(e: WtFlowSelectionChange): string {
+  flowSelection(e: WuFlowSelectionChange): string {
     return e.nodes.map((n) => n.id).join(',') + '|' + e.edges.map((x) => x.id).join(',');
   }
 
-  flowRoundTrip(flow: WtFlow): void {
+  flowRoundTrip(flow: WuFlow): void {
     const json = JSON.stringify(flow.toJSON());
     this.note('flow:json:' + (flow.fromJSON(json) ? JSON.parse(json).nodes.length : 'failed'));
   }
@@ -729,8 +729,8 @@ export class AppComponent {
     return this.flowCtlNodes.map((n) => `${n.id}@${Math.round(n.position.x)},${Math.round(n.position.y)}${n.selected ? '*' : ''}`).join(' ');
   }
 
-  setupI18n(): WtI18n {
-    const i18n = inject(WtI18n);
+  setupI18n(): WuI18n {
+    const i18n = inject(WuI18n);
     i18n.add('th', { menu: { home: 'หน้าแรก' } });
     i18n.add('en', { 'บันทึก': 'Save', 'สวัสดี {name}': 'Hello {name}', menu: { home: 'Home' } });
     return i18n;

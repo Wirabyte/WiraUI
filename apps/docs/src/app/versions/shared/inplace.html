@@ -7,65 +7,65 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="display"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-inplace id="d-ip-basic" [closable]="true" (onActivate)="logInplace('onActivate')" (onDeactivate)="logInplace('onDeactivate')">
+        <wu-inplace id="d-ip-basic" [closable]="true" (onActivate)="logInplace('onActivate')" (onDeactivate)="logInplace('onDeactivate')">
           <ng-template #display>
             <span class="d-ip-name">{{ studentName }}</span>
           </ng-template>
           <ng-template #content>
-            <input id="d-ip-name-input" wtInputText name="studentName" [(ngModel)]="studentName" [attr.aria-label]="tx('ชื่อ - สกุล')" />
+            <input id="d-ip-name-input" wuInputText name="studentName" [(ngModel)]="studentName" [attr.aria-label]="tx('ชื่อ - สกุล')" />
           </ng-template>
-        </wt-inplace>
+        </wu-inplace>
         <span class="docs-demo-output">event: <code id="d-ip-events">{{ inplaceEvents.join(' · ') || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="save" [section]="sec['save']">
       <docs-demo [html]="code['save']" [ts]="ts['save']" layout="stack">
-        <wt-inplace id="d-ip-save">
+        <wu-inplace id="d-ip-save">
           <ng-template #display>
             {{ tx('ชื่อเล่น') }}: <b class="d-ip-nickname">{{ nickname }}</b>
           </ng-template>
           <ng-template #content let-closeCallback="closeCallback">
             <span class="docs-demo-actions">
-              <input id="d-ip-nickname-input" wtInputText name="nickname" [(ngModel)]="nickname" [attr.aria-label]="tx('ชื่อเล่น')" />
-              <wt-button id="d-ip-nickname-save" [label]="tx('บันทึก')" icon="wi wi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wt-button>
+              <input id="d-ip-nickname-input" wuInputText name="nickname" [(ngModel)]="nickname" [attr.aria-label]="tx('ชื่อเล่น')" />
+              <wu-button id="d-ip-nickname-save" [label]="tx('บันทึก')" icon="wi wi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wu-button>
             </span>
           </ng-template>
-        </wt-inplace>
+        </wu-inplace>
         <span class="docs-demo-output">saved: <code id="d-ip-saved">{{ savedNickname }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="lazy" [section]="sec['lazy']">
       <docs-demo [html]="code['lazy']" layout="stack">
-        <wt-inplace id="d-ip-lazy" [closable]="true" closeIcon="wi wi-times">
+        <wu-inplace id="d-ip-lazy" [closable]="true" closeIcon="wi wi-times">
           <ng-template #display>
             <span class="d-ip-photo-label"><i class="wi wi-image"></i> {{ tx('ดูรูปอาคาร') }}</span>
           </ng-template>
           <ng-template #content>
             <img id="d-ip-photo" src="samples/school-thumb.svg" [alt]="tx('อาคารเรียนของโรงเรียน')" width="320" class="docs-ip-photo" />
           </ng-template>
-        </wt-inplace>
+        </wu-inplace>
       </docs-demo>
     </docs-section>
 
     <docs-section id="control" [section]="sec['control']">
       <docs-demo [html]="code['control']" [ts]="ts['control']" layout="stack">
-        <wt-inplace #noteEditor id="d-ip-note" [(active)]="editingNote" [preventClick]="true" [closable]="true">
+        <wu-inplace #noteEditor id="d-ip-note" [(active)]="editingNote" [preventClick]="true" [closable]="true">
           <ng-template #display>
             <span class="d-ip-note-text">{{ note || tx('ยังไม่มีหมายเหตุ') }}</span>
           </ng-template>
           <ng-template #content>
-            <textarea id="d-ip-note-input" wtTextarea name="note" [(ngModel)]="note" rows="3" [attr.aria-label]="tx('หมายเหตุ')"></textarea>
+            <textarea id="d-ip-note-input" wuTextarea name="note" [(ngModel)]="note" rows="3" [attr.aria-label]="tx('หมายเหตุ')"></textarea>
           </ng-template>
-        </wt-inplace>
+        </wu-inplace>
         <div class="docs-demo-actions">
-          <wt-button id="d-ip-note-edit" [label]="tx('แก้ไขหมายเหตุ')" icon="wi wi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wt-button>
+          <wu-button id="d-ip-note-edit" [label]="tx('แก้ไขหมายเหตุ')" icon="wi wi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wu-button>
           <span class="docs-demo-output">active: <code id="d-ip-note-active">{{ editingNote }}</code></span>
         </div>
-        <wt-inplace id="d-ip-disabled" [disabled]="true">
+        <wu-inplace id="d-ip-disabled" [disabled]="true">
           <ng-template #display>{{ tx('แก้ไขได้เฉพาะเจ้าหน้าที่') }}</ng-template>
-        </wt-inplace>
+        </wu-inplace>
       </docs-demo>
     </docs-section>
 

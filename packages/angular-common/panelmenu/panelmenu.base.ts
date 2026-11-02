@@ -10,28 +10,28 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WT_VERSION_INFO, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { menuHasSubmenu, menuItemAt, menuKey, menuVisible } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { menuHasSubmenu, menuItemAt, menuKey, menuVisible } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * What wt-panelmenu does, shared by the v1 and v2/v3 templates: a side menu of collapsible panels. Each root item is a
+ * What wu-panelmenu does, shared by the v1 and v2/v3 templates: a side menu of collapsible panels. Each root item is a
  * header; its items (nested as deep as needed) open under it. Open state lives on the items' `expanded` flag, as it
  * always has, so a model can say which panels start open. `multiple` lets several root panels stay open.
  */
 @Directive()
-export abstract class ɵWtPanelMenuBase {
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+export abstract class ɵWuPanelMenuBase {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v || [];
     this.cdr.markForCheck();
   }
-  get model(): WtMenuItem[] {
+  get model(): WuMenuItem[] {
     return this._model;
   }
   /** Several root panels open at once. Default: true in v1, false in v2 / v3 (as each era did). */
   @Input() set multiple(v: unknown) {
-    this._multiple = v === undefined || v === null ? WT_VERSION_INFO.major === 1 : ɵtoBool(v);
+    this._multiple = v === undefined || v === null ? WU_VERSION_INFO.major === 1 : ɵtoBool(v);
   }
   get multiple(): boolean {
     return this._multiple;
@@ -43,26 +43,26 @@ export abstract class ɵWtPanelMenuBase {
   /** Accepted for templates moving over. */
   @Input() transitionOptions: unknown;
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('submenuicon', { descendants: false }) protected submenuIconRef?: unknown;
 
-  readonly baseId = ɵuniqueId('wt-panelmenu');
+  readonly baseId = ɵuniqueId('wu-panelmenu');
   readonly trackIndex = (i: number): number => i;
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
-  private _model: WtMenuItem[] = [];
-  private _multiple = WT_VERSION_INFO.major === 1;
+  private _model: WuMenuItem[] = [];
+  private _multiple = WU_VERSION_INFO.major === 1;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   // ---------- what the templates read ----------
 
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this._model);
   }
   get itemTemplate(): TemplateRef<unknown> | null {
@@ -71,32 +71,32 @@ export abstract class ɵWtPanelMenuBase {
   get submenuIconTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.submenuIconRef) || ɵfindTemplate(this.templates, 'submenuicon');
   }
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return menuVisible(items);
   }
-  hasSubmenu(item: WtMenuItem): boolean {
+  hasSubmenu(item: WuMenuItem): boolean {
     return menuHasSubmenu(item);
   }
   keyOf(parent: string, index: number): string {
     return menuKey(parent, index);
   }
-  isOpen(item: WtMenuItem): boolean {
+  isOpen(item: WuMenuItem): boolean {
     return !!item.expanded && menuHasSubmenu(item);
   }
   itemId(key: string): string {
     return `${this.id || this.baseId}_${key}`;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
 
   // ---------- events ----------
 
   /** A header or an item: items with children open and close, the rest run their command (links follow). */
-  itemClick(event: Event, item: WtMenuItem, key: string): void {
+  itemClick(event: Event, item: WuMenuItem, key: string): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -115,11 +115,11 @@ export abstract class ɵWtPanelMenuBase {
    */
   keydown(event: KeyboardEvent): void {
     const target = event.target as HTMLElement | null;
-    const key = target?.closest?.('[data-wt-key]')?.getAttribute('data-wt-key');
+    const key = target?.closest?.('[data-wu-key]')?.getAttribute('data-wu-key');
     if (!key) return;
     const item = menuItemAt(this._model, key);
-    const focusables = Array.from(this.host.querySelectorAll<HTMLElement>('[data-wt-key]')).filter((el) => !el.closest('[inert]'));
-    const at = focusables.findIndex((el) => el.getAttribute('data-wt-key') === key);
+    const focusables = Array.from(this.host.querySelectorAll<HTMLElement>('[data-wu-key]')).filter((el) => !el.closest('[inert]'));
+    const at = focusables.findIndex((el) => el.getAttribute('data-wu-key') === key);
     const go = (i: number) => {
       const el = focusables[Math.max(0, Math.min(focusables.length - 1, i))];
       if (!el) return;
@@ -160,7 +160,7 @@ export abstract class ɵWtPanelMenuBase {
 
   // ---------- internals ----------
 
-  private setOpen(item: WtMenuItem, key: string, open: boolean): void {
+  private setOpen(item: WuMenuItem, key: string, open: boolean): void {
     // One root panel at a time unless multiple; nested items open independently.
     if (open && !this._multiple && !key.includes('_')) {
       for (const other of this.items) if (other !== item) other.expanded = false;

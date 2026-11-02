@@ -8,7 +8,7 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
         <div class="docs-demo-labelled">
           <label for="d-im-id-input">{{ tx('เลขบัตรประชาชน') }}</label>
-          <wt-inputmask id="d-im-id" inputId="d-im-id-input" [(ngModel)]="idCard" mask="9-9999-99999-99-9" [placeholder]="tx('เลขบัตรประชาชน 13 หลัก')"></wt-inputmask>
+          <wu-inputmask id="d-im-id" inputId="d-im-id-input" [(ngModel)]="idCard" mask="9-9999-99999-99-9" [placeholder]="tx('เลขบัตรประชาชน 13 หลัก')"></wu-inputmask>
         </div>
         <span class="docs-demo-output">idCard: <code id="d-im-id-value">{{ idCard | json }}</code></span>
       </docs-demo>
@@ -19,19 +19,19 @@
         <div class="docs-im-grid">
           <div class="docs-demo-labelled">
             <label for="d-im-phone-input">{{ tx('เบอร์มือถือ') }}</label>
-            <wt-inputmask id="d-im-phone" inputId="d-im-phone-input" [(ngModel)]="phone" mask="999-999-9999" [ariaLabel]="tx('เบอร์มือถือ')"></wt-inputmask>
+            <wu-inputmask id="d-im-phone" inputId="d-im-phone-input" [(ngModel)]="phone" mask="999-999-9999" [ariaLabel]="tx('เบอร์มือถือ')"></wu-inputmask>
           </div>
           <div class="docs-demo-labelled">
             <label for="d-im-birth-input">{{ tx('วันเกิด') }}</label>
-            <wt-inputmask id="d-im-birth" inputId="d-im-birth-input" [(ngModel)]="birthDate" mask="99/99/9999" [ariaLabel]="tx('วันเกิด')"></wt-inputmask>
+            <wu-inputmask id="d-im-birth" inputId="d-im-birth-input" [(ngModel)]="birthDate" mask="99/99/9999" [ariaLabel]="tx('วันเกิด')"></wu-inputmask>
           </div>
           <div class="docs-demo-labelled">
             <label for="d-im-sku-input">{{ tx('รหัสสินค้า') }}</label>
-            <wt-inputmask id="d-im-sku" inputId="d-im-sku-input" [(ngModel)]="sku" mask="aa-9999" [ariaLabel]="tx('รหัสสินค้า')"></wt-inputmask>
+            <wu-inputmask id="d-im-sku" inputId="d-im-sku-input" [(ngModel)]="sku" mask="aa-9999" [ariaLabel]="tx('รหัสสินค้า')"></wu-inputmask>
           </div>
           <div class="docs-demo-labelled">
             <label for="d-im-office-input">{{ tx('เบอร์ที่ทำงาน (มีเบอร์ต่อได้)') }}</label>
-            <wt-inputmask id="d-im-office" inputId="d-im-office-input" [(ngModel)]="office" mask="(999) 999-9999? x99999" [ariaLabel]="tx('เบอร์ที่ทำงาน (มีเบอร์ต่อได้)')"></wt-inputmask>
+            <wu-inputmask id="d-im-office" inputId="d-im-office-input" [(ngModel)]="office" mask="(999) 999-9999? x99999" [ariaLabel]="tx('เบอร์ที่ทำงาน (มีเบอร์ต่อได้)')"></wu-inputmask>
           </div>
         </div>
         <span class="docs-demo-output">phone: <code id="d-im-phone-value">{{ phone | json }}</code> · office: <code id="d-im-office-value">{{ office | json }}</code></span>
@@ -40,15 +40,15 @@
 
     <docs-section id="thai" [section]="sec['thai']">
       <docs-demo [html]="code['thai']">
-        <wt-inputmask id="d-im-plate" [(ngModel)]="plate" mask="9aa 9999" characterPattern="[ก-ฮ]" [ariaLabel]="tx('ทะเบียนรถ')"></wt-inputmask>
+        <wu-inputmask id="d-im-plate" [(ngModel)]="plate" mask="9aa 9999" characterPattern="[ก-ฮ]" [ariaLabel]="tx('ทะเบียนรถ')"></wu-inputmask>
         <span class="docs-demo-output">plate: <code id="d-im-plate-value">{{ plate | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="slotchar" [section]="sec['slotchar']">
       <docs-demo [html]="code['slotchar']">
-        <wt-inputmask id="d-im-visit" [(ngModel)]="visitDate" mask="99/99/9999" slotChar="dd/mm/yyyy" [ariaLabel]="tx('วันนัด')"></wt-inputmask>
-        <wt-inputmask id="d-im-otp" [(ngModel)]="otp" mask="999999" slotChar="•" [ariaLabel]="tx('รหัส OTP')"></wt-inputmask>
+        <wu-inputmask id="d-im-visit" [(ngModel)]="visitDate" mask="99/99/9999" slotChar="dd/mm/yyyy" [ariaLabel]="tx('วันนัด')"></wu-inputmask>
+        <wu-inputmask id="d-im-otp" [(ngModel)]="otp" mask="999999" slotChar="•" [ariaLabel]="tx('รหัส OTP')"></wu-inputmask>
       </docs-demo>
     </docs-section>
 
@@ -57,11 +57,11 @@
         <div class="docs-im-grid">
           <div class="docs-demo-labelled">
             <label for="d-im-clear-input">{{ tx('ล้างเมื่อไม่ครบ (ค่าเริ่มต้น)') }}</label>
-            <wt-inputmask id="d-im-clear" inputId="d-im-clear-input" [(ngModel)]="clearedPhone" mask="999-999-9999" [ariaLabel]="tx('ล้างเมื่อไม่ครบ (ค่าเริ่มต้น)')"></wt-inputmask>
+            <wu-inputmask id="d-im-clear" inputId="d-im-clear-input" [(ngModel)]="clearedPhone" mask="999-999-9999" [ariaLabel]="tx('ล้างเมื่อไม่ครบ (ค่าเริ่มต้น)')"></wu-inputmask>
           </div>
           <div class="docs-demo-labelled">
             <label for="d-im-keep-input">{{ tx('เก็บค่าที่กรอกไว้') }}</label>
-            <wt-inputmask id="d-im-keep" inputId="d-im-keep-input" [(ngModel)]="draftPhone" mask="999-999-9999" [autoClear]="false" [ariaLabel]="tx('เก็บค่าที่กรอกไว้')"></wt-inputmask>
+            <wu-inputmask id="d-im-keep" inputId="d-im-keep-input" [(ngModel)]="draftPhone" mask="999-999-9999" [autoClear]="false" [ariaLabel]="tx('เก็บค่าที่กรอกไว้')"></wu-inputmask>
           </div>
         </div>
         <span class="docs-demo-output">phone: <code id="d-im-clear-value">{{ clearedPhone | json }}</code> · draftPhone: <code id="d-im-keep-value">{{ draftPhone | json }}</code></span>
@@ -73,11 +73,11 @@
         <div class="docs-im-grid">
           <div class="docs-demo-labelled">
             <label for="d-im-formatted-input">{{ tx('ตามรูปแบบ (ค่าเริ่มต้น)') }}</label>
-            <wt-inputmask id="d-im-formatted" inputId="d-im-formatted-input" [(ngModel)]="formattedId" mask="9-9999-99999-99-9" [ariaLabel]="tx('ตามรูปแบบ (ค่าเริ่มต้น)')"></wt-inputmask>
+            <wu-inputmask id="d-im-formatted" inputId="d-im-formatted-input" [(ngModel)]="formattedId" mask="9-9999-99999-99-9" [ariaLabel]="tx('ตามรูปแบบ (ค่าเริ่มต้น)')"></wu-inputmask>
           </div>
           <div class="docs-demo-labelled">
             <label for="d-im-raw-input">{{ tx('เฉพาะตัวที่พิมพ์') }}</label>
-            <wt-inputmask id="d-im-raw" inputId="d-im-raw-input" [(ngModel)]="rawId" mask="9-9999-99999-99-9" [unmask]="true" [ariaLabel]="tx('เฉพาะตัวที่พิมพ์')"></wt-inputmask>
+            <wu-inputmask id="d-im-raw" inputId="d-im-raw-input" [(ngModel)]="rawId" mask="9-9999-99999-99-9" [unmask]="true" [ariaLabel]="tx('เฉพาะตัวที่พิมพ์')"></wu-inputmask>
           </div>
         </div>
         <span class="docs-demo-output">idCard: <code id="d-im-formatted-value">{{ formattedId | json }}</code> · idCardRaw: <code id="d-im-raw-value">{{ rawId | json }}</code></span>
@@ -86,7 +86,7 @@
 
     <docs-section id="events" [section]="sec['events']">
       <docs-demo [html]="code['events']" [ts]="ts['events']">
-        <wt-inputmask id="d-im-member" [(ngModel)]="memberId" mask="9-9999-99999-99-9" [showClear]="true" [ariaLabel]="tx('เลขสมาชิก')" (onComplete)="lookUp()" (onClear)="clearLookup()"></wt-inputmask>
+        <wu-inputmask id="d-im-member" [(ngModel)]="memberId" mask="9-9999-99999-99-9" [showClear]="true" [ariaLabel]="tx('เลขสมาชิก')" (onComplete)="lookUp()" (onClear)="clearLookup()"></wu-inputmask>
         <span class="docs-demo-output" id="d-im-status">{{ lookupText }}</span>
       </docs-demo>
     </docs-section>
@@ -96,7 +96,7 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-inputmask id="r-im-phone" formControlName="phone" mask="999-999-9999" [ariaLabel]="tx('เบอร์มือถือ')"></wt-inputmask>
+          <wu-inputmask id="r-im-phone" formControlName="phone" mask="999-999-9999" [ariaLabel]="tx('เบอร์มือถือ')"></wu-inputmask>
         </form>
         <span class="docs-demo-output">value: <code id="r-im-value">{{ form.getRawValue() | json }}</code> · valid: <code id="r-im-valid">{{ form.valid }}</code></span>
       </docs-demo>
@@ -104,10 +104,10 @@
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']">
-        <wt-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wt-inputmask>
-        <wt-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wt-inputmask>
-        <wt-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" variant="filled" [placeholder]="tx('แบบพื้นทึบ')" [ariaLabel]="tx('แบบพื้นทึบ')"></wt-inputmask>
-        <wt-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" [ariaLabel]="tx('กว้างเต็มพื้นที่')"></wt-inputmask>
+        <wu-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wu-inputmask>
+        <wu-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wu-inputmask>
+        <wu-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" variant="filled" [placeholder]="tx('แบบพื้นทึบ')" [ariaLabel]="tx('แบบพื้นทึบ')"></wu-inputmask>
+        <wu-inputmask [(ngModel)]="lookPhone" mask="999-999-9999" [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" [ariaLabel]="tx('กว้างเต็มพื้นที่')"></wu-inputmask>
       </docs-demo>
     </docs-section>
 

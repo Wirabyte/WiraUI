@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-/** What the alert demos call: WtAlertService of the version on screen (or its static WtAlert). */
+/** What the alert demos call: WuAlertService of the version on screen (or its static WuAlert). */
 export interface DocsAlert {
   fire(options: any): Promise<any>;
   fire(title?: string, text?: string, icon?: any): Promise<any>;
@@ -13,7 +13,7 @@ export interface DocsAlert {
 }
 
 /**
- * The overlay services of one wiratheme major. Each version module provides its own, so the shared demo pages
+ * The overlay services of one wiraui major. Each version module provides its own, so the shared demo pages
  * open the dialogs, alerts and toasts of the version on screen.
  */
 export interface DocsOverlays {
@@ -25,7 +25,7 @@ export interface DocsOverlays {
 
 export const DOCS_OVERLAYS = new InjectionToken<DocsOverlays>('DOCS_OVERLAYS');
 
-/** `WtValidators` of the version on screen, for the reactive validation demo. */
+/** `WuValidators` of the version on screen, for the reactive validation demo. */
 export interface DocsValidators {
   thaiId: (control: any) => any;
   thaiPhone: (control: any) => any;
@@ -34,7 +34,7 @@ export interface DocsValidators {
 
 export const DOCS_VALIDATORS = new InjectionToken<DocsValidators>('DOCS_VALIDATORS');
 
-/** WtTerminalService of the version on screen, for the Terminal demo: commands in, answers out. */
+/** WuTerminalService of the version on screen, for the Terminal demo: commands in, answers out. */
 export interface DocsTerminal {
   readonly commandHandler: { subscribe(next: (command: string) => void): { unsubscribe(): void } };
   sendResponse(response: string): void;
@@ -42,7 +42,7 @@ export interface DocsTerminal {
 
 export const DOCS_TERMINAL = new InjectionToken<DocsTerminal>('DOCS_TERMINAL');
 
-/** The flow helpers of the version on screen (wiratheme/flow), for the Flow demos that apply changes themselves. */
+/** The flow helpers of the version on screen (wiraui/flow), for the Flow demos that apply changes themselves. */
 export interface DocsFlowKit {
   applyNodeChanges(changes: any[], nodes: any[]): any[];
   applyEdgeChanges(changes: any[], edges: any[]): any[];
@@ -51,7 +51,7 @@ export interface DocsFlowKit {
 
 export const DOCS_FLOW = new InjectionToken<DocsFlowKit>('DOCS_FLOW');
 
-/** The Excel functions of the version on screen (wiratheme/excel). */
+/** The Excel functions of the version on screen (wiraui/excel). */
 export interface DocsExcelKit {
   downloadExcel(source: any, options?: any): Promise<void>;
   downloadRowsAsExcel(rows: readonly any[], columns: readonly any[], options?: any, download?: any): Promise<void>;
@@ -60,7 +60,7 @@ export interface DocsExcelKit {
 
 export const DOCS_EXCEL = new InjectionToken<DocsExcelKit>('DOCS_EXCEL');
 
-/** Opens the version's student picker through its WtDialogService; resolves with the student, or undefined. */
+/** Opens the version's student picker through its WuDialogService; resolves with the student, or undefined. */
 export interface DocsDialogKit {
   pickStudent(config: any): Promise<unknown>;
 }

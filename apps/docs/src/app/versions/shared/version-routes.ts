@@ -93,7 +93,7 @@ export interface VersionPages {
   tree: Type<unknown>;
   treeselect: Type<unknown>;
   dragdrop: Type<unknown>;
-  /** WiraTheme Studio: built from the version's own components. */
+  /** WiraUI Studio: built from the version's own components. */
   studio: Type<unknown>;
   navbar: Type<unknown>;
   asidemenu: Type<unknown>;
@@ -116,11 +116,11 @@ export interface VersionPages {
   footer: Type<unknown>;
   bottombar: Type<unknown>;
   thai: Type<unknown>;
-  /** WiraTheme's own chart: wiratheme@3 only. */
+  /** WiraUI's own chart: wiraui@3 only. */
   chart?: Type<unknown>;
 }
 
-/** This version's page components (one per nav id), so WiraTheme Studio can show any component's demos in its preview. */
+/** This version's page components (one per nav id), so WiraUI Studio can show any component's demos in its preview. */
 export const DOCS_PAGES = new InjectionToken<VersionPages>('DOCS_PAGES');
 
 /** Same page tree under /v1, /v2 and /v3, so the version dropdown can keep the path. */

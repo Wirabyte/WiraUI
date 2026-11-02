@@ -1,37 +1,37 @@
 <div
-  class="wt-table p-datatable p-component"
+  class="wu-table p-datatable p-component"
   [ngClass]="styleClass || ''"
   [ngStyle]="style || null"
-  [class.wt-table-gridlines]="showGridlines"
+  [class.wu-table-gridlines]="showGridlines"
   [class.p-datatable-gridlines]="showGridlines"
-  [class.wt-table-striped]="stripedRows"
+  [class.wu-table-striped]="stripedRows"
   [class.p-datatable-striped]="stripedRows"
-  [class.wt-table-sm]="sizeKey === 'sm'"
+  [class.wu-table-sm]="sizeKey === 'sm'"
   [class.p-datatable-sm]="sizeKey === 'sm'"
-  [class.wt-table-lg]="sizeKey === 'lg'"
+  [class.wu-table-lg]="sizeKey === 'lg'"
   [class.p-datatable-lg]="sizeKey === 'lg'"
-  [class.wt-table-hoverable]="rowHover"
+  [class.wu-table-hoverable]="rowHover"
   [class.p-datatable-hoverable-rows]="rowHover"
-  [class.wt-table-scrollable]="scrollable"
+  [class.wu-table-scrollable]="scrollable"
   [class.p-datatable-scrollable]="scrollable"
-  [class.wt-table-flex]="flexScroll"
-  [class.wt-table-stack]="responsiveLayout === 'stack'"
+  [class.wu-table-flex]="flexScroll"
+  [class.wu-table-stack]="responsiveLayout === 'stack'"
   [class.p-datatable-responsive-stack]="responsiveLayout === 'stack'"
   [class.p-datatable-responsive-scroll]="responsiveLayout !== 'stack'"
-  [class.wt-table-stacked]="stacked"
-  [class.wt-table-loading]="loading"
+  [class.wu-table-stacked]="stacked"
+  [class.wu-table-loading]="loading"
   [attr.aria-busy]="loading || null"
 >
-  <div *ngIf="showMask" class="wt-table-mask p-datatable-loading-overlay p-component-overlay">
-    <i *ngIf="loadingIcon; else spinner" [class]="'wt-table-loading-icon p-datatable-loading-icon ' + loadingIcon" aria-hidden="true"></i>
-    <ng-template #spinner><span class="wt-table-spinner" role="status" [attr.aria-label]="t.loading"></span></ng-template>
+  <div *ngIf="showMask" class="wu-table-mask p-datatable-loading-overlay p-component-overlay">
+    <i *ngIf="loadingIcon; else spinner" [class]="'wu-table-loading-icon p-datatable-loading-icon ' + loadingIcon" aria-hidden="true"></i>
+    <ng-template #spinner><span class="wu-table-spinner" role="status" [attr.aria-label]="t.loading"></span></ng-template>
   </div>
-  <div *ngIf="captionTemplate" class="wt-table-header p-datatable-header">
+  <div *ngIf="captionTemplate" class="wu-table-header p-datatable-header">
     <ng-container *ngTemplateOutlet="captionTemplate"></ng-container>
   </div>
-  <wt-paginator
+  <wu-paginator
     *ngIf="showPaginatorTop"
-    class="wt-table-paginator p-paginator-top"
+    class="wu-table-paginator p-paginator-top"
     [styleClass]="paginatorStyleClass"
     [first]="pageFirst"
     [rows]="rows"
@@ -44,19 +44,19 @@
     [leftTemplate]="paginatorLeftTemplate"
     [rightTemplate]="paginatorRightTemplate"
     (onPageChange)="pageChange($event)"
-  ></wt-paginator>
-  <div class="wt-table-wrapper p-datatable-wrapper" [style.max-height]="wrapperMaxHeight">
-    <table class="wt-table-table p-datatable-table" role="table" [ngClass]="tableStyleClass || ''" [ngStyle]="tableStyle || null">
+  ></wu-paginator>
+  <div class="wu-table-wrapper p-datatable-wrapper" [style.max-height]="wrapperMaxHeight">
+    <table class="wu-table-table p-datatable-table" role="table" [ngClass]="tableStyleClass || ''" [ngStyle]="tableStyle || null">
       <ng-container *ngIf="colgroupTemplate"><ng-container *ngTemplateOutlet="colgroupTemplate; context: columnsContext"></ng-container></ng-container>
-      <thead *ngIf="headerTemplate" class="wt-table-thead p-datatable-thead">
+      <thead *ngIf="headerTemplate" class="wu-table-thead p-datatable-thead">
         <ng-container *ngTemplateOutlet="headerTemplate; context: columnsContext"></ng-container>
       </thead>
-      <tbody *ngIf="frozenValue.length && frozenBodyTemplate" class="wt-table-tbody wt-table-frozen-tbody p-datatable-frozen-tbody">
+      <tbody *ngIf="frozenValue.length && frozenBodyTemplate" class="wu-table-tbody wu-table-frozen-tbody p-datatable-frozen-tbody">
         <ng-container *ngFor="let row of frozenValue; let i = index">
           <ng-container *ngTemplateOutlet="frozenBodyTemplate; context: frozenContext(row, i)"></ng-container>
         </ng-container>
       </tbody>
-      <tbody class="wt-table-tbody p-datatable-tbody">
+      <tbody class="wu-table-tbody p-datatable-tbody">
         <ng-container *ngIf="showLoadingBody; else rowsBody">
           <ng-container *ngTemplateOutlet="loadingBodyTemplate; context: columnsContext"></ng-container>
         </ng-container>
@@ -77,18 +77,18 @@
           </ng-container>
           <ng-container *ngIf="isEmpty && !loading">
             <ng-container *ngIf="emptyTemplate; else defaultEmpty"><ng-container *ngTemplateOutlet="emptyTemplate; context: columnsContext"></ng-container></ng-container>
-            <ng-template #defaultEmpty><tr class="wt-table-empty-row"><td class="wt-table-empty" colspan="100">{{ t.emptyMessage }}</td></tr></ng-template>
+            <ng-template #defaultEmpty><tr class="wu-table-empty-row"><td class="wu-table-empty" colspan="100">{{ t.emptyMessage }}</td></tr></ng-template>
           </ng-container>
         </ng-template>
       </tbody>
-      <tfoot *ngIf="footerTemplate" class="wt-table-tfoot p-datatable-tfoot">
+      <tfoot *ngIf="footerTemplate" class="wu-table-tfoot p-datatable-tfoot">
         <ng-container *ngTemplateOutlet="footerTemplate; context: columnsContext"></ng-container>
       </tfoot>
     </table>
   </div>
-  <wt-paginator
+  <wu-paginator
     *ngIf="showPaginatorBottom"
-    class="wt-table-paginator p-paginator-bottom"
+    class="wu-table-paginator p-paginator-bottom"
     [styleClass]="paginatorStyleClass"
     [first]="pageFirst"
     [rows]="rows"
@@ -101,8 +101,8 @@
     [leftTemplate]="paginatorLeftTemplate"
     [rightTemplate]="paginatorRightTemplate"
     (onPageChange)="pageChange($event)"
-  ></wt-paginator>
-  <div *ngIf="summaryTemplate" class="wt-table-footer p-datatable-footer">
+  ></wu-paginator>
+  <div *ngIf="summaryTemplate" class="wu-table-footer p-datatable-footer">
     <ng-container *ngTemplateOutlet="summaryTemplate"></ng-container>
   </div>
 </div>

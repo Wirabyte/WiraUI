@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtResult } from './result.component';
+import { WuResult } from './result.component';
 
-/** For NgModule apps. Standalone apps can import `WtResult` directly. */
+/** For NgModule apps. Standalone apps can import `WuResult` directly. */
 @NgModule({
-  imports: [WtResult],
-  exports: [WtResult],
+  imports: [WuResult],
+  exports: [WuResult],
 })
-export class WtResultModule {}
+export class WuResultModule {}

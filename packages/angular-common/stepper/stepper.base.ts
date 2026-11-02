@@ -15,27 +15,27 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WT_VERSION_INFO, WtMenuItem, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from 'wiraui/config';
 
-/** A wt-step, as its stepper knows it. */
-export interface ɵWtStepRef {
+/** A wu-step, as its stepper knows it. */
+export interface ɵWuStepRef {
   readonly el: HTMLElement;
   readonly stepValue: unknown;
 }
 
 /** What steps, panels and step items need from their stepper. */
-export interface ɵWtStepperApi {
+export interface ɵWuStepperApi {
   readonly value: unknown;
   readonly linear: boolean;
   /** The steps only show where the process is; they cannot be clicked. */
   readonly readonly: boolean;
   readonly baseId: string;
   readonly changes: Subject<void>;
-  register(step: ɵWtStepRef): void;
-  unregister(step: ɵWtStepRef): void;
+  register(step: ɵWuStepRef): void;
+  unregister(step: ɵWuStepRef): void;
   /** Position of a step among the stepper's steps (document order), -1 when unknown. */
-  indexOf(step: ɵWtStepRef): number;
-  isLast(step: ɵWtStepRef): boolean;
+  indexOf(step: ɵWuStepRef): number;
+  isLast(step: ɵWuStepRef): boolean;
   /** Whether the last step holds `value` (a vertical stepper draws no line under it). */
   isLastValue(value: unknown): boolean;
   /** Position of the step holding `value`, -1 when none does. */
@@ -49,12 +49,12 @@ export interface ɵWtStepperApi {
   panelId(value: unknown): string;
 }
 
-export const ɵWT_STEPPER = new InjectionToken<ɵWtStepperApi>('WT_STEPPER');
-/** A wt-step-item: gives its value to the step and panel inside it. */
-export const ɵWT_STEP_ITEM = new InjectionToken<{ readonly value: unknown }>('WT_STEP_ITEM');
+export const ɵWU_STEPPER = new InjectionToken<ɵWuStepperApi>('WU_STEPPER');
+/** A wu-step-item: gives its value to the step and panel inside it. */
+export const ɵWU_STEP_ITEM = new InjectionToken<{ readonly value: unknown }>('WU_STEP_ITEM');
 
-/** Context of `#content` templates on wt-step and wt-step-panel: `let-activateCallback="activateCallback"`. */
-export interface WtStepContext {
+/** Context of `#content` templates on wu-step and wu-step-panel: `let-activateCallback="activateCallback"`. */
+export interface WuStepContext {
   activateCallback: (value: unknown) => void;
   value: unknown;
   active: boolean;
@@ -64,12 +64,12 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
 const idPart = (v: unknown) => String(v ?? '').replace(/[^\w-]/g, '_');
 
 /**
- * What wt-stepper does: holds the current step's value (`[(value)]`) and tells its steps and panels which is active.
+ * What wu-stepper does: holds the current step's value (`[(value)]`) and tells its steps and panels which is active.
  * `[linear]="true"` locks the step headers, so the app moves on with the panels' `activateCallback` (after checking
  * the step's form).
  */
 @Directive()
-export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
+export abstract class ɵWuStepperBase implements ɵWuStepperApi, OnDestroy {
   /** The current step's value. Two-way: `[(value)]`. Typed `any` so app fields keep their own types. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set value(v: any) {
@@ -89,15 +89,15 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
   }
   @Input() id?: string;
   /**
-   * Steps from a menu model instead of wt-step children (what a Steps bar does): `[model]="steps"` +
+   * Steps from a menu model instead of wu-step children (what a Steps bar does): `[model]="steps"` +
    * `[(activeIndex)]`. Items take `label`, `subtitle`, `disabled` and `command`.
    */
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v ? v.filter((it) => it && it.visible !== false) : null;
     if (this._model && this._activeIndex !== null) this._value = this._activeIndex;
     this.changes.next();
   }
-  get model(): WtMenuItem[] | null {
+  get model(): WuMenuItem[] | null {
     return this._model;
   }
   /** With `[model]`: the current step's position. Two-way: `[(activeIndex)]`. */
@@ -127,19 +127,19 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
   @Output() readonly activeIndexChange = new EventEmitter<number>();
 
   readonly changes = new Subject<void>();
-  readonly major: number = WT_VERSION_INFO.major;
-  private readonly ownId = ɵuniqueId('wt-stepper');
+  readonly major: number = WU_VERSION_INFO.major;
+  private readonly ownId = ɵuniqueId('wu-stepper');
   private _value: unknown;
   private _linear = false;
   private _readonly = false;
-  private _model: WtMenuItem[] | null = null;
+  private _model: WuMenuItem[] | null = null;
   private _activeIndex: number | null = null;
-  private steps: ɵWtStepRef[] = [];
+  private steps: ɵWuStepRef[] = [];
   private refreshQueued = false;
   private sorted = true;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -149,13 +149,13 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
   get baseId(): string {
     return this.id || this.ownId;
   }
-  register(step: ɵWtStepRef): void {
+  register(step: ɵWuStepRef): void {
     this.steps.push(step);
     this.sorted = false;
     this.changes.next();
     this.refreshSoon();
   }
-  unregister(step: ɵWtStepRef): void {
+  unregister(step: ɵWuStepRef): void {
     this.steps = this.steps.filter((s) => s !== step);
     this.changes.next();
     this.refreshSoon();
@@ -173,10 +173,10 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
       this.changes.next();
     });
   }
-  indexOf(step: ɵWtStepRef): number {
+  indexOf(step: ɵWuStepRef): number {
     return this.ordered().indexOf(step);
   }
-  isLast(step: ɵWtStepRef): boolean {
+  isLast(step: ɵWuStepRef): boolean {
     const o = this.ordered();
     return o[o.length - 1] === step;
   }
@@ -206,7 +206,7 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
     this.changes.next();
   }
   /** With `[model]`: the subtitle an item carries (`subtitle`, or the older `title` when it is not used as a tooltip). */
-  subtitleOf(item: WtMenuItem): string | null {
+  subtitleOf(item: WuMenuItem): string | null {
     const s = (item as { subtitle?: unknown }).subtitle;
     return typeof s === 'string' && s ? s : null;
   }
@@ -218,7 +218,7 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
   }
 
   /** Steps in document order (the order @for or the template put them in). */
-  private ordered(): ɵWtStepRef[] {
+  private ordered(): ɵWuStepRef[] {
     if (!this.sorted) {
       this.steps.sort((a, b) => (a.el.compareDocumentPosition(b.el) & 4 /* FOLLOWING */ ? -1 : 1));
       this.sorted = true;
@@ -230,8 +230,8 @@ export abstract class ɵWtStepperBase implements ɵWtStepperApi, OnDestroy {
 /** Re-renders a stepper part whenever the stepper's value or its steps change. */
 @Directive()
 abstract class StepperChild implements OnDestroy {
-  protected readonly stepper = inject(ɵWT_STEPPER);
-  protected readonly item = inject(ɵWT_STEP_ITEM, { optional: true, skipSelf: true });
+  protected readonly stepper = inject(ɵWU_STEPPER);
+  protected readonly item = inject(ɵWU_STEP_ITEM, { optional: true, skipSelf: true });
   protected readonly cdr = inject(ChangeDetectorRef);
   readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly sub: Subscription = this.stepper.changes.subscribe(() => this.cdr.markForCheck());
@@ -241,15 +241,15 @@ abstract class StepperChild implements OnDestroy {
 }
 
 /**
- * The row of step headers (`wt-step-list`). Tab reaches the current step; ← / → / Home / End move between the
+ * The row of step headers (`wu-step-list`). Tab reaches the current step; ← / → / Home / End move between the
  * steps that can be picked.
  */
 @Directive()
-export abstract class ɵWtStepListBase extends StepperChild {
+export abstract class ɵWuStepListBase extends StepperChild {
   keydown(event: KeyboardEvent): void {
     const keys = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'];
     if (!keys.includes(event.key)) return;
-    const headers = Array.from(this.el.querySelectorAll<HTMLButtonElement>('.wt-step-header')).filter((b) => !b.disabled);
+    const headers = Array.from(this.el.querySelectorAll<HTMLButtonElement>('.wu-step-header')).filter((b) => !b.disabled);
     if (!headers.length) return;
     const at = headers.indexOf(event.target as HTMLButtonElement);
     let next = at;
@@ -263,11 +263,11 @@ export abstract class ɵWtStepListBase extends StepperChild {
 }
 
 /**
- * One step header (`wt-step [value]="1"`): its number, the projected title, and the line to the next step. Clicking
+ * One step header (`wu-step [value]="1"`): its number, the projected title, and the line to the next step. Clicking
  * it shows its panel unless it is disabled or the stepper is linear. A `#content` template replaces the header.
  */
 @Directive()
-export abstract class ɵWtStepBase extends StepperChild implements ɵWtStepRef, OnInit, OnDestroy {
+export abstract class ɵWuStepBase extends StepperChild implements ɵWuStepRef, OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any;
   @Input() set disabled(v: unknown) {
@@ -278,7 +278,7 @@ export abstract class ɵWtStepBase extends StepperChild implements ɵWtStepRef, 
   }
   /** A second, smaller line under the title. */
   @Input() subtitle?: string | null;
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   private _disabled = false;
 
@@ -330,7 +330,7 @@ export abstract class ɵWtStepBase extends StepperChild implements ɵWtStepRef, 
   get contentTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.contentRef) || ɵfindTemplate(this.templates, 'content');
   }
-  get context(): WtStepContext {
+  get context(): WuStepContext {
     return { activateCallback: (v) => this.stepper.activate(v), value: this.stepValue, active: this.active };
   }
   pick(event?: Event): void {
@@ -340,14 +340,14 @@ export abstract class ɵWtStepBase extends StepperChild implements ɵWtStepRef, 
 }
 
 /**
- * The content of one step (`wt-step-panel [value]="1"` with a `#content` template, or plain content), shown while
- * its step is current. Inside a wt-step-item it takes the item's value and draws the line down to the next step.
+ * The content of one step (`wu-step-panel [value]="1"` with a `#content` template, or plain content), shown while
+ * its step is current. Inside a wu-step-item it takes the item's value and draws the line down to the next step.
  */
 @Directive()
-export abstract class ɵWtStepPanelBase extends StepperChild {
+export abstract class ɵWuStepPanelBase extends StepperChild {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any;
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
 
   get panelValue(): unknown {
@@ -378,14 +378,14 @@ export abstract class ɵWtStepPanelBase extends StepperChild {
   get contentTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.contentRef) || ɵfindTemplate(this.templates, 'content');
   }
-  get context(): WtStepContext {
+  get context(): WuStepContext {
     return { activateCallback: (v) => this.stepper.activate(v), value: this.panelValue, active: this.active };
   }
 }
 
-/** A step of a vertical stepper (`wt-step-item [value]="1"`): its wt-step and wt-step-panel share the value. */
+/** A step of a vertical stepper (`wu-step-item [value]="1"`): its wu-step and wu-step-panel share the value. */
 @Directive()
-export abstract class ɵWtStepItemBase extends StepperChild {
+export abstract class ɵWuStepItemBase extends StepperChild {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any;
   get active(): boolean {

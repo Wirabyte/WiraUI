@@ -1,21 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtDividerAlign, WtDividerLayout, WtDividerType } from './divider.types';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuDividerAlign, WuDividerLayout, WuDividerType } from './divider.types';
 
-/** Line between sections, horizontal or vertical, with optional content on it: `<wt-divider align="center">หรือ</wt-divider>`. */
+/** Line between sections, horizontal or vertical, with optional content on it: `<wu-divider align="center">หรือ</wu-divider>`. */
 @Component({
-  selector: 'wt-divider',
+  selector: 'wu-divider',
   standalone: true,
   templateUrl: './divider.component.html',
   styleUrl: './divider.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[class.wt-divider-host-vertical]': "layout() === 'vertical'" },
+  host: { '[class.wu-divider-host-vertical]': "layout() === 'vertical'" },
 })
-export class WtDivider {
-  readonly layout = input<WtDividerLayout>('horizontal');
-  readonly type = input<WtDividerType>('solid');
-  readonly align = input<WtDividerAlign>();
+export class WuDivider {
+  readonly layout = input<WuDividerLayout>('horizontal');
+  readonly type = input<WuDividerType>('solid');
+  readonly align = input<WuDividerAlign>();
 
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   readonly styleClass = input<string | null | undefined>();
@@ -34,19 +34,19 @@ export class WtDivider {
     const layout = this.layout();
     const align = this.align() || (layout === 'horizontal' ? 'left' : 'center');
     return [
-      'wt-divider',
+      'wu-divider',
       'p-divider',
       'p-component',
-      `wt-divider-${layout}`,
+      `wu-divider-${layout}`,
       `p-divider-${layout}`,
-      `wt-divider-${this.type()}`,
+      `wu-divider-${this.type()}`,
       `p-divider-${this.type()}`,
-      `wt-divider-${align}`,
+      `wu-divider-${align}`,
       `p-divider-${align}`,
     ].join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 }

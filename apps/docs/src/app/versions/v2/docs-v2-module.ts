@@ -1,103 +1,103 @@
 import { inject, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { WtButtonModule } from 'wiratheme-v2/button';
-import { WtSelectModule } from 'wiratheme-v2/select';
-import { WtTableModule } from 'wiratheme-v2/table';
-import { WtPaginatorModule } from 'wiratheme-v2/paginator';
-import { WtMenubarModule } from 'wiratheme-v2/menubar';
-import { WtPanelMenuModule } from 'wiratheme-v2/panelmenu';
-import { WtStepsModule } from 'wiratheme-v2/steps';
-import { WtChartJsModule } from 'wiratheme-v2/chartjs';
-import { WtImageModule } from 'wiratheme-v2/image';
-import { WtAutoCompleteModule } from 'wiratheme-v2/autocomplete';
-import { WtMenuModule } from 'wiratheme-v2/menu';
-import { WtTabMenuModule } from 'wiratheme-v2/tabmenu';
-import { WtMultiSelectModule } from 'wiratheme-v2/multiselect';
-import { WtInputMaskModule } from 'wiratheme-v2/inputmask';
-import { WtTimelineModule } from 'wiratheme-v2/timeline';
-import { WtPickListModule } from 'wiratheme-v2/picklist';
-import { WtOrderListModule } from 'wiratheme-v2/orderlist';
-import { WtFileUploadModule } from 'wiratheme-v2/fileupload';
-import { WtStepperModule } from 'wiratheme-v2/stepper';
-import { WtEditorModule } from 'wiratheme-v2/editor';
-import { WtRippleModule } from 'wiratheme-v2/ripple';
-import { WtKeyFilterModule } from 'wiratheme-v2/keyfilter';
-import { WtSliderModule } from 'wiratheme-v2/slider';
-import { WtSplitButtonModule } from 'wiratheme-v2/splitbutton';
-import { WtListboxModule } from 'wiratheme-v2/listbox';
-import { WtGalleriaModule } from 'wiratheme-v2/galleria';
-import { WtColorPickerModule } from 'wiratheme-v2/colorpicker';
-import { WtBreadcrumbModule } from 'wiratheme-v2/breadcrumb';
-import { WtInplaceModule } from 'wiratheme-v2/inplace';
-import { WtBlockUIModule } from 'wiratheme-v2/blockui';
-import { WtScrollPanelModule } from 'wiratheme-v2/scrollpanel';
-import { WtScrollerModule } from 'wiratheme-v2/scroller';
-import { WtDrawerModule } from 'wiratheme-v2/drawer';
-import { WtTieredMenuModule } from 'wiratheme-v2/tieredmenu';
-import { WtContextMenuModule } from 'wiratheme-v2/contextmenu';
-import { WtTreeModule } from 'wiratheme-v2/tree';
-import { WtTreeSelectModule } from 'wiratheme-v2/treeselect';
-import { WtDragDropModule } from 'wiratheme-v2/dragdrop';
-import { WtNavbarModule } from 'wiratheme-v2/navbar';
-import { WtAsideMenuModule } from 'wiratheme-v2/asidemenu';
-import { WtImageCropperModule } from 'wiratheme-v2/imagecropper';
+import { WuButtonModule } from 'wiraui-v2/button';
+import { WuSelectModule } from 'wiraui-v2/select';
+import { WuTableModule } from 'wiraui-v2/table';
+import { WuPaginatorModule } from 'wiraui-v2/paginator';
+import { WuMenubarModule } from 'wiraui-v2/menubar';
+import { WuPanelMenuModule } from 'wiraui-v2/panelmenu';
+import { WuStepsModule } from 'wiraui-v2/steps';
+import { WuChartJsModule } from 'wiraui-v2/chartjs';
+import { WuImageModule } from 'wiraui-v2/image';
+import { WuAutoCompleteModule } from 'wiraui-v2/autocomplete';
+import { WuMenuModule } from 'wiraui-v2/menu';
+import { WuTabMenuModule } from 'wiraui-v2/tabmenu';
+import { WuMultiSelectModule } from 'wiraui-v2/multiselect';
+import { WuInputMaskModule } from 'wiraui-v2/inputmask';
+import { WuTimelineModule } from 'wiraui-v2/timeline';
+import { WuPickListModule } from 'wiraui-v2/picklist';
+import { WuOrderListModule } from 'wiraui-v2/orderlist';
+import { WuFileUploadModule } from 'wiraui-v2/fileupload';
+import { WuStepperModule } from 'wiraui-v2/stepper';
+import { WuEditorModule } from 'wiraui-v2/editor';
+import { WuRippleModule } from 'wiraui-v2/ripple';
+import { WuKeyFilterModule } from 'wiraui-v2/keyfilter';
+import { WuSliderModule } from 'wiraui-v2/slider';
+import { WuSplitButtonModule } from 'wiraui-v2/splitbutton';
+import { WuListboxModule } from 'wiraui-v2/listbox';
+import { WuGalleriaModule } from 'wiraui-v2/galleria';
+import { WuColorPickerModule } from 'wiraui-v2/colorpicker';
+import { WuBreadcrumbModule } from 'wiraui-v2/breadcrumb';
+import { WuInplaceModule } from 'wiraui-v2/inplace';
+import { WuBlockUIModule } from 'wiraui-v2/blockui';
+import { WuScrollPanelModule } from 'wiraui-v2/scrollpanel';
+import { WuScrollerModule } from 'wiraui-v2/scroller';
+import { WuDrawerModule } from 'wiraui-v2/drawer';
+import { WuTieredMenuModule } from 'wiraui-v2/tieredmenu';
+import { WuContextMenuModule } from 'wiraui-v2/contextmenu';
+import { WuTreeModule } from 'wiraui-v2/tree';
+import { WuTreeSelectModule } from 'wiraui-v2/treeselect';
+import { WuDragDropModule } from 'wiraui-v2/dragdrop';
+import { WuNavbarModule } from 'wiraui-v2/navbar';
+import { WuAsideMenuModule } from 'wiraui-v2/asidemenu';
+import { WuImageCropperModule } from 'wiraui-v2/imagecropper';
 import { WiIconModule } from 'wiraicon/angular';
-import { WtTerminalModule, WtTerminalService } from 'wiratheme-v2/terminal';
-import { WtImageCompareModule } from 'wiratheme-v2/imagecompare';
-import { WtCarouselModule } from 'wiratheme-v2/carousel';
-import { WtSplitterModule } from 'wiratheme-v2/splitter';
-import { WtOrganizationChartModule } from 'wiratheme-v2/organizationchart';
-import { WtKnobModule } from 'wiratheme-v2/knob';
-import { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } from 'wiratheme-v2/excel';
-import { WtEmptyStateModule } from 'wiratheme-v2/emptystate';
-import { WtResultModule } from 'wiratheme-v2/result';
-import { WtErrorPageModule } from 'wiratheme-v2/errorpage';
-import { WtDockModule } from 'wiratheme-v2/dock';
-import { WtSiteFooterModule } from 'wiratheme-v2/sitefooter';
-import { WtBottomBarModule } from 'wiratheme-v2/bottombar';
-import { WtThaiModule } from 'wiratheme-v2/thai';
-import { WtInputOtpModule } from 'wiratheme-v2/inputotp';
-import { addEdge, applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme-v2/flow';
-import { WtMeterGroupModule } from 'wiratheme-v2/metergroup';
-import { WtValidationModule, WtValidators } from 'wiratheme-v2/validation';
-import { WtDialogModule, WtDialogService } from 'wiratheme-v2/dialog';
-import { WtAlert, WtAlertModule, WtAlertService } from 'wiratheme-v2/alert';
-import { WtConfirmationService, WtConfirmDialogModule } from 'wiratheme-v2/confirmdialog';
-import { WtMessageService, WtToastModule } from 'wiratheme-v2/toast';
-import { WtTooltipModule } from 'wiratheme-v2/tooltip';
-import { WtPopoverModule } from 'wiratheme-v2/popover';
-import { WtAnimateModule } from 'wiratheme-v2/animate';
-import { WtDatePickerModule } from 'wiratheme-v2/datepicker';
-import { WtInputNumberModule } from 'wiratheme-v2/inputnumber';
-import { WtToolbarModule } from 'wiratheme-v2/toolbar';
-import { WtAccordionModule } from 'wiratheme-v2/accordion';
-import { WtTabsModule } from 'wiratheme-v2/tabs';
-import { WtIconFieldModule } from 'wiratheme-v2/iconfield';
-import { WtInputGroupModule } from 'wiratheme-v2/inputgroup';
-import { WtFloatLabelModule } from 'wiratheme-v2/floatlabel';
-import { WtToggleButtonModule } from 'wiratheme-v2/togglebutton';
-import { WtSelectButtonModule } from 'wiratheme-v2/selectbutton';
-import { WtRatingModule } from 'wiratheme-v2/rating';
-import { WtPasswordModule } from 'wiratheme-v2/password';
-import { WtTagModule } from 'wiratheme-v2/tag';
-import { WtBadgeModule } from 'wiratheme-v2/badge';
-import { WtChipModule } from 'wiratheme-v2/chip';
-import { WtAvatarModule } from 'wiratheme-v2/avatar';
-import { WtSkeletonModule } from 'wiratheme-v2/skeleton';
-import { WtProgressBarModule } from 'wiratheme-v2/progressbar';
-import { WtProgressSpinnerModule } from 'wiratheme-v2/progressspinner';
-import { WtDividerModule } from 'wiratheme-v2/divider';
-import { WtPanelModule } from 'wiratheme-v2/panel';
-import { WtFieldsetModule } from 'wiratheme-v2/fieldset';
-import { WtMessageModule } from 'wiratheme-v2/message';
-import { WtCardModule } from 'wiratheme-v2/card';
-import { WtCheckboxModule } from 'wiratheme-v2/checkbox';
-import { provideWiraTheme, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme-v2/config';
-import { WtInputTextModule } from 'wiratheme-v2/inputtext';
-import { WtRadioButtonModule } from 'wiratheme-v2/radiobutton';
-import { WtTextareaModule } from 'wiratheme-v2/textarea';
-import { WtToggleSwitchModule } from 'wiratheme-v2/toggleswitch';
+import { WuTerminalModule, WuTerminalService } from 'wiraui-v2/terminal';
+import { WuImageCompareModule } from 'wiraui-v2/imagecompare';
+import { WuCarouselModule } from 'wiraui-v2/carousel';
+import { WuSplitterModule } from 'wiraui-v2/splitter';
+import { WuOrganizationChartModule } from 'wiraui-v2/organizationchart';
+import { WuKnobModule } from 'wiraui-v2/knob';
+import { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } from 'wiraui-v2/excel';
+import { WuEmptyStateModule } from 'wiraui-v2/emptystate';
+import { WuResultModule } from 'wiraui-v2/result';
+import { WuErrorPageModule } from 'wiraui-v2/errorpage';
+import { WuDockModule } from 'wiraui-v2/dock';
+import { WuSiteFooterModule } from 'wiraui-v2/sitefooter';
+import { WuBottomBarModule } from 'wiraui-v2/bottombar';
+import { WuThaiModule } from 'wiraui-v2/thai';
+import { WuInputOtpModule } from 'wiraui-v2/inputotp';
+import { addEdge, applyEdgeChanges, applyNodeChanges, WuFlowModule } from 'wiraui-v2/flow';
+import { WuMeterGroupModule } from 'wiraui-v2/metergroup';
+import { WuValidationModule, WuValidators } from 'wiraui-v2/validation';
+import { WuDialogModule, WuDialogService } from 'wiraui-v2/dialog';
+import { WuAlert, WuAlertModule, WuAlertService } from 'wiraui-v2/alert';
+import { WuConfirmationService, WuConfirmDialogModule } from 'wiraui-v2/confirmdialog';
+import { WuMessageService, WuToastModule } from 'wiraui-v2/toast';
+import { WuTooltipModule } from 'wiraui-v2/tooltip';
+import { WuPopoverModule } from 'wiraui-v2/popover';
+import { WuAnimateModule } from 'wiraui-v2/animate';
+import { WuDatePickerModule } from 'wiraui-v2/datepicker';
+import { WuInputNumberModule } from 'wiraui-v2/inputnumber';
+import { WuToolbarModule } from 'wiraui-v2/toolbar';
+import { WuAccordionModule } from 'wiraui-v2/accordion';
+import { WuTabsModule } from 'wiraui-v2/tabs';
+import { WuIconFieldModule } from 'wiraui-v2/iconfield';
+import { WuInputGroupModule } from 'wiraui-v2/inputgroup';
+import { WuFloatLabelModule } from 'wiraui-v2/floatlabel';
+import { WuToggleButtonModule } from 'wiraui-v2/togglebutton';
+import { WuSelectButtonModule } from 'wiraui-v2/selectbutton';
+import { WuRatingModule } from 'wiraui-v2/rating';
+import { WuPasswordModule } from 'wiraui-v2/password';
+import { WuTagModule } from 'wiraui-v2/tag';
+import { WuBadgeModule } from 'wiraui-v2/badge';
+import { WuChipModule } from 'wiraui-v2/chip';
+import { WuAvatarModule } from 'wiraui-v2/avatar';
+import { WuSkeletonModule } from 'wiraui-v2/skeleton';
+import { WuProgressBarModule } from 'wiraui-v2/progressbar';
+import { WuProgressSpinnerModule } from 'wiraui-v2/progressspinner';
+import { WuDividerModule } from 'wiraui-v2/divider';
+import { WuPanelModule } from 'wiraui-v2/panel';
+import { WuFieldsetModule } from 'wiraui-v2/fieldset';
+import { WuMessageModule } from 'wiraui-v2/message';
+import { WuCardModule } from 'wiraui-v2/card';
+import { WuCheckboxModule } from 'wiraui-v2/checkbox';
+import { provideWiraUI, ɵWU_SKIP_VERSION_CHECK } from 'wiraui-v2/config';
+import { WuInputTextModule } from 'wiraui-v2/inputtext';
+import { WuRadioButtonModule } from 'wiraui-v2/radiobutton';
+import { WuTextareaModule } from 'wiraui-v2/textarea';
+import { WuToggleSwitchModule } from 'wiraui-v2/toggleswitch';
 import { DOCS_DIALOGS, DOCS_EXCEL, DOCS_FLOW, DOCS_OVERLAYS, DOCS_TERMINAL, DOCS_VALIDATORS, DocsOverlays } from '../../core/overlays';
 import { DocsSharedModule } from '../../shared/docs-shared-module';
 import { DocsPagesModule } from '../../shared/pages/docs-pages-module';
@@ -312,101 +312,101 @@ import { THEME_V2 } from './theme-v2';
     ReactiveFormsModule,
     DocsSharedModule,
     DocsPagesModule,
-    WtButtonModule,
-    WtCardModule,
-    WtInputTextModule,
-    WtTextareaModule,
-    WtCheckboxModule,
-    WtRadioButtonModule,
-    WtToggleSwitchModule,
-    WtTagModule,
-    WtBadgeModule,
-    WtChipModule,
-    WtAvatarModule,
-    WtSkeletonModule,
-    WtProgressBarModule,
-    WtProgressSpinnerModule,
-    WtDividerModule,
-    WtPanelModule,
-    WtFieldsetModule,
-    WtMessageModule,
-    WtIconFieldModule,
-    WtInputGroupModule,
-    WtFloatLabelModule,
-    WtToggleButtonModule,
-    WtSelectButtonModule,
-    WtRatingModule,
-    WtPasswordModule,
-    WtToolbarModule,
-    WtAccordionModule,
-    WtTabsModule,
-    WtInputNumberModule,
-    WtDatePickerModule,
-    WtDialogModule,
-    WtAlertModule,
-    WtConfirmDialogModule,
-    WtToastModule,
-    WtTooltipModule,
-    WtPopoverModule,
-    WtAnimateModule,
-    WtMeterGroupModule,
-    WtValidationModule,
-    WtSelectModule,
-    WtTableModule,
-    WtPaginatorModule,
-    WtMenubarModule,
-    WtPanelMenuModule,
-    WtStepsModule,
-    WtChartJsModule,
-    WtImageModule,
-    WtAutoCompleteModule,
-    WtMenuModule,
-    WtTabMenuModule,
-    WtMultiSelectModule,
-    WtInputMaskModule,
-    WtTimelineModule,
-    WtPickListModule,
-    WtOrderListModule,
-    WtFileUploadModule,
-    WtStepperModule,
-    WtEditorModule,
-    WtRippleModule,
-    WtKeyFilterModule,
-    WtSliderModule,
-    WtSplitButtonModule,
-    WtListboxModule,
-    WtGalleriaModule,
-    WtColorPickerModule,
-    WtBreadcrumbModule,
-    WtInplaceModule,
-    WtBlockUIModule,
-    WtScrollPanelModule,
-    WtScrollerModule,
-    WtDrawerModule,
-    WtTieredMenuModule,
-    WtContextMenuModule,
-    WtTreeModule,
-    WtTreeSelectModule,
-    WtDragDropModule,
-    WtNavbarModule,
-    WtAsideMenuModule,
-    WtImageCropperModule,
+    WuButtonModule,
+    WuCardModule,
+    WuInputTextModule,
+    WuTextareaModule,
+    WuCheckboxModule,
+    WuRadioButtonModule,
+    WuToggleSwitchModule,
+    WuTagModule,
+    WuBadgeModule,
+    WuChipModule,
+    WuAvatarModule,
+    WuSkeletonModule,
+    WuProgressBarModule,
+    WuProgressSpinnerModule,
+    WuDividerModule,
+    WuPanelModule,
+    WuFieldsetModule,
+    WuMessageModule,
+    WuIconFieldModule,
+    WuInputGroupModule,
+    WuFloatLabelModule,
+    WuToggleButtonModule,
+    WuSelectButtonModule,
+    WuRatingModule,
+    WuPasswordModule,
+    WuToolbarModule,
+    WuAccordionModule,
+    WuTabsModule,
+    WuInputNumberModule,
+    WuDatePickerModule,
+    WuDialogModule,
+    WuAlertModule,
+    WuConfirmDialogModule,
+    WuToastModule,
+    WuTooltipModule,
+    WuPopoverModule,
+    WuAnimateModule,
+    WuMeterGroupModule,
+    WuValidationModule,
+    WuSelectModule,
+    WuTableModule,
+    WuPaginatorModule,
+    WuMenubarModule,
+    WuPanelMenuModule,
+    WuStepsModule,
+    WuChartJsModule,
+    WuImageModule,
+    WuAutoCompleteModule,
+    WuMenuModule,
+    WuTabMenuModule,
+    WuMultiSelectModule,
+    WuInputMaskModule,
+    WuTimelineModule,
+    WuPickListModule,
+    WuOrderListModule,
+    WuFileUploadModule,
+    WuStepperModule,
+    WuEditorModule,
+    WuRippleModule,
+    WuKeyFilterModule,
+    WuSliderModule,
+    WuSplitButtonModule,
+    WuListboxModule,
+    WuGalleriaModule,
+    WuColorPickerModule,
+    WuBreadcrumbModule,
+    WuInplaceModule,
+    WuBlockUIModule,
+    WuScrollPanelModule,
+    WuScrollerModule,
+    WuDrawerModule,
+    WuTieredMenuModule,
+    WuContextMenuModule,
+    WuTreeModule,
+    WuTreeSelectModule,
+    WuDragDropModule,
+    WuNavbarModule,
+    WuAsideMenuModule,
+    WuImageCropperModule,
     WiIconModule,
-    WtTerminalModule,
-    WtImageCompareModule,
-    WtCarouselModule,
-    WtSplitterModule,
-    WtOrganizationChartModule,
-    WtKnobModule,
-    WtEmptyStateModule,
-    WtResultModule,
-    WtErrorPageModule,
-    WtDockModule,
-    WtSiteFooterModule,
-    WtBottomBarModule,
-    WtThaiModule,
-    WtInputOtpModule,
-    WtFlowModule,
+    WuTerminalModule,
+    WuImageCompareModule,
+    WuCarouselModule,
+    WuSplitterModule,
+    WuOrganizationChartModule,
+    WuKnobModule,
+    WuEmptyStateModule,
+    WuResultModule,
+    WuErrorPageModule,
+    WuDockModule,
+    WuSiteFooterModule,
+    WuBottomBarModule,
+    WuThaiModule,
+    WuInputOtpModule,
+    WuFlowModule,
     RouterModule.forChild(
       versionRoutes({
         button: ButtonPageV2,
@@ -511,33 +511,33 @@ import { THEME_V2 } from './theme-v2';
     ),
   ],
   providers: [
-    // Docs site only: wiratheme@2 normally refuses to start on Angular 21 (DESIGN.md §3).
-    { provide: ɵWT_SKIP_VERSION_CHECK, useValue: true },
-    provideWiraTheme({ locale: 'th', calendar: 'buddhist' }),
+    // Docs site only: wiraui@2 normally refuses to start on Angular 21 (DESIGN.md §3).
+    { provide: ɵWU_SKIP_VERSION_CHECK, useValue: true },
+    provideWiraUI({ locale: 'th', calendar: 'buddhist' }),
     THEME_V2,
     // Overlay services live in this module's injector, not the app root: the alert dialog they create then sees the
     // version check skip above, and pages of one major never reach another major's services.
-    WtAlertService,
-    WtConfirmationService,
-    WtMessageService,
+    WuAlertService,
+    WuConfirmationService,
+    WuMessageService,
     // The overlay demos open this version's alerts, confirmations and toasts.
-    { provide: DOCS_VALIDATORS, useValue: WtValidators },
+    { provide: DOCS_VALIDATORS, useValue: WuValidators },
     // The Terminal demo talks to this version's terminal service.
-    { provide: DOCS_TERMINAL, useExisting: WtTerminalService },
+    { provide: DOCS_TERMINAL, useExisting: WuTerminalService },
     // The Flow demos that apply changes themselves use this version's helpers.
     { provide: DOCS_FLOW, useValue: { applyNodeChanges, applyEdgeChanges, addEdge } },
-    // The Excel demos build files with this version's wiratheme/excel.
+    // The Excel demos build files with this version's wiraui/excel.
     { provide: DOCS_EXCEL, useValue: { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } },
-    // The Dialog page's service sample: this module's WtDialogService opens this version's picker.
-    WtDialogService,
-    { provide: DOCS_DIALOGS, useFactory: () => { const dialogs = inject(WtDialogService); return { pickStudent: (config: object) => dialogs.open(PickStudentV2, config).result }; } },
+    // The Dialog page's service sample: this module's WuDialogService opens this version's picker.
+    WuDialogService,
+    { provide: DOCS_DIALOGS, useFactory: () => { const dialogs = inject(WuDialogService); return { pickStudent: (config: object) => dialogs.open(PickStudentV2, config).result }; } },
     {
       provide: DOCS_OVERLAYS,
       useFactory: (): DocsOverlays => ({
-        alert: inject(WtAlertService),
-        staticAlert: WtAlert,
-        confirm: inject(WtConfirmationService),
-        messages: inject(WtMessageService),
+        alert: inject(WuAlertService),
+        staticAlert: WuAlert,
+        confirm: inject(WuConfirmationService),
+        messages: inject(WuMessageService),
       }),
     },
   ],

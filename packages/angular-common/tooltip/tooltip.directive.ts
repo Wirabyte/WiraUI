@@ -1,32 +1,32 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, HostListener, inject, Input, OnDestroy } from '@angular/core';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, ɵWtStyleLoader } from 'wiratheme/config';
-import { WT_TOOLTIP_CSS } from './tooltip.styles';
-import { WtTooltipEvent, WtTooltipOptions, WtTooltipPosition } from './tooltip.types';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
+import { WU_TOOLTIP_CSS } from './tooltip.styles';
+import { WuTooltipEvent, WuTooltipOptions, WuTooltipPosition } from './tooltip.types';
 
 type PopoverElement = HTMLElement & { showPopover(): void; hidePopover(): void };
 const GAP = 8;
 const MARGIN = 8;
-const FLIP: Record<WtTooltipPosition, WtTooltipPosition> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+const FLIP: Record<WuTooltipPosition, WuTooltipPosition> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
 
 /**
- * Tooltip: `<button wtTooltip="บันทึก" tooltipPosition="top">`. The `pTooltip` attribute existing templates use works
+ * Tooltip: `<button wuTooltip="บันทึก" tooltipPosition="top">`. The `pTooltip` attribute existing templates use works
  * the same. Shown on hover and on keyboard focus; drawn in the top layer, so it shows above dialogs and is never
  * clipped. Flips to the other side when there is no room.
  */
 @Directive({
-  selector: '[wtTooltip], [pTooltip]',
+  selector: '[wuTooltip], [pTooltip]',
   standalone: true,
-  exportAs: 'wtTooltip',
+  exportAs: 'wuTooltip',
 })
-export class WtTooltip implements OnDestroy {
+export class WuTooltip implements OnDestroy {
   /** The text. Use `[escape]="false"` for HTML (only formatting tags are kept: b, i, strong, em, u, br, p, span, small, code, ul, ol, li, and http/https/mailto links). */
-  @Input() set wtTooltip(v: string | null | undefined) { this.setText(v); }
+  @Input() set wuTooltip(v: string | null | undefined) { this.setText(v); }
   @Input() set pTooltip(v: string | null | undefined) { this.setText(v); }
   /** Default `'right'`, as before. */
-  @Input() tooltipPosition: WtTooltipPosition = 'right';
+  @Input() tooltipPosition: WuTooltipPosition = 'right';
   /** `'hover'` (also keyboard focus), `'focus'`, or `'both'`. */
-  @Input() tooltipEvent: WtTooltipEvent = 'hover';
+  @Input() tooltipEvent: WuTooltipEvent = 'hover';
   @Input() set showDelay(v: unknown) { this._showDelay = Number(v) || 0; }
   @Input() set hideDelay(v: unknown) { this._hideDelay = Number(v) || 0; }
   /** Hide after this many milliseconds. */
@@ -41,7 +41,7 @@ export class WtTooltip implements OnDestroy {
   @Input() set positionTop(v: unknown) { this._dy = Number(v) || 0; }
   @Input() set positionLeft(v: unknown) { this._dx = Number(v) || 0; }
   /** All of the above in one object, as some templates pass them. */
-  @Input() set tooltipOptions(o: WtTooltipOptions | null | undefined) {
+  @Input() set tooltipOptions(o: WuTooltipOptions | null | undefined) {
     if (!o) return;
     if (o.tooltipLabel !== undefined) this.setText(o.tooltipLabel);
     if (o.tooltipPosition) this.tooltipPosition = o.tooltipPosition;
@@ -78,10 +78,10 @@ export class WtTooltip implements OnDestroy {
   private hideTimer: ReturnType<typeof setTimeout> | null = null;
   private lifeTimer: ReturnType<typeof setTimeout> | null = null;
   private keyboard = false;
-  private readonly id = ɵuniqueId('wt-tooltip');
+  private readonly id = ɵuniqueId('wu-tooltip');
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
-  private readonly loader = inject(ɵWtStyleLoader);
+  private readonly loader = inject(ɵWuStyleLoader);
   /** Scrolling moves the tooltip with its target, and hides it once the target leaves the screen. */
   private readonly onScroll = () => {
     const r = this.host.getBoundingClientRect();
@@ -91,7 +91,7 @@ export class WtTooltip implements OnDestroy {
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get visible(): boolean {
@@ -134,22 +134,22 @@ export class WtTooltip implements OnDestroy {
 
   show(): void {
     if (this._disabled || !this.text || this.el) return;
-    this.loader.load('tooltip', WT_TOOLTIP_CSS);
+    this.loader.load('tooltip', WU_TOOLTIP_CSS);
     const tip = this.doc.createElement('div');
     tip.id = this.id;
     tip.setAttribute('role', 'tooltip');
     tip.setAttribute('popover', 'manual');
-    tip.className = `wt-tooltip p-tooltip p-component ${this.tooltipStyleClass || ''}`;
-    if (this._fit) tip.classList.add('wt-tooltip-fit');
+    tip.className = `wu-tooltip p-tooltip p-component ${this.tooltipStyleClass || ''}`;
+    if (this._fit) tip.classList.add('wu-tooltip-fit');
     if (!this._autoHide) {
-      tip.classList.add('wt-tooltip-hoverable');
+      tip.classList.add('wu-tooltip-hoverable');
       tip.addEventListener('pointerenter', () => this.keep());
       tip.addEventListener('pointerleave', () => this.scheduleHide(true));
     }
     const arrow = this.doc.createElement('div');
-    arrow.className = 'wt-tooltip-arrow p-tooltip-arrow';
+    arrow.className = 'wu-tooltip-arrow p-tooltip-arrow';
     const body = this.doc.createElement('div');
-    body.className = 'wt-tooltip-text p-tooltip-text';
+    body.className = 'wu-tooltip-text p-tooltip-text';
     if (this._escape) body.textContent = this.text;
     else body.replaceChildren(safeHtml(this.text, this.doc));
     tip.append(arrow, body);
@@ -183,7 +183,7 @@ export class WtTooltip implements OnDestroy {
     this.hide();
   }
 
-  /** The element screen readers land on: the host, or the button inside a component such as wt-button. */
+  /** The element screen readers land on: the host, or the button inside a component such as wu-button. */
   private describes(): HTMLElement {
     const focusable = 'button, a[href], input, select, textarea, [tabindex]';
     return this.host.matches(focusable) ? this.host : this.host.querySelector<HTMLElement>(focusable) || this.host;
@@ -194,7 +194,7 @@ export class WtTooltip implements OnDestroy {
     if (!this.el) return;
     if (!this.text) this.hide();
     else {
-      const body = this.el.querySelector('.wt-tooltip-text') as HTMLElement;
+      const body = this.el.querySelector('.wu-tooltip-text') as HTMLElement;
       if (this._escape) body.textContent = this.text;
       else body.replaceChildren(safeHtml(this.text, this.doc));
       this.place();
@@ -240,7 +240,7 @@ export class WtTooltip implements OnDestroy {
     const r = this.host.getBoundingClientRect();
     const vw = this.doc.documentElement.clientWidth;
     const vh = this.doc.documentElement.clientHeight;
-    const fits = (pos: WtTooltipPosition, w: number, h: number) =>
+    const fits = (pos: WuTooltipPosition, w: number, h: number) =>
       pos === 'top' ? r.top - GAP - h >= MARGIN : pos === 'bottom' ? r.bottom + GAP + h <= vh - MARGIN : pos === 'left' ? r.left - GAP - w >= MARGIN : r.right + GAP + w <= vw - MARGIN;
     let pos = this.tooltipPosition in FLIP ? this.tooltipPosition : 'right';
     this.setSide(tip, pos);
@@ -263,9 +263,9 @@ export class WtTooltip implements OnDestroy {
     tip.style.setProperty('--_arrow', `${Math.round(arrow)}px`);
   }
 
-  private setSide(tip: HTMLElement, pos: WtTooltipPosition): void {
+  private setSide(tip: HTMLElement, pos: WuTooltipPosition): void {
     for (const p of ['top', 'bottom', 'left', 'right']) {
-      tip.classList.toggle(`wt-tooltip-${p}`, p === pos);
+      tip.classList.toggle(`wu-tooltip-${p}`, p === pos);
       tip.classList.toggle(`p-tooltip-${p}`, p === pos);
     }
   }

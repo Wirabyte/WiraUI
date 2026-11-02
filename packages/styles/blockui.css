@@ -1,10 +1,10 @@
-/* wt-blockui. Shared by wiratheme v1, v2 and v3. A dim cover with its content centred: over one element (moved into
+/* wu-blockui. Shared by wiraui v1, v2 and v3. A dim cover with its content centred: over one element (moved into
    it), or over the whole page as a modal <dialog> in the top layer. */
-@layer wiratheme.components {
-  :is(wt-blockui, wt-block-ui) {
+@layer wiraui.components {
+  :is(wu-blockui, wu-block-ui) {
     display: contents;
   }
-  .wt-blockui {
+  .wu-blockui {
     position: absolute;
     inset: 0;
     z-index: 5;
@@ -15,19 +15,19 @@
     gap: 0.75rem;
     border-radius: inherit;
     /* Over one part: a veil of the card colour, blurred, with text in the text colour (clear in light and dark). */
-    background: var(--wt-blockui-target-mask);
-    -webkit-backdrop-filter: blur(var(--wt-blockui-target-blur));
-    backdrop-filter: blur(var(--wt-blockui-target-blur));
-    color: var(--wt-blockui-target-color);
+    background: var(--wu-blockui-target-mask);
+    -webkit-backdrop-filter: blur(var(--wu-blockui-target-blur));
+    backdrop-filter: blur(var(--wu-blockui-target-blur));
+    color: var(--wu-blockui-target-color);
     font-weight: 500;
     text-align: center;
-    animation: wt-blockui-in 0.15s ease;
+    animation: wu-blockui-in 0.15s ease;
     outline: none;
   }
-  .wt-blockui-container {
+  .wu-blockui-container {
     position: relative;
   }
-  .wt-blockui-document {
+  .wu-blockui-document {
     position: fixed;
     box-sizing: border-box;
     width: 100%;
@@ -39,24 +39,24 @@
     border: 0;
     border-radius: 0;
     /* The whole page: the dark mask modals use, text in white. */
-    background: var(--wt-blockui-mask);
+    background: var(--wu-blockui-mask);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    color: var(--wt-blockui-color);
+    color: var(--wu-blockui-color);
   }
-  .wt-blockui-document:not([open]) {
+  .wu-blockui-document:not([open]) {
     display: none;
   }
-  .wt-blockui-document::backdrop {
+  .wu-blockui-document::backdrop {
     background: transparent;
   }
-  @keyframes wt-blockui-in {
+  @keyframes wu-blockui-in {
     from {
       opacity: 0;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-blockui {
+    .wu-blockui {
       animation: none;
     }
   }

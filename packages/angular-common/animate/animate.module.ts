@@ -1,15 +1,15 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { WtAnimate } from './animate.directive';
-import { provideWtAnimate } from './animate.service';
-import { WtAnimateOptions } from './animate.types';
+import { WuAnimate } from './animate.directive';
+import { provideWuAnimate } from './animate.service';
+import { WuAnimateOptions } from './animate.types';
 
-/** For NgModule apps: import it where templates use `wtAnimate` / `data-aos`; `forRoot()` once also animates the rest. */
+/** For NgModule apps: import it where templates use `wuAnimate` / `data-aos`; `forRoot()` once also animates the rest. */
 @NgModule({
-  imports: [WtAnimate],
-  exports: [WtAnimate],
+  imports: [WuAnimate],
+  exports: [WuAnimate],
 })
-export class WtAnimateModule {
-  static forRoot(options: WtAnimateOptions = {}): ModuleWithProviders<WtAnimateModule> {
-    return { ngModule: WtAnimateModule, providers: [provideWtAnimate(options)] };
+export class WuAnimateModule {
+  static forRoot(options: WuAnimateOptions = {}): ModuleWithProviders<WuAnimateModule> {
+    return { ngModule: WuAnimateModule, providers: [provideWuAnimate(options)] };
   }
 }

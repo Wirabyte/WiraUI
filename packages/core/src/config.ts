@@ -24,7 +24,7 @@ export type ComponentValues = Partial<Record<ComponentId, Record<string, number 
 
 /**
  * Everything a theme is made of. This is the object the Designer edits and every
- * exported file embeds on its `wiratheme-config` line.
+ * exported file embeds on its `wiraui-config` line.
  */
 export interface ThemeConfig {
   v: 1;
@@ -91,7 +91,7 @@ export function isThemeName(value: unknown): value is string {
 export function themeConfig(name: string): ThemeConfig {
   if (isPresetId(name)) return defaults(name);
   const t = CLASSIC_THEMES[name];
-  if (!t) throw new Error(`wiratheme: unknown theme ${name}`);
+  if (!t) throw new Error(`wiraui: unknown theme ${name}`);
   const c = defaults(t.preset);
   if (t.primary) c.primary = t.primary;
   if (t.surface) c.surface = t.surface;

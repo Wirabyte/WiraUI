@@ -18,26 +18,26 @@ import {
   ɵfindTemplate,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { checkFile, formatFileSize, isImageFile, sameFile, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { checkFile, formatFileSize, isImageFile, sameFile, WuLocale } from 'wiraui/core';
 import {
-  WtFileBeforeUploadEvent,
-  WtFileProgressEvent,
-  WtFileRemoveEvent,
-  WtFileSelectEvent,
-  WtFileSendEvent,
-  WtFileUploadContentContext,
-  WtFileUploadErrorEvent,
-  WtFileUploadEvent,
-  WtFileUploadHandlerEvent,
-  WtFileUploadMode,
-  WtFileValidationFailEvent,
+  WuFileBeforeUploadEvent,
+  WuFileProgressEvent,
+  WuFileRemoveEvent,
+  WuFileSelectEvent,
+  WuFileSendEvent,
+  WuFileUploadContentContext,
+  WuFileUploadErrorEvent,
+  WuFileUploadEvent,
+  WuFileUploadHandlerEvent,
+  WuFileUploadMode,
+  WuFileValidationFailEvent,
 } from './fileupload.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
@@ -59,14 +59,14 @@ function headerEntries(headers: unknown): Array<[string, string]> {
 }
 
 /**
- * What wt-fileupload does, shared by the v1 and v2/v3 templates. Files come from the Choose button or are dropped on
+ * What wu-fileupload does, shared by the v1 and v2/v3 templates. Files come from the Choose button or are dropped on
  * the content area; each is checked against `accept`, `maxFileSize` and `fileLimit` (turned-away files get a message
  * and `(onValidationFail)`). Upload posts them to `url` as `FormData` under `name`, or with `[customUpload]="true"`
  * hands them to `(uploadHandler)`; `[auto]="true"` uploads as soon as they are chosen. `mode="basic"` is a single
  * button.
  */
 @Directive()
-export abstract class ɵWtFileUploadBase implements OnDestroy {
+export abstract class ɵWuFileUploadBase implements OnDestroy {
   /** Form field name of each file in the request. */
   @Input() name?: string;
   @Input() url?: string;
@@ -114,7 +114,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   get showUploadButton(): boolean { return this._showUpload; }
   @Input() set showCancelButton(v: unknown) { this._showCancel = v === undefined || ɵtoBool(v); }
   get showCancelButton(): boolean { return this._showCancel; }
-  @Input() mode: WtFileUploadMode = 'advanced';
+  @Input() mode: WuFileUploadMode = 'advanced';
   /** Request headers: Angular `HttpHeaders` or a plain object. */
   @Input() headers: unknown;
   /** The app uploads: Upload (or `auto`) emits `(uploadHandler)` with the files instead of posting to `url`. */
@@ -139,27 +139,27 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   @Input() uploadButtonProps: unknown;
   @Input() cancelButtonProps: unknown;
 
-  @Output() readonly onBeforeUpload = new EventEmitter<WtFileBeforeUploadEvent>();
-  @Output() readonly onSend = new EventEmitter<WtFileSendEvent>();
-  @Output() readonly onUpload = new EventEmitter<WtFileUploadEvent>();
-  @Output() readonly onError = new EventEmitter<WtFileUploadErrorEvent>();
+  @Output() readonly onBeforeUpload = new EventEmitter<WuFileBeforeUploadEvent>();
+  @Output() readonly onSend = new EventEmitter<WuFileSendEvent>();
+  @Output() readonly onUpload = new EventEmitter<WuFileUploadEvent>();
+  @Output() readonly onError = new EventEmitter<WuFileUploadErrorEvent>();
   @Output() readonly onClear = new EventEmitter<void>();
-  @Output() readonly onRemove = new EventEmitter<WtFileRemoveEvent>();
-  @Output() readonly onSelect = new EventEmitter<WtFileSelectEvent>();
-  @Output() readonly onProgress = new EventEmitter<WtFileProgressEvent>();
-  @Output() readonly uploadHandler = new EventEmitter<WtFileUploadHandlerEvent>();
+  @Output() readonly onRemove = new EventEmitter<WuFileRemoveEvent>();
+  @Output() readonly onSelect = new EventEmitter<WuFileSelectEvent>();
+  @Output() readonly onProgress = new EventEmitter<WuFileProgressEvent>();
+  @Output() readonly uploadHandler = new EventEmitter<WuFileUploadHandlerEvent>();
   @Output() readonly onImageError = new EventEmitter<Event>();
   @Output() readonly onRemoveUploadedFile = new EventEmitter<{ file: File; index: number }>();
-  @Output() readonly onValidationFail = new EventEmitter<WtFileValidationFailEvent>();
+  @Output() readonly onValidationFail = new EventEmitter<WuFileValidationFailEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('file', { descendants: false }) protected fileRef?: unknown;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   @ContentChild('toolbar', { descendants: false }) protected toolbarRef?: unknown;
   @ContentChild('empty', { descendants: false }) protected emptyRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
 
-  readonly major: number = WT_VERSION_INFO.major;
+  readonly major: number = WU_VERSION_INFO.major;
   /** Files uploaded by this component (to `url`), shown as completed. */
   uploadedFiles: File[] = [];
   uploadedFileCount = 0;
@@ -172,7 +172,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly i18n = ɵrefreshOnTranslation();
   private _files: File[] = [];
@@ -189,8 +189,8 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   private xhr: XMLHttpRequest | null = null;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnDestroy(): void {
@@ -201,7 +201,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get basic(): boolean {
@@ -254,7 +254,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   get canCancel(): boolean {
     return !this._disabled && !this.uploading && this.hasFiles();
   }
-  get context(): WtFileUploadContentContext {
+  get context(): WuFileUploadContentContext {
     return {
       $implicit: this._files,
       files: this._files,
@@ -272,7 +272,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
     return ɵbuttonClass(styleClass) + ' ' + extra;
   }
   removeClass(): string {
-    return ɵbuttonClass(this.removeStyleClass, 'p-button-danger p-button-text p-button-rounded') + ' wt-btn-icon-only wt-fileupload-remove';
+    return ɵbuttonClass(this.removeStyleClass, 'p-button-danger p-button-text p-button-rounded') + ' wu-btn-icon-only wu-fileupload-remove';
   }
   hasFiles(): boolean {
     return this._files.length > 0;
@@ -295,7 +295,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   /** Opens the file chooser. */
   choose(): void {
     if (!this.canChoose) return;
-    const input = this.host.querySelector('input.wt-fileupload-input') as HTMLInputElement | null;
+    const input = this.host.querySelector('input.wu-fileupload-input') as HTMLInputElement | null;
     input?.click();
   }
 
@@ -493,7 +493,7 @@ export abstract class ɵWtFileUploadBase implements OnDestroy {
   }
 
   private clearInput(): void {
-    const input = this.host.querySelector('input.wt-fileupload-input') as HTMLInputElement | null;
+    const input = this.host.querySelector('input.wu-fileupload-input') as HTMLInputElement | null;
     if (input) input.value = '';
   }
 

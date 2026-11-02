@@ -13,15 +13,15 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
-import { WtPanelToggler } from './panel.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
+import { WuPanelToggler } from './panel.types';
 
 /**
- * Titled box that can collapse: `<wt-panel header="รายละเอียด" toggleable [(collapsed)]="closed">`.
- * Slots: `[wtPanelHeader]` (extra header content), `[wtPanelIcons]` (buttons next to the toggler), `[wtPanelFooter]`.
+ * Titled box that can collapse: `<wu-panel header="รายละเอียด" toggleable [(collapsed)]="closed">`.
+ * Slots: `[wuPanelHeader]` (extra header content), `[wuPanelIcons]` (buttons next to the toggler), `[wuPanelFooter]`.
  */
 @Component({
-  selector: 'wt-panel',
+  selector: 'wu-panel',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './panel.component.html',
@@ -29,8 +29,8 @@ import { WtPanelToggler } from './panel.types';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtPanel implements OnDestroy {
-  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+export class WuPanel implements OnDestroy {
+  @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
   @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
@@ -49,20 +49,20 @@ export class WtPanel implements OnDestroy {
   /** Two-way: `[(collapsed)]`. */
   @Input() set collapsed(v: unknown) { this._collapsed = ɵtoBool(v); }
   get collapsed(): boolean { return this._collapsed; }
-  @Input() toggler: WtPanelToggler = 'icon';
+  @Input() toggler: WuPanelToggler = 'icon';
 
   @Output() readonly collapsedChange = new EventEmitter<boolean>();
   @Output() readonly onToggle = new EventEmitter<{ collapsed: boolean }>();
 
-  readonly titleId = ɵuniqueId('wt-panel-title');
-  readonly contentId = ɵuniqueId('wt-panel-content');
+  readonly titleId = ɵuniqueId('wu-panel-title');
+  readonly contentId = ɵuniqueId('wu-panel-content');
   private _toggleable = false;
   private _collapsed = false;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -88,9 +88,9 @@ export class WtPanel implements OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-panel', 'p-panel', 'p-component'];
-    if (this._toggleable) c.push('wt-panel-toggleable', 'p-panel-toggleable');
-    if (this.isCollapsed) c.push('wt-panel-collapsed');
+    const c = ['wu-panel', 'p-panel', 'p-component'];
+    if (this._toggleable) c.push('wu-panel-toggleable', 'p-panel-toggleable');
+    if (this.isCollapsed) c.push('wu-panel-collapsed');
     return c.join(' ');
   }
 

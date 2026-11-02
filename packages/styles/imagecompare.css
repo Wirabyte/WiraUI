@@ -1,37 +1,37 @@
-/* wt-imageCompare. Shared by wiratheme v1, v2 and v3. Two pictures stacked in one box: the `left` one fills it and the
+/* wu-imageCompare. Shared by wiraui v1, v2 and v3. Two pictures stacked in one box: the `left` one fills it and the
    `right` one shows from the start edge to the divider. Drag anywhere (mouse, pen or a sideways swipe; up-and-down
    swipes still scroll the page) or use the keys on the round handle. */
-@layer wiratheme.components {
-  :is(wt-imagecompare, wt-image-compare) {
+@layer wiraui.components {
+  :is(wu-imagecompare, wu-image-compare) {
     display: block;
     max-width: 100%;
   }
-  .wt-imagecompare {
+  .wu-imagecompare {
     position: relative;
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    aspect-ratio: var(--wt-imagecompare-aspect-ratio);
+    aspect-ratio: var(--wu-imagecompare-aspect-ratio);
     overflow: hidden;
-    border-radius: var(--wt-imagecompare-radius);
-    background: var(--wt-imagecompare-bg);
+    border-radius: var(--wu-imagecompare-radius);
+    background: var(--wu-imagecompare-bg);
     cursor: ew-resize;
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
   }
-  .wt-imagecompare-item {
+  .wu-imagecompare-item {
     position: absolute;
     inset: 0;
     overflow: hidden;
   }
-  .wt-imagecompare-item > * {
+  .wu-imagecompare-item > * {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
   }
-  .wt-imagecompare-item img {
+  .wu-imagecompare-item img {
     display: block;
     width: 100%;
     height: 100%;
@@ -39,54 +39,54 @@
     pointer-events: none;
     -webkit-user-drag: none;
   }
-  .wt-imagecompare-divider {
+  .wu-imagecompare-divider {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: var(--wt-imagecompare-divider-width);
+    width: var(--wu-imagecompare-divider-width);
     transform: translateX(-50%);
-    background: var(--wt-imagecompare-divider-color);
+    background: var(--wu-imagecompare-divider-color);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
     pointer-events: none;
   }
-  .wt-imagecompare-handle {
+  .wu-imagecompare-handle {
     position: absolute;
     top: 50%;
     display: grid;
     place-items: center;
     box-sizing: border-box;
-    width: var(--wt-imagecompare-handle-size);
-    height: var(--wt-imagecompare-handle-size);
+    width: var(--wu-imagecompare-handle-size);
+    height: var(--wu-imagecompare-handle-size);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: var(--wt-imagecompare-handle-bg);
-    color: var(--wt-imagecompare-handle-color);
-    box-shadow: var(--wt-imagecompare-handle-shadow);
+    background: var(--wu-imagecompare-handle-bg);
+    color: var(--wu-imagecompare-handle-color);
+    box-shadow: var(--wu-imagecompare-handle-shadow);
     outline: none;
     cursor: ew-resize;
-    transition: box-shadow var(--wt-transition);
+    transition: box-shadow var(--wu-transition);
   }
-  .wt-imagecompare-handle svg {
+  .wu-imagecompare-handle svg {
     width: 1.25rem;
     height: 1.25rem;
   }
-  .wt-imagecompare-handle:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow), var(--wt-imagecompare-handle-shadow);
+  .wu-imagecompare-handle:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow), var(--wu-imagecompare-handle-shadow);
   }
-  .wt-imagecompare-dragging,
-  .wt-imagecompare-dragging .wt-imagecompare-handle {
+  .wu-imagecompare-dragging,
+  .wu-imagecompare-dragging .wu-imagecompare-handle {
     cursor: grabbing;
   }
   @media (pointer: coarse) {
-    .wt-imagecompare-handle {
-      width: calc(var(--wt-imagecompare-handle-size) * 1.2);
-      height: calc(var(--wt-imagecompare-handle-size) * 1.2);
+    .wu-imagecompare-handle {
+      width: calc(var(--wu-imagecompare-handle-size) * 1.2);
+      height: calc(var(--wu-imagecompare-handle-size) * 1.2);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-imagecompare-handle {
+    .wu-imagecompare-handle {
       transition: none;
     }
   }

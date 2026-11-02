@@ -1,25 +1,25 @@
 <div
   #root
-  class="wt-splitter p-splitter p-component"
-  [class.wt-splitter-horizontal]="horizontal()"
+  class="wu-splitter p-splitter p-component"
+  [class.wu-splitter-horizontal]="horizontal()"
   [class.p-splitter-horizontal]="horizontal()"
-  [class.wt-splitter-vertical]="!horizontal()"
+  [class.wu-splitter-vertical]="!horizontal()"
   [class.p-splitter-vertical]="!horizontal()"
-  [class.wt-splitter-resizing]="resizing"
+  [class.wu-splitter-resizing]="resizing"
   [class.p-splitter-resizing]="resizing"
   [ngClass]="styleClass || ''"
   [ngStyle]="rootStyle"
 >
   <ng-container *ngFor="let p of panels; let i = index; let last = last; trackBy: trackPanel">
-    <div class="wt-splitter-panel p-splitterpanel p-splitter-panel" [id]="panelId(i)" [style.flex-basis]="basis(i)" [ngClass]="panelClass(p)" [ngStyle]="panelStyleOf(p)">
+    <div class="wu-splitter-panel p-splitterpanel p-splitter-panel" [id]="panelId(i)" [style.flex-basis]="basis(i)" [ngClass]="panelClass(p)" [ngStyle]="panelStyleOf(p)">
       <ng-container *ngTemplateOutlet="p.template"></ng-container>
     </div>
     <div
       *ngIf="!last"
-      class="wt-splitter-gutter p-splitter-gutter"
+      class="wu-splitter-gutter p-splitter-gutter"
       role="separator"
       tabindex="0"
-      [class.wt-splitter-gutter-resizing]="activeGutter === i"
+      [class.wu-splitter-gutter-resizing]="activeGutter === i"
       [class.p-splitter-gutter-resizing]="activeGutter === i"
       [style.width.px]="horizontal() ? gutterSize : null"
       [style.height.px]="horizontal() ? null : gutterSize"
@@ -37,7 +37,7 @@
       (keyup)="gutterKeyup($event)"
       (blur)="gutterBlur($event)"
     >
-      <div class="wt-splitter-gutter-handle p-splitter-gutter-handle"></div>
+      <div class="wu-splitter-gutter-handle p-splitter-gutter-handle"></div>
     </div>
   </ng-container>
 </div>

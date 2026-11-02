@@ -14,10 +14,10 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
 
 /** `(onChange)` and `(onSlideEnd)`: the value, and both ends of a range. */
-export interface WtSliderChangeEvent {
+export interface WuSliderChangeEvent {
   event?: Event;
   originalEvent?: Event;
   value?: number;
@@ -28,21 +28,21 @@ const toNumber = (v: unknown, fallback: number) => (v === null || v === undefine
 
 /**
  * A value (or a range, `[range]="true"`) picked by dragging a handle along a track:
- * `<wt-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="5">`. Click the track to jump, drag a handle,
+ * `<wu-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="5">`. Click the track to jump, drag a handle,
  * or use the keyboard (arrows, Page Up/Down, Home/End). `orientation="vertical"` stands it up.
  */
 @Component({
-  selector: 'wt-slider',
+  selector: 'wu-slider',
   standalone: true,
   imports: [NgFor, NgIf],
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtSlider), multi: true }],
-  host: { class: 'wt-slider-host', '[class.wt-slider-host-vertical]': "orientation === 'vertical'" },
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuSlider), multi: true }],
+  host: { class: 'wu-slider-host', '[class.wu-slider-host-vertical]': "orientation === 'vertical'" },
 })
-export class WtSlider implements ControlValueAccessor, OnDestroy {
+export class WuSlider implements ControlValueAccessor, OnDestroy {
   @Input() set min(v: unknown) { this._min = toNumber(v, 0); }
   get min(): number { return this._min; }
   @Input() set max(v: unknown) { this._max = toNumber(v, 100); }
@@ -66,8 +66,8 @@ export class WtSlider implements ControlValueAccessor, OnDestroy {
   @Input() animate: unknown;
   @Input() autofocus: unknown;
 
-  @Output() readonly onChange = new EventEmitter<WtSliderChangeEvent>();
-  @Output() readonly onSlideEnd = new EventEmitter<WtSliderChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuSliderChangeEvent>();
+  @Output() readonly onSlideEnd = new EventEmitter<WuSliderChangeEvent>();
 
   values: number[] = [0, 0];
   private _min = 0;
@@ -85,7 +85,7 @@ export class WtSlider implements ControlValueAccessor, OnDestroy {
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -137,7 +137,7 @@ export class WtSlider implements ControlValueAccessor, OnDestroy {
 
   private startDrag(index: number): void {
     this.dragging = index;
-    (this.host.querySelectorAll('.wt-slider-handle')[index] as HTMLElement | undefined)?.focus();
+    (this.host.querySelectorAll('.wu-slider-handle')[index] as HTMLElement | undefined)?.focus();
     const doc = this.host.ownerDocument;
     const move = (e: PointerEvent) => this.zone.run(() => this.setValue(this.dragging, this.valueAt(e), e));
     const up = (e: PointerEvent) =>
@@ -235,7 +235,7 @@ export class WtSlider implements ControlValueAccessor, OnDestroy {
   }
 
   private valueAt(event: PointerEvent): number {
-    const track = this.host.querySelector('.wt-slider') as HTMLElement;
+    const track = this.host.querySelector('.wu-slider') as HTMLElement;
     const r = track.getBoundingClientRect();
     const ratio = this.vertical ? (r.bottom - event.clientY) / r.height : (event.clientX - r.left) / r.width;
     return this._min + Math.min(1, Math.max(0, ratio)) * (this._max - this._min);
@@ -257,7 +257,7 @@ export class WtSlider implements ControlValueAccessor, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private event(e: Event): WtSliderChangeEvent {
+  private event(e: Event): WuSliderChangeEvent {
     return this._range ? { originalEvent: e, values: [this.values[0], this.values[1]] } : { originalEvent: e, value: this.values[0] };
   }
 }

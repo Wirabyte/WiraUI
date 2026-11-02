@@ -50,8 +50,8 @@
               }
             ],
             "styles": [
-              "node_modules/wiratheme/utils/utils.css",
-              "src/theme/wiratheme.theme.css",
+              "node_modules/wiraui/utils/utils.css",
+              "src/theme/wiraui.theme.css",
               "src/styles.css"
             ]
           },

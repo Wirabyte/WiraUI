@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-orderlist
+        <wu-orderlist
           id="d-ol-basic"
           [value]="electives"
           [header]="tx('ลำดับวิชาเลือกที่ต้องการ')"
@@ -20,14 +20,14 @@
             <div class="docs-pl-name">{{ i + 1 }}. {{ e.name }}</div>
             <small class="docs-pl-meta">{{ e.teacher }}</small>
           </ng-template>
-        </wt-orderlist>
+        </wu-orderlist>
         <span class="docs-demo-output">order: <code id="d-ol-order">{{ order }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="dragdrop" [section]="sec['dragdrop']">
       <docs-demo [html]="code['dragdrop']" [ts]="ts['dragdrop']" layout="stack">
-        <wt-orderlist
+        <wu-orderlist
           id="d-ol-drag"
           [value]="dragElectives"
           [header]="tx('ลำดับวิชาเลือกที่ต้องการ')"
@@ -38,7 +38,7 @@
           [listStyle]="{ height: '18rem' }"
         >
           <ng-template #item let-e>{{ e.name }}</ng-template>
-        </wt-orderlist>
+        </wu-orderlist>
         <span class="docs-demo-output">
           order: <code id="d-ol-drag-order">{{ idsOf(dragElectives) }}</code> · selectedElectives: <code id="d-ol-selection">{{ idsOf(selectedElectives) }}</code>
         </span>
@@ -47,7 +47,7 @@
 
     <docs-section id="filter" [section]="sec['filter']">
       <docs-demo [html]="code['filter']" layout="stack">
-        <wt-orderlist
+        <wu-orderlist
           id="d-ol-filter"
           [value]="filterElectives"
           dataKey="id"
@@ -59,13 +59,13 @@
           <ng-template #item let-e>{{ e.name }} <small class="docs-pl-meta">· {{ e.teacher }}</small></ng-template>
           <ng-template #emptyfilter>{{ tx('ไม่พบวิชาที่ค้นหา') }}</ng-template>
           <ng-template #empty>{{ tx('ยังไม่มีวิชาเลือก') }}</ng-template>
-        </wt-orderlist>
+        </wu-orderlist>
       </docs-demo>
     </docs-section>
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']" layout="stack">
-        <wt-orderlist
+        <wu-orderlist
           id="d-ol-look"
           [value]="lookElectives"
           [header]="tx('ลำดับวิชาเลือกที่ต้องการ')"
@@ -73,7 +73,7 @@
           optionLabel="name"
           scrollHeight="14rem"
           [stripedRows]="true"
-        ></wt-orderlist>
+        ></wu-orderlist>
       </docs-demo>
     </docs-section>
 

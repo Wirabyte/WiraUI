@@ -1,212 +1,212 @@
-/* wt-aside-menu. Shared by wiratheme v1, v2 and v3. Side navigation: a full-height column beside the page (sticky,
+/* wu-aside-menu. Shared by wiraui v1, v2 and v3. Side navigation: a full-height column beside the page (sticky,
    scrolling on its own) whose groups expand in place; collapsed, an icon rail whose groups open as flyouts beside it.
-   At and below its breakpoint (an input, watched in JS, so the phone layout hangs off .wt-aside-menu-mobile rather
+   At and below its breakpoint (an input, watched in JS, so the phone layout hangs off .wu-aside-menu-mobile rather
    than a media query) it is an off-canvas panel over a mask. */
-@layer wiratheme.components {
-  wt-aside-menu {
+@layer wiraui.components {
+  wu-aside-menu {
     position: sticky;
-    top: var(--wt-aside-menu-top);
+    top: var(--wu-aside-menu-top);
     display: block;
     flex: none;
     align-self: flex-start;
     box-sizing: border-box;
-    width: var(--wt-aside-menu-width);
+    width: var(--wu-aside-menu-width);
     max-width: 100%;
-    height: calc(100vh - var(--wt-aside-menu-top));
-    height: calc(100dvh - var(--wt-aside-menu-top));
-    transition: width var(--wt-transition) ease;
+    height: calc(100vh - var(--wu-aside-menu-top));
+    height: calc(100dvh - var(--wu-aside-menu-top));
+    transition: width var(--wu-transition) ease;
   }
-  wt-aside-menu.wt-aside-menu-host-collapsed {
-    width: var(--wt-aside-menu-collapsed-width);
+  wu-aside-menu.wu-aside-menu-host-collapsed {
+    width: var(--wu-aside-menu-collapsed-width);
   }
   /* Collapsing or expanding: the menu keeps its full layout at full width while the host's width moves over it, so
      labels never wrap and spring back mid-way. The host clips it and draws the edge line meanwhile. */
-  wt-aside-menu.wt-aside-menu-host-sliding {
+  wu-aside-menu.wu-aside-menu-host-sliding {
     overflow: hidden;
   }
-  wt-aside-menu.wt-aside-menu-host-sliding::after {
+  wu-aside-menu.wu-aside-menu-host-sliding::after {
     content: '';
     position: absolute;
     inset-block: 0;
     inset-inline-end: 0;
-    border-inline-end: var(--wt-aside-menu-border-width) solid var(--wt-aside-menu-border-color);
+    border-inline-end: var(--wu-aside-menu-border-width) solid var(--wu-aside-menu-border-color);
     pointer-events: none;
   }
   /* Phones: the host takes no room in the layout; the panel and its mask are fixed over the page. */
-  wt-aside-menu.wt-aside-menu-host-mobile {
+  wu-aside-menu.wu-aside-menu-host-mobile {
     display: contents;
   }
 
-  .wt-aside-menu {
+  .wu-aside-menu {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-inline-end: var(--wt-aside-menu-border-width) solid var(--wt-aside-menu-border-color);
-    background: var(--wt-aside-menu-bg);
-    color: var(--wt-aside-menu-color);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    border-inline-end: var(--wu-aside-menu-border-width) solid var(--wu-aside-menu-border-color);
+    background: var(--wu-aside-menu-bg);
+    color: var(--wu-aside-menu-color);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-aside-menu.wt-aside-menu-sliding {
-    width: var(--wt-aside-menu-width);
+  .wu-aside-menu.wu-aside-menu-sliding {
+    width: var(--wu-aside-menu-width);
     border-inline-end-color: transparent;
   }
-  .wt-aside-menu-sliding :is(.wt-aside-menu-label, .wt-aside-menu-section-label) {
+  .wu-aside-menu-sliding :is(.wu-aside-menu-label, .wu-aside-menu-section-label) {
     overflow: hidden;
     white-space: nowrap;
   }
   /* Labels, badges and arrows fade out as the menu narrows, and in as it widens. */
-  .wt-aside-menu-sliding-collapse :is(.wt-aside-menu-label, .wt-aside-menu-section-label, .wt-aside-menu-badge, .wt-aside-menu-chevron) {
+  .wu-aside-menu-sliding-collapse :is(.wu-aside-menu-label, .wu-aside-menu-section-label, .wu-aside-menu-badge, .wu-aside-menu-chevron) {
     opacity: 0;
-    transition: opacity var(--wt-transition) ease;
+    transition: opacity var(--wu-transition) ease;
   }
-  .wt-aside-menu-sliding-expand :is(.wt-aside-menu-label, .wt-aside-menu-section-label, .wt-aside-menu-badge, .wt-aside-menu-chevron) {
-    animation: wt-aside-menu-fade-in var(--wt-transition) ease both;
+  .wu-aside-menu-sliding-expand :is(.wu-aside-menu-label, .wu-aside-menu-section-label, .wu-aside-menu-badge, .wu-aside-menu-chevron) {
+    animation: wu-aside-menu-fade-in var(--wu-transition) ease both;
   }
-  @keyframes wt-aside-menu-fade-in {
+  @keyframes wu-aside-menu-fade-in {
     from {
       opacity: 0;
     }
   }
   /* Focused only as a fallback when the panel has nothing focusable. */
-  .wt-aside-menu:focus {
+  .wu-aside-menu:focus {
     outline: none;
   }
-  .wt-aside-menu-header,
-  .wt-aside-menu-footer {
+  .wu-aside-menu-header,
+  .wu-aside-menu-footer {
     display: flex;
     flex: none;
     gap: 0.5rem;
     min-width: 0;
-    padding: var(--wt-aside-menu-padding);
+    padding: var(--wu-aside-menu-padding);
   }
-  .wt-aside-menu-header {
+  .wu-aside-menu-header {
     align-items: center;
   }
-  .wt-aside-menu-footer {
+  .wu-aside-menu-footer {
     flex-direction: column;
     align-items: stretch;
-    border-top: var(--wt-aside-menu-border-width) solid var(--wt-aside-menu-border-color);
+    border-top: var(--wu-aside-menu-border-width) solid var(--wu-aside-menu-border-color);
   }
-  .wt-aside-menu-header:empty,
-  .wt-aside-menu-footer:empty {
+  .wu-aside-menu-header:empty,
+  .wu-aside-menu-footer:empty {
     display: none;
   }
-  .wt-aside-menu-collapsed .wt-aside-menu-header {
+  .wu-aside-menu-collapsed .wu-aside-menu-header {
     overflow: hidden;
   }
-  .wt-aside-menu-body {
+  .wu-aside-menu-body {
     flex: 1 1 auto;
     min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: thin;
-    padding: var(--wt-aside-menu-padding);
+    padding: var(--wu-aside-menu-padding);
   }
 
-  .wt-aside-menu-list {
+  .wu-aside-menu-list {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-menu-gap);
+    gap: var(--wu-menu-gap);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-aside-menu-sublist {
-    padding-block-start: var(--wt-menu-gap);
-    padding-inline-start: var(--wt-aside-menu-indent);
+  .wu-aside-menu-sublist {
+    padding-block-start: var(--wu-menu-gap);
+    padding-inline-start: var(--wu-aside-menu-indent);
   }
-  .wt-aside-menu-item,
-  .wt-aside-menu-section {
+  .wu-aside-menu-item,
+  .wu-aside-menu-section {
     display: flex;
     flex-direction: column;
     min-width: 0;
   }
-  .wt-aside-menu-section {
-    gap: var(--wt-menu-gap);
+  .wu-aside-menu-section {
+    gap: var(--wu-menu-gap);
   }
-  .wt-aside-menu-section-label {
+  .wu-aside-menu-section-label {
     display: block;
-    padding: var(--wt-aside-menu-section-padding);
-    color: var(--wt-aside-menu-section-color);
-    font-size: var(--wt-aside-menu-section-size);
+    padding: var(--wu-aside-menu-section-padding);
+    color: var(--wu-aside-menu-section-color);
+    font-size: var(--wu-aside-menu-section-size);
     font-weight: 600;
     overflow-wrap: anywhere;
   }
-  .wt-aside-menu-separator {
+  .wu-aside-menu-separator {
     margin: 0.25rem 0.5rem;
-    border-top: 1px solid var(--wt-aside-menu-border-color);
+    border-top: 1px solid var(--wu-aside-menu-border-color);
   }
 
   /* Links, command items and group buttons share one look. */
-  .wt-aside-menu-link {
+  .wu-aside-menu-link {
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--wt-aside-menu-item-gap);
+    gap: var(--wu-aside-menu-item-gap);
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    min-height: var(--wt-aside-menu-item-height);
+    min-height: var(--wu-aside-menu-item-height);
     margin: 0;
-    padding: var(--wt-aside-menu-item-padding);
+    padding: var(--wu-aside-menu-item-padding);
     border: 0;
-    border-radius: var(--wt-aside-menu-item-radius);
+    border-radius: var(--wu-aside-menu-item-radius);
     background: transparent;
-    color: var(--wt-aside-menu-item-color);
+    color: var(--wu-aside-menu-item-color);
     font: inherit;
     text-align: start;
     text-decoration: none;
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-aside-menu-link:where(:not(:disabled, .wt-aside-menu-link-disabled)):hover {
-    background: var(--wt-aside-menu-item-hover-bg);
+  .wu-aside-menu-link:where(:not(:disabled, .wu-aside-menu-link-disabled)):hover {
+    background: var(--wu-aside-menu-item-hover-bg);
   }
   /* The keyboard's place: the hover tint plus the theme's focus outline, drawn inside (the lists clip outside it). */
-  .wt-aside-menu-link:focus-visible {
-    background: var(--wt-aside-menu-item-hover-bg);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: calc(-1 * var(--wt-control-focus-offset) - 1px);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-aside-menu-link:focus-visible {
+    background: var(--wu-aside-menu-item-hover-bg);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: calc(-1 * var(--wu-control-focus-offset) - 1px);
+    box-shadow: var(--wu-control-focus-shadow);
   }
   /* A group that holds the current page. */
-  .wt-aside-menu-group-active {
-    color: var(--wt-aside-menu-group-active-color);
+  .wu-aside-menu-group-active {
+    color: var(--wu-aside-menu-group-active-color);
   }
   /* The current page. */
-  .wt-aside-menu-link.wt-aside-menu-link-active {
-    background: var(--wt-aside-menu-item-active-bg);
-    color: var(--wt-aside-menu-item-active-color);
+  .wu-aside-menu-link.wu-aside-menu-link-active {
+    background: var(--wu-aside-menu-item-active-bg);
+    color: var(--wu-aside-menu-item-active-color);
   }
-  .wt-aside-menu-link:disabled,
-  .wt-aside-menu-link-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-aside-menu-link:disabled,
+  .wu-aside-menu-link-disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-aside-menu-icon {
+  .wu-aside-menu-icon {
     flex: none;
     width: 1.25rem;
-    color: var(--wt-aside-menu-item-icon-color);
+    color: var(--wu-aside-menu-item-icon-color);
     text-align: center;
   }
-  .wt-aside-menu-link-active .wt-aside-menu-icon,
-  .wt-aside-menu-group-active .wt-aside-menu-icon {
+  .wu-aside-menu-link-active .wu-aside-menu-icon,
+  .wu-aside-menu-group-active .wu-aside-menu-icon {
     color: inherit;
   }
-  .wt-aside-menu-label {
+  .wu-aside-menu-label {
     flex: 1 1 auto;
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  .wt-aside-menu-badge {
+  .wu-aside-menu-badge {
     display: inline-grid;
     flex: none;
     place-items: center;
@@ -214,51 +214,51 @@
     height: 1.25rem;
     padding: 0 0.375rem;
     border-radius: 999px;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
   }
-  .wt-aside-menu-link-active .wt-aside-menu-badge {
-    background: var(--wt-aside-menu-item-active-color);
-    color: var(--wt-primary-color);
+  .wu-aside-menu-link-active .wu-aside-menu-badge {
+    background: var(--wu-aside-menu-item-active-color);
+    color: var(--wu-primary-color);
   }
   /* Closed: pointing at the label's end; open: down. */
-  .wt-aside-menu-chevron {
+  .wu-aside-menu-chevron {
     flex: none;
     width: 0.875rem;
     height: 0.875rem;
     margin-inline-start: auto;
     transform: rotate(-90deg);
-    transition: transform var(--wt-transition);
+    transition: transform var(--wu-transition);
   }
-  [aria-expanded='true'] > .wt-aside-menu-chevron {
+  [aria-expanded='true'] > .wu-aside-menu-chevron {
     transform: none;
   }
 
   /* Children of a group: a grid row that grows from nothing to the content's height. */
-  .wt-aside-menu-children {
+  .wu-aside-menu-children {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--wt-transition) ease;
+    transition: grid-template-rows var(--wu-transition) ease;
   }
-  .wt-aside-menu-children-open {
+  .wu-aside-menu-children-open {
     grid-template-rows: 1fr;
   }
-  .wt-aside-menu-children-inner {
+  .wu-aside-menu-children-inner {
     min-height: 0;
     overflow: hidden;
   }
 
   /* The icon rail (collapsed, wide screens): icons only; labels stay for screen readers and show as tooltips. */
-  .wt-aside-menu-link-rail {
+  .wu-aside-menu-link-rail {
     justify-content: center;
     gap: 0;
     padding-inline: 0;
   }
-  .wt-aside-menu-link-rail .wt-aside-menu-label,
-  .wt-aside-menu-rail .wt-aside-menu-section-label {
+  .wu-aside-menu-link-rail .wu-aside-menu-label,
+  .wu-aside-menu-rail .wu-aside-menu-section-label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -270,7 +270,7 @@
     border: 0;
     white-space: nowrap;
   }
-  .wt-aside-menu-link-rail .wt-aside-menu-badge {
+  .wu-aside-menu-link-rail .wu-aside-menu-badge {
     position: absolute;
     top: 0.375rem;
     inset-inline-end: 0.375rem;
@@ -279,167 +279,167 @@
     padding: 0;
     font-size: 0;
   }
-  .wt-aside-menu-initial {
+  .wu-aside-menu-initial {
     display: inline-grid;
     flex: none;
     place-items: center;
     width: 1.75rem;
     height: 1.75rem;
-    border-radius: var(--wt-radius-full);
-    background: var(--wt-aside-menu-item-hover-bg);
+    border-radius: var(--wu-radius-full);
+    background: var(--wu-aside-menu-item-hover-bg);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1;
   }
-  .wt-aside-menu-link-active .wt-aside-menu-initial {
+  .wu-aside-menu-link-active .wu-aside-menu-initial {
     background: transparent;
   }
   /* Sections on the rail: the heading becomes a line (it still names the list for screen readers). */
-  .wt-aside-menu-rail > .wt-aside-menu-section:not(:first-child)::before {
+  .wu-aside-menu-rail > .wu-aside-menu-section:not(:first-child)::before {
     content: '';
     display: block;
     margin: 0.25rem 0.5rem;
-    border-top: 1px solid var(--wt-aside-menu-border-color);
+    border-top: 1px solid var(--wu-aside-menu-border-color);
   }
 
   /* Built-in buttons: collapse (wide screens) and close (phones). */
-  .wt-aside-menu-collapse {
-    color: var(--wt-aside-menu-item-icon-color);
+  .wu-aside-menu-collapse {
+    color: var(--wu-aside-menu-item-icon-color);
   }
-  .wt-aside-menu-collapse-icon {
+  .wu-aside-menu-collapse-icon {
     flex: none;
     width: 1.25rem;
     height: 1rem;
-    transition: transform var(--wt-transition);
+    transition: transform var(--wu-transition);
   }
-  .wt-aside-menu-collapsed .wt-aside-menu-collapse-icon {
+  .wu-aside-menu-collapsed .wu-aside-menu-collapse-icon {
     transform: scaleX(-1);
   }
-  .wt-aside-menu-close {
+  .wu-aside-menu-close {
     display: inline-grid;
     flex: none;
     place-items: center;
-    width: var(--wt-aside-menu-item-height);
-    height: var(--wt-aside-menu-item-height);
+    width: var(--wu-aside-menu-item-height);
+    height: var(--wu-aside-menu-item-height);
     margin: 0;
     margin-inline-start: auto;
     padding: 0;
     border: 0;
-    border-radius: var(--wt-radius-full);
+    border-radius: var(--wu-radius-full);
     background: transparent;
     color: inherit;
     font: inherit;
     cursor: pointer;
-    transition: background-color var(--wt-transition);
+    transition: background-color var(--wu-transition);
   }
-  .wt-aside-menu-close:hover {
-    background: var(--wt-aside-menu-item-hover-bg);
+  .wu-aside-menu-close:hover {
+    background: var(--wu-aside-menu-item-hover-bg);
   }
-  .wt-aside-menu-close:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-aside-menu-close:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-aside-menu-close svg {
+  .wu-aside-menu-close svg {
     width: 1.125rem;
     height: 1.125rem;
   }
 
   /* Phones: an off-canvas panel from the start edge, over a mask. Hidden panels are out of reach (visibility + inert). */
-  .wt-aside-menu-mobile {
+  .wu-aside-menu-mobile {
     position: fixed;
     top: 0;
     bottom: 0;
     inset-inline-start: 0;
-    z-index: var(--wt-aside-menu-z-index);
-    width: var(--wt-aside-menu-mobile-width);
+    z-index: var(--wu-aside-menu-z-index);
+    width: var(--wu-aside-menu-mobile-width);
     max-width: 100vw;
     height: auto;
     border-inline-end: 0;
-    box-shadow: var(--wt-aside-menu-mobile-shadow);
+    box-shadow: var(--wu-aside-menu-mobile-shadow);
     visibility: hidden;
     transform: translateX(-100%);
   }
-  .wt-aside-menu-mobile:dir(rtl) {
+  .wu-aside-menu-mobile:dir(rtl) {
     transform: translateX(100%);
   }
-  .wt-aside-menu-mobile.wt-aside-menu-open {
+  .wu-aside-menu-mobile.wu-aside-menu-open {
     visibility: visible;
     transform: none;
   }
   /* Slides only after it has been opened or closed, so it never crosses the page while it loads. */
-  .wt-aside-menu-mobile.wt-aside-menu-animated {
+  .wu-aside-menu-mobile.wu-aside-menu-animated {
     transition:
-      transform var(--wt-transition) ease,
-      visibility 0s linear var(--wt-transition);
+      transform var(--wu-transition) ease,
+      visibility 0s linear var(--wu-transition);
   }
-  .wt-aside-menu-mobile.wt-aside-menu-animated.wt-aside-menu-open {
+  .wu-aside-menu-mobile.wu-aside-menu-animated.wu-aside-menu-open {
     transition:
-      transform var(--wt-transition) ease,
+      transform var(--wu-transition) ease,
       visibility 0s;
   }
-  .wt-aside-menu-mask {
+  .wu-aside-menu-mask {
     position: fixed;
     inset: 0;
-    z-index: var(--wt-aside-menu-z-index);
-    background: var(--wt-mask);
+    z-index: var(--wu-aside-menu-z-index);
+    background: var(--wu-mask);
     opacity: 0;
     visibility: hidden;
   }
-  .wt-aside-menu-mask-visible {
+  .wu-aside-menu-mask-visible {
     opacity: 1;
     visibility: visible;
   }
-  .wt-aside-menu-mask.wt-aside-menu-animated {
+  .wu-aside-menu-mask.wu-aside-menu-animated {
     transition:
-      opacity var(--wt-transition) ease,
-      visibility 0s linear var(--wt-transition);
+      opacity var(--wu-transition) ease,
+      visibility 0s linear var(--wu-transition);
   }
-  .wt-aside-menu-mask-visible.wt-aside-menu-animated {
+  .wu-aside-menu-mask-visible.wu-aside-menu-animated {
     transition:
-      opacity var(--wt-transition) ease,
+      opacity var(--wu-transition) ease,
       visibility 0s;
   }
 
   /* A rail group's flyout: in the top layer, beside the bar. */
-  .wt-aside-menu-flyout {
+  .wu-aside-menu-flyout {
     position: fixed;
     inset: auto;
     z-index: 1200;
     box-sizing: border-box;
-    min-width: var(--wt-menu-min-width);
+    min-width: var(--wu-menu-min-width);
     max-width: calc(100vw - 1rem);
     max-height: calc(100vh - 1rem);
     margin: 0;
     overflow-y: auto;
-    padding: var(--wt-menu-padding);
-    border: var(--wt-menu-overlay-border-width) solid var(--wt-border);
-    border-radius: var(--wt-menu-radius);
-    background: var(--wt-menu-overlay-bg);
-    box-shadow: var(--wt-menu-shadow);
-    color: var(--wt-aside-menu-item-color);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    padding: var(--wu-menu-padding);
+    border: var(--wu-menu-overlay-border-width) solid var(--wu-border);
+    border-radius: var(--wu-menu-radius);
+    background: var(--wu-menu-overlay-bg);
+    box-shadow: var(--wu-menu-shadow);
+    color: var(--wu-aside-menu-item-color);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-aside-menu-flyout-title {
-    padding: var(--wt-menu-submenu-label-padding);
-    background: var(--wt-menu-submenu-label-bg);
-    color: var(--wt-menu-submenu-label-color);
-    font-weight: var(--wt-menu-submenu-label-weight);
+  .wu-aside-menu-flyout-title {
+    padding: var(--wu-menu-submenu-label-padding);
+    background: var(--wu-menu-submenu-label-bg);
+    color: var(--wu-menu-submenu-label-color);
+    font-weight: var(--wu-menu-submenu-label-weight);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    wt-aside-menu,
-    .wt-aside-menu-link,
-    .wt-aside-menu-chevron,
-    .wt-aside-menu-children,
-    .wt-aside-menu-collapse-icon,
-    .wt-aside-menu-close,
-    .wt-aside-menu-mobile.wt-aside-menu-animated,
-    .wt-aside-menu-mobile.wt-aside-menu-animated.wt-aside-menu-open,
-    .wt-aside-menu-mask.wt-aside-menu-animated,
-    .wt-aside-menu-mask-visible.wt-aside-menu-animated {
+    wu-aside-menu,
+    .wu-aside-menu-link,
+    .wu-aside-menu-chevron,
+    .wu-aside-menu-children,
+    .wu-aside-menu-collapse-icon,
+    .wu-aside-menu-close,
+    .wu-aside-menu-mobile.wu-aside-menu-animated,
+    .wu-aside-menu-mobile.wu-aside-menu-animated.wu-aside-menu-open,
+    .wu-aside-menu-mask.wu-aside-menu-animated,
+    .wu-aside-menu-mask-visible.wu-aside-menu-animated {
       transition: none;
     }
   }

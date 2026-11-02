@@ -6,27 +6,27 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-chip label="Angular"></wt-chip>
-        <wt-chip label="TypeScript"></wt-chip>
-        <wt-chip label="SCSS"></wt-chip>
+        <wu-chip label="Angular"></wu-chip>
+        <wu-chip label="TypeScript"></wu-chip>
+        <wu-chip label="SCSS"></wu-chip>
       </docs-demo>
     </docs-section>
 
     <docs-section id="icon" [section]="sec['icon']">
       <docs-demo [html]="code['icon']">
-        <wt-chip [label]="tx('ส่งแล้ว')" icon="wi wi-send"></wt-chip>
-        <wt-chip [label]="tx('สมชาย ใจดี')" [image]="image" [alt]="tx('สมชาย')"></wt-chip>
+        <wu-chip [label]="tx('ส่งแล้ว')" icon="wi wi-send"></wu-chip>
+        <wu-chip [label]="tx('สมชาย ใจดี')" [image]="image" [alt]="tx('สมชาย')"></wu-chip>
       </docs-demo>
     </docs-section>
 
     <docs-section id="removable" [section]="sec['removable']">
       <docs-demo [html]="code['removable']" [ts]="ts['removable']">
         @for (t of tags; track t) {
-          <wt-chip [label]="t" [removable]="true" (onRemove)="remove(t)"></wt-chip>
+          <wu-chip [label]="t" [removable]="true" (onRemove)="remove(t)"></wu-chip>
         }
         <span class="docs-demo-output">tags: <code id="d-tags">{{ tags | json }}</code></span>
         @if (tags.length < 3) {
-          <wt-button id="d-reset" [label]="tx('คืนค่า')" size="small" severity="secondary" [text]="true" (onClick)="resetTags()"></wt-button>
+          <wu-button id="d-reset" [label]="tx('คืนค่า')" size="small" severity="secondary" [text]="true" (onClick)="resetTags()"></wu-button>
         }
       </docs-demo>
     </docs-section>

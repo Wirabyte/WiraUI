@@ -1,7 +1,7 @@
-import type { ChartType } from 'wiratheme/core';
+import type { ChartType } from 'wiraui/core';
 
 /** The look picker's names. */
-export const WT_CHART_LOOKS: Record<string, { th: string; en: string }> = {
+export const WU_CHART_LOOKS: Record<string, { th: string; en: string }> = {
   square: { th: 'สี่เหลี่ยม', en: 'Squares' },
   circle: { th: 'วงกลม', en: 'Circles' },
   hex: { th: 'รังผึ้ง', en: 'Honeycomb' },
@@ -29,7 +29,7 @@ export const WT_CHART_LOOKS: Record<string, { th: string; en: string }> = {
 };
 
 /** The type switcher's buttons: a 24 × 24 stroked icon and a name per kind. */
-export const WT_CHART_KINDS: Record<ChartType, { icon: string; th: string; en: string }> = {
+export const WU_CHART_KINDS: Record<ChartType, { icon: string; th: string; en: string }> = {
   bar: { icon: 'M5 20V11M10 20V5M15 20v-7M20 20V8', th: 'แท่ง', en: 'Bar' },
   line: { icon: 'M3 17l5-6 4 3 8-9', th: 'เส้น', en: 'Line' },
   area: { icon: 'M3 18l5-7 4 3 8-8v12H3Z', th: 'พื้นที่', en: 'Area' },

@@ -1,5 +1,5 @@
 // Finishes dist/: copies the JSON files tsc does not emit and renames the output to .cjs.
-// ng-packagr 17+ marks the whole wiratheme package "type": "module", and npm pack drops nested
+// ng-packagr 17+ marks the whole wiraui package "type": "module", and npm pack drops nested
 // package.json files, so a .cjs extension is the only reliable way to keep the schematics CommonJS.
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';

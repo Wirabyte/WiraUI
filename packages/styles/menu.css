@@ -1,22 +1,22 @@
-/* wt-menu. Shared by wiratheme v1, v2 and v3. A list of commands and links, in place or as a popup in the top layer;
+/* wu-menu. Shared by wiraui v1, v2 and v3. A list of commands and links, in place or as a popup in the top layer;
    items with children become a labelled group. */
-@layer wiratheme.components {
-  wt-menu {
+@layer wiraui.components {
+  wu-menu {
     display: block;
   }
-  .wt-menu {
+  .wu-menu {
     box-sizing: border-box;
-    min-width: var(--wt-menu-min-width);
-    padding: var(--wt-menu-padding);
-    border: var(--wt-menu-border-width) solid var(--wt-border);
-    border-radius: var(--wt-menu-radius);
-    background: var(--wt-menu-bg);
-    color: var(--wt-menu-item-color);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    min-width: var(--wu-menu-min-width);
+    padding: var(--wu-menu-padding);
+    border: var(--wu-menu-border-width) solid var(--wu-border);
+    border-radius: var(--wu-menu-radius);
+    background: var(--wu-menu-bg);
+    color: var(--wu-menu-item-color);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-menu-overlay {
+  .wu-menu-overlay {
     position: fixed;
     inset: auto;
     z-index: 1200;
@@ -24,37 +24,37 @@
     max-height: calc(100vh - 1rem);
     margin: 0;
     overflow-y: auto;
-    border-width: var(--wt-menu-overlay-border-width);
-    background: var(--wt-menu-overlay-bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
-    box-shadow: var(--wt-menu-shadow);
+    border-width: var(--wu-menu-overlay-border-width);
+    background: var(--wu-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
+    box-shadow: var(--wu-menu-shadow);
   }
-  .wt-menu-list {
+  .wu-menu-list {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-menu-gap);
+    gap: var(--wu-menu-gap);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-menu-submenu-label {
-    padding: var(--wt-menu-submenu-label-padding);
-    background: var(--wt-menu-submenu-label-bg);
-    color: var(--wt-menu-submenu-label-color);
-    font-weight: var(--wt-menu-submenu-label-weight);
+  .wu-menu-submenu-label {
+    padding: var(--wu-menu-submenu-label-padding);
+    background: var(--wu-menu-submenu-label-bg);
+    color: var(--wu-menu-submenu-label-color);
+    font-weight: var(--wu-menu-submenu-label-weight);
   }
-  .wt-menu-item-content {
-    border-radius: var(--wt-menu-item-radius);
+  .wu-menu-item-content {
+    border-radius: var(--wu-menu-item-radius);
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-menu-item-link {
+  .wu-menu-item-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: var(--wt-menu-item-padding);
+    padding: var(--wu-menu-item-padding);
     border-radius: inherit;
     color: inherit;
     text-decoration: none;
@@ -62,52 +62,52 @@
     cursor: pointer;
     user-select: none;
   }
-  .wt-menu-item:not(.wt-menu-item-disabled) > .wt-menu-item-content:hover {
-    background: var(--wt-menu-item-hover-bg);
-    color: var(--wt-menu-item-hover-color);
+  .wu-menu-item:not(.wu-menu-item-disabled) > .wu-menu-item-content:hover {
+    background: var(--wu-menu-item-hover-bg);
+    color: var(--wu-menu-item-hover-color);
   }
   /* The keyboard's place: the hover tint plus the theme's focus outline, drawn inside the item. */
-  .wt-menu-item-link:focus-visible {
-    background: var(--wt-menu-item-hover-bg);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: calc(-1 * var(--wt-control-focus-offset) - 1px);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-menu-item-link:focus-visible {
+    background: var(--wu-menu-item-hover-bg);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: calc(-1 * var(--wu-control-focus-offset) - 1px);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-menu-link-active {
-    color: var(--wt-menu-link-active-color);
+  .wu-menu-link-active {
+    color: var(--wu-menu-link-active-color);
   }
-  .wt-menu-item-disabled > .wt-menu-item-content {
-    opacity: var(--wt-disabled-opacity);
+  .wu-menu-item-disabled > .wu-menu-item-content {
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-menu-item-disabled .wt-menu-item-link {
+  .wu-menu-item-disabled .wu-menu-item-link {
     cursor: default;
   }
-  .wt-menu-item-icon {
+  .wu-menu-item-icon {
     flex: none;
-    color: var(--wt-menu-item-icon-color);
+    color: var(--wu-menu-item-icon-color);
   }
-  .wt-menu-item-label {
+  .wu-menu-item-label {
     flex: 1 1 auto;
   }
-  .wt-menu-badge {
+  .wu-menu-badge {
     display: inline-grid;
     place-items: center;
     min-width: 1.25rem;
     height: 1.25rem;
     padding: 0 0.375rem;
     border-radius: 999px;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
   }
-  .wt-menu-separator {
+  .wu-menu-separator {
     margin: 0.25rem 0;
-    border-top: 1px solid var(--wt-menu-separator-color);
+    border-top: 1px solid var(--wu-menu-separator-color);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-menu-item-content {
+    .wu-menu-item-content {
       transition: none;
     }
   }

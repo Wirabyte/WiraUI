@@ -1,7 +1,7 @@
 import { THAI_DOC } from '../../data/thai';
 import { SimpleDemo } from './demos';
 
-/* State behind the Thai pipes page (no wiratheme import, like demos.ts). */
+/* State behind the Thai pipes page (no wiraui import, like demos.ts). */
 export abstract class ThaiDemo extends SimpleDemo {
   protected readonly doc = THAI_DOC;
   readonly born = new Date(2012, 4, 14);

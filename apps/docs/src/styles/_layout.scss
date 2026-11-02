@@ -62,45 +62,45 @@ docs-layout {
   position: relative;
 }
 
-// The version switcher (wiratheme v3's wt-select): sized and coloured like the other header controls, in either mode
+// The version switcher (wiraui v3's wu-select): sized and coloured like the other header controls, in either mode
 // and whichever version's theme is on the page. Its list opens in the top layer but inherits these tokens.
 .docs-version-select {
-  --wt-field-bg: var(--docs-surface);
-  --wt-field-border: var(--docs-border);
-  --wt-field-border-width: 1px;
-  --wt-field-hover-border: var(--docs-border-strong);
-  --wt-field-focus-border: var(--docs-primary);
-  --wt-field-color: var(--docs-text);
-  --wt-field-shadow: none;
-  --wt-field-padding-y: 0px;
-  --wt-field-padding-x: 10px;
-  --wt-input-radius: 10px;
-  --wt-font-family: var(--docs-font);
-  --wt-font-size: 13px;
-  --wt-text: var(--docs-text);
-  --wt-text-muted: var(--docs-muted);
-  --wt-border: var(--docs-border);
-  --wt-overlay-bg: var(--docs-overlay);
-  --wt-select-overlay-radius: 12px;
-  --wt-select-option-radius: 8px;
-  --wt-select-option-hover-bg: var(--docs-hover);
-  --wt-select-option-selected-bg: var(--docs-primary-soft);
-  --wt-select-option-selected-color: var(--docs-primary-soft-text);
+  --wu-field-bg: var(--docs-surface);
+  --wu-field-border: var(--docs-border);
+  --wu-field-border-width: 1px;
+  --wu-field-hover-border: var(--docs-border-strong);
+  --wu-field-focus-border: var(--docs-primary);
+  --wu-field-color: var(--docs-text);
+  --wu-field-shadow: none;
+  --wu-field-padding-y: 0px;
+  --wu-field-padding-x: 10px;
+  --wu-input-radius: 10px;
+  --wu-font-family: var(--docs-font);
+  --wu-font-size: 13px;
+  --wu-text: var(--docs-text);
+  --wu-text-muted: var(--docs-muted);
+  --wu-border: var(--docs-border);
+  --wu-overlay-bg: var(--docs-overlay);
+  --wu-select-overlay-radius: 12px;
+  --wu-select-option-radius: 8px;
+  --wu-select-option-hover-bg: var(--docs-hover);
+  --wu-select-option-selected-bg: var(--docs-primary-soft);
+  --wu-select-option-selected-color: var(--docs-primary-soft-text);
   // As wide as the chosen version ("v3" on phones), not the select's standard width.
-  --wt-select-width: auto;
+  --wu-select-width: auto;
   display: inline-flex;
   flex: none;
   align-items: center;
 }
-.docs-version-select wt-select {
+.docs-version-select wu-select {
   display: inline-flex;
 }
-.docs-version-select .wt-select {
+.docs-version-select .wu-select {
   align-items: center;
   height: var(--docs-tap);
   font-weight: 500;
 }
-.docs-version-select .wt-select:hover {
+.docs-version-select .wu-select:hover {
   background: var(--docs-hover);
 }
 .docs-version-current {

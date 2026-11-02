@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, inject, Injectable, OnDestroy } from '@angular/core';
-import { ɵwtRootInjector } from 'wiratheme/config';
-import { WtAlertDialog } from './alert-dialog.component';
-import { WtAlertDismissReason, WtAlertIcon, WtAlertOptions, WtAlertResult } from './alert.types';
+import { ɵwuRootInjector } from 'wiraui/config';
+import { WuAlertDialog } from './alert-dialog.component';
+import { WuAlertDismissReason, WuAlertIcon, WuAlertOptions, WuAlertResult } from './alert.types';
 
 /**
  * Ready-made alerts and questions: an animated icon, a title, text or HTML, optional input, and buttons.
@@ -12,56 +12,56 @@ import { WtAlertDismissReason, WtAlertIcon, WtAlertOptions, WtAlertResult } from
  * if (r.isConfirmed) …
  * alert.fire('บันทึกแล้ว', '', 'success');
  * ```
- * The same calls work statically through `WtAlert`, so code written for a global alert function moves over by
+ * The same calls work statically through `WuAlert`, so code written for a global alert function moves over by
  * changing its import.
  */
 @Injectable({ providedIn: 'root' })
-export class WtAlertService implements OnDestroy {
-  private host: ComponentRef<WtAlertDialog> | null = null;
+export class WuAlertService implements OnDestroy {
+  private host: ComponentRef<WuAlertDialog> | null = null;
   private readonly appRef = inject(ApplicationRef);
   private readonly injector = inject(EnvironmentInjector);
   private readonly doc = inject(DOCUMENT);
 
-  fire<T = any>(options: WtAlertOptions): Promise<WtAlertResult<T>>;
-  fire<T = any>(title?: string, text?: string, icon?: WtAlertIcon): Promise<WtAlertResult<T>>;
-  fire<T = any>(a?: string | WtAlertOptions, text?: string, icon?: WtAlertIcon): Promise<WtAlertResult<T>> {
+  fire<T = any>(options: WuAlertOptions): Promise<WuAlertResult<T>>;
+  fire<T = any>(title?: string, text?: string, icon?: WuAlertIcon): Promise<WuAlertResult<T>>;
+  fire<T = any>(a?: string | WuAlertOptions, text?: string, icon?: WuAlertIcon): Promise<WuAlertResult<T>> {
     const options = typeof a === 'object' && a !== null ? a : { title: a, text, icon };
-    return this.dialog().open(options) as Promise<WtAlertResult<T>>;
+    return this.dialog().open(options) as Promise<WuAlertResult<T>>;
   }
 
-  success(title: string, text?: string): Promise<WtAlertResult> {
+  success(title: string, text?: string): Promise<WuAlertResult> {
     return this.fire({ title, text, icon: 'success' });
   }
-  error(title: string, text?: string): Promise<WtAlertResult> {
+  error(title: string, text?: string): Promise<WuAlertResult> {
     return this.fire({ title, text, icon: 'error' });
   }
-  warning(title: string, text?: string): Promise<WtAlertResult> {
+  warning(title: string, text?: string): Promise<WuAlertResult> {
     return this.fire({ title, text, icon: 'warning' });
   }
-  info(title: string, text?: string): Promise<WtAlertResult> {
+  info(title: string, text?: string): Promise<WuAlertResult> {
     return this.fire({ title, text, icon: 'info' });
   }
-  question(title: string, text?: string): Promise<WtAlertResult> {
+  question(title: string, text?: string): Promise<WuAlertResult> {
     return this.fire({ title, text, icon: 'question' });
   }
 
   /** A yes/no question that resolves to true only on confirm. Cancel is focused, so Enter does not confirm by accident. */
-  async confirm(options: WtAlertOptions | string, text?: string): Promise<boolean> {
+  async confirm(options: WuAlertOptions | string, text?: string): Promise<boolean> {
     const o = typeof options === 'string' ? { title: options, text } : options;
     const r = await this.fire({ icon: 'question', showCancelButton: true, focusCancel: true, ...o });
     return r.isConfirmed;
   }
 
   /** A preset that later calls build on: `const toastLike = alert.mixin({ timer: 2000 })`. */
-  mixin(defaults: WtAlertOptions): Pick<WtAlertService, 'fire'> {
+  mixin(defaults: WuAlertOptions): Pick<WuAlertService, 'fire'> {
     return {
-      fire: ((a?: string | WtAlertOptions, text?: string, icon?: WtAlertIcon) =>
-        this.fire({ ...defaults, ...(typeof a === 'object' && a !== null ? a : { title: a, text, icon }) })) as WtAlertService['fire'],
+      fire: ((a?: string | WuAlertOptions, text?: string, icon?: WuAlertIcon) =>
+        this.fire({ ...defaults, ...(typeof a === 'object' && a !== null ? a : { title: a, text, icon }) })) as WuAlertService['fire'],
     };
   }
 
   /** Closes the alert on screen (it resolves as dismissed). */
-  close(result?: Partial<WtAlertResult>): void {
+  close(result?: Partial<WuAlertResult>): void {
     this.host?.instance.closeAlert(result);
   }
 
@@ -102,9 +102,9 @@ export class WtAlertService implements OnDestroy {
     this.host = null;
   }
 
-  private dialog(): WtAlertDialog {
+  private dialog(): WuAlertDialog {
     if (!this.host) {
-      this.host = createComponent(WtAlertDialog, { environmentInjector: this.injector });
+      this.host = createComponent(WuAlertDialog, { environmentInjector: this.injector });
       this.appRef.attachView(this.host.hostView);
       this.doc.body.appendChild(this.host.location.nativeElement);
     }
@@ -112,28 +112,28 @@ export class WtAlertService implements OnDestroy {
   }
 }
 
-function service(): WtAlertService {
-  const injector = ɵwtRootInjector();
-  if (!injector) throw new Error('WtAlert needs provideWiraTheme() (or WiraThemeModule.forRoot()) in the app providers.');
-  return injector.get(WtAlertService);
+function service(): WuAlertService {
+  const injector = ɵwuRootInjector();
+  if (!injector) throw new Error('WuAlert needs provideWiraUI() (or WiraUIModule.forRoot()) in the app providers.');
+  return injector.get(WuAlertService);
 }
 
-const DISMISS: Record<WtAlertDismissReason, WtAlertDismissReason> = { cancel: 'cancel', backdrop: 'backdrop', close: 'close', esc: 'esc', timer: 'timer' };
+const DISMISS: Record<WuAlertDismissReason, WuAlertDismissReason> = { cancel: 'cancel', backdrop: 'backdrop', close: 'close', esc: 'esc', timer: 'timer' };
 
 /**
- * `WtAlertService` without injection, for code that calls an alert from anywhere:
- * `import { WtAlert as Swal } from 'wiratheme/alert'` keeps `Swal.fire(...)` calls working as they are.
+ * `WuAlertService` without injection, for code that calls an alert from anywhere:
+ * `import { WuAlert as Swal } from 'wiraui/alert'` keeps `Swal.fire(...)` calls working as they are.
  */
-export const WtAlert = {
-  fire: ((a?: string | WtAlertOptions, text?: string, icon?: WtAlertIcon) => service().fire(a as string, text, icon)) as WtAlertService['fire'],
+export const WuAlert = {
+  fire: ((a?: string | WuAlertOptions, text?: string, icon?: WuAlertIcon) => service().fire(a as string, text, icon)) as WuAlertService['fire'],
   success: (title: string, text?: string) => service().success(title, text),
   error: (title: string, text?: string) => service().error(title, text),
   warning: (title: string, text?: string) => service().warning(title, text),
   info: (title: string, text?: string) => service().info(title, text),
   question: (title: string, text?: string) => service().question(title, text),
-  confirm: (options: WtAlertOptions | string, text?: string) => service().confirm(options, text),
-  mixin: (defaults: WtAlertOptions) => service().mixin(defaults),
-  close: (result?: Partial<WtAlertResult>) => service().close(result),
+  confirm: (options: WuAlertOptions | string, text?: string) => service().confirm(options, text),
+  mixin: (defaults: WuAlertOptions) => service().mixin(defaults),
+  close: (result?: Partial<WuAlertResult>) => service().close(result),
   showLoading: () => service().showLoading(),
   hideLoading: () => service().hideLoading(),
   isLoading: () => service().isLoading(),

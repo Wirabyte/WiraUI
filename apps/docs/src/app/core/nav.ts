@@ -6,7 +6,7 @@ export interface NavItem {
   /** Path after the version prefix, e.g. 'components/button'. */
   path: string;
   soon?: boolean;
-  /** The first wiratheme major that has the page (Chart, WiraTheme's own: 3); older versions leave it out. */
+  /** The first wiraui major that has the page (Chart, WiraUI's own: 3); older versions leave it out. */
   since?: number;
   /** Extra words the Ctrl+K search matches (either language). */
   keywords?: string;
@@ -35,7 +35,7 @@ export const NAV: NavGroup[] = [
     items: [
       { id: 'introduction', title: { th: 'บทนำ', en: 'Introduction' }, path: 'getting-started/introduction', keywords: 'overview เริ่มต้น' },
       { id: 'installation', title: { th: 'ติดตั้ง', en: 'Installation' }, path: 'getting-started/installation', keywords: 'install ng add npm' },
-      { id: 'configuration', title: { th: 'ตั้งค่า', en: 'Configuration' }, path: 'getting-started/configuration', keywords: 'config provideWiraTheme options locale' },
+      { id: 'configuration', title: { th: 'ตั้งค่า', en: 'Configuration' }, path: 'getting-started/configuration', keywords: 'config provideWiraUI options locale' },
       { id: 'migration', title: { th: 'ย้ายโปรเจคเดิม', en: 'Migrating an existing app' }, path: 'getting-started/migration', keywords: 'migrate ย้าย css class' },
       { id: 'icons', title: { th: 'ไอคอน', en: 'Icons' }, path: 'getting-started/icons', keywords: 'icons icon wiraicon wi-icon svg pi-* font awesome phosphor ไอคอน สัญลักษณ์' },
     ],
@@ -49,8 +49,8 @@ export const NAV: NavGroup[] = [
       { id: 'presets', title: { th: 'Presets ของรุ่นนี้', en: 'Presets in this version' }, path: 'theming/presets', keywords: 'preset mali sila arun theme ธีม' },
       { id: 'scss', title: 'SCSS', path: 'theming/scss', keywords: 'sass @use' },
       { id: 'css', title: 'CSS', path: 'theming/css', keywords: 'css variables angular.json' },
-      { id: 'typescript', title: 'TypeScript', path: 'theming/typescript', keywords: 'overrides definePreset WtThemeService' },
-      { id: 'studio', title: { th: 'สตูดิโอธีม', en: 'WiraTheme Studio' }, path: 'theming/studio', keywords: 'studio designer theme designer export figma สตูดิโอ' },
+      { id: 'typescript', title: 'TypeScript', path: 'theming/typescript', keywords: 'overrides definePreset WuThemeService' },
+      { id: 'studio', title: { th: 'สตูดิโอธีม', en: 'WiraUI Studio' }, path: 'theming/studio', keywords: 'studio designer theme designer export figma สตูดิโอ' },
     ],
   },
   // Laying a page out: the grid / flex / spacing classes and the components that divide space.

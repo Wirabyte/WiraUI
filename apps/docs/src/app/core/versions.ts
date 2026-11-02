@@ -5,7 +5,7 @@ export type DocVersionId = 'v1' | 'v2' | 'v3';
 export interface DocVersion {
   id: DocVersionId;
   major: number;
-  /** Angular majors this wiratheme major installs on. */
+  /** Angular majors this wiraui major installs on. */
   angular: string;
   label: string;
   status: 'maintenance' | 'active' | 'latest';
@@ -40,8 +40,8 @@ export const DOC_VERSIONS: DocVersion[] = [
     status: 'active',
     look: { th: 'Mali, Sila, Material, Phet', en: 'Mali, Sila, Material, Phet' },
     lookDetail: {
-      th: 'preset: Mali (ค่าเริ่มต้น), Sila, Material และ Phet ทุกตัวมี light / dark ในตัว สลับด้วย class .wt-dark หรือ darkModeSelector',
-      en: 'Presets: Mali (default), Sila, Material and Phet. Each has light and dark built in, switched with the .wt-dark class or darkModeSelector.',
+      th: 'preset: Mali (ค่าเริ่มต้น), Sila, Material และ Phet ทุกตัวมี light / dark ในตัว สลับด้วย class .wu-dark หรือ darkModeSelector',
+      en: 'Presets: Mali (default), Sila, Material and Phet. Each has light and dark built in, switched with the .wu-dark class or darkModeSelector.',
     },
     api: 'input() / model() / output()',
     controlFlow: '@if / @for',
@@ -54,15 +54,15 @@ export const DOC_VERSIONS: DocVersion[] = [
     status: 'latest',
     look: { th: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet', en: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet' },
     lookDetail: {
-      th: 'ธีมของ WiraTheme เอง: Wira (ค่าเริ่มต้น), Lanna, Siam, Nakhon และ Glass แบบ Liquid Glass พร้อม preset ของ v2 (Mali, Sila, Material, Phet)',
-      en: "WiraTheme's own themes: Wira (the default), Lanna, Siam, Nakhon and the Liquid Glass theme Glass, plus v2's presets (Mali, Sila, Material, Phet).",
+      th: 'ธีมของ WiraUI เอง: Wira (ค่าเริ่มต้น), Lanna, Siam, Nakhon และ Glass แบบ Liquid Glass พร้อม preset ของ v2 (Mali, Sila, Material, Phet)',
+      en: "WiraUI's own themes: Wira (the default), Lanna, Siam, Nakhon and the Liquid Glass theme Glass, plus v2's presets (Mali, Sila, Material, Phet).",
     },
     api: 'input() / model() / output() + Signal Forms',
     controlFlow: '@if / @for',
   },
 ];
 
-export const VERSION_STORE = 'wiratheme-docs-version';
+export const VERSION_STORE = 'wiraui-docs-version';
 
 export function docVersion(id: DocVersionId): DocVersion {
   return DOC_VERSIONS.find((v) => v.id === id) || DOC_VERSIONS[2];

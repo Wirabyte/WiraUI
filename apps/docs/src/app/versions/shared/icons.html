@@ -3,17 +3,17 @@
   <h1 class="docs-h1">{{ en() ? 'Icons' : 'ไอคอน' }}</h1>
   @if (en()) {
     <p class="docs-lead">
-      wiraicon is WiraTheme's own icon set: 424 icons in five weights, as CSS classes, SVG files and an Angular component. The main names are the
+      wiraicon is WiraUI's own icon set: 424 icons in five weights, as CSS classes, SVG files and an Angular component. The main names are the
       ones teams already write, so moving over only changes the prefix.
     </p>
   } @else {
     <p class="docs-lead">
-      wiraicon คือชุดไอคอนของ WiraTheme เอง 424 ไอคอน 5 น้ำหนักเส้น ใช้ได้ทั้งเป็น class, ไฟล์ SVG และ component ของ Angular ชื่อหลักตรงกับชื่อที่ทีมใช้อยู่
+      wiraicon คือชุดไอคอนของ WiraUI เอง 424 ไอคอน 5 น้ำหนักเส้น ใช้ได้ทั้งเป็น class, ไฟล์ SVG และ component ของ Angular ชื่อหลักตรงกับชื่อที่ทีมใช้อยู่
       การย้ายมาใช้จึงเปลี่ยนแค่ prefix
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }}</span>
     <span class="docs-chip"><code>wiraicon</code></span>
     <span class="docs-chip docs-chip-quiet">{{ en() ? '424 icons · 5 weights · MIT' : '424 ไอคอน · 5 น้ำหนักเส้น · MIT' }}</span>
   </div>
@@ -56,8 +56,8 @@
 <docs-section id="size" [section]="sec['size']">
   <docs-demo [html]="code('size')" layout="stack">
     <span class="docs-wi-row">
-      <i class="wi wi-star wi-fill" style="font-size: 2rem; color: var(--wt-warn-color)"></i>
-      <i class="wi wi-bell" style="font-size: 1.5rem; color: var(--wt-primary-color)"></i>
+      <i class="wi wi-star wi-fill" style="font-size: 2rem; color: var(--wu-warn-color)"></i>
+      <i class="wi wi-bell" style="font-size: 1.5rem; color: var(--wu-primary-color)"></i>
       <i id="d-wi-spin" class="wi wi-spinner wi-spin" style="font-size: 1.5rem"></i>
     </span>
     <ul class="docs-wi-list">
@@ -70,9 +70,9 @@
 
 <docs-section id="buttons" [section]="sec['buttons']">
   <docs-demo [html]="code('buttons')">
-    <wt-button id="d-wi-save" [label]="tx('บันทึก')" icon="wi wi-save"></wt-button>
-    <wt-button [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wt-button>
-    <wt-button icon="wi wi-trash wi-bold" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('ลบ')"></wt-button>
+    <wu-button id="d-wi-save" [label]="tx('บันทึก')" icon="wi wi-save"></wu-button>
+    <wu-button [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wu-button>
+    <wu-button icon="wi wi-trash wi-bold" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('ลบ')"></wu-button>
   </docs-demo>
 </docs-section>
 
@@ -80,7 +80,7 @@
   <docs-demo [html]="code('component')">
     <span class="docs-wi-row" id="d-wi-component">
       <wi-icon name="check"></wi-icon>
-      <wi-icon name="trash" weight="bold" [size]="24" color="var(--wt-danger-color)"></wi-icon>
+      <wi-icon name="trash" weight="bold" [size]="24" color="var(--wu-danger-color)"></wi-icon>
       <wi-icon name="info-circle" [size]="24" [label]="tx('ข้อมูลเพิ่มเติม')"></wi-icon>
       <wi-icon name="spinner" [size]="24" [spin]="true"></wi-icon>
     </span>
@@ -91,10 +91,10 @@
 <docs-section id="gallery" [section]="sec['gallery']">
   <div class="docs-wi-gallery" id="wi-gallery">
     <div class="docs-wi-tools">
-      <wt-iconfield class="docs-wi-search">
-        <wt-inputicon icon="wi wi-search"></wt-inputicon>
+      <wu-iconfield class="docs-wi-search">
+        <wu-inputicon icon="wi wi-search"></wu-inputicon>
         <input
-          wtInputText
+          wuInputText
           id="wi-search"
           type="search"
           autocomplete="off"
@@ -104,8 +104,8 @@
           [placeholder]="tx('ค้นหาไอคอน เช่น save, xmark, ปฏิทิน')"
           [attr.aria-label]="tx('ค้นหาไอคอน เช่น save, xmark, ปฏิทิน')"
         />
-      </wt-iconfield>
-      <wt-select
+      </wu-iconfield>
+      <wu-select
         id="wi-category"
         class="docs-wi-category"
         [options]="categoryOptions()"
@@ -114,9 +114,9 @@
         [ngModel]="category()"
         (ngModelChange)="setCategory($event)"
         [ariaLabel]="tx('หมวด')"
-      ></wt-select>
+      ></wu-select>
       <span id="wi-weight-label" class="docs-wi-sr">{{ tx('น้ำหนักเส้น') }}</span>
-      <wt-selectbutton
+      <wu-selectbutton
         id="wi-weight"
         size="small"
         [options]="weightOptions()"
@@ -126,10 +126,10 @@
         (ngModelChange)="setWeight($event)"
         [allowEmpty]="false"
         ariaLabelledBy="wi-weight-label"
-      ></wt-selectbutton>
+      ></wu-selectbutton>
       <span class="docs-wi-size">
         <span id="wi-size-label">{{ tx('ขนาด') }} <code>{{ size() }}px</code></span>
-        <wt-slider
+        <wu-slider
           id="wi-size"
           [ngModel]="size()"
           (ngModelChange)="setSize($event)"
@@ -137,7 +137,7 @@
           [max]="64"
           [step]="4"
           ariaLabelledBy="wi-size-label"
-        ></wt-slider>
+        ></wu-slider>
       </span>
     </div>
 
@@ -163,7 +163,7 @@
             <docs-copy id="wi-copy-tag" [text]="tagCode()"></docs-copy>
           </div>
           <div class="docs-wi-detail-row">
-            <span class="docs-wi-detail-label">wt-button</span>
+            <span class="docs-wi-detail-label">wu-button</span>
             <code id="wi-detail-button">{{ buttonCode() }}</code>
             <docs-copy id="wi-copy-button" [text]="buttonCode()"></docs-copy>
           </div>
@@ -177,7 +177,7 @@
               }
             </span>
           </div>
-          <a wtButton id="wi-detail-svg" [href]="svgHref()" [attr.download]="p.name + '.svg'" icon="wi wi-download" size="small" severity="secondary" [outlined]="true" [label]="tx('ดาวน์โหลด SVG')"></a>
+          <a wuButton id="wi-detail-svg" [href]="svgHref()" [attr.download]="p.name + '.svg'" icon="wi wi-download" size="small" severity="secondary" [outlined]="true" [label]="tx('ดาวน์โหลด SVG')"></a>
         </div>
       </section>
     }

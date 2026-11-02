@@ -1,15 +1,15 @@
 import { ChangeDetectorRef, ContentChild, ContentChildren, Directive, ElementRef, inject, Input, NgZone, OnDestroy, QueryList, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵfindTemplate, ɵtoBool, ɵWtPopup, ɵWtStyleLoader, WtConfig, WtTemplate } from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { FilterMatchMode, FilterMeta, WtLocale } from 'wiratheme/core';
-import { ɵWT_TABLE } from './table.types';
+import { ɵfindTemplate, ɵtoBool, ɵWuPopup, ɵWuStyleLoader, WuConfig, WuTemplate } from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { FilterMatchMode, FilterMeta, WuLocale } from 'wiraui/core';
+import { ɵWU_TABLE } from './table.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /** Context of a column filter's `filter` template: `let-value let-filter="filterCallback"`. */
-export interface WtColumnFilterContext {
+export interface WuColumnFilterContext {
   $implicit: unknown;
   filterCallback: (value: unknown) => void;
   field: string;
@@ -18,14 +18,14 @@ export interface WtColumnFilterContext {
 }
 
 /**
- * What wt-columnFilter does: a filter box for one column, usually in a header row or the caption. Without a template
+ * What wu-columnFilter does: a filter box for one column, usually in a header row or the caption. Without a template
  * it is a text box (or a number / date box, or a yes–no–any button for `type="boolean"`); a `filter` template brings
  * any control, which calls `filterCallback(value)`. The table filters by `field` with `matchMode` (contains for text,
  * the same day for dates, equals otherwise). `display="menu"` puts a filter button in the header instead: its menu
  * has match modes, several rules joined by "match all" / "match any", and Clear / Apply.
  */
 @Directive()
-export abstract class ɵWtColumnFilterBase implements OnDestroy {
+export abstract class ɵWuColumnFilterBase implements OnDestroy {
   @Input() field = '';
   @Input() type: 'text' | 'numeric' | 'date' | 'boolean' = 'text';
   @Input() display: 'row' | 'menu' = 'row';
@@ -68,13 +68,13 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
   @Input() useGrouping: unknown;
   @Input() showButtons: unknown;
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('filter', { descendants: false }) protected filterRef?: unknown;
 
   readonly filterCallback = (value: unknown): void => this.apply(value);
-  protected readonly table = inject(ɵWT_TABLE);
+  protected readonly table = inject(ɵWU_TABLE);
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly sub: Subscription = this.table.changes.subscribe(() => this.cdr.markForCheck());
   private _showClear = true;
   private _delay: number | null = null;
@@ -84,20 +84,20 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
   private _showModes = true;
   private _max = 2;
   private _hideOnClear = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly zone = inject(NgZone);
   /** The menu is open, and the rules being edited in it. */
   menuOpen = false;
   rules: FilterMeta[] = [];
   operator: 'and' | 'or' = 'and';
-  readonly menuId = `wt-colfilter-${Math.random().toString(36).slice(2, 9)}`;
+  readonly menuId = `wu-colfilter-${Math.random().toString(36).slice(2, 9)}`;
   private timer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
-    const styles = inject(ɵWtStyleLoader);
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('button', ɵWT_BUTTON_CSS);
+    const styles = inject(ɵWuStyleLoader);
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnDestroy(): void {
@@ -106,7 +106,7 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
     if (this.timer) clearTimeout(this.timer);
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get filterTemplate(): TemplateRef<unknown> | null {
@@ -148,7 +148,7 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
     const v = this.value;
     return v === true ? this.t.yes : v === false ? this.t.no : '';
   }
-  get context(): WtColumnFilterContext {
+  get context(): WuColumnFilterContext {
     return { $implicit: this.value, filterCallback: this.filterCallback, field: this.field, type: this.type, placeholder: this.placeholder };
   }
 
@@ -208,21 +208,21 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
     return modes.map((value) => ({ value, label: t[value] || value }));
   }
   get buttonClasses(): string {
-    return ɵbuttonClass('p-button-text p-button-rounded p-button-sm') + ' wt-btn-icon-only wt-column-filter-menu-button';
+    return ɵbuttonClass('p-button-text p-button-rounded p-button-sm') + ' wu-btn-icon-only wu-column-filter-menu-button';
   }
   get clearClass(): string {
-    return ɵbuttonClass('p-button-outlined p-button-sm') + ' wt-column-filter-menu-clear';
+    return ɵbuttonClass('p-button-outlined p-button-sm') + ' wu-column-filter-menu-clear';
   }
   get applyClass(): string {
-    return ɵbuttonClass('p-button-sm') + ' wt-column-filter-menu-apply';
+    return ɵbuttonClass('p-button-sm') + ' wu-column-filter-menu-apply';
   }
   get addClass(): string {
-    return ɵbuttonClass('p-button-text p-button-sm') + ' wt-column-filter-add';
+    return ɵbuttonClass('p-button-text p-button-sm') + ' wu-column-filter-add';
   }
   get removeClass(): string {
-    return ɵbuttonClass('p-button-text p-button-danger p-button-sm') + ' wt-column-filter-remove';
+    return ɵbuttonClass('p-button-text p-button-danger p-button-sm') + ' wu-column-filter-remove';
   }
-  ruleContext(rule: FilterMeta): WtColumnFilterContext {
+  ruleContext(rule: FilterMeta): WuColumnFilterContext {
     return { $implicit: rule.value, filterCallback: (v: unknown) => this.setRuleValue(rule, v), field: this.field, type: this.type, placeholder: this.placeholder };
   }
 
@@ -240,14 +240,14 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
     this.cdr.detectChanges();
     const panel = this.host.querySelector(`#${this.menuId}`) as HTMLElement | null;
     if (!panel) return;
-    this.popup = new ɵWtPopup(anchor, panel, {
+    this.popup = new ɵWuPopup(anchor, panel, {
       onOutside: () => this.zone.run(() => this.closeMenu(false)),
       onEscape: (e) => this.zone.run(() => {
         e.preventDefault();
         this.closeMenu(true);
       }),
-      sheetClass: 'wt-column-filter-sheet',
-      modalClass: 'wt-column-filter-modal',
+      sheetClass: 'wu-column-filter-sheet',
+      modalClass: 'wu-column-filter-modal',
       sheet: false,
     });
     this.popup.open();
@@ -260,7 +260,7 @@ export abstract class ɵWtColumnFilterBase implements OnDestroy {
     this.popup = null;
     this.menuOpen = false;
     this.cdr.markForCheck();
-    if (returnFocus) (this.host.querySelector('.wt-column-filter-menu-button') as HTMLElement | null)?.focus();
+    if (returnFocus) (this.host.querySelector('.wu-column-filter-menu-button') as HTMLElement | null)?.focus();
   }
 
   setRuleValue(rule: FilterMeta, v: unknown): void {

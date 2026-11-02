@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtRating } from './rating.component';
+import { WuRating } from './rating.component';
 
-/** For NgModule apps. Standalone apps can import `WtRating` directly. */
+/** For NgModule apps. Standalone apps can import `WuRating` directly. */
 @NgModule({
-  imports: [WtRating],
-  exports: [WtRating],
+  imports: [WuRating],
+  exports: [WuRating],
 })
-export class WtRatingModule {}
+export class WuRatingModule {}

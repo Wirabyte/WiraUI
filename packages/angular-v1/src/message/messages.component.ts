@@ -1,16 +1,16 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { WtMessage } from './message.component';
-import { ɵWtMessagesBase } from './messages.base';
+import { WuMessage } from './message.component';
+import { ɵWuMessagesBase } from './messages.base';
 
-/** A stack of messages from an array: `<wt-messages [(value)]="msgs" [enableService]="false">`. */
+/** A stack of messages from an array: `<wu-messages [(value)]="msgs" [enableService]="false">`. */
 @Component({
-  selector: 'wt-messages',
+  selector: 'wu-messages',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, NgStyle, WtMessage],
+  imports: [NgClass, NgFor, NgIf, NgStyle, WuMessage],
   template: `
-    <div class="wt-messages p-messages p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" aria-live="polite">
-      <wt-message
+    <div class="wu-messages p-messages p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" aria-live="polite">
+      <wu-message
         *ngFor="let m of messages"
         [severity]="severityOf(m)"
         [icon]="iconOf(m)"
@@ -19,17 +19,17 @@ import { ɵWtMessagesBase } from './messages.base';
         (onClose)="remove(m)"
       >
         <ng-container *ngIf="escape; else html">
-          <span *ngIf="m.summary" class="wt-messages-summary p-message-summary">{{ m.summary }}</span>
-          <span *ngIf="m.detail" class="wt-messages-detail p-message-detail">{{ m.detail }}</span>
+          <span *ngIf="m.summary" class="wu-messages-summary p-message-summary">{{ m.summary }}</span>
+          <span *ngIf="m.detail" class="wu-messages-detail p-message-detail">{{ m.detail }}</span>
         </ng-container>
         <ng-template #html>
-          <span *ngIf="m.summary" class="wt-messages-summary p-message-summary" [innerHTML]="m.summary"></span>
-          <span *ngIf="m.detail" class="wt-messages-detail p-message-detail" [innerHTML]="m.detail"></span>
+          <span *ngIf="m.summary" class="wu-messages-summary p-message-summary" [innerHTML]="m.summary"></span>
+          <span *ngIf="m.detail" class="wu-messages-detail p-message-detail" [innerHTML]="m.detail"></span>
         </ng-template>
-      </wt-message>
+      </wu-message>
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtMessages extends ɵWtMessagesBase {}
+export class WuMessages extends ɵWuMessagesBase {}

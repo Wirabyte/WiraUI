@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-// The header's version switcher is wiratheme v3's select, whichever version the page shows.
-import { WtSelectModule } from 'wiratheme/select';
+// The header's version switcher is wiraui v3's select, whichever version the page shows.
+import { WuSelectModule } from 'wiraui/select';
 import { DocsSharedModule } from '../shared/docs-shared-module';
 import { DocsConfigurator } from './configurator';
 import { DocsLayout } from './layout';
@@ -14,7 +14,7 @@ import { DocsTocNav } from './toc';
   declarations: [DocsLayout, DocsSearch, DocsConfigurator, DocsTocNav],
   imports: [
     FormsModule,
-    WtSelectModule,
+    WuSelectModule,
     DocsSharedModule,
     RouterModule.forChild([
       {

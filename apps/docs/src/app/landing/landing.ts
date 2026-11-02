@@ -21,7 +21,7 @@ const MONTHS: Record<'th' | 'en', string[]> = {
 };
 const REVENUE = [62, 70, 66, 78, 84, 80, 92, 98, 94, 108, 116, 128];
 
-/** Marketing page at /. A sample dashboard built from real wiratheme@3 components, in v3's default look. */
+/** Marketing page at /. A sample dashboard built from real wiraui@3 components, in v3's default look. */
 @Component({
   selector: 'docs-landing',
   standalone: false,

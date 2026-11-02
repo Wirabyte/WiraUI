@@ -1,21 +1,21 @@
 import { DOCUMENT, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { httpErrorActions, httpErrorCode, httpErrorKind, httpErrorTextKey, TH_LOCALE, WtErrorAction, WtErrorKind } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { httpErrorActions, httpErrorCode, httpErrorKind, httpErrorTextKey, TH_LOCALE, WuErrorAction, WuErrorKind } from 'wiraui/core';
 
-export type { WtErrorAction, WtErrorKind };
+export type { WuErrorAction, WuErrorKind };
 
 /** `'formal'` (default): a clean, plain page. `'kawaii'`: a little character holding up the code, and friendlier words. */
-export type WtErrorPageLook = 'formal' | 'kawaii';
+export type WuErrorPageLook = 'formal' | 'kawaii';
 
 /** `(action)`: a built-in button was pressed. `originalEvent.preventDefault()` stops its own step (to route instead). */
-export interface WtErrorPageActionEvent {
-  action: WtErrorAction;
+export interface WuErrorPageActionEvent {
+  action: WuErrorAction;
   originalEvent: Event;
 }
 
 /** The formal look's picture per kind: a 24 × 24 stroked icon. */
-const ICONS: Record<WtErrorKind, string> = {
+const ICONS: Record<WuErrorKind, string> = {
   request: 'M7 3h7l5 5v13H7ZM14 3v5h5M10 13l4 4M14 13l-4 4',
   auth: 'M10 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM3 21v-1a6 6 0 0 1 9-5.2M16 15v-1.5a2 2 0 1 1 4 0V15M14.5 15h7v5.5h-7Z',
   forbidden: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6ZM9.5 12v-1.5a2.5 2.5 0 0 1 5 0V12M8.5 12h7v4.5h-7Z',
@@ -28,15 +28,15 @@ const ICONS: Record<WtErrorKind, string> = {
 };
 
 /**
- * A page for an error status, ready to use: `<wt-error-page code="404"></wt-error-page>` or `look="kawaii"`. Any 4xx /
+ * A page for an error status, ready to use: `<wu-error-page code="404"></wu-error-page>` or `look="kawaii"`. Any 4xx /
  * 5xx code works: the common ones (400, 401, 403, 404, 405, 408, 409, 410, 413, 415, 422, 429, 500, 501, 502, 503, 504)
  * have their own words in Thai and English, the rest read as a client or server error. The buttons fit the code (sign
  * in for 401, try again for timeouts and 5xx, back and home otherwise); `[actions]` picks them, `(action)` hears them,
- * elements marked `wtErrorAction` join them, and anything else inside goes in a box under them. `reference` shows an
+ * elements marked `wuErrorAction` join them, and anything else inside goes in a box under them. `reference` shows an
  * error id people can quote to support. `fullPage` fills the screen (a route's page).
  */
 @Component({
-  selector: 'wt-error-page, wt-errorPage',
+  selector: 'wu-error-page, wu-errorPage',
   standalone: true,
   imports: [NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
   templateUrl: './errorpage.component.html',
@@ -44,9 +44,9 @@ const ICONS: Record<WtErrorKind, string> = {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // `title` is an input here: keep it off the host so the page gets no browser tooltip.
-  host: { class: 'wt-error-page-host', '[attr.title]': 'null' },
+  host: { class: 'wu-error-page-host', '[attr.title]': 'null' },
 })
-export class WtErrorPage implements OnDestroy {
+export class WuErrorPage implements OnDestroy {
   /** The HTTP status, 400–599 (`'404'` or `404`). Anything else shows 500. */
   @Input() set code(v: number | string | null | undefined) {
     this._code = httpErrorCode(v);
@@ -55,10 +55,10 @@ export class WtErrorPage implements OnDestroy {
     return this._code;
   }
   /** `'formal'` (default) or `'kawaii'`. */
-  @Input() set look(v: WtErrorPageLook | string | null | undefined) {
+  @Input() set look(v: WuErrorPageLook | string | null | undefined) {
     this._look = v === 'kawaii' ? 'kawaii' : 'formal';
   }
-  get look(): WtErrorPageLook {
+  get look(): WuErrorPageLook {
     return this._look;
   }
   /** Default: the locale's words for the code (kawaii: for its kind). */
@@ -67,7 +67,7 @@ export class WtErrorPage implements OnDestroy {
   /** An error or request id to quote to support, shown small under the buttons. */
   @Input() reference?: string | null;
   /** Built-in buttons, the main one first: `['retry', 'home']`; `false` for none. Default: what fits the code. */
-  @Input() actions?: WtErrorAction[] | boolean | string | null;
+  @Input() actions?: WuErrorAction[] | boolean | string | null;
   /** Where the home button goes. Default `'/'`. */
   @Input() homeLink: string | null = '/';
   /** Where the sign-in button goes (401). Default `'/login'`. */
@@ -86,17 +86,17 @@ export class WtErrorPage implements OnDestroy {
   @Input() style?: Record<string, any> | string | null;
 
   /** A built-in button was pressed (before its own step; `originalEvent.preventDefault()` stops that). */
-  @Output() action = new EventEmitter<WtErrorPageActionEvent>();
+  @Output() action = new EventEmitter<WuErrorPageActionEvent>();
 
   private _code = 404;
-  private _look: WtErrorPageLook = 'formal';
+  private _look: WuErrorPageLook = 'formal';
   private _full = false;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -108,7 +108,7 @@ export class WtErrorPage implements OnDestroy {
   get kawaii(): boolean {
     return this._look === 'kawaii';
   }
-  get kind(): WtErrorKind {
+  get kind(): WuErrorKind {
     return httpErrorKind(this._code);
   }
   get icon(): string {
@@ -128,7 +128,7 @@ export class WtErrorPage implements OnDestroy {
   get descriptionText(): string {
     return this.description ?? this.text?.description ?? '';
   }
-  get buttons(): { action: WtErrorAction; label: string; href: string | null }[] {
+  get buttons(): { action: WuErrorAction; label: string; href: string | null }[] {
     const own = this.actions;
     if (own === false || own === 'false') return [];
     const list = Array.isArray(own) ? own : httpErrorActions(this._code);
@@ -147,7 +147,7 @@ export class WtErrorPage implements OnDestroy {
   }
 
   /** A button: tell the app, then (unless it said no) follow the link, go back or reload. */
-  run(action: WtErrorAction, event: Event): void {
+  run(action: WuErrorAction, event: Event): void {
     this.action.emit({ action, originalEvent: event });
     if (event.defaultPrevented) return;
     const win = this.doc.defaultView;

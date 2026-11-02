@@ -1,11 +1,11 @@
 import { Directive, ElementRef, forwardRef, HostListener, inject, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
-import { ɵtoBool } from 'wiratheme/config';
+import { ɵtoBool } from 'wiraui/config';
 
 /** The named filters, as before, plus `thai` (Thai letters and spaces). */
-export type WtKeyFilterPreset = 'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum' | 'thai';
+export type WuKeyFilterPreset = 'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum' | 'thai';
 
-export const WT_KEYFILTER_PRESETS: Record<WtKeyFilterPreset, RegExp> = {
+export const WU_KEYFILTER_PRESETS: Record<WuKeyFilterPreset, RegExp> = {
   pint: /^[\d]$/,
   int: /^[\d-]$/,
   pnum: /^[\d.]$/,
@@ -19,31 +19,31 @@ export const WT_KEYFILTER_PRESETS: Record<WtKeyFilterPreset, RegExp> = {
 };
 
 /**
- * Lets only some characters into a field: `<input wtInputText wtKeyFilter="pint">` (or `pKeyFilter`), a preset name
- * or a RegExp tested on each character (`[wtKeyFilter]="/[0-9a-z]/i"`). Typing, pasting and dropping are all checked.
- * With `wtValidateOnly` (`pValidateOnly`) nothing is blocked; the form control gets a `keyfilter` error instead, the
+ * Lets only some characters into a field: `<input wuInputText wuKeyFilter="pint">` (or `pKeyFilter`), a preset name
+ * or a RegExp tested on each character (`[wuKeyFilter]="/[0-9a-z]/i"`). Typing, pasting and dropping are all checked.
+ * With `wuValidateOnly` (`pValidateOnly`) nothing is blocked; the form control gets a `keyfilter` error instead, the
  * RegExp then testing the whole value.
  */
 @Directive({
-  selector: '[wtKeyFilter], [pKeyFilter]',
+  selector: '[wuKeyFilter], [pKeyFilter]',
   standalone: true,
-  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WtKeyFilter), multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WuKeyFilter), multi: true }],
 })
-export class WtKeyFilter implements Validator {
-  @Input() set wtKeyFilter(v: WtKeyFilterPreset | RegExp | string | null | undefined) {
+export class WuKeyFilter implements Validator {
+  @Input() set wuKeyFilter(v: WuKeyFilterPreset | RegExp | string | null | undefined) {
     this.filter = v;
   }
-  @Input() set pKeyFilter(v: WtKeyFilterPreset | RegExp | string | null | undefined) {
+  @Input() set pKeyFilter(v: WuKeyFilterPreset | RegExp | string | null | undefined) {
     this.filter = v;
   }
-  @Input() set wtValidateOnly(v: unknown) {
+  @Input() set wuValidateOnly(v: unknown) {
     this.validateOnly = ɵtoBool(v);
   }
   @Input() set pValidateOnly(v: unknown) {
     this.validateOnly = ɵtoBool(v);
   }
 
-  private filter: WtKeyFilterPreset | RegExp | string | null | undefined;
+  private filter: WuKeyFilterPreset | RegExp | string | null | undefined;
   private validateOnly = false;
   private readonly el: HTMLInputElement = inject(ElementRef).nativeElement;
 
@@ -52,7 +52,7 @@ export class WtKeyFilter implements Validator {
     const f = this.filter;
     if (!f) return null;
     if (f instanceof RegExp) return new RegExp(f.source, f.flags.replace('g', ''));
-    if (f in WT_KEYFILTER_PRESETS) return WT_KEYFILTER_PRESETS[f as WtKeyFilterPreset];
+    if (f in WU_KEYFILTER_PRESETS) return WU_KEYFILTER_PRESETS[f as WuKeyFilterPreset];
     try {
       return new RegExp(f);
     } catch {

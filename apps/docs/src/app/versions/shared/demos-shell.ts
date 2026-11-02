@@ -1,7 +1,7 @@
 import { BOTTOMBAR_DOC, DOCK_DOC, SITEFOOTER_DOC } from '../../data/shell';
 import { SimpleDemo } from './demos';
 
-/* State behind the Dock, Footer and BottomBar pages (no wiratheme import, like demos.ts). */
+/* State behind the Dock, Footer and BottomBar pages (no wiraui import, like demos.ts). */
 
 interface App {
   id: string;

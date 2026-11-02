@@ -6,9 +6,9 @@ export const DIVIDER_DOC: ComponentDoc = {
   title: 'Divider',
   group: 'Layout',
   entry: 'divider',
-  standalone: 'WtDivider',
-  module: 'WtDividerModule',
-  selector: 'wt-divider',
+  standalone: 'WuDivider',
+  module: 'WuDividerModule',
+  selector: 'wu-divider',
   description: { th: 'เส้นคั่นเนื้อหาแนวนอนหรือแนวตั้ง ใส่ข้อความกลางเส้นได้', en: 'A horizontal or vertical separator, optionally with content on the line.' },
   english: {
     'ส่วนบน': 'Top part',
@@ -34,18 +34,18 @@ export const DIVIDER_DOC: ComponentDoc = {
   },
   code: {
     basic: `<p>ส่วนบน</p>
-<wt-divider></wt-divider>
+<wu-divider></wu-divider>
 <p>ส่วนล่าง</p>`,
-    content: `<wt-divider align="left"><b>ข้อมูลบัญชี</b></wt-divider>
-<wt-divider align="center">หรือ</wt-divider>
-<wt-divider align="right"><span class="wi wi-check"></span></wt-divider>`,
-    type: `<wt-divider type="dashed"></wt-divider>
-<wt-divider type="dotted"></wt-divider>`,
+    content: `<wu-divider align="left"><b>ข้อมูลบัญชี</b></wu-divider>
+<wu-divider align="center">หรือ</wu-divider>
+<wu-divider align="right"><span class="wi wi-check"></span></wu-divider>`,
+    type: `<wu-divider type="dashed"></wu-divider>
+<wu-divider type="dotted"></wu-divider>`,
     vertical: `<div class="flex">
   <span>ซ้าย</span>
-  <wt-divider layout="vertical"></wt-divider>
+  <wu-divider layout="vertical"></wu-divider>
   <span>กลาง</span>
-  <wt-divider layout="vertical" align="center">หรือ</wt-divider>
+  <wu-divider layout="vertical" align="center">หรือ</wu-divider>
   <span>ขวา</span>
 </div>`,
   },
@@ -62,14 +62,14 @@ export const DIVIDER_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-divider-color', 'สีเส้น', 'Line colour'),
-    tok('--wt-divider-margin', 'ระยะห่างรอบเส้น', 'Space around the line'),
-    tok('--wt-divider-padding', 'ระยะของเส้นแนวตั้ง', 'Padding of vertical lines'),
-    tok('--wt-divider-content-padding', 'ระยะซ้ายขวารอบข้อความบนเส้น', 'Horizontal padding around the content'),
-    tok('--wt-divider-content-padding-y', 'ระยะบนล่างรอบข้อความบนเส้น', 'Vertical padding around the content'),
-    tok('--wt-divider-content-radius', 'ความมนของพื้นหลังข้อความบนเส้น', 'Corner radius behind the content'),
-    tok('--wt-card-bg', 'พื้นหลังข้อความบนเส้น', 'Background behind the content'),
-    tok('--wt-text-muted', 'สีข้อความ', 'Content colour'),
+    tok('--wu-divider-color', 'สีเส้น', 'Line colour'),
+    tok('--wu-divider-margin', 'ระยะห่างรอบเส้น', 'Space around the line'),
+    tok('--wu-divider-padding', 'ระยะของเส้นแนวตั้ง', 'Padding of vertical lines'),
+    tok('--wu-divider-content-padding', 'ระยะซ้ายขวารอบข้อความบนเส้น', 'Horizontal padding around the content'),
+    tok('--wu-divider-content-padding-y', 'ระยะบนล่างรอบข้อความบนเส้น', 'Vertical padding around the content'),
+    tok('--wu-divider-content-radius', 'ความมนของพื้นหลังข้อความบนเส้น', 'Corner radius behind the content'),
+    tok('--wu-card-bg', 'พื้นหลังข้อความบนเส้น', 'Background behind the content'),
+    tok('--wu-text-muted', 'สีข้อความ', 'Content colour'),
   ],
 };
 
@@ -78,9 +78,9 @@ export const PANEL_DOC: ComponentDoc = {
   title: 'Panel',
   group: 'Panel',
   entry: 'panel',
-  standalone: 'WtPanel',
-  module: 'WtPanelModule',
-  selector: 'wt-panel',
+  standalone: 'WuPanel',
+  module: 'WuPanelModule',
+  selector: 'wu-panel',
   description: { th: 'กล่องที่มีหัวข้อ พับเก็บได้ และมี slot สำหรับหัว ปุ่มบนหัว และส่วนท้าย', en: 'A titled box that can collapse, with slots for the header, header icons and a footer.' },
   english: {
     'รายละเอียดคำสั่งซื้อ': 'Order details',
@@ -108,41 +108,41 @@ export const PANEL_DOC: ComponentDoc = {
         en: '<code>toggleable</code> adds a collapse button. Bind the state with <code>[(collapsed)]</code>, and use <code>toggler="header"</code> to make the whole header clickable.',
       },
     },
-    slots: { title: 'Slots', text: { th: 'ใส่ attribute <code>wtPanelHeader</code>, <code>wtPanelIcons</code> หรือ <code>wtPanelFooter</code> บน element ที่จะวาง', en: 'Add <code>wtPanelHeader</code>, <code>wtPanelIcons</code> or <code>wtPanelFooter</code> to the element you place.' } },
+    slots: { title: 'Slots', text: { th: 'ใส่ attribute <code>wuPanelHeader</code>, <code>wuPanelIcons</code> หรือ <code>wuPanelFooter</code> บน element ที่จะวาง', en: 'Add <code>wuPanelHeader</code>, <code>wuPanelIcons</code> or <code>wuPanelFooter</code> to the element you place.' } },
     templates: {
       title: { th: 'template ของหัว ปุ่ม และส่วนท้าย', en: 'Header, icons and footer templates' },
       text: {
-        th: 'template <code>header</code>, <code>icons</code> และ <code>footer</code> (<code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot และ element <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code> ก็วางได้ (มากับ <code>WtCardModule</code>)',
-        en: 'The <code>header</code>, <code>icons</code> and <code>footer</code> templates (<code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots, and the <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code> elements fit too (they come with <code>WtCardModule</code>).',
+        th: 'template <code>header</code>, <code>icons</code> และ <code>footer</code> (<code>#header</code>, <code>wuTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot และ element <code>&lt;wu-header&gt;</code> / <code>&lt;wu-footer&gt;</code> ก็วางได้ (มากับ <code>WuCardModule</code>)',
+        en: 'The <code>header</code>, <code>icons</code> and <code>footer</code> templates (<code>#header</code>, <code>wuTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots, and the <code>&lt;wu-header&gt;</code> / <code>&lt;wu-footer&gt;</code> elements fit too (they come with <code>WuCardModule</code>).',
       },
     },
   },
   code: {
-    basic: `<wt-panel header="รายละเอียดคำสั่งซื้อ">
+    basic: `<wu-panel header="รายละเอียดคำสั่งซื้อ">
   <p>สินค้า 3 รายการ · ชำระแล้ว · จัดส่งภายใน 2 วัน</p>
-</wt-panel>`,
-    toggleable: `<wt-panel header="ตัวกรองขั้นสูง" [toggleable]="true" [(collapsed)]="filtersClosed">
+</wu-panel>`,
+    toggleable: `<wu-panel header="ตัวกรองขั้นสูง" [toggleable]="true" [(collapsed)]="filtersClosed">
   <p>ช่วงวันที่ สถานะ และผู้รับผิดชอบ</p>
-</wt-panel>
-<wt-panel header="กดที่หัวเพื่อพับ" [toggleable]="true" toggler="header">
+</wu-panel>
+<wu-panel header="กดที่หัวเพื่อพับ" [toggleable]="true" toggler="header">
   <p>ทั้งแถบหัวกดได้</p>
-</wt-panel>`,
-    slots: `<wt-panel>
-  <div wtPanelHeader><b>สมาชิก</b> <wt-badge value="5"></wt-badge></div>
-  <wt-button wtPanelIcons icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+</wu-panel>`,
+    slots: `<wu-panel>
+  <div wuPanelHeader><b>สมาชิก</b> <wu-badge value="5"></wu-badge></div>
+  <wu-button wuPanelIcons icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wu-button>
   <p>สมชาย, กมล, มานี และอีก 2 คน</p>
-  <div wtPanelFooter>อัปเดตล่าสุด 5 นาทีที่แล้ว</div>
-</wt-panel>`,
-    templates: `<wt-panel [toggleable]="true">
+  <div wuPanelFooter>อัปเดตล่าสุด 5 นาทีที่แล้ว</div>
+</wu-panel>`,
+    templates: `<wu-panel [toggleable]="true">
   <ng-template #header>
     <i class="wi wi-chart-bar"></i> <b>สรุปคะแนนสอบ</b>
   </ng-template>
   <ng-template #icons>
-    <wt-button icon="wi wi-download" [text]="true" [rounded]="true" ariaLabel="ส่งออก"></wt-button>
+    <wu-button icon="wi wi-download" [text]="true" [rounded]="true" ariaLabel="ส่งออก"></wu-button>
   </ng-template>
   <p>คะแนนเฉลี่ยของห้อง 78.5</p>
   <ng-template #footer>คำนวณเมื่อ 08:30 น.</ng-template>
-</wt-panel>`,
+</wu-panel>`,
   },
   ts: {
     toggleable: `filtersClosed = true;   // [(collapsed)] เขียนค่ากลับเมื่อผู้ใช้กดพับหรือกาง`,
@@ -173,25 +173,25 @@ export const PANEL_DOC: ComponentDoc = {
       title: 'Slots',
       typeLabel: { th: 'ใส่ด้วย', en: 'Use' },
       rows: [
-        row('wtPanelHeader', 'attribute', undefined, 'หัวแบบกำหนดเอง (แทน header)', 'Custom header (instead of header)'),
-        row('wtPanelIcons', 'attribute', undefined, 'ปุ่มทางขวาของหัว', 'Buttons on the right of the header'),
+        row('wuPanelHeader', 'attribute', undefined, 'หัวแบบกำหนดเอง (แทน header)', 'Custom header (instead of header)'),
+        row('wuPanelIcons', 'attribute', undefined, 'ปุ่มทางขวาของหัว', 'Buttons on the right of the header'),
         row('(default)', 'content', undefined, 'เนื้อหา', 'Content'),
-        row('wtPanelFooter', 'attribute', undefined, 'ส่วนท้าย', 'Footer'),
-        row('wt-header · wt-footer', 'element', undefined, 'เหมือน wtPanelHeader / wtPanelFooter (มากับ WtCardModule)', 'Like wtPanelHeader / wtPanelFooter (from WtCardModule)'),
-        row('header · icons · footer', 'template', undefined, 'template ของแต่ละส่วน (#name, wtTemplate หรือ pTemplate)', 'A template per part (#name, wtTemplate or pTemplate)'),
+        row('wuPanelFooter', 'attribute', undefined, 'ส่วนท้าย', 'Footer'),
+        row('wu-header · wu-footer', 'element', undefined, 'เหมือน wuPanelHeader / wuPanelFooter (มากับ WuCardModule)', 'Like wuPanelHeader / wuPanelFooter (from WuCardModule)'),
+        row('header · icons · footer', 'template', undefined, 'template ของแต่ละส่วน (#name, wuTemplate หรือ pTemplate)', 'A template per part (#name, wuTemplate or pTemplate)'),
       ],
     },
   ],
   tokens: [
-    tok('--wt-panel-header-bg', 'พื้นของหัว', 'Header background'),
-    tok('--wt-panel-header-color', 'สีหัวข้อ', 'Header text colour'),
-    tok('--wt-panel-header-padding', 'ระยะในหัว', 'Header padding'),
-    tok('--wt-panel-header-weight', 'น้ำหนักหัวข้อ', 'Header font weight'),
-    tok('--wt-panel-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
-    tok('--wt-panel-radius', 'ความมน', 'Radius'),
-    tok('--wt-panel-border-width', 'ความหนาขอบ', 'Border width'),
-    tok('--wt-border', 'สีขอบ', 'Border colour'),
-    tok('--wt-card-bg', 'พื้นเนื้อหา', 'Content background'),
+    tok('--wu-panel-header-bg', 'พื้นของหัว', 'Header background'),
+    tok('--wu-panel-header-color', 'สีหัวข้อ', 'Header text colour'),
+    tok('--wu-panel-header-padding', 'ระยะในหัว', 'Header padding'),
+    tok('--wu-panel-header-weight', 'น้ำหนักหัวข้อ', 'Header font weight'),
+    tok('--wu-panel-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
+    tok('--wu-panel-radius', 'ความมน', 'Radius'),
+    tok('--wu-panel-border-width', 'ความหนาขอบ', 'Border width'),
+    tok('--wu-border', 'สีขอบ', 'Border colour'),
+    tok('--wu-card-bg', 'พื้นเนื้อหา', 'Content background'),
   ],
 };
 
@@ -200,9 +200,9 @@ export const FIELDSET_DOC: ComponentDoc = {
   title: 'Fieldset',
   group: 'Panel',
   entry: 'fieldset',
-  standalone: 'WtFieldset',
-  module: 'WtFieldsetModule',
-  selector: 'wt-fieldset',
+  standalone: 'WuFieldset',
+  module: 'WuFieldsetModule',
+  selector: 'wu-fieldset',
   description: { th: 'กลุ่มเนื้อหาที่มี legend แบบ <fieldset> พับเก็บได้', en: 'A group of content with a legend, like <fieldset>, that can collapse.' },
   english: {
     'ที่อยู่สำหรับจัดส่ง': 'Shipping address',
@@ -219,24 +219,24 @@ export const FIELDSET_DOC: ComponentDoc = {
     header: {
       title: { th: 'template ของ legend', en: 'Legend template' },
       text: {
-        th: 'template <code>header</code> วาด legend เอง เช่น ใส่ icon (<code>#header</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>)',
-        en: 'A <code>header</code> template draws the legend yourself, with an icon for example (<code>#header</code>, <code>wtTemplate</code> or <code>pTemplate</code>).',
+        th: 'template <code>header</code> วาด legend เอง เช่น ใส่ icon (<code>#header</code>, <code>wuTemplate</code> หรือ <code>pTemplate</code>)',
+        en: 'A <code>header</code> template draws the legend yourself, with an icon for example (<code>#header</code>, <code>wuTemplate</code> or <code>pTemplate</code>).',
       },
     },
   },
   code: {
-    basic: `<wt-fieldset legend="ที่อยู่สำหรับจัดส่ง">
+    basic: `<wu-fieldset legend="ที่อยู่สำหรับจัดส่ง">
   <p>99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000</p>
-</wt-fieldset>`,
-    toggleable: `<wt-fieldset legend="ข้อมูลเพิ่มเติม" [toggleable]="true" [(collapsed)]="moreClosed">
+</wu-fieldset>`,
+    toggleable: `<wu-fieldset legend="ข้อมูลเพิ่มเติม" [toggleable]="true" [(collapsed)]="moreClosed">
   <p>หมายเหตุสำหรับทีมงาน</p>
-</wt-fieldset>`,
-    header: `<wt-fieldset>
+</wu-fieldset>`,
+    header: `<wu-fieldset>
   <ng-template #header>
     <i class="wi wi-phone"></i> ผู้ติดต่อฉุกเฉิน
   </ng-template>
   <p>นางสมศรี ใจดี · 081-234-5678</p>
-</wt-fieldset>`,
+</wu-fieldset>`,
   },
   ts: { toggleable: `moreClosed = false;` },
   api: [
@@ -245,7 +245,7 @@ export const FIELDSET_DOC: ComponentDoc = {
       title: 'Inputs',
       rows: [
         row('legend', 'string', undefined, 'หัวข้อของกลุ่ม', 'Group title'),
-        row('#header (template)', 'template', undefined, 'legend แบบวาดเอง (wtTemplate / pTemplate ก็ได้)', 'A custom legend (wtTemplate / pTemplate work too)'),
+        row('#header (template)', 'template', undefined, 'legend แบบวาดเอง (wuTemplate / pTemplate ก็ได้)', 'A custom legend (wuTemplate / pTemplate work too)'),
         row('toggleable', 'boolean', 'false', 'พับเก็บได้', 'Can collapse'),
         row('collapsed', 'boolean', 'false', 'สถานะพับ ใช้ [(collapsed)] ได้', 'Collapsed state; supports [(collapsed)]'),
         STYLE_ROW,
@@ -262,15 +262,15 @@ export const FIELDSET_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-fieldset-padding', 'ระยะด้านใน', 'Inner padding'),
-    tok('--wt-fieldset-radius', 'ความมน', 'Radius'),
-    tok('--wt-fieldset-legend-bg', 'พื้นของ legend (v2 / v3 มีสีอ่อนของตัวเอง)', 'Legend background (its own tint in v2 / v3)'),
-    tok('--wt-fieldset-legend-border-width', 'ขอบของ legend (v2 / v3 เส้นบาง 1px)', 'Legend border width (a thin 1px line in v2 / v3)'),
-    tok('--wt-fieldset-legend-color', 'สีของ legend', 'Legend colour'),
-    tok('--wt-fieldset-legend-weight', 'น้ำหนักของ legend', 'Legend weight'),
-    tok('--wt-fieldset-legend-padding-x', 'ระยะซ้ายขวาของ legend', 'Legend horizontal padding'),
-    tok('--wt-fieldset-legend-padding-y', 'ระยะบนล่างของ legend', 'Legend vertical padding'),
-    tok('--wt-border', 'สีขอบ', 'Border colour'),
+    tok('--wu-fieldset-padding', 'ระยะด้านใน', 'Inner padding'),
+    tok('--wu-fieldset-radius', 'ความมน', 'Radius'),
+    tok('--wu-fieldset-legend-bg', 'พื้นของ legend (v2 / v3 มีสีอ่อนของตัวเอง)', 'Legend background (its own tint in v2 / v3)'),
+    tok('--wu-fieldset-legend-border-width', 'ขอบของ legend (v2 / v3 เส้นบาง 1px)', 'Legend border width (a thin 1px line in v2 / v3)'),
+    tok('--wu-fieldset-legend-color', 'สีของ legend', 'Legend colour'),
+    tok('--wu-fieldset-legend-weight', 'น้ำหนักของ legend', 'Legend weight'),
+    tok('--wu-fieldset-legend-padding-x', 'ระยะซ้ายขวาของ legend', 'Legend horizontal padding'),
+    tok('--wu-fieldset-legend-padding-y', 'ระยะบนล่างของ legend', 'Legend vertical padding'),
+    tok('--wu-border', 'สีขอบ', 'Border colour'),
   ],
 };
 
@@ -279,9 +279,9 @@ export const MESSAGE_DOC: ComponentDoc = {
   title: 'Message',
   group: 'Feedback',
   entry: 'message',
-  standalone: 'WtMessage, WtMessages',
-  module: 'WtMessageModule',
-  selector: 'wt-message',
+  standalone: 'WuMessage, WuMessages',
+  module: 'WuMessageModule',
+  selector: 'wu-message',
   description: {
     th: 'ข้อความแจ้งในหน้า มีสีตามความหมาย ปิดได้ และหายเองตามเวลาที่ตั้ง',
     en: 'An inline message with severity colours. It can be closable and dismiss itself after a set time.',
@@ -308,7 +308,7 @@ export const MESSAGE_DOC: ComponentDoc = {
     'ส่งแบบฟอร์ม': 'Send the form',
     'ส่งแบบฟอร์มแล้ว': 'Form sent',
     'จะได้รับอีเมลยืนยันภายใน 5 นาที': 'A confirmation email arrives within 5 minutes.',
-    'ข้อความที่มี key ตรงกับ <wt-messages key="form">': 'messages with the key of <wt-messages key="form">',
+    'ข้อความที่มี key ตรงกับ <wu-messages key="form">': 'messages with the key of <wu-messages key="form">',
     'ส่งเอกสารภายใน <b>วันศุกร์นี้</b>': 'Send the documents by <b>this Friday</b>',
     'ระบบจะปิดปรับปรุงคืนนี้': 'The system is down for maintenance tonight',
   },
@@ -316,8 +316,8 @@ export const MESSAGE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtMessageModule</code> ชื่อ <code>WtMessagesModule</code> ก็ได้) และ standalone (<code>WtMessage</code> สำหรับข้อความเดียว <code>WtMessages</code> สำหรับหลายข้อความ)',
-        en: 'Works as an NgModule (<code>WtMessageModule</code>, also exported as <code>WtMessagesModule</code>) or standalone (<code>WtMessage</code> for one message, <code>WtMessages</code> for several).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuMessageModule</code> ชื่อ <code>WuMessagesModule</code> ก็ได้) และ standalone (<code>WuMessage</code> สำหรับข้อความเดียว <code>WuMessages</code> สำหรับหลายข้อความ)',
+        en: 'Works as an NgModule (<code>WuMessageModule</code>, also exported as <code>WuMessagesModule</code>) or standalone (<code>WuMessage</code> for one message, <code>WuMessages</code> for several).',
       },
     },
     severity: { title: 'Severity', text: { th: 'ค่าเริ่มต้นคือ <code>info</code>', en: 'The default is <code>info</code>.' } },
@@ -330,60 +330,60 @@ export const MESSAGE_DOC: ComponentDoc = {
     escape: {
       title: { th: 'ข้อความเป็น HTML', en: 'Text as HTML' },
       text: {
-        th: '<code>[escape]="false"</code> แสดง <code>text</code> เป็น HTML (Angular sanitize ให้) แบบที่ template เดิมใช้กับข้อความที่มีตัวหนา ส่วน <code>wt-messages</code> รับ <code>severity</code> เป็นค่าเริ่มต้นของข้อความที่ไม่ได้ใส่ severity',
-        en: '<code>[escape]="false"</code> shows <code>text</code> as HTML (sanitised by Angular), as older templates do for text with bold parts. <code>wt-messages</code> takes a <code>severity</code> used by messages that set none.',
+        th: '<code>[escape]="false"</code> แสดง <code>text</code> เป็น HTML (Angular sanitize ให้) แบบที่ template เดิมใช้กับข้อความที่มีตัวหนา ส่วน <code>wu-messages</code> รับ <code>severity</code> เป็นค่าเริ่มต้นของข้อความที่ไม่ได้ใส่ severity',
+        en: '<code>[escape]="false"</code> shows <code>text</code> as HTML (sanitised by Angular), as older templates do for text with bold parts. <code>wu-messages</code> takes a <code>severity</code> used by messages that set none.',
       },
     },
     messages: {
-      title: { th: 'หลายข้อความ (wt-messages)', en: 'Several messages (wt-messages)' },
+      title: { th: 'หลายข้อความ (wu-messages)', en: 'Several messages (wu-messages)' },
       text: {
-        th: '<code>wt-messages</code> (อยู่ใน <code>wiratheme/message</code>) แสดงข้อความจาก array <code>[(value)]</code> แต่ละรายการคือ <code>{ severity, summary, detail, closable?, icon?, life? }</code> กดปิดแล้วรายการถูกเอาออกจาก array ให้ · <code>[closable]</code> ค่าเริ่มต้น true · <code>[escape]="false"</code> ให้ summary / detail เป็น HTML (Angular sanitize ให้)',
-        en: '<code>wt-messages</code> (in <code>wiratheme/message</code>) shows the messages of an array bound with <code>[(value)]</code>, each <code>{ severity, summary, detail, closable?, icon?, life? }</code>. Closing one removes it from the array. <code>[closable]</code> defaults to true; <code>[escape]="false"</code> makes summary / detail HTML (sanitised by Angular).',
+        th: '<code>wu-messages</code> (อยู่ใน <code>wiraui/message</code>) แสดงข้อความจาก array <code>[(value)]</code> แต่ละรายการคือ <code>{ severity, summary, detail, closable?, icon?, life? }</code> กดปิดแล้วรายการถูกเอาออกจาก array ให้ · <code>[closable]</code> ค่าเริ่มต้น true · <code>[escape]="false"</code> ให้ summary / detail เป็น HTML (Angular sanitize ให้)',
+        en: '<code>wu-messages</code> (in <code>wiraui/message</code>) shows the messages of an array bound with <code>[(value)]</code>, each <code>{ severity, summary, detail, closable?, icon?, life? }</code>. Closing one removes it from the array. <code>[closable]</code> defaults to true; <code>[escape]="false"</code> makes summary / detail HTML (sanitised by Angular).',
       },
     },
     service: {
       title: { th: 'ข้อความจาก MessageService', en: 'Messages from MessageService' },
       text: {
-        th: '<code>enableService</code> เปิดอยู่เป็นค่าเริ่มต้น (เหมือนเดิม) wt-messages จึงแสดงข้อความที่ส่งด้วย <code>MessageService.add()</code> ที่มี <code>key</code> ตรงกันด้วย แอปส่วนใหญ่จึงตั้ง <code>[enableService]="false"</code> ให้ wt-messages ที่ใช้ array (แบบหัวข้อก่อน) เพราะไม่อย่างนั้นข้อความ toast ที่ไม่ใส่ key จะมาโผล่ที่นี่ด้วย ถ้าตั้งใจใช้ service ให้ใส่ <code>key</code> ทั้งสองฝั่ง แบบตัวอย่างนี้',
-        en: '<code>enableService</code> is on by default (as before), so wt-messages also shows messages sent with <code>MessageService.add()</code> that carry the same <code>key</code>. That is why most apps set <code>[enableService]="false"</code> on an array-driven wt-messages (like the one above): otherwise toast messages sent without a key show up there too. When you do want the service, give both sides a <code>key</code>, as here.',
+        th: '<code>enableService</code> เปิดอยู่เป็นค่าเริ่มต้น (เหมือนเดิม) wu-messages จึงแสดงข้อความที่ส่งด้วย <code>MessageService.add()</code> ที่มี <code>key</code> ตรงกันด้วย แอปส่วนใหญ่จึงตั้ง <code>[enableService]="false"</code> ให้ wu-messages ที่ใช้ array (แบบหัวข้อก่อน) เพราะไม่อย่างนั้นข้อความ toast ที่ไม่ใส่ key จะมาโผล่ที่นี่ด้วย ถ้าตั้งใจใช้ service ให้ใส่ <code>key</code> ทั้งสองฝั่ง แบบตัวอย่างนี้',
+        en: '<code>enableService</code> is on by default (as before), so wu-messages also shows messages sent with <code>MessageService.add()</code> that carry the same <code>key</code>. That is why most apps set <code>[enableService]="false"</code> on an array-driven wu-messages (like the one above): otherwise toast messages sent without a key show up there too. When you do want the service, give both sides a <code>key</code>, as here.',
       },
     },
   },
   code: {
-    severity: `<wt-message text="ระบบจะปิดปรับปรุงคืนนี้ 22:00 น."></wt-message>
-<wt-message severity="success" text="บันทึกเรียบร้อย"></wt-message>
-<wt-message severity="warn" text="แผนของคุณจะหมดอายุใน 3 วัน"></wt-message>
-<wt-message severity="error" text="ชำระเงินไม่สำเร็จ"></wt-message>
-<wt-message severity="secondary" text="ไม่มีรายการใหม่"></wt-message>`,
-    closable: `<wt-message severity="info" text="กดปุ่มปิดได้" [closable]="true" (onClose)="closed = closed + 1"></wt-message>
-<wt-message severity="success" text="ข้อความนี้จะหายใน 4 วินาที" [life]="4000"></wt-message>`,
-    variants: `<wt-message severity="info" variant="outlined" text="Outlined"></wt-message>
-<wt-message severity="info" variant="simple" text="Simple"></wt-message>
-<wt-message severity="info" size="small" text="Small"></wt-message>
-<wt-message severity="info" size="large" text="Large"></wt-message>`,
-    content: `<wt-message severity="warn">
+    severity: `<wu-message text="ระบบจะปิดปรับปรุงคืนนี้ 22:00 น."></wu-message>
+<wu-message severity="success" text="บันทึกเรียบร้อย"></wu-message>
+<wu-message severity="warn" text="แผนของคุณจะหมดอายุใน 3 วัน"></wu-message>
+<wu-message severity="error" text="ชำระเงินไม่สำเร็จ"></wu-message>
+<wu-message severity="secondary" text="ไม่มีรายการใหม่"></wu-message>`,
+    closable: `<wu-message severity="info" text="กดปุ่มปิดได้" [closable]="true" (onClose)="closed = closed + 1"></wu-message>
+<wu-message severity="success" text="ข้อความนี้จะหายใน 4 วินาที" [life]="4000"></wu-message>`,
+    variants: `<wu-message severity="info" variant="outlined" text="Outlined"></wu-message>
+<wu-message severity="info" variant="simple" text="Simple"></wu-message>
+<wu-message severity="info" size="small" text="Small"></wu-message>
+<wu-message severity="info" size="large" text="Large"></wu-message>`,
+    content: `<wu-message severity="warn">
   <span>อีเมลยังไม่ยืนยัน <b>ตรวจกล่องจดหมายของคุณ</b></span>
-</wt-message>`,
-    messages: `<wt-messages [(value)]="notices" [enableService]="false"></wt-messages>`,
-    escape: `<wt-message severity="warn" [escape]="false" text="ส่งเอกสารภายใน <b>วันศุกร์นี้</b>"></wt-message>
-<wt-messages [value]="[{ summary: 'ระบบจะปิดปรับปรุงคืนนี้' }]" severity="info" [closable]="false" [enableService]="false"></wt-messages>`,
-    service: `<wt-messages key="form"></wt-messages>
-<wt-button label="ส่งแบบฟอร์ม" icon="wi wi-send" (onClick)="sendForm()"></wt-button>`,
+</wu-message>`,
+    messages: `<wu-messages [(value)]="notices" [enableService]="false"></wu-messages>`,
+    escape: `<wu-message severity="warn" [escape]="false" text="ส่งเอกสารภายใน <b>วันศุกร์นี้</b>"></wu-message>
+<wu-messages [value]="[{ summary: 'ระบบจะปิดปรับปรุงคืนนี้' }]" severity="info" [closable]="false" [enableService]="false"></wu-messages>`,
+    service: `<wu-messages key="form"></wu-messages>
+<wu-button label="ส่งแบบฟอร์ม" icon="wi wi-send" (onClick)="sendForm()"></wu-button>`,
   },
   ts: {
-    messages: `import { Message } from 'wiratheme/api';
+    messages: `import { Message } from 'wiraui/api';
 
 notices: Message[] = [
   { severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลนักเรียนถูกบันทึกเรียบร้อย' },
   { severity: 'warn', summary: 'ใกล้ครบกำหนด', detail: 'ส่งเอกสารภายในวันศุกร์', closable: false },
   { severity: 'error', summary: 'อัปโหลดไม่สำเร็จ', detail: 'ไฟล์ใหญ่เกิน 5 MB' },
 ];`,
-    service: `import { MessageService } from 'wiratheme/api';
+    service: `import { MessageService } from 'wiraui/api';
 
 private readonly messageService = inject(MessageService);
 
 sendForm(): void {
-  // ข้อความที่มี key ตรงกับ <wt-messages key="form">
+  // ข้อความที่มี key ตรงกับ <wu-messages key="form">
   this.messageService.add({
     key: 'form',
     severity: 'info',
@@ -398,7 +398,7 @@ sendForm(): void {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('severity', 'WtSeverityInput', "'info'", 'สีตามความหมาย', 'Colour by meaning'),
+        row('severity', 'WuSeverityInput', "'info'", 'สีตามความหมาย', 'Colour by meaning'),
         row('text', 'string', undefined, 'ข้อความ', 'Text'),
         row('icon', 'string', undefined, 'class ของ icon (ไม่ใส่ใช้ icon ตาม severity)', 'Icon class (defaults to one per severity)'),
         row('closable', 'boolean', 'false', 'แสดงปุ่มปิด', 'Shows a close button'),
@@ -413,31 +413,31 @@ sendForm(): void {
     {
       id: 'api-messages',
       title: 'Messages',
-      note: { th: 'ของ wt-messages', en: 'On wt-messages.' },
+      note: { th: 'ของ wu-messages', en: 'On wu-messages.' },
       rows: [
         row('value', 'Message[]', '[]', 'ข้อความทั้งหมด ใช้ [(value)] (ปิดแล้วถูกเอาออก)', 'The messages; use [(value)] (closing removes one)'),
         row('closable', 'boolean', 'true', 'มีปุ่มปิด (ข้อความที่ closable: false ไม่มี)', 'Close buttons (not on messages with closable: false)'),
         row('enableService', 'boolean', 'true', 'แสดงข้อความจาก MessageService.add() ที่ key ตรงกันด้วย', 'Also show MessageService.add() messages with the same key'),
         row('key', 'string', undefined, 'key ที่รับจาก MessageService', 'The key it takes from MessageService'),
         row('escape', 'boolean', 'true', 'false = summary / detail เป็น HTML', 'false = summary / detail are HTML'),
-        row('severity', 'WtSeverityInput', "'info'", 'severity ของข้อความที่ไม่ได้ใส่เอง', 'Severity for messages that set none'),
+        row('severity', 'WuSeverityInput', "'info'", 'severity ของข้อความที่ไม่ได้ใส่เอง', 'Severity for messages that set none'),
         row('styleClass · style', 'string · object', undefined, 'class / style ของกล่อง', 'Box class / style'),
         row('showTransitionOptions · hideTransitionOptions', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ไม่มีผล', 'Accepted so existing templates compile; no effect'),
         row('valueChange · onClose', 'Message[] · Message', undefined, 'outputs: array หลังปิด · ข้อความที่ถูกปิด', 'Outputs: the array after a close · the closed message'),
         row('clear()', 'void', undefined, 'method: ลบทุกข้อความ', 'Method: removes every message'),
       ],
     },
-    { id: 'api-types', title: 'Types', code: `type WtMessageSize = 'small' | 'large';\ntype WtMessageVariant = 'outlined' | 'simple';\n${SEVERITY_TYPE}` },
+    { id: 'api-types', title: 'Types', code: `type WuMessageSize = 'small' | 'large';\ntype WuMessageVariant = 'outlined' | 'simple';\n${SEVERITY_TYPE}` },
   ],
   tokens: [
-    tok('--wt-message-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
-    tok('--wt-message-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
-    tok('--wt-message-radius', 'ความมน', 'Radius'),
-    tok('--wt-message-gap', 'ระยะระหว่าง icon กับข้อความ', 'Gap between icon and text'),
-    tok('--wt-message-border-width', 'ความหนาขอบ', 'Border width'),
-    tok('--wt-message-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
-    tok('--wt-info-bg', 'พื้นของ severity="info" (success / warn / danger / help แบบเดียวกัน)', 'severity="info" background (success / warn / danger / help alike)'),
-    tok('--wt-info-text', 'สีตัวอักษรของ severity="info"', 'severity="info" text colour'),
-    tok('--wt-info-color', 'สี icon และขอบของ severity="info"', 'severity="info" icon and border'),
+    tok('--wu-message-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-message-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
+    tok('--wu-message-radius', 'ความมน', 'Radius'),
+    tok('--wu-message-gap', 'ระยะระหว่าง icon กับข้อความ', 'Gap between icon and text'),
+    tok('--wu-message-border-width', 'ความหนาขอบ', 'Border width'),
+    tok('--wu-message-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
+    tok('--wu-info-bg', 'พื้นของ severity="info" (success / warn / danger / help แบบเดียวกัน)', 'severity="info" background (success / warn / danger / help alike)'),
+    tok('--wu-info-text', 'สีตัวอักษรของ severity="info"', 'severity="info" text colour'),
+    tok('--wu-info-color', 'สี icon และขอบของ severity="info"', 'severity="info" icon and border'),
   ],
 };

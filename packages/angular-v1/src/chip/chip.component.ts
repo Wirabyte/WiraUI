@@ -10,14 +10,14 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
 
 /**
- * Compact label with an optional icon or image: `<wt-chip label="แอดมิน" icon="pi pi-user" removable (onRemove)="…">`.
+ * Compact label with an optional icon or image: `<wu-chip label="แอดมิน" icon="pi pi-user" removable (onRemove)="…">`.
  * A removable chip hides itself when its remove button is pressed and emits `onRemove`.
  */
 @Component({
-  selector: 'wt-chip',
+  selector: 'wu-chip',
   standalone: true,
   imports: [NgIf],
   templateUrl: './chip.component.html',
@@ -25,7 +25,7 @@ import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_V
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtChip implements OnDestroy {
+export class WuChip implements OnDestroy {
   @Input() label?: string;
   /** Icon class, e.g. `pi pi-user`. Ignored when `image` is set. */
   @Input() icon?: string;
@@ -43,11 +43,11 @@ export class WtChip implements OnDestroy {
 
   visible = true;
   private _removable = false;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -68,8 +68,8 @@ export class WtChip implements OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-chip', 'p-chip', 'p-component'];
-    if (this.image) c.push('wt-chip-has-image', 'p-chip-image');
+    const c = ['wu-chip', 'p-chip', 'p-component'];
+    if (this.image) c.push('wu-chip-has-image', 'p-chip-image');
     return c.join(' ');
   }
 

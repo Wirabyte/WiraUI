@@ -1,5 +1,5 @@
 # Everything under apps/ (playgrounds, docs) is a plain npm project on purpose: those apps
-# install packed wiratheme tarballs exactly as a real app would, not workspace links.
+# install packed wiraui tarballs exactly as a real app would, not workspace links.
 packages:
   - 'packages/*'
   - 'e2e'

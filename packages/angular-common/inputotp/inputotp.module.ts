@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtInputOtp } from './inputotp.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuInputOtp } from './inputotp.component';
 
-/** For NgModule apps. Standalone apps can import `WtInputOtp` directly. `wtTemplate` (`pTemplate`) comes with it. */
+/** For NgModule apps. Standalone apps can import `WuInputOtp` directly. `wuTemplate` (`pTemplate`) comes with it. */
 @NgModule({
-  imports: [WtInputOtp, WtTemplate],
-  exports: [WtInputOtp, WtTemplate],
+  imports: [WuInputOtp, WuTemplate],
+  exports: [WuInputOtp, WuTemplate],
 })
-export class WtInputOtpModule {}
+export class WuInputOtpModule {}

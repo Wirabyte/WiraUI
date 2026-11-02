@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtPassword } from './password.component';
+import { WuPassword } from './password.component';
 
-/** For NgModule apps. Standalone apps can import `WtPassword` directly. */
+/** For NgModule apps. Standalone apps can import `WuPassword` directly. */
 @NgModule({
-  imports: [WtPassword],
-  exports: [WtPassword],
+  imports: [WuPassword],
+  exports: [WuPassword],
 })
-export class WtPasswordModule {}
+export class WuPasswordModule {}

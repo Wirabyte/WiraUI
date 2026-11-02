@@ -1,20 +1,20 @@
 <div
   #root
-  class="wt-select wt-multiselect p-multiselect p-component"
+  class="wu-select wu-multiselect p-multiselect p-component"
   [ngClass]="styleClass || ''"
-  [class.wt-select-open]="open"
+  [class.wu-select-open]="open"
   [class.p-multiselect-open]="open"
-  [class.wt-select-focus]="focused || open"
+  [class.wu-select-focus]="focused || open"
   [class.p-focus]="focused || open"
-  [class.wt-select-disabled]="disabled"
+  [class.wu-select-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-select-invalid]="invalid"
+  [class.wu-select-invalid]="invalid"
   [class.p-invalid]="invalid"
-  [class.wt-select-filled]="variant === 'filled'"
-  [class.wt-select-sm]="sizeKey === 'sm'"
-  [class.wt-select-lg]="sizeKey === 'lg'"
-  [class.wt-select-loading]="loading"
-  [class.wt-multiselect-chips]="chips"
+  [class.wu-select-filled]="variant === 'filled'"
+  [class.wu-select-sm]="sizeKey === 'sm'"
+  [class.wu-select-lg]="sizeKey === 'lg'"
+  [class.wu-select-loading]="loading"
+  [class.wu-multiselect-chips]="chips"
   [class.p-multiselect-chip]="display === 'chip'"
   [class.p-multiselect-clearable]="clearable"
   (mousedown)="fieldMousedown($event)"
@@ -23,7 +23,7 @@
   <input
     #focusInput
     type="text"
-    class="wt-select-input p-hidden-accessible"
+    class="wu-select-input p-hidden-accessible"
     role="combobox"
     readonly
     inputmode="none"
@@ -42,18 +42,18 @@
     (keydown)="keydown($event)"
     (focus)="fieldFocus($event)"
   />
-  <div class="wt-select-label wt-multiselect-label p-multiselect-label" [class.wt-select-placeholder]="!filled" [class.p-placeholder]="!filled">
+  <div class="wu-select-label wu-multiselect-label p-multiselect-label" [class.wu-select-placeholder]="!filled" [class.p-placeholder]="!filled">
     <ng-container *ngIf="selectedItemsTemplate; else ownLabel">
       <ng-container *ngTemplateOutlet="selectedItemsTemplate; context: selectedItemsContext"></ng-container>
     </ng-container>
     <ng-template #ownLabel>
       <ng-container *ngIf="chips; else commaLabel">
-        <span *ngFor="let item of selectedItems; trackBy: trackIndex" class="wt-multiselect-chip p-multiselect-token">
-          <span class="wt-multiselect-chip-label p-multiselect-token-label">{{ item.label }}</span>
+        <span *ngFor="let item of selectedItems; trackBy: trackIndex" class="wu-multiselect-chip p-multiselect-token">
+          <span class="wu-multiselect-chip-label p-multiselect-token-label">{{ item.label }}</span>
           <button
             *ngIf="!disabled && !readonly"
             type="button"
-            class="wt-multiselect-chip-remove p-multiselect-token-icon"
+            class="wu-multiselect-chip-remove p-multiselect-token-icon"
             tabindex="-1"
             [attr.aria-label]="removeLabel(item)"
             (click)="remove(item.value, $event)"
@@ -61,16 +61,16 @@
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"></path></svg>
           </button>
         </span>
-        <span class="wt-multiselect-more p-multiselect-token" hidden aria-hidden="true"></span>
+        <span class="wu-multiselect-more p-multiselect-token" hidden aria-hidden="true"></span>
       </ng-container>
       <ng-template #commaLabel>{{ labelText || ' ' }}</ng-template>
     </ng-template>
   </div>
-  <button *ngIf="clearable" type="button" class="wt-select-clear p-multiselect-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+  <button *ngIf="clearable" type="button" class="wu-select-clear p-multiselect-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
   </button>
-  <span class="wt-select-dropdown p-multiselect-trigger" aria-hidden="true">
-    <span *ngIf="loading; else arrow" class="wt-select-spinner p-multiselect-loading-icon"></span>
+  <span class="wu-select-dropdown p-multiselect-trigger" aria-hidden="true">
+    <span *ngIf="loading; else arrow" class="wu-select-spinner p-multiselect-loading-icon"></span>
     <ng-template #arrow>
       <ng-container *ngIf="dropdownIconTemplate; else chevron"><ng-container *ngTemplateOutlet="dropdownIconTemplate"></ng-container></ng-container>
       <ng-template #chevron>
@@ -84,34 +84,34 @@
   *ngIf="open"
   #panel
   popover="manual"
-  class="wt-select-overlay wt-multiselect-overlay p-multiselect-panel p-component"
+  class="wu-select-overlay wu-multiselect-overlay p-multiselect-panel p-component"
   [ngClass]="panelStyleClass || ''"
   [ngStyle]="panelStyle || null"
   (mousedown)="panelMousedown($event)"
 >
   <ng-container *ngIf="headerTemplate"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container>
-  <div *ngIf="showHeader && (showToggleAll || filter)" class="wt-select-header wt-multiselect-header p-multiselect-header">
+  <div *ngIf="showHeader && (showToggleAll || filter)" class="wu-select-header wu-multiselect-header p-multiselect-header">
     <span
       *ngIf="showToggleAll"
-      class="wt-checkbox wt-multiselect-toggle-all"
+      class="wu-checkbox wu-multiselect-toggle-all"
       role="checkbox"
       tabindex="-1"
-      [class.wt-checkbox-checked]="allSelected"
+      [class.wu-checkbox-checked]="allSelected"
       [attr.aria-checked]="allSelected ? true : someSelected ? 'mixed' : false"
       [attr.aria-label]="t.selectAll"
       (click)="toggleAll($event)"
     >
-      <span class="wt-checkbox-control p-checkbox p-component" aria-hidden="true">
-        <span class="wt-checkbox-box p-checkbox-box" [class.p-highlight]="allSelected" [class.wt-checkbox-mixed]="someSelected">
-          <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+      <span class="wu-checkbox-control p-checkbox p-component" aria-hidden="true">
+        <span class="wu-checkbox-box p-checkbox-box" [class.p-highlight]="allSelected" [class.wu-checkbox-mixed]="someSelected">
+          <svg class="wu-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
         </span>
       </span>
     </span>
-    <div *ngIf="filter" class="wt-select-filter-wrap p-multiselect-filter-container">
+    <div *ngIf="filter" class="wu-select-filter-wrap p-multiselect-filter-container">
       <input
         #filterInput
         type="text"
-        class="wt-inputtext wt-select-filter p-multiselect-filter p-inputtext"
+        class="wu-inputtext wu-select-filter p-multiselect-filter p-inputtext"
         role="searchbox"
         autocomplete="off"
         [value]="filterText"
@@ -122,13 +122,13 @@
         (input)="search($event)"
         (keydown)="keydown($event)"
       />
-      <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+      <svg class="wu-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
     </div>
   </div>
-  <div class="wt-select-list-container p-multiselect-items-wrapper" [style.max-height]="scrollHeight">
-    <ul #listBox class="wt-select-list p-multiselect-items" role="listbox" aria-multiselectable="true" [id]="listId" [attr.aria-label]="ariaLabel || placeholderText || null">
+  <div class="wu-select-list-container p-multiselect-items-wrapper" [style.max-height]="scrollHeight">
+    <ul #listBox class="wu-select-list p-multiselect-items" role="listbox" aria-multiselectable="true" [id]="listId" [attr.aria-label]="ariaLabel || placeholderText || null">
       <ng-container *ngFor="let item of visible; let i = index; trackBy: trackIndex">
-        <li *ngIf="item.group; else option" class="wt-select-group p-multiselect-item-group" role="presentation">
+        <li *ngIf="item.group; else option" class="wu-select-group p-multiselect-item-group" role="presentation">
           <ng-container *ngIf="groupTemplate; else groupLabel">
             <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
           </ng-container>
@@ -136,35 +136,35 @@
         </li>
         <ng-template #option>
           <li
-            class="wt-select-option wt-multiselect-option p-multiselect-item"
+            class="wu-select-option wu-multiselect-option p-multiselect-item"
             role="option"
             [id]="optionId(i)"
-            [class.wt-select-option-selected]="isSelected(item)"
+            [class.wu-select-option-selected]="isSelected(item)"
             [class.p-highlight]="isSelected(item)"
-            [class.wt-select-option-active]="i === activeIndex"
+            [class.wu-select-option-active]="i === activeIndex"
             [class.p-focus]="i === activeIndex"
-            [class.wt-select-option-disabled]="item.disabled || isBlocked(item)"
+            [class.wu-select-option-disabled]="item.disabled || isBlocked(item)"
             [class.p-disabled]="item.disabled || isBlocked(item)"
             [attr.aria-selected]="isSelected(item)"
             [attr.aria-disabled]="item.disabled || isBlocked(item) || null"
             (click)="toggleItem(item, $event)"
             (mousemove)="hover(i)"
           >
-            <span class="wt-checkbox wt-multiselect-check" [class.wt-checkbox-checked]="isSelected(item)" aria-hidden="true">
-              <span class="wt-checkbox-control p-checkbox p-component">
-                <span class="wt-checkbox-box p-checkbox-box" [class.p-highlight]="isSelected(item)">
-                  <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="wu-checkbox wu-multiselect-check" [class.wu-checkbox-checked]="isSelected(item)" aria-hidden="true">
+              <span class="wu-checkbox-control p-checkbox p-component">
+                <span class="wu-checkbox-box p-checkbox-box" [class.p-highlight]="isSelected(item)">
+                  <svg class="wu-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
                 </span>
               </span>
             </span>
             <ng-container *ngIf="itemTemplate; else optionLabel">
               <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, selected: isSelected(item), index: i }"></ng-container>
             </ng-container>
-            <ng-template #optionLabel><span class="wt-select-option-label">{{ item.label || ' ' }}</span></ng-template>
+            <ng-template #optionLabel><span class="wu-select-option-label">{{ item.label || ' ' }}</span></ng-template>
           </li>
         </ng-template>
       </ng-container>
-      <li *ngIf="!visible.length" class="wt-select-empty p-multiselect-empty-message" role="option" aria-disabled="true">
+      <li *ngIf="!visible.length" class="wu-select-empty p-multiselect-empty-message" role="option" aria-disabled="true">
         <ng-container *ngIf="emptyTemplate; else emptyLabel"><ng-container *ngTemplateOutlet="emptyTemplate"></ng-container></ng-container>
         <ng-template #emptyLabel>{{ emptyText }}</ng-template>
       </li>

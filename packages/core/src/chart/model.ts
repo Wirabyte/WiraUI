@@ -1,5 +1,5 @@
 /**
- * wt-chart: from data to shapes. `chartModel()` takes series (or Chart.js-shaped data, see `chartSeriesFrom()`), the size
+ * wu-chart: from data to shapes. `chartModel()` takes series (or Chart.js-shaped data, see `chartSeriesFrom()`), the size
  * and the options, and returns everything a renderer draws: the plot box, axis ticks, grid, bars, lines, areas, dots,
  * slices, radar webs, value labels, reference lines and the hover bands, all in pixels. No DOM: text widths come from
  * the `measure` callback.
@@ -354,7 +354,7 @@ export interface ChartShape {
   delay?: number;
   /** The hover target it belongs to (`ChartHoverBand.key`): lit when that target or one under it is pointed at. */
   hover?: string;
-  /** Extra class: `'wt-chart-connector'`, `'wt-chart-whisker'`, … */
+  /** Extra class: `'wu-chart-connector'`, `'wu-chart-whisker'`, … */
   className?: string;
 }
 
@@ -466,7 +466,7 @@ export interface ChartModel {
   empty: boolean;
 }
 
-/** The default palette: ten colours that read apart in light and dark (overridden by the theme's `--wt-chart-*`). */
+/** The default palette: ten colours that read apart in light and dark (overridden by the theme's `--wu-chart-*`). */
 export const CHART_PALETTE = ['#0f766e', '#f59e0b', '#6366f1', '#ef4444', '#0ea5e9', '#84cc16', '#d946ef', '#f97316', '#14b8a6', '#64748b'];
 
 const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
@@ -475,7 +475,7 @@ const approx = (text: string, size: number) => text.length * size * 0.56;
 
 /**
  * Series from Chart.js-shaped data (`{ labels, datasets: [{ label, data, backgroundColor, borderColor, type, yAxisID,
- * stack, hidden, tension, fill, borderDash }] }`), so `<wt-chartjs>` (Chart.js) data works in `<wt-chart>` as it is.
+ * stack, hidden, tension, fill, borderDash }] }`), so `<wu-chartjs>` (Chart.js) data works in `<wu-chart>` as it is.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function chartSeriesFrom(data: any, type: ChartType = 'bar'): { labels: (string | number)[]; series: ChartSeries[] } {
@@ -886,7 +886,7 @@ function cartesianModel(o: ChartModelOptions, model: ChartModel, palette: string
   // Reference lines and bands.
   for (const ref of yNotes) {
     const isRight = ref.axis === 'right' && hasRight;
-    const color = ref.color || 'var(--wt-chart-reference-color)';
+    const color = ref.color || 'var(--wu-chart-reference-color)';
     if (typeof ref.to === 'number' && Number.isFinite(ref.to)) {
       const [a, b] = [Math.min(ref.value, ref.to), Math.max(ref.value, ref.to)];
       if (horizontal) {
@@ -915,7 +915,7 @@ function cartesianModel(o: ChartModelOptions, model: ChartModel, palette: string
     for (const note of o.annotations?.x || []) {
       const k = indexOf(note.at);
       if (k < 0) continue;
-      const color = note.color || 'var(--wt-chart-reference-color)';
+      const color = note.color || 'var(--wu-chart-reference-color)';
       const k2 = note.to === undefined ? -1 : indexOf(note.to);
       if (k2 >= 0) {
         const [a, b] = [Math.min(k, k2), Math.max(k, k2)];
@@ -932,7 +932,7 @@ function cartesianModel(o: ChartModelOptions, model: ChartModel, palette: string
     for (const pt of o.annotations?.points || []) {
       const k = indexOf(pt.at);
       if (k < 0 || !Number.isFinite(pt.value)) continue;
-      const color = pt.color || 'var(--wt-chart-mark-color)';
+      const color = pt.color || 'var(--wu-chart-mark-color)';
       const x = horizontal ? xOfValue(pt.value) : centerOf(k);
       const y = horizontal ? centerOf(k) : yOf(pt.value, pt.axis === 'right' && hasRight);
       let label: ChartText | null = null;

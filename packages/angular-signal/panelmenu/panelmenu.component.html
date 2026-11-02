@@ -1,28 +1,28 @@
-<div class="wt-panelmenu p-panelmenu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (keydown)="keydown($event)">
+<div class="wu-panelmenu p-panelmenu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (keydown)="keydown($event)">
   @for (item of items; track $index; let i = $index) {
-    <div class="wt-panelmenu-panel p-panelmenu-panel" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
+    <div class="wu-panelmenu-panel p-panelmenu-panel" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
       <div
-        class="wt-panelmenu-header p-panelmenu-header"
-        [class.wt-panelmenu-header-active]="isOpen(item)"
+        class="wu-panelmenu-header p-panelmenu-header"
+        [class.wu-panelmenu-header-active]="isOpen(item)"
         [class.p-panelmenu-header-active]="isOpen(item)"
-        [class.wt-panelmenu-disabled]="item.disabled"
+        [class.wu-panelmenu-disabled]="item.disabled"
         [class.p-disabled]="item.disabled"
       >
-        <div class="wt-panelmenu-header-content p-panelmenu-header-content">
+        <div class="wu-panelmenu-header-content p-panelmenu-header-content">
           <ng-container *ngTemplateOutlet="link; context: { $implicit: item, key: keyOf('', i), header: true }"></ng-container>
         </div>
       </div>
       @if (hasSubmenu(item)) {
         <div
-          class="wt-panelmenu-content-container p-panelmenu-content-container"
+          class="wu-panelmenu-content-container p-panelmenu-content-container"
           role="region"
           [id]="itemId(keyOf('', i)) + '_content'"
           [attr.aria-labelledby]="itemId(keyOf('', i))"
           [attr.inert]="isOpen(item) ? null : ''"
         >
-          <div class="wt-panelmenu-content-inner">
-            <div class="wt-panelmenu-content p-panelmenu-content">
-              <ul class="wt-panelmenu-list p-panelmenu-root-list">
+          <div class="wu-panelmenu-content-inner">
+            <div class="wu-panelmenu-content p-panelmenu-content">
+              <ul class="wu-panelmenu-list p-panelmenu-root-list">
                 <ng-container *ngTemplateOutlet="list; context: { $implicit: visibleOf(item.items), parent: keyOf('', i) }"></ng-container>
               </ul>
             </div>
@@ -36,23 +36,23 @@
 <ng-template #list let-entries let-parent="parent">
   @for (child of entries; track $index; let j = $index) {
     @if (child.separator) {
-      <li class="wt-panelmenu-separator p-menuitem-separator" role="separator"></li>
+      <li class="wu-panelmenu-separator p-menuitem-separator" role="separator"></li>
     } @else {
       <li
-        class="wt-panelmenu-item p-panelmenu-item"
+        class="wu-panelmenu-item p-panelmenu-item"
         [ngClass]="child.styleClass || ''"
         [ngStyle]="child.style || null"
-        [class.wt-panelmenu-item-active]="isOpen(child)"
-        [class.wt-panelmenu-disabled]="child.disabled"
+        [class.wu-panelmenu-item-active]="isOpen(child)"
+        [class.wu-panelmenu-disabled]="child.disabled"
         [class.p-disabled]="child.disabled"
       >
-        <div class="wt-panelmenu-item-content p-panelmenu-item-content">
+        <div class="wu-panelmenu-item-content p-panelmenu-item-content">
           <ng-container *ngTemplateOutlet="link; context: { $implicit: child, key: keyOf(parent, j), header: false }"></ng-container>
         </div>
         @if (hasSubmenu(child)) {
-          <div class="wt-panelmenu-content-container" [id]="itemId(keyOf(parent, j)) + '_content'" [attr.inert]="isOpen(child) ? null : ''">
-            <div class="wt-panelmenu-content-inner">
-              <ul class="wt-panelmenu-list wt-panelmenu-submenu p-panelmenu-submenu">
+          <div class="wu-panelmenu-content-container" [id]="itemId(keyOf(parent, j)) + '_content'" [attr.inert]="isOpen(child) ? null : ''">
+            <div class="wu-panelmenu-content-inner">
+              <ul class="wu-panelmenu-list wu-panelmenu-submenu p-panelmenu-submenu">
                 <ng-container *ngTemplateOutlet="list; context: { $implicit: visibleOf(child.items), parent: keyOf(parent, j) }"></ng-container>
               </ul>
             </div>
@@ -67,9 +67,9 @@
   @if (hasSubmenu(item)) {
     <button
       type="button"
-      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [class]="header ? 'wu-panelmenu-header-link p-panelmenu-header-link' : 'wu-panelmenu-item-link p-panelmenu-item-link'"
       [id]="itemId(key)"
-      [attr.data-wt-key]="key"
+      [attr.data-wu-key]="key"
       [attr.tabindex]="tabindex ?? null"
       [attr.title]="item.title || null"
       [attr.aria-expanded]="isOpen(item)"
@@ -81,9 +81,9 @@
     </button>
   } @else if (routed(item)) {
     <a
-      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [class]="header ? 'wu-panelmenu-header-link p-panelmenu-header-link' : 'wu-panelmenu-item-link p-panelmenu-item-link'"
       [id]="itemId(key)"
-      [attr.data-wt-key]="key"
+      [attr.data-wu-key]="key"
       [attr.tabindex]="tabindex ?? null"
       [attr.title]="item.title || null"
       [attr.target]="item.target || null"
@@ -95,7 +95,7 @@
       [skipLocationChange]="!!item.skipLocationChange"
       [replaceUrl]="!!item.replaceUrl"
       [state]="item.state"
-      routerLinkActive="wt-panelmenu-link-active p-panelmenu-item-link-active"
+      routerLinkActive="wu-panelmenu-link-active p-panelmenu-item-link-active"
       [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
       (click)="itemClick($event, item, key)"
     >
@@ -103,9 +103,9 @@
     </a>
   } @else {
     <a
-      [class]="header ? 'wt-panelmenu-header-link p-panelmenu-header-link' : 'wt-panelmenu-item-link p-panelmenu-item-link'"
+      [class]="header ? 'wu-panelmenu-header-link p-panelmenu-header-link' : 'wu-panelmenu-item-link p-panelmenu-item-link'"
       [id]="itemId(key)"
-      [attr.data-wt-key]="key"
+      [attr.data-wu-key]="key"
       [attr.href]="hrefOf(item)"
       [attr.tabindex]="item.disabled ? -1 : tabindex ?? 0"
       [attr.role]="hrefOf(item) ? null : 'button'"
@@ -125,17 +125,17 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, root: header }"></ng-container>
   } @else {
     @if (item.icon) {
-      <span [class]="(header ? 'wt-panelmenu-header-icon p-panelmenu-header-icon ' : 'wt-panelmenu-item-icon p-panelmenu-item-icon ') + item.icon" aria-hidden="true"></span>
+      <span [class]="(header ? 'wu-panelmenu-header-icon p-panelmenu-header-icon ' : 'wu-panelmenu-item-icon p-panelmenu-item-icon ') + item.icon" aria-hidden="true"></span>
     }
-    <span [class]="header ? 'wt-panelmenu-label p-panelmenu-header-label' : 'wt-panelmenu-label p-panelmenu-item-label'">{{ item.label }}</span>
+    <span [class]="header ? 'wu-panelmenu-label p-panelmenu-header-label' : 'wu-panelmenu-label p-panelmenu-item-label'">{{ item.label }}</span>
     @if (item.badge) {
-      <span class="wt-panelmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+      <span class="wu-panelmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
     }
     @if (hasSubmenu(item)) {
       @if (submenuIconTemplate) {
-        <span class="wt-panelmenu-submenu-icon p-panelmenu-submenu-icon"><ng-container *ngTemplateOutlet="submenuIconTemplate"></ng-container></span>
+        <span class="wu-panelmenu-submenu-icon p-panelmenu-submenu-icon"><ng-container *ngTemplateOutlet="submenuIconTemplate"></ng-container></span>
       } @else {
-        <svg class="wt-panelmenu-submenu-icon p-panelmenu-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
+        <svg class="wu-panelmenu-submenu-icon p-panelmenu-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
       }
     }
   }

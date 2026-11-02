@@ -5,16 +5,16 @@ const BOOL = 'boolean';
 
 const MENU_ITEM_ROWS = [
   row('label · icon', 'string', undefined, 'ข้อความและไอคอน', 'Text and icon'),
-  row('items', 'WtMenuItem[]', undefined, 'เมนูย่อย (ซ้อนกี่ชั้นก็ได้)', 'A submenu (any depth)'),
+  row('items', 'WuMenuItem[]', undefined, 'เมนูย่อย (ซ้อนกี่ชั้นก็ได้)', 'A submenu (any depth)'),
   row('command', '(event: { originalEvent, item }) => void', undefined, 'ทำงานเมื่อเลือก', 'Runs on pick'),
   row('routerLink · queryParams · url · target', 'any', undefined, 'ลิงก์ใน router ของแอป หรือลิงก์ธรรมดา', 'A link through the app\'s router, or a plain link'),
   row('separator · disabled · visible', 'boolean', undefined, 'เส้นคั่น ปิดการใช้งาน และซ่อน', 'A separator, turned off, hidden'),
   row('badge · title · styleClass · style', 'string · string · string · object', undefined, 'ตัวเลขท้ายรายการ tooltip และการแต่ง', 'A trailing badge, a tooltip, and styling'),
 ];
 
-const ITEMS_TS = `import { WtMenuItem } from 'wiratheme/menu';
+const ITEMS_TS = `import { WuMenuItem } from 'wiraui/menu';
 
-items: WtMenuItem[] = [
+items: WuMenuItem[] = [
   {
     label: 'เอกสาร',
     icon: 'wi wi-file',
@@ -40,7 +40,7 @@ items: WtMenuItem[] = [
 ];
 lastCommand = '';
 
-run(event: { item?: WtMenuItem }): void {
+run(event: { item?: WuMenuItem }): void {
   this.lastCommand = event.item?.label ?? '';
 }`;
 
@@ -79,9 +79,9 @@ export const TIEREDMENU_DOC: ComponentDoc = {
   title: 'TieredMenu',
   group: 'Navigation',
   entry: 'tieredmenu',
-  standalone: 'WtTieredMenu',
-  module: 'WtTieredMenuModule',
-  selector: 'wt-tieredmenu',
+  standalone: 'WuTieredMenu',
+  module: 'WuTieredMenuModule',
+  selector: 'wu-tieredmenu',
   description: {
     th: 'เมนูที่รายการมีเมนูย่อยเปิดออกด้านข้าง ซ้อนกี่ชั้นก็ได้ วางบนหน้าหรือเปิดเป็น popup จากปุ่ม เมนูย่อยเปิดเมื่อชี้ คลิก หรือกดลูกศรขวา และบนมือถือเปิดลงด้านล่างแทน',
     en: 'A menu whose items open submenus to the side, any depth, placed in the page or opened as a popup from a button. Submenus open on hover, click or Arrow Right; on phones they open below their item instead.',
@@ -91,15 +91,15 @@ export const TIEREDMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTieredMenuModule</code>) และ standalone (<code>WtTieredMenu</code>) แท็กเขียนได้ทั้ง <code>wt-tieredmenu</code>, <code>wt-tieredMenu</code> และ <code>wt-tiered-menu</code>',
-        en: 'Works as an NgModule (<code>WtTieredMenuModule</code>) or standalone (<code>WtTieredMenu</code>). The tag can be written <code>wt-tieredmenu</code>, <code>wt-tieredMenu</code> or <code>wt-tiered-menu</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTieredMenuModule</code>) และ standalone (<code>WuTieredMenu</code>) แท็กเขียนได้ทั้ง <code>wu-tieredmenu</code>, <code>wu-tieredMenu</code> และ <code>wu-tiered-menu</code>',
+        en: 'Works as an NgModule (<code>WuTieredMenuModule</code>) or standalone (<code>WuTieredMenu</code>). The tag can be written <code>wu-tieredmenu</code>, <code>wu-tieredMenu</code> or <code>wu-tiered-menu</code>.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[model]</code> คือรายการเมนู (แบบเดียวกับ wt-menu) รายการที่มี <code>items</code> เปิดเมนูย่อยด้านข้าง และพลิกไปอีกด้านเมื่อใกล้ขอบจอ · คีย์บอร์ด: ลูกศรขึ้นลงเลือก, <code>→</code> / <code>Enter</code> เปิดเมนูย่อย, <code>←</code> / <code>Esc</code> ปิดกลับ, <code>Home</code> / <code>End</code> · <code>[autoDisplay]="false"</code> เมนูย่อยเปิดเมื่อคลิกเท่านั้น ไม่เปิดเมื่อชี้',
-        en: '<code>[model]</code> is the menu (items as in wt-menu); items with <code>items</code> open a submenu to the side, flipping to the other side near the window edge · keyboard: up and down arrows move, <code>→</code> / <code>Enter</code> open a submenu, <code>←</code> / <code>Esc</code> close it, <code>Home</code> / <code>End</code> · <code>[autoDisplay]="false"</code>: submenus open on click only, not on hover.',
+        th: '<code>[model]</code> คือรายการเมนู (แบบเดียวกับ wu-menu) รายการที่มี <code>items</code> เปิดเมนูย่อยด้านข้าง และพลิกไปอีกด้านเมื่อใกล้ขอบจอ · คีย์บอร์ด: ลูกศรขึ้นลงเลือก, <code>→</code> / <code>Enter</code> เปิดเมนูย่อย, <code>←</code> / <code>Esc</code> ปิดกลับ, <code>Home</code> / <code>End</code> · <code>[autoDisplay]="false"</code> เมนูย่อยเปิดเมื่อคลิกเท่านั้น ไม่เปิดเมื่อชี้',
+        en: '<code>[model]</code> is the menu (items as in wu-menu); items with <code>items</code> open a submenu to the side, flipping to the other side near the window edge · keyboard: up and down arrows move, <code>→</code> / <code>Enter</code> open a submenu, <code>←</code> / <code>Esc</code> close it, <code>Home</code> / <code>End</code> · <code>[autoDisplay]="false"</code>: submenus open on click only, not on hover.',
       },
     },
     popup: {
@@ -119,18 +119,18 @@ export const TIEREDMENU_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-tieredMenu&gt;</code> เป็น <code>&lt;wt-tieredMenu&gt;</code> input, event, template และ method (<code>toggle</code>, <code>show</code>, <code>hide</code>) ชื่อเดิม รายการเป็น <code>MenuItem</code> แบบเดิม · popup เปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ transition) · class <code>p-tieredmenu</code> และ <code>p-menuitem-*</code> อยู่คู่กับ class <code>wt-*</code>',
-        en: 'Change <code>&lt;p-tieredMenu&gt;</code> to <code>&lt;wt-tieredMenu&gt;</code>; inputs, events, templates and methods (<code>toggle</code>, <code>show</code>, <code>hide</code>) keep their names, and items are the same <code>MenuItem</code> shape · the popup opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and the transitions) · the <code>p-tieredmenu</code> and <code>p-menuitem-*</code> classes sit next to the <code>wt-*</code> ones.',
+        th: 'เปลี่ยน <code>&lt;p-tieredMenu&gt;</code> เป็น <code>&lt;wu-tieredMenu&gt;</code> input, event, template และ method (<code>toggle</code>, <code>show</code>, <code>hide</code>) ชื่อเดิม รายการเป็น <code>MenuItem</code> แบบเดิม · popup เปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ transition) · class <code>p-tieredmenu</code> และ <code>p-menuitem-*</code> อยู่คู่กับ class <code>wu-*</code>',
+        en: 'Change <code>&lt;p-tieredMenu&gt;</code> to <code>&lt;wu-tieredMenu&gt;</code>; inputs, events, templates and methods (<code>toggle</code>, <code>show</code>, <code>hide</code>) keep their names, and items are the same <code>MenuItem</code> shape · the popup opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and the transitions) · the <code>p-tieredmenu</code> and <code>p-menuitem-*</code> classes sit next to the <code>wu-*</code> ones.',
       },
     },
   },
   code: {
-    basic: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร"></wt-tieredMenu>
+    basic: `<wu-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร"></wu-tieredMenu>
 <span>สั่งล่าสุด: {{ lastCommand }}</span>`,
-    popup: `<wt-button label="จัดการ" icon="wi wi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wt-button>
-<wt-tieredMenu #manageMenu [model]="items" [popup]="true" ariaLabel="เมนูเอกสาร"></wt-tieredMenu>`,
+    popup: `<wu-button label="จัดการ" icon="wi wi-angle-down" iconPos="right" (onClick)="manageMenu.toggle($event)"></wu-button>
+<wu-tieredMenu #manageMenu [model]="items" [popup]="true" ariaLabel="เมนูเอกสาร"></wu-tieredMenu>`,
     templates: {
-      v3: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
+      v3: `<wu-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
   <ng-template #item let-item let-hasSubmenu="hasSubmenu">
     <i [class]="item.icon"></i>
     <span>{{ item.label }}</span>
@@ -141,17 +141,17 @@ export const TIEREDMENU_DOC: ComponentDoc = {
   <ng-template #submenuicon>
     <i class="wi wi-chevron-right"></i>
   </ng-template>
-</wt-tieredMenu>`,
-      classic: `<wt-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
-  <ng-template wtTemplate="item" let-item let-hasSubmenu="hasSubmenu">
+</wu-tieredMenu>`,
+      classic: `<wu-tieredMenu [model]="items" ariaLabel="เมนูเอกสาร">
+  <ng-template wuTemplate="item" let-item let-hasSubmenu="hasSubmenu">
     <i [class]="item.icon"></i>
     <span>{{ item.label }}</span>
     <small *ngIf="hasSubmenu" class="submenu-count">{{ item.items.length }}</small>
   </ng-template>
-  <ng-template wtTemplate="submenuicon">
+  <ng-template wuTemplate="submenuicon">
     <i class="wi wi-chevron-right"></i>
   </ng-template>
-</wt-tieredMenu>`,
+</wu-tieredMenu>`,
     },
   },
   ts: {
@@ -162,7 +162,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('model', 'WtMenuItem[]', undefined, 'รายการเมนู', 'The menu items'),
+        row('model', 'WuMenuItem[]', undefined, 'รายการเมนู', 'The menu items'),
         row('popup', BOOL, 'false', 'เปิดเป็น popup ด้วย toggle($event)', 'A popup opened with toggle($event)'),
         row('autoDisplay', BOOL, 'true', 'เมนูย่อยเปิดเมื่อชี้', 'Submenus open on hover'),
         row('disabled', BOOL, 'false', 'ปิดทั้งเมนู', 'The whole menu off'),
@@ -182,7 +182,7 @@ export const TIEREDMENU_DOC: ComponentDoc = {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (item) · hasSubmenu', undefined, 'เนื้อในแต่ละรายการ', 'What is inside each item'),
         row('submenuicon', '—', undefined, 'ลูกศรของรายการที่มีเมนูย่อย', 'The arrow on items with a submenu'),
@@ -209,41 +209,41 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
   title: 'ContextMenu',
   group: 'Navigation',
   entry: 'contextmenu',
-  standalone: 'WtContextMenu',
-  module: 'WtContextMenuModule',
-  selector: 'wt-contextmenu',
+  standalone: 'WuContextMenu',
+  module: 'WuContextMenuModule',
+  selector: 'wu-contextmenu',
   description: {
-    th: 'เมนูที่เปิดตรงตำแหน่งที่คลิกขวา บน element ที่กำหนด ทั้งหน้า หรือเปิดจากโค้ด รายการมีเมนูย่อยได้เหมือน wt-tieredMenu และเปิดจากคีย์บอร์ดได้',
-    en: 'A menu that opens where the right-click happened: on one element, on the whole page, or from code. Items can have submenus as in wt-tieredMenu, and the keyboard can open it.',
+    th: 'เมนูที่เปิดตรงตำแหน่งที่คลิกขวา บน element ที่กำหนด ทั้งหน้า หรือเปิดจากโค้ด รายการมีเมนูย่อยได้เหมือน wu-tieredMenu และเปิดจากคีย์บอร์ดได้',
+    en: 'A menu that opens where the right-click happened: on one element, on the whole page, or from code. Items can have submenus as in wu-tieredMenu, and the keyboard can open it.',
   },
   english: MENU_WORDS,
   sections: {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtContextMenuModule</code>) และ standalone (<code>WtContextMenu</code>) แท็กเขียนได้ทั้ง <code>wt-contextmenu</code>, <code>wt-contextMenu</code> และ <code>wt-context-menu</code>',
-        en: 'Works as an NgModule (<code>WtContextMenuModule</code>) or standalone (<code>WtContextMenu</code>). The tag can be written <code>wt-contextmenu</code>, <code>wt-contextMenu</code> or <code>wt-context-menu</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuContextMenuModule</code>) และ standalone (<code>WuContextMenu</code>) แท็กเขียนได้ทั้ง <code>wu-contextmenu</code>, <code>wu-contextMenu</code> และ <code>wu-context-menu</code>',
+        en: 'Works as an NgModule (<code>WuContextMenuModule</code>) or standalone (<code>WuContextMenu</code>). The tag can be written <code>wu-contextmenu</code>, <code>wu-contextMenu</code> or <code>wu-context-menu</code>.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[target]="card"</code> (template ref ของ element, ElementRef, id ของ element เป็น string หรือ component) คลิกขวาบนส่วนนั้นแล้วเมนูเปิดตรงตำแหน่งที่คลิก ไม่ล้นขอบจอ · ปุ่มเมนูบนคีย์บอร์ดหรือ <code>Shift</code> + <code>F10</code> เปิดที่ element ที่โฟกัส แล้วใช้ลูกศรเหมือน wt-tieredMenu · ปิดเมื่อคลิกข้างนอก เลือกรายการ หรือกด <code>Esc</code> · <code>[global]="true"</code> ใช้กับคลิกขวาทั้งหน้า และ <code>triggerEvent="click"</code> เปิดด้วยคลิกซ้ายแทน',
-        en: '<code>[target]="card"</code> (a template ref to an element, an ElementRef, an element id as a string, or a component): a right-click there opens the menu at the pointer, kept inside the window · the keyboard menu key or <code>Shift</code> + <code>F10</code> opens it at the focused element, and the arrows work as in wt-tieredMenu · it closes on an outside click, a pick or <code>Esc</code> · <code>[global]="true"</code> takes right-clicks anywhere on the page, and <code>triggerEvent="click"</code> opens it on a left click instead.',
+        th: '<code>[target]="card"</code> (template ref ของ element, ElementRef, id ของ element เป็น string หรือ component) คลิกขวาบนส่วนนั้นแล้วเมนูเปิดตรงตำแหน่งที่คลิก ไม่ล้นขอบจอ · ปุ่มเมนูบนคีย์บอร์ดหรือ <code>Shift</code> + <code>F10</code> เปิดที่ element ที่โฟกัส แล้วใช้ลูกศรเหมือน wu-tieredMenu · ปิดเมื่อคลิกข้างนอก เลือกรายการ หรือกด <code>Esc</code> · <code>[global]="true"</code> ใช้กับคลิกขวาทั้งหน้า และ <code>triggerEvent="click"</code> เปิดด้วยคลิกซ้ายแทน',
+        en: '<code>[target]="card"</code> (a template ref to an element, an ElementRef, an element id as a string, or a component): a right-click there opens the menu at the pointer, kept inside the window · the keyboard menu key or <code>Shift</code> + <code>F10</code> opens it at the focused element, and the arrows work as in wu-tieredMenu · it closes on an outside click, a pick or <code>Esc</code> · <code>[global]="true"</code> takes right-clicks anywhere on the page, and <code>triggerEvent="click"</code> opens it on a left click instead.',
       },
     },
     show: {
       title: { th: 'เปิดจากโค้ด', en: 'Opening from code' },
       text: {
-        th: 'ไม่ใส่ <code>target</code> แล้วเรียก <code>menu.show($event)</code> จาก <code>(contextmenu)</code> ของแต่ละแถว จะรู้ว่าคลิกขวาที่รายการไหน (เก็บไว้ก่อนเปิด) · <code>hide()</code> และ <code>toggle($event)</code> ก็มี · <code>(onShow)</code> / <code>(onHide)</code> เมื่อเปิด / ปิด · ตาราง (<code>[contextMenu]</code> กับ <code>wtContextMenuRow</code>) และ wt-tree (<code>[contextMenu]</code>) ต่อกับเมนูนี้ได้ในตัว',
-        en: 'Leave out <code>target</code> and call <code>menu.show($event)</code> from each row\'s <code>(contextmenu)</code> to know which row was right-clicked (keep it before opening) · <code>hide()</code> and <code>toggle($event)</code> are there too · <code>(onShow)</code> / <code>(onHide)</code> on open / close · the table (<code>[contextMenu]</code> with <code>wtContextMenuRow</code>) and wt-tree (<code>[contextMenu]</code>) connect to this menu by themselves.',
+        th: 'ไม่ใส่ <code>target</code> แล้วเรียก <code>menu.show($event)</code> จาก <code>(contextmenu)</code> ของแต่ละแถว จะรู้ว่าคลิกขวาที่รายการไหน (เก็บไว้ก่อนเปิด) · <code>hide()</code> และ <code>toggle($event)</code> ก็มี · <code>(onShow)</code> / <code>(onHide)</code> เมื่อเปิด / ปิด · ตาราง (<code>[contextMenu]</code> กับ <code>wuContextMenuRow</code>) และ wu-tree (<code>[contextMenu]</code>) ต่อกับเมนูนี้ได้ในตัว',
+        en: 'Leave out <code>target</code> and call <code>menu.show($event)</code> from each row\'s <code>(contextmenu)</code> to know which row was right-clicked (keep it before opening) · <code>hide()</code> and <code>toggle($event)</code> are there too · <code>(onShow)</code> / <code>(onHide)</code> on open / close · the table (<code>[contextMenu]</code> with <code>wuContextMenuRow</code>) and wu-tree (<code>[contextMenu]</code>) connect to this menu by themselves.',
       },
     },
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-contextMenu&gt;</code> เป็น <code>&lt;wt-contextMenu&gt;</code> <code>[model]</code>, <code>[target]</code>, <code>[global]</code>, <code>triggerEvent</code> และ method ชื่อเดิม รายการเป็น <code>MenuItem</code> แบบเดิม · เมนูเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code> และ <code>baseZIndex</code>) · class <code>p-contextmenu</code> อยู่คู่กับ <code>wt-contextmenu</code>',
-        en: 'Change <code>&lt;p-contextMenu&gt;</code> to <code>&lt;wt-contextMenu&gt;</code>; <code>[model]</code>, <code>[target]</code>, <code>[global]</code>, <code>triggerEvent</code> and the methods keep their names, and items are the same <code>MenuItem</code> shape · the menu opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code> and <code>baseZIndex</code>) · the <code>p-contextmenu</code> class sits next to <code>wt-contextmenu</code>.',
+        th: 'เปลี่ยน <code>&lt;p-contextMenu&gt;</code> เป็น <code>&lt;wu-contextMenu&gt;</code> <code>[model]</code>, <code>[target]</code>, <code>[global]</code>, <code>triggerEvent</code> และ method ชื่อเดิม รายการเป็น <code>MenuItem</code> แบบเดิม · เมนูเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code> และ <code>baseZIndex</code>) · class <code>p-contextmenu</code> อยู่คู่กับ <code>wu-contextmenu</code>',
+        en: 'Change <code>&lt;p-contextMenu&gt;</code> to <code>&lt;wu-contextMenu&gt;</code>; <code>[model]</code>, <code>[target]</code>, <code>[global]</code>, <code>triggerEvent</code> and the methods keep their names, and items are the same <code>MenuItem</code> shape · the menu opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code> and <code>baseZIndex</code>) · the <code>p-contextmenu</code> class sits next to <code>wu-contextmenu</code>.',
       },
     },
   },
@@ -252,7 +252,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
   <i class="wi wi-file"></i> ใบงานคณิตศาสตร์ ม.1
   <small>คลิกขวาที่การ์ดนี้</small>
 </div>
-<wt-contextMenu [model]="fileActions" [target]="worksheet"></wt-contextMenu>
+<wu-contextMenu [model]="fileActions" [target]="worksheet"></wu-contextMenu>
 <span>สั่งล่าสุด: {{ lastCommand }}</span>`,
     show: {
       v3: `<ul class="file-list">
@@ -262,7 +262,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
     </li>
   }
 </ul>
-<wt-contextMenu #fileMenu [model]="fileActions"></wt-contextMenu>
+<wu-contextMenu #fileMenu [model]="fileActions"></wu-contextMenu>
 <span>เลือกอยู่: {{ pickedFile?.name }}</span>`,
       classic: `<ul class="file-list">
   <li *ngFor="let file of files" tabindex="0" [class.file-picked]="file === pickedFile"
@@ -270,14 +270,14 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
     <i class="wi wi-file"></i> {{ file.name }}
   </li>
 </ul>
-<wt-contextMenu #fileMenu [model]="fileActions"></wt-contextMenu>
+<wu-contextMenu #fileMenu [model]="fileActions"></wu-contextMenu>
 <span>เลือกอยู่: {{ pickedFile?.name }}</span>`,
     },
   },
   ts: {
-    basic: `import { WtMenuItem } from 'wiratheme/menu';
+    basic: `import { WuMenuItem } from 'wiraui/menu';
 
-fileActions: WtMenuItem[] = [
+fileActions: WuMenuItem[] = [
   { label: 'คัดลอก', icon: 'wi wi-copy', command: (event) => this.run(event) },
   { label: 'เปลี่ยนชื่อ', icon: 'wi wi-pencil', command: (event) => this.run(event) },
   { label: 'แชร์', icon: 'wi wi-share-alt', items: [
@@ -289,7 +289,7 @@ fileActions: WtMenuItem[] = [
 ];
 lastCommand = '';
 
-run(event: { item?: WtMenuItem }): void {
+run(event: { item?: WuMenuItem }): void {
   this.lastCommand = event.item?.label ?? '';
 }`,
     show: `files = [
@@ -308,7 +308,7 @@ pickFile(file: { id: number; name: string }): void {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('model', 'WtMenuItem[]', undefined, 'รายการเมนู (มีเมนูย่อยได้)', 'The menu items (submenus allowed)'),
+        row('model', 'WuMenuItem[]', undefined, 'รายการเมนู (มีเมนูย่อยได้)', 'The menu items (submenus allowed)'),
         row('target', 'HTMLElement | ElementRef | string | component', undefined, 'คลิกขวาบนส่วนนี้แล้วเปิด (string คือ id ของ element)', 'Right-clicks here open it (a string is an element id)'),
         row('global', BOOL, 'false', 'คลิกขวาที่ใดก็ได้ในหน้า', 'Right-clicks anywhere on the page'),
         row('triggerEvent', 'string', "'contextmenu'", 'event ที่เปิดเมนูบน target', 'The event that opens it on the target'),

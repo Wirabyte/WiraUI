@@ -1,18 +1,18 @@
 <div
-  class="wt-editor p-editor p-editor-container p-component"
-  [class.wt-editor-focused]="focused"
-  [class.wt-editor-disabled]="disabled"
+  class="wu-editor p-editor p-editor-container p-component"
+  [class.wu-editor-focused]="focused"
+  [class.wu-editor-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-editor-readonly]="readonly"
-  [class.wt-editor-fullscreen]="fullscreen"
-  [class.wt-editor-sticky]="stickyToolbar"
-  [class.wt-editor-source-mode]="sourceMode"
+  [class.wu-editor-readonly]="readonly"
+  [class.wu-editor-fullscreen]="fullscreen"
+  [class.wu-editor-sticky]="stickyToolbar"
+  [class.wu-editor-source-mode]="sourceMode"
   [ngClass]="styleClass || ''"
 >
   <div
     *ngIf="headerTemplate || groups.length"
     #toolbarEl
-    class="wt-editor-toolbar p-editor-toolbar"
+    class="wu-editor-toolbar p-editor-toolbar"
     role="toolbar"
     [attr.aria-label]="m.toolbar"
     [attr.aria-controls]="areaId"
@@ -23,16 +23,16 @@
       <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
     </ng-container>
     <ng-template #ownTools>
-      <span *ngFor="let group of groups" class="wt-editor-group" role="group">
+      <span *ngFor="let group of groups" class="wu-editor-group" role="group">
         <button
           *ngFor="let t of group"
           type="button"
-          class="wt-editor-tool"
+          class="wu-editor-tool"
           tabindex="-1"
-          [class.wt-editor-dropdown]="isDropdown(t)"
-          [class.wt-editor-tool-on]="isOn(t)"
-          [class.wt-editor-tool-open]="panelOpenFor(t)"
-          [attr.data-wt-tool]="t"
+          [class.wu-editor-dropdown]="isDropdown(t)"
+          [class.wu-editor-tool-on]="isOn(t)"
+          [class.wu-editor-tool-open]="panelOpenFor(t)"
+          [attr.data-wu-tool]="t"
           [disabled]="isDisabled(t)"
           [attr.aria-pressed]="hasMenu(t) ? null : isOn(t)"
           [attr.aria-haspopup]="hasMenu(t) ? 'true' : null"
@@ -42,25 +42,25 @@
           (click)="runTool(t, $event)"
         >
           <ng-container *ngIf="isDropdown(t); else iconTool">
-            <span class="wt-editor-dropdown-label">{{ dropdownLabel(t) }}</span>
-            <span class="wt-editor-chevron-wrap" wtEditorIcon="chevron"></span>
+            <span class="wu-editor-dropdown-label">{{ dropdownLabel(t) }}</span>
+            <span class="wu-editor-chevron-wrap" wuEditorIcon="chevron"></span>
           </ng-container>
-          <ng-template #iconTool><span class="wt-editor-icon-wrap" [wtEditorIcon]="toolIcon(t)"></span></ng-template>
+          <ng-template #iconTool><span class="wu-editor-icon-wrap" [wuEditorIcon]="toolIcon(t)"></span></ng-template>
         </button>
       </span>
     </ng-template>
   </div>
 
-  <div class="wt-editor-body">
+  <div class="wu-editor-body">
     <div
       #area
-      class="wt-editor-area wt-editor-content p-editor-content"
+      class="wu-editor-area wu-editor-content p-editor-content"
       role="textbox"
       aria-multiline="true"
       spellcheck="true"
       [id]="areaId"
-      [class.wt-editor-hidden]="sourceMode"
-      [class.wt-editor-empty]="empty"
+      [class.wu-editor-hidden]="sourceMode"
+      [class.wu-editor-empty]="empty"
       [attr.aria-label]="ariaLabelledBy ? null : areaLabel"
       [attr.aria-labelledby]="ariaLabelledBy || null"
       [attr.aria-readonly]="readonly || null"
@@ -78,54 +78,54 @@
     ></div>
     <textarea
       *ngIf="sourceMode"
-      class="wt-editor-source wt-inputtext p-inputtext"
+      class="wu-editor-source wu-inputtext p-inputtext"
       spellcheck="false"
       [value]="sourceText"
       [ngStyle]="style || null"
       [attr.aria-label]="m.source"
       (input)="sourceInput($event)"
     ></textarea>
-    <div #frameEl class="wt-editor-image-frame" style="display: none" aria-hidden="true">
-      <span class="wt-editor-image-handle" [attr.title]="m.imageResize" (pointerdown)="resizeStart($event)"></span>
+    <div #frameEl class="wu-editor-image-frame" style="display: none" aria-hidden="true">
+      <span class="wu-editor-image-handle" [attr.title]="m.imageResize" (pointerdown)="resizeStart($event)"></span>
     </div>
   </div>
 
-  <div *ngIf="notices.length || showCount" class="wt-editor-footer">
-    <div *ngFor="let n of notices; let i = index" class="wt-editor-notice" role="alert">
+  <div *ngIf="notices.length || showCount" class="wu-editor-footer">
+    <div *ngFor="let n of notices; let i = index" class="wu-editor-notice" role="alert">
       <span>{{ n }}</span>
-      <button type="button" class="wt-editor-notice-close" [attr.aria-label]="t.close" (click)="dismissNotice(i)">×</button>
+      <button type="button" class="wu-editor-notice-close" [attr.aria-label]="t.close" (click)="dismissNotice(i)">×</button>
     </div>
-    <span *ngIf="showCount" class="wt-editor-count">{{ countText }}</span>
+    <span *ngIf="showCount" class="wu-editor-count">{{ countText }}</span>
   </div>
 
-  <input #imageInput type="file" class="wt-editor-file" tabindex="-1" aria-hidden="true" multiple [attr.accept]="acceptImages" (change)="imageFilesChosen($event)" />
+  <input #imageInput type="file" class="wu-editor-file" tabindex="-1" aria-hidden="true" multiple [attr.accept]="acceptImages" (change)="imageFilesChosen($event)" />
 
-  <div *ngIf="panel" #panelEl class="wt-editor-panel" popover="manual" [attr.data-wt-panel]="panel" (keydown)="panelKeydown($event)" [ngSwitch]="panel">
-    <div *ngSwitchCase="'heading'" class="wt-editor-menu" role="menu" [attr.aria-label]="m.blockStyle">
-      <button *ngFor="let h of opts.headings" type="button" role="menuitemradio" [class]="'wt-editor-menu-item wt-editor-block-' + h" [attr.aria-checked]="state.heading === h && !state.codeBlock && !state.blockquote" (click)="pickHeading(h)">
+  <div *ngIf="panel" #panelEl class="wu-editor-panel" popover="manual" [attr.data-wu-panel]="panel" (keydown)="panelKeydown($event)" [ngSwitch]="panel">
+    <div *ngSwitchCase="'heading'" class="wu-editor-menu" role="menu" [attr.aria-label]="m.blockStyle">
+      <button *ngFor="let h of opts.headings" type="button" role="menuitemradio" [class]="'wu-editor-menu-item wu-editor-block-' + h" [attr.aria-checked]="state.heading === h && !state.codeBlock && !state.blockquote" (click)="pickHeading(h)">
         {{ headingLabel(h) }}
       </button>
-      <div *ngIf="opts.blocks.length" class="wt-editor-menu-sep" role="separator"></div>
+      <div *ngIf="opts.blocks.length" class="wu-editor-menu-sep" role="separator"></div>
       <button
         *ngFor="let b of opts.blocks"
         type="button"
         role="menuitemradio"
-        [class]="'wt-editor-menu-item wt-editor-block-' + b"
+        [class]="'wu-editor-menu-item wu-editor-block-' + b"
         [attr.aria-checked]="b === 'blockquote' ? !!state.blockquote : !!state.codeBlock"
         (click)="pickBlock(b)"
       >
         {{ b === 'blockquote' ? m.blockquote : m.codeBlock }}
       </button>
     </div>
-    <div *ngSwitchCase="'fontSize'" class="wt-editor-menu" role="menu" [attr.aria-label]="m.fontSize">
-      <button *ngFor="let s of fontSizes" type="button" role="menuitemradio" class="wt-editor-menu-item" [style.font-size]="s.value || null" [attr.aria-checked]="state.fontSize === s.value" (click)="pickSize(s.value)">{{ s.label }}</button>
+    <div *ngSwitchCase="'fontSize'" class="wu-editor-menu" role="menu" [attr.aria-label]="m.fontSize">
+      <button *ngFor="let s of fontSizes" type="button" role="menuitemradio" class="wu-editor-menu-item" [style.font-size]="s.value || null" [attr.aria-checked]="state.fontSize === s.value" (click)="pickSize(s.value)">{{ s.label }}</button>
     </div>
-    <div *ngSwitchCase="'fontFamily'" class="wt-editor-menu" role="menu" [attr.aria-label]="m.fontFamily">
-      <button *ngFor="let f of fontFamilies" type="button" role="menuitemradio" class="wt-editor-menu-item" [style.font-family]="f.value || null" [attr.aria-checked]="state.fontFamily === f.value" (click)="pickFont(f.value)">{{ f.label }}</button>
+    <div *ngSwitchCase="'fontFamily'" class="wu-editor-menu" role="menu" [attr.aria-label]="m.fontFamily">
+      <button *ngFor="let f of fontFamilies" type="button" role="menuitemradio" class="wu-editor-menu-item" [style.font-family]="f.value || null" [attr.aria-checked]="state.fontFamily === f.value" (click)="pickFont(f.value)">{{ f.label }}</button>
     </div>
-    <div *ngSwitchCase="'align'" class="wt-editor-menu wt-editor-menu-icons" role="menu" [attr.aria-label]="m.align">
-      <button *ngFor="let a of opts.alignments" type="button" role="menuitemradio" class="wt-editor-menu-item" [attr.aria-checked]="state.align === a" (click)="pickAlign(a)">
-        <span class="wt-editor-icon-wrap" [wtEditorIcon]="alignIcon(a)"></span>
+    <div *ngSwitchCase="'align'" class="wu-editor-menu wu-editor-menu-icons" role="menu" [attr.aria-label]="m.align">
+      <button *ngFor="let a of opts.alignments" type="button" role="menuitemradio" class="wu-editor-menu-item" [attr.aria-checked]="state.align === a" (click)="pickAlign(a)">
+        <span class="wu-editor-icon-wrap" [wuEditorIcon]="alignIcon(a)"></span>
         <span>{{ alignLabel(a) }}</span>
       </button>
     </div>
@@ -135,193 +135,193 @@
     <ng-container *ngSwitchCase="'highlight'">
       <ng-container *ngTemplateOutlet="palette; context: { kind: 'highlight', colors: opts.highlights }"></ng-container>
     </ng-container>
-    <form *ngSwitchCase="'link'" class="wt-editor-form" (submit)="$event.preventDefault(); applyLink()">
-      <label class="wt-editor-field">
+    <form *ngSwitchCase="'link'" class="wu-editor-form" (submit)="$event.preventDefault(); applyLink()">
+      <label class="wu-editor-field">
         <span>{{ m.linkUrl }}</span>
-        <input class="wt-inputtext p-inputtext" type="text" inputmode="url" autocomplete="off" name="url" placeholder="https://" [value]="linkForm.url" (input)="linkForm.url = $any($event.target).value; linkForm.error = ''" />
+        <input class="wu-inputtext p-inputtext" type="text" inputmode="url" autocomplete="off" name="url" placeholder="https://" [value]="linkForm.url" (input)="linkForm.url = $any($event.target).value; linkForm.error = ''" />
       </label>
-      <label *ngIf="linkForm.showText" class="wt-editor-field">
+      <label *ngIf="linkForm.showText" class="wu-editor-field">
         <span>{{ m.linkText }}</span>
-        <input class="wt-inputtext p-inputtext" type="text" name="text" [value]="linkForm.text" (input)="linkForm.text = $any($event.target).value" />
+        <input class="wu-inputtext p-inputtext" type="text" name="text" [value]="linkForm.text" (input)="linkForm.text = $any($event.target).value" />
       </label>
-      <label class="wt-editor-check">
+      <label class="wu-editor-check">
         <input type="checkbox" name="newTab" [checked]="linkForm.newTab" (change)="linkForm.newTab = $any($event.target).checked" />
         <span>{{ m.linkNewTab }}</span>
       </label>
-      <div *ngIf="linkForm.error" class="wt-editor-form-error" role="alert">{{ linkForm.error }}</div>
-      <div class="wt-editor-form-actions">
+      <div *ngIf="linkForm.error" class="wu-editor-form-error" role="alert">{{ linkForm.error }}</div>
+      <div class="wu-editor-form-actions">
         <button *ngIf="state.link" type="button" [class]="buttonClass('p-button-text p-button-danger p-button-sm')" (click)="unlink()">{{ m.unlink }}</button>
         <button type="submit" [class]="buttonClass('p-button-sm')">{{ m.apply }}</button>
       </div>
     </form>
-    <div *ngSwitchCase="'linkMenu'" class="wt-editor-balloon">
-      <a class="wt-editor-balloon-link" [attr.href]="currentLinkHref() || null" target="_blank" rel="noopener noreferrer" [attr.title]="m.openLink">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="external"></span>
-        <span class="wt-editor-balloon-url">{{ currentLinkHref() }}</span>
+    <div *ngSwitchCase="'linkMenu'" class="wu-editor-balloon">
+      <a class="wu-editor-balloon-link" [attr.href]="currentLinkHref() || null" target="_blank" rel="noopener noreferrer" [attr.title]="m.openLink">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="external"></span>
+        <span class="wu-editor-balloon-url">{{ currentLinkHref() }}</span>
       </a>
-      <button type="button" class="wt-editor-tool" [attr.aria-label]="m.editLink" [attr.title]="m.editLink" (click)="openPanel('link', panelAnchor)">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="edit"></span>
+      <button type="button" class="wu-editor-tool" [attr.aria-label]="m.editLink" [attr.title]="m.editLink" (click)="openPanel('link', panelAnchor)">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="edit"></span>
       </button>
-      <button type="button" class="wt-editor-tool" [attr.aria-label]="m.unlink" [attr.title]="m.unlink" (click)="unlink()">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="unlink"></span>
+      <button type="button" class="wu-editor-tool" [attr.aria-label]="m.unlink" [attr.title]="m.unlink" (click)="unlink()">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="unlink"></span>
       </button>
     </div>
-    <div *ngSwitchCase="'image'" class="wt-editor-image-form">
-      <div class="wt-editor-tabs" role="tablist">
-        <button type="button" role="tab" class="wt-editor-tab" [attr.aria-selected]="imageForm.tab === 'upload'" (click)="imageForm.tab = 'upload'">{{ m.imageUpload }}</button>
-        <button type="button" role="tab" class="wt-editor-tab" [attr.aria-selected]="imageForm.tab === 'url'" (click)="imageForm.tab = 'url'">{{ m.imageFromUrl }}</button>
+    <div *ngSwitchCase="'image'" class="wu-editor-image-form">
+      <div class="wu-editor-tabs" role="tablist">
+        <button type="button" role="tab" class="wu-editor-tab" [attr.aria-selected]="imageForm.tab === 'upload'" (click)="imageForm.tab = 'upload'">{{ m.imageUpload }}</button>
+        <button type="button" role="tab" class="wu-editor-tab" [attr.aria-selected]="imageForm.tab === 'url'" (click)="imageForm.tab = 'url'">{{ m.imageFromUrl }}</button>
       </div>
-      <button *ngIf="imageForm.tab === 'upload'; else urlForm" type="button" class="wt-editor-drop" (click)="chooseImage()" (dragover)="$event.preventDefault()" (drop)="imagePanelDrop($event)">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="upload"></span>
+      <button *ngIf="imageForm.tab === 'upload'; else urlForm" type="button" class="wu-editor-drop" (click)="chooseImage()" (dragover)="$event.preventDefault()" (drop)="imagePanelDrop($event)">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="upload"></span>
         <span>{{ m.imageDrop }}</span>
       </button>
       <ng-template #urlForm>
-        <form class="wt-editor-form" (submit)="$event.preventDefault(); insertImageUrl()">
-          <label class="wt-editor-field">
+        <form class="wu-editor-form" (submit)="$event.preventDefault(); insertImageUrl()">
+          <label class="wu-editor-field">
             <span>{{ m.imageUrl }}</span>
-            <input class="wt-inputtext p-inputtext" type="text" inputmode="url" name="src" placeholder="https://" [value]="imageForm.url" (input)="imageForm.url = $any($event.target).value; imageForm.error = ''" />
+            <input class="wu-inputtext p-inputtext" type="text" inputmode="url" name="src" placeholder="https://" [value]="imageForm.url" (input)="imageForm.url = $any($event.target).value; imageForm.error = ''" />
           </label>
-          <label class="wt-editor-field">
+          <label class="wu-editor-field">
             <span>{{ m.imageAlt }}</span>
-            <input class="wt-inputtext p-inputtext" type="text" name="alt" [value]="imageForm.alt" (input)="imageForm.alt = $any($event.target).value" />
+            <input class="wu-inputtext p-inputtext" type="text" name="alt" [value]="imageForm.alt" (input)="imageForm.alt = $any($event.target).value" />
           </label>
-          <div *ngIf="imageForm.error" class="wt-editor-form-error" role="alert">{{ imageForm.error }}</div>
-          <div class="wt-editor-form-actions">
+          <div *ngIf="imageForm.error" class="wu-editor-form-error" role="alert">{{ imageForm.error }}</div>
+          <div class="wu-editor-form-actions">
             <button type="submit" [class]="buttonClass('p-button-sm')">{{ m.apply }}</button>
           </div>
         </form>
       </ng-template>
     </div>
-    <div *ngSwitchCase="'imageMenu'" class="wt-editor-balloon wt-editor-image-menu">
-      <span class="wt-editor-balloon-group" role="group">
+    <div *ngSwitchCase="'imageMenu'" class="wu-editor-balloon wu-editor-image-menu">
+      <span class="wu-editor-balloon-group" role="group">
         <button
           *ngFor="let a of imageAligns"
           type="button"
-          class="wt-editor-tool"
-          [class.wt-editor-tool-on]="imageAlignIs(a)"
+          class="wu-editor-tool"
+          [class.wu-editor-tool-on]="imageAlignIs(a)"
           [attr.aria-pressed]="imageAlignIs(a)"
           [attr.aria-label]="imageAlignLabel(a)"
           [attr.title]="imageAlignLabel(a)"
           (click)="setImageAlign(a)"
         >
-          <span class="wt-editor-icon-wrap" [wtEditorIcon]="'image' + a[0].toUpperCase() + a.slice(1)"></span>
+          <span class="wu-editor-icon-wrap" [wuEditorIcon]="'image' + a[0].toUpperCase() + a.slice(1)"></span>
         </button>
       </span>
-      <span class="wt-editor-balloon-group" role="group" [attr.aria-label]="m.imageWidth">
-        <button *ngFor="let w of imageWidths" type="button" class="wt-editor-tool wt-editor-tool-text" (click)="setImageWidth(w)">{{ w }}%</button>
-        <button type="button" class="wt-editor-tool wt-editor-tool-text" (click)="setImageWidth(null)">{{ m.imageOriginal }}</button>
+      <span class="wu-editor-balloon-group" role="group" [attr.aria-label]="m.imageWidth">
+        <button *ngFor="let w of imageWidths" type="button" class="wu-editor-tool wu-editor-tool-text" (click)="setImageWidth(w)">{{ w }}%</button>
+        <button type="button" class="wu-editor-tool wu-editor-tool-text" (click)="setImageWidth(null)">{{ m.imageOriginal }}</button>
       </span>
-      <input class="wt-inputtext p-inputtext wt-editor-alt" type="text" [attr.placeholder]="m.imageAlt" [attr.aria-label]="m.imageAlt" [value]="selectedImage?.getAttribute('alt') || ''" (change)="setImageAlt($event)" />
-      <button type="button" class="wt-editor-tool wt-editor-tool-danger" [attr.aria-label]="m.imageRemove" [attr.title]="m.imageRemove" (click)="removeImage()">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="trash"></span>
+      <input class="wu-inputtext p-inputtext wu-editor-alt" type="text" [attr.placeholder]="m.imageAlt" [attr.aria-label]="m.imageAlt" [value]="selectedImage?.getAttribute('alt') || ''" (change)="setImageAlt($event)" />
+      <button type="button" class="wu-editor-tool wu-editor-tool-danger" [attr.aria-label]="m.imageRemove" [attr.title]="m.imageRemove" (click)="removeImage()">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="trash"></span>
       </button>
     </div>
-    <div *ngSwitchCase="'table'" class="wt-editor-table-insert">
-    <div class="wt-editor-grid" role="grid" tabindex="0" [attr.aria-label]="m.insertTable" (keydown)="gridKeydown($event)" (mouseleave)="gridMove(0, 0)">
-      <div *ngFor="let r of gridRows()" class="wt-editor-grid-row" role="row">
+    <div *ngSwitchCase="'table'" class="wu-editor-table-insert">
+    <div class="wu-editor-grid" role="grid" tabindex="0" [attr.aria-label]="m.insertTable" (keydown)="gridKeydown($event)" (mouseleave)="gridMove(0, 0)">
+      <div *ngFor="let r of gridRows()" class="wu-editor-grid-row" role="row">
         <button
           *ngFor="let c of gridCols()"
           type="button"
           role="gridcell"
           tabindex="-1"
-          class="wt-editor-grid-cell"
-          [class.wt-editor-grid-on]="r <= gridHover.rows && c <= gridHover.cols"
+          class="wu-editor-grid-cell"
+          [class.wu-editor-grid-on]="r <= gridHover.rows && c <= gridHover.cols"
           [attr.aria-label]="m.tableSize.replace('{0}', '' + r).replace('{1}', '' + c)"
           (mouseenter)="gridMove(r, c)"
           (focus)="gridMove(r, c)"
           (click)="insertTable(r, c)"
         ></button>
       </div>
-      <div class="wt-editor-grid-label" aria-live="polite">{{ gridLabel }}</div>
+      <div class="wu-editor-grid-label" aria-live="polite">{{ gridLabel }}</div>
     </div>
-    <div class="wt-editor-table-size">
-      <label class="wt-editor-table-size-field">
+    <div class="wu-editor-table-size">
+      <label class="wu-editor-table-size-field">
         <span>{{ m.tableRows }}</span>
-        <input class="wt-inputtext p-inputtext" type="number" min="1" max="100" inputmode="numeric" [value]="tableForm.rows" (input)="setTableForm('rows', $event)" (keydown.enter)="$event.preventDefault(); insertCustomTable()" />
+        <input class="wu-inputtext p-inputtext" type="number" min="1" max="100" inputmode="numeric" [value]="tableForm.rows" (input)="setTableForm('rows', $event)" (keydown.enter)="$event.preventDefault(); insertCustomTable()" />
       </label>
-      <label class="wt-editor-table-size-field">
+      <label class="wu-editor-table-size-field">
         <span>{{ m.tableCols }}</span>
-        <input class="wt-inputtext p-inputtext" type="number" min="1" max="30" inputmode="numeric" [value]="tableForm.cols" (input)="setTableForm('cols', $event)" (keydown.enter)="$event.preventDefault(); insertCustomTable()" />
+        <input class="wu-inputtext p-inputtext" type="number" min="1" max="30" inputmode="numeric" [value]="tableForm.cols" (input)="setTableForm('cols', $event)" (keydown.enter)="$event.preventDefault(); insertCustomTable()" />
       </label>
-      <label class="wt-editor-check wt-editor-table-size-header">
+      <label class="wu-editor-check wu-editor-table-size-header">
         <input type="checkbox" [checked]="tableForm.header" (change)="setTableHeader($event)" />
         <span>{{ m.headerRow }}</span>
       </label>
-      <button type="button" class="wt-btn p-button wt-btn-sm p-button-sm wt-editor-table-size-insert" (click)="insertCustomTable()">{{ m.insert }}</button>
+      <button type="button" class="wu-btn p-button wu-btn-sm p-button-sm wu-editor-table-size-insert" (click)="insertCustomTable()">{{ m.insert }}</button>
     </div>
     </div>
-    <div *ngSwitchCase="'tableBar'" class="wt-editor-balloon wt-editor-table-bar" role="toolbar" [attr.aria-label]="m.tableTools">
-      <span class="wt-editor-balloon-group" role="group">
-        <button *ngFor="let a of tableInserts" type="button" class="wt-editor-tool" [attr.aria-label]="$any(m)[a]" [attr.title]="$any(m)[a]" (click)="tableAction(a)">
-          <span class="wt-editor-icon-wrap" [wtEditorIcon]="a"></span>
+    <div *ngSwitchCase="'tableBar'" class="wu-editor-balloon wu-editor-table-bar" role="toolbar" [attr.aria-label]="m.tableTools">
+      <span class="wu-editor-balloon-group" role="group">
+        <button *ngFor="let a of tableInserts" type="button" class="wu-editor-tool" [attr.aria-label]="$any(m)[a]" [attr.title]="$any(m)[a]" (click)="tableAction(a)">
+          <span class="wu-editor-icon-wrap" [wuEditorIcon]="a"></span>
         </button>
       </span>
-      <span class="wt-editor-balloon-group" role="group">
-        <button type="button" class="wt-editor-tool" [disabled]="!canMergePicked" [attr.aria-label]="cellPick ? m.mergeCells : m.mergeRight" [attr.title]="cellPick ? m.mergeCells : m.mergeRight" (click)="tableAction('mergeCells')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="mergeRight"></span>
+      <span class="wu-editor-balloon-group" role="group">
+        <button type="button" class="wu-editor-tool" [disabled]="!canMergePicked" [attr.aria-label]="cellPick ? m.mergeCells : m.mergeRight" [attr.title]="cellPick ? m.mergeCells : m.mergeRight" (click)="tableAction('mergeCells')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="mergeRight"></span>
         </button>
-        <button type="button" class="wt-editor-tool" [disabled]="!canSplit()" [attr.aria-label]="m.splitCell" [attr.title]="m.splitCell" (click)="tableAction('splitCell')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="splitCell"></span>
+        <button type="button" class="wu-editor-tool" [disabled]="!canSplit()" [attr.aria-label]="m.splitCell" [attr.title]="m.splitCell" (click)="tableAction('splitCell')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="splitCell"></span>
         </button>
-        <button type="button" class="wt-editor-tool" [class.wt-editor-tool-on]="inHeaderRow" [attr.aria-pressed]="inHeaderRow" [attr.aria-label]="m.headerRow" [attr.title]="m.headerRow" (click)="tableAction('headerRow')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="headerRow"></span>
+        <button type="button" class="wu-editor-tool" [class.wu-editor-tool-on]="inHeaderRow" [attr.aria-pressed]="inHeaderRow" [attr.aria-label]="m.headerRow" [attr.title]="m.headerRow" (click)="tableAction('headerRow')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="headerRow"></span>
         </button>
       </span>
-      <span class="wt-editor-balloon-group" role="group">
-        <button type="button" class="wt-editor-tool" [attr.aria-label]="m.deleteRow" [attr.title]="m.deleteRow" (click)="tableAction('deleteRow')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="deleteRow"></span>
+      <span class="wu-editor-balloon-group" role="group">
+        <button type="button" class="wu-editor-tool" [attr.aria-label]="m.deleteRow" [attr.title]="m.deleteRow" (click)="tableAction('deleteRow')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="deleteRow"></span>
         </button>
-        <button type="button" class="wt-editor-tool" [attr.aria-label]="m.deleteCol" [attr.title]="m.deleteCol" (click)="tableAction('deleteCol')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="deleteCol"></span>
+        <button type="button" class="wu-editor-tool" [attr.aria-label]="m.deleteCol" [attr.title]="m.deleteCol" (click)="tableAction('deleteCol')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="deleteCol"></span>
         </button>
-        <button type="button" class="wt-editor-tool wt-editor-tool-danger" [attr.aria-label]="m.deleteTable" [attr.title]="m.deleteTable" (click)="tableAction('deleteTable')">
-          <span class="wt-editor-icon-wrap" wtEditorIcon="trash"></span>
+        <button type="button" class="wu-editor-tool wu-editor-tool-danger" [attr.aria-label]="m.deleteTable" [attr.title]="m.deleteTable" (click)="tableAction('deleteTable')">
+          <span class="wu-editor-icon-wrap" wuEditorIcon="trash"></span>
         </button>
       </span>
     </div>
-    <div *ngSwitchCase="'tableMenu'" class="wt-editor-menu wt-editor-menu-icons" role="menu" [attr.aria-label]="m.table">
-      <button *ngFor="let a of tableInserts" type="button" role="menuitem" class="wt-editor-menu-item" (click)="tableAction(a)">
-        <span class="wt-editor-icon-wrap" [wtEditorIcon]="a"></span><span>{{ $any(m)[a] }}</span>
+    <div *ngSwitchCase="'tableMenu'" class="wu-editor-menu wu-editor-menu-icons" role="menu" [attr.aria-label]="m.table">
+      <button *ngFor="let a of tableInserts" type="button" role="menuitem" class="wu-editor-menu-item" (click)="tableAction(a)">
+        <span class="wu-editor-icon-wrap" [wuEditorIcon]="a"></span><span>{{ $any(m)[a] }}</span>
       </button>
-      <div class="wt-editor-menu-sep" role="separator"></div>
-      <button type="button" role="menuitemcheckbox" class="wt-editor-menu-item" [attr.aria-checked]="inHeaderRow" (click)="tableAction('headerRow')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="headerRow"></span><span>{{ m.headerRow }}</span>
+      <div class="wu-editor-menu-sep" role="separator"></div>
+      <button type="button" role="menuitemcheckbox" class="wu-editor-menu-item" [attr.aria-checked]="inHeaderRow" (click)="tableAction('headerRow')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="headerRow"></span><span>{{ m.headerRow }}</span>
       </button>
-      <button *ngIf="cellPick" type="button" role="menuitem" class="wt-editor-menu-item" [disabled]="!canMergePicked" (click)="tableAction('mergeCells')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="mergeRight"></span><span>{{ m.mergeCells }}</span>
+      <button *ngIf="cellPick" type="button" role="menuitem" class="wu-editor-menu-item" [disabled]="!canMergePicked" (click)="tableAction('mergeCells')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="mergeRight"></span><span>{{ m.mergeCells }}</span>
       </button>
-      <button type="button" role="menuitem" class="wt-editor-menu-item" [disabled]="!canMerge('right')" (click)="tableAction('mergeRight')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="mergeRight"></span><span>{{ m.mergeRight }}</span>
+      <button type="button" role="menuitem" class="wu-editor-menu-item" [disabled]="!canMerge('right')" (click)="tableAction('mergeRight')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="mergeRight"></span><span>{{ m.mergeRight }}</span>
       </button>
-      <button type="button" role="menuitem" class="wt-editor-menu-item" [disabled]="!canMerge('down')" (click)="tableAction('mergeDown')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="mergeDown"></span><span>{{ m.mergeDown }}</span>
+      <button type="button" role="menuitem" class="wu-editor-menu-item" [disabled]="!canMerge('down')" (click)="tableAction('mergeDown')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="mergeDown"></span><span>{{ m.mergeDown }}</span>
       </button>
-      <button type="button" role="menuitem" class="wt-editor-menu-item" [disabled]="!canSplit()" (click)="tableAction('splitCell')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="splitCell"></span><span>{{ m.splitCell }}</span>
+      <button type="button" role="menuitem" class="wu-editor-menu-item" [disabled]="!canSplit()" (click)="tableAction('splitCell')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="splitCell"></span><span>{{ m.splitCell }}</span>
       </button>
-      <div class="wt-editor-menu-sep" role="separator"></div>
-      <button type="button" role="menuitem" class="wt-editor-menu-item" (click)="tableAction('deleteRow')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="deleteRow"></span><span>{{ m.deleteRow }}</span>
+      <div class="wu-editor-menu-sep" role="separator"></div>
+      <button type="button" role="menuitem" class="wu-editor-menu-item" (click)="tableAction('deleteRow')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="deleteRow"></span><span>{{ m.deleteRow }}</span>
       </button>
-      <button type="button" role="menuitem" class="wt-editor-menu-item" (click)="tableAction('deleteCol')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="deleteCol"></span><span>{{ m.deleteCol }}</span>
+      <button type="button" role="menuitem" class="wu-editor-menu-item" (click)="tableAction('deleteCol')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="deleteCol"></span><span>{{ m.deleteCol }}</span>
       </button>
-      <button type="button" role="menuitem" class="wt-editor-menu-item wt-editor-menu-danger" (click)="tableAction('deleteTable')">
-        <span class="wt-editor-icon-wrap" wtEditorIcon="trash"></span><span>{{ m.deleteTable }}</span>
+      <button type="button" role="menuitem" class="wu-editor-menu-item wu-editor-menu-danger" (click)="tableAction('deleteTable')">
+        <span class="wu-editor-icon-wrap" wuEditorIcon="trash"></span><span>{{ m.deleteTable }}</span>
       </button>
     </div>
   </div>
 </div>
 
 <ng-template #palette let-kind="kind" let-colors="colors">
-  <div class="wt-editor-palette" role="menu" [attr.aria-label]="kind === 'color' ? m.color : m.highlight">
-    <button type="button" role="menuitem" class="wt-editor-menu-item wt-editor-palette-none" (click)="pickColor(kind, null)">
-      <span class="wt-editor-swatch wt-editor-swatch-none" aria-hidden="true"></span>{{ m.removeColor }}
+  <div class="wu-editor-palette" role="menu" [attr.aria-label]="kind === 'color' ? m.color : m.highlight">
+    <button type="button" role="menuitem" class="wu-editor-menu-item wu-editor-palette-none" (click)="pickColor(kind, null)">
+      <span class="wu-editor-swatch wu-editor-swatch-none" aria-hidden="true"></span>{{ m.removeColor }}
     </button>
-    <div class="wt-editor-swatches">
-      <button *ngFor="let c of colors" type="button" role="menuitem" class="wt-editor-swatch" [style.background]="c" [attr.aria-label]="c" [attr.title]="c" (click)="pickColor(kind, c)"></button>
+    <div class="wu-editor-swatches">
+      <button *ngFor="let c of colors" type="button" role="menuitem" class="wu-editor-swatch" [style.background]="c" [attr.aria-label]="c" [attr.title]="c" (click)="pickColor(kind, c)"></button>
     </div>
-    <label class="wt-editor-custom-color">
+    <label class="wu-editor-custom-color">
       <input type="color" (change)="customColor(kind, $event)" />
       <span>{{ m.customColor }}</span>
     </label>

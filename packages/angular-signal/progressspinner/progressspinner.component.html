@@ -1,5 +1,5 @@
 <div
-  class="wt-progress-spinner p-progressspinner p-component"
+  class="wu-progress-spinner p-progressspinner p-component"
   [class]="styleClass() || ''"
   [style]="rootStyle()"
   [style.width]="labelled() ? ringSize() : null"
@@ -8,9 +8,9 @@
   aria-busy="true"
   [attr.aria-label]="ariaText()"
 >
-  <svg class="wt-progress-spinner-svg p-progressspinner-spin" viewBox="25 25 50 50" [style.animation-duration]="animationDuration()">
+  <svg class="wu-progress-spinner-svg p-progressspinner-spin" viewBox="25 25 50 50" [style.animation-duration]="animationDuration()">
     <circle
-      class="wt-progress-spinner-circle p-progressspinner-circle"
+      class="wu-progress-spinner-circle p-progressspinner-circle"
       cx="50"
       cy="50"
       r="20"
@@ -21,7 +21,7 @@
   </svg>
 </div>
 @if (labelled()) {
-  <div class="wt-progress-spinner-label" aria-hidden="true">
+  <div class="wu-progress-spinner-label" aria-hidden="true">
     @if (labelTemplate(); as tpl) {
       <ng-container *ngTemplateOutlet="tpl"></ng-container>
     } @else {

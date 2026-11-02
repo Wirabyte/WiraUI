@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtFooter, WtHeader } from 'wiratheme/card';
-import { WtTemplate } from 'wiratheme/config';
-import { WtCarousel } from './carousel.component';
+import { WuFooter, WuHeader } from 'wiraui/card';
+import { WuTemplate } from 'wiraui/config';
+import { WuCarousel } from './carousel.component';
 
-/** For NgModule apps. Standalone apps can import `WtCarousel` directly. `<wt-header>` / `<wt-footer>` and `wtTemplate` come with it. */
+/** For NgModule apps. Standalone apps can import `WuCarousel` directly. `<wu-header>` / `<wu-footer>` and `wuTemplate` come with it. */
 @NgModule({
-  imports: [WtCarousel, WtHeader, WtFooter, WtTemplate],
-  exports: [WtCarousel, WtHeader, WtFooter, WtTemplate],
+  imports: [WuCarousel, WuHeader, WuFooter, WuTemplate],
+  exports: [WuCarousel, WuHeader, WuFooter, WuTemplate],
 })
-export class WtCarouselModule {}
+export class WuCarouselModule {}

@@ -2,7 +2,7 @@
   <dialog
     #mask
     *ngIf="visible"
-    class="wt-galleria-mask p-galleria-mask p-overlay-mask"
+    class="wu-galleria-mask p-galleria-mask p-overlay-mask"
     [ngClass]="maskClass || ''"
     (cancel)="cancel($event)"
     (click)="maskClick($event)"
@@ -16,28 +16,28 @@
 
 <ng-template #gallery let-full="full">
   <div
-    class="wt-galleria p-galleria p-component"
-    [ngClass]="(containerClass || '') + ' ' + (styleClass || '') + ' wt-galleria-thumbnails-' + thumbnailsPosition + ' wt-galleria-indicators-' + indicatorsPosition"
+    class="wu-galleria p-galleria p-component"
+    [ngClass]="(containerClass || '') + ' ' + (styleClass || '') + ' wu-galleria-thumbnails-' + thumbnailsPosition + ' wu-galleria-indicators-' + indicatorsPosition"
     [ngStyle]="rootStyle"
-    [class.wt-galleria-fullscreen]="full"
+    [class.wu-galleria-fullscreen]="full"
     [class.p-galleria-fullscreen]="full"
-    [class.wt-galleria-nav-hover]="showItemNavigatorsOnHover"
-    [class.wt-galleria-vertical]="vertical"
+    [class.wu-galleria-nav-hover]="showItemNavigatorsOnHover"
+    [class.wu-galleria-vertical]="vertical"
     (mouseenter)="pause(true)"
     (mouseleave)="pause(false)"
     (focusin)="pause(true)"
     (focusout)="pause(false)"
   >
-    <button *ngIf="full" type="button" class="wt-galleria-close p-galleria-close-button" [attr.aria-label]="t.close" (click)="close($event)">
+    <button *ngIf="full" type="button" class="wu-galleria-close p-galleria-close-button" [attr.aria-label]="t.close" (click)="close($event)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
     </button>
-    <div *ngIf="headerTemplate" class="wt-galleria-header p-galleria-header">
+    <div *ngIf="headerTemplate" class="wu-galleria-header p-galleria-header">
       <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
     </div>
-    <div class="wt-galleria-content p-galleria-content">
-      <div class="wt-galleria-items-container p-galleria-items-container">
+    <div class="wu-galleria-content p-galleria-content">
+      <div class="wu-galleria-items-container p-galleria-items-container">
         <div
-          class="wt-galleria-items p-galleria-items"
+          class="wu-galleria-items p-galleria-items"
           role="region"
           aria-roledescription="carousel"
           aria-live="polite"
@@ -49,7 +49,7 @@
           <button
             *ngIf="showItemNavigators"
             type="button"
-            class="wt-galleria-nav wt-galleria-item-prev p-galleria-item-nav p-galleria-item-prev p-galleria-prev-button"
+            class="wu-galleria-nav wu-galleria-item-prev p-galleria-item-nav p-galleria-item-prev p-galleria-prev-button"
             [disabled]="!canPrev"
             [attr.aria-label]="t.previousImage"
             (click)="prev($event)"
@@ -58,7 +58,7 @@
           </button>
           <div
             *ngFor="let entry of activeItems; trackBy: trackActive"
-            class="wt-galleria-item p-galleria-item"
+            class="wu-galleria-item p-galleria-item"
             role="group"
             aria-roledescription="slide"
             [attr.aria-label]="imageLabel(entry.index)"
@@ -68,14 +68,14 @@
           <button
             *ngIf="showItemNavigators"
             type="button"
-            class="wt-galleria-nav wt-galleria-item-next p-galleria-item-nav p-galleria-item-next p-galleria-next-button"
+            class="wu-galleria-nav wu-galleria-item-next p-galleria-item-nav p-galleria-item-next p-galleria-next-button"
             [disabled]="!canNext"
             [attr.aria-label]="t.nextImage"
             (click)="next($event)"
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5-4.5 4.5"></path></svg>
           </button>
-          <div *ngIf="captionTemplate && activeItems.length" class="wt-galleria-caption p-galleria-caption">
+          <div *ngIf="captionTemplate && activeItems.length" class="wu-galleria-caption p-galleria-caption">
             <ng-container *ngTemplateOutlet="captionTemplate; context: { $implicit: activeItems[0].item }"></ng-container>
           </div>
           <ng-container *ngIf="showIndicators && showIndicatorsOnItem">
@@ -86,12 +86,12 @@
           <ng-container *ngTemplateOutlet="dots; context: { onItem: false }"></ng-container>
         </ng-container>
       </div>
-      <div *ngIf="showThumbnails && value.length" class="wt-galleria-thumbnails p-galleria-thumbnails">
-        <div class="wt-galleria-thumbnails-content p-galleria-thumbnails-content">
+      <div *ngIf="showThumbnails && value.length" class="wu-galleria-thumbnails p-galleria-thumbnails">
+        <div class="wu-galleria-thumbnails-content p-galleria-thumbnails-content">
           <button
             *ngIf="showThumbnailNavigators"
             type="button"
-            class="wt-galleria-thumb-nav p-galleria-thumbnail-prev p-galleria-thumbnail-prev-button"
+            class="wu-galleria-thumb-nav p-galleria-thumbnail-prev p-galleria-thumbnail-prev-button"
             [disabled]="thumbPrevDisabled"
             [attr.aria-label]="t.previousImage"
             (click)="prev($event)"
@@ -100,22 +100,22 @@
               <path [attr.d]="vertical ? 'm3.5 9.5 4.5-4.5 4.5 4.5' : 'm9.5 3.5-4.5 4.5 4.5 4.5'"></path>
             </svg>
           </button>
-          <div class="wt-galleria-thumbnails-viewport p-galleria-thumbnails-viewport" [style.height]="vertical ? verticalThumbnailViewPortHeight : null">
+          <div class="wu-galleria-thumbnails-viewport p-galleria-thumbnails-viewport" [style.height]="vertical ? verticalThumbnailViewPortHeight : null">
             <div
-              class="wt-galleria-thumbnails-track p-galleria-thumbnail-items"
+              class="wu-galleria-thumbnails-track p-galleria-thumbnail-items"
               [style.transform]="vertical ? 'translateY(' + trackShift + ')' : 'translateX(' + trackShift + ')'"
             >
               <div
                 *ngFor="let i of indexes()"
-                class="wt-galleria-thumbnail p-galleria-thumbnail-item"
+                class="wu-galleria-thumbnail p-galleria-thumbnail-item"
                 [style.flex-basis]="thumbBasis"
-                [class.wt-galleria-thumbnail-active]="i === activeIndex"
+                [class.wu-galleria-thumbnail-active]="i === activeIndex"
                 [class.p-galleria-thumbnail-item-current]="i === activeIndex"
                 [class.p-galleria-thumbnail-item-active]="i >= first && i < first + numVisibleNow"
               >
                 <button
                   type="button"
-                  class="wt-galleria-thumbnail-button p-galleria-thumbnail"
+                  class="wu-galleria-thumbnail-button p-galleria-thumbnail"
                   [attr.aria-label]="imageLabel(i)"
                   [attr.aria-current]="i === activeIndex || null"
                   [attr.tabindex]="i >= first && i < first + numVisibleNow ? 0 : -1"
@@ -129,7 +129,7 @@
           <button
             *ngIf="showThumbnailNavigators"
             type="button"
-            class="wt-galleria-thumb-nav p-galleria-thumbnail-next p-galleria-thumbnail-next-button"
+            class="wu-galleria-thumb-nav p-galleria-thumbnail-next p-galleria-thumbnail-next-button"
             [disabled]="thumbNextDisabled"
             [attr.aria-label]="t.nextImage"
             (click)="next($event)"
@@ -141,25 +141,25 @@
         </div>
       </div>
     </div>
-    <div *ngIf="footerTemplate" class="wt-galleria-footer p-galleria-footer">
+    <div *ngIf="footerTemplate" class="wu-galleria-footer p-galleria-footer">
       <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
     </div>
   </div>
 </ng-template>
 
 <ng-template #dots let-onItem="onItem">
-  <ul class="wt-galleria-indicators p-galleria-indicator-list p-galleria-indicators" [class.wt-galleria-indicators-onitem]="onItem" [class.p-galleria-indicator-onitem]="onItem">
+  <ul class="wu-galleria-indicators p-galleria-indicator-list p-galleria-indicators" [class.wu-galleria-indicators-onitem]="onItem" [class.p-galleria-indicator-onitem]="onItem">
     <li
       *ngFor="let i of indexes()"
-      class="wt-galleria-indicator p-galleria-indicator"
-      [class.wt-galleria-indicator-active]="i === activeIndex"
+      class="wu-galleria-indicator p-galleria-indicator"
+      [class.wu-galleria-indicator-active]="i === activeIndex"
       [class.p-galleria-indicator-active]="i === activeIndex"
       [class.p-highlight]="i === activeIndex"
     >
       <button
         type="button"
-        class="wt-galleria-indicator-button p-galleria-indicator-button"
-        [class.wt-galleria-indicator-custom]="!!indicatorTemplate"
+        class="wu-galleria-indicator-button p-galleria-indicator-button"
+        [class.wu-galleria-indicator-custom]="!!indicatorTemplate"
         [attr.aria-label]="imageLabel(i)"
         [attr.aria-current]="i === activeIndex || null"
         (click)="select(i, $event)"

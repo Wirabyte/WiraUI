@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtMeterGroup } from './metergroup.component';
+import { WuMeterGroup } from './metergroup.component';
 
-/** For NgModule apps. Standalone apps can import `WtMeterGroup` directly. */
+/** For NgModule apps. Standalone apps can import `WuMeterGroup` directly. */
 @NgModule({
-  imports: [WtMeterGroup],
-  exports: [WtMeterGroup],
+  imports: [WuMeterGroup],
+  exports: [WuMeterGroup],
 })
-export class WtMeterGroupModule {}
+export class WuMeterGroupModule {}

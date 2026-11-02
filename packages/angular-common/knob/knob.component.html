@@ -1,8 +1,8 @@
 <div
-  class="wt-knob p-knob p-component"
-  [class.wt-knob-disabled]="disabled"
+  class="wu-knob p-knob p-component"
+  [class.wu-knob-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-knob-readonly]="readonly"
+  [class.wu-knob-readonly]="readonly"
   [class]="styleClass || ''"
   [style]="rootStyle"
 >
@@ -28,8 +28,8 @@
     (keydown)="keydown($event)"
     (blur)="blurred()"
   >
-    <path class="wt-knob-range p-knob-range" [attr.d]="paths.range" [attr.stroke-width]="strokeWidth" [style.stroke]="rangeColor || null"></path>
-    <path class="wt-knob-value p-knob-value" [attr.d]="paths.value" [attr.stroke-width]="strokeWidth" [style.stroke]="valueColor || null"></path>
-    <text *ngIf="showValue" x="50" y="57" text-anchor="middle" class="wt-knob-text p-knob-text" [style.fill]="textColor || null">{{ text }}</text>
+    <path class="wu-knob-range p-knob-range" [attr.d]="paths.range" [attr.stroke-width]="strokeWidth" [style.stroke]="rangeColor || null"></path>
+    <path class="wu-knob-value p-knob-value" [attr.d]="paths.value" [attr.stroke-width]="strokeWidth" [style.stroke]="valueColor || null"></path>
+    <text *ngIf="showValue" x="50" y="57" text-anchor="middle" class="wu-knob-text p-knob-text" [style.fill]="textColor || null">{{ text }}</text>
   </svg>
 </div>

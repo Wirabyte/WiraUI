@@ -21,12 +21,12 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   menuFirst,
   menuFocusable,
@@ -38,8 +38,8 @@ import {
   menuStep,
   menuTypeahead,
   menuVisible,
-  WtLocale,
-} from 'wiratheme/core';
+  WuLocale,
+} from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const depth = (key: string) => (key ? key.split('_').length : 0);
@@ -47,26 +47,26 @@ const parentOf = (key: string) => key.split('_').slice(0, -1).join('_');
 const indexOf = (key: string) => Number(key.split('_').pop());
 
 /** Context of the `item` template: `<ng-template #item let-item let-root="root" let-hasSubmenu="hasSubmenu">`. */
-export interface WtMenubarItemContext {
-  $implicit: WtMenuItem;
+export interface WuMenubarItemContext {
+  $implicit: WuMenuItem;
   root: boolean;
   hasSubmenu: boolean;
 }
 
 /**
- * What wt-menubar does, shared by the v1 and v2/v3 templates. A bar with optional start / end slots and a menu model:
+ * What wu-menubar does, shared by the v1 and v2/v3 templates. A bar with optional start / end slots and a menu model:
  * root items in a row, submenus dropping under them; below `breakpoint` a menu button shows the items as a list.
  * The keyboard follows the ARIA menubar pattern with a roving tab stop: one Tab reaches the bar, arrows move inside.
  */
 @Directive()
-export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
+export abstract class ɵWuMenubarBase implements AfterContentInit, OnDestroy {
   /** The items. A bar with only start / end slots (no model) is fine too. */
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v || [];
     this.openKeys = this.openKeys.filter((k) => menuHasSubmenu(menuItemAt(this._model, k)));
     if (!menuFocusable(menuItemAt(this._model, this.tabKey))) this.tabKey = '';
   }
-  get model(): WtMenuItem[] {
+  get model(): WuMenuItem[] {
     return this._model;
   }
   @Input() styleClass?: string;
@@ -81,7 +81,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   }
   /** Open a root submenu on hover, without a click first. Default: false in v1, true in v2 / v3 (as each era did). */
   @Input() set autoDisplay(v: unknown) {
-    this._autoDisplay = v === undefined || v === null ? WT_VERSION_INFO.major > 1 : ɵtoBool(v);
+    this._autoDisplay = v === undefined || v === null ? WU_VERSION_INFO.major > 1 : ɵtoBool(v);
   }
   get autoDisplay(): boolean {
     return this._autoDisplay;
@@ -104,14 +104,14 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('start', { descendants: false }) protected startRef?: unknown;
   @ContentChild('end', { descendants: false }) protected endRef?: unknown;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('menuicon', { descendants: false }) protected menuIconRef?: unknown;
   @ContentChild('submenuicon', { descendants: false }) protected submenuIconRef?: unknown;
 
-  readonly baseId = ɵuniqueId('wt-menubar');
+  readonly baseId = ɵuniqueId('wu-menubar');
   readonly trackIndex = (i: number): number => i;
   /** Keys of the open submenus' items, outermost first (`["2", "2_0"]`). */
   openKeys: string[] = [];
@@ -125,11 +125,11 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
   protected readonly zone = inject(NgZone);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
-  private _model: WtMenuItem[] = [];
+  private _model: WuMenuItem[] = [];
   private _breakpoint = '960px';
-  private _autoDisplay = WT_VERSION_INFO.major > 1;
+  private _autoDisplay = WU_VERSION_INFO.major > 1;
   private _autoHide = false;
   /** Root item that holds the bar's single tab stop. */
   private tabKey = '';
@@ -153,7 +153,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterContentInit(): void {
@@ -171,13 +171,13 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get rootId(): string {
     return (this.id || this.baseId) + '-root';
   }
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this._model);
   }
   get startTemplate(): TemplateRef<unknown> | null {
@@ -186,8 +186,8 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   get endTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.endRef) || ɵfindTemplate(this.templates, 'end');
   }
-  get itemTemplate(): TemplateRef<WtMenubarItemContext> | null {
-    return (asTemplate(this.itemRef) || ɵfindTemplate(this.templates, 'item')) as TemplateRef<WtMenubarItemContext> | null;
+  get itemTemplate(): TemplateRef<WuMenubarItemContext> | null {
+    return (asTemplate(this.itemRef) || ɵfindTemplate(this.templates, 'item')) as TemplateRef<WuMenubarItemContext> | null;
   }
   get menuIconTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.menuIconRef) || ɵfindTemplate(this.templates, 'menuicon');
@@ -200,13 +200,13 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
     return !this.mobile || this.mobileActive;
   }
 
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return menuVisible(items);
   }
   keyOf(parent: string, index: number): string {
     return menuKey(parent, index);
   }
-  hasSubmenu(item: WtMenuItem): boolean {
+  hasSubmenu(item: WuMenuItem): boolean {
     return menuHasSubmenu(item);
   }
   isOpen(key: string): boolean {
@@ -219,20 +219,20 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   tabindexOf(key: string): number {
     return key === this.currentTabKey() ? 0 : -1;
   }
-  itemContext(item: WtMenuItem, key: string): WtMenubarItemContext {
+  itemContext(item: WuMenuItem, key: string): WuMenubarItemContext {
     return { $implicit: item, root: depth(key) === 1, hasSubmenu: menuHasSubmenu(item) };
   }
   /** Leaf items with neither `url` nor `routerLink` get no href (they run `command`). */
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
 
   // ---------- pointer ----------
 
-  itemClick(event: MouseEvent, item: WtMenuItem, key: string): void {
+  itemClick(event: MouseEvent, item: WuMenuItem, key: string): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -259,7 +259,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
     this.activate(event, item, key);
   }
 
-  itemEnter(item: WtMenuItem, key: string): void {
+  itemEnter(item: WuMenuItem, key: string): void {
     if (this.hideTimer) clearTimeout(this.hideTimer);
     if (this.mobile) return;
     const level = depth(key);
@@ -301,7 +301,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   // ---------- keyboard ----------
 
   keydown(event: KeyboardEvent): void {
-    const key = (event.target as HTMLElement | null)?.closest?.('[data-wt-key]')?.getAttribute('data-wt-key');
+    const key = (event.target as HTMLElement | null)?.closest?.('[data-wu-key]')?.getAttribute('data-wu-key');
     if (key === null || key === undefined) return;
     const item = menuItemAt(this._model, key);
     if (!item) return;
@@ -377,7 +377,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   }
 
   focusIn(event: FocusEvent): void {
-    const key = (event.target as HTMLElement | null)?.closest?.('[data-wt-key]')?.getAttribute('data-wt-key');
+    const key = (event.target as HTMLElement | null)?.closest?.('[data-wu-key]')?.getAttribute('data-wu-key');
     if (key && depth(key) === 1) this.tabKey = key;
     if (!this.focused) {
       this.focused = true;
@@ -404,7 +404,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
 
   // ---------- internals ----------
 
-  private activate(event: Event, item: WtMenuItem, key: string): void {
+  private activate(event: Event, item: WuMenuItem, key: string): void {
     if (item.disabled) return;
     const keyboard = event instanceof KeyboardEvent;
     // Keyboard activation of a link follows it like a click (which runs the command); plain items run it here.
@@ -423,7 +423,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
     } else this.focusItem(this.tabKey);
   }
 
-  private siblings(key: string): WtMenuItem[] {
+  private siblings(key: string): WuMenuItem[] {
     const parent = parentOf(key);
     return parent ? menuVisible(menuItemAt(this._model, parent)?.items) : this.items;
   }
@@ -507,7 +507,7 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
   }
 
   private focusMenuButton(): void {
-    (this.host.querySelector('.wt-menubar-button') as HTMLElement | null)?.focus();
+    (this.host.querySelector('.wu-menubar-button') as HTMLElement | null)?.focus();
   }
 
   /** Submenus that would run off the right edge open to the left instead. */
@@ -516,10 +516,10 @@ export abstract class ɵWtMenubarBase implements AfterContentInit, OnDestroy {
     setTimeout(() => {
       const win = this.doc.defaultView;
       if (!win || this.mobile) return;
-      this.host.querySelectorAll<HTMLElement>('.wt-menubar-submenu').forEach((ul) => {
-        if (ul.classList.contains('wt-menubar-submenu-flip')) return;
+      this.host.querySelectorAll<HTMLElement>('.wu-menubar-submenu').forEach((ul) => {
+        if (ul.classList.contains('wu-menubar-submenu-flip')) return;
         const box = ul.getBoundingClientRect();
-        if (box.right > win.innerWidth - 4 && box.width < win.innerWidth) ul.classList.add('wt-menubar-submenu-flip');
+        if (box.right > win.innerWidth - 4 && box.width < win.innerWidth) ul.classList.add('wu-menubar-submenu-flip');
       });
     });
   }

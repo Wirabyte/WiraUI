@@ -1,5 +1,5 @@
 /** Where the label goes: under the ring (default) or beside it. */
-export type WtProgressSpinnerLabelPosition = 'bottom' | 'right';
+export type WuProgressSpinnerLabelPosition = 'bottom' | 'right';
 
 /** `[multicolor]`: unset = the preset's choice, a bare attribute = true, `"false"` = false. */
 export function ɵspinnerMulticolor(v: unknown): boolean | undefined {
@@ -16,12 +16,12 @@ export function ɵspinnerColors(multicolor: boolean | undefined, colors: readonl
   const list = own.length
     ? own
     : multicolor === true
-      ? ['var(--wt-primary-color)', 'var(--wt-info-color)', 'var(--wt-success-color)', 'var(--wt-warn-color)']
+      ? ['var(--wu-primary-color)', 'var(--wu-info-color)', 'var(--wu-success-color)', 'var(--wu-warn-color)']
       : multicolor === false
-        ? ['var(--wt-primary-color)']
+        ? ['var(--wu-primary-color)']
         : null;
   if (!list) return null;
   const out: Record<string, string> = {};
-  for (let i = 0; i < 4; i++) out[`--wt-spinner-color-${i + 1}`] = list[i % list.length];
+  for (let i = 0; i < 4; i++) out[`--wu-spinner-color-${i + 1}`] = list[i % list.length];
   return out;
 }

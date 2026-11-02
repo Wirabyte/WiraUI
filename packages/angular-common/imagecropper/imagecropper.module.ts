@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtImageCropper } from './imagecropper.component';
+import { WuImageCropper } from './imagecropper.component';
 
-/** For NgModule apps. Standalone apps can import `WtImageCropper` directly. */
+/** For NgModule apps. Standalone apps can import `WuImageCropper` directly. */
 @NgModule({
-  imports: [WtImageCropper],
-  exports: [WtImageCropper],
+  imports: [WuImageCropper],
+  exports: [WuImageCropper],
 })
-export class WtImageCropperModule {}
+export class WuImageCropperModule {}

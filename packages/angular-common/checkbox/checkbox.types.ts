@@ -1,4 +1,4 @@
-export interface WtCheckboxChangeEvent {
+export interface WuCheckboxChangeEvent {
   checked: boolean;
   originalEvent: Event;
 }

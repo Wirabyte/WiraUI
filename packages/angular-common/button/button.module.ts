@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtButton } from './button.component';
-import { WtButtonDirective } from './button.directive';
+import { WuButton } from './button.component';
+import { WuButtonDirective } from './button.directive';
 
-/** For NgModule apps: `<wt-button>` and `<button wtButton>` (also read from `pButton`). */
+/** For NgModule apps: `<wu-button>` and `<button wuButton>` (also read from `pButton`). */
 @NgModule({
-  imports: [WtButton, WtButtonDirective],
-  exports: [WtButton, WtButtonDirective],
+  imports: [WuButton, WuButtonDirective],
+  exports: [WuButton, WuButtonDirective],
 })
-export class WtButtonModule {}
+export class WuButtonModule {}

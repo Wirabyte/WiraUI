@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtColorPicker } from './colorpicker.component';
+import { WuColorPicker } from './colorpicker.component';
 
-/** For NgModule apps. Standalone apps can import `WtColorPicker` directly. */
+/** For NgModule apps. Standalone apps can import `WuColorPicker` directly. */
 @NgModule({
-  imports: [WtColorPicker],
-  exports: [WtColorPicker],
+  imports: [WuColorPicker],
+  exports: [WuColorPicker],
 })
-export class WtColorPickerModule {}
+export class WuColorPickerModule {}

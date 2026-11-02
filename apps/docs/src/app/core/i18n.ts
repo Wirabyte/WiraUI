@@ -7,7 +7,7 @@ export type Lang = 'th' | 'en';
 /** Text shown to readers: the same in both languages, or one string per language. */
 export type Text = string | { th: string; en: string };
 
-export const LANG_STORE = 'wiratheme-docs-lang';
+export const LANG_STORE = 'wiraui-docs-lang';
 
 /**
  * Runtime language switch for the docs (one build, no $localize). UI strings live in ui-text.ts,

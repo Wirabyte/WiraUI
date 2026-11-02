@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtTabMenu } from './tabmenu.component';
-import { WtTab, WtTabList, WtTabPanel, WtTabPanels, WtTabs } from './tabs.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuTabMenu } from './tabmenu.component';
+import { WuTab, WuTabList, WuTabPanel, WuTabPanels, WuTabs } from './tabs.component';
 
-const ALL = [WtTabs, WtTabPanel, WtTabList, WtTab, WtTabPanels, WtTabMenu, WtTemplate];
+const ALL = [WuTabs, WuTabPanel, WuTabList, WuTab, WuTabPanels, WuTabMenu, WuTemplate];
 
-/** For NgModule apps. Standalone apps can import `WtTabs`, `WtTabPanel` (and `WtTabList`, `WtTab`, `WtTabPanels`) directly. */
+/** For NgModule apps. Standalone apps can import `WuTabs`, `WuTabPanel` (and `WuTabList`, `WuTab`, `WuTabPanels`) directly. */
 @NgModule({
   imports: ALL,
   exports: ALL,
 })
-export class WtTabsModule {}
+export class WuTabsModule {}

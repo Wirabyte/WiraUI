@@ -12,21 +12,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
-import { WtToggleSwitchChangeEvent } from './toggleswitch.types';
+import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuSize } from 'wiraui/config';
+import { WuToggleSwitchChangeEvent } from './toggleswitch.types';
 
 /** On/off switch for ngModel and reactive forms (also known as InputSwitch), with an optional `label`. */
 @Component({
-  selector: 'wt-toggleswitch, wt-toggleSwitch, wt-inputswitch, wt-inputSwitch, wt-toggle-switch',
+  selector: 'wu-toggleswitch, wu-toggleSwitch, wu-inputswitch, wu-inputSwitch, wu-toggle-switch',
   standalone: true,
   imports: [NgIf],
   templateUrl: './toggleswitch.component.html',
   styleUrls: ['./toggleswitch.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtToggleSwitch), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuToggleSwitch), multi: true }],
 })
-export class WtToggleSwitch implements ControlValueAccessor {
+export class WuToggleSwitch implements ControlValueAccessor {
   @Input() label?: string;
   @Input() inputId?: string;
   @Input() name?: string;
@@ -49,11 +49,11 @@ export class WtToggleSwitch implements ControlValueAccessor {
   get readonly(): boolean { return this._readonly; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
-  @Input() size?: WtSize;
-  @HostBinding('class.wt-toggleswitch-sm') @HostBinding('class.p-toggleswitch-sm') get sizeSm(): boolean {
+  @Input() size?: WuSize;
+  @HostBinding('class.wu-toggleswitch-sm') @HostBinding('class.p-toggleswitch-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
-  @HostBinding('class.wt-toggleswitch-lg') @HostBinding('class.p-toggleswitch-lg') get sizeLg(): boolean {
+  @HostBinding('class.wu-toggleswitch-lg') @HostBinding('class.p-toggleswitch-lg') get sizeLg(): boolean {
     return this.sizeKey === 'lg';
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -61,20 +61,20 @@ export class WtToggleSwitch implements ControlValueAccessor {
   }
   get invalid(): boolean { return this._invalid; }
 
-  @Output() readonly onChange = new EventEmitter<WtToggleSwitchChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuToggleSwitchChangeEvent>();
 
   private _disabled = false;
   private _readonly = false;
   private _invalid = false;
   private model: unknown = false;
   private formDisabled = false;
-  private readonly autoId = ɵuniqueId('wt-toggleswitch');
+  private readonly autoId = ɵuniqueId('wu-toggleswitch');
   private readonly cdr = inject(ChangeDetectorRef);
   private onModelChange: (value: unknown) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get id(): string {

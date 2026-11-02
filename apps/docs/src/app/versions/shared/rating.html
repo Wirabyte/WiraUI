@@ -6,22 +6,22 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-rating id="d-rating" [(ngModel)]="score" [ariaLabel]="tx('ความพึงพอใจ')" (onRate)="rated = $event.value"></wt-rating>
+        <wu-rating id="d-rating" [(ngModel)]="score" [ariaLabel]="tx('ความพึงพอใจ')" (onRate)="rated = $event.value"></wu-rating>
         <span class="docs-demo-output">score: <code id="d-rating-value">{{ score }}</code> · onRate: <code id="d-rating-rated">{{ rated ?? '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="stars" [section]="sec['stars']">
       <docs-demo [html]="code['stars']">
-        <wt-rating [(ngModel)]="score10" [stars]="10" [ariaLabel]="tx('คะแนน 1 ถึง 10')"></wt-rating>
+        <wu-rating [(ngModel)]="score10" [stars]="10" [ariaLabel]="tx('คะแนน 1 ถึง 10')"></wu-rating>
         <span class="docs-demo-output">score10: <code>{{ score10 }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="readonly" [section]="sec['readonly']">
       <docs-demo [html]="code['readonly']">
-        <wt-rating [ngModel]="4" [readonly]="true" ariaLabel="Readonly"></wt-rating>
-        <wt-rating [ngModel]="2" [disabled]="true" ariaLabel="Disabled"></wt-rating>
+        <wu-rating [ngModel]="4" [readonly]="true" ariaLabel="Readonly"></wu-rating>
+        <wu-rating [ngModel]="2" [disabled]="true" ariaLabel="Disabled"></wu-rating>
       </docs-demo>
     </docs-section>
   </ng-template>

@@ -14,11 +14,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import { getBoundsOfRects, minimapLayout, minimapMaskPath, minimapToFlow, viewRect } from 'wiratheme/core';
-import type { FlowMinimapLayout, FlowNode, FlowXY } from 'wiratheme/core';
-import { ɵWtFlowHost } from './flow-host';
-import type { WtFlowPanelPosition } from './flow.types';
+import { ɵtoBool } from 'wiraui/config';
+import { getBoundsOfRects, minimapLayout, minimapMaskPath, minimapToFlow, viewRect } from 'wiraui/core';
+import type { FlowMinimapLayout, FlowNode, FlowXY } from 'wiraui/core';
+import { ɵWuFlowHost } from './flow-host';
+import type { WuFlowPanelPosition } from './flow.types';
 
 interface MiniNode {
   id: string;
@@ -34,18 +34,18 @@ interface MiniNode {
 const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ? fallback : ɵtoBool(v));
 
 /**
- * A small map of the whole diagram with the part in view outlined: `<wt-flow-minimap position="bottom-right">`.
+ * A small map of the whole diagram with the part in view outlined: `<wu-flow-minimap position="bottom-right">`.
  * Drag it to pan, click to jump there, wheel over it to zoom (`[pannable]` / `[zoomable]`). Nodes take
- * `[nodeColor]` (a colour or a function of the node), else the `--wt-flow-minimap-node-bg` token.
+ * `[nodeColor]` (a colour or a function of the node), else the `--wu-flow-minimap-node-bg` token.
  */
 @Component({
-  selector: 'wt-flow-minimap',
+  selector: 'wu-flow-minimap',
   standalone: true,
   imports: [NgFor],
   template: `
     <svg
       #svg
-      class="wt-flow-minimap-svg"
+      class="wu-flow-minimap-svg"
       [attr.width]="width"
       [attr.height]="height"
       [attr.viewBox]="viewBox"
@@ -55,7 +55,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
     >
       <svg:rect
         *ngFor="let n of items; trackBy: trackById"
-        class="wt-flow-minimap-node"
+        class="wu-flow-minimap-node"
         [attr.class]="n.className"
         [attr.x]="n.x"
         [attr.y]="n.y"
@@ -68,7 +68,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
         [style.stroke-width]="nodeStrokeWidth"
       ></svg:rect>
       <svg:path
-        class="wt-flow-minimap-mask"
+        class="wu-flow-minimap-mask"
         [attr.d]="mask"
         fill-rule="evenodd"
         [style.fill]="maskColor || null"
@@ -80,20 +80,20 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'wt-flow-panel wt-flow-minimap nowheel',
-    '[class.wt-flow-minimap-pannable]': 'pannable',
-    '[class.wt-flow-panel-top-left]': "position === 'top-left'",
-    '[class.wt-flow-panel-top-center]': "position === 'top-center'",
-    '[class.wt-flow-panel-top-right]': "position === 'top-right'",
-    '[class.wt-flow-panel-bottom-left]': "position === 'bottom-left'",
-    '[class.wt-flow-panel-bottom-center]': "position === 'bottom-center'",
-    '[class.wt-flow-panel-bottom-right]': "!position || position === 'bottom-right'",
-    '[class.wt-flow-panel-center-left]': "position === 'center-left'",
-    '[class.wt-flow-panel-center-right]': "position === 'center-right'",
+    class: 'wu-flow-panel wu-flow-minimap nowheel',
+    '[class.wu-flow-minimap-pannable]': 'pannable',
+    '[class.wu-flow-panel-top-left]': "position === 'top-left'",
+    '[class.wu-flow-panel-top-center]': "position === 'top-center'",
+    '[class.wu-flow-panel-top-right]': "position === 'top-right'",
+    '[class.wu-flow-panel-bottom-left]': "position === 'bottom-left'",
+    '[class.wu-flow-panel-bottom-center]': "position === 'bottom-center'",
+    '[class.wu-flow-panel-bottom-right]': "!position || position === 'bottom-right'",
+    '[class.wu-flow-panel-center-left]': "position === 'center-left'",
+    '[class.wu-flow-panel-center-right]': "position === 'center-right'",
   },
 })
-export class WtFlowMinimap implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  @Input() position: WtFlowPanelPosition = 'bottom-right';
+export class WuFlowMinimap implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  @Input() position: WuFlowPanelPosition = 'bottom-right';
   /** Size in px. Default 200 × 150 (smaller on narrow screens through the CSS). */
   @Input() width = 200;
   @Input() height = 150;
@@ -149,7 +149,7 @@ export class WtFlowMinimap implements OnInit, OnChanges, AfterViewInit, OnDestro
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
 
   get label(): string {
     return this.host ? this.host.ɵtext('flowMiniMap') : '';
@@ -222,7 +222,7 @@ export class WtFlowMinimap implements OnInit, OnChanges, AfterViewInit, OnDestro
         height: r.height,
         fill: this.pick(this.nodeColor, r.node),
         stroke: this.pick(this.nodeStrokeColor, r.node),
-        className: 'wt-flow-minimap-node' + (r.selected ? ' wt-flow-minimap-node-selected' : '') + (r.node.type === 'group' ? ' wt-flow-minimap-node-group' : '') + (extra ? ' ' + extra : ''),
+        className: 'wu-flow-minimap-node' + (r.selected ? ' wu-flow-minimap-node-selected' : '') + (r.node.type === 'group' ? ' wu-flow-minimap-node-group' : '') + (extra ? ' ' + extra : ''),
       };
     });
   }

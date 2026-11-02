@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HASU, KAWAII } from './core/secrets';
 
-// Landing page and docs shell are lazy NgModules; inside the shell each wiratheme major is lazy too,
+// Landing page and docs shell are lazy NgModules; inside the shell each wiraui major is lazy too,
 // so v1's code only downloads on /v1.
 const routes: Routes = [
   {

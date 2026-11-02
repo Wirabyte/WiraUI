@@ -1,34 +1,34 @@
-/* wt-checkbox. Shared by wiratheme v1, v2 and v3. The real <input> covers the whole label (invisible),
+/* wu-checkbox. Shared by wiraui v1, v2 and v3. The real <input> covers the whole label (invisible),
    so clicks, keyboard focus and screen readers all use the native control. */
-@layer wiratheme.components {
-  :is(wt-checkbox, wt-check-box) {
+@layer wiraui.components {
+  :is(wu-checkbox, wu-check-box) {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-checkbox {
+  .wu-checkbox {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
     user-select: none;
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-font-size) * var(--_cb-font, 1));
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-font-size) * var(--_cb-font, 1));
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
-  .wt-checkbox-sm,
+  /* size="small" | "large" (class names wu-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wu-checkbox-sm,
   .p-checkbox-sm {
-    --_cb-scale: var(--wt-size-sm-scale);
+    --_cb-scale: var(--wu-size-sm-scale);
     --_cb-font: 0.875;
   }
-  .wt-checkbox-lg,
+  .wu-checkbox-lg,
   .p-checkbox-lg {
-    --_cb-scale: var(--wt-size-lg-scale);
-    --_cb-font: var(--wt-size-lg-scale);
+    --_cb-scale: var(--wu-size-lg-scale);
+    --_cb-font: var(--wu-size-lg-scale);
   }
-  .wt-checkbox-input {
+  .wu-checkbox-input {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -38,90 +38,90 @@
     cursor: inherit;
     z-index: 1;
   }
-  .wt-checkbox-control {
+  .wu-checkbox-control {
     display: inline-flex;
     flex: none;
   }
-  .wt-checkbox-box {
+  .wu-checkbox-box {
     flex: none;
     display: grid;
     place-items: center;
-    width: calc(var(--wt-checkbox-size) * var(--_cb-scale, 1));
-    height: calc(var(--wt-checkbox-size) * var(--_cb-scale, 1));
-    /* Whole pixels, so a size like 17.5px is not snapped to 18 × 17 (same as wt-radiobutton). */
-    width: round(calc(var(--wt-checkbox-size) * var(--_cb-scale, 1)), 2px);
-    height: round(calc(var(--wt-checkbox-size) * var(--_cb-scale, 1)), 2px);
+    width: calc(var(--wu-checkbox-size) * var(--_cb-scale, 1));
+    height: calc(var(--wu-checkbox-size) * var(--_cb-scale, 1));
+    /* Whole pixels, so a size like 17.5px is not snapped to 18 × 17 (same as wu-radiobutton). */
+    width: round(calc(var(--wu-checkbox-size) * var(--_cb-scale, 1)), 2px);
+    height: round(calc(var(--wu-checkbox-size) * var(--_cb-scale, 1)), 2px);
     box-sizing: border-box;
-    border: var(--wt-checkbox-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-checkbox-radius);
-    background: var(--wt-field-bg);
-    box-shadow: var(--wt-field-shadow);
+    border: var(--wu-checkbox-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-checkbox-radius);
+    background: var(--wu-field-bg);
+    box-shadow: var(--wu-field-shadow);
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      outline-color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-checkbox-icon {
-    width: var(--wt-checkbox-icon-size);
-    height: var(--wt-checkbox-icon-size);
+  .wu-checkbox-icon {
+    width: var(--wu-checkbox-icon-size);
+    height: var(--wu-checkbox-icon-size);
     fill: none;
-    stroke: var(--wt-primary-contrast);
+    stroke: var(--wu-primary-contrast);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
     opacity: 0;
     transform: scale(0.6);
     transition:
-      opacity var(--wt-transition),
-      transform var(--wt-transition);
+      opacity var(--wu-transition),
+      transform var(--wu-transition);
   }
-  .wt-checkbox:not(.wt-checkbox-disabled):hover .wt-checkbox-box {
-    border-color: var(--wt-checkbox-hover-border);
+  .wu-checkbox:not(.wu-checkbox-disabled):hover .wu-checkbox-box {
+    border-color: var(--wu-checkbox-hover-border);
   }
-  .wt-checkbox-checked .wt-checkbox-box {
-    background: var(--wt-primary-color);
-    border-color: var(--wt-primary-color);
+  .wu-checkbox-checked .wu-checkbox-box {
+    background: var(--wu-primary-color);
+    border-color: var(--wu-primary-color);
   }
-  .wt-checkbox-checked:not(.wt-checkbox-disabled):hover .wt-checkbox-box {
-    background: var(--wt-primary-hover);
-    border-color: var(--wt-primary-hover);
+  .wu-checkbox-checked:not(.wu-checkbox-disabled):hover .wu-checkbox-box {
+    background: var(--wu-primary-hover);
+    border-color: var(--wu-primary-hover);
   }
-  .wt-checkbox-checked .wt-checkbox-icon {
+  .wu-checkbox-checked .wu-checkbox-icon {
     opacity: 1;
     transform: none;
   }
   /* Some but not all ticked (a header or check-all box): a filled box with a dash, in the tick's place. */
-  .wt-checkbox-box > .wt-checkbox-icon {
+  .wu-checkbox-box > .wu-checkbox-icon {
     grid-area: 1 / 1;
   }
-  .wt-checkbox-box.wt-checkbox-mixed {
-    background: var(--wt-primary-color);
-    border-color: var(--wt-primary-color);
+  .wu-checkbox-box.wu-checkbox-mixed {
+    background: var(--wu-primary-color);
+    border-color: var(--wu-primary-color);
   }
-  .wt-checkbox:not(.wt-checkbox-disabled):hover .wt-checkbox-box.wt-checkbox-mixed {
-    background: var(--wt-primary-hover);
-    border-color: var(--wt-primary-hover);
+  .wu-checkbox:not(.wu-checkbox-disabled):hover .wu-checkbox-box.wu-checkbox-mixed {
+    background: var(--wu-primary-hover);
+    border-color: var(--wu-primary-hover);
   }
-  .wt-checkbox-box.wt-checkbox-mixed::after {
+  .wu-checkbox-box.wu-checkbox-mixed::after {
     content: '';
     grid-area: 1 / 1;
     width: 50%;
     height: 2px;
     border-radius: 1px;
-    background: var(--wt-primary-contrast);
+    background: var(--wu-primary-contrast);
   }
-  .wt-checkbox-input:focus-visible + .wt-checkbox-control .wt-checkbox-box {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-checkbox-input:focus-visible + .wu-checkbox-control .wu-checkbox-box {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-checkbox-disabled {
+  .wu-checkbox-disabled {
     cursor: default;
-    opacity: var(--wt-disabled-opacity);
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-checkbox.wt-invalid .wt-checkbox-box,
-  :is(wt-checkbox, wt-check-box).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-checkbox-box {
-    border-color: var(--wt-danger-color);
+  .wu-checkbox.wu-invalid .wu-checkbox-box,
+  :is(wu-checkbox, wu-check-box).ng-invalid:is(.ng-touched, form.ng-submitted *) .wu-checkbox-box {
+    border-color: var(--wu-danger-color);
   }
 }

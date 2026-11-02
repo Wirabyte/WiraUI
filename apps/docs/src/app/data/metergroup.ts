@@ -6,9 +6,9 @@ export const METERGROUP_DOC: ComponentDoc = {
   title: 'MeterGroup',
   group: 'Display',
   entry: 'metergroup',
-  standalone: 'WtMeterGroup',
-  module: 'WtMeterGroupModule',
-  selector: 'wt-metergroup',
+  standalone: 'WuMeterGroup',
+  module: 'WuMeterGroupModule',
+  selector: 'wu-metergroup',
   description: {
     th: 'หลายค่าบนแถบเดียวพร้อมคำอธิบาย เช่น พื้นที่จัดเก็บที่ใช้ไปแยกตามประเภท สีวนตามสีของธีมเองถ้าไม่กำหนด',
     en: 'Several values on one bar with a legend, such as storage used by type. Colours cycle through the theme\'s own when not set.',
@@ -80,21 +80,21 @@ export const METERGROUP_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-metergroup [value]="[{ label: 'ใช้ไป', value: 32 }]" ariaLabel="พื้นที่จัดเก็บ"></wt-metergroup>`,
-    multiple: `<wt-metergroup [value]="storage" ariaLabel="พื้นที่จัดเก็บ"></wt-metergroup>`,
-    icons: `<wt-metergroup [value]="storageIcons" ariaLabel="พื้นที่จัดเก็บ"></wt-metergroup>`,
-    label: `<wt-metergroup [value]="storage" labelPosition="start" labelOrientation="vertical"></wt-metergroup>`,
-    vertical: `<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical"
-  style="height: 20rem"></wt-metergroup>`,
-    minmax: `<wt-metergroup [value]="usedGb" [min]="0" [max]="200" ariaLabel="พื้นที่ 200 GB"></wt-metergroup>`,
-    reverse: `<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" style="height: 14rem"></wt-metergroup>
+    basic: `<wu-metergroup [value]="[{ label: 'ใช้ไป', value: 32 }]" ariaLabel="พื้นที่จัดเก็บ"></wu-metergroup>`,
+    multiple: `<wu-metergroup [value]="storage" ariaLabel="พื้นที่จัดเก็บ"></wu-metergroup>`,
+    icons: `<wu-metergroup [value]="storageIcons" ariaLabel="พื้นที่จัดเก็บ"></wu-metergroup>`,
+    label: `<wu-metergroup [value]="storage" labelPosition="start" labelOrientation="vertical"></wu-metergroup>`,
+    vertical: `<wu-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical"
+  style="height: 20rem"></wu-metergroup>`,
+    minmax: `<wu-metergroup [value]="usedGb" [min]="0" [max]="200" ariaLabel="พื้นที่ 200 GB"></wu-metergroup>`,
+    reverse: `<wu-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" style="height: 14rem"></wu-metergroup>
 
 <!-- เติมจากล่างขึ้นบน -->
-<wt-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" [reverse]="true"
-  style="height: 14rem"></wt-metergroup>`,
+<wu-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" [reverse]="true"
+  style="height: 14rem"></wu-metergroup>`,
     template: {
-      classic: `<wt-metergroup [value]="storage" labelPosition="start">
-  <ng-template wtTemplate="label" let-value let-percentages="percentages">
+      classic: `<wu-metergroup [value]="storage" labelPosition="start">
+  <ng-template wuTemplate="label" let-value let-percentages="percentages">
     <div class="storage-cards">
       <div *ngFor="let item of value; let i = index" class="storage-card">
         <span class="storage-name">{{ item.label }}</span>
@@ -102,11 +102,11 @@ export const METERGROUP_DOC: ComponentDoc = {
       </div>
     </div>
   </ng-template>
-  <ng-template wtTemplate="end" let-totalPercent="totalPercent">
+  <ng-template wuTemplate="end" let-totalPercent="totalPercent">
     <p class="storage-total">ใช้ไปทั้งหมด {{ totalPercent }}%</p>
   </ng-template>
-</wt-metergroup>`,
-      v3: `<wt-metergroup [value]="storage" labelPosition="start">
+</wu-metergroup>`,
+      v3: `<wu-metergroup [value]="storage" labelPosition="start">
   <ng-template #label let-value let-percentages="percentages">
     <div class="storage-cards">
       @for (item of value; track item.label; let i = $index) {
@@ -120,23 +120,23 @@ export const METERGROUP_DOC: ComponentDoc = {
   <ng-template #end let-totalPercent="totalPercent">
     <p class="storage-total">ใช้ไปทั้งหมด {{ totalPercent }}%</p>
   </ng-template>
-</wt-metergroup>`,
+</wu-metergroup>`,
     },
   },
   ts: {
-    multiple: `storage: WtMeterItem[] = [
+    multiple: `storage: WuMeterItem[] = [
   { label: 'รูปภาพ', value: 24 },
   { label: 'วิดีโอ', value: 16 },
   { label: 'เอกสาร', value: 12 },
   { label: 'อื่น ๆ', value: 8 },
 ];`,
-    icons: `storageIcons: WtMeterItem[] = [
+    icons: `storageIcons: WuMeterItem[] = [
   { label: 'รูปภาพ', value: 24, icon: 'wi wi-image' },
   { label: 'วิดีโอ', value: 16, icon: 'wi wi-video' },
   { label: 'เอกสาร', value: 12, icon: 'wi wi-file' },
 ];`,
     minmax: `// ใช้ไป 96 จาก 200 GB
-usedGb: WtMeterItem[] = [
+usedGb: WuMeterItem[] = [
   { label: 'ระบบ', value: 40, color: '#64748b' },
   { label: 'แอป', value: 56, color: '#1e7ae0' },
 ];`,
@@ -146,7 +146,7 @@ usedGb: WtMeterItem[] = [
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('value', 'WtMeterItem[]', '[]', 'ช่วงต่าง ๆ บนแถบ', 'The parts of the bar'),
+        row('value', 'WuMeterItem[]', '[]', 'ช่วงต่าง ๆ บนแถบ', 'The parts of the bar'),
         row('min · max', 'number', '0 · 100', 'ช่วงที่ค่านับเทียบ', 'Range the values are read against'),
         row('orientation', "'horizontal' | 'vertical'", "'horizontal'", 'แนวของแถบ (vertical เต็มความสูงของ element)', 'Bar direction (vertical fills the element height)'),
         row('reverse', 'boolean', 'false', 'เติมจากอีกด้าน: ขวาไปซ้าย หรือ (แนวตั้ง) ล่างขึ้นบน คำอธิบายเรียงเหมือนเดิม', 'Fill from the other end: right to left, or (vertical) bottom to top; the legend keeps its order'),
@@ -170,20 +170,20 @@ usedGb: WtMeterItem[] = [
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtMeterItem {
+      code: `interface WuMeterItem {
   label?: string;
   value: number;
   color?: string;   // สี CSS ใดก็ได้ ไม่ใส่ = สีของธีมวนไป
   icon?: string;
 }
-type WtMeterOrientation = 'horizontal' | 'vertical';
-type WtMeterLabelPosition = 'start' | 'end';`,
+type WuMeterOrientation = 'horizontal' | 'vertical';
+type WuMeterLabelPosition = 'start' | 'end';`,
     },
   ],
   tokens: [
-    tok('--wt-metergroup-size', 'ความหนาของแถบ', 'Bar thickness'),
-    tok('--wt-metergroup-gap', 'ระยะระหว่างแถบกับคำอธิบาย', 'Gap between the bar and the legend'),
-    tok('--wt-metergroup-radius', 'ความมนของแถบ', 'Bar radius'),
-    tok('--wt-metergroup-bg', 'พื้นราง', 'Track background'),
+    tok('--wu-metergroup-size', 'ความหนาของแถบ', 'Bar thickness'),
+    tok('--wu-metergroup-gap', 'ระยะระหว่างแถบกับคำอธิบาย', 'Gap between the bar and the legend'),
+    tok('--wu-metergroup-radius', 'ความมนของแถบ', 'Bar radius'),
+    tok('--wu-metergroup-bg', 'พื้นราง', 'Track background'),
   ],
 };

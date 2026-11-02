@@ -1,31 +1,31 @@
-/* wt-autocomplete. Shared by wiratheme v1, v2 and v3. The field and the list come from wt-select's stylesheet (loaded
-   with it): the field is wt-select's editable form, the dropdown button sits where its arrow is. */
-@layer wiratheme.components {
-  :is(wt-autocomplete, wt-auto-complete) {
+/* wu-autocomplete. Shared by wiraui v1, v2 and v3. The field and the list come from wu-select's stylesheet (loaded
+   with it): the field is wu-select's editable form, the dropdown button sits where its arrow is. */
+@layer wiraui.components {
+  :is(wu-autocomplete, wu-auto-complete) {
     display: inline-flex;
     vertical-align: middle;
-    width: var(--wt-select-width);
+    width: var(--wu-select-width);
     max-width: 100%;
   }
-  :is(wt-autocomplete, wt-auto-complete).wt-select-fluid {
+  :is(wu-autocomplete, wu-auto-complete).wu-select-fluid {
     display: flex;
     width: 100%;
   }
-  .wt-autocomplete-dropdown {
-    border-radius: 0 calc(var(--wt-input-radius) - var(--wt-field-border-width)) calc(var(--wt-input-radius) - var(--wt-field-border-width)) 0;
+  .wu-autocomplete-dropdown {
+    border-radius: 0 calc(var(--wu-input-radius) - var(--wu-field-border-width)) calc(var(--wu-input-radius) - var(--wu-field-border-width)) 0;
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-autocomplete-dropdown:not(:disabled):hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-field-color);
+  .wu-autocomplete-dropdown:not(:disabled):hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-field-color);
   }
-  .wt-autocomplete-dropdown:disabled {
+  .wu-autocomplete-dropdown:disabled {
     cursor: default;
   }
-  :is(wt-autocomplete, wt-auto-complete).ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-select {
-    border-color: var(--wt-danger-color);
+  :is(wu-autocomplete, wu-auto-complete).ng-invalid:is(.ng-touched, form.ng-submitted *) > .wu-select {
+    border-color: var(--wu-danger-color);
   }
 }

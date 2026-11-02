@@ -8,9 +8,9 @@ export const TAG_DOC: ComponentDoc = {
   title: 'Tag',
   group: 'Display',
   entry: 'tag',
-  standalone: 'WtTag',
-  module: 'WtTagModule',
-  selector: 'wt-tag',
+  standalone: 'WuTag',
+  module: 'WuTagModule',
+  selector: 'wu-tag',
   description: { th: 'ป้ายสั้น ๆ บอกสถานะหรือหมวดหมู่ มีสีตาม severity, แบบมนเต็ม และ icon', en: 'A short label for a status or category, with severity colours, a pill shape and an icon.' },
   english: {
     'ใหม่': 'New',
@@ -30,13 +30,13 @@ export const TAG_DOC: ComponentDoc = {
     content: { title: { th: 'เนื้อหาเอง', en: 'Custom content' }, text: { th: 'ไม่ใส่ <code>value</code> แล้ววางเนื้อหาไว้ข้างในแทนได้', en: 'Leave out <code>value</code> and put your own content inside.' } },
   },
   code: {
-    basic: `<wt-tag value="ใหม่"></wt-tag>`,
-    severity: severities.map((s) => `<wt-tag value="${s}" severity="${s}"></wt-tag>`).join('\n'),
-    pill: `<wt-tag value="เปิดใช้งาน" severity="success" [rounded]="true"></wt-tag>
-<wt-tag value="ยืนยันแล้ว" icon="wi wi-check" severity="info"></wt-tag>`,
-    content: `<wt-tag severity="warn">
+    basic: `<wu-tag value="ใหม่"></wu-tag>`,
+    severity: severities.map((s) => `<wu-tag value="${s}" severity="${s}"></wu-tag>`).join('\n'),
+    pill: `<wu-tag value="เปิดใช้งาน" severity="success" [rounded]="true"></wu-tag>
+<wu-tag value="ยืนยันแล้ว" icon="wi wi-check" severity="info"></wu-tag>`,
+    content: `<wu-tag severity="warn">
   <span class="wi wi-bell"></span> รออนุมัติ 3 รายการ
-</wt-tag>`,
+</wu-tag>`,
   },
   api: [
     {
@@ -44,7 +44,7 @@ export const TAG_DOC: ComponentDoc = {
       title: 'Inputs',
       rows: [
         row('value', 'string | number', undefined, 'ข้อความของป้าย', 'Tag text'),
-        row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
+        row('severity', 'WuSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
         row('rounded', 'boolean', 'false', 'มนเต็ม (pill)', 'Fully rounded (pill)'),
         row('icon', 'string', undefined, 'class ของ icon หน้าข้อความ', 'Icon class before the text'),
         STYLE_ROW,
@@ -53,16 +53,16 @@ export const TAG_DOC: ComponentDoc = {
     { id: 'api-types', title: 'Types', code: SEVERITY_TYPE },
   ],
   tokens: [
-    tok('--wt-tag-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
-    tok('--wt-tag-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
-    tok('--wt-tag-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-tag-font-size', 'ขนาดตัวอักษร', 'Font size'),
-    tok('--wt-tag-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
-    tok('--wt-tag-gap', 'ระยะระหว่าง icon กับข้อความ', 'Gap between icon and text'),
-    tok('--wt-tag-fill', 'พื้นแบบทึบหรือแบบอ่อน', 'Solid or soft fill'),
-    tok('--wt-primary-soft', 'พื้นของ severity="primary"', 'severity="primary" background'),
-    tok('--wt-success-bg', 'พื้นของ severity="success" (info / warn / danger / help แบบเดียวกัน)', 'severity="success" background (info / warn / danger / help alike)'),
-    tok('--wt-radius-full', 'มุมของ rounded', 'rounded corners'),
+    tok('--wu-tag-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-tag-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
+    tok('--wu-tag-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-tag-font-size', 'ขนาดตัวอักษร', 'Font size'),
+    tok('--wu-tag-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
+    tok('--wu-tag-gap', 'ระยะระหว่าง icon กับข้อความ', 'Gap between icon and text'),
+    tok('--wu-tag-fill', 'พื้นแบบทึบหรือแบบอ่อน', 'Solid or soft fill'),
+    tok('--wu-primary-soft', 'พื้นของ severity="primary"', 'severity="primary" background'),
+    tok('--wu-success-bg', 'พื้นของ severity="success" (info / warn / danger / help แบบเดียวกัน)', 'severity="success" background (info / warn / danger / help alike)'),
+    tok('--wu-radius-full', 'มุมของ rounded', 'rounded corners'),
   ],
   overrides: `    tag: { pill: true },`,
 };
@@ -72,9 +72,9 @@ export const BADGE_DOC: ComponentDoc = {
   title: 'Badge',
   group: 'Display',
   entry: 'badge',
-  standalone: 'WtBadge',
-  module: 'WtBadgeModule',
-  selector: 'wt-badge',
+  standalone: 'WuBadge',
+  module: 'WuBadgeModule',
+  selector: 'wu-badge',
   description: { th: 'ตัวเลขหรือจุดเล็ก ๆ บอกจำนวนหรือสถานะ ไม่ใส่ค่าจะเป็นจุด', en: 'A small count or dot. Without a value it is a dot.' },
   english: {
     'กล่องข้อความ': 'Inbox',
@@ -90,10 +90,10 @@ export const BADGE_DOC: ComponentDoc = {
     sizes: { title: 'Sizes' },
     inline: { title: { th: 'วางคู่กับข้อความ', en: 'Next to text' } },
     directive: {
-      title: { th: 'Badge ที่มุมของ element (wtBadge)', en: 'A corner badge on any element (wtBadge)' },
+      title: { th: 'Badge ที่มุมของ element (wuBadge)', en: 'A corner badge on any element (wuBadge)' },
       text: {
-        th: 'directive <code>wtBadge</code> (หรือ <code>pBadge</code>) วาง badge ที่มุมขวาบนของ element ใดก็ได้ เช่น ไอคอนกระดิ่ง รับ <code>value</code> (ไม่ใส่เป็นจุด), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> และ <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> ซ่อน badge ตัวอย่างนี้ซ่อนเมื่อไม่มีข้อความที่ยังไม่อ่าน มาจาก <code>WtBadgeModule</code> ตัวเดียวกัน',
-        en: 'The <code>wtBadge</code> (or <code>pBadge</code>) directive puts a badge on the top-right corner of any element, such as a bell icon. It takes <code>value</code> (a dot when left out), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> and <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> hides it; here it hides once nothing is unread. It comes with the same <code>WtBadgeModule</code>.',
+        th: 'directive <code>wuBadge</code> (หรือ <code>pBadge</code>) วาง badge ที่มุมขวาบนของ element ใดก็ได้ เช่น ไอคอนกระดิ่ง รับ <code>value</code> (ไม่ใส่เป็นจุด), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> และ <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> ซ่อน badge ตัวอย่างนี้ซ่อนเมื่อไม่มีข้อความที่ยังไม่อ่าน มาจาก <code>WuBadgeModule</code> ตัวเดียวกัน',
+        en: 'The <code>wuBadge</code> (or <code>pBadge</code>) directive puts a badge on the top-right corner of any element, such as a bell icon. It takes <code>value</code> (a dot when left out), <code>severity</code>, <code>size</code> / <code>badgeSize</code>, <code>badgeStyleClass</code> and <code>badgeStyle</code> · <code>[badgeDisabled]="true"</code> hides it; here it hides once nothing is unread. It comes with the same <code>WuBadgeModule</code>.',
       },
     },
     style: {
@@ -105,21 +105,21 @@ export const BADGE_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-badge value="8"></wt-badge>
-<wt-badge></wt-badge>`,
-    severity: severities.map((s, i) => `<wt-badge value="${i + 1}" severity="${s}"></wt-badge>`).join('\n'),
-    sizes: `<wt-badge value="2"></wt-badge>
-<wt-badge value="4" size="large"></wt-badge>
-<wt-badge value="6" size="xlarge"></wt-badge>`,
-    inline: `<span>กล่องข้อความ <wt-badge value="12" severity="danger"></wt-badge></span>
-<span>สถานะออนไลน์ <wt-badge severity="success"></wt-badge></span>`,
-    directive: `<span class="notify-icon" wtBadge [value]="unread" severity="danger" [badgeDisabled]="!unread">
+    basic: `<wu-badge value="8"></wu-badge>
+<wu-badge></wu-badge>`,
+    severity: severities.map((s, i) => `<wu-badge value="${i + 1}" severity="${s}"></wu-badge>`).join('\n'),
+    sizes: `<wu-badge value="2"></wu-badge>
+<wu-badge value="4" size="large"></wu-badge>
+<wu-badge value="6" size="xlarge"></wu-badge>`,
+    inline: `<span>กล่องข้อความ <wu-badge value="12" severity="danger"></wu-badge></span>
+<span>สถานะออนไลน์ <wu-badge severity="success"></wu-badge></span>`,
+    directive: `<span class="notify-icon" wuBadge [value]="unread" severity="danger" [badgeDisabled]="!unread">
   <i class="wi wi-bell"></i>
 </span>
-<span class="notify-icon" wtBadge severity="success"><i class="wi wi-envelope"></i></span>
+<span class="notify-icon" wuBadge severity="success"><i class="wi wi-envelope"></i></span>
 <span class="notify-icon" pBadge value="2" badgeSize="large"><i class="wi wi-calendar"></i></span>
-<wt-button label="อ่านทั้งหมด" severity="secondary" [text]="true" (onClick)="markRead()"></wt-button>`,
-    style: `<wt-badge value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wt-badge>`,
+<wu-button label="อ่านทั้งหมด" severity="secondary" [text]="true" (onClick)="markRead()"></wu-button>`,
+    style: `<wu-badge value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wu-badge>`,
   },
   ts: {
     directive: `unread = 3;   // ข้อความที่ยังไม่อ่าน
@@ -134,34 +134,34 @@ markRead(): void {
       title: 'Inputs',
       rows: [
         row('value', 'string | number', undefined, 'ค่าที่แสดง ไม่ใส่จะเป็นจุด', 'Value to show; a dot when left out'),
-        row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
+        row('severity', 'WuSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
         row('size', "'small' | 'large' | 'xlarge'", undefined, 'ขนาด', 'Size'),
         STYLE_ROW,
       ],
     },
     {
       id: 'api-directive',
-      title: { th: 'Directive wtBadge', en: 'The wtBadge directive' },
-      note: { th: 'ใส่บน element ใดก็ได้: wtBadge หรือ pBadge', en: 'On any element: wtBadge or pBadge.' },
+      title: { th: 'Directive wuBadge', en: 'The wuBadge directive' },
+      note: { th: 'ใส่บน element ใดก็ได้: wuBadge หรือ pBadge', en: 'On any element: wuBadge or pBadge.' },
       rows: [
         row('value', 'string | number', undefined, 'ค่าที่แสดง ไม่ใส่จะเป็นจุด', 'Value to show; a dot when left out'),
-        row('severity', 'WtSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
+        row('severity', 'WuSeverityInput', "'primary'", 'สีตามความหมาย', 'Colour by meaning'),
         row('size · badgeSize', "'small' | 'large' | 'xlarge'", undefined, 'ขนาด', 'Size'),
         row('badgeDisabled', 'boolean', 'false', 'ซ่อน badge', 'Hide the badge'),
         row('badgeStyleClass · badgeStyle', 'string · object', undefined, 'class / style ของตัว badge', 'Class / style of the badge itself'),
       ],
     },
-    { id: 'api-types', title: 'Types', code: `type WtBadgeSize = 'small' | 'large' | 'xlarge';\n${SEVERITY_TYPE}` },
+    { id: 'api-types', title: 'Types', code: `type WuBadgeSize = 'small' | 'large' | 'xlarge';\n${SEVERITY_TYPE}` },
   ],
   tokens: [
-    tok('--wt-badge-size', 'ความสูงและความกว้างขั้นต่ำ', 'Height and minimum width'),
-    tok('--wt-badge-dot-size', 'ขนาดของจุด', 'Dot size'),
-    tok('--wt-badge-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
-    tok('--wt-badge-font-size', 'ขนาดตัวอักษร', 'Font size'),
-    tok('--wt-badge-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
-    tok('--wt-primary-color', 'พื้นของ severity="primary"', 'severity="primary" background'),
-    tok('--wt-primary-contrast', 'ตัวอักษรบน severity="primary"', 'Text on severity="primary"'),
-    tok('--wt-radius-full', 'ความมน', 'Radius'),
+    tok('--wu-badge-size', 'ความสูงและความกว้างขั้นต่ำ', 'Height and minimum width'),
+    tok('--wu-badge-dot-size', 'ขนาดของจุด', 'Dot size'),
+    tok('--wu-badge-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-badge-font-size', 'ขนาดตัวอักษร', 'Font size'),
+    tok('--wu-badge-font-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
+    tok('--wu-primary-color', 'พื้นของ severity="primary"', 'severity="primary" background'),
+    tok('--wu-primary-contrast', 'ตัวอักษรบน severity="primary"', 'Text on severity="primary"'),
+    tok('--wu-radius-full', 'ความมน', 'Radius'),
   ],
 };
 
@@ -175,9 +175,9 @@ export const CHIP_DOC: ComponentDoc = {
   title: 'Chip',
   group: 'Display',
   entry: 'chip',
-  standalone: 'WtChip',
-  module: 'WtChipModule',
-  selector: 'wt-chip',
+  standalone: 'WuChip',
+  module: 'WuChipModule',
+  selector: 'wu-chip',
   description: { th: 'ข้อมูลชิ้นเล็กแบบเม็ดยา มี icon หรือรูป และลบออกได้', en: 'A compact pill for a piece of data, with an icon or image, and optionally removable.' },
   english: {
     'ส่งแล้ว': 'Sent',
@@ -201,15 +201,15 @@ export const CHIP_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-chip label="Angular"></wt-chip>
-<wt-chip label="TypeScript"></wt-chip>
-<wt-chip label="SCSS"></wt-chip>`,
-    icon: `<wt-chip label="ส่งแล้ว" icon="wi wi-send"></wt-chip>
-<wt-chip label="สมชาย ใจดี" image="assets/avatar.png" alt="สมชาย"></wt-chip>`,
+    basic: `<wu-chip label="Angular"></wu-chip>
+<wu-chip label="TypeScript"></wu-chip>
+<wu-chip label="SCSS"></wu-chip>`,
+    icon: `<wu-chip label="ส่งแล้ว" icon="wi wi-send"></wu-chip>
+<wu-chip label="สมชาย ใจดี" image="assets/avatar.png" alt="สมชาย"></wu-chip>`,
     removable: {
-      classic: `<wt-chip *ngFor="let t of tags" [label]="t" [removable]="true" (onRemove)="remove(t)"></wt-chip>`,
+      classic: `<wu-chip *ngFor="let t of tags" [label]="t" [removable]="true" (onRemove)="remove(t)"></wu-chip>`,
       v3: `@for (t of tags; track t) {
-<wt-chip [label]="t" [removable]="true" (onRemove)="remove(t)"></wt-chip>
+<wu-chip [label]="t" [removable]="true" (onRemove)="remove(t)"></wu-chip>
 }`,
     },
   },
@@ -241,13 +241,13 @@ remove(tag: string): void {
     },
   ],
   tokens: [
-    tok('--wt-chip-bg', 'พื้น', 'Background'),
-    tok('--wt-chip-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-chip-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
-    tok('--wt-chip-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
-    tok('--wt-chip-radius', 'ความมน', 'Radius'),
-    tok('--wt-chip-gap', 'ระยะระหว่างส่วนต่าง ๆ', 'Gap between parts'),
-    tok('--wt-control-focus-shadow', 'วงโฟกัสของปุ่มลบ', 'Focus ring of the remove button'),
+    tok('--wu-chip-bg', 'พื้น', 'Background'),
+    tok('--wu-chip-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-chip-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-chip-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
+    tok('--wu-chip-radius', 'ความมน', 'Radius'),
+    tok('--wu-chip-gap', 'ระยะระหว่างส่วนต่าง ๆ', 'Gap between parts'),
+    tok('--wu-control-focus-shadow', 'วงโฟกัสของปุ่มลบ', 'Focus ring of the remove button'),
   ],
 };
 
@@ -256,9 +256,9 @@ export const AVATAR_DOC: ComponentDoc = {
   title: 'Avatar',
   group: 'Display',
   entry: 'avatar',
-  standalone: 'WtAvatar',
-  module: 'WtAvatarModule',
-  selector: 'wt-avatar',
+  standalone: 'WuAvatar',
+  module: 'WuAvatarModule',
+  selector: 'wu-avatar',
   description: {
     th: 'รูปหรือตัวอักษรแทนผู้ใช้ มีขนาด รูปทรง และกลุ่มที่ซ้อนกัน ถ้าโหลดรูปไม่ได้จะแสดง label แทน',
     en: 'A picture or initials for a person, with sizes, shapes and overlapping groups. If the image fails, the label shows instead.',
@@ -270,10 +270,10 @@ export const AVATAR_DOC: ComponentDoc = {
     'สมชาย ใจดี': 'Alex Morgan',
   },
   sections: {
-    import: { title: 'Import', text: { th: 'มี <code>WtAvatar</code> และ <code>WtAvatarGroup</code> อยู่ใน <code>WtAvatarModule</code>', en: '<code>WtAvatar</code> and <code>WtAvatarGroup</code> both come with <code>WtAvatarModule</code>.' } },
+    import: { title: 'Import', text: { th: 'มี <code>WuAvatar</code> และ <code>WuAvatarGroup</code> อยู่ใน <code>WuAvatarModule</code>', en: '<code>WuAvatar</code> and <code>WuAvatarGroup</code> both come with <code>WuAvatarModule</code>.' } },
     basic: { title: { th: 'Label, icon และรูป', en: 'Label, icon and image' } },
     sizes: { title: { th: 'ขนาดและรูปทรง', en: 'Sizes and shapes' } },
-    group: { title: 'AvatarGroup', text: { th: 'ครอบด้วย <code>wt-avatar-group</code> เพื่อเรียงซ้อนกัน', en: 'Wrap them in <code>wt-avatar-group</code> to overlap them.' } },
+    group: { title: 'AvatarGroup', text: { th: 'ครอบด้วย <code>wu-avatar-group</code> เพื่อเรียงซ้อนกัน', en: 'Wrap them in <code>wu-avatar-group</code> to overlap them.' } },
     fallback: {
       title: { th: 'เมื่อโหลดรูปไม่ได้', en: 'When the image fails' },
       text: {
@@ -283,20 +283,20 @@ export const AVATAR_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-avatar label="ส"></wt-avatar>
-<wt-avatar icon="wi wi-user"></wt-avatar>
-<wt-avatar image="assets/avatar.png" ariaLabel="สมชาย ใจดี"></wt-avatar>`,
-    sizes: `<wt-avatar label="A" shape="circle"></wt-avatar>
-<wt-avatar label="B" size="large" shape="circle"></wt-avatar>
-<wt-avatar label="C" size="xlarge" shape="circle"></wt-avatar>
-<wt-avatar label="D" size="xlarge"></wt-avatar>`,
-    group: `<wt-avatar-group>
-  <wt-avatar label="ส" shape="circle"></wt-avatar>
-  <wt-avatar label="ก" shape="circle"></wt-avatar>
-  <wt-avatar label="ม" shape="circle"></wt-avatar>
-  <wt-avatar label="+5" shape="circle"></wt-avatar>
-</wt-avatar-group>`,
-    fallback: `<wt-avatar image="assets/missing.png" label="ส" shape="circle" (onImageError)="log($event)"></wt-avatar>`,
+    basic: `<wu-avatar label="ส"></wu-avatar>
+<wu-avatar icon="wi wi-user"></wu-avatar>
+<wu-avatar image="assets/avatar.png" ariaLabel="สมชาย ใจดี"></wu-avatar>`,
+    sizes: `<wu-avatar label="A" shape="circle"></wu-avatar>
+<wu-avatar label="B" size="large" shape="circle"></wu-avatar>
+<wu-avatar label="C" size="xlarge" shape="circle"></wu-avatar>
+<wu-avatar label="D" size="xlarge"></wu-avatar>`,
+    group: `<wu-avatar-group>
+  <wu-avatar label="ส" shape="circle"></wu-avatar>
+  <wu-avatar label="ก" shape="circle"></wu-avatar>
+  <wu-avatar label="ม" shape="circle"></wu-avatar>
+  <wu-avatar label="+5" shape="circle"></wu-avatar>
+</wu-avatar-group>`,
+    fallback: `<wu-avatar image="assets/missing.png" label="ส" shape="circle" (onImageError)="log($event)"></wu-avatar>`,
   },
   api: [
     {
@@ -317,16 +317,16 @@ export const AVATAR_DOC: ComponentDoc = {
       id: 'api-group',
       title: 'AvatarGroup',
       typeLabel: { th: 'ใส่ด้วย', en: 'Use' },
-      rows: [row('wt-avatar-group', 'element', undefined, 'ครอบ avatar หลายตัวให้ซ้อนกัน', 'Wraps avatars so they overlap')],
+      rows: [row('wu-avatar-group', 'element', undefined, 'ครอบ avatar หลายตัวให้ซ้อนกัน', 'Wraps avatars so they overlap')],
     },
   ],
   tokens: [
-    tok('--wt-avatar-size', 'ขนาด', 'Size'),
-    tok('--wt-avatar-bg', 'พื้น', 'Background'),
-    tok('--wt-avatar-color', 'สีตัวอักษรและ icon', 'Text and icon colour'),
-    tok('--wt-avatar-font-size', 'ขนาดตัวอักษร', 'Font size'),
-    tok('--wt-avatar-radius', 'ความมนของ shape="square"', 'Radius of shape="square"'),
-    tok('--wt-card-bg', 'ขอบคั่นระหว่าง avatar ในกลุ่ม', 'Ring between grouped avatars'),
+    tok('--wu-avatar-size', 'ขนาด', 'Size'),
+    tok('--wu-avatar-bg', 'พื้น', 'Background'),
+    tok('--wu-avatar-color', 'สีตัวอักษรและ icon', 'Text and icon colour'),
+    tok('--wu-avatar-font-size', 'ขนาดตัวอักษร', 'Font size'),
+    tok('--wu-avatar-radius', 'ความมนของ shape="square"', 'Radius of shape="square"'),
+    tok('--wu-card-bg', 'ขอบคั่นระหว่าง avatar ในกลุ่ม', 'Ring between grouped avatars'),
   ],
 };
 
@@ -335,9 +335,9 @@ export const SKELETON_DOC: ComponentDoc = {
   title: 'Skeleton',
   group: 'Feedback',
   entry: 'skeleton',
-  standalone: 'WtSkeleton',
-  module: 'WtSkeletonModule',
-  selector: 'wt-skeleton',
+  standalone: 'WuSkeleton',
+  module: 'WuSkeletonModule',
+  selector: 'wu-skeleton',
   description: { th: 'กล่องเปล่าที่แสดงระหว่างรอข้อมูล วางเป็นโครงหน้าตาของเนื้อหาจริงได้', en: 'Placeholder shapes shown while data loads, laid out like the real content.' },
   sections: {
     import: { title: 'Import', text: importText },
@@ -347,20 +347,20 @@ export const SKELETON_DOC: ComponentDoc = {
     animation: { title: 'Animation', text: { th: '<code>animation="none"</code> ปิดแสงวิ่ง ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะไม่เห็นแสงวิ่งอยู่แล้ว', en: '<code>animation="none"</code> turns the shimmer off; it is also off for readers who prefer reduced motion.' } },
   },
   code: {
-    basic: `<wt-skeleton></wt-skeleton>
-<wt-skeleton width="60%"></wt-skeleton>
-<wt-skeleton width="10rem" height="2rem"></wt-skeleton>`,
-    shapes: `<wt-skeleton shape="circle" size="3rem"></wt-skeleton>
-<wt-skeleton size="3rem" borderRadius="12px"></wt-skeleton>`,
+    basic: `<wu-skeleton></wu-skeleton>
+<wu-skeleton width="60%"></wu-skeleton>
+<wu-skeleton width="10rem" height="2rem"></wu-skeleton>`,
+    shapes: `<wu-skeleton shape="circle" size="3rem"></wu-skeleton>
+<wu-skeleton size="3rem" borderRadius="12px"></wu-skeleton>`,
     card: `<div class="row">
-  <wt-skeleton shape="circle" size="3rem"></wt-skeleton>
+  <wu-skeleton shape="circle" size="3rem"></wu-skeleton>
   <div class="lines">
-    <wt-skeleton width="40%"></wt-skeleton>
-    <wt-skeleton width="70%" height="0.75rem"></wt-skeleton>
+    <wu-skeleton width="40%"></wu-skeleton>
+    <wu-skeleton width="70%" height="0.75rem"></wu-skeleton>
   </div>
 </div>
-<wt-skeleton height="8rem"></wt-skeleton>`,
-    animation: `<wt-skeleton animation="none"></wt-skeleton>`,
+<wu-skeleton height="8rem"></wu-skeleton>`,
+    animation: `<wu-skeleton animation="none"></wu-skeleton>`,
   },
   api: [
     {
@@ -378,9 +378,9 @@ export const SKELETON_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-skeleton-bg', 'พื้น', 'Background'),
-    tok('--wt-skeleton-wave', 'สีของแสงวิ่ง', 'Shimmer colour'),
-    tok('--wt-radius-md', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-skeleton-bg', 'พื้น', 'Background'),
+    tok('--wu-skeleton-wave', 'สีของแสงวิ่ง', 'Shimmer colour'),
+    tok('--wu-radius-md', 'ความมนของมุม', 'Corner radius'),
   ],
 };
 
@@ -389,9 +389,9 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
   title: 'ProgressBar',
   group: 'Feedback',
   entry: 'progressbar',
-  standalone: 'WtProgressBar',
-  module: 'WtProgressBarModule',
-  selector: 'wt-progressbar',
+  standalone: 'WuProgressBar',
+  module: 'WuProgressBarModule',
+  selector: 'wu-progressbar',
   description: {
     th: 'แถบความคืบหน้าแบบรู้ค่าหรือไม่รู้ค่า นับเป็นเปอร์เซ็นต์หรือเป็นจำนวนชิ้นเทียบกับ max ความสูงตั้งที่ตัว element ได้เลย',
     en: 'A progress bar, determinate or indeterminate, in percent or as a count against max. Set its height on the element itself.',
@@ -426,8 +426,8 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     striped: {
       title: { th: 'ลายทาง', en: 'Stripes' },
       text: {
-        th: '<code>[striped]="true"</code> ใส่ลายทางเฉียงบนแถบ · <code>[animated]="true"</code> ให้ลายทางเคลื่อนที่ (มีลายทางในตัว ไม่ต้องใส่ striped) เหมาะกับงานที่กำลังทำอยู่ ลายเอียงไปข้างหน้าและวิ่งไปทางเดียวกับที่แถบยาวขึ้น (ขวาไปซ้ายในหน้า RTL) ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นลายทางนิ่ง · ลายทางเป็นอีกชั้นหนึ่ง จึงใช้คู่กับ <code>color</code> ได้ และขนาดลายตั้งด้วย token <code>--wt-progressbar-stripe-size</code>',
-        en: '<code>[striped]="true"</code> lays diagonal stripes over the bar · <code>[animated]="true"</code> makes them move (it brings the stripes itself, no striped needed), for work in progress; they lean forward and travel the way the bar grows (right to left on RTL pages), and people who ask for reduced motion see them still · the stripes are a layer of their own, so they go with <code>color</code>, and the <code>--wt-progressbar-stripe-size</code> token sets their size.',
+        th: '<code>[striped]="true"</code> ใส่ลายทางเฉียงบนแถบ · <code>[animated]="true"</code> ให้ลายทางเคลื่อนที่ (มีลายทางในตัว ไม่ต้องใส่ striped) เหมาะกับงานที่กำลังทำอยู่ ลายเอียงไปข้างหน้าและวิ่งไปทางเดียวกับที่แถบยาวขึ้น (ขวาไปซ้ายในหน้า RTL) ผู้ใช้ที่ตั้งลดการเคลื่อนไหวจะเห็นลายทางนิ่ง · ลายทางเป็นอีกชั้นหนึ่ง จึงใช้คู่กับ <code>color</code> ได้ และขนาดลายตั้งด้วย token <code>--wu-progressbar-stripe-size</code>',
+        en: '<code>[striped]="true"</code> lays diagonal stripes over the bar · <code>[animated]="true"</code> makes them move (it brings the stripes itself, no striped needed), for work in progress; they lean forward and travel the way the bar grows (right to left on RTL pages), and people who ask for reduced motion see them still · the stripes are a layer of their own, so they go with <code>color</code>, and the <code>--wu-progressbar-stripe-size</code> token sets their size.',
       },
     },
     shimmer: {
@@ -439,23 +439,23 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-progressbar [value]="64"></wt-progressbar>
-<wt-progressbar [value]="40" [showValue]="false"></wt-progressbar>`,
-    dynamic: `<wt-progressbar [value]="progress" unit="%"></wt-progressbar>
-<wt-button label="+10" size="small" (onClick)="progress = progress >= 100 ? 0 : progress + 10"></wt-button>`,
-    count: `<wt-progressbar [value]="1000" [max]="2500" unit="รายการ"></wt-progressbar>
-<wt-progressbar [value]="3" [max]="10" text="อัปโหลด 3 จาก 10 ไฟล์"></wt-progressbar>`,
-    content: `<wt-progressbar [value]="50">
+    basic: `<wu-progressbar [value]="64"></wu-progressbar>
+<wu-progressbar [value]="40" [showValue]="false"></wu-progressbar>`,
+    dynamic: `<wu-progressbar [value]="progress" unit="%"></wu-progressbar>
+<wu-button label="+10" size="small" (onClick)="progress = progress >= 100 ? 0 : progress + 10"></wu-button>`,
+    count: `<wu-progressbar [value]="1000" [max]="2500" unit="รายการ"></wu-progressbar>
+<wu-progressbar [value]="3" [max]="10" text="อัปโหลด 3 จาก 10 ไฟล์"></wu-progressbar>`,
+    content: `<wu-progressbar [value]="50">
   <ng-template #content let-value>{{ value }}/100</ng-template>
-</wt-progressbar>`,
-    indeterminate: `<wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>`,
-    style: `<wt-progressbar [value]="72" color="#14b8a6" [showValue]="false" style="height: 6px"></wt-progressbar>`,
-    striped: `<wt-progressbar [value]="45" [striped]="true"></wt-progressbar>
-<wt-progressbar [value]="60" [animated]="true" text="กำลังนำเข้า"></wt-progressbar>
-<wt-progressbar [value]="80" [striped]="true" color="var(--wt-success-color)" [showValue]="false"></wt-progressbar>`,
-    shimmer: `<wt-progressbar [value]="70" [shimmer]="true" text="กำลังคัดลอก 7 จาก 10 ไฟล์"></wt-progressbar>
-<wt-progressbar [value]="45" [shimmer]="true" color="var(--wt-success-color)" text="สำรองข้อมูล"></wt-progressbar>
-<wt-progressbar mode="indeterminate" [shimmer]="true" style="height: 6px"></wt-progressbar>`,
+</wu-progressbar>`,
+    indeterminate: `<wu-progressbar mode="indeterminate" style="height: 6px"></wu-progressbar>`,
+    style: `<wu-progressbar [value]="72" color="#14b8a6" [showValue]="false" style="height: 6px"></wu-progressbar>`,
+    striped: `<wu-progressbar [value]="45" [striped]="true"></wu-progressbar>
+<wu-progressbar [value]="60" [animated]="true" text="กำลังนำเข้า"></wu-progressbar>
+<wu-progressbar [value]="80" [striped]="true" color="var(--wu-success-color)" [showValue]="false"></wu-progressbar>`,
+    shimmer: `<wu-progressbar [value]="70" [shimmer]="true" text="กำลังคัดลอก 7 จาก 10 ไฟล์"></wu-progressbar>
+<wu-progressbar [value]="45" [shimmer]="true" color="var(--wu-success-color)" text="สำรองข้อมูล"></wu-progressbar>
+<wu-progressbar mode="indeterminate" [shimmer]="true" style="height: 6px"></wu-progressbar>`,
   },
   api: [
     {
@@ -484,14 +484,14 @@ export const PROGRESSBAR_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-progressbar-height', 'ความสูง', 'Height'),
-    tok('--wt-progressbar-bg', 'พื้นราง', 'Track background'),
-    tok('--wt-progressbar-radius', 'ความมน', 'Radius'),
-    tok('--wt-progressbar-label-size', 'ขนาดตัวเลข', 'Label size'),
-    tok('--wt-progressbar-label-weight', 'น้ำหนักตัวเลข', 'Label weight'),
-    tok('--wt-progressbar-stripe-size', 'ขนาดของลายทาง (striped / animated)', 'Size of the stripes (striped / animated)'),
-    tok('--wt-primary-color', 'สีแถบ', 'Bar colour'),
-    tok('--wt-primary-contrast', 'สีตัวเลขบนแถบ', 'Label colour on the bar'),
+    tok('--wu-progressbar-height', 'ความสูง', 'Height'),
+    tok('--wu-progressbar-bg', 'พื้นราง', 'Track background'),
+    tok('--wu-progressbar-radius', 'ความมน', 'Radius'),
+    tok('--wu-progressbar-label-size', 'ขนาดตัวเลข', 'Label size'),
+    tok('--wu-progressbar-label-weight', 'น้ำหนักตัวเลข', 'Label weight'),
+    tok('--wu-progressbar-stripe-size', 'ขนาดของลายทาง (striped / animated)', 'Size of the stripes (striped / animated)'),
+    tok('--wu-primary-color', 'สีแถบ', 'Bar colour'),
+    tok('--wu-primary-contrast', 'สีตัวเลขบนแถบ', 'Label colour on the bar'),
   ],
 };
 
@@ -500,9 +500,9 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   title: 'ProgressSpinner',
   group: 'Feedback',
   entry: 'progressspinner',
-  standalone: 'WtProgressSpinner',
-  module: 'WtProgressSpinnerModule',
-  selector: 'wt-progress-spinner',
+  standalone: 'WuProgressSpinner',
+  module: 'WuProgressSpinnerModule',
+  selector: 'wu-progress-spinner',
   description: {
     th: 'วงกลมหมุนบอกว่ากำลังโหลด ตั้งขนาด สีเดียวหรือหลายสี และใส่ข้อความใต้วงหรือข้างวงได้ โดยวงกับข้อความจัดอยู่กลางพื้นที่ให้เอง',
     en: 'A spinning circle that shows something is loading: set its size, one colour or several, and text under or beside the ring, centred for you.',
@@ -522,8 +522,8 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtProgressSpinnerModule</code>) และ standalone ชื่อ tag ที่แอปใช้อยู่ <code>wt-progressSpinner</code> (และ <code>wt-progressspinner</code>) ใช้ได้เหมือน <code>wt-progress-spinner</code> ย้ายมาแค่เปลี่ยน prefix',
-        en: 'Works as an NgModule (<code>WtProgressSpinnerModule</code>) or standalone. The tag name apps already use, <code>wt-progressSpinner</code> (and <code>wt-progressspinner</code>), works the same as <code>wt-progress-spinner</code>, so moving over is a prefix change.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuProgressSpinnerModule</code>) และ standalone ชื่อ tag ที่แอปใช้อยู่ <code>wu-progressSpinner</code> (และ <code>wu-progressspinner</code>) ใช้ได้เหมือน <code>wu-progress-spinner</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Works as an NgModule (<code>WuProgressSpinnerModule</code>) or standalone. The tag name apps already use, <code>wu-progressSpinner</code> (and <code>wu-progressspinner</code>), works the same as <code>wu-progress-spinner</code>, so moving over is a prefix change.',
       },
     },
     basic: { title: 'Basic' },
@@ -537,42 +537,42 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
     colors: {
       title: { th: 'หลากสี', en: 'Colours' },
       text: {
-        th: '<code>[multicolor]="true"</code> ให้วงเปลี่ยนสีวนตามสีของธีม (primary → info → success → warn) ส่วน <code>[multicolor]="false"</code> ใช้สี primary สีเดียว · ถ้าไม่ใส่ จะเป็นไปตาม preset (บาง preset วนสี่สีอยู่แล้ว บาง preset ใช้สีเดียว) · <code>[colors]</code> ใส่สีเองได้สูงสุดสี่สี เช่นสีของแบรนด์ (ใส่น้อยกว่าสี่สีจะวนซ้ำให้ครบ) · ทั้งหมดเป็นตัวแปร <code>--wt-spinner-color-1</code> ถึง <code>-4</code> ที่ host จึงตั้งด้วย CSS ก็ได้',
-        en: '<code>[multicolor]="true"</code> cycles the ring through the theme’s colours (primary → info → success → warn), and <code>[multicolor]="false"</code> keeps it on the primary colour · left out, the preset decides (some presets already cycle four colours, others use one) · <code>[colors]</code> takes your own, up to four, such as brand colours (fewer repeat to fill four) · all of them are the <code>--wt-spinner-color-1</code> to <code>-4</code> variables on the host, so CSS can set them too.',
+        th: '<code>[multicolor]="true"</code> ให้วงเปลี่ยนสีวนตามสีของธีม (primary → info → success → warn) ส่วน <code>[multicolor]="false"</code> ใช้สี primary สีเดียว · ถ้าไม่ใส่ จะเป็นไปตาม preset (บาง preset วนสี่สีอยู่แล้ว บาง preset ใช้สีเดียว) · <code>[colors]</code> ใส่สีเองได้สูงสุดสี่สี เช่นสีของแบรนด์ (ใส่น้อยกว่าสี่สีจะวนซ้ำให้ครบ) · ทั้งหมดเป็นตัวแปร <code>--wu-spinner-color-1</code> ถึง <code>-4</code> ที่ host จึงตั้งด้วย CSS ก็ได้',
+        en: '<code>[multicolor]="true"</code> cycles the ring through the theme’s colours (primary → info → success → warn), and <code>[multicolor]="false"</code> keeps it on the primary colour · left out, the preset decides (some presets already cycle four colours, others use one) · <code>[colors]</code> takes your own, up to four, such as brand colours (fewer repeat to fill four) · all of them are the <code>--wu-spinner-color-1</code> to <code>-4</code> variables on the host, so CSS can set them too.',
       },
     },
     label: {
       title: { th: 'ข้อความใต้ spinner', en: 'With a label' },
       text: {
-        th: '<code>label</code> ใส่ข้อความใต้วง แล้ว spinner จัดวงกับข้อความไว้กลางพื้นที่ที่ได้รับเองทั้งแนวนอนและแนวตั้ง จึงเป็นกล่องรอโหลดได้เลยโดยไม่ต้องห่อด้วย div (ให้ความสูงกับมันพอ) · <code>labelPosition="right"</code> วางข้อความข้างวงในบรรทัดเดียว เหมาะกับแถบสถานะหรือแถวที่มีปุ่ม · template <code>label</code> ใส่เนื้อหาเองแทนข้อความ เช่นหัวข้อกับคำอธิบายสองบรรทัด · ข้อความเป็นชื่อของ progressbar สำหรับ screen reader ด้วย เว้นแต่ใส่ <code>ariaLabel</code> (ใส่ไว้เสมอเมื่อใช้ template) · ระยะห่าง สี และขนาดของข้อความตั้งด้วย token <code>--wt-spinner-label-gap</code>, <code>--wt-spinner-label-color</code> และ <code>--wt-spinner-label-size</code>',
-        en: '<code>label</code> puts text under the ring, and the spinner centres ring and text in the space it is given, both ways, so it makes a loading block without a wrapper (give it the height) · <code>labelPosition="right"</code> puts the text beside the ring on one line, for a status strip or a row with a button · a <code>label</code> template replaces the text with your own content, such as a title over a small hint · the text is also the progressbar’s name for screen readers unless <code>ariaLabel</code> is set (always set it with a template) · the <code>--wt-spinner-label-gap</code>, <code>--wt-spinner-label-color</code> and <code>--wt-spinner-label-size</code> tokens set the gap, colour and size of the text.',
+        th: '<code>label</code> ใส่ข้อความใต้วง แล้ว spinner จัดวงกับข้อความไว้กลางพื้นที่ที่ได้รับเองทั้งแนวนอนและแนวตั้ง จึงเป็นกล่องรอโหลดได้เลยโดยไม่ต้องห่อด้วย div (ให้ความสูงกับมันพอ) · <code>labelPosition="right"</code> วางข้อความข้างวงในบรรทัดเดียว เหมาะกับแถบสถานะหรือแถวที่มีปุ่ม · template <code>label</code> ใส่เนื้อหาเองแทนข้อความ เช่นหัวข้อกับคำอธิบายสองบรรทัด · ข้อความเป็นชื่อของ progressbar สำหรับ screen reader ด้วย เว้นแต่ใส่ <code>ariaLabel</code> (ใส่ไว้เสมอเมื่อใช้ template) · ระยะห่าง สี และขนาดของข้อความตั้งด้วย token <code>--wu-spinner-label-gap</code>, <code>--wu-spinner-label-color</code> และ <code>--wu-spinner-label-size</code>',
+        en: '<code>label</code> puts text under the ring, and the spinner centres ring and text in the space it is given, both ways, so it makes a loading block without a wrapper (give it the height) · <code>labelPosition="right"</code> puts the text beside the ring on one line, for a status strip or a row with a button · a <code>label</code> template replaces the text with your own content, such as a title over a small hint · the text is also the progressbar’s name for screen readers unless <code>ariaLabel</code> is set (always set it with a template) · the <code>--wu-spinner-label-gap</code>, <code>--wu-spinner-label-color</code> and <code>--wu-spinner-label-size</code> tokens set the gap, colour and size of the text.',
       },
     },
   },
   code: {
-    basic: `<wt-progress-spinner ariaLabel="กำลังโหลด"></wt-progress-spinner>`,
-    custom: `<wt-progress-spinner size="2rem" strokeWidth="6"></wt-progress-spinner>
-<wt-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wt-progress-spinner>`,
-    colors: `<wt-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังโหลด"></wt-progress-spinner>
-<wt-progress-spinner [multicolor]="false" size="3rem" ariaLabel="กำลังโหลด"></wt-progress-spinner>
+    basic: `<wu-progress-spinner ariaLabel="กำลังโหลด"></wu-progress-spinner>`,
+    custom: `<wu-progress-spinner size="2rem" strokeWidth="6"></wu-progress-spinner>
+<wu-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wu-progress-spinner>`,
+    colors: `<wu-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังโหลด"></wu-progress-spinner>
+<wu-progress-spinner [multicolor]="false" size="3rem" ariaLabel="กำลังโหลด"></wu-progress-spinner>
 <!-- สีของแบรนด์ (ใส่ได้สูงสุดสี่สี) -->
-<wt-progress-spinner [colors]="brandColors" size="3rem" strokeWidth="4" ariaLabel="กำลังโหลด"></wt-progress-spinner>`,
+<wu-progress-spinner [colors]="brandColors" size="3rem" strokeWidth="4" ariaLabel="กำลังโหลด"></wu-progress-spinner>`,
     label: `<!-- กล่องรอโหลด: วงกับข้อความอยู่กลางพื้นที่ของตัวเอง -->
-<wt-progress-spinner size="2.5rem" label="กำลังโหลดข้อมูล…" class="loading-card"></wt-progress-spinner>
+<wu-progress-spinner size="2.5rem" label="กำลังโหลดข้อมูล…" class="loading-card"></wu-progress-spinner>
 
 <!-- ข้อความข้างวง ในแถวเดียวกับปุ่ม -->
 <div class="sync-row">
-  <wt-progress-spinner size="1.25rem" strokeWidth="5" label="กำลังซิงก์ 3 รายการ" labelPosition="right"></wt-progress-spinner>
-  <wt-button label="ยกเลิก" severity="secondary" [text]="true" size="small"></wt-button>
+  <wu-progress-spinner size="1.25rem" strokeWidth="5" label="กำลังซิงก์ 3 รายการ" labelPosition="right"></wu-progress-spinner>
+  <wu-button label="ยกเลิก" severity="secondary" [text]="true" size="small"></wu-button>
 </div>
 
 <!-- เนื้อหาเองสองบรรทัด -->
-<wt-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังเตรียมรายงาน">
+<wu-progress-spinner [multicolor]="true" size="3rem" ariaLabel="กำลังเตรียมรายงาน">
   <ng-template #label>
     <strong class="spinner-title">กำลังเตรียมรายงาน</strong>
     <small class="spinner-hint">อาจใช้เวลาราว 1 นาที</small>
   </ng-template>
-</wt-progress-spinner>`,
+</wu-progress-spinner>`,
   },
   ts: {
     colors: `brandColors = ['#e8668e', '#3b6fd8', '#ff9a2e'];`,
@@ -580,7 +580,7 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   css: {
     label: `.loading-card {
   height: 12rem;
-  border: 1px dashed var(--wt-border);
+  border: 1px dashed var(--wu-border);
   border-radius: 12px;
 }
 .sync-row {
@@ -589,7 +589,7 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   justify-content: space-between;
   gap: 12px;
   padding: 6px 6px 6px 14px;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 999px;
 }
 .spinner-title,
@@ -597,7 +597,7 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
   display: block;
 }
 .spinner-hint {
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }`,
   },
   api: [
@@ -620,17 +620,17 @@ export const PROGRESSSPINNER_DOC: ComponentDoc = {
     {
       id: 'api-templates',
       title: 'Templates',
-      rows: [row('label', '—', undefined, 'เนื้อหาเองแทนข้อความ (v3: <ng-template #label> · v1 / v2: wtTemplate="label")', 'Own content in place of the text (v3: <ng-template #label> · v1 / v2: wtTemplate="label")')],
+      rows: [row('label', '—', undefined, 'เนื้อหาเองแทนข้อความ (v3: <ng-template #label> · v1 / v2: wuTemplate="label")', 'Own content in place of the text (v3: <ng-template #label> · v1 / v2: wuTemplate="label")')],
     },
   ],
   tokens: [
-    tok('--wt-spinner-size', 'ขนาดเริ่มต้น', 'Default size'),
-    tok('--wt-spinner-color-1', 'สีช่วงที่ 1 (เปลี่ยนสีวนไป 4 สี)', 'Colour 1 (the stroke cycles through 4)'),
-    tok('--wt-spinner-color-2', 'สีช่วงที่ 2', 'Colour 2'),
-    tok('--wt-spinner-color-3', 'สีช่วงที่ 3', 'Colour 3'),
-    tok('--wt-spinner-color-4', 'สีช่วงที่ 4', 'Colour 4'),
-    tok('--wt-spinner-label-gap', 'ระยะระหว่างวงกับข้อความ', 'Space between the ring and its label'),
-    tok('--wt-spinner-label-color', 'สีของข้อความ', 'Label colour'),
-    tok('--wt-spinner-label-size', 'ขนาดของข้อความ', 'Label size'),
+    tok('--wu-spinner-size', 'ขนาดเริ่มต้น', 'Default size'),
+    tok('--wu-spinner-color-1', 'สีช่วงที่ 1 (เปลี่ยนสีวนไป 4 สี)', 'Colour 1 (the stroke cycles through 4)'),
+    tok('--wu-spinner-color-2', 'สีช่วงที่ 2', 'Colour 2'),
+    tok('--wu-spinner-color-3', 'สีช่วงที่ 3', 'Colour 3'),
+    tok('--wu-spinner-color-4', 'สีช่วงที่ 4', 'Colour 4'),
+    tok('--wu-spinner-label-gap', 'ระยะระหว่างวงกับข้อความ', 'Space between the ring and its label'),
+    tok('--wu-spinner-label-color', 'สีของข้อความ', 'Label colour'),
+    tok('--wu-spinner-label-size', 'ขนาดของข้อความ', 'Label size'),
   ],
 };

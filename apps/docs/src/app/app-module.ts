@@ -15,7 +15,7 @@ import { DocsTitleStrategy } from './core/title-strategy';
   imports: [BrowserModule, AppRoutingModule],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    // zone.js stays on: wiratheme@1 components rely on it.
+    // zone.js stays on: wiraui@1 components rely on it.
     provideZoneChangeDetection({ eventCoalescing: true }),
     { provide: TitleStrategy, useClass: DocsTitleStrategy },
   ],

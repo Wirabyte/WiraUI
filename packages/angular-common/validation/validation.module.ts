@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { WtFieldError } from './field-error.component';
-import { WtMatchValidator, WtThaiIdValidator, WtThaiPhoneValidator } from './validators';
+import { WuFieldError } from './field-error.component';
+import { WuMatchValidator, WuThaiIdValidator, WuThaiPhoneValidator } from './validators';
 
-const ALL = [WtFieldError, WtThaiIdValidator, WtThaiPhoneValidator, WtMatchValidator];
+const ALL = [WuFieldError, WuThaiIdValidator, WuThaiPhoneValidator, WuMatchValidator];
 
-/** For NgModule apps: `wt-field-error` and the `wtThaiId`, `wtThaiPhone`, `wtMatch` validators. */
+/** For NgModule apps: `wu-field-error` and the `wuThaiId`, `wuThaiPhone`, `wuMatch` validators. */
 @NgModule({
   imports: ALL,
   exports: ALL,
 })
-export class WtValidationModule {}
+export class WuValidationModule {}

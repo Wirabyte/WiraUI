@@ -1,15 +1,15 @@
 /** The `value` of a tab when tabs are written by value. */
-export type WtTabValue = string | number;
+export type WuTabValue = string | number;
 
-export interface WtTabsChangeEvent {
+export interface WuTabsChangeEvent {
   index: number;
   /** Tabs by value: the chosen tab's value. */
-  value?: WtTabValue;
+  value?: WuTabValue;
   originalEvent: Event;
 }
 
 /** A tab value as an id fragment. */
-export function ɵtabKey(value: WtTabValue | undefined): string {
+export function ɵtabKey(value: WuTabValue | undefined): string {
   return String(value ?? '').replace(/[^\w-]/g, '_');
 }
 

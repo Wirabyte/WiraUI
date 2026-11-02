@@ -1,65 +1,65 @@
-/* wiratheme/animate. Shared by wiratheme v1, v2 and v3. Elements with data-aos start hidden or moved and settle in
-   place when they scroll into view (.wt-aos-in). Only elements the script watches (.wt-aos), so content never stays
+/* wiraui/animate. Shared by wiraui v1, v2 and v3. Elements with data-aos start hidden or moved and settle in
+   place when they scroll into view (.wu-aos-in). Only elements the script watches (.wu-aos), so content never stays
    hidden without it; and never for people who ask for reduced motion. */
-@layer wiratheme.utilities {
-  [data-aos].wt-aos {
+@layer wiraui.utilities {
+  [data-aos].wu-aos {
     --_aos-distance: 100px;
   }
-  /* Transitions start once the hidden state is in place (.wt-aos-ready), so content never fades out first. */
-  [data-aos].wt-aos.wt-aos-ready {
+  /* Transitions start once the hidden state is in place (.wu-aos-ready), so content never fades out first. */
+  [data-aos].wu-aos.wu-aos-ready {
     transition-property: opacity, transform, visibility;
     transition-duration: var(--_aos-duration, 400ms);
     transition-delay: var(--_aos-delay, 0ms);
     transition-timing-function: var(--_aos-easing, ease);
   }
-  [data-aos].wt-aos.wt-aos-in {
+  [data-aos].wu-aos.wu-aos-in {
     opacity: 1;
     transform: none;
     visibility: visible;
   }
 
   /* fade */
-  [data-aos^='fade'].wt-aos:not(.wt-aos-in) { opacity: 0; }
-  [data-aos='fade-up'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, var(--_aos-distance), 0); }
-  [data-aos='fade-down'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0); }
-  [data-aos='fade-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0); }
-  [data-aos='fade-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0); }
-  [data-aos='fade-up-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), var(--_aos-distance), 0); }
-  [data-aos='fade-up-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(var(--_aos-distance), var(--_aos-distance), 0); }
-  [data-aos='fade-down-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), calc(var(--_aos-distance) * -1), 0); }
-  [data-aos='fade-down-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(var(--_aos-distance), calc(var(--_aos-distance) * -1), 0); }
+  [data-aos^='fade'].wu-aos:not(.wu-aos-in) { opacity: 0; }
+  [data-aos='fade-up'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, var(--_aos-distance), 0); }
+  [data-aos='fade-down'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0); }
+  [data-aos='fade-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0); }
+  [data-aos='fade-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0); }
+  [data-aos='fade-up-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), var(--_aos-distance), 0); }
+  [data-aos='fade-up-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(var(--_aos-distance), var(--_aos-distance), 0); }
+  [data-aos='fade-down-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), calc(var(--_aos-distance) * -1), 0); }
+  [data-aos='fade-down-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(var(--_aos-distance), calc(var(--_aos-distance) * -1), 0); }
 
   /* zoom */
-  [data-aos^='zoom'].wt-aos:not(.wt-aos-in) { opacity: 0; }
-  [data-aos='zoom-in'].wt-aos:not(.wt-aos-in) { transform: scale(0.6); }
-  [data-aos='zoom-in-up'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, var(--_aos-distance), 0) scale(0.6); }
-  [data-aos='zoom-in-down'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0) scale(0.6); }
-  [data-aos='zoom-in-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0) scale(0.6); }
-  [data-aos='zoom-in-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0) scale(0.6); }
-  [data-aos='zoom-out'].wt-aos:not(.wt-aos-in) { transform: scale(1.2); }
-  [data-aos='zoom-out-up'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, var(--_aos-distance), 0) scale(1.2); }
-  [data-aos='zoom-out-down'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0) scale(1.2); }
-  [data-aos='zoom-out-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0) scale(1.2); }
-  [data-aos='zoom-out-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0) scale(1.2); }
+  [data-aos^='zoom'].wu-aos:not(.wu-aos-in) { opacity: 0; }
+  [data-aos='zoom-in'].wu-aos:not(.wu-aos-in) { transform: scale(0.6); }
+  [data-aos='zoom-in-up'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, var(--_aos-distance), 0) scale(0.6); }
+  [data-aos='zoom-in-down'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0) scale(0.6); }
+  [data-aos='zoom-in-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0) scale(0.6); }
+  [data-aos='zoom-in-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0) scale(0.6); }
+  [data-aos='zoom-out'].wu-aos:not(.wu-aos-in) { transform: scale(1.2); }
+  [data-aos='zoom-out-up'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, var(--_aos-distance), 0) scale(1.2); }
+  [data-aos='zoom-out-down'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, calc(var(--_aos-distance) * -1), 0) scale(1.2); }
+  [data-aos='zoom-out-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(var(--_aos-distance), 0, 0) scale(1.2); }
+  [data-aos='zoom-out-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(calc(var(--_aos-distance) * -1), 0, 0) scale(1.2); }
 
   /* slide: moves its own height or width, hidden until it starts */
-  [data-aos^='slide'].wt-aos:not(.wt-aos-in) { visibility: hidden; }
-  [data-aos='slide-up'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, 100%, 0); }
-  [data-aos='slide-down'].wt-aos:not(.wt-aos-in) { transform: translate3d(0, -100%, 0); }
-  [data-aos='slide-left'].wt-aos:not(.wt-aos-in) { transform: translate3d(100%, 0, 0); }
-  [data-aos='slide-right'].wt-aos:not(.wt-aos-in) { transform: translate3d(-100%, 0, 0); }
+  [data-aos^='slide'].wu-aos:not(.wu-aos-in) { visibility: hidden; }
+  [data-aos='slide-up'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, 100%, 0); }
+  [data-aos='slide-down'].wu-aos:not(.wu-aos-in) { transform: translate3d(0, -100%, 0); }
+  [data-aos='slide-left'].wu-aos:not(.wu-aos-in) { transform: translate3d(100%, 0, 0); }
+  [data-aos='slide-right'].wu-aos:not(.wu-aos-in) { transform: translate3d(-100%, 0, 0); }
 
   /* flip: turns in from edge-on */
-  [data-aos^='flip'].wt-aos { backface-visibility: hidden; }
-  [data-aos^='flip'].wt-aos.wt-aos-in { transform: perspective(2500px) rotateX(0) rotateY(0); }
-  [data-aos='flip-left'].wt-aos:not(.wt-aos-in) { transform: perspective(2500px) rotateY(-100deg); }
-  [data-aos='flip-right'].wt-aos:not(.wt-aos-in) { transform: perspective(2500px) rotateY(100deg); }
-  [data-aos='flip-up'].wt-aos:not(.wt-aos-in) { transform: perspective(2500px) rotateX(-100deg); }
-  [data-aos='flip-down'].wt-aos:not(.wt-aos-in) { transform: perspective(2500px) rotateX(100deg); }
+  [data-aos^='flip'].wu-aos { backface-visibility: hidden; }
+  [data-aos^='flip'].wu-aos.wu-aos-in { transform: perspective(2500px) rotateX(0) rotateY(0); }
+  [data-aos='flip-left'].wu-aos:not(.wu-aos-in) { transform: perspective(2500px) rotateY(-100deg); }
+  [data-aos='flip-right'].wu-aos:not(.wu-aos-in) { transform: perspective(2500px) rotateY(100deg); }
+  [data-aos='flip-up'].wu-aos:not(.wu-aos-in) { transform: perspective(2500px) rotateX(-100deg); }
+  [data-aos='flip-down'].wu-aos:not(.wu-aos-in) { transform: perspective(2500px) rotateX(100deg); }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-aos].wt-aos,
-    [data-aos].wt-aos:not(.wt-aos-in) {
+    [data-aos].wu-aos,
+    [data-aos].wu-aos:not(.wu-aos-in) {
       opacity: 1;
       transform: none;
       visibility: visible;

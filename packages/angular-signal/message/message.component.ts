@@ -12,15 +12,15 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { WtMessageSeverity, WtMessageSize, WtMessageVariant } from './message.types';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { WuMessageSeverity, WuMessageSize, WuMessageVariant } from './message.types';
 
 /**
- * Inline status message: `<wt-message severity="warn" text="กรุณาตรวจสอบข้อมูล" closable>`.
+ * Inline status message: `<wu-message severity="warn" text="กรุณาตรวจสอบข้อมูล" closable>`.
  * Projected content follows `text`. `life` (ms) closes it automatically; closing emits `onClose`.
  */
 @Component({
-  selector: 'wt-message',
+  selector: 'wu-message',
   standalone: true,
   templateUrl: './message.component.html',
   styleUrl: './message.css',
@@ -28,8 +28,8 @@ import { WtMessageSeverity, WtMessageSize, WtMessageVariant } from './message.ty
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[hidden]': '!visible()' },
 })
-export class WtMessage implements OnInit {
-  readonly severity = input<WtMessageSeverity>('info');
+export class WuMessage implements OnInit {
+  readonly severity = input<WuMessageSeverity>('info');
   readonly text = input<string>();
   /** `[escape]="false"` shows `text` as HTML (sanitised by Angular). Default true. */
   readonly escape = input(true, { transform: booleanAttribute });
@@ -38,12 +38,12 @@ export class WtMessage implements OnInit {
   readonly closable = input(false, { transform: booleanAttribute });
   /** Close automatically after this many milliseconds. */
   readonly life = input(0, { transform: numberAttribute });
-  readonly size = input<WtMessageSize>();
-  readonly variant = input<WtMessageVariant>();
+  readonly size = input<WuMessageSize>();
+  readonly variant = input<WuMessageVariant>();
 
   readonly onClose = output<Event | null>();
 
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly destroyRef = inject(DestroyRef);
   readonly visible = signal(true);
   readonly sev = computed(() => ɵseverity(this.severity(), 'info'));
@@ -63,15 +63,15 @@ export class WtMessage implements OnInit {
   readonly baseClasses = computed(() => {
     const sev = this.sev();
     // The styled class names spell danger as error.
-    const c = ['wt-message', 'p-message', 'p-component', 'wt-message-' + sev, 'p-message-' + (sev === 'danger' ? 'error' : sev)];
-    if (this.size() === 'small') c.push('wt-message-sm', 'p-message-sm');
-    if (this.size() === 'large') c.push('wt-message-lg', 'p-message-lg');
-    if (this.variant()) c.push('wt-message-' + this.variant(), 'p-message-' + this.variant());
+    const c = ['wu-message', 'p-message', 'p-component', 'wu-message-' + sev, 'p-message-' + (sev === 'danger' ? 'error' : sev)];
+    if (this.size() === 'small') c.push('wu-message-sm', 'p-message-sm');
+    if (this.size() === 'large') c.push('wu-message-lg', 'p-message-lg');
+    if (this.variant()) c.push('wu-message-' + this.variant(), 'p-message-' + this.variant());
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     const i18n = ɵrefreshOnTranslation();
     inject(DestroyRef).onDestroy(() => i18n.unsubscribe());
   }

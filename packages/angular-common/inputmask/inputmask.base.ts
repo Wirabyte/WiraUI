@@ -16,10 +16,10 @@ import {
   ɵsize,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtStyleLoader,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuStyleLoader,
+} from 'wiraui/config';
 import {
   caretAfter,
   fillMask,
@@ -31,18 +31,18 @@ import {
   parseMask,
   typedBefore,
   unmaskedValue,
-  WtLocale,
-} from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
+  WuLocale,
+} from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
 
 /**
- * What wt-inputmask does, shared by the v1 and v2/v3 templates. A text field that types the literals of a mask for the
+ * What wu-inputmask does, shared by the v1 and v2/v3 templates. A text field that types the literals of a mask for the
  * user (`mask="9-9999-99999-99-9"` for a Thai ID). The field shows `_` for empty slots while it has focus; on blur an
  * incomplete value is cleared (`autoClear`, default true). The model gets the formatted text, or only the typed
  * characters with `[unmask]="true"`. Thai digits count as 0–9, and digit-only masks bring up the number keypad.
  */
 @Directive()
-export abstract class ɵWtInputMaskBase implements ControlValueAccessor, OnDestroy {
+export abstract class ɵWuInputMaskBase implements ControlValueAccessor, OnDestroy {
   /** `9` digit, `a` letter, `*` letter or digit, `?` starts the optional part; anything else is typed for the user. */
   @Input() set mask(v: string | null | undefined) {
     this._mask = v || '';
@@ -105,13 +105,13 @@ export abstract class ɵWtInputMaskBase implements ControlValueAccessor, OnDestr
 
   @ViewChild('field', { static: true }) protected inputRef?: ElementRef<HTMLInputElement>;
 
-  readonly baseId = ɵuniqueId('wt-inputmask');
+  readonly baseId = ɵuniqueId('wu-inputmask');
   focused = false;
   /** What the model holds. */
   value: string | null = null;
 
   protected readonly cdr = inject(ChangeDetectorRef);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private _mask = '';
   private _charPattern?: string;
@@ -131,8 +131,8 @@ export abstract class ɵWtInputMaskBase implements ControlValueAccessor, OnDestr
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -141,7 +141,7 @@ export abstract class ɵWtInputMaskBase implements ControlValueAccessor, OnDestr
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get sizeKey(): 'sm' | 'lg' | null {

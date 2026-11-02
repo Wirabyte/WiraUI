@@ -1,4 +1,4 @@
-/** wt-flow: pan and zoom maths. Screen points here are relative to the pane's top-left corner, in CSS pixels. */
+/** wu-flow: pan and zoom maths. Screen points here are relative to the pane's top-left corner, in CSS pixels. */
 import { flowClamp } from './geometry';
 import type { FlowCoordinateExtent, FlowDimensions, FlowRect, FlowViewport, FlowXY } from './types';
 

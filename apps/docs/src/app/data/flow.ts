@@ -2,9 +2,9 @@ import { ComponentDoc } from '../core/component-doc';
 import { row, STYLE_ROW, tok } from './doc-helpers';
 
 /** The node template context, shown on the Properties tab. */
-const NODE_CONTEXT = `// <ng-template wtFlowNode="person" let-node> : node คือ object นี้
-interface WtFlowNodeContext<T = any> {
-  node: WtFlowNode<T>;          // โหนดตามที่แอปให้ (ตำแหน่งและการเลือกล่าสุด)
+const NODE_CONTEXT = `// <ng-template wuFlowNode="person" let-node> : node คือ object นี้
+interface WuFlowNodeContext<T = any> {
+  node: WuFlowNode<T>;          // โหนดตามที่แอปให้ (ตำแหน่งและการเลือกล่าสุด)
   id: string;
   type: string;
   data: T;
@@ -21,9 +21,9 @@ interface WtFlowNodeContext<T = any> {
   parentId: string | null;
 }
 
-// <ng-template wtFlowEdge="special" let-edge> และ wtFlowEdgeLabel
-interface WtFlowEdgeContext<T = any> {
-  edge: WtFlowEdge<T>;
+// <ng-template wuFlowEdge="special" let-edge> และ wuFlowEdgeLabel
+interface WuFlowEdgeContext<T = any> {
+  edge: WuFlowEdge<T>;
   id: string;
   type: string;
   data: T;
@@ -41,8 +41,8 @@ interface WtFlowEdgeContext<T = any> {
   markerEnd: string | null;
 }
 
-// <ng-template wtFlowConnectionLine let-line>
-interface WtFlowConnectionLineContext {
+// <ng-template wuFlowConnectionLine let-line>
+interface WuFlowConnectionLineContext {
   path: string;
   fromX: number;
   fromY: number;
@@ -53,7 +53,7 @@ interface WtFlowConnectionLineContext {
   fromHandleId: string | null;
 }`;
 
-const DATA_TYPES = `interface WtFlowNode<T = any> {
+const DATA_TYPES = `interface WuFlowNode<T = any> {
   id: string;
   position: { x: number; y: number };    // นับจากกรอบแม่ถ้ามี parentId
   data?: T;                               // โหนดในตัวแสดง data.label
@@ -81,7 +81,7 @@ const DATA_TYPES = `interface WtFlowNode<T = any> {
   dragHandle?: string;                    // selector ของส่วนที่ใช้ลาก เช่น '.grip'
 }
 
-interface WtFlowEdge<T = any> {
+interface WuFlowEdge<T = any> {
   id: string;
   source: string;
   target: string;
@@ -117,9 +117,9 @@ export const FLOW_DOC: ComponentDoc = {
   title: 'Flow',
   group: 'Charts',
   entry: 'flow',
-  standalone: 'WtFlow, WtFlowHandle, WtFlowNodeTemplate, WtFlowBackground, WtFlowControls, WtFlowMinimap',
-  module: 'WtFlowModule',
-  selector: 'wt-flow',
+  standalone: 'WuFlow, WuFlowHandle, WuFlowNodeTemplate, WuFlowBackground, WuFlowControls, WuFlowMinimap',
+  module: 'WuFlowModule',
+  selector: 'wu-flow',
   description: {
     th: 'แผนภาพแบบโหนดที่ผู้ใช้ลาก เชื่อม และแก้ได้บนหน้าเว็บ เช่น ขั้นตอนอนุมัติ ผังงาน ผังองค์กร แผนผังระบบ · โหนดเป็น template ของแอปเอง เส้นเชื่อมมี 5 แบบ ซูมและเลื่อนได้ทั้งเมาส์ คีย์บอร์ด และจอสัมผัส จัดเรียงอัตโนมัติ เลิกทำ / ทำซ้ำ และส่งออกเป็น SVG หรือ JSON',
     en: 'A node diagram people drag, connect and edit on the page: approval steps, flowcharts, org charts, system maps · nodes are your own templates, edges come in five shapes, and it pans and zooms by mouse, keyboard and touch, lays itself out, undoes and redoes, and exports to SVG or JSON.',
@@ -303,7 +303,7 @@ export const FLOW_DOC: ComponentDoc = {
     'โหนดตามที่แอปให้ (ตำแหน่งและการเลือกล่าสุด)': 'the node as the app gave it (with the latest position and selection)',
     'ตำแหน่งใน flow รวมกรอบแม่แล้ว': 'position in the flow, parents added',
     'ขนาดที่วัดได้ (0 จนกว่าจะวัด)': 'measured size (0 until measured)',
-    'และ wtFlowEdgeLabel': 'and wtFlowEdgeLabel',
+    'และ wuFlowEdgeLabel': 'and wuFlowEdgeLabel',
     'ใช้กับ': 'for',
     'อยู่เหนือจุดที่ต่อได้ / ไม่ได้ / ยังไม่อยู่เหนือจุดไหน': 'over a handle that may take it / may not / over none yet',
     'นับจากกรอบแม่ถ้ามี parentId': 'from the parent’s corner when parentId is set',
@@ -320,8 +320,8 @@ export const FLOW_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'NgModule ใช้ <code>WtFlowModule</code> (ได้ทุกส่วนของ flow รวม <code>wtTemplate</code>) ส่วน standalone นำเข้าเฉพาะส่วนที่ใช้: <code>WtFlow</code>, <code>WtFlowHandle</code>, <code>WtFlowNodeTemplate</code>, <code>WtFlowEdgeTemplate</code>, <code>WtFlowEdgeLabelTemplate</code>, <code>WtFlowConnectionLineTemplate</code>, <code>WtFlowBackground</code>, <code>WtFlowControls</code>, <code>WtFlowMinimap</code>, <code>WtFlowPanel</code>, <code>WtFlowNodeToolbar</code>, <code>WtFlowNodeResizer</code>, <code>WtFlowHistory</code> · ชนิดข้อมูล (<code>WtFlowNode</code>, <code>WtFlowEdge</code> …) และ helper (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) นำเข้าจาก <code>wiratheme/flow</code> ที่เดียวกัน · เขียนครั้งเดียวใช้ได้ทุกรุ่น และไม่มี dependency ภายนอก',
-        en: 'As an NgModule use <code>WtFlowModule</code> (every part of the flow, plus <code>wtTemplate</code>); standalone apps import the parts they use: <code>WtFlow</code>, <code>WtFlowHandle</code>, <code>WtFlowNodeTemplate</code>, <code>WtFlowEdgeTemplate</code>, <code>WtFlowEdgeLabelTemplate</code>, <code>WtFlowConnectionLineTemplate</code>, <code>WtFlowBackground</code>, <code>WtFlowControls</code>, <code>WtFlowMinimap</code>, <code>WtFlowPanel</code>, <code>WtFlowNodeToolbar</code>, <code>WtFlowNodeResizer</code>, <code>WtFlowHistory</code> · the types (<code>WtFlowNode</code>, <code>WtFlowEdge</code> …) and helpers (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) come from <code>wiratheme/flow</code> too · written once for every version, with no outside dependencies.',
+        th: 'NgModule ใช้ <code>WuFlowModule</code> (ได้ทุกส่วนของ flow รวม <code>wuTemplate</code>) ส่วน standalone นำเข้าเฉพาะส่วนที่ใช้: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · ชนิดข้อมูล (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) และ helper (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) นำเข้าจาก <code>wiraui/flow</code> ที่เดียวกัน · เขียนครั้งเดียวใช้ได้ทุกรุ่น และไม่มี dependency ภายนอก',
+        en: 'As an NgModule use <code>WuFlowModule</code> (every part of the flow, plus <code>wuTemplate</code>); standalone apps import the parts they use: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · the types (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) and helpers (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) come from <code>wiraui/flow</code> too · written once for every version, with no outside dependencies.',
       },
     },
     basic: {
@@ -334,15 +334,15 @@ export const FLOW_DOC: ComponentDoc = {
     nodes: {
       title: { th: 'โหนดของแอปเอง', en: 'Your own nodes' },
       text: {
-        th: 'โหนดที่ <code>type</code> ตรงกับ <code>&lt;ng-template wtFlowNode="person" let-node&gt;</code> วาดด้วย template นั้น (<code>node.data</code>, <code>node.selected</code>, <code>node.id</code> …) ใส่ <code>class="wt-flow-node-box"</code> เพื่อได้กรอบแบบโหนดในตัว · <code>&lt;wt-flow-handle&gt;</code> คือจุดที่เส้นมาต่อ: <code>type</code> เป็น source หรือ target และ <code>position</code> เป็น top / right / bottom / left · มีหลายจุดในโหนดเดียวได้: ตั้ง <code>id</code> แล้วอ้างในเส้นด้วย <code>sourceHandle</code> / <code>targetHandle</code> และเลื่อนตามด้านด้วย style (<code>[style.top.%]="30"</code>) · <code>&lt;ng-template wtFlowNode let-node&gt;</code> ที่ไม่ใส่ชื่อใช้กับทุกโหนดที่ไม่มี template ของตัวเอง · จะวาดด้วย component ก็ได้: <code>[nodeTypes]="{ machine: MachineNodeComponent }"</code> แล้วใน component ใช้ <code>inject(WT_FLOW_NODE)</code>',
-        en: 'A node whose <code>type</code> matches <code>&lt;ng-template wtFlowNode="person" let-node&gt;</code> is drawn by that template (<code>node.data</code>, <code>node.selected</code>, <code>node.id</code> …); add <code>class="wt-flow-node-box"</code> for the frame the built-in nodes have · a <code>&lt;wt-flow-handle&gt;</code> is where edges attach: its <code>type</code> is source or target and its <code>position</code> top / right / bottom / left · a node may have several: give each an <code>id</code>, name it in the edge as <code>sourceHandle</code> / <code>targetHandle</code>, and move it along its side with a style (<code>[style.top.%]="30"</code>) · <code>&lt;ng-template wtFlowNode let-node&gt;</code> without a name draws every node that has no template of its own · components work too: <code>[nodeTypes]="{ machine: MachineNodeComponent }"</code>, with <code>inject(WT_FLOW_NODE)</code> inside the component.',
+        th: 'โหนดที่ <code>type</code> ตรงกับ <code>&lt;ng-template wuFlowNode="person" let-node&gt;</code> วาดด้วย template นั้น (<code>node.data</code>, <code>node.selected</code>, <code>node.id</code> …) ใส่ <code>class="wu-flow-node-box"</code> เพื่อได้กรอบแบบโหนดในตัว · <code>&lt;wu-flow-handle&gt;</code> คือจุดที่เส้นมาต่อ: <code>type</code> เป็น source หรือ target และ <code>position</code> เป็น top / right / bottom / left · มีหลายจุดในโหนดเดียวได้: ตั้ง <code>id</code> แล้วอ้างในเส้นด้วย <code>sourceHandle</code> / <code>targetHandle</code> และเลื่อนตามด้านด้วย style (<code>[style.top.%]="30"</code>) · <code>&lt;ng-template wuFlowNode let-node&gt;</code> ที่ไม่ใส่ชื่อใช้กับทุกโหนดที่ไม่มี template ของตัวเอง · จะวาดด้วย component ก็ได้: <code>[nodeTypes]="{ machine: MachineNodeComponent }"</code> แล้วใน component ใช้ <code>inject(WU_FLOW_NODE)</code>',
+        en: 'A node whose <code>type</code> matches <code>&lt;ng-template wuFlowNode="person" let-node&gt;</code> is drawn by that template (<code>node.data</code>, <code>node.selected</code>, <code>node.id</code> …); add <code>class="wu-flow-node-box"</code> for the frame the built-in nodes have · a <code>&lt;wu-flow-handle&gt;</code> is where edges attach: its <code>type</code> is source or target and its <code>position</code> top / right / bottom / left · a node may have several: give each an <code>id</code>, name it in the edge as <code>sourceHandle</code> / <code>targetHandle</code>, and move it along its side with a style (<code>[style.top.%]="30"</code>) · <code>&lt;ng-template wuFlowNode let-node&gt;</code> without a name draws every node that has no template of its own · components work too: <code>[nodeTypes]="{ machine: MachineNodeComponent }"</code>, with <code>inject(WU_FLOW_NODE)</code> inside the component.',
       },
     },
     edges: {
       title: { th: 'เส้นเชื่อม', en: 'Edges' },
       text: {
-        th: '<code>type</code> ของเส้นมี <code>default</code> (โค้ง bezier) <code>smoothstep</code> (หักมุมมน) <code>step</code> (หักมุมฉาก) <code>straight</code> และ <code>simplebezier</code> · <code>label</code> คือป้ายกลางเส้น <code>markerEnd</code> / <code>markerStart</code> ใส่หัวลูกศร (<code>\'arrow\'</code>, <code>\'arrowclosed\'</code> หรือ <code>{ type, color, width, height }</code>) <code>animated</code> ให้เส้นประวิ่ง (หยุดนิ่งเมื่อผู้ใช้ขอลดการเคลื่อนไหว) <code>style</code> เปลี่ยนสีและความหนา และ <code>pathOptions</code> ปรับความโค้ง มุม และระยะยื่น · <code>&lt;ng-template wtFlowEdgeLabel="removable" let-edge&gt;</code> วาด HTML แทนป้ายของเส้นชนิดนั้น เช่นปุ่มลบในตัวอย่าง ส่วน <code>wtFlowEdge</code> วาดทั้งเส้นเองด้วย <code>&lt;svg:path [attr.d]="edge.path"&gt;</code> · คลิกเส้นเพื่อเลือก แล้วลากวงกลมที่ปลายไปจุดอื่นเพื่อย้ายปลายเส้น (<code>[autoConnect]="true"</code> ย้ายให้เอง หรือจัดการเองใน <code>(reconnect)</code> ด้วย <code>reconnectEdge()</code>)',
-        en: 'An edge’s <code>type</code> is <code>default</code> (a bezier curve), <code>smoothstep</code> (rounded corners), <code>step</code> (square corners), <code>straight</code> or <code>simplebezier</code> · <code>label</code> sits in the middle, <code>markerEnd</code> / <code>markerStart</code> add arrowheads (<code>\'arrow\'</code>, <code>\'arrowclosed\'</code> or <code>{ type, color, width, height }</code>), <code>animated</code> runs the dashes (still when people ask for reduced motion), <code>style</code> sets the colour and width, and <code>pathOptions</code> tune the curve, the corners and the offset · <code>&lt;ng-template wtFlowEdgeLabel="removable" let-edge&gt;</code> draws HTML in place of the label of that edge type, like the remove button here, and <code>wtFlowEdge</code> draws the whole edge with <code>&lt;svg:path [attr.d]="edge.path"&gt;</code> · click an edge to select it, then drag the circle at an end to another handle to reconnect it (<code>[autoConnect]="true"</code> moves it for you, or handle <code>(reconnect)</code> with <code>reconnectEdge()</code>).',
+        th: '<code>type</code> ของเส้นมี <code>default</code> (โค้ง bezier) <code>smoothstep</code> (หักมุมมน) <code>step</code> (หักมุมฉาก) <code>straight</code> และ <code>simplebezier</code> · <code>label</code> คือป้ายกลางเส้น <code>markerEnd</code> / <code>markerStart</code> ใส่หัวลูกศร (<code>\'arrow\'</code>, <code>\'arrowclosed\'</code> หรือ <code>{ type, color, width, height }</code>) <code>animated</code> ให้เส้นประวิ่ง (หยุดนิ่งเมื่อผู้ใช้ขอลดการเคลื่อนไหว) <code>style</code> เปลี่ยนสีและความหนา และ <code>pathOptions</code> ปรับความโค้ง มุม และระยะยื่น · <code>&lt;ng-template wuFlowEdgeLabel="removable" let-edge&gt;</code> วาด HTML แทนป้ายของเส้นชนิดนั้น เช่นปุ่มลบในตัวอย่าง ส่วน <code>wuFlowEdge</code> วาดทั้งเส้นเองด้วย <code>&lt;svg:path [attr.d]="edge.path"&gt;</code> · คลิกเส้นเพื่อเลือก แล้วลากวงกลมที่ปลายไปจุดอื่นเพื่อย้ายปลายเส้น (<code>[autoConnect]="true"</code> ย้ายให้เอง หรือจัดการเองใน <code>(reconnect)</code> ด้วย <code>reconnectEdge()</code>)',
+        en: 'An edge’s <code>type</code> is <code>default</code> (a bezier curve), <code>smoothstep</code> (rounded corners), <code>step</code> (square corners), <code>straight</code> or <code>simplebezier</code> · <code>label</code> sits in the middle, <code>markerEnd</code> / <code>markerStart</code> add arrowheads (<code>\'arrow\'</code>, <code>\'arrowclosed\'</code> or <code>{ type, color, width, height }</code>), <code>animated</code> runs the dashes (still when people ask for reduced motion), <code>style</code> sets the colour and width, and <code>pathOptions</code> tune the curve, the corners and the offset · <code>&lt;ng-template wuFlowEdgeLabel="removable" let-edge&gt;</code> draws HTML in place of the label of that edge type, like the remove button here, and <code>wuFlowEdge</code> draws the whole edge with <code>&lt;svg:path [attr.d]="edge.path"&gt;</code> · click an edge to select it, then drag the circle at an end to another handle to reconnect it (<code>[autoConnect]="true"</code> moves it for you, or handle <code>(reconnect)</code> with <code>reconnectEdge()</code>).',
       },
     },
     connecting: {
@@ -376,15 +376,15 @@ export const FLOW_DOC: ComponentDoc = {
     toolbar: {
       title: { th: 'แถบปุ่มของโหนดและการปรับขนาด', en: 'Node toolbar and resizer' },
       text: {
-        th: '<code>&lt;wt-flow-node-toolbar&gt;</code> ใน template คือแถบปุ่มลอยข้างโหนด แสดงเมื่อเลือกโหนดนั้นโหนดเดียว (หรือตาม <code>[isVisible]</code>) ขนาดคงที่ไม่ว่าจะซูมเท่าไร และกดแล้วไม่เริ่มการลาก · <code>position</code> และ <code>align</code> บอกว่าอยู่ด้านไหน · <code>&lt;wt-flow-node-resizer&gt;</code> ให้ลากมุมหรือขอบเพื่อปรับขนาด (<code>minWidth</code>, <code>minHeight</code>, <code>maxWidth</code>, <code>maxHeight</code>, <code>keepAspectRatio</code>) ขนาดใหม่เขียนลง <code>width</code> / <code>height</code> ของโหนด และ Alt + ลูกศรปรับขนาดโหนดที่โฟกัสอยู่ · ปุ่มในตัวอย่างเรียก <code>updateNodeData()</code> และ <code>deleteElements()</code> ของ flow และ <code>fitViewOptions</code> เว้นที่ขอบไว้ให้แถบปุ่ม · คลิกโน้ตเพื่อดูแถบปุ่ม',
-        en: 'A <code>&lt;wt-flow-node-toolbar&gt;</code> in the template is a row of buttons floating beside the node, shown while it is the only one selected (or as <code>[isVisible]</code> says); it keeps its size at any zoom and a press on it never starts a drag · <code>position</code> and <code>align</code> say where it sits · <code>&lt;wt-flow-node-resizer&gt;</code> lets people drag a corner or side to resize (<code>minWidth</code>, <code>minHeight</code>, <code>maxWidth</code>, <code>maxHeight</code>, <code>keepAspectRatio</code>); the new size goes into the node’s <code>width</code> / <code>height</code>, and Alt + arrows resize the focused node · the buttons here call the flow’s <code>updateNodeData()</code> and <code>deleteElements()</code>, and <code>fitViewOptions</code> leaves room at the border for the toolbar · click a note to see its toolbar.',
+        th: '<code>&lt;wu-flow-node-toolbar&gt;</code> ใน template คือแถบปุ่มลอยข้างโหนด แสดงเมื่อเลือกโหนดนั้นโหนดเดียว (หรือตาม <code>[isVisible]</code>) ขนาดคงที่ไม่ว่าจะซูมเท่าไร และกดแล้วไม่เริ่มการลาก · <code>position</code> และ <code>align</code> บอกว่าอยู่ด้านไหน · <code>&lt;wu-flow-node-resizer&gt;</code> ให้ลากมุมหรือขอบเพื่อปรับขนาด (<code>minWidth</code>, <code>minHeight</code>, <code>maxWidth</code>, <code>maxHeight</code>, <code>keepAspectRatio</code>) ขนาดใหม่เขียนลง <code>width</code> / <code>height</code> ของโหนด และ Alt + ลูกศรปรับขนาดโหนดที่โฟกัสอยู่ · ปุ่มในตัวอย่างเรียก <code>updateNodeData()</code> และ <code>deleteElements()</code> ของ flow และ <code>fitViewOptions</code> เว้นที่ขอบไว้ให้แถบปุ่ม · คลิกโน้ตเพื่อดูแถบปุ่ม',
+        en: 'A <code>&lt;wu-flow-node-toolbar&gt;</code> in the template is a row of buttons floating beside the node, shown while it is the only one selected (or as <code>[isVisible]</code> says); it keeps its size at any zoom and a press on it never starts a drag · <code>position</code> and <code>align</code> say where it sits · <code>&lt;wu-flow-node-resizer&gt;</code> lets people drag a corner or side to resize (<code>minWidth</code>, <code>minHeight</code>, <code>maxWidth</code>, <code>maxHeight</code>, <code>keepAspectRatio</code>); the new size goes into the node’s <code>width</code> / <code>height</code>, and Alt + arrows resize the focused node · the buttons here call the flow’s <code>updateNodeData()</code> and <code>deleteElements()</code>, and <code>fitViewOptions</code> leaves room at the border for the toolbar · click a note to see its toolbar.',
       },
     },
     contextmenu: {
       title: { th: 'เมนูคลิกขวา', en: 'Right-click menus' },
       text: {
-        th: 'คลิกขวาบนเส้น โหนด หรือพื้น แล้ว <code>(edgeContextMenu)</code>, <code>(nodeContextMenu)</code> และ <code>(paneContextMenu)</code> ส่งเหตุการณ์พร้อมสิ่งที่ถูกคลิกมาให้ แอปเตรียมรายการแล้วเปิด <code>&lt;wt-contextMenu&gt;</code> ด้วย <code>menu.show($event.event)</code> (ซึ่งกันเมนูของเบราว์เซอร์ไว้ให้ด้วย) · บนเส้น: ลบ ลากปลายเส้นใหม่ (เลือกเส้นไว้ วงกลมที่ปลายจึงโผล่มาให้ลาก) สลับเส้นประวิ่ง และเปลี่ยนรูปเส้นด้วย <code>updateEdge()</code> · บนโหนด: แก้ชื่อ (<code>updateNodeData()</code>) ทำสำเนา (<code>addNodes()</code>) และลบ (<code>deleteElements()</code>) · บนพื้น: เพิ่มโหนดตรงจุดที่คลิก (<code>screenToFlowPosition()</code>) · คีย์บอร์ด: Tab ไปที่โหนดหรือเส้น แล้วกดปุ่ม Menu หรือ Shift + F10 ได้เมนูเดียวกัน',
-        en: 'Right-click an edge, a node or the pane, and <code>(edgeContextMenu)</code>, <code>(nodeContextMenu)</code> and <code>(paneContextMenu)</code> hand over the event with what was clicked; the app fills in the items and opens a <code>&lt;wt-contextMenu&gt;</code> with <code>menu.show($event.event)</code> (which also keeps the browser’s own menu away) · on an edge: delete, reconnect (the edge gets selected, so the circles at its ends appear to drag), toggle the running dashes, and change its shape with <code>updateEdge()</code> · on a node: rename (<code>updateNodeData()</code>), duplicate (<code>addNodes()</code>) and delete (<code>deleteElements()</code>) · on the pane: add a node right where it was clicked (<code>screenToFlowPosition()</code>) · keyboard: Tab to a node or edge and press the Menu key or Shift + F10 for the same menu.',
+        th: 'คลิกขวาบนเส้น โหนด หรือพื้น แล้ว <code>(edgeContextMenu)</code>, <code>(nodeContextMenu)</code> และ <code>(paneContextMenu)</code> ส่งเหตุการณ์พร้อมสิ่งที่ถูกคลิกมาให้ แอปเตรียมรายการแล้วเปิด <code>&lt;wu-contextMenu&gt;</code> ด้วย <code>menu.show($event.event)</code> (ซึ่งกันเมนูของเบราว์เซอร์ไว้ให้ด้วย) · บนเส้น: ลบ ลากปลายเส้นใหม่ (เลือกเส้นไว้ วงกลมที่ปลายจึงโผล่มาให้ลาก) สลับเส้นประวิ่ง และเปลี่ยนรูปเส้นด้วย <code>updateEdge()</code> · บนโหนด: แก้ชื่อ (<code>updateNodeData()</code>) ทำสำเนา (<code>addNodes()</code>) และลบ (<code>deleteElements()</code>) · บนพื้น: เพิ่มโหนดตรงจุดที่คลิก (<code>screenToFlowPosition()</code>) · คีย์บอร์ด: Tab ไปที่โหนดหรือเส้น แล้วกดปุ่ม Menu หรือ Shift + F10 ได้เมนูเดียวกัน',
+        en: 'Right-click an edge, a node or the pane, and <code>(edgeContextMenu)</code>, <code>(nodeContextMenu)</code> and <code>(paneContextMenu)</code> hand over the event with what was clicked; the app fills in the items and opens a <code>&lt;wu-contextMenu&gt;</code> with <code>menu.show($event.event)</code> (which also keeps the browser’s own menu away) · on an edge: delete, reconnect (the edge gets selected, so the circles at its ends appear to drag), toggle the running dashes, and change its shape with <code>updateEdge()</code> · on a node: rename (<code>updateNodeData()</code>), duplicate (<code>addNodes()</code>) and delete (<code>deleteElements()</code>) · on the pane: add a node right where it was clicked (<code>screenToFlowPosition()</code>) · keyboard: Tab to a node or edge and press the Menu key or Shift + F10 for the same menu.',
       },
     },
     viewport: {
@@ -404,8 +404,8 @@ export const FLOW_DOC: ComponentDoc = {
     history: {
       title: { th: 'เลิกทำและทำซ้ำ', en: 'Undo and redo' },
       text: {
-        th: 'ใส่ <code>wtFlowHistory</code> ที่ <code>&lt;wt-flow&gt;</code> แล้วทุกการเปลี่ยนแปลงที่จบแล้ว (ลากเสร็จ เชื่อม ลบ ปรับขนาด เรียก method) เป็นหนึ่งขั้น การเลือกและการวัดขนาดไม่นับ · Ctrl / ⌘ + Z เลิกทำ Ctrl / ⌘ + Shift + Z หรือ Ctrl + Y ทำซ้ำ ขณะ flow มีโฟกัส · ปุ่มของแอปเรียก <code>history.undo()</code> / <code>history.redo()</code> คู่กับ <code>[disabled]="!history.canUndo"</code> · <code>historyLimit</code> (ค่าเริ่มต้น 100) และ <code>(historyChange)</code> · <code>&lt;wt-flow-panel&gt;</code> วางปุ่มของแอปไว้บนแผนภาพที่มุมไหนก็ได้',
-        en: 'Put <code>wtFlowHistory</code> on <code>&lt;wt-flow&gt;</code> and every finished change (a drag that ended, a connection, a delete, a resize, a method call) becomes a step; selecting and measuring do not count · Ctrl / ⌘ + Z undoes, Ctrl / ⌘ + Shift + Z or Ctrl + Y redoes while the flow has focus · your buttons call <code>history.undo()</code> / <code>history.redo()</code> with <code>[disabled]="!history.canUndo"</code> · <code>historyLimit</code> (100 by default) and <code>(historyChange)</code> · <code>&lt;wt-flow-panel&gt;</code> places your own buttons over the diagram at any corner.',
+        th: 'ใส่ <code>wuFlowHistory</code> ที่ <code>&lt;wu-flow&gt;</code> แล้วทุกการเปลี่ยนแปลงที่จบแล้ว (ลากเสร็จ เชื่อม ลบ ปรับขนาด เรียก method) เป็นหนึ่งขั้น การเลือกและการวัดขนาดไม่นับ · Ctrl / ⌘ + Z เลิกทำ Ctrl / ⌘ + Shift + Z หรือ Ctrl + Y ทำซ้ำ ขณะ flow มีโฟกัส · ปุ่มของแอปเรียก <code>history.undo()</code> / <code>history.redo()</code> คู่กับ <code>[disabled]="!history.canUndo"</code> · <code>historyLimit</code> (ค่าเริ่มต้น 100) และ <code>(historyChange)</code> · <code>&lt;wu-flow-panel&gt;</code> วางปุ่มของแอปไว้บนแผนภาพที่มุมไหนก็ได้',
+        en: 'Put <code>wuFlowHistory</code> on <code>&lt;wu-flow&gt;</code> and every finished change (a drag that ended, a connection, a delete, a resize, a method call) becomes a step; selecting and measuring do not count · Ctrl / ⌘ + Z undoes, Ctrl / ⌘ + Shift + Z or Ctrl + Y redoes while the flow has focus · your buttons call <code>history.undo()</code> / <code>history.redo()</code> with <code>[disabled]="!history.canUndo"</code> · <code>historyLimit</code> (100 by default) and <code>(historyChange)</code> · <code>&lt;wu-flow-panel&gt;</code> places your own buttons over the diagram at any corner.',
       },
     },
     export: {
@@ -438,7 +438,7 @@ export const FLOW_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-flow
+    basic: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -447,11 +447,11 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ขั้นตอนอนุมัติคำร้อง"
   style="height: 24rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-  <wt-flow-controls position="bottom-left"></wt-flow-controls>
-  <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
-</wt-flow>`,
-    nodes: `<wt-flow
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+  <wu-flow-controls position="bottom-left"></wu-flow-controls>
+  <wu-flow-minimap position="bottom-right"></wu-flow-minimap>
+</wu-flow>`,
+    nodes: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -461,31 +461,31 @@ export const FLOW_DOC: ComponentDoc = {
   style="height: 22rem"
 >
   <!-- โหนด type: 'request' -->
-  <ng-template wtFlowNode="request" let-node>
-    <div class="wt-flow-node-box flow-card">
+  <ng-template wuFlowNode="request" let-node>
+    <div class="wu-flow-node-box flow-card">
       <i class="wi wi-calendar" aria-hidden="true"></i>
       <span>
         <strong>{{ node.data.name }}</strong>
         <small>ขอลา {{ node.data.days }} วัน</small>
       </span>
-      <wt-flow-handle type="source" position="right"></wt-flow-handle>
+      <wu-flow-handle type="source" position="right"></wu-flow-handle>
     </div>
   </ng-template>
 
   <!-- โหนดตัดสินใจ: จุดออกสองจุดทางขวา id="yes" และ id="no" -->
-  <ng-template wtFlowNode="decision" let-node>
-    <div class="wt-flow-node-box flow-card flow-decision">
-      <wt-flow-handle type="target" position="left"></wt-flow-handle>
+  <ng-template wuFlowNode="decision" let-node>
+    <div class="wu-flow-node-box flow-card flow-decision">
+      <wu-flow-handle type="target" position="left"></wu-flow-handle>
       <i class="wi wi-question-circle" aria-hidden="true"></i>
       <strong>{{ node.data.question }}</strong>
-      <wt-flow-handle type="source" position="right" id="yes" [style.top.%]="30"></wt-flow-handle>
-      <wt-flow-handle type="source" position="right" id="no" [style.top.%]="70"></wt-flow-handle>
+      <wu-flow-handle type="source" position="right" id="yes" [style.top.%]="30"></wu-flow-handle>
+      <wu-flow-handle type="source" position="right" id="no" [style.top.%]="70"></wu-flow-handle>
     </div>
   </ng-template>
 
-  <ng-template wtFlowNode="person" let-node>
-    <div class="wt-flow-node-box flow-card">
-      <wt-flow-handle type="target" position="left"></wt-flow-handle>
+  <ng-template wuFlowNode="person" let-node>
+    <div class="wu-flow-node-box flow-card">
+      <wu-flow-handle type="target" position="left"></wu-flow-handle>
       <span class="flow-avatar"><i class="wi wi-user" aria-hidden="true"></i></span>
       <span>
         <strong>{{ node.data.name }}</strong>
@@ -494,9 +494,9 @@ export const FLOW_DOC: ComponentDoc = {
     </div>
   </ng-template>
 
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>`,
-    edges: `<wt-flow
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>`,
+    edges: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -504,7 +504,7 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="เส้นเชื่อมแต่ละแบบ"
   style="height: 30rem"
 >
-  <ng-template wtFlowEdgeLabel="removable" let-edge>
+  <ng-template wuFlowEdgeLabel="removable" let-edge>
     <span class="flow-edge-chip">
       {{ edge.label }}
       <button type="button" class="flow-edge-remove" aria-label="ลบเส้นนี้" (click)="removeEdge(edge.id)">
@@ -512,9 +512,9 @@ export const FLOW_DOC: ComponentDoc = {
       </button>
     </span>
   </ng-template>
-  <wt-flow-background variant="lines" [gap]="24"></wt-flow-background>
-</wt-flow>`,
-    connecting: `<wt-flow
+  <wu-flow-background variant="lines" [gap]="24"></wu-flow-background>
+</wu-flow>`,
+    connecting: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -526,26 +526,26 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ครูประจำชั้น"
   style="height: 22rem"
 >
-  <ng-template wtFlowNode="teacher" let-node>
-    <div class="wt-flow-node-box flow-card">
+  <ng-template wuFlowNode="teacher" let-node>
+    <div class="wu-flow-node-box flow-card">
       <i class="wi wi-chalkboard" aria-hidden="true"></i>
       <strong>{{ node.data.label }}</strong>
-      <wt-flow-handle type="source" position="right"></wt-flow-handle>
+      <wu-flow-handle type="source" position="right"></wu-flow-handle>
     </div>
   </ng-template>
-  <ng-template wtFlowNode="room" let-node>
-    <div class="wt-flow-node-box flow-card">
+  <ng-template wuFlowNode="room" let-node>
+    <div class="wu-flow-node-box flow-card">
       <!-- ห้องละหนึ่งคน -->
-      <wt-flow-handle type="target" position="left" [connectionLimit]="1"></wt-flow-handle>
+      <wu-flow-handle type="target" position="left" [connectionLimit]="1"></wu-flow-handle>
       <i class="wi wi-school" aria-hidden="true"></i>
       <strong>{{ node.data.label }}</strong>
     </div>
   </ng-template>
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>
-<wt-button label="connectionMode: {{ connectionMode }}" severity="secondary" [outlined]="true" (onClick)="toggleMode()"></wt-button>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>
+<wu-button label="connectionMode: {{ connectionMode }}" severity="secondary" [outlined]="true" (onClick)="toggleMode()"></wu-button>
 <span>ล่าสุด: {{ lastConnect }}</span>`,
-    controlled: `<wt-flow
+    controlled: `<wu-flow
   [nodes]="nodes"
   [edges]="edges"
   [applyChanges]="false"
@@ -557,11 +557,11 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ปฏิทินภาคเรียน"
   style="height: 16rem"
 >
-  <wt-flow-background variant="lines" [gap]="40"></wt-flow-background>
-</wt-flow>
+  <wu-flow-background variant="lines" [gap]="40"></wu-flow-background>
+</wu-flow>
 <span>การเปลี่ยนแปลงล่าสุด: {{ lastChanges }}</span>`,
     selection: {
-      classic: `<wt-flow
+      classic: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -574,18 +574,18 @@ export const FLOW_DOC: ComponentDoc = {
   style="height: 22rem"
 >
   <!-- ไม่ใส่ชื่อ: ใช้กับทุกโหนดที่ไม่มี template ของตัวเอง -->
-  <ng-template wtFlowNode let-node>
-    <div class="wt-flow-node-box flow-task">
-      <wt-flow-handle type="target" position="top"></wt-flow-handle>
+  <ng-template wuFlowNode let-node>
+    <div class="wu-flow-node-box flow-task">
+      <wu-flow-handle type="target" position="top"></wu-flow-handle>
       {{ node.data.label }}
       <i *ngIf="node.data.locked" class="wi wi-lock" aria-label="ล็อกไว้"></i>
-      <wt-flow-handle type="source" position="bottom"></wt-flow-handle>
+      <wu-flow-handle type="source" position="bottom"></wu-flow-handle>
     </div>
   </ng-template>
-</wt-flow>
+</wu-flow>
 <span>ที่เลือก: {{ selectedLabels }}</span>
 <span>{{ message }}</span>`,
-      v3: `<wt-flow
+      v3: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -598,21 +598,21 @@ export const FLOW_DOC: ComponentDoc = {
   style="height: 22rem"
 >
   <!-- ไม่ใส่ชื่อ: ใช้กับทุกโหนดที่ไม่มี template ของตัวเอง -->
-  <ng-template wtFlowNode let-node>
-    <div class="wt-flow-node-box flow-task">
-      <wt-flow-handle type="target" position="top"></wt-flow-handle>
+  <ng-template wuFlowNode let-node>
+    <div class="wu-flow-node-box flow-task">
+      <wu-flow-handle type="target" position="top"></wu-flow-handle>
       {{ node.data.label }}
       @if (node.data.locked) {
         <i class="wi wi-lock" aria-label="ล็อกไว้"></i>
       }
-      <wt-flow-handle type="source" position="bottom"></wt-flow-handle>
+      <wu-flow-handle type="source" position="bottom"></wu-flow-handle>
     </div>
   </ng-template>
-</wt-flow>
+</wu-flow>
 <span>ที่เลือก: {{ selectedLabels }}</span>
 <span>{{ message }}</span>`,
     },
-    groups: `<wt-flow
+    groups: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -620,10 +620,10 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="งานของโรงเรียน"
   style="height: 22rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-  <wt-flow-controls position="bottom-left" [showInteractive]="false"></wt-flow-controls>
-</wt-flow>`,
-    toolbar: `<wt-flow
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+  <wu-flow-controls position="bottom-left" [showInteractive]="false"></wu-flow-controls>
+</wu-flow>`,
+    toolbar: `<wu-flow
   #board
   [(nodes)]="nodes"
   [fitView]="true"
@@ -631,22 +631,22 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ป้ายประกาศ"
   style="height: 22rem"
 >
-  <ng-template wtFlowNode="note" let-node>
-    <div class="wt-flow-node-box flow-note" [attr.data-tone]="node.data.tone">
+  <ng-template wuFlowNode="note" let-node>
+    <div class="wu-flow-node-box flow-note" [attr.data-tone]="node.data.tone">
       {{ node.data.text }}
-      <wt-flow-node-toolbar position="top">
+      <wu-flow-node-toolbar position="top">
         <button type="button" class="flow-swatch" data-tone="yellow" aria-label="สีเหลือง" (click)="recolor(board, node.id, 'yellow')"></button>
         <button type="button" class="flow-swatch" data-tone="green" aria-label="สีเขียว" (click)="recolor(board, node.id, 'green')"></button>
         <button type="button" class="flow-swatch" data-tone="blue" aria-label="สีฟ้า" (click)="recolor(board, node.id, 'blue')"></button>
-        <wt-button icon="wi wi-trash" severity="danger" [text]="true" [rounded]="true" ariaLabel="ลบโน้ต" (onClick)="removeNote(board, node.id)"></wt-button>
-      </wt-flow-node-toolbar>
-      <wt-flow-node-resizer [minWidth]="140" [minHeight]="72"></wt-flow-node-resizer>
+        <wu-button icon="wi wi-trash" severity="danger" [text]="true" [rounded]="true" ariaLabel="ลบโน้ต" (onClick)="removeNote(board, node.id)"></wu-button>
+      </wu-flow-node-toolbar>
+      <wu-flow-node-resizer [minWidth]="140" [minHeight]="72"></wu-flow-node-resizer>
     </div>
   </ng-template>
-  <wt-flow-background variant="cross" [gap]="28"></wt-flow-background>
-</wt-flow>`,
+  <wu-flow-background variant="cross" [gap]="28"></wu-flow-background>
+</wu-flow>`,
     contextmenu: {
-      classic: `<wt-flow
+      classic: `<wu-flow
   #sheet
   [(nodes)]="nodes"
   [(edges)]="edges"
@@ -660,17 +660,17 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ขั้นตอนเบิกพัสดุ"
   style="height: 22rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>
-<wt-contextMenu #menu [model]="menuItems"></wt-contextMenu>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>
+<wu-contextMenu #menu [model]="menuItems"></wu-contextMenu>
 
 <!-- แก้ชื่อโหนด -->
 <div *ngIf="renaming">
-  <input wtInputText [(ngModel)]="newName" aria-label="ชื่อใหม่" (keydown.enter)="saveName(sheet)" />
-  <wt-button label="บันทึก" (onClick)="saveName(sheet)"></wt-button>
+  <input wuInputText [(ngModel)]="newName" aria-label="ชื่อใหม่" (keydown.enter)="saveName(sheet)" />
+  <wu-button label="บันทึก" (onClick)="saveName(sheet)"></wu-button>
 </div>
 <span>ล่าสุด: {{ lastAction }}</span>`,
-      v3: `<wt-flow
+      v3: `<wu-flow
   #sheet
   [(nodes)]="nodes"
   [(edges)]="edges"
@@ -684,15 +684,15 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ขั้นตอนเบิกพัสดุ"
   style="height: 22rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>
-<wt-contextMenu #menu [model]="menuItems"></wt-contextMenu>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>
+<wu-contextMenu #menu [model]="menuItems"></wu-contextMenu>
 
 <!-- แก้ชื่อโหนด -->
 @if (renaming) {
   <div>
-    <input wtInputText [(ngModel)]="newName" aria-label="ชื่อใหม่" (keydown.enter)="saveName(sheet)" />
-    <wt-button label="บันทึก" (onClick)="saveName(sheet)"></wt-button>
+    <input wuInputText [(ngModel)]="newName" aria-label="ชื่อใหม่" (keydown.enter)="saveName(sheet)" />
+    <wu-button label="บันทึก" (onClick)="saveName(sheet)"></wu-button>
   </div>
 }
 <span>ล่าสุด: {{ lastAction }}</span>`,
@@ -704,7 +704,7 @@ export const FLOW_DOC: ComponentDoc = {
   <button type="button" draggable="true" (dragstart)="pick($event, 'output')" (click)="addAtCentre(view, canvas, 'output')">จบ</button>
 </div>
 <div #canvas>
-  <wt-flow
+  <wu-flow
     #view
     [(nodes)]="nodes"
     [(edges)]="edges"
@@ -717,17 +717,17 @@ export const FLOW_DOC: ComponentDoc = {
     ariaLabel="แบบฟอร์มออนไลน์"
     style="height: 22rem"
   >
-    <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-    <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
-  </wt-flow>
+    <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+    <wu-flow-minimap position="bottom-right"></wu-flow-minimap>
+  </wu-flow>
 </div>
-<wt-button label="พอดีจอ" icon="wi wi-expand" (onClick)="view.fitView({ duration: 300 })"></wt-button>
-<wt-button label="100%" severity="secondary" (onClick)="view.zoomTo(1, { duration: 300 })"></wt-button>
-<wt-button label="ไปที่จุดเริ่ม" icon="wi wi-target" severity="secondary" (onClick)="goToStart(view)"></wt-button>
-<wt-toggleswitch [(ngModel)]="panOnScroll" inputId="pan-on-scroll"></wt-toggleswitch>
+<wu-button label="พอดีจอ" icon="wi wi-expand" (onClick)="view.fitView({ duration: 300 })"></wu-button>
+<wu-button label="100%" severity="secondary" (onClick)="view.zoomTo(1, { duration: 300 })"></wu-button>
+<wu-button label="ไปที่จุดเริ่ม" icon="wi wi-target" severity="secondary" (onClick)="goToStart(view)"></wu-button>
+<wu-toggleswitch [(ngModel)]="panOnScroll" inputId="pan-on-scroll"></wu-toggleswitch>
 <label for="pan-on-scroll">ล้อเมาส์เลื่อนภาพ</label>
 <span>มุมมอง: {{ viewportText() }}</span>`,
-    layout: `<wt-flow
+    layout: `<wu-flow
   #chart
   [(nodes)]="nodes"
   [(edges)]="edges"
@@ -736,14 +736,14 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="โครงสร้างโรงเรียน"
   style="height: 26rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>
-<wt-button label="บนลงล่าง" icon="wi wi-sitemap" (onClick)="chart.layout({ direction: 'TB' })"></wt-button>
-<wt-button label="ซ้ายไปขวา" icon="wi wi-arrow-right" severity="secondary" (onClick)="chart.layout({ direction: 'LR' })"></wt-button>
-<wt-button label="แบบต้นไม้" icon="wi wi-tree-view" severity="secondary" (onClick)="chart.layout({ algorithm: 'tree', direction: 'TB' })"></wt-button>`,
-    history: `<wt-flow
-  wtFlowHistory
-  #history="wtFlowHistory"
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>
+<wu-button label="บนลงล่าง" icon="wi wi-sitemap" (onClick)="chart.layout({ direction: 'TB' })"></wu-button>
+<wu-button label="ซ้ายไปขวา" icon="wi wi-arrow-right" severity="secondary" (onClick)="chart.layout({ direction: 'LR' })"></wu-button>
+<wu-button label="แบบต้นไม้" icon="wi wi-tree-view" severity="secondary" (onClick)="chart.layout({ algorithm: 'tree', direction: 'TB' })"></wu-button>`,
+    history: `<wu-flow
+  wuFlowHistory
+  #history="wuFlowHistory"
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -751,13 +751,13 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="แผนผังห้องสมุด"
   style="height: 22rem"
 >
-  <wt-flow-panel position="top-right">
-    <wt-button icon="wi wi-undo" ariaLabel="เลิกทำ" severity="secondary" [outlined]="true" [disabled]="!history.canUndo" (onClick)="history.undo()"></wt-button>
-    <wt-button icon="wi wi-redo" ariaLabel="ทำซ้ำ" severity="secondary" [outlined]="true" [disabled]="!history.canRedo" (onClick)="history.redo()"></wt-button>
-  </wt-flow-panel>
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>`,
-    export: `<wt-flow
+  <wu-flow-panel position="top-right">
+    <wu-button icon="wi wi-undo" ariaLabel="เลิกทำ" severity="secondary" [outlined]="true" [disabled]="!history.canUndo" (onClick)="history.undo()"></wu-button>
+    <wu-button icon="wi wi-redo" ariaLabel="ทำซ้ำ" severity="secondary" [outlined]="true" [disabled]="!history.canRedo" (onClick)="history.redo()"></wu-button>
+  </wu-flow-panel>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>`,
+    export: `<wu-flow
   #admission
   [(nodes)]="nodes"
   [(edges)]="edges"
@@ -766,14 +766,14 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ขั้นตอนรับสมัคร"
   style="height: 18rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>
-<wt-button label="ส่งออก SVG" icon="wi wi-file-image" (onClick)="exportSvg(admission)"></wt-button>
-<wt-button label="JSON" icon="wi wi-code" severity="secondary" (onClick)="exportJson(admission)"></wt-button>
-<wt-button label="โหลดกลับ" icon="wi wi-upload" severity="secondary" [disabled]="!json" (onClick)="admission.fromJSON(json)"></wt-button>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>
+<wu-button label="ส่งออก SVG" icon="wi wi-file-image" (onClick)="exportSvg(admission)"></wu-button>
+<wu-button label="JSON" icon="wi wi-code" severity="secondary" (onClick)="exportJson(admission)"></wu-button>
+<wu-button label="โหลดกลับ" icon="wi wi-upload" severity="secondary" [disabled]="!json" (onClick)="admission.fromJSON(json)"></wu-button>
 <img [src]="svgUrl" alt="ภาพที่ส่งออก" />
 <pre>{{ json }}</pre>`,
-    keyboard: `<wt-flow
+    keyboard: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [fitView]="true"
@@ -781,9 +781,9 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="ลองด้วยคีย์บอร์ด"
   style="height: 16rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-</wt-flow>`,
-    performance: `<wt-flow
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+</wu-flow>`,
+    performance: `<wu-flow
   [(nodes)]="nodes"
   [(edges)]="edges"
   [onlyRenderVisibleElements]="onlyVisible"
@@ -792,42 +792,42 @@ export const FLOW_DOC: ComponentDoc = {
   ariaLabel="แผนภาพ 300 โหนด"
   style="height: 24rem"
 >
-  <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-  <wt-flow-controls position="bottom-left"></wt-flow-controls>
-  <wt-flow-minimap position="bottom-right"></wt-flow-minimap>
-</wt-flow>
-<wt-toggleswitch [(ngModel)]="onlyVisible" inputId="only-visible"></wt-toggleswitch>
+  <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+  <wu-flow-controls position="bottom-left"></wu-flow-controls>
+  <wu-flow-minimap position="bottom-right"></wu-flow-minimap>
+</wu-flow>
+<wu-toggleswitch [(ngModel)]="onlyVisible" inputId="only-visible"></wu-toggleswitch>
 <label for="only-visible">วาดเฉพาะส่วนที่เห็น</label>`,
   },
   ts: {
-    basic: `import { WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    basic: `import { WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'submit', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
   { id: 'check', position: { x: 0, y: 100 }, data: { label: 'ตรวจเอกสาร' } },
   { id: 'more', position: { x: 220, y: 100 }, data: { label: 'ขอเอกสารเพิ่ม' } },
   { id: 'approve', position: { x: 0, y: 200 }, data: { label: 'ครูที่ปรึกษาอนุมัติ' } },
   { id: 'notify', type: 'output', position: { x: 0, y: 300 }, data: { label: 'แจ้งผลทางอีเมล' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'submit-check', source: 'submit', target: 'check' },
   { id: 'check-approve', source: 'check', target: 'approve', label: 'ครบ' },
   { id: 'approve-notify', source: 'approve', target: 'notify', animated: true },
 ];
 // ทุกเส้น (และเส้นที่ผู้ใช้ลากเชื่อมใหม่) มีหัวลูกศร
-edgeDefaults: Partial<WtFlowEdge> = { markerEnd: 'arrowclosed' };`,
-    nodes: `nodes: WtFlowNode[] = [
+edgeDefaults: Partial<WuFlowEdge> = { markerEnd: 'arrowclosed' };`,
+    nodes: `nodes: WuFlowNode[] = [
   { id: 'request', type: 'request', position: { x: 0, y: 60 }, data: { name: 'อรุณ', days: 4 } },
   { id: 'rule', type: 'decision', position: { x: 240, y: 60 }, data: { question: 'ลาเกิน 3 วัน?' } },
   { id: 'head', type: 'person', position: { x: 500, y: 130 }, data: { name: 'ศิลา', role: 'หัวหน้างาน' } },
   { id: 'hr', type: 'person', position: { x: 500, y: 0 }, data: { name: 'เพชร', role: 'ฝ่ายบุคคล' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'request-rule', source: 'request', target: 'rule' },
   { id: 'rule-hr', source: 'rule', sourceHandle: 'yes', target: 'hr', label: 'ใช่' },
   { id: 'rule-head', source: 'rule', sourceHandle: 'no', target: 'head', label: 'ไม่' },
 ];`,
-    edges: `nodes: WtFlowNode[] = [
+    edges: `nodes: WuFlowNode[] = [
   { id: 's1', type: 'input', position: { x: 0, y: 0 }, sourcePosition: 'right', data: { label: 'ต้นทาง' } },
   { id: 't1', type: 'output', position: { x: 340, y: 40 }, targetPosition: 'left', data: { label: 'ปลายทาง' } },
   { id: 's2', type: 'input', position: { x: 0, y: 80 }, sourcePosition: 'right', data: { label: 'ต้นทาง' } },
@@ -841,7 +841,7 @@ edges: WtFlowEdge[] = [
   { id: 's6', type: 'input', position: { x: 0, y: 400 }, sourcePosition: 'right', data: { label: 'ต้นทาง' } },
   { id: 't6', type: 'output', position: { x: 340, y: 440 }, targetPosition: 'left', data: { label: 'ปลายทาง' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'e1', source: 's1', target: 't1', label: 'default' },
   { id: 'e2', source: 's2', target: 't2', type: 'smoothstep', label: 'smoothstep', markerEnd: 'arrowclosed' },
   { id: 'e3', source: 's3', target: 't3', type: 'step', label: 'step', markerStart: 'arrow', markerEnd: 'arrow' },
@@ -858,16 +858,16 @@ edges: WtFlowEdge[] = [
 removeEdge(id: string): void {
   this.edges = this.edges.filter((e) => e.id !== id);
 }`,
-    connecting: `import { addEdge, FlowConnection, WtFlowConnectEndEvent, WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    connecting: `import { addEdge, FlowConnection, WuFlowConnectEndEvent, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 't-mali', type: 'teacher', position: { x: 0, y: 0 }, data: { label: 'ครูมาลี' } },
   { id: 't-arun', type: 'teacher', position: { x: 0, y: 90 }, data: { label: 'ครูอรุณ' } },
   { id: 't-ratri', type: 'teacher', position: { x: 0, y: 180 }, data: { label: 'ครูราตรี' } },
   { id: 'r-11', type: 'room', position: { x: 300, y: 40 }, data: { label: 'ม.1/1' } },
   { id: 'r-12', type: 'room', position: { x: 300, y: 150 }, data: { label: 'ม.1/2' } },
 ];
-edges: WtFlowEdge[] = [{ id: 't-mali-r-11', source: 't-mali', target: 'r-11', type: 'smoothstep' }];
+edges: WuFlowEdge[] = [{ id: 't-mali-r-11', source: 't-mali', target: 'r-11', type: 'smoothstep' }];
 connectionMode: 'strict' | 'loose' = 'strict';
 lastConnect = '-';
 // [isValidConnection] รับฟังก์ชัน: bind ครั้งเดียว
@@ -884,21 +884,21 @@ assign(connection: FlowConnection): void {
 }
 
 // บอกผลเมื่อปล่อยเมาส์
-connectEnded(event: WtFlowConnectEndEvent): void {
+connectEnded(event: WuFlowConnectEndEvent): void {
   this.lastConnect = event.isValid ? 'เชื่อมแล้ว' : 'เชื่อมไม่ได้';
 }
 
 toggleMode(): void {
   this.connectionMode = this.connectionMode === 'strict' ? 'loose' : 'strict';
 }`,
-    controlled: `import { applyEdgeChanges, applyNodeChanges, FlowEdgeChange, FlowNodeChange, WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    controlled: `import { applyEdgeChanges, applyNodeChanges, FlowEdgeChange, FlowNodeChange, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'orientation', type: 'input', position: { x: 0, y: 0 }, sourcePosition: 'right', data: { label: 'ปฐมนิเทศ' } },
   { id: 'midterm', position: { x: 220, y: 0 }, sourcePosition: 'right', targetPosition: 'left', data: { label: 'สอบกลางภาค' } },
   { id: 'final', type: 'output', position: { x: 440, y: 0 }, targetPosition: 'left', data: { label: 'สอบปลายภาค' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'orientation-midterm', source: 'orientation', target: 'midterm' },
   { id: 'midterm-final', source: 'midterm', target: 'final' },
 ];
@@ -914,9 +914,9 @@ onNodeChanges(changes: FlowNodeChange[]): void {
 onEdgeChanges(changes: FlowEdgeChange[]): void {
   this.edges = applyEdgeChanges(changes, this.edges);
 }`,
-    selection: `import { WtFlowDeleteEvent, WtFlowEdge, WtFlowNode, WtFlowSelectionChange } from 'wiratheme/flow';
+    selection: `import { WuFlowDeleteEvent, WuFlowEdge, WuFlowNode, WuFlowSelectionChange } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'hall', position: { x: 0, y: 0 }, data: { label: 'จองหอประชุม', locked: true } },
   { id: 'speaker', position: { x: 200, y: 0 }, data: { label: 'เชิญวิทยากร' } },
   { id: 'banner', position: { x: 0, y: 90 }, data: { label: 'ทำป้าย' } },
@@ -924,7 +924,7 @@ nodes: WtFlowNode[] = [
   { id: 'register', position: { x: 100, y: 180 }, data: { label: 'ลงทะเบียน', locked: true } },
   { id: 'report', position: { x: 100, y: 270 }, data: { label: 'สรุปผล' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'hall-banner', source: 'hall', target: 'banner' },
   { id: 'speaker-announce', source: 'speaker', target: 'announce' },
   { id: 'banner-register', source: 'banner', target: 'register' },
@@ -937,7 +937,7 @@ message = '';
 confirmDelete = this.keepLocked.bind(this);
 
 // ห้ามลบงานที่ล็อกไว้
-keepLocked(elements: { nodes: WtFlowNode[]; edges: WtFlowEdge[] }): boolean {
+keepLocked(elements: { nodes: WuFlowNode[]; edges: WuFlowEdge[] }): boolean {
   if (elements.nodes.some((n) => n.data.locked)) {
     this.message = 'งานที่ล็อกไว้ลบไม่ได้';
     return false;
@@ -945,14 +945,14 @@ keepLocked(elements: { nodes: WtFlowNode[]; edges: WtFlowEdge[] }): boolean {
   return true;
 }
 
-selectionChanged(selection: WtFlowSelectionChange): void {
+selectionChanged(selection: WuFlowSelectionChange): void {
   this.selectedLabels = selection.nodes.map((n) => n.data.label).join(', ') || '-';
 }
 
-deleted(event: WtFlowDeleteEvent): void {
+deleted(event: WuFlowDeleteEvent): void {
   this.message = 'ลบแล้ว ' + event.nodes.length + ' โหนด ' + event.edges.length + ' เส้น';
 }`,
-    groups: `nodes: WtFlowNode[] = [
+    groups: `nodes: WuFlowNode[] = [
   { id: 'academic', type: 'group', position: { x: 0, y: 0 }, width: 250, height: 210, data: { label: 'ฝ่ายวิชาการ' } },
   { id: 'timetable', parentId: 'academic', extent: 'parent', position: { x: 45, y: 45 }, data: { label: 'จัดตารางสอน' } },
   { id: 'grades', parentId: 'academic', extent: 'parent', position: { x: 45, y: 135 }, data: { label: 'บันทึกผลการเรียน' } },
@@ -960,46 +960,46 @@ deleted(event: WtFlowDeleteEvent): void {
   { id: 'clubs', parentId: 'affairs', expandParent: true, position: { x: 45, y: 45 }, data: { label: 'ชุมนุม' } },
   { id: 'care', parentId: 'affairs', extent: 'parent', position: { x: 45, y: 135 }, data: { label: 'ดูแลนักเรียน' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'timetable-grades', source: 'timetable', target: 'grades' },
   { id: 'clubs-care', source: 'clubs', target: 'care' },
   { id: 'grades-care', source: 'grades', target: 'care', type: 'smoothstep', animated: true },
 ];`,
-    toolbar: `import { WtFlow, WtFlowNode } from 'wiratheme/flow';
+    toolbar: `import { WuFlow, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'meeting', type: 'note', position: { x: 0, y: 0 }, width: 180, height: 96, data: { text: 'ประชุมผู้ปกครอง 9:00 น.', tone: 'yellow' } },
   { id: 'scores', type: 'note', position: { x: 240, y: 60 }, width: 180, height: 96, data: { text: 'ส่งคะแนนก่อนวันศุกร์', tone: 'green' } },
 ];
 
-recolor(flow: WtFlow, id: string, tone: string): void {
+recolor(flow: WuFlow, id: string, tone: string): void {
   flow.updateNodeData(id, { tone });
 }
 
-removeNote(flow: WtFlow, id: string): void {
+removeNote(flow: WuFlow, id: string): void {
   flow.deleteElements({ nodes: [id] });
 }`,
-    contextmenu: `import { MenuItem } from 'wiratheme/api';
-import { WtContextMenu } from 'wiratheme/contextmenu';
-import { WtFlow, WtFlowEdge, WtFlowEdgeEvent, WtFlowNode, WtFlowNodeEvent } from 'wiratheme/flow';
+    contextmenu: `import { MenuItem } from 'wiraui/api';
+import { WuContextMenu } from 'wiraui/contextmenu';
+import { WuFlow, WuFlowEdge, WuFlowEdgeEvent, WuFlowNode, WuFlowNodeEvent } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'request', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ขอเบิกพัสดุ' } },
   { id: 'approve', position: { x: 0, y: 120 }, data: { label: 'หัวหน้าอนุมัติ' } },
   { id: 'handout', type: 'output', position: { x: 0, y: 240 }, data: { label: 'จ่ายของ' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'request-approve', source: 'request', target: 'approve', label: 'ส่งต่อ' },
   { id: 'approve-handout', source: 'approve', target: 'handout', label: 'อนุมัติแล้ว' },
 ];
 menuItems: MenuItem[] = [];
-renaming: WtFlowNode | null = null;
+renaming: WuFlowNode | null = null;
 newName = '';
 lastAction = '-';
 added = 0;
 
 // คลิกขวาบนเส้น: เมนูของเส้นนั้น
-openEdgeMenu(e: WtFlowEdgeEvent, flow: WtFlow, menu: WtContextMenu): void {
+openEdgeMenu(e: WuFlowEdgeEvent, flow: WuFlow, menu: WuContextMenu): void {
   const edge = e.edge;
   this.menuItems = [
     { label: 'ลบเส้น', icon: 'wi wi-trash', command: () => this.deleteEdge(flow, edge) },
@@ -1019,7 +1019,7 @@ openEdgeMenu(e: WtFlowEdgeEvent, flow: WtFlow, menu: WtContextMenu): void {
   menu.show(e.event);
 }
 
-openNodeMenu(e: WtFlowNodeEvent, flow: WtFlow, menu: WtContextMenu): void {
+openNodeMenu(e: WuFlowNodeEvent, flow: WuFlow, menu: WuContextMenu): void {
   const node = e.node;
   this.menuItems = [
     { label: 'แก้ชื่อ', icon: 'wi wi-pencil', command: () => this.startRename(node) },
@@ -1030,7 +1030,7 @@ openNodeMenu(e: WtFlowNodeEvent, flow: WtFlow, menu: WtContextMenu): void {
 }
 
 // คลิกขวาบนพื้น: จำจุดที่คลิกไว้เป็นตำแหน่งใน flow
-openPaneMenu(e: MouseEvent | KeyboardEvent, flow: WtFlow, menu: WtContextMenu): void {
+openPaneMenu(e: MouseEvent | KeyboardEvent, flow: WuFlow, menu: WuContextMenu): void {
   const box = (e.target as Element).getBoundingClientRect();
   const point = e instanceof MouseEvent && e.clientX ? { x: e.clientX, y: e.clientY } : { x: box.left + box.width / 2, y: box.top + box.height / 2 };
   const position = flow.screenToFlowPosition(point);
@@ -1039,53 +1039,53 @@ openPaneMenu(e: MouseEvent | KeyboardEvent, flow: WtFlow, menu: WtContextMenu): 
 }
 
 // ปุ่ม Menu หรือ Shift + F10 บนโหนด เส้น หรือพื้นที่โฟกัสอยู่: เมนูเดียวกับคลิกขวา
-menuKey(e: KeyboardEvent, flow: WtFlow, menu: WtContextMenu): void {
+menuKey(e: KeyboardEvent, flow: WuFlow, menu: WuContextMenu): void {
   if (e.key !== 'ContextMenu' && !(e.shiftKey && e.key === 'F10')) return;
   const target = e.target as Element;
-  const node = flow.getNode(target.closest('.wt-flow-node')?.getAttribute('data-id') || '');
-  const edge = flow.getEdge(target.closest('.wt-flow-edge')?.getAttribute('data-id') || '');
+  const node = flow.getNode(target.closest('.wu-flow-node')?.getAttribute('data-id') || '');
+  const edge = flow.getEdge(target.closest('.wu-flow-edge')?.getAttribute('data-id') || '');
   if (node) this.openNodeMenu({ event: e, node }, flow, menu);
   else if (edge) this.openEdgeMenu({ event: e, edge }, flow, menu);
   else this.openPaneMenu(e, flow, menu);
 }
 
-deleteEdge(flow: WtFlow, edge: WtFlowEdge): void {
+deleteEdge(flow: WuFlow, edge: WuFlowEdge): void {
   flow.deleteElements({ edges: [edge.id] });
   this.lastAction = 'ลบเส้น';
 }
 
 // เลือกเส้นไว้ วงกลมที่ปลายจึงโผล่มาให้ลากไปจุดใหม่
-reconnect(flow: WtFlow, edge: WtFlowEdge): void {
+reconnect(flow: WuFlow, edge: WuFlowEdge): void {
   flow.select({ edges: [edge.id] });
   this.lastAction = 'ลากวงกลมที่ปลายเส้นไปจุดใหม่';
 }
 
-duplicate(flow: WtFlow, node: WtFlowNode): void {
+duplicate(flow: WuFlow, node: WuFlowNode): void {
   this.added++;
   flow.addNodes({ ...node, id: node.id + '-' + this.added, selected: false, position: { x: node.position.x + 40, y: node.position.y + 40 } });
 }
 
-addHere(flow: WtFlow, position: { x: number; y: number }): void {
+addHere(flow: WuFlow, position: { x: number; y: number }): void {
   this.added++;
   flow.addNodes({ id: 'step-' + this.added, position, data: { label: 'ขั้นตอนใหม่ ' + this.added } });
 }
 
-startRename(node: WtFlowNode): void {
+startRename(node: WuFlowNode): void {
   this.renaming = node;
   this.newName = node.data.label;
 }
 
-saveName(flow: WtFlow): void {
+saveName(flow: WuFlow): void {
   if (this.renaming) flow.updateNodeData(this.renaming.id, { label: this.newName });
   this.renaming = null;
 }`,
-    viewport: `import { FlowViewport, WtFlow, WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    viewport: `import { FlowViewport, WuFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'start', type: 'input', position: { x: 0, y: 0 }, data: { label: 'แบบฟอร์มออนไลน์' } },
   { id: 'send', type: 'output', position: { x: 0, y: 120 }, data: { label: 'ส่งเรื่องให้ฝ่ายทะเบียน' } },
 ];
-edges: WtFlowEdge[] = [{ id: 'start-send', source: 'start', target: 'send' }];
+edges: WuFlowEdge[] = [{ id: 'start-send', source: 'start', target: 'send' }];
 viewport: FlowViewport = { x: 0, y: 0, zoom: 1 };
 panOnScroll = false;
 added = 0;
@@ -1100,34 +1100,34 @@ allowDrop(event: DragEvent): void {
 }
 
 // วางบน flow: แปลงตำแหน่งบนจอเป็นตำแหน่งใน flow
-drop(event: DragEvent, flow: WtFlow): void {
+drop(event: DragEvent, flow: WuFlow): void {
   event.preventDefault();
   const type = event.dataTransfer?.getData('application/x-flow-node');
   if (type) this.place(flow, type, flow.screenToFlowPosition({ x: event.clientX, y: event.clientY }));
 }
 
 // แตะรายการ: วางไว้กลางภาพ
-addAtCentre(flow: WtFlow, canvas: HTMLElement, type: string): void {
+addAtCentre(flow: WuFlow, canvas: HTMLElement, type: string): void {
   const box = canvas.getBoundingClientRect();
   this.place(flow, type, flow.screenToFlowPosition({ x: box.left + box.width / 2, y: box.top + box.height / 2 }));
 }
 
-place(flow: WtFlow, type: string, position: { x: number; y: number }): void {
+place(flow: WuFlow, type: string, position: { x: number; y: number }): void {
   this.added++;
   const label = type === 'input' ? 'เริ่ม' : type === 'output' ? 'จบ' : 'ขั้นตอน';
   flow.addNodes({ id: 'new-' + this.added, type, position, data: { label: label + ' ' + this.added } });
 }
 
-goToStart(flow: WtFlow): void {
+goToStart(flow: WuFlow): void {
   flow.setCenter(80, 20, { zoom: 1.5, duration: 400 });
 }
 
 viewportText(): string {
   return Math.round(this.viewport.x) + ', ' + Math.round(this.viewport.y) + ' · ' + this.viewport.zoom.toFixed(2);
 }`,
-    layout: `import { layoutFlow, WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    layout: `import { layoutFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'principal', position: { x: 160, y: 0 }, data: { label: 'ผู้อำนวยการ' } },
   { id: 'academic', position: { x: 0, y: 40 }, data: { label: 'รองฝ่ายวิชาการ' } },
   { id: 'admin', position: { x: 380, y: 90 }, data: { label: 'รองฝ่ายบริหาร' } },
@@ -1136,7 +1136,7 @@ nodes: WtFlowNode[] = [
   { id: 'finance', position: { x: 480, y: 260 }, data: { label: 'งานการเงิน' } },
   { id: 'supplies', position: { x: 220, y: 320 }, data: { label: 'งานพัสดุ' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'p-a', source: 'principal', target: 'academic', type: 'smoothstep' },
   { id: 'p-b', source: 'principal', target: 'admin', type: 'smoothstep' },
   { id: 'a-r', source: 'academic', target: 'registrar', type: 'smoothstep' },
@@ -1146,30 +1146,30 @@ edges: WtFlowEdge[] = [
 ];
 
 // หรือจัดก่อนแสดงด้วย helper เช่นข้อมูลจาก API ที่ยังไม่มีตำแหน่ง
-loadChart(nodes: WtFlowNode[], edges: WtFlowEdge[]): void {
+loadChart(nodes: WuFlowNode[], edges: WuFlowEdge[]): void {
   this.nodes = layoutFlow(nodes, edges, { direction: 'LR', nodeSep: 30, rankSep: 70 });
   this.edges = edges;
 }`,
-    history: `nodes: WtFlowNode[] = [
+    history: `nodes: WuFlowNode[] = [
   { id: 'door', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ทางเข้า' } },
   { id: 'shelves', position: { x: -120, y: 120 }, data: { label: 'ชั้นหนังสือ' } },
   { id: 'reading', position: { x: 120, y: 120 }, data: { label: 'มุมอ่าน' } },
   { id: 'loans', type: 'output', position: { x: 0, y: 240 }, data: { label: 'เคาน์เตอร์ยืมคืน' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'door-shelves', source: 'door', target: 'shelves' },
   { id: 'door-reading', source: 'door', target: 'reading' },
   { id: 'shelves-loans', source: 'shelves', target: 'loans' },
 ];`,
-    export: `import { WtFlow, WtFlowEdge, WtFlowNode } from 'wiratheme/flow';
+    export: `import { WuFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
 
-nodes: WtFlowNode[] = [
+nodes: WuFlowNode[] = [
   { id: 'form', type: 'input', position: { x: 0, y: 0 }, sourcePosition: 'right', data: { label: 'กรอกใบสมัคร' } },
   { id: 'fee', position: { x: 210, y: 0 }, sourcePosition: 'right', targetPosition: 'left', data: { label: 'ชำระค่าสมัคร' } },
   { id: 'exam', position: { x: 420, y: 0 }, sourcePosition: 'right', targetPosition: 'left', data: { label: 'สอบคัดเลือก' } },
   { id: 'result', type: 'output', position: { x: 630, y: 0 }, targetPosition: 'left', data: { label: 'ประกาศผล' } },
 ];
-edges: WtFlowEdge[] = [
+edges: WuFlowEdge[] = [
   { id: 'form-fee', source: 'form', target: 'fee', markerEnd: 'arrowclosed' },
   { id: 'fee-exam', source: 'fee', target: 'exam', markerEnd: 'arrowclosed' },
   { id: 'exam-result', source: 'exam', target: 'result', markerEnd: 'arrowclosed', animated: true },
@@ -1177,24 +1177,24 @@ edges: WtFlowEdge[] = [
 svgUrl = '';
 json = '';
 
-exportSvg(flow: WtFlow): void {
+exportSvg(flow: WuFlow): void {
   const svg = flow.toSvg({ title: 'ขั้นตอนรับสมัคร' });
   this.svgUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   // ดาวน์โหลดเป็นไฟล์: new Blob([svg], { type: 'image/svg+xml' }) แล้วใช้ URL.createObjectURL()
 }
 
 // เก็บลงฐานข้อมูล แล้วโหลดกลับทีหลัง
-exportJson(flow: WtFlow): void {
+exportJson(flow: WuFlow): void {
   this.json = JSON.stringify(flow.toJSON(), null, 2);
 }`,
-    keyboard: `nodes: WtFlowNode[] = [
+    keyboard: `nodes: WuFlowNode[] = [
   { id: 'a', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
   { id: 'b', position: { x: 0, y: 100 }, data: { label: 'ตรวจเอกสาร' } },
   { id: 'c', type: 'output', position: { x: 220, y: 100 }, data: { label: 'แจ้งผลทางอีเมล' } },
 ];
-edges: WtFlowEdge[] = [{ id: 'a-b', source: 'a', target: 'b' }];`,
-    performance: `nodes: WtFlowNode[] = [];
-edges: WtFlowEdge[] = [];
+edges: WuFlowEdge[] = [{ id: 'a-b', source: 'a', target: 'b' }];`,
+    performance: `nodes: WuFlowNode[] = [];
+edges: WuFlowEdge[] = [];
 onlyVisible = true;
 
 constructor() {
@@ -1217,7 +1217,7 @@ constructor() {
   gap: 0.375rem;
 }
 .flow-task .wi-lock {
-  color: var(--wt-warn-color);
+  color: var(--wu-warn-color);
 }`,
     nodes: `.flow-card {
   display: flex;
@@ -1227,7 +1227,7 @@ constructor() {
 }
 .flow-card small {
   display: block;
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 .flow-avatar {
   display: grid;
@@ -1235,8 +1235,8 @@ constructor() {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--wt-primary-soft);
-  color: var(--wt-primary-soft-text);
+  background: var(--wu-primary-soft);
+  color: var(--wu-primary-soft-text);
 }
 .flow-decision {
   border-style: dashed;
@@ -1246,9 +1246,9 @@ constructor() {
   align-items: center;
   gap: 0.25rem;
   padding: 0.125rem 0.25rem 0.125rem 0.5rem;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 999px;
-  background: var(--wt-card-bg);
+  background: var(--wu-card-bg);
   font-size: 0.75rem;
 }
 .flow-edge-remove {
@@ -1259,8 +1259,8 @@ constructor() {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--wt-danger-bg);
-  color: var(--wt-danger-text);
+  background: var(--wu-danger-bg);
+  color: var(--wu-danger-text);
   cursor: pointer;
 }`,
     toolbar: `.flow-note {
@@ -1268,31 +1268,31 @@ constructor() {
   place-items: center;
   font-weight: 600;
 }
-.flow-note[data-tone='yellow'] { background: var(--wt-warn-bg); color: var(--wt-warn-text); }
-.flow-note[data-tone='green'] { background: var(--wt-success-bg); color: var(--wt-success-text); }
-.flow-note[data-tone='blue'] { background: var(--wt-info-bg); color: var(--wt-info-text); }
+.flow-note[data-tone='yellow'] { background: var(--wu-warn-bg); color: var(--wu-warn-text); }
+.flow-note[data-tone='green'] { background: var(--wu-success-bg); color: var(--wu-success-text); }
+.flow-note[data-tone='blue'] { background: var(--wu-info-bg); color: var(--wu-info-text); }
 .flow-swatch {
   width: 1.5rem;
   height: 1.5rem;
-  border: 2px solid var(--wt-card-bg);
+  border: 2px solid var(--wu-card-bg);
   border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--wt-border);
+  box-shadow: 0 0 0 1px var(--wu-border);
   cursor: pointer;
 }
-.flow-swatch[data-tone='yellow'] { background: var(--wt-warn-color); }
-.flow-swatch[data-tone='green'] { background: var(--wt-success-color); }
-.flow-swatch[data-tone='blue'] { background: var(--wt-info-color); }`,
+.flow-swatch[data-tone='yellow'] { background: var(--wu-warn-color); }
+.flow-swatch[data-tone='green'] { background: var(--wu-success-color); }
+.flow-swatch[data-tone='blue'] { background: var(--wu-info-color); }`,
   },
   api: [
     {
       id: 'api-inputs',
       title: { th: 'Inputs · ข้อมูล', en: 'Inputs · the diagram' },
       rows: [
-        row('nodes', 'WtFlowNode[]', undefined, 'โหนดทั้งหมด (สองทาง [(nodes)])', 'Every node (two-way [(nodes)])'),
-        row('edges', 'WtFlowEdge[]', undefined, 'เส้นทั้งหมด (สองทาง [(edges)])', 'Every edge (two-way [(edges)])'),
+        row('nodes', 'WuFlowNode[]', undefined, 'โหนดทั้งหมด (สองทาง [(nodes)])', 'Every node (two-way [(nodes)])'),
+        row('edges', 'WuFlowEdge[]', undefined, 'เส้นทั้งหมด (สองทาง [(edges)])', 'Every edge (two-way [(edges)])'),
         row('applyChanges', 'boolean', 'true', 'ใช้การเปลี่ยนแปลงเองแล้วส่ง array ใหม่ · false รายงานผ่าน (nodeChanges) / (edgeChanges) อย่างเดียว', 'Apply changes and hand back new arrays · false only reports them through (nodeChanges) / (edgeChanges)'),
-        row('nodeTypes', 'Record<string, Type>', undefined, 'component ที่วาดโหนดแต่ละชนิด (template wtFlowNode ชนะ)', 'Components that draw node types (a wtFlowNode template wins)'),
-        row('defaultEdgeOptions', 'Partial<WtFlowEdge>', undefined, 'ค่าตั้งต้นของทุกเส้น รวมเส้นที่เชื่อมใหม่ (type, animated, markerEnd …)', 'What every edge starts from, new connections too (type, animated, markerEnd …)'),
+        row('nodeTypes', 'Record<string, Type>', undefined, 'component ที่วาดโหนดแต่ละชนิด (template wuFlowNode ชนะ)', 'Components that draw node types (a wuFlowNode template wins)'),
+        row('defaultEdgeOptions', 'Partial<WuFlowEdge>', undefined, 'ค่าตั้งต้นของทุกเส้น รวมเส้นที่เชื่อมใหม่ (type, animated, markerEnd …)', 'What every edge starts from, new connections too (type, animated, markerEnd …)'),
       ],
     },
     {
@@ -1341,7 +1341,7 @@ constructor() {
       rows: [
         row('viewport', 'FlowViewport', undefined, 'มุมมอง { x, y, zoom } (สองทาง [(viewport)])', 'The view { x, y, zoom } (two-way [(viewport)])'),
         row('defaultViewport', 'FlowViewport', undefined, 'มุมมองเริ่มต้นเมื่อไม่ผูก [(viewport)]', 'Starting view when [(viewport)] is not bound'),
-        row('fitView · fitViewOptions', 'boolean · WtFlowFitViewOptions', 'false', 'ซูมให้เห็นทั้งภาพเมื่อวัดขนาดเสร็จ', 'Fit everything into view once measured'),
+        row('fitView · fitViewOptions', 'boolean · WuFlowFitViewOptions', 'false', 'ซูมให้เห็นทั้งภาพเมื่อวัดขนาดเสร็จ', 'Fit everything into view once measured'),
         row('minZoom · maxZoom', 'number', '0.5 · 2', 'ซูมต่ำสุด / สูงสุด', 'Smallest / largest zoom'),
         row('translateExtent', '[[minX, minY], [maxX, maxY]]', undefined, 'ขอบเขตที่เลื่อนภาพได้', 'How far the view may pan'),
         row('panOnDrag', 'boolean | number[]', 'true', 'ลากพื้นเพื่อเลื่อน: true, false หรือปุ่มเมาส์ที่ใช้ ([1, 2])', 'Drag the pane to pan: true, false or the mouse buttons ([1, 2])'),
@@ -1372,7 +1372,7 @@ constructor() {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('nodesChange · edgesChange · viewportChange · interactiveChange', 'WtFlowNode[] · WtFlowEdge[] · FlowViewport · boolean', undefined, 'สำหรับการผูกสองทาง', 'For the two-way bindings'),
+        row('nodesChange · edgesChange · viewportChange · interactiveChange', 'WuFlowNode[] · WuFlowEdge[] · FlowViewport · boolean', undefined, 'สำหรับการผูกสองทาง', 'For the two-way bindings'),
         row('nodeChanges · edgeChanges', 'FlowNodeChange[] · FlowEdgeChange[]', undefined, 'ทุกการเปลี่ยนแปลง (ทุกจังหวะของการลาก)', 'Every change (each step of a drag)'),
         row('selectionChange', '{ nodes, edges }', undefined, 'ที่เลือกเปลี่ยน', 'The selection changed'),
         row('nodeClick · nodeDoubleClick · nodeContextMenu · nodeMouseEnter · nodeMouseLeave', '{ event, node }', undefined, 'เหตุการณ์ของโหนด', 'Node events'),
@@ -1384,8 +1384,8 @@ constructor() {
         row('connectStart · connectEnd', '{ event, nodeId, handleId, handleType } · { event, connection, isValid }', undefined, 'เริ่มและจบการลากเชื่อม', 'A connection drag starts and ends'),
         row('reconnect · reconnectStart · reconnectEnd', '{ edge, connection } · { event, edge, handleType } · { event, edge, connection }', undefined, 'ย้ายปลายเส้น', 'An edge end was moved'),
         row('delete', '{ nodes, edges }', undefined, 'ลบแล้ว', 'Elements were deleted'),
-        row('init', 'WtFlow', undefined, 'flow พร้อมใช้ ส่งตัว flow (method ทั้งหมด) มาให้', 'The flow is ready; carries the flow itself (all its methods)'),
-        row('nodesInitialized', 'WtFlowNode[]', undefined, 'วัดขนาดทุกโหนดครบแล้ว', 'Every node has been measured'),
+        row('init', 'WuFlow', undefined, 'flow พร้อมใช้ ส่งตัว flow (method ทั้งหมด) มาให้', 'The flow is ready; carries the flow itself (all its methods)'),
+        row('nodesInitialized', 'WuFlowNode[]', undefined, 'วัดขนาดทุกโหนดครบแล้ว', 'Every node has been measured'),
         row('nodeComponentEvent', '{ node, name, value }', undefined, 'output ของ component ใน nodeTypes', 'An output of a nodeTypes component'),
       ],
     },
@@ -1394,12 +1394,12 @@ constructor() {
       title: { th: 'Methods (ผ่าน #ref, @ViewChild หรือ (init))', en: 'Methods (through #ref, @ViewChild or (init))' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
-        row('getNodes() · getEdges() · getNode(id) · getEdge(id)', 'WtFlowNode[] · WtFlowEdge[] · …', undefined, 'อ่านข้อมูลล่าสุด', 'Read the latest data'),
+        row('getNodes() · getEdges() · getNode(id) · getEdge(id)', 'WuFlowNode[] · WuFlowEdge[] · …', undefined, 'อ่านข้อมูลล่าสุด', 'Read the latest data'),
         row('setNodes(nodes | fn) · setEdges(edges | fn) · addNodes(n) · addEdges(e)', 'void', undefined, 'แทนที่หรือเพิ่ม (ผ่านการเปลี่ยนแปลงตามปกติ)', 'Replace or add (as ordinary changes)'),
         row('updateNode(id, update, { replace }) · updateNodeData(id, update) · updateEdge(id, update)', 'void', undefined, 'รวมค่าใหม่เข้าไปในโหนด / data / เส้น', 'Merge new values into a node, its data, an edge'),
         row('deleteElements({ nodes, edges })', 'Promise<{ deletedNodes, deletedEdges }>', undefined, 'ลบ (ลูกและเส้นที่ต่ออยู่ถูกลบด้วย ถาม beforeDelete ก่อน)', 'Delete (children and connected edges too; beforeDelete is asked first)'),
         row('select({ nodes, edges }) · selectAll() · clearSelection()', 'void', undefined, 'เลือกจากโค้ด', 'Select from code'),
-        row('getIntersectingNodes(target, partially) · isNodeIntersecting(target, area, partially)', 'WtFlowNode[] · boolean', undefined, 'โหนดที่ซ้อนทับ', 'Overlapping nodes'),
+        row('getIntersectingNodes(target, partially) · isNodeIntersecting(target, area, partially)', 'WuFlowNode[] · boolean', undefined, 'โหนดที่ซ้อนทับ', 'Overlapping nodes'),
         row('getViewport() · getZoom() · setViewport(viewport, { duration })', 'FlowViewport · number · Promise<boolean>', undefined, 'อ่านและตั้งมุมมอง', 'Read and set the view'),
         row('zoomIn() · zoomOut() · zoomTo(zoom, { duration })', 'Promise<boolean>', undefined, 'ซูม', 'Zoom'),
         row('fitView({ padding, nodes, minZoom, maxZoom, duration })', 'Promise<boolean>', undefined, 'ซูมให้เห็นทุกโหนด (หรือเฉพาะ nodes)', 'Fit every node (or just nodes) into view'),
@@ -1415,17 +1415,17 @@ constructor() {
       id: 'api-templates',
       title: 'Templates',
       rows: [
-        row('<ng-template wtFlowNode="type" let-node>', 'WtFlowNodeContext', undefined, 'วาดโหนดชนิดนั้น (ไม่ใส่ชื่อ = ทุกโหนดที่ไม่มี template)', 'Draws nodes of that type (no name = every node without one)'),
-        row('<ng-template wtFlowEdge="type" let-edge>', 'WtFlowEdgeContext', undefined, 'วาดเส้นชนิดนั้นเอง (ใช้ svg:path)', 'Draws edges of that type yourself (with svg:path)'),
-        row('<ng-template wtFlowEdgeLabel="type" let-edge>', 'WtFlowEdgeContext', undefined, 'HTML แทนป้ายของเส้น', 'HTML in place of an edge label'),
-        row('<ng-template wtFlowConnectionLine let-line>', 'WtFlowConnectionLineContext', undefined, 'เส้นที่วาดตอนลากเชื่อม', 'The line drawn while connecting'),
-        row('WT_FLOW_NODE', 'InjectionToken<WtFlowNodeContext>', undefined, 'context ของโหนด สำหรับ inject() ใน component ของ nodeTypes', 'The node’s context, for inject() in a nodeTypes component'),
+        row('<ng-template wuFlowNode="type" let-node>', 'WuFlowNodeContext', undefined, 'วาดโหนดชนิดนั้น (ไม่ใส่ชื่อ = ทุกโหนดที่ไม่มี template)', 'Draws nodes of that type (no name = every node without one)'),
+        row('<ng-template wuFlowEdge="type" let-edge>', 'WuFlowEdgeContext', undefined, 'วาดเส้นชนิดนั้นเอง (ใช้ svg:path)', 'Draws edges of that type yourself (with svg:path)'),
+        row('<ng-template wuFlowEdgeLabel="type" let-edge>', 'WuFlowEdgeContext', undefined, 'HTML แทนป้ายของเส้น', 'HTML in place of an edge label'),
+        row('<ng-template wuFlowConnectionLine let-line>', 'WuFlowConnectionLineContext', undefined, 'เส้นที่วาดตอนลากเชื่อม', 'The line drawn while connecting'),
+        row('WU_FLOW_NODE', 'InjectionToken<WuFlowNodeContext>', undefined, 'context ของโหนด สำหรับ inject() ใน component ของ nodeTypes', 'The node’s context, for inject() in a nodeTypes component'),
       ],
       code: NODE_CONTEXT,
     },
     {
       id: 'api-handle',
-      title: 'wt-flow-handle',
+      title: 'wu-flow-handle',
       rows: [
         row('type', "'source' | 'target'", "'source'", 'ทางออก (เส้นเริ่มที่นี่) หรือทางเข้า', 'A way out (edges start here) or a way in'),
         row('position', "'top' | 'right' | 'bottom' | 'left'", 'target: top · source: bottom', 'ด้านของโหนด', 'Side of the node'),
@@ -1437,7 +1437,7 @@ constructor() {
     },
     {
       id: 'api-background',
-      title: 'wt-flow-background',
+      title: 'wu-flow-background',
       rows: [
         row('variant', "'dots' | 'lines' | 'cross' | 'image'", "'dots'", 'ลายพื้น (ซ้อนหลายชั้นได้)', 'The pattern (stack several)'),
         row('gap · size · lineWidth · offset', 'number | [x, y]', '20 · 1 / 6 · 1 · 0', 'ระยะ ขนาดจุด ความหนาเส้น และการเลื่อนลาย (หน่วยใน flow)', 'Spacing, dot size, line width and shift (flow units)'),
@@ -1447,20 +1447,20 @@ constructor() {
     },
     {
       id: 'api-controls',
-      title: 'wt-flow-controls',
+      title: 'wu-flow-controls',
       rows: [
-        row('position', 'WtFlowPanelPosition', "'bottom-left'", 'มุมที่วาง', 'The corner it sits in'),
+        row('position', 'WuFlowPanelPosition', "'bottom-left'", 'มุมที่วาง', 'The corner it sits in'),
         row('orientation', "'vertical' | 'horizontal'", "'vertical'", 'เรียงปุ่ม', 'Button direction'),
         row('showZoom · showFitView · showInteractive', 'boolean', 'true', 'ปุ่มซูม พอดีจอ และล็อก', 'Zoom, fit and lock buttons'),
-        row('fitViewOptions · duration', 'WtFlowFitViewOptions · number', '200', 'ค่าของปุ่มพอดีจอ และความยาวการเคลื่อน (ms)', 'Fit button options and the animation length (ms)'),
+        row('fitViewOptions · duration', 'WuFlowFitViewOptions · number', '200', 'ค่าของปุ่มพอดีจอ และความยาวการเคลื่อน (ms)', 'Fit button options and the animation length (ms)'),
         row('(zoomInClick) · (zoomOutClick) · (fitViewClick) · (interactiveChange)', 'void · boolean', undefined, 'กดปุ่ม', 'A button was pressed'),
       ],
     },
     {
       id: 'api-minimap',
-      title: 'wt-flow-minimap',
+      title: 'wu-flow-minimap',
       rows: [
-        row('position', 'WtFlowPanelPosition', "'bottom-right'", 'มุมที่วาง', 'The corner it sits in'),
+        row('position', 'WuFlowPanelPosition', "'bottom-right'", 'มุมที่วาง', 'The corner it sits in'),
         row('width · height', 'number', '200 · 150', 'ขนาดเป็น px (เล็กลงบนจอแคบ)', 'Size in px (smaller on narrow screens)'),
         row('nodeColor · nodeStrokeColor · nodeClassName', 'string | (node) => string', 'token', 'สีหรือ class ของโหนดในแผนที่', 'Colour or class of the nodes on the map'),
         row('nodeBorderRadius · nodeStrokeWidth', 'number', '5', 'มุมโค้งและความหนาเส้นของโหนด', 'Node corner radius and stroke width'),
@@ -1471,12 +1471,12 @@ constructor() {
     },
     {
       id: 'api-panel',
-      title: 'wt-flow-panel',
+      title: 'wu-flow-panel',
       rows: [row('position', "'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'center-left' | 'center-right'", "'top-left'", 'อะไรก็ได้วางบนแผนภาพ (ไม่เลื่อนหรือซูมตาม)', 'Anything placed over the diagram (it does not pan or zoom)')],
     },
     {
       id: 'api-toolbar',
-      title: 'wt-flow-node-toolbar',
+      title: 'wu-flow-node-toolbar',
       rows: [
         row('isVisible', 'boolean', undefined, 'บังคับแสดง / ซ่อน (ไม่ใส่ = แสดงเมื่อเลือกโหนดนี้โหนดเดียว)', 'Force shown / hidden (leave out: shown while this node is the only one selected)'),
         row('position · align', "'top' | 'right' | 'bottom' | 'left' · 'start' | 'center' | 'end'", "'top' · 'center'", 'ด้านและแนวของแถบปุ่ม', 'Side and alignment'),
@@ -1486,7 +1486,7 @@ constructor() {
     },
     {
       id: 'api-resizer',
-      title: 'wt-flow-node-resizer',
+      title: 'wu-flow-node-resizer',
       rows: [
         row('minWidth · minHeight · maxWidth · maxHeight', 'number', '10 · 10', 'ขนาดเล็กสุด / ใหญ่สุด', 'Smallest / largest size'),
         row('keepAspectRatio', 'boolean', 'false', 'รักษาสัดส่วน', 'Keep the aspect ratio'),
@@ -1497,12 +1497,12 @@ constructor() {
     },
     {
       id: 'api-history',
-      title: 'wtFlowHistory',
+      title: 'wuFlowHistory',
       rows: [
         row('historyLimit', 'number', '100', 'จำนวนขั้นที่เก็บ', 'Steps kept'),
         row('historyKeyboard', 'boolean', 'true', 'Ctrl / ⌘ + Z, Ctrl / ⌘ + Shift + Z, Ctrl + Y', 'Ctrl / ⌘ + Z, Ctrl / ⌘ + Shift + Z, Ctrl + Y'),
         row('(historyChange)', '{ canUndo, canRedo }', undefined, 'สถานะของปุ่ม', 'What the buttons can do'),
-        row('canUndo · canRedo · undo() · redo() · clear()', 'boolean · boolean · boolean · boolean · void', undefined, 'ผ่าน #history="wtFlowHistory"', 'Through #history="wtFlowHistory"'),
+        row('canUndo · canRedo · undo() · redo() · clear()', 'boolean · boolean · boolean · boolean · void', undefined, 'ผ่าน #history="wuFlowHistory"', 'Through #history="wuFlowHistory"'),
       ],
     },
     {
@@ -1511,14 +1511,14 @@ constructor() {
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
         row('applyNodeChanges(changes, nodes) · applyEdgeChanges(changes, edges)', 'array ใหม่', undefined, 'ใช้การเปลี่ยนแปลง (โหมดคุมเอง)', 'Apply changes (controlled mode)'),
-        row('addEdge(edgeOrConnection, edges, defaults)', 'WtFlowEdge[]', undefined, 'เพิ่มเส้น (ไม่ซ้ำ ตั้ง id ให้)', 'Add an edge (no duplicates; gives it an id)'),
-        row('reconnectEdge(oldEdge, connection, edges) · updateEdge', 'WtFlowEdge[]', undefined, 'ย้ายปลายเส้น', 'Move an edge’s ends'),
+        row('addEdge(edgeOrConnection, edges, defaults)', 'WuFlowEdge[]', undefined, 'เพิ่มเส้น (ไม่ซ้ำ ตั้ง id ให้)', 'Add an edge (no duplicates; gives it an id)'),
+        row('reconnectEdge(oldEdge, connection, edges) · updateEdge', 'WuFlowEdge[]', undefined, 'ย้ายปลายเส้น', 'Move an edge’s ends'),
         row('getIncomers(node, nodes, edges) · getOutgoers(…) · getConnectedEdges(nodes, edges)', 'array', undefined, 'โหนดก่อนหน้า / ถัดไป และเส้นที่ต่ออยู่', 'Nodes before / after, and connected edges'),
         row('getNodesBounds(nodes) · getNodesInside(nodes, rect) · getIntersectingNodes(target, nodes)', 'FlowRect · array', undefined, 'กรอบรวมและโหนดในพื้นที่', 'Bounding box and nodes in an area'),
         row('getViewportForBounds(bounds, width, height, minZoom, maxZoom, padding)', 'FlowViewport', undefined, 'มุมมองที่ทำให้กรอบพอดี', 'The view that fits a box'),
-        row('getBezierPath · getSmoothStepPath · getStepPath · getStraightPath · getSimpleBezierPath · getEdgePath(type, p)', '[path, labelX, labelY, offsetX, offsetY]', undefined, 'เส้นทาง SVG ของเส้นแต่ละแบบ (สำหรับ wtFlowEdge)', 'SVG paths of each edge shape (for wtFlowEdge)'),
+        row('getBezierPath · getSmoothStepPath · getStepPath · getStraightPath · getSimpleBezierPath · getEdgePath(type, p)', '[path, labelX, labelY, offsetX, offsetY]', undefined, 'เส้นทาง SVG ของเส้นแต่ละแบบ (สำหรับ wuFlowEdge)', 'SVG paths of each edge shape (for wuFlowEdge)'),
         row('getEdgeCenter(sourceX, sourceY, targetX, targetY)', '[x, y, offsetX, offsetY]', undefined, 'จุดกึ่งกลางของเส้น', 'The middle of an edge'),
-        row('layoutFlow(nodes, edges, options) · layoutTree(nodes, edges, options)', 'WtFlowNode[]', undefined, 'จัดเรียงแบบชั้น / แบบต้นไม้', 'Layered / tree layout'),
+        row('layoutFlow(nodes, edges, options) · layoutTree(nodes, edges, options)', 'WuFlowNode[]', undefined, 'จัดเรียงแบบชั้น / แบบต้นไม้', 'Layered / tree layout'),
         row('flowToJSON(nodes, edges, viewport) · flowFromJSON(json) · flowToSvg(nodes, edges, options)', 'FlowJSON · FlowJSON | null · string', undefined, 'บันทึก โหลด และส่งออก', 'Save, load and export'),
         row('new FlowHistory({ limit }) · flowHistoryKey(event)', "FlowHistory · 'undo' | 'redo' | null", undefined, 'ประวัติสำหรับแอปที่ทำปุ่มเอง', 'History for apps with their own buttons'),
         row('isNode(v) · isEdge(v)', 'boolean', undefined, 'ตรวจชนิดข้อมูล', 'Type checks'),
@@ -1531,89 +1531,89 @@ constructor() {
     },
   ],
   tokens: [
-    tok('--wt-flow-bg', 'พื้นของแผนภาพ', 'Diagram background'),
-    tok('--wt-flow-border-width', 'ความหนากรอบ', 'Border width'),
-    tok('--wt-flow-border-color', 'สีกรอบ', 'Border colour'),
-    tok('--wt-flow-radius', 'มุมโค้งของกรอบ', 'Corner radius'),
-    tok('--wt-flow-min-height', 'ความสูงต่ำสุด (20rem)', 'Smallest height (20rem)'),
-    tok('--wt-flow-focus-ring', 'วงโฟกัสของแผนภาพ', 'Focus ring of the diagram'),
-    tok('--wt-flow-grid-dot-color', 'สีจุดของพื้น', 'Background dot colour'),
-    tok('--wt-flow-grid-line-color', 'สีเส้นของพื้น', 'Background line colour'),
-    tok('--wt-flow-node-bg', 'พื้นของโหนด', 'Node background'),
-    tok('--wt-flow-node-color', 'สีตัวอักษรของโหนด', 'Node text colour'),
-    tok('--wt-flow-node-border-color', 'สีขอบโหนด', 'Node border colour'),
-    tok('--wt-flow-node-border-width', 'ความหนาขอบโหนด', 'Node border width'),
-    tok('--wt-flow-node-radius', 'มุมโค้งของโหนด', 'Node corner radius'),
-    tok('--wt-flow-node-shadow', 'เงาของโหนด', 'Node shadow'),
-    tok('--wt-flow-node-padding', 'ระยะในโหนด', 'Node padding'),
-    tok('--wt-flow-node-width', 'ความกว้างของโหนดในตัว (10rem)', 'Width of the built-in nodes (10rem)'),
-    tok('--wt-flow-node-font-size', 'ขนาดตัวอักษรของโหนด', 'Node font size'),
-    tok('--wt-flow-node-hover-border-color', 'สีขอบเมื่อชี้', 'Border colour on hover'),
-    tok('--wt-flow-node-selected-border-color', 'สีขอบเมื่อเลือก', 'Border colour when selected'),
-    tok('--wt-flow-node-selected-ring', 'วงรอบโหนดที่เลือก', 'Ring around a selected node'),
-    tok('--wt-flow-node-dragging-shadow', 'เงาขณะลาก', 'Shadow while dragged'),
-    tok('--wt-flow-node-focus-outline', 'เส้นโฟกัสของโหนด', 'Node focus outline'),
-    tok('--wt-flow-group-bg', 'พื้นของกลุ่ม', 'Group background'),
-    tok('--wt-flow-group-border-color', 'สีขอบกลุ่ม', 'Group border colour'),
-    tok('--wt-flow-group-label-color', 'สีชื่อกลุ่ม', 'Group label colour'),
-    tok('--wt-flow-handle-size', 'ขนาดจุดเชื่อม', 'Handle size'),
-    tok('--wt-flow-handle-bg', 'สีจุดเชื่อม', 'Handle colour'),
-    tok('--wt-flow-handle-border', 'สีขอบจุดเชื่อม', 'Handle border colour'),
-    tok('--wt-flow-handle-border-width', 'ความหนาขอบจุดเชื่อม', 'Handle border width'),
-    tok('--wt-flow-handle-hover-bg', 'สีจุดเชื่อมเมื่อชี้', 'Handle colour on hover'),
-    tok('--wt-flow-handle-valid-bg', 'สีจุดที่เชื่อมได้ขณะลาก', 'Colour of a handle that may take the connection'),
-    tok('--wt-flow-handle-invalid-bg', 'สีจุดที่เชื่อมไม่ได้ขณะลาก', 'Colour of a handle that may not'),
-    tok('--wt-flow-handle-hit', 'พื้นที่กดรอบจุดเชื่อม', 'Hit area around a handle'),
-    tok('--wt-flow-handle-hit-coarse', 'พื้นที่กดรอบจุดเชื่อมบนจอสัมผัส', 'Hit area around a handle on touch screens'),
-    tok('--wt-flow-edge-color', 'สีเส้น', 'Edge colour'),
-    tok('--wt-flow-edge-width', 'ความหนาเส้น', 'Edge width'),
-    tok('--wt-flow-edge-hover-color', 'สีเส้นเมื่อชี้', 'Edge colour on hover'),
-    tok('--wt-flow-edge-selected-color', 'สีเส้นที่เลือก', 'Selected edge colour'),
-    tok('--wt-flow-edge-selected-width', 'ความหนาเส้นที่เลือก', 'Selected edge width'),
-    tok('--wt-flow-edge-animated-dash', 'ลายเส้นประของเส้น animated', 'Dash pattern of animated edges'),
-    tok('--wt-flow-edge-animated-duration', 'ความเร็วของเส้นประวิ่ง', 'Speed of the running dashes'),
-    tok('--wt-flow-edge-focus-color', 'สีเส้นที่โฟกัส', 'Focused edge colour'),
-    tok('--wt-flow-edge-updater-bg', 'สีวงกลมที่ปลายเส้นสำหรับย้าย', 'Colour of the circles that move an edge’s ends'),
-    tok('--wt-flow-edge-label-bg', 'พื้นป้ายเส้น', 'Edge label background'),
-    tok('--wt-flow-edge-label-color', 'สีตัวอักษรป้ายเส้น', 'Edge label text colour'),
-    tok('--wt-flow-edge-label-border', 'ขอบป้ายเส้น', 'Edge label border'),
-    tok('--wt-flow-edge-label-padding', 'ระยะในป้ายเส้น', 'Edge label padding'),
-    tok('--wt-flow-edge-label-radius', 'มุมโค้งป้ายเส้น', 'Edge label corner radius'),
-    tok('--wt-flow-edge-label-font-size', 'ขนาดตัวอักษรป้ายเส้น', 'Edge label font size'),
-    tok('--wt-flow-edge-label-max-width', 'ความกว้างสูงสุดของป้ายเส้น', 'Widest edge label'),
-    tok('--wt-flow-connection-color', 'สีเส้นตอนลากเชื่อม', 'Colour of the line while connecting'),
-    tok('--wt-flow-connection-width', 'ความหนาเส้นตอนลากเชื่อม', 'Width of the line while connecting'),
-    tok('--wt-flow-selection-bg', 'พื้นกรอบเลือก', 'Selection box fill'),
-    tok('--wt-flow-selection-border', 'ขอบกรอบเลือก', 'Selection box border'),
-    tok('--wt-flow-guide-color', 'สีเส้นช่วยจัดแนว', 'Alignment guide colour'),
-    tok('--wt-flow-panel-margin', 'ระยะห่างของ panel, controls และ minimap จากขอบ', 'Space between the border and panels, controls, minimap'),
-    tok('--wt-flow-controls-bg', 'พื้นของปุ่มควบคุม', 'Controls background'),
-    tok('--wt-flow-controls-color', 'สีไอคอนของปุ่มควบคุม', 'Controls icon colour'),
-    tok('--wt-flow-controls-border', 'สีขอบของปุ่มควบคุม', 'Controls border colour'),
-    tok('--wt-flow-controls-radius', 'มุมโค้งของปุ่มควบคุม', 'Controls corner radius'),
-    tok('--wt-flow-controls-shadow', 'เงาของปุ่มควบคุม', 'Controls shadow'),
-    tok('--wt-flow-controls-button-size', 'ขนาดปุ่มควบคุม', 'Control button size'),
-    tok('--wt-flow-controls-button-size-coarse', 'ขนาดปุ่มควบคุมบนจอสัมผัส', 'Control button size on touch screens'),
-    tok('--wt-flow-controls-hover-bg', 'พื้นปุ่มควบคุมเมื่อชี้', 'Control button background on hover'),
-    tok('--wt-flow-controls-disabled-opacity', 'ความจางของปุ่มที่ใช้ไม่ได้', 'Opacity of a disabled button'),
-    tok('--wt-flow-minimap-bg', 'พื้นของแผนที่ย่อ', 'Minimap background'),
-    tok('--wt-flow-minimap-border', 'สีขอบของแผนที่ย่อ', 'Minimap border colour'),
-    tok('--wt-flow-minimap-radius', 'มุมโค้งของแผนที่ย่อ', 'Minimap corner radius'),
-    tok('--wt-flow-minimap-shadow', 'เงาของแผนที่ย่อ', 'Minimap shadow'),
-    tok('--wt-flow-minimap-node-bg', 'สีโหนดในแผนที่ย่อ', 'Node colour on the minimap'),
-    tok('--wt-flow-minimap-node-selected-bg', 'สีโหนดที่เลือกในแผนที่ย่อ', 'Selected node colour on the minimap'),
-    tok('--wt-flow-minimap-group-bg', 'สีกลุ่มในแผนที่ย่อ', 'Group colour on the minimap'),
-    tok('--wt-flow-minimap-mask', 'สีทับส่วนที่อยู่นอกมุมมอง', 'Colour over what is out of view'),
-    tok('--wt-flow-minimap-mask-stroke', 'สีกรอบมุมมองในแผนที่ย่อ', 'Outline of the view on the minimap'),
-    tok('--wt-flow-toolbar-bg', 'พื้นของแถบปุ่มของโหนด', 'Node toolbar background'),
-    tok('--wt-flow-toolbar-border', 'สีขอบของแถบปุ่ม', 'Node toolbar border colour'),
-    tok('--wt-flow-toolbar-radius', 'มุมโค้งของแถบปุ่ม', 'Node toolbar corner radius'),
-    tok('--wt-flow-toolbar-shadow', 'เงาของแถบปุ่ม', 'Node toolbar shadow'),
-    tok('--wt-flow-toolbar-padding', 'ระยะในแถบปุ่ม', 'Node toolbar padding'),
-    tok('--wt-flow-toolbar-gap', 'ระยะระหว่างปุ่ม', 'Space between toolbar buttons'),
-    tok('--wt-flow-toolbar-offset', 'ระยะห่างจากโหนด (10px)', 'Space from the node (10px)'),
-    tok('--wt-flow-resizer-color', 'สีเส้นและจุดจับของการปรับขนาด', 'Colour of the resizer lines and grips'),
-    tok('--wt-flow-resizer-handle-bg', 'พื้นของจุดจับ', 'Grip background'),
-    tok('--wt-flow-resizer-handle-size', 'ขนาดจุดจับ', 'Grip size'),
+    tok('--wu-flow-bg', 'พื้นของแผนภาพ', 'Diagram background'),
+    tok('--wu-flow-border-width', 'ความหนากรอบ', 'Border width'),
+    tok('--wu-flow-border-color', 'สีกรอบ', 'Border colour'),
+    tok('--wu-flow-radius', 'มุมโค้งของกรอบ', 'Corner radius'),
+    tok('--wu-flow-min-height', 'ความสูงต่ำสุด (20rem)', 'Smallest height (20rem)'),
+    tok('--wu-flow-focus-ring', 'วงโฟกัสของแผนภาพ', 'Focus ring of the diagram'),
+    tok('--wu-flow-grid-dot-color', 'สีจุดของพื้น', 'Background dot colour'),
+    tok('--wu-flow-grid-line-color', 'สีเส้นของพื้น', 'Background line colour'),
+    tok('--wu-flow-node-bg', 'พื้นของโหนด', 'Node background'),
+    tok('--wu-flow-node-color', 'สีตัวอักษรของโหนด', 'Node text colour'),
+    tok('--wu-flow-node-border-color', 'สีขอบโหนด', 'Node border colour'),
+    tok('--wu-flow-node-border-width', 'ความหนาขอบโหนด', 'Node border width'),
+    tok('--wu-flow-node-radius', 'มุมโค้งของโหนด', 'Node corner radius'),
+    tok('--wu-flow-node-shadow', 'เงาของโหนด', 'Node shadow'),
+    tok('--wu-flow-node-padding', 'ระยะในโหนด', 'Node padding'),
+    tok('--wu-flow-node-width', 'ความกว้างของโหนดในตัว (10rem)', 'Width of the built-in nodes (10rem)'),
+    tok('--wu-flow-node-font-size', 'ขนาดตัวอักษรของโหนด', 'Node font size'),
+    tok('--wu-flow-node-hover-border-color', 'สีขอบเมื่อชี้', 'Border colour on hover'),
+    tok('--wu-flow-node-selected-border-color', 'สีขอบเมื่อเลือก', 'Border colour when selected'),
+    tok('--wu-flow-node-selected-ring', 'วงรอบโหนดที่เลือก', 'Ring around a selected node'),
+    tok('--wu-flow-node-dragging-shadow', 'เงาขณะลาก', 'Shadow while dragged'),
+    tok('--wu-flow-node-focus-outline', 'เส้นโฟกัสของโหนด', 'Node focus outline'),
+    tok('--wu-flow-group-bg', 'พื้นของกลุ่ม', 'Group background'),
+    tok('--wu-flow-group-border-color', 'สีขอบกลุ่ม', 'Group border colour'),
+    tok('--wu-flow-group-label-color', 'สีชื่อกลุ่ม', 'Group label colour'),
+    tok('--wu-flow-handle-size', 'ขนาดจุดเชื่อม', 'Handle size'),
+    tok('--wu-flow-handle-bg', 'สีจุดเชื่อม', 'Handle colour'),
+    tok('--wu-flow-handle-border', 'สีขอบจุดเชื่อม', 'Handle border colour'),
+    tok('--wu-flow-handle-border-width', 'ความหนาขอบจุดเชื่อม', 'Handle border width'),
+    tok('--wu-flow-handle-hover-bg', 'สีจุดเชื่อมเมื่อชี้', 'Handle colour on hover'),
+    tok('--wu-flow-handle-valid-bg', 'สีจุดที่เชื่อมได้ขณะลาก', 'Colour of a handle that may take the connection'),
+    tok('--wu-flow-handle-invalid-bg', 'สีจุดที่เชื่อมไม่ได้ขณะลาก', 'Colour of a handle that may not'),
+    tok('--wu-flow-handle-hit', 'พื้นที่กดรอบจุดเชื่อม', 'Hit area around a handle'),
+    tok('--wu-flow-handle-hit-coarse', 'พื้นที่กดรอบจุดเชื่อมบนจอสัมผัส', 'Hit area around a handle on touch screens'),
+    tok('--wu-flow-edge-color', 'สีเส้น', 'Edge colour'),
+    tok('--wu-flow-edge-width', 'ความหนาเส้น', 'Edge width'),
+    tok('--wu-flow-edge-hover-color', 'สีเส้นเมื่อชี้', 'Edge colour on hover'),
+    tok('--wu-flow-edge-selected-color', 'สีเส้นที่เลือก', 'Selected edge colour'),
+    tok('--wu-flow-edge-selected-width', 'ความหนาเส้นที่เลือก', 'Selected edge width'),
+    tok('--wu-flow-edge-animated-dash', 'ลายเส้นประของเส้น animated', 'Dash pattern of animated edges'),
+    tok('--wu-flow-edge-animated-duration', 'ความเร็วของเส้นประวิ่ง', 'Speed of the running dashes'),
+    tok('--wu-flow-edge-focus-color', 'สีเส้นที่โฟกัส', 'Focused edge colour'),
+    tok('--wu-flow-edge-updater-bg', 'สีวงกลมที่ปลายเส้นสำหรับย้าย', 'Colour of the circles that move an edge’s ends'),
+    tok('--wu-flow-edge-label-bg', 'พื้นป้ายเส้น', 'Edge label background'),
+    tok('--wu-flow-edge-label-color', 'สีตัวอักษรป้ายเส้น', 'Edge label text colour'),
+    tok('--wu-flow-edge-label-border', 'ขอบป้ายเส้น', 'Edge label border'),
+    tok('--wu-flow-edge-label-padding', 'ระยะในป้ายเส้น', 'Edge label padding'),
+    tok('--wu-flow-edge-label-radius', 'มุมโค้งป้ายเส้น', 'Edge label corner radius'),
+    tok('--wu-flow-edge-label-font-size', 'ขนาดตัวอักษรป้ายเส้น', 'Edge label font size'),
+    tok('--wu-flow-edge-label-max-width', 'ความกว้างสูงสุดของป้ายเส้น', 'Widest edge label'),
+    tok('--wu-flow-connection-color', 'สีเส้นตอนลากเชื่อม', 'Colour of the line while connecting'),
+    tok('--wu-flow-connection-width', 'ความหนาเส้นตอนลากเชื่อม', 'Width of the line while connecting'),
+    tok('--wu-flow-selection-bg', 'พื้นกรอบเลือก', 'Selection box fill'),
+    tok('--wu-flow-selection-border', 'ขอบกรอบเลือก', 'Selection box border'),
+    tok('--wu-flow-guide-color', 'สีเส้นช่วยจัดแนว', 'Alignment guide colour'),
+    tok('--wu-flow-panel-margin', 'ระยะห่างของ panel, controls และ minimap จากขอบ', 'Space between the border and panels, controls, minimap'),
+    tok('--wu-flow-controls-bg', 'พื้นของปุ่มควบคุม', 'Controls background'),
+    tok('--wu-flow-controls-color', 'สีไอคอนของปุ่มควบคุม', 'Controls icon colour'),
+    tok('--wu-flow-controls-border', 'สีขอบของปุ่มควบคุม', 'Controls border colour'),
+    tok('--wu-flow-controls-radius', 'มุมโค้งของปุ่มควบคุม', 'Controls corner radius'),
+    tok('--wu-flow-controls-shadow', 'เงาของปุ่มควบคุม', 'Controls shadow'),
+    tok('--wu-flow-controls-button-size', 'ขนาดปุ่มควบคุม', 'Control button size'),
+    tok('--wu-flow-controls-button-size-coarse', 'ขนาดปุ่มควบคุมบนจอสัมผัส', 'Control button size on touch screens'),
+    tok('--wu-flow-controls-hover-bg', 'พื้นปุ่มควบคุมเมื่อชี้', 'Control button background on hover'),
+    tok('--wu-flow-controls-disabled-opacity', 'ความจางของปุ่มที่ใช้ไม่ได้', 'Opacity of a disabled button'),
+    tok('--wu-flow-minimap-bg', 'พื้นของแผนที่ย่อ', 'Minimap background'),
+    tok('--wu-flow-minimap-border', 'สีขอบของแผนที่ย่อ', 'Minimap border colour'),
+    tok('--wu-flow-minimap-radius', 'มุมโค้งของแผนที่ย่อ', 'Minimap corner radius'),
+    tok('--wu-flow-minimap-shadow', 'เงาของแผนที่ย่อ', 'Minimap shadow'),
+    tok('--wu-flow-minimap-node-bg', 'สีโหนดในแผนที่ย่อ', 'Node colour on the minimap'),
+    tok('--wu-flow-minimap-node-selected-bg', 'สีโหนดที่เลือกในแผนที่ย่อ', 'Selected node colour on the minimap'),
+    tok('--wu-flow-minimap-group-bg', 'สีกลุ่มในแผนที่ย่อ', 'Group colour on the minimap'),
+    tok('--wu-flow-minimap-mask', 'สีทับส่วนที่อยู่นอกมุมมอง', 'Colour over what is out of view'),
+    tok('--wu-flow-minimap-mask-stroke', 'สีกรอบมุมมองในแผนที่ย่อ', 'Outline of the view on the minimap'),
+    tok('--wu-flow-toolbar-bg', 'พื้นของแถบปุ่มของโหนด', 'Node toolbar background'),
+    tok('--wu-flow-toolbar-border', 'สีขอบของแถบปุ่ม', 'Node toolbar border colour'),
+    tok('--wu-flow-toolbar-radius', 'มุมโค้งของแถบปุ่ม', 'Node toolbar corner radius'),
+    tok('--wu-flow-toolbar-shadow', 'เงาของแถบปุ่ม', 'Node toolbar shadow'),
+    tok('--wu-flow-toolbar-padding', 'ระยะในแถบปุ่ม', 'Node toolbar padding'),
+    tok('--wu-flow-toolbar-gap', 'ระยะระหว่างปุ่ม', 'Space between toolbar buttons'),
+    tok('--wu-flow-toolbar-offset', 'ระยะห่างจากโหนด (10px)', 'Space from the node (10px)'),
+    tok('--wu-flow-resizer-color', 'สีเส้นและจุดจับของการปรับขนาด', 'Colour of the resizer lines and grips'),
+    tok('--wu-flow-resizer-handle-bg', 'พื้นของจุดจับ', 'Grip background'),
+    tok('--wu-flow-resizer-handle-size', 'ขนาดจุดจับ', 'Grip size'),
   ],
 };

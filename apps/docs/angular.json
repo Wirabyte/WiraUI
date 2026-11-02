@@ -58,8 +58,8 @@
               },
               {
                 "glob": "utils.min.css",
-                "input": "node_modules/wiratheme/utils",
-                "output": "wiratheme-utils"
+                "input": "node_modules/wiraui/utils",
+                "output": "wiraui-utils"
               },
               {
                 "glob": "icons.json",

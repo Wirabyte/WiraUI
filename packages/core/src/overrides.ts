@@ -82,7 +82,7 @@ export interface ThemeOverrides extends ThemeOverrideSet {
 }
 
 export interface ThemePreset {
-  readonly wtPreset: true;
+  readonly wuPreset: true;
   readonly name: string;
   readonly config: ThemeConfig;
   readonly overrides: ThemeOverrides[];
@@ -95,10 +95,10 @@ export function palette(input: string): Palette {
   const ref = /^\{([a-z]+)\}$/.exec(input.trim());
   if (ref) {
     const sw = PRIMARY_SWATCHES.find((s) => s.id === ref[1]);
-    if (!sw) throw new Error(`wiratheme: unknown colour reference ${input}`);
+    if (!sw) throw new Error(`wiraui: unknown colour reference ${input}`);
     return generatePalette(sw.hex);
   }
-  if (!isHex(input)) throw new Error(`wiratheme: palette() needs a hex colour or {name}, got ${input}`);
+  if (!isHex(input)) throw new Error(`wiraui: palette() needs a hex colour or {name}, got ${input}`);
   return generatePalette(input);
 }
 
@@ -107,7 +107,7 @@ export function defineOverrides(overrides: ThemeOverrides): ThemeOverrides {
 }
 
 function makePreset(id: PresetId): ThemePreset {
-  return { wtPreset: true, name: presetExportName(id), config: defaults(id), overrides: [] };
+  return { wuPreset: true, name: presetExportName(id), config: defaults(id), overrides: [] };
 }
 // v1 (classic look)
 export const SilaClassic = makePreset('sila-classic');
@@ -120,7 +120,7 @@ export const Mali = makePreset('mali');
 export const Sila = makePreset('sila');
 export const Material = makePreset('material');
 export const Phet = makePreset('phet');
-// v3 (WiraTheme's own)
+// v3 (WiraUI's own)
 export const Wira = makePreset('wira');
 export const Lanna = makePreset('lanna');
 export const Siam = makePreset('siam');
@@ -151,22 +151,22 @@ export const PRESET_LIST: Record<PresetId, ThemePreset> = {
 
 /** A ready-made theme as a preset, e.g. `themePreset('sila-light-teal')` or `themePreset('sayan-green')`. */
 export function themePreset(name: string): ThemePreset {
-  return { wtPreset: true, name, config: themeConfig(name), overrides: [] };
+  return { wuPreset: true, name, config: themeConfig(name), overrides: [] };
 }
 
-/** Presets a wiratheme major offers, in menu order. */
+/** Presets a wiraui major offers, in menu order. */
 export function presetsFor(major: MajorVersion): ThemePreset[] {
   return VERSION_CATALOG[major].presets.map((id) => PRESET_LIST[id]);
 }
 
-/** A new preset: `base` plus your changes. Use it with `provideWiraTheme({ preset })` when there is no SCSS/CSS theme file. */
+/** A new preset: `base` plus your changes. Use it with `provideWiraUI({ preset })` when there is no SCSS/CSS theme file. */
 export function definePreset(base: ThemePreset, overrides: ThemeOverrides): ThemePreset {
   const config = overrides.scheme ? { ...base.config, scheme: overrides.scheme } : base.config;
-  return { wtPreset: true, name: base.name + '+', config, overrides: base.overrides.concat(overrides) };
+  return { wuPreset: true, name: base.name + '+', config, overrides: base.overrides.concat(overrides) };
 }
 
 export function isThemePreset(value: unknown): value is ThemePreset {
-  return !!value && typeof value === 'object' && (value as ThemePreset).wtPreset === true;
+  return !!value && typeof value === 'object' && (value as ThemePreset).wuPreset === true;
 }
 
 const num = (v: Size): number => (typeof v === 'number' ? v : parseFloat(v));
@@ -174,7 +174,7 @@ const num = (v: Size): number => (typeof v === 'number' ? v : parseFloat(v));
 function resolveSurface(s: string | Palette): SurfaceId | Palette {
   if (typeof s !== 'string') return s;
   const id = s.replace(/[{}]/g, '').trim();
-  if (!Object.prototype.hasOwnProperty.call(SURFACES, id)) throw new Error(`wiratheme: unknown surface ${s}`);
+  if (!Object.prototype.hasOwnProperty.call(SURFACES, id)) throw new Error(`wiraui: unknown surface ${s}`);
   return id as SurfaceId;
 }
 function surface950(s: SurfaceId | Palette | undefined): string {
@@ -187,7 +187,7 @@ function setTokens(set: ThemeOverrideSet, s950: string): ThemeTokens {
   const sem = set.semantic || {};
   if (sem.surface !== undefined) mergeTokens(t, surfaceTokens(resolveSurface(sem.surface)));
   if (sem.primary !== undefined) {
-    if (!isPalette(sem.primary)) throw new Error('wiratheme: semantic.primary must be a palette, use palette()');
+    if (!isPalette(sem.primary)) throw new Error('wiraui: semantic.primary must be a palette, use palette()');
     mergeTokens(t, primaryTokens(sem.primary, s950));
   }
   for (const k of SEMANTIC_KEYS) {

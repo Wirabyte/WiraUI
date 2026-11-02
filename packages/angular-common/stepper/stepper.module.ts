@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtStep, WtStepItem, WtStepList, WtStepPanel, WtStepPanels, WtStepper } from './stepper.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuStep, WuStepItem, WuStepList, WuStepPanel, WuStepPanels, WuStepper } from './stepper.component';
 
-const ALL = [WtStepper, WtStepList, WtStep, WtStepPanels, WtStepPanel, WtStepItem, WtTemplate];
+const ALL = [WuStepper, WuStepList, WuStep, WuStepPanels, WuStepPanel, WuStepItem, WuTemplate];
 
-/** For NgModule apps: the stepper, its parts and `wtTemplate` (`pTemplate`). */
+/** For NgModule apps: the stepper, its parts and `wuTemplate` (`pTemplate`). */
 @NgModule({
   imports: ALL,
   exports: ALL,
 })
-export class WtStepperModule {}
+export class WuStepperModule {}

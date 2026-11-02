@@ -14,21 +14,21 @@ test('i18n: the pipe shows the main language first; keys without a message show 
   await expect(page.locator('#i18n-params')).toHaveText('สวัสดี วิระ');
   await expect(page.locator('#i18n-key')).toHaveText('หน้าแรก');
   await expect(page.locator('html')).toHaveAttribute('lang', 'th');
-  const buttons = page.locator('#ls-buttons .wt-languageswitch-option');
+  const buttons = page.locator('#ls-buttons .wu-languageswitch-option');
   await expect(buttons).toHaveText(['TH', 'EN']);
   await expect(buttons.nth(0)).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#ls-buttons [role="group"]')).toHaveAttribute('aria-label', 'ภาษา');
 });
 
 test('i18n: the switch changes the page, <html lang> and the components’ own texts, and is remembered', async ({ page }) => {
-  await page.locator('#ls-buttons .wt-languageswitch-option', { hasText: 'EN' }).click();
+  await page.locator('#ls-buttons .wu-languageswitch-option', { hasText: 'EN' }).click();
   await expect(page.locator('#i18n-lang')).toHaveText('en');
   await expect(page.locator('#i18n-text')).toHaveText('Save');
   await expect(page.locator('#i18n-params')).toHaveText('Hello วิระ');
   await expect(page.locator('#i18n-key')).toHaveText('Home');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.locator('#ls-buttons .wt-languageswitch-option').nth(1)).toHaveAttribute('aria-pressed', 'true');
-  // WiraTheme's own texts follow: the switch's label comes from the component locale.
+  await expect(page.locator('#ls-buttons .wu-languageswitch-option').nth(1)).toHaveAttribute('aria-pressed', 'true');
+  // WiraUI's own texts follow: the switch's label comes from the component locale.
   await expect(page.locator('#ls-buttons [role="group"]')).toHaveAttribute('aria-label', 'Language');
   await expect(page.locator('#ls-select select')).toHaveValue('en');
   // Remembered across a reload.

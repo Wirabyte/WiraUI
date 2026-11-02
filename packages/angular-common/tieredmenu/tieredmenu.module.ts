@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTieredMenu } from './tieredmenu.component';
+import { WuTieredMenu } from './tieredmenu.component';
 
-/** For NgModule apps. Standalone apps can import `WtTieredMenu` directly. */
+/** For NgModule apps. Standalone apps can import `WuTieredMenu` directly. */
 @NgModule({
-  imports: [WtTieredMenu],
-  exports: [WtTieredMenu],
+  imports: [WuTieredMenu],
+  exports: [WuTieredMenu],
 })
-export class WtTieredMenuModule {}
+export class WuTieredMenuModule {}

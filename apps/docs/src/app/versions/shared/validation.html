@@ -9,16 +9,16 @@
         <form id="d-vform" #profileForm="ngForm" class="docs-form-grid" (ngSubmit)="saveTemplate(profileForm.valid)">
           <div class="docs-form-field">
             <label for="d-v-email">{{ tx('อีเมล') }}</label>
-            <input wtInputText id="d-v-email" name="email" [(ngModel)]="email" [required]="true" [email]="true" />
-            <wt-field-error id="d-v-email-err" for="email" [label]="tx('อีเมล')"></wt-field-error>
+            <input wuInputText id="d-v-email" name="email" [(ngModel)]="email" [required]="true" [email]="true" />
+            <wu-field-error id="d-v-email-err" for="email" [label]="tx('อีเมล')"></wu-field-error>
           </div>
           <div class="docs-form-field">
             <label for="d-v-phone">{{ tx('เบอร์โทร') }}</label>
-            <input wtInputText id="d-v-phone" name="phone" [(ngModel)]="phone" wtThaiPhone />
-            <wt-field-error id="d-v-phone-err" for="phone"></wt-field-error>
+            <input wuInputText id="d-v-phone" name="phone" [(ngModel)]="phone" wuThaiPhone />
+            <wu-field-error id="d-v-phone-err" for="phone"></wu-field-error>
           </div>
           <div class="docs-demo-actions">
-            <wt-button id="d-v-submit" type="submit" [label]="tx('บันทึก')" icon="wi wi-save"></wt-button>
+            <wu-button id="d-v-submit" type="submit" [label]="tx('บันทึก')" icon="wi wi-save"></wu-button>
             <span class="docs-demo-output">submit: <code id="d-v-result">{{ templateResult || '-' }}</code></span>
           </div>
         </form>
@@ -29,19 +29,19 @@
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form id="d-rform" [formGroup]="form" class="docs-form-grid" (ngSubmit)="register()">
           <div class="docs-form-field">
-            <input wtInputText id="d-r-id" formControlName="thaiId" [placeholder]="tx('เลขประจำตัวประชาชน')" [attr.aria-label]="tx('เลขประจำตัวประชาชน')" />
-            <wt-field-error id="d-r-id-err" for="thaiId" [label]="tx('เลขประจำตัวประชาชน')"></wt-field-error>
+            <input wuInputText id="d-r-id" formControlName="thaiId" [placeholder]="tx('เลขประจำตัวประชาชน')" [attr.aria-label]="tx('เลขประจำตัวประชาชน')" />
+            <wu-field-error id="d-r-id-err" for="thaiId" [label]="tx('เลขประจำตัวประชาชน')"></wu-field-error>
           </div>
           <div class="docs-form-field">
-            <wt-password inputId="d-r-pass" formControlName="password" [feedback]="false" [fluid]="true" [placeholder]="tx('รหัสผ่าน')" [ariaLabel]="tx('รหัสผ่าน')"></wt-password>
-            <wt-field-error for="password" [label]="tx('รหัสผ่าน')"></wt-field-error>
+            <wu-password inputId="d-r-pass" formControlName="password" [feedback]="false" [fluid]="true" [placeholder]="tx('รหัสผ่าน')" [ariaLabel]="tx('รหัสผ่าน')"></wu-password>
+            <wu-field-error for="password" [label]="tx('รหัสผ่าน')"></wu-field-error>
           </div>
           <div class="docs-form-field">
-            <wt-password inputId="d-r-confirm" formControlName="confirm" [feedback]="false" [fluid]="true" [placeholder]="tx('ยืนยันรหัสผ่าน')" [ariaLabel]="tx('ยืนยันรหัสผ่าน')"></wt-password>
-            <wt-field-error id="d-r-confirm-err" for="confirm" [label]="tx('ยืนยันรหัสผ่าน')"></wt-field-error>
+            <wu-password inputId="d-r-confirm" formControlName="confirm" [feedback]="false" [fluid]="true" [placeholder]="tx('ยืนยันรหัสผ่าน')" [ariaLabel]="tx('ยืนยันรหัสผ่าน')"></wu-password>
+            <wu-field-error id="d-r-confirm-err" for="confirm" [label]="tx('ยืนยันรหัสผ่าน')"></wu-field-error>
           </div>
           <div class="docs-demo-actions">
-            <wt-button id="d-r-submit" type="submit" [label]="tx('สมัคร')"></wt-button>
+            <wu-button id="d-r-submit" type="submit" [label]="tx('สมัคร')"></wu-button>
             <span class="docs-demo-output">valid: <code id="d-r-valid">{{ form.valid }}</code></span>
           </div>
         </form>
@@ -51,8 +51,8 @@
     <docs-section id="messages" [section]="sec['messages']">
       <docs-demo [html]="code['messages']" layout="stack">
         <div class="docs-form-field">
-          <input wtInputText id="d-v-code" name="branchCode" [(ngModel)]="branchCode" #codeModel="ngModel" pattern="[0-9]{10}" [placeholder]="tx('รหัสสาขา')" [attr.aria-label]="tx('รหัสสาขา')" />
-          <wt-field-error id="d-v-code-err" [control]="codeModel" [messages]="{ pattern: tx('ใช้ตัวเลข 10 หลัก') }" [always]="true"></wt-field-error>
+          <input wuInputText id="d-v-code" name="branchCode" [(ngModel)]="branchCode" #codeModel="ngModel" pattern="[0-9]{10}" [placeholder]="tx('รหัสสาขา')" [attr.aria-label]="tx('รหัสสาขา')" />
+          <wu-field-error id="d-v-code-err" [control]="codeModel" [messages]="{ pattern: tx('ใช้ตัวเลข 10 หลัก') }" [always]="true"></wu-field-error>
         </div>
       </docs-demo>
     </docs-section>
@@ -60,8 +60,8 @@
     <docs-section id="control" [section]="sec['control']">
       <docs-demo [html]="code['control']" layout="stack">
         <div class="docs-form-field">
-          <input wtInputText id="d-v-nick" name="nickname" [(ngModel)]="nickname" #nicknameModel="ngModel" [required]="true" [placeholder]="tx('ชื่อเล่น')" [attr.aria-label]="tx('ชื่อเล่น')" />
-          <wt-field-error id="d-v-nick-err" [control]="nicknameModel" [label]="tx('ชื่อเล่น')"></wt-field-error>
+          <input wuInputText id="d-v-nick" name="nickname" [(ngModel)]="nickname" #nicknameModel="ngModel" [required]="true" [placeholder]="tx('ชื่อเล่น')" [attr.aria-label]="tx('ชื่อเล่น')" />
+          <wu-field-error id="d-v-nick-err" [control]="nicknameModel" [label]="tx('ชื่อเล่น')"></wu-field-error>
         </div>
       </docs-demo>
     </docs-section>

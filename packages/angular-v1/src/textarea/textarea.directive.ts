@@ -1,42 +1,42 @@
 import { AfterViewInit, Directive, DoCheck, ElementRef, inject, Input, OnDestroy } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, ɵWtStyleLoader } from 'wiratheme/config';
-import { WtInputSize, WtInputVariant, ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
+import { WuInputSize, WuInputVariant, ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
 
 /**
- * Styles a native <textarea> like wtInputText. `autoResize` grows it with its text, including values
+ * Styles a native <textarea> like wuInputText. `autoResize` grows it with its text, including values
  * set from code through ngModel or a form control.
  */
 @Directive({
-  selector: 'textarea[wtTextarea], textarea[pTextarea], textarea[wtInputTextarea], textarea[pInputTextarea]',
+  selector: 'textarea[wuTextarea], textarea[pTextarea], textarea[wuInputTextarea], textarea[pInputTextarea]',
   standalone: true,
   host: {
-    class: 'wt-inputtext wt-textarea p-inputtextarea p-inputtext p-component p-element',
-    '[class.wt-textarea-autoresize]': 'autoResize',
+    class: 'wu-inputtext wu-textarea p-inputtextarea p-inputtext p-component p-element',
+    '[class.wu-textarea-autoresize]': 'autoResize',
     '[class.p-inputtextarea-resizable]': 'autoResize',
-    '[class.wt-inputtext-sm]': "wtSize === 'small'",
-    '[class.wt-inputtext-lg]': "wtSize === 'large'",
-    '[class.wt-inputtext-filled]': "variant === 'filled'",
-    '[class.wt-inputtext-fluid]': 'fluid',
-    '[class.wt-invalid]': 'invalid',
+    '[class.wu-inputtext-sm]': "wuSize === 'small'",
+    '[class.wu-inputtext-lg]': "wuSize === 'large'",
+    '[class.wu-inputtext-filled]': "variant === 'filled'",
+    '[class.wu-inputtext-fluid]': 'fluid',
+    '[class.wu-invalid]': 'invalid',
     '[attr.aria-invalid]': 'invalid || null',
-    '[class.wt-filled]': 'filled',
+    '[class.wu-filled]': 'filled',
     '[class.p-filled]': 'filled',
     '(input)': 'onInput()',
   },
 })
-export class WtTextarea implements AfterViewInit, DoCheck, OnDestroy {
+export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
   @Input() set autoResize(v: unknown) { this._autoResize = ɵtoBool(v); }
   get autoResize(): boolean { return this._autoResize; }
-  @Input() wtSize?: WtInputSize;
-  @Input() variant: WtInputVariant = 'outlined';
+  @Input() wuSize?: WuInputSize;
+  @Input() variant: WuInputVariant = 'outlined';
   @Input() set fluid(v: unknown) { this._fluid = ɵtoBool(v); }
   get fluid(): boolean { return this._fluid; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   get invalid(): boolean { return this._invalid; }
 
-  /** True while the field has a value; floating labels read the `wt-filled` / `p-filled` class. */
+  /** True while the field has a value; floating labels read the `wu-filled` / `p-filled` class. */
   filled = false;
   private _autoResize = false;
   private _fluid = false;
@@ -46,8 +46,8 @@ export class WtTextarea implements AfterViewInit, DoCheck, OnDestroy {
   private sub?: Subscription;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngAfterViewInit(): void {

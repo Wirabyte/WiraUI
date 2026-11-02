@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtEmptyState } from './emptystate.component';
+import { WuEmptyState } from './emptystate.component';
 
-/** For NgModule apps. Standalone apps can import `WtEmptyState` directly. */
+/** For NgModule apps. Standalone apps can import `WuEmptyState` directly. */
 @NgModule({
-  imports: [WtEmptyState],
-  exports: [WtEmptyState],
+  imports: [WuEmptyState],
+  exports: [WuEmptyState],
 })
-export class WtEmptyStateModule {}
+export class WuEmptyStateModule {}

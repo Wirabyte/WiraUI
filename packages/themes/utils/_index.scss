@@ -1,13 +1,13 @@
-// WiraTheme utility classes: grid, flex, spacing, sizing, typography and more, mobile-first.
+// WiraUI utility classes: grid, flex, spacing, sizing, typography and more, mobile-first.
 // Class names follow the utility conventions Angular apps already use (`grid`, `col-12 md:col-6`,
 // `flex align-items-center gap-2`, `p-3`, `surface-card`), so existing templates keep working.
 //
-//   @use 'wiratheme/utils';                                            everything
-//   @use 'wiratheme/utils' with ($groups: (palette: false));           drop a group
-//   @use 'wiratheme/utils' with ($prefix: 'u-');                       .u-flex, .md:u-col-6
+//   @use 'wiraui/utils';                                            everything
+//   @use 'wiraui/utils' with ($groups: (palette: false));           drop a group
+//   @use 'wiraui/utils' with ($prefix: 'u-');                       .u-flex, .md:u-col-6
 //
 // Responsive variants (`sm:` `md:` `lg:` `xl:`) apply from that width up. Colours and radii read the
-// theme's --wt-* tokens, so they follow the preset and dark mode.
+// theme's --wu-* tokens, so they follow the preset and dark mode.
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
@@ -29,27 +29,27 @@ $breakpoints: (
   xl: 1200px,
 ) !default;
 $columns: 12 !default;
-// Space around grid columns; change it at run time with --wt-grid-gutter.
+// Space around grid columns; change it at run time with --wu-grid-gutter.
 $gutter: 0.5rem !default;
 // Cascade layer: wins over component styles, loses to the app's own CSS. false for no layer.
-$layer: 'wiratheme.utilities' !default;
+$layer: 'wiraui.utilities' !default;
 $important: false !default;
 
 $-group-names: (display, flex, grid, forms, spacing, sizing, typography, colors, palette, borders, shadows, position, overflow, misc);
 
 @if meta.type-of($groups) != 'map' and not (meta.type-of($groups) == 'list' and list.length($groups) == 0) {
-  @error 'wiratheme/utils: $groups must be a map like (palette: false), got `#{meta.inspect($groups)}`.';
+  @error 'wiraui/utils: $groups must be a map like (palette: false), got `#{meta.inspect($groups)}`.';
 }
 @each $name, $on in $groups {
   @if not list.index($-group-names, $name) {
-    @error 'wiratheme/utils: unknown group `#{$name}`; use #{$-group-names}.';
+    @error 'wiraui/utils: unknown group `#{$name}`; use #{$-group-names}.';
   }
   @if meta.type-of($on) != 'bool' {
-    @error 'wiratheme/utils: $groups.#{$name} must be true or false, got `#{meta.inspect($on)}`.';
+    @error 'wiraui/utils: $groups.#{$name} must be true or false, got `#{meta.inspect($on)}`.';
   }
 }
 @if meta.type-of($prefix) != 'string' {
-  @error 'wiratheme/utils: $prefix must be a string like \'u-\', got `#{meta.inspect($prefix)}`.';
+  @error 'wiraui/utils: $prefix must be a string like \'u-\', got `#{meta.inspect($prefix)}`.';
 }
 
 @function -on($group) {
@@ -57,7 +57,7 @@ $-group-names: (display, flex, grid, forms, spacing, sizing, typography, colors,
   @return $v == null or $v == true;
 }
 
-$-gutter: var(--wt-grid-gutter, #{$gutter});
+$-gutter: var(--wu-grid-gutter, #{$gutter});
 $-spacing: (
   0: 0,
   1: 0.25rem,
@@ -325,39 +325,39 @@ $-spacing: (
 
 // Theme colours: follow the preset and dark mode.
 @mixin -colors {
-  @include -rule('', text-color, (color: var(--wt-text)));
-  @include -rule('', text-color-secondary, (color: var(--wt-text-muted)));
-  @include -rule('', text-primary, (color: var(--wt-primary-color)));
+  @include -rule('', text-color, (color: var(--wu-text)));
+  @include -rule('', text-color-secondary, (color: var(--wu-text-muted)));
+  @include -rule('', text-primary, (color: var(--wu-primary-color)));
   @include -rule('', text-white, (color: #ffffff));
   @include -rule('', text-black, (color: #000000));
-  @include -rule('', bg-primary, (background-color: var(--wt-primary-color), color: var(--wt-primary-contrast)));
+  @include -rule('', bg-primary, (background-color: var(--wu-primary-color), color: var(--wu-primary-contrast)));
   @include -rule('', bg-white, (background-color: #ffffff));
   @include -rule('', bg-black, (background-color: #000000));
   @include -rule('', bg-transparent, (background-color: transparent));
-  @include -rule('', border-primary, (border-color: var(--wt-primary-color)));
+  @include -rule('', border-primary, (border-color: var(--wu-primary-color)));
   // The page ground takes the theme's backdrop: the ground colour, or the colour fields behind Liquid Glass.
-  @include -rule('', surface-ground, (background: var(--wt-backdrop)));
+  @include -rule('', surface-ground, (background: var(--wu-backdrop)));
   @each $name, $token in (section: card-bg, card: card-bg, overlay: overlay-bg, hover: hover-bg) {
-    @include -rule('', 'surface-#{$name}', (background-color: var(--wt-#{$token})));
+    @include -rule('', 'surface-#{$name}', (background-color: var(--wu-#{$token})));
   }
-  @include -rule('', surface-border, (border-color: var(--wt-border)));
+  @include -rule('', surface-border, (border-color: var(--wu-border)));
   @each $k in (success, info, warn, danger, help) {
-    @include -rule('', 'text-#{$k}', (color: var(--wt-#{$k}-color)));
-    @include -rule('', 'bg-#{$k}', (background-color: var(--wt-#{$k}-color), color: var(--wt-#{$k}-contrast)));
-    @include -rule('', 'border-#{$k}', (border-color: var(--wt-#{$k}-color)));
+    @include -rule('', 'text-#{$k}', (color: var(--wu-#{$k}-color)));
+    @include -rule('', 'bg-#{$k}', (background-color: var(--wu-#{$k}-color), color: var(--wu-#{$k}-contrast)));
+    @include -rule('', 'border-#{$k}', (border-color: var(--wu-#{$k}-color)));
   }
-  @include -rule('', text-warning, (color: var(--wt-warn-color)));
+  @include -rule('', text-warning, (color: var(--wu-warn-color)));
   @each $s in (0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950) {
-    @include -rule('', 'surface-#{$s}', (background-color: var(--wt-surface-#{$s})));
-    @include -rule('', 'text-surface-#{$s}', (color: var(--wt-surface-#{$s})));
+    @include -rule('', 'surface-#{$s}', (background-color: var(--wu-surface-#{$s})));
+    @include -rule('', 'text-surface-#{$s}', (color: var(--wu-surface-#{$s})));
     // gray-* is the theme's surface scale, so it matches the preset's neutrals.
-    @include -rule('', 'text-gray-#{$s}', (color: var(--wt-surface-#{$s})));
-    @include -rule('', 'bg-gray-#{$s}', (background-color: var(--wt-surface-#{$s})));
-    @include -rule('', 'border-gray-#{$s}', (border-color: var(--wt-surface-#{$s})));
+    @include -rule('', 'text-gray-#{$s}', (color: var(--wu-surface-#{$s})));
+    @include -rule('', 'bg-gray-#{$s}', (background-color: var(--wu-surface-#{$s})));
+    @include -rule('', 'border-gray-#{$s}', (border-color: var(--wu-surface-#{$s})));
     @if $s != 0 {
-      @include -rule('', 'text-primary-#{$s}', (color: var(--wt-primary-#{$s})));
-      @include -rule('', 'bg-primary-#{$s}', (background-color: var(--wt-primary-#{$s})));
-      @include -rule('', 'border-primary-#{$s}', (border-color: var(--wt-primary-#{$s})));
+      @include -rule('', 'text-primary-#{$s}', (color: var(--wu-primary-#{$s})));
+      @include -rule('', 'bg-primary-#{$s}', (background-color: var(--wu-primary-#{$s})));
+      @include -rule('', 'border-primary-#{$s}', (border-color: var(--wu-primary-#{$s})));
     }
   }
 }
@@ -388,15 +388,15 @@ $-spacing: (
     @include -rule('', 'border-#{$name}', (border-style: $name));
   }
   @include -rule('', border-noround, (border-radius: 0));
-  @include -rule('', border-round, (border-radius: var(--wt-radius-md)));
+  @include -rule('', border-round, (border-radius: var(--wu-radius-md)));
   @each $size in (xs, sm, md, lg, xl) {
-    @include -rule('', 'border-round-#{$size}', (border-radius: var(--wt-radius-#{$size})));
+    @include -rule('', 'border-round-#{$size}', (border-radius: var(--wu-radius-#{$size})));
   }
   @include -rule('', border-circle, (border-radius: 50%));
-  @include -rule('', border-round-left, (border-top-left-radius: var(--wt-radius-md), border-bottom-left-radius: var(--wt-radius-md)));
-  @include -rule('', border-round-right, (border-top-right-radius: var(--wt-radius-md), border-bottom-right-radius: var(--wt-radius-md)));
-  @include -rule('', border-round-top, (border-top-left-radius: var(--wt-radius-md), border-top-right-radius: var(--wt-radius-md)));
-  @include -rule('', border-round-bottom, (border-bottom-left-radius: var(--wt-radius-md), border-bottom-right-radius: var(--wt-radius-md)));
+  @include -rule('', border-round-left, (border-top-left-radius: var(--wu-radius-md), border-bottom-left-radius: var(--wu-radius-md)));
+  @include -rule('', border-round-right, (border-top-right-radius: var(--wu-radius-md), border-bottom-right-radius: var(--wu-radius-md)));
+  @include -rule('', border-round-top, (border-top-left-radius: var(--wu-radius-md), border-top-right-radius: var(--wu-radius-md)));
+  @include -rule('', border-round-bottom, (border-bottom-left-radius: var(--wu-radius-md), border-bottom-right-radius: var(--wu-radius-md)));
 }
 
 @mixin -shadows {
@@ -416,7 +416,7 @@ $-spacing: (
   }
   // The theme's own elevation levels.
   @each $name in (sm, md, lg) {
-    @include -rule('', 'shadow-#{$name}', (box-shadow: var(--wt-shadow-#{$name})));
+    @include -rule('', 'shadow-#{$name}', (box-shadow: var(--wu-shadow-#{$name})));
   }
 }
 
@@ -520,9 +520,9 @@ $-spacing: (
 }
 
 @if $layer {
-  @if $layer == 'wiratheme.utilities' {
+  @if $layer == 'wiraui.utilities' {
     // Same order statement as the theme, so loading this file first cannot reorder the layers.
-    @layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;
+    @layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;
   }
   @layer #{$layer} {
     @include -all;

@@ -109,7 +109,7 @@ function svgFont(weight) {
   });
 }
 for (const w of WEIGHTS) {
-  const ttf = Buffer.from(svg2ttf(await svgFont(w), { ts: 0, description: 'wiraicon, WiraTheme icons built on Phosphor Icons (MIT)', url: 'https://github.com/Wirabyte/WiraTheme' }).buffer);
+  const ttf = Buffer.from(svg2ttf(await svgFont(w), { ts: 0, description: 'wiraicon, WiraUI icons built on Phosphor Icons (MIT)', url: 'https://github.com/Wirabyte/WiraUI' }).buffer);
   writeFileSync(join(lib, 'fonts', `${FAMILY[w]}.woff2`), ttf2woff2(ttf));
 }
 
@@ -117,7 +117,7 @@ for (const w of WEIGHTS) {
 
 const hex = (cp) => cp.toString(16);
 const css = [
-  `/* wiraicon ${VERSION} · WiraTheme icons, built on Phosphor Icons (MIT). <i class="wi wi-check"></i>, weights: wi-thin, wi-light, wi-bold, wi-fill. */`,
+  `/* wiraicon ${VERSION} · WiraUI icons, built on Phosphor Icons (MIT). <i class="wi wi-check"></i>, weights: wi-thin, wi-light, wi-bold, wi-fill. */`,
   ...WEIGHTS.map(
     (w) => `@font-face {\n  font-family: '${FAMILY[w]}';\n  src: url('./fonts/${FAMILY[w]}.woff2') format('woff2');\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}`,
   ),

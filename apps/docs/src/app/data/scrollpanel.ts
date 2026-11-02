@@ -20,9 +20,9 @@ export const SCROLLPANEL_DOC: ComponentDoc = {
   title: 'ScrollPanel',
   group: 'Layout',
   entry: 'scrollpanel',
-  standalone: 'WtScrollPanel',
-  module: 'WtScrollPanelModule',
-  selector: 'wt-scrollpanel',
+  standalone: 'WuScrollPanel',
+  module: 'WuScrollPanelModule',
+  selector: 'wu-scrollpanel',
   description: {
     th: 'กล่องที่เนื้อหาเลื่อนอยู่ข้างใน มีแถบเลื่อนบางที่เข้ากับธีม ตั้งความสูงหรือความสูงสูงสุดแล้วเนื้อหาที่เกินจะเลื่อนได้ ทั้งด้วยเมาส์ นิ้ว และคีย์บอร์ด',
     en: 'A box whose content scrolls inside it, with thin scrollbars that follow the theme. Give it a height or a max height and what does not fit scrolls, by mouse, finger or keyboard.',
@@ -50,8 +50,8 @@ export const SCROLLPANEL_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtScrollPanelModule</code>) และ standalone (<code>WtScrollPanel</code>) แท็กเขียนได้ทั้ง <code>wt-scrollpanel</code>, <code>wt-scrollPanel</code> และ <code>wt-scroll-panel</code>',
-        en: 'Works as an NgModule (<code>WtScrollPanelModule</code>) or standalone (<code>WtScrollPanel</code>). The tag can be written <code>wt-scrollpanel</code>, <code>wt-scrollPanel</code> or <code>wt-scroll-panel</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuScrollPanelModule</code>) และ standalone (<code>WuScrollPanel</code>) แท็กเขียนได้ทั้ง <code>wu-scrollpanel</code>, <code>wu-scrollPanel</code> และ <code>wu-scroll-panel</code>',
+        en: 'Works as an NgModule (<code>WuScrollPanelModule</code>) or standalone (<code>WuScrollPanel</code>). The tag can be written <code>wu-scrollpanel</code>, <code>wu-scrollPanel</code> or <code>wu-scroll-panel</code>.',
       },
     },
     basic: {
@@ -78,53 +78,53 @@ export const SCROLLPANEL_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-scrollPanel&gt;</code> เป็น <code>&lt;wt-scrollPanel&gt;</code> <code>[style]</code>, <code>styleClass</code>, <code>scrollTop()</code> และ <code>refresh()</code> ชื่อเดิม class <code>p-scrollpanel</code> และ <code>p-scrollpanel-content</code> อยู่คู่กับ class <code>wt-*</code> (ไม่มีแถบเลื่อนจำลองแยก จึงไม่มี class <code>p-scrollpanel-bar</code>)',
-        en: 'Change <code>&lt;p-scrollPanel&gt;</code> to <code>&lt;wt-scrollPanel&gt;</code>; <code>[style]</code>, <code>styleClass</code>, <code>scrollTop()</code> and <code>refresh()</code> keep their names, and the <code>p-scrollpanel</code> and <code>p-scrollpanel-content</code> classes sit next to the <code>wt-*</code> ones (there are no separate fake bars, so no <code>p-scrollpanel-bar</code> class).',
+        th: 'เปลี่ยน <code>&lt;p-scrollPanel&gt;</code> เป็น <code>&lt;wu-scrollPanel&gt;</code> <code>[style]</code>, <code>styleClass</code>, <code>scrollTop()</code> และ <code>refresh()</code> ชื่อเดิม class <code>p-scrollpanel</code> และ <code>p-scrollpanel-content</code> อยู่คู่กับ class <code>wu-*</code> (ไม่มีแถบเลื่อนจำลองแยก จึงไม่มี class <code>p-scrollpanel-bar</code>)',
+        en: 'Change <code>&lt;p-scrollPanel&gt;</code> to <code>&lt;wu-scrollPanel&gt;</code>; <code>[style]</code>, <code>styleClass</code>, <code>scrollTop()</code> and <code>refresh()</code> keep their names, and the <code>p-scrollpanel</code> and <code>p-scrollpanel-content</code> classes sit next to the <code>wu-*</code> ones (there are no separate fake bars, so no <code>p-scrollpanel-bar</code> class).',
       },
     },
   },
   code: {
     basic: {
-      v3: `<wt-scrollPanel [style]="{ width: '100%', height: '12rem' }" ariaLabel="ระเบียบของโรงเรียน">
+      v3: `<wu-scrollPanel [style]="{ width: '100%', height: '12rem' }" ariaLabel="ระเบียบของโรงเรียน">
   <ol>
     @for (rule of rules; track rule) {
       <li>{{ rule }}</li>
     }
   </ol>
-</wt-scrollPanel>`,
-      classic: `<wt-scrollPanel [style]="{ width: '100%', height: '12rem' }" ariaLabel="ระเบียบของโรงเรียน">
+</wu-scrollPanel>`,
+      classic: `<wu-scrollPanel [style]="{ width: '100%', height: '12rem' }" ariaLabel="ระเบียบของโรงเรียน">
   <ol>
     <li *ngFor="let rule of rules">{{ rule }}</li>
   </ol>
-</wt-scrollPanel>`,
+</wu-scrollPanel>`,
     },
     grow: {
-      v3: `<wt-scrollPanel [style]="{ width: '100%', maxHeight: '10rem' }" ariaLabel="ประกาศ">
+      v3: `<wu-scrollPanel [style]="{ width: '100%', maxHeight: '10rem' }" ariaLabel="ประกาศ">
   @for (notice of notices; track $index) {
     <p>{{ notice }}</p>
   }
-</wt-scrollPanel>
-<wt-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
-      classic: `<wt-scrollPanel [style]="{ width: '100%', maxHeight: '10rem' }" ariaLabel="ประกาศ">
+</wu-scrollPanel>
+<wu-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wu-button>`,
+      classic: `<wu-scrollPanel [style]="{ width: '100%', maxHeight: '10rem' }" ariaLabel="ประกาศ">
   <p *ngFor="let notice of notices">{{ notice }}</p>
-</wt-scrollPanel>
-<wt-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>`,
+</wu-scrollPanel>
+<wu-button label="เพิ่มประกาศ" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wu-button>`,
     },
     methods: {
-      v3: `<wt-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
+      v3: `<wu-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
   <ol>
     @for (rule of rules; track rule) {
       <li>{{ rule }}</li>
     }
   </ol>
-</wt-scrollPanel>
-<wt-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
-      classic: `<wt-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
+</wu-scrollPanel>
+<wu-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wu-button>`,
+      classic: `<wu-scrollPanel #rulesPanel [style]="{ width: '100%', height: '10rem' }" [step]="40" ariaLabel="ระเบียบของโรงเรียน">
   <ol>
     <li *ngFor="let rule of rules">{{ rule }}</li>
   </ol>
-</wt-scrollPanel>
-<wt-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>`,
+</wu-scrollPanel>
+<wu-button label="กลับขึ้นบน" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wu-button>`,
     },
   },
   ts: {
@@ -166,8 +166,8 @@ addNotice(): void {
     },
   ],
   tokens: [
-    tok('--wt-scrollpanel-bar-size', 'ความหนาของแถบเลื่อน', 'Scrollbar thickness'),
-    tok('--wt-scrollpanel-bar-color', 'สีแถบเลื่อน', 'Scrollbar colour'),
-    tok('--wt-scrollpanel-bar-hover-color', 'สีแถบเลื่อนเมื่อชี้', 'Scrollbar colour on hover'),
+    tok('--wu-scrollpanel-bar-size', 'ความหนาของแถบเลื่อน', 'Scrollbar thickness'),
+    tok('--wu-scrollpanel-bar-color', 'สีแถบเลื่อน', 'Scrollbar colour'),
+    tok('--wu-scrollpanel-bar-hover-color', 'สีแถบเลื่อนเมื่อชี้', 'Scrollbar colour on hover'),
   ],
 };

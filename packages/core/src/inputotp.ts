@@ -1,4 +1,4 @@
-/** One-time code boxes (wt-inputOtp): what each box holds, which keys go in, and pasting a whole code. */
+/** One-time code boxes (wu-inputOtp): what each box holds, which keys go in, and pasting a whole code. */
 
 /** The characters of a model value, one per box: a string, a number or an array of characters. */
 export function otpTokens(value: unknown, length: number): string[] {

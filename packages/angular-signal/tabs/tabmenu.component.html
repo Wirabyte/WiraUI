@@ -1,13 +1,13 @@
-<div class="wt-tabmenu p-tabmenu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null">
-  <div class="wt-tabs-nav">
+<div class="wu-tabmenu p-tabmenu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+  <div class="wu-tabs-nav">
     @if (canPrev) {
-      <button type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tabmenu-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
+      <button type="button" class="wu-tabs-nav-btn wu-tabs-prev p-tabmenu-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     }
     <ul
       #list
-      class="wt-tablist wt-tabmenu-list p-tabmenu-tablist"
+      class="wu-tablist wu-tabmenu-list p-tabmenu-tablist"
       role="tablist"
       [attr.aria-label]="ariaLabel || null"
       [attr.aria-labelledby]="ariaLabelledBy || null"
@@ -16,7 +16,7 @@
     >
       @for (item of items; track $index; let i = $index) {
         <li
-          class="wt-tabmenu-item p-tabmenu-item"
+          class="wu-tabmenu-item p-tabmenu-item"
           role="presentation"
           [ngClass]="item.styleClass || ''"
           [ngStyle]="item.style || null"
@@ -26,11 +26,11 @@
           @if (routed(item)) {
             <a
               #rla="routerLinkActive"
-              class="wt-tab p-tabmenu-item-link"
+              class="wu-tab p-tabmenu-item-link"
               role="tab"
-              [class.wt-tab-active]="isActive(item)"
+              [class.wu-tab-active]="isActive(item)"
               [id]="itemId(i)"
-              [attr.data-wt-index]="i"
+              [attr.data-wu-index]="i"
               [attr.tabindex]="tabindexOf(i)"
               [attr.aria-selected]="activeItem ? isActive(item) : rla.isActive"
               [attr.title]="item.title || null"
@@ -51,11 +51,11 @@
             </a>
           } @else {
             <a
-              class="wt-tab p-tabmenu-item-link"
+              class="wu-tab p-tabmenu-item-link"
               role="tab"
-              [class.wt-tab-active]="isActive(item)"
+              [class.wu-tab-active]="isActive(item)"
               [id]="itemId(i)"
-              [attr.data-wt-index]="i"
+              [attr.data-wu-index]="i"
               [attr.tabindex]="tabindexOf(i)"
               [attr.aria-selected]="isActive(item)"
               [attr.aria-disabled]="item.disabled || null"
@@ -71,7 +71,7 @@
       }
     </ul>
     @if (canNext) {
-      <button type="button" class="wt-tabs-nav-btn wt-tabs-next p-tabmenu-nav-next" tabindex="-1" aria-hidden="true" (click)="page(1)">
+      <button type="button" class="wu-tabs-nav-btn wu-tabs-next p-tabmenu-nav-next" tabindex="-1" aria-hidden="true" (click)="page(1)">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     }
@@ -83,11 +83,11 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, index: index }"></ng-container>
   } @else {
     @if (item.icon) {
-      <span class="wt-tab-icon p-tabmenu-item-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+      <span class="wu-tab-icon p-tabmenu-item-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
     }
-    <span class="wt-tabmenu-label p-tabmenu-item-label">{{ item.label }}</span>
+    <span class="wu-tabmenu-label p-tabmenu-item-label">{{ item.label }}</span>
     @if (item.badge) {
-      <span class="wt-tabmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+      <span class="wu-tabmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
     }
   }
 </ng-template>

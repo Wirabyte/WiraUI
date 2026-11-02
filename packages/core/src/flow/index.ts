@@ -1,4 +1,4 @@
-/** wt-flow, framework-free: the data model, geometry, edge paths, viewport maths, changes, layout, history and export. */
+/** wu-flow, framework-free: the data model, geometry, edge paths, viewport maths, changes, layout, history and export. */
 export * from './types';
 export * from './geometry';
 export * from './viewport';

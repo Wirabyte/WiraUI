@@ -1,11 +1,11 @@
 import { expect, Page, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
-// WiraTheme Studio (theming/studio): live token editing through the version's WtThemeService, downloads, import.
+// WiraUI Studio (theming/studio): live token editing through the version's WuThemeService, downloads, import.
 test.use({ locale: 'th-TH' });
 
 const token = (page: Page, name: string) =>
-  page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue('--wt-' + n).trim(), name);
+  page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue('--wu-' + n).trim(), name);
 
 function collectErrors(page: Page): string[] {
   const errors: string[] = [];
@@ -29,8 +29,8 @@ async function setPrimary(page: Page, hex: string): Promise<void> {
 }
 
 async function openTab(page: Page, tab: string): Promise<void> {
-  await page.locator(`#studio-tabs wt-tab[value="${tab}"]`).click();
-  await expect(page.locator(`#studio-tabs wt-tab[value="${tab}"]`)).toHaveAttribute('aria-selected', 'true');
+  await page.locator(`#studio-tabs wu-tab[value="${tab}"]`).click();
+  await expect(page.locator(`#studio-tabs wu-tab[value="${tab}"]`)).toHaveAttribute('aria-selected', 'true');
 }
 
 async function download(page: Page, format: string, scope?: string): Promise<{ name: string; text: string }> {
@@ -53,7 +53,7 @@ test('studio: a new primary colour restyles the whole site, survives a reload, a
   expect(await token(page, 'primary-color')).toBe('#e11d48');
   await expect(page.locator('#studio-saved')).toBeVisible();
   // The preview's primary button and the shades follow.
-  await expect(page.locator('#studio-preview .wt-btn').first()).toHaveCSS('background-color', 'rgb(225, 29, 72)');
+  await expect(page.locator('#studio-preview .wu-btn').first()).toHaveCSS('background-color', 'rgb(225, 29, 72)');
   await expect(page.locator('#studio-f-primary-600')).toHaveValue('#bf193d');
 
   await page.locator('#studio-undo button').click();
@@ -66,32 +66,32 @@ test('studio: a new primary colour restyles the whole site, survives a reload, a
     history.pushState(null, '', '/v3/components/button');
     dispatchEvent(new PopStateEvent('popstate'));
   });
-  await expect(page.locator('[data-wt-version="v3"] wt-button .wt-btn').first()).toBeVisible();
+  await expect(page.locator('[data-wu-version="v3"] wu-button .wu-btn').first()).toBeVisible();
   expect(await token(page, 'primary-500')).toBe('#e11d48');
   await page.reload();
-  await expect(page.locator('[data-wt-version="v3"] wt-button .wt-btn').first()).toBeVisible();
+  await expect(page.locator('[data-wu-version="v3"] wu-button .wu-btn').first()).toBeVisible();
   expect(await token(page, 'primary-500')).toBe('#e11d48');
   // Another version keeps its own theme.
   await page.goto('/v2/components/button');
-  await expect(page.locator('[data-wt-version="v2"] wt-button .wt-btn').first()).toBeVisible();
+  await expect(page.locator('[data-wu-version="v2"] wu-button .wu-btn').first()).toBeVisible();
   expect(await token(page, 'primary-500')).not.toBe('#e11d48');
   expect(errors).toEqual([]);
 });
 
 test('studio: a token edit applies per mode, and the CSS download carries it', async ({ page }) => {
   await page.goto('/v3/theming/studio');
-  await page.locator('#docs-dark').evaluate((b) => document.documentElement.classList.contains('wt-dark') && (b as HTMLElement).click());
-  await expect(page.locator('html')).not.toHaveClass(/wt-dark/);
+  await page.locator('#docs-dark').evaluate((b) => document.documentElement.classList.contains('wu-dark') && (b as HTMLElement).click());
+  await expect(page.locator('html')).not.toHaveClass(/wu-dark/);
   await setPrimary(page, '#0f766e');
   await openTab(page, 'semantic');
   const darkBefore = await page.evaluate(() => {
-    document.documentElement.classList.add('wt-dark');
-    const v = getComputedStyle(document.documentElement).getPropertyValue('--wt-field-bg').trim();
-    document.documentElement.classList.remove('wt-dark');
+    document.documentElement.classList.add('wu-dark');
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--wu-field-bg').trim();
+    document.documentElement.classList.remove('wu-dark');
     return v;
   });
   // Open the Form field group (closed content is inert until it opens).
-  const header = page.locator('.wt-accordion-header:has(.docs-designer-acc-title[data-group="field"])');
+  const header = page.locator('.wu-accordion-header:has(.docs-designer-acc-title[data-group="field"])');
   await header.click();
   await expect(header).toHaveAttribute('aria-expanded', 'true');
   await enter(page, '#studio-f-field-bg', '#fff7ed');
@@ -99,26 +99,26 @@ test('studio: a token edit applies per mode, and the CSS download carries it', a
   await expect(page.locator('[data-field="studio-f-field-bg"]')).toHaveClass(/is-changed/);
   // field-bg has its own dark value: a light edit leaves dark mode alone.
   await page.locator('#docs-dark').click();
-  await expect(page.locator('html')).toHaveClass(/wt-dark/);
+  await expect(page.locator('html')).toHaveClass(/wu-dark/);
   expect(await token(page, 'field-bg')).toBe(darkBefore);
   await page.locator('#docs-dark').click();
 
   const changes = await download(page, 'CSS');
-  expect(changes.name).toBe('wiratheme.theme.css');
-  expect(changes.text).toContain('--wt-primary-500: #0f766e;');
-  expect(changes.text).toContain('--wt-field-bg: #fff7ed;');
-  expect(changes.text).toContain('wiratheme-config {');
+  expect(changes.name).toBe('wiraui.theme.css');
+  expect(changes.text).toContain('--wu-primary-500: #0f766e;');
+  expect(changes.text).toContain('--wu-field-bg: #fff7ed;');
+  expect(changes.text).toContain('wiraui-config {');
   // Changes only: no token that is the same as the preset.
-  expect(changes.text).not.toContain('--wt-surface-500:');
+  expect(changes.text).not.toContain('--wu-surface-500:');
 
   const all = await download(page, 'CSS', 'ทั้งหมด');
-  expect(all.text).toContain('--wt-surface-500:');
-  expect(all.text).toContain(':root.wt-dark {');
-  expect(all.text).toContain('--wt-field-bg: #fff7ed;');
+  expect(all.text).toContain('--wu-surface-500:');
+  expect(all.text).toContain(':root.wu-dark {');
+  expect(all.text).toContain('--wu-field-bg: #fff7ed;');
 
   const scss = await download(page, 'SCSS', 'เฉพาะที่แก้');
-  expect(scss.name).toBe('wiratheme.theme.scss');
-  expect(scss.text).toContain("@use 'wiratheme/theme' with (");
+  expect(scss.name).toBe('wiraui.theme.scss');
+  expect(scss.text).toContain("@use 'wiraui/theme' with (");
   expect(scss.text).toContain('500: #0f766e,');
   expect(scss.text).not.toContain('$shadow:');
 });
@@ -135,7 +135,7 @@ test('studio: a JSON download imports back with every edit', async ({ page }) =>
   await enter(page, '#studio-name', 'โรงเรียนวิระ');
 
   const json = await download(page, 'JSON');
-  expect(json.name).toBe('wiratheme.theme.json');
+  expect(json.name).toBe('wiraui.theme.json');
   const data = JSON.parse(json.text);
   expect(data.config.primary).toBe('#7c3aed');
   expect(data.studio.custom[0]).toMatchObject({ name: 'school-accent', value: '{primary-300}' });
@@ -144,8 +144,8 @@ test('studio: a JSON download imports back with every edit', async ({ page }) =>
   await page.locator('#studio-reset button').click();
   await expect.poll(() => token(page, 'primary-500')).not.toBe('#7c3aed');
   expect(await token(page, 'school-accent')).toBe('');
-  await page.locator('#studio-file').setInputFiles({ name: 'wiratheme.theme.json', mimeType: 'application/json', buffer: Buffer.from(json.text) });
-  await expect(page.locator('#studio-notice')).toContainText('wiratheme.theme.json');
+  await page.locator('#studio-file').setInputFiles({ name: 'wiraui.theme.json', mimeType: 'application/json', buffer: Buffer.from(json.text) });
+  await expect(page.locator('#studio-notice')).toContainText('wiraui.theme.json');
   await expect.poll(() => token(page, 'primary-500')).toBe('#7c3aed');
   expect(await token(page, 'school-accent')).toBe('#b38df5');
   await expect(page.locator('#studio-name')).toHaveValue('โรงเรียนวิระ');
@@ -153,9 +153,9 @@ test('studio: a JSON download imports back with every edit', async ({ page }) =>
   // A SCSS file imports too (its config line), and a file without one is refused.
   const scss = await download(page, 'SCSS');
   await page.locator('#studio-file').setInputFiles({ name: 'other.css', mimeType: 'text/css', buffer: Buffer.from(':root { --x: 1; }') });
-  await expect(page.locator('#studio-notice')).toContainText('wiratheme-config');
-  await page.locator('#studio-file').setInputFiles({ name: 'wiratheme.theme.scss', mimeType: 'text/plain', buffer: Buffer.from(scss.text) });
-  await expect(page.locator('#studio-notice')).toContainText('wiratheme.theme.scss');
+  await expect(page.locator('#studio-notice')).toContainText('wiraui-config');
+  await page.locator('#studio-file').setInputFiles({ name: 'wiraui.theme.scss', mimeType: 'text/plain', buffer: Buffer.from(scss.text) });
+  await expect(page.locator('#studio-notice')).toContainText('wiraui.theme.scss');
   expect(await token(page, 'school-accent')).toBe('#b38df5');
 });
 
@@ -166,7 +166,7 @@ test('studio: search filters the fields of every tab', async ({ page }) => {
   expect(await fields.count()).toBeGreaterThan(10);
 
   await page.locator('#studio-search').fill('field-bg');
-  await expect(page.locator('#studio-tabs wt-tab[value="semantic"] .docs-designer-count')).toHaveText('1');
+  await expect(page.locator('#studio-tabs wu-tab[value="semantic"] .docs-designer-count')).toHaveText('1');
   await expect(fields).toHaveCount(1);
   await expect(page.locator('[data-field="studio-f-field-bg"]')).toBeVisible();
 
@@ -174,14 +174,14 @@ test('studio: search filters the fields of every tab', async ({ page }) => {
   await openTab(page, 'primitive');
   await page.locator('#studio-search').fill('');
   await page.locator('#studio-search').fill('row-hover');
-  await expect(page.locator('#studio-tabs wt-tab[value="component"]')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#studio-tabs wu-tab[value="component"]')).toHaveAttribute('aria-selected', 'true');
   await expect(page.locator('[data-token$="row-hover-bg"]').first()).toBeVisible();
   for (const name of await page.locator('#studio-tabs .docs-designer-field:visible').evaluateAll((els) => els.map((e) => e.getAttribute('data-token') || ''))) {
     expect(name).toContain('row-hover');
   }
 
   await page.locator('#studio-search').fill('');
-  await expect(page.locator('#studio-tabs wt-tab .docs-designer-count')).toHaveCount(0);
+  await expect(page.locator('#studio-tabs wu-tab .docs-designer-count')).toHaveCount(0);
 });
 
 test('studio: the theme panel and the studio edit the same theme', async ({ page }) => {
@@ -253,8 +253,8 @@ test('studio: nothing overflows at 360px, on any tab, in either language', async
     await expect(page.locator('#studio-export-panel')).toBeVisible();
     const problems: string[] = [];
     for (const tab of ['primitive', 'semantic', 'component', 'custom', 'settings']) {
-      await page.locator(`#studio-tabs wt-tab[value="${tab}"]`).scrollIntoViewIfNeeded();
-      await page.locator(`#studio-tabs wt-tab[value="${tab}"]`).click();
+      await page.locator(`#studio-tabs wu-tab[value="${tab}"]`).scrollIntoViewIfNeeded();
+      await page.locator(`#studio-tabs wu-tab[value="${tab}"]`).click();
       if (tab === 'custom') await page.locator('#studio-custom-add button').click();
       await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
       for (const o of await overflow()) problems.push(`${lang} ${tab}: ${o}`);

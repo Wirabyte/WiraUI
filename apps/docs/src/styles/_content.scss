@@ -575,7 +575,7 @@ docs-demo,
   margin: 0;
 }
 // A divider in a stacked demo keeps only its own margin, as in a page, not the demo box's gap on top.
-.docs-demo-stack > :is(wt-divider, .wt-divider-host) {
+.docs-demo-stack > :is(wu-divider, .wu-divider-host) {
   margin-block: -12px;
 }
 // A demo field with a short caption above it.
@@ -619,15 +619,15 @@ docs-demo,
     radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.45), transparent 50%),
     var(--docs-hover);
 }
-.docs-demo-preview input.wt-inputtext,
-.docs-demo-preview textarea.wt-inputtext {
+.docs-demo-preview input.wu-inputtext,
+.docs-demo-preview textarea.wu-inputtext {
   max-width: 100%;
 }
-.docs-demo-preview textarea.wt-inputtext,
-.docs-demo-fields .wt-inputtext {
+.docs-demo-preview textarea.wu-inputtext,
+.docs-demo-fields .wu-inputtext {
   width: 100%;
 }
-.docs-demo-stack > textarea.wt-inputtext {
+.docs-demo-stack > textarea.wu-inputtext {
   max-width: 520px;
 }
 
@@ -687,14 +687,14 @@ docs-demo,
   gap: 8px;
   min-width: 0;
 }
-.docs-menubar-actions wt-iconfield {
+.docs-menubar-actions wu-iconfield {
   display: none;
   flex: 0 1 12rem;
   min-width: 0;
 }
 // Like the sample's `hidden sm:block`: the search field shows from 576px up.
 @media (min-width: 576px) {
-  .docs-menubar-actions wt-iconfield {
+  .docs-menubar-actions wu-iconfield {
     display: block;
   }
 }
@@ -804,7 +804,7 @@ docs-demo,
   border-radius: 14px;
   background: var(--docs-ground);
 }
-.docs-preset-preview wt-card {
+.docs-preset-preview wu-card {
   max-width: 560px;
 }
 .docs-preset-preview .docs-demo-fields,
@@ -883,7 +883,7 @@ docs-demo,
 }
 
 // Utilities pages. Helpers only set looks the utility classes in a demo do not set (no padding / margin /
-// width on the frames), because unlayered docs CSS would win over @layer wiratheme.utilities.
+// width on the frames), because unlayered docs CSS would win over @layer wiraui.utilities.
 .docs-u-demo .docs-demo-preview {
   align-items: stretch;
 }
@@ -1154,7 +1154,7 @@ docs-demo,
   height: 4px;
   margin-left: -2px;
   border-radius: 50%;
-  background: var(--wt-danger-color, #dc2626);
+  background: var(--wu-danger-color, #dc2626);
 }
 // RadioButton layouts: a stack, and a row with an even gap that wraps.
 .docs-radio-stack {
@@ -1184,10 +1184,10 @@ docs-demo,
   font-weight: 500;
 }
 // The message sits right under its field: only its own small margin, not the grid's gap.
-.docs-form-field > :is(wt-field-error, .p-error) {
+.docs-form-field > :is(wu-field-error, .p-error) {
   margin-top: calc(0.25rem - 6px);
 }
-.docs-form-field .wt-inputtext {
+.docs-form-field .wu-inputtext {
   width: 100%;
 }
 // MeterGroup template demo: storage cards under the bar.
@@ -1249,7 +1249,7 @@ docs-demo,
   font-weight: 600;
 }
 .docs-menu-group-label {
-  color: var(--wt-primary-color);
+  color: var(--wu-primary-color);
 }
 .docs-menu-badge {
   margin-left: auto;
@@ -1268,8 +1268,8 @@ docs-demo,
   margin-right: 4px;
   padding: 0 4px 0 8px;
   border-radius: 999px;
-  background: var(--wt-chip-bg);
-  color: var(--wt-chip-color);
+  background: var(--wu-chip-bg);
+  color: var(--wu-chip-color);
   font-size: 0.875em;
   font-weight: 600;
   line-height: 1.6;
@@ -1292,11 +1292,11 @@ docs-demo,
   background: color-mix(in srgb, currentColor 14%, transparent);
 }
 .docs-ms-placeholder {
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 .docs-ms-note {
   padding: 6px 12px 0;
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
   font-size: 0.85em;
 }
 .docs-ms-group {
@@ -1319,7 +1319,7 @@ docs-demo,
 
 // Timeline demos
 .docs-tl-date {
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 .docs-tl-marker {
   display: grid;
@@ -1332,9 +1332,9 @@ docs-demo,
 .docs-tl-card {
   margin-bottom: 12px;
   padding: 10px 14px;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 10px;
-  background: var(--wt-card-bg);
+  background: var(--wu-card-bg);
 }
 .docs-tl-status {
   font-weight: 600;
@@ -1436,7 +1436,7 @@ docs-demo,
   gap: 8px;
   min-width: 0;
   padding: 6px 12px;
-  border: 1px solid var(--wt-steps-line-color, var(--docs-border));
+  border: 1px solid var(--wu-steps-line-color, var(--docs-border));
   border-radius: 999px;
   background: transparent;
   color: inherit;
@@ -1444,12 +1444,12 @@ docs-demo,
   cursor: pointer;
 }
 .docs-stp-head-active {
-  border-color: var(--wt-primary-color);
-  background: var(--wt-primary-color);
-  color: var(--wt-primary-contrast);
+  border-color: var(--wu-primary-color);
+  background: var(--wu-primary-color);
+  color: var(--wu-primary-contrast);
 }
 .docs-stp-head:focus-visible {
-  outline: 2px solid var(--wt-primary-color);
+  outline: 2px solid var(--wu-primary-color);
   outline-offset: 2px;
 }
 // Phones: the other steps show their icon only, as the built-in headers show their number only.
@@ -1470,7 +1470,7 @@ docs-demo,
   overflow-wrap: anywhere;
 }
 .docs-pl-meta {
-  color: var(--wt-text-muted, var(--docs-muted));
+  color: var(--wu-text-muted, var(--docs-muted));
 }
 .docs-pl-pick {
   display: inline-flex;
@@ -1492,7 +1492,7 @@ docs-demo,
   display: grid;
   justify-items: center;
   gap: 4px;
-  color: var(--wt-text-muted, var(--docs-muted));
+  color: var(--wu-text-muted, var(--docs-muted));
   text-align: center;
 }
 .docs-fu-empty p {
@@ -1515,9 +1515,9 @@ docs-demo,
 }
 .docs-rp-card {
   padding: 14px 16px;
-  border: 1px solid var(--wt-border, var(--docs-border));
+  border: 1px solid var(--wu-border, var(--docs-border));
   border-radius: 12px;
-  background: var(--wt-card-bg, var(--docs-surface));
+  background: var(--wu-card-bg, var(--docs-surface));
   cursor: pointer;
   user-select: none;
 }
@@ -1525,9 +1525,9 @@ docs-demo,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--wt-border, var(--docs-border));
+  border: 1px solid var(--wu-border, var(--docs-border));
   border-radius: 12px;
-  background: var(--wt-card-bg, var(--docs-surface));
+  background: var(--wu-card-bg, var(--docs-surface));
   list-style: none;
 }
 .docs-rp-list > li {
@@ -1536,7 +1536,7 @@ docs-demo,
   user-select: none;
 }
 .docs-rp-list > li + li {
-  border-top: 1px solid var(--wt-border, var(--docs-border));
+  border-top: 1px solid var(--wu-border, var(--docs-border));
 }
 .docs-badge-icon {
   display: inline-flex;
@@ -1568,7 +1568,7 @@ docs-demo,
 }
 // ---------- Slider, Listbox, Galleria and the other new pages ----------
 // A fixed demo width ([style] lands on the inner element) still fits a phone.
-.docs-demo-preview :is(.wt-tree, .wt-listbox, .wt-treeselect, .wt-galleria) {
+.docs-demo-preview :is(.wu-tree, .wu-listbox, .wu-treeselect, .wu-galleria) {
   box-sizing: border-box;
   max-width: 100%;
 }
@@ -1579,7 +1579,7 @@ docs-demo,
   flex-wrap: nowrap;
   min-width: 0;
 }
-.docs-sl-line > wt-slider {
+.docs-sl-line > wu-slider {
   flex: 0 1 16rem;
   min-width: 0;
 }
@@ -1660,7 +1660,7 @@ docs-demo,
 }
 /* Navbar demos: framed like a page, kept under the site's own top bar when they stick. */
 .docs-navbar-demo {
-  --wt-navbar-z-index: 1;
+  --wu-navbar-z-index: 1;
   width: 100%;
 }
 .docs-navbar-brand {
@@ -1712,12 +1712,12 @@ docs-demo,
   background: var(--docs-gradient-strong);
   color: #ffffff;
 }
-.docs-navbar-hero .wt-navbar {
+.docs-navbar-hero .wu-navbar {
   border-radius: var(--docs-radius);
 }
-.docs-navbar-hero .wt-navbar-transparent {
-  --wt-navbar-link-color: #ffffff;
-  --wt-navbar-color: #ffffff;
+.docs-navbar-hero .wu-navbar-transparent {
+  --wu-navbar-link-color: #ffffff;
+  --wu-navbar-color: #ffffff;
 }
 // Ready-made themes: the width switch, and a stage per theme. The theme CSS itself is the sample's (demos-layout.ts).
 .docs-navbar-width {
@@ -1733,11 +1733,11 @@ docs-demo,
   border-radius: var(--docs-radius);
 }
 // The bar's own edge, so light bars still show where they end on the white preview (framing only, not the theme).
-.docs-navbar-stage .wt-navbar {
+.docs-navbar-stage .wu-navbar {
   border-radius: var(--docs-radius);
   box-shadow: 0 0 0 1px var(--docs-edge);
 }
-.docs-navbar-stage .wt-navbar.wt-navbar-open {
+.docs-navbar-stage .wu-navbar.wu-navbar-open {
   border-radius: var(--docs-radius) var(--docs-radius) 0 0;
 }
 // Narrow: room under the bar for the panel that drops down.
@@ -1757,10 +1757,10 @@ docs-demo,
   min-height: 21rem;
 }
 // A bar folded by the window's own width (phones): the open panel pushes the code down rather than covering it.
-.docs-navbar-stage:has(.wt-navbar-open) {
+.docs-navbar-stage:has(.wu-navbar-open) {
   min-height: 21rem;
 }
-.docs-navbar-photo .wt-navbar {
+.docs-navbar-photo .wu-navbar {
   box-shadow: none;
 }
 // Image Cropper: what the (imageCropped) event holds, one field per row.
@@ -1797,7 +1797,7 @@ docs-demo,
   border: 1px solid var(--docs-edge);
   border-radius: 10px;
 }
-.docs-bu-form .wt-inputtext {
+.docs-bu-form .wu-inputtext {
   width: 100%;
 }
 .docs-bu-msg,
@@ -1860,7 +1860,7 @@ docs-demo,
 .docs-scr-day small {
   color: var(--docs-muted);
 }
-wt-scroller {
+wu-scroller {
   display: block;
   width: 100%;
   max-width: 40rem;
@@ -1884,7 +1884,7 @@ wt-scroller {
   border-radius: 8px;
   object-fit: cover;
 }
-.docs-dr-preview wt-button {
+.docs-dr-preview wu-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -2068,7 +2068,7 @@ wt-scroller {
   flex: 0 1 220px;
   min-width: 0;
 }
-.docs-wi-category .wt-select {
+.docs-wi-category .wu-select {
   width: 100%;
 }
 .docs-wi-size {
@@ -2081,7 +2081,7 @@ wt-scroller {
   font-size: 13px;
   white-space: nowrap;
 }
-.docs-wi-size wt-slider {
+.docs-wi-size wu-slider {
   flex: 1 1 auto;
   min-width: 96px;
 }
@@ -2357,7 +2357,7 @@ wt-scroller {
 // ProgressSpinner with a label: the classes its sample uses.
 .loading-card {
   height: 12rem;
-  border: 1px dashed var(--wt-border);
+  border: 1px dashed var(--wu-border);
   border-radius: 12px;
 }
 .sync-row {
@@ -2366,7 +2366,7 @@ wt-scroller {
   justify-content: space-between;
   gap: 12px;
   padding: 6px 6px 6px 14px;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 999px;
 }
 .spinner-title,
@@ -2374,7 +2374,7 @@ wt-scroller {
   display: block;
 }
 .spinner-hint {
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 
 /* Dock, Footer and BottomBar pages: sample desktops and phones. */
@@ -2419,7 +2419,7 @@ wt-scroller {
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(18px);
   font-size: 13px;
-  .wt-menubar,
+  .wu-menubar,
   .p-menubar {
     min-height: 0;
     padding: 0;
@@ -2536,7 +2536,7 @@ wt-scroller {
   height: 100%;
   border-radius: 22%;
   color: #ffffff;
-  font-size: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) * 0.5);
+  font-size: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) * 0.5);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
     0 2px 6px rgba(0, 0, 0, 0.25);
@@ -2545,7 +2545,7 @@ wt-scroller {
   width: 70%;
   height: 70%;
   border-radius: 6px;
-  font-size: calc(var(--wt-dock-item-size) * 0.36);
+  font-size: calc(var(--wu-dock-item-size) * 0.36);
 }
 .docs-win-startbtn {
   width: 40px;
@@ -2557,7 +2557,7 @@ wt-scroller {
   font-size: 1.25rem;
   cursor: pointer;
   &:hover {
-    background: var(--wt-dock-taskbar-hover);
+    background: var(--wu-dock-taskbar-hover);
   }
 }
 .docs-win-tray {

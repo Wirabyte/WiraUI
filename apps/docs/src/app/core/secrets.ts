@@ -21,7 +21,7 @@ export interface Secret {
 }
 
 function secret(word: string, path: string, preset: string): Secret {
-  const unlockKey = `wiratheme-docs-${word}`;
+  const unlockKey = `wiraui-docs-${word}`;
   // In memory only: a reload or a typed address starts without it.
   let pass = false;
   return {

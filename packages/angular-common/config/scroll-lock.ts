@@ -13,7 +13,7 @@ export function ɵlockScroll(doc: Document): () => void {
     saved = { overflow: root.style.overflow, paddingRight: body.style.paddingRight };
     root.style.overflow = 'hidden';
     if (bar > 0) body.style.paddingRight = `calc(${doc.defaultView!.getComputedStyle(body).paddingRight} + ${bar}px)`;
-    root.classList.add('wt-overflow-hidden');
+    root.classList.add('wu-overflow-hidden');
   }
   let done = false;
   return () => {
@@ -22,7 +22,7 @@ export function ɵlockScroll(doc: Document): () => void {
     if (--locks === 0 && saved) {
       root.style.overflow = saved.overflow;
       body.style.paddingRight = saved.paddingRight;
-      root.classList.remove('wt-overflow-hidden');
+      root.classList.remove('wu-overflow-hidden');
       saved = null;
     }
   };

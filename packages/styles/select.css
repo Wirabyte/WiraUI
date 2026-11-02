@@ -1,21 +1,21 @@
-/* wt-select. Shared by wiratheme v1, v2 and v3. The field is drawn like a text field (same tokens, same height and
+/* wu-select. Shared by wiraui v1, v2 and v3. The field is drawn like a text field (same tokens, same height and
    focus); the list opens in the top layer under it. */
-@layer wiratheme.components {
-  /* A standard width (long values end in …); never wider than its container. `--wt-select-width: auto` sizes it to
+@layer wiraui.components {
+  /* A standard width (long values end in …); never wider than its container. `--wu-select-width: auto` sizes it to
      its value instead, [fluid] fills the row. A fixed width, not min-width: min(…, 100%), which WebKit resolves too
      wide for grid items. */
-  wt-select,
-  wt-dropdown {
+  wu-select,
+  wu-dropdown {
     display: inline-flex;
     vertical-align: middle;
-    width: var(--wt-select-width);
+    width: var(--wu-select-width);
     max-width: 100%;
   }
-  .wt-select-fluid {
+  .wu-select-fluid {
     display: flex;
     width: 100%;
   }
-  .wt-select {
+  .wu-select {
     position: relative;
     display: inline-flex;
     align-items: stretch;
@@ -23,54 +23,54 @@
     box-sizing: border-box;
     min-width: 0;
     max-width: 100%;
-    background: var(--wt-field-bg);
-    border: var(--wt-field-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-input-radius);
-    box-shadow: var(--wt-field-shadow);
-    color: var(--wt-field-color);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-control-line-height);
+    background: var(--wu-field-bg);
+    border: var(--wu-field-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-input-radius);
+    box-shadow: var(--wu-field-shadow);
+    color: var(--wu-field-color);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-control-line-height);
     cursor: pointer;
     user-select: none;
     transition:
-      border-color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      background-color var(--wt-transition);
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      background-color var(--wu-transition);
   }
-  .wt-select-fluid > .wt-select {
+  .wu-select-fluid > .wu-select {
     width: 100%;
   }
-  .wt-select:not(.wt-select-disabled):hover {
-    border-color: var(--wt-field-hover-border);
+  .wu-select:not(.wu-select-disabled):hover {
+    border-color: var(--wu-field-hover-border);
   }
-  .wt-select-focus {
-    border-color: var(--wt-field-focus-border);
-    box-shadow: var(--wt-field-focus-shadow);
-    outline: var(--wt-field-focus-outline);
-    outline-offset: var(--wt-field-focus-offset);
+  .wu-select-focus {
+    border-color: var(--wu-field-focus-border);
+    box-shadow: var(--wu-field-focus-shadow);
+    outline: var(--wu-field-focus-outline);
+    outline-offset: var(--wu-field-focus-offset);
   }
-  .wt-select-filled {
-    background: var(--wt-field-filled-bg);
+  .wu-select-filled {
+    background: var(--wu-field-filled-bg);
   }
-  .wt-select-loading {
+  .wu-select-loading {
     cursor: progress;
   }
-  .wt-select-disabled {
-    background: var(--wt-field-disabled-bg);
-    color: var(--wt-field-disabled-color);
-    opacity: var(--wt-field-disabled-opacity);
+  .wu-select-disabled {
+    background: var(--wu-field-disabled-bg);
+    color: var(--wu-field-disabled-color);
+    opacity: var(--wu-field-disabled-opacity);
     cursor: default;
   }
   /* Red once invalid and touched, or its form was submitted, like the other fields; or forced with [invalid]. */
-  .wt-select-invalid,
-  wt-select.ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-select,
-  wt-dropdown.ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-select {
-    border-color: var(--wt-danger-color);
+  .wu-select-invalid,
+  wu-select.ng-invalid:is(.ng-touched, form.ng-submitted *) > .wu-select,
+  wu-dropdown.ng-invalid:is(.ng-touched, form.ng-submitted *) > .wu-select {
+    border-color: var(--wu-danger-color);
   }
 
   /* The focus target: invisible but focusable, so the keyboard and <label for> reach the control. */
-  .wt-select-input {
+  .wu-select-input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -83,12 +83,12 @@
     white-space: nowrap;
     opacity: 0;
   }
-  .wt-select-label {
+  .wu-select-label {
     display: block;
     flex: 1 1 auto;
     min-width: 0;
     margin: 0;
-    padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
+    padding: var(--wu-field-padding-y) var(--wu-field-padding-x);
     border: 0;
     background: transparent;
     color: inherit;
@@ -98,77 +98,77 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .wt-select-label.wt-select-editable {
+  .wu-select-label.wu-select-editable {
     outline: none;
     cursor: text;
     user-select: text;
   }
-  .wt-select-placeholder,
-  .wt-select-editable::placeholder {
-    color: var(--wt-field-placeholder);
+  .wu-select-placeholder,
+  .wu-select-editable::placeholder {
+    color: var(--wu-field-placeholder);
     opacity: 1;
   }
-  .wt-select-clear,
-  .wt-select-dropdown {
+  .wu-select-clear,
+  .wu-select-dropdown {
     flex: none;
     display: inline-grid;
     place-items: center;
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--wt-select-dropdown-color);
+    color: var(--wu-select-dropdown-color);
   }
-  .wt-select-clear {
+  .wu-select-clear {
     width: 2rem;
     cursor: pointer;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
   }
-  .wt-select-clear:hover {
-    color: var(--wt-field-color);
+  .wu-select-clear:hover {
+    color: var(--wu-field-color);
   }
-  .wt-select-clear svg {
+  .wu-select-clear svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  .wt-select-dropdown {
-    width: var(--wt-select-dropdown-width);
+  .wu-select-dropdown {
+    width: var(--wu-select-dropdown-width);
   }
-  .wt-select-dropdown svg {
+  .wu-select-dropdown svg {
     width: 1rem;
     height: 1rem;
-    transition: transform var(--wt-transition);
+    transition: transform var(--wu-transition);
   }
-  .wt-select-open .wt-select-dropdown svg {
+  .wu-select-open .wu-select-dropdown svg {
     transform: rotate(180deg);
   }
-  .wt-select-spinner {
+  .wu-select-spinner {
     width: 1rem;
     height: 1rem;
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: wt-select-spin 0.7s linear infinite;
+    animation: wu-select-spin 0.7s linear infinite;
   }
-  @keyframes wt-select-spin {
+  @keyframes wu-select-spin {
     to {
       transform: rotate(360deg);
     }
   }
-  .wt-select-sm {
-    font-size: calc(var(--wt-font-size) * 0.875);
+  .wu-select-sm {
+    font-size: calc(var(--wu-font-size) * 0.875);
   }
-  .wt-select-sm .wt-select-label {
-    padding: calc(var(--wt-field-padding-y) * var(--wt-size-sm-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-sm-scale));
+  .wu-select-sm .wu-select-label {
+    padding: calc(var(--wu-field-padding-y) * var(--wu-size-sm-scale)) calc(var(--wu-field-padding-x) * var(--wu-size-sm-scale));
   }
-  .wt-select-lg {
-    font-size: calc(var(--wt-font-size) * var(--wt-size-lg-scale));
+  .wu-select-lg {
+    font-size: calc(var(--wu-font-size) * var(--wu-size-lg-scale));
   }
-  .wt-select-lg .wt-select-label {
-    padding: calc(var(--wt-field-padding-y) * var(--wt-size-lg-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-lg-scale));
+  .wu-select-lg .wu-select-label {
+    padding: calc(var(--wu-field-padding-y) * var(--wu-size-lg-scale)) calc(var(--wu-field-padding-x) * var(--wu-size-lg-scale));
   }
 
   /* ---------- the list ---------- */
-  .wt-select-overlay {
+  .wu-select-overlay {
     position: fixed;
     inset: auto;
     z-index: 1200;
@@ -179,132 +179,132 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border: var(--wt-select-overlay-border-width) solid var(--wt-border);
-    border-radius: var(--wt-select-overlay-radius);
-    background: var(--wt-overlay-bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
-    box-shadow: var(--wt-select-overlay-shadow);
-    color: var(--wt-text);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-control-line-height);
+    border: var(--wu-select-overlay-border-width) solid var(--wu-border);
+    border-radius: var(--wu-select-overlay-radius);
+    background: var(--wu-overlay-bg);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
+    box-shadow: var(--wu-select-overlay-shadow);
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-control-line-height);
   }
-  .wt-select-header {
+  .wu-select-header {
     flex: none;
-    padding: var(--wt-select-header-padding);
-    border-bottom: var(--wt-select-header-border-width) solid var(--wt-border);
-    background: var(--wt-select-header-bg);
+    padding: var(--wu-select-header-padding);
+    border-bottom: var(--wu-select-header-border-width) solid var(--wu-border);
+    background: var(--wu-select-header-bg);
   }
-  .wt-select-filter-wrap {
+  .wu-select-filter-wrap {
     position: relative;
   }
-  .wt-select-filter.wt-inputtext {
+  .wu-select-filter.wu-inputtext {
     display: block;
     width: 100%;
     padding-right: 2.25rem;
   }
-  .wt-select-filter-icon {
+  .wu-select-filter-icon {
     position: absolute;
     top: 50%;
     right: 0.75rem;
     width: 1rem;
     height: 1rem;
-    color: var(--wt-field-placeholder);
+    color: var(--wu-field-placeholder);
     transform: translateY(-50%);
     pointer-events: none;
   }
-  .wt-select-list-container {
+  .wu-select-list-container {
     position: relative;
     flex: 1 1 auto;
     min-height: 0;
     overflow: auto;
     overscroll-behavior: contain;
   }
-  .wt-select-list {
+  .wu-select-list {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-select-option-gap);
+    gap: var(--wu-select-option-gap);
     margin: 0;
-    padding: var(--wt-select-list-padding);
+    padding: var(--wu-select-list-padding);
     list-style: none;
   }
-  .wt-select-option {
+  .wu-select-option {
     position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: var(--wt-select-option-padding-y) var(--wt-select-option-padding-x);
-    border-radius: var(--wt-select-option-radius);
-    color: var(--wt-text);
+    padding: var(--wu-select-option-padding-y) var(--wu-select-option-padding-x);
+    border-radius: var(--wu-select-option-radius);
+    color: var(--wu-text);
     cursor: pointer;
     white-space: nowrap;
   }
-  .wt-select-option-active {
-    background: var(--wt-select-option-hover-bg);
+  .wu-select-option-active {
+    background: var(--wu-select-option-hover-bg);
   }
-  .wt-select-option-selected {
-    background: var(--wt-select-option-selected-bg);
-    color: var(--wt-select-option-selected-color);
+  .wu-select-option-selected {
+    background: var(--wu-select-option-selected-bg);
+    color: var(--wu-select-option-selected-color);
   }
   /* Selected and under the pointer / keyboard: a little more of the theme colour (mixing in the text colour made it muddy). */
-  .wt-select-option-selected.wt-select-option-active {
-    background: color-mix(in srgb, var(--wt-primary-color) 14%, var(--wt-select-option-selected-bg));
+  .wu-select-option-selected.wu-select-option-active {
+    background: color-mix(in srgb, var(--wu-primary-color) 14%, var(--wu-select-option-selected-bg));
   }
-  .wt-select-option-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-select-option-disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-select-option-label {
+  .wu-select-option-label {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .wt-select-check {
+  .wu-select-check {
     flex: none;
     width: 0.875rem;
     height: 0.875rem;
     visibility: hidden;
   }
-  .wt-select-check-on {
+  .wu-select-check-on {
     visibility: visible;
   }
   /* A group heading is a band of its own: tinted, a rule above (not on the first), smaller text, never hovered. */
-  .wt-select-group {
+  .wu-select-group {
     position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: var(--wt-select-group-padding);
-    border-radius: var(--wt-select-option-radius);
-    background: var(--wt-select-group-bg);
-    color: var(--wt-select-group-color);
-    font-size: var(--wt-select-group-size);
-    font-weight: var(--wt-select-group-weight);
+    padding: var(--wu-select-group-padding);
+    border-radius: var(--wu-select-option-radius);
+    background: var(--wu-select-group-bg);
+    color: var(--wu-select-group-color);
+    font-size: var(--wu-select-group-size);
+    font-weight: var(--wu-select-group-weight);
     cursor: default;
     user-select: none;
   }
-  .wt-select-group:not(:first-child) {
+  .wu-select-group:not(:first-child) {
     margin-top: 0.5rem;
   }
-  .wt-select-group:not(:first-child)::before {
+  .wu-select-group:not(:first-child)::before {
     content: '';
     position: absolute;
     top: calc(-0.25rem - 1px);
     right: 0;
     left: 0;
-    border-top: 1px solid var(--wt-select-group-rule);
+    border-top: 1px solid var(--wu-select-group-rule);
   }
-  .wt-select-empty {
-    padding: var(--wt-select-option-padding-y) var(--wt-select-option-padding-x);
-    color: var(--wt-text-muted);
+  .wu-select-empty {
+    padding: var(--wu-select-option-padding-y) var(--wu-select-option-padding-x);
+    color: var(--wu-text-muted);
     cursor: default;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-select-dropdown svg {
+    .wu-select-dropdown svg {
       transition: none;
     }
-    .wt-select-spinner {
+    .wu-select-spinner {
       animation-duration: 2s;
     }
   }

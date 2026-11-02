@@ -22,14 +22,14 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
 import {
   FilterMatchMode,
   ListState,
@@ -40,10 +40,10 @@ import {
   moveUp,
   optionField,
   transferItems,
-  WtLocale,
-} from 'wiratheme/core';
-import { ɵWtListDrag } from './list-drag';
-import { WtPickListFilterEvent, WtPickListFilterOptions, WtPickListMoveEvent, WtPickListSelectEvent, WtPickListSide } from './picklist.types';
+  WuLocale,
+} from 'wiraui/core';
+import { ɵWuListDrag } from './list-drag';
+import { WuPickListFilterEvent, WuPickListFilterOptions, WuPickListMoveEvent, WuPickListSelectEvent, WuPickListSide } from './picklist.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 type Reorder = 'up' | 'top' | 'down' | 'bottom';
@@ -59,13 +59,13 @@ export function ɵlistItemLabel(item: unknown, optionLabel?: string | null): str
 }
 
 /**
- * What wt-picklist does, shared by the v1 and v2/v3 templates: two lists, items move between them with the buttons in
+ * What wu-picklist does, shared by the v1 and v2/v3 templates: two lists, items move between them with the buttons in
  * the middle, by double click, or by dragging (`[dragdrop]="true"`); each list can be searched (`filterBy`) and put in
  * order with its own buttons. `source` and `target` are changed in place, as apps expect, and also emitted
  * (`sourceChange` / `targetChange`) for `[(source)]` bindings.
  */
 @Directive()
-export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
+export abstract class ɵWuPickListBase implements AfterContentInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set source(v: any[] | null | undefined) {
     this._source = Array.isArray(v) ? v : [];
@@ -115,7 +115,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
    * Default: true in v1, false in v2 / v3, as each era did. Touch always toggles.
    */
   @Input() set metaKeySelection(v: unknown) {
-    this._metaKey = v === undefined || v === null ? WT_VERSION_INFO.major === 1 : ɵtoBool(v);
+    this._metaKey = v === undefined || v === null ? WU_VERSION_INFO.major === 1 : ɵtoBool(v);
   }
   get metaKeySelection(): boolean { return this._metaKey; }
   @Input() set showSourceControls(v: unknown) { this._showSourceControls = v === undefined || ɵtoBool(v); }
@@ -155,16 +155,16 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   @Input() filterLocale: unknown;
   @Input() autoOptionFocus: unknown;
 
-  @Output() readonly onMoveToTarget = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onMoveAllToTarget = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onMoveToSource = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onMoveAllToSource = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onSourceReorder = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onTargetReorder = new EventEmitter<WtPickListMoveEvent>();
-  @Output() readonly onSourceSelect = new EventEmitter<WtPickListSelectEvent>();
-  @Output() readonly onTargetSelect = new EventEmitter<WtPickListSelectEvent>();
-  @Output() readonly onSourceFilter = new EventEmitter<WtPickListFilterEvent>();
-  @Output() readonly onTargetFilter = new EventEmitter<WtPickListFilterEvent>();
+  @Output() readonly onMoveToTarget = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onMoveAllToTarget = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onMoveToSource = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onMoveAllToSource = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onSourceReorder = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onTargetReorder = new EventEmitter<WuPickListMoveEvent>();
+  @Output() readonly onSourceSelect = new EventEmitter<WuPickListSelectEvent>();
+  @Output() readonly onTargetSelect = new EventEmitter<WuPickListSelectEvent>();
+  @Output() readonly onSourceFilter = new EventEmitter<WuPickListFilterEvent>();
+  @Output() readonly onTargetFilter = new EventEmitter<WuPickListFilterEvent>();
   @Output() readonly onFocus = new EventEmitter<Event>();
   @Output() readonly onBlur = new EventEmitter<Event>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -172,7 +172,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly targetChange = new EventEmitter<any[]>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('sourceHeader', { descendants: false }) protected sourceHeaderRef?: unknown;
   @ContentChild('targetHeader', { descendants: false }) protected targetHeaderRef?: unknown;
@@ -183,25 +183,25 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   @ContentChild('emptymessagetarget', { descendants: false }) protected emptyTargetRef?: unknown;
   @ContentChild('emptyfiltermessagetarget', { descendants: false }) protected emptyFilterTargetRef?: unknown;
 
-  readonly baseId = ɵuniqueId('wt-picklist');
-  readonly major: number = WT_VERSION_INFO.major;
+  readonly baseId = ɵuniqueId('wu-picklist');
+  readonly major: number = WU_VERSION_INFO.major;
   /** The lists are stacked (narrow screen). */
   stacked = false;
   /** The list the keyboard is in. */
-  focusedList: WtPickListSide | null = null;
-  readonly lists: Record<WtPickListSide, ListState> = {
+  focusedList: WuPickListSide | null = null;
+  readonly lists: Record<WuPickListSide, ListState> = {
     source: new ListState(() => this._source, () => this.listOptions),
     target: new ListState(() => this._target, () => this.listOptions),
   };
-  readonly drag: ɵWtListDrag;
-  readonly filterOptions: Record<WtPickListSide, WtPickListFilterOptions> = {
+  readonly drag: ɵWuListDrag;
+  readonly filterOptions: Record<WuPickListSide, WuPickListFilterOptions> = {
     source: { filter: (v) => this.setFilter('source', v), reset: () => this.setFilter('source', '') },
     target: { filter: (v) => this.setFilter('target', v), reset: () => this.setFilter('target', '') },
   };
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly i18n = ɵrefreshOnTranslation();
   private _source: unknown[] = [];
@@ -209,7 +209,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   private _showSourceFilter = true;
   private _showTargetFilter = true;
   private _dragdrop = false;
-  private _metaKey = WT_VERSION_INFO.major === 1;
+  private _metaKey = WU_VERSION_INFO.major === 1;
   private _showSourceControls = true;
   private _showTargetControls = true;
   private _keepSelection = false;
@@ -225,20 +225,20 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    styles.load('button', ɵWT_BUTTON_CSS);
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    styles.load('button', ɵWU_BUTTON_CSS);
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
     const el = this.host;
-    this.drag = new ɵWtListDrag(
+    this.drag = new ɵWuListDrag(
       {
         get root() {
-          return el.querySelector('.wt-picklist') as HTMLElement | null;
+          return el.querySelector('.wu-picklist') as HTMLElement | null;
         },
         canDrag: () => this._dragdrop && !this._disabled,
-        itemsFor: (list, index) => this.dragItems(list as WtPickListSide, index),
+        itemsFor: (list, index) => this.dragItems(list as WuPickListSide, index),
         accepts: () => true,
-        drop: (from, items, to, index, event) => this.dropItems(from as WtPickListSide, items, to as WtPickListSide, index, event),
+        drop: (from, items, to, index, event) => this.dropItems(from as WuPickListSide, items, to as WuPickListSide, index, event),
       },
       inject(NgZone, { optional: true })
     );
@@ -257,23 +257,23 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get itemTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.itemRef) || ɵfindTemplate(this.templates, 'item');
   }
-  headerTemplate(side: WtPickListSide): TemplateRef<unknown> | null {
+  headerTemplate(side: WuPickListSide): TemplateRef<unknown> | null {
     return side === 'source'
       ? asTemplate(this.sourceHeaderRef) || ɵfindTemplate(this.templates, 'sourceHeader') || ɵfindTemplate(this.templates, 'sourceheader')
       : asTemplate(this.targetHeaderRef) || ɵfindTemplate(this.templates, 'targetHeader') || ɵfindTemplate(this.templates, 'targetheader');
   }
-  filterTemplate(side: WtPickListSide): TemplateRef<unknown> | null {
+  filterTemplate(side: WuPickListSide): TemplateRef<unknown> | null {
     return side === 'source'
       ? asTemplate(this.sourceFilterRef) || ɵfindTemplate(this.templates, 'sourceFilter')
       : asTemplate(this.targetFilterRef) || ɵfindTemplate(this.templates, 'targetFilter');
   }
-  emptyTemplate(side: WtPickListSide): TemplateRef<unknown> | null {
+  emptyTemplate(side: WuPickListSide): TemplateRef<unknown> | null {
     const filtered = !!this.lists[side].query.trim();
     if (side === 'source') {
       return filtered
@@ -284,77 +284,77 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
       ? asTemplate(this.emptyFilterTargetRef) || ɵfindTemplate(this.templates, 'emptyfiltermessagetarget')
       : asTemplate(this.emptyTargetRef) || ɵfindTemplate(this.templates, 'emptymessagetarget');
   }
-  headerText(side: WtPickListSide): string {
+  headerText(side: WuPickListSide): string {
     return (side === 'source' ? this.sourceHeader : this.targetHeader) || '';
   }
-  hasHeader(side: WtPickListSide): boolean {
+  hasHeader(side: WuPickListSide): boolean {
     return !!this.headerText(side) || !!this.headerTemplate(side);
   }
-  showFilter(side: WtPickListSide): boolean {
+  showFilter(side: WuPickListSide): boolean {
     return (!!this.filterBy || !!this.filterTemplate(side)) && (side === 'source' ? this._showSourceFilter : this._showTargetFilter);
   }
   /** The search box hint: the app's text, else the locale's "search". */
-  filterPlaceholder(side: WtPickListSide): string {
+  filterPlaceholder(side: WuPickListSide): string {
     return (side === 'source' ? this.sourceFilterPlaceholder : this.targetFilterPlaceholder) || this.t.search;
   }
-  filterAriaLabel(side: WtPickListSide): string {
+  filterAriaLabel(side: WuPickListSide): string {
     return (side === 'source' ? this.ariaSourceFilterLabel : this.ariaTargetFilterLabel) || this.filterPlaceholder(side);
   }
-  filterOptionsOf(side: WtPickListSide): WtPickListFilterOptions {
+  filterOptionsOf(side: WuPickListSide): WuPickListFilterOptions {
     return this.filterOptions[side];
   }
-  queryOf(side: WtPickListSide): string {
+  queryOf(side: WuPickListSide): string {
     return this.lists[side].query;
   }
-  listOf(side: WtPickListSide): unknown[] {
+  listOf(side: WuPickListSide): unknown[] {
     return side === 'source' ? this._source : this._target;
   }
-  listStyle(side: WtPickListSide): Record<string, string | number> | null {
+  listStyle(side: WuPickListSide): Record<string, string | number> | null {
     const own = side === 'source' ? this.sourceStyle : this.targetStyle;
     if (!this.scrollHeight) return own || null;
     return { height: this.scrollHeight, ...(own || {}) };
   }
-  listId(side: WtPickListSide): string {
+  listId(side: WuPickListSide): string {
     return `${this.id || this.baseId}_${side}`;
   }
-  headerId(side: WtPickListSide): string {
+  headerId(side: WuPickListSide): string {
     return `${this.listId(side)}_header`;
   }
-  itemId(side: WtPickListSide, index: number): string {
+  itemId(side: WuPickListSide, index: number): string {
     return `${this.listId(side)}_${index}`;
   }
-  activeId(side: WtPickListSide): string | null {
+  activeId(side: WuPickListSide): string | null {
     const f = this.lists[side].focus;
     return this.focusedList === side && f >= 0 && f < this.listOf(side).length ? this.itemId(side, f) : null;
   }
-  isVisible(side: WtPickListSide, item: unknown): boolean {
+  isVisible(side: WuPickListSide, item: unknown): boolean {
     return this.lists[side].isVisible(item);
   }
-  isSelected(side: WtPickListSide, item: unknown): boolean {
+  isSelected(side: WuPickListSide, item: unknown): boolean {
     return this.lists[side].isSelected(item);
   }
-  isFocused(side: WtPickListSide, index: number): boolean {
+  isFocused(side: WuPickListSide, index: number): boolean {
     return this.focusedList === side && this.lists[side].focus === index;
   }
   /** Nothing to show: the list is empty, or the search left nothing. */
-  isEmpty(side: WtPickListSide): boolean {
+  isEmpty(side: WuPickListSide): boolean {
     const st = this.lists[side];
     return !st.query.trim() ? !this.listOf(side).length : !st.visible().length;
   }
   /** The text shown in an empty list when there is no template: only when a search found nothing. */
-  emptyText(side: WtPickListSide): string {
+  emptyText(side: WuPickListSide): string {
     return this.lists[side].query.trim() ? this.t.emptyFilterMessage : '';
   }
   label(item: unknown): string {
     return ɵlistItemLabel(item, this.optionLabel);
   }
-  itemContext(side: WtPickListSide, item: unknown, index: number): Record<string, unknown> {
+  itemContext(side: WuPickListSide, item: unknown, index: number): Record<string, unknown> {
     return { $implicit: item, index, selected: this.isSelected(side, item), side };
   }
-  headerContext(side: WtPickListSide): Record<string, unknown> {
+  headerContext(side: WuPickListSide): Record<string, unknown> {
     return { $implicit: this.listOf(side), side };
   }
-  trackItem(side: WtPickListSide): TrackByFunction<unknown> {
+  trackItem(side: WuPickListSide): TrackByFunction<unknown> {
     const fn = (side === 'source' ? this.sourceTrackBy : this.targetTrackBy) || this.trackBy;
     return fn || this.trackAny;
   }
@@ -379,16 +379,16 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   // ---------- buttons ----------
 
   buttonClass(extra: string): string {
-    return ɵbuttonClass(this.major === 1 ? '' : 'p-button-secondary') + ' wt-btn-icon-only ' + extra;
+    return ɵbuttonClass(this.major === 1 ? '' : 'p-button-secondary') + ' wu-btn-icon-only ' + extra;
   }
-  canTransfer(side: WtPickListSide): boolean {
+  canTransfer(side: WuPickListSide): boolean {
     return !this._disabled && this.lists[side].selectedVisible().length > 0;
   }
-  canTransferAll(side: WtPickListSide): boolean {
+  canTransferAll(side: WuPickListSide): boolean {
     return !this._disabled && this.lists[side].visible().length > 0;
   }
   /** Reordering works on the whole list, so it waits while a search hides part of it. */
-  canReorder(side: WtPickListSide): boolean {
+  canReorder(side: WuPickListSide): boolean {
     const st = this.lists[side];
     return !this._disabled && !st.query.trim() && st.selection.length > 0;
   }
@@ -407,7 +407,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     this.transfer('target', this.lists.target.visible(), this._source.length, event, true);
   }
 
-  reorder(side: WtPickListSide, how: Reorder, event?: Event): void {
+  reorder(side: WuPickListSide, how: Reorder, event?: Event): void {
     if (!this.canReorder(side)) return;
     const st = this.lists[side];
     const list = this.listOf(side);
@@ -436,12 +436,12 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
 
   // ---------- items ----------
 
-  pointerDown(event: PointerEvent, side: WtPickListSide, index: number): void {
+  pointerDown(event: PointerEvent, side: WuPickListSide, index: number): void {
     this.pointerType = event.pointerType || 'mouse';
     this.drag.down(event, side, index);
   }
 
-  itemClick(event: MouseEvent, side: WtPickListSide, item: unknown, index: number): void {
+  itemClick(event: MouseEvent, side: WuPickListSide, item: unknown, index: number): void {
     if (this._disabled || this.drag.swallowClick) return;
     const st = this.lists[side];
     const touch = this.pointerType === 'touch';
@@ -452,20 +452,20 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
   }
 
   /** A double click sends the item across. */
-  itemDblClick(event: MouseEvent, side: WtPickListSide, item: unknown): void {
+  itemDblClick(event: MouseEvent, side: WuPickListSide, item: unknown): void {
     if (this._disabled) return;
     const other = side === 'source' ? this._target : this._source;
     this.transfer(side, [item], other.length, event, false);
   }
 
-  listFocus(event: FocusEvent, side: WtPickListSide): void {
+  listFocus(event: FocusEvent, side: WuPickListSide): void {
     this.focusedList = side;
     this.lists[side].enter();
     this.onFocus.emit(event);
     this.cdr.markForCheck();
   }
 
-  listBlur(event: FocusEvent, side: WtPickListSide): void {
+  listBlur(event: FocusEvent, side: WuPickListSide): void {
     if (this.focusedList === side) this.focusedList = null;
     this.onBlur.emit(event);
     this.cdr.markForCheck();
@@ -475,7 +475,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
    * Listbox keys: ↑ / ↓ / Home / End move, Shift + arrow also selects, Space or Enter toggles the item,
    * Ctrl / ⌘ + A selects every item the search shows.
    */
-  listKeydown(event: KeyboardEvent, side: WtPickListSide): void {
+  listKeydown(event: KeyboardEvent, side: WuPickListSide): void {
     const st = this.lists[side];
     const list = this.listOf(side);
     const key = event.key;
@@ -507,7 +507,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     this.revealFocus(side);
   }
 
-  filterInput(event: Event, side: WtPickListSide): void {
+  filterInput(event: Event, side: WuPickListSide): void {
     this.setFilter(side, (event.target as HTMLInputElement).value);
   }
 
@@ -517,7 +517,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     return { filterBy: this.filterBy, matchMode: this.filterMatchMode, dataKey: this.dataKey };
   }
 
-  private setFilter(side: WtPickListSide, value: unknown): void {
+  private setFilter(side: WuPickListSide, value: unknown): void {
     const st = this.lists[side];
     st.query = value === null || value === undefined ? '' : String(value);
     st.focus = -1;
@@ -525,13 +525,13 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private emitSelect(side: WtPickListSide, event: Event): void {
+  private emitSelect(side: WuPickListSide, event: Event): void {
     (side === 'source' ? this.onSourceSelect : this.onTargetSelect).emit({ originalEvent: event, items: [...this.lists[side].selection] });
   }
 
-  private transfer(from: WtPickListSide, items: unknown[], at: number, event: Event | undefined, all: boolean): void {
+  private transfer(from: WuPickListSide, items: unknown[], at: number, event: Event | undefined, all: boolean): void {
     if (this._disabled || !items.length) return;
-    const to: WtPickListSide = from === 'source' ? 'target' : 'source';
+    const to: WuPickListSide = from === 'source' ? 'target' : 'source';
     const fromState = this.lists[from];
     const toState = this.lists[to];
     const moved = transferItems(this.listOf(from), this.listOf(to), items, at, fromState.same);
@@ -549,7 +549,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private dragItems(side: WtPickListSide, index: number): unknown[] {
+  private dragItems(side: WuPickListSide, index: number): unknown[] {
     const list = this.listOf(side);
     const item = list[index];
     if (item === undefined) return [];
@@ -557,7 +557,7 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     return st.isSelected(item) ? st.selectedVisible() : [item];
   }
 
-  private dropItems(from: WtPickListSide, items: unknown[], to: WtPickListSide, index: number, event: Event): void {
+  private dropItems(from: WuPickListSide, items: unknown[], to: WuPickListSide, index: number, event: Event): void {
     if (this._disabled) return;
     if (from === to) {
       const st = this.lists[from];
@@ -571,17 +571,17 @@ export abstract class ɵWtPickListBase implements AfterContentInit, OnDestroy {
     this.transfer(from, items, index, event, false);
   }
 
-  private emitLists(side: WtPickListSide): void {
+  private emitLists(side: WuPickListSide): void {
     if (side === 'source') this.sourceChange.emit(this._source);
     else this.targetChange.emit(this._target);
   }
 
-  private revealFocus(side: WtPickListSide): void {
+  private revealFocus(side: WuPickListSide): void {
     const f = this.lists[side].focus;
     if (f >= 0) this.doc.getElementById(this.itemId(side, f))?.scrollIntoView?.({ block: 'nearest' });
   }
 
-  private revealSelection(side: WtPickListSide): void {
+  private revealSelection(side: WuPickListSide): void {
     const st = this.lists[side];
     const first = this.listOf(side).findIndex((it) => st.isSelected(it));
     if (first >= 0) this.doc.getElementById(this.itemId(side, first))?.scrollIntoView?.({ block: 'nearest' });

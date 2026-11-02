@@ -6,16 +6,16 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-datepicker id="d-dp-basic" inputId="dp-basic" [(ngModel)]="basicDate" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('วันนัดหมาย')"></wt-datepicker>
+        <wu-datepicker id="d-dp-basic" inputId="dp-basic" [(ngModel)]="basicDate" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('วันนัดหมาย')"></wu-datepicker>
         <span class="docs-demo-output">date: <code id="dp-basic-value">{{ show(basicDate) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-datepicker [(ngModel)]="sizeValue" size="small" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('เล็ก')"></wt-datepicker>
-        <wt-datepicker [(ngModel)]="sizeValue" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ปกติ')"></wt-datepicker>
-        <wt-datepicker [(ngModel)]="sizeValue" size="large" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ใหญ่')"></wt-datepicker>
+        <wu-datepicker [(ngModel)]="sizeValue" size="small" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('เล็ก')"></wu-datepicker>
+        <wu-datepicker [(ngModel)]="sizeValue" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ปกติ')"></wu-datepicker>
+        <wu-datepicker [(ngModel)]="sizeValue" size="large" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ใหญ่')"></wu-datepicker>
       </docs-demo>
     </docs-section>
 
@@ -23,20 +23,20 @@
       <docs-demo [html]="code['format']" [ts]="ts['basic']" layout="stack">
         <div class="docs-demo-labelled">
           <label for="dp-fmt-default">{{ tx('ค่าเริ่มต้นของ locale') }}</label>
-          <wt-datepicker inputId="dp-fmt-default" [(ngModel)]="day"></wt-datepicker>
+          <wu-datepicker inputId="dp-fmt-default" [(ngModel)]="day"></wu-datepicker>
         </div>
         <div class="docs-demo-labelled">
           <label for="dp-fmt-be">dateFormat="dd/mm/yy"</label>
-          <wt-datepicker inputId="dp-fmt-be" [(ngModel)]="day" dateFormat="dd/mm/yy"></wt-datepicker>
+          <wu-datepicker inputId="dp-fmt-be" [(ngModel)]="day" dateFormat="dd/mm/yy"></wu-datepicker>
         </div>
         <div class="docs-demo-labelled">
           <!-- The other era of the site language: Thai pages show Gregorian here, English pages the Buddhist era. -->
           <label for="dp-fmt-ce">{{ en() ? 'calendar="buddhist"' : 'calendar="gregorian"' }}</label>
-          <wt-datepicker inputId="dp-fmt-ce" [(ngModel)]="day" dateFormat="dd/mm/yy" [calendar]="en() ? 'buddhist' : 'gregorian'"></wt-datepicker>
+          <wu-datepicker inputId="dp-fmt-ce" [(ngModel)]="day" dateFormat="dd/mm/yy" [calendar]="en() ? 'buddhist' : 'gregorian'"></wu-datepicker>
         </div>
         <div class="docs-demo-labelled">
           <label for="dp-fmt-names">dateFormat="DD d M y"</label>
-          <wt-datepicker inputId="dp-fmt-names" [(ngModel)]="day" dateFormat="DD d M y"></wt-datepicker>
+          <wu-datepicker inputId="dp-fmt-names" [(ngModel)]="day" dateFormat="DD d M y"></wu-datepicker>
         </div>
         <span class="docs-demo-output">date: <code>{{ show(day) }}</code></span>
       </docs-demo>
@@ -44,28 +44,28 @@
 
     <docs-section id="datatype" [section]="sec['datatype']">
       <docs-demo [html]="code['datatype']" [ts]="ts['datatype']">
-        <wt-datepicker inputId="dp-text" [(ngModel)]="dueText" dataType="string" dateFormat="dd/mm/yy" [ariaLabel]="tx('กำหนดส่ง')"></wt-datepicker>
+        <wu-datepicker inputId="dp-text" [(ngModel)]="dueText" dataType="string" dateFormat="dd/mm/yy" [ariaLabel]="tx('กำหนดส่ง')"></wu-datepicker>
         <span class="docs-demo-output">dueText: <code id="dp-text-value">{{ dueText | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="typing" [section]="sec['typing']">
       <docs-demo [html]="code['typing']">
-        <wt-datepicker
+        <wu-datepicker
           inputId="dp-typed"
           [(ngModel)]="typed"
           dateFormat="dd/mm/yy"
           [showOnFocus]="false"
           [placeholder]="tx('เช่น 5/4/2569 หรือ 5 เม.ย. 69')"
           [ariaLabel]="tx('วันที่')"
-        ></wt-datepicker>
+        ></wu-datepicker>
         <span class="docs-demo-output">typed: <code id="dp-typed-value">{{ show(typed) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="time" [section]="sec['time']">
       <docs-demo [html]="code['time']" [ts]="ts['time']">
-        <wt-datepicker id="d-dp-time" inputId="dp-time" [(ngModel)]="meeting" [showTime]="true" [showSeconds]="true" [stepMinute]="5" [ariaLabel]="tx('เวลาประชุม')"></wt-datepicker>
+        <wu-datepicker id="d-dp-time" inputId="dp-time" [(ngModel)]="meeting" [showTime]="true" [showSeconds]="true" [stepMinute]="5" [ariaLabel]="tx('เวลาประชุม')"></wu-datepicker>
         <span class="docs-demo-output">meeting: <code id="dp-time-value">{{ show(meeting) }}</code></span>
       </docs-demo>
     </docs-section>
@@ -74,25 +74,25 @@
       <docs-demo [html]="code['readonly']" layout="stack">
         <div class="docs-demo-labelled">
           <label for="dp-ro-date">readonlyInput · {{ tx('เลือกวันจากปฏิทิน พิมพ์เวลาได้') }}</label>
-          <wt-datepicker id="d-dp-ro-date" inputId="dp-ro-date" [(ngModel)]="start" [showTime]="true" [readonlyInput]="true"></wt-datepicker>
+          <wu-datepicker id="d-dp-ro-date" inputId="dp-ro-date" [(ngModel)]="start" [showTime]="true" [readonlyInput]="true"></wu-datepicker>
         </div>
         <div class="docs-demo-labelled">
           <label for="dp-ro-time">timeReadonlyInput · {{ tx('พิมพ์วันที่ได้ เวลาปรับด้วยปุ่มหรือลูกศร') }}</label>
-          <wt-datepicker id="d-dp-ro-time" inputId="dp-ro-time" [(ngModel)]="start2" [showTime]="true" [timeReadonlyInput]="true"></wt-datepicker>
+          <wu-datepicker id="d-dp-ro-time" inputId="dp-ro-time" [(ngModel)]="start2" [showTime]="true" [timeReadonlyInput]="true"></wu-datepicker>
         </div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="range" [section]="sec['range']">
       <docs-demo [html]="code['range']" [ts]="ts['range']">
-        <wt-datepicker id="d-dp-range" inputId="dp-range" [(ngModel)]="stay" selectionMode="range" dateFormat="d M y" [showIcon]="true" [ariaLabel]="tx('ช่วงเข้าพัก')"></wt-datepicker>
+        <wu-datepicker id="d-dp-range" inputId="dp-range" [(ngModel)]="stay" selectionMode="range" dateFormat="d M y" [showIcon]="true" [ariaLabel]="tx('ช่วงเข้าพัก')"></wu-datepicker>
         <span class="docs-demo-output">stay: <code id="dp-range-value">{{ show(stay) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="multiple" [section]="sec['multiple']">
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']">
-        <wt-datepicker
+        <wu-datepicker
           id="d-dp-multi"
           inputId="dp-multi"
           [(ngModel)]="shifts"
@@ -101,29 +101,29 @@
           dateFormat="d M"
           [showIcon]="true"
           [ariaLabel]="tx('วันเข้ากะ')"
-        ></wt-datepicker>
+        ></wu-datepicker>
         <span class="docs-demo-output">shifts: <code id="dp-multi-value">{{ show(shifts) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="views" [section]="sec['views']">
       <docs-demo [html]="code['views']" [ts]="ts['views']">
-        <wt-datepicker id="d-dp-month" inputId="dp-month" [(ngModel)]="month" view="month" dateFormat="MM yy" [ariaLabel]="tx('เดือน')"></wt-datepicker>
-        <wt-datepicker id="d-dp-year" inputId="dp-year" [(ngModel)]="year" view="year" dateFormat="yy" [ariaLabel]="tx('ปี')"></wt-datepicker>
+        <wu-datepicker id="d-dp-month" inputId="dp-month" [(ngModel)]="month" view="month" dateFormat="MM yy" [ariaLabel]="tx('เดือน')"></wu-datepicker>
+        <wu-datepicker id="d-dp-year" inputId="dp-year" [(ngModel)]="year" view="year" dateFormat="yy" [ariaLabel]="tx('ปี')"></wu-datepicker>
         <span class="docs-demo-output">month: <code>{{ show(month) }}</code> · year: <code>{{ show(year) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="timeonly" [section]="sec['timeonly']">
       <docs-demo [html]="code['timeonly']" [ts]="ts['timeonly']">
-        <wt-datepicker inputId="dp-alarm" [(ngModel)]="alarm" [timeOnly]="true" hourFormat="12" [ariaLabel]="tx('เวลาปลุก')"></wt-datepicker>
+        <wu-datepicker inputId="dp-alarm" [(ngModel)]="alarm" [timeOnly]="true" hourFormat="12" [ariaLabel]="tx('เวลาปลุก')"></wu-datepicker>
         <span class="docs-demo-output">alarm: <code>{{ show(alarm) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="limits" [section]="sec['limits']">
       <docs-demo [html]="code['limits']" [ts]="ts['limits']">
-        <wt-datepicker
+        <wu-datepicker
           id="d-dp-limits"
           inputId="dp-limits"
           [(ngModel)]="visit"
@@ -133,69 +133,69 @@
           [disabledDates]="holidays"
           [showIcon]="true"
           [ariaLabel]="tx('วันเข้าพบ')"
-        ></wt-datepicker>
+        ></wu-datepicker>
         <span class="docs-demo-output">visit: <code>{{ show(visit) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="icons" [section]="sec['icons']">
       <docs-demo [html]="code['icons']">
-        <wt-datepicker [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ปุ่มข้างช่อง')"></wt-datepicker>
-        <wt-datepicker [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('icon ในช่อง')"></wt-datepicker>
-        <wt-datepicker id="d-dp-clock" [(ngModel)]="alarm" [timeOnly]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('เวลา')"></wt-datepicker>
+        <wu-datepicker [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('ปุ่มข้างช่อง')"></wu-datepicker>
+        <wu-datepicker [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('icon ในช่อง')"></wu-datepicker>
+        <wu-datepicker id="d-dp-clock" [(ngModel)]="alarm" [timeOnly]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('เวลา')"></wu-datepicker>
       </docs-demo>
     </docs-section>
 
     <docs-section id="customicons" [section]="sec['customicons']">
       <docs-slot-note slot="inputicon"></docs-slot-note>
       <docs-demo [html]="code['customicons']" [ts]="ts['customicons']">
-        <wt-datepicker id="d-dp-inputicon" [(ngModel)]="alarm" [timeOnly]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('เวลา')">
+        <wu-datepicker id="d-dp-inputicon" [(ngModel)]="alarm" [timeOnly]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('เวลา')">
           <ng-template #inputicon let-clickCallBack="clickCallBack">
             <i class="wi wi-clock" (click)="clickCallBack($event)"></i>
           </ng-template>
-        </wt-datepicker>
-        <wt-datepicker id="d-dp-triggericon" [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('วันที่')">
+        </wu-datepicker>
+        <wu-datepicker id="d-dp-triggericon" [(ngModel)]="day" dateFormat="dd/mm/yy" [showIcon]="true" [ariaLabel]="tx('วันที่')">
           <ng-template #triggericon>
             <i class="wi wi-calendar-plus"></i>
           </ng-template>
-        </wt-datepicker>
+        </wu-datepicker>
       </docs-demo>
     </docs-section>
 
     <docs-section id="datetemplate" [section]="sec['datetemplate']">
       <docs-demo [html]="code['datetemplate']" [ts]="ts['datetemplate']">
-        <wt-datepicker id="d-dp-datetpl" [(ngModel)]="inlineDate" [inline]="true" [ariaLabel]="tx('ปฏิทินนัดหมาย')">
+        <wu-datepicker id="d-dp-datetpl" [(ngModel)]="inlineDate" [inline]="true" [ariaLabel]="tx('ปฏิทินนัดหมาย')">
           <ng-template #date let-date>
             <span class="docs-dp-day" [class.docs-dp-event]="events.includes(date.day) && date.selectable">{{ date.day }}</span>
           </ng-template>
-        </wt-datepicker>
+        </wu-datepicker>
       </docs-demo>
     </docs-section>
 
     <docs-section id="buttonbar" [section]="sec['buttonbar']">
       <docs-demo [html]="code['buttonbar']">
-        <wt-datepicker id="d-dp-bar" inputId="dp-bar" [(ngModel)]="due" [showButtonBar]="true" [showClear]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('กำหนดส่ง')"></wt-datepicker>
+        <wu-datepicker id="d-dp-bar" inputId="dp-bar" [(ngModel)]="due" [showButtonBar]="true" [showClear]="true" [showIcon]="true" iconDisplay="input" [ariaLabel]="tx('กำหนดส่ง')"></wu-datepicker>
         <span class="docs-demo-output">due: <code id="dp-bar-value">{{ show(due) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="inline" [section]="sec['inline']">
       <docs-demo [html]="code['inline']">
-        <wt-datepicker id="d-dp-inline" [(ngModel)]="inlineDate" [inline]="true" [ariaLabel]="tx('ปฏิทิน')"></wt-datepicker>
+        <wu-datepicker id="d-dp-inline" [(ngModel)]="inlineDate" [inline]="true" [ariaLabel]="tx('ปฏิทิน')"></wu-datepicker>
         <span class="docs-demo-output">date: <code id="dp-inline-value">{{ show(inlineDate) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="touch" [section]="sec['touch']">
       <docs-demo [html]="code['touch']">
-        <wt-datepicker inputId="dp-touch" [(ngModel)]="touchDate" [touchUI]="true" [showIcon]="true" [ariaLabel]="tx('วันที่')"></wt-datepicker>
+        <wu-datepicker inputId="dp-touch" [(ngModel)]="touchDate" [touchUI]="true" [showIcon]="true" [ariaLabel]="tx('วันที่')"></wu-datepicker>
       </docs-demo>
     </docs-section>
 
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-datepicker
+          <wu-datepicker
             inputId="r-birthday"
             formControlName="birthday"
             dateFormat="dd/mm/yy"
@@ -203,7 +203,7 @@
             [maxDate]="today"
             [placeholder]="tx('วว/ดด/ปปปป')"
             [ariaLabel]="tx('วันเกิด')"
-          ></wt-datepicker>
+          ></wu-datepicker>
         </form>
         <span class="docs-demo-output">
           value: <code id="r-birthday-value">{{ show(form.controls.birthday.value) }}</code> · valid: <code id="r-birthday-valid">{{ form.valid }}</code>

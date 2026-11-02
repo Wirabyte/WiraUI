@@ -16,18 +16,18 @@ import {
   ɵfindTemplate,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵprogressPercent, ɵprogressText, WtProgressBarContext, WtProgressBarMode } from './progressbar.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵprogressPercent, ɵprogressText, WuProgressBarContext, WuProgressBarMode } from './progressbar.types';
 
 /**
- * Progress, or an endless bar while the length is unknown: `<wt-progressbar [value]="60">`.
- * Counting items instead: `<wt-progressbar [value]="1000" [max]="2500" unit="รายการ">` shows `1,000 / 2,500 รายการ`.
+ * Progress, or an endless bar while the length is unknown: `<wu-progressbar [value]="60">`.
+ * Counting items instead: `<wu-progressbar [value]="1000" [max]="2500" unit="รายการ">` shows `1,000 / 2,500 รายการ`.
  */
 @Component({
-  selector: 'wt-progressbar, wt-progressBar, wt-progress-bar',
+  selector: 'wu-progressbar, wu-progressBar, wu-progress-bar',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './progressbar.component.html',
@@ -35,7 +35,7 @@ import { ɵprogressPercent, ɵprogressText, WtProgressBarContext, WtProgressBarM
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtProgressBar implements OnDestroy {
+export class WuProgressBar implements OnDestroy {
   @Input() set value(v: unknown) { this._value = Number(v) || 0; }
   get value(): number { return this._value; }
   /** What `value` counts up to. Default 100 (percent). */
@@ -46,8 +46,8 @@ export class WtProgressBar implements OnDestroy {
   @Input() set showValue(v: unknown) { this._showValue = v === undefined || ɵtoBool(v); }
   get showValue(): boolean { return this._showValue; }
   @Input() unit = '%';
-  @Input() mode: WtProgressBarMode = 'determinate';
-  /** Bar colour, e.g. `var(--wt-success-color)`. */
+  @Input() mode: WuProgressBarMode = 'determinate';
+  /** Bar colour, e.g. `var(--wu-success-color)`. */
   @Input() color?: string;
   /** Diagonal stripes on the bar. */
   @Input() set striped(v: unknown) { this._striped = ɵtoBool(v); }
@@ -64,16 +64,16 @@ export class WtProgressBar implements OnDestroy {
   @Input() ariaLabel?: string;
 
   @ContentChild('content', { descendants: false }) private contentRef?: unknown;
-  @ContentChildren(WtTemplate) private templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) private templates?: QueryList<WuTemplate>;
 
   private _value = 0;
   private _max = 100;
   private _showValue = true;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -90,12 +90,12 @@ export class WtProgressBar implements OnDestroy {
   get shown(): string {
     return this.text || ɵprogressText(this._value, this._max, this.unit);
   }
-  /** `<ng-template #content let-value let-max="max" let-percent="percent">` (or `wtTemplate="content"`). */
-  get contentTemplate(): TemplateRef<WtProgressBarContext> | null {
+  /** `<ng-template #content let-value let-max="max" let-percent="percent">` (or `wuTemplate="content"`). */
+  get contentTemplate(): TemplateRef<WuProgressBarContext> | null {
     const own = this.contentRef instanceof TemplateRef ? this.contentRef : null;
-    return (own || ɵfindTemplate(this.templates, 'content')) as TemplateRef<WtProgressBarContext> | null;
+    return (own || ɵfindTemplate(this.templates, 'content')) as TemplateRef<WuProgressBarContext> | null;
   }
-  get context(): WtProgressBarContext {
+  get context(): WuProgressBarContext {
     return { $implicit: this._value, value: this._value, max: this._max, percent: this.percent };
   }
 
@@ -113,10 +113,10 @@ export class WtProgressBar implements OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const stripes = this._striped || this._animated ? ' wt-progressbar-striped' : '';
-    const moving = this._animated ? ' wt-progressbar-animated' : '';
-    const shimmer = this._shimmer ? ' wt-progressbar-shimmer' : '';
-    return `wt-progressbar p-progressbar p-component wt-progressbar-${this.mode} p-progressbar-${this.mode}${stripes}${moving}${shimmer}`;
+    const stripes = this._striped || this._animated ? ' wu-progressbar-striped' : '';
+    const moving = this._animated ? ' wu-progressbar-animated' : '';
+    const shimmer = this._shimmer ? ' wu-progressbar-shimmer' : '';
+    return `wu-progressbar p-progressbar p-component wu-progressbar-${this.mode} p-progressbar-${this.mode}${stripes}${moving}${shimmer}`;
   }
 
   get label(): string {

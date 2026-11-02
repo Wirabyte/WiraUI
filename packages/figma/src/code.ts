@@ -1,5 +1,5 @@
-// WiraTheme UI Kit for Figma: builds the kit in the open file from WT_DATA, the tokens of every v3 preset as the
-// browser computes them (scripts/build.mjs puts WT_DATA in front of this file).
+// WiraUI UI Kit for Figma: builds the kit in the open file from WU_DATA, the tokens of every v3 preset as the
+// browser computes them (scripts/build.mjs puts WU_DATA in front of this file).
 //
 // The kit is three pages: Foundations (variables shown as swatches, text styles, shadows), Components (component
 // sets with variants and properties) and Icons (wiraicon, regular weight). Every colour, padding, gap, radius and
@@ -37,7 +37,7 @@ interface BuildOptions {
   components: boolean;
   icons: boolean;
 }
-declare const WT_DATA: KitData;
+declare const WU_DATA: KitData;
 
 type Weight = 'regular' | 'medium' | 'semibold' | 'bold';
 type Len = number | string;
@@ -56,7 +56,7 @@ interface Kit {
 }
 
 let K: Kit;
-const ICONS = new Map<string, string>(WT_DATA.icons);
+const ICONS = new Map<string, string>(WU_DATA.icons);
 const SEVERITIES = ['Primary', 'Secondary', 'Success', 'Info', 'Warn', 'Danger', 'Help', 'Contrast'];
 
 figma.showUI(__html__, { width: 380, height: 600, themeColors: true });
@@ -344,7 +344,7 @@ function value(t: Token): VariableValue | null {
 
 async function buildVariables(): Promise<void> {
   const p = K.p;
-  const name = `WiraTheme · ${p.label}`;
+  const name = `WiraUI · ${p.label}`;
   const coll = figma.variables.createVariableCollection(name);
   const light = coll.modes[0].modeId;
   coll.renameMode(light, 'Light');
@@ -369,7 +369,7 @@ async function buildVariables(): Promise<void> {
     const d = p.dark[token] ? value(p.dark[token]) : v;
     if (darkColl) figma.variables.createVariable(varName(token), darkColl, type).setValueForMode(dark, d ?? v);
     else variable.setValueForMode(dark, d ?? v);
-    variable.description = `--wt-${token}`;
+    variable.description = `--wu-${token}`;
     K.vars[token] = variable;
     count++;
   }
@@ -454,9 +454,9 @@ async function buildStyles(): Promise<void> {
 // ── Foundations page ───────────────────────────────────────────────────────────────────────────────────────────────
 
 async function buildFoundations(page: PageNode): Promise<void> {
-  const root = box({ name: `WiraTheme · ${K.p.label} · Foundations`, dir: 'V', gap: 48, px: 64, py: 64, fill: 'ground' });
+  const root = box({ name: `WiraUI · ${K.p.label} · Foundations`, dir: 'V', gap: 48, px: 64, py: 64, fill: 'ground' });
   page.appendChild(root);
-  add(root, txt(`WiraTheme · ${K.p.label}`, { size: 40, weight: 'bold' }));
+  add(root, txt(`WiraUI · ${K.p.label}`, { size: 40, weight: 'bold' }));
   add(root, txt(`Tokens of the ${K.p.label} preset as Figma variables (modes Light / Dark). Font: ${K.p.fontFamily}.`, { size: 15, color: 'text-muted' }));
 
   const pal = section(root, 'Palettes', 'palette/<colour>/<shade>: the generated scales every other colour is built from.');
@@ -493,14 +493,14 @@ async function buildFoundations(page: PageNode): Promise<void> {
     sw.strokeWeight = 1;
     cell.appendChild(sw);
     add(cell, txt(token, { size: 12, weight: 'medium' }));
-    add(cell, txt(`--wt-${token}`, { size: 11, color: 'text-muted', mono: true }));
+    add(cell, txt(`--wu-${token}`, { size: 11, color: 'text-muted', mono: true }));
   }
 
   const type = section(root, 'Type', `Text styles in ${K.fonts.regular.family}. Thai first: the line heights leave room for upper and lower marks.`);
   for (const name of Object.keys(K.textStyles)) {
     const row = add(type, box({ name, gap: 24 }));
     add(row, txt(name, { size: 12, color: 'text-muted' })).resize(120, 16);
-    const sample = add(row, txt(name === 'Code' ? "@use 'wiratheme/theme';" : 'ภาษาไทยอ่านง่าย ทุกสระวรรณยุกต์ · WiraTheme', { mono: name === 'Code' }));
+    const sample = add(row, txt(name === 'Code' ? "@use 'wiraui/theme';" : 'ภาษาไทยอ่านง่าย ทุกสระวรรณยุกต์ · WiraUI', { mono: name === 'Code' }));
     await setStyle(sample, name);
   }
 
@@ -1099,10 +1099,10 @@ function asideMenu(parent: Box): ComponentNode {
 }
 
 async function buildComponents(page: PageNode): Promise<void> {
-  const root = box({ name: `WiraTheme · ${K.p.label} · Components`, dir: 'V', gap: 56, px: 64, py: 64, fill: 'ground' });
+  const root = box({ name: `WiraUI · ${K.p.label} · Components`, dir: 'V', gap: 56, px: 64, py: 64, fill: 'ground' });
   page.appendChild(root);
   add(root, txt('Components', { size: 40, weight: 'bold' }));
-  add(root, txt('Component sets with variants and properties, bound to the WiraTheme variables. Names and properties follow the library (severity, variant, size, state).', { size: 15, color: 'text-muted' }));
+  add(root, txt('Component sets with variants and properties, bound to the WiraUI variables. Names and properties follow the library (severity, variant, size, state).', { size: 15, color: 'text-muted' }));
   const step = async (label: string, fn: () => void) => {
     fn();
     say(`  ${label}`);
@@ -1179,8 +1179,8 @@ async function buildIcons(page: PageNode, all: boolean): Promise<void> {
 // ── Build ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 async function build(o: BuildOptions): Promise<string> {
-  const p = WT_DATA.presets.find((x) => x.id === o.preset) || WT_DATA.presets[0];
-  say(`Building WiraTheme · ${p.label}`);
+  const p = WU_DATA.presets.find((x) => x.id === o.preset) || WU_DATA.presets[0];
+  say(`Building WiraUI · ${p.label}`);
   const iconsPage = figma.createPage();
   iconsPage.name = `Icons · ${p.label}`;
   const iconHome = figma.createFrame();
@@ -1228,7 +1228,7 @@ async function build(o: BuildOptions): Promise<string> {
     figma.viewport.scrollAndZoomIntoView(comps.children);
   }
   if (K.missing.size) say(`Tokens this preset does not have (shown magenta): ${[...K.missing].join(', ')}`);
-  figma.notify(`WiraTheme · ${p.label}: kit built`);
+  figma.notify(`WiraUI · ${p.label}: kit built`);
   return `Done: ${Object.keys(K.vars).length} variables, ${Object.keys(K.icons).length} icons${o.components ? ', components' : ''}.`;
 }
 

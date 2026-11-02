@@ -34,7 +34,7 @@ test('row expansion: the toggler opens the rowexpansion row under its row and se
 test('frozen columns stay in view when the table scrolls sideways', async ({ page }) => {
   await page.setViewportSize({ width: 600, height: 800 });
   await tx(page).scrollIntoViewIfNeeded();
-  const wrapper = tx(page).locator('.wt-table-wrapper');
+  const wrapper = tx(page).locator('.wu-table-wrapper');
   const wrap = (await wrapper.boundingBox())!;
   const before = (await tx(page).locator('.fz-cell').first().boundingBox())!;
   // Not scrolled: the name column sits after the (unfrozen) toggle column.
@@ -57,7 +57,7 @@ test('column filter: typing filters by the field, the clear button removes it', 
   await box.fill('มานี');
   await expect(tx(page).locator('tr.ext-row')).toHaveCount(1);
   await expect(tx(page).locator('tr.grp-head')).toHaveCount(1);
-  await tx(page).locator('.wt-column-filter-clear').click();
+  await tx(page).locator('.wu-column-filter-clear').click();
   await expect(tx(page).locator('tr.ext-row')).toHaveCount(8);
   await expect(box).toHaveValue('');
 });

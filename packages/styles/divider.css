@@ -1,83 +1,83 @@
-/* wt-divider. Shared by wiratheme v1, v2 and v3. Horizontal or vertical line with optional content on it. */
-@layer wiratheme.components {
-  wt-divider {
+/* wu-divider. Shared by wiraui v1, v2 and v3. Horizontal or vertical line with optional content on it. */
+@layer wiraui.components {
+  wu-divider {
     display: block;
   }
-  wt-divider.wt-divider-host-vertical {
+  wu-divider.wu-divider-host-vertical {
     display: flex;
     align-self: stretch;
   }
-  .wt-divider {
+  .wu-divider {
     --_style: solid;
     --_width: 1px;
     position: relative;
     display: flex;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    color: var(--wt-text-muted);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    color: var(--wu-text-muted);
   }
-  .wt-divider::before {
+  .wu-divider::before {
     content: '';
     position: absolute;
   }
-  .wt-divider-dashed {
+  .wu-divider-dashed {
     --_style: dashed;
   }
   /* 1px dots almost disappear; 2px reads as a dotted line. */
-  .wt-divider-dotted {
+  .wu-divider-dotted {
     --_style: dotted;
     --_width: 2px;
   }
-  .wt-divider-horizontal {
+  .wu-divider-horizontal {
     align-items: center;
     width: 100%;
-    margin: var(--wt-divider-margin) 0;
-    padding: 0 var(--wt-divider-padding);
+    margin: var(--wu-divider-margin) 0;
+    padding: 0 var(--wu-divider-padding);
     box-sizing: border-box;
   }
-  .wt-divider-horizontal::before {
+  .wu-divider-horizontal::before {
     top: 50%;
     left: 0;
     width: 100%;
-    border-top: var(--_width) var(--_style) var(--wt-divider-color);
+    border-top: var(--_width) var(--_style) var(--wu-divider-color);
     margin-top: calc(var(--_width) / -2);
   }
-  .wt-divider-vertical {
+  .wu-divider-vertical {
     flex-direction: column;
     justify-content: center;
     min-height: 100%;
-    margin: 0 var(--wt-divider-margin);
-    padding: var(--wt-divider-padding) 0;
+    margin: 0 var(--wu-divider-margin);
+    padding: var(--wu-divider-padding) 0;
   }
-  .wt-divider-vertical::before {
+  .wu-divider-vertical::before {
     top: 0;
     left: 50%;
     height: 100%;
-    border-left: var(--_width) var(--_style) var(--wt-divider-color);
+    border-left: var(--_width) var(--_style) var(--wu-divider-color);
     margin-left: calc(var(--_width) / -2);
   }
-  .wt-divider-content {
+  .wu-divider-content {
     position: relative;
     z-index: 1;
-    padding: var(--wt-divider-content-padding-y) var(--wt-divider-content-padding);
-    border-radius: var(--wt-divider-content-radius);
-    background: var(--wt-card-bg);
+    padding: var(--wu-divider-content-padding-y) var(--wu-divider-content-padding);
+    border-radius: var(--wu-divider-content-radius);
+    background: var(--wu-card-bg);
   }
-  .wt-divider-vertical .wt-divider-content {
-    padding: var(--wt-divider-content-padding) var(--wt-divider-content-padding-y);
+  .wu-divider-vertical .wu-divider-content {
+    padding: var(--wu-divider-content-padding) var(--wu-divider-content-padding-y);
   }
-  .wt-divider-content:empty {
+  .wu-divider-content:empty {
     display: none;
   }
-  .wt-divider-left,
-  .wt-divider-top {
+  .wu-divider-left,
+  .wu-divider-top {
     justify-content: flex-start;
   }
-  .wt-divider-center {
+  .wu-divider-center {
     justify-content: center;
   }
-  .wt-divider-right,
-  .wt-divider-bottom {
+  .wu-divider-right,
+  .wu-divider-bottom {
     justify-content: flex-end;
   }
 }

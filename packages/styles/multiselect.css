@@ -1,58 +1,58 @@
-/* wt-multiselect. Shared by wiratheme v1, v2 and v3. The field and the list come from wt-select's stylesheet and the
-   check boxes from wt-checkbox's (both loaded with it, including the check-all box's half state); this file adds the
+/* wu-multiselect. Shared by wiraui v1, v2 and v3. The field and the list come from wu-select's stylesheet and the
+   check boxes from wu-checkbox's (both loaded with it, including the check-all box's half state); this file adds the
    chips and the header row. */
-@layer wiratheme.components {
-  :is(wt-multiselect, wt-multi-select) {
+@layer wiraui.components {
+  :is(wu-multiselect, wu-multi-select) {
     display: inline-flex;
     vertical-align: middle;
-    width: var(--wt-select-width);
+    width: var(--wu-select-width);
     max-width: 100%;
   }
-  :is(wt-multiselect, wt-multi-select).wt-select-fluid {
+  :is(wu-multiselect, wu-multi-select).wu-select-fluid {
     display: flex;
     width: 100%;
   }
   /* One row of chips; the ones that do not fit hide behind a "+N" chip (the first one shrinks instead). */
-  .wt-multiselect-chips .wt-multiselect-label {
+  .wu-multiselect-chips .wu-multiselect-label {
     position: relative;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     gap: 0.25rem;
     overflow: hidden;
-    padding-top: calc(var(--wt-field-padding-y) - 0.125rem);
-    padding-bottom: calc(var(--wt-field-padding-y) - 0.125rem);
+    padding-top: calc(var(--wu-field-padding-y) - 0.125rem);
+    padding-bottom: calc(var(--wu-field-padding-y) - 0.125rem);
   }
-  .wt-multiselect-chip,
-  .wt-multiselect-more {
+  .wu-multiselect-chip,
+  .wu-multiselect-more {
     display: inline-flex;
     flex: none;
     align-items: center;
     gap: 0.25rem;
     max-width: 100%;
     padding: 0.125rem 0.5rem;
-    border-radius: var(--wt-chip-radius);
-    background: var(--wt-chip-bg);
-    color: var(--wt-chip-color);
+    border-radius: var(--wu-chip-radius);
+    background: var(--wu-chip-bg);
+    color: var(--wu-chip-color);
     font-size: 0.875em;
     line-height: 1.25;
   }
-  .wt-multiselect-chip-label {
+  .wu-multiselect-chip-label {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  :is(.wt-multiselect-chip, .wt-multiselect-more)[hidden] {
+  :is(.wu-multiselect-chip, .wu-multiselect-more)[hidden] {
     display: none;
   }
-  .wt-multiselect-chip:first-child {
+  .wu-multiselect-chip:first-child {
     flex-shrink: 1;
     min-width: 0;
   }
-  .wt-multiselect-more {
+  .wu-multiselect-more {
     font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
-  .wt-multiselect-chip-remove {
+  .wu-multiselect-chip-remove {
     display: inline-grid;
     place-items: center;
     width: 1rem;
@@ -64,38 +64,38 @@
     color: inherit;
     cursor: pointer;
   }
-  .wt-multiselect-chip-remove:hover {
+  .wu-multiselect-chip-remove:hover {
     background: color-mix(in srgb, currentColor 14%, transparent);
   }
-  .wt-multiselect-chip-remove svg {
+  .wu-multiselect-chip-remove svg {
     width: 0.75rem;
     height: 0.75rem;
   }
-  .wt-multiselect-header {
+  .wu-multiselect-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-multiselect-header .wt-select-filter-wrap {
+  .wu-multiselect-header .wu-select-filter-wrap {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .wt-multiselect-toggle-all {
+  .wu-multiselect-toggle-all {
     flex: none;
   }
   /* The check-all box sits in the same column as the rows' boxes (list padding + row padding). */
-  .wt-select-header.wt-multiselect-header:has(> .wt-multiselect-toggle-all) {
-    padding-inline-start: calc(var(--wt-select-list-padding) + var(--wt-select-option-padding-x));
+  .wu-select-header.wu-multiselect-header:has(> .wu-multiselect-toggle-all) {
+    padding-inline-start: calc(var(--wu-select-list-padding) + var(--wu-select-option-padding-x));
   }
-  .wt-multiselect-check {
+  .wu-multiselect-check {
     pointer-events: none;
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
   @media (pointer: coarse) {
-    .wt-multiselect-chip-remove {
+    .wu-multiselect-chip-remove {
       position: relative;
     }
-    .wt-multiselect-chip-remove::after {
+    .wu-multiselect-chip-remove::after {
       content: '';
       position: absolute;
       inset: -0.5rem;

@@ -1,201 +1,201 @@
-/* wt-stepper and its parts. Shared by wiratheme v1, v2 and v3. Numbered step headers joined by lines (the steps
-   before the current one in the primary colour), the current step's panel below; or, with wt-step-item, a vertical
+/* wu-stepper and its parts. Shared by wiraui v1, v2 and v3. Numbered step headers joined by lines (the steps
+   before the current one in the primary colour), the current step's panel below; or, with wu-step-item, a vertical
    stepper whose panels open under their headers. On phones only the current step keeps its title in the row, so
    every number fits. */
-@layer wiratheme.components {
-  wt-stepper {
+@layer wiraui.components {
+  wu-stepper {
     display: block;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  wt-step-list {
+  wu-step-list {
     display: flex;
     align-items: center;
     min-width: 0;
   }
-  wt-step {
+  wu-step {
     display: flex;
     flex: 1 1 auto;
     align-items: center;
     gap: 0.5rem;
     min-width: 0;
   }
-  wt-step.wt-step-last {
+  wu-step.wu-step-last {
     flex: 0 1 auto;
   }
-  .wt-step-header {
+  .wu-step-header {
     display: inline-flex;
     flex: 0 1 auto;
     align-items: center;
-    gap: var(--wt-steps-gap);
+    gap: var(--wu-steps-gap);
     min-width: 0;
     margin: 0;
     padding: 0.25rem;
     border: 0;
-    border-radius: var(--wt-radius-md);
+    border-radius: var(--wu-radius-md);
     background: none;
     color: inherit;
     font: inherit;
     text-align: left;
     cursor: pointer;
   }
-  .wt-step-header:disabled {
+  .wu-step-header:disabled {
     cursor: default;
   }
-  .wt-step-header:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-step-header:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-step-number {
+  .wu-step-number {
     display: grid;
     flex: none;
     place-items: center;
     box-sizing: border-box;
-    width: var(--wt-steps-number-size);
-    height: var(--wt-steps-number-size);
-    border: var(--wt-steps-number-border-width) solid var(--wt-steps-line-color);
+    width: var(--wu-steps-number-size);
+    height: var(--wu-steps-number-size);
+    border: var(--wu-steps-number-border-width) solid var(--wu-steps-line-color);
     border-radius: 50%;
-    background: var(--wt-steps-number-bg);
-    color: var(--wt-steps-number-color);
+    background: var(--wu-steps-number-bg);
+    color: var(--wu-steps-number-color);
     font-weight: 600;
     line-height: 1;
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-step-complete .wt-step-number {
-    border-color: var(--wt-primary-color);
-    color: var(--wt-primary-color);
+  .wu-step-complete .wu-step-number {
+    border-color: var(--wu-primary-color);
+    color: var(--wu-primary-color);
   }
-  .wt-step-active .wt-step-number {
-    border-color: var(--wt-primary-color);
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+  .wu-step-active .wu-step-number {
+    border-color: var(--wu-primary-color);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
   }
-  .wt-step-header:not(:disabled):hover .wt-step-number {
-    border-color: var(--wt-primary-color);
+  .wu-step-header:not(:disabled):hover .wu-step-number {
+    border-color: var(--wu-primary-color);
   }
-  .wt-step-text {
+  .wu-step-text {
     display: flex;
     flex-direction: column;
     min-width: 0;
   }
-  .wt-step-subtitle {
+  .wu-step-subtitle {
     min-width: 0;
     overflow: hidden;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     font-size: 0.8125em;
     line-height: 1.35;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .wt-stepper-readonly .wt-step-header {
+  .wu-stepper-readonly .wu-step-header {
     cursor: default;
   }
-  .wt-step-title {
+  .wu-step-title {
     min-width: 0;
     overflow: hidden;
-    color: var(--wt-steps-label-color);
-    font-weight: var(--wt-steps-label-weight);
+    color: var(--wu-steps-label-color);
+    font-weight: var(--wu-steps-label-weight);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .wt-step-active .wt-step-title {
-    color: var(--wt-steps-label-active-color);
+  .wu-step-active .wu-step-title {
+    color: var(--wu-steps-label-active-color);
     font-weight: 600;
   }
-  .wt-stepper-separator {
+  .wu-stepper-separator {
     display: block;
     flex: 1 1 auto;
     min-width: 1rem;
-    border-top: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+    border-top: var(--wu-steps-line-width) solid var(--wu-steps-line-color);
   }
-  .wt-step-complete > .wt-stepper-separator,
-  .wt-stepper-separator-done {
-    border-color: var(--wt-primary-color);
+  .wu-step-complete > .wu-stepper-separator,
+  .wu-stepper-separator-done {
+    border-color: var(--wu-primary-color);
   }
   /* labelPosition="bottom": steps in equal columns, the title and subtitle centred under the number, and the line
      drawn from number to number behind the titles. */
-  .wt-stepper-label-bottom wt-step-list {
+  .wu-stepper-label-bottom wu-step-list {
     align-items: flex-start;
   }
-  .wt-stepper-label-bottom wt-step-list > wt-step,
-  .wt-stepper-label-bottom wt-step-list > wt-step.wt-step-last {
+  .wu-stepper-label-bottom wu-step-list > wu-step,
+  .wu-stepper-label-bottom wu-step-list > wu-step.wu-step-last {
     position: relative;
     flex: 1 1 0;
     justify-content: center;
   }
-  .wt-stepper-label-bottom wt-step-list .wt-step-header {
+  .wu-stepper-label-bottom wu-step-list .wu-step-header {
     flex-direction: column;
     max-width: 100%;
     text-align: center;
   }
-  .wt-stepper-label-bottom wt-step-list .wt-step-text {
+  .wu-stepper-label-bottom wu-step-list .wu-step-text {
     align-items: center;
   }
-  .wt-stepper-label-bottom wt-step-list :is(.wt-step-title, .wt-step-subtitle) {
+  .wu-stepper-label-bottom wu-step-list :is(.wu-step-title, .wu-step-subtitle) {
     white-space: normal;
     overflow-wrap: anywhere;
   }
-  .wt-stepper-label-bottom wt-step-list > wt-step > .wt-stepper-separator {
+  .wu-stepper-label-bottom wu-step-list > wu-step > .wu-stepper-separator {
     position: absolute;
-    top: calc(0.25rem + var(--wt-steps-number-size) / 2 - var(--wt-steps-line-width) / 2);
-    left: calc(50% + var(--wt-steps-number-size) / 2 + 0.5rem);
-    right: calc(-50% + var(--wt-steps-number-size) / 2 + 0.5rem);
+    top: calc(0.25rem + var(--wu-steps-number-size) / 2 - var(--wu-steps-line-width) / 2);
+    left: calc(50% + var(--wu-steps-number-size) / 2 + 0.5rem);
+    right: calc(-50% + var(--wu-steps-number-size) / 2 + 0.5rem);
     min-width: 0;
   }
-  wt-step-panels {
+  wu-step-panels {
     display: block;
-    padding: var(--wt-stepper-panel-padding);
+    padding: var(--wu-stepper-panel-padding);
   }
-  wt-step-panel {
+  wu-step-panel {
     display: block;
   }
-  wt-step-panels > wt-step-panel:not(.wt-step-panel-active) {
+  wu-step-panels > wu-step-panel:not(.wu-step-panel-active) {
     display: none;
   }
-  .wt-step-panel-content-hidden {
+  .wu-step-panel-content-hidden {
     display: none;
   }
 
-  /* ---------- vertical: wt-step-item ---------- */
-  wt-step-item {
+  /* ---------- vertical: wu-step-item ---------- */
+  wu-step-item {
     display: flex;
     flex-direction: column;
   }
-  wt-step-item > wt-step {
+  wu-step-item > wu-step {
     flex: none;
   }
-  wt-step-panel.wt-step-panel-vertical {
+  wu-step-panel.wu-step-panel-vertical {
     display: flex;
     min-height: 1rem;
   }
-  .wt-step-panel-vertical > .wt-stepper-separator {
+  .wu-step-panel-vertical > .wu-stepper-separator {
     flex: none;
     min-width: 0;
-    margin-left: calc(0.25rem + var(--wt-steps-number-size) / 2 - var(--wt-steps-line-width) / 2);
+    margin-left: calc(0.25rem + var(--wu-steps-number-size) / 2 - var(--wu-steps-line-width) / 2);
     border-top: 0;
-    border-left: var(--wt-steps-line-width) solid var(--wt-steps-line-color);
+    border-left: var(--wu-steps-line-width) solid var(--wu-steps-line-color);
   }
-  .wt-step-panel-vertical > .wt-stepper-separator.wt-stepper-separator-done {
-    border-left-color: var(--wt-primary-color);
+  .wu-step-panel-vertical > .wu-stepper-separator.wu-stepper-separator-done {
+    border-left-color: var(--wu-primary-color);
   }
-  .wt-step-panel-vertical > .wt-step-panel-content {
+  .wu-step-panel-vertical > .wu-step-panel-content {
     flex: 1 1 auto;
     min-width: 0;
-    padding: 0.5rem 0 1rem calc(var(--wt-steps-number-size) / 2 + 0.5rem);
+    padding: 0.5rem 0 1rem calc(var(--wu-steps-number-size) / 2 + 0.5rem);
   }
-  .wt-step-panel-vertical:not(:has(> .wt-stepper-separator)) > .wt-step-panel-content {
-    padding-left: calc(0.75rem + var(--wt-steps-number-size));
+  .wu-step-panel-vertical:not(:has(> .wu-stepper-separator)) > .wu-step-panel-content {
+    padding-left: calc(0.75rem + var(--wu-steps-number-size));
   }
 
   /* Phones: titles of the other steps step aside (still read out), so the numbers and lines fit. */
   @media (max-width: 575.98px) {
-    wt-step-list > wt-step:not(.wt-step-active) :is(.wt-step-title, .wt-step-subtitle) {
+    wu-step-list > wu-step:not(.wu-step-active) :is(.wu-step-title, .wu-step-subtitle) {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -206,7 +206,7 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-step-number {
+    .wu-step-number {
       transition: none;
     }
   }

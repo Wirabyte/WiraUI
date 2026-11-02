@@ -1,3 +1,3 @@
-export interface WtDialogMaximizeEvent {
+export interface WuDialogMaximizeEvent {
   maximized: boolean;
 }

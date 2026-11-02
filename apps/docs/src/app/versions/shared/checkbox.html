@@ -6,23 +6,23 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-checkbox id="d-agree" [(ngModel)]="agree" [binary]="true" [label]="tx('ยอมรับเงื่อนไขการใช้งาน')"></wt-checkbox>
+        <wu-checkbox id="d-agree" [(ngModel)]="agree" [binary]="true" [label]="tx('ยอมรับเงื่อนไขการใช้งาน')"></wu-checkbox>
         <span class="docs-demo-output">agree: <code id="d-agree-value">{{ agree | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-checkbox [(ngModel)]="sizeValue" [binary]="true" size="small" [label]="tx('เล็ก')"></wt-checkbox>
-        <wt-checkbox [(ngModel)]="sizeValue" [binary]="true" [label]="tx('ปกติ')"></wt-checkbox>
-        <wt-checkbox [(ngModel)]="sizeValue" [binary]="true" size="large" [label]="tx('ใหญ่')"></wt-checkbox>
+        <wu-checkbox [(ngModel)]="sizeValue" [binary]="true" size="small" [label]="tx('เล็ก')"></wu-checkbox>
+        <wu-checkbox [(ngModel)]="sizeValue" [binary]="true" [label]="tx('ปกติ')"></wu-checkbox>
+        <wu-checkbox [(ngModel)]="sizeValue" [binary]="true" size="large" [label]="tx('ใหญ่')"></wu-checkbox>
       </docs-demo>
     </docs-section>
 
     <docs-section id="group" [section]="sec['group']">
       <docs-demo [html]="code['group']" [ts]="ts['group']">
         @for (t of topics; track t.value) {
-          <wt-checkbox [id]="'d-' + t.value" name="topic" [value]="t.value" [label]="tx(t.label)" [(ngModel)]="selected"></wt-checkbox>
+          <wu-checkbox [id]="'d-' + t.value" name="topic" [value]="t.value" [label]="tx(t.label)" [(ngModel)]="selected"></wu-checkbox>
         }
         <span class="docs-demo-output">selected: <code id="d-selected">{{ selected | json }}</code></span>
       </docs-demo>
@@ -31,11 +31,11 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-checkbox id="r-terms" formControlName="terms" [binary]="true" [label]="tx('ยอมรับเงื่อนไขการใช้งาน')"></wt-checkbox>
-          <wt-checkbox id="r-privacy" formControlName="privacy" [binary]="true" [label]="tx('ยินยอมตามนโยบายความเป็นส่วนตัว')"></wt-checkbox>
+          <wu-checkbox id="r-terms" formControlName="terms" [binary]="true" [label]="tx('ยอมรับเงื่อนไขการใช้งาน')"></wu-checkbox>
+          <wu-checkbox id="r-privacy" formControlName="privacy" [binary]="true" [label]="tx('ยินยอมตามนโยบายความเป็นส่วนตัว')"></wu-checkbox>
         </form>
         <div class="docs-demo-actions">
-          <wt-button id="r-patch" [label]="tx('ติ๊กทั้งหมด')" size="small" severity="secondary" (onClick)="patch()"></wt-button>
+          <wu-button id="r-patch" [label]="tx('ติ๊กทั้งหมด')" size="small" severity="secondary" (onClick)="patch()"></wu-button>
           <span class="docs-demo-output">valid: <b id="r-valid">{{ form.valid }}</b></span>
         </div>
       </docs-demo>
@@ -43,21 +43,21 @@
 
     <docs-section id="values" [section]="sec['values']">
       <docs-demo [html]="code['values']">
-        <wt-checkbox id="d-newsletter" [(ngModel)]="newsletter" [binary]="true" trueValue="Y" falseValue="N" [label]="tx('รับข่าวสารทางอีเมล')"></wt-checkbox>
+        <wu-checkbox id="d-newsletter" [(ngModel)]="newsletter" [binary]="true" trueValue="Y" falseValue="N" [label]="tx('รับข่าวสารทางอีเมล')"></wu-checkbox>
         <span class="docs-demo-output">newsletter: <code id="d-newsletter-value">{{ newsletter | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <wt-checkbox [ngModel]="true" [binary]="true" [disabled]="true" [label]="tx('ปิดอยู่ (ติ๊กแล้ว)')"></wt-checkbox>
-        <wt-checkbox [ngModel]="false" [binary]="true" [disabled]="true" [label]="tx('ปิดอยู่')"></wt-checkbox>
+        <wu-checkbox [ngModel]="true" [binary]="true" [disabled]="true" [label]="tx('ปิดอยู่ (ติ๊กแล้ว)')"></wu-checkbox>
+        <wu-checkbox [ngModel]="false" [binary]="true" [disabled]="true" [label]="tx('ปิดอยู่')"></wu-checkbox>
       </docs-demo>
     </docs-section>
 
     <docs-section id="invalid" [section]="sec['invalid']">
       <docs-demo [html]="code['invalid']">
-        <wt-checkbox [(ngModel)]="invalidAgree" [binary]="true" [invalid]="true" [label]="tx('ต้องยอมรับก่อนดำเนินการต่อ')"></wt-checkbox>
+        <wu-checkbox [(ngModel)]="invalidAgree" [binary]="true" [invalid]="true" [label]="tx('ต้องยอมรับก่อนดำเนินการต่อ')"></wu-checkbox>
       </docs-demo>
     </docs-section>
   </ng-template>

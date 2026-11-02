@@ -1,10 +1,10 @@
 import { InjectionToken, Provider } from '@angular/core';
-import type { EditorTool, EditorToolbar, EditorToolOptions } from 'wiratheme/core';
+import type { EditorTool, EditorToolbar, EditorToolOptions } from 'wiraui/core';
 
 export type { EditorTool, EditorToolbar, EditorToolOptions };
 
 /** `(onTextChange)`: the value as HTML (null when empty, as before) and as plain text. */
-export interface WtEditorTextChangeEvent {
+export interface WuEditorTextChangeEvent {
   htmlValue: string | null;
   textValue: string;
   /** Kept for templates moving over; there is no delta model. */
@@ -13,17 +13,17 @@ export interface WtEditorTextChangeEvent {
 }
 
 /** `(onSelectionChange)`: character offsets of the selection in the text, null when the editor lost it. */
-export interface WtEditorSelectionChangeEvent {
+export interface WuEditorSelectionChangeEvent {
   range: { index: number; length: number } | null;
   oldRange: { index: number; length: number } | null;
   source: 'user';
 }
 
-export interface WtEditorInitEvent {
-  editor: WtEditorApi;
+export interface WuEditorInitEvent {
+  editor: WuEditorApi;
 }
 
-export interface WtEditorImageUploadErrorEvent {
+export interface WuEditorImageUploadErrorEvent {
   file: File;
   reason: 'size' | 'type' | 'upload';
   message: string;
@@ -34,7 +34,7 @@ export interface WtEditorImageUploadErrorEvent {
  * How pictures get into the content: embedded as base64 data URLs, or uploaded and linked by URL.
  * With neither `url` nor `upload` set, pictures are embedded.
  */
-export interface WtEditorImageUpload {
+export interface WuEditorImageUpload {
   /** `'base64'` embeds the picture in the HTML; `'upload'` sends it to `url` (or `upload`) and links it. */
   mode?: 'base64' | 'upload';
   /** Endpoint that takes the file as multipart form data and answers with JSON holding the picture's URL. */
@@ -57,23 +57,23 @@ export interface WtEditorImageUpload {
   upload?: (file: File) => Promise<string>;
 }
 
-/** App-wide defaults for every wt-editor: `provideEditorOptions({ imageUpload: { url: '/api/upload' } })`. */
-export interface WtEditorOptions {
+/** App-wide defaults for every wu-editor: `provideEditorOptions({ imageUpload: { url: '/api/upload' } })`. */
+export interface WuEditorOptions {
   toolbar?: EditorToolbar;
   toolOptions?: EditorToolOptions;
-  imageUpload?: WtEditorImageUpload;
+  imageUpload?: WuEditorImageUpload;
 }
 
-export const WT_EDITOR_OPTIONS = new InjectionToken<WtEditorOptions>('WT_EDITOR_OPTIONS');
+export const WU_EDITOR_OPTIONS = new InjectionToken<WuEditorOptions>('WU_EDITOR_OPTIONS');
 
-export function provideEditorOptions(options: WtEditorOptions): Provider {
-  return { provide: WT_EDITOR_OPTIONS, useValue: options };
+export function provideEditorOptions(options: WuEditorOptions): Provider {
+  return { provide: WU_EDITOR_OPTIONS, useValue: options };
 }
 
 /**
  * What `getEditor()` (and `getQuill()`, for code moving over) returns: the calls apps make on the editor from code.
  */
-export interface WtEditorApi {
+export interface WuEditorApi {
   readonly root: HTMLElement;
   getHTML(): string;
   getSemanticHTML(): string;
@@ -94,4 +94,4 @@ export interface WtEditorApi {
 }
 
 /** The panels a tool opens. */
-export type WtEditorPanel = 'heading' | 'fontSize' | 'fontFamily' | 'color' | 'highlight' | 'align' | 'link' | 'image' | 'table' | 'tableMenu' | 'tableBar' | 'imageMenu' | 'linkMenu';
+export type WuEditorPanel = 'heading' | 'fontSize' | 'fontFamily' | 'color' | 'highlight' | 'align' | 'link' | 'image' | 'table' | 'tableMenu' | 'tableBar' | 'imageMenu' | 'linkMenu';

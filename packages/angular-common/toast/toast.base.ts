@@ -17,14 +17,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
-import { WtMessageService } from './message.service';
-import { WtToastCloseEvent, WtToastMessage, WtToastPosition } from './toast.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
+import { WuMessageService } from './message.service';
+import { WuToastCloseEvent, WuToastMessage, WuToastPosition } from './toast.types';
 
-export interface ɵWtToastItem {
+export interface ɵWuToastItem {
   uid: number;
-  message: WtToastMessage;
+  message: WuToastMessage;
   /** success, info, warn, error, secondary or contrast. */
   severity: string;
   leaving: boolean;
@@ -43,14 +43,14 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
 let uid = 0;
 
 /**
- * Shared logic of wt-toast (v1 and v2/v3 templates). The stack sits in the top layer (popover), so toasts show above
+ * Shared logic of wu-toast (v1 and v2/v3 templates). The stack sits in the top layer (popover), so toasts show above
  * dialogs; on phones it spans the screen width.
  */
 @Directive()
-export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestroy {
+export abstract class ɵWuToastBase implements OnInit, AfterViewChecked, OnDestroy {
   /** Shows only messages with this key. */
   @Input() key?: string;
-  @Input() position: WtToastPosition = 'top-right';
+  @Input() position: WuToastPosition = 'top-right';
   /** Default time on screen in milliseconds. */
   @Input() set life(v: unknown) { this._life = Number(v) > 0 ? Number(v) : 3000; }
   get life(): number { return this._life; }
@@ -72,35 +72,35 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
   @Input() showTransitionOptions: unknown;
   @Input() hideTransitionOptions: unknown;
 
-  @Output() readonly onClose = new EventEmitter<WtToastCloseEvent>();
+  @Output() readonly onClose = new EventEmitter<WuToastCloseEvent>();
 
-  @ContentChildren(WtTemplate) templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) templates?: QueryList<WuTemplate>;
   @ContentChild('message', { descendants: false }) messageRef?: unknown;
   @ContentChild('headless', { descendants: false }) headlessRef?: unknown;
   @ViewChild('container') containerRef?: ElementRef<HTMLElement>;
 
-  items: ɵWtToastItem[] = [];
-  readonly trackItem = (_: number, item: ɵWtToastItem) => item.uid;
+  items: ɵWuToastItem[] = [];
+  readonly trackItem = (_: number, item: ɵWuToastItem) => item.uid;
 
   private _life = 3000;
   private _showTimer = true;
   private _preventDuplicates = false;
   private _preventOpenDuplicates = false;
-  private readonly shown: WtToastMessage[] = [];
+  private readonly shown: WuToastMessage[] = [];
   private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
   private subs: Subscription[] = [];
   private raise = false;
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly service = inject(WtMessageService);
-  private readonly config = inject(WtConfig);
+  private readonly service = inject(WuMessageService);
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get messageTemplate(): TemplateRef<unknown> | null {
@@ -117,8 +117,8 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
       this.raise = true;
       this.ngAfterViewChecked();
     };
-    this.doc.addEventListener('wt-modal-open', raise);
-    this.subs.push(new Subscription(() => this.doc.removeEventListener('wt-modal-open', raise)));
+    this.doc.addEventListener('wu-modal-open', raise);
+    this.subs.push(new Subscription(() => this.doc.removeEventListener('wu-modal-open', raise)));
     this.subs.push(
       this.service.messageObserver.subscribe((m) => this.add(Array.isArray(m) ? m : [m])),
       this.service.clearObserver.subscribe((key) => {
@@ -151,7 +151,7 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
     this.i18n.unsubscribe();
   }
 
-  close(item: ɵWtToastItem, byUser = true): void {
+  close(item: ɵWuToastItem, byUser = true): void {
     if (item.leaving) return;
     item.leaving = true;
     this.stopTimer(item);
@@ -167,15 +167,15 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
   }
 
   /** Hovering holds a toast (and its countdown line); leaving runs the time that was left. */
-  pause(item: ɵWtToastItem): void {
+  pause(item: ɵWuToastItem): void {
     this.stopTimer(item);
     if (item.deadline) item.remaining = Math.max(0, item.deadline - Date.now());
   }
-  resume(item: ɵWtToastItem): void {
+  resume(item: ɵWuToastItem): void {
     if (!item.leaving) this.startTimer(item);
   }
 
-  private add(messages: WtToastMessage[]): void {
+  private add(messages: WuToastMessage[]): void {
     let added = false;
     for (const m of messages) {
       if (!m || (m.key ?? undefined) !== (this.key ?? undefined)) continue;
@@ -183,7 +183,7 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
       if (this._preventDuplicates && this.shown.some((s) => same(s, m))) continue;
       this.shown.push(m);
       const severity = String(m.severity || 'info');
-      const item: ɵWtToastItem = {
+      const item: ɵWuToastItem = {
         uid: ++uid,
         message: m,
         severity: SEVERITY[severity] || severity,
@@ -200,7 +200,7 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
     this.cdr.markForCheck();
   }
 
-  private startTimer(item: ɵWtToastItem): void {
+  private startTimer(item: ɵWuToastItem): void {
     if (item.message.sticky) return;
     this.stopTimer(item);
     const ms = item.remaining ?? item.life;
@@ -208,7 +208,7 @@ export abstract class ɵWtToastBase implements OnInit, AfterViewChecked, OnDestr
     this.timers.set(item.uid, setTimeout(() => this.close(item, false), ms));
   }
 
-  private stopTimer(item: ɵWtToastItem): void {
+  private stopTimer(item: ɵWuToastItem): void {
     const t = this.timers.get(item.uid);
     if (t) clearTimeout(t);
     this.timers.delete(item.uid);
@@ -223,6 +223,6 @@ function modalOpen(doc: Document): boolean {
   }
 }
 
-function same(a: WtToastMessage, b: WtToastMessage): boolean {
+function same(a: WuToastMessage, b: WuToastMessage): boolean {
   return a.summary === b.summary && a.detail === b.detail && a.severity === b.severity;
 }

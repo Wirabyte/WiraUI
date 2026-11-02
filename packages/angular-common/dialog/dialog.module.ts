@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtDialogFooter } from './dialog.base';
-import { WtDialog } from './dialog.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuDialogFooter } from './dialog.base';
+import { WuDialog } from './dialog.component';
 
-/** For NgModule apps. Also exports `WtTemplate` (`<ng-template wtTemplate="footer">`) and `wt-footer`. */
+/** For NgModule apps. Also exports `WuTemplate` (`<ng-template wuTemplate="footer">`) and `wu-footer`. */
 @NgModule({
-  imports: [WtDialog, WtDialogFooter, WtTemplate],
-  exports: [WtDialog, WtDialogFooter, WtTemplate],
+  imports: [WuDialog, WuDialogFooter, WuTemplate],
+  exports: [WuDialog, WuDialogFooter, WuTemplate],
 })
-export class WtDialogModule {}
+export class WuDialogModule {}

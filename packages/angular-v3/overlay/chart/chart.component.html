@@ -1,22 +1,22 @@
-<div [class]="classes()" [style]="rootStyle()" [style.font-family]="font() || null" [style.--wt-chart-font-size]="fontSize() + 'px'">
+<div [class]="classes()" [style]="rootStyle()" [style.font-family]="font() || null" [style.--wu-chart-font-size]="fontSize() + 'px'">
   @if (heading() || subtitle() || toolbar() || swapKinds().length || lookList().length) {
-    <div class="wt-chart-head">
-      <div class="wt-chart-heading">
+    <div class="wu-chart-head">
+      <div class="wu-chart-heading">
         @if (heading()) {
-          <div class="wt-chart-title" [id]="id + '-title'">{{ heading() }}</div>
+          <div class="wu-chart-title" [id]="id + '-title'">{{ heading() }}</div>
         }
         @if (subtitle()) {
-          <div class="wt-chart-subtitle">{{ subtitle() }}</div>
+          <div class="wu-chart-subtitle">{{ subtitle() }}</div>
         }
       </div>
       @if (lookList().length) {
-        <div class="wt-chart-looks" role="radiogroup" [attr.aria-label]="words().looks">
+        <div class="wu-chart-looks" role="radiogroup" [attr.aria-label]="words().looks">
           @for (l of lookList(); track l) {
             <button
               type="button"
               role="radio"
-              class="wt-chart-look-item"
-              [class.wt-chart-look-on]="activeLook() === l"
+              class="wu-chart-look-item"
+              [class.wu-chart-look-on]="activeLook() === l"
               [attr.aria-checked]="activeLook() === l"
               [attr.data-look]="l"
               (click)="setLook(l)"
@@ -25,13 +25,13 @@
         </div>
       }
       @if (swapKinds().length) {
-        <div class="wt-chart-swap" role="radiogroup" [attr.aria-label]="words().kinds">
+        <div class="wu-chart-swap" role="radiogroup" [attr.aria-label]="words().kinds">
           @for (t of swapKinds(); track t) {
             <button
               type="button"
               role="radio"
-              class="wt-chart-swap-item"
-              [class.wt-chart-swap-on]="kind() === t"
+              class="wu-chart-swap-item"
+              [class.wu-chart-swap-on]="kind() === t"
               [attr.aria-checked]="kind() === t"
               [attr.aria-label]="language().startsWith('th') ? kindsInfo[t].th : kindsInfo[t].en"
               [attr.title]="language().startsWith('th') ? kindsInfo[t].th : kindsInfo[t].en"
@@ -44,22 +44,22 @@
         </div>
       }
       @if (toolbar()) {
-        <div class="wt-chart-toolbar" role="toolbar" [attr.aria-label]="words().toolbar" (focusout)="toolbarOut($event)" (keydown.escape)="menu.set(false)">
+        <div class="wu-chart-toolbar" role="toolbar" [attr.aria-label]="words().toolbar" (focusout)="toolbarOut($event)" (keydown.escape)="menu.set(false)">
           @if (zoomable()) {
-            <button type="button" class="wt-chart-tool" [attr.aria-label]="words().zoomIn" [attr.title]="words().zoomIn" (click)="zoomIn()">
+            <button type="button" class="wu-chart-tool" [attr.aria-label]="words().zoomIn" [attr.title]="words().zoomIn" (click)="zoomIn()">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 1 0 0-14ZM20 20l-4.2-4.2M11 8v6M8 11h6"></path></svg>
             </button>
-            <button type="button" class="wt-chart-tool" [attr.aria-label]="words().zoomOut" [attr.title]="words().zoomOut" [disabled]="!zoomed()" (click)="zoomOut()">
+            <button type="button" class="wu-chart-tool" [attr.aria-label]="words().zoomOut" [attr.title]="words().zoomOut" [disabled]="!zoomed()" (click)="zoomOut()">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 1 0 0-14ZM20 20l-4.2-4.2M8 11h6"></path></svg>
             </button>
-            <button type="button" class="wt-chart-tool" [attr.aria-label]="words().reset" [attr.title]="words().reset" [disabled]="!zoomed()" (click)="resetZoom()">
+            <button type="button" class="wu-chart-tool" [attr.aria-label]="words().reset" [attr.title]="words().reset" [disabled]="!zoomed()" (click)="resetZoom()">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4"></path></svg>
             </button>
           }
-          <span class="wt-chart-tool-wrap">
+          <span class="wu-chart-tool-wrap">
             <button
               type="button"
-              class="wt-chart-tool"
+              class="wu-chart-tool"
               [attr.aria-label]="words().download"
               [attr.title]="words().download"
               aria-haspopup="menu"
@@ -69,7 +69,7 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19.5h14"></path></svg>
             </button>
             @if (menu()) {
-              <span class="wt-chart-menu" role="menu">
+              <span class="wu-chart-menu" role="menu">
                 <button type="button" role="menuitem" (click)="save('png')">PNG</button>
                 <button type="button" role="menuitem" (click)="save('svg')">SVG</button>
                 <button type="button" role="menuitem" (click)="save('csv')">CSV</button>
@@ -81,18 +81,18 @@
     </div>
   }
 
-  <div class="wt-chart-main">
-    <div #body class="wt-chart-body" [style.height]="heightCss()">
+  <div class="wu-chart-main">
+    <div #body class="wu-chart-body" [style.height]="heightCss()">
       @if (model(); as m) {
         <svg
           #svg
-          class="wt-chart-svg"
+          class="wu-chart-svg"
           [attr.width]="m.width"
           [attr.height]="m.height"
           [attr.viewBox]="'0 0 ' + m.width + ' ' + m.height"
           role="img"
           tabindex="0"
-          [class.wt-chart-zoomable]="zoomable()"
+          [class.wu-chart-zoomable]="zoomable()"
           [attr.aria-label]="summary() || null"
           [attr.aria-labelledby]="!ariaLabel() && heading() ? id + '-title' : null"
           (pointermove)="move($event)"
@@ -113,34 +113,34 @@
                 </linearGradient>
               } @else if (s.fade) {
                 <linearGradient [attr.id]="id + '-' + s.key" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" class="wt-chart-fade-from" [style.stop-color]="s.fill"></stop>
-                  <stop offset="1" class="wt-chart-fade-to" [style.stop-color]="s.fill"></stop>
+                  <stop offset="0" class="wu-chart-fade-from" [style.stop-color]="s.fill"></stop>
+                  <stop offset="1" class="wu-chart-fade-to" [style.stop-color]="s.fill"></stop>
                 </linearGradient>
               }
             }
             @for (l of m.lines; track l.key) {
               @if (l.gradient) {
                 <linearGradient [attr.id]="id + '-' + l.key" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" class="wt-chart-fade-from" [style.stop-color]="l.color"></stop>
-                  <stop offset="1" class="wt-chart-fade-to" [style.stop-color]="l.color"></stop>
+                  <stop offset="0" class="wu-chart-fade-from" [style.stop-color]="l.color"></stop>
+                  <stop offset="1" class="wu-chart-fade-to" [style.stop-color]="l.color"></stop>
                 </linearGradient>
               }
             }
           </defs>
           @for (b of m.bands; track $index) {
-            <rect class="wt-chart-band" [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" [style.fill]="b.color"></rect>
+            <rect class="wu-chart-band" [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" [style.fill]="b.color"></rect>
           }
-          <g class="wt-chart-grid">
+          <g class="wu-chart-grid">
             @for (g of m.grid; track $index) {
               <line [attr.x1]="g.x1" [attr.y1]="g.y1" [attr.x2]="g.x2" [attr.y2]="g.y2"></line>
             }
           </g>
           @if (m.zero; as z) {
-            <line class="wt-chart-zero" [attr.x1]="z.x1" [attr.y1]="z.y1" [attr.x2]="z.x2" [attr.y2]="z.y2"></line>
+            <line class="wu-chart-zero" [attr.x1]="z.x1" [attr.y1]="z.y1" [attr.x2]="z.x2" [attr.y2]="z.y2"></line>
           }
 
           @if (m.radar; as r) {
-            <g class="wt-chart-web">
+            <g class="wu-chart-web">
               @for (d of r.rings; track $index) {
                 <path [attr.d]="d"></path>
               }
@@ -149,45 +149,45 @@
               }
             </g>
             @for (s of r.shapes; track s.key) {
-              <path class="wt-chart-radar" [attr.d]="s.d" [style.fill]="s.color" [style.stroke]="s.color" [class.wt-chart-dim]="dim(s.series)"></path>
+              <path class="wu-chart-radar" [attr.d]="s.d" [style.fill]="s.color" [style.stroke]="s.color" [class.wu-chart-dim]="dim(s.series)"></path>
             }
           }
 
           @for (l of m.lines; track l.key) {
             @if (l.area) {
               <path
-                class="wt-chart-area"
-                [class.wt-chart-area-fade]="l.gradient"
+                class="wu-chart-area"
+                [class.wu-chart-area-fade]="l.gradient"
                 [attr.d]="l.area"
                 [style.fill]="l.gradient ? 'url(#' + id + '-' + l.key + ')' : l.color"
-                [class.wt-chart-dim]="dim(l.series)"
+                [class.wu-chart-dim]="dim(l.series)"
               ></path>
             }
           }
           @for (b of m.bars; track b.key) {
             <path
-              class="wt-chart-bar"
+              class="wu-chart-bar"
               [attr.d]="b.d"
               [style.fill]="b.color"
               [attr.data-series]="b.series"
               [attr.data-index]="b.index"
-              [class.wt-chart-dim]="dim(b.series) || (hovered() !== null && hovered() !== b.index)"
+              [class.wu-chart-dim]="dim(b.series) || (hovered() !== null && hovered() !== b.index)"
             ></path>
           }
           @for (c of m.cells; track c.key) {
             @if (c.d) {
               <path
-                class="wt-chart-cell"
+                class="wu-chart-cell"
                 [attr.d]="c.d"
                 [style.fill]="c.color"
                 [style.fill-opacity]="c.opacity"
                 [attr.data-series]="c.series"
                 [attr.data-index]="c.index"
-                [class.wt-chart-cell-active]="hovered() === c.index && hoveredSeries() === c.series"
+                [class.wu-chart-cell-active]="hovered() === c.index && hoveredSeries() === c.series"
               ></path>
             } @else {
               <rect
-                class="wt-chart-cell"
+                class="wu-chart-cell"
                 rx="4"
                 [attr.x]="c.x"
                 [attr.y]="c.y"
@@ -197,8 +197,8 @@
                 [style.fill-opacity]="c.opacity"
                 [attr.data-series]="c.series"
                 [attr.data-index]="c.index"
-                [class.wt-chart-cell-active]="hovered() === c.index && hoveredSeries() === c.series"
-                [class.wt-chart-dim]="!colorRanges()?.length && dim(c.series)"
+                [class.wu-chart-cell-active]="hovered() === c.index && hoveredSeries() === c.series"
+                [class.wu-chart-dim]="!colorRanges()?.length && dim(c.series)"
               ></rect>
             }
           }
@@ -261,9 +261,9 @@
           @for (c of m.cells; track c.key) {
             @for (t of c.texts; track $index) {
               <text
-                class="wt-chart-cell-text"
-                [class.wt-chart-cell-text-inside]="t.tone === 'inside'"
-                [class.wt-chart-cell-name]="t.strong"
+                class="wu-chart-cell-text"
+                [class.wu-chart-cell-text-inside]="t.tone === 'inside'"
+                [class.wu-chart-cell-name]="t.strong"
                 [attr.x]="t.x"
                 [attr.y]="t.y"
                 [attr.dy]="dy(t)"
@@ -272,44 +272,44 @@
             }
           }
           @for (g of m.rings; track g.key) {
-            <path class="wt-chart-track" [class.wt-chart-round]="g.round" [attr.d]="g.track" [style.stroke-width]="g.width" (pointerenter)="hoverSlice(g.index)"></path>
+            <path class="wu-chart-track" [class.wu-chart-round]="g.round" [attr.d]="g.track" [style.stroke-width]="g.width" (pointerenter)="hoverSlice(g.index)"></path>
             @if (g.d) {
               <path
-                class="wt-chart-ring"
-                [class.wt-chart-round]="g.round"
+                class="wu-chart-ring"
+                [class.wu-chart-round]="g.round"
                 [attr.d]="g.d"
                 [style.stroke]="g.color"
                 [style.stroke-width]="g.width"
                 [attr.data-series]="0"
                 [attr.data-index]="g.index"
-                [class.wt-chart-dim]="dimSlice(g.index)"
+                [class.wu-chart-dim]="dimSlice(g.index)"
                 (pointerenter)="hoverSlice(g.index)"
               ></path>
             }
           }
           @if (crosshair(); as c) {
-            <line class="wt-chart-crosshair" [attr.x1]="c.x1" [attr.y1]="c.y1" [attr.x2]="c.x2" [attr.y2]="c.y2"></line>
+            <line class="wu-chart-crosshair" [attr.x1]="c.x1" [attr.y1]="c.y1" [attr.x2]="c.x2" [attr.y2]="c.y2"></line>
           }
           @for (l of m.lines; track l.key) {
-            <path class="wt-chart-line" [attr.d]="l.d" [style.stroke]="l.color" [class.wt-chart-dashed]="l.dashed" [class.wt-chart-dim]="dim(l.series)"></path>
+            <path class="wu-chart-line" [attr.d]="l.d" [style.stroke]="l.color" [class.wu-chart-dashed]="l.dashed" [class.wu-chart-dim]="dim(l.series)"></path>
           }
           @for (s of m.slices; track s.key) {
             <path
-              class="wt-chart-slice"
+              class="wu-chart-slice"
               [attr.d]="s.d"
               [style.fill]="s.color"
               [style.transform]="sliceShift(s)"
               [attr.data-series]="0"
               [attr.data-index]="s.index"
-              [class.wt-chart-dim]="dimSlice(s.index)"
+              [class.wu-chart-dim]="dimSlice(s.index)"
               (pointerenter)="hoverSlice(s.index)"
             ></path>
           }
           @for (d of m.dots; track d.key) {
             @if (d.r > 0 || hovered() === d.index) {
               <circle
-                class="wt-chart-dot"
-                [class.wt-chart-bubble]="kind() === 'scatter'"
+                class="wu-chart-dot"
+                [class.wu-chart-bubble]="kind() === 'scatter'"
                 [attr.cx]="d.cx"
                 [attr.cy]="d.cy"
                 [attr.r]="dotR(d)"
@@ -317,44 +317,44 @@
                 [style.fill]="kind() === 'scatter' ? d.color : null"
                 [attr.data-series]="d.series"
                 [attr.data-index]="d.index"
-                [class.wt-chart-dim]="dim(d.series)"
+                [class.wu-chart-dim]="dim(d.series)"
               ></circle>
             }
           }
 
           @if (m.radar; as r) {
             @for (t of r.ringLabels; track $index) {
-              <text class="wt-chart-tick wt-chart-ring-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+              <text class="wu-chart-tick wu-chart-ring-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
             }
           }
           @for (k of m.marks; track $index) {
-            <circle class="wt-chart-mark" [attr.cx]="k.x" [attr.cy]="k.y" r="5" [style.stroke]="k.color"></circle>
+            <circle class="wu-chart-mark" [attr.cx]="k.x" [attr.cy]="k.y" r="5" [style.stroke]="k.color"></circle>
             @if (k.box; as b) {
-              <rect class="wt-chart-mark-box" rx="6" [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" [style.fill]="k.color"></rect>
+              <rect class="wu-chart-mark-box" rx="6" [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" [style.fill]="k.color"></rect>
             }
             @if (k.label; as t) {
-              <text class="wt-chart-mark-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+              <text class="wu-chart-mark-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
             }
           }
           @for (b of m.bands; track $index) {
             @if (b.label; as t) {
-              <text class="wt-chart-reference-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [style.fill]="b.color">{{ t.text }}</text>
+              <text class="wu-chart-reference-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [style.fill]="b.color">{{ t.text }}</text>
             }
           }
           @for (r of m.references; track $index) {
-            <line class="wt-chart-reference" [class.wt-chart-dashed]="r.dashed" [attr.x1]="r.x1" [attr.y1]="r.y1" [attr.x2]="r.x2" [attr.y2]="r.y2" [style.stroke]="r.color"></line>
+            <line class="wu-chart-reference" [class.wu-chart-dashed]="r.dashed" [attr.x1]="r.x1" [attr.y1]="r.y1" [attr.x2]="r.x2" [attr.y2]="r.y2" [style.stroke]="r.color"></line>
             @if (r.label; as t) {
-              <text class="wt-chart-reference-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [style.fill]="r.color">{{ t.text }}</text>
+              <text class="wu-chart-reference-label" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [style.fill]="r.color">{{ t.text }}</text>
             }
           }
 
           @for (t of m.texts; track $index) {
             <text
-              class="wt-chart-text"
-              [class.wt-chart-text-inside]="t.tone === 'inside'"
-              [class.wt-chart-text-muted]="t.tone === 'muted'"
-              [class.wt-chart-text-strong]="t.strong"
-              [class.wt-chart-dim]="m.dimOthers && hoverKey() && t.hover && hoverKey() !== t.hover && !hoverKey()!.startsWith(t.hover + '/')"
+              class="wu-chart-text"
+              [class.wu-chart-text-inside]="t.tone === 'inside'"
+              [class.wu-chart-text-muted]="t.tone === 'muted'"
+              [class.wu-chart-text-strong]="t.strong"
+              [class.wu-chart-dim]="m.dimOthers && hoverKey() && t.hover && hoverKey() !== t.hover && !hoverKey()!.startsWith(t.hover + '/')"
               [attr.x]="t.x"
               [attr.y]="t.y"
               [attr.dy]="dy(t)"
@@ -364,62 +364,62 @@
             >{{ t.text }}</text>
           }
           @for (t of m.valueLabels; track $index) {
-            <text class="wt-chart-value" [class.wt-chart-value-inside]="t.tone === 'inside'" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+            <text class="wu-chart-value" [class.wu-chart-value-inside]="t.tone === 'inside'" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
           }
           @for (t of m.xTicks; track $index) {
-            <text class="wt-chart-tick" [class.wt-chart-tick-active]="kind() === 'radar' && hovered() === $index" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+            <text class="wu-chart-tick" [class.wu-chart-tick-active]="kind() === 'radar' && hovered() === $index" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
           }
           @for (t of m.yTicks; track $index) {
-            <text class="wt-chart-tick" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+            <text class="wu-chart-tick" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
           }
           @for (t of m.y2Ticks; track $index) {
-            <text class="wt-chart-tick" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
+            <text class="wu-chart-tick" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor">{{ t.text }}</text>
           }
           @for (t of m.titles; track $index) {
-            <text class="wt-chart-axis-title" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [attr.transform]="rotate(t)">{{ t.text }}</text>
+            <text class="wu-chart-axis-title" [attr.x]="t.x" [attr.y]="t.y" [attr.dy]="dy(t)" [attr.text-anchor]="t.anchor" [attr.transform]="rotate(t)">{{ t.text }}</text>
           }
           @if (selection(); as s) {
-            <rect class="wt-chart-selection" [attr.x]="s.x" [attr.y]="s.y" [attr.width]="s.w" [attr.height]="s.h"></rect>
+            <rect class="wu-chart-selection" [attr.x]="s.x" [attr.y]="s.y" [attr.width]="s.w" [attr.height]="s.h"></rect>
           }
         </svg>
 
         @if (center(); as c) {
-          <div class="wt-chart-center" [class.wt-chart-center-lift]="c.lift" [style.left.px]="c.x" [style.top.px]="c.y" [style.width.px]="c.r * 1.5" aria-hidden="true">
-            <span class="wt-chart-center-value">{{ c.value }}</span>
-            <span class="wt-chart-center-label">{{ c.label }}</span>
+          <div class="wu-chart-center" [class.wu-chart-center-lift]="c.lift" [style.left.px]="c.x" [style.top.px]="c.y" [style.width.px]="c.r * 1.5" aria-hidden="true">
+            <span class="wu-chart-center-value">{{ c.value }}</span>
+            <span class="wu-chart-center-label">{{ c.label }}</span>
             @if ($any(c).back) {
-              <span class="wt-chart-center-back">← {{ words().back }}</span>
+              <span class="wu-chart-center-back">← {{ words().back }}</span>
             }
           </div>
         }
         @if (tip(); as t) {
-          <div class="wt-chart-tooltip" [class.wt-chart-tooltip-flip]="t.flip" [style.left.px]="t.x" [style.top.px]="t.y" aria-hidden="true">
+          <div class="wu-chart-tooltip" [class.wu-chart-tooltip-flip]="t.flip" [style.left.px]="t.x" [style.top.px]="t.y" aria-hidden="true">
             @if (t.title) {
-              <div class="wt-chart-tooltip-title">{{ t.title }}</div>
+              <div class="wu-chart-tooltip-title">{{ t.title }}</div>
             }
             @for (row of t.rows; track $index) {
-              <div class="wt-chart-tooltip-row">
-                <span class="wt-chart-swatch" [style.background]="row.color"></span>
-                <span class="wt-chart-tooltip-name">{{ row.name }}</span>
-                <span class="wt-chart-tooltip-value">{{ row.value }}</span>
+              <div class="wu-chart-tooltip-row">
+                <span class="wu-chart-swatch" [style.background]="row.color"></span>
+                <span class="wu-chart-tooltip-name">{{ row.name }}</span>
+                <span class="wu-chart-tooltip-value">{{ row.value }}</span>
               </div>
             }
           </div>
         }
         @if (empty()) {
-          <div class="wt-chart-empty">{{ emptyText() }}</div>
+          <div class="wu-chart-empty">{{ emptyText() }}</div>
         }
       }
     </div>
 
     @if (legendPos() !== 'none' && legendItems().length) {
-      <ul class="wt-chart-legend">
+      <ul class="wu-chart-legend">
         @for (item of legendItems(); track item.index) {
           <li>
             <button
               type="button"
-              class="wt-chart-legend-item"
-              [class.wt-chart-legend-off]="item.hidden"
+              class="wu-chart-legend-item"
+              [class.wu-chart-legend-off]="item.hidden"
               [attr.aria-pressed]="!item.hidden"
               (click)="toggle(item.index)"
               (pointerenter)="focusSeries.set(item.index)"
@@ -427,8 +427,8 @@
               (focus)="focusSeries.set(item.index)"
               (blur)="focusSeries.set(null)"
             >
-              <span class="wt-chart-swatch" [class.wt-chart-swatch-line]="item.shape === 'line'" [class.wt-chart-swatch-dot]="item.shape === 'dot'" [style.background]="item.color"></span>
-              <span class="wt-chart-legend-name">{{ item.name }}</span>
+              <span class="wu-chart-swatch" [class.wu-chart-swatch-line]="item.shape === 'line'" [class.wu-chart-swatch-dot]="item.shape === 'dot'" [style.background]="item.color"></span>
+              <span class="wu-chart-legend-name">{{ item.name }}</span>
             </button>
           </li>
         }
@@ -436,7 +436,7 @@
     }
   </div>
 
-  <div class="wt-chart-sr">
+  <div class="wu-chart-sr">
     <table [id]="id + '-table'">
       @if (heading()) {
         <caption>{{ heading() }}</caption>
@@ -464,5 +464,5 @@
       </tbody>
     </table>
   </div>
-  <div class="wt-chart-sr" aria-live="polite">{{ liveText() }}</div>
+  <div class="wu-chart-sr" aria-live="polite">{{ liveText() }}</div>
 </div>

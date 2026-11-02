@@ -1,180 +1,180 @@
-/* wt-button. One stylesheet for wiratheme v1, v2 and v3: the preset's tokens decide the look
-   (classic metrics in v1, styled in v2/v3, WiraTheme's own in v3). */
-@layer wiratheme.components {
-  wt-button {
+/* wu-button. One stylesheet for wiraui v1, v2 and v3: the preset's tokens decide the look
+   (classic metrics in v1, styled in v2/v3, WiraUI's own in v3). */
+@layer wiraui.components {
+  wu-button {
     display: inline-flex;
     vertical-align: middle;
   }
-  wt-button.wt-button-fluid {
+  wu-button.wu-button-fluid {
     display: flex;
     width: 100%;
   }
 
-  .wt-btn {
+  .wu-btn {
     /* --_bg/--_bd/--_fg: solid colours; --_tone: colour of outlined and text buttons. */
-    --_bg: var(--wt-primary-color);
-    --_fg: var(--wt-primary-contrast);
-    --_bd: var(--wt-primary-color);
-    --_hover: var(--wt-primary-hover);
-    --_active: var(--wt-primary-active);
-    --_tone: var(--wt-primary-color);
+    --_bg: var(--wu-primary-color);
+    --_fg: var(--wu-primary-contrast);
+    --_bd: var(--wu-primary-color);
+    --_hover: var(--wu-primary-hover);
+    --_active: var(--wu-primary-active);
+    --_tone: var(--wu-primary-color);
     position: relative;
     overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--wt-button-gap);
+    gap: var(--wu-button-gap);
     margin: 0;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    font-weight: var(--wt-button-font-weight);
-    line-height: var(--wt-control-line-height);
-    text-transform: var(--wt-button-text-transform);
-    letter-spacing: var(--wt-button-letter-spacing);
-    padding: var(--wt-button-padding-y) var(--wt-button-padding-x);
-    border-radius: var(--wt-button-radius);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    font-weight: var(--wu-button-font-weight);
+    line-height: var(--wu-control-line-height);
+    text-transform: var(--wu-button-text-transform);
+    letter-spacing: var(--wu-button-letter-spacing);
+    padding: var(--wu-button-padding-y) var(--wu-button-padding-x);
+    border-radius: var(--wu-button-radius);
     border: 1px solid var(--_bd);
     background: var(--_bg);
     color: var(--_fg);
     /* none, except the glass material: a sheen of light inside and a soft lift. */
-    box-shadow: var(--wt-button-shadow);
-    -webkit-backdrop-filter: var(--wt-button-backdrop);
-    backdrop-filter: var(--wt-button-backdrop);
+    box-shadow: var(--wu-button-shadow);
+    -webkit-backdrop-filter: var(--wu-button-backdrop);
+    backdrop-filter: var(--wu-button-backdrop);
     cursor: pointer;
     white-space: nowrap;
     user-select: none;
     text-decoration: none;
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      outline-color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-btn:not(:disabled):hover {
+  .wu-btn:not(:disabled):hover {
     background: var(--_hover);
     border-color: var(--_hover);
   }
-  .wt-btn:not(:disabled):active {
+  .wu-btn:not(:disabled):active {
     background: var(--_active);
     border-color: var(--_active);
   }
-  .wt-btn:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-btn:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-btn:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-btn:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
   /* Disabled (and not busy with its action): a faint gray button whatever its colour, read at a glance as
      "not yet", where a faded colour still looks pressable. A loading button keeps its colour. */
-  .wt-btn:disabled:not([aria-busy='true']) {
-    --_bg: var(--wt-button-disabled-bg);
-    --_bd: var(--wt-button-disabled-bg);
-    --_fg: var(--wt-button-disabled-color);
-    --_tone: var(--wt-button-disabled-color);
+  .wu-btn:disabled:not([aria-busy='true']) {
+    --_bg: var(--wu-button-disabled-bg);
+    --_bd: var(--wu-button-disabled-bg);
+    --_fg: var(--wu-button-disabled-color);
+    --_tone: var(--wu-button-disabled-color);
     opacity: 1;
     box-shadow: none;
   }
-  .wt-button-fluid .wt-btn {
+  .wu-button-fluid .wu-btn {
     width: 100%;
   }
 
   /* severities */
-  .wt-btn-secondary {
-    --_bg: var(--wt-button-secondary-bg);
-    --_fg: var(--wt-button-secondary-color);
-    --_bd: var(--wt-button-secondary-border);
-    --_hover: var(--wt-button-secondary-hover-bg);
-    --_active: var(--wt-button-secondary-active-bg);
-    --_tone: var(--wt-button-secondary-tone);
+  .wu-btn-secondary {
+    --_bg: var(--wu-button-secondary-bg);
+    --_fg: var(--wu-button-secondary-color);
+    --_bd: var(--wu-button-secondary-border);
+    --_hover: var(--wu-button-secondary-hover-bg);
+    --_active: var(--wu-button-secondary-active-bg);
+    --_tone: var(--wu-button-secondary-tone);
   }
-  .wt-btn-success { --_bg: var(--wt-success-color); --_bd: var(--wt-success-color); --_fg: var(--wt-success-contrast); --_hover: var(--wt-success-hover); --_active: var(--wt-success-active); --_tone: var(--wt-success-color); }
-  .wt-btn-info { --_bg: var(--wt-info-color); --_bd: var(--wt-info-color); --_fg: var(--wt-info-contrast); --_hover: var(--wt-info-hover); --_active: var(--wt-info-active); --_tone: var(--wt-info-color); }
-  .wt-btn-warn { --_bg: var(--wt-warn-color); --_bd: var(--wt-warn-color); --_fg: var(--wt-warn-contrast); --_hover: var(--wt-warn-hover); --_active: var(--wt-warn-active); --_tone: var(--wt-warn-color); }
-  .wt-btn-danger { --_bg: var(--wt-danger-color); --_bd: var(--wt-danger-color); --_fg: var(--wt-danger-contrast); --_hover: var(--wt-danger-hover); --_active: var(--wt-danger-active); --_tone: var(--wt-danger-color); }
-  .wt-btn-help { --_bg: var(--wt-help-color); --_bd: var(--wt-help-color); --_fg: var(--wt-help-contrast); --_hover: var(--wt-help-hover); --_active: var(--wt-help-active); --_tone: var(--wt-help-color); }
+  .wu-btn-success { --_bg: var(--wu-success-color); --_bd: var(--wu-success-color); --_fg: var(--wu-success-contrast); --_hover: var(--wu-success-hover); --_active: var(--wu-success-active); --_tone: var(--wu-success-color); }
+  .wu-btn-info { --_bg: var(--wu-info-color); --_bd: var(--wu-info-color); --_fg: var(--wu-info-contrast); --_hover: var(--wu-info-hover); --_active: var(--wu-info-active); --_tone: var(--wu-info-color); }
+  .wu-btn-warn { --_bg: var(--wu-warn-color); --_bd: var(--wu-warn-color); --_fg: var(--wu-warn-contrast); --_hover: var(--wu-warn-hover); --_active: var(--wu-warn-active); --_tone: var(--wu-warn-color); }
+  .wu-btn-danger { --_bg: var(--wu-danger-color); --_bd: var(--wu-danger-color); --_fg: var(--wu-danger-contrast); --_hover: var(--wu-danger-hover); --_active: var(--wu-danger-active); --_tone: var(--wu-danger-color); }
+  .wu-btn-help { --_bg: var(--wu-help-color); --_bd: var(--wu-help-color); --_fg: var(--wu-help-contrast); --_hover: var(--wu-help-hover); --_active: var(--wu-help-active); --_tone: var(--wu-help-color); }
   /* Contrast gets stronger on hover and press, like every other colour (it used to fade, which read as "cancel"). */
-  .wt-btn-contrast { --_bg: var(--wt-text); --_bd: var(--wt-text); --_fg: var(--wt-card-bg); --_hover: var(--wt-button-contrast-hover-bg); --_active: var(--wt-button-contrast-active-bg); --_tone: var(--wt-text); }
+  .wu-btn-contrast { --_bg: var(--wu-text); --_bd: var(--wu-text); --_fg: var(--wu-card-bg); --_hover: var(--wu-button-contrast-hover-bg); --_active: var(--wu-button-contrast-active-bg); --_tone: var(--wu-text); }
 
   /* variants */
-  .wt-btn-outlined,
-  .wt-btn-text {
+  .wu-btn-outlined,
+  .wu-btn-text {
     color: var(--_tone);
     background: transparent;
   }
-  .wt-btn-outlined {
-    border-color: color-mix(in srgb, var(--_tone) var(--wt-button-outlined-border-mix), transparent);
+  .wu-btn-outlined {
+    border-color: color-mix(in srgb, var(--_tone) var(--wu-button-outlined-border-mix), transparent);
   }
-  .wt-btn-text {
+  .wu-btn-text {
     border-color: transparent;
     box-shadow: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .wt-btn-outlined:not(:disabled):hover,
-  .wt-btn-text:not(:disabled):hover {
-    background: color-mix(in srgb, var(--_tone) var(--wt-button-tint), transparent);
+  .wu-btn-outlined:not(:disabled):hover,
+  .wu-btn-text:not(:disabled):hover {
+    background: color-mix(in srgb, var(--_tone) var(--wu-button-tint), transparent);
   }
-  .wt-btn-outlined:not(:disabled):active,
-  .wt-btn-text:not(:disabled):active {
-    background: color-mix(in srgb, var(--_tone) calc(var(--wt-button-tint) * 2), transparent);
+  .wu-btn-outlined:not(:disabled):active,
+  .wu-btn-text:not(:disabled):active {
+    background: color-mix(in srgb, var(--_tone) calc(var(--wu-button-tint) * 2), transparent);
   }
-  .wt-btn-outlined:not(:disabled):hover,
-  .wt-btn-outlined:not(:disabled):active {
-    border-color: color-mix(in srgb, var(--_tone) var(--wt-button-outlined-border-mix), transparent);
+  .wu-btn-outlined:not(:disabled):hover,
+  .wu-btn-outlined:not(:disabled):active {
+    border-color: color-mix(in srgb, var(--_tone) var(--wu-button-outlined-border-mix), transparent);
   }
-  .wt-btn-text:not(:disabled):hover,
-  .wt-btn-text:not(:disabled):active {
+  .wu-btn-text:not(:disabled):hover,
+  .wu-btn-text:not(:disabled):active {
     border-color: transparent;
   }
-  .wt-btn-raised {
-    box-shadow: var(--wt-shadow-md);
+  .wu-btn-raised {
+    box-shadow: var(--wu-shadow-md);
   }
 
   /* sizes and shapes */
-  .wt-btn-sm,
-  .wt-btn.p-button-sm {
-    font-size: calc(var(--wt-font-size) * 0.875);
-    padding: calc(var(--wt-button-padding-y) * var(--wt-size-sm-scale)) calc(var(--wt-button-padding-x) * var(--wt-size-sm-scale));
+  .wu-btn-sm,
+  .wu-btn.p-button-sm {
+    font-size: calc(var(--wu-font-size) * 0.875);
+    padding: calc(var(--wu-button-padding-y) * var(--wu-size-sm-scale)) calc(var(--wu-button-padding-x) * var(--wu-size-sm-scale));
   }
-  .wt-btn-lg,
-  .wt-btn.p-button-lg {
-    font-size: calc(var(--wt-font-size) * var(--wt-size-lg-scale));
-    padding: calc(var(--wt-button-padding-y) * var(--wt-size-lg-scale)) calc(var(--wt-button-padding-x) * var(--wt-size-lg-scale));
+  .wu-btn-lg,
+  .wu-btn.p-button-lg {
+    font-size: calc(var(--wu-font-size) * var(--wu-size-lg-scale));
+    padding: calc(var(--wu-button-padding-y) * var(--wu-size-lg-scale)) calc(var(--wu-button-padding-x) * var(--wu-size-lg-scale));
   }
-  .wt-btn-rounded {
-    border-radius: var(--wt-radius-full);
+  .wu-btn-rounded {
+    border-radius: var(--wu-radius-full);
   }
-  .wt-btn-icon-only {
-    padding: var(--wt-button-padding-y);
+  .wu-btn-icon-only {
+    padding: var(--wu-button-padding-y);
     aspect-ratio: 1;
   }
-  .wt-btn-sm.wt-btn-icon-only,
-  .wt-btn.p-button-sm.wt-btn-icon-only {
-    padding: calc(var(--wt-button-padding-y) * var(--wt-size-sm-scale));
+  .wu-btn-sm.wu-btn-icon-only,
+  .wu-btn.p-button-sm.wu-btn-icon-only {
+    padding: calc(var(--wu-button-padding-y) * var(--wu-size-sm-scale));
   }
-  .wt-btn-lg.wt-btn-icon-only,
-  .wt-btn.p-button-lg.wt-btn-icon-only {
-    padding: calc(var(--wt-button-padding-y) * var(--wt-size-lg-scale));
+  .wu-btn-lg.wu-btn-icon-only,
+  .wu-btn.p-button-lg.wu-btn-icon-only {
+    padding: calc(var(--wu-button-padding-y) * var(--wu-size-lg-scale));
   }
 
   /* parts */
-  .wt-btn-icon {
+  .wu-btn-icon {
     line-height: 1;
   }
-  .wt-btn-spinner {
+  .wu-btn-spinner {
     width: 1em;
     height: 1em;
     border-radius: 50%;
     border: 2px solid currentColor;
     border-right-color: transparent;
-    animation: wt-btn-spin 0.8s linear infinite;
+    animation: wu-btn-spin 0.8s linear infinite;
   }
   /* A pill that fits two digits comfortably and keeps them centred whatever the font's line height. */
-  .wt-btn-badge {
+  .wu-btn-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -182,7 +182,7 @@
     min-width: 1.75em;
     height: 1.75em;
     padding: 0 0.45em;
-    border-radius: var(--wt-radius-full);
+    border-radius: var(--wu-radius-full);
     background: var(--_fg);
     color: var(--_bg);
     font-size: 0.75em;
@@ -191,13 +191,13 @@
     line-height: 1;
     letter-spacing: normal;
   }
-  .wt-btn-outlined .wt-btn-badge,
-  .wt-btn-text .wt-btn-badge {
+  .wu-btn-outlined .wu-btn-badge,
+  .wu-btn-text .wu-btn-badge {
     background: var(--_tone);
-    color: var(--wt-card-bg);
+    color: var(--wu-card-bg);
   }
   /* link: a button that reads as a link. */
-  .wt-btn.wt-btn-link {
+  .wu-btn.wu-btn-link {
     border-color: transparent;
     background: transparent;
     color: var(--_tone);
@@ -205,48 +205,48 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .wt-btn.wt-btn-link:not(:disabled):hover,
-  .wt-btn.wt-btn-link:not(:disabled):active {
+  .wu-btn.wu-btn-link:not(:disabled):hover,
+  .wu-btn.wu-btn-link:not(:disabled):active {
     border-color: transparent;
     background: transparent;
     text-decoration: underline;
   }
-  .wt-btn-badge:is(.wt-btn-badge-success, .wt-btn-badge-info, .wt-btn-badge-warn, .wt-btn-badge-danger, .wt-btn-badge-secondary, .wt-btn-badge-help, .wt-btn-badge-contrast) {
+  .wu-btn-badge:is(.wu-btn-badge-success, .wu-btn-badge-info, .wu-btn-badge-warn, .wu-btn-badge-danger, .wu-btn-badge-secondary, .wu-btn-badge-help, .wu-btn-badge-contrast) {
     background: var(--_badge-bg);
     color: var(--_badge-fg);
   }
-  .wt-btn-badge-success { --_badge-bg: var(--wt-success-color); --_badge-fg: var(--wt-success-contrast); }
-  .wt-btn-badge-info { --_badge-bg: var(--wt-info-color); --_badge-fg: var(--wt-info-contrast); }
-  .wt-btn-badge-warn { --_badge-bg: var(--wt-warn-color); --_badge-fg: var(--wt-warn-contrast); }
-  .wt-btn-badge-danger { --_badge-bg: var(--wt-danger-color); --_badge-fg: var(--wt-danger-contrast); }
-  .wt-btn-badge-secondary { --_badge-bg: var(--wt-button-secondary-bg); --_badge-fg: var(--wt-button-secondary-color); }
-  .wt-btn-badge-help { --_badge-bg: var(--wt-help-color); --_badge-fg: var(--wt-help-contrast); }
-  .wt-btn-badge-contrast { --_badge-bg: var(--wt-text); --_badge-fg: var(--wt-card-bg); }
-  .wt-ripple-ink {
+  .wu-btn-badge-success { --_badge-bg: var(--wu-success-color); --_badge-fg: var(--wu-success-contrast); }
+  .wu-btn-badge-info { --_badge-bg: var(--wu-info-color); --_badge-fg: var(--wu-info-contrast); }
+  .wu-btn-badge-warn { --_badge-bg: var(--wu-warn-color); --_badge-fg: var(--wu-warn-contrast); }
+  .wu-btn-badge-danger { --_badge-bg: var(--wu-danger-color); --_badge-fg: var(--wu-danger-contrast); }
+  .wu-btn-badge-secondary { --_badge-bg: var(--wu-button-secondary-bg); --_badge-fg: var(--wu-button-secondary-color); }
+  .wu-btn-badge-help { --_badge-bg: var(--wu-help-color); --_badge-fg: var(--wu-help-contrast); }
+  .wu-btn-badge-contrast { --_badge-bg: var(--wu-text); --_badge-fg: var(--wu-card-bg); }
+  .wu-ripple-ink {
     position: absolute;
     border-radius: 50%;
     background: currentColor;
     opacity: 0.28;
     transform: scale(0);
-    animation: wt-ripple 560ms ease-out forwards;
+    animation: wu-ripple 560ms ease-out forwards;
     pointer-events: none;
   }
 
-  @keyframes wt-btn-spin {
+  @keyframes wu-btn-spin {
     to {
       transform: rotate(1turn);
     }
   }
-  @keyframes wt-ripple {
+  @keyframes wu-ripple {
     to {
       transform: scale(2.6);
       opacity: 0;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-btn,
-    .wt-btn-spinner,
-    .wt-ripple-ink {
+    .wu-btn,
+    .wu-btn-spinner,
+    .wu-ripple-ink {
       transition: none;
       animation-duration: 0.01ms;
     }
@@ -254,7 +254,7 @@
   /* Touch screens: small and icon-only buttons are at least 24 × 24 px (WCAG 2.5.8). The button clips its own
      content (ripple), so it grows a little instead of taking a wider invisible hit area. */
   @media (pointer: coarse) {
-    .wt-btn {
+    .wu-btn {
       min-width: 24px;
       min-height: 24px;
     }

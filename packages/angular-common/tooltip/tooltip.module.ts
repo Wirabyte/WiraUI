@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTooltip } from './tooltip.directive';
+import { WuTooltip } from './tooltip.directive';
 
-/** For NgModule apps. Standalone apps can import `WtTooltip` directly. */
+/** For NgModule apps. Standalone apps can import `WuTooltip` directly. */
 @NgModule({
-  imports: [WtTooltip],
-  exports: [WtTooltip],
+  imports: [WuTooltip],
+  exports: [WuTooltip],
 })
-export class WtTooltipModule {}
+export class WuTooltipModule {}

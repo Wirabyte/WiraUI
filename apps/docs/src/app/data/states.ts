@@ -8,9 +8,9 @@ export const EMPTYSTATE_DOC: ComponentDoc = {
   title: 'EmptyState',
   group: 'Feedback',
   entry: 'emptystate',
-  standalone: 'WtEmptyState',
-  module: 'WtEmptyStateModule',
-  selector: 'wt-empty-state',
+  standalone: 'WuEmptyState',
+  module: 'WuEmptyStateModule',
+  selector: 'wu-empty-state',
   description: {
     th: 'สิ่งที่แสดงเมื่อรายการ ตาราง หรือหน้าไม่มีอะไรเลย: ภาพวาดในสีของธีม หัวข้อ คำอธิบาย และปุ่มให้ทำต่อ มี 6 แบบ (ไม่มีข้อมูล ค้นไม่พบ กล่องว่าง โฟลเดอร์ว่าง โหลดไม่สำเร็จ ไม่มีอินเทอร์เน็ต) ข้อความเริ่มต้นเปลี่ยนตามภาษาของแอป',
     en: 'What a list, table or page shows when there is nothing in it: a drawing in the theme’s colours, a title, a line under it and buttons to go on. Six kinds (no data, nothing found, empty inbox, empty folder, failed load, offline), with default text in the app’s language.',
@@ -31,8 +31,8 @@ export const EMPTYSTATE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtEmptyStateModule</code>) และ standalone (<code>WtEmptyState</code>) · ชื่อ tag <code>wt-empty-state</code>, <code>wt-emptyState</code> และ <code>wt-empty</code> ใช้ได้เหมือนกัน',
-        en: 'Works as an NgModule (<code>WtEmptyStateModule</code>) or standalone (<code>WtEmptyState</code>) · the tags <code>wt-empty-state</code>, <code>wt-emptyState</code> and <code>wt-empty</code> are the same component.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuEmptyStateModule</code>) และ standalone (<code>WuEmptyState</code>) · ชื่อ tag <code>wu-empty-state</code>, <code>wu-emptyState</code> และ <code>wu-empty</code> ใช้ได้เหมือนกัน',
+        en: 'Works as an NgModule (<code>WuEmptyStateModule</code>) or standalone (<code>WuEmptyState</code>) · the tags <code>wu-empty-state</code>, <code>wu-emptyState</code> and <code>wu-empty</code> are the same component.',
       },
     },
     basic: {
@@ -66,32 +66,32 @@ export const EMPTYSTATE_DOC: ComponentDoc = {
     table: {
       title: { th: 'ในตารางและการ์ด', en: 'In tables and cards' },
       text: {
-        th: '<code>size="small"</code> ภาพและข้อความเล็กลงให้พอดีกับแถวว่างของ <code>wt-table</code> (template <code>emptymessage</code>) หรือในการ์ด · <code>size="large"</code> สำหรับทั้งหน้า',
-        en: '<code>size="small"</code> shrinks the drawing and text to fit a <code>wt-table</code> empty row (the <code>emptymessage</code> template) or a card · <code>size="large"</code> for a whole page.',
+        th: '<code>size="small"</code> ภาพและข้อความเล็กลงให้พอดีกับแถวว่างของ <code>wu-table</code> (template <code>emptymessage</code>) หรือในการ์ด · <code>size="large"</code> สำหรับทั้งหน้า',
+        en: '<code>size="small"</code> shrinks the drawing and text to fit a <code>wu-table</code> empty row (the <code>emptymessage</code> template) or a card · <code>size="large"</code> for a whole page.',
       },
     },
   },
   code: {
-    basic: `<wt-empty-state></wt-empty-state>`,
-    types: `<wt-empty-state type="nodata"></wt-empty-state>
-<wt-empty-state type="search"></wt-empty-state>
-<wt-empty-state type="inbox"></wt-empty-state>
-<wt-empty-state type="folder"></wt-empty-state>
-<wt-empty-state type="error"></wt-empty-state>
-<wt-empty-state type="offline"></wt-empty-state>`,
-    actions: `<wt-empty-state title="ยังไม่มีนักเรียนในห้องนี้" description="เพิ่มนักเรียนทีละคน หรือนำเข้าจากไฟล์ Excel">
-  <wt-button label="เพิ่มนักเรียน" icon="wi wi-plus"></wt-button>
-  <wt-button label="นำเข้าจาก Excel" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wt-button>
-</wt-empty-state>
+    basic: `<wu-empty-state></wu-empty-state>`,
+    types: `<wu-empty-state type="nodata"></wu-empty-state>
+<wu-empty-state type="search"></wu-empty-state>
+<wu-empty-state type="inbox"></wu-empty-state>
+<wu-empty-state type="folder"></wu-empty-state>
+<wu-empty-state type="error"></wu-empty-state>
+<wu-empty-state type="offline"></wu-empty-state>`,
+    actions: `<wu-empty-state title="ยังไม่มีนักเรียนในห้องนี้" description="เพิ่มนักเรียนทีละคน หรือนำเข้าจากไฟล์ Excel">
+  <wu-button label="เพิ่มนักเรียน" icon="wi wi-plus"></wu-button>
+  <wu-button label="นำเข้าจาก Excel" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wu-button>
+</wu-empty-state>
 
-<wt-empty-state type="search">
-  <wt-button label="ล้างตัวกรอง" severity="secondary" [text]="true"></wt-button>
-</wt-empty-state>`,
-    picture: `<wt-empty-state icon="wi wi-bell" title="ยังไม่มีการแจ้งเตือน" description=""></wt-empty-state>
-<wt-empty-state type="error" [showImage]="false">
-  <wt-button label="ลองใหม่" icon="wi wi-refresh" size="small"></wt-button>
-</wt-empty-state>`,
-    table: `<wt-table [value]="students">
+<wu-empty-state type="search">
+  <wu-button label="ล้างตัวกรอง" severity="secondary" [text]="true"></wu-button>
+</wu-empty-state>`,
+    picture: `<wu-empty-state icon="wi wi-bell" title="ยังไม่มีการแจ้งเตือน" description=""></wu-empty-state>
+<wu-empty-state type="error" [showImage]="false">
+  <wu-button label="ลองใหม่" icon="wi wi-refresh" size="small"></wu-button>
+</wu-empty-state>`,
+    table: `<wu-table [value]="students">
   <ng-template #header>
     <tr>
       <th>รหัส</th>
@@ -109,13 +109,13 @@ export const EMPTYSTATE_DOC: ComponentDoc = {
   <ng-template #emptymessage>
     <tr>
       <td colspan="3">
-        <wt-empty-state size="small" title="ยังไม่มีนักเรียนในห้องนี้">
-          <wt-button label="เพิ่มนักเรียน" icon="wi wi-plus" size="small"></wt-button>
-        </wt-empty-state>
+        <wu-empty-state size="small" title="ยังไม่มีนักเรียนในห้องนี้">
+          <wu-button label="เพิ่มนักเรียน" icon="wi wi-plus" size="small"></wu-button>
+        </wu-empty-state>
       </td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
   },
   api: [
     {
@@ -138,14 +138,14 @@ export const EMPTYSTATE_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-empty-state-padding · -sm-padding · -lg-padding · -gap', 'ระยะรอบนอก (ปกติ · เล็ก · ใหญ่) · ระยะระหว่างส่วน', 'Outer padding (normal · small · large) · gap between parts'),
-    tok('--wt-empty-state-art-width · -art-sm-width · -art-lg-width', 'ความกว้างของภาพตามขนาด', 'Width of the drawing per size'),
-    tok('--wt-empty-state-art-bg · -art-paper · -art-line', 'สีพื้นเงา · สีกระดาษ · สีเส้นของภาพ', 'Drawing: shadow · paper · line colours'),
-    tok('--wt-empty-state-art-accent · -art-soft · -art-danger', 'สีเน้น · สีอ่อน · สีผิดพลาดของภาพ', 'Drawing: accent · soft · error colours'),
-    tok('--wt-empty-state-icon-box · -icon-size · -icon-bg · -icon-color', 'วงกลมของ icon: ขนาด · ขนาดไอคอน · สีพื้น · สีไอคอน', 'Icon circle: size · icon size · background · colour'),
-    tok('--wt-empty-state-title-color · -title-size · -title-weight', 'หัวข้อ', 'Title'),
-    tok('--wt-empty-state-description-color · -description-size', 'คำอธิบาย', 'The line under the title'),
-    tok('--wt-empty-state-actions-gap', 'ระยะระหว่างปุ่ม', 'Gap between actions'),
+    tok('--wu-empty-state-padding · -sm-padding · -lg-padding · -gap', 'ระยะรอบนอก (ปกติ · เล็ก · ใหญ่) · ระยะระหว่างส่วน', 'Outer padding (normal · small · large) · gap between parts'),
+    tok('--wu-empty-state-art-width · -art-sm-width · -art-lg-width', 'ความกว้างของภาพตามขนาด', 'Width of the drawing per size'),
+    tok('--wu-empty-state-art-bg · -art-paper · -art-line', 'สีพื้นเงา · สีกระดาษ · สีเส้นของภาพ', 'Drawing: shadow · paper · line colours'),
+    tok('--wu-empty-state-art-accent · -art-soft · -art-danger', 'สีเน้น · สีอ่อน · สีผิดพลาดของภาพ', 'Drawing: accent · soft · error colours'),
+    tok('--wu-empty-state-icon-box · -icon-size · -icon-bg · -icon-color', 'วงกลมของ icon: ขนาด · ขนาดไอคอน · สีพื้น · สีไอคอน', 'Icon circle: size · icon size · background · colour'),
+    tok('--wu-empty-state-title-color · -title-size · -title-weight', 'หัวข้อ', 'Title'),
+    tok('--wu-empty-state-description-color · -description-size', 'คำอธิบาย', 'The line under the title'),
+    tok('--wu-empty-state-actions-gap', 'ระยะระหว่างปุ่ม', 'Gap between actions'),
   ],
 };
 
@@ -154,9 +154,9 @@ export const RESULT_DOC: ComponentDoc = {
   title: 'Result',
   group: 'Feedback',
   entry: 'result',
-  standalone: 'WtResult',
-  module: 'WtResultModule',
-  selector: 'wt-result',
+  standalone: 'WuResult',
+  module: 'WuResultModule',
+  selector: 'wu-result',
   description: {
     th: 'หน้าหรือกล่องที่บอกผลเมื่องานจบ (สำเร็จ ไม่สำเร็จ แจ้งเพื่อทราบ ต้องตรวจสอบ) หรือแทนหน้าที่เปิดไม่ได้ (403 ไม่มีสิทธิ์, 404 ไม่พบหน้า, 500 ระบบขัดข้อง) พร้อมปุ่มให้ทำต่อและกล่องรายละเอียด ข้อความเริ่มต้นเปลี่ยนตามภาษาของแอป',
     en: 'The page or box that tells how a task ended (done, failed, for your information, please check) or stands in for a page that cannot open (403 no access, 404 not found, 500 server error), with actions and a details box. Default text follows the app’s language.',
@@ -180,8 +180,8 @@ export const RESULT_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtResultModule</code>) และ standalone (<code>WtResult</code>)',
-        en: 'Works as an NgModule (<code>WtResultModule</code>) or standalone (<code>WtResult</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuResultModule</code>) และ standalone (<code>WuResult</code>)',
+        en: 'Works as an NgModule (<code>WuResultModule</code>) or standalone (<code>WuResult</code>).',
       },
     },
     status: {
@@ -201,8 +201,8 @@ export const RESULT_DOC: ComponentDoc = {
     extra: {
       title: { th: 'ปุ่มและรายละเอียด', en: 'Actions and details' },
       text: {
-        th: 'ใส่ attribute <code>wtResultExtra</code> ให้ปุ่มที่จะเรียงเป็นแถวใต้ข้อความ · สิ่งอื่นใน tag ไปอยู่ในกล่องรายละเอียดสีอ่อนด้านล่าง (ไม่มีก็ไม่แสดงกล่อง)',
-        en: 'Mark buttons with <code>wtResultExtra</code> to line them up under the text · anything else inside the tag goes in a soft details box below (no content, no box).',
+        th: 'ใส่ attribute <code>wuResultExtra</code> ให้ปุ่มที่จะเรียงเป็นแถวใต้ข้อความ · สิ่งอื่นใน tag ไปอยู่ในกล่องรายละเอียดสีอ่อนด้านล่าง (ไม่มีก็ไม่แสดงกล่อง)',
+        en: 'Mark buttons with <code>wuResultExtra</code> to line them up under the text · anything else inside the tag goes in a soft details box below (no content, no box).',
       },
     },
     custom: {
@@ -214,30 +214,30 @@ export const RESULT_DOC: ComponentDoc = {
     },
   },
   code: {
-    status: `<wt-result status="success" title="ส่งใบสมัครเรียบร้อยแล้ว"
+    status: `<wu-result status="success" title="ส่งใบสมัครเรียบร้อยแล้ว"
   subtitle="เลขที่ใบสมัคร 69-000123 ระบบส่งอีเมลยืนยันไปที่ wira@example.com แล้ว">
-  <wt-button wtResultExtra label="ดูใบสมัคร"></wt-button>
-  <wt-button wtResultExtra label="กลับหน้าแรก" severity="secondary" [outlined]="true"></wt-button>
-</wt-result>
-<wt-result status="error"></wt-result>
-<wt-result status="info"></wt-result>
-<wt-result status="warning"></wt-result>`,
-    codes: `<wt-result status="403">
-  <wt-button wtResultExtra label="ติดต่อผู้ดูแลระบบ" severity="secondary" [outlined]="true"></wt-button>
-</wt-result>
-<wt-result status="404">
-  <wt-button wtResultExtra label="กลับหน้าแรก" icon="wi wi-house"></wt-button>
-</wt-result>
-<wt-result status="500">
-  <wt-button wtResultExtra label="ย้อนกลับ" severity="secondary" [text]="true"></wt-button>
-</wt-result>`,
-    extra: `<wt-result status="error" title="ชำระเงินไม่สำเร็จ" subtitle="บัตรถูกปฏิเสธโดยธนาคาร">
-  <wt-button wtResultExtra label="ลองอีกครั้ง" icon="wi wi-refresh"></wt-button>
-  <wt-button wtResultExtra label="กลับหน้าแรก" severity="secondary" [outlined]="true"></wt-button>
+  <wu-button wuResultExtra label="ดูใบสมัคร"></wu-button>
+  <wu-button wuResultExtra label="กลับหน้าแรก" severity="secondary" [outlined]="true"></wu-button>
+</wu-result>
+<wu-result status="error"></wu-result>
+<wu-result status="info"></wu-result>
+<wu-result status="warning"></wu-result>`,
+    codes: `<wu-result status="403">
+  <wu-button wuResultExtra label="ติดต่อผู้ดูแลระบบ" severity="secondary" [outlined]="true"></wu-button>
+</wu-result>
+<wu-result status="404">
+  <wu-button wuResultExtra label="กลับหน้าแรก" icon="wi wi-house"></wu-button>
+</wu-result>
+<wu-result status="500">
+  <wu-button wuResultExtra label="ย้อนกลับ" severity="secondary" [text]="true"></wu-button>
+</wu-result>`,
+    extra: `<wu-result status="error" title="ชำระเงินไม่สำเร็จ" subtitle="บัตรถูกปฏิเสธโดยธนาคาร">
+  <wu-button wuResultExtra label="ลองอีกครั้ง" icon="wi wi-refresh"></wu-button>
+  <wu-button wuResultExtra label="กลับหน้าแรก" severity="secondary" [outlined]="true"></wu-button>
   <p>ยอดที่ต้องชำระ 3,500.00 บาท</p>
-</wt-result>`,
-    custom: `<wt-result status="warning" icon="wi wi-wrench" title="กำลังปิดปรับปรุงระบบ" subtitle="เปิดให้ใช้งานอีกครั้งเวลา 06:00 น."></wt-result>
-<wt-result status="success" [showIcon]="false" title="ส่งใบสมัครเรียบร้อยแล้ว" subtitle=""></wt-result>`,
+</wu-result>`,
+    custom: `<wu-result status="warning" icon="wi wi-wrench" title="กำลังปิดปรับปรุงระบบ" subtitle="เปิดให้ใช้งานอีกครั้งเวลา 06:00 น."></wu-result>
+<wu-result status="success" [showIcon]="false" title="ส่งใบสมัครเรียบร้อยแล้ว" subtitle=""></wu-result>`,
   },
   api: [
     {
@@ -255,20 +255,20 @@ export const RESULT_DOC: ComponentDoc = {
       id: 'api-slots',
       title: { th: 'เนื้อหาใน tag', en: 'Content' },
       rows: [
-        row('[wtResultExtra]', 'HTML', undefined, 'ปุ่มหรือลิงก์ เรียงเป็นแถวใต้ข้อความ', 'Buttons or links in a row under the text'),
+        row('[wuResultExtra]', 'HTML', undefined, 'ปุ่มหรือลิงก์ เรียงเป็นแถวใต้ข้อความ', 'Buttons or links in a row under the text'),
         row('(content)', 'HTML', undefined, 'สิ่งอื่น ไปอยู่ในกล่องรายละเอียด', 'Anything else, in the details box'),
       ],
     },
   ],
   tokens: [
-    tok('--wt-result-padding · -gap', 'ระยะรอบนอก · ระยะระหว่างส่วน', 'Outer padding · gap between parts'),
-    tok('--wt-result-icon-box', 'ขนาดวงกลมของเครื่องหมาย (สีมาจาก --wt-success-color / -bg ฯลฯ)', 'Size of the mark circle (colours from --wt-success-color / -bg and so on)'),
-    tok('--wt-result-art-width · -code-color', 'ความกว้างของภาพรหัส · สีของตัวเลข', 'Width of the code picture · colour of its digits'),
-    tok('--wt-result-art-accent · -art-soft · -art-paper', 'สีเน้น · สีอ่อน · สีกระดาษของภาพ', 'Picture: accent · soft · paper colours'),
-    tok('--wt-result-title-color · -title-size · -title-weight', 'หัวข้อ', 'Title'),
-    tok('--wt-result-description-color', 'คำอธิบาย', 'The line under the title'),
-    tok('--wt-result-actions-gap', 'ระยะระหว่างปุ่ม', 'Gap between actions'),
-    tok('--wt-result-content-bg · -content-radius · -content-padding', 'กล่องรายละเอียด', 'Details box'),
+    tok('--wu-result-padding · -gap', 'ระยะรอบนอก · ระยะระหว่างส่วน', 'Outer padding · gap between parts'),
+    tok('--wu-result-icon-box', 'ขนาดวงกลมของเครื่องหมาย (สีมาจาก --wu-success-color / -bg ฯลฯ)', 'Size of the mark circle (colours from --wu-success-color / -bg and so on)'),
+    tok('--wu-result-art-width · -code-color', 'ความกว้างของภาพรหัส · สีของตัวเลข', 'Width of the code picture · colour of its digits'),
+    tok('--wu-result-art-accent · -art-soft · -art-paper', 'สีเน้น · สีอ่อน · สีกระดาษของภาพ', 'Picture: accent · soft · paper colours'),
+    tok('--wu-result-title-color · -title-size · -title-weight', 'หัวข้อ', 'Title'),
+    tok('--wu-result-description-color', 'คำอธิบาย', 'The line under the title'),
+    tok('--wu-result-actions-gap', 'ระยะระหว่างปุ่ม', 'Gap between actions'),
+    tok('--wu-result-content-bg · -content-radius · -content-padding', 'กล่องรายละเอียด', 'Details box'),
   ],
 };
 
@@ -277,9 +277,9 @@ export const ERRORPAGE_DOC: ComponentDoc = {
   title: 'ErrorPage',
   group: 'Feedback',
   entry: 'errorpage',
-  standalone: 'WtErrorPage',
-  module: 'WtErrorPageModule',
-  selector: 'wt-error-page',
+  standalone: 'WuErrorPage',
+  module: 'WuErrorPageModule',
+  selector: 'wu-error-page',
   description: {
     th: 'หน้าข้อผิดพลาดสำเร็จรูปสำหรับรหัส 4xx และ 5xx ทุกตัว มีสองแบบ: แบบทางการ (ไอคอนเรียบ ๆ กับรหัสตัวใหญ่) และแบบ kawaii (ตัวการ์ตูนถือป้ายรหัส ขยับตัวและกะพริบตา พร้อมคำพูดน่ารัก) ข้อความไทยและอังกฤษของรหัสที่พบบ่อยมีให้ ปุ่มเลือกให้ตามรหัส (เข้าสู่ระบบ ลองอีกครั้ง ย้อนกลับ กลับหน้าแรก) และแสดงรหัสอ้างอิงให้แจ้งฝ่ายช่วยเหลือได้',
     en: 'Ready-made pages for every 4xx and 5xx code, in two looks: formal (a quiet icon and the code in large type) and kawaii (a little character holding the code up on a sign, bobbing and blinking, with friendlier words). Thai and English words for the common codes are built in, the buttons fit the code (sign in, try again, back, home), and a reference people can quote to support.',
@@ -296,8 +296,8 @@ export const ERRORPAGE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtErrorPageModule</code>) และ standalone (<code>WtErrorPage</code>) · ชื่อ tag <code>wt-error-page</code> หรือ <code>wt-errorPage</code> · ใช้ได้ทุกรุ่น (v1–v3)',
-        en: 'Works as an NgModule (<code>WtErrorPageModule</code>) or standalone (<code>WtErrorPage</code>) · the tags <code>wt-error-page</code> and <code>wt-errorPage</code> · every version (v1–v3).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuErrorPageModule</code>) และ standalone (<code>WuErrorPage</code>) · ชื่อ tag <code>wu-error-page</code> หรือ <code>wu-errorPage</code> · ใช้ได้ทุกรุ่น (v1–v3)',
+        en: 'Works as an NgModule (<code>WuErrorPageModule</code>) or standalone (<code>WuErrorPage</code>) · the tags <code>wu-error-page</code> and <code>wu-errorPage</code> · every version (v1–v3).',
       },
     },
     basic: {
@@ -324,8 +324,8 @@ export const ERRORPAGE_DOC: ComponentDoc = {
     actions: {
       title: { th: 'ปุ่ม เหตุการณ์ และรหัสอ้างอิง', en: 'Buttons, events and a reference' },
       text: {
-        th: '<code>[actions]="[\'retry\', \'home\']"</code> เลือกปุ่มเอง (<code>home</code> <code>back</code> <code>retry</code> <code>signIn</code>, <code>false</code> ไม่มีปุ่ม) · <code>homeLink</code> / <code>signInLink</code> ที่อยู่ของปุ่ม · <code>(action)</code> แจ้งก่อนทำงาน เรียก <code>originalEvent.preventDefault()</code> แล้วใช้ router ของแอปแทนได้ · สิ่งที่ใส่ <code>wtErrorAction</code> ต่อท้ายแถวปุ่ม · <code>reference</code> แสดงรหัสอ้างอิง (request id) ให้ผู้ใช้แจ้งฝ่ายช่วยเหลือ · สิ่งอื่นใน tag อยู่ในกล่องรายละเอียดด้านล่าง',
-        en: '<code>[actions]="[\'retry\', \'home\']"</code> picks the buttons (<code>home</code> <code>back</code> <code>retry</code> <code>signIn</code>; <code>false</code> for none) · <code>homeLink</code> / <code>signInLink</code> are where they go · <code>(action)</code> comes first: call <code>originalEvent.preventDefault()</code> to route with the app’s router instead · elements marked <code>wtErrorAction</code> join the buttons · <code>reference</code> shows an id (a request id) people can quote to support · anything else inside goes in a details box under them.',
+        th: '<code>[actions]="[\'retry\', \'home\']"</code> เลือกปุ่มเอง (<code>home</code> <code>back</code> <code>retry</code> <code>signIn</code>, <code>false</code> ไม่มีปุ่ม) · <code>homeLink</code> / <code>signInLink</code> ที่อยู่ของปุ่ม · <code>(action)</code> แจ้งก่อนทำงาน เรียก <code>originalEvent.preventDefault()</code> แล้วใช้ router ของแอปแทนได้ · สิ่งที่ใส่ <code>wuErrorAction</code> ต่อท้ายแถวปุ่ม · <code>reference</code> แสดงรหัสอ้างอิง (request id) ให้ผู้ใช้แจ้งฝ่ายช่วยเหลือ · สิ่งอื่นใน tag อยู่ในกล่องรายละเอียดด้านล่าง',
+        en: '<code>[actions]="[\'retry\', \'home\']"</code> picks the buttons (<code>home</code> <code>back</code> <code>retry</code> <code>signIn</code>; <code>false</code> for none) · <code>homeLink</code> / <code>signInLink</code> are where they go · <code>(action)</code> comes first: call <code>originalEvent.preventDefault()</code> to route with the app’s router instead · elements marked <code>wuErrorAction</code> join the buttons · <code>reference</code> shows an id (a request id) people can quote to support · anything else inside goes in a details box under them.',
       },
     },
     route: {
@@ -337,25 +337,25 @@ export const ERRORPAGE_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-error-page code="404"></wt-error-page>`,
-    codes: `<wt-error-page [code]="status" look="formal"></wt-error-page>
-<wt-error-page [code]="status" look="kawaii"></wt-error-page>`,
-    kawaii: `<wt-error-page code="404" look="kawaii"></wt-error-page>
-<wt-error-page code="403" look="kawaii"></wt-error-page>
-<wt-error-page code="503" look="kawaii"></wt-error-page>
-<wt-error-page code="429" look="kawaii"></wt-error-page>`,
-    actions: `<wt-error-page code="503" [actions]="['retry']" reference="REQ-7F3A-2026" (action)="picked($event)">
-  <wt-button wtErrorAction label="ติดต่อฝ่ายช่วยเหลือ" severity="secondary" [outlined]="true"></wt-button>
+    basic: `<wu-error-page code="404"></wu-error-page>`,
+    codes: `<wu-error-page [code]="status" look="formal"></wu-error-page>
+<wu-error-page [code]="status" look="kawaii"></wu-error-page>`,
+    kawaii: `<wu-error-page code="404" look="kawaii"></wu-error-page>
+<wu-error-page code="403" look="kawaii"></wu-error-page>
+<wu-error-page code="503" look="kawaii"></wu-error-page>
+<wu-error-page code="429" look="kawaii"></wu-error-page>`,
+    actions: `<wu-error-page code="503" [actions]="['retry']" reference="REQ-7F3A-2026" (action)="picked($event)">
+  <wu-button wuErrorAction label="ติดต่อฝ่ายช่วยเหลือ" severity="secondary" [outlined]="true"></wu-button>
   ระบบลงทะเบียนปิดชั่วคราว เปิดอีกครั้งวันจันทร์ที่ 3 พฤศจิกายน 2569 เวลา 08:00 น.
-</wt-error-page>`,
+</wu-error-page>`,
     route: `<!-- not-found.page.html -->
-<wt-error-page code="404" look="kawaii" fullPage (action)="go($event)"></wt-error-page>`,
+<wu-error-page code="404" look="kawaii" fullPage (action)="go($event)"></wu-error-page>`,
   },
   ts: {
     codes: `status = 404; // 400, 401, 403, 404, 408, 429, 500, 502, 503 …`,
-    actions: `import { WtErrorPageActionEvent } from 'wiratheme/errorpage';
+    actions: `import { WuErrorPageActionEvent } from 'wiraui/errorpage';
 
-picked(e: WtErrorPageActionEvent): void {
+picked(e: WuErrorPageActionEvent): void {
   e.originalEvent.preventDefault(); // stay here (the sample only shows the name)
   this.last = e.action;
 }`,
@@ -363,7 +363,7 @@ picked(e: WtErrorPageActionEvent): void {
 { path: '**', loadComponent: () => import('./not-found.page').then((m) => m.NotFoundPage) },
 
 // not-found.page.ts: home through the router, without a full reload
-go(e: WtErrorPageActionEvent): void {
+go(e: WuErrorPageActionEvent): void {
   if (e.action === 'home') {
     e.originalEvent.preventDefault();
     this.router.navigateByUrl('/');
@@ -390,25 +390,25 @@ go(e: WtErrorPageActionEvent): void {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('action', 'WtErrorPageActionEvent', undefined, '{ action, originalEvent } ก่อนปุ่มทำงาน (preventDefault() เพื่อหยุด)', '{ action, originalEvent } before the button acts (preventDefault() stops it)')],
+      rows: [row('action', 'WuErrorPageActionEvent', undefined, '{ action, originalEvent } ก่อนปุ่มทำงาน (preventDefault() เพื่อหยุด)', '{ action, originalEvent } before the button acts (preventDefault() stops it)')],
     },
     {
       id: 'api-slots',
       title: { th: 'เนื้อหาใน tag', en: 'Content' },
       typeLabel: { th: 'ที่อยู่', en: 'Goes' },
       rows: [
-        row('[wtErrorAction]', 'element', undefined, 'ต่อท้ายแถวปุ่ม', 'After the buttons'),
+        row('[wuErrorAction]', 'element', undefined, 'ต่อท้ายแถวปุ่ม', 'After the buttons'),
         row('อื่น ๆ', 'content', undefined, 'กล่องรายละเอียดใต้ปุ่ม', 'A details box under the buttons'),
       ],
     },
   ],
   tokens: [
-    tok('--wt-error-page-padding · -gap', 'ระยะรอบหน้าและระหว่างส่วน', 'Padding and gaps'),
-    tok('--wt-error-page-badge-size · -badge-bg · -badge-color', 'ไอคอนของแบบทางการ', 'The formal icon'),
-    tok('--wt-error-page-label-color · -code-size · -code-from · -code-to', 'คำว่า “ข้อผิดพลาด” และรหัสตัวใหญ่ (ไล่สีจากบนลงล่าง)', 'The “Error” label and the large code (a top-to-bottom gradient)'),
-    tok('--wt-error-page-title-color · -title-size · -title-weight · -description-color', 'หัวข้อและคำอธิบาย', 'Title and line'),
-    tok('--wt-error-page-button-bg · -button-color · -button-border · -button-radius', 'ปุ่มรอง (ปุ่มหลักใช้สีหลัก)', 'Secondary buttons (the main one takes the primary colour)'),
-    tok('--wt-error-page-mascot-width · -k-blob · -k-body · -k-ink · -k-blush', 'ตัวการ์ตูน: ขนาด พื้นหลัง ตัว เส้น และแก้ม', 'The character: size, backdrop, body, ink and cheeks'),
-    tok('--wt-error-page-k-sign · -k-sign-text · -k-spark · -k-drop · -k-button-shadow', 'ป้ายรหัส ประกาย หยดเหงื่อ และเงาปุ่ม', 'The sign, sparkles, sweat drops and button ledge'),
+    tok('--wu-error-page-padding · -gap', 'ระยะรอบหน้าและระหว่างส่วน', 'Padding and gaps'),
+    tok('--wu-error-page-badge-size · -badge-bg · -badge-color', 'ไอคอนของแบบทางการ', 'The formal icon'),
+    tok('--wu-error-page-label-color · -code-size · -code-from · -code-to', 'คำว่า “ข้อผิดพลาด” และรหัสตัวใหญ่ (ไล่สีจากบนลงล่าง)', 'The “Error” label and the large code (a top-to-bottom gradient)'),
+    tok('--wu-error-page-title-color · -title-size · -title-weight · -description-color', 'หัวข้อและคำอธิบาย', 'Title and line'),
+    tok('--wu-error-page-button-bg · -button-color · -button-border · -button-radius', 'ปุ่มรอง (ปุ่มหลักใช้สีหลัก)', 'Secondary buttons (the main one takes the primary colour)'),
+    tok('--wu-error-page-mascot-width · -k-blob · -k-body · -k-ink · -k-blush', 'ตัวการ์ตูน: ขนาด พื้นหลัง ตัว เส้น และแก้ม', 'The character: size, backdrop, body, ink and cheeks'),
+    tok('--wu-error-page-k-sign · -k-sign-text · -k-spark · -k-drop · -k-button-shadow', 'ป้ายรหัส ประกาย หยดเหงื่อ และเงาปุ่ม', 'The sign, sparkles, sweat drops and button ledge'),
   ],
 };

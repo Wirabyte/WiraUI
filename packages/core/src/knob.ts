@@ -1,4 +1,4 @@
-/** Knob (wt-knob): the dial's arcs in its 100 × 100 viewBox, the value under a pointer, and key steps. */
+/** Knob (wu-knob): the dial's arcs in its 100 × 100 viewBox, the value under a pointer, and key steps. */
 
 /** The dial runs from the bottom left (240°) round the top to the bottom right (-60°). Radians, counter-clockwise. */
 export const KNOB_MIN_RADIANS = (4 * Math.PI) / 3;

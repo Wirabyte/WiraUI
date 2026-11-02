@@ -3,7 +3,7 @@ import { DocsI18n } from '../core/i18n';
 import { DOCS_VERSION } from '../core/version-theme';
 
 /**
- * Once per page with named slots, on v1 / v2 only: their samples write `wtTemplate="footer"`, and the attribute
+ * Once per page with named slots, on v1 / v2 only: their samples write `wuTemplate="footer"`, and the attribute
  * older templates use is read the same. v3 samples use `#footer`, so nothing is shown there.
  */
 @Component({
@@ -14,10 +14,10 @@ import { DOCS_VERSION } from '../core/version-theme';
     @if (version.major < 3) {
       <p class="docs-slot-note">
         @if (en()) {
-          Named slots are written <code>&lt;ng-template wtTemplate="{{ slot() }}"&gt;</code> here. The
+          Named slots are written <code>&lt;ng-template wuTemplate="{{ slot() }}"&gt;</code> here. The
           <code>pTemplate="{{ slot() }}"</code> attribute existing templates use is read the same, so they move over as they are.
         } @else {
-          ตัวอย่างในรุ่นนี้เขียน slot เป็น <code>&lt;ng-template wtTemplate="{{ slot() }}"&gt;</code> ส่วน attribute
+          ตัวอย่างในรุ่นนี้เขียน slot เป็น <code>&lt;ng-template wuTemplate="{{ slot() }}"&gt;</code> ส่วน attribute
           <code>pTemplate="{{ slot() }}"</code> ที่ template เดิมใช้ก็อ่านได้เหมือนกัน ย้ายมาได้โดยไม่ต้องแก้
         }
       </p>

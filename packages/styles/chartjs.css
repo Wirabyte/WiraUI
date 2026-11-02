@@ -1,15 +1,15 @@
-/* wt-chartjs (and wt-chart in wiratheme v1 / v2). Shared by wiratheme v1, v2 and v3. A canvas Chart.js draws into; a
+/* wu-chartjs (and wu-chart in wiraui v1 / v2). Shared by wiraui v1, v2 and v3. A canvas Chart.js draws into; a
    responsive chart fills its container. */
-@layer wiratheme.components {
-  :is(wt-chartjs, wt-chartJs, wt-chart) {
+@layer wiraui.components {
+  :is(wu-chartjs, wu-chartJs, wu-chart) {
     display: block;
   }
   /* Never wider than its container, even with a fixed width (the canvas follows when responsive). */
-  .wt-chartjs {
+  .wu-chartjs {
     position: relative;
     max-width: 100%;
   }
-  .wt-chartjs > canvas {
+  .wu-chartjs > canvas {
     max-width: 100%;
   }
 }

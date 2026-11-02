@@ -3,7 +3,7 @@ import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ITEMS_TS = `import { MenuItem } from 'wiratheme/api';
+const ITEMS_TS = `import { MenuItem } from 'wiraui/api';
 
 items: MenuItem[] = [
   { label: 'หน้าแรก', icon: 'wi wi-home' },
@@ -37,9 +37,9 @@ export const MENUBAR_DOC: ComponentDoc = {
   title: 'Menubar',
   group: 'Navigation',
   entry: 'menubar',
-  standalone: 'WtMenubar',
-  module: 'WtMenubarModule',
-  selector: 'wt-menubar',
+  standalone: 'WuMenubar',
+  module: 'WuMenubarModule',
+  selector: 'wu-menubar',
   description: {
     th: 'แถบเมนูบนหัวหน้าเว็บ มีช่อง start / end สำหรับโลโก้ ช่องค้นหา และปุ่ม เมนูย่อยเปิดใต้รายการและซ้อนได้หลายชั้น ใช้คีย์บอร์ดได้ครบ และบนจอแคบพับเป็นปุ่มเมนู ใช้เป็นแถบหัวเว็บเปล่า ๆ โดยไม่มีเมนูก็ได้',
     en: 'A bar across the top of a page, with start / end slots for a logo, search and buttons. Submenus drop under their item and nest, the keyboard works throughout, and narrow screens get a menu button. It also works as a plain header bar with no menu.',
@@ -97,8 +97,8 @@ export const MENUBAR_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtMenubarModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtMenubar</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code> (หรือ <code>WtMenuItem</code> จาก <code>wiratheme/config</code>) entry นี้ใช้ <code>@angular/router</code> สำหรับ <code>routerLink</code> เป็น peer dependency แบบไม่บังคับที่ใช้เฉพาะ entry นี้',
-        en: 'Works as an NgModule (<code>WtMenubarModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtMenubar</code>). Items are typed <code>MenuItem</code> from <code>wiratheme/api</code> (or <code>WtMenuItem</code> from <code>wiratheme/config</code>). This entry uses <code>@angular/router</code> for <code>routerLink</code>: an optional peer dependency that only this entry needs.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenubarModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenubar</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code> (หรือ <code>WuMenuItem</code> จาก <code>wiraui/config</code>) entry นี้ใช้ <code>@angular/router</code> สำหรับ <code>routerLink</code> เป็น peer dependency แบบไม่บังคับที่ใช้เฉพาะ entry นี้',
+        en: 'Works as an NgModule (<code>WuMenubarModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenubar</code>). Items are typed <code>MenuItem</code> from <code>wiraui/api</code> (or <code>WuMenuItem</code> from <code>wiraui/config</code>). This entry uses <code>@angular/router</code> for <code>routerLink</code>: an optional peer dependency that only this entry needs.',
       },
     },
     basic: {
@@ -111,15 +111,15 @@ export const MENUBAR_DOC: ComponentDoc = {
     header: {
       title: { th: 'แถบหัวเว็บ (ไม่มีเมนู)', en: 'Header bar (no menu)' },
       text: {
-        th: 'แบบที่ใช้บ่อยที่สุด: ใช้ <code>wt-menubar</code> เป็นแถบหัวเว็บอย่างเดียว ไม่ต้องมี <code>[model]</code> ใส่โลโก้และชื่อระบบใน <code>start</code> ช่องค้นหา ปุ่มแจ้งเตือน และรูปโปรไฟล์ใน <code>end</code> (เนื้อหาที่วางในแท็กตรง ๆ ก็ไปอยู่ท้ายแถบเหมือนกัน) เมื่อไม่มีรายการก็ไม่มีปุ่มเมนูบนจอแคบ',
-        en: 'The most common use: <code>wt-menubar</code> as the page header only, with no <code>[model]</code>. The logo and app name go in <code>start</code>; search, notifications and the profile picture in <code>end</code> (content placed straight inside the tag lands at the end too). With no items there is no menu button on narrow screens.',
+        th: 'แบบที่ใช้บ่อยที่สุด: ใช้ <code>wu-menubar</code> เป็นแถบหัวเว็บอย่างเดียว ไม่ต้องมี <code>[model]</code> ใส่โลโก้และชื่อระบบใน <code>start</code> ช่องค้นหา ปุ่มแจ้งเตือน และรูปโปรไฟล์ใน <code>end</code> (เนื้อหาที่วางในแท็กตรง ๆ ก็ไปอยู่ท้ายแถบเหมือนกัน) เมื่อไม่มีรายการก็ไม่มีปุ่มเมนูบนจอแคบ',
+        en: 'The most common use: <code>wu-menubar</code> as the page header only, with no <code>[model]</code>. The logo and app name go in <code>start</code>; search, notifications and the profile picture in <code>end</code> (content placed straight inside the tag lands at the end too). With no items there is no menu button on narrow screens.',
       },
     },
     router: {
       title: { th: 'ลิงก์และ router', en: 'Router links' },
       text: {
-        th: '<code>routerLink</code> ทำงานเหมือน <code>[routerLink]</code> (string หรือ array) พร้อม <code>queryParams</code>, <code>fragment</code>, <code>queryParamsHandling</code>, <code>state</code> และอื่น ๆ โดยใช้ router ของแอป รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wt-menubar-link-active</code> (สีหลัก) <code>routerLinkActiveOptions</code> ค่าเริ่มต้นคือ <code>{ exact: false }</code> ตัวอย่างนี้เทียบ fragment ด้วย จึงไฮไลต์เฉพาะหัวข้อที่เลือก ลองกดดูได้ · <code>url</code> กับ <code>target</code> ใช้กับลิงก์ธรรมดา',
-        en: '<code>routerLink</code> works like <code>[routerLink]</code> (a string or an array), with <code>queryParams</code>, <code>fragment</code>, <code>queryParamsHandling</code>, <code>state</code> and the rest, through the app\'s router. The item matching the current page gets the <code>wt-menubar-link-active</code> class (primary colour). <code>routerLinkActiveOptions</code> defaults to <code>{ exact: false }</code>; this sample compares the fragment too, so only the section you pick lights up. Try one. <code>url</code> and <code>target</code> are for plain links.',
+        th: '<code>routerLink</code> ทำงานเหมือน <code>[routerLink]</code> (string หรือ array) พร้อม <code>queryParams</code>, <code>fragment</code>, <code>queryParamsHandling</code>, <code>state</code> และอื่น ๆ โดยใช้ router ของแอป รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wu-menubar-link-active</code> (สีหลัก) <code>routerLinkActiveOptions</code> ค่าเริ่มต้นคือ <code>{ exact: false }</code> ตัวอย่างนี้เทียบ fragment ด้วย จึงไฮไลต์เฉพาะหัวข้อที่เลือก ลองกดดูได้ · <code>url</code> กับ <code>target</code> ใช้กับลิงก์ธรรมดา',
+        en: '<code>routerLink</code> works like <code>[routerLink]</code> (a string or an array), with <code>queryParams</code>, <code>fragment</code>, <code>queryParamsHandling</code>, <code>state</code> and the rest, through the app\'s router. The item matching the current page gets the <code>wu-menubar-link-active</code> class (primary colour). <code>routerLinkActiveOptions</code> defaults to <code>{ exact: false }</code>; this sample compares the fragment too, so only the section you pick lights up. Try one. <code>url</code> and <code>target</code> are for plain links.',
       },
     },
     commands: {
@@ -167,41 +167,41 @@ export const MENUBAR_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-menubar&gt;</code> เป็น <code>&lt;wt-menubar&gt;</code> model เดิมใช้ต่อได้ไม่ต้องแก้ (field เดียวกับ MenuItem) template <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> ใช้ได้ และ class <code>p-menubar-*</code> อยู่คู่กับ <code>wt-menubar-*</code> ส่วน <code>autoZIndex</code> และ <code>baseZIndex</code> รับไว้แต่ไม่มีผล (เมนูย่อยซ้อนอยู่เหนือหน้าด้วย z-index ของตัวเอง)',
-        en: 'Change <code>&lt;p-menubar&gt;</code> to <code>&lt;wt-menubar&gt;</code>. Existing models work unchanged (the same fields as MenuItem), <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> templates work, and the <code>p-menubar-*</code> classes sit next to <code>wt-menubar-*</code>. <code>autoZIndex</code> and <code>baseZIndex</code> are accepted and ignored (submenus stack above the page with their own z-index).',
+        th: 'เปลี่ยน <code>&lt;p-menubar&gt;</code> เป็น <code>&lt;wu-menubar&gt;</code> model เดิมใช้ต่อได้ไม่ต้องแก้ (field เดียวกับ MenuItem) template <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> ใช้ได้ และ class <code>p-menubar-*</code> อยู่คู่กับ <code>wu-menubar-*</code> ส่วน <code>autoZIndex</code> และ <code>baseZIndex</code> รับไว้แต่ไม่มีผล (เมนูย่อยซ้อนอยู่เหนือหน้าด้วย z-index ของตัวเอง)',
+        en: 'Change <code>&lt;p-menubar&gt;</code> to <code>&lt;wu-menubar&gt;</code>. Existing models work unchanged (the same fields as MenuItem), <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> templates work, and the <code>p-menubar-*</code> classes sit next to <code>wu-menubar-*</code>. <code>autoZIndex</code> and <code>baseZIndex</code> are accepted and ignored (submenus stack above the page with their own z-index).',
       },
     },
   },
   code: {
-    basic: `<wt-menubar [model]="items" ariaLabel="เมนูหลัก">
+    basic: `<wu-menubar [model]="items" ariaLabel="เมนูหลัก">
   <ng-template #start>
     <span class="flex align-items-center gap-2 font-semibold"><i class="wi wi-book"></i> WiraSchool</span>
   </ng-template>
   <ng-template #end>
-    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
+    <wu-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wu-button>
   </ng-template>
-</wt-menubar>`,
+</wu-menubar>`,
     header: `<!-- ไม่ต้องมี [model] -->
-<wt-menubar>
+<wu-menubar>
   <ng-template #start>
     <span class="flex align-items-center gap-2 font-semibold"><i class="wi wi-building"></i> ระบบรับสมัคร</span>
   </ng-template>
   <ng-template #end>
     <div class="flex align-items-center gap-2">
-      <wt-iconfield class="hidden sm:block">
-        <wt-inputicon icon="wi wi-search"></wt-inputicon>
-        <input wtInputText placeholder="ค้นหาผู้สมัคร" />
-      </wt-iconfield>
-      <wt-button icon="wi wi-bell" [rounded]="true" [text]="true" ariaLabel="การแจ้งเตือน"></wt-button>
-      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+      <wu-iconfield class="hidden sm:block">
+        <wu-inputicon icon="wi wi-search"></wu-inputicon>
+        <input wuInputText placeholder="ค้นหาผู้สมัคร" />
+      </wu-iconfield>
+      <wu-button icon="wi wi-bell" [rounded]="true" [text]="true" ariaLabel="การแจ้งเตือน"></wu-button>
+      <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
     </div>
   </ng-template>
-</wt-menubar>`,
-    router: `<wt-menubar [model]="links" ariaLabel="หัวข้อในหน้านี้"></wt-menubar>`,
-    commands: `<wt-menubar [model]="fileItems" ariaLabel="เมนูเอกสาร"></wt-menubar>`,
-    states: `<wt-menubar [model]="accountItems" ariaLabel="บัญชี"></wt-menubar>`,
+</wu-menubar>`,
+    router: `<wu-menubar [model]="links" ariaLabel="หัวข้อในหน้านี้"></wu-menubar>`,
+    commands: `<wu-menubar [model]="fileItems" ariaLabel="เมนูเอกสาร"></wu-menubar>`,
+    states: `<wu-menubar [model]="accountItems" ariaLabel="บัญชี"></wu-menubar>`,
     templates: {
-      v3: `<wt-menubar [model]="editorItems" ariaLabel="เมนูเอกสาร">
+      v3: `<wu-menubar [model]="editorItems" ariaLabel="เมนูเอกสาร">
   <ng-template #item let-item let-root="root" let-hasSubmenu="hasSubmenu">
     @if (item.icon) {
       <i [class]="item.icon"></i>
@@ -214,33 +214,33 @@ export const MENUBAR_DOC: ComponentDoc = {
       <i [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
     }
   </ng-template>
-</wt-menubar>`,
-      classic: `<wt-menubar [model]="editorItems" ariaLabel="เมนูเอกสาร">
-  <ng-template wtTemplate="item" let-item let-root="root" let-hasSubmenu="hasSubmenu">
+</wu-menubar>`,
+      classic: `<wu-menubar [model]="editorItems" ariaLabel="เมนูเอกสาร">
+  <ng-template wuTemplate="item" let-item let-root="root" let-hasSubmenu="hasSubmenu">
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span>{{ item.label }}</span>
     <kbd *ngIf="item.shortcut" class="ml-auto text-xs">{{ item.shortcut }}</kbd>
     <i *ngIf="hasSubmenu" [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
   </ng-template>
-</wt-menubar>`,
+</wu-menubar>`,
     },
-    narrow: `<wt-menubar [model]="items" breakpoint="9999px" ariaLabel="เมนูหลัก">
+    narrow: `<wu-menubar [model]="items" breakpoint="9999px" ariaLabel="เมนูหลัก">
   <ng-template #start>
     <span class="font-semibold">WiraSchool</span>
   </ng-template>
   <ng-template #menuicon>
     <i class="wi wi-bars"></i>
   </ng-template>
-</wt-menubar>`,
+</wu-menubar>`,
     auto: `<!-- เปิดเมื่อคลิกเท่านั้น -->
-<wt-menubar [model]="items" [autoDisplay]="false" ariaLabel="คลิกเพื่อเปิด"></wt-menubar>
+<wu-menubar [model]="items" [autoDisplay]="false" ariaLabel="คลิกเพื่อเปิด"></wu-menubar>
 
 <!-- ชี้แล้วเปิด และปิดเองเมื่อเมาส์ออกจากแถบ 300ms -->
-<wt-menubar [model]="items" [autoDisplay]="true" [autoHide]="true" [autoHideDelay]="300" ariaLabel="ชี้เพื่อเปิด"></wt-menubar>`,
+<wu-menubar [model]="items" [autoDisplay]="true" [autoHide]="true" [autoHideDelay]="300" ariaLabel="ชี้เพื่อเปิด"></wu-menubar>`,
   },
   ts: {
     basic: ITEMS_TS,
-    router: `import { MenuItem } from 'wiratheme/api';
+    router: `import { MenuItem } from 'wiraui/api';
 
 // เทียบ fragment ด้วย: ไฮไลต์เฉพาะหัวข้อที่เปิดอยู่
 private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
@@ -258,7 +258,7 @@ links: MenuItem[] = [
   { label: 'ลิงก์และ router', icon: 'wi wi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
   { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
 ];`,
-    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 fileItems: MenuItem[] = [
   {
@@ -349,8 +349,8 @@ run(event: MenuItemCommandEvent): void {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #start, wtTemplate="start" หรือ pTemplate="start" ก็ได้ เนื้อหาที่วางในแท็กตรง ๆ ไปอยู่ท้ายแถบเหมือน end',
-        en: 'Write them as #start, wtTemplate="start" or pTemplate="start". Content placed straight inside the tag lands at the end, like end.',
+        th: 'เขียนเป็น #start, wuTemplate="start" หรือ pTemplate="start" ก็ได้ เนื้อหาที่วางในแท็กตรง ๆ ไปอยู่ท้ายแถบเหมือน end',
+        en: 'Write them as #start, wuTemplate="start" or pTemplate="start". Content placed straight inside the tag lands at the end, like end.',
       },
       rows: [
         row('start', '—', undefined, 'หัวแถบ (โลโก้ ชื่อระบบ)', 'Start of the bar (logo, app name)'),
@@ -374,7 +374,7 @@ run(event: MenuItemCommandEvent): void {
           'ลิงก์ของ router แบบเดียวกับ [routerLink] (ใช้ router ของแอป)',
           'A router link, as with [routerLink] (uses the app\'s router)'
         ),
-        row('routerLinkActiveOptions', '{ exact: boolean } | IsActiveMatchOptions', '{ exact: false }', 'เมื่อไหร่ถือว่าลิงก์ตรงกับหน้าปัจจุบัน (class wt-menubar-link-active)', 'When the link counts as the current page (class wt-menubar-link-active)'),
+        row('routerLinkActiveOptions', '{ exact: boolean } | IsActiveMatchOptions', '{ exact: false }', 'เมื่อไหร่ถือว่าลิงก์ตรงกับหน้าปัจจุบัน (class wu-menubar-link-active)', 'When the link counts as the current page (class wu-menubar-link-active)'),
         row('url · target', 'string', undefined, 'ลิงก์ธรรมดา (href) และ target ของมัน', 'A plain link (href) and its target'),
         row('disabled · visible', BOOL, 'false · true', 'กดไม่ได้ (คีย์บอร์ดข้าม) · ไม่แสดง', 'Blocked (the keyboard skips it) · hidden'),
         row('separator', BOOL, 'false', 'เส้นคั่นแทนรายการ', 'A separator line instead of an item'),
@@ -387,7 +387,7 @@ run(event: MenuItemCommandEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+      code: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;
@@ -396,7 +396,7 @@ interface MenuItemCommandEvent {
 }
 
 // context ของ template item
-interface WtMenubarItemContext {
+interface WuMenubarItemContext {
   $implicit: MenuItem;
   root: boolean;        // อยู่ในแถบ (ไม่ใช่เมนูย่อย)
   hasSubmenu: boolean;
@@ -404,34 +404,34 @@ interface WtMenubarItemContext {
     },
   ],
   tokens: [
-    tok('--wt-menubar-bg', 'พื้นหลังของแถบ', 'Bar background'),
-    tok('--wt-menubar-border-width', 'ความหนาขอบของแถบ (สีจาก --wt-border)', 'Bar border width (colour from --wt-border)'),
-    tok('--wt-menubar-radius', 'ความมนของแถบ', 'Bar corner radius'),
-    tok('--wt-menubar-padding', 'ระยะขอบในของแถบ', 'Bar padding'),
-    tok('--wt-menubar-gap', 'ระยะระหว่าง start รายการ และ end', 'Gap between start, the items and end'),
-    tok('--wt-menubar-root-gap', 'ระยะระหว่างรายการในแถบ', 'Gap between bar items'),
-    tok('--wt-menubar-item-padding', 'ระยะในของรายการบนแถบ', 'Bar item padding'),
-    tok('--wt-menubar-item-radius', 'ความมนของรายการ', 'Item radius'),
-    tok('--wt-menubar-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
-    tok('--wt-menubar-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
-    tok('--wt-menubar-item-hover-bg', 'พื้นรายการเมื่อชี้', 'Item background on hover'),
-    tok('--wt-menubar-item-hover-color', 'สีตัวอักษรเมื่อชี้', 'Item text on hover'),
-    tok('--wt-menubar-item-active-bg', 'พื้นรายการที่เมนูย่อยเปิดอยู่', 'Background of an item whose submenu is open'),
-    tok('--wt-menubar-item-active-color', 'สีตัวอักษรรายการที่เมนูย่อยเปิดอยู่', 'Text of an item whose submenu is open'),
-    tok('--wt-menubar-link-active-color', 'สีลิงก์ของหน้าปัจจุบัน (routerLinkActive)', 'Link of the current page (routerLinkActive)'),
-    tok('--wt-menubar-submenu-bg', 'พื้นของเมนูย่อย', 'Submenu background'),
-    tok('--wt-menubar-submenu-border-width', 'ความหนาขอบของเมนูย่อย', 'Submenu border width'),
-    tok('--wt-menubar-submenu-radius', 'ความมนของเมนูย่อย', 'Submenu radius'),
-    tok('--wt-menubar-submenu-shadow', 'เงาของเมนูย่อย', 'Submenu shadow'),
-    tok('--wt-menubar-submenu-padding', 'ระยะขอบในของเมนูย่อย', 'Submenu padding'),
-    tok('--wt-menubar-submenu-gap', 'ระยะระหว่างรายการในเมนูย่อย', 'Gap between submenu items'),
-    tok('--wt-menubar-submenu-offset', 'ระยะห่างระหว่างแถบกับเมนูย่อย', 'Space between the bar and a submenu'),
-    tok('--wt-menubar-submenu-min-width', 'ความกว้างขั้นต่ำของเมนูย่อย', 'Submenu minimum width'),
-    tok('--wt-menubar-submenu-item-padding', 'ระยะในของรายการในเมนูย่อย (และรายการบนจอแคบ)', 'Submenu item padding (and items on narrow screens)'),
-    tok('--wt-menubar-submenu-item-radius', 'ความมนของรายการในเมนูย่อย', 'Submenu item radius'),
-    tok('--wt-menubar-separator-color', 'สีเส้นคั่น', 'Separator colour'),
-    tok('--wt-menubar-button-size', 'ขนาดปุ่มเมนูบนจอแคบ', 'Menu button size (narrow screens)'),
-    tok('--wt-menubar-button-radius', 'ความมนของปุ่มเมนู', 'Menu button radius'),
-    tok('--wt-border', 'สีขอบของแถบและเมนูย่อย', 'Bar and submenu border colour'),
+    tok('--wu-menubar-bg', 'พื้นหลังของแถบ', 'Bar background'),
+    tok('--wu-menubar-border-width', 'ความหนาขอบของแถบ (สีจาก --wu-border)', 'Bar border width (colour from --wu-border)'),
+    tok('--wu-menubar-radius', 'ความมนของแถบ', 'Bar corner radius'),
+    tok('--wu-menubar-padding', 'ระยะขอบในของแถบ', 'Bar padding'),
+    tok('--wu-menubar-gap', 'ระยะระหว่าง start รายการ และ end', 'Gap between start, the items and end'),
+    tok('--wu-menubar-root-gap', 'ระยะระหว่างรายการในแถบ', 'Gap between bar items'),
+    tok('--wu-menubar-item-padding', 'ระยะในของรายการบนแถบ', 'Bar item padding'),
+    tok('--wu-menubar-item-radius', 'ความมนของรายการ', 'Item radius'),
+    tok('--wu-menubar-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
+    tok('--wu-menubar-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
+    tok('--wu-menubar-item-hover-bg', 'พื้นรายการเมื่อชี้', 'Item background on hover'),
+    tok('--wu-menubar-item-hover-color', 'สีตัวอักษรเมื่อชี้', 'Item text on hover'),
+    tok('--wu-menubar-item-active-bg', 'พื้นรายการที่เมนูย่อยเปิดอยู่', 'Background of an item whose submenu is open'),
+    tok('--wu-menubar-item-active-color', 'สีตัวอักษรรายการที่เมนูย่อยเปิดอยู่', 'Text of an item whose submenu is open'),
+    tok('--wu-menubar-link-active-color', 'สีลิงก์ของหน้าปัจจุบัน (routerLinkActive)', 'Link of the current page (routerLinkActive)'),
+    tok('--wu-menubar-submenu-bg', 'พื้นของเมนูย่อย', 'Submenu background'),
+    tok('--wu-menubar-submenu-border-width', 'ความหนาขอบของเมนูย่อย', 'Submenu border width'),
+    tok('--wu-menubar-submenu-radius', 'ความมนของเมนูย่อย', 'Submenu radius'),
+    tok('--wu-menubar-submenu-shadow', 'เงาของเมนูย่อย', 'Submenu shadow'),
+    tok('--wu-menubar-submenu-padding', 'ระยะขอบในของเมนูย่อย', 'Submenu padding'),
+    tok('--wu-menubar-submenu-gap', 'ระยะระหว่างรายการในเมนูย่อย', 'Gap between submenu items'),
+    tok('--wu-menubar-submenu-offset', 'ระยะห่างระหว่างแถบกับเมนูย่อย', 'Space between the bar and a submenu'),
+    tok('--wu-menubar-submenu-min-width', 'ความกว้างขั้นต่ำของเมนูย่อย', 'Submenu minimum width'),
+    tok('--wu-menubar-submenu-item-padding', 'ระยะในของรายการในเมนูย่อย (และรายการบนจอแคบ)', 'Submenu item padding (and items on narrow screens)'),
+    tok('--wu-menubar-submenu-item-radius', 'ความมนของรายการในเมนูย่อย', 'Submenu item radius'),
+    tok('--wu-menubar-separator-color', 'สีเส้นคั่น', 'Separator colour'),
+    tok('--wu-menubar-button-size', 'ขนาดปุ่มเมนูบนจอแคบ', 'Menu button size (narrow screens)'),
+    tok('--wu-menubar-button-radius', 'ความมนของปุ่มเมนู', 'Menu button radius'),
+    tok('--wu-border', 'สีขอบของแถบและเมนูย่อย', 'Bar and submenu border colour'),
   ],
 };

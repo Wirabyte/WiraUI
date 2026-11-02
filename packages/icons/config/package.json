@@ -1,13 +1,15 @@
 {
   "name": "wiraicon",
   "version": "0.0.0",
-  "description": "WiraTheme icons: 424 icons in five weights (thin, light, regular, bold, fill) as CSS classes, SVG files and an Angular component. Works without wiratheme.",
+  "description": "WiraUI icons: 424 icons in five weights (thin, light, regular, bold, fill) as CSS classes, SVG files and an Angular component. Works without wiraui.",
   "license": "MIT",
-  "keywords": ["icons", "icon font", "svg", "angular", "wiratheme", "thai"],
-  "repository": { "type": "git", "url": "https://github.com/Wirabyte/WiraTheme.git", "directory": "packages/icons" },
+  "homepage": "https://github.com/Wirabyte/WiraUI/tree/main/packages/icons/config#readme",
+  "bugs": "https://github.com/Wirabyte/WiraUI/issues",
+  "keywords": ["icons", "icon font", "svg", "angular", "wiraui", "thai"],
+  "repository": { "type": "git", "url": "git+https://github.com/Wirabyte/WiraUI.git", "directory": "packages/icons" },
   "sideEffects": ["*.css"],
   "peerDependencies": {
-    "@angular/core": ">=15.0.0 <23.0.0"
+    "@angular/core": ">=15.0.0"
   },
   "peerDependenciesMeta": {
     "@angular/core": { "optional": true }

@@ -1,4 +1,4 @@
-export interface WtRadioButtonClickEvent {
+export interface WuRadioButtonClickEvent {
   value: unknown;
   originalEvent: Event;
 }

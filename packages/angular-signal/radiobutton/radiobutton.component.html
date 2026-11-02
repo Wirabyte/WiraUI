@@ -1,14 +1,14 @@
 <label
-  class="wt-radiobutton"
+  class="wu-radiobutton"
   [class]="styleClass() || ''"
   [style]="rootStyle()"
-  [class.wt-radiobutton-checked]="checked()"
-  [class.wt-radiobutton-disabled]="isDisabled()"
-  [class.wt-invalid]="invalid()"
+  [class.wu-radiobutton-checked]="checked()"
+  [class.wu-radiobutton-disabled]="isDisabled()"
+  [class.wu-invalid]="invalid()"
 >
   <input
     type="radio"
-    class="wt-radiobutton-input p-radiobutton-input"
+    class="wu-radiobutton-input p-radiobutton-input"
     [id]="id()"
     [attr.name]="name() || null"
     [checked]="checked()"
@@ -19,15 +19,15 @@
     (blur)="onTouched()"
   />
   <span
-    class="wt-radiobutton-control p-radiobutton p-component"
+    class="wu-radiobutton-control p-radiobutton p-component"
     [class.p-radiobutton-checked]="checked()"
     [class.p-disabled]="isDisabled()"
     [class.p-invalid]="invalid()"
     aria-hidden="true"
   >
-    <span class="wt-radiobutton-box p-radiobutton-box"><span class="wt-radiobutton-dot p-radiobutton-icon"></span></span>
+    <span class="wu-radiobutton-box p-radiobutton-box"><span class="wu-radiobutton-dot p-radiobutton-icon"></span></span>
   </span>
   @if (label()) {
-    <span class="wt-radiobutton-label p-radiobutton-label">{{ label() }}</span>
+    <span class="wu-radiobutton-label p-radiobutton-label">{{ label() }}</span>
   }
 </label>

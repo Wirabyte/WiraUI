@@ -1,4 +1,4 @@
-/** Trees (wt-tree, wt-treeSelect): the node shape apps already use, search, and check-box selection that spreads. */
+/** Trees (wu-tree, wu-treeSelect): the node shape apps already use, search, and check-box selection that spreads. */
 import { optionField, searchText } from './select';
 
 /** One node of a tree. The same fields TreeNode has in the apps moving over. */
@@ -13,7 +13,7 @@ export interface TreeNode<T = any> {
   /** `false`: has children still to load (an arrow shows; `(onNodeExpand)` loads them). */
   leaf?: boolean;
   expanded?: boolean;
-  /** Picks the template (`wtTemplate="url"`); `'default'` otherwise. */
+  /** Picks the template (`wuTemplate="url"`); `'default'` otherwise. */
   type?: string;
   parent?: TreeNode<T>;
   partialSelected?: boolean;

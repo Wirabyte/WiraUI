@@ -1,4 +1,4 @@
-/** Carousel (wt-carousel): pages of items, what shows at a window width, and moving between pages. */
+/** Carousel (wu-carousel): pages of items, what shows at a window width, and moving between pages. */
 
 /** At or below `breakpoint` (a CSS width such as `'768px'`), show `numVisible` items and move `numScroll` at a time. */
 export interface CarouselResponsiveOptions {

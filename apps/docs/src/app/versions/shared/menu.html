@@ -8,16 +8,16 @@
       <docs-demo [html]="code['popup']" [ts]="ts['popup']" layout="stack">
         <div class="docs-menu-header">
           <span class="docs-menu-brand">WiraSchool</span>
-          <wt-button
+          <wu-button
             id="d-menu-open"
             icon="wi wi-user"
             [rounded]="true"
             [text]="true"
             [ariaLabel]="tx('บัญชีของฉัน')"
             (onClick)="profileMenu.toggle($event)"
-          ></wt-button>
+          ></wu-button>
         </div>
-        <wt-menu #profileMenu id="d-menu-popup" [model]="local(profileItems)" [popup]="true" [ariaLabel]="tx('บัญชีของฉัน')"></wt-menu>
+        <wu-menu #profileMenu id="d-menu-popup" [model]="local(profileItems)" [popup]="true" [ariaLabel]="tx('บัญชีของฉัน')"></wu-menu>
         <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-menu-popup-out">{{ lastCommand || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -25,26 +25,26 @@
     <docs-section id="inline" [section]="sec['inline']">
       <docs-demo [html]="code['inline']" [ts]="ts['inline']">
         <aside class="docs-menu-side">
-          <wt-menu id="d-menu-inline" [model]="local(sideItems)" [style]="{ width: '100%', border: 'none' }" [ariaLabel]="tx('เมนูข้าง')"></wt-menu>
+          <wu-menu id="d-menu-inline" [model]="local(sideItems)" [style]="{ width: '100%', border: 'none' }" [ariaLabel]="tx('เมนูข้าง')"></wu-menu>
         </aside>
       </docs-demo>
     </docs-section>
 
     <docs-section id="groups" [section]="sec['groups']">
       <docs-demo [html]="code['groups']" [ts]="ts['groups']">
-        <wt-menu id="d-menu-groups" [model]="local(groupItems)" [ariaLabel]="tx('เมนูเอกสาร')"></wt-menu>
+        <wu-menu id="d-menu-groups" [model]="local(groupItems)" [ariaLabel]="tx('เมนูเอกสาร')"></wu-menu>
       </docs-demo>
     </docs-section>
 
     <docs-section id="states" [section]="sec['states']">
       <docs-demo [html]="code['states']" [ts]="ts['states']">
-        <wt-menu id="d-menu-states" [model]="local(stateItems)" [ariaLabel]="tx('กล่องข้อความ')"></wt-menu>
+        <wu-menu id="d-menu-states" [model]="local(stateItems)" [ariaLabel]="tx('กล่องข้อความ')"></wu-menu>
       </docs-demo>
     </docs-section>
 
     <docs-section id="links" [section]="sec['links']">
       <docs-demo [html]="code['links']" [ts]="ts['links']">
-        <wt-menu id="d-menu-links" [model]="local(linkItems)" [ariaLabel]="tx('ลิงก์และคำสั่ง')"></wt-menu>
+        <wu-menu id="d-menu-links" [model]="local(linkItems)" [ariaLabel]="tx('ลิงก์และคำสั่ง')"></wu-menu>
         <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-menu-command">{{ lastCommand || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -52,10 +52,10 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['groups']">
-        <wt-menu id="d-menu-template" [model]="local(groupItems)" [ariaLabel]="tx('เมนูผู้ใช้')">
+        <wu-menu id="d-menu-template" [model]="local(groupItems)" [ariaLabel]="tx('เมนูผู้ใช้')">
           <ng-template #start>
             <div class="docs-menu-user">
-              <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+              <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
               <span>{{ tx('สมหญิง ใจดี') }}</span>
             </div>
           </ng-template>
@@ -66,21 +66,21 @@
             <i [class]="item.icon"></i>
             <span>{{ item.label }}</span>
             @if (item.badge) {
-              <wt-badge class="docs-menu-badge" [value]="item.badge"></wt-badge>
+              <wu-badge class="docs-menu-badge" [value]="item.badge"></wu-badge>
             }
           </ng-template>
           <ng-template #end>
-            <wt-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
+            <wu-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wu-button>
           </ng-template>
-        </wt-menu>
+        </wu-menu>
       </docs-demo>
     </docs-section>
 
     <docs-section id="methods" [section]="sec['methods']">
       <docs-demo [html]="code['methods']" [ts]="ts['methods']">
-        <wt-button id="d-menu-show" [label]="tx('เปิดเมนู')" (onClick)="actionMenu.show($event)"></wt-button>
-        <wt-button id="d-menu-hide" [label]="tx('ปิดเมนู')" severity="secondary" [outlined]="true" (onClick)="actionMenu.hide()"></wt-button>
-        <wt-menu
+        <wu-button id="d-menu-show" [label]="tx('เปิดเมนู')" (onClick)="actionMenu.show($event)"></wu-button>
+        <wu-button id="d-menu-hide" [label]="tx('ปิดเมนู')" severity="secondary" [outlined]="true" (onClick)="actionMenu.hide()"></wu-button>
+        <wu-menu
           #actionMenu
           id="d-menu-action"
           [model]="local(profileItems)"
@@ -88,7 +88,7 @@
           [ariaLabel]="tx('เมนูคำสั่ง')"
           (onShow)="logMenu('onShow')"
           (onHide)="logMenu('onHide')"
-        ></wt-menu>
+        ></wu-menu>
         <span class="docs-demo-output">events: <code id="d-menu-events">{{ menuEvents.join(', ') || '-' }}</code></span>
       </docs-demo>
     </docs-section>

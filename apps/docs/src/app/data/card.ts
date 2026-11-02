@@ -6,9 +6,9 @@ export const CARD_DOC: ComponentDoc = {
   title: 'Card',
   group: 'Panel',
   entry: 'card',
-  standalone: 'WtCard',
-  module: 'WtCardModule',
-  selector: 'wt-card',
+  standalone: 'WuCard',
+  module: 'WuCardModule',
+  selector: 'wu-card',
   description: {
     th: 'กล่องเนื้อหาที่มี header / subheader และ slot สำหรับรูป ปุ่มข้างหัวการ์ด และ footer พร้อม variant outlined, elevated, glass และสถานะ loading',
     en: 'A content box with header / subheader and slots for media, header actions and a footer, plus outlined, elevated and glass variants and a loading state.',
@@ -53,15 +53,15 @@ export const CARD_DOC: ComponentDoc = {
     slots: {
       title: 'Slots',
       text: {
-        th: 'ใส่ attribute <code>wtCardHeader</code> (ด้านบนสุด เช่น รูป), <code>wtCardActions</code> (ข้างหัวการ์ด) และ <code>wtCardFooter</code> บน element ที่จะวาง ส่วนที่ไม่ได้ใส่จะไม่กินพื้นที่',
-        en: 'Add <code>wtCardHeader</code> (top, e.g. an image), <code>wtCardActions</code> (next to the title) or <code>wtCardFooter</code> to the element you place. Unused slots take no space.',
+        th: 'ใส่ attribute <code>wuCardHeader</code> (ด้านบนสุด เช่น รูป), <code>wuCardActions</code> (ข้างหัวการ์ด) และ <code>wuCardFooter</code> บน element ที่จะวาง ส่วนที่ไม่ได้ใส่จะไม่กินพื้นที่',
+        en: 'Add <code>wuCardHeader</code> (top, e.g. an image), <code>wuCardActions</code> (next to the title) or <code>wuCardFooter</code> to the element you place. Unused slots take no space.',
       },
     },
     templates: {
       title: 'Templates',
       text: {
-        th: 'template <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> และ <code>footer</code> (เขียนเป็น <code>#name</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot · element <code>&lt;wt-header&gt;</code> และ <code>&lt;wt-footer&gt;</code> วางในการ์ดได้เลยเหมือน <code>wtCardHeader</code> / <code>wtCardFooter</code> · <code>styleClass</code> และ <code>style</code> (object) ใส่ที่กล่องการ์ด',
-        en: 'The <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> and <code>footer</code> templates (as <code>#name</code>, <code>wtTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots · the <code>&lt;wt-header&gt;</code> and <code>&lt;wt-footer&gt;</code> elements go straight into the card like <code>wtCardHeader</code> / <code>wtCardFooter</code> · <code>styleClass</code> and <code>style</code> (an object) go on the card box.',
+        th: 'template <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> และ <code>footer</code> (เขียนเป็น <code>#name</code>, <code>wuTemplate</code> หรือ <code>pTemplate</code>) แบบที่ template เดิมใช้ ทำงานเหมือน slot · element <code>&lt;wu-header&gt;</code> และ <code>&lt;wu-footer&gt;</code> วางในการ์ดได้เลยเหมือน <code>wuCardHeader</code> / <code>wuCardFooter</code> · <code>styleClass</code> และ <code>style</code> (object) ใส่ที่กล่องการ์ด',
+        en: 'The <code>header</code>, <code>title</code>, <code>subtitle</code>, <code>content</code> and <code>footer</code> templates (as <code>#name</code>, <code>wuTemplate</code> or <code>pTemplate</code>) that older templates use work like the slots · the <code>&lt;wu-header&gt;</code> and <code>&lt;wu-footer&gt;</code> elements go straight into the card like <code>wuCardHeader</code> / <code>wuCardFooter</code> · <code>styleClass</code> and <code>style</code> (an object) go on the card box.',
       },
     },
     variants: {
@@ -74,8 +74,8 @@ export const CARD_DOC: ComponentDoc = {
     advanced: {
       title: 'Advanced',
       text: {
-        th: 'รูปเต็มความกว้างด้านบนด้วย <code>[wtCardHeader]</code> (กว้างราว 22rem รูปสูงราว 11.5rem และ <code>object-fit: cover</code>) ตามด้วยหัว ข้อความรอง เนื้อหา และปุ่ม ยกเลิก / บันทึก กว้างเท่ากันเต็มแถว',
-        en: 'A full-bleed image with <code>[wtCardHeader]</code> (about 22rem wide, the image about 11.5rem tall with <code>object-fit: cover</code>), then the title, subtitle, a paragraph and equal full-width Cancel / Save buttons.',
+        th: 'รูปเต็มความกว้างด้านบนด้วย <code>[wuCardHeader]</code> (กว้างราว 22rem รูปสูงราว 11.5rem และ <code>object-fit: cover</code>) ตามด้วยหัว ข้อความรอง เนื้อหา และปุ่ม ยกเลิก / บันทึก กว้างเท่ากันเต็มแถว',
+        en: 'A full-bleed image with <code>[wuCardHeader]</code> (about 22rem wide, the image about 11.5rem tall with <code>object-fit: cover</code>), then the title, subtitle, a paragraph and equal full-width Cancel / Save buttons.',
       },
     },
     loading: {
@@ -87,19 +87,19 @@ export const CARD_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-card header="โปรไฟล์" subheader="ข้อมูลบัญชี">
+    basic: `<wu-card header="โปรไฟล์" subheader="ข้อมูลบัญชี">
   <p>สมชาย ใจดี · สมาชิกตั้งแต่ 2566 · แผน Pro</p>
-</wt-card>`,
-    slots: `<wt-card header="แผน Pro" subheader="รายเดือน">
-  <div wtCardHeader class="cover">฿290 / เดือน</div>
-  <wt-button wtCardActions icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wt-button>
+</wu-card>`,
+    slots: `<wu-card header="แผน Pro" subheader="รายเดือน">
+  <div wuCardHeader class="cover">฿290 / เดือน</div>
+  <wu-button wuCardActions icon="wi wi-plus" [text]="true" [rounded]="true" ariaLabel="เพิ่ม"></wu-button>
   <p>5 โปรเจค · พื้นที่ 50 GB · ผู้ใช้ไม่จำกัด</p>
-  <div wtCardFooter>
-    <wt-button label="อัปเกรด" size="small"></wt-button>
-    <wt-button label="รายละเอียด" size="small" severity="secondary" [text]="true"></wt-button>
+  <div wuCardFooter>
+    <wu-button label="อัปเกรด" size="small"></wu-button>
+    <wu-button label="รายละเอียด" size="small" severity="secondary" [text]="true"></wu-button>
   </div>
-</wt-card>`,
-    templates: `<wt-card styleClass="news-card" [style]="{ maxWidth: '26rem' }">
+</wu-card>`,
+    templates: `<wu-card styleClass="news-card" [style]="{ maxWidth: '26rem' }">
   <ng-template #header>
     <div class="cover">ปีการศึกษา 2569</div>
   </ng-template>
@@ -109,35 +109,35 @@ export const CARD_DOC: ComponentDoc = {
     <p>เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4</p>
   </ng-template>
   <ng-template #footer>
-    <wt-button label="สมัครเลย" size="small"></wt-button>
+    <wu-button label="สมัครเลย" size="small"></wu-button>
   </ng-template>
-</wt-card>
+</wu-card>
 
-<wt-card header="ประกาศ">
-  <wt-header><div class="cover">ปิดภาคเรียนวันที่ 1 ตุลาคม</div></wt-header>
+<wu-card header="ประกาศ">
+  <wu-header><div class="cover">ปิดภาคเรียนวันที่ 1 ตุลาคม</div></wu-header>
   <p>ปิดภาคเรียนวันที่ 1 ตุลาคม</p>
-  <wt-footer>อัปเดตเมื่อวานนี้</wt-footer>
-</wt-card>`,
-    variants: `<wt-card header="Default"></wt-card>
-<wt-card header="Outlined" variant="outlined"></wt-card>
-<wt-card header="Elevated" variant="elevated"></wt-card>
-<wt-card header="Glass" variant="glass"></wt-card>`,
-    advanced: `<wt-card header="ทริปทะเลสาบยามเย็น" subheader="3 วัน 2 คืน · เชียงใหม่" [style]="{ width: '22rem' }">
-  <img wtCardHeader src="assets/lake.jpg" alt="ทะเลสาบยามเย็น" class="card-cover" />
+  <wu-footer>อัปเดตเมื่อวานนี้</wu-footer>
+</wu-card>`,
+    variants: `<wu-card header="Default"></wu-card>
+<wu-card header="Outlined" variant="outlined"></wu-card>
+<wu-card header="Elevated" variant="elevated"></wu-card>
+<wu-card header="Glass" variant="glass"></wu-card>`,
+    advanced: `<wu-card header="ทริปทะเลสาบยามเย็น" subheader="3 วัน 2 คืน · เชียงใหม่" [style]="{ width: '22rem' }">
+  <img wuCardHeader src="assets/lake.jpg" alt="ทะเลสาบยามเย็น" class="card-cover" />
   <p>พักริมทะเลสาบ ล่องเรือชมพระอาทิตย์ตก และอาหารเย็นจากฟาร์มท้องถิ่น</p>
-  <div wtCardFooter class="card-actions">
-    <wt-button label="ยกเลิก" severity="secondary" [outlined]="true" [fluid]="true"></wt-button>
-    <wt-button label="บันทึก" [fluid]="true"></wt-button>
+  <div wuCardFooter class="card-actions">
+    <wu-button label="ยกเลิก" severity="secondary" [outlined]="true" [fluid]="true"></wu-button>
+    <wu-button label="บันทึก" [fluid]="true"></wu-button>
   </div>
-</wt-card>
+</wu-card>
 
 <!-- styles.css
 .card-cover { display: block; width: 100%; height: 11.5rem; object-fit: cover; }
 .card-actions { display: flex; gap: 1rem; }
 .card-actions > * { flex: 1 1 0; } -->`,
-    loading: `<wt-card header="ยอดขายเดือนนี้" [loading]="isPageLoading">
+    loading: `<wu-card header="ยอดขายเดือนนี้" [loading]="isPageLoading">
   <p>฿128,400 จาก 312 คำสั่งซื้อ</p>
-</wt-card>`,
+</wu-card>`,
   },
   ts: {
     loading: `isPageLoading = true;
@@ -158,7 +158,7 @@ ngOnInit(): void {
         { name: 'subheader', type: 'string', description: { th: 'ข้อความรองใต้หัวการ์ด', en: 'Secondary line under the title' } },
         {
           name: 'variant',
-          type: 'WtCardVariant',
+          type: 'WuCardVariant',
           default: "'default'",
           description: {
             th: 'outlined ไม่มีเงา · elevated มีเงาไม่มีขอบ · glass พื้นกระจก (เฉพาะ v3 ถอยเป็นพื้นทึบเองถ้าเบราว์เซอร์ไม่รองรับ)',
@@ -174,36 +174,36 @@ ngOnInit(): void {
       title: 'Slots',
       typeLabel: { th: 'ใส่ด้วย', en: 'Use' },
       rows: [
-        { name: 'wtCardHeader', type: 'attribute', description: { th: 'ส่วนบนสุดของการ์ด เช่น รูปภาพ', en: 'Top of the card, e.g. an image' } },
-        { name: 'wtCardActions', type: 'attribute', description: { th: 'ปุ่มหรือเมนูทางขวาของหัวการ์ด', en: 'Buttons or a menu to the right of the title' } },
+        { name: 'wuCardHeader', type: 'attribute', description: { th: 'ส่วนบนสุดของการ์ด เช่น รูปภาพ', en: 'Top of the card, e.g. an image' } },
+        { name: 'wuCardActions', type: 'attribute', description: { th: 'ปุ่มหรือเมนูทางขวาของหัวการ์ด', en: 'Buttons or a menu to the right of the title' } },
         { name: '(default)', type: 'content', description: { th: 'เนื้อหาของการ์ด', en: 'Card content' } },
-        { name: 'wtCardFooter', type: 'attribute', description: { th: 'ส่วนท้าย เรียงแนวนอนและขึ้นบรรทัดใหม่เองเมื่อแคบ', en: 'Footer row that wraps on narrow screens' } },
-        { name: 'wt-header · wt-footer', type: 'element', description: { th: 'เหมือน wtCardHeader / wtCardFooter', en: 'Like wtCardHeader / wtCardFooter' } },
-        { name: 'header · title · subtitle · content · footer', type: 'template', description: { th: 'template ของแต่ละส่วน (#name, wtTemplate หรือ pTemplate)', en: 'A template per part (#name, wtTemplate or pTemplate)' } },
+        { name: 'wuCardFooter', type: 'attribute', description: { th: 'ส่วนท้าย เรียงแนวนอนและขึ้นบรรทัดใหม่เองเมื่อแคบ', en: 'Footer row that wraps on narrow screens' } },
+        { name: 'wu-header · wu-footer', type: 'element', description: { th: 'เหมือน wuCardHeader / wuCardFooter', en: 'Like wuCardHeader / wuCardFooter' } },
+        { name: 'header · title · subtitle · content · footer', type: 'template', description: { th: 'template ของแต่ละส่วน (#name, wuTemplate หรือ pTemplate)', en: 'A template per part (#name, wuTemplate or pTemplate)' } },
       ],
       note: {
         th: 'slot ที่ว่างจะหายไปเอง ระยะห่าง body gap จึงอยู่ระหว่างส่วนที่มีจริงเท่านั้น',
         en: 'Empty slots collapse, so the body gap only sits between parts that are there.',
       },
     },
-    { id: 'api-types', title: 'Types', code: `type WtCardVariant = 'default' | 'outlined' | 'elevated' | 'glass';` },
+    { id: 'api-types', title: 'Types', code: `type WuCardVariant = 'default' | 'outlined' | 'elevated' | 'glass';` },
   ],
   tokens: [
-    { name: '--wt-card-bg', description: { th: 'พื้นของการ์ด', en: 'Background' } },
-    { name: '--wt-card-padding', description: { th: 'ระยะขอบด้านใน', en: 'Inner padding' } },
-    { name: '--wt-card-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
-    { name: '--wt-card-shadow', description: { th: 'เงา', en: 'Shadow' } },
-    { name: '--wt-card-body-gap', description: { th: 'ระยะระหว่างหัว เนื้อหา และ footer', en: 'Gap between title, content and footer' } },
-    { name: '--wt-card-border-width', description: { th: 'ความหนาเส้นขอบ', en: 'Border width' } },
-    { name: '--wt-card-title-size', description: { th: 'ขนาดหัวการ์ด', en: 'Title size' } },
-    { name: '--wt-card-title-weight', description: { th: 'น้ำหนักหัวการ์ด', en: 'Title weight' } },
-    { name: '--wt-border', description: { th: 'สีเส้นขอบ', en: 'Border colour' } },
-    { name: '--wt-shadow-md', description: { th: 'เงาของ elevated', en: 'elevated shadow' } },
-    { name: '--wt-text-muted', description: { th: 'สี subheader', en: 'Subheader colour' } },
-    { name: '--wt-glass-bg', description: { th: 'พื้นของ glass', en: 'glass background' } },
-    { name: '--wt-glass-blur', description: { th: 'ความเบลอของ glass', en: 'glass blur' } },
-    { name: '--wt-glass-border', description: { th: 'ขอบของ glass', en: 'glass border' } },
-    { name: '--wt-glass-shadow', description: { th: 'เงาของ glass', en: 'glass shadow' } },
+    { name: '--wu-card-bg', description: { th: 'พื้นของการ์ด', en: 'Background' } },
+    { name: '--wu-card-padding', description: { th: 'ระยะขอบด้านใน', en: 'Inner padding' } },
+    { name: '--wu-card-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
+    { name: '--wu-card-shadow', description: { th: 'เงา', en: 'Shadow' } },
+    { name: '--wu-card-body-gap', description: { th: 'ระยะระหว่างหัว เนื้อหา และ footer', en: 'Gap between title, content and footer' } },
+    { name: '--wu-card-border-width', description: { th: 'ความหนาเส้นขอบ', en: 'Border width' } },
+    { name: '--wu-card-title-size', description: { th: 'ขนาดหัวการ์ด', en: 'Title size' } },
+    { name: '--wu-card-title-weight', description: { th: 'น้ำหนักหัวการ์ด', en: 'Title weight' } },
+    { name: '--wu-border', description: { th: 'สีเส้นขอบ', en: 'Border colour' } },
+    { name: '--wu-shadow-md', description: { th: 'เงาของ elevated', en: 'elevated shadow' } },
+    { name: '--wu-text-muted', description: { th: 'สี subheader', en: 'Subheader colour' } },
+    { name: '--wu-glass-bg', description: { th: 'พื้นของ glass', en: 'glass background' } },
+    { name: '--wu-glass-blur', description: { th: 'ความเบลอของ glass', en: 'glass blur' } },
+    { name: '--wu-glass-border', description: { th: 'ขอบของ glass', en: 'glass border' } },
+    { name: '--wu-glass-shadow', description: { th: 'เงาของ glass', en: 'glass shadow' } },
   ],
   overrides: `    card: { padding: '1rem', radius: '12px', bodyGap: '0', bordered: false },`,
 };
@@ -224,9 +224,9 @@ export const CARD_DOC_CLASSIC: ComponentDoc = {
   },
   code: {
     ...CARD_DOC.code,
-    variants: `<wt-card header="Default"></wt-card>
-<wt-card header="Outlined" variant="outlined"></wt-card>
-<wt-card header="Elevated" variant="elevated"></wt-card>`,
+    variants: `<wu-card header="Default"></wu-card>
+<wu-card header="Outlined" variant="outlined"></wu-card>
+<wu-card header="Elevated" variant="elevated"></wu-card>`,
   },
   api: CARD_DOC.api.map((g) =>
     g.id === 'api-inputs'
@@ -237,8 +237,8 @@ export const CARD_DOC_CLASSIC: ComponentDoc = {
           ),
         }
       : g.id === 'api-types'
-        ? { ...g, code: `type WtCardVariant = 'default' | 'outlined' | 'elevated';` }
+        ? { ...g, code: `type WuCardVariant = 'default' | 'outlined' | 'elevated';` }
         : g
   ),
-  tokens: CARD_DOC.tokens.filter((t) => !t.name.startsWith('--wt-glass')),
+  tokens: CARD_DOC.tokens.filter((t) => !t.name.startsWith('--wu-glass')),
 };

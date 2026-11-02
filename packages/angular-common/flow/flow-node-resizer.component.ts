@@ -14,14 +14,14 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import { resizeBox } from 'wiratheme/core';
-import type { FlowRect, FlowResizeDirection, FlowResizeLimits, FlowXY } from 'wiratheme/core';
-import { ɵWtFlowHost } from './flow-host';
-import { WT_FLOW_NODE } from './flow.types';
+import { ɵtoBool } from 'wiraui/config';
+import { resizeBox } from 'wiraui/core';
+import type { FlowRect, FlowResizeDirection, FlowResizeLimits, FlowXY } from 'wiraui/core';
+import { ɵWuFlowHost } from './flow-host';
+import { WU_FLOW_NODE } from './flow.types';
 
 /** `(resizeStart)` / `(resize)` / `(resizeEnd)`: the node's new box (position relative to its parent). */
-export interface WtFlowResizeEvent {
+export interface WuFlowResizeEvent {
   event: PointerEvent | null;
   x: number;
   y: number;
@@ -34,19 +34,19 @@ const CORNERS: FlowResizeDirection[] = ['top-left', 'top-right', 'bottom-right',
 const SIDES: FlowResizeDirection[] = ['top', 'right', 'bottom', 'left'];
 
 /**
- * Resize handles on a node: `<wt-flow-node-resizer [minWidth]="120" [keepAspectRatio]="false">` inside a node
+ * Resize handles on a node: `<wu-flow-node-resizer [minWidth]="120" [keepAspectRatio]="false">` inside a node
  * template. Drag a corner or a side; shown while the node is selected (or as `[isVisible]` says). With the keyboard,
  * Alt + arrow keys on the focused node resize it.
  */
 @Component({
-  selector: 'wt-flow-node-resizer',
+  selector: 'wu-flow-node-resizer',
   standalone: true,
   imports: [NgIf, NgFor],
   template: `
     <ng-container *ngIf="visible">
       <div
         *ngFor="let d of sides"
-        class="wt-flow-resize-line nodrag"
+        class="wu-flow-resize-line nodrag"
         [class]="lineClass || ''"
         [attr.data-dir]="d"
         [style.border-color]="color || null"
@@ -54,7 +54,7 @@ const SIDES: FlowResizeDirection[] = ['top', 'right', 'bottom', 'left'];
       ></div>
       <div
         *ngFor="let d of corners"
-        class="wt-flow-resize-handle nodrag"
+        class="wu-flow-resize-handle nodrag"
         [class]="handleClass || ''"
         [attr.data-dir]="d"
         [style.background-color]="color || null"
@@ -64,9 +64,9 @@ const SIDES: FlowResizeDirection[] = ['top', 'right', 'bottom', 'left'];
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-flow-resizer', '[class.wt-flow-resizer-active]': 'visible' },
+  host: { class: 'wu-flow-resizer', '[class.wu-flow-resizer-active]': 'visible' },
 })
-export class WtFlowNodeResizer implements OnInit, OnChanges, OnDestroy {
+export class WuFlowNodeResizer implements OnInit, OnChanges, OnDestroy {
   @Input() minWidth = 10;
   @Input() minHeight = 10;
   @Input() maxWidth: number | null | undefined;
@@ -79,16 +79,16 @@ export class WtFlowNodeResizer implements OnInit, OnChanges, OnDestroy {
   }
   /** Force it shown / hidden; leave out to show it while the node is selected. */
   @Input() isVisible: boolean | string | null | undefined;
-  /** Colour of the handles and lines (default: the `--wt-flow-resizer-color` token). */
+  /** Colour of the handles and lines (default: the `--wu-flow-resizer-color` token). */
   @Input() color: string | null | undefined;
   @Input() handleClass: string | null | undefined;
   @Input() lineClass: string | null | undefined;
   /** The node it resizes (default: the node whose template it is in). */
   @Input() nodeId: string | null | undefined;
 
-  @Output() readonly resizeStart = new EventEmitter<WtFlowResizeEvent>();
-  @Output() readonly resize = new EventEmitter<WtFlowResizeEvent>();
-  @Output() readonly resizeEnd = new EventEmitter<WtFlowResizeEvent>();
+  @Output() readonly resizeStart = new EventEmitter<WuFlowResizeEvent>();
+  @Output() readonly resize = new EventEmitter<WuFlowResizeEvent>();
+  @Output() readonly resizeEnd = new EventEmitter<WuFlowResizeEvent>();
 
   readonly corners = CORNERS;
   readonly sides = SIDES;
@@ -100,8 +100,8 @@ export class WtFlowNodeResizer implements OnInit, OnChanges, OnDestroy {
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
-  private readonly nodeCtx = inject(WT_FLOW_NODE, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
+  private readonly nodeCtx = inject(WU_FLOW_NODE, { optional: true });
 
   ngOnInit(): void {
     this.sync();
@@ -124,7 +124,7 @@ export class WtFlowNodeResizer implements OnInit, OnChanges, OnDestroy {
   }
 
   private id(): string | null {
-    return this.nodeId || this.nodeCtx?.id || this.el.closest?.('.wt-flow-node')?.getAttribute('data-id') || null;
+    return this.nodeId || this.nodeCtx?.id || this.el.closest?.('.wu-flow-node')?.getAttribute('data-id') || null;
   }
 
   private register(): void {

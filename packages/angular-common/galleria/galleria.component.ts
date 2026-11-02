@@ -25,14 +25,14 @@ import {
   ɵlockScroll,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
 
 /** How many thumbnails show at or below a window width: `{ breakpoint: '768px', numVisible: 2 }`. */
-export interface WtGalleriaResponsiveOptions {
+export interface WuGalleriaResponsiveOptions {
   breakpoint: string;
   numVisible: number;
 }
@@ -41,13 +41,13 @@ type Side = 'bottom' | 'top' | 'left' | 'right';
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * Images one at a time, with thumbnails, dots and arrows: `<wt-galleria [value]="photos" [numVisible]="5">` +
- * `<ng-template wtTemplate="item" let-item>`. It can play by itself (`[autoPlay]="true"`, paused while the pointer
+ * Images one at a time, with thumbnails, dots and arrows: `<wu-galleria [value]="photos" [numVisible]="5">` +
+ * `<ng-template wuTemplate="item" let-item>`. It can play by itself (`[autoPlay]="true"`, paused while the pointer
  * is over it), wrap round (`[circular]="true"`), be swiped on touch screens, and open full screen
  * (`[fullScreen]="true"` + `[(visible)]`).
  */
 @Component({
-  selector: 'wt-galleria',
+  selector: 'wu-galleria',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './galleria.component.html',
@@ -55,7 +55,7 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
+export class WuGalleria implements OnInit, AfterViewChecked, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set value(v: any[] | null | undefined) {
     this._value = Array.isArray(v) ? v : [];
@@ -77,7 +77,7 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
   }
   /** Thumbnails in view. Default 3; `responsiveOptions` changes it by window width. */
   @Input() set numVisible(v: number | string | null | undefined) { this._numVisible = Math.max(1, Number(v) || 3); this.align(); }
-  @Input() set responsiveOptions(v: WtGalleriaResponsiveOptions[] | null | undefined) { this._responsive = v || []; this.watchWidth(); }
+  @Input() set responsiveOptions(v: WuGalleriaResponsiveOptions[] | null | undefined) { this._responsive = v || []; this.watchWidth(); }
   @Input() set showThumbnails(v: unknown) { this._thumbs = v === undefined || ɵtoBool(v); }
   get showThumbnails(): boolean { return this._thumbs; }
   @Input() set showThumbnailNavigators(v: unknown) { this._thumbNav = v === undefined || ɵtoBool(v); }
@@ -129,7 +129,7 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
   @Output() readonly activeIndexChange = new EventEmitter<number>();
   @Output() readonly visibleChange = new EventEmitter<boolean>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('thumbnail', { descendants: false }) protected thumbnailRef?: unknown;
   @ContentChild('caption', { descendants: false }) protected captionRef?: unknown;
@@ -147,7 +147,7 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
   private _value: any[] = [];
   private _active = 0;
   private _numVisible = 3;
-  private _responsive: WtGalleriaResponsiveOptions[] = [];
+  private _responsive: WuGalleriaResponsiveOptions[] = [];
   private _thumbs = true;
   private _thumbNav = true;
   private _indicators = false;
@@ -169,11 +169,11 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -195,7 +195,7 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
       }
     }
     this.unlockScroll = ɵlockScroll(this.doc);
-    (el.querySelector('.wt-galleria-close') as HTMLElement | null)?.focus();
+    (el.querySelector('.wu-galleria-close') as HTMLElement | null)?.focus();
   }
 
   ngOnDestroy(): void {
@@ -207,7 +207,7 @@ export class WtGalleria implements OnInit, AfterViewChecked, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

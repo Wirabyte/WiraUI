@@ -1,21 +1,21 @@
 import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { WtResultStatus } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { WuResultStatus } from 'wiraui/core';
 
-export type { WtResultStatus };
+export type { WuResultStatus };
 
-const STATUSES: readonly WtResultStatus[] = ['success', 'error', 'info', 'warning', '403', '404', '500'];
+const STATUSES: readonly WuResultStatus[] = ['success', 'error', 'info', 'warning', '403', '404', '500'];
 
 /**
  * The page or panel after a task ends, or instead of a page that cannot be shown:
- * `<wt-result status="success" title="ส่งใบสมัครแล้ว"><wt-button wtResultExtra label="กลับหน้าแรก"></wt-button></wt-result>`.
+ * `<wu-result status="success" title="ส่งใบสมัครแล้ว"><wu-button wuResultExtra label="กลับหน้าแรก"></wu-button></wu-result>`.
  * `success`, `error`, `info` and `warning` draw a large status mark in the theme's colours; `403`, `404` and `500` draw
  * the code with a picture in place of its 0. Title and line come from the locale unless given. Elements marked
- * `wtResultExtra` sit in a row of actions; anything else inside the tag goes in a details box under them.
+ * `wuResultExtra` sit in a row of actions; anything else inside the tag goes in a details box under them.
  */
 @Component({
-  selector: 'wt-result',
+  selector: 'wu-result',
   standalone: true,
   imports: [NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
   templateUrl: './result.component.html',
@@ -23,15 +23,15 @@ const STATUSES: readonly WtResultStatus[] = ['success', 'error', 'info', 'warnin
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // `title` is an input here: keep it off the host so the whole block gets no browser tooltip.
-  host: { class: 'wt-result-host', '[attr.title]': 'null' },
+  host: { class: 'wu-result-host', '[attr.title]': 'null' },
 })
-export class WtResult implements OnDestroy {
+export class WuResult implements OnDestroy {
   /** Default `'info'`. Numbers work too: `[status]="404"`. */
-  @Input() set status(v: WtResultStatus | number | string | null | undefined) {
-    const s = String(v ?? '') as WtResultStatus;
+  @Input() set status(v: WuResultStatus | number | string | null | undefined) {
+    const s = String(v ?? '') as WuResultStatus;
     this._status = STATUSES.includes(s) ? s : 'info';
   }
-  get status(): WtResultStatus {
+  get status(): WuResultStatus {
     return this._status;
   }
   /** Default: the locale's title for `status`; `''` shows none. */
@@ -46,12 +46,12 @@ export class WtResult implements OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
 
-  private _status: WtResultStatus = 'info';
-  private readonly config = inject(WtConfig);
+  private _status: WuResultStatus = 'info';
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {

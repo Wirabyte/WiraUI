@@ -1,14 +1,14 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtAvatarShape, WtAvatarSize } from './avatar.types';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuAvatarShape, WuAvatarSize } from './avatar.types';
 
 /**
- * Picture, initials or icon: `<wt-avatar image="…" label="สม" shape="circle">`.
+ * Picture, initials or icon: `<wu-avatar image="…" label="สม" shape="circle">`.
  * If the image fails to load it falls back to `label`, then `icon`.
  */
 @Component({
-  selector: 'wt-avatar',
+  selector: 'wu-avatar',
   standalone: true,
   imports: [NgIf],
   templateUrl: './avatar.component.html',
@@ -16,13 +16,13 @@ import { WtAvatarShape, WtAvatarSize } from './avatar.types';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtAvatar {
+export class WuAvatar {
   @Input() label?: string;
   /** Icon class, e.g. `pi pi-user`. */
   @Input() icon?: string;
   @Input() image?: string;
-  @Input() size: WtAvatarSize = 'normal';
-  @Input() shape: WtAvatarShape = 'square';
+  @Input() size: WuAvatarSize = 'normal';
+  @Input() shape: WuAvatarShape = 'square';
   @Input() ariaLabel?: string;
 
   @Output() readonly onImageError = new EventEmitter<Event>();
@@ -32,7 +32,7 @@ export class WtAvatar {
   private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get showImage(): boolean {
@@ -53,11 +53,11 @@ export class WtAvatar {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-avatar', 'p-avatar', 'p-component'];
-    if (this.shape === 'circle') c.push('wt-avatar-circle', 'p-avatar-circle');
-    if (this.size === 'large') c.push('wt-avatar-lg', 'p-avatar-lg');
-    if (this.size === 'xlarge') c.push('wt-avatar-xl', 'p-avatar-xl');
-    if (this.showImage) c.push('wt-avatar-image', 'p-avatar-image');
+    const c = ['wu-avatar', 'p-avatar', 'p-component'];
+    if (this.shape === 'circle') c.push('wu-avatar-circle', 'p-avatar-circle');
+    if (this.size === 'large') c.push('wu-avatar-lg', 'p-avatar-lg');
+    if (this.size === 'xlarge') c.push('wu-avatar-xl', 'p-avatar-xl');
+    if (this.showImage) c.push('wu-avatar-image', 'p-avatar-image');
     return c.join(' ');
   }
 
@@ -68,13 +68,13 @@ export class WtAvatar {
   }
 }
 
-/** Overlapping row of avatars: `<wt-avatar-group><wt-avatar …></wt-avatar>…</wt-avatar-group>`. */
+/** Overlapping row of avatars: `<wu-avatar-group><wu-avatar …></wu-avatar>…</wu-avatar-group>`. */
 @Component({
-  selector: 'wt-avatar-group, wt-avatarGroup, wt-avatargroup',
+  selector: 'wu-avatar-group, wu-avatarGroup, wu-avatargroup',
   standalone: true,
-  template: '<div class="wt-avatar-group p-avatar-group p-component"><ng-content></ng-content></div>',
+  template: '<div class="wu-avatar-group p-avatar-group p-component"><ng-content></ng-content></div>',
   styleUrls: ['./avatar.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtAvatarGroup {}
+export class WuAvatarGroup {}

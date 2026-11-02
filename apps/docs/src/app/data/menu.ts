@@ -25,7 +25,7 @@ const ITEM_ROWS = (groups: { th: string; en: string }): ApiRow[] => [
   row('title · automationId', 'string', undefined, 'title ของลิงก์ และ data-automationid', 'Link title, and data-automationid'),
 ];
 
-const COMMAND_TYPE = `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+const COMMAND_TYPE = `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;
@@ -38,9 +38,9 @@ export const MENU_DOC: ComponentDoc = {
   title: 'Menu',
   group: 'Navigation',
   entry: 'menu',
-  standalone: 'WtMenu',
-  module: 'WtMenuModule',
-  selector: 'wt-menu',
+  standalone: 'WuMenu',
+  module: 'WuMenuModule',
+  selector: 'wu-menu',
   description: {
     th: 'รายการคำสั่งและลิงก์ เปิดเป็น popup จากปุ่ม (เช่นเมนูโปรไฟล์บนหัวเว็บ) หรือวางไว้ในหน้าเป็นเมนูข้าง จัดกลุ่มได้ ใช้คีย์บอร์ดได้ครบ และ popup เปิดใน top layer จึงไม่ต้องใช้ appendTo',
     en: 'A list of commands and links, opened as a popup from a button (such as the profile menu in a header) or placed in the page as a side menu. Items group, the keyboard works throughout, and the popup opens in the top layer, so no appendTo is needed.',
@@ -85,8 +85,8 @@ export const MENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtMenuModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtMenu</code>) อ้างถึงเมนูใน template ด้วย <code>#menu</code> (exportAs คือ <code>wtMenu</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code>',
-        en: 'Works as an NgModule (<code>WtMenuModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtMenu</code>). Reach the menu in a template with <code>#menu</code> (its exportAs is <code>wtMenu</code>). Items are typed <code>MenuItem</code> from <code>wiratheme/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenu</code>) อ้างถึงเมนูใน template ด้วย <code>#menu</code> (exportAs คือ <code>wuMenu</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code>',
+        en: 'Works as an NgModule (<code>WuMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenu</code>). Reach the menu in a template with <code>#menu</code> (its exportAs is <code>wuMenu</code>). Items are typed <code>MenuItem</code> from <code>wiraui/api</code>.',
       },
     },
     popup: {
@@ -120,8 +120,8 @@ export const MENU_DOC: ComponentDoc = {
     links: {
       title: { th: 'ลิงก์และคำสั่ง', en: 'Links and commands' },
       text: {
-        th: '<code>routerLink</code> (พร้อม <code>queryParams</code>, <code>fragment</code> และอื่น ๆ) ใช้ router ของแอป รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wt-menu-link-active</code> ตัวอย่างนี้เทียบ fragment ด้วยผ่าน <code>routerLinkActiveOptions</code> · <code>url</code> กับ <code>target</code> สำหรับลิงก์ธรรมดา · <code>command</code> ทำงานเมื่อเลือก และได้ <code>{ originalEvent, item }</code>',
-        en: '<code>routerLink</code> (with <code>queryParams</code>, <code>fragment</code> and the rest) uses the app\'s router; the item matching the current page gets the <code>wt-menu-link-active</code> class. This sample compares the fragment too, through <code>routerLinkActiveOptions</code> · <code>url</code> and <code>target</code> for plain links · <code>command</code> runs on pick and gets <code>{ originalEvent, item }</code>.',
+        th: '<code>routerLink</code> (พร้อม <code>queryParams</code>, <code>fragment</code> และอื่น ๆ) ใช้ router ของแอป รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wu-menu-link-active</code> ตัวอย่างนี้เทียบ fragment ด้วยผ่าน <code>routerLinkActiveOptions</code> · <code>url</code> กับ <code>target</code> สำหรับลิงก์ธรรมดา · <code>command</code> ทำงานเมื่อเลือก และได้ <code>{ originalEvent, item }</code>',
+        en: '<code>routerLink</code> (with <code>queryParams</code>, <code>fragment</code> and the rest) uses the app\'s router; the item matching the current page gets the <code>wu-menu-link-active</code> class. This sample compares the fragment too, through <code>routerLinkActiveOptions</code> · <code>url</code> and <code>target</code> for plain links · <code>command</code> runs on pick and gets <code>{ originalEvent, item }</code>.',
       },
     },
     templates: {
@@ -148,28 +148,28 @@ export const MENU_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-menu&gt;</code> เป็น <code>&lt;wt-menu&gt;</code> model เดิมใช้ต่อได้ <code>#menu</code> กับ <code>menu.toggle($event)</code> เขียนเหมือนเดิม template <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> / <code>"submenuheader"</code> ใช้ได้ และ class <code>p-menu-*</code> อยู่คู่กับ <code>wt-menu-*</code> ส่วน <code>appendTo</code>, <code>autoZIndex</code>, <code>baseZIndex</code>, <code>showTransitionOptions</code> และ <code>hideTransitionOptions</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-menu&gt;</code> to <code>&lt;wt-menu&gt;</code>. Models work unchanged, and <code>#menu</code> with <code>menu.toggle($event)</code> reads the same. <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> / <code>"submenuheader"</code> templates work, and the <code>p-menu-*</code> classes sit next to <code>wt-menu-*</code>. <code>appendTo</code>, <code>autoZIndex</code>, <code>baseZIndex</code>, <code>showTransitionOptions</code> and <code>hideTransitionOptions</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-menu&gt;</code> เป็น <code>&lt;wu-menu&gt;</code> model เดิมใช้ต่อได้ <code>#menu</code> กับ <code>menu.toggle($event)</code> เขียนเหมือนเดิม template <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> / <code>"submenuheader"</code> ใช้ได้ และ class <code>p-menu-*</code> อยู่คู่กับ <code>wu-menu-*</code> ส่วน <code>appendTo</code>, <code>autoZIndex</code>, <code>baseZIndex</code>, <code>showTransitionOptions</code> และ <code>hideTransitionOptions</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-menu&gt;</code> to <code>&lt;wu-menu&gt;</code>. Models work unchanged, and <code>#menu</code> with <code>menu.toggle($event)</code> reads the same. <code>pTemplate="start"</code> / <code>"end"</code> / <code>"item"</code> / <code>"submenuheader"</code> templates work, and the <code>p-menu-*</code> classes sit next to <code>wu-menu-*</code>. <code>appendTo</code>, <code>autoZIndex</code>, <code>baseZIndex</code>, <code>showTransitionOptions</code> and <code>hideTransitionOptions</code> are accepted and ignored.',
       },
     },
   },
   code: {
     popup: `<div class="flex align-items-center justify-content-between gap-2">
   <span class="font-semibold">WiraSchool</span>
-  <wt-button icon="wi wi-user" [rounded]="true" [text]="true" ariaLabel="บัญชีของฉัน" (onClick)="profileMenu.toggle($event)"></wt-button>
+  <wu-button icon="wi wi-user" [rounded]="true" [text]="true" ariaLabel="บัญชีของฉัน" (onClick)="profileMenu.toggle($event)"></wu-button>
 </div>
-<wt-menu #profileMenu [model]="profileItems" [popup]="true" ariaLabel="บัญชีของฉัน"></wt-menu>`,
+<wu-menu #profileMenu [model]="profileItems" [popup]="true" ariaLabel="บัญชีของฉัน"></wu-menu>`,
     inline: `<aside class="w-15rem">
-  <wt-menu [model]="sideItems" [style]="{ width: '100%', border: 'none' }" ariaLabel="เมนูข้าง"></wt-menu>
+  <wu-menu [model]="sideItems" [style]="{ width: '100%', border: 'none' }" ariaLabel="เมนูข้าง"></wu-menu>
 </aside>`,
-    groups: `<wt-menu [model]="groupItems" ariaLabel="เมนูเอกสาร"></wt-menu>`,
-    states: `<wt-menu [model]="stateItems" ariaLabel="กล่องข้อความ"></wt-menu>`,
-    links: `<wt-menu [model]="linkItems" ariaLabel="ลิงก์และคำสั่ง"></wt-menu>`,
+    groups: `<wu-menu [model]="groupItems" ariaLabel="เมนูเอกสาร"></wu-menu>`,
+    states: `<wu-menu [model]="stateItems" ariaLabel="กล่องข้อความ"></wu-menu>`,
+    links: `<wu-menu [model]="linkItems" ariaLabel="ลิงก์และคำสั่ง"></wu-menu>`,
     templates: {
-      v3: `<wt-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
+      v3: `<wu-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
   <ng-template #start>
     <div class="flex align-items-center gap-2 p-2">
-      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+      <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
       <span class="font-semibold">สมหญิง ใจดี</span>
     </div>
   </ng-template>
@@ -180,40 +180,40 @@ export const MENU_DOC: ComponentDoc = {
     <i [class]="item.icon"></i>
     <span>{{ item.label }}</span>
     @if (item.badge) {
-      <wt-badge class="ml-auto" [value]="item.badge"></wt-badge>
+      <wu-badge class="ml-auto" [value]="item.badge"></wu-badge>
     }
   </ng-template>
   <ng-template #end>
-    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
+    <wu-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wu-button>
   </ng-template>
-</wt-menu>`,
-      classic: `<wt-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
-  <ng-template wtTemplate="start">
+</wu-menu>`,
+      classic: `<wu-menu [model]="groupItems" ariaLabel="เมนูผู้ใช้">
+  <ng-template wuTemplate="start">
     <div class="flex align-items-center gap-2 p-2">
-      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+      <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
       <span class="font-semibold">สมหญิง ใจดี</span>
     </div>
   </ng-template>
-  <ng-template wtTemplate="submenuheader" let-item>
+  <ng-template wuTemplate="submenuheader" let-item>
     <span class="text-primary">{{ item.label }}</span>
   </ng-template>
-  <ng-template wtTemplate="item" let-item>
+  <ng-template wuTemplate="item" let-item>
     <i [class]="item.icon"></i>
     <span>{{ item.label }}</span>
-    <wt-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge"></wt-badge>
+    <wu-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge"></wu-badge>
   </ng-template>
-  <ng-template wtTemplate="end">
-    <wt-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
+  <ng-template wuTemplate="end">
+    <wu-button label="ออกจากระบบ" icon="wi wi-sign-out" severity="secondary" [text]="true"></wu-button>
   </ng-template>
-</wt-menu>`,
+</wu-menu>`,
     },
-    methods: `<wt-button label="เปิดเมนู" (onClick)="actionMenu.show($event)"></wt-button>
-<wt-button label="ปิดเมนู" severity="secondary" [outlined]="true" (onClick)="actionMenu.hide()"></wt-button>
-<wt-menu #actionMenu [model]="profileItems" [popup]="true" ariaLabel="เมนูคำสั่ง"
-  (onShow)="logMenu('onShow')" (onHide)="logMenu('onHide')"></wt-menu>`,
+    methods: `<wu-button label="เปิดเมนู" (onClick)="actionMenu.show($event)"></wu-button>
+<wu-button label="ปิดเมนู" severity="secondary" [outlined]="true" (onClick)="actionMenu.hide()"></wu-button>
+<wu-menu #actionMenu [model]="profileItems" [popup]="true" ariaLabel="เมนูคำสั่ง"
+  (onShow)="logMenu('onShow')" (onHide)="logMenu('onHide')"></wu-menu>`,
   },
   ts: {
-    popup: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+    popup: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 profileItems: MenuItem[] = [
   { label: 'โปรไฟล์ของฉัน', icon: 'wi wi-user', command: (event) => this.run(event) },
@@ -300,7 +300,7 @@ logMenu(name: string): void {
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน template reference เช่น #menu (exportAs="wtMenu")', en: 'Call them through a template reference such as #menu (exportAs="wtMenu").' },
+      note: { th: 'เรียกผ่าน template reference เช่น #menu (exportAs="wuMenu")', en: 'Call them through a template reference such as #menu (exportAs="wuMenu").' },
       rows: [
         row('toggle(event?)', 'void', undefined, 'เปิดถ้าปิดอยู่ ปิดถ้าเปิดอยู่', 'Open when closed, close when open'),
         row('show(event?)', 'void', undefined, 'เปิดติดกับ element ที่ส่ง event มา', 'Open next to the element the event came from'),
@@ -311,7 +311,7 @@ logMenu(name: string): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('start · end', '—', undefined, 'เนื้อหาเหนือและใต้รายการ', 'Content above and below the items'),
         row('item', '$implicit (MenuItem)', undefined, 'เนื้อหาของแต่ละรายการ แทนไอคอน label และ badge', "Each item's content, in place of icon, label and badge"),
@@ -326,28 +326,28 @@ logMenu(name: string): void {
     { id: 'api-types', title: 'Types', code: COMMAND_TYPE },
   ],
   tokens: [
-    tok('--wt-menu-bg', 'พื้นของเมนูในหน้า', 'Background of a menu in the page'),
-    tok('--wt-menu-overlay-bg', 'พื้นของ popup', 'Popup background'),
-    tok('--wt-menu-border-width', 'ความหนาขอบ (สีจาก --wt-border)', 'Border width (colour from --wt-border)'),
-    tok('--wt-menu-overlay-border-width', 'ความหนาขอบของ popup', 'Popup border width'),
-    tok('--wt-menu-radius', 'ความมนของเมนู', 'Menu corner radius'),
-    tok('--wt-menu-padding', 'ระยะขอบในของเมนู', 'Menu padding'),
-    tok('--wt-menu-gap', 'ระยะระหว่างรายการ', 'Gap between items'),
-    tok('--wt-menu-min-width', 'ความกว้างขั้นต่ำ', 'Minimum width'),
-    tok('--wt-menu-shadow', 'เงาของ popup', 'Popup shadow'),
-    tok('--wt-menu-item-padding', 'ระยะในของรายการ', 'Item padding'),
-    tok('--wt-menu-item-radius', 'ความมนของรายการ', 'Item radius'),
-    tok('--wt-menu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
-    tok('--wt-menu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
-    tok('--wt-menu-item-hover-bg', 'พื้นรายการเมื่อชี้หรือโฟกัส', 'Item background on hover or focus'),
-    tok('--wt-menu-item-hover-color', 'สีตัวอักษรเมื่อชี้หรือโฟกัส', 'Item text on hover or focus'),
-    tok('--wt-menu-link-active-color', 'สีลิงก์ของหน้าปัจจุบัน (routerLinkActive)', 'Link of the current page (routerLinkActive)'),
-    tok('--wt-menu-submenu-label-padding', 'ระยะในของหัวกลุ่ม', 'Group label padding'),
-    tok('--wt-menu-submenu-label-bg', 'พื้นของหัวกลุ่ม', 'Group label background'),
-    tok('--wt-menu-submenu-label-color', 'สีของหัวกลุ่ม', 'Group label colour'),
-    tok('--wt-menu-submenu-label-weight', 'น้ำหนักตัวอักษรของหัวกลุ่ม', 'Group label weight'),
-    tok('--wt-menu-separator-color', 'สีเส้นคั่น', 'Separator colour'),
-    tok('--wt-border', 'สีขอบของเมนู', 'Menu border colour'),
+    tok('--wu-menu-bg', 'พื้นของเมนูในหน้า', 'Background of a menu in the page'),
+    tok('--wu-menu-overlay-bg', 'พื้นของ popup', 'Popup background'),
+    tok('--wu-menu-border-width', 'ความหนาขอบ (สีจาก --wu-border)', 'Border width (colour from --wu-border)'),
+    tok('--wu-menu-overlay-border-width', 'ความหนาขอบของ popup', 'Popup border width'),
+    tok('--wu-menu-radius', 'ความมนของเมนู', 'Menu corner radius'),
+    tok('--wu-menu-padding', 'ระยะขอบในของเมนู', 'Menu padding'),
+    tok('--wu-menu-gap', 'ระยะระหว่างรายการ', 'Gap between items'),
+    tok('--wu-menu-min-width', 'ความกว้างขั้นต่ำ', 'Minimum width'),
+    tok('--wu-menu-shadow', 'เงาของ popup', 'Popup shadow'),
+    tok('--wu-menu-item-padding', 'ระยะในของรายการ', 'Item padding'),
+    tok('--wu-menu-item-radius', 'ความมนของรายการ', 'Item radius'),
+    tok('--wu-menu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
+    tok('--wu-menu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
+    tok('--wu-menu-item-hover-bg', 'พื้นรายการเมื่อชี้หรือโฟกัส', 'Item background on hover or focus'),
+    tok('--wu-menu-item-hover-color', 'สีตัวอักษรเมื่อชี้หรือโฟกัส', 'Item text on hover or focus'),
+    tok('--wu-menu-link-active-color', 'สีลิงก์ของหน้าปัจจุบัน (routerLinkActive)', 'Link of the current page (routerLinkActive)'),
+    tok('--wu-menu-submenu-label-padding', 'ระยะในของหัวกลุ่ม', 'Group label padding'),
+    tok('--wu-menu-submenu-label-bg', 'พื้นของหัวกลุ่ม', 'Group label background'),
+    tok('--wu-menu-submenu-label-color', 'สีของหัวกลุ่ม', 'Group label colour'),
+    tok('--wu-menu-submenu-label-weight', 'น้ำหนักตัวอักษรของหัวกลุ่ม', 'Group label weight'),
+    tok('--wu-menu-separator-color', 'สีเส้นคั่น', 'Separator colour'),
+    tok('--wu-border', 'สีขอบของเมนู', 'Menu border colour'),
   ],
 };
 
@@ -356,12 +356,12 @@ export const TABMENU_DOC: ComponentDoc = {
   title: 'TabMenu',
   group: 'Navigation',
   entry: 'tabmenu',
-  standalone: 'WtTabMenu',
-  module: 'WtTabMenuModule',
-  selector: 'wt-tabmenu',
+  standalone: 'WuTabMenu',
+  module: 'WuTabMenuModule',
+  selector: 'wu-tabmenu',
   description: {
-    th: 'แถวแท็บจาก menu model สำหรับสลับมุมมองหรือหน้า บอกแท็บปัจจุบันด้วย activeItem หรือให้ตาม router ก็ได้ หน้าตาเหมือน wt-tabs และเลื่อนด้านข้างได้เมื่อแท็บล้น',
-    en: 'A row of tabs from a menu model, for switching views or pages. Mark the current tab with activeItem or let it follow the router. It looks like wt-tabs and scrolls sideways when the tabs overflow.',
+    th: 'แถวแท็บจาก menu model สำหรับสลับมุมมองหรือหน้า บอกแท็บปัจจุบันด้วย activeItem หรือให้ตาม router ก็ได้ หน้าตาเหมือน wu-tabs และเลื่อนด้านข้างได้เมื่อแท็บล้น',
+    en: 'A row of tabs from a menu model, for switching views or pages. Mark the current tab with activeItem or let it follow the router. It looks like wu-tabs and scrolls sideways when the tabs overflow.',
   },
   english: {
     'ข้อมูลโรงเรียน': 'School data',
@@ -399,8 +399,8 @@ export const TABMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTabMenuModule</code>) และ standalone (<code>WtTabMenu</code>) selector <code>wt-tabmenu</code> หรือ <code>wt-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code> แถวแท็บใช้ stylesheet และ token ของ wt-tabs · <code>&lt;wt-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> คือ component เดียวกันนี้ (ดูหน้า Tabs) ตอนนี้ wt-tabmenu อยู่ใน <code>wiratheme/tabs</code> ส่วน import จาก <code>wiratheme/tabmenu</code> ยังใช้ได้เหมือนเดิม',
-        en: 'Works as an NgModule (<code>WtTabMenuModule</code>) or standalone (<code>WtTabMenu</code>), as <code>wt-tabmenu</code> or <code>wt-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>wiratheme/api</code>. The tab row uses the wt-tabs stylesheet and tokens · <code>&lt;wt-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> is this same component (see the Tabs page): wt-tabmenu now lives in <code>wiratheme/tabs</code>, and imports from <code>wiratheme/tabmenu</code> keep working.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTabMenuModule</code>) และ standalone (<code>WuTabMenu</code>) selector <code>wu-tabmenu</code> หรือ <code>wu-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code> แถวแท็บใช้ stylesheet และ token ของ wu-tabs · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> คือ component เดียวกันนี้ (ดูหน้า Tabs) ตอนนี้ wu-tabmenu อยู่ใน <code>wiraui/tabs</code> ส่วน import จาก <code>wiraui/tabmenu</code> ยังใช้ได้เหมือนเดิม',
+        en: 'Works as an NgModule (<code>WuTabMenuModule</code>) or standalone (<code>WuTabMenu</code>), as <code>wu-tabmenu</code> or <code>wu-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>wiraui/api</code>. The tab row uses the wu-tabs stylesheet and tokens · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> is this same component (see the Tabs page): wu-tabmenu now lives in <code>wiraui/tabs</code>, and imports from <code>wiraui/tabmenu</code> keep working.',
       },
     },
     basic: {
@@ -441,21 +441,21 @@ export const TABMENU_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-tabMenu&gt;</code> เป็น <code>&lt;wt-tabMenu&gt;</code> (หรือ <code>wt-tabmenu</code>) <code>[model]</code>, <code>[activeItem]</code>, <code>(activeItemChange)</code> และ <code>[scrollable]</code> ใช้ชื่อเดิม template <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-tabmenu-*</code> อยู่คู่กับ class ของ wt-tabs',
-        en: 'Change <code>&lt;p-tabMenu&gt;</code> to <code>&lt;wt-tabMenu&gt;</code> (or <code>wt-tabmenu</code>). <code>[model]</code>, <code>[activeItem]</code>, <code>(activeItemChange)</code> and <code>[scrollable]</code> keep their names, <code>pTemplate="item"</code> works, and the <code>p-tabmenu-*</code> classes sit next to the wt-tabs ones.',
+        th: 'เปลี่ยน <code>&lt;p-tabMenu&gt;</code> เป็น <code>&lt;wu-tabMenu&gt;</code> (หรือ <code>wu-tabmenu</code>) <code>[model]</code>, <code>[activeItem]</code>, <code>(activeItemChange)</code> และ <code>[scrollable]</code> ใช้ชื่อเดิม template <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-tabmenu-*</code> อยู่คู่กับ class ของ wu-tabs',
+        en: 'Change <code>&lt;p-tabMenu&gt;</code> to <code>&lt;wu-tabMenu&gt;</code> (or <code>wu-tabmenu</code>). <code>[model]</code>, <code>[activeItem]</code>, <code>(activeItemChange)</code> and <code>[scrollable]</code> keep their names, <code>pTemplate="item"</code> works, and the <code>p-tabmenu-*</code> classes sit next to the wu-tabs ones.',
       },
     },
   },
   code: {
-    basic: `<wt-tabmenu [model]="items" [(activeItem)]="activeItem" ariaLabel="ข้อมูลโรงเรียน"></wt-tabmenu>`,
-    commands: `<wt-tabmenu [model]="mailItems" [(activeItem)]="mailTab" ariaLabel="กล่องจดหมาย"></wt-tabmenu>`,
-    router: `<wt-tabmenu [model]="viewItems" ariaLabel="มุมมอง"></wt-tabmenu>`,
+    basic: `<wu-tabmenu [model]="items" [(activeItem)]="activeItem" ariaLabel="ข้อมูลโรงเรียน"></wu-tabmenu>`,
+    commands: `<wu-tabmenu [model]="mailItems" [(activeItem)]="mailTab" ariaLabel="กล่องจดหมาย"></wu-tabmenu>`,
+    router: `<wu-tabmenu [model]="viewItems" ariaLabel="มุมมอง"></wu-tabmenu>`,
     scroll: `<div style="max-width: min(360px, 100%)">
-  <wt-tabmenu [model]="months" [(activeItem)]="month" [scrollable]="true" ariaLabel="เดือน"></wt-tabmenu>
+  <wu-tabmenu [model]="months" [(activeItem)]="month" [scrollable]="true" ariaLabel="เดือน"></wu-tabmenu>
 </div>`,
   },
   ts: {
-    basic: `import { MenuItem } from 'wiratheme/api';
+    basic: `import { MenuItem } from 'wiraui/api';
 
 items: MenuItem[] = [
   { label: 'ภาพรวม', icon: 'wi wi-th-large' },
@@ -464,7 +464,7 @@ items: MenuItem[] = [
   { label: 'ตั้งค่า', icon: 'wi wi-cog' },
 ];
 activeItem: MenuItem = this.items[0];`,
-    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 mailItems: MenuItem[] = [
   { label: 'ทั้งหมด', icon: 'wi wi-inbox', command: (event) => this.open(event) },
@@ -513,7 +513,7 @@ month: MenuItem = this.months[2];`,
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write it as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write it as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [row('item', '$implicit (MenuItem) · index', undefined, 'เนื้อหาของแต่ละแท็บ แทนไอคอน label และ badge', "Each tab's content, in place of icon, label and badge")],
     },
     {
@@ -524,13 +524,13 @@ month: MenuItem = this.months[2];`,
     { id: 'api-types', title: 'Types', code: COMMAND_TYPE },
   ],
   tokens: [
-    tok('--wt-tabs-tab-color', 'สีชื่อแท็บ (ร่วมกับ wt-tabs)', 'Tab text colour (shared with wt-tabs)'),
-    tok('--wt-tabs-tab-active-color', 'สีแท็บปัจจุบันและเส้นใต้', 'Current tab and underline colour'),
-    tok('--wt-tabs-tab-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
-    tok('--wt-tabs-tab-padding-x', 'ระยะซ้ายขวาของแท็บ', 'Tab horizontal padding'),
-    tok('--wt-tabs-tab-padding-y', 'ระยะบนล่างของแท็บ', 'Tab vertical padding'),
-    tok('--wt-tabs-border-width', 'ความหนาของเส้นใต้แถวแท็บ', 'Tab row border width'),
-    tok('--wt-border', 'สีเส้นใต้แถวแท็บ', 'Tab row border colour'),
-    tok('--wt-primary-color', 'พื้นของ badge', 'Badge background'),
+    tok('--wu-tabs-tab-color', 'สีชื่อแท็บ (ร่วมกับ wu-tabs)', 'Tab text colour (shared with wu-tabs)'),
+    tok('--wu-tabs-tab-active-color', 'สีแท็บปัจจุบันและเส้นใต้', 'Current tab and underline colour'),
+    tok('--wu-tabs-tab-weight', 'น้ำหนักตัวอักษร', 'Font weight'),
+    tok('--wu-tabs-tab-padding-x', 'ระยะซ้ายขวาของแท็บ', 'Tab horizontal padding'),
+    tok('--wu-tabs-tab-padding-y', 'ระยะบนล่างของแท็บ', 'Tab vertical padding'),
+    tok('--wu-tabs-border-width', 'ความหนาของเส้นใต้แถวแท็บ', 'Tab row border width'),
+    tok('--wu-border', 'สีเส้นใต้แถวแท็บ', 'Tab row border colour'),
+    tok('--wu-primary-color', 'พื้นของ badge', 'Badge background'),
   ],
 };

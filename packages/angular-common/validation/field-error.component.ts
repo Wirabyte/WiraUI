@@ -1,32 +1,32 @@
 import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, AbstractControlDirective, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, ɵWtStyleLoader } from 'wiratheme/config';
-import { validationMessage } from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuStyleLoader } from 'wiraui/config';
+import { validationMessage } from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
 
 /**
  * The error of one field, in Thai (or the app's language), shown once the field was touched or its form submitted:
  *
  * ```html
- * <input wtInputText formControlName="email" />
- * <wt-field-error for="email" label="อีเมล" />          <!-- กรุณากรอกอีเมล · รูปแบบอีเมลไม่ถูกต้อง -->
+ * <input wuInputText formControlName="email" />
+ * <wu-field-error for="email" label="อีเมล" />          <!-- กรุณากรอกอีเมล · รูปแบบอีเมลไม่ถูกต้อง -->
  * ```
  * `for` names a control of the surrounding form (reactive or ngModel); `[control]` takes the control itself
  * (`form.controls.email`, or `#m="ngModel"`). Fields turn red on their own at the same moment.
  */
 @Component({
-  selector: 'wt-field-error',
+  selector: 'wu-field-error',
   standalone: true,
   template: '{{ message }}',
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'wt-field-error p-error',
+    class: 'wu-field-error p-error',
     'aria-live': 'polite',
     '[attr.id]': 'id',
     '[attr.hidden]': 'message ? null : ""',
   },
 })
-export class WtFieldError {
+export class WuFieldError {
   /** Name of a control in the surrounding form. */
   @Input('for') name?: string;
   /** The control itself: a FormControl, or a directive such as `#m="ngModel"`. */
@@ -42,15 +42,15 @@ export class WtFieldError {
   get id(): string { return this._id; }
 
   private _always = false;
-  private _id = ɵuniqueId('wt-field-error');
+  private _id = ɵuniqueId('wu-field-error');
   private readonly container = inject(ControlContainer, { optional: true });
   private readonly reactiveForm = inject(FormGroupDirective, { optional: true });
   private readonly templateForm = inject(NgForm, { optional: true });
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   /** Read on every check: touched has no event to listen to in every Angular version this runs on. */

@@ -22,12 +22,12 @@ import {
   ɵsize,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   filterItems,
   firstIndex,
@@ -38,23 +38,23 @@ import {
   selectItems,
   stepIndex,
   typeaheadIndex,
-  WtLocale,
-} from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { WtSelectChangeEvent, WtSelectFilterEvent, WtSelectMatchMode } from './select.types';
+  WuLocale,
+} from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { WuSelectChangeEvent, WuSelectFilterEvent, WuSelectMatchMode } from './select.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const TYPEAHEAD_MS = 600;
 
 /**
- * What wt-select does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
+ * What wu-select does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
  *
  * A select-only combobox (ARIA): a hidden, focusable `<input role="combobox">` takes the keyboard and `<label for>`,
  * the visible label shows the choice or a `selectedItem` template, and the list opens in the top layer.
  * With `filter` the search box in the panel takes focus; with `editable` the visible field is the combobox itself.
  */
 @Directive()
-export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy {
+export abstract class ɵWuSelectBase implements ControlValueAccessor, OnDestroy {
   // ---------- the options ----------
   @Input() set options(v: readonly unknown[] | null | undefined) { this._options = v || []; this.rebuild(); }
   get options(): readonly unknown[] { return this._options; }
@@ -112,7 +112,7 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
   get filter(): boolean { return this._filter; }
   /** Fields to search, comma separated (`filterBy="name_th,code"`). Default: the label. */
   @Input() set filterBy(v: string | undefined) { this._filterBy = v; this.applyFilter(); }
-  @Input() set filterMatchMode(v: WtSelectMatchMode | undefined) { this._matchMode = v || 'contains'; this.applyFilter(); }
+  @Input() set filterMatchMode(v: WuSelectMatchMode | undefined) { this._matchMode = v || 'contains'; this.applyFilter(); }
   @Input() filterPlaceholder?: string;
   @Input() ariaFilterLabel?: string;
   /** Start with this search text. */
@@ -132,8 +132,8 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
   @Input() autoDisplayFirst: unknown;
   @Input() autofocusFilter: unknown;
 
-  @Output() readonly onChange = new EventEmitter<WtSelectChangeEvent>();
-  @Output() readonly onFilter = new EventEmitter<WtSelectFilterEvent>();
+  @Output() readonly onChange = new EventEmitter<WuSelectChangeEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuSelectFilterEvent>();
   /** Accepted for templates moving over (lists are not loaded lazily). */
   @Output() readonly onLazyLoad = new EventEmitter<unknown>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
@@ -142,7 +142,7 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
   @Output() readonly onHide = new EventEmitter<void>();
   @Output() readonly onClear = new EventEmitter<Event>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('selectedItem', { descendants: false }) protected selectedItemRef?: unknown;
   @ContentChild('group', { descendants: false }) protected groupRef?: unknown;
@@ -167,13 +167,13 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
   filterText = '';
   /** Row under the keyboard / pointer in `visible`, -1 for none. */
   activeIndex = -1;
-  readonly baseId = ɵuniqueId('wt-select');
+  readonly baseId = ɵuniqueId('wu-select');
   readonly listId = `${this.baseId}-list`;
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private _options: readonly unknown[] = [];
   private _optionLabel?: string;
@@ -193,19 +193,19 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
   private _invalid = false;
   private _filter = false;
   private _filterBy?: string;
-  private _matchMode: WtSelectMatchMode = 'contains';
+  private _matchMode: WuSelectMatchMode = 'contains';
   private _resetFilter = false;
   private formDisabled = false;
   private selectedIndex = -1;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private typed = '';
   private typedAt = 0;
   private onModelChange: (v: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -215,7 +215,7 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -295,10 +295,10 @@ export abstract class ɵWtSelectBase implements ControlValueAccessor, OnDestroy 
     const panel = this.panelRef?.nativeElement;
     const anchor = this.rootRef?.nativeElement;
     if (!panel || !anchor) return;
-    this.popup = new ɵWtPopup(anchor, panel, {
+    this.popup = new ɵWuPopup(anchor, panel, {
       sheet: false,
-      sheetClass: 'wt-select-sheet',
-      modalClass: 'wt-select-modal',
+      sheetClass: 'wu-select-sheet',
+      modalClass: 'wu-select-modal',
       onOutside: () => this.hide(),
       onPosition: (_, box) => (panel.style.minWidth = `${Math.round(box.width)}px`),
     });

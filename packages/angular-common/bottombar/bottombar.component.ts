@@ -17,19 +17,19 @@ import {
 } from '@angular/core';
 import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { TH_LOCALE } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { TH_LOCALE } from 'wiraui/core';
 
 /** `'standard'` (default): a full-width bar. `'pill'`: a floating pill whose active item opens to show its name. `'fab'`: a bar with a raised round button in the middle (`action`). */
-export type WtBottomBarLook = 'standard' | 'pill' | 'fab';
+export type WuBottomBarLook = 'standard' | 'pill' | 'fab';
 
 /** Item names: `'always'` (default), only the `'active'` one, or `'never'` (still read out). */
-export type WtBottomBarLabels = 'always' | 'active' | 'never';
+export type WuBottomBarLabels = 'always' | 'active' | 'never';
 
 /** `(onItemClick)`: the item clicked; `index` is -1 for the middle button. */
-export interface WtBottomBarItemClickEvent {
+export interface WuBottomBarItemClickEvent {
   originalEvent: Event;
-  item: WtMenuItem;
+  item: WuMenuItem;
   index: number;
 }
 
@@ -37,25 +37,25 @@ const SUBSET: IsActiveMatchOptions = { paths: 'subset', queryParams: 'subset', f
 const EXACT: IsActiveMatchOptions = { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' };
 
 /**
- * The main menu of a phone app, along the bottom of the screen: `<wt-bottombar [model]="tabs">`. Items are menu items
+ * The main menu of a phone app, along the bottom of the screen: `<wu-bottombar [model]="tabs">`. Items are menu items
  * (`label`, `icon`, `routerLink`, `url`, `command`, `badge`, `disabled`). The active one follows `[(activeIndex)]`, or
  * the route when items have `routerLink` (the closest match; `routerLinkActiveOptions: { exact: true }` for home).
  * Looks: `standard`, `pill` and `fab` (with `action`, the round button in the middle). `labels` shows names always, for
  * the active item only, or never. It stays fixed to the bottom of the screen above the home indicator (`fixed`, default
- * true), and `hideOnScroll` slides it away while the page scrolls down. `<ng-template wtTemplate="item" let-item let-active="active">` draws an item.
+ * true), and `hideOnScroll` slides it away while the page scrolls down. `<ng-template wuTemplate="item" let-item let-active="active">` draws an item.
  */
 @Component({
-  selector: 'wt-bottombar, wt-bottom-bar, wt-bottomBar',
+  selector: 'wu-bottombar, wu-bottom-bar, wu-bottomBar',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink],
   templateUrl: './bottombar.component.html',
   styleUrls: ['./bottombar.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-bottombar-host' },
+  host: { class: 'wu-bottombar-host' },
 })
-export class WtBottomBar implements AfterViewInit, OnDestroy {
-  @Input() model: WtMenuItem[] | null | undefined;
+export class WuBottomBar implements AfterViewInit, OnDestroy {
+  @Input() model: WuMenuItem[] | null | undefined;
   /** The active item; default: from the route, else none. */
   @Input() set activeIndex(v: number | string | null | undefined) {
     const n = Number(v);
@@ -65,16 +65,16 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
     return this._index;
   }
   /** `'standard'` (default), `'pill'` or `'fab'`. */
-  @Input() set look(v: WtBottomBarLook | string | null | undefined) {
+  @Input() set look(v: WuBottomBarLook | string | null | undefined) {
     this._look = v === 'pill' || v === 'fab' ? v : 'standard';
   }
-  get look(): WtBottomBarLook {
+  get look(): WuBottomBarLook {
     return this._look;
   }
   /** `'always'` (default; pill: `'active'`), `'active'` or `'never'`. */
-  @Input() labels?: WtBottomBarLabels | null;
+  @Input() labels?: WuBottomBarLabels | null;
   /** The round button in the middle (`look="fab"`): `{ icon: 'wi wi-plus', label: 'สร้าง', command }`. */
-  @Input() action?: WtMenuItem | null;
+  @Input() action?: WuMenuItem | null;
   /** Fixed to the bottom of the screen. Default true; false keeps it where it is in the page. */
   @Input() fixed: boolean | string | null | undefined = true;
   /** Slide away while the page scrolls down, back as it scrolls up. */
@@ -85,17 +85,17 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
   @Input() style?: Record<string, any> | string | null;
 
   @Output() readonly activeIndexChange = new EventEmitter<number>();
-  @Output() readonly onItemClick = new EventEmitter<WtBottomBarItemClickEvent>();
+  @Output() readonly onItemClick = new EventEmitter<WuBottomBarItemClickEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
 
   /** Away while the page scrolls down. */
   away = false;
 
   private _index: number | null = null;
-  private _look: WtBottomBarLook = 'standard';
+  private _look: WuBottomBarLook = 'standard';
   private routeIndex: number | null = null;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly zone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -106,7 +106,7 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
   private stopScroll: (() => void) | null = null;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     this.routes = this.router?.events.subscribe((e) => {
       if (!(e instanceof NavigationEnd)) return;
       this.routeIndex = this.fromRoute();
@@ -129,7 +129,7 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
         last = y;
         if (away === this.away) return;
         this.away = away;
-        this.host.querySelector('.wt-bottombar')?.classList.toggle('wt-bottombar-away', away);
+        this.host.querySelector('.wu-bottombar')?.classList.toggle('wu-bottombar-away', away);
       };
       win.addEventListener('scroll', onScroll, { passive: true });
       this.stopScroll = () => win.removeEventListener('scroll', onScroll);
@@ -144,7 +144,7 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return (this.model || []).filter((i) => i && i.visible !== false);
   }
   /** The active item: the one given, else the route's. */
@@ -158,7 +158,7 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
   get fabAfter(): number {
     return Math.ceil(this.items.length / 2) - 1;
   }
-  get labelMode(): WtBottomBarLabels {
+  get labelMode(): WuBottomBarLabels {
     return this.labels === 'active' || this.labels === 'never' || this.labels === 'always' ? this.labels : this._look === 'pill' ? 'active' : 'always';
   }
   get name(): string {
@@ -169,11 +169,11 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
   }
   get classes(): string[] {
     return [
-      'wt-bottombar',
-      `wt-bottombar-look-${this._look}`,
-      `wt-bottombar-labels-${this.labelMode}`,
-      this.on(this.fixed) ? 'wt-bottombar-fixed' : '',
-      this.away ? 'wt-bottombar-away' : '',
+      'wu-bottombar',
+      `wu-bottombar-look-${this._look}`,
+      `wu-bottombar-labels-${this.labelMode}`,
+      this.on(this.fixed) ? 'wu-bottombar-fixed' : '',
+      this.away ? 'wu-bottombar-away' : '',
       this.styleClass || '',
     ];
   }
@@ -181,13 +181,13 @@ export class WtBottomBar implements AfterViewInit, OnDestroy {
   get rootStyle(): Record<string, any> | null {
     return this.style && typeof this.style === 'object' ? this.style : null;
   }
-  hasRoute(item: WtMenuItem): boolean {
+  hasRoute(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
 
   // ---------- events ----------
 
-  pick(item: WtMenuItem, index: number, event: Event): void {
+  pick(item: WuMenuItem, index: number, event: Event): void {
     if (item.disabled) {
       event.preventDefault();
       return;

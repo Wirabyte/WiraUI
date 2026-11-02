@@ -29,11 +29,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-// A theme with a backdrop of its own (Glass: soft colour fields from --wt-backdrop) shows it behind the whole site, and
+// A theme with a backdrop of its own (Glass: soft colour fields from --wu-backdrop) shows it behind the whole site, and
 // the demo boxes let it through, so translucent cards, menus and dialogs have colour behind them. For every other theme
-// --wt-backdrop is the ground colour and DocsState leaves this class off: the site keeps its page colour.
+// --wu-backdrop is the ground colour and DocsState leaves this class off: the site keeps its page colour.
 // Theme changes (core/theme-reveal.ts): the new look grows out of the pressed control through a four-point sparkle,
-// the WiraTheme mark. Only while html.docs-reveal is on; browsers without View Transitions change at once.
+// the WiraUI mark. Only while html.docs-reveal is on; browsers without View Transitions change at once.
 html.docs-reveal::view-transition-old(root),
 html.docs-reveal::view-transition-new(root) {
   animation: none;
@@ -66,7 +66,7 @@ html.docs-reveal :is(.docs-topbar, .lp-nav) {
   backdrop-filter: none;
 }
 html.docs-glass-ground {
-  background: var(--wt-backdrop);
+  background: var(--wu-backdrop);
   background-attachment: fixed;
 }
 html.docs-glass-ground body {
@@ -127,7 +127,7 @@ kbd {
   border-radius: 6px;
 }
 
-// Element resets go in the `reset` layer (declared first by WiraTheme), so they never beat component styles:
+// Element resets go in the `reset` layer (declared first by WiraUI), so they never beat component styles:
 // an unlayered `button { font: inherit }` made every demo button take the page's 15px / 1.75 text.
 @layer reset {
   button {

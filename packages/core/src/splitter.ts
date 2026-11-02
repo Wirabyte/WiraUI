@@ -1,4 +1,4 @@
-/** Splitter (wt-splitter): panel sizes in %, moving a gutter within the panels' minimum sizes, and the saved state. */
+/** Splitter (wu-splitter): panel sizes in %, moving a gutter within the panels' minimum sizes, and the saved state. */
 
 const tidy = (n: number): number => Math.round(n * 10000) / 10000;
 const positive = (v: unknown): number | null => {

@@ -10,23 +10,23 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵuniqueId } from 'wiratheme/config';
-import { backgroundPattern } from 'wiratheme/core';
-import type { FlowBackgroundPattern, FlowViewport } from 'wiratheme/core';
-import { ɵWtFlowHost } from './flow-host';
+import { ɵuniqueId } from 'wiraui/config';
+import { backgroundPattern } from 'wiraui/core';
+import type { FlowBackgroundPattern, FlowViewport } from 'wiraui/core';
+import { ɵWuFlowHost } from './flow-host';
 
 /**
- * The pane's background: `<wt-flow-background variant="dots" [gap]="20">` inside `<wt-flow>`. `dots` (default),
+ * The pane's background: `<wu-flow-background variant="dots" [gap]="20">` inside `<wu-flow>`. `dots` (default),
  * `lines` or `cross`, every `gap` flow units (or `[x, y]`), moving and scaling with the view. Stack two for a fine and
  * a coarse grid. `variant="image"` puts a picture (a floor plan, a map) under the diagram at `imageX`, `imageY` in flow
  * coordinates, `imageWidth` × `imageHeight` flow units, scaling with the zoom.
  */
 @Component({
-  selector: 'wt-flow-background',
+  selector: 'wu-flow-background',
   standalone: true,
   imports: [NgIf],
   template: `
-    <svg class="wt-flow-background" [class]="styleClass || ''" [style.background-color]="bgColor || null" aria-hidden="true" focusable="false">
+    <svg class="wu-flow-background" [class]="styleClass || ''" [style.background-color]="bgColor || null" aria-hidden="true" focusable="false">
       <ng-container *ngIf="variant !== 'image'; else picture">
         <svg:pattern
           [attr.id]="patternId"
@@ -38,7 +38,7 @@ import { ɵWtFlowHost } from './flow-host';
         >
           <svg:circle
             *ngIf="variant === 'dots' || !variant"
-            class="wt-flow-background-dot"
+            class="wu-flow-background-dot"
             [attr.cx]="p.width / 2"
             [attr.cy]="p.height / 2"
             [attr.r]="p.radius"
@@ -46,7 +46,7 @@ import { ɵWtFlowHost } from './flow-host';
           ></svg:circle>
           <svg:path
             *ngIf="variant === 'lines' || variant === 'cross'"
-            class="wt-flow-background-line"
+            class="wu-flow-background-line"
             [attr.d]="p.path"
             [style.stroke]="color || null"
             [style.stroke-width]="lineWidth || null"
@@ -71,7 +71,7 @@ import { ɵWtFlowHost } from './flow-host';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtFlowBackground implements OnInit, OnChanges, OnDestroy {
+export class WuFlowBackground implements OnInit, OnChanges, OnDestroy {
   @Input() variant: 'dots' | 'lines' | 'cross' | 'image' = 'dots';
   /** Space between dots / lines in flow units, or `[x, y]`. Default 20. */
   @Input() gap: number | [number, number] = 20;
@@ -81,7 +81,7 @@ export class WtFlowBackground implements OnInit, OnChanges, OnDestroy {
   @Input() lineWidth: number | null | undefined;
   /** Shift of the pattern in flow units. */
   @Input() offset: number | [number, number] = 0;
-  /** Colour of the dots / lines (default: the `--wt-flow-grid-dot-color` / `--wt-flow-grid-line-color` tokens). */
+  /** Colour of the dots / lines (default: the `--wu-flow-grid-dot-color` / `--wu-flow-grid-line-color` tokens). */
   @Input() color: string | null | undefined;
   /** Colour behind the pattern (default: none, the pane's own background shows). */
   @Input() bgColor: string | null | undefined;
@@ -94,13 +94,13 @@ export class WtFlowBackground implements OnInit, OnChanges, OnDestroy {
   @Input() imageOpacity = 1;
   @Input() styleClass?: string | null;
 
-  readonly patternId = ɵuniqueId('wt-flow-bg');
+  readonly patternId = ɵuniqueId('wu-flow-bg');
   p: FlowBackgroundPattern = { width: 20, height: 20, x: 0, y: 0, radius: 0.5, path: '' };
   imageBox = { x: 0, y: 0, width: 0, height: 0 };
 
   private stop: (() => void) | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
 
   ngOnInit(): void {
     this.update();

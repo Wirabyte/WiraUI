@@ -8,9 +8,9 @@ export const BLOCKUI_DOC: ComponentDoc = {
   title: 'BlockUI',
   group: 'Feedback',
   entry: 'blockui',
-  standalone: 'WtBlockUI',
-  module: 'WtBlockUIModule',
-  selector: 'wt-blockui',
+  standalone: 'WuBlockUI',
+  module: 'WuBlockUIModule',
+  selector: 'wu-blockui',
   description: {
     th: 'บังทั้งหน้า หรือบังเฉพาะส่วนหนึ่ง ระหว่างที่งานกำลังทำ เช่นตอนบันทึก ส่วนที่ถูกบังกดและ Tab เข้าไปไม่ได้ ตรงกลางแสดงสิ่งที่ใส่ไว้ (spinner หรือข้อความ)',
     en: 'Covers the whole page, or one part of it, while work runs, such as a save. What is covered cannot be pressed or tabbed into; the middle shows what you put inside (a spinner or a message).',
@@ -33,8 +33,8 @@ export const BLOCKUI_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtBlockUIModule</code>) และ standalone (<code>WtBlockUI</code>) แท็กเขียนได้ทั้ง <code>wt-blockui</code>, <code>wt-blockUI</code> และ <code>wt-block-ui</code>',
-        en: 'Works as an NgModule (<code>WtBlockUIModule</code>) or standalone (<code>WtBlockUI</code>). The tag can be written <code>wt-blockui</code>, <code>wt-blockUI</code> or <code>wt-block-ui</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuBlockUIModule</code>) และ standalone (<code>WuBlockUI</code>) แท็กเขียนได้ทั้ง <code>wu-blockui</code>, <code>wu-blockUI</code> และ <code>wu-block-ui</code>',
+        en: 'Works as an NgModule (<code>WuBlockUIModule</code>) or standalone (<code>WuBlockUI</code>). The tag can be written <code>wu-blockui</code>, <code>wu-blockUI</code> or <code>wu-block-ui</code>.',
       },
     },
     target: {
@@ -54,8 +54,8 @@ export const BLOCKUI_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-blockUI&gt;</code> เป็น <code>&lt;wt-blockUI&gt;</code> <code>[blocked]</code> และ <code>[target]</code> ชื่อเดิม เนื้อหาตรงกลางใส่ตรง ๆ หรือใช้ <code>pTemplate="content"</code> ก็ได้ · <code>autoZIndex</code> และ <code>baseZIndex</code> รับไว้แต่ไม่มีผล (ม่านทั้งหน้าอยู่ใน top layer) · class <code>p-blockui</code> และ <code>p-blockui-document</code> อยู่คู่กับ class <code>wt-*</code>',
-        en: 'Change <code>&lt;p-blockUI&gt;</code> to <code>&lt;wt-blockUI&gt;</code>; <code>[blocked]</code> and <code>[target]</code> keep their names, and the middle content goes straight inside or in <code>pTemplate="content"</code> · <code>autoZIndex</code> and <code>baseZIndex</code> are accepted and ignored (the page cover is in the top layer) · the <code>p-blockui</code> and <code>p-blockui-document</code> classes sit next to the <code>wt-*</code> ones.',
+        th: 'เปลี่ยน <code>&lt;p-blockUI&gt;</code> เป็น <code>&lt;wu-blockUI&gt;</code> <code>[blocked]</code> และ <code>[target]</code> ชื่อเดิม เนื้อหาตรงกลางใส่ตรง ๆ หรือใช้ <code>pTemplate="content"</code> ก็ได้ · <code>autoZIndex</code> และ <code>baseZIndex</code> รับไว้แต่ไม่มีผล (ม่านทั้งหน้าอยู่ใน top layer) · class <code>p-blockui</code> และ <code>p-blockui-document</code> อยู่คู่กับ class <code>wu-*</code>',
+        en: 'Change <code>&lt;p-blockUI&gt;</code> to <code>&lt;wu-blockUI&gt;</code>; <code>[blocked]</code> and <code>[target]</code> keep their names, and the middle content goes straight inside or in <code>pTemplate="content"</code> · <code>autoZIndex</code> and <code>baseZIndex</code> are accepted and ignored (the page cover is in the top layer) · the <code>p-blockui</code> and <code>p-blockui-document</code> classes sit next to the <code>wu-*</code> ones.',
       },
     },
   },
@@ -63,19 +63,19 @@ export const BLOCKUI_DOC: ComponentDoc = {
     target: `<div #studentForm class="student-form">
   <b>ข้อมูลนักเรียน</b>
   <label for="name">ชื่อ - สกุล</label>
-  <input id="name" name="name" wtInputText [(ngModel)]="studentName" />
-  <wt-button label="ปุ่มด้านใน" severity="secondary" [outlined]="true"></wt-button>
+  <input id="name" name="name" wuInputText [(ngModel)]="studentName" />
+  <wu-button label="ปุ่มด้านใน" severity="secondary" [outlined]="true"></wu-button>
 </div>
-<wt-blockUI [blocked]="isApiSaving" [target]="studentForm" ariaLabel="กำลังบันทึก">
-  <wt-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wt-progress-spinner>
+<wu-blockUI [blocked]="isApiSaving" [target]="studentForm" ariaLabel="กำลังบันทึก">
+  <wu-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wu-progress-spinner>
   <span>กำลังบันทึก</span>
-</wt-blockUI>
-<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>`,
-    document: `<wt-blockUI [blocked]="isApiSending" ariaLabel="กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้">
-  <wt-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wt-progress-spinner>
+</wu-blockUI>
+<wu-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wu-button>`,
+    document: `<wu-blockUI [blocked]="isApiSending" ariaLabel="กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้">
+  <wu-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wu-progress-spinner>
   <p>กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้</p>
-</wt-blockUI>
-<wt-button label="ส่งผลการเรียน" icon="wi wi-send" (onClick)="sendGrades()"></wt-button>`,
+</wu-blockUI>
+<wu-button label="ส่งผลการเรียน" icon="wi wi-send" (onClick)="sendGrades()"></wu-button>`,
   },
   ts: {
     target: `studentName = 'ด.ช.กิตติพัฒน์ ใจดี';
@@ -118,7 +118,7 @@ sendGrades(): void {
     },
   ],
   tokens: [
-    tok('--wt-blockui-mask', 'สีม่าน', 'Cover colour'),
-    tok('--wt-blockui-color', 'สีตัวอักษรบนม่าน', 'Text colour on the cover'),
+    tok('--wu-blockui-mask', 'สีม่าน', 'Cover colour'),
+    tok('--wu-blockui-color', 'สีตัวอักษรบนม่าน', 'Text colour on the cover'),
   ],
 };

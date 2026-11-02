@@ -1,14 +1,14 @@
-/** What wt-empty-state shows: no data yet, nothing found, an empty inbox or folder, a failed load, no connection. */
-export type WtEmptyStateType = 'nodata' | 'search' | 'inbox' | 'folder' | 'error' | 'offline';
+/** What wu-empty-state shows: no data yet, nothing found, an empty inbox or folder, a failed load, no connection. */
+export type WuEmptyStateType = 'nodata' | 'search' | 'inbox' | 'folder' | 'error' | 'offline';
 
-/** What wt-result reports: the outcome of a task, or a page that cannot be shown. */
-export type WtResultStatus = 'success' | 'error' | 'info' | 'warning' | '403' | '404' | '500';
+/** What wu-result reports: the outcome of a task, or a page that cannot be shown. */
+export type WuResultStatus = 'success' | 'error' | 'info' | 'warning' | '403' | '404' | '500';
 
-/** wt-error-page: what kind of failure a status code is (picks the picture and the kawaii text). */
-export type WtErrorKind = 'request' | 'auth' | 'forbidden' | 'missing' | 'time' | 'busy' | 'server' | 'gateway' | 'down';
+/** wu-error-page: what kind of failure a status code is (picks the picture and the kawaii text). */
+export type WuErrorKind = 'request' | 'auth' | 'forbidden' | 'missing' | 'time' | 'busy' | 'server' | 'gateway' | 'down';
 
 /** UI strings components read. Keys follow the translation object shape apps already use, so migrating apps can reuse theirs. */
-export interface WtLocale {
+export interface WuLocale {
   code: string;
   dayNames: string[];
   dayNamesShort: string[];
@@ -45,19 +45,19 @@ export interface WtLocale {
   rowsPerPage: string;
   /** The menu button that shows a menubar's items on narrow screens. */
   navigation: string;
-  /** wt-aside-menu: the side menu's landmark and its collapse button. */
+  /** wu-aside-menu: the side menu's landmark and its collapse button. */
   sideNavigation: string;
   collapseMenu: string;
   expandMenu: string;
   selectAll: string;
   /** Label of the total row in an exported table. */
   total: string;
-  /** wt-empty-state: the title and the line under it, per type. */
-  emptyState: Record<WtEmptyStateType, { title: string; description: string }>;
-  /** wt-result: the title and the line under it, per status. */
-  result: Record<WtResultStatus, { title: string; description: string }>;
+  /** wu-empty-state: the title and the line under it, per type. */
+  emptyState: Record<WuEmptyStateType, { title: string; description: string }>;
+  /** wu-result: the title and the line under it, per status. */
+  result: Record<WuResultStatus, { title: string; description: string }>;
   /**
-   * wt-error-page: the word before the code, the buttons, the reference line, the formal text per status code (any code
+   * wu-error-page: the word before the code, the buttons, the reference line, the formal text per status code (any code
    * not listed takes `4xx` / `5xx`) and the kawaii text per kind.
    */
   errorPage: {
@@ -68,9 +68,9 @@ export interface WtLocale {
     signIn: string;
     reference: string;
     codes: Record<string, { title: string; description: string }>;
-    kawaii: Record<WtErrorKind, { title: string; description: string }>;
+    kawaii: Record<WuErrorKind, { title: string; description: string }>;
   };
-  /** wt-site-footer: the back-to-top button and the words after the copyright. wt-bottombar: its label. */
+  /** wu-site-footer: the back-to-top button and the words after the copyright. wu-bottombar: its label. */
   siteFooter: { backToTop: string; rights: string };
   bottombar: string;
   /** Multi-select field once more are chosen than it lists; {0} is the count. */
@@ -80,9 +80,9 @@ export interface WtLocale {
   rotateRight: string;
   rotateLeft: string;
   zoomIn: string;
-  /** wt-imagecropper */
+  /** wu-imagecropper */
   imageCropper: string;
-  /** Label of wt-language-switch. */
+  /** Label of wu-language-switch. */
   language: string;
   cropArea: string;
   cropAreaHint: string;
@@ -189,7 +189,7 @@ export interface WtLocale {
   /** One-time code boxes: the group's label and each box's (`{0}` of `{1}`). */
   oneTimeCode: string;
   otpCharacter: string;
-  /** wt-flow (a node diagram): role names, keyboard hints, controls, and what screen readers hear as things change. */
+  /** wu-flow (a node diagram): role names, keyboard hints, controls, and what screen readers hear as things change. */
   /** The diagram's accessible name and role description. */
   flowLabel: string;
   flowNode: string;
@@ -229,12 +229,12 @@ export interface WtLocale {
    * Form error messages, by validator key. `{label}` is the field's name when one is given (`requiredLabel`),
    * `{requiredLength}`, `{min}`, `{max}` come from the error.
    */
-  validation: WtValidationMessages;
+  validation: WuValidationMessages;
   /** Rich-text editor: toolbar labels, menus and dialogs. `{0}` / `{1}` are filled in (a level, a size, a count). */
-  editor: WtEditorMessages;
+  editor: WuEditorMessages;
 }
 
-export interface WtEditorMessages {
+export interface WuEditorMessages {
   toolbar: string;
   undo: string;
   redo: string;
@@ -327,7 +327,7 @@ export interface WtEditorMessages {
   content: string;
 }
 
-export interface WtValidationMessages {
+export interface WuValidationMessages {
   required: string;
   requiredLabel: string;
   requiredTrue: string;
@@ -344,7 +344,7 @@ export interface WtValidationMessages {
   invalid: string;
 }
 
-export const TH_LOCALE: WtLocale = {
+export const TH_LOCALE: WuLocale = {
   code: 'th',
   dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
   dayNamesShort: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
@@ -670,7 +670,7 @@ export const TH_LOCALE: WtLocale = {
   },
 };
 
-export const EN_LOCALE: WtLocale = {
+export const EN_LOCALE: WuLocale = {
   code: 'en',
   dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -996,4 +996,4 @@ export const EN_LOCALE: WtLocale = {
   },
 };
 
-export const LOCALES: Record<string, WtLocale> = { th: TH_LOCALE, en: EN_LOCALE };
+export const LOCALES: Record<string, WuLocale> = { th: TH_LOCALE, en: EN_LOCALE };

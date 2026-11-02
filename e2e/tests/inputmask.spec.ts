@@ -49,25 +49,25 @@ test('a model value is formatted; without autoClear a partial value stays; paste
   await expect(input).toHaveValue('098-765-4');
   // Formatted model, with slot characters while it is incomplete.
   await expect.poll(() => model(page)).toMatchObject({ phone: '098-765-4___' });
-  await page.locator('#im-phone .wt-inputmask-clear').click();
+  await page.locator('#im-phone .wu-inputmask-clear').click();
   await expect(input).toHaveValue('___-___-____');
   await expect.poll(() => model(page)).toMatchObject({ phone: '' });
 });
 
 test('messages: a stack from an array; closing removes one; the service fills the one with the same key', async ({ page }) => {
-  const boxes = page.locator('#msgs .wt-message:visible');
+  const boxes = page.locator('#msgs .wu-message:visible');
   await expect(boxes).toHaveCount(3);
-  await expect(boxes.nth(0).locator('.wt-messages-summary')).toHaveText('บันทึกแล้ว');
-  await expect(boxes.nth(0).locator('.wt-messages-detail')).toHaveText('ข้อมูลนักเรียน 3 คน');
-  await expect(boxes.nth(1)).toHaveClass(/wt-message-danger/);
+  await expect(boxes.nth(0).locator('.wu-messages-summary')).toHaveText('บันทึกแล้ว');
+  await expect(boxes.nth(0).locator('.wu-messages-detail')).toHaveText('ข้อมูลนักเรียน 3 คน');
+  await expect(boxes.nth(1)).toHaveClass(/wu-message-danger/);
   // closable: false on the second one.
-  await expect(boxes.nth(1).locator('.wt-message-close')).toHaveCount(0);
-  await boxes.nth(0).locator('.wt-message-close').click();
+  await expect(boxes.nth(1).locator('.wu-message-close')).toHaveCount(0);
+  await boxes.nth(0).locator('.wu-message-close').click();
   await expect(boxes).toHaveCount(2);
-  await expect(boxes.nth(0).locator('.wt-messages-summary')).toHaveText('ผิดพลาด');
+  await expect(boxes.nth(0).locator('.wu-messages-summary')).toHaveText('ผิดพลาด');
   await expect(boxes.nth(1)).toHaveText('ใกล้ครบกำหนด');
-  await expect(page.locator('#msgs-service .wt-message')).toHaveCount(0);
+  await expect(page.locator('#msgs-service .wu-message')).toHaveCount(0);
   await page.locator('#msgs-send').click();
-  await expect(page.locator('#msgs-service .wt-message')).toHaveCount(1);
-  await expect(page.locator('#msgs-service .wt-message')).toContainText('ส่งผ่าน service');
+  await expect(page.locator('#msgs-service .wu-message')).toHaveCount(1);
+  await expect(page.locator('#msgs-service .wu-message')).toContainText('ส่งผ่าน service');
 });

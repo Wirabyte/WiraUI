@@ -13,30 +13,30 @@ import type {
   ChartValueFormat,
   ChartXAnnotation,
   ChartXY,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 
 export type {
-  ChartAnnotations as WtChartAnnotations,
-  ChartBoxStats as WtChartBoxStats,
-  ChartNode as WtChartNode,
-  ChartRange as WtChartRange,
-  ChartColorRange as WtChartColorRange,
-  ChartCurve as WtChartCurve,
-  ChartPointAnnotation as WtChartPointAnnotation,
-  ChartReferenceLine as WtChartReferenceLine,
-  ChartSeries as WtChartSeries,
+  ChartAnnotations as WuChartAnnotations,
+  ChartBoxStats as WuChartBoxStats,
+  ChartNode as WuChartNode,
+  ChartRange as WuChartRange,
+  ChartColorRange as WuChartColorRange,
+  ChartCurve as WuChartCurve,
+  ChartPointAnnotation as WuChartPointAnnotation,
+  ChartReferenceLine as WuChartReferenceLine,
+  ChartSeries as WuChartSeries,
   ChartSeriesType,
-  ChartType as WtChartType,
+  ChartType as WuChartType,
   ChartValueFormat,
-  ChartXAnnotation as WtChartXAnnotation,
+  ChartXAnnotation as WuChartXAnnotation,
   ChartXY,
 };
 
 /** Where the legend goes. */
-export type WtChartLegend = 'top' | 'bottom' | 'right' | 'none';
+export type WuChartLegend = 'top' | 'bottom' | 'right' | 'none';
 
 /** `(pointClick)`: the bar, point or slice clicked (or chosen with Enter). */
-export interface WtChartClickEvent {
+export interface WuChartClickEvent {
   /** Index of the series (pie: 0). */
   series: number;
   seriesName: string;
@@ -48,21 +48,21 @@ export interface WtChartClickEvent {
 }
 
 /** `(seriesToggle)`: a legend click showed or hid a series (pie: a slice). */
-export interface WtChartToggleEvent {
+export interface WuChartToggleEvent {
   index: number;
   name: string;
   hidden: boolean;
 }
 
 /** One row of the tooltip. */
-export interface WtChartTipRow {
+export interface WuChartTipRow {
   color: string;
   name: string;
   value: string;
 }
 
 /** `(zoomChange)`: the labels zoomed into, by index in the whole data (both included). */
-export interface WtChartZoomEvent {
+export interface WuChartZoomEvent {
   from: number;
   to: number;
 }

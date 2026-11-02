@@ -18,15 +18,15 @@ test.beforeEach(async ({ page }) => {
 
 test('aside menu: a full-height column; groups expand in place at any depth; the group holding the current page starts open', async ({ page }) => {
   const host = side(page);
-  const nav = host.locator('nav.wt-aside-menu');
+  const nav = host.locator('nav.wu-aside-menu');
   await expect(nav).toHaveAttribute('aria-label', 'เมนูด้านข้าง');
   // Beside the content, as tall as the window, sticky, scrolling on its own.
   await expect(host).toHaveCSS('position', 'sticky');
   expect(Math.round((await host.boundingBox())!.height)).toBe(800);
-  expect(await nav.locator('.wt-aside-menu-body').evaluate((el) => getComputedStyle(el).overflowY)).toBe('auto');
+  expect(await nav.locator('.wu-aside-menu-body').evaluate((el) => getComputedStyle(el).overflowY)).toBe('auto');
   expect((await page.locator('#am-content').boundingBox())!.x).toBeGreaterThanOrEqual((await host.boundingBox())!.x + (await host.boundingBox())!.width - 1);
   // Hidden items are left out.
-  await expect(nav.locator('.wt-aside-menu-root > li:not(.wt-aside-menu-separator)')).toHaveCount(5);
+  await expect(nav.locator('.wu-aside-menu-root > li:not(.wu-aside-menu-separator)')).toHaveCount(5);
 
   const students = nav.getByRole('button', { name: 'นักเรียน', exact: true });
   const reports = nav.getByRole('button', { name: /^รายงาน/ });
@@ -54,15 +54,15 @@ test('aside menu: a full-height column; groups expand in place at any depth; the
 });
 
 test('aside menu: the current page and its group are marked; commands, disabled items, separators; arrow keys', async ({ page }) => {
-  const nav = side(page).locator('nav.wt-aside-menu');
-  const active = nav.locator('.wt-aside-menu-link-active');
+  const nav = side(page).locator('nav.wu-aside-menu');
+  const active = nav.locator('.wu-aside-menu-link-active');
   await expect(active).toHaveCount(1);
   await expect(active).toHaveAttribute('aria-current', 'page');
   await expect(active).toHaveText('สรุปผล');
   await expect(nav.locator('[aria-current]')).toHaveCount(1);
-  await expect(nav.getByRole('button', { name: /^รายงาน/ })).toHaveClass(/wt-aside-menu-group-active/);
+  await expect(nav.getByRole('button', { name: /^รายงาน/ })).toHaveClass(/wu-aside-menu-group-active/);
   await expect(nav.getByRole('button', { name: 'ปิดใช้งาน' })).toBeDisabled();
-  await expect(nav.locator('.wt-aside-menu-root > .wt-aside-menu-separator')).toHaveCount(1);
+  await expect(nav.locator('.wu-aside-menu-root > .wu-aside-menu-separator')).toHaveCount(1);
   await nav.getByRole('button', { name: 'ตั้งค่า' }).click();
   await expect(log(page)).toContainText('am:settings');
 
@@ -86,12 +86,12 @@ test('aside menu: the current page and its group are marked; commands, disabled 
 
 test('aside menu collapsed: an icon rail with tooltips; a group opens a flyout beside it; Escape; a pick closes it', async ({ page }) => {
   const host = side(page);
-  const nav = host.locator('nav.wt-aside-menu');
-  const collapse = nav.locator('.wt-aside-menu-collapse');
+  const nav = host.locator('nav.wu-aside-menu');
+  const collapse = nav.locator('.wu-aside-menu-collapse');
   await expect(collapse).toHaveText('ย่อเมนู');
   const full = (await host.boundingBox())!.width;
   await collapse.click();
-  await expect(host).toHaveClass(/wt-aside-menu-host-collapsed/);
+  await expect(host).toHaveClass(/wu-aside-menu-host-collapsed/);
   await expect(page.locator('#am-collapsed')).toHaveText('true');
   await expect.poll(async () => (await host.boundingBox())!.width).toBeLessThan(full / 2);
   await expect(collapse).toHaveAttribute('title', 'ขยายเมนู');
@@ -100,14 +100,14 @@ test('aside menu collapsed: an icon rail with tooltips; a group opens a flyout b
   // Labels become tooltips and stay the accessible names; an item without an icon shows its first consonant.
   const dashboard = nav.getByRole('button', { name: 'แดชบอร์ด' });
   await expect(dashboard).toHaveAttribute('title', 'แดชบอร์ด');
-  await expect(dashboard.locator('.wt-aside-menu-initial')).toHaveText('ด');
+  await expect(dashboard.locator('.wu-aside-menu-initial')).toHaveText('ด');
 
   const students = nav.getByRole('button', { name: 'นักเรียน', exact: true });
   await students.click();
-  const flyout = nav.locator('.wt-aside-menu-flyout');
+  const flyout = nav.locator('.wu-aside-menu-flyout');
   await expect(flyout).toBeVisible();
   await expect(students).toHaveAttribute('aria-expanded', 'true');
-  await expect(flyout.locator('.wt-aside-menu-flyout-title')).toHaveText('นักเรียน');
+  await expect(flyout.locator('.wu-aside-menu-flyout-title')).toHaveText('นักเรียน');
   const rail = (await nav.boundingBox())!;
   expect((await flyout.boundingBox())!.x).toBeGreaterThanOrEqual(rail.x + rail.width - 1);
   await expect.poll(() => focusedText(page)).toBe('รายชื่อ');
@@ -122,15 +122,15 @@ test('aside menu collapsed: an icon rail with tooltips; a group opens a flyout b
   await expect(flyout).toHaveCount(0);
 
   await collapse.click();
-  await expect(host).not.toHaveClass(/wt-aside-menu-host-collapsed/);
+  await expect(host).not.toHaveClass(/wu-aside-menu-host-collapsed/);
   await expect(page.locator('#am-collapsed')).toHaveText('false');
 });
 
 test('aside menu on a phone: off-canvas over a mask; focus moves in and stays in; Escape, a pick and the mask close it', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   const host = side(page);
-  const nav = host.locator('nav.wt-aside-menu');
-  await expect(host).toHaveClass(/wt-aside-menu-host-mobile/);
+  const nav = host.locator('nav.wu-aside-menu');
+  await expect(host).toHaveClass(/wu-aside-menu-host-mobile/);
   await expect(nav).toBeHidden();
   await expect(nav).toHaveAttribute('inert', '');
   // Opened from the keyboard, so every engine has the button focused to return to.
@@ -142,15 +142,15 @@ test('aside menu on a phone: off-canvas over a mask; focus moves in and stays in
   const box = (await nav.boundingBox())!;
   expect(Math.round(box.x)).toBe(0);
   expect(Math.round(box.height)).toBe(740);
-  await expect(host.locator('.wt-aside-menu-mask')).toBeVisible();
+  await expect(host.locator('.wu-aside-menu-mask')).toBeVisible();
   // Focus lands on the current page.
   await expect(nav.locator('[aria-current="page"]')).toBeFocused();
   // Tab wraps inside the panel.
-  await nav.locator('.wt-aside-menu-close').focus();
+  await nav.locator('.wu-aside-menu-close').focus();
   await page.keyboard.press('Shift+Tab');
   await expect(page.locator('#am-logout')).toBeFocused();
   await page.keyboard.press('Tab');
-  await expect(nav.locator('.wt-aside-menu-close')).toBeFocused();
+  await expect(nav.locator('.wu-aside-menu-close')).toBeFocused();
   // Escape closes it and focus goes back to the opener.
   await page.keyboard.press('Escape');
   await expect(nav).toBeHidden();
@@ -172,33 +172,33 @@ test('aside menu on a phone: off-canvas over a mask; focus moves in and stays in
   await open.click();
   await expect(nav).toBeVisible();
   await page.setViewportSize({ width: 1000, height: 800 });
-  await expect(host).not.toHaveClass(/wt-aside-menu-host-mobile/);
+  await expect(host).not.toHaveClass(/wu-aside-menu-host-mobile/);
   await expect(nav).toBeVisible();
   await expect.poll(() => log(page).textContent()).toMatch(/am:visible:false\s*$/);
 });
 
 test('navbar [aside]: the menu button collapses the aside on wide screens and opens it on phones, with the bar links inside', async ({ page }) => {
   const bar = page.locator('#am-bar');
-  const button = bar.locator('.wt-navbar-toggle');
+  const button = bar.locator('.wu-navbar-toggle');
   const host = side(page);
-  const nav = host.locator('nav.wt-aside-menu');
+  const nav = host.locator('nav.wu-aside-menu');
   await bar.scrollIntoViewIfNeeded();
   // Wide: the button comes first and controls the aside.
   await expect(button).toBeVisible();
   await expect(button).toHaveAttribute('aria-controls', (await nav.getAttribute('id')) || '');
   await expect(button).toHaveAttribute('aria-expanded', 'true');
   expect((await button.boundingBox())!.x).toBeLessThan((await page.locator('#am-brand').boundingBox())!.x);
-  await expect(bar.locator('.wt-navbar-links')).toBeVisible();
+  await expect(bar.locator('.wu-navbar-links')).toBeVisible();
   await button.click();
-  await expect(host).toHaveClass(/wt-aside-menu-host-collapsed/);
+  await expect(host).toHaveClass(/wu-aside-menu-host-collapsed/);
   await expect(button).toHaveAttribute('aria-expanded', 'false');
   await expect(page.locator('#am-collapsed')).toHaveText('true');
   await button.click();
-  await expect(host).not.toHaveClass(/wt-aside-menu-host-collapsed/);
+  await expect(host).not.toHaveClass(/wu-aside-menu-host-collapsed/);
 
   // Phones: the bar's links fold into the aside, which the button opens.
   await page.setViewportSize({ width: 360, height: 740 });
-  await expect(bar.locator('.wt-navbar-links')).toBeHidden();
+  await expect(bar.locator('.wu-navbar-links')).toBeHidden();
   await expect(button).toHaveAttribute('aria-expanded', 'false');
   await button.focus();
   await page.keyboard.press('Enter');
@@ -221,10 +221,10 @@ test('navbar [aside]: the menu button collapses the aside on wide screens and op
 });
 
 test('aside menu sections: top-level groups become headings; multiple=false keeps one group open', async ({ page }) => {
-  const nav = page.locator('#am-sections nav.wt-aside-menu');
+  const nav = page.locator('#am-sections nav.wu-aside-menu');
   await nav.scrollIntoViewIfNeeded();
   await expect(nav).toHaveAttribute('aria-label', 'เมนูแบบหัวข้อ');
-  await expect(nav.locator('.wt-aside-menu-section-label')).toHaveText(['นักเรียน', 'รายงาน']);
+  await expect(nav.locator('.wu-aside-menu-section-label')).toHaveText(['นักเรียน', 'รายงาน']);
   // No toggle for a heading; its items always show and are named by it.
   await expect(nav.getByRole('button', { name: 'นักเรียน', exact: true })).toHaveCount(0);
   await expect(nav.getByRole('list', { name: 'นักเรียน' })).toBeVisible();
@@ -242,31 +242,31 @@ test('aside menu: nothing is wider than a phone, closed or open', async ({ page 
   await page.setViewportSize({ width: 360, height: 740 });
   for (const id of ['#am-bar', '#am']) expect(await overflowing(page, id), id).toEqual([]);
   await page.locator('#am-open').click();
-  const nav = side(page).locator('nav.wt-aside-menu');
+  const nav = side(page).locator('nav.wu-aside-menu');
   await expect(nav).toBeVisible();
   await nav.getByRole('button', { name: 'นักเรียน', exact: true }).click();
   expect(await overflowing(page, '#am')).toEqual([]);
-  expect(await nav.locator('.wt-aside-menu-body').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+  expect(await nav.locator('.wu-aside-menu-body').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
 });
 
 test('aside menu: collapsing and expanding slide over the full layout; labels never wrap mid-way', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   const host = side(page);
-  const nav = host.locator('nav.wt-aside-menu');
-  const collapse = nav.locator('.wt-aside-menu-collapse');
+  const nav = host.locator('nav.wu-aside-menu');
+  const collapse = nav.locator('.wu-aside-menu-collapse');
   const full = (await nav.boundingBox())!.width;
   /** Lines of the tallest visible label and the panel's width, on each frame for 700 ms. */
   const sample = () =>
     page.evaluate(
       () =>
         new Promise<{ lines: number; width: number; sliding: boolean }[]>((resolve) => {
-          const panel = document.querySelector('#am-side nav.wt-aside-menu') as HTMLElement;
+          const panel = document.querySelector('#am-side nav.wu-aside-menu') as HTMLElement;
           const out: { lines: number; width: number; sliding: boolean }[] = [];
           const start = performance.now();
           const tick = () => {
-            const labels = [...panel.querySelectorAll<HTMLElement>('.wt-aside-menu-link:not(.wt-aside-menu-link-rail) .wt-aside-menu-label')];
+            const labels = [...panel.querySelectorAll<HTMLElement>('.wu-aside-menu-link:not(.wu-aside-menu-link-rail) .wu-aside-menu-label')];
             const lines = Math.max(0, ...labels.map((l) => Math.round(l.getBoundingClientRect().height / parseFloat(getComputedStyle(l).lineHeight))));
-            out.push({ lines, width: panel.getBoundingClientRect().width, sliding: panel.classList.contains('wt-aside-menu-sliding') });
+            out.push({ lines, width: panel.getBoundingClientRect().width, sliding: panel.classList.contains('wu-aside-menu-sliding') });
             if (performance.now() - start < 700) requestAnimationFrame(tick);
             else resolve(out);
           };
@@ -280,11 +280,11 @@ test('aside menu: collapsing and expanding slide over the full layout; labels ne
     expect(f.width).toBeCloseTo(full, 0);
     expect(f.lines).toBeLessThanOrEqual(1);
   }
-  await expect(nav).toHaveClass(/wt-aside-menu-collapsed/);
-  await expect(nav).not.toHaveClass(/wt-aside-menu-sliding/);
+  await expect(nav).toHaveClass(/wu-aside-menu-collapsed/);
+  await expect(nav).not.toHaveClass(/wu-aside-menu-sliding/);
   const [expanding] = await Promise.all([sample(), collapse.click()]);
   expect(expanding.some((f) => f.sliding)).toBe(true);
   for (const f of expanding) expect(f.lines).toBeLessThanOrEqual(1);
-  await expect(nav).not.toHaveClass(/wt-aside-menu-sliding/);
+  await expect(nav).not.toHaveClass(/wu-aside-menu-sliding/);
   await expect.poll(async () => Math.round((await host.boundingBox())!.width)).toBe(Math.round(full));
 });

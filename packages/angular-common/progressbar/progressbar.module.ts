@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtProgressBar } from './progressbar.component';
+import { WuProgressBar } from './progressbar.component';
 
-/** For NgModule apps. Standalone apps can import `WtProgressBar` directly. */
+/** For NgModule apps. Standalone apps can import `WuProgressBar` directly. */
 @NgModule({
-  imports: [WtProgressBar],
-  exports: [WtProgressBar],
+  imports: [WuProgressBar],
+  exports: [WuProgressBar],
 })
-export class WtProgressBarModule {}
+export class WuProgressBarModule {}

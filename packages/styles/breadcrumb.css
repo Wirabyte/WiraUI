@@ -1,85 +1,85 @@
-/* wt-breadcrumb. Shared by wiratheme v1, v2 and v3. A row of links with chevrons between them; it wraps on narrow
+/* wu-breadcrumb. Shared by wiraui v1, v2 and v3. A row of links with chevrons between them; it wraps on narrow
    screens and the last item, the current page, is plain text colour. */
-@layer wiratheme.components {
-  wt-breadcrumb {
+@layer wiraui.components {
+  wu-breadcrumb {
     display: block;
     max-width: 100%;
   }
-  .wt-breadcrumb {
-    padding: var(--wt-breadcrumb-padding);
-    border: var(--wt-breadcrumb-border-width) solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-breadcrumb-bg);
+  .wu-breadcrumb {
+    padding: var(--wu-breadcrumb-padding);
+    border: var(--wu-breadcrumb-border-width) solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-breadcrumb-bg);
   }
-  .wt-breadcrumb-list {
+  .wu-breadcrumb-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--wt-breadcrumb-gap);
+    gap: var(--wu-breadcrumb-gap);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-breadcrumb-item {
+  .wu-breadcrumb-item {
     display: flex;
     min-width: 0;
   }
-  .wt-breadcrumb-link {
+  .wu-breadcrumb-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     min-width: 0;
-    border-radius: var(--wt-radius-sm);
-    color: var(--wt-breadcrumb-link-color);
+    border-radius: var(--wu-radius-sm);
+    color: var(--wu-breadcrumb-link-color);
     text-decoration: none;
     cursor: pointer;
     transition: color 0.15s;
   }
-  .wt-breadcrumb-link:hover {
-    color: var(--wt-breadcrumb-link-hover-color);
+  .wu-breadcrumb-link:hover {
+    color: var(--wu-breadcrumb-link-hover-color);
   }
-  .wt-breadcrumb-link:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-breadcrumb-link:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-breadcrumb-link-static {
+  .wu-breadcrumb-link-static {
     cursor: default;
   }
-  .wt-breadcrumb-current .wt-breadcrumb-link {
-    color: var(--wt-breadcrumb-current-color);
-    font-weight: var(--wt-breadcrumb-current-weight);
+  .wu-breadcrumb-current .wu-breadcrumb-link {
+    color: var(--wu-breadcrumb-current-color);
+    font-weight: var(--wu-breadcrumb-current-weight);
   }
-  .wt-breadcrumb-item-disabled .wt-breadcrumb-link {
-    opacity: var(--wt-disabled-opacity);
+  .wu-breadcrumb-item-disabled .wu-breadcrumb-link {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-breadcrumb-label {
+  .wu-breadcrumb-label {
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  .wt-breadcrumb-icon {
+  .wu-breadcrumb-icon {
     flex: none;
   }
-  svg.wt-breadcrumb-icon {
+  svg.wu-breadcrumb-icon {
     width: 1rem;
     height: 1rem;
   }
-  .wt-breadcrumb-separator {
+  .wu-breadcrumb-separator {
     display: flex;
     align-items: center;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
   }
-  .wt-breadcrumb-separator svg {
+  .wu-breadcrumb-separator svg {
     width: 0.875rem;
     height: 0.875rem;
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
   @media (pointer: coarse) {
-    .wt-breadcrumb-link {
+    .wu-breadcrumb-link {
       position: relative;
     }
-    .wt-breadcrumb-link::after {
+    .wu-breadcrumb-link::after {
       content: '';
       position: absolute;
       inset: -0.375rem;

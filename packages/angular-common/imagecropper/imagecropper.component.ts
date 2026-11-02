@@ -27,12 +27,12 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
 import {
   base64ToFile,
   clampCrop,
@@ -70,20 +70,20 @@ import {
   roundCrop,
   sameCrop,
   viewWindow,
-  WtLocale,
+  WuLocale,
   zoomCrop,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 import {
-  WT_IMAGE_CROPPER_OPTIONS,
-  WtImageCroppedEvent,
-  WtImageCropperFormat,
-  WtImageCropperToolbar,
-  WtImageTransform,
-  WtLoadedImage,
+  WU_IMAGE_CROPPER_OPTIONS,
+  WuImageCroppedEvent,
+  WuImageCropperFormat,
+  WuImageCropperToolbar,
+  WuImageTransform,
+  WuLoadedImage,
 } from './imagecropper.types';
 
 /** A group of buttons on the toolbar; `zoom` when it holds the slider (it then takes the spare width). */
-interface WtImageCropperToolGroup {
+interface WuImageCropperToolGroup {
   tools: CropperToolName[];
   zoom: boolean;
 }
@@ -124,13 +124,13 @@ const num = (v: unknown, fallback = 0): number => {
   return v !== null && v !== '' && isFinite(n) ? n : fallback;
 };
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
-const groupTools = (toolbar: WtImageCropperToolbar | readonly string[] | string | null | undefined): WtImageCropperToolGroup[] =>
+const groupTools = (toolbar: WuImageCropperToolbar | readonly string[] | string | null | undefined): WuImageCropperToolGroup[] =>
   cropperToolbarGroups(toolbar).map((tools) => ({ tools, zoom: tools.includes('zoomSlider') }));
 const sameTurn = (a: CropOrientation, b: CropOrientation) =>
   normalizeAngle(a.rotate) === normalizeAngle(b.rotate) && a.flipH === b.flipH && a.flipV === b.flipV;
 
 /**
- * Crops a picture: `<wt-imagecropper [imageFile]="file" [aspectRatio]="4 / 3" [resizeToWidth]="800"
+ * Crops a picture: `<wu-imagecropper [imageFile]="file" [aspectRatio]="4 / 3" [resizeToWidth]="800"
  * (imageCropped)="saved($event)">`. The picture comes from a File/Blob (`imageFile`), a file input's change event
  * (`imageChangedEvent`), a URL or base64; JPEG photos from phones are turned upright from their EXIF orientation.
  * Drag the box to move it, its corners and edges to resize it (the aspect ratio is kept unless
@@ -141,7 +141,7 @@ const sameTurn = (a: CropOrientation, b: CropOrientation) =>
  */
 @Component({
   // `image-cropper` is the tag cropper templates already use, so they move over unchanged.
-  selector: 'wt-imagecropper, wt-imageCropper, wt-image-cropper, image-cropper',
+  selector: 'wu-imagecropper, wu-imageCropper, wu-image-cropper, image-cropper',
   standalone: true,
   imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgTemplateOutlet],
   templateUrl: './imagecropper.component.html',
@@ -149,9 +149,9 @@ const sameTurn = (a: CropOrientation, b: CropOrientation) =>
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
+export class WuImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   /** App-wide defaults from `provideImageCropperOptions()`; the inputs below start from them. */
-  private readonly defaults = inject(WT_IMAGE_CROPPER_OPTIONS, { optional: true }) || {};
+  private readonly defaults = inject(WU_IMAGE_CROPPER_OPTIONS, { optional: true }) || {};
 
   // ---------- the picture ----------
 
@@ -167,7 +167,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
 
   // ---------- the result ----------
 
-  @Input() format: WtImageCropperFormat = this.defaults.format ?? 'png';
+  @Input() format: WuImageCropperFormat = this.defaults.format ?? 'png';
   /** 0–100, for jpeg and webp. Default 92. */
   @Input() imageQuality: number | string | null | undefined = this.defaults.imageQuality ?? 92;
   /** `'blob'` (default: `blob` + `objectUrl`) or `'base64'` (a data URL). */
@@ -216,7 +216,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   /** Quarter turns clockwise (negative = anticlockwise), applied before `transform`. */
   @Input() canvasRotation: number | string | null | undefined = 0;
   /** Two-way: `[(transform)]`, `{ scale, rotate, flipH, flipV }`. The toolbar changes it too. */
-  @Input() transform: WtImageTransform | null | undefined;
+  @Input() transform: WuImageTransform | null | undefined;
   /** Degrees clockwise; overrides `transform.rotate` when given. */
   @Input() rotation: number | string | null | undefined;
   /** 1 = the whole picture; overrides `transform.scale` when given. */
@@ -237,11 +237,11 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
    * Which built-in buttons the toolbar has: `'full'` (default), `'none'`, or a list such as
    * `['zoom', '|', 'rotateLeft', 'rotateRight']` (`'|'` starts a group). A `tools` template adds the app's own buttons.
    */
-  @Input() set toolbar(v: WtImageCropperToolbar | readonly string[] | string | null | undefined) {
-    this._tools = (v as WtImageCropperToolbar) ?? null;
+  @Input() set toolbar(v: WuImageCropperToolbar | readonly string[] | string | null | undefined) {
+    this._tools = (v as WuImageCropperToolbar) ?? null;
     this.toolGroups = groupTools(v ?? this.defaults.toolbar);
   }
-  get toolbar(): WtImageCropperToolbar | null {
+  get toolbar(): WuImageCropperToolbar | null {
     return this._tools;
   }
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
@@ -260,19 +260,19 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   @Input() checkImageType: unknown;
   @Input() options: unknown;
 
-  @Output() readonly imageCropped = new EventEmitter<WtImageCroppedEvent>();
+  @Output() readonly imageCropped = new EventEmitter<WuImageCroppedEvent>();
   /** Fires as a crop starts (the result follows in `imageCropped`). */
   @Output() readonly startCropImage = new EventEmitter<void>();
-  @Output() readonly imageLoaded = new EventEmitter<WtLoadedImage>();
+  @Output() readonly imageLoaded = new EventEmitter<WuLoadedImage>();
   /** The picture is shown; carries its size on screen in CSS pixels. */
   @Output() readonly cropperReady = new EventEmitter<CropDimensions>();
   @Output() readonly loadImageFailed = new EventEmitter<void>();
   /** The box moved or resized (image pixels, rounded). */
   @Output() readonly cropperChange = new EventEmitter<CropperPosition>();
   /** Zoom, turn or mirror changed from the toolbar, keys, wheel or pinch. */
-  @Output() readonly transformChange = new EventEmitter<WtImageTransform>();
+  @Output() readonly transformChange = new EventEmitter<WuImageTransform>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('tools', { descendants: false }) protected toolsRef?: unknown;
   @ViewChild('viewport') protected viewportRef?: ElementRef<HTMLElement>;
   @ViewChild('frame') protected frameRef?: ElementRef<HTMLElement>;
@@ -283,9 +283,9 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   // ---------- what the template reads ----------
 
   /** The built-in toolbar buttons, in groups. */
-  toolGroups: WtImageCropperToolGroup[] = groupTools(this.defaults.toolbar);
+  toolGroups: WuImageCropperToolGroup[] = groupTools(this.defaults.toolbar);
   /** What the `tools` template gets: the cropper as `let-cropper` (and as `cropper`). */
-  readonly toolsContext: { $implicit: WtImageCropper; cropper: WtImageCropper } = { $implicit: this, cropper: this };
+  readonly toolsContext: { $implicit: WuImageCropper; cropper: WuImageCropper } = { $implicit: this, cropper: this };
   /** A picture is loaded. */
   ready = false;
   loading = false;
@@ -312,7 +312,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   canZoomOut = false;
   readonly squares: CropHandle[] = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
   readonly edges: CropHandle[] = ['n', 'e', 's', 'w'];
-  readonly hintId = ɵuniqueId('wt-imagecropper-hint');
+  readonly hintId = ɵuniqueId('wu-imagecropper-hint');
 
   private _onlyScaleDown = false;
   private _autoCrop = true;
@@ -322,7 +322,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   private _hideSquares = false;
   private _toolbar = true;
   private _disabled = false;
-  private _tools: WtImageCropperToolbar | null = null;
+  private _tools: WuImageCropperToolbar | null = null;
 
   private source: Source | null = null;
   private rect: CropperPosition = { x1: 0, y1: 0, x2: 0, y2: 0 };
@@ -359,13 +359,13 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -445,14 +445,14 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get rootStyle(): Record<string, any> | null {
     return this.style && typeof this.style === 'object' ? this.style : null;
   }
-  /** The app's own toolbar buttons: `<ng-template #tools let-cropper>` or `wtTemplate="tools"`. */
+  /** The app's own toolbar buttons: `<ng-template #tools let-cropper>` or `wuTemplate="tools"`. */
   get toolsTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.toolsRef) || ɵfindTemplate(this.templates, 'tools');
   }
@@ -464,7 +464,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
     return `${this.cropperFrameAriaLabel || this.t.cropArea}, ${this.cropW} × ${this.cropH}`;
   }
   buttonClass(extra: string): string {
-    return ɵbuttonClass('p-button-text p-button-secondary') + ' wt-btn-icon-only ' + extra;
+    return ɵbuttonClass('p-button-text p-button-secondary') + ' wu-btn-icon-only ' + extra;
   }
 
   // ---------- methods for the app ----------
@@ -473,7 +473,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
    * Crops now and resolves with the result (also emitted as `imageCropped`); null while no picture is loaded.
    * `output` overrides the `output` input for this call.
    */
-  crop(output?: 'blob' | 'base64'): Promise<WtImageCroppedEvent | null> {
+  crop(output?: 'blob' | 'base64'): Promise<WuImageCroppedEvent | null> {
     return this.cropNow(output === 'base64' || output === 'blob' ? output : this.output, false);
   }
 
@@ -542,7 +542,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
     if (this.pointers.size > 2) return;
     const target = event.target as Element | null;
     const handle = target?.closest('[data-handle]')?.getAttribute('data-handle') as CropHandle | null | undefined;
-    const inBox = !!target?.closest('.wt-imagecropper-box');
+    const inBox = !!target?.closest('.wu-imagecropper-box');
     this.boxRef?.nativeElement.focus({ preventScroll: true });
     let mode: Gesture['mode'] = 'none';
     if (handle && this.resizable) mode = 'resize';
@@ -1030,7 +1030,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  private currentTransform(): WtImageTransform {
+  private currentTransform(): WuImageTransform {
     return { ...(this.transform || {}), scale: this.view.zoom, rotate: this.turn.rotate, flipH: this.turn.flipH, flipV: this.turn.flipV };
   }
 
@@ -1047,16 +1047,16 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
 
   // ---------- cropping ----------
 
-  private async cropNow(output: 'blob' | 'base64', auto: boolean): Promise<WtImageCroppedEvent | null> {
+  private async cropNow(output: 'blob' | 'base64', auto: boolean): Promise<WuImageCroppedEvent | null> {
     const src = this.source;
     if (!src || !this.ready || this.destroyed) return null;
     const seq = ++this.cropSeq;
     this.startCropImage.emit();
-    let event: WtImageCroppedEvent | null = null;
+    let event: WuImageCroppedEvent | null = null;
     try {
       event = await this.produce(src, { ...this.rect }, output);
     } catch (e) {
-      console.warn('[wiratheme] imagecropper: the picture could not be cropped (a cross-origin image without CORS?).', e);
+      console.warn('[wiraui] imagecropper: the picture could not be cropped (a cross-origin image without CORS?).', e);
     }
     if (!event) return null;
     if (seq !== this.cropSeq || this.destroyed || src !== this.source) {
@@ -1075,7 +1075,7 @@ export class WtImageCropper implements OnChanges, AfterViewInit, OnDestroy {
     return event;
   }
 
-  private async produce(src: Source, rect: CropperPosition, output: 'blob' | 'base64'): Promise<WtImageCroppedEvent | null> {
+  private async produce(src: Source, rect: CropperPosition, output: 'blob' | 'base64'): Promise<WuImageCroppedEvent | null> {
     const size = outputSize(cropWidth(rect), cropHeight(rect), {
       resizeToWidth: num(this.resizeToWidth),
       resizeToHeight: num(this.resizeToHeight),

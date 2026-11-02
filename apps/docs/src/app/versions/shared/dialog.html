@@ -7,9 +7,9 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-button id="d-dialog-open" [label]="tx('แก้ไขโปรไฟล์')" icon="wi wi-user" (onClick)="visible = true"></wt-button>
+        <wu-button id="d-dialog-open" [label]="tx('แก้ไขโปรไฟล์')" icon="wi wi-user" (onClick)="visible = true"></wu-button>
         <span class="docs-demo-output">visible: <code id="d-dialog-visible">{{ visible }}</code> · events: <code id="d-dialog-events">{{ events.join(', ') || '-' }}</code></span>
-        <wt-dialog
+        <wu-dialog
           [header]="tx('แก้ไขโปรไฟล์')"
           styleClass="d-dialog-basic"
           [(visible)]="visible"
@@ -19,46 +19,46 @@
         >
           <div class="docs-demo-labelled docs-demo-grow">
             <label for="profile-name">{{ tx('ชื่อที่แสดง') }}</label>
-            <input wtInputText id="profile-name" [(ngModel)]="name" [fluid]="true" />
+            <input wuInputText id="profile-name" [(ngModel)]="name" [fluid]="true" />
           </div>
           <ng-template #footer>
-            <wt-button id="d-dialog-cancel" [label]="tx('ยกเลิก')" severity="secondary" [text]="true" (onClick)="visible = false"></wt-button>
-            <wt-button id="d-dialog-save" [label]="tx('บันทึก')" (onClick)="visible = false"></wt-button>
+            <wu-button id="d-dialog-cancel" [label]="tx('ยกเลิก')" severity="secondary" [text]="true" (onClick)="visible = false"></wu-button>
+            <wu-button id="d-dialog-save" [label]="tx('บันทึก')" (onClick)="visible = false"></wu-button>
           </ng-template>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="slots" [section]="sec['slots']">
       <docs-demo [html]="code['slots']">
-        <wt-button [label]="tx('ส่งข้อความ')" icon="wi wi-send" severity="secondary" (onClick)="slotsVisible = true"></wt-button>
-        <wt-dialog [(visible)]="slotsVisible" [style]="{ width: '26rem' }">
+        <wu-button [label]="tx('ส่งข้อความ')" icon="wi wi-send" severity="secondary" (onClick)="slotsVisible = true"></wu-button>
+        <wu-dialog [(visible)]="slotsVisible" [style]="{ width: '26rem' }">
           <ng-template #header>
-            <span class="docs-dialog-head"><wt-avatar [label]="tx('ส')" shape="circle"></wt-avatar> <b>{{ tx('สมหญิง ใจดี') }}</b></span>
+            <span class="docs-dialog-head"><wu-avatar [label]="tx('ส')" shape="circle"></wu-avatar> <b>{{ tx('สมหญิง ใจดี') }}</b></span>
           </ng-template>
           <p class="docs-demo-p">{{ tx('ส่งข้อความหาสมาชิกในทีม') }}</p>
-          <wt-footer>
-            <wt-button [label]="tx('ส่ง')" icon="wi wi-send" (onClick)="slotsVisible = false"></wt-button>
-          </wt-footer>
-        </wt-dialog>
+          <wu-footer>
+            <wu-button [label]="tx('ส่ง')" icon="wi wi-send" (onClick)="slotsVisible = false"></wu-button>
+          </wu-footer>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="position" [section]="sec['position']">
       <docs-demo [html]="code['position']">
         @for (p of positions; track p) {
-          <wt-button [label]="p" size="small" severity="secondary" [outlined]="true" (onClick)="openAt(p)"></wt-button>
+          <wu-button [label]="p" size="small" severity="secondary" [outlined]="true" (onClick)="openAt(p)"></wu-button>
         }
-        <wt-dialog [header]="tx('ตำแหน่ง')" [(visible)]="posVisible" [position]="position" [style]="{ width: '20rem' }">
+        <wu-dialog [header]="tx('ตำแหน่ง')" [(visible)]="posVisible" [position]="position" [style]="{ width: '20rem' }">
           <p class="docs-demo-p">position="{{ position }}"</p>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="responsive" [section]="sec['responsive']">
       <docs-demo [html]="code['responsive']">
-        <wt-button [label]="tx('เปิดรายงาน')" icon="wi wi-search" (onClick)="wideVisible = true"></wt-button>
-        <wt-dialog
+        <wu-button [label]="tx('เปิดรายงาน')" icon="wi wi-search" (onClick)="wideVisible = true"></wu-button>
+        <wu-dialog
           [header]="tx('รายงานประจำเดือน')"
           [(visible)]="wideVisible"
           [maximizable]="true"
@@ -72,42 +72,42 @@
                 : 'ลองย่อหน้าต่าง: จอใหญ่กว้าง 50vw ต่ำกว่า 1200px กว้าง 75vw และบนมือถือกว้างเต็มจอ ปุ่มข้าง × ขยายเต็มจอ'
             }}
           </p>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="modeless" [section]="sec['modeless']">
       <docs-demo [html]="code['modeless']">
-        <wt-button [label]="tx('โน้ต (ไม่บังหน้า)')" severity="secondary" (onClick)="noteVisible = true"></wt-button>
-        <wt-button [label]="tx('คลิกพื้นมืดเพื่อปิด')" severity="secondary" (onClick)="maskVisible = true"></wt-button>
-        <wt-dialog [header]="tx('โน้ต')" [(visible)]="noteVisible" [modal]="false" [draggable]="true" position="right" [style]="{ width: '18rem' }">
+        <wu-button [label]="tx('โน้ต (ไม่บังหน้า)')" severity="secondary" (onClick)="noteVisible = true"></wu-button>
+        <wu-button [label]="tx('คลิกพื้นมืดเพื่อปิด')" severity="secondary" (onClick)="maskVisible = true"></wu-button>
+        <wu-dialog [header]="tx('โน้ต')" [(visible)]="noteVisible" [modal]="false" [draggable]="true" position="right" [style]="{ width: '18rem' }">
           <p class="docs-demo-p">{{ tx('ลากที่หัวเพื่อย้าย หน้ายังใช้งานได้') }}</p>
-        </wt-dialog>
-        <wt-dialog [header]="tx('รายละเอียด')" [(visible)]="maskVisible" [dismissableMask]="true" [style]="{ width: '22rem' }">
+        </wu-dialog>
+        <wu-dialog [header]="tx('รายละเอียด')" [(visible)]="maskVisible" [dismissableMask]="true" [style]="{ width: '22rem' }">
           <p class="docs-demo-p">{{ tx('คลิกที่พื้นมืดเพื่อปิด') }}</p>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="headless" [section]="sec['headless']">
       <docs-demo [html]="code['headless']">
-        <wt-button [label]="tx('ดูข้อเสนอ')" severity="help" (onClick)="headlessVisible = true"></wt-button>
-        <wt-dialog [(visible)]="headlessVisible" [style]="{ width: '22rem' }">
+        <wu-button [label]="tx('ดูข้อเสนอ')" severity="help" (onClick)="headlessVisible = true"></wu-button>
+        <wu-dialog [(visible)]="headlessVisible" [style]="{ width: '22rem' }">
           <ng-template #headless>
             <div class="docs-dialog-promo">
               <h3>{{ tx('ทดลองใช้แพ็กเกจ Pro ฟรี 14 วัน') }}</h3>
               <p>{{ tx('ผู้ใช้ไม่จำกัด รายงานขั้นสูง และฝ่ายช่วยเหลือ 24 ชั่วโมง') }}</p>
-              <wt-button [label]="tx('เริ่มเลย')" [fluid]="true" (onClick)="headlessVisible = false"></wt-button>
-              <wt-button [label]="tx('ไว้ทีหลัง')" [text]="true" [fluid]="true" (onClick)="headlessVisible = false"></wt-button>
+              <wu-button [label]="tx('เริ่มเลย')" [fluid]="true" (onClick)="headlessVisible = false"></wu-button>
+              <wu-button [label]="tx('ไว้ทีหลัง')" [text]="true" [fluid]="true" (onClick)="headlessVisible = false"></wu-button>
             </div>
           </ng-template>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="service" [section]="sec['service']">
       <docs-demo [html]="code['service']" [ts]="ts['service']">
-        <wt-button id="d-dlg-service" [label]="tx('เลือกหัวหน้าห้อง')" icon="wi wi-user" (onClick)="pickLeader()"></wt-button>
+        <wu-button id="d-dlg-service" [label]="tx('เลือกหัวหน้าห้อง')" icon="wi wi-user" (onClick)="pickLeader()"></wu-button>
         <span class="docs-demo-output">{{ tx('หัวหน้าห้อง') }}: <code id="d-dlg-leader">{{ leader }}</code></span>
       </docs-demo>
     </docs-section>

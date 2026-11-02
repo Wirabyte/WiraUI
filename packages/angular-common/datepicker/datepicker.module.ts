@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtDatePicker } from './datepicker.component';
+import { WuDatePicker } from './datepicker.component';
 
-/** For NgModule apps. Standalone apps can import `WtDatePicker` directly. */
+/** For NgModule apps. Standalone apps can import `WuDatePicker` directly. */
 @NgModule({
-  imports: [WtDatePicker],
-  exports: [WtDatePicker],
+  imports: [WuDatePicker],
+  exports: [WuDatePicker],
 })
-export class WtDatePickerModule {}
+export class WuDatePickerModule {}

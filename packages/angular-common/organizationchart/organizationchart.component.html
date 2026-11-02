@@ -1,7 +1,7 @@
-<div class="wt-organizationchart p-organizationchart p-component" [ngClass]="styleClass || ''" [ngStyle]="rootStyle">
+<div class="wu-organizationchart p-organizationchart p-component" [ngClass]="styleClass || ''" [ngStyle]="rootStyle">
   <ul
     *ngIf="root"
-    class="wt-organizationchart-tree p-organizationchart-table"
+    class="wu-organizationchart-tree p-organizationchart-table"
     role="tree"
     [attr.aria-label]="chartLabel"
     [attr.aria-labelledby]="ariaLabelledBy || null"
@@ -13,7 +13,7 @@
 
 <ng-template #branch let-node let-level="level">
   <li
-    class="wt-organizationchart-branch"
+    class="wu-organizationchart-branch"
     role="treeitem"
     [attr.tabindex]="node === tabTarget ? 0 : -1"
     [attr.aria-labelledby]="idOf(node)"
@@ -24,19 +24,19 @@
     (keydown)="keydown($event, node)"
   >
     <div
-      class="wt-organizationchart-node p-organizationchart-node p-organizationchart-node-content"
-      [class.wt-organizationchart-node-selectable]="isSelectable(node)"
+      class="wu-organizationchart-node p-organizationchart-node p-organizationchart-node-content"
+      [class.wu-organizationchart-node-selectable]="isSelectable(node)"
       [class.p-organizationchart-node-selectable]="isSelectable(node)"
-      [class.wt-organizationchart-node-selected]="isSelected(node)"
+      [class.wu-organizationchart-node-selected]="isSelected(node)"
       [class.p-organizationchart-node-selected]="isSelected(node)"
       [class.p-highlight]="isSelected(node)"
-      [class.wt-organizationchart-node-toggleable]="collapsible && !isLeaf(node)"
+      [class.wu-organizationchart-node-toggleable]="collapsible && !isLeaf(node)"
       [ngClass]="node.styleClass || ''"
       [ngStyle]="nodeStyle(node)"
       (click)="onNodeClick($event, node)"
     >
       <!-- The box's name for screen readers: its content, without the toggle button's label. -->
-      <div class="wt-organizationchart-node-label" [id]="idOf(node)">
+      <div class="wu-organizationchart-node-label" [id]="idOf(node)">
         <ng-container *ngIf="templateFor(node) as tpl; else plain">
           <ng-container *ngTemplateOutlet="tpl; context: { $implicit: node }"></ng-container>
         </ng-container>
@@ -46,7 +46,7 @@
         *ngIf="collapsible && !isLeaf(node)"
         type="button"
         tabindex="-1"
-        class="wt-organizationchart-node-toggle-button p-organizationchart-node-toggle-button p-node-toggler"
+        class="wu-organizationchart-node-toggle-button p-organizationchart-node-toggle-button p-node-toggler"
         [attr.aria-label]="isOpen(node) ? t.collapse : t.expand"
         (click)="toggleNode($event, node)"
       >
@@ -61,9 +61,9 @@
     </div>
     <ul
       *ngIf="hasChildren(node) && (isOpen(node) || preserveSpace)"
-      class="wt-organizationchart-children p-organizationchart-node-children"
+      class="wu-organizationchart-children p-organizationchart-node-children"
       role="group"
-      [class.wt-organizationchart-hidden]="!isOpen(node)"
+      [class.wu-organizationchart-hidden]="!isOpen(node)"
       [attr.inert]="isOpen(node) ? null : ''"
       [attr.aria-hidden]="isOpen(node) ? null : 'true'"
     >

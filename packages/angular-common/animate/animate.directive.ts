@@ -1,20 +1,20 @@
 import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import { WtAnimateService } from './animate.service';
-import { WtAnimation } from './animate.types';
+import { ɵtoBool } from 'wiraui/config';
+import { WuAnimateService } from './animate.service';
+import { WuAnimation } from './animate.types';
 
 /**
- * Animates the element when it scrolls into view: `<div wtAnimate="fade-up" [animateDelay]="200">`.
+ * Animates the element when it scrolls into view: `<div wuAnimate="fade-up" [animateDelay]="200">`.
  * Plain `data-aos="fade-up"` attributes work too (with `data-aos-delay`, `data-aos-duration` …), here and in HTML
- * Angular does not compile once `WtAnimateService.init()` (or `provideWtAnimate()`) runs.
+ * Angular does not compile once `WuAnimateService.init()` (or `provideWuAnimate()`) runs.
  */
 @Directive({
-  selector: '[wtAnimate], [data-aos]',
+  selector: '[wuAnimate], [data-aos]',
   standalone: true,
 })
-export class WtAnimate implements OnInit, OnDestroy {
+export class WuAnimate implements OnInit, OnDestroy {
   /** fade, fade-up, fade-down, fade-left, fade-right, zoom-in, zoom-out, flip-left, slide-up … Empty: the `data-aos` value. */
-  @Input() wtAnimate?: WtAnimation | string | '';
+  @Input() wuAnimate?: WuAnimation | string | '';
   @Input() set animateDelay(v: unknown) { this.delay = num(v); }
   @Input() set animateDuration(v: unknown) { this.duration = num(v); }
   @Input() animateEasing?: string;
@@ -33,10 +33,10 @@ export class WtAnimate implements OnInit, OnDestroy {
   private mirror?: boolean;
   private stop: (() => void) | null = null;
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly service = inject(WtAnimateService);
+  private readonly service = inject(WuAnimateService);
 
   ngOnInit(): void {
-    if (this.wtAnimate) this.el.setAttribute('data-aos', this.wtAnimate);
+    if (this.wuAnimate) this.el.setAttribute('data-aos', this.wuAnimate);
     else if (!this.el.hasAttribute('data-aos')) this.el.setAttribute('data-aos', 'fade-up');
     this.stop = this.service.observe(this.el, {
       delay: this.delay,

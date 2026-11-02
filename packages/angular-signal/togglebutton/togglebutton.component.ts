@@ -12,16 +12,16 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize } from 'wiratheme/config';
-import { WtToggleButtonChangeEvent } from './togglebutton.types';
+import { ɵassertSupportedAngular, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize } from 'wiraui/config';
+import { WuToggleButtonChangeEvent } from './togglebutton.types';
 
-/** On/off button for a boolean in ngModel or reactive forms: `<wt-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */
+/** On/off button for a boolean in ngModel or reactive forms: `<wu-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */
 @Component({
-  selector: 'wt-togglebutton, wt-toggleButton, wt-toggle-button',
+  selector: 'wu-togglebutton, wu-toggleButton, wu-toggle-button',
   host: {
-    '[class.wt-togglebutton-sm]': "sizeKey() === 'sm'",
+    '[class.wu-togglebutton-sm]': "sizeKey() === 'sm'",
     '[class.p-togglebutton-sm]': "sizeKey() === 'sm'",
-    '[class.wt-togglebutton-lg]': "sizeKey() === 'lg'",
+    '[class.wu-togglebutton-lg]': "sizeKey() === 'lg'",
     '[class.p-togglebutton-lg]': "sizeKey() === 'lg'",
   },
   standalone: true,
@@ -29,9 +29,9 @@ import { WtToggleButtonChangeEvent } from './togglebutton.types';
   styleUrl: './togglebutton.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtToggleButton), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuToggleButton), multi: true }],
 })
-export class WtToggleButton implements ControlValueAccessor {
+export class WuToggleButton implements ControlValueAccessor {
   /** Label when on / off. Default: the locale's yes / no. Pass '' for an icon-only button. */
   readonly onLabel = input<string>();
   readonly offLabel = input<string>();
@@ -43,13 +43,13 @@ export class WtToggleButton implements ControlValueAccessor {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
-  readonly size = input<WtSize>();
+  readonly size = input<WuSize>();
   readonly sizeKey = computed(() => ɵsize(this.size()));
 
-  readonly onChange = output<WtToggleButtonChangeEvent>();
+  readonly onChange = output<WuToggleButtonChangeEvent>();
 
-  private readonly config = inject(WtConfig);
-  /** Bumped by `WtConfig.setTranslation()`; read by the computeds that show UI strings. */
+  private readonly config = inject(WuConfig);
+  /** Bumped by `WuConfig.setTranslation()`; read by the computeds that show UI strings. */
   private readonly language = signal(0);
   readonly checked = signal(false);
   private readonly formDisabled = signal(false);
@@ -76,14 +76,14 @@ export class WtToggleButton implements ControlValueAccessor {
   });
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
-    const c = ['wt-togglebutton', 'p-togglebutton', 'p-component'];
-    if (this.checked()) c.push('wt-togglebutton-checked', 'p-togglebutton-checked');
-    if (this.invalid()) c.push('wt-invalid', 'p-invalid');
+    const c = ['wu-togglebutton', 'p-togglebutton', 'p-component'];
+    if (this.checked()) c.push('wu-togglebutton-checked', 'p-togglebutton-checked');
+    if (this.invalid()) c.push('wu-invalid', 'p-invalid');
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     // computed() caches, so language changes have to reach it through a signal.
     const i18n = this.config.translationChange.subscribe(() => this.language.update((n) => n + 1));
     inject(DestroyRef).onDestroy(() => i18n.unsubscribe());

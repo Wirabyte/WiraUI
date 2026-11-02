@@ -121,7 +121,7 @@ export function providersEdit(obj: ts.ObjectLiteralExpression, text: string): Ed
   const prop = obj.properties.find((p) => nameOf(p) === 'providers');
   if (prop) {
     if (!ts.isPropertyAssignment(prop) || !ts.isArrayLiteralExpression(prop.initializer)) {
-      throw new SchematicsException('`providers` is not an array literal. Add provideWiraTheme() to it by hand.');
+      throw new SchematicsException('`providers` is not an array literal. Add provideWiraUI() to it by hand.');
     }
     const arr = prop.initializer;
     if (!arr.elements.length) return { pos: arr.getStart() + 1, text };

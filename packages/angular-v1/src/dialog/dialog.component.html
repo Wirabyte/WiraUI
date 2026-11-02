@@ -1,11 +1,11 @@
 <dialog
   #mask
   *ngIf="rendered"
-  class="wt-dialog-mask p-dialog-mask p-component-overlay p-component-overlay-enter"
+  class="wu-dialog-mask p-dialog-mask p-component-overlay p-component-overlay-enter"
   [ngClass]="(maskStyleClass || '') + ' ' + positionClasses"
-  [class.wt-dialog-modal]="modal"
+  [class.wu-dialog-modal]="modal"
   [class.p-dialog-mask-scrollblocker]="modal"
-  [class.wt-dialog-leaving]="leaving"
+  [class.wu-dialog-leaving]="leaving"
   [attr.aria-labelledby]="labelledBy"
   (keydown)="keydown($event)"
   (cancel)="cancel($event)"
@@ -16,29 +16,29 @@
   <div
     #panel
     tabindex="-1"
-    class="wt-dialog p-dialog p-component"
+    class="wu-dialog p-dialog p-component"
     [ngClass]="styleClass || ''"
     [ngStyle]="panelStyle"
-    [class.wt-dialog-maximized]="maximized"
+    [class.wu-dialog-maximized]="maximized"
     [class.p-dialog-maximized]="maximized"
-    [class.wt-dialog-draggable]="draggable"
+    [class.wu-dialog-draggable]="draggable"
     [class.p-dialog-draggable]="draggable"
-    [class.wt-dialog-headerless]="!showHeader"
+    [class.wu-dialog-headerless]="!showHeader"
   >
     <ng-container *ngIf="headlessTemplate; else regular">
       <ng-container *ngTemplateOutlet="headlessTemplate"></ng-container>
     </ng-container>
     <ng-template #regular>
-      <div *ngIf="showHeader" class="wt-dialog-header p-dialog-header" (pointerdown)="headerPointerdown($event)">
-        <span *ngIf="!headerTemplate" class="wt-dialog-title p-dialog-title" [id]="titleId">{{ header }}</span>
-        <div *ngIf="headerTemplate" class="wt-dialog-title p-dialog-title" [id]="titleId">
+      <div *ngIf="showHeader" class="wu-dialog-header p-dialog-header" (pointerdown)="headerPointerdown($event)">
+        <span *ngIf="!headerTemplate" class="wu-dialog-title p-dialog-title" [id]="titleId">{{ header }}</span>
+        <div *ngIf="headerTemplate" class="wu-dialog-title p-dialog-title" [id]="titleId">
           <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
         </div>
-        <div class="wt-dialog-header-actions p-dialog-header-icons">
+        <div class="wu-dialog-header-actions p-dialog-header-icons">
           <button
             *ngIf="maximizable"
             type="button"
-            class="wt-dialog-icon p-dialog-header-icon p-dialog-header-maximize p-link"
+            class="wu-dialog-icon p-dialog-header-icon p-dialog-header-maximize p-link"
             [attr.aria-label]="maximized ? t.collapse : t.expand"
             (click)="toggleMaximize()"
           >
@@ -51,7 +51,7 @@
           <button
             *ngIf="closable"
             type="button"
-            class="wt-dialog-icon p-dialog-header-icon p-dialog-header-close p-link"
+            class="wu-dialog-icon p-dialog-header-icon p-dialog-header-close p-link"
             [attr.aria-label]="closeAriaLabel || t.close"
             (click)="close($event)"
           >
@@ -67,14 +67,14 @@
           </button>
         </div>
       </div>
-      <div class="wt-dialog-content p-dialog-content" [ngClass]="contentStyleClass || ''" [ngStyle]="contentStyle || null">
+      <div class="wu-dialog-content p-dialog-content" [ngClass]="contentStyleClass || ''" [ngStyle]="contentStyle || null">
         <ng-content></ng-content>
         <ng-container *ngIf="contentTemplate">
           <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
         </ng-container>
       </div>
-      <div *ngIf="hasFooter" class="wt-dialog-footer p-dialog-footer">
-        <ng-content select="[wtDialogFooter], wt-footer"></ng-content>
+      <div *ngIf="hasFooter" class="wu-dialog-footer p-dialog-footer">
+        <ng-content select="[wuDialogFooter], wu-footer"></ng-content>
         <ng-container *ngIf="footerTemplate">
           <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
         </ng-container>

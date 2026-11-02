@@ -1,110 +1,110 @@
 <main class="pg">
-  <h1>WiraTheme playground</h1>
-  <p class="pg-meta">wiratheme&#64;<span id="wt-major">{{ major }}</span> · Angular <span id="ng-version">{{ ngVersion }}</span></p>
+  <h1>WiraUI playground</h1>
+  <p class="pg-meta">wiraui&#64;<span id="wu-major">{{ major }}</span> · Angular <span id="ng-version">{{ ngVersion }}</span></p>
 
   <section id="gallery" class="pg-gallery">
     <div class="pg-row">
-      <wt-button id="primary-btn" label="บันทึก"></wt-button>
-      <wt-button label="รอง" severity="secondary"></wt-button>
-      <wt-button label="สำเร็จ" severity="success"></wt-button>
-      <wt-button label="ข้อมูล" severity="info"></wt-button>
-      <wt-button label="เตือน" severity="warn"></wt-button>
-      <wt-button label="อันตราย" severity="danger"></wt-button>
-      <wt-button label="ช่วยเหลือ" severity="help"></wt-button>
-      <wt-button label="Contrast" severity="contrast"></wt-button>
+      <wu-button id="primary-btn" label="บันทึก"></wu-button>
+      <wu-button label="รอง" severity="secondary"></wu-button>
+      <wu-button label="สำเร็จ" severity="success"></wu-button>
+      <wu-button label="ข้อมูล" severity="info"></wu-button>
+      <wu-button label="เตือน" severity="warn"></wu-button>
+      <wu-button label="อันตราย" severity="danger"></wu-button>
+      <wu-button label="ช่วยเหลือ" severity="help"></wu-button>
+      <wu-button label="Contrast" severity="contrast"></wu-button>
     </div>
     <div class="pg-row">
-      <wt-button label="Outlined" outlined></wt-button>
-      <wt-button label="รอง" severity="secondary" outlined></wt-button>
-      <wt-button label="Text" text></wt-button>
-      <wt-button label="อันตราย" severity="danger" text></wt-button>
-      <wt-button label="Raised" raised></wt-button>
-      <wt-button label="Rounded" rounded></wt-button>
+      <wu-button label="Outlined" outlined></wu-button>
+      <wu-button label="รอง" severity="secondary" outlined></wu-button>
+      <wu-button label="Text" text></wu-button>
+      <wu-button label="อันตราย" severity="danger" text></wu-button>
+      <wu-button label="Raised" raised></wu-button>
+      <wu-button label="Rounded" rounded></wu-button>
     </div>
     <div class="pg-row">
-      <wt-button label="เล็ก" size="small"></wt-button>
-      <wt-button label="ปกติ"></wt-button>
-      <wt-button label="ใหญ่" size="large"></wt-button>
-      <wt-button label="แจ้งเตือน" badge="8"></wt-button>
-      <wt-button label="ปิดใช้งาน" disabled></wt-button>
-      <wt-button label="กำลังโหลด" loading></wt-button>
+      <wu-button label="เล็ก" size="small"></wu-button>
+      <wu-button label="ปกติ"></wu-button>
+      <wu-button label="ใหญ่" size="large"></wu-button>
+      <wu-button label="แจ้งเตือน" badge="8"></wu-button>
+      <wu-button label="ปิดใช้งาน" disabled></wu-button>
+      <wu-button label="กำลังโหลด" loading></wu-button>
     </div>
     <div class="pg-row">
-      <wt-button label="ภาษาไทย ปู่ ปี้ ญี่ ฎีกา" severity="secondary"></wt-button>
-      <wt-button label="ปุ่มเต็มความกว้าง" fluid></wt-button>
+      <wu-button label="ภาษาไทย ปู่ ปี้ ญี่ ฎีกา" severity="secondary"></wu-button>
+      <wu-button label="ปุ่มเต็มความกว้าง" fluid></wu-button>
     </div>
   </section>
 
   <section class="pg-row pg-controls">
-    <wt-button id="save" label="ส่งใบสมัคร" [action]="save"></wt-button>
+    <wu-button id="save" label="ส่งใบสมัคร" [action]="save"></wu-button>
     <span>ส่งแล้ว <b id="saved-count">{{ saved }}</b> ครั้ง</span>
-    <wt-button id="use-blue" label="ใช้สีน้ำเงิน (TS override)" severity="secondary" (onClick)="useBlue()"></wt-button>
-    <wt-button id="use-siam" label="preset Siam (TS)" severity="secondary" (onClick)="useSiam()"></wt-button>
-    <wt-button id="use-en" label="English UI" severity="secondary" (onClick)="useEnglish()"></wt-button>
-    <wt-button id="toggle-dark" label="สลับโหมดมืด" severity="secondary" (onClick)="toggleDark()"></wt-button>
-    <wt-button id="app-css-wins" label="CSS ของแอปชนะ"></wt-button>
+    <wu-button id="use-blue" label="ใช้สีน้ำเงิน (TS override)" severity="secondary" (onClick)="useBlue()"></wu-button>
+    <wu-button id="use-siam" label="preset Siam (TS)" severity="secondary" (onClick)="useSiam()"></wu-button>
+    <wu-button id="use-en" label="English UI" severity="secondary" (onClick)="useEnglish()"></wu-button>
+    <wu-button id="toggle-dark" label="สลับโหมดมืด" severity="secondary" (onClick)="toggleDark()"></wu-button>
+    <wu-button id="app-css-wins" label="CSS ของแอปชนะ"></wu-button>
   </section>
 
   <section id="forms-gallery" class="pg-gallery">
     <div class="pg-cards">
-      <wt-card id="card-basic" header="ข้อมูลผู้สมัคร" subheader="กรอกให้ตรงกับทะเบียนบ้าน">
-        <wt-button wtCardActions label="แก้ไข" size="small" text></wt-button>
+      <wu-card id="card-basic" header="ข้อมูลผู้สมัคร" subheader="กรอกให้ตรงกับทะเบียนบ้าน">
+        <wu-button wuCardActions label="แก้ไข" size="small" text></wu-button>
         <p class="pg-p">การ์ดนี้มีหัวเรื่อง คำอธิบาย ปุ่มด้านขวา เนื้อหา และส่วนท้าย</p>
-        <div wtCardFooter>
-          <wt-button label="ยกเลิก" severity="secondary" size="small" text></wt-button>
-          <wt-button label="บันทึก" size="small"></wt-button>
+        <div wuCardFooter>
+          <wu-button label="ยกเลิก" severity="secondary" size="small" text></wu-button>
+          <wu-button label="บันทึก" size="small"></wu-button>
         </div>
-      </wt-card>
-      <wt-card id="card-loading" header="กำลังโหลด" loading>
+      </wu-card>
+      <wu-card id="card-loading" header="กำลังโหลด" loading>
         <p class="pg-p">ไม่ควรเห็นข้อความนี้ระหว่างโหลด</p>
-      </wt-card>
-      <wt-card variant="outlined" header="Outlined"><p class="pg-p">มีเส้นขอบ ไม่มีเงา</p></wt-card>
-      <wt-card variant="elevated" header="Elevated"><p class="pg-p">มีเงา ไม่มีเส้นขอบ</p></wt-card>
+      </wu-card>
+      <wu-card variant="outlined" header="Outlined"><p class="pg-p">มีเส้นขอบ ไม่มีเงา</p></wu-card>
+      <wu-card variant="elevated" header="Elevated"><p class="pg-p">มีเงา ไม่มีเส้นขอบ</p></wu-card>
     </div>
     <div class="pg-fields">
-      <input wtInputText placeholder="ชื่อ (placeholder)" />
-      <input wtInputText value="สมชาย ใจดี" />
-      <input wtInputText value="ปิดใช้งาน" disabled />
-      <input wtInputText value="0812" invalid />
-      <input wtInputText wtSize="small" placeholder="เล็ก" />
-      <input wtInputText wtSize="large" placeholder="ใหญ่" />
-      <input wtInputText variant="filled" placeholder="filled" />
-      <textarea wtTextarea rows="2">ที่อยู่ 99/1 หมู่ 4 ตำบลบางรัก ปู่ ปี้ ญี่</textarea>
+      <input wuInputText placeholder="ชื่อ (placeholder)" />
+      <input wuInputText value="สมชาย ใจดี" />
+      <input wuInputText value="ปิดใช้งาน" disabled />
+      <input wuInputText value="0812" invalid />
+      <input wuInputText wuSize="small" placeholder="เล็ก" />
+      <input wuInputText wuSize="large" placeholder="ใหญ่" />
+      <input wuInputText variant="filled" placeholder="filled" />
+      <textarea wuTextarea rows="2">ที่อยู่ 99/1 หมู่ 4 ตำบลบางรัก ปู่ ปี้ ญี่</textarea>
     </div>
     <div class="pg-row">
-      <wt-checkbox [ngModel]="true" binary label="เลือกแล้ว"></wt-checkbox>
-      <wt-checkbox [ngModel]="false" binary label="ยังไม่เลือก"></wt-checkbox>
-      <wt-checkbox [ngModel]="true" binary disabled label="ปิดใช้งาน"></wt-checkbox>
-      <wt-checkbox [ngModel]="false" binary invalid label="ไม่ถูกต้อง"></wt-checkbox>
+      <wu-checkbox [ngModel]="true" binary label="เลือกแล้ว"></wu-checkbox>
+      <wu-checkbox [ngModel]="false" binary label="ยังไม่เลือก"></wu-checkbox>
+      <wu-checkbox [ngModel]="true" binary disabled label="ปิดใช้งาน"></wu-checkbox>
+      <wu-checkbox [ngModel]="false" binary invalid label="ไม่ถูกต้อง"></wu-checkbox>
     </div>
     <div class="pg-row">
-      <wt-radiobutton name="g-radio" value="a" [ngModel]="'a'" label="เลือกแล้ว"></wt-radiobutton>
-      <wt-radiobutton name="g-radio" value="b" [ngModel]="'a'" label="ยังไม่เลือก"></wt-radiobutton>
-      <wt-radiobutton name="g-radio2" value="c" [ngModel]="'c'" disabled label="ปิดใช้งาน"></wt-radiobutton>
+      <wu-radiobutton name="g-radio" value="a" [ngModel]="'a'" label="เลือกแล้ว"></wu-radiobutton>
+      <wu-radiobutton name="g-radio" value="b" [ngModel]="'a'" label="ยังไม่เลือก"></wu-radiobutton>
+      <wu-radiobutton name="g-radio2" value="c" [ngModel]="'c'" disabled label="ปิดใช้งาน"></wu-radiobutton>
     </div>
     <div class="pg-row">
-      <wt-toggleswitch [ngModel]="true" label="เปิด"></wt-toggleswitch>
-      <wt-toggleswitch [ngModel]="false" label="ปิด"></wt-toggleswitch>
-      <wt-toggleswitch [ngModel]="true" disabled label="ปิดใช้งาน"></wt-toggleswitch>
+      <wu-toggleswitch [ngModel]="true" label="เปิด"></wu-toggleswitch>
+      <wu-toggleswitch [ngModel]="false" label="ปิด"></wu-toggleswitch>
+      <wu-toggleswitch [ngModel]="true" disabled label="ปิดใช้งาน"></wu-toggleswitch>
     </div>
   </section>
 
   <section id="tdf" class="pg-gallery">
     <h2>ngModel</h2>
     <div class="pg-fields">
-      <input id="tdf-name" wtInputText [(ngModel)]="tdf.name" placeholder="ชื่อ" />
-      <textarea id="tdf-note" wtTextarea autoResize rows="1" [(ngModel)]="tdf.note"></textarea>
+      <input id="tdf-name" wuInputText [(ngModel)]="tdf.name" placeholder="ชื่อ" />
+      <textarea id="tdf-note" wuTextarea autoResize rows="1" [(ngModel)]="tdf.note"></textarea>
     </div>
     <div class="pg-row">
-      <wt-checkbox id="tdf-agree" [(ngModel)]="tdf.agree" binary label="ยอมรับเงื่อนไข"></wt-checkbox>
-      <wt-checkbox id="tdf-doc-a" [(ngModel)]="tdf.docs" value="house" label="ทะเบียนบ้าน"></wt-checkbox>
-      <wt-checkbox id="tdf-doc-b" [(ngModel)]="tdf.docs" value="birth" label="สูติบัตร"></wt-checkbox>
-      <wt-checkbox id="tdf-doc-c" [(ngModel)]="tdf.docs" value="photo" label="รูปถ่าย"></wt-checkbox>
+      <wu-checkbox id="tdf-agree" [(ngModel)]="tdf.agree" binary label="ยอมรับเงื่อนไข"></wu-checkbox>
+      <wu-checkbox id="tdf-doc-a" [(ngModel)]="tdf.docs" value="house" label="ทะเบียนบ้าน"></wu-checkbox>
+      <wu-checkbox id="tdf-doc-b" [(ngModel)]="tdf.docs" value="birth" label="สูติบัตร"></wu-checkbox>
+      <wu-checkbox id="tdf-doc-c" [(ngModel)]="tdf.docs" value="photo" label="รูปถ่าย"></wu-checkbox>
     </div>
     <div class="pg-row">
-      <wt-radiobutton id="tdf-plan-sci" name="tdf-plan" value="sci" [(ngModel)]="tdf.plan" label="วิทย์-คณิต"></wt-radiobutton>
-      <wt-radiobutton id="tdf-plan-art" name="tdf-plan" value="art" [(ngModel)]="tdf.plan" label="ศิลป์-ภาษา"></wt-radiobutton>
-      <wt-toggleswitch id="tdf-notify" [(ngModel)]="tdf.notify" label="แจ้งผลทาง LINE"></wt-toggleswitch>
+      <wu-radiobutton id="tdf-plan-sci" name="tdf-plan" value="sci" [(ngModel)]="tdf.plan" label="วิทย์-คณิต"></wu-radiobutton>
+      <wu-radiobutton id="tdf-plan-art" name="tdf-plan" value="art" [(ngModel)]="tdf.plan" label="ศิลป์-ภาษา"></wu-radiobutton>
+      <wu-toggleswitch id="tdf-notify" [(ngModel)]="tdf.notify" label="แจ้งผลทาง LINE"></wu-toggleswitch>
     </div>
     <pre id="tdf-model">{{ tdf | json }}</pre>
   </section>
@@ -113,19 +113,19 @@
     <h2>Reactive Forms</h2>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="pg-fields">
-        <input id="rf-name" wtInputText formControlName="name" placeholder="ชื่อ (ต้องกรอก)" />
-        <textarea id="rf-note" wtTextarea formControlName="note" rows="2"></textarea>
+        <input id="rf-name" wuInputText formControlName="name" placeholder="ชื่อ (ต้องกรอก)" />
+        <textarea id="rf-note" wuTextarea formControlName="note" rows="2"></textarea>
       </div>
       <div class="pg-row">
-        <wt-checkbox id="rf-agree" formControlName="agree" binary label="ยอมรับเงื่อนไข (ต้องเลือก)"></wt-checkbox>
-        <wt-radiobutton id="rf-plan-sci" name="rf-plan" value="sci" formControlName="plan" label="วิทย์-คณิต"></wt-radiobutton>
-        <wt-radiobutton id="rf-plan-art" name="rf-plan" value="art" formControlName="plan" label="ศิลป์-ภาษา"></wt-radiobutton>
-        <wt-toggleswitch id="rf-notify" formControlName="notify" label="แจ้งผลทาง LINE"></wt-toggleswitch>
+        <wu-checkbox id="rf-agree" formControlName="agree" binary label="ยอมรับเงื่อนไข (ต้องเลือก)"></wu-checkbox>
+        <wu-radiobutton id="rf-plan-sci" name="rf-plan" value="sci" formControlName="plan" label="วิทย์-คณิต"></wu-radiobutton>
+        <wu-radiobutton id="rf-plan-art" name="rf-plan" value="art" formControlName="plan" label="ศิลป์-ภาษา"></wu-radiobutton>
+        <wu-toggleswitch id="rf-notify" formControlName="notify" label="แจ้งผลทาง LINE"></wu-toggleswitch>
       </div>
       <div class="pg-row">
-        <wt-button id="rf-submit" type="submit" label="ส่ง"></wt-button>
-        <wt-button id="rf-patch" label="ใส่ค่าตัวอย่าง" severity="secondary" (onClick)="patch()"></wt-button>
-        <wt-button id="rf-disable" label="ปิด/เปิดฟอร์ม" severity="secondary" (onClick)="toggleDisabled()"></wt-button>
+        <wu-button id="rf-submit" type="submit" label="ส่ง"></wu-button>
+        <wu-button id="rf-patch" label="ใส่ค่าตัวอย่าง" severity="secondary" (onClick)="patch()"></wu-button>
+        <wu-button id="rf-disable" label="ปิด/เปิดฟอร์ม" severity="secondary" (onClick)="toggleDisabled()"></wu-button>
         <span>valid: <b id="rf-valid">{{ form.valid }}</b></span>
       </div>
     </form>
@@ -135,109 +135,109 @@
   <section id="display" class="pg-gallery">
     <h2>Tag, Badge, Chip, Avatar, Divider, Skeleton, Progress, Message, Panel, Fieldset</h2>
     <div class="pg-row">
-      <wt-tag id="tag-primary" value="ใหม่"></wt-tag>
-      <wt-tag value="อนุมัติ" severity="success"></wt-tag>
-      <wt-tag value="ข้อมูล" severity="info"></wt-tag>
-      <wt-tag id="tag-warn" value="รอตรวจ" severity="warning"></wt-tag>
-      <wt-tag value="ปฏิเสธ" severity="danger" rounded></wt-tag>
-      <wt-tag value="รอง" severity="secondary"></wt-tag>
-      <wt-tag value="Contrast" severity="contrast"></wt-tag>
+      <wu-tag id="tag-primary" value="ใหม่"></wu-tag>
+      <wu-tag value="อนุมัติ" severity="success"></wu-tag>
+      <wu-tag value="ข้อมูล" severity="info"></wu-tag>
+      <wu-tag id="tag-warn" value="รอตรวจ" severity="warning"></wu-tag>
+      <wu-tag value="ปฏิเสธ" severity="danger" rounded></wu-tag>
+      <wu-tag value="รอง" severity="secondary"></wu-tag>
+      <wu-tag value="Contrast" severity="contrast"></wu-tag>
     </div>
     <div class="pg-row">
-      <wt-badge id="badge-count" value="8"></wt-badge>
-      <wt-badge value="3" severity="danger"></wt-badge>
-      <wt-badge value="12" severity="success" size="large"></wt-badge>
-      <wt-badge id="badge-dot" severity="warn"></wt-badge>
-      <wt-chip id="chip-remove" label="แอดมิน" removable (onRemove)="removed = removed + 1"></wt-chip>
-      <wt-chip label="ผู้ใช้งาน"></wt-chip>
+      <wu-badge id="badge-count" value="8"></wu-badge>
+      <wu-badge value="3" severity="danger"></wu-badge>
+      <wu-badge value="12" severity="success" size="large"></wu-badge>
+      <wu-badge id="badge-dot" severity="warn"></wu-badge>
+      <wu-chip id="chip-remove" label="แอดมิน" removable (onRemove)="removed = removed + 1"></wu-chip>
+      <wu-chip label="ผู้ใช้งาน"></wu-chip>
       <span>ลบแล้ว <b id="chip-removed">{{ removed }}</b></span>
     </div>
     <div class="pg-row">
-      <wt-avatar label="สม"></wt-avatar>
-      <wt-avatar label="AB" shape="circle" size="large"></wt-avatar>
-      <wt-avatar id="avatar-broken" image="/does-not-exist.png" label="WB" shape="circle"></wt-avatar>
-      <wt-avatar-group>
-        <wt-avatar label="A" shape="circle"></wt-avatar>
-        <wt-avatar label="B" shape="circle"></wt-avatar>
-        <wt-avatar label="+3" shape="circle"></wt-avatar>
-      </wt-avatar-group>
+      <wu-avatar label="สม"></wu-avatar>
+      <wu-avatar label="AB" shape="circle" size="large"></wu-avatar>
+      <wu-avatar id="avatar-broken" image="/does-not-exist.png" label="WB" shape="circle"></wu-avatar>
+      <wu-avatar-group>
+        <wu-avatar label="A" shape="circle"></wu-avatar>
+        <wu-avatar label="B" shape="circle"></wu-avatar>
+        <wu-avatar label="+3" shape="circle"></wu-avatar>
+      </wu-avatar-group>
     </div>
-    <wt-divider align="center">หรือ</wt-divider>
+    <wu-divider align="center">หรือ</wu-divider>
     <div class="pg-row">
-      <wt-skeleton width="8rem" animation="none"></wt-skeleton>
-      <wt-skeleton shape="circle" size="2.5rem" animation="none"></wt-skeleton>
+      <wu-skeleton width="8rem" animation="none"></wu-skeleton>
+      <wu-skeleton shape="circle" size="2.5rem" animation="none"></wu-skeleton>
     </div>
-    <wt-progressbar id="progress" [value]="60"></wt-progressbar>
-    <wt-message id="msg-info" severity="info" text="บันทึกข้อมูลเรียบร้อย"></wt-message>
-    <wt-message id="msg-warn" severity="warn" text="กรุณาตรวจสอบข้อมูลก่อนส่ง" closable></wt-message>
-    <wt-message id="msg-error" severity="error" text="เชื่อมต่อไม่ได้"></wt-message>
-    <wt-panel id="panel" header="รายละเอียด" toggleable [(collapsed)]="panelCollapsed">
+    <wu-progressbar id="progress" [value]="60"></wu-progressbar>
+    <wu-message id="msg-info" severity="info" text="บันทึกข้อมูลเรียบร้อย"></wu-message>
+    <wu-message id="msg-warn" severity="warn" text="กรุณาตรวจสอบข้อมูลก่อนส่ง" closable></wu-message>
+    <wu-message id="msg-error" severity="error" text="เชื่อมต่อไม่ได้"></wu-message>
+    <wu-panel id="panel" header="รายละเอียด" toggleable [(collapsed)]="panelCollapsed">
       <p class="pg-p">เนื้อหาในแผง</p>
-      <div wtPanelFooter>ส่วนท้าย</div>
-    </wt-panel>
+      <div wuPanelFooter>ส่วนท้าย</div>
+    </wu-panel>
     <span>ยุบแผง: <b id="panel-state">{{ panelCollapsed }}</b></span>
-    <wt-fieldset id="fieldset" legend="ที่อยู่" toggleable>
+    <wu-fieldset id="fieldset" legend="ที่อยู่" toggleable>
       <p class="pg-p">เนื้อหาใน fieldset</p>
-    </wt-fieldset>
+    </wu-fieldset>
   </section>
 
   <section id="form-extras" class="pg-gallery">
     <h2>IconField, InputGroup, FloatLabel, ToggleButton, SelectButton, Rating, Password</h2>
     <div class="pg-fields">
-      <wt-iconfield id="if-new">
-        <wt-inputicon><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5L14 14"></path></svg></wt-inputicon>
-        <input wtInputText placeholder="ค้นหา" />
-      </wt-iconfield>
-      <span id="if-old" class="p-input-icon-left"><i class="pi pi-user"></i><input wtInputText placeholder="แบบเดิม p-input-icon-left" /></span>
-      <wt-inputgroup id="ig">
-        <wt-inputgroup-addon>฿</wt-inputgroup-addon>
-        <input wtInputText placeholder="จำนวนเงิน" />
-        <wt-inputgroup-addon>.00</wt-inputgroup-addon>
-      </wt-inputgroup>
-      <wt-floatlabel id="fl">
-        <input wtInputText id="fl-name" [(ngModel)]="extras.name" />
+      <wu-iconfield id="if-new">
+        <wu-inputicon><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5L14 14"></path></svg></wu-inputicon>
+        <input wuInputText placeholder="ค้นหา" />
+      </wu-iconfield>
+      <span id="if-old" class="p-input-icon-left"><i class="pi pi-user"></i><input wuInputText placeholder="แบบเดิม p-input-icon-left" /></span>
+      <wu-inputgroup id="ig">
+        <wu-inputgroup-addon>฿</wu-inputgroup-addon>
+        <input wuInputText placeholder="จำนวนเงิน" />
+        <wu-inputgroup-addon>.00</wu-inputgroup-addon>
+      </wu-inputgroup>
+      <wu-floatlabel id="fl">
+        <input wuInputText id="fl-name" [(ngModel)]="extras.name" />
         <label for="fl-name">ชื่อเล่น</label>
-      </wt-floatlabel>
+      </wu-floatlabel>
     </div>
     <div class="pg-row">
-      <wt-togglebutton id="tb" [(ngModel)]="extras.bold" onLabel="ตัวหนา" offLabel="ปกติ"></wt-togglebutton>
-      <wt-selectbutton id="sb" [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="extras.plan"></wt-selectbutton>
-      <wt-rating id="rating" [(ngModel)]="extras.score" ariaLabel="ให้คะแนน"></wt-rating>
+      <wu-togglebutton id="tb" [(ngModel)]="extras.bold" onLabel="ตัวหนา" offLabel="ปกติ"></wu-togglebutton>
+      <wu-selectbutton id="sb" [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="extras.plan"></wu-selectbutton>
+      <wu-rating id="rating" [(ngModel)]="extras.score" ariaLabel="ให้คะแนน"></wu-rating>
     </div>
-    <wt-password id="pw" [(ngModel)]="extras.pw" toggleMask></wt-password>
+    <wu-password id="pw" [(ngModel)]="extras.pw" toggleMask></wu-password>
     <pre id="extras-model">{{ extras | json }}</pre>
   </section>
 
   <section id="panels" class="pg-gallery">
     <h2>Toolbar, Accordion, Tabs</h2>
-    <wt-toolbar id="toolbar">
-      <div wtToolbarStart>
-        <wt-button label="เพิ่มรายการ" size="small"></wt-button>
-        <wt-button label="ลบ" severity="danger" size="small" outlined></wt-button>
+    <wu-toolbar id="toolbar">
+      <div wuToolbarStart>
+        <wu-button label="เพิ่มรายการ" size="small"></wu-button>
+        <wu-button label="ลบ" severity="danger" size="small" outlined></wu-button>
       </div>
-      <div wtToolbarEnd><input wtInputText wtSize="small" placeholder="ค้นหา" /></div>
-    </wt-toolbar>
-    <wt-accordion id="acc" [(activeIndex)]="accIndex">
-      <wt-accordion-tab header="ข้อมูลทั่วไป"><p class="pg-p">เนื้อหาส่วนที่ 1</p></wt-accordion-tab>
-      <wt-accordion-tab header="ที่อยู่"><p class="pg-p">เนื้อหาส่วนที่ 2</p></wt-accordion-tab>
-      <wt-accordion-tab header="ปิดใช้งาน" disabled><p class="pg-p">เนื้อหาส่วนที่ 3</p></wt-accordion-tab>
-    </wt-accordion>
+      <div wuToolbarEnd><input wuInputText wuSize="small" placeholder="ค้นหา" /></div>
+    </wu-toolbar>
+    <wu-accordion id="acc" [(activeIndex)]="accIndex">
+      <wu-accordion-tab header="ข้อมูลทั่วไป"><p class="pg-p">เนื้อหาส่วนที่ 1</p></wu-accordion-tab>
+      <wu-accordion-tab header="ที่อยู่"><p class="pg-p">เนื้อหาส่วนที่ 2</p></wu-accordion-tab>
+      <wu-accordion-tab header="ปิดใช้งาน" disabled><p class="pg-p">เนื้อหาส่วนที่ 3</p></wu-accordion-tab>
+    </wu-accordion>
     <span>เปิดอยู่: <b id="acc-index">{{ accIndex }}</b></span>
-    <wt-tabs id="tabs" [(activeIndex)]="tabIndex" ariaLabel="ข้อมูลผู้ใช้">
-      <wt-tab-panel header="ข้อมูลส่วนตัว"><p class="pg-p" id="tab-p1">แท็บที่ 1</p></wt-tab-panel>
-      <wt-tab-panel header="การทำงาน"><p class="pg-p" id="tab-p2">แท็บที่ 2</p></wt-tab-panel>
-      <wt-tab-panel header="ปิดใช้งาน" disabled><p class="pg-p">แท็บที่ 3</p></wt-tab-panel>
-      <wt-tab-panel header="เอกสารแนบ"><p class="pg-p" id="tab-p4">แท็บที่ 4</p></wt-tab-panel>
-    </wt-tabs>
+    <wu-tabs id="tabs" [(activeIndex)]="tabIndex" ariaLabel="ข้อมูลผู้ใช้">
+      <wu-tab-panel header="ข้อมูลส่วนตัว"><p class="pg-p" id="tab-p1">แท็บที่ 1</p></wu-tab-panel>
+      <wu-tab-panel header="การทำงาน"><p class="pg-p" id="tab-p2">แท็บที่ 2</p></wu-tab-panel>
+      <wu-tab-panel header="ปิดใช้งาน" disabled><p class="pg-p">แท็บที่ 3</p></wu-tab-panel>
+      <wu-tab-panel header="เอกสารแนบ"><p class="pg-p" id="tab-p4">แท็บที่ 4</p></wu-tab-panel>
+    </wu-tabs>
     <span>แท็บ: <b id="tab-index">{{ tabIndex }}</b></span>
   </section>
 
   <section id="numbers" class="pg-gallery">
     <h2>InputNumber</h2>
     <div class="pg-fields">
-      <wt-inputnumber id="num-price" [(ngModel)]="num.price" mode="currency" [min]="0" ariaLabel="ราคา"></wt-inputnumber>
-      <wt-inputnumber id="num-qty" [(ngModel)]="num.qty" showButtons [min]="0" [max]="10" [maxFractionDigits]="0" ariaLabel="จำนวน"></wt-inputnumber>
-      <wt-inputnumber id="num-weight" [(ngModel)]="num.weight" showButtons buttonLayout="horizontal" [step]="0.5" [maxFractionDigits]="1" suffix=" กก." ariaLabel="น้ำหนัก"></wt-inputnumber>
+      <wu-inputnumber id="num-price" [(ngModel)]="num.price" mode="currency" [min]="0" ariaLabel="ราคา"></wu-inputnumber>
+      <wu-inputnumber id="num-qty" [(ngModel)]="num.qty" showButtons [min]="0" [max]="10" [maxFractionDigits]="0" ariaLabel="จำนวน"></wu-inputnumber>
+      <wu-inputnumber id="num-weight" [(ngModel)]="num.weight" showButtons buttonLayout="horizontal" [step]="0.5" [maxFractionDigits]="1" suffix=" กก." ariaLabel="น้ำหนัก"></wu-inputnumber>
     </div>
     <pre id="num-model">{{ num | json }}</pre>
   </section>
@@ -245,32 +245,32 @@
   <section id="dates" class="pg-gallery">
     <h2>DatePicker</h2>
     <div class="pg-fields">
-      <wt-datepicker id="dp-due" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" showIcon showButtonBar [minDate]="minDate" [maxDate]="maxDate" placeholder="วันที่" ariaLabel="วันครบกำหนด"></wt-datepicker>
-      <wt-datepicker id="dp-time" [(ngModel)]="dates.meeting" dateFormat="dd/mm/yy" showTime showSeconds hourFormat="24" readonlyInput showIcon iconDisplay="input" ariaLabel="เวลานัด"></wt-datepicker>
-      <wt-datepicker id="dp-ro" [(ngModel)]="dates.locked" dateFormat="dd/mm/yy" showTime readonlyInput timeReadonlyInput ariaLabel="เวลาล็อก"></wt-datepicker>
-      <wt-datepicker id="dp-range" [(ngModel)]="dates.stay" selectionMode="range" dateFormat="dd/mm/yy" showClear ariaLabel="ช่วงวันที่"></wt-datepicker>
-      <wt-datepicker id="dp-month" [(ngModel)]="dates.month" view="month" dateFormat="MM yy" [isBudhistYear]="false" ariaLabel="เดือน"></wt-datepicker>
-      <wt-datepicker id="dp-12h" [(ngModel)]="dates.alarm" timeOnly hourFormat="12" ariaLabel="เวลาปลุก"></wt-datepicker>
+      <wu-datepicker id="dp-due" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" showIcon showButtonBar [minDate]="minDate" [maxDate]="maxDate" placeholder="วันที่" ariaLabel="วันครบกำหนด"></wu-datepicker>
+      <wu-datepicker id="dp-time" [(ngModel)]="dates.meeting" dateFormat="dd/mm/yy" showTime showSeconds hourFormat="24" readonlyInput showIcon iconDisplay="input" ariaLabel="เวลานัด"></wu-datepicker>
+      <wu-datepicker id="dp-ro" [(ngModel)]="dates.locked" dateFormat="dd/mm/yy" showTime readonlyInput timeReadonlyInput ariaLabel="เวลาล็อก"></wu-datepicker>
+      <wu-datepicker id="dp-range" [(ngModel)]="dates.stay" selectionMode="range" dateFormat="dd/mm/yy" showClear ariaLabel="ช่วงวันที่"></wu-datepicker>
+      <wu-datepicker id="dp-month" [(ngModel)]="dates.month" view="month" dateFormat="MM yy" [isBudhistYear]="false" ariaLabel="เดือน"></wu-datepicker>
+      <wu-datepicker id="dp-12h" [(ngModel)]="dates.alarm" timeOnly hourFormat="12" ariaLabel="เวลาปลุก"></wu-datepicker>
     </div>
-    <wt-datepicker id="dp-inline" inline [(ngModel)]="dates.inline"></wt-datepicker>
+    <wu-datepicker id="dp-inline" inline [(ngModel)]="dates.inline"></wu-datepicker>
     <pre id="dates-model">{{ datesText() }}</pre>
   </section>
 
   <section id="overlays" class="pg-gallery">
     <h2>Dialog, Alert, Confirm, Toast, Tooltip, Popover</h2>
     <div class="pg-row">
-      <wt-button id="open-dialog" label="เปิด Dialog" (onClick)="dialogOpen = true"></wt-button>
-      <wt-button id="open-alert" label="Alert" severity="success" (onClick)="fireAlert()"></wt-button>
-      <wt-button id="open-question" label="Question" severity="warn" (onClick)="askAlert()"></wt-button>
-      <wt-button id="open-input" label="Input" severity="info" (onClick)="askInput()"></wt-button>
-      <wt-button id="open-confirm" label="Confirm" severity="secondary" (onClick)="askConfirm()"></wt-button>
-      <wt-button id="open-toast" label="Toast" severity="help" (onClick)="showToast()"></wt-button>
-      <wt-button id="tip-target" label="Tooltip" outlined wtTooltip="บันทึกข้อมูล" tooltipPosition="top"></wt-button>
-      <wt-button id="tip-p" label="pTooltip" outlined pTooltip="ข้อความเดิม"></wt-button>
-      <wt-button id="pop-target" label="Popover" outlined (onClick)="op.toggle($event)"></wt-button>
+      <wu-button id="open-dialog" label="เปิด Dialog" (onClick)="dialogOpen = true"></wu-button>
+      <wu-button id="open-alert" label="Alert" severity="success" (onClick)="fireAlert()"></wu-button>
+      <wu-button id="open-question" label="Question" severity="warn" (onClick)="askAlert()"></wu-button>
+      <wu-button id="open-input" label="Input" severity="info" (onClick)="askInput()"></wu-button>
+      <wu-button id="open-confirm" label="Confirm" severity="secondary" (onClick)="askConfirm()"></wu-button>
+      <wu-button id="open-toast" label="Toast" severity="help" (onClick)="showToast()"></wu-button>
+      <wu-button id="tip-target" label="Tooltip" outlined wuTooltip="บันทึกข้อมูล" tooltipPosition="top"></wu-button>
+      <wu-button id="tip-p" label="pTooltip" outlined pTooltip="ข้อความเดิม"></wu-button>
+      <wu-button id="pop-target" label="Popover" outlined (onClick)="op.toggle($event)"></wu-button>
     </div>
-    <wt-popover #op id="pop"><p id="pop-body" class="pg-p">รายละเอียดอุปกรณ์</p></wt-popover>
-    <wt-dialog
+    <wu-popover #op id="pop"><p id="pop-body" class="pg-p">รายละเอียดอุปกรณ์</p></wu-popover>
+    <wu-dialog
       id="dlg"
       header="แก้ไขข้อมูล"
       [(visible)]="dialogOpen"
@@ -283,149 +283,149 @@
     >
       <p class="pg-p">เนื้อหาในหน้าต่าง</p>
       <div class="pg-fields">
-        <input id="dlg-input" wtInputText placeholder="ชื่อ" />
-        <wt-datepicker id="dlg-date" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" ariaLabel="วันที่ในหน้าต่าง"></wt-datepicker>
+        <input id="dlg-input" wuInputText placeholder="ชื่อ" />
+        <wu-datepicker id="dlg-date" [(ngModel)]="dates.due" dateFormat="dd/mm/yy" ariaLabel="วันที่ในหน้าต่าง"></wu-datepicker>
       </div>
-      <ng-template wtTemplate="footer">
-        <wt-button id="dlg-toast" label="แจ้งเตือน" text (onClick)="showToast()"></wt-button>
-        <wt-button id="dlg-save" label="บันทึก" (onClick)="dialogOpen = false"></wt-button>
+      <ng-template wuTemplate="footer">
+        <wu-button id="dlg-toast" label="แจ้งเตือน" text (onClick)="showToast()"></wu-button>
+        <wu-button id="dlg-save" label="บันทึก" (onClick)="dialogOpen = false"></wu-button>
       </ng-template>
-    </wt-dialog>
-    <wt-confirmdialog></wt-confirmdialog>
-    <wt-toast></wt-toast>
+    </wu-dialog>
+    <wu-confirmdialog></wu-confirmdialog>
+    <wu-toast></wu-toast>
     <pre id="overlay-log">{{ log.join('
 ') }}</pre>
     <div class="pg-aos">
       <div id="aos-a" class="pg-card" data-aos="fade-up">data-aos="fade-up"</div>
-      <div id="aos-b" class="pg-card" wtAnimate="zoom-in" [animateDelay]="100">wtAnimate="zoom-in"</div>
+      <div id="aos-b" class="pg-card" wuAnimate="zoom-in" [animateDelay]="100">wuAnimate="zoom-in"</div>
     </div>
   </section>
 
   <section id="review" class="pg-gallery">
     <h2>Sizes, pButton, validation, progress, MeterGroup, tabs, scale</h2>
     <div class="pg-row" id="sizes">
-      <wt-button id="btn-sm" label="เล็ก" size="small"></wt-button>
-      <wt-button id="btn-md" label="ปกติ"></wt-button>
-      <wt-button id="btn-lg" label="ใหญ่" size="large"></wt-button>
+      <wu-button id="btn-sm" label="เล็ก" size="small"></wu-button>
+      <wu-button id="btn-md" label="ปกติ"></wu-button>
+      <wu-button id="btn-lg" label="ใหญ่" size="large"></wu-button>
       <button id="pbtn" pButton type="button" label="ปุ่มเดิม" icon="pi pi-check" class="p-button-sm p-button-danger"></button>
-      <wt-button id="btn-styleclass" label="styleClass" styleClass="p-button-sm p-button-outlined"></wt-button>
-      <wt-checkbox id="cb-sm" [(ngModel)]="review.agree" [binary]="true" size="small" ariaLabel="เล็ก"></wt-checkbox>
-      <wt-checkbox id="cb-lg" [(ngModel)]="review.agree" [binary]="true" size="large" ariaLabel="ใหญ่"></wt-checkbox>
-      <wt-button id="use-sm" label="ขนาด sm" [text]="true" (onClick)="useScale('sm')"></wt-button>
-      <wt-button id="use-reset" label="ขนาดเดิม" [text]="true" (onClick)="useScale(null)"></wt-button>
+      <wu-button id="btn-styleclass" label="styleClass" styleClass="p-button-sm p-button-outlined"></wu-button>
+      <wu-checkbox id="cb-sm" [(ngModel)]="review.agree" [binary]="true" size="small" ariaLabel="เล็ก"></wu-checkbox>
+      <wu-checkbox id="cb-lg" [(ngModel)]="review.agree" [binary]="true" size="large" ariaLabel="ใหญ่"></wu-checkbox>
+      <wu-button id="use-sm" label="ขนาด sm" [text]="true" (onClick)="useScale('sm')"></wu-button>
+      <wu-button id="use-reset" label="ขนาดเดิม" [text]="true" (onClick)="useScale(null)"></wu-button>
     </div>
     <form id="vform" #vf="ngForm" class="pg-fields" (ngSubmit)="note('vform:' + vf.valid)">
       <div>
-        <input id="v-email" wtInputText name="email" [(ngModel)]="review.email" required email placeholder="อีเมล" />
-        <wt-field-error id="v-email-err" for="email" label="อีเมล"></wt-field-error>
+        <input id="v-email" wuInputText name="email" [(ngModel)]="review.email" required email placeholder="อีเมล" />
+        <wu-field-error id="v-email-err" for="email" label="อีเมล"></wu-field-error>
       </div>
       <div>
-        <input id="v-phone" wtInputText name="phone" [(ngModel)]="review.phone" wtThaiPhone placeholder="เบอร์โทร" />
-        <wt-field-error id="v-phone-err" for="phone"></wt-field-error>
+        <input id="v-phone" wuInputText name="phone" [(ngModel)]="review.phone" wuThaiPhone placeholder="เบอร์โทร" />
+        <wu-field-error id="v-phone-err" for="phone"></wu-field-error>
       </div>
       <div>
-        <input id="v-pw" wtInputText type="password" name="pw" [(ngModel)]="review.pw" placeholder="รหัสผ่าน" />
+        <input id="v-pw" wuInputText type="password" name="pw" [(ngModel)]="review.pw" placeholder="รหัสผ่าน" />
       </div>
       <div>
-        <input id="v-pw2" wtInputText type="password" name="pw2" [(ngModel)]="review.pw2" wtMatch="pw" placeholder="ยืนยันรหัสผ่าน" />
-        <wt-field-error id="v-pw2-err" for="pw2"></wt-field-error>
+        <input id="v-pw2" wuInputText type="password" name="pw2" [(ngModel)]="review.pw2" wuMatch="pw" placeholder="ยืนยันรหัสผ่าน" />
+        <wu-field-error id="v-pw2-err" for="pw2"></wu-field-error>
       </div>
-      <wt-button id="v-submit" type="submit" label="ส่ง"></wt-button>
+      <wu-button id="v-submit" type="submit" label="ส่ง"></wu-button>
     </form>
-    <wt-progressbar id="pb-count" [value]="1000" [max]="2500" unit="รายการ"></wt-progressbar>
-    <wt-progressbar id="pb-tpl" [value]="50">
+    <wu-progressbar id="pb-count" [value]="1000" [max]="2500" unit="รายการ"></wu-progressbar>
+    <wu-progressbar id="pb-tpl" [value]="50">
       <ng-template #content let-value>{{ value }}/100</ng-template>
-    </wt-progressbar>
-    <wt-metergroup id="mg" [value]="meters" ariaLabel="พื้นที่จัดเก็บ"></wt-metergroup>
+    </wu-progressbar>
+    <wu-metergroup id="mg" [value]="meters" ariaLabel="พื้นที่จัดเก็บ"></wu-metergroup>
     <div id="tabs-narrow" style="max-width: 320px">
-      <wt-tabs id="tabs-many" [(activeIndex)]="monthIndex" ariaLabel="เดือน">
-        <wt-tab-panel header="มกราคม">ยอดเดือนมกราคม</wt-tab-panel>
-        <wt-tab-panel header="กุมภาพันธ์">ยอดเดือนกุมภาพันธ์</wt-tab-panel>
-        <wt-tab-panel header="มีนาคม">ยอดเดือนมีนาคม</wt-tab-panel>
-        <wt-tab-panel header="เมษายน">ยอดเดือนเมษายน</wt-tab-panel>
-        <wt-tab-panel header="พฤษภาคม">ยอดเดือนพฤษภาคม</wt-tab-panel>
-        <wt-tab-panel header="มิถุนายน">ยอดเดือนมิถุนายน</wt-tab-panel>
-        <wt-tab-panel header="กรกฎาคม">ยอดเดือนกรกฎาคม</wt-tab-panel>
-        <wt-tab-panel header="สิงหาคม"><span id="tab-aug">ยอดเดือนสิงหาคม</span></wt-tab-panel>
-      </wt-tabs>
+      <wu-tabs id="tabs-many" [(activeIndex)]="monthIndex" ariaLabel="เดือน">
+        <wu-tab-panel header="มกราคม">ยอดเดือนมกราคม</wu-tab-panel>
+        <wu-tab-panel header="กุมภาพันธ์">ยอดเดือนกุมภาพันธ์</wu-tab-panel>
+        <wu-tab-panel header="มีนาคม">ยอดเดือนมีนาคม</wu-tab-panel>
+        <wu-tab-panel header="เมษายน">ยอดเดือนเมษายน</wu-tab-panel>
+        <wu-tab-panel header="พฤษภาคม">ยอดเดือนพฤษภาคม</wu-tab-panel>
+        <wu-tab-panel header="มิถุนายน">ยอดเดือนมิถุนายน</wu-tab-panel>
+        <wu-tab-panel header="กรกฎาคม">ยอดเดือนกรกฎาคม</wu-tab-panel>
+        <wu-tab-panel header="สิงหาคม"><span id="tab-aug">ยอดเดือนสิงหาคม</span></wu-tab-panel>
+      </wu-tabs>
     </div>
-    <wt-button id="open-bottom" label="Dialog ล่าง" [outlined]="true" (onClick)="bottomOpen = true"></wt-button>
-    <wt-dialog id="dlg-bottom" header="ด้านล่าง" [(visible)]="bottomOpen" position="bottom" [modal]="true" [style]="{ width: '20rem' }">
+    <wu-button id="open-bottom" label="Dialog ล่าง" [outlined]="true" (onClick)="bottomOpen = true"></wu-button>
+    <wu-dialog id="dlg-bottom" header="ด้านล่าง" [(visible)]="bottomOpen" position="bottom" [modal]="true" [style]="{ width: '20rem' }">
       <p class="pg-p">position="bottom"</p>
-    </wt-dialog>
-    <wt-button id="tip-link" label="ลิงก์ในทูลทิป" [outlined]="true" [escape]="false" tooltipPosition="top"
-      wtTooltip="ดูรายละเอียด <a id='tip-a' href='https://example.com'>ที่นี่</a>"></wt-button>
+    </wu-dialog>
+    <wu-button id="tip-link" label="ลิงก์ในทูลทิป" [outlined]="true" [escape]="false" tooltipPosition="top"
+      wuTooltip="ดูรายละเอียด <a id='tip-a' href='https://example.com'>ที่นี่</a>"></wu-button>
   </section>
 
   <section id="select" class="pg-gallery">
     <h2>Select</h2>
     <div class="pg-fields">
       <label for="sel-province-input">จังหวัด</label>
-      <wt-select id="sel-province" inputId="sel-province-input" [options]="provinces" optionLabel="name_th"
-        optionValue="id" optionDisabled="inactive" [(ngModel)]="sel.province" placeholder="เลือกจังหวัด" (onChange)="note('select:' + $event.value)"></wt-select>
-      <wt-select id="sel-search" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="sel.search"
-        [filter]="true" filterBy="name_th,code" [showClear]="true" placeholder="ค้นหาจังหวัด" ariaLabel="ค้นหาจังหวัด"></wt-select>
-      <wt-select id="sel-group" [options]="regions" [group]="true" optionLabel="name" optionValue="name"
-        [(ngModel)]="sel.region" placeholder="เลือกตามภาค" ariaLabel="ตามภาค"></wt-select>
-      <wt-select id="sel-tpl" [options]="provinces" optionLabel="name_th" [(ngModel)]="sel.object" dataKey="id"
+      <wu-select id="sel-province" inputId="sel-province-input" [options]="provinces" optionLabel="name_th"
+        optionValue="id" optionDisabled="inactive" [(ngModel)]="sel.province" placeholder="เลือกจังหวัด" (onChange)="note('select:' + $event.value)"></wu-select>
+      <wu-select id="sel-search" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="sel.search"
+        [filter]="true" filterBy="name_th,code" [showClear]="true" placeholder="ค้นหาจังหวัด" ariaLabel="ค้นหาจังหวัด"></wu-select>
+      <wu-select id="sel-group" [options]="regions" [group]="true" optionLabel="name" optionValue="name"
+        [(ngModel)]="sel.region" placeholder="เลือกตามภาค" ariaLabel="ตามภาค"></wu-select>
+      <wu-select id="sel-tpl" [options]="provinces" optionLabel="name_th" [(ngModel)]="sel.object" dataKey="id"
         placeholder="แบบ template" ariaLabel="แบบ template">
-        <ng-template wtTemplate="item" let-p><b class="sel-code">{{ p.code }}</b> {{ p.name_th }}</ng-template>
-        <ng-template wtTemplate="selectedItem" let-p><span class="sel-chosen">{{ p.code }} · {{ p.name_th }}</span></ng-template>
-      </wt-select>
-      <wt-select id="sel-edit" [options]="titles" [editable]="true" [(ngModel)]="sel.title" placeholder="คำนำหน้า"
-        ariaLabel="คำนำหน้า"></wt-select>
-      <wt-select id="sel-loading" [options]="titles" [(ngModel)]="sel.loadingTitle" [showClear]="true" [loading]="isOptionsLoading"
-        placeholder="กำลังโหลด" ariaLabel="กำลังโหลด"></wt-select>
+        <ng-template wuTemplate="item" let-p><b class="sel-code">{{ p.code }}</b> {{ p.name_th }}</ng-template>
+        <ng-template wuTemplate="selectedItem" let-p><span class="sel-chosen">{{ p.code }} · {{ p.name_th }}</span></ng-template>
+      </wu-select>
+      <wu-select id="sel-edit" [options]="titles" [editable]="true" [(ngModel)]="sel.title" placeholder="คำนำหน้า"
+        ariaLabel="คำนำหน้า"></wu-select>
+      <wu-select id="sel-loading" [options]="titles" [(ngModel)]="sel.loadingTitle" [showClear]="true" [loading]="isOptionsLoading"
+        placeholder="กำลังโหลด" ariaLabel="กำลังโหลด"></wu-select>
       <button type="button" id="sel-loading-done" (click)="isOptionsLoading = false">loaded</button>
     </div>
     <div class="pg-fields">
       <label for="ms-clubs-input">ชุมนุม</label>
-      <wt-multiSelect id="ms-clubs" inputId="ms-clubs-input" [options]="clubs" optionLabel="name" optionValue="id" optionDisabled="closed"
-        [(ngModel)]="ms.clubs" placeholder="เลือกชุมนุม" [maxSelectedLabels]="2" (onChange)="note('ms:' + $event.value.length)"></wt-multiSelect>
-      <wt-multiselect id="ms-chips" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="ms.provinces"
-        display="chip" [filter]="false" [showToggleAll]="false" defaultLabel="จังหวัด" ariaLabel="จังหวัด"></wt-multiselect>
-      <wt-multiselect id="ms-limit" [options]="titles" [(ngModel)]="ms.titles" [selectionLimit]="2" placeholder="สูงสุด 2" ariaLabel="สูงสุด 2"
-        selectedItemsLabel="{0} คำนำหน้า" [maxSelectedLabels]="1"></wt-multiselect>
+      <wu-multiSelect id="ms-clubs" inputId="ms-clubs-input" [options]="clubs" optionLabel="name" optionValue="id" optionDisabled="closed"
+        [(ngModel)]="ms.clubs" placeholder="เลือกชุมนุม" [maxSelectedLabels]="2" (onChange)="note('ms:' + $event.value.length)"></wu-multiSelect>
+      <wu-multiselect id="ms-chips" [options]="provinces" optionLabel="name_th" optionValue="id" [(ngModel)]="ms.provinces"
+        display="chip" [filter]="false" [showToggleAll]="false" defaultLabel="จังหวัด" ariaLabel="จังหวัด"></wu-multiselect>
+      <wu-multiselect id="ms-limit" [options]="titles" [(ngModel)]="ms.titles" [selectionLimit]="2" placeholder="สูงสุด 2" ariaLabel="สูงสุด 2"
+        selectedItemsLabel="{0} คำนำหน้า" [maxSelectedLabels]="1"></wu-multiselect>
     </div>
     <pre id="ms-model">{{ ms | json }}</pre>
     <div class="pg-fields">
       <label for="im-id-input">เลขบัตรประชาชน</label>
-      <wt-inputMask id="im-id" inputId="im-id-input" mask="9-9999-99999-99-9" [(ngModel)]="im.id" [unmask]="true"
-        placeholder="เลขบัตร 13 หลัก" (onComplete)="note('im:complete')"></wt-inputMask>
+      <wu-inputMask id="im-id" inputId="im-id-input" mask="9-9999-99999-99-9" [(ngModel)]="im.id" [unmask]="true"
+        placeholder="เลขบัตร 13 หลัก" (onComplete)="note('im:complete')"></wu-inputMask>
       <label for="im-phone-input">โทรศัพท์</label>
-      <wt-inputmask id="im-phone" inputId="im-phone-input" mask="999-999-9999" [(ngModel)]="im.phone" [autoClear]="false" [showClear]="true"></wt-inputmask>
+      <wu-inputmask id="im-phone" inputId="im-phone-input" mask="999-999-9999" [(ngModel)]="im.phone" [autoClear]="false" [showClear]="true"></wu-inputmask>
     </div>
     <pre id="im-model">{{ im | json }}</pre>
     <div class="pg-fields">
       <label for="ac-school-input">โรงเรียน</label>
-      <wt-autoComplete id="ac-school" inputId="ac-school-input" [(ngModel)]="ac.school" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
-        optionLabel="name" [delay]="0" [dropdown]="true" placeholder="พิมพ์ชื่อโรงเรียน" (onSelect)="note('ac:' + $any($event.value).name)"></wt-autoComplete>
+      <wu-autoComplete id="ac-school" inputId="ac-school-input" [(ngModel)]="ac.school" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
+        optionLabel="name" [delay]="0" [dropdown]="true" placeholder="พิมพ์ชื่อโรงเรียน" (onSelect)="note('ac:' + $any($event.value).name)"></wu-autoComplete>
       <label for="ac-free-input">คำค้น</label>
-      <wt-autocomplete id="ac-free" inputId="ac-free-input" [(ngModel)]="ac.free" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
-        field="name" [minLength]="2" [delay]="0" [forceSelection]="true" placeholder="อย่างน้อย 2 ตัว"></wt-autocomplete>
+      <wu-autocomplete id="ac-free" inputId="ac-free-input" [(ngModel)]="ac.free" [suggestions]="schoolHits" (completeMethod)="findSchool($event)"
+        field="name" [minLength]="2" [delay]="0" [forceSelection]="true" placeholder="อย่างน้อย 2 ตัว"></wu-autocomplete>
       <label for="ac-plain-input">ไม่ได้ตั้ง delay</label>
-      <wt-autocomplete id="ac-plain" inputId="ac-plain-input" [(ngModel)]="ac.plain" [suggestions]="schoolHits" (completeMethod)="findSchoolNow($event)"
-        field="name" placeholder="ค่าเริ่มต้น"></wt-autocomplete>
+      <wu-autocomplete id="ac-plain" inputId="ac-plain-input" [(ngModel)]="ac.plain" [suggestions]="schoolHits" (completeMethod)="findSchoolNow($event)"
+        field="name" placeholder="ค่าเริ่มต้น"></wu-autocomplete>
     </div>
     <pre id="ac-model">{{ ac | json }}</pre>
-    <wt-timeline id="tl" [value]="steps">
+    <wu-timeline id="tl" [value]="steps">
       <ng-template pTemplate="content" let-s><span class="tl-text">{{ s.status }}</span></ng-template>
-    </wt-timeline>
-    <wt-timeline id="tl-alt" [value]="steps" align="alternate">
+    </wu-timeline>
+    <wu-timeline id="tl-alt" [value]="steps" align="alternate">
       <ng-template #content let-s>{{ s.status }}</ng-template>
       <ng-template #opposite let-s let-i="index"><small class="tl-when">{{ i + 1 }}. {{ s.date }}</small></ng-template>
-    </wt-timeline>
-    <wt-timeline id="tl-h" [value]="steps" layout="horizontal" align="top">
+    </wu-timeline>
+    <wu-timeline id="tl-h" [value]="steps" layout="horizontal" align="top">
       <ng-template #content let-s>{{ s.status }}</ng-template>
-    </wt-timeline>
-    <wt-chartjs id="ch" #chart type="bar" [data]="chartData" [options]="chartOptions" height="240px" ariaLabel="คะแนนเฉลี่ย"
-      (onDataSelect)="note('chart:' + $any($event.element).index)"></wt-chartjs>
+    </wu-timeline>
+    <wu-chartjs id="ch" #chart type="bar" [data]="chartData" [options]="chartOptions" height="240px" ariaLabel="คะแนนเฉลี่ย"
+      (onDataSelect)="note('chart:' + $any($event.element).index)"></wu-chartjs>
     <button type="button" id="ch-pie" (click)="chartType = chartType === 'bar' ? 'pie' : 'bar'">{{ chartType }}</button>
-    <wt-chartjs id="ch-2" [type]="chartType" [data]="chartData" width="320px" height="200px"></wt-chartjs>
-    <wt-image id="img" [src]="photo" alt="ภาพโรงเรียน" width="160" [preview]="true" (onImageError)="note('img:error')"></wt-image>
-    <wt-image id="img-broken" src="/does-not-exist.png" alt="ไม่มีภาพ" width="40" (onImageError)="note('img:error')"></wt-image>
-    <wt-messages id="msgs" [(value)]="msgs" [enableService]="false"></wt-messages>
-    <wt-messages id="msgs-service" key="inline"></wt-messages>
+    <wu-chartjs id="ch-2" [type]="chartType" [data]="chartData" width="320px" height="200px"></wu-chartjs>
+    <wu-image id="img" [src]="photo" alt="ภาพโรงเรียน" width="160" [preview]="true" (onImageError)="note('img:error')"></wu-image>
+    <wu-image id="img-broken" src="/does-not-exist.png" alt="ไม่มีภาพ" width="40" (onImageError)="note('img:error')"></wu-image>
+    <wu-messages id="msgs" [(value)]="msgs" [enableService]="false"></wu-messages>
+    <wu-messages id="msgs-service" key="inline"></wu-messages>
     <button type="button" id="msgs-send" (click)="sendInline()">แจ้งในหน้า</button>
     <pre id="sel-model">{{ sel | json }}</pre>
   </section>
@@ -433,104 +433,104 @@
   <section id="aliases" class="pg-gallery">
     <h2>Old tag names and tabs by value</h2>
     <div class="pg-row">
-      <wt-calendar id="al-calendar" [(ngModel)]="aliasDate" placeholder="วันที่"></wt-calendar>
-      <wt-inputSwitch id="al-switch" [(ngModel)]="aliasOn"></wt-inputSwitch>
-      <wt-progressSpinner id="al-spinner" ariaLabel="กำลังโหลด"></wt-progressSpinner>
+      <wu-calendar id="al-calendar" [(ngModel)]="aliasDate" placeholder="วันที่"></wu-calendar>
+      <wu-inputSwitch id="al-switch" [(ngModel)]="aliasOn"></wu-inputSwitch>
+      <wu-progressSpinner id="al-spinner" ariaLabel="กำลังโหลด"></wu-progressSpinner>
     </div>
-    <wt-tabView id="al-tabview">
-      <wt-tabPanel header="หนึ่ง">แผงหนึ่ง</wt-tabPanel>
-      <wt-tabPanel header="สอง">แผงสอง</wt-tabPanel>
-    </wt-tabView>
-    <wt-accordion id="al-accordion">
-      <wt-accordionTab header="หัวข้อเดิม">เนื้อหาเดิม</wt-accordionTab>
-    </wt-accordion>
-    <wt-accordion id="va" [(value)]="openPanel">
-      <wt-accordion-panel value="fees">
-        <wt-accordion-header>ค่าธรรมเนียม</wt-accordion-header>
-        <wt-accordion-content>ชำระภายในวันที่ 15</wt-accordion-content>
-      </wt-accordion-panel>
-      <wt-accordion-panel value="docs">
-        <wt-accordion-header>เอกสาร</wt-accordion-header>
-        <wt-accordion-content>สำเนาบัตรประชาชน</wt-accordion-content>
-      </wt-accordion-panel>
-      <wt-accordion-panel value="off" [disabled]="true">
-        <wt-accordion-header>ปิดอยู่</wt-accordion-header>
-        <wt-accordion-content>-</wt-accordion-content>
-      </wt-accordion-panel>
-    </wt-accordion>
+    <wu-tabView id="al-tabview">
+      <wu-tabPanel header="หนึ่ง">แผงหนึ่ง</wu-tabPanel>
+      <wu-tabPanel header="สอง">แผงสอง</wu-tabPanel>
+    </wu-tabView>
+    <wu-accordion id="al-accordion">
+      <wu-accordionTab header="หัวข้อเดิม">เนื้อหาเดิม</wu-accordionTab>
+    </wu-accordion>
+    <wu-accordion id="va" [(value)]="openPanel">
+      <wu-accordion-panel value="fees">
+        <wu-accordion-header>ค่าธรรมเนียม</wu-accordion-header>
+        <wu-accordion-content>ชำระภายในวันที่ 15</wu-accordion-content>
+      </wu-accordion-panel>
+      <wu-accordion-panel value="docs">
+        <wu-accordion-header>เอกสาร</wu-accordion-header>
+        <wu-accordion-content>สำเนาบัตรประชาชน</wu-accordion-content>
+      </wu-accordion-panel>
+      <wu-accordion-panel value="off" [disabled]="true">
+        <wu-accordion-header>ปิดอยู่</wu-accordion-header>
+        <wu-accordion-content>-</wu-accordion-content>
+      </wu-accordion-panel>
+    </wu-accordion>
     <p>panel: <code id="va-value">{{ openPanel }}</code></p>
-    <wt-accordion id="va-multi" [multiple]="true" [(value)]="openPanels">
-      <wt-accordion-panel value="a"><wt-accordion-header>ก</wt-accordion-header><wt-accordion-content>เนื้อหา ก</wt-accordion-content></wt-accordion-panel>
-      <wt-accordion-panel value="b"><wt-accordion-header>ข</wt-accordion-header><wt-accordion-content>เนื้อหา ข</wt-accordion-content></wt-accordion-panel>
-    </wt-accordion>
+    <wu-accordion id="va-multi" [multiple]="true" [(value)]="openPanels">
+      <wu-accordion-panel value="a"><wu-accordion-header>ก</wu-accordion-header><wu-accordion-content>เนื้อหา ก</wu-accordion-content></wu-accordion-panel>
+      <wu-accordion-panel value="b"><wu-accordion-header>ข</wu-accordion-header><wu-accordion-content>เนื้อหา ข</wu-accordion-content></wu-accordion-panel>
+    </wu-accordion>
     <p>panels: <code id="va-multi-value">{{ openPanels | json }}</code></p>
-    <wt-tabs id="vt" [(value)]="valueTab" ariaLabel="แท็บตามค่า">
-      <wt-tablist>
-        <wt-tab value="info">ข้อมูล</wt-tab>
-        <wt-tab value="docs">เอกสาร</wt-tab>
-        <wt-tab value="off" [disabled]="true">ปิดอยู่</wt-tab>
-        <wt-tab value="log">ประวัติ</wt-tab>
-      </wt-tablist>
-      <wt-tabpanels>
-        <wt-tabpanel value="info">แผงข้อมูล</wt-tabpanel>
-        <wt-tabpanel value="docs">แผงเอกสาร</wt-tabpanel>
-        <wt-tabpanel value="off">แผงที่ปิด</wt-tabpanel>
-        <wt-tabpanel value="log">แผงประวัติ</wt-tabpanel>
-      </wt-tabpanels>
-    </wt-tabs>
+    <wu-tabs id="vt" [(value)]="valueTab" ariaLabel="แท็บตามค่า">
+      <wu-tablist>
+        <wu-tab value="info">ข้อมูล</wu-tab>
+        <wu-tab value="docs">เอกสาร</wu-tab>
+        <wu-tab value="off" [disabled]="true">ปิดอยู่</wu-tab>
+        <wu-tab value="log">ประวัติ</wu-tab>
+      </wu-tablist>
+      <wu-tabpanels>
+        <wu-tabpanel value="info">แผงข้อมูล</wu-tabpanel>
+        <wu-tabpanel value="docs">แผงเอกสาร</wu-tabpanel>
+        <wu-tabpanel value="off">แผงที่ปิด</wu-tabpanel>
+        <wu-tabpanel value="log">แผงประวัติ</wu-tabpanel>
+      </wu-tabpanels>
+    </wu-tabs>
     <p>tab: <code id="vt-value">{{ valueTab }}</code></p>
   </section>
 
   <section id="menubar" class="pg-gallery">
     <h2>Menubar</h2>
-    <wt-menubar id="mb-main" [model]="menuItems" ariaLabel="เมนูหลัก">
-      <ng-template pTemplate="start"><b id="mb-logo">WiraTheme</b></ng-template>
+    <wu-menubar id="mb-main" [model]="menuItems" ariaLabel="เมนูหลัก">
+      <ng-template pTemplate="start"><b id="mb-logo">WiraUI</b></ng-template>
       <ng-template pTemplate="end"><button type="button" id="mb-end">ออกจากระบบ</button></ng-template>
-    </wt-menubar>
+    </wu-menubar>
     <!-- The way most headers use it: only start / end, no model. -->
-    <wt-menubar id="mb-shell" [style]="{ 'border-radius': 0 }">
+    <wu-menubar id="mb-shell" [style]="{ 'border-radius': 0 }">
       <ng-template #start><span id="mb-shell-start">ระบบงานทะเบียน</span></ng-template>
       <ng-template #end><span id="mb-shell-end">ผู้ใช้</span></ng-template>
-    </wt-menubar>
+    </wu-menubar>
     <p>last: <code id="mb-log">{{ menuLog }}</code></p>
     <div class="pg-row">
       <button type="button" id="mn-open" (click)="popMenu.toggle($event)">เมนูโปรไฟล์</button>
-      <wt-menu #popMenu id="mn-popup" [model]="profileItems" [popup]="true" appendTo="body"></wt-menu>
+      <wu-menu #popMenu id="mn-popup" [model]="profileItems" [popup]="true" appendTo="body"></wu-menu>
     </div>
-    <wt-menu id="mn-side" [model]="sideItems" [style]="{ width: '100%', border: 'none' }"></wt-menu>
-    <wt-steps id="st" [model]="stepItems" [(activeIndex)]="stepIndex" [readonly]="false"></wt-steps>
+    <wu-menu id="mn-side" [model]="sideItems" [style]="{ width: '100%', border: 'none' }"></wu-menu>
+    <wu-steps id="st" [model]="stepItems" [(activeIndex)]="stepIndex" [readonly]="false"></wu-steps>
     <p>step: <code id="st-index">{{ stepIndex }}</code></p>
-    <wt-steps id="st-ro" [model]="stepItems" [activeIndex]="2"></wt-steps>
-    <wt-steps id="st-right" [model]="stepItems" [activeIndex]="1" labelPosition="right"></wt-steps>
-    <wt-steps id="st-vertical" [model]="stepItems" [(activeIndex)]="stepVerticalIndex" [readonly]="false" orientation="vertical"></wt-steps>
-    <wt-panelMenu id="pm" [model]="panelItems" [style]="{ width: '18rem' }"></wt-panelMenu>
-    <wt-panelmenu id="pm-multi" [model]="panelItemsMulti" [multiple]="true"></wt-panelmenu>
-    <wt-tabMenu id="tm" [model]="tabPages" [(activeItem)]="tabPage" [scrollable]="true"></wt-tabMenu>
+    <wu-steps id="st-ro" [model]="stepItems" [activeIndex]="2"></wu-steps>
+    <wu-steps id="st-right" [model]="stepItems" [activeIndex]="1" labelPosition="right"></wu-steps>
+    <wu-steps id="st-vertical" [model]="stepItems" [(activeIndex)]="stepVerticalIndex" [readonly]="false" orientation="vertical"></wu-steps>
+    <wu-panelMenu id="pm" [model]="panelItems" [style]="{ width: '18rem' }"></wu-panelMenu>
+    <wu-panelmenu id="pm-multi" [model]="panelItemsMulti" [multiple]="true"></wu-panelmenu>
+    <wu-tabMenu id="tm" [model]="tabPages" [(activeItem)]="tabPage" [scrollable]="true"></wu-tabMenu>
     <p>page: <code id="tm-page">{{ tabPage?.label }}</code></p>
   </section>
 
   <section id="table" class="pg-gallery">
     <h2>Table</h2>
-    <wt-table #dt id="tbl-main" [value]="students" dataKey="id" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+    <wu-table #dt id="tbl-main" [value]="students" dataKey="id" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
       [showCurrentPageReport]="true" currentPageReportTemplate="กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ"
       [globalFilterFields]="['name', 'room', 'info.club']" [filterDelay]="0" [(selection)]="picked" [tableStyle]="{ 'min-width': '40rem' }"
       (onSort)="note('sort:' + ($event.field || '-') + ':' + ($event.order || 0))">
       <ng-template pTemplate="caption">
-        <input id="tbl-search" wtInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+        <input id="tbl-search" wuInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+          <th style="width: 3rem"><wu-tableHeaderCheckbox></wu-tableHeaderCheckbox></th>
           <th>ลำดับ</th>
-          <th pSortableColumn="name">ชื่อ <wt-sortIcon field="name"></wt-sortIcon></th>
-          <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
-          <th pSortableColumn="info.club">ชุมนุม <wt-sortIcon field="info.club"></wt-sortIcon></th>
-          <th pSortableColumn="score">คะแนน <wt-sortIcon field="score"></wt-sortIcon></th>
+          <th pSortableColumn="name">ชื่อ <wu-sortIcon field="name"></wu-sortIcon></th>
+          <th wuSortableColumn="room">ห้อง <wu-sortIcon field="room"></wu-sortIcon></th>
+          <th pSortableColumn="info.club">ชุมนุม <wu-sortIcon field="info.club"></wu-sortIcon></th>
+          <th pSortableColumn="score">คะแนน <wu-sortIcon field="score"></wu-sortIcon></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-s let-i="rowIndex">
         <tr class="tbl-row">
-          <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+          <td><wu-tableCheckbox [value]="s"></wu-tableCheckbox></td>
           <td class="tbl-no">{{ i + 1 }}</td>
           <td class="tbl-name">{{ s.name }}</td>
           <td>{{ s.room }}</td>
@@ -541,39 +541,39 @@
       <ng-template pTemplate="emptymessage">
         <tr><td colspan="6" class="tbl-empty">ไม่พบข้อมูล</td></tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
     <p>เลือก: <b id="tbl-picked">{{ picked.length }}</b></p>
 
-    <wt-table id="tbl-single" [value]="fewStudents" selectionMode="single" [(selection)]="chosen" dataKey="id"
+    <wu-table id="tbl-single" [value]="fewStudents" selectionMode="single" [(selection)]="chosen" dataKey="id"
       [stripedRows]="true" [showGridlines]="true" size="small" responsiveLayout="stack" breakpoint="600px">
-      <ng-template wtTemplate="header">
+      <ng-template wuTemplate="header">
         <tr><th>ชื่อ</th><th>ห้อง</th></tr>
       </ng-template>
-      <ng-template wtTemplate="body" let-s>
+      <ng-template wuTemplate="body" let-s>
         <tr [pSelectableRow]="s">
           <td><span class="p-column-title">ชื่อ</span>{{ s.name }}</td>
           <td><span class="p-column-title">ห้อง</span>{{ s.room }}</td>
         </tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
     <p>ที่เลือก: <b id="tbl-chosen">{{ chosen?.name || '-' }}</b></p>
 
-    <wt-table id="tbl-lazy" [value]="lazyRows" [lazy]="true" [paginator]="true" [rows]="5" [totalRecords]="lazyTotal"
+    <wu-table id="tbl-lazy" [value]="lazyRows" [lazy]="true" [paginator]="true" [rows]="5" [totalRecords]="lazyTotal"
       [loading]="lazyLoading" (onLazyLoad)="loadLazy($event)">
-      <ng-template wtTemplate="header">
-        <tr><th>#</th><th pSortableColumn="name">ชื่อ <wt-sortIcon field="name"></wt-sortIcon></th></tr>
+      <ng-template wuTemplate="header">
+        <tr><th>#</th><th pSortableColumn="name">ชื่อ <wu-sortIcon field="name"></wu-sortIcon></th></tr>
       </ng-template>
-      <ng-template wtTemplate="body" let-s let-i="rowIndex">
+      <ng-template wuTemplate="body" let-s let-i="rowIndex">
         <tr class="lazy-row"><td>{{ i + 1 }}</td><td>{{ s.name }}</td></tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
     <pre id="tbl-lazy-log">{{ lazyLog }}</pre>
 
-    <wt-table #dx id="tbl-extra" [value]="groupStudents" dataKey="id" rowGroupMode="subheader" groupRowsBy="info.club"
+    <wu-table #dx id="tbl-extra" [value]="groupStudents" dataKey="id" rowGroupMode="subheader" groupRowsBy="info.club"
       [columns]="exportCols" [tableStyle]="{ 'min-width': '60rem' }" (onRowExpand)="note('expand:' + $any($event.data).id)">
       <ng-template pTemplate="caption">
         <div class="pg-row">
-          <wt-columnFilter id="tbl-filter" field="name" placeholder="กรองชื่อ" [delay]="0"></wt-columnFilter>
+          <wu-columnFilter id="tbl-filter" field="name" placeholder="กรองชื่อ" [delay]="0"></wu-columnFilter>
           <button type="button" id="tbl-export" (click)="csv = dx.toCSV()">CSV</button>
         </div>
       </ng-template>
@@ -603,11 +603,11 @@
       <ng-template pTemplate="rowexpansion" let-s>
         <tr class="ext-detail"><td colspan="6">รายละเอียดของ {{ s.name }}</td></tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
     <pre id="tbl-csv">{{ csv }}</pre>
 
-    <wt-table id="tbl-deep" [value]="deepRows" dataKey="id" [columns]="deepCols" [resizableColumns]="true" [reorderableColumns]="true"
-      selectionMode="single" [(selection)]="deepPicked" [rowSelectable]="isDeepSelectable" stateKey="wt-e2e-deep" [frozenValue]="deepFrozen"
+    <wu-table id="tbl-deep" [value]="deepRows" dataKey="id" [columns]="deepCols" [resizableColumns]="true" [reorderableColumns]="true"
+      selectionMode="single" [(selection)]="deepPicked" [rowSelectable]="isDeepSelectable" stateKey="wu-e2e-deep" [frozenValue]="deepFrozen"
       [customSort]="true" (sortFunction)="sortDeep($event)" [tableStyle]="{ 'min-width': '30rem' }"
       (onRowReorder)="note('reorder:' + $event.dragIndex + '>' + $event.dropIndex)" (onEditComplete)="note('edit:' + $event.field)"
       (onColReorder)="note('colreorder:' + $event.dragIndex + '>' + $event.dropIndex)">
@@ -616,8 +616,8 @@
           <th style="width: 2.5rem"></th>
           <th style="width: 3rem"></th>
           <th *ngFor="let c of columns" class="deep-th" pResizableColumn pReorderableColumn [pSortableColumn]="c.field">
-            {{ c.header }} <wt-sortIcon [field]="c.field"></wt-sortIcon>
-            <wt-columnFilter *ngIf="c.field === 'score'" type="numeric" [field]="c.field" display="menu"></wt-columnFilter>
+            {{ c.header }} <wu-sortIcon [field]="c.field"></wu-sortIcon>
+            <wu-columnFilter *ngIf="c.field === 'score'" type="numeric" [field]="c.field" display="menu"></wu-columnFilter>
           </th>
         </tr>
       </ng-template>
@@ -627,26 +627,26 @@
       <ng-template pTemplate="body" let-r let-i="rowIndex" let-columns="columns">
         <tr [pReorderableRow]="i" class="deep-row">
           <td><span class="deep-handle" pReorderableRowHandle>☰</span></td>
-          <td><wt-tableRadioButton [value]="r" [index]="i"></wt-tableRadioButton></td>
+          <td><wu-tableRadioButton [value]="r" [index]="i"></wu-tableRadioButton></td>
           <td *ngFor="let c of columns" class="deep-cell" [pEditableColumn]="r" [pEditableColumnField]="c.field" [pEditableColumnRowIndex]="i">
-            <wt-cellEditor>
-              <ng-template pTemplate="input"><input class="deep-input" wtInputText [(ngModel)]="r[c.field]" [name]="'deep' + i + c.field" /></ng-template>
+            <wu-cellEditor>
+              <ng-template pTemplate="input"><input class="deep-input" wuInputText [(ngModel)]="r[c.field]" [name]="'deep' + i + c.field" /></ng-template>
               <ng-template pTemplate="output"><span class="deep-out">{{ r[c.field] }}</span></ng-template>
-            </wt-cellEditor>
+            </wu-cellEditor>
           </td>
         </tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
     <p>picked: <code id="deep-picked">{{ deepPicked?.name || '-' }}</code></p>
-    <wt-table id="tbl-rowedit" [value]="editRows" dataKey="id" editMode="row">
+    <wu-table id="tbl-rowedit" [value]="editRows" dataKey="id" editMode="row">
       <ng-template pTemplate="header"><tr><th>ชื่อ</th><th></th></tr></ng-template>
       <ng-template pTemplate="body" let-r let-editing="editing">
         <tr [pEditableRow]="r" class="re-row">
           <td>
-            <wt-cellEditor>
-              <ng-template pTemplate="input"><input class="re-input" wtInputText [(ngModel)]="r.name" [name]="'re' + r.id" required /></ng-template>
+            <wu-cellEditor>
+              <ng-template pTemplate="input"><input class="re-input" wuInputText [(ngModel)]="r.name" [name]="'re' + r.id" required /></ng-template>
               <ng-template pTemplate="output"><span class="re-out">{{ r.name }}</span></ng-template>
-            </wt-cellEditor>
+            </wu-cellEditor>
           </td>
           <td>
             <button *ngIf="!editing" type="button" class="re-edit" pInitEditableRow>แก้ไข</button>
@@ -655,50 +655,50 @@
           </td>
         </tr>
       </ng-template>
-    </wt-table>
+    </wu-table>
   </section>
 
   <section id="lists" class="pg-gallery">
     <h2>PickList / OrderList</h2>
-    <wt-pickList id="pl" [source]="plSource" [target]="plTarget" sourceHeader="สิทธิ์ทั้งหมด" targetHeader="สิทธิ์ที่ได้รับ"
+    <wu-pickList id="pl" [source]="plSource" [target]="plTarget" sourceHeader="สิทธิ์ทั้งหมด" targetHeader="สิทธิ์ที่ได้รับ"
       filterBy="name" sourceFilterPlaceholder="ค้นหาสิทธิ์" [dragdrop]="true" [responsive]="true" [metaKeySelection]="false"
       [sourceStyle]="{ height: '16rem' }" [targetStyle]="{ height: '16rem' }"
       (onMoveToTarget)="note('pl:target:' + $event.items.length)" (onMoveToSource)="note('pl:source:' + $event.items.length)"
       (onMoveAllToTarget)="note('pl:all-target:' + $event.items.length)" (onTargetReorder)="note('pl:reorder')">
       <ng-template let-item pTemplate="item"><span class="pl-item">{{ item.name }}</span></ng-template>
-    </wt-pickList>
+    </wu-pickList>
     <p>source: <code id="pl-source">{{ names(plSource) }}</code></p>
     <p>target: <code id="pl-target">{{ names(plTarget) }}</code></p>
-    <wt-picklist id="pl-stacked" [source]="plSource2" [target]="plTarget2" sourceHeader="ทั้งหมด" targetHeader="ที่เลือก"
-      breakpoint="5000px" [showSourceControls]="false" optionLabel="name"></wt-picklist>
-    <wt-orderList id="ol" [value]="olItems" header="ลำดับการส่งต่อ" dataKey="id" [dragdrop]="true" [(selection)]="olSelected"
+    <wu-picklist id="pl-stacked" [source]="plSource2" [target]="plTarget2" sourceHeader="ทั้งหมด" targetHeader="ที่เลือก"
+      breakpoint="5000px" [showSourceControls]="false" optionLabel="name"></wu-picklist>
+    <wu-orderList id="ol" [value]="olItems" header="ลำดับการส่งต่อ" dataKey="id" [dragdrop]="true" [(selection)]="olSelected"
       [metaKeySelection]="false" [listStyle]="{ height: '14rem' }" (onReorder)="note('ol:reorder:' + $event.length)">
       <ng-template let-item pTemplate="item"><span class="ol-item">{{ item.name }}</span></ng-template>
-    </wt-orderList>
+    </wu-orderList>
     <p>order: <code id="ol-order">{{ names(olItems) }}</code> selected: <code id="ol-selected">{{ olSelected.length }}</code></p>
   </section>
 
   <section id="upload" class="pg-gallery">
     <h2>FileUpload</h2>
-    <wt-fileUpload #fu id="fu" name="files" accept="image/*,application/pdf" [multiple]="true" [maxFileSize]="1000000"
+    <wu-fileUpload #fu id="fu" name="files" accept="image/*,application/pdf" [multiple]="true" [maxFileSize]="1000000"
       [fileLimit]="3" [customUpload]="true" chooseLabel="เลือกไฟล์" uploadLabel="อัปโหลด" cancelLabel="ยกเลิก"
       (onSelect)="note('fu:select:' + $event.files.length)" (uploadHandler)="uploadFiles($event, fu)"
-      (onValidationFail)="note('fu:fail:' + $event.reason)" (onRemove)="note('fu:remove')" (onClear)="note('fu:clear')"></wt-fileUpload>
+      (onValidationFail)="note('fu:fail:' + $event.reason)" (onRemove)="note('fu:remove')" (onClear)="note('fu:clear')"></wu-fileUpload>
     <p>uploaded: <code id="fu-log">{{ uploadLog }}</code></p>
-    <wt-fileupload id="fu-basic" mode="basic" chooseLabel="แนบสลิป" accept=".png,.jpg" [maxFileSize]="5000000"
-      (onSelect)="note('fub:' + $event.files[0].name)" (onClear)="note('fub:clear')"></wt-fileupload>
-    <wt-fileupload id="fu-empty" accept=".xlsx,.xls" [showUploadButton]="false" [customUpload]="true" chooseIcon="pi pi-file-excel">
+    <wu-fileupload id="fu-basic" mode="basic" chooseLabel="แนบสลิป" accept=".png,.jpg" [maxFileSize]="5000000"
+      (onSelect)="note('fub:' + $event.files[0].name)" (onClear)="note('fub:clear')"></wu-fileupload>
+    <wu-fileupload id="fu-empty" accept=".xlsx,.xls" [showUploadButton]="false" [customUpload]="true" chooseIcon="pi pi-file-excel">
       <ng-template pTemplate="empty"><p id="fu-empty-text">ลากไฟล์ Excel มาวางที่นี่</p></ng-template>
-    </wt-fileupload>
+    </wu-fileupload>
   </section>
 
   <section id="editor" class="pg-gallery">
     <h2>Editor</h2>
-    <wt-editor id="ed" [(ngModel)]="editorHtml" name="body" placeholder="พิมพ์เนื้อหาข่าว" [style]="{ height: '240px' }"
-      toolbar="full" [showCount]="true" (onTextChange)="note('ed:change')"></wt-editor>
+    <wu-editor id="ed" [(ngModel)]="editorHtml" name="body" placeholder="พิมพ์เนื้อหาข่าว" [style]="{ height: '240px' }"
+      toolbar="full" [showCount]="true" (onTextChange)="note('ed:change')"></wu-editor>
     <pre id="ed-value" class="pg-wrap">{{ editorHtml }}</pre>
     <button type="button" id="ed-set" (click)="setEditorValue()">set value</button>
-    <wt-editor id="ed-quill" [(ngModel)]="editorQuill" name="quill" [style]="{ height: '160px' }">
+    <wu-editor id="ed-quill" [(ngModel)]="editorQuill" name="quill" [style]="{ height: '160px' }">
       <ng-template pTemplate="header">
         <span class="ql-formats">
           <button type="button" class="ql-bold" aria-label="Bold"></button>
@@ -715,217 +715,217 @@
           <button type="button" class="ql-video"></button>
         </span>
       </ng-template>
-    </wt-editor>
+    </wu-editor>
     <pre id="ed-quill-value" class="pg-wrap">{{ editorQuill }}</pre>
-    <wt-editor id="ed-upload" [(ngModel)]="editorUpload" name="upload" [toolbar]="['image', 'table', '|', 'undo', 'redo']"
+    <wu-editor id="ed-upload" [(ngModel)]="editorUpload" name="upload" [toolbar]="['image', 'table', '|', 'undo', 'redo']"
       [imageUpload]="{ url: '/api/upload', responseUrl: 'data.url', maxSize: 200000 }" [toolOptions]="{ table: { rows: 4, cols: 5, headerRow: false } }"
-      (onImageUpload)="note('ed:uploaded')" (onImageUploadError)="note('ed:upload-error:' + $event.reason)"></wt-editor>
+      (onImageUpload)="note('ed:uploaded')" (onImageUploadError)="note('ed:upload-error:' + $event.reason)"></wu-editor>
     <pre id="ed-upload-value" class="pg-wrap">{{ editorUpload }}</pre>
-    <wt-editor id="ed-ro" [ngModel]="readonlyHtml" name="ro" [readonly]="true" toolbar="basic"></wt-editor>
-    <div id="ed-view" wtEditorContent [innerHTML]="viewHtml"></div>
+    <wu-editor id="ed-ro" [ngModel]="readonlyHtml" name="ro" [readonly]="true" toolbar="basic"></wu-editor>
+    <div id="ed-view" wuEditorContent [innerHTML]="viewHtml"></div>
   </section>
 
   <section id="parity" class="pg-gallery">
     <h2>Parity</h2>
     <div class="pg-row">
-      <wt-inputNumber id="pr-num" [(ngModel)]="prNumber" name="prNumber" styleClass="pr-num-root" inputStyleClass="pr-num-input"
+      <wu-inputNumber id="pr-num" [(ngModel)]="prNumber" name="prNumber" styleClass="pr-num-root" inputStyleClass="pr-num-input"
         [inputStyle]="{ 'text-align': 'right' }" [showClear]="true" [showButtons]="true" incrementButtonIcon="pr-inc"
-        decrementButtonIcon="pr-dec" (onClear)="note('pr:clear')" (onKeyDown)="note('pr:key')"></wt-inputNumber>
-      <wt-radioButton id="pr-radio" name="prRadio" value="a" [(ngModel)]="prRadio" styleClass="pr-radio"></wt-radioButton>
-      <wt-progressBar id="pr-bar" [value]="40" styleClass="pr-bar" [style]="{ height: '10px' }"></wt-progressBar>
-      <wt-selectButton id="pr-sb" [options]="prOptions" [(ngModel)]="prChoice" name="prChoice" optionLabel="label" optionValue="value" [unselectable]="true">
+        decrementButtonIcon="pr-dec" (onClear)="note('pr:clear')" (onKeyDown)="note('pr:key')"></wu-inputNumber>
+      <wu-radioButton id="pr-radio" name="prRadio" value="a" [(ngModel)]="prRadio" styleClass="pr-radio"></wu-radioButton>
+      <wu-progressBar id="pr-bar" [value]="40" styleClass="pr-bar" [style]="{ height: '10px' }"></wu-progressBar>
+      <wu-selectButton id="pr-sb" [options]="prOptions" [(ngModel)]="prChoice" name="prChoice" optionLabel="label" optionValue="value" [unselectable]="true">
         <ng-template let-o pTemplate="item"><span class="pr-sb-item">[{{ o.label }}]</span></ng-template>
-      </wt-selectButton>
+      </wu-selectButton>
       <textarea id="pr-ta" pInputTextarea rows="2"></textarea>
-      <input id="pr-kf" wtInputText pKeyFilter="pint" [(ngModel)]="prDigits" name="prDigits" />
+      <input id="pr-kf" wuInputText pKeyFilter="pint" [(ngModel)]="prDigits" name="prDigits" />
     </div>
-    <wt-card id="pr-card" styleClass="pr-card" [style]="{ maxWidth: '24rem' }">
+    <wu-card id="pr-card" styleClass="pr-card" [style]="{ maxWidth: '24rem' }">
       <ng-template pTemplate="header"><div class="pr-card-header">หัวการ์ด</div></ng-template>
       <ng-template pTemplate="title">ชื่อการ์ด</ng-template>
       <ng-template pTemplate="subtitle">รองชื่อ</ng-template>
       <ng-template pTemplate="content"><p class="pr-card-content">เนื้อหาจาก template</p></ng-template>
-      <wt-footer><span class="pr-card-footer">ท้ายการ์ด</span></wt-footer>
-    </wt-card>
-    <wt-accordion id="pr-acc" styleClass="pr-acc" [activeIndex]="0">
-      <wt-accordionTab>
+      <wu-footer><span class="pr-card-footer">ท้ายการ์ด</span></wu-footer>
+    </wu-card>
+    <wu-accordion id="pr-acc" styleClass="pr-acc" [activeIndex]="0">
+      <wu-accordionTab>
         <ng-template pTemplate="header"><b class="pr-acc-header">หัวข้อจาก template</b></ng-template>
         <p>เนื้อหาแท็บ</p>
-      </wt-accordionTab>
-    </wt-accordion>
-    <wt-tabView id="pr-tabs">
-      <wt-tabPanel><ng-template pTemplate="header"><i class="pr-tab-header">แท็บพิเศษ</i></ng-template>เนื้อหา</wt-tabPanel>
-      <wt-tabPanel header="ธรรมดา">สอง</wt-tabPanel>
-    </wt-tabView>
-    <wt-panel id="pr-panel" header="แผง">
+      </wu-accordionTab>
+    </wu-accordion>
+    <wu-tabView id="pr-tabs">
+      <wu-tabPanel><ng-template pTemplate="header"><i class="pr-tab-header">แท็บพิเศษ</i></ng-template>เนื้อหา</wu-tabPanel>
+      <wu-tabPanel header="ธรรมดา">สอง</wu-tabPanel>
+    </wu-tabView>
+    <wu-panel id="pr-panel" header="แผง">
       <ng-template pTemplate="icons"><span class="pr-panel-icon">★</span></ng-template>
       เนื้อหาแผง
       <ng-template pTemplate="footer"><span class="pr-panel-footer">ท้ายแผง</span></ng-template>
-    </wt-panel>
-    <wt-fieldset id="pr-fs" legend="ไม่ใช้">
+    </wu-panel>
+    <wu-fieldset id="pr-fs" legend="ไม่ใช้">
       <ng-template pTemplate="header"><span class="pr-fs-header">หัวกลุ่มจาก template</span></ng-template>
       เนื้อหา
-    </wt-fieldset>
-    <wt-toolbar id="pr-tb" styleClass="pr-tb">
+    </wu-fieldset>
+    <wu-toolbar id="pr-tb" styleClass="pr-tb">
       <ng-template pTemplate="start"><span class="pr-tb-start">ซ้าย</span></ng-template>
       <ng-template pTemplate="end"><span class="pr-tb-end">ขวา</span></ng-template>
-    </wt-toolbar>
+    </wu-toolbar>
     <div class="pg-row">
-      <wt-iconfield id="pr-if" iconPosition="right">
-        <wt-inputicon icon="pr-icon"></wt-inputicon>
-        <input wtInputText placeholder="ไอคอนขวา" />
-      </wt-iconfield>
+      <wu-iconfield id="pr-if" iconPosition="right">
+        <wu-inputicon icon="pr-icon"></wu-inputicon>
+        <input wuInputText placeholder="ไอคอนขวา" />
+      </wu-iconfield>
       <button type="button" id="pr-pop-open" (click)="prPop.toggle($event)">popover</button>
-      <wt-popover #prPop id="pr-pop">
+      <wu-popover #prPop id="pr-pop">
         <ng-template pTemplate="content" let-closeCallback="closeCallback">
           <span class="pr-pop-content">ในป๊อปโอเวอร์</span>
           <button type="button" id="pr-pop-close" (click)="closeCallback()">ปิด</button>
         </ng-template>
-      </wt-popover>
-      <wt-button id="pr-link" label="ลิงก์" [link]="true"></wt-button>
-      <wt-button id="pr-badge-btn" label="แจ้งเตือน" badge="5" badgeSeverity="danger"></wt-button>
+      </wu-popover>
+      <wu-button id="pr-link" label="ลิงก์" [link]="true"></wu-button>
+      <wu-button id="pr-badge-btn" label="แจ้งเตือน" badge="5" badgeSeverity="danger"></wu-button>
       <i id="pr-badge" class="pr-bell" pBadge value="7" severity="danger">กระดิ่ง</i>
       <div id="pr-ripple" pRipple class="pr-ripple">กดตรงนี้</div>
     </div>
-    <wt-message id="pr-msg" severity="info" text="ข้อความ <b>ตัวหนา</b>" [escape]="false"></wt-message>
-    <wt-autoComplete #prAc id="pr-ac" [(ngModel)]="prAcValue" name="prAc" [suggestions]="prAcItems" (completeMethod)="prAcItems = ['ก', 'ข']"></wt-autoComplete>
+    <wu-message id="pr-msg" severity="info" text="ข้อความ <b>ตัวหนา</b>" [escape]="false"></wu-message>
+    <wu-autoComplete #prAc id="pr-ac" [(ngModel)]="prAcValue" name="prAc" [suggestions]="prAcItems" (completeMethod)="prAcItems = ['ก', 'ข']"></wu-autoComplete>
     <button type="button" id="pr-ac-show" (click)="prAcItems = ['หนึ่ง', 'สอง']; prAc.show()">show</button>
   </section>
 
   <section id="stepper" class="pg-gallery">
     <h2>Stepper</h2>
-    <wt-stepper id="sp" [(value)]="stepValue" [linear]="true">
-      <wt-step-list>
-        <wt-step [value]="1">ข้อมูลพื้นฐาน</wt-step>
-        <wt-step [value]="2">ที่อยู่ปัจจุบันตามทะเบียนบ้าน</wt-step>
-        <wt-step [value]="3">ยืนยัน</wt-step>
-      </wt-step-list>
-      <wt-step-panels>
-        <wt-step-panel [value]="1">
+    <wu-stepper id="sp" [(value)]="stepValue" [linear]="true">
+      <wu-step-list>
+        <wu-step [value]="1">ข้อมูลพื้นฐาน</wu-step>
+        <wu-step [value]="2">ที่อยู่ปัจจุบันตามทะเบียนบ้าน</wu-step>
+        <wu-step [value]="3">ยืนยัน</wu-step>
+      </wu-step-list>
+      <wu-step-panels>
+        <wu-step-panel [value]="1">
           <ng-template #content let-activateCallback="activateCallback">
             <p class="sp-content">กรอกชื่อ</p>
             <button type="button" id="sp-next-1" (click)="activateCallback(2)">ถัดไป</button>
           </ng-template>
-        </wt-step-panel>
-        <wt-step-panel [value]="2">
+        </wu-step-panel>
+        <wu-step-panel [value]="2">
           <ng-template pTemplate="content" let-activateCallback="activateCallback">
             <p class="sp-content">กรอกที่อยู่</p>
             <button type="button" id="sp-back-2" (click)="activateCallback(1)">ย้อนกลับ</button>
             <button type="button" id="sp-next-2" (click)="activateCallback(3)">ถัดไป</button>
           </ng-template>
-        </wt-step-panel>
-        <wt-step-panel [value]="3"><p class="sp-content">ตรวจสอบข้อมูล</p></wt-step-panel>
-      </wt-step-panels>
-    </wt-stepper>
+        </wu-step-panel>
+        <wu-step-panel [value]="3"><p class="sp-content">ตรวจสอบข้อมูล</p></wu-step-panel>
+      </wu-step-panels>
+    </wu-stepper>
     <p>step: <code id="sp-value">{{ stepValue }}</code></p>
-    <wt-stepper id="sp-free" [value]="'a'">
-      <wt-step-list>
-        <wt-step [value]="'a'">หนึ่ง</wt-step>
-        <wt-step [value]="'b'" [disabled]="true">สอง</wt-step>
-        <wt-step [value]="'c'">สาม</wt-step>
-      </wt-step-list>
-    </wt-stepper>
-    <wt-stepper id="sp-v" [value]="1">
-      <wt-step-item [value]="1">
-        <wt-step>ขั้นที่หนึ่ง</wt-step>
-        <wt-step-panel><p class="spv-content">เนื้อหาขั้นที่หนึ่ง</p></wt-step-panel>
-      </wt-step-item>
-      <wt-step-item [value]="2">
-        <wt-step>ขั้นที่สอง</wt-step>
-        <wt-step-panel><p class="spv-content">เนื้อหาขั้นที่สอง</p></wt-step-panel>
-      </wt-step-item>
-    </wt-stepper>
+    <wu-stepper id="sp-free" [value]="'a'">
+      <wu-step-list>
+        <wu-step [value]="'a'">หนึ่ง</wu-step>
+        <wu-step [value]="'b'" [disabled]="true">สอง</wu-step>
+        <wu-step [value]="'c'">สาม</wu-step>
+      </wu-step-list>
+    </wu-stepper>
+    <wu-stepper id="sp-v" [value]="1">
+      <wu-step-item [value]="1">
+        <wu-step>ขั้นที่หนึ่ง</wu-step>
+        <wu-step-panel><p class="spv-content">เนื้อหาขั้นที่หนึ่ง</p></wu-step-panel>
+      </wu-step-item>
+      <wu-step-item [value]="2">
+        <wu-step>ขั้นที่สอง</wu-step>
+        <wu-step-panel><p class="spv-content">เนื้อหาขั้นที่สอง</p></wu-step-panel>
+      </wu-step-item>
+    </wu-stepper>
   </section>
 
   <section id="busy" class="pg-gallery">
-    <wt-progress-spinner id="spinner" style="width: 2rem; height: 2rem"></wt-progress-spinner>
-    <wt-progressbar mode="indeterminate" style="height: 6px"></wt-progressbar>
+    <wu-progress-spinner id="spinner" style="width: 2rem; height: 2rem"></wu-progress-spinner>
+    <wu-progressbar mode="indeterminate" style="height: 6px"></wu-progressbar>
   </section>
 
   <section id="more" class="pg-gallery">
     <h2>more components</h2>
     <div class="pg-row">
-      <wt-slider id="sl" [(ngModel)]="sliderValue" [min]="0" [max]="100" [step]="5" ariaLabel="ระดับเสียง" (onSlideEnd)="note('slide:' + sliderValue)" style="width: 16rem"></wt-slider>
+      <wu-slider id="sl" [(ngModel)]="sliderValue" [min]="0" [max]="100" [step]="5" ariaLabel="ระดับเสียง" (onSlideEnd)="note('slide:' + sliderValue)" style="width: 16rem"></wu-slider>
       <code id="sl-value">{{ sliderValue }}</code>
-      <wt-slider id="sl-range" [(ngModel)]="sliderRange" [range]="true" ariaLabel="ช่วงคะแนน" style="width: 16rem"></wt-slider>
+      <wu-slider id="sl-range" [(ngModel)]="sliderRange" [range]="true" ariaLabel="ช่วงคะแนน" style="width: 16rem"></wu-slider>
       <code id="sl-range-value">{{ sliderRange.join('-') }}</code>
     </div>
     <div class="pg-row">
-      <wt-splitButton id="spb" label="บันทึก" [model]="splitItems" (onClick)="note('split:main')"></wt-splitButton>
-      <wt-split-button id="spb-sev" label="ส่งออก" severity="secondary" [outlined]="true" size="small" [model]="splitItems"></wt-split-button>
+      <wu-splitButton id="spb" label="บันทึก" [model]="splitItems" (onClick)="note('split:main')"></wu-splitButton>
+      <wu-split-button id="spb-sev" label="ส่งออก" severity="secondary" [outlined]="true" size="small" [model]="splitItems"></wu-split-button>
     </div>
     <div class="pg-row">
-      <wt-listbox id="lb" [options]="rooms" optionLabel="name" optionDisabled="disabled" [(ngModel)]="room" [filter]="true" emptyMessage="ไม่พบห้อง" (onChange)="note('lb:' + (room?.name || ''))" style="width: 14rem"></wt-listbox>
-      <wt-listbox id="lb-multi" [options]="rooms" optionLabel="name" optionValue="code" optionDisabled="disabled" [(ngModel)]="roomCodes" [multiple]="true" [checkbox]="true" [striped]="true" style="width: 14rem"></wt-listbox>
+      <wu-listbox id="lb" [options]="rooms" optionLabel="name" optionDisabled="disabled" [(ngModel)]="room" [filter]="true" emptyMessage="ไม่พบห้อง" (onChange)="note('lb:' + (room?.name || ''))" style="width: 14rem"></wu-listbox>
+      <wu-listbox id="lb-multi" [options]="rooms" optionLabel="name" optionValue="code" optionDisabled="disabled" [(ngModel)]="roomCodes" [multiple]="true" [checkbox]="true" [striped]="true" style="width: 14rem"></wu-listbox>
       <code id="lb-multi-value">{{ roomCodes.join(',') }}</code>
     </div>
-    <wt-galleria id="gal" [value]="photos" [numVisible]="3" [showIndicators]="true" [showItemNavigators]="true" [circular]="true" [containerStyle]="{ maxWidth: '24rem' }" [(activeIndex)]="photoIndex">
-      <ng-template wtTemplate="item" let-item><div class="gal-item" [style.background]="item.color">{{ item.title }}</div></ng-template>
-      <ng-template wtTemplate="thumbnail" let-item><div class="gal-thumb" [style.background]="item.color">{{ item.title }}</div></ng-template>
-    </wt-galleria>
+    <wu-galleria id="gal" [value]="photos" [numVisible]="3" [showIndicators]="true" [showItemNavigators]="true" [circular]="true" [containerStyle]="{ maxWidth: '24rem' }" [(activeIndex)]="photoIndex">
+      <ng-template wuTemplate="item" let-item><div class="gal-item" [style.background]="item.color">{{ item.title }}</div></ng-template>
+      <ng-template wuTemplate="thumbnail" let-item><div class="gal-thumb" [style.background]="item.color">{{ item.title }}</div></ng-template>
+    </wu-galleria>
     <code id="gal-index">{{ photoIndex }}</code>
     <button id="gal-full-open" type="button" (click)="galleryFull = true">ดูเต็มจอ</button>
-    <wt-galleria id="gal-full" [value]="photos" [fullScreen]="true" [(visible)]="galleryFull" [showThumbnails]="false" [showItemNavigators]="true">
-      <ng-template wtTemplate="item" let-item><div class="gal-item" [style.background]="item.color">{{ item.title }}</div></ng-template>
-    </wt-galleria>
+    <wu-galleria id="gal-full" [value]="photos" [fullScreen]="true" [(visible)]="galleryFull" [showThumbnails]="false" [showItemNavigators]="true">
+      <ng-template wuTemplate="item" let-item><div class="gal-item" [style.background]="item.color">{{ item.title }}</div></ng-template>
+    </wu-galleria>
     <div class="pg-row">
-      <wt-colorPicker id="cp" [(ngModel)]="color"></wt-colorPicker>
+      <wu-colorPicker id="cp" [(ngModel)]="color"></wu-colorPicker>
       <code id="cp-value">{{ color }}</code>
-      <wt-colorPicker id="cp-inline" [(ngModel)]="colorRgb" format="rgb" [inline]="true"></wt-colorPicker>
+      <wu-colorPicker id="cp-inline" [(ngModel)]="colorRgb" format="rgb" [inline]="true"></wu-colorPicker>
       <code id="cp-rgb">{{ colorRgb.r }},{{ colorRgb.g }},{{ colorRgb.b }}</code>
     </div>
-    <wt-breadcrumb id="bc" [model]="crumbs" [home]="crumbHome"></wt-breadcrumb>
-    <wt-inplace id="ip" [closable]="true">
-      <ng-template wtTemplate="display"><span class="ip-display">แก้ไขชื่อ</span></ng-template>
-      <ng-template wtTemplate="content"><input wtInputText class="ip-input" value="สมชาย" /></ng-template>
-    </wt-inplace>
+    <wu-breadcrumb id="bc" [model]="crumbs" [home]="crumbHome"></wu-breadcrumb>
+    <wu-inplace id="ip" [closable]="true">
+      <ng-template wuTemplate="display"><span class="ip-display">แก้ไขชื่อ</span></ng-template>
+      <ng-template wuTemplate="content"><input wuInputText class="ip-input" value="สมชาย" /></ng-template>
+    </wu-inplace>
     <div #blockTarget id="bu-target" class="pg-card">เนื้อหาที่ถูกบัง <button id="bu-inner" type="button" (click)="note('bu:inner')">ปุ่มด้านใน</button></div>
-    <wt-blockUI id="bu" [blocked]="blocked" [target]="blockTarget"><span class="bu-msg">กำลังบันทึก</span></wt-blockUI>
+    <wu-blockUI id="bu" [blocked]="blocked" [target]="blockTarget"><span class="bu-msg">กำลังบันทึก</span></wu-blockUI>
     <button id="bu-toggle" type="button" (click)="blocked = !blocked">บัง/เลิกบัง</button>
-    <wt-blockUI id="bu-page" [blocked]="pageBlocked"><span class="bu-page-msg">กำลังบันทึก กรุณาอย่าปิดหน้าต่างนี้</span></wt-blockUI>
+    <wu-blockUI id="bu-page" [blocked]="pageBlocked"><span class="bu-page-msg">กำลังบันทึก กรุณาอย่าปิดหน้าต่างนี้</span></wu-blockUI>
     <button id="bu-page-toggle" type="button" (click)="blockPage()">บังทั้งหน้า</button>
-    <wt-scrollPanel id="scp" [style]="{ width: '100%', maxHeight: '6rem' }">
+    <wu-scrollPanel id="scp" [style]="{ width: '100%', maxHeight: '6rem' }">
       <p *ngFor="let n of numbers" class="scp-line">บรรทัด {{ n }}</p>
-    </wt-scrollPanel>
-    <wt-scroller id="scr" [items]="manyRows" [itemSize]="32" scrollHeight="160px">
-      <ng-template wtTemplate="item" let-item let-options="options"><div class="scr-row" [class.scr-odd]="options.odd">{{ item }}</div></ng-template>
-    </wt-scroller>
+    </wu-scrollPanel>
+    <wu-scroller id="scr" [items]="manyRows" [itemSize]="32" scrollHeight="160px">
+      <ng-template wuTemplate="item" let-item let-options="options"><div class="scr-row" [class.scr-odd]="options.odd">{{ item }}</div></ng-template>
+    </wu-scroller>
     <div class="pg-row">
       <button id="dr-open" type="button" (click)="drawerOpen = true">เปิดเมนู</button>
       <button id="sb-open" type="button" (click)="sidebarOpen = true">เปิดแชต</button>
     </div>
-    <wt-drawer id="dr" header="เมนู" position="right" [(visible)]="drawerOpen" (onHide)="note('drawer:hide')">
+    <wu-drawer id="dr" header="เมนู" position="right" [(visible)]="drawerOpen" (onHide)="note('drawer:hide')">
       <p class="dr-content">เนื้อหาในเมนู</p>
       <button id="dr-inner" type="button">ลิงก์</button>
-    </wt-drawer>
-    <wt-sidebar id="sb" [(visible)]="sidebarOpen" position="left" styleClass="sb-panel"><p class="sb-content">แชต</p></wt-sidebar>
+    </wu-drawer>
+    <wu-sidebar id="sb" [(visible)]="sidebarOpen" position="left" styleClass="sb-panel"><p class="sb-content">แชต</p></wu-sidebar>
     <div class="pg-row">
-      <wt-tieredMenu id="tim" [model]="tieredItems"></wt-tieredMenu>
+      <wu-tieredMenu id="tim" [model]="tieredItems"></wu-tieredMenu>
       <div id="cm-target" class="pg-card">คลิกขวาที่นี่</div>
-      <wt-contextMenu id="cm" [model]="tieredItems" target="cm-target"></wt-contextMenu>
+      <wu-contextMenu id="cm" [model]="tieredItems" target="cm-target"></wu-contextMenu>
     </div>
-    <wt-table id="tbl-ctx" [value]="rooms" [contextMenu]="ctxTable" [(contextMenuSelection)]="ctxRoom" [style]="{ maxWidth: '20rem' }">
+    <wu-table id="tbl-ctx" [value]="rooms" [contextMenu]="ctxTable" [(contextMenuSelection)]="ctxRoom" [style]="{ maxWidth: '20rem' }">
       <ng-template pTemplate="body" let-r let-i="rowIndex">
         <tr class="ctx-row" [pContextMenuRow]="r" [pContextMenuRowIndex]="i"><td>{{ r.name }}</td></tr>
       </ng-template>
-    </wt-table>
-    <wt-contextMenu #ctxTable [model]="ctxItems"></wt-contextMenu>
+    </wu-table>
+    <wu-contextMenu #ctxTable [model]="ctxItems"></wu-contextMenu>
     <code id="ctx-room">{{ ctxRoom?.name || '' }}</code>
     <div class="pg-row">
-      <wt-tree id="tr" [value]="treeNodes" selectionMode="checkbox" [(selection)]="treePicked" [filter]="true" style="width: 18rem"></wt-tree>
+      <wu-tree id="tr" [value]="treeNodes" selectionMode="checkbox" [(selection)]="treePicked" [filter]="true" style="width: 18rem"></wu-tree>
       <code id="tr-picked">{{ pickedKeys() }}</code>
-      <wt-treeSelect id="ts" [options]="treeNodes2" [(ngModel)]="treeNode" placeholder="— ประเด็นหลัก —" [filter]="true" [showClear]="true" style="width: 18rem"></wt-treeSelect>
+      <wu-treeSelect id="ts" [options]="treeNodes2" [(ngModel)]="treeNode" placeholder="— ประเด็นหลัก —" [filter]="true" [showClear]="true" style="width: 18rem"></wu-treeSelect>
       <code id="ts-value">{{ treeNode?.label || '' }}</code>
     </div>
     <div class="pg-row">
-      <div id="dd-src" class="pg-card" wtDraggable="cards" (onDragStart)="note('drag:start')">ลากฉัน</div>
+      <div id="dd-src" class="pg-card" wuDraggable="cards" (onDragStart)="note('drag:start')">ลากฉัน</div>
       <div id="dd-dst" class="pg-card" pDroppable="cards" (onDrop)="note('drop:cards')">วางที่นี่</div>
-      <div id="dd-other" class="pg-card" wtDroppable="other" (onDrop)="note('drop:other')">วางไม่ได้</div>
+      <div id="dd-other" class="pg-card" wuDroppable="other" (onDrop)="note('drop:other')">วางไม่ได้</div>
     </div>
   </section>
 
   <section id="ic-section" class="pg-gallery">
     <h2>image cropper</h2>
-    <wt-imagecropper
+    <wu-imagecropper
       id="ic"
       [imageBase64]="icImage"
       output="blob"
@@ -936,13 +936,13 @@
       (loadImageFailed)="note('ic:failed')"
       (imageCropped)="icCropped = $event"
       style="max-width: 24rem"
-    ></wt-imagecropper>
+    ></wu-imagecropper>
     <div class="pg-row">
       <code id="ic-size">{{ icCropped ? icCropped.width + 'x' + icCropped.height : '' }}</code>
       <code id="ic-type">{{ icCropped?.blob?.type || '' }}</code>
       <code id="ic-x1">{{ icBox ? icBox.x1 : '' }}</code>
     </div>
-    <wt-imageCropper
+    <wu-imageCropper
       id="ic-ratio"
       [imageFile]="icFile"
       [maintainAspectRatio]="true"
@@ -951,22 +951,22 @@
       [(cropper)]="icRatioBox"
       (imageCropped)="icRatioSize = $event.width + 'x' + $event.height"
       style="max-width: 24rem"
-    ></wt-imageCropper>
+    ></wu-imageCropper>
     <div class="pg-row">
       <code id="ic-ratio-size">{{ icRatioSize }}</code>
       <code id="ic-ratio-box">{{ icRatioBox ? (icRatioBox.x2 - icRatioBox.x1) + 'x' + (icRatioBox.y2 - icRatioBox.y1) : '' }}</code>
       <code id="ic-ratio-x1">{{ icRatioBox ? icRatioBox.x1 : '' }}</code>
     </div>
-    <wt-image-cropper
+    <wu-image-cropper
       id="ic-free"
       [imageURL]="icImage"
       [maintainAspectRatio]="false"
       (imageCropped)="icFreeSize = $event.width + 'x' + $event.height"
       (transformChange)="note('ic-free:rotate:' + $event.rotate); note('ic-free:flip:' + $event.flipH)"
       style="max-width: 24rem"
-    ></wt-image-cropper>
+    ></wu-image-cropper>
     <code id="ic-free-size">{{ icFreeSize }}</code>
-    <wt-imagecropper
+    <wu-imagecropper
       id="ic-tools"
       [imageBase64]="icImage"
       output="base64"
@@ -974,79 +974,79 @@
       (imageCropped)="icToolsKind = $event.base64 ? 'base64' : 'blob'"
       style="max-width: 24rem"
     >
-      <ng-template wtTemplate="tools" let-cropper>
+      <ng-template wuTemplate="tools" let-cropper>
         <button id="ic-tools-own" type="button" (click)="cropper.rotateLeft(); note('ic-tools:own')">หมุนซ้าย</button>
       </ng-template>
-    </wt-imagecropper>
+    </wu-imagecropper>
     <code id="ic-tools-kind">{{ icToolsKind }}</code>
-    <wt-imagecropper id="ic-none" [imageBase64]="icImage" toolbar="none" style="max-width: 24rem"></wt-imagecropper>
+    <wu-imagecropper id="ic-none" [imageBase64]="icImage" toolbar="none" style="max-width: 24rem"></wu-imagecropper>
   </section>
 
   <section id="term-section" class="pg-gallery">
     <h2>terminal</h2>
-    <wt-terminal id="term" welcomeMessage="ยินดีต้อนรับสู่ระบบวิระ" prompt="วิระ $" [style]="{ height: '12rem' }"></wt-terminal>
+    <wu-terminal id="term" welcomeMessage="ยินดีต้อนรับสู่ระบบวิระ" prompt="วิระ $" [style]="{ height: '12rem' }"></wu-terminal>
   </section>
 
   <section id="icmp-section" class="pg-gallery">
     <h2>image compare</h2>
-    <wt-imageCompare id="icmp" [(value)]="icmpValue" ariaLabel="เทียบภาพก่อนและหลัง" style="max-width: 24rem">
-      <ng-template wtTemplate="left"><div id="icmp-left" class="icmp-pic" style="background: #10b981; display: grid; place-items: center">ก่อน</div></ng-template>
-      <ng-template wtTemplate="right"><div id="icmp-right" class="icmp-pic" style="background: #6366f1; display: grid; place-items: center">หลัง</div></ng-template>
-    </wt-imageCompare>
+    <wu-imageCompare id="icmp" [(value)]="icmpValue" ariaLabel="เทียบภาพก่อนและหลัง" style="max-width: 24rem">
+      <ng-template wuTemplate="left"><div id="icmp-left" class="icmp-pic" style="background: #10b981; display: grid; place-items: center">ก่อน</div></ng-template>
+      <ng-template wuTemplate="right"><div id="icmp-right" class="icmp-pic" style="background: #6366f1; display: grid; place-items: center">หลัง</div></ng-template>
+    </wu-imageCompare>
     <code id="icmp-value">{{ icmpValue }}</code>
-    <wt-image-compare id="icmp-refs" style="max-width: 16rem">
+    <wu-image-compare id="icmp-refs" style="max-width: 16rem">
       <ng-template #left><div class="icmp-pic" style="background: #f59e0b"></div></ng-template>
       <ng-template #right><div class="icmp-pic" style="background: #e11d48"></div></ng-template>
-    </wt-image-compare>
+    </wu-image-compare>
   </section>
 
   <section id="crs-section" class="pg-gallery">
     <h2>carousel</h2>
-    <wt-carousel id="crs" [value]="crsItems" [numVisible]="3" [numScroll]="1" [responsiveOptions]="crsResponsive" [(page)]="crsPage" (onPage)="note('crs:page:' + $event.page)">
-      <ng-template wtTemplate="header"><p class="crs-header" style="margin: 0">ข่าวประชาสัมพันธ์</p></ng-template>
-      <ng-template wtTemplate="item" let-item>
+    <wu-carousel id="crs" [value]="crsItems" [numVisible]="3" [numScroll]="1" [responsiveOptions]="crsResponsive" [(page)]="crsPage" (onPage)="note('crs:page:' + $event.page)">
+      <ng-template wuTemplate="header"><p class="crs-header" style="margin: 0">ข่าวประชาสัมพันธ์</p></ng-template>
+      <ng-template wuTemplate="item" let-item>
         <div class="crs-card" style="margin: 0 0.25rem; padding: 1rem; border-radius: 6px" [style.background]="item.color">
           <span class="crs-title">{{ item.title }}</span>
           <button type="button" class="crs-read" (click)="note('crs:read:' + item.title)">อ่าน</button>
         </div>
       </ng-template>
-    </wt-carousel>
+    </wu-carousel>
     <div class="pg-row">
       <code id="crs-page">{{ crsPage }}</code>
       <button id="crs-first" type="button" (click)="crsPage = 0">หน้าแรกของข่าว</button>
     </div>
-    <wt-carousel id="crs-circ" [value]="crsItems" [numVisible]="2" [numScroll]="2" [circular]="true">
-      <ng-template wtTemplate="item" let-item><div class="crs-card" style="padding: 1rem" [style.background]="item.color">{{ item.title }}</div></ng-template>
-      <wt-footer><span class="crs-foot">ท้ายรายการ</span></wt-footer>
-    </wt-carousel>
-    <wt-carousel id="crs-vert" [value]="crsItems" orientation="vertical" verticalViewPortHeight="160px" [autoplayInterval]="crsAutoplay" style="max-width: 20rem">
-      <ng-template wtTemplate="item" let-item><div class="crs-card" style="height: 100%; box-sizing: border-box; padding: 1rem" [style.background]="item.color">{{ item.title }}</div></ng-template>
-    </wt-carousel>
+    <wu-carousel id="crs-circ" [value]="crsItems" [numVisible]="2" [numScroll]="2" [circular]="true">
+      <ng-template wuTemplate="item" let-item><div class="crs-card" style="padding: 1rem" [style.background]="item.color">{{ item.title }}</div></ng-template>
+      <wu-footer><span class="crs-foot">ท้ายรายการ</span></wu-footer>
+    </wu-carousel>
+    <wu-carousel id="crs-vert" [value]="crsItems" orientation="vertical" verticalViewPortHeight="160px" [autoplayInterval]="crsAutoplay" style="max-width: 20rem">
+      <ng-template wuTemplate="item" let-item><div class="crs-card" style="height: 100%; box-sizing: border-box; padding: 1rem" [style.background]="item.color">{{ item.title }}</div></ng-template>
+    </wu-carousel>
     <button id="crs-play" type="button" (click)="crsAutoplay = 400">เล่นอัตโนมัติ</button>
   </section>
 
   <section id="spl-section" class="pg-gallery">
     <h2>splitter</h2>
-    <wt-splitter id="spl" [panelSizes]="[30, 70]" [minSizes]="[10, 20]" [step]="50" [style]="{ height: '8rem' }" (onResizeStart)="note('spl:start')" (onResizeEnd)="splSizes = $event.sizes; note('spl:end')">
-      <ng-template wtTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">ซ้าย</div></ng-template>
-      <ng-template wtTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">ขวา</div></ng-template>
-    </wt-splitter>
+    <wu-splitter id="spl" [panelSizes]="[30, 70]" [minSizes]="[10, 20]" [step]="50" [style]="{ height: '8rem' }" (onResizeStart)="note('spl:start')" (onResizeEnd)="splSizes = $event.sizes; note('spl:end')">
+      <ng-template wuTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">ซ้าย</div></ng-template>
+      <ng-template wuTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">ขวา</div></ng-template>
+    </wu-splitter>
     <code id="spl-sizes">{{ splSizes.join(',') }}</code>
-    <wt-splitter id="spl-nested" stateKey="wt-e2e-splitter" stateStorage="local" [(panelSizes)]="splNestedSizes" [style]="{ height: '12rem' }">
-      <wt-splitter-panel [size]="40"><div class="spl-pane" style="padding: 0.5rem">เมนู</div></wt-splitter-panel>
-      <wt-splitter-panel>
-        <wt-splitter id="spl-inner" layout="vertical" [panelSizes]="[50, 50]">
+    <wu-splitter id="spl-nested" stateKey="wu-e2e-splitter" stateStorage="local" [(panelSizes)]="splNestedSizes" [style]="{ height: '12rem' }">
+      <wu-splitter-panel [size]="40"><div class="spl-pane" style="padding: 0.5rem">เมนู</div></wu-splitter-panel>
+      <wu-splitter-panel>
+        <wu-splitter id="spl-inner" layout="vertical" [panelSizes]="[50, 50]">
           <ng-template pTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">บน</div></ng-template>
           <ng-template pTemplate="panel"><div class="spl-pane" style="padding: 0.5rem">ล่าง</div></ng-template>
-        </wt-splitter>
-      </wt-splitter-panel>
-    </wt-splitter>
+        </wu-splitter>
+      </wu-splitter-panel>
+    </wu-splitter>
     <code id="spl-nested-sizes">{{ splNestedSizes.join(',') }}</code>
   </section>
 
   <section id="oc-section" class="pg-gallery">
     <h2>organization chart</h2>
-    <wt-organizationChart
+    <wu-organizationChart
       id="oc"
       [value]="ocData"
       selectionMode="single"
@@ -1057,41 +1057,41 @@
       (onNodeExpand)="note('oc:expand:' + $event.node.label)"
       (onNodeCollapse)="note('oc:collapse:' + $event.node.label)"
     >
-      <ng-template wtTemplate="person" let-node>
+      <ng-template wuTemplate="person" let-node>
         <div class="oc-person" style="display: flex; flex-direction: column"><strong>{{ node.data.name }}</strong><span>{{ node.data.title }}</span></div>
       </ng-template>
-    </wt-organizationChart>
+    </wu-organizationChart>
     <code id="oc-picked">{{ ocPicked?.label || '' }}</code>
-    <wt-organization-chart id="oc-multi" [value]="ocData2" selectionMode="multiple" [(selection)]="ocMany"></wt-organization-chart>
+    <wu-organization-chart id="oc-multi" [value]="ocData2" selectionMode="multiple" [(selection)]="ocMany"></wu-organization-chart>
     <code id="oc-many">{{ ocManyLabels() }}</code>
   </section>
 
   <section id="kn-section" class="pg-gallery">
     <h2>knob</h2>
     <div class="pg-row">
-      <wt-knob id="kn" [(ngModel)]="knobValue" [min]="0" [max]="100" [step]="5" valueTemplate="{value}%" ariaLabel="ระดับเสียง" (onChange)="note('kn:' + $event)"></wt-knob>
+      <wu-knob id="kn" [(ngModel)]="knobValue" [min]="0" [max]="100" [step]="5" valueTemplate="{value}%" ariaLabel="ระดับเสียง" (onChange)="note('kn:' + $event)"></wu-knob>
       <code id="kn-value">{{ knobValue }}</code>
-      <wt-knob id="kn-ro" [(ngModel)]="knobValue2" [readonly]="true" [size]="80" valueColor="#e11d48" rangeColor="#fde68a" textColor="#e11d48" ariaLabel="อ่านอย่างเดียว"></wt-knob>
-      <wt-knob id="kn-dis" [disabled]="true" [showValue]="false" ariaLabel="ปิดใช้งาน"></wt-knob>
-      <form [formGroup]="knobForm"><wt-knob id="kn-rf" formControlName="level" [min]="-50" [max]="50" ariaLabel="ระดับ"></wt-knob></form>
+      <wu-knob id="kn-ro" [(ngModel)]="knobValue2" [readonly]="true" [size]="80" valueColor="#e11d48" rangeColor="#fde68a" textColor="#e11d48" ariaLabel="อ่านอย่างเดียว"></wu-knob>
+      <wu-knob id="kn-dis" [disabled]="true" [showValue]="false" ariaLabel="ปิดใช้งาน"></wu-knob>
+      <form [formGroup]="knobForm"><wu-knob id="kn-rf" formControlName="level" [min]="-50" [max]="50" ariaLabel="ระดับ"></wu-knob></form>
       <code id="kn-rf-value">{{ knobForm.value.level }}</code>
     </div>
   </section>
 
   <section id="otp-section" class="pg-gallery">
     <h2>input otp</h2>
-    <wt-inputOtp id="otp" [(ngModel)]="otpCode" [length]="6" [integerOnly]="true" (onChange)="note('otp:' + $event.value)" (onBlur)="note('otp:blur')"></wt-inputOtp>
+    <wu-inputOtp id="otp" [(ngModel)]="otpCode" [length]="6" [integerOnly]="true" (onChange)="note('otp:' + $event.value)" (onBlur)="note('otp:blur')"></wu-inputOtp>
     <code id="otp-value">{{ otpCode }}</code>
-    <wt-input-otp id="otp-mask" [(ngModel)]="otpSecret" [mask]="true" size="small" variant="filled"></wt-input-otp>
+    <wu-input-otp id="otp-mask" [(ngModel)]="otpSecret" [mask]="true" size="small" variant="filled"></wu-input-otp>
     <code id="otp-secret">{{ otpSecret }}</code>
-    <wt-inputotp id="otp-custom" [(ngModel)]="otpCustom">
-      <ng-template wtTemplate="input" let-token let-events="events" let-index="index">
+    <wu-inputotp id="otp-custom" [(ngModel)]="otpCustom">
+      <ng-template wuTemplate="input" let-token let-events="events" let-index="index">
         <input class="otp-own" type="text" maxlength="1" style="width: 2rem; min-height: 2rem; text-align: center" [value]="token" (input)="events.input($event)" (keydown)="events.keydown($event)" (paste)="events.paste($event)" (focus)="events.focus($event)" (blur)="events.blur($event)" />
         <span *ngIf="index === 2" class="otp-dash">-</span>
       </ng-template>
-    </wt-inputotp>
+    </wu-inputotp>
     <code id="otp-custom-value">{{ otpCustom }}</code>
-    <wt-inputOtp id="otp-ro" [ngModel]="'1234'" [readonly]="true"></wt-inputOtp>
+    <wu-inputOtp id="otp-ro" [ngModel]="'1234'" [readonly]="true"></wu-inputOtp>
   </section>
 
   <section id="flow-section" class="pg-gallery">
@@ -1105,11 +1105,11 @@
       <code id="flow-sel">{{ flowSel }}</code>
       <code id="flow-svg">{{ flowSvgSize }}</code>
     </div>
-    <wt-flow
+    <wu-flow
       id="flow"
       #flow
-      wtFlowHistory
-      #flowHistory="wtFlowHistory"
+      wuFlowHistory
+      #flowHistory="wuFlowHistory"
       style="height: 26rem"
       ariaLabel="ขั้นตอนอนุมัติ"
       [(nodes)]="flowNodes"
@@ -1124,32 +1124,32 @@
       (selectionChange)="flowSel = flowSelection($event)"
       (init)="note('flow:init')"
     >
-      <ng-template wtFlowNode="person" let-node>
-        <div class="wt-flow-node-box flow-person">
-          <wt-flow-handle type="target" position="left"></wt-flow-handle>
+      <ng-template wuFlowNode="person" let-node>
+        <div class="wu-flow-node-box flow-person">
+          <wu-flow-handle type="target" position="left"></wu-flow-handle>
           <strong>{{ node.data.name }}</strong>
           <div class="flow-person-role">{{ node.data.role }}</div>
-          <wt-flow-handle type="source" position="right" id="out"></wt-flow-handle>
-          <wt-flow-node-toolbar>
+          <wu-flow-handle type="source" position="right" id="out"></wu-flow-handle>
+          <wu-flow-node-toolbar>
             <button type="button" id="flow-toolbar-edit" (click)="note('flow:toolbar:' + node.id)">แก้ไข</button>
-          </wt-flow-node-toolbar>
-          <wt-flow-node-resizer [minWidth]="120" [minHeight]="56"></wt-flow-node-resizer>
+          </wu-flow-node-toolbar>
+          <wu-flow-node-resizer [minWidth]="120" [minHeight]="56"></wu-flow-node-resizer>
         </div>
       </ng-template>
-      <wt-flow-background variant="dots" [gap]="20"></wt-flow-background>
-      <wt-flow-controls position="bottom-left"></wt-flow-controls>
-      <wt-flow-minimap position="bottom-right" [width]="160" [height]="110"></wt-flow-minimap>
-      <wt-flow-panel position="top-right">
+      <wu-flow-background variant="dots" [gap]="20"></wu-flow-background>
+      <wu-flow-controls position="bottom-left"></wu-flow-controls>
+      <wu-flow-minimap position="bottom-right" [width]="160" [height]="110"></wu-flow-minimap>
+      <wu-flow-panel position="top-right">
         <button type="button" id="flow-undo" [disabled]="!flowHistory.canUndo" (click)="flowHistory.undo()">เลิกทำ</button>
         <button type="button" id="flow-redo" [disabled]="!flowHistory.canRedo" (click)="flowHistory.redo()">ทำซ้ำ</button>
         <button type="button" id="flow-layout" (click)="flow.layout({ direction: 'LR' })">จัดเรียง</button>
         <button type="button" id="flow-export" (click)="flowSvgSize = flow.toSvg().length">SVG</button>
         <button type="button" id="flow-json" (click)="flowRoundTrip(flow)">JSON</button>
-      </wt-flow-panel>
-    </wt-flow>
+      </wu-flow-panel>
+    </wu-flow>
 
     <!-- Controlled mode: the flow only reports changes; the page applies them. -->
-    <wt-flow
+    <wu-flow
       id="flow-controlled"
       style="height: 14rem"
       [nodes]="flowCtlNodes"
@@ -1160,65 +1160,65 @@
       (nodeChanges)="flowCtlNodes = applyFlowNodeChanges($event, flowCtlNodes)"
       (edgeChanges)="flowCtlEdges = applyFlowEdgeChanges($event, flowCtlEdges)"
     >
-      <wt-flow-background variant="lines" [gap]="24"></wt-flow-background>
-    </wt-flow>
+      <wu-flow-background variant="lines" [gap]="24"></wu-flow-background>
+    </wu-flow>
     <code id="flow-ctl">{{ flowCtlText() }}</code>
   </section>
 
   <section id="tweaks" class="pg-gallery">
     <h2>tweaks</h2>
-    <wt-stepper id="spm" [model]="stepModel" [(activeIndex)]="stepModelIndex" labelPosition="bottom"></wt-stepper>
+    <wu-stepper id="spm" [model]="stepModel" [(activeIndex)]="stepModelIndex" labelPosition="bottom"></wu-stepper>
     <code id="spm-index">{{ stepModelIndex }}</code>
-    <wt-stepper id="spm-ro" [model]="stepModel" [activeIndex]="1" [readonly]="true"></wt-stepper>
-    <wt-accordion id="acc-gap" [gap]="true">
-      <wt-accordion-tab header="หนึ่ง"><p>ก</p></wt-accordion-tab>
-      <wt-accordion-tab header="สอง"><p>ข</p></wt-accordion-tab>
-    </wt-accordion>
-    <wt-progressbar id="pb-anim" [value]="50" [animated]="true" [showValue]="false" style="height: 10px"></wt-progressbar>
-    <wt-progressbar id="pb-shimmer" [value]="70" [shimmer]="true"></wt-progressbar>
+    <wu-stepper id="spm-ro" [model]="stepModel" [activeIndex]="1" [readonly]="true"></wu-stepper>
+    <wu-accordion id="acc-gap" [gap]="true">
+      <wu-accordion-tab header="หนึ่ง"><p>ก</p></wu-accordion-tab>
+      <wu-accordion-tab header="สอง"><p>ข</p></wu-accordion-tab>
+    </wu-accordion>
+    <wu-progressbar id="pb-anim" [value]="50" [animated]="true" [showValue]="false" style="height: 10px"></wu-progressbar>
+    <wu-progressbar id="pb-shimmer" [value]="70" [shimmer]="true"></wu-progressbar>
     <div class="pg-row">
-      <wt-progress-spinner id="sp-multi" [multicolor]="true" size="2.5rem"></wt-progress-spinner>
-      <wt-progress-spinner id="sp-own" [colors]="['#e8668e', '#3b6fd8']" size="2rem"></wt-progress-spinner>
-      <wt-progress-spinner id="sp-right" label="กำลังบันทึก" labelPosition="right" size="1.25rem"></wt-progress-spinner>
+      <wu-progress-spinner id="sp-multi" [multicolor]="true" size="2.5rem"></wu-progress-spinner>
+      <wu-progress-spinner id="sp-own" [colors]="['#e8668e', '#3b6fd8']" size="2rem"></wu-progress-spinner>
+      <wu-progress-spinner id="sp-right" label="กำลังบันทึก" labelPosition="right" size="1.25rem"></wu-progress-spinner>
     </div>
     <div id="sp-box" style="max-width: 20rem; border: 1px dashed currentColor">
-      <wt-progress-spinner id="sp-label" label="กำลังโหลดข้อมูล…" size="2.5rem"></wt-progress-spinner>
+      <wu-progress-spinner id="sp-label" label="กำลังโหลดข้อมูล…" size="2.5rem"></wu-progress-spinner>
     </div>
-    <wt-progress-spinner id="sp-tpl" size="2rem"><ng-template wtTemplate="label"><b id="sp-tpl-text">อีกนิดเดียว</b></ng-template></wt-progress-spinner>
-    <wt-metergroup id="mg-rev" [value]="meterParts" orientation="vertical" [reverse]="true" style="height: 8rem"></wt-metergroup>
-    <wt-tabs id="tabs-model" [model]="tabPages" [(activeItem)]="tabModelPage" ariaLabel="หน้า"></wt-tabs>
+    <wu-progress-spinner id="sp-tpl" size="2rem"><ng-template wuTemplate="label"><b id="sp-tpl-text">อีกนิดเดียว</b></ng-template></wu-progress-spinner>
+    <wu-metergroup id="mg-rev" [value]="meterParts" orientation="vertical" [reverse]="true" style="height: 8rem"></wu-metergroup>
+    <wu-tabs id="tabs-model" [model]="tabPages" [(activeItem)]="tabModelPage" ariaLabel="หน้า"></wu-tabs>
     <code id="tabs-model-page">{{ tabModelPage?.label }}</code>
-    <wt-multiselect id="ms-more" [options]="rooms" optionLabel="name" optionValue="code" [(ngModel)]="msMore" display="chip" ariaLabel="ห้อง" [style]="{ width: '11rem' }"></wt-multiselect>
+    <wu-multiselect id="ms-more" [options]="rooms" optionLabel="name" optionValue="code" [(ngModel)]="msMore" display="chip" ariaLabel="ห้อง" [style]="{ width: '11rem' }"></wu-multiselect>
   </section>
 
   <section id="nv" class="pg-gallery">
     <h2>navbar</h2>
-    <wt-navbar id="nv-glass" variant="glass" breakpoint="600px" ariaLabel="เมนูเว็บไซต์" menuIcon="nv-icon-open" closeIcon="nv-icon-close" [model]="navShort">
-      <ng-template wtTemplate="start"><span class="nv-glass-brand">เว็บไซต์</span></ng-template>
-      <a wtNavbarLinks id="nv-proj-link" class="wt-navbar-link" href="#nv">ติดต่อ</a>
-      <ng-template wtTemplate="end"><span class="nv-glass-end">TH</span></ng-template>
-    </wt-navbar>
-    <wt-navbar id="nv-clear" variant="transparent" [model]="navShort">
-      <span wtNavbarBrand>โปร่งใส</span>
-    </wt-navbar>
-    <wt-navbar id="nv-main" [model]="navLinks" [activeItem]="navActive" [sticky]="true" (onMenuToggle)="note('nv:menu:' + $event)">
-      <a wtNavbarBrand id="nv-brand" href="#nv">วิระ</a>
-      <button wtNavbarEnd id="nv-login" type="button" (click)="note('nv:login')">เข้าสู่ระบบ</button>
-    </wt-navbar>
+    <wu-navbar id="nv-glass" variant="glass" breakpoint="600px" ariaLabel="เมนูเว็บไซต์" menuIcon="nv-icon-open" closeIcon="nv-icon-close" [model]="navShort">
+      <ng-template wuTemplate="start"><span class="nv-glass-brand">เว็บไซต์</span></ng-template>
+      <a wuNavbarLinks id="nv-proj-link" class="wu-navbar-link" href="#nv">ติดต่อ</a>
+      <ng-template wuTemplate="end"><span class="nv-glass-end">TH</span></ng-template>
+    </wu-navbar>
+    <wu-navbar id="nv-clear" variant="transparent" [model]="navShort">
+      <span wuNavbarBrand>โปร่งใส</span>
+    </wu-navbar>
+    <wu-navbar id="nv-main" [model]="navLinks" [activeItem]="navActive" [sticky]="true" (onMenuToggle)="note('nv:menu:' + $event)">
+      <a wuNavbarBrand id="nv-brand" href="#nv">วิระ</a>
+      <button wuNavbarEnd id="nv-login" type="button" (click)="note('nv:login')">เข้าสู่ระบบ</button>
+    </wu-navbar>
     <div id="nv-content" class="pg-card" style="height: 60rem">เนื้อหาใต้แถบนำทาง</div>
   </section>
 
   <section id="am" class="pg-gallery">
     <h2>aside menu</h2>
-    <wt-navbar id="am-bar" [aside]="amSide" [model]="amBarLinks">
-      <a wtNavbarBrand id="am-brand" href="#am">ระบบโรงเรียน</a>
-    </wt-navbar>
+    <wu-navbar id="am-bar" [aside]="amSide" [model]="amBarLinks">
+      <a wuNavbarBrand id="am-brand" href="#am">ระบบโรงเรียน</a>
+    </wu-navbar>
     <div class="pg-row">
       <button id="am-open" type="button" (click)="amSide.open()">เปิดเมนูด้านข้าง</button>
       <code id="am-collapsed">{{ amCollapsed }}</code>
     </div>
     <div id="am-layout" style="display: flex; align-items: flex-start; min-width: 0">
-      <wt-aside-menu
+      <wu-aside-menu
         #amSide
         id="am-side"
         [model]="amItems"
@@ -1228,18 +1228,18 @@
         [showCollapseButton]="true"
         (visibleChange)="note('am:visible:' + $event)"
       >
-        <ng-template wtTemplate="start" let-collapsed><span class="am-brand">{{ collapsed ? 'ว' : 'โรงเรียนวิระ' }}</span></ng-template>
-        <button wtAsideMenuEnd id="am-logout" type="button" (click)="note('am:logout')">ออกจากระบบ</button>
-      </wt-aside-menu>
+        <ng-template wuTemplate="start" let-collapsed><span class="am-brand">{{ collapsed ? 'ว' : 'โรงเรียนวิระ' }}</span></ng-template>
+        <button wuAsideMenuEnd id="am-logout" type="button" (click)="note('am:logout')">ออกจากระบบ</button>
+      </wu-aside-menu>
       <div id="am-content" class="pg-card" style="flex: 1 1 auto; min-width: 0; height: 40rem">เนื้อหาของหน้า</div>
     </div>
     <div style="display: flex; align-items: flex-start">
-      <wt-aside-menu id="am-sections" [model]="amSectionItems" [sections]="true" [multiple]="false" ariaLabel="เมนูแบบหัวข้อ" style="height: 28rem"></wt-aside-menu>
+      <wu-aside-menu id="am-sections" [model]="amSectionItems" [sections]="true" [multiple]="false" ariaLabel="เมนูแบบหัวข้อ" style="height: 28rem"></wu-aside-menu>
     </div>
   </section>
 
   <section id="utils" class="pg-gallery">
-    <h2>wiratheme/utils</h2>
+    <h2>wiraui/utils</h2>
     <div id="utils-grid" class="grid">
       <div id="utils-col-a" class="col-12 md:col-6"><div id="utils-card" class="surface-card border-round shadow-2 p-3">col-12 md:col-6</div></div>
       <div id="utils-col-b" class="col-12 md:col-6"><div class="surface-card border-round p-3">col-12 md:col-6</div></div>
@@ -1252,11 +1252,11 @@
 
   <section id="i18n" class="pg-gallery">
     <h2>i18n</h2>
-    <wt-language-switch id="ls-buttons"></wt-language-switch>
-    <wt-language-switch id="ls-select" variant="select"></wt-language-switch>
+    <wu-language-switch id="ls-buttons"></wu-language-switch>
+    <wu-language-switch id="ls-select" variant="select"></wu-language-switch>
     <p id="i18n-text">{{ 'บันทึก' | t }}</p>
     <p id="i18n-params">{{ 'สวัสดี {name}' | t: { name: 'วิระ' } }}</p>
-    <p id="i18n-key">{{ 'menu.home' | wtTranslate }}</p>
+    <p id="i18n-key">{{ 'menu.home' | wuTranslate }}</p>
     <code id="i18n-lang">{{ i18n.language }}</code>
   </section>
 </main>

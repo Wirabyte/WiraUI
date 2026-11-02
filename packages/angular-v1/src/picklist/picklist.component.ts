@@ -1,19 +1,19 @@
 import { NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ɵWtPickListBase } from './picklist.base';
+import { ɵWuPickListBase } from './picklist.base';
 
 /**
- * Two lists to move items between: `<wt-picklist [source]="available" [target]="chosen" sourceHeader="ทั้งหมด"
- * targetHeader="ที่เลือก" filterBy="name" [dragdrop]="true">` with the app's `item` template. `wt-pickList` is the same.
+ * Two lists to move items between: `<wu-picklist [source]="available" [target]="chosen" sourceHeader="ทั้งหมด"
+ * targetHeader="ที่เลือก" filterBy="name" [dragdrop]="true">` with the app's `item` template. `wu-pickList` is the same.
  */
 @Component({
-  selector: 'wt-picklist, wt-pickList, wt-pick-list',
+  selector: 'wu-picklist, wu-pickList, wu-pick-list',
   standalone: true,
-  exportAs: 'wtPickList',
+  exportAs: 'wuPickList',
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './picklist.component.html',
   styleUrls: ['./picklist.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtPickList extends ɵWtPickListBase {}
+export class WuPickList extends ɵWuPickListBase {}

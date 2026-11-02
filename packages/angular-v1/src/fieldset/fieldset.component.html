@@ -1,9 +1,9 @@
 <fieldset [class]="classes" [style]="rootStyle">
-  <legend class="wt-fieldset-legend p-fieldset-legend">
+  <legend class="wu-fieldset-legend p-fieldset-legend">
     <button
       *ngIf="toggleable; else plainLegend"
       type="button"
-      class="wt-fieldset-toggle"
+      class="wu-fieldset-toggle"
       [attr.aria-expanded]="!isCollapsed"
       [attr.aria-controls]="contentId"
       (click)="toggle()"
@@ -13,12 +13,12 @@
       <span class="p-fieldset-legend-text"><ng-container *ngIf="headerTemplate; else legendText"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container></span>
     </button>
     <ng-template #plainLegend>
-      <span class="wt-fieldset-legend-label p-fieldset-legend-text"><ng-container *ngIf="headerTemplate; else legendText"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container></span>
+      <span class="wu-fieldset-legend-label p-fieldset-legend-text"><ng-container *ngIf="headerTemplate; else legendText"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container></span>
     </ng-template>
   </legend>
-  <div class="wt-fieldset-content-container p-toggleable-content" [id]="contentId" [attr.inert]="isCollapsed ? '' : null">
-    <div class="wt-fieldset-content-inner">
-      <div class="wt-fieldset-content p-fieldset-content"><ng-content></ng-content></div>
+  <div class="wu-fieldset-content-container p-toggleable-content" [id]="contentId" [attr.inert]="isCollapsed ? '' : null">
+    <div class="wu-fieldset-content-inner">
+      <div class="wu-fieldset-content p-fieldset-content"><ng-content></ng-content></div>
     </div>
   </div>
 </fieldset>

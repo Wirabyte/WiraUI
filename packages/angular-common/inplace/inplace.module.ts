@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtInplace } from './inplace.component';
+import { WuInplace } from './inplace.component';
 
-/** For NgModule apps. Standalone apps can import `WtInplace` directly. */
+/** For NgModule apps. Standalone apps can import `WuInplace` directly. */
 @NgModule({
-  imports: [WtInplace],
-  exports: [WtInplace],
+  imports: [WuInplace],
+  exports: [WuInplace],
 })
-export class WtInplaceModule {}
+export class WuInplaceModule {}

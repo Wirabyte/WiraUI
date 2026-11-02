@@ -1,17 +1,17 @@
 <span
   #root
-  class="wt-datepicker p-calendar"
+  class="wu-datepicker p-calendar"
   [ngClass]="styleClass || ''"
   [ngStyle]="style || null"
-  [class.wt-datepicker-has-dropdown]="hasDropdown && !inline"
+  [class.wu-datepicker-has-dropdown]="hasDropdown && !inline"
   [class.p-calendar-w-btn]="hasDropdown && !inline"
-  [class.wt-datepicker-has-input-icon]="hasInputIcon && !inline"
-  [class.wt-datepicker-has-clear]="hasClear && !inline"
+  [class.wu-datepicker-has-input-icon]="hasInputIcon && !inline"
+  [class.wu-datepicker-has-clear]="hasClear && !inline"
   [class.p-calendar-clearable]="hasClear"
   [class.p-calendar-timeonly]="timeOnly"
   [class.p-calendar-disabled]="isDisabled"
 >
-  <span *ngIf="!inline" class="wt-datepicker-field">
+  <span *ngIf="!inline" class="wu-datepicker-field">
     <input
       #input
       type="text"
@@ -19,16 +19,16 @@
       autocomplete="off"
       aria-autocomplete="none"
       aria-haspopup="dialog"
-      class="wt-inputtext p-inputtext p-component p-element wt-datepicker-input"
-      [class.wt-inputtext-sm]="sizeKey === 'sm'"
+      class="wu-inputtext p-inputtext p-component p-element wu-datepicker-input"
+      [class.wu-inputtext-sm]="sizeKey === 'sm'"
       [class.p-inputtext-sm]="sizeKey === 'sm'"
-      [class.wt-inputtext-lg]="sizeKey === 'lg'"
+      [class.wu-inputtext-lg]="sizeKey === 'lg'"
       [class.p-inputtext-lg]="sizeKey === 'lg'"
       [ngClass]="inputStyleClass || ''"
       [ngStyle]="inputStyle || null"
-      [class.wt-invalid]="invalid"
+      [class.wu-invalid]="invalid"
       [class.p-invalid]="invalid"
-      [class.wt-filled]="filled"
+      [class.wu-filled]="filled"
       [class.p-filled]="filled"
       [id]="id"
       [attr.name]="name || null"
@@ -54,7 +54,7 @@
       *ngIf="hasClear"
       type="button"
       tabindex="-1"
-      class="wt-datepicker-clear p-calendar-clear-icon"
+      class="wu-datepicker-clear p-calendar-clear-icon"
       [attr.aria-label]="t.clear"
       (click)="clearField()"
     >
@@ -62,7 +62,7 @@
     </button>
     <span
       *ngIf="hasInputIcon"
-      class="wt-datepicker-input-icon p-datepicker-icon"
+      class="wu-datepicker-input-icon p-datepicker-icon"
       aria-hidden="true"
       (click)="inputIconTemplate ? null : toggle()"
     >
@@ -74,7 +74,7 @@
   <button
     *ngIf="hasDropdown && !inline"
     type="button"
-    class="wt-datepicker-dropdown p-datepicker-trigger p-button p-component p-button-icon-only"
+    class="wu-datepicker-dropdown p-datepicker-trigger p-button p-component p-button-icon-only"
     [attr.aria-label]="t.chooseDate"
     [attr.aria-expanded]="open"
     [attr.aria-controls]="open ? panelId : null"
@@ -90,54 +90,54 @@
     #panel
     *ngIf="inline || open"
     role="dialog"
-    class="wt-datepicker-panel p-datepicker p-component"
+    class="wu-datepicker-panel p-datepicker p-component"
     [ngClass]="panelStyleClass || ''"
     [ngStyle]="panelStyle || null"
     [id]="panelId"
     [attr.popover]="inline ? null : 'manual'"
     [attr.aria-label]="t.chooseDate"
-    [class.wt-datepicker-popup]="!inline"
-    [class.wt-datepicker-inline]="inline"
+    [class.wu-datepicker-popup]="!inline"
+    [class.wu-datepicker-inline]="inline"
     [class.p-datepicker-inline]="inline"
     [class.p-datepicker-timeonly]="timeOnly"
     [class.p-datepicker-touch-ui]="touchUI"
-    [class.wt-datepicker-disabled]="inline && isDisabled"
+    [class.wu-datepicker-disabled]="inline && isDisabled"
     [class.p-disabled]="isDisabled"
     (mousedown)="panelMousedown($event)"
     (keydown)="panelKeydown($event)"
   >
     <div *ngIf="!timeOnly" class="p-datepicker-group-container">
       <div class="p-datepicker-group">
-        <div class="wt-datepicker-header p-datepicker-header">
+        <div class="wu-datepicker-header p-datepicker-header">
           <button
             type="button"
-            class="wt-datepicker-nav p-datepicker-prev p-link"
+            class="wu-datepicker-nav p-datepicker-prev p-link"
             [attr.aria-label]="previousLabel"
             [disabled]="!state.canGo(-1) || isDisabled"
             (click)="go(-1)"
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5"></path></svg>
           </button>
-          <div class="wt-datepicker-title p-datepicker-title">
+          <div class="wu-datepicker-title p-datepicker-title">
             <button
               *ngIf="state.view === 'date'"
               type="button"
-              class="wt-datepicker-title-button p-datepicker-month p-link"
+              class="wu-datepicker-title-button p-datepicker-month p-link"
               [disabled]="isDisabled"
               (click)="showView('month')"
             >{{ state.monthLabel }}</button>
             <button
               *ngIf="state.view !== 'year'"
               type="button"
-              class="wt-datepicker-title-button p-datepicker-year p-link"
+              class="wu-datepicker-title-button p-datepicker-year p-link"
               [disabled]="isDisabled"
               (click)="showView('year')"
             >{{ state.yearLabel }}</button>
-            <span *ngIf="state.view === 'year'" class="wt-datepicker-decade p-datepicker-decade" aria-live="polite">{{ state.decadeLabel }}</span>
+            <span *ngIf="state.view === 'year'" class="wu-datepicker-decade p-datepicker-decade" aria-live="polite">{{ state.decadeLabel }}</span>
           </div>
           <button
             type="button"
-            class="wt-datepicker-nav p-datepicker-next p-link"
+            class="wu-datepicker-nav p-datepicker-next p-link"
             [attr.aria-label]="nextLabel"
             [disabled]="!state.canGo(1) || isDisabled"
             (click)="go(1)"
@@ -146,11 +146,11 @@
           </button>
         </div>
 
-        <div class="wt-datepicker-body p-datepicker-calendar-container">
+        <div class="wu-datepicker-body p-datepicker-calendar-container">
           <table
             *ngIf="state.view === 'date'"
             role="grid"
-            class="wt-datepicker-days p-datepicker-calendar"
+            class="wu-datepicker-days p-datepicker-calendar"
             [attr.aria-label]="state.monthLabel + ' ' + state.yearLabel"
             (keydown)="gridKeydown($event)"
           >
@@ -163,9 +163,9 @@
               <tr *ngFor="let week of weeks; trackBy: trackIndex">
                 <td
                   *ngFor="let c of week; trackBy: trackIndex"
-                  [class.wt-datepicker-other-month]="c.otherMonth"
+                  [class.wu-datepicker-other-month]="c.otherMonth"
                   [class.p-datepicker-other-month]="c.otherMonth"
-                  [class.wt-datepicker-today]="c.today"
+                  [class.wu-datepicker-today]="c.today"
                   [class.p-datepicker-today]="c.today"
                   [attr.aria-selected]="c.selected || c.inRange"
                   [attr.aria-disabled]="!c.selectable || null"
@@ -173,9 +173,9 @@
                   <span
                     *ngIf="showOtherMonths || !c.otherMonth"
                     role="button"
-                    class="wt-datepicker-cell"
-                    [class.wt-datepicker-selected]="c.selected"
-                    [class.wt-datepicker-in-range]="c.inRange"
+                    class="wu-datepicker-cell"
+                    [class.wu-datepicker-selected]="c.selected"
+                    [class.wu-datepicker-in-range]="c.inRange"
                     [class.p-highlight]="(c.selected || c.inRange) && c.selectable"
                     [class.p-disabled]="!c.selectable"
                     [attr.tabindex]="c.focused ? 0 : -1"
@@ -192,7 +192,7 @@
 
           <div
             *ngIf="state.view === 'month'"
-            class="wt-datepicker-grid p-monthpicker"
+            class="wu-datepicker-grid p-monthpicker"
             role="group"
             [attr.aria-label]="state.yearLabel"
             (keydown)="gridKeydown($event)"
@@ -200,11 +200,11 @@
             <span
               *ngFor="let m of months; trackBy: trackIndex"
               role="button"
-              class="wt-datepicker-cell p-monthpicker-month"
-              [class.wt-datepicker-selected]="m.selected"
+              class="wu-datepicker-cell p-monthpicker-month"
+              [class.wu-datepicker-selected]="m.selected"
               [class.p-highlight]="m.selected"
               [class.p-disabled]="!m.selectable"
-              [class.wt-datepicker-current]="m.current"
+              [class.wu-datepicker-current]="m.current"
               [attr.tabindex]="m.focused ? 0 : -1"
               [attr.aria-label]="t.monthNames[m.month] + ' ' + state.yearLabel"
               [attr.aria-pressed]="m.selected"
@@ -215,7 +215,7 @@
 
           <div
             *ngIf="state.view === 'year'"
-            class="wt-datepicker-grid p-yearpicker"
+            class="wu-datepicker-grid p-yearpicker"
             role="group"
             [attr.aria-label]="state.decadeLabel"
             (keydown)="gridKeydown($event)"
@@ -223,9 +223,9 @@
             <span
               *ngFor="let y of years; trackBy: trackIndex"
               role="button"
-              class="wt-datepicker-cell p-yearpicker-year"
-              [class.wt-datepicker-selected]="y.selected"
-              [class.wt-datepicker-outside]="y.outside"
+              class="wu-datepicker-cell p-yearpicker-year"
+              [class.wu-datepicker-selected]="y.selected"
+              [class.wu-datepicker-outside]="y.outside"
               [class.p-highlight]="y.selected"
               [class.p-disabled]="!y.selectable"
               [attr.tabindex]="y.focused ? 0 : -1"
@@ -238,13 +238,13 @@
       </div>
     </div>
 
-    <div *ngIf="showTime || timeOnly" class="wt-datepicker-time p-timepicker">
+    <div *ngIf="showTime || timeOnly" class="wu-datepicker-time p-timepicker">
       <ng-container *ngFor="let u of timeUnits; let last = last">
-        <div class="wt-datepicker-time-field" [ngClass]="'p-' + u + '-picker'">
+        <div class="wu-datepicker-time-field" [ngClass]="'p-' + u + '-picker'">
           <button
             type="button"
             tabindex="-1"
-            class="wt-datepicker-time-step p-link"
+            class="wu-datepicker-time-step p-link"
             [attr.aria-label]="t[u] + ' +'"
             [disabled]="isDisabled"
             (mousedown)="$event.preventDefault()"
@@ -261,7 +261,7 @@
             inputmode="numeric"
             maxlength="2"
             autocomplete="off"
-            class="wt-datepicker-time-input"
+            class="wu-datepicker-time-input"
             [attr.data-unit]="u"
             [attr.aria-label]="t[u]"
             [attr.aria-valuenow]="state.timeText(u)"
@@ -278,7 +278,7 @@
           <button
             type="button"
             tabindex="-1"
-            class="wt-datepicker-time-step p-link"
+            class="wu-datepicker-time-step p-link"
             [attr.aria-label]="t[u] + ' −'"
             [disabled]="isDisabled"
             (mousedown)="$event.preventDefault()"
@@ -290,36 +290,36 @@
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
           </button>
         </div>
-        <span *ngIf="!last" class="wt-datepicker-time-separator p-separator" aria-hidden="true">:</span>
+        <span *ngIf="!last" class="wu-datepicker-time-separator p-separator" aria-hidden="true">:</span>
       </ng-container>
-      <div *ngIf="hourFormat === '12'" class="wt-datepicker-time-field p-ampm-picker">
-        <button type="button" tabindex="-1" class="wt-datepicker-time-step p-link" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
+      <div *ngIf="hourFormat === '12'" class="wu-datepicker-time-field p-ampm-picker">
+        <button type="button" tabindex="-1" class="wu-datepicker-time-step p-link" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"></path></svg>
         </button>
         <button
           type="button"
           role="spinbutton"
-          class="wt-datepicker-time-period"
+          class="wu-datepicker-time-period"
           [attr.aria-valuetext]="state.pm ? t.pm : t.am"
           [disabled]="isDisabled"
           (click)="togglePeriod()"
           (keydown)="periodKeydown($event)"
         >{{ state.pm ? t.pm : t.am }}</button>
-        <button type="button" tabindex="-1" class="wt-datepicker-time-step p-link" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
+        <button type="button" tabindex="-1" class="wu-datepicker-time-step p-link" aria-hidden="true" [disabled]="isDisabled" (mousedown)="$event.preventDefault()" (click)="togglePeriod()">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"></path></svg>
         </button>
       </div>
     </div>
 
-    <div *ngIf="showButtonBar" class="wt-datepicker-buttonbar p-datepicker-buttonbar">
-      <button type="button" class="wt-datepicker-bar-button p-button p-button-text" [disabled]="isDisabled" (click)="today($event)">{{ t.today }}</button>
-      <button type="button" class="wt-datepicker-bar-button p-button p-button-text" [disabled]="isDisabled" (click)="clearAll($event)">{{ t.clear }}</button>
+    <div *ngIf="showButtonBar" class="wu-datepicker-buttonbar p-datepicker-buttonbar">
+      <button type="button" class="wu-datepicker-bar-button p-button p-button-text" [disabled]="isDisabled" (click)="today($event)">{{ t.today }}</button>
+      <button type="button" class="wu-datepicker-bar-button p-button p-button-text" [disabled]="isDisabled" (click)="clearAll($event)">{{ t.clear }}</button>
     </div>
   </div>
 </span>
 
 <ng-template #defaultIcon>
-  <i *ngIf="icon; else builtInIcon" [class]="icon + ' wt-datepicker-icon-custom'"></i>
+  <i *ngIf="icon; else builtInIcon" [class]="icon + ' wu-datepicker-icon-custom'"></i>
 </ng-template>
 <ng-template #builtInIcon>
   <ng-container *ngIf="timeOnly; else calendarIcon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"></circle><path d="M8 4.75V8l2.25 1.5"></path></svg></ng-container>

@@ -16,9 +16,9 @@ import { addGlobalStyle, angularMajor, getProject, hasDependency, ProjectInfo } 
 import * as ts from 'typescript';
 import { NgAddOptions } from './schema';
 
-const GENERATOR = 'ng add wiratheme';
+const GENERATOR = 'ng add wiraui';
 
-/** Theme names teams know from the theme sets they used before, so a familiar `--theme` still finds WiraTheme's own. */
+/** Theme names teams know from the theme sets they used before, so a familiar `--theme` still finds WiraUI's own. */
 const FAMILIAR_THEME_NAMES: [RegExp, string][] = [
   [/^lara-(light|dark)-/, 'sila-$1-'],
   [/^saga-/, 'arun-'],
@@ -35,9 +35,9 @@ function ownThemeName(name: string): string {
   return n;
 }
 
-const OVERRIDES_TEMPLATE = `// WiraTheme · wiratheme.overrides.ts
-// Values here win over the main theme file through @layer wiratheme.overrides, no !important needed.
-import { defineOverrides } from 'wiratheme/config';
+const OVERRIDES_TEMPLATE = `// WiraUI · wiraui.overrides.ts
+// Values here win over the main theme file through @layer wiraui.overrides, no !important needed.
+import { defineOverrides } from 'wiraui/config';
 
 export const wiraOverrides = defineOverrides({
   // semantic: { radius: '8px', density: 'compact' },
@@ -59,12 +59,12 @@ export function ngAdd(options: NgAddOptions): Rule {
     }
     const structure = options.structure === 'auto' ? detectStructure(tree, project) : options.structure;
     const fontChoice = options.font === 'auto' || options.font === 'none' ? undefined : options.font;
-    // The version lock above guarantees the project's Angular matches this wiratheme major.
-    const major = (wiraThemeMajorFor(angularMajor(tree) ?? 21) ?? 3) as MajorVersion;
+    // The version lock above guarantees the project's Angular matches this wiraui major.
+    const major = (wiraUIMajorFor(angularMajor(tree) ?? 21) ?? 3) as MajorVersion;
     const catalog = VERSION_CATALOG[major];
     const themeName = !options.theme || options.theme === 'auto' ? catalog.defaultTheme : ownThemeName(options.theme);
     if (!catalog.themes.includes(themeName)) {
-      throw new SchematicsException(`wiratheme@${major} has no theme "${themeName}"; choose one of: ${catalog.themes.join(', ')}`);
+      throw new SchematicsException(`wiraui@${major} has no theme "${themeName}"; choose one of: ${catalog.themes.join(', ')}`);
     }
     const base = themeConfig(themeName);
     const config = normalize({
@@ -80,14 +80,14 @@ export function ngAdd(options: NgAddOptions): Rule {
     const themeDir = `${project.sourceRoot}/theme`;
     const done: string[] = [];
     if (style === 'scss') {
-      done.push(writeIfMissing(tree, `${themeDir}/wiratheme.theme.scss`, toSCSS(config, { generator: GENERATOR }), log));
-      done.push(addScssUse(tree, scssEntry as string, `${themeDir}/wiratheme.theme`));
+      done.push(writeIfMissing(tree, `${themeDir}/wiraui.theme.scss`, toSCSS(config, { generator: GENERATOR }), log));
+      done.push(addScssUse(tree, scssEntry as string, `${themeDir}/wiraui.theme`));
     } else {
-      done.push(writeIfMissing(tree, `${themeDir}/wiratheme.theme.css`, toCSS(config, { generator: GENERATOR }), log));
-      addGlobalStyle(tree, project.name, `${themeDir}/wiratheme.theme.css`);
-      done.push(`angular.json: added ${themeDir}/wiratheme.theme.css to styles`);
+      done.push(writeIfMissing(tree, `${themeDir}/wiraui.theme.css`, toCSS(config, { generator: GENERATOR }), log));
+      addGlobalStyle(tree, project.name, `${themeDir}/wiraui.theme.css`);
+      done.push(`angular.json: added ${themeDir}/wiraui.theme.css to styles`);
     }
-    done.push(writeIfMissing(tree, `${themeDir}/wiratheme.overrides.ts`, OVERRIDES_TEMPLATE, log));
+    done.push(writeIfMissing(tree, `${themeDir}/wiraui.overrides.ts`, OVERRIDES_TEMPLATE, log));
     if (options.utils !== false) {
       if (style === 'scss') {
         done.push(addScssUtils(tree, scssEntry as string));
@@ -99,25 +99,25 @@ export function ngAdd(options: NgAddOptions): Rule {
 
     const [locale, calendar] =
       options.locale === 'en' ? ['en', 'gregorian'] : options.locale === 'th-gregorian' ? ['th', 'gregorian'] : ['th', 'buddhist'];
-    const provider = `provideWiraTheme({ overrides: wiraOverrides, locale: '${locale}', calendar: '${calendar}', darkMode: '${options.darkMode}' })`;
+    const provider = `provideWiraUI({ overrides: wiraOverrides, locale: '${locale}', calendar: '${calendar}', darkMode: '${options.darkMode}' })`;
     done.push(structure === 'module' ? addToModule(tree, project, themeDir, provider) : addToStandalone(tree, project, themeDir, provider));
 
     if (options.font !== 'none') done.push(addFont(tree, project, fontChoice || config.fontFamily));
 
     log.info('');
-    log.info(`WiraTheme: ${style === 'scss' ? 'SCSS' : 'CSS'} · ${structure === 'module' ? 'NgModule' : 'Standalone'} · ${themeName} · ${config.primary}`);
+    log.info(`WiraUI: ${style === 'scss' ? 'SCSS' : 'CSS'} · ${structure === 'module' ? 'NgModule' : 'Standalone'} · ${themeName} · ${config.primary}`);
     for (const line of done.filter(Boolean)) log.info('  ✔ ' + line);
     if (options.utils !== false && hasDependency(tree, 'primeflex')) {
       log.info(
-        '  ℹ WiraTheme utilities use the same class names as the utility library already installed, so you can remove it when ready.'
+        '  ℹ WiraUI utilities use the same class names as the utility library already installed, so you can remove it when ready.'
       );
     }
     if (hasDependency(tree, 'primeng')) {
       log.info(
-        '  ℹ An existing UI library was found: both can run side by side while you migrate, and WiraTheme components also carry the p-* classes your CSS targets.'
+        '  ℹ An existing UI library was found: both can run side by side while you migrate, and WiraUI components also carry the p-* classes your CSS targets.'
       );
     }
-    log.info('Next: import WtButtonModule (NgModule) or WtButton (standalone) from wiratheme/button, then use <wt-button label="Save"></wt-button>');
+    log.info('Next: import WuButtonModule (NgModule) or WuButton (standalone) from wiraui/button, then use <wu-button label="Save"></wu-button>');
   };
 }
 
@@ -125,14 +125,14 @@ export function ngAdd(options: NgAddOptions): Rule {
 
 function ownAngularRange(): string | undefined {
   try {
-    // node_modules/wiratheme/schematics/ng-add/index.js → node_modules/wiratheme/package.json
+    // node_modules/wiraui/schematics/ng-add/index.js → node_modules/wiraui/package.json
     return require('../../package.json').peerDependencies['@angular/core'];
   } catch (e) {
     return undefined;
   }
 }
 
-function wiraThemeMajorFor(angular: number): number | null {
+function wiraUIMajorFor(angular: number): number | null {
   if (angular >= 21) return 3;
   if (angular >= 18) return 2;
   if (angular >= 15) return 1;
@@ -147,11 +147,11 @@ function assertAngularVersion(tree: Tree, range: string | undefined): void {
   const min = parseInt(m[1], 10);
   const max = m[2] ? parseInt(m[2], 10) : null;
   if (major >= min && (max === null || major < max)) return;
-  const fit = wiraThemeMajorFor(major);
+  const fit = wiraUIMajorFor(major);
   const span = max === null ? `${min}+` : `${min}–${max - 1}`;
   throw new SchematicsException(
-    `This wiratheme release supports Angular ${span}; this project uses Angular ${major}.` +
-      (fit ? ` Use: ng add wiratheme@${fit}` : ' No wiratheme release supports this Angular version.')
+    `This wiraui release supports Angular ${span}; this project uses Angular ${major}.` +
+      (fit ? ` Use: ng add wiraui@${fit}` : ' No wiraui release supports this Angular version.')
   );
 }
 
@@ -187,23 +187,23 @@ function writeIfMissing(tree: Tree, path: string, content: string, log: Schemati
 
 function addScssUse(tree: Tree, stylesFile: string, themeModule: string): string {
   const text = readText(tree, stylesFile);
-  if (text.includes('wiratheme.theme')) return '';
-  // Sass resolves a plain path like 'theme/wiratheme.theme' relative to the importing file.
+  if (text.includes('wiraui.theme')) return '';
+  // Sass resolves a plain path like 'theme/wiraui.theme' relative to the importing file.
   const rel = posix.relative(posix.dirname(stylesFile), themeModule);
   const line = stylesFile.endsWith('.sass') ? `@use '${rel}'\n` : `@use '${rel}';\n`;
   tree.overwrite(stylesFile, line + text);
   return `${stylesFile}: added @use '${rel}'`;
 }
 
-const UTILS_CSS = 'node_modules/wiratheme/utils/utils.css';
+const UTILS_CSS = 'node_modules/wiraui/utils/utils.css';
 
-/** `@use 'wiratheme/utils';` right under the theme's @use (both must come before any @import or rule). */
+/** `@use 'wiraui/utils';` right under the theme's @use (both must come before any @import or rule). */
 function addScssUtils(tree: Tree, stylesFile: string): string {
   const text = readText(tree, stylesFile);
-  if (text.includes('wiratheme/utils')) return '';
-  const line = stylesFile.endsWith('.sass') ? `@use 'wiratheme/utils'` : `@use 'wiratheme/utils';`;
+  if (text.includes('wiraui/utils')) return '';
+  const line = stylesFile.endsWith('.sass') ? `@use 'wiraui/utils'` : `@use 'wiraui/utils';`;
   const lines = text.split('\n');
-  const at = lines.findIndex((l) => l.includes('wiratheme.theme'));
+  const at = lines.findIndex((l) => l.includes('wiraui.theme'));
   lines.splice(at + 1, 0, line);
   tree.overwrite(stylesFile, lines.join('\n'));
   return `${stylesFile}: added ${line}`;
@@ -230,16 +230,16 @@ function addToModule(tree: Tree, p: ProjectInfo, themeDir: string, provider: str
   if (!boot) throw new SchematicsException('bootstrapModule(...) not found in main.ts; use --structure=standalone or add the provider by hand.');
   const file = resolveTs(p.main as string, boot.from);
   const text = readText(tree, file);
-  if (text.includes('provideWiraTheme(')) return `${file}: provideWiraTheme() already there`;
+  if (text.includes('provideWiraUI(')) return `${file}: provideWiraUI() already there`;
   const sf = parse(file, text);
   const obj = findNgModuleObject(sf, boot.name);
   if (!obj) throw new SchematicsException(`@NgModule for ${boot.name} not found in ${file}`);
   apply(tree, file, [
-    importEdit(sf, 'provideWiraTheme', 'wiratheme/config'),
-    importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiratheme.overrides`)),
+    importEdit(sf, 'provideWiraUI', 'wiraui/config'),
+    importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiraui.overrides`)),
     providersEdit(obj, provider),
   ]);
-  return `${file}: added provideWiraTheme() to the providers of ${boot.name}`;
+  return `${file}: added provideWiraUI() to the providers of ${boot.name}`;
 }
 
 function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider: string): string {
@@ -258,14 +258,14 @@ function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider:
   } else if (opts && ts.isObjectLiteralExpression(opts)) {
     obj = opts;
   }
-  if (readText(tree, file).includes('provideWiraTheme(')) return `${file}: provideWiraTheme() already there`;
-  if (!obj) throw new SchematicsException('ApplicationConfig not found; add provideWiraTheme() to its providers by hand.');
+  if (readText(tree, file).includes('provideWiraUI(')) return `${file}: provideWiraUI() already there`;
+  if (!obj) throw new SchematicsException('ApplicationConfig not found; add provideWiraUI() to its providers by hand.');
   apply(tree, file, [
-    importEdit(sf, 'provideWiraTheme', 'wiratheme/config'),
-    importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiratheme.overrides`)),
+    importEdit(sf, 'provideWiraUI', 'wiraui/config'),
+    importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiraui.overrides`)),
     providersEdit(obj, provider),
   ]);
-  return `${file}: added provideWiraTheme() to providers`;
+  return `${file}: added provideWiraUI() to providers`;
 }
 
 function addFont(tree: Tree, p: ProjectInfo, family: string): string {

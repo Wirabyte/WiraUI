@@ -1,0 +1,120 @@
+# The WiraUI docs site on OpenShift. In your project:
+#   oc apply -f deploy/openshift/docs.yaml
+#   oc start-build wiraui-docs --follow
+# The build reads the public GitHub repository. The Route gets the cluster's default host; set spec.host for your domain.
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/Wirabyte/WiraUI.git
+      ref: main
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: deploy/openshift/Containerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: wiraui-docs:latest
+  # Building all three library majors and the site takes a lot of memory.
+  resources:
+    requests:
+      cpu: "1"
+      memory: 4Gi
+    limits:
+      memory: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+  annotations:
+    # Roll out again whenever a build pushes a new image.
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"wiraui-docs:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"docs\")].image"}]'
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wiraui-docs
+  template:
+    metadata:
+      labels:
+        app: wiraui-docs
+    spec:
+      containers:
+        - name: docs
+          image: wiraui-docs:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: [ALL]
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+spec:
+  selector:
+    app: wiraui-docs
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+spec:
+  to:
+    kind: Service
+    name: wiraui-docs
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

@@ -3,7 +3,7 @@ import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ITEMS_TS = `import { MenuItem } from 'wiratheme/api';
+const ITEMS_TS = `import { MenuItem } from 'wiraui/api';
 
 items: MenuItem[] = [
   {
@@ -43,9 +43,9 @@ export const PANELMENU_DOC: ComponentDoc = {
   title: 'PanelMenu',
   group: 'Navigation',
   entry: 'panelmenu',
-  standalone: 'WtPanelMenu',
-  module: 'WtPanelMenuModule',
-  selector: 'wt-panelmenu',
+  standalone: 'WuPanelMenu',
+  module: 'WuPanelMenuModule',
+  selector: 'wu-panelmenu',
   description: {
     th: 'เมนูข้างแบบหัวข้อพับได้ รายการระดับบนเป็นหัวข้อ รายการย่อยเปิดอยู่ใต้หัวข้อและซ้อนได้หลายชั้น สถานะเปิด / ปิดอยู่ใน model เอง และใช้คีย์บอร์ดได้ครบ',
     en: 'A side menu of collapsible panels. Root items are the headers; their items open under them and nest as deep as needed. The open state lives in the model itself, and the keyboard works throughout.',
@@ -120,8 +120,8 @@ export const PANELMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtPanelMenuModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtPanelMenu</code>) selector <code>wt-panelMenu</code> ก็ใช้ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiratheme/api</code>',
-        en: 'Works as an NgModule (<code>WtPanelMenuModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtPanelMenu</code>). The <code>wt-panelMenu</code> selector works too. Items are typed <code>MenuItem</code> from <code>wiratheme/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuPanelMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuPanelMenu</code>) selector <code>wu-panelMenu</code> ก็ใช้ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code>',
+        en: 'Works as an NgModule (<code>WuPanelMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuPanelMenu</code>). The <code>wu-panelMenu</code> selector works too. Items are typed <code>MenuItem</code> from <code>wiraui/api</code>.',
       },
     },
     basic: {
@@ -141,8 +141,8 @@ export const PANELMENU_DOC: ComponentDoc = {
     links: {
       title: { th: 'ลิงก์และคำสั่ง', en: 'Links and commands' },
       text: {
-        th: 'รายการปลายทางใช้ <code>routerLink</code> (พร้อม <code>fragment</code>, <code>queryParams</code> และอื่น ๆ ผ่าน router ของแอป) <code>url</code> / <code>target</code> หรือ <code>command</code> รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wt-panelmenu-link-active</code> (สีหลัก) ตัวอย่างนี้เทียบ fragment ด้วย จึงไฮไลต์เฉพาะหัวข้อที่เลือก',
-        en: 'Leaf items take <code>routerLink</code> (with <code>fragment</code>, <code>queryParams</code> and the rest, through the app\'s router), <code>url</code> / <code>target</code> or <code>command</code>. The item matching the current page gets the <code>wt-panelmenu-link-active</code> class (primary colour); this sample compares the fragment too, so only the section you pick lights up.',
+        th: 'รายการปลายทางใช้ <code>routerLink</code> (พร้อม <code>fragment</code>, <code>queryParams</code> และอื่น ๆ ผ่าน router ของแอป) <code>url</code> / <code>target</code> หรือ <code>command</code> รายการที่ตรงกับหน้าปัจจุบันได้ class <code>wu-panelmenu-link-active</code> (สีหลัก) ตัวอย่างนี้เทียบ fragment ด้วย จึงไฮไลต์เฉพาะหัวข้อที่เลือก',
+        en: 'Leaf items take <code>routerLink</code> (with <code>fragment</code>, <code>queryParams</code> and the rest, through the app\'s router), <code>url</code> / <code>target</code> or <code>command</code>. The item matching the current page gets the <code>wu-panelmenu-link-active</code> class (primary colour); this sample compares the fragment too, so only the section you pick lights up.',
       },
     },
     states: {
@@ -176,22 +176,22 @@ export const PANELMENU_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-panelMenu&gt;</code> เป็น <code>&lt;wt-panelmenu&gt;</code> (หรือ <code>&lt;wt-panelMenu&gt;</code>) model เดิมใช้ต่อได้ไม่ต้องแก้ รวมถึง <code>expanded</code> ที่กำหนดหัวข้อที่เปิด template <code>pTemplate="item"</code> / <code>"submenuicon"</code> ใช้ได้ class <code>p-panelmenu-*</code> อยู่คู่กับ <code>wt-panelmenu-*</code> ค่าเริ่มต้นของ <code>multiple</code> ตามรุ่นเหมือนเดิม และ <code>transitionOptions</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-panelMenu&gt;</code> to <code>&lt;wt-panelmenu&gt;</code> (or <code>&lt;wt-panelMenu&gt;</code>). Existing models work unchanged, <code>expanded</code> flags included. <code>pTemplate="item"</code> / <code>"submenuicon"</code> templates work, the <code>p-panelmenu-*</code> classes sit next to <code>wt-panelmenu-*</code>, the <code>multiple</code> default follows the version as before, and <code>transitionOptions</code> is accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-panelMenu&gt;</code> เป็น <code>&lt;wu-panelmenu&gt;</code> (หรือ <code>&lt;wu-panelMenu&gt;</code>) model เดิมใช้ต่อได้ไม่ต้องแก้ รวมถึง <code>expanded</code> ที่กำหนดหัวข้อที่เปิด template <code>pTemplate="item"</code> / <code>"submenuicon"</code> ใช้ได้ class <code>p-panelmenu-*</code> อยู่คู่กับ <code>wu-panelmenu-*</code> ค่าเริ่มต้นของ <code>multiple</code> ตามรุ่นเหมือนเดิม และ <code>transitionOptions</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-panelMenu&gt;</code> to <code>&lt;wu-panelmenu&gt;</code> (or <code>&lt;wu-panelMenu&gt;</code>). Existing models work unchanged, <code>expanded</code> flags included. <code>pTemplate="item"</code> / <code>"submenuicon"</code> templates work, the <code>p-panelmenu-*</code> classes sit next to <code>wu-panelmenu-*</code>, the <code>multiple</code> default follows the version as before, and <code>transitionOptions</code> is accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-panelmenu [model]="items"></wt-panelmenu>`,
+    basic: `<wu-panelmenu [model]="items"></wu-panelmenu>`,
     multiple: `<!-- เปิดได้ทีละหัวข้อ -->
-<wt-panelmenu [model]="oneAtATime" [multiple]="false"></wt-panelmenu>
+<wu-panelmenu [model]="oneAtATime" [multiple]="false"></wu-panelmenu>
 
 <!-- เปิดได้หลายหัวข้อพร้อมกัน -->
-<wt-panelmenu [model]="severalAtOnce" [multiple]="true"></wt-panelmenu>`,
-    links: `<wt-panelmenu [model]="links"></wt-panelmenu>`,
-    states: `<wt-panelmenu [model]="accountItems"></wt-panelmenu>`,
+<wu-panelmenu [model]="severalAtOnce" [multiple]="true"></wu-panelmenu>`,
+    links: `<wu-panelmenu [model]="links"></wu-panelmenu>`,
+    states: `<wu-panelmenu [model]="accountItems"></wu-panelmenu>`,
     templates: {
-      v3: `<wt-panelmenu [model]="editorItems">
+      v3: `<wu-panelmenu [model]="editorItems">
   <ng-template #item let-item let-root="root">
     @if (item.icon) {
       <i [class]="item.icon"></i>
@@ -204,30 +204,30 @@ export const PANELMENU_DOC: ComponentDoc = {
       <i class="wi wi-angle-down ml-auto"></i>
     }
   </ng-template>
-</wt-panelmenu>
+</wu-panelmenu>
 
-<wt-panelmenu [model]="classItems">
+<wu-panelmenu [model]="classItems">
   <ng-template #submenuicon>
     <i class="wi wi-chevron-down"></i>
   </ng-template>
-</wt-panelmenu>`,
-      classic: `<wt-panelmenu [model]="editorItems">
-  <ng-template wtTemplate="item" let-item let-root="root">
+</wu-panelmenu>`,
+      classic: `<wu-panelmenu [model]="editorItems">
+  <ng-template wuTemplate="item" let-item let-root="root">
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span [class.font-semibold]="root">{{ item.label }}</span>
     <kbd *ngIf="item.shortcut" class="ml-auto text-xs">{{ item.shortcut }}</kbd>
     <i *ngIf="item.items" class="wi wi-angle-down ml-auto"></i>
   </ng-template>
-</wt-panelmenu>
+</wu-panelmenu>
 
-<wt-panelmenu [model]="classItems">
-  <ng-template wtTemplate="submenuicon">
+<wu-panelmenu [model]="classItems">
+  <ng-template wuTemplate="submenuicon">
     <i class="wi wi-chevron-down"></i>
   </ng-template>
-</wt-panelmenu>`,
+</wu-panelmenu>`,
     },
     style: `<aside class="w-15rem">
-  <wt-panelmenu [model]="compactItems" [style]="{ width: '100%' }" styleClass="app-sidebar"></wt-panelmenu>
+  <wu-panelmenu [model]="compactItems" [style]="{ width: '100%' }" styleClass="app-sidebar"></wu-panelmenu>
 </aside>`,
   },
   ts: {
@@ -243,7 +243,7 @@ sections(): MenuItem[] {
     { label: 'การเงิน', icon: 'wi wi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
   ];
 }`,
-    links: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+    links: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 // เทียบ fragment ด้วย: ไฮไลต์เฉพาะหัวข้อที่เปิดอยู่
 private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
@@ -335,7 +335,7 @@ classItems: MenuItem[] = [
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (MenuItem) · root', undefined, 'เนื้อหาของทุกหัวข้อและรายการ แทนไอคอน label badge และลูกศร', 'The content of every header and item, in place of icon, label, badge and arrow'),
         row('submenuicon', '—', undefined, 'ลูกศรของหัวข้อและรายการที่มีรายการย่อย (หมุนเองเมื่อเปิด)', 'The arrow of headers and items with children (turns on its own when open)'),
@@ -356,7 +356,7 @@ classItems: MenuItem[] = [
           'ลิงก์ของ router แบบเดียวกับ [routerLink] (ใช้ router ของแอป)',
           "A router link, as with [routerLink] (uses the app's router)"
         ),
-        row('routerLinkActiveOptions', '{ exact: boolean } | IsActiveMatchOptions', '{ exact: false }', 'เมื่อไหร่ถือว่าลิงก์ตรงกับหน้าปัจจุบัน (class wt-panelmenu-link-active)', 'When the link counts as the current page (class wt-panelmenu-link-active)'),
+        row('routerLinkActiveOptions', '{ exact: boolean } | IsActiveMatchOptions', '{ exact: false }', 'เมื่อไหร่ถือว่าลิงก์ตรงกับหน้าปัจจุบัน (class wu-panelmenu-link-active)', 'When the link counts as the current page (class wu-panelmenu-link-active)'),
         row('url · target', 'string', undefined, 'ลิงก์ธรรมดา (href) และ target ของมัน', 'A plain link (href) and its target'),
         row('disabled · visible', BOOL, 'false · true', 'กดไม่ได้ · ไม่แสดง', 'Blocked · hidden'),
         row('separator', BOOL, 'false', 'เส้นคั่นแทนรายการ', 'A separator line instead of an item'),
@@ -368,7 +368,7 @@ classItems: MenuItem[] = [
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { MenuItem, MenuItemCommandEvent } from 'wiratheme/api';
+      code: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;
@@ -384,28 +384,28 @@ interface ItemContext {
     },
   ],
   tokens: [
-    tok('--wt-panelmenu-gap', 'ระยะห่างระหว่างหัวข้อ', 'Gap between panels'),
-    tok('--wt-panelmenu-panel-bg', 'พื้นของแต่ละหัวข้อ (v2 / v3 สีการ์ด)', 'Panel background (card colour in v2 / v3)'),
-    tok('--wt-panelmenu-panel-border-width', 'ขอบของแต่ละหัวข้อ (v2 / v3)', 'Panel border width (v2 / v3)'),
-    tok('--wt-panelmenu-panel-radius', 'ความมนของแต่ละหัวข้อ', 'Panel corner radius'),
-    tok('--wt-panelmenu-panel-padding', 'ระยะขอบในของแต่ละหัวข้อ', 'Panel padding'),
-    tok('--wt-panelmenu-header-padding', 'ระยะในของหัวข้อ', 'Header padding'),
-    tok('--wt-panelmenu-header-border-width', 'ขอบของหัวข้อ (v1 1px)', 'Header border width (1px in v1)'),
-    tok('--wt-panelmenu-header-radius', 'ความมนของหัวข้อ', 'Header radius'),
-    tok('--wt-panelmenu-header-active-radius', 'ความมนของหัวข้อที่เปิดอยู่', 'Radius of an open header'),
-    tok('--wt-panelmenu-header-bg', 'พื้นของหัวข้อ (v1 เทาอ่อน)', 'Header background (light grey in v1)'),
-    tok('--wt-panelmenu-header-color', 'สีตัวอักษรของหัวข้อ', 'Header text'),
-    tok('--wt-panelmenu-header-weight', 'น้ำหนักตัวอักษรของหัวข้อ', 'Header font weight'),
-    tok('--wt-panelmenu-content-bg', 'พื้นของรายการใต้หัวข้อ', 'Background under a header'),
-    tok('--wt-panelmenu-content-border-width', 'ขอบของส่วนรายการ (v1 1px)', 'Content border width (1px in v1)'),
-    tok('--wt-panelmenu-content-padding', 'ระยะขอบในของส่วนรายการ', 'Content padding'),
-    tok('--wt-panelmenu-submenu-indent', 'ระยะเยื้องของรายการที่ซ้อนอยู่', 'Indent of nested items'),
-    tok('--wt-panelmenu-item-padding', 'ระยะในของรายการ', 'Item padding'),
-    tok('--wt-panelmenu-item-radius', 'ความมนของรายการ', 'Item radius'),
-    tok('--wt-panelmenu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
-    tok('--wt-panelmenu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
-    tok('--wt-panelmenu-item-hover-bg', 'พื้นรายการและหัวข้อเมื่อชี้', 'Item and header background on hover'),
-    tok('--wt-panelmenu-icon-order', 'ลูกศรอยู่ขวา (1) หรือซ้าย (-1, v1)', 'Arrow on the right (1) or the left (-1, v1)'),
-    tok('--wt-border', 'สีขอบ', 'Border colour'),
+    tok('--wu-panelmenu-gap', 'ระยะห่างระหว่างหัวข้อ', 'Gap between panels'),
+    tok('--wu-panelmenu-panel-bg', 'พื้นของแต่ละหัวข้อ (v2 / v3 สีการ์ด)', 'Panel background (card colour in v2 / v3)'),
+    tok('--wu-panelmenu-panel-border-width', 'ขอบของแต่ละหัวข้อ (v2 / v3)', 'Panel border width (v2 / v3)'),
+    tok('--wu-panelmenu-panel-radius', 'ความมนของแต่ละหัวข้อ', 'Panel corner radius'),
+    tok('--wu-panelmenu-panel-padding', 'ระยะขอบในของแต่ละหัวข้อ', 'Panel padding'),
+    tok('--wu-panelmenu-header-padding', 'ระยะในของหัวข้อ', 'Header padding'),
+    tok('--wu-panelmenu-header-border-width', 'ขอบของหัวข้อ (v1 1px)', 'Header border width (1px in v1)'),
+    tok('--wu-panelmenu-header-radius', 'ความมนของหัวข้อ', 'Header radius'),
+    tok('--wu-panelmenu-header-active-radius', 'ความมนของหัวข้อที่เปิดอยู่', 'Radius of an open header'),
+    tok('--wu-panelmenu-header-bg', 'พื้นของหัวข้อ (v1 เทาอ่อน)', 'Header background (light grey in v1)'),
+    tok('--wu-panelmenu-header-color', 'สีตัวอักษรของหัวข้อ', 'Header text'),
+    tok('--wu-panelmenu-header-weight', 'น้ำหนักตัวอักษรของหัวข้อ', 'Header font weight'),
+    tok('--wu-panelmenu-content-bg', 'พื้นของรายการใต้หัวข้อ', 'Background under a header'),
+    tok('--wu-panelmenu-content-border-width', 'ขอบของส่วนรายการ (v1 1px)', 'Content border width (1px in v1)'),
+    tok('--wu-panelmenu-content-padding', 'ระยะขอบในของส่วนรายการ', 'Content padding'),
+    tok('--wu-panelmenu-submenu-indent', 'ระยะเยื้องของรายการที่ซ้อนอยู่', 'Indent of nested items'),
+    tok('--wu-panelmenu-item-padding', 'ระยะในของรายการ', 'Item padding'),
+    tok('--wu-panelmenu-item-radius', 'ความมนของรายการ', 'Item radius'),
+    tok('--wu-panelmenu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
+    tok('--wu-panelmenu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
+    tok('--wu-panelmenu-item-hover-bg', 'พื้นรายการและหัวข้อเมื่อชี้', 'Item and header background on hover'),
+    tok('--wu-panelmenu-icon-order', 'ลูกศรอยู่ขวา (1) หรือซ้าย (-1, v1)', 'Arrow on the right (1) or the left (-1, v1)'),
+    tok('--wu-border', 'สีขอบ', 'Border colour'),
   ],
 };

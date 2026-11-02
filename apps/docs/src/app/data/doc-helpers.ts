@@ -7,13 +7,13 @@ export const row = (name: string, type: string, def: string | undefined, th: str
 export const tok = (name: string, th: string, en: string): TokenRow => ({ name, description: { th, en } });
 
 export const importText = {
-  th: 'ใช้ได้ทั้ง NgModule (<code>WtXxxModule</code>) และ standalone',
-  en: 'Works as an NgModule (<code>WtXxxModule</code>) or standalone.',
+  th: 'ใช้ได้ทั้ง NgModule (<code>WuXxxModule</code>) และ standalone',
+  en: 'Works as an NgModule (<code>WuXxxModule</code>) or standalone.',
 };
 
-export const SEVERITY_TYPE = `type WtSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'help' | 'contrast';
+export const SEVERITY_TYPE = `type WuSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'help' | 'contrast';
 // 'warning' และ 'error' ใช้ได้ด้วย (= 'warn' และ 'danger')
-type WtSeverityInput = WtSeverity | 'warning' | 'error' | null | undefined;`;
+type WuSeverityInput = WuSeverity | 'warning' | 'error' | null | undefined;`;
 
 /** The `styleClass` / `style` pair every component takes (style is an object with unquoted keys). */
 export const STYLE_ROW = row(

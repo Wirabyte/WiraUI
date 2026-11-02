@@ -1,7 +1,7 @@
 /**
  * Input masks in the familiar notation: `9` a digit, `a` a letter, `*` a letter or digit, `?` starts the optional
  * part, anything else is a literal typed for the user (`9-9999-99999-99-9`, `999-999-9999`, `(99) 9999-9999`).
- * Framework-free: wt-inputmask keeps a buffer with these helpers and the browser's input value in step with it.
+ * Framework-free: wu-inputmask keeps a buffer with these helpers and the browser's input value in step with it.
  */
 export interface MaskSlot {
   /** A literal character the mask writes itself; undefined for a slot the user fills. */

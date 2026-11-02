@@ -15,12 +15,12 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import type { FlowNode } from 'wiratheme/core';
-import { WT_FLOW_NODE } from './flow.types';
-import type { WtFlowNodeContext } from './flow.types';
+import type { FlowNode } from 'wiraui/core';
+import { WU_FLOW_NODE } from './flow.types';
+import type { WuFlowNodeContext } from './flow.types';
 
 /** The flow's side of the node wrapper: it measures the element while it exists. */
-export abstract class ɵWtFlowNodeRegistry {
+export abstract class ɵWuFlowNodeRegistry {
   abstract ɵregisterNode(id: string, el: HTMLElement): void;
   abstract ɵunregisterNode(id: string, el: HTMLElement): void;
   abstract ɵnodeComponentEvent(node: FlowNode, name: string, value: unknown): void;
@@ -28,13 +28,13 @@ export abstract class ɵWtFlowNodeRegistry {
 
 /** Marks a node's wrapper element so the flow can measure it. Internal. */
 @Directive({
-  selector: '[wtFlowNodeWrapper]',
+  selector: '[wuFlowNodeWrapper]',
   standalone: true,
 })
-export class ɵWtFlowNodeWrapper implements OnInit, OnChanges, OnDestroy {
-  @Input('wtFlowNodeWrapper') nodeId = '';
+export class ɵWuFlowNodeWrapper implements OnInit, OnChanges, OnDestroy {
+  @Input('wuFlowNodeWrapper') nodeId = '';
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly registry = inject(ɵWtFlowNodeRegistry);
+  private readonly registry = inject(ɵWuFlowNodeRegistry);
   private registered = '';
 
   ngOnInit(): void {
@@ -58,7 +58,7 @@ export class ɵWtFlowNodeWrapper implements OnInit, OnChanges, OnDestroy {
 }
 
 /** Inputs a node component may declare; each gets the node's current value. */
-const NODE_INPUTS: Record<string, (ctx: WtFlowNodeContext) => unknown> = {
+const NODE_INPUTS: Record<string, (ctx: WuFlowNodeContext) => unknown> = {
   node: (c) => c.node,
   context: (c) => c,
   props: (c) => c,
@@ -86,21 +86,21 @@ const NODE_INPUTS: Record<string, (ctx: WtFlowNodeContext) => unknown> = {
  * `(nodeComponentEvent)`. Internal.
  */
 @Directive({
-  selector: '[wtFlowNodeComponent]',
+  selector: '[wuFlowNodeComponent]',
   standalone: true,
 })
-export class ɵWtFlowNodeComponentOutlet implements OnChanges, DoCheck, OnDestroy {
-  @Input() wtFlowNodeComponent: Type<unknown> | null = null;
-  @Input() wtFlowNodeContext: WtFlowNodeContext | null = null;
+export class ɵWuFlowNodeComponentOutlet implements OnChanges, DoCheck, OnDestroy {
+  @Input() wuFlowNodeComponent: Type<unknown> | null = null;
+  @Input() wuFlowNodeContext: WuFlowNodeContext | null = null;
 
   private ref: ComponentRef<unknown> | null = null;
   private inputs: string[] = [];
   private subs: { unsubscribe(): void }[] = [];
   private readonly vcr = inject(ViewContainerRef);
-  private readonly registry = inject(ɵWtFlowNodeRegistry);
+  private readonly registry = inject(ɵWuFlowNodeRegistry);
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['wtFlowNodeComponent'] || changes['wtFlowNodeContext']) this.create();
+    if (changes['wuFlowNodeComponent'] || changes['wuFlowNodeContext']) this.create();
   }
 
   ngDoCheck(): void {
@@ -113,11 +113,11 @@ export class ɵWtFlowNodeComponentOutlet implements OnChanges, DoCheck, OnDestro
 
   private create(): void {
     this.clear();
-    const type = this.wtFlowNodeComponent;
+    const type = this.wuFlowNodeComponent;
     if (!type) return;
     const mirror = reflectComponentType(type);
-    // The node's context for `inject(WT_FLOW_NODE)`, on top of the flow's own injector (handles inside find the flow).
-    const injector = Injector.create({ providers: [{ provide: WT_FLOW_NODE, useValue: this.wtFlowNodeContext }], parent: this.vcr.injector });
+    // The node's context for `inject(WU_FLOW_NODE)`, on top of the flow's own injector (handles inside find the flow).
+    const injector = Injector.create({ providers: [{ provide: WU_FLOW_NODE, useValue: this.wuFlowNodeContext }], parent: this.vcr.injector });
     this.ref = this.vcr.createComponent(type, { injector });
     this.inputs = mirror ? mirror.inputs.map((i) => i.templateName).filter((n) => n in NODE_INPUTS) : [];
     const instance = this.ref.instance as Record<string, unknown>;
@@ -126,7 +126,7 @@ export class ɵWtFlowNodeComponentOutlet implements OnChanges, DoCheck, OnDestro
       if (emitter instanceof EventEmitter || (emitter && typeof (emitter as { subscribe?: unknown }).subscribe === 'function')) {
         this.subs.push(
           (emitter as EventEmitter<unknown>).subscribe((value: unknown) => {
-            const ctx = this.wtFlowNodeContext;
+            const ctx = this.wuFlowNodeContext;
             if (ctx) this.registry.ɵnodeComponentEvent(ctx.node, out.templateName, value);
           })
         );
@@ -137,7 +137,7 @@ export class ɵWtFlowNodeComponentOutlet implements OnChanges, DoCheck, OnDestro
 
   private push(): void {
     const ref = this.ref;
-    const ctx = this.wtFlowNodeContext;
+    const ctx = this.wuFlowNodeContext;
     if (!ref || !ctx) return;
     for (const name of this.inputs) ref.setInput(name, NODE_INPUTS[name](ctx));
   }

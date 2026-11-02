@@ -13,13 +13,13 @@
   @if (startTemplate(); as t) {
     <ng-container *ngTemplateOutlet="t; context: groupContext()"></ng-container>
   }
-  <div class="wt-metergroup-meters p-metergroup-meters">
+  <div class="wu-metergroup-meters p-metergroup-meters">
     @for (item of parts().items; track $index; let i = $index) {
       @if (meterTemplate(); as t) {
         <ng-container *ngTemplateOutlet="t; context: meterContext(i)"></ng-container>
       } @else {
         <span
-          class="wt-metergroup-meter p-metergroup-meter"
+          class="wu-metergroup-meter p-metergroup-meter"
           [style.background]="parts().colors[i]"
           [style.width]="orientation() === 'horizontal' ? parts().sizes[i] : null"
           [style.height]="orientation() === 'vertical' ? parts().sizes[i] : null"
@@ -41,15 +41,15 @@
   } @else {
     <ol [class]="labelClasses()">
       @for (item of parts().items; track $index; let i = $index) {
-        <li class="wt-metergroup-label p-metergroup-label">
+        <li class="wu-metergroup-label p-metergroup-label">
           @if (iconTemplate(); as t) {
             <ng-container *ngTemplateOutlet="t; context: { $implicit: item, icon: item.icon }"></ng-container>
           } @else if (item.icon) {
-            <i [class]="'wt-metergroup-label-icon p-metergroup-label-icon ' + item.icon" [style.color]="parts().colors[i]" aria-hidden="true"></i>
+            <i [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon" [style.color]="parts().colors[i]" aria-hidden="true"></i>
           } @else {
-            <span class="wt-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts().colors[i]"></span>
+            <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts().colors[i]"></span>
           }
-          <span class="wt-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts().percentages[i] }}%)</span>
+          <span class="wu-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts().percentages[i] }}%)</span>
         </li>
       }
     </ol>

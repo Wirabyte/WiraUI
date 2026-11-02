@@ -8,7 +8,7 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
         <div class="docs-demo-labelled">
           <label for="d-ms-province">{{ tx('จังหวัด') }}</label>
-          <wt-multiselect
+          <wu-multiselect
             id="d-ms-basic"
             inputId="d-ms-province"
             [(ngModel)]="provinceIds"
@@ -16,7 +16,7 @@
             [optionLabel]="tx('name_th')"
             optionValue="id"
             [placeholder]="tx('เลือกจังหวัด')"
-          ></wt-multiselect>
+          ></wu-multiselect>
         </div>
         <span class="docs-demo-output">provinceIds: <code id="d-ms-value">{{ provinceIds | json }}</code></span>
       </docs-demo>
@@ -24,7 +24,7 @@
 
     <docs-section id="labels" [section]="sec['labels']">
       <docs-demo [html]="code['labels']" [ts]="ts['labels']">
-        <wt-multiselect
+        <wu-multiselect
           id="d-ms-labels"
           [(ngModel)]="labelIds"
           [options]="local(provinces)"
@@ -33,17 +33,17 @@
           [maxSelectedLabels]="2"
           [selectedItemsLabel]="tx('เลือกแล้ว {0} จังหวัด')"
           [defaultLabel]="tx('จังหวัดที่ดูแล')"
-        ></wt-multiselect>
+        ></wu-multiselect>
       </docs-demo>
     </docs-section>
 
     <docs-section id="chips" [section]="sec['chips']">
       <docs-demo [html]="code['chips']" [ts]="ts['chips']">
-        <wt-multiselect id="d-ms-chips" [(ngModel)]="chipIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" display="chip" [placeholder]="tx('เลือกจังหวัด')"></wt-multiselect>
+        <wu-multiselect id="d-ms-chips" [(ngModel)]="chipIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" display="chip" [placeholder]="tx('เลือกจังหวัด')"></wu-multiselect>
         <span class="docs-demo-output">value: <code id="d-ms-chips-value">{{ chipIds | json }}</code></span>
       </docs-demo>
       <docs-demo [html]="code['chipsNarrow']" [ts]="ts['chipsNarrow']">
-        <wt-multiselect
+        <wu-multiselect
           id="d-ms-chips-narrow"
           [(ngModel)]="narrowChipIds"
           [options]="local(provinces)"
@@ -52,64 +52,64 @@
           display="chip"
           [maxSelectedLabels]="5"
           [style]="{ width: '14rem', maxWidth: '100%' }"
-        ></wt-multiselect>
+        ></wu-multiselect>
         <span class="docs-demo-output">value: <code id="d-ms-chips-narrow-value">{{ narrowChipIds | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="limit" [section]="sec['limit']">
       <docs-demo [html]="code['limit']">
-        <wt-multiselect id="d-ms-limit" [(ngModel)]="limitIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [selectionLimit]="2" [placeholder]="tx('เลือกได้ไม่เกิน 2 จังหวัด')"></wt-multiselect>
+        <wu-multiselect id="d-ms-limit" [(ngModel)]="limitIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [selectionLimit]="2" [placeholder]="tx('เลือกได้ไม่เกิน 2 จังหวัด')"></wu-multiselect>
         <span class="docs-demo-output">value: <code id="d-ms-limit-value">{{ limitIds | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="toggleall" [section]="sec['toggleall']">
       <docs-demo [html]="code['toggleall']" [ts]="ts['toggleall']">
-        <wt-multiselect id="d-ms-all" [(ngModel)]="allIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกจังหวัด')" (onSelectAllChange)="allChanged($event)"></wt-multiselect>
+        <wu-multiselect id="d-ms-all" [(ngModel)]="allIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกจังหวัด')" (onSelectAllChange)="allChanged($event)"></wu-multiselect>
         <span class="docs-demo-output">value: <code id="d-ms-all-value">{{ allIds | json }}</code> · onSelectAllChange: <code id="d-ms-all-checked">{{ allChecked | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="group" [section]="sec['group']">
       <docs-demo [html]="code['group']" [ts]="ts['group']">
-        <wt-multiselect id="d-ms-group" [(ngModel)]="regionIds" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกตามภาค')" [ariaLabel]="tx('เลือกตามภาค')"></wt-multiselect>
+        <wu-multiselect id="d-ms-group" [(ngModel)]="regionIds" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกตามภาค')" [ariaLabel]="tx('เลือกตามภาค')"></wu-multiselect>
       </docs-demo>
     </docs-section>
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']" [ts]="ts['disabled']">
-        <wt-multiselect id="d-ms-level" [(ngModel)]="levelIds" [options]="local(levels)" optionLabel="name" optionValue="id" optionDisabled="closed" [filter]="false" [placeholder]="tx('เลือกระดับชั้น')" [ariaLabel]="tx('เลือกระดับชั้น')"></wt-multiselect>
+        <wu-multiselect id="d-ms-level" [(ngModel)]="levelIds" [options]="local(levels)" optionLabel="name" optionValue="id" optionDisabled="closed" [filter]="false" [placeholder]="tx('เลือกระดับชั้น')" [ariaLabel]="tx('เลือกระดับชั้น')"></wu-multiselect>
         <span class="docs-demo-output">levelIds: <code id="d-ms-level-value">{{ levelIds | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="clear" [section]="sec['clear']">
       <docs-demo [html]="code['clear']" [ts]="ts['clear']">
-        <wt-multiselect id="d-ms-clear" [(ngModel)]="clearIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [showClear]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')"></wt-multiselect>
-        <wt-multiselect id="d-ms-loading" [(ngModel)]="clearIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [loading]="true" [placeholder]="tx('กำลังโหลด…')" [ariaLabel]="tx('กำลังโหลด…')"></wt-multiselect>
+        <wu-multiselect id="d-ms-clear" [(ngModel)]="clearIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [showClear]="true" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')"></wu-multiselect>
+        <wu-multiselect id="d-ms-loading" [(ngModel)]="clearIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [loading]="true" [placeholder]="tx('กำลังโหลด…')" [ariaLabel]="tx('กำลังโหลด…')"></wu-multiselect>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wt-multiselect>
-        <wt-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('ปกติ')" [ariaLabel]="tx('ปกติ')"></wt-multiselect>
-        <wt-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wt-multiselect>
+        <wu-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" size="small" [placeholder]="tx('เล็ก')" [ariaLabel]="tx('เล็ก')"></wu-multiselect>
+        <wu-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('ปกติ')" [ariaLabel]="tx('ปกติ')"></wu-multiselect>
+        <wu-multiselect [(ngModel)]="sizeIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" size="large" [placeholder]="tx('ใหญ่')" [ariaLabel]="tx('ใหญ่')"></wu-multiselect>
       </docs-demo>
     </docs-section>
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']">
-        <wt-multiselect [(ngModel)]="lookIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" [ariaLabel]="tx('กว้างเต็มพื้นที่')"></wt-multiselect>
-        <wt-multiselect [(ngModel)]="lookIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" variant="filled" [placeholder]="tx('แบบพื้นทึบ')" [ariaLabel]="tx('แบบพื้นทึบ')"></wt-multiselect>
+        <wu-multiselect [(ngModel)]="lookIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" [ariaLabel]="tx('กว้างเต็มพื้นที่')"></wu-multiselect>
+        <wu-multiselect [(ngModel)]="lookIds" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" variant="filled" [placeholder]="tx('แบบพื้นทึบ')" [ariaLabel]="tx('แบบพื้นทึบ')"></wu-multiselect>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="selectedItems"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['templates']">
-        <wt-multiselect id="d-ms-tpl" [(ngModel)]="picked" [options]="local(provinces)" [optionLabel]="tx('name_th')" dataKey="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')">
+        <wu-multiselect id="d-ms-tpl" [(ngModel)]="picked" [options]="local(provinces)" [optionLabel]="tx('name_th')" dataKey="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')">
           <ng-template #item let-p>
             <b class="docs-ms-code">{{ p.code }}</b> {{ en() ? p.name_en : p.name_th }}
           </ng-template>
@@ -123,14 +123,14 @@
               <span class="docs-ms-placeholder">{{ tx('เลือกจังหวัด') }}</span>
             }
           </ng-template>
-        </wt-multiselect>
+        </wu-multiselect>
         <span class="docs-demo-output">picked: <code id="d-ms-tpl-value">{{ codesOf(picked) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="moretemplates" [section]="sec['moretemplates']">
       <docs-demo [html]="code['moretemplates']" [ts]="ts['moretemplates']">
-        <wt-multiselect id="d-ms-more" [(ngModel)]="moreIds" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')">
+        <wu-multiselect id="d-ms-more" [(ngModel)]="moreIds" [options]="local(regions)" [group]="true" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('เลือกจังหวัด')" [ariaLabel]="tx('เลือกจังหวัด')">
           <ng-template #group let-g>
             <span class="docs-ms-group"><i class="wi wi-map-marker"></i> {{ g.label }}</span>
           </ng-template>
@@ -138,20 +138,20 @@
             <div class="docs-ms-note">{{ tx('เลือกได้หลายจังหวัด') }}</div>
           </ng-template>
           <ng-template #footer>
-            <wt-button [label]="tx('เพิ่มจังหวัด')" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+            <wu-button [label]="tx('เพิ่มจังหวัด')" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wu-button>
           </ng-template>
           <ng-template #emptyfilter>{{ tx('ไม่พบจังหวัดที่ค้นหา') }}</ng-template>
           <ng-template #dropdownicon>
             <i class="wi wi-search"></i>
           </ng-template>
-        </wt-multiselect>
+        </wu-multiselect>
         <span class="docs-demo-output">footer: <code id="d-ms-more-added">{{ added }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="events" [section]="sec['events']">
       <docs-demo [html]="code['events']" [ts]="ts['events']" layout="stack">
-        <wt-multiselect
+        <wu-multiselect
           id="d-ms-events"
           [(ngModel)]="eventIds"
           [options]="local(provinces)"
@@ -165,7 +165,7 @@
           (onPanelShow)="log('onPanelShow')"
           (onPanelHide)="log('onPanelHide')"
           (onClear)="log('onClear')"
-        ></wt-multiselect>
+        ></wu-multiselect>
         <span class="docs-demo-output">onChange: <code id="d-ms-change">{{ lastChange || '-' }}</code></span>
         <span class="docs-demo-output">event: <code id="d-ms-event">{{ lastEvent || '-' }}</code></span>
       </docs-demo>
@@ -174,7 +174,7 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-multiselect formControlName="provinces" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('จังหวัด (ต้องเลือก)')" [ariaLabel]="tx('จังหวัด (ต้องเลือก)')"></wt-multiselect>
+          <wu-multiselect formControlName="provinces" [options]="local(provinces)" [optionLabel]="tx('name_th')" optionValue="id" [placeholder]="tx('จังหวัด (ต้องเลือก)')" [ariaLabel]="tx('จังหวัด (ต้องเลือก)')"></wu-multiselect>
         </form>
         <span class="docs-demo-output">value: <code id="d-ms-form-value">{{ form.getRawValue() | json }}</code> · valid: <code id="d-ms-form-valid">{{ form.valid }}</code></span>
       </docs-demo>

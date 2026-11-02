@@ -6,26 +6,26 @@
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']" layout="stack">
-        <wt-message [text]="tx('ระบบจะปิดปรับปรุงคืนนี้ 22:00 น.')"></wt-message>
-        <wt-message severity="success" [text]="tx('บันทึกเรียบร้อย')"></wt-message>
-        <wt-message severity="warn" [text]="tx('แผนของคุณจะหมดอายุใน 3 วัน')"></wt-message>
-        <wt-message severity="error" [text]="tx('ชำระเงินไม่สำเร็จ')"></wt-message>
-        <wt-message severity="secondary" [text]="tx('ไม่มีรายการใหม่')"></wt-message>
+        <wu-message [text]="tx('ระบบจะปิดปรับปรุงคืนนี้ 22:00 น.')"></wu-message>
+        <wu-message severity="success" [text]="tx('บันทึกเรียบร้อย')"></wu-message>
+        <wu-message severity="warn" [text]="tx('แผนของคุณจะหมดอายุใน 3 วัน')"></wu-message>
+        <wu-message severity="error" [text]="tx('ชำระเงินไม่สำเร็จ')"></wu-message>
+        <wu-message severity="secondary" [text]="tx('ไม่มีรายการใหม่')"></wu-message>
       </docs-demo>
     </docs-section>
 
     <docs-section id="closable" [section]="sec['closable']">
       <docs-demo [html]="code['closable']" layout="stack">
         @if (showClosable) {
-          <wt-message id="d-closable" severity="info" [text]="tx('กดปุ่มปิดได้')" [closable]="true" (onClose)="onClosed()"></wt-message>
+          <wu-message id="d-closable" severity="info" [text]="tx('กดปุ่มปิดได้')" [closable]="true" (onClose)="onClosed()"></wu-message>
         }
         @if (showTimed) {
-          <wt-message severity="success" [text]="tx('ข้อความนี้จะหายใน 4 วินาที')" [life]="4000" (onClose)="showTimed = false"></wt-message>
+          <wu-message severity="success" [text]="tx('ข้อความนี้จะหายใน 4 วินาที')" [life]="4000" (onClose)="showTimed = false"></wu-message>
         }
         <div class="docs-demo-actions">
           <span class="docs-demo-output">onClose: <code id="d-closed">{{ closed }}</code></span>
           @if (!showClosable || !showTimed) {
-            <wt-button [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="showAgain()"></wt-button>
+            <wu-button [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="showAgain()"></wu-button>
           }
         </div>
       </docs-demo>
@@ -33,35 +33,35 @@
 
     <docs-section id="variants" [section]="sec['variants']">
       <docs-demo [html]="code['variants']" layout="stack">
-        <wt-message severity="info" variant="outlined" text="Outlined"></wt-message>
-        <wt-message severity="info" variant="simple" text="Simple"></wt-message>
-        <wt-message severity="info" size="small" text="Small"></wt-message>
-        <wt-message severity="info" size="large" text="Large"></wt-message>
+        <wu-message severity="info" variant="outlined" text="Outlined"></wu-message>
+        <wu-message severity="info" variant="simple" text="Simple"></wu-message>
+        <wu-message severity="info" size="small" text="Small"></wu-message>
+        <wu-message severity="info" size="large" text="Large"></wu-message>
       </docs-demo>
     </docs-section>
 
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']" layout="stack">
-        <wt-message severity="warn">
+        <wu-message severity="warn">
           <span>{{ tx('อีเมลยังไม่ยืนยัน') }} <b>{{ tx('ตรวจกล่องจดหมายของคุณ') }}</b></span>
-        </wt-message>
+        </wu-message>
       </docs-demo>
     </docs-section>
 
     <docs-section id="escape" [section]="sec['escape']">
       <docs-demo [html]="code['escape']" layout="stack">
-        <wt-message id="d-msg-html" severity="warn" [escape]="false" [text]="tx('ส่งเอกสารภายใน <b>วันศุกร์นี้</b>')"></wt-message>
-        <wt-messages id="d-msgs-severity" [value]="[{ summary: tx('ระบบจะปิดปรับปรุงคืนนี้') }]" severity="info" [closable]="false" [enableService]="false"></wt-messages>
+        <wu-message id="d-msg-html" severity="warn" [escape]="false" [text]="tx('ส่งเอกสารภายใน <b>วันศุกร์นี้</b>')"></wu-message>
+        <wu-messages id="d-msgs-severity" [value]="[{ summary: tx('ระบบจะปิดปรับปรุงคืนนี้') }]" severity="info" [closable]="false" [enableService]="false"></wu-messages>
       </docs-demo>
     </docs-section>
 
     <docs-section id="messages" [section]="sec['messages']">
       <docs-demo [html]="code['messages']" [ts]="ts['messages']" layout="stack">
-        <wt-messages id="d-messages" [(value)]="notices" [enableService]="false"></wt-messages>
+        <wu-messages id="d-messages" [(value)]="notices" [enableService]="false"></wu-messages>
         <div class="docs-demo-actions">
           <span class="docs-demo-output">{{ tx('เหลือ') }}: <code id="d-messages-count">{{ notices.length }}</code></span>
           @if (notices.length < 3) {
-            <wt-button id="d-messages-reset" [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="resetNotices()"></wt-button>
+            <wu-button id="d-messages-reset" [label]="tx('แสดงอีกครั้ง')" size="small" severity="secondary" [text]="true" (onClick)="resetNotices()"></wu-button>
           }
         </div>
       </docs-demo>
@@ -69,9 +69,9 @@
 
     <docs-section id="service" [section]="sec['service']">
       <docs-demo [html]="code['service']" [ts]="ts['service']" layout="stack">
-        <wt-messages id="d-messages-service" key="form"></wt-messages>
+        <wu-messages id="d-messages-service" key="form"></wu-messages>
         <div>
-          <wt-button id="d-messages-send" [label]="tx('ส่งแบบฟอร์ม')" icon="wi wi-send" (onClick)="sendForm()"></wt-button>
+          <wu-button id="d-messages-send" [label]="tx('ส่งแบบฟอร์ม')" icon="wi wi-send" (onClick)="sendForm()"></wu-button>
         </div>
       </docs-demo>
     </docs-section>

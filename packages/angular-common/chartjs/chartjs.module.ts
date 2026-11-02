@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtChartJs } from './chartjs.component';
+import { WuChartJs } from './chartjs.component';
 
-/** For NgModule apps. Standalone apps can import `WtChartJs` directly. */
+/** For NgModule apps. Standalone apps can import `WuChartJs` directly. */
 @NgModule({
-  imports: [WtChartJs],
-  exports: [WtChartJs],
+  imports: [WuChartJs],
+  exports: [WuChartJs],
 })
-export class WtChartJsModule {}
+export class WuChartJsModule {}

@@ -9,34 +9,34 @@ import {
   OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import type { FlowHandleType, FlowPosition } from 'wiratheme/core';
-import { ɵWtFlowHost } from './flow-host';
-import { WT_FLOW_NODE } from './flow.types';
+import { ɵtoBool } from 'wiraui/config';
+import type { FlowHandleType, FlowPosition } from 'wiraui/core';
+import { ɵWuFlowHost } from './flow-host';
+import { WU_FLOW_NODE } from './flow.types';
 
 const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ? fallback : ɵtoBool(v));
 
 /**
- * A place on a node where edges attach: `<wt-flow-handle type="source" position="right" id="out">` inside a node
+ * A place on a node where edges attach: `<wu-flow-handle type="source" position="right" id="out">` inside a node
  * template. Drag from it to connect (or click it, then another handle). Several per node are fine: give each an `id`
  * and name it in the edge (`sourceHandle` / `targetHandle`); move one along its side with a style
  * (`[style.left.%]="25"`). It shows as a dot; put content inside for a custom look.
  */
 @Component({
-  selector: 'wt-flow-handle',
+  selector: 'wu-flow-handle',
   standalone: true,
   template: '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'wt-flow-handle nodrag',
-    '[class.wt-flow-handle-top]': "side === 'top'",
-    '[class.wt-flow-handle-right]': "side === 'right'",
-    '[class.wt-flow-handle-bottom]': "side === 'bottom'",
-    '[class.wt-flow-handle-left]': "side === 'left'",
-    '[class.wt-flow-handle-source]': "type !== 'target'",
-    '[class.wt-flow-handle-target]': "type === 'target'",
-    '[class.wt-flow-handle-connectable]': 'isConnectable',
+    class: 'wu-flow-handle nodrag',
+    '[class.wu-flow-handle-top]': "side === 'top'",
+    '[class.wu-flow-handle-right]': "side === 'right'",
+    '[class.wu-flow-handle-bottom]': "side === 'bottom'",
+    '[class.wu-flow-handle-left]': "side === 'left'",
+    '[class.wu-flow-handle-source]': "type !== 'target'",
+    '[class.wu-flow-handle-target]': "type === 'target'",
+    '[class.wu-flow-handle-connectable]': 'isConnectable',
     '[class]': 'styleClass || ""',
     // The id is the handle's name inside its node, not a page-wide element id (every node of a type has the same one).
     '[attr.id]': 'null',
@@ -50,7 +50,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
     'aria-hidden': 'true',
   },
 })
-export class WtFlowHandle implements OnChanges, AfterViewInit, OnDestroy {
+export class WuFlowHandle implements OnChanges, AfterViewInit, OnDestroy {
   /** `source` (edges start here, the default) or `target` (edges end here). */
   @Input() type: FlowHandleType = 'source';
   /** Side of the node. Default: top for a target, bottom for a source. */
@@ -90,8 +90,8 @@ export class WtFlowHandle implements OnChanges, AfterViewInit, OnDestroy {
   private viewInit = false;
   private nodeId: string | null = null;
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
-  private readonly nodeCtx = inject(WT_FLOW_NODE, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
+  private readonly nodeCtx = inject(WU_FLOW_NODE, { optional: true });
 
   get side(): FlowPosition {
     const p = this.position;
@@ -120,7 +120,7 @@ export class WtFlowHandle implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private notify(): void {
-    const id = this.nodeCtx?.id ?? this.el.closest?.('.wt-flow-node')?.getAttribute('data-id') ?? null;
+    const id = this.nodeCtx?.id ?? this.el.closest?.('.wu-flow-node')?.getAttribute('data-id') ?? null;
     if (id) {
       this.nodeId = id;
       this.host?.ɵhandlesChanged(id);

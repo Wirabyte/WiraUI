@@ -6,42 +6,42 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-chart id="d-wc-basic" type="bar" [labels]="local(months)" [series]="local(money)" format="currency"></wt-chart>
+        <wu-chart id="d-wc-basic" type="bar" [labels]="local(months)" [series]="local(money)" format="currency"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="swap" [section]="sec['swap']">
       <docs-demo [html]="code['swap']" layout="stack">
-        <wt-chart id="d-wc-swap" type="bar" [labels]="local(months)" [series]="local(money)" [swap]="true" format="compact" (typeChange)="swapped = $event"></wt-chart>
+        <wu-chart id="d-wc-swap" type="bar" [labels]="local(months)" [series]="local(money)" [swap]="true" format="compact" (typeChange)="swapped = $event"></wu-chart>
         <span class="docs-demo-output">typeChange: <code id="d-wc-swapped">{{ swapped }}</code></span>
-        <wt-chart id="d-wc-swap-one" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [swap]="true"></wt-chart>
+        <wu-chart id="d-wc-swap-one" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [swap]="true"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="dynamic" [section]="sec['dynamic']">
       <docs-demo [html]="code['dynamic']" [ts]="ts['dynamic']" layout="stack">
-        <wt-selectbutton id="d-wc-own-kind" [options]="local(ownKinds)" optionLabel="label" optionValue="value" [(ngModel)]="ownKind" [allowEmpty]="false"></wt-selectbutton>
-        <wt-chart id="d-wc-own" [type]="ownKind" [labels]="local(months)" [series]="local(money)" format="compact"></wt-chart>
+        <wu-selectbutton id="d-wc-own-kind" [options]="local(ownKinds)" optionLabel="label" optionValue="value" [(ngModel)]="ownKind" [allowEmpty]="false"></wu-selectbutton>
+        <wu-chart id="d-wc-own" [type]="ownKind" [labels]="local(months)" [series]="local(money)" format="compact"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="line" [section]="sec['line']">
       <docs-demo [html]="code['line']" [ts]="ts['line']" layout="stack">
-        <wt-chart id="d-wc-line" type="line" [labels]="local(months)" [series]="local(visitors)" [smooth]="true" format="compact"></wt-chart>
-        <wt-chart id="d-wc-area" type="area" [labels]="local(months)" [series]="local(money)" [stacked]="true" format="compact"></wt-chart>
+        <wu-chart id="d-wc-line" type="line" [labels]="local(months)" [series]="local(visitors)" [smooth]="true" format="compact"></wu-chart>
+        <wu-chart id="d-wc-area" type="area" [labels]="local(months)" [series]="local(money)" [stacked]="true" format="compact"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="bars" [section]="sec['bars']">
       <docs-demo [html]="code['bars']" [ts]="ts['bars']" layout="stack">
-        <wt-chart id="d-wc-stacked" type="bar" [labels]="local(grades)" [series]="local(students)" [stacked]="true" [showValues]="true"></wt-chart>
-        <wt-chart id="d-wc-across" type="bar" [labels]="local(channels)" [series]="local(applicants)" [horizontal]="true" [showValues]="true" height="260"></wt-chart>
+        <wu-chart id="d-wc-stacked" type="bar" [labels]="local(grades)" [series]="local(students)" [stacked]="true" [showValues]="true"></wu-chart>
+        <wu-chart id="d-wc-across" type="bar" [labels]="local(channels)" [series]="local(applicants)" [horizontal]="true" [showValues]="true" height="260"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="mixed" [section]="sec['mixed']">
       <docs-demo [html]="code['mixed']" [ts]="ts['mixed']" layout="stack">
-        <wt-chart
+        <wu-chart
           id="d-wc-mixed"
           type="bar"
           [labels]="local(months)"
@@ -50,15 +50,15 @@
           rightFormat="percent"
           [yTitle]="tx('ยอดขาย')"
           [y2Title]="tx('อัตราเติบโต')"
-        ></wt-chart>
+        ></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="pie" [section]="sec['pie']">
       <docs-demo [html]="code['pie']" layout="stack">
         <div class="docs-demo-grid">
-          <wt-chart id="d-wc-doughnut" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [showValues]="true" [suffix]="tx(' คน')"></wt-chart>
-          <wt-chart id="d-wc-pie" type="pie" [labels]="local(channels)" [series]="local(applicants)" legend="bottom"></wt-chart>
+          <wu-chart id="d-wc-doughnut" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [showValues]="true" [suffix]="tx(' คน')"></wu-chart>
+          <wu-chart id="d-wc-pie" type="pie" [labels]="local(channels)" [series]="local(applicants)" legend="bottom"></wu-chart>
         </div>
       </docs-demo>
     </docs-section>
@@ -66,30 +66,30 @@
     <docs-section id="radar" [section]="sec['radar']">
       <docs-demo [html]="code['radar']" [ts]="ts['radar']" layout="stack">
         <div class="docs-demo-grid">
-          <wt-chart id="d-wc-radar" type="radar" [labels]="local(skills)" [series]="local(skillScores)" [max]="5"></wt-chart>
-          <wt-chart
+          <wu-chart id="d-wc-radar" type="radar" [labels]="local(skills)" [series]="local(skillScores)" [max]="5"></wu-chart>
+          <wu-chart
             id="d-wc-scatter"
             type="scatter"
             [series]="local(readingVsScore)"
             [xTitle]="tx('ชั่วโมงอ่านหนังสือ')"
             [yTitle]="tx('คะแนนสอบ')"
-          ></wt-chart>
+          ></wu-chart>
         </div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="curves" [section]="sec['curves']">
       <docs-demo [html]="code['curves']" [ts]="ts['curves']" layout="stack">
-        <wt-chart id="d-wc-fade" type="area" [labels]="local(months)" [series]="local(money)" format="compact"></wt-chart>
-        <wt-chart id="d-wc-step" type="line" [labels]="years" [series]="local(tuition)" curve="step" format="currency"></wt-chart>
+        <wu-chart id="d-wc-fade" type="area" [labels]="local(months)" [series]="local(money)" format="compact"></wu-chart>
+        <wu-chart id="d-wc-step" type="line" [labels]="years" [series]="local(tuition)" curve="step" format="currency"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="gauge" [section]="sec['gauge']">
       <docs-demo [html]="code['gauge']" layout="stack">
         <div class="docs-demo-grid">
-          <wt-chart id="d-wc-gauge" type="radialBar" [labels]="local(attendance)" [series]="attendanceValue" [startAngle]="-90" [endAngle]="90"></wt-chart>
-          <wt-chart id="d-wc-rings" type="radialBar" [labels]="local(progressLabels)" [series]="progress" legend="bottom"></wt-chart>
+          <wu-chart id="d-wc-gauge" type="radialBar" [labels]="local(attendance)" [series]="attendanceValue" [startAngle]="-90" [endAngle]="90"></wu-chart>
+          <wu-chart id="d-wc-rings" type="radialBar" [labels]="local(progressLabels)" [series]="progress" legend="bottom"></wu-chart>
         </div>
       </docs-demo>
     </docs-section>
@@ -97,82 +97,82 @@
     <docs-section id="polar" [section]="sec['polar']">
       <docs-demo [html]="code['polar']" layout="stack">
         <div class="docs-demo-grid">
-          <wt-chart id="d-wc-polar" type="polarArea" [labels]="local(channels)" [series]="local(applicants)"></wt-chart>
-          <wt-chart id="d-wc-semi" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [startAngle]="-90" [endAngle]="90" legend="bottom"></wt-chart>
+          <wu-chart id="d-wc-polar" type="polarArea" [labels]="local(channels)" [series]="local(applicants)"></wu-chart>
+          <wu-chart id="d-wc-semi" type="doughnut" [labels]="local(channels)" [series]="local(applicants)" [startAngle]="-90" [endAngle]="90" legend="bottom"></wu-chart>
         </div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="heatmap" [section]="sec['heatmap']">
       <docs-demo [html]="code['heatmap']" [ts]="ts['heatmap']" layout="stack">
-        <wt-chart id="d-wc-heatmap" type="heatmap" [labels]="local(days)" [series]="library" [looks]="true" height="260"></wt-chart>
-        <wt-chart id="d-wc-heatranges" type="heatmap" [labels]="local(days)" [series]="library" [colorRanges]="local(ranges)" height="260"></wt-chart>
+        <wu-chart id="d-wc-heatmap" type="heatmap" [labels]="local(days)" [series]="library" [looks]="true" height="260"></wu-chart>
+        <wu-chart id="d-wc-heatranges" type="heatmap" [labels]="local(days)" [series]="library" [colorRanges]="local(ranges)" height="260"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="treemap" [section]="sec['treemap']">
       <docs-demo [html]="code['treemap']" [ts]="ts['treemap']" layout="stack">
-        <wt-chart id="d-wc-treemap" type="treemap" [labels]="local(departments)" [series]="local(budgets)" format="compact" height="340"></wt-chart>
+        <wu-chart id="d-wc-treemap" type="treemap" [labels]="local(departments)" [series]="local(budgets)" format="compact" height="340"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="stream" [section]="sec['stream']">
       <docs-demo [html]="code['stream']" [ts]="ts['stream']" layout="stack">
-        <wt-chart id="d-wc-stream" type="stream" [labels]="local(months)" [series]="local(clubs)" [looks]="true"></wt-chart>
+        <wu-chart id="d-wc-stream" type="stream" [labels]="local(months)" [series]="local(clubs)" [looks]="true"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="waterfall" [section]="sec['waterfall']">
       <docs-demo [html]="code['waterfall']" [ts]="ts['waterfall']" layout="stack">
-        <wt-chart id="d-wc-waterfall" type="waterfall" [labels]="local(budgetSteps)" [series]="budgetFlow" format="compact" [looks]="true"></wt-chart>
+        <wu-chart id="d-wc-waterfall" type="waterfall" [labels]="local(budgetSteps)" [series]="budgetFlow" format="compact" [looks]="true"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="dumbbell" [section]="sec['dumbbell']">
       <docs-demo [html]="code['dumbbell']" [ts]="ts['dumbbell']" layout="stack">
-        <wt-chart id="d-wc-dumbbell" type="dumbbell" [labels]="local(subjects)" [series]="local(beforeAfter)" [looks]="true" height="300"></wt-chart>
+        <wu-chart id="d-wc-dumbbell" type="dumbbell" [labels]="local(subjects)" [series]="local(beforeAfter)" [looks]="true" height="300"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="timeline" [section]="sec['timeline']">
       <docs-demo [html]="code['timeline']" [ts]="ts['timeline']" layout="stack">
-        <wt-chart id="d-wc-timeline" type="timeline" [series]="local(project)" [looks]="true" height="300"></wt-chart>
+        <wu-chart id="d-wc-timeline" type="timeline" [series]="local(project)" [looks]="true" height="300"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="funnel" [section]="sec['funnel']">
       <docs-demo [html]="code['funnel']" [ts]="ts['funnel']" layout="stack">
-        <wt-chart id="d-wc-funnel" type="funnel" [labels]="local(steps)" [series]="admissions" [looks]="true" height="320"></wt-chart>
+        <wu-chart id="d-wc-funnel" type="funnel" [labels]="local(steps)" [series]="admissions" [looks]="true" height="320"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="boxplot" [section]="sec['boxplot']">
       <docs-demo [html]="code['boxplot']" [ts]="ts['boxplot']" layout="stack">
-        <wt-chart id="d-wc-boxplot" type="boxplot" [labels]="local(classes)" [series]="local(scores)" [looks]="true" [yTitle]="tx('คะแนน')"></wt-chart>
+        <wu-chart id="d-wc-boxplot" type="boxplot" [labels]="local(classes)" [series]="local(scores)" [looks]="true" [yTitle]="tx('คะแนน')"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="histogram" [section]="sec['histogram']">
       <docs-demo [html]="code['histogram']" [ts]="ts['histogram']" layout="stack">
-        <wt-chart id="d-wc-histogram" type="histogram" [series]="local(heights)" [looks]="true" [xTitle]="tx('ส่วนสูง (ซม.)')"></wt-chart>
+        <wu-chart id="d-wc-histogram" type="histogram" [series]="local(heights)" [looks]="true" [xTitle]="tx('ส่วนสูง (ซม.)')"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sunburst" [section]="sec['sunburst']">
       <docs-demo [html]="code['sunburst']" [ts]="ts['sunburst']" layout="stack">
-        <wt-chart id="d-wc-sunburst" type="sunburst" [series]="local(budgetSeries)" [looks]="true" format="compact" height="360"></wt-chart>
+        <wu-chart id="d-wc-sunburst" type="sunburst" [series]="local(budgetSeries)" [looks]="true" format="compact" height="360"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="unit" [section]="sec['unit']">
       <docs-demo [html]="code['unit']" [ts]="ts['unit']" layout="stack">
-        <wt-chart id="d-wc-unit" type="unit" [labels]="local(travel)" [series]="local(travelCounts)" [looks]="true" height="300"></wt-chart>
+        <wu-chart id="d-wc-unit" type="unit" [labels]="local(travel)" [series]="local(travelCounts)" [looks]="true" height="300"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="slope" [section]="sec['slope']">
       <docs-demo [html]="code['slope']" [ts]="ts['slope']" layout="stack">
-        <wt-chart id="d-wc-slope" type="slope" [labels]="years2" [series]="local(yearScores)" [looks]="true" height="320"></wt-chart>
+        <wu-chart id="d-wc-slope" type="slope" [labels]="years2" [series]="local(yearScores)" [looks]="true" height="320"></wu-chart>
       </docs-demo>
     </docs-section>
 
@@ -182,17 +182,17 @@
           <div class="docs-kpi">
             <span>{{ tx('ผู้เข้าชม') }}</span>
             <strong>30,400</strong>
-            <wt-chart type="area" [labels]="local(months)" [series]="local(kpiVisitors)" [sparkline]="true" format="compact"></wt-chart>
+            <wu-chart type="area" [labels]="local(months)" [series]="local(kpiVisitors)" [sparkline]="true" format="compact"></wu-chart>
           </div>
           <div class="docs-kpi">
             <span>{{ tx('รายรับ') }}</span>
             <strong>฿610,000</strong>
-            <wt-chart type="line" [labels]="local(months)" [series]="local(kpiIncome)" [sparkline]="true" format="currency" [colors]="['#f59e0b']"></wt-chart>
+            <wu-chart type="line" [labels]="local(months)" [series]="local(kpiIncome)" [sparkline]="true" format="currency" [colors]="['#f59e0b']"></wu-chart>
           </div>
           <div class="docs-kpi">
             <span>{{ tx('สมัครเรียน') }}</span>
             <strong>2,610</strong>
-            <wt-chart type="bar" [labels]="local(months)" [series]="local(kpiApplications)" [sparkline]="true" [colors]="['#6366f1']"></wt-chart>
+            <wu-chart type="bar" [labels]="local(months)" [series]="local(kpiApplications)" [sparkline]="true" [colors]="['#6366f1']"></wu-chart>
           </div>
         </div>
       </docs-demo>
@@ -200,13 +200,13 @@
 
     <docs-section id="annotations" [section]="sec['annotations']">
       <docs-demo [html]="code['annotations']" [ts]="ts['annotations']" layout="stack">
-        <wt-chart id="d-wc-notes" type="line" [labels]="local(months)" [series]="local(kpiVisitors)" [annotations]="local(notes)" format="compact"></wt-chart>
+        <wu-chart id="d-wc-notes" type="line" [labels]="local(months)" [series]="local(kpiVisitors)" [annotations]="local(notes)" format="compact"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="toolbar" [section]="sec['toolbar']">
       <docs-demo [html]="code['toolbar']" [ts]="ts['toolbar']" layout="stack">
-        <wt-chart
+        <wu-chart
           id="d-wc-toolbar"
           type="area"
           [title]="tx('ผู้เข้าชมรายวัน')"
@@ -216,28 +216,28 @@
           [toolbar]="true"
           fileName="visitors"
           (zoomChange)="zoomTo($event)"
-        ></wt-chart>
+        ></wu-chart>
         <span class="docs-demo-output">zoomChange: <code id="d-wc-zoom">{{ zoomText }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sync" [section]="sec['sync']">
       <docs-demo [html]="code['sync']" layout="stack">
-        <wt-chart id="d-wc-sync1" group="docs-school" type="line" [labels]="local(months)" [series]="local(kpiVisitors)" height="200"></wt-chart>
-        <wt-chart id="d-wc-sync2" group="docs-school" type="bar" [labels]="local(months)" [series]="local(money)" format="compact" height="200"></wt-chart>
+        <wu-chart id="d-wc-sync1" group="docs-school" type="line" [labels]="local(months)" [series]="local(kpiVisitors)" height="200"></wu-chart>
+        <wu-chart id="d-wc-sync2" group="docs-school" type="bar" [labels]="local(months)" [series]="local(money)" format="compact" height="200"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="format" [section]="sec['format']">
       <docs-demo [html]="code['format']" layout="stack">
-        <wt-chart id="d-wc-font" type="bar" [labels]="local(months)" [series]="local(money)" format="compact" font="Sarabun" [fontSize]="14"></wt-chart>
-        <wt-chart id="d-wc-suffix" type="line" [labels]="local(months)" [series]="local(visitors)" format="number" [suffix]="tx(' คน')" [decimals]="0"></wt-chart>
+        <wu-chart id="d-wc-font" type="bar" [labels]="local(months)" [series]="local(money)" format="compact" font="Sarabun" [fontSize]="14"></wu-chart>
+        <wu-chart id="d-wc-suffix" type="line" [labels]="local(months)" [series]="local(visitors)" format="number" [suffix]="tx(' คน')" [decimals]="0"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="extras" [section]="sec['extras']">
       <docs-demo [html]="code['extras']" layout="stack">
-        <wt-chart
+        <wu-chart
           id="d-wc-extras"
           type="line"
           [title]="tx('รายรับรายจ่าย ภาคเรียนที่ 2/2569')"
@@ -247,14 +247,14 @@
           [referenceLines]="local(budget)"
           format="compact"
           [yTitle]="tx('บาท')"
-        ></wt-chart>
+        ></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="live" [section]="sec['live']">
       <docs-demo [html]="code['live']" [ts]="ts['live']" layout="stack">
-        <wt-button id="d-wc-shuffle" [label]="tx('สุ่มข้อมูลใหม่')" icon="wi wi-refresh" (onClick)="shuffle()"></wt-button>
-        <wt-chart id="d-wc-live" type="bar" [labels]="local(months)" [series]="local(live)" (pointClick)="clicked($event)" (seriesToggle)="seriesToggled($event)"></wt-chart>
+        <wu-button id="d-wc-shuffle" [label]="tx('สุ่มข้อมูลใหม่')" icon="wi wi-refresh" (onClick)="shuffle()"></wu-button>
+        <wu-chart id="d-wc-live" type="bar" [labels]="local(months)" [series]="local(live)" (pointClick)="clicked($event)" (seriesToggle)="seriesToggled($event)"></wu-chart>
         <span class="docs-demo-output">
           {{ tx('คลิกล่าสุด') }}: <code id="d-wc-click">{{ lastClick }}</code> · seriesToggle: <code id="d-wc-toggle">{{ toggled }}</code>
         </span>
@@ -263,16 +263,16 @@
 
     <docs-section id="chartjs" [section]="sec['chartjs']">
       <docs-demo [html]="code['chartjs']" [ts]="ts['chartjs']" layout="stack">
-        <wt-chart id="d-wc-chartjs" type="bar" [data]="local(chartjsData)" [options]="chartjsOptions"></wt-chart>
+        <wu-chart id="d-wc-chartjs" type="bar" [data]="local(chartjsData)" [options]="chartjsOptions"></wu-chart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="export" [section]="sec['export']">
       <docs-demo [html]="code['export']" layout="stack">
-        <wt-chart #exportChart="wtChart" id="d-wc-export" type="doughnut" [labels]="local(channels)" [series]="local(applicants)"></wt-chart>
+        <wu-chart #exportChart="wuChart" id="d-wc-export" type="doughnut" [labels]="local(channels)" [series]="local(applicants)"></wu-chart>
         <div class="docs-demo-actions">
-          <wt-button id="d-wc-png" [label]="tx('ดาวน์โหลด PNG')" icon="wi wi-download" (onClick)="exportChart.download('applicants')"></wt-button>
-          <wt-button id="d-wc-svg" [label]="tx('ดาวน์โหลด SVG')" severity="secondary" [outlined]="true" (onClick)="exportChart.download('applicants', 'svg')"></wt-button>
+          <wu-button id="d-wc-png" [label]="tx('ดาวน์โหลด PNG')" icon="wi wi-download" (onClick)="exportChart.download('applicants')"></wu-button>
+          <wu-button id="d-wc-svg" [label]="tx('ดาวน์โหลด SVG')" severity="secondary" [outlined]="true" (onClick)="exportChart.download('applicants', 'svg')"></wu-button>
         </div>
       </docs-demo>
     </docs-section>

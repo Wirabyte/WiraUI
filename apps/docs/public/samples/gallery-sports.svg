@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
-  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): sports day on the school field. -->
+  <!-- Sample artwork for the docs (drawn for WiraUI, free to use): sports day on the school field. -->
   <rect width="320" height="200" fill="#bae6fd" />
   <circle cx="54" cy="40" r="18" fill="#fde68a" />
   <rect y="110" width="320" height="90" fill="#4ade80" />

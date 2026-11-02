@@ -21,8 +21,8 @@ export const EXCEL_DOC: ComponentDoc = {
   module: 'downloadExcel',
   selector: 'downloadExcel() · buildExcel()',
   description: {
-    th: 'สร้างไฟล์ Excel (.xlsx) จากข้อมูลในแอปโดยไม่ต้องติดตั้ง library เพิ่ม ใส่สี ฟอนต์ เส้นขอบ รูปแบบตัวเลข รวมเซลล์ สูตร หลาย sheet ตรึงแถว ตัวกรอง และตั้งค่าการพิมพ์ได้ ตัวเลขยังเป็นตัวเลข วันที่เป็นวันที่ (แสดงปี พ.ศ. ได้) และเลขที่ขึ้นต้นด้วย 0 ไม่หาย wt-table ใช้ตัวนี้ใน exportExcel()',
-    en: 'Builds Excel files (.xlsx) from your app’s data with no extra library: colours, fonts, borders, number formats, merged cells, formulas, several sheets, frozen rows, filters and print settings. Numbers stay numbers, dates stay dates (Buddhist years if you like) and leading zeros survive. wt-table uses it for exportExcel().',
+    th: 'สร้างไฟล์ Excel (.xlsx) จากข้อมูลในแอปโดยไม่ต้องติดตั้ง library เพิ่ม ใส่สี ฟอนต์ เส้นขอบ รูปแบบตัวเลข รวมเซลล์ สูตร หลาย sheet ตรึงแถว ตัวกรอง และตั้งค่าการพิมพ์ได้ ตัวเลขยังเป็นตัวเลข วันที่เป็นวันที่ (แสดงปี พ.ศ. ได้) และเลขที่ขึ้นต้นด้วย 0 ไม่หาย wu-table ใช้ตัวนี้ใน exportExcel()',
+    en: 'Builds Excel files (.xlsx) from your app’s data with no extra library: colours, fonts, borders, number formats, merged cells, formulas, several sheets, frozen rows, filters and print settings. Numbers stay numbers, dates stay dates (Buddhist years if you like) and leading zeros survive. wu-table uses it for exportExcel().',
   },
   english: {
     'ดาวน์โหลด': 'Download',
@@ -128,15 +128,15 @@ export const EXCEL_DOC: ComponentDoc = {
     report: {
       title: { th: 'รายงานจาก object', en: 'A report from objects' },
       text: {
-        th: '<code>downloadRowsAsExcel(rows, columns, options, fileName)</code> ทำรายงานจาก array ของ object แบบเดียวกับ <code>wt-table</code>: หัวตารางตัวหนาตรึงไว้มีปุ่มกรอง เส้นตาราง · คอลัมน์ <code>{ field, header, format, width, style, total }</code> (field เป็น dot path ได้) · ตัวเลือก <code>title</code>, <code>subtitle</code>, <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code>, <code>rowStyle</code>, <code>totals</code> (สูตร SUBTOTAL ที่คิดตามตัวกรอง), <code>totalLabel</code>, <code>freezeHeader</code>, <code>autoFilter</code>, <code>customize</code> · <code>excelSheetFromRows()</code> คืนเป็น sheet แทนการดาวน์โหลด',
-        en: '<code>downloadRowsAsExcel(rows, columns, options, fileName)</code> makes a report from an array of objects, the way <code>wt-table</code> does: a bold frozen header with filter buttons and cell borders · columns are <code>{ field, header, format, width, style, total }</code> (field may be a dot path) · options: <code>title</code>, <code>subtitle</code>, <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code>, <code>rowStyle</code>, <code>totals</code> (SUBTOTAL formulas that follow the filter), <code>totalLabel</code>, <code>freezeHeader</code>, <code>autoFilter</code>, <code>customize</code> · <code>excelSheetFromRows()</code> returns the sheet instead of saving it.',
+        th: '<code>downloadRowsAsExcel(rows, columns, options, fileName)</code> ทำรายงานจาก array ของ object แบบเดียวกับ <code>wu-table</code>: หัวตารางตัวหนาตรึงไว้มีปุ่มกรอง เส้นตาราง · คอลัมน์ <code>{ field, header, format, width, style, total }</code> (field เป็น dot path ได้) · ตัวเลือก <code>title</code>, <code>subtitle</code>, <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code>, <code>rowStyle</code>, <code>totals</code> (สูตร SUBTOTAL ที่คิดตามตัวกรอง), <code>totalLabel</code>, <code>freezeHeader</code>, <code>autoFilter</code>, <code>customize</code> · <code>excelSheetFromRows()</code> คืนเป็น sheet แทนการดาวน์โหลด',
+        en: '<code>downloadRowsAsExcel(rows, columns, options, fileName)</code> makes a report from an array of objects, the way <code>wu-table</code> does: a bold frozen header with filter buttons and cell borders · columns are <code>{ field, header, format, width, style, total }</code> (field may be a dot path) · options: <code>title</code>, <code>subtitle</code>, <code>headerStyle</code>, <code>striped</code>, <code>borders</code>, <code>cellStyle</code>, <code>rowStyle</code>, <code>totals</code> (SUBTOTAL formulas that follow the filter), <code>totalLabel</code>, <code>freezeHeader</code>, <code>autoFilter</code>, <code>customize</code> · <code>excelSheetFromRows()</code> returns the sheet instead of saving it.',
       },
     },
     workbook: {
       title: { th: 'หลาย sheet ฟอนต์ และการพิมพ์', en: 'Sheets, fonts and printing' },
       text: {
-        th: 'ส่ง <code>{ sheets: [...] }</code> แทน sheet เดียว · ระดับไฟล์: <code>fontName</code> / <code>fontSize</code> (เช่น TH Sarabun New 16), <code>calendar: \'buddhist\'</code> แสดงวันที่เป็นปี พ.ศ. (ค่ายังเป็นวันที่จริง เรียงและคำนวณได้), <code>dateFormat</code> / <code>dateTimeFormat</code> · ระดับ sheet: <code>name</code>, <code>tabColor</code>, <code>freeze: \'A2\'</code> (เซลล์แรกที่เลื่อน), <code>autoFilter</code>, <code>gridLines</code>, <code>landscape</code>, <code>fitToWidth</code>, <code>paper</code>, <code>repeatRows: \'1:1\'</code> พิมพ์หัวซ้ำทุกหน้า · ลิงก์: <code>{ value, link: \'https://…\' }</code> หรือไปที่ sheet อื่น <code>link: "#\'รายชื่อ\'!A1"</code> · รวม <code>wt-table</code> หลายตัวในไฟล์เดียว: <code>buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })</code>',
-        en: 'Pass <code>{ sheets: [...] }</code> instead of one sheet · for the file: <code>fontName</code> / <code>fontSize</code> (TH Sarabun New 16, say), <code>calendar: \'buddhist\'</code> shows dates with Buddhist years (they stay real dates you can sort and calculate with), <code>dateFormat</code> / <code>dateTimeFormat</code> · for a sheet: <code>name</code>, <code>tabColor</code>, <code>freeze: \'A2\'</code> (the first cell that scrolls), <code>autoFilter</code>, <code>gridLines</code>, <code>landscape</code>, <code>fitToWidth</code>, <code>paper</code>, <code>repeatRows: \'1:1\'</code> to print the header on every page · links: <code>{ value, link: \'https://…\' }</code>, or to another sheet with <code>link: "#\'Students list\'!A1"</code> · several <code>wt-table</code>s in one file: <code>buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })</code>.',
+        th: 'ส่ง <code>{ sheets: [...] }</code> แทน sheet เดียว · ระดับไฟล์: <code>fontName</code> / <code>fontSize</code> (เช่น TH Sarabun New 16), <code>calendar: \'buddhist\'</code> แสดงวันที่เป็นปี พ.ศ. (ค่ายังเป็นวันที่จริง เรียงและคำนวณได้), <code>dateFormat</code> / <code>dateTimeFormat</code> · ระดับ sheet: <code>name</code>, <code>tabColor</code>, <code>freeze: \'A2\'</code> (เซลล์แรกที่เลื่อน), <code>autoFilter</code>, <code>gridLines</code>, <code>landscape</code>, <code>fitToWidth</code>, <code>paper</code>, <code>repeatRows: \'1:1\'</code> พิมพ์หัวซ้ำทุกหน้า · ลิงก์: <code>{ value, link: \'https://…\' }</code> หรือไปที่ sheet อื่น <code>link: "#\'รายชื่อ\'!A1"</code> · รวม <code>wu-table</code> หลายตัวในไฟล์เดียว: <code>buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })</code>',
+        en: 'Pass <code>{ sheets: [...] }</code> instead of one sheet · for the file: <code>fontName</code> / <code>fontSize</code> (TH Sarabun New 16, say), <code>calendar: \'buddhist\'</code> shows dates with Buddhist years (they stay real dates you can sort and calculate with), <code>dateFormat</code> / <code>dateTimeFormat</code> · for a sheet: <code>name</code>, <code>tabColor</code>, <code>freeze: \'A2\'</code> (the first cell that scrolls), <code>autoFilter</code>, <code>gridLines</code>, <code>landscape</code>, <code>fitToWidth</code>, <code>paper</code>, <code>repeatRows: \'1:1\'</code> to print the header on every page · links: <code>{ value, link: \'https://…\' }</code>, or to another sheet with <code>link: "#\'Students list\'!A1"</code> · several <code>wu-table</code>s in one file: <code>buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })</code>.',
       },
     },
     limits: {
@@ -148,16 +148,16 @@ export const EXCEL_DOC: ComponentDoc = {
     },
   },
   code: {
-    import: `import { downloadExcel, downloadRowsAsExcel, buildExcel, excelSheetFromRows, ExcelStyle } from 'wiratheme/excel';`,
-    basic: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="download()"></wt-button>`,
-    styles: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadStyles()"></wt-button>`,
-    merge: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadTimetable()"></wt-button>`,
-    formulas: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadReceipt()"></wt-button>`,
-    report: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadReport()"></wt-button>`,
-    workbook: `<wt-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadWorkbook()"></wt-button>`,
+    import: `import { downloadExcel, downloadRowsAsExcel, buildExcel, excelSheetFromRows, ExcelStyle } from 'wiraui/excel';`,
+    basic: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="download()"></wu-button>`,
+    styles: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadStyles()"></wu-button>`,
+    merge: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadTimetable()"></wu-button>`,
+    formulas: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadReceipt()"></wu-button>`,
+    report: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadReport()"></wu-button>`,
+    workbook: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadWorkbook()"></wu-button>`,
   },
   ts: {
-    basic: `import { downloadExcel } from 'wiratheme/excel';
+    basic: `import { downloadExcel } from 'wiraui/excel';
 
 download(): void {
   downloadExcel(
@@ -171,7 +171,7 @@ download(): void {
     'scores' // ชื่อไฟล์ไม่ต้องมี .xlsx
   );
 }`,
-    styles: `import { downloadExcel, ExcelStyle } from 'wiratheme/excel';
+    styles: `import { downloadExcel, ExcelStyle } from 'wiraui/excel';
 
 downloadStyles(): void {
   const head: ExcelStyle = { bold: true, color: '#ffffff', fill: '#1d4ed8', align: 'center', border: 'thin' };
@@ -196,7 +196,7 @@ downloadStyles(): void {
     'styles'
   );
 }`,
-    merge: `import { downloadExcel, ExcelStyle } from 'wiratheme/excel';
+    merge: `import { downloadExcel, ExcelStyle } from 'wiraui/excel';
 
 downloadTimetable(): void {
   const cell: ExcelStyle = { border: 'thin', align: 'center', valign: 'middle' };
@@ -216,7 +216,7 @@ downloadTimetable(): void {
     'timetable'
   );
 }`,
-    formulas: `import { downloadExcel } from 'wiratheme/excel';
+    formulas: `import { downloadExcel } from 'wiraui/excel';
 
 downloadReceipt(): void {
   const right = { align: 'right' as const };
@@ -239,7 +239,7 @@ downloadReceipt(): void {
     'receipt'
   );
 }`,
-    report: `import { downloadRowsAsExcel } from 'wiratheme/excel';
+    report: `import { downloadRowsAsExcel } from 'wiraui/excel';
 
 interface Fee {
   code: string;
@@ -279,7 +279,7 @@ downloadReport(): void {
     'fees'
   );
 }`,
-    workbook: `import { downloadExcel, excelSheetFromRows } from 'wiratheme/excel';
+    workbook: `import { downloadExcel, excelSheetFromRows } from 'wiraui/excel';
 
 downloadWorkbook(): void {
   downloadExcel(

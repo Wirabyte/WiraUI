@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize, ɵWtStyleLoader } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize, ɵWuStyleLoader } from 'wiraui/config';
 import {
   acceptsNumberInput,
   acceptsNumberText,
@@ -26,37 +26,37 @@ import {
   NumberTypingRules,
   parseNumber,
   stepNumber,
-} from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { WtInputNumberButtonLayout, WtInputNumberInputEvent, WtInputNumberMode } from './inputnumber.types';
+} from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { WuInputNumberButtonLayout, WuInputNumberInputEvent, WuInputNumberMode } from './inputnumber.types';
 
 const optionalNumber = (v: unknown) => (v === null || v === undefined || v === '' ? null : numberAttribute(v));
 
 /**
- * Number field: `<wt-inputnumber [(ngModel)]="price" mode="currency" [min]="0" showButtons>`.
+ * Number field: `<wu-inputnumber [(ngModel)]="price" mode="currency" [min]="0" showButtons>`.
  * Shows the formatted value (`฿1,234.50`) while idle and plain digits while typing; the model is a number or null.
  * ArrowUp/ArrowDown step the value; phones get the numeric keypad.
  */
 @Component({
-  selector: 'wt-inputnumber, wt-inputNumber, wt-input-number',
+  selector: 'wu-inputnumber, wu-inputNumber, wu-input-number',
   standalone: true,
   templateUrl: './inputnumber.component.html',
   styleUrl: './inputnumber.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtInputNumber), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuInputNumber), multi: true }],
   host: {
-    '[class.wt-inputnumber-sm]': "sizeKey() === 'sm'",
+    '[class.wu-inputnumber-sm]': "sizeKey() === 'sm'",
     '[class.p-inputnumber-sm]': "sizeKey() === 'sm'",
-    '[class.wt-inputnumber-lg]': "sizeKey() === 'lg'",
+    '[class.wu-inputnumber-lg]': "sizeKey() === 'lg'",
     '[class.p-inputnumber-lg]': "sizeKey() === 'lg'",
-    '[class.wt-inputnumber-fluid]': 'fluid()',
-    '[class.wt-filled]': 'value() !== null',
+    '[class.wu-inputnumber-fluid]': 'fluid()',
+    '[class.wu-filled]': 'value() !== null',
     '[class.p-inputwrapper-filled]': 'value() !== null',
   },
 })
-export class WtInputNumber implements ControlValueAccessor {
-  readonly mode = input<WtInputNumberMode>('decimal');
+export class WuInputNumber implements ControlValueAccessor {
+  readonly mode = input<WuInputNumberMode>('decimal');
   /** ISO 4217 code for currency mode. Default THB. */
   readonly currency = input('THB');
   /** BCP 47 locale. Default: th-TH, or en-US when the app's locale is English. */
@@ -68,7 +68,7 @@ export class WtInputNumber implements ControlValueAccessor {
   readonly max = input<number | null, unknown>(null, { transform: optionalNumber });
   readonly step = input(1, { transform: numberAttribute });
   readonly showButtons = input(false, { transform: booleanAttribute });
-  readonly buttonLayout = input<WtInputNumberButtonLayout>('stacked');
+  readonly buttonLayout = input<WuInputNumberButtonLayout>('stacked');
   readonly prefix = input<string>();
   readonly suffix = input<string>();
   readonly placeholder = input<string>();
@@ -79,7 +79,7 @@ export class WtInputNumber implements ControlValueAccessor {
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
-  readonly size = input<WtSize>();
+  readonly size = input<WuSize>();
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly fluid = input(false, { transform: booleanAttribute });
 
@@ -100,15 +100,15 @@ export class WtInputNumber implements ControlValueAccessor {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly inputStyleObject = computed(() => (this.inputStyle() && typeof this.inputStyle() === 'object' ? (this.inputStyle() as Record<string, any>) : null));
   readonly showClearButton = computed(() => this.showClear() && this.value() !== null && !this.isDisabled() && !this.readonly());
-  private readonly wtConfig = inject(WtConfig);
-  readonly onInput = output<WtInputNumberInputEvent>();
+  private readonly wuConfig = inject(WuConfig);
+  readonly onInput = output<WuInputNumberInputEvent>();
   readonly onFocus = output<FocusEvent>();
   readonly onBlur = output<FocusEvent>();
 
-  private readonly config = inject(WtConfig);
-  /** Bumped by `WtConfig.setTranslation()`; read by the computeds that show UI strings. */
+  private readonly config = inject(WuConfig);
+  /** Bumped by `WuConfig.setTranslation()`; read by the computeds that show UI strings. */
   private readonly language = signal(0);
-  private readonly autoId = ɵuniqueId('wt-inputnumber');
+  private readonly autoId = ɵuniqueId('wu-inputnumber');
   readonly value = signal<number | null>(null);
   private readonly editing = signal(false);
   private readonly draft = signal('');
@@ -150,19 +150,19 @@ export class WtInputNumber implements ControlValueAccessor {
   });
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
-    const c = ['wt-inputnumber', 'p-inputnumber', 'p-component', 'p-inputwrapper'];
+    const c = ['wu-inputnumber', 'p-inputnumber', 'p-component', 'p-inputwrapper'];
     if (this.showButtons()) {
-      c.push('wt-inputnumber-' + this.buttonLayout(), 'p-inputnumber-' + this.buttonLayout());
+      c.push('wu-inputnumber-' + this.buttonLayout(), 'p-inputnumber-' + this.buttonLayout());
     }
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     // computed() caches, so language changes have to reach it through a signal.
     const i18n = this.config.translationChange.subscribe(() => this.language.update((n) => n + 1));
     inject(DestroyRef).onDestroy(() => i18n.unsubscribe());
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
     inject(DestroyRef).onDestroy(() => this.stopRepeat());
   }
 
@@ -227,7 +227,7 @@ export class WtInputNumber implements ControlValueAccessor {
   }
 
   clearLabel(): string {
-    return this.wtConfig.translation.clear;
+    return this.wuConfig.translation.clear;
   }
 
   /** Empties the field (the × of `showClear`). */

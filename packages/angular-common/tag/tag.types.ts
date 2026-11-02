@@ -1,3 +1,3 @@
-import type { WtSeverityInput } from 'wiratheme/config';
+import type { WuSeverityInput } from 'wiraui/config';
 
-export type WtTagSeverity = WtSeverityInput;
+export type WuTagSeverity = WuSeverityInput;

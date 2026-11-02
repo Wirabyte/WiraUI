@@ -1,17 +1,17 @@
-<nav class="wt-breadcrumb p-breadcrumb p-component" [class]="styleClass || ''" [style]="rootStyle" [attr.aria-label]="ariaLabel || t.breadcrumb">
-  <ol class="wt-breadcrumb-list p-breadcrumb-list p-menuitem-list">
+<nav class="wu-breadcrumb p-breadcrumb p-component" [class]="styleClass || ''" [style]="rootStyle" [attr.aria-label]="ariaLabel || t.breadcrumb">
+  <ol class="wu-breadcrumb-list p-breadcrumb-list p-menuitem-list">
     <li
       *ngIf="home"
-      class="wt-breadcrumb-item wt-breadcrumb-home p-breadcrumb-home-item p-menuitem"
+      class="wu-breadcrumb-item wu-breadcrumb-home p-breadcrumb-home-item p-menuitem"
       [ngClass]="home.styleClass || ''"
       [ngStyle]="home.style || null"
-      [class.wt-breadcrumb-item-disabled]="home.disabled"
+      [class.wu-breadcrumb-item-disabled]="home.disabled"
       [class.p-disabled]="home.disabled"
     >
       <ng-container *ngTemplateOutlet="link; context: { $implicit: home, isHome: true, last: !items.length }"></ng-container>
     </li>
     <ng-container *ngFor="let item of items; let i = index; let last = last">
-      <li *ngIf="home || i > 0" class="wt-breadcrumb-separator p-breadcrumb-separator p-menuitem-separator" aria-hidden="true">
+      <li *ngIf="home || i > 0" class="wu-breadcrumb-separator p-breadcrumb-separator p-menuitem-separator" aria-hidden="true">
         <ng-container *ngIf="separatorTemplate; else chevron">
           <ng-container *ngTemplateOutlet="separatorTemplate"></ng-container>
         </ng-container>
@@ -20,12 +20,12 @@
         </ng-template>
       </li>
       <li
-        class="wt-breadcrumb-item p-breadcrumb-item p-menuitem"
+        class="wu-breadcrumb-item p-breadcrumb-item p-menuitem"
         [ngClass]="item.styleClass || ''"
         [ngStyle]="item.style || null"
-        [class.wt-breadcrumb-item-disabled]="item.disabled"
+        [class.wu-breadcrumb-item-disabled]="item.disabled"
         [class.p-disabled]="item.disabled"
-        [class.wt-breadcrumb-current]="last"
+        [class.wu-breadcrumb-current]="last"
       >
         <ng-container *ngTemplateOutlet="link; context: { $implicit: item, isHome: false, last: last }"></ng-container>
       </li>
@@ -36,7 +36,7 @@
 <ng-template #link let-item let-isHome="isHome" let-last="last">
   <a
     *ngIf="routed(item); else plain"
-    class="wt-breadcrumb-link p-breadcrumb-item-link p-menuitem-link"
+    class="wu-breadcrumb-link p-breadcrumb-item-link p-menuitem-link"
     [attr.aria-label]="isHome && !item.label ? homeLabel : null"
     [attr.aria-current]="last ? 'page' : null"
     [attr.title]="item.title || null"
@@ -50,7 +50,7 @@
     [skipLocationChange]="!!item.skipLocationChange"
     [replaceUrl]="!!item.replaceUrl"
     [state]="item.state"
-    routerLinkActive="wt-breadcrumb-link-active p-menuitem-link-active"
+    routerLinkActive="wu-breadcrumb-link-active p-menuitem-link-active"
     [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: true }"
     (click)="itemClick($event, item)"
   >
@@ -58,8 +58,8 @@
   </a>
   <ng-template #plain>
     <a
-      class="wt-breadcrumb-link p-breadcrumb-item-link p-menuitem-link"
-      [class.wt-breadcrumb-link-static]="!item.url && !item.command"
+      class="wu-breadcrumb-link p-breadcrumb-item-link p-menuitem-link"
+      [class.wu-breadcrumb-link-static]="!item.url && !item.command"
       [attr.href]="hrefOf(item)"
       [attr.role]="!item.url && item.command ? 'button' : null"
       [attr.tabindex]="!item.url && item.command && !item.disabled ? 0 : null"
@@ -82,12 +82,12 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
   </ng-container>
   <ng-template #defaultContent>
-    <span *ngIf="item.icon" class="wt-breadcrumb-icon p-breadcrumb-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
-    <svg *ngIf="isHome && !item.icon" class="wt-breadcrumb-icon wt-breadcrumb-home-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <span *ngIf="item.icon" class="wu-breadcrumb-icon p-breadcrumb-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    <svg *ngIf="isHome && !item.icon" class="wu-breadcrumb-icon wu-breadcrumb-home-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M2.5 7.25 8 2.75l5.5 4.5"></path>
       <path d="M4 6.25v7h3V10h2v3.25h3v-7"></path>
     </svg>
-    <span *ngIf="item.label && item.escape !== false" class="wt-breadcrumb-label p-breadcrumb-item-label p-menuitem-text">{{ item.label }}</span>
-    <span *ngIf="item.label && item.escape === false" class="wt-breadcrumb-label p-breadcrumb-item-label p-menuitem-text" [innerHTML]="item.label"></span>
+    <span *ngIf="item.label && item.escape !== false" class="wu-breadcrumb-label p-breadcrumb-item-label p-menuitem-text">{{ item.label }}</span>
+    <span *ngIf="item.label && item.escape === false" class="wu-breadcrumb-label p-breadcrumb-item-label p-menuitem-text" [innerHTML]="item.label"></span>
   </ng-template>
 </ng-template>

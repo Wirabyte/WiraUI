@@ -13,20 +13,20 @@ import {
   ViewChild,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtChartJsDataSelectEvent } from './chartjs.types';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuChartJsDataSelectEvent } from './chartjs.types';
 
 /** Chart.js's own defaults: when an app has not changed them, charts take the theme's font and colours instead. */
 const CHARTJS_FONT = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 const CHARTJS_COLOR = '#666';
 
 /**
- * What wt-chartjs does (and wt-chart in wiratheme v1 / v2), shared by the v1 and v2/v3 templates: a canvas with a Chart.js chart, rebuilt when `type`, `data`
+ * What wu-chartjs does (and wu-chart in wiraui v1 / v2), shared by the v1 and v2/v3 templates: a canvas with a Chart.js chart, rebuilt when `type`, `data`
  * or `options` change. Charts pick up the theme's font (Thai included) and text colour unless the app set Chart.js
  * defaults itself or passes its own in `options`. Needs `chart.js` (3 or 4) installed in the app.
  */
 @Directive()
-export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
+export abstract class ɵWuChartJsBase implements AfterViewInit, OnDestroy {
   /** `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `bubble`, `scatter`. */
   @Input() set type(v: string | undefined) {
     this._type = v || 'bar';
@@ -75,7 +75,7 @@ export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
   @Input() style?: Record<string, string | number> | null;
 
   /** A click on a bar, point or slice. */
-  @Output() readonly onDataSelect = new EventEmitter<WtChartJsDataSelectEvent>();
+  @Output() readonly onDataSelect = new EventEmitter<WuChartJsDataSelectEvent>();
 
   @ViewChild('canvas') protected canvasRef?: ElementRef<HTMLCanvasElement>;
 
@@ -94,7 +94,7 @@ export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
   private initialized = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {
@@ -178,12 +178,12 @@ export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const typeOf = (d: any) => (d && d.type) || this._type;
     const lines = sets.filter((d) => typeOf(d) === 'line');
-    if (!lines.length || lines.length === sets.length || sets.some((d) => d && d.order !== undefined && !d.__wtOrder)) return;
+    if (!lines.length || lines.length === sets.length || sets.some((d) => d && d.order !== undefined && !d.__wuOrder)) return;
     for (const d of sets) {
       if (!d) continue;
       d.order = typeOf(d) === 'line' ? 0 : 1;
       // Marks the order as ours, so a later refresh may set it again.
-      Object.defineProperty(d, '__wtOrder', { value: true, enumerable: false, configurable: true });
+      Object.defineProperty(d, '__wuOrder', { value: true, enumerable: false, configurable: true });
     }
   }
 
@@ -193,9 +193,9 @@ export abstract class ɵWtChartJsBase implements AfterViewInit, OnDestroy {
     const win = this.host.ownerDocument.defaultView;
     if (!win) return;
     const css = win.getComputedStyle(this.host);
-    const family = css.getPropertyValue('--wt-font-family').trim();
-    const muted = css.getPropertyValue('--wt-text-muted').trim();
-    const border = css.getPropertyValue('--wt-border').trim();
+    const family = css.getPropertyValue('--wu-font-family').trim();
+    const muted = css.getPropertyValue('--wu-text-muted').trim();
+    const border = css.getPropertyValue('--wu-border').trim();
     if (family && Chart.defaults.font.family === CHARTJS_FONT && !options.font?.family) {
       options.font = { ...(options.font || {}), family };
     }

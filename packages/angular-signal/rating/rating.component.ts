@@ -12,28 +12,28 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtRatingRateEvent } from './rating.types';
+import { ɵassertSupportedAngular, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuRatingRateEvent } from './rating.types';
 
-/** Star rating for ngModel and reactive forms: `<wt-rating [(ngModel)]="score" [stars]="5">`. Arrow keys move between stars. */
+/** Star rating for ngModel and reactive forms: `<wu-rating [(ngModel)]="score" [stars]="5">`. Arrow keys move between stars. */
 @Component({
-  selector: 'wt-rating',
+  selector: 'wu-rating',
   standalone: true,
   templateUrl: './rating.component.html',
   styleUrl: './rating.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtRating), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuRating), multi: true }],
 })
-export class WtRating implements ControlValueAccessor {
+export class WuRating implements ControlValueAccessor {
   readonly stars = input(5, { transform: numberAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
 
-  readonly onRate = output<WtRatingRateEvent>();
+  readonly onRate = output<WuRatingRateEvent>();
 
-  readonly name = ɵuniqueId('wt-rating');
+  readonly name = ɵuniqueId('wu-rating');
   readonly value = signal<number | null>(null);
   private readonly hover = signal<number | null>(null);
   private readonly formDisabled = signal(false);
@@ -58,18 +58,18 @@ export class WtRating implements ControlValueAccessor {
   });
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
-    const c = ['wt-rating', 'p-rating', 'p-component'];
-    if (this.readonly()) c.push('wt-rating-readonly', 'p-readonly');
-    if (this.isDisabled()) c.push('wt-rating-disabled', 'p-disabled');
+    const c = ['wu-rating', 'p-rating', 'p-component'];
+    if (this.readonly()) c.push('wu-rating-readonly', 'p-readonly');
+    if (this.isDisabled()) c.push('wu-rating-disabled', 'p-disabled');
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   optionClasses(star: number): string {
-    return star <= this.shown() ? 'wt-rating-option wt-rating-option-active p-rating-option p-rating-option-active' : 'wt-rating-option p-rating-option';
+    return star <= this.shown() ? 'wu-rating-option wu-rating-option-active p-rating-option p-rating-option-active' : 'wu-rating-option p-rating-option';
   }
 
   preview(star: number | null): void {

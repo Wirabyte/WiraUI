@@ -23,11 +23,11 @@ import {
   ɵrefreshOnTranslation,
   ɵsize,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   buildExcel,
   EXCEL_MIME,
@@ -45,47 +45,47 @@ import {
   sameValue,
   SortMeta,
   sortRows,
-  WtLocale,
-} from 'wiratheme/core';
-import { WtPageEvent } from 'wiratheme/paginator';
+  WuLocale,
+} from 'wiraui/core';
+import { WuPageEvent } from 'wiraui/paginator';
 import {
-  WtTableExcelColumn,
-  WtTableExcelOptions,
-  WtTableExportFunction,
-  WtTableExportOptions,
-  WtTableFilterEvent,
-  WtTableHeaderCheckboxToggleEvent,
-  WtTableLazyLoadEvent,
-  WtTablePageEvent,
-  WtTableColReorderEvent,
-  WtTableColResizeEvent,
-  WtTableContextMenuSelectEvent,
-  WtTableEditEvent,
-  WtTableRowExpandEvent,
-  WtTableRowGroupMode,
-  WtTableRowReorderEvent,
-  WtTableSortFunctionEvent,
-  WtTableState,
-  WtTableRowSelectEvent,
-  WtTableSelectionMode,
-  WtTableSortEvent,
-  WtTableSortMode,
-  ɵWtTableApi,
+  WuTableExcelColumn,
+  WuTableExcelOptions,
+  WuTableExportFunction,
+  WuTableExportOptions,
+  WuTableFilterEvent,
+  WuTableHeaderCheckboxToggleEvent,
+  WuTableLazyLoadEvent,
+  WuTablePageEvent,
+  WuTableColReorderEvent,
+  WuTableColResizeEvent,
+  WuTableContextMenuSelectEvent,
+  WuTableEditEvent,
+  WuTableRowExpandEvent,
+  WuTableRowGroupMode,
+  WuTableRowReorderEvent,
+  WuTableSortFunctionEvent,
+  WuTableState,
+  WuTableRowSelectEvent,
+  WuTableSelectionMode,
+  WuTableSortEvent,
+  WuTableSortMode,
+  ɵWuTableApi,
 } from './table.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const toInt = (v: unknown, fallback: number) => (Number.isFinite(Number(v)) && v !== null && v !== '' ? Math.floor(Number(v)) : fallback);
 
 /**
- * What wt-table does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
+ * What wu-table does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
  *
  * The data flow is filter (global search, column filters) → sort → page, all in the browser; with `lazy` the table
  * only reports what to load (`onLazyLoad`) and shows `value` as it is. Body rows come from the app's own templates
- * (`body`, `header`, `caption`, `emptymessage` …, as `wtTemplate="body"` / `pTemplate="body"` or `#body`), so any
+ * (`body`, `header`, `caption`, `emptymessage` …, as `wuTemplate="body"` / `pTemplate="body"` or `#body`), so any
  * markup and components fit in the cells.
  */
 @Directive()
-export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, AfterViewChecked, OnDestroy {
+export abstract class ɵWuTableBase implements ɵWuTableApi, AfterContentInit, AfterViewChecked, OnDestroy {
   // ---------- data ----------
   @Input() set value(v: readonly unknown[] | null | undefined) {
     this._valueRef = Array.isArray(v) ? (v as unknown[]) : null;
@@ -137,7 +137,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   get sortField(): string | null { return this._sortField; }
   @Input() set sortOrder(v: unknown) { this._sortOrder = toInt(v, 1) < 0 ? -1 : 1; this.process(); }
   get sortOrder(): number { return this._sortOrder; }
-  @Input() sortMode: WtTableSortMode = 'single';
+  @Input() sortMode: WuTableSortMode = 'single';
   @Input() set multiSortMeta(v: SortMeta[] | null | undefined) { this._multi = v ? [...v] : []; this.process(); }
   get multiSortMeta(): SortMeta[] { return this._multi; }
   /** A third click on a sorted column removes its sort. Default true; `[removableSort]="false"` keeps toggling. */
@@ -156,7 +156,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   get filters(): Record<string, FilterRule> { return this._filters; }
 
   // ---------- selection ----------
-  @Input() selectionMode?: WtTableSelectionMode | null;
+  @Input() selectionMode?: WuTableSelectionMode | null;
   /**
    * Two-way: `[(selection)]`. A row in single mode, an array in multiple mode. Typed `any` so app fields keep their
    * own types (`selected: Student[]`).
@@ -167,7 +167,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   get selection(): any { return this._selection; }
   /** The header checkbox selects only the rows of the current page. */
   @Input() set selectionPageOnly(v: unknown) { this._pageOnly = ɵtoBool(v); }
-  /** A wt-contextMenu (anything with `show(event)`) opened by a right-click on a `wtContextMenuRow`. */
+  /** A wu-contextMenu (anything with `show(event)`) opened by a right-click on a `wuContextMenuRow`. */
   @Input() contextMenu?: { show(event: Event): void } | null;
   /** Two-way: `[(contextMenuSelection)]`, the row last right-clicked (it gets an outline). */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -207,7 +207,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
 
   // ---------- row groups ----------
   /** `'subheader'`: a `groupheader` (and `groupfooter`) row around each group; `'rowspan'`: `let-rowgroup="rowgroup" let-rowspan="rowspan"`. */
-  @Input() rowGroupMode?: WtTableRowGroupMode | null;
+  @Input() rowGroupMode?: WuTableRowGroupMode | null;
   /** Field that groups rows (dot path). Rows of a group must be next to each other (sort by it). */
   @Input() groupRowsBy?: string;
 
@@ -217,15 +217,15 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   /** Column property used as the CSV header. Default `header`. */
   @Input() exportHeader?: string;
   @Input() csvSeparator = ',';
-  @Input() exportFunction?: WtTableExportFunction;
+  @Input() exportFunction?: WuTableExportFunction;
 
   /** Accepted for templates moving over; they have no effect here. */
   @Input() responsive: unknown;
   @Input() autoLayout: unknown;
-  /** Header cells marked `wtResizableColumn` get a grip on their right edge. */
+  /** Header cells marked `wuResizableColumn` get a grip on their right edge. */
   @Input() set resizableColumns(v: unknown) { this._resizable = ɵtoBool(v); }
   get resizableColumns(): boolean { return this._resizable; }
-  /** Header cells marked `wtReorderableColumn` can be dragged sideways; `columns` changes in place. */
+  /** Header cells marked `wuReorderableColumn` can be dragged sideways; `columns` changes in place. */
   @Input() set reorderableColumns(v: unknown) { this._reorderable = ɵtoBool(v); }
   get reorderableColumns(): boolean { return this._reorderable; }
   /** `'fit'` (default): the next column gives up the width; `'expand'`: the table grows. */
@@ -275,7 +275,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     const t0 = table.getBoundingClientRect().width;
     const min = 24;
     let delta = 0;
-    th.classList.add('wt-column-resizing');
+    th.classList.add('wu-column-resizing');
     const move = (e: PointerEvent) => {
       delta = e.clientX - startX;
       if (this.columnResizeMode === 'expand' || !next) {
@@ -292,7 +292,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       this.doc.removeEventListener('pointermove', move, true);
       this.doc.removeEventListener('pointerup', up, true);
       this.doc.removeEventListener('pointercancel', up, true);
-      th.classList.remove('wt-column-resizing');
+      th.classList.remove('wu-column-resizing');
       // The click that ends a resize must not sort the column. Chromium sends it to the grip (which ignores it), but
       // Firefox sends it to the header cell when the pointer is let go beside the grip.
       const swallow = (e: Event) => {
@@ -316,9 +316,9 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     const startY = event.clientY;
     let dragging = false;
     let target: { index: number; after: boolean } | null = null;
-    const cells = () => Array.from(row.children).filter((c) => c.classList.contains('wt-reorderable-column')) as HTMLElement[];
+    const cells = () => Array.from(row.children).filter((c) => c.classList.contains('wu-reorderable-column')) as HTMLElement[];
     const dragIndex = cells().indexOf(th);
-    const clear = () => row.querySelectorAll('.wt-col-drop-before, .wt-col-drop-after').forEach((c) => c.classList.remove('wt-col-drop-before', 'wt-col-drop-after'));
+    const clear = () => row.querySelectorAll('.wu-col-drop-before, .wu-col-drop-after').forEach((c) => c.classList.remove('wu-col-drop-before', 'wu-col-drop-after'));
     // Firefox starts selecting the header's text on the press and then never reports the release, so the drop never
     // comes. Holding back the press's default stops that (the click still follows and still sorts when the pointer
     // did not move); the header is focused by hand, as the press would have done. A native drag or selection that
@@ -332,7 +332,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       if (!dragging && Math.hypot(e.clientX - startX, e.clientY - startY) < 6) return;
       if (!dragging) {
         dragging = true;
-        th.classList.add('wt-column-dragging');
+        th.classList.add('wu-column-dragging');
       }
       e.preventDefault();
       clear();
@@ -342,7 +342,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
         if (e.clientX >= b.left && e.clientX <= b.right) {
           const after = e.clientX > b.left + b.width / 2;
           target = { index: i, after };
-          c.classList.add(after ? 'wt-col-drop-after' : 'wt-col-drop-before');
+          c.classList.add(after ? 'wu-col-drop-after' : 'wu-col-drop-before');
         }
       });
     };
@@ -353,7 +353,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       this.doc.removeEventListener('dragstart', noNative, true);
       this.doc.removeEventListener('selectstart', noNative, true);
       clear();
-      th.classList.remove('wt-column-dragging');
+      th.classList.remove('wu-column-dragging');
       if (!dragging) return;
       // The click that ends the drag must not sort the column.
       const swallow = (e: Event) => {
@@ -386,7 +386,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     return !!this.editing && this.editing.cell === cell;
   }
 
-  /** Opens a cell's `input` template (`wt-cellEditor`). Another open cell closes first. */
+  /** Opens a cell's `input` template (`wu-cellEditor`). Another open cell closes first. */
   startCellEdit(cell: HTMLElement, data: unknown, field: string, index: number | undefined, event?: Event): void {
     if (this.editing?.cell === cell) return;
     if (this.editing) this.completeCellEdit(event);
@@ -426,7 +426,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     this.onEditComplete.emit({ field: e.field, data: e.data, index: e.index, originalEvent: event });
     this.notify();
     if (next) {
-      const cells = Array.from(this.tableHost.querySelectorAll<HTMLElement>('.wt-editable-column'));
+      const cells = Array.from(this.tableHost.querySelectorAll<HTMLElement>('.wu-editable-column'));
       const at = cells.indexOf(e.cell);
       const target = cells[at + next];
       if (target) target.click();
@@ -491,7 +491,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   @Input() stateStorage: 'session' | 'local' = 'session';
 
   // ---------- editing ----------
-  /** `'cell'` (default): a `wtEditableColumn` cell edits on click. `'row'`: rows edit as a whole with the row buttons. */
+  /** `'cell'` (default): a `wuEditableColumn` cell edits on click. `'row'`: rows edit as a whole with the row buttons. */
   @Input() editMode: 'cell' | 'row' = 'cell';
   /** Rows being edited, by `dataKey` value: `{ 7: true }`. Kept up to date in place. */
   @Input() set editingRowKeys(v: Record<string, boolean> | null | undefined) { this._editingKeys = v || {}; this.notify(); }
@@ -502,33 +502,33 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   @Input() set frozenValue(v: readonly unknown[] | null | undefined) { this._frozenValue = v ? [...v] : []; this.notify(); }
   get frozenValue(): unknown[] { return this._frozenValue; }
 
-  @Output() readonly onPage = new EventEmitter<WtTablePageEvent>();
-  @Output() readonly onSort = new EventEmitter<WtTableSortEvent>();
-  @Output() readonly onFilter = new EventEmitter<WtTableFilterEvent>();
-  @Output() readonly onLazyLoad = new EventEmitter<WtTableLazyLoadEvent>();
-  @Output() readonly onRowSelect = new EventEmitter<WtTableRowSelectEvent>();
-  @Output() readonly onRowUnselect = new EventEmitter<WtTableRowSelectEvent>();
-  @Output() readonly onHeaderCheckboxToggle = new EventEmitter<WtTableHeaderCheckboxToggleEvent>();
-  @Output() readonly onRowExpand = new EventEmitter<WtTableRowExpandEvent>();
-  @Output() readonly onRowReorder = new EventEmitter<WtTableRowReorderEvent>();
-  @Output() readonly onColResize = new EventEmitter<WtTableColResizeEvent>();
-  @Output() readonly onColReorder = new EventEmitter<WtTableColReorderEvent>();
-  @Output() readonly onEditInit = new EventEmitter<WtTableEditEvent>();
-  @Output() readonly onEditComplete = new EventEmitter<WtTableEditEvent>();
-  @Output() readonly onEditCancel = new EventEmitter<WtTableEditEvent>();
-  @Output() readonly sortFunction = new EventEmitter<WtTableSortFunctionEvent>();
-  @Output() readonly onStateSave = new EventEmitter<WtTableState>();
-  @Output() readonly onStateRestore = new EventEmitter<WtTableState>();
-  @Output() readonly onRowCollapse = new EventEmitter<WtTableRowExpandEvent>();
+  @Output() readonly onPage = new EventEmitter<WuTablePageEvent>();
+  @Output() readonly onSort = new EventEmitter<WuTableSortEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuTableFilterEvent>();
+  @Output() readonly onLazyLoad = new EventEmitter<WuTableLazyLoadEvent>();
+  @Output() readonly onRowSelect = new EventEmitter<WuTableRowSelectEvent>();
+  @Output() readonly onRowUnselect = new EventEmitter<WuTableRowSelectEvent>();
+  @Output() readonly onHeaderCheckboxToggle = new EventEmitter<WuTableHeaderCheckboxToggleEvent>();
+  @Output() readonly onRowExpand = new EventEmitter<WuTableRowExpandEvent>();
+  @Output() readonly onRowReorder = new EventEmitter<WuTableRowReorderEvent>();
+  @Output() readonly onColResize = new EventEmitter<WuTableColResizeEvent>();
+  @Output() readonly onColReorder = new EventEmitter<WuTableColReorderEvent>();
+  @Output() readonly onEditInit = new EventEmitter<WuTableEditEvent>();
+  @Output() readonly onEditComplete = new EventEmitter<WuTableEditEvent>();
+  @Output() readonly onEditCancel = new EventEmitter<WuTableEditEvent>();
+  @Output() readonly sortFunction = new EventEmitter<WuTableSortFunctionEvent>();
+  @Output() readonly onStateSave = new EventEmitter<WuTableState>();
+  @Output() readonly onStateRestore = new EventEmitter<WuTableState>();
+  @Output() readonly onRowCollapse = new EventEmitter<WuTableRowExpandEvent>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly selectionChange = new EventEmitter<any>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly contextMenuSelectionChange = new EventEmitter<any>();
-  @Output() readonly onContextMenuSelect = new EventEmitter<WtTableContextMenuSelectEvent>();
+  @Output() readonly onContextMenuSelect = new EventEmitter<WuTableContextMenuSelectEvent>();
   @Output() readonly firstChange = new EventEmitter<number>();
   @Output() readonly rowsChange = new EventEmitter<number>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('caption', { descendants: false }) protected captionRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('body', { descendants: false }) protected bodyRef?: unknown;
@@ -551,7 +551,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   /** Start of the current page in `processed` (client paging) or `first` (lazy). */
   pageFirst = 0;
   stacked = false;
-  readonly major: number = WT_VERSION_INFO.major;
+  readonly major: number = WU_VERSION_INFO.major;
   readonly changes = new Subject<void>();
   globalFilter: string | null = null;
   readonly trackRow: TrackByFunction<unknown> = (i, row) =>
@@ -559,7 +559,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   protected readonly tableHost: HTMLElement = inject(ElementRef).nativeElement;
   private readonly i18n = ɵrefreshOnTranslation();
   private _value: unknown[] = [];
@@ -613,7 +613,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   private initialized = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterContentInit(): void {
@@ -626,7 +626,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   /** Frozen rows sit right under the sticky header: their offset follows the header's height. */
   ngAfterViewChecked(): void {
     if (!this._frozenValue.length) return;
-    const wrapper = this.tableHost.querySelector('.wt-table-wrapper') as HTMLElement | null;
+    const wrapper = this.tableHost.querySelector('.wu-table-wrapper') as HTMLElement | null;
     const head = wrapper?.querySelector('thead') as HTMLElement | null;
     const h = head ? `${head.offsetHeight}px` : '0px';
     if (wrapper && wrapper.style.getPropertyValue('--_table-head-height') !== h) wrapper.style.setProperty('--_table-head-height', h);
@@ -641,7 +641,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -767,7 +767,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
 
   // ---------- paging ----------
 
-  pageChange(e: WtPageEvent): void {
+  pageChange(e: WuPageEvent): void {
     const rowsChanged = e.rows !== this._rows;
     this._first = e.first;
     this._rows = e.rows;
@@ -1004,13 +1004,13 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
    * and sort leave (all of them with `allValues`, the selection with `selectionOnly`), the `columns` given to the
    * table (`field`, `header`, `exportable: false` to skip), or every top-level field when there are none.
    */
-  exportCSV(options: WtTableExportOptions = {}): void {
+  exportCSV(options: WuTableExportOptions = {}): void {
     const csv = this.toCSV(options);
     this.download(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' }), `${this.exportFilename || 'download'}.csv`);
   }
 
   /** The CSV text `exportCSV()` saves (without the byte order mark). */
-  toCSV(options: WtTableExportOptions = {}): string {
+  toCSV(options: WuTableExportOptions = {}): string {
     const { rows, cols, headerKey } = this.exportSource(options);
     const sep = this.csvSeparator || ',';
     const quote = (v: unknown) => `"${(v === null || v === undefined ? '' : v instanceof Date ? v.toISOString() : String(v)).replace(/"/g, '""')}"`;
@@ -1034,13 +1034,13 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
    * buttons, borders, widths from the content, and whatever `options` add (title, colours, totals, merged cells,
    * formulas through `customize`). No library needed.
    */
-  async exportExcel(options: WtTableExcelOptions = {}): Promise<void> {
+  async exportExcel(options: WuTableExcelOptions = {}): Promise<void> {
     const bytes = await this.toExcel(options);
     this.download(new Blob([bytes as BlobPart], { type: EXCEL_MIME }),`${options.fileName || this.exportFilename || 'download'}.xlsx`);
   }
 
   /** The .xlsx file `exportExcel()` saves, e.g. to upload it instead. */
-  toExcel(options: WtTableExcelOptions = {}): Promise<Uint8Array> {
+  toExcel(options: WuTableExcelOptions = {}): Promise<Uint8Array> {
     return buildExcel({
       sheets: [this.toExcelSheet(options), ...(options.sheets || [])],
       fontName: options.fontName,
@@ -1050,11 +1050,11 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     });
   }
 
-  /** The table as one sheet, to put several tables in one workbook with `buildExcel()` from `wiratheme/excel`. */
-  toExcelSheet(options: WtTableExcelOptions = {}): ExcelSheet {
+  /** The table as one sheet, to put several tables in one workbook with `buildExcel()` from `wiraui/excel`. */
+  toExcelSheet(options: WuTableExcelOptions = {}): ExcelSheet {
     const { rows, cols, headerKey } = this.exportSource(options);
     const columns: ExcelTableColumn[] = cols.map((c) => {
-      const col = c as WtTableExcelColumn & Record<string, unknown>;
+      const col = c as WuTableExcelColumn & Record<string, unknown>;
       const header = col[headerKey] ?? col.header ?? col.field;
       return {
         field: col.field!,
@@ -1074,7 +1074,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   }
 
   /** The rows and columns an export writes (see `exportCSV()`), and the column key that names the header. */
-  private exportSource(options: WtTableExportOptions): { rows: unknown[]; cols: { field?: string; header?: unknown; [k: string]: unknown }[]; headerKey: string } {
+  private exportSource(options: WuTableExportOptions): { rows: unknown[]; cols: { field?: string; header?: unknown; [k: string]: unknown }[]; headerKey: string } {
     const sel = this._selection;
     const rows = options.selectionOnly ? (Array.isArray(sel) ? sel : sel ? [sel] : []) : options.allValues ? this._value : this.processed;
     type Col = { field?: string; header?: unknown; exportable?: boolean; [k: string]: unknown };
@@ -1110,18 +1110,18 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
     if (!tbody) return;
     event.preventDefault();
     let target: { index: number; below: boolean } | null = null;
-    row.classList.add('wt-row-dragging');
-    const clear = () => tbody.querySelectorAll('.wt-row-drop-above, .wt-row-drop-below').forEach((el) => el.classList.remove('wt-row-drop-above', 'wt-row-drop-below'));
+    row.classList.add('wu-row-dragging');
+    const clear = () => tbody.querySelectorAll('.wu-row-drop-above, .wu-row-drop-below').forEach((el) => el.classList.remove('wu-row-drop-above', 'wu-row-drop-below'));
     const move = (e: PointerEvent) => {
-      const rows = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr[data-wt-row-index]'));
+      const rows = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr[data-wu-row-index]'));
       clear();
       target = null;
       for (const r of rows) {
         const b = r.getBoundingClientRect();
         if (e.clientY < b.top || e.clientY > b.bottom) continue;
         const below = e.clientY > b.top + b.height / 2;
-        target = { index: Number(r.getAttribute('data-wt-row-index')), below };
-        r.classList.add(below ? 'wt-row-drop-below' : 'wt-row-drop-above');
+        target = { index: Number(r.getAttribute('data-wu-row-index')), below };
+        r.classList.add(below ? 'wu-row-drop-below' : 'wu-row-drop-above');
         break;
       }
     };
@@ -1131,7 +1131,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
       this.doc.removeEventListener('pointercancel', onCancel, true);
       this.doc.removeEventListener('keydown', onKey, true);
       clear();
-      row.classList.remove('wt-row-dragging');
+      row.classList.remove('wu-row-dragging');
       const t = target;
       if (drop && t) this.reorderRows(index, t.index + (t.below ? 1 : 0));
     };
@@ -1176,7 +1176,7 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   /** Saves paging, sorting, filters, selection and expanded rows under `stateKey`. */
   saveState(): void {
     if (!this.stateKey || this.restoringState) return;
-    const state: WtTableState = {
+    const state: WuTableState = {
       first: this._first,
       rows: this._rows,
       sortField: this._sortField,
@@ -1198,10 +1198,10 @@ export abstract class ɵWtTableBase implements ɵWtTableApi, AfterContentInit, A
   /** Brings back what `saveState()` kept. Runs on its own when the table starts. */
   restoreState(): void {
     if (!this.stateKey) return;
-    let state: WtTableState | null = null;
+    let state: WuTableState | null = null;
     try {
       const raw = this.storage?.getItem(this.stateKey);
-      state = raw ? (JSON.parse(raw) as WtTableState) : null;
+      state = raw ? (JSON.parse(raw) as WuTableState) : null;
     } catch {
       state = null;
     }

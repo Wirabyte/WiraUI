@@ -4,22 +4,22 @@ import { DocsI18n } from './i18n';
 import { editsCss, readStudio, rebase, STUDIO_STORE, StudioHistory, StudioTheme, studioEdits, writeStudio } from './studio-store';
 import { DocsScale, DocsVersionTheme, NO_CUSTOM, ThemeCustom } from './version-theme';
 
-const DARK_STORE = 'wiratheme-docs-dark';
-const SCALE_STORE = 'wiratheme-docs-scale';
-/** <style> with the studio's token edits; it follows WtThemeService's tokens block. */
+const DARK_STORE = 'wiraui-docs-dark';
+const SCALE_STORE = 'wiraui-docs-scale';
+/** <style> with the studio's token edits; it follows WuThemeService's tokens block. */
 const STUDIO_STYLE = 'data-docs-studio';
 
 /**
  * Site-wide theme state. Dark mode and ripple are global; preset / primary / surface are kept per
  * version and in memory only, so every version opens in its own default look. A theme made in
- * WiraTheme Studio replaces that for its version and is saved in localStorage.
+ * WiraUI Studio replaces that for its version and is saved in localStorage.
  */
 @Injectable({ providedIn: 'root' })
 export class DocsState {
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = inject(DocsI18n);
   private readonly customs = signal<Record<string, ThemeCustom>>({});
-  /** WiraTheme Studio themes by version key; one present is that version's theme everywhere on the site. */
+  /** WiraUI Studio themes by version key; one present is that version's theme everywhere on the site. */
   readonly studio = signal<Record<string, StudioTheme>>(readStudio());
   private readonly history: Record<string, StudioHistory> = {};
   /** Bumped on every studio change, so undo / redo buttons re-read the history. */
@@ -67,7 +67,7 @@ export class DocsState {
   readonly rippleOn = computed(() => this.ripple() ?? this.studioTheme()?.config.ripple ?? this.theme()?.info(this.activePresetId())?.ripple ?? false);
 
   constructor() {
-    this.doc.documentElement.classList.toggle('wt-dark', this.dark());
+    this.doc.documentElement.classList.toggle('wu-dark', this.dark());
     this.followOtherTabs();
     // Demos follow the site language: component texts and the calendar of the version on screen.
     effect(() => {
@@ -76,7 +76,7 @@ export class DocsState {
     });
   }
 
-  /** Called on every activation: each wiratheme major has its own WtThemeService, so re-apply each time. */
+  /** Called on every activation: each wiraui major has its own WuThemeService, so re-apply each time. */
   activate(theme: DocsVersionTheme): void {
     this.checkStudio(theme);
     this.theme.set(theme);
@@ -278,7 +278,7 @@ export class DocsState {
     if (t && st) t.applyStudio(st.config, st.name, this.dark(), this.ripple(), this.scale());
     else if (t) t.apply(this.custom(), this.dark(), this.ripple(), this.scale());
     this.writeStudioStyle(st);
-    this.doc.documentElement.classList.toggle('wt-dark', this.dark());
+    this.doc.documentElement.classList.toggle('wu-dark', this.dark());
     // A surface picked in the theme panel tints the whole site (styles/_tokens.scss), as the primary colour does.
     this.doc.documentElement.classList.toggle('docs-surface-custom', !!this.custom().surface);
     this.markBackdrop();
@@ -287,7 +287,7 @@ export class DocsState {
   }
 
   /**
-   * A theme whose --wt-backdrop is more than its ground colour (Glass: soft colour fields) gets it behind the whole site
+   * A theme whose --wu-backdrop is more than its ground colour (Glass: soft colour fields) gets it behind the whole site
    * (html.docs-glass-ground, styles/_base.scss), so translucent components have colour to show. For every other theme the
    * backdrop is the ground colour and the site keeps its own page colour.
    */
@@ -296,12 +296,12 @@ export class DocsState {
     const view = this.doc.defaultView;
     if (!view || typeof view.getComputedStyle !== 'function') return;
     const css = view.getComputedStyle(root);
-    const backdrop = css.getPropertyValue('--wt-backdrop').trim();
-    const ground = css.getPropertyValue('--wt-ground').trim();
+    const backdrop = css.getPropertyValue('--wu-backdrop').trim();
+    const ground = css.getPropertyValue('--wu-ground').trim();
     root.classList.toggle('docs-glass-ground', !!backdrop && backdrop !== ground);
   }
 
-  /** Token edits after WtThemeService's tokens block (same layer, later in the page, so they win). */
+  /** Token edits after WuThemeService's tokens block (same layer, later in the page, so they win). */
   private writeStudioStyle(st: StudioTheme | null): void {
     const head = this.doc.head;
     let el = head.querySelector(`style[${STUDIO_STYLE}]`) as HTMLStyleElement | null;
@@ -314,7 +314,7 @@ export class DocsState {
       el = this.doc.createElement('style');
       el.setAttribute(STUDIO_STYLE, '');
     }
-    const tokens = head.querySelector('style[data-wt-style="tokens"]');
+    const tokens = head.querySelector('style[data-wu-style="tokens"]');
     if (!el.isConnected || (tokens && tokens.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING)) head.appendChild(el);
     el.textContent = css;
   }

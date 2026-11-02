@@ -1,91 +1,91 @@
-/* wt-metergroup. Shared by wiratheme v1, v2 and v3. Several values on one bar, with a legend. */
-@layer wiratheme.components {
-  :is(wt-metergroup, wt-meter-group) {
+/* wu-metergroup. Shared by wiraui v1, v2 and v3. Several values on one bar, with a legend. */
+@layer wiraui.components {
+  :is(wu-metergroup, wu-meter-group) {
     display: block;
   }
-  .wt-metergroup {
+  .wu-metergroup {
     display: flex;
-    gap: var(--wt-metergroup-gap);
-    color: var(--wt-text);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    gap: var(--wu-metergroup-gap);
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-metergroup-meters {
+  .wu-metergroup-meters {
     display: flex;
     overflow: hidden;
-    border-radius: var(--wt-metergroup-radius);
-    background: var(--wt-metergroup-bg);
+    border-radius: var(--wu-metergroup-radius);
+    background: var(--wu-metergroup-bg);
   }
-  .wt-metergroup-meter {
+  .wu-metergroup-meter {
     flex: none;
     display: block;
     border: 0;
     transition:
-      width var(--wt-transition),
-      height var(--wt-transition);
+      width var(--wu-transition),
+      height var(--wu-transition);
   }
-  .wt-metergroup-labels {
+  .wu-metergroup-labels {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-metergroup-labels-horizontal {
-    gap: 0.5rem var(--wt-metergroup-gap);
+  .wu-metergroup-labels-horizontal {
+    gap: 0.5rem var(--wu-metergroup-gap);
   }
-  .wt-metergroup-labels-vertical {
+  .wu-metergroup-labels-vertical {
     flex-direction: column;
     gap: 0.5rem;
   }
-  .wt-metergroup-label {
+  .wu-metergroup-label {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-metergroup-label-marker {
+  .wu-metergroup-label-marker {
     flex: none;
     display: inline-flex;
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
   }
-  .wt-metergroup-label-icon {
+  .wu-metergroup-label-icon {
     flex: none;
     width: 1rem;
     font-size: 1rem;
     line-height: 1;
     text-align: center;
   }
-  .wt-metergroup-horizontal {
+  .wu-metergroup-horizontal {
     flex-direction: column;
   }
-  .wt-metergroup-horizontal .wt-metergroup-meters {
-    height: var(--wt-metergroup-size);
+  .wu-metergroup-horizontal .wu-metergroup-meters {
+    height: var(--wu-metergroup-size);
   }
-  /* Vertical: the bar fills the host's height (style="height: 20rem" on <wt-metergroup>). */
-  :is(wt-metergroup, wt-meter-group):has(> .wt-metergroup-vertical) {
+  /* Vertical: the bar fills the host's height (style="height: 20rem" on <wu-metergroup>). */
+  :is(wu-metergroup, wu-meter-group):has(> .wu-metergroup-vertical) {
     height: 100%;
   }
-  .wt-metergroup-vertical {
+  .wu-metergroup-vertical {
     flex-direction: row;
     height: 100%;
   }
-  .wt-metergroup-vertical .wt-metergroup-meters {
+  .wu-metergroup-vertical .wu-metergroup-meters {
     flex-direction: column;
-    width: var(--wt-metergroup-size);
+    width: var(--wu-metergroup-size);
     height: 100%;
   }
   /* [reverse]: the parts start at the other end (the legend keeps its order). */
-  .wt-metergroup-reverse.wt-metergroup-horizontal .wt-metergroup-meters {
+  .wu-metergroup-reverse.wu-metergroup-horizontal .wu-metergroup-meters {
     flex-direction: row-reverse;
   }
-  .wt-metergroup-reverse.wt-metergroup-vertical .wt-metergroup-meters {
+  .wu-metergroup-reverse.wu-metergroup-vertical .wu-metergroup-meters {
     flex-direction: column-reverse;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-metergroup-meter {
+    .wu-metergroup-meter {
       transition: none;
     }
   }

@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { ɵtoBool, ɵWtStyleLoader } from 'wiratheme/config';
-import { WT_DRAGDROP_CSS } from './dragdrop.styles';
+import { ɵtoBool, ɵWuStyleLoader } from 'wiraui/config';
+import { WU_DRAGDROP_CSS } from './dragdrop.styles';
 
 type Scope = string | string[] | null | undefined;
 const MIME = 'text';
@@ -11,23 +11,23 @@ function scopes(s: Scope): string[] {
 }
 
 /**
- * Lets an element be dragged with the browser's drag and drop: `<div wtDraggable="students" (onDragStart)="dragged = s">`
+ * Lets an element be dragged with the browser's drag and drop: `<div wuDraggable="students" (onDragStart)="dragged = s">`
  * (`pDraggable` works too). The scope pairs it with the drop zones that accept it. `dragHandle` limits where the drag
  * may start (a CSS selector inside the element).
  */
 @Directive({
-  selector: '[wtDraggable], [pDraggable]',
+  selector: '[wuDraggable], [pDraggable]',
   standalone: true,
-  host: { class: 'wt-draggable p-draggable' },
+  host: { class: 'wu-draggable p-draggable' },
 })
-export class WtDraggable implements OnInit, OnDestroy {
-  @Input() set wtDraggable(v: Scope) { this.scope = v; }
+export class WuDraggable implements OnInit, OnDestroy {
+  @Input() set wuDraggable(v: Scope) { this.scope = v; }
   @Input() set pDraggable(v: Scope) { this.scope = v; }
   /** `'copy'`, `'move'`, `'link'`, `'copyMove'`, … what the drag allows. */
   @Input() dragEffect?: DataTransfer['effectAllowed'];
   /** A selector inside the element: the drag starts only from there. */
   @Input() dragHandle?: string;
-  @Input() set wtDraggableDisabled(v: unknown) { this.setDisabled(ɵtoBool(v)); }
+  @Input() set wuDraggableDisabled(v: unknown) { this.setDisabled(ɵtoBool(v)); }
   @Input() set pDraggableDisabled(v: unknown) { this.setDisabled(ɵtoBool(v)); }
 
   @Output() readonly onDragStart = new EventEmitter<DragEvent>();
@@ -42,7 +42,7 @@ export class WtDraggable implements OnInit, OnDestroy {
   private readonly zone = inject(NgZone);
 
   constructor() {
-    inject(ɵWtStyleLoader).load('dragdrop', WT_DRAGDROP_CSS);
+    inject(ɵWuStyleLoader).load('dragdrop', WU_DRAGDROP_CSS);
   }
 
   ngOnInit(): void {
@@ -74,13 +74,13 @@ export class WtDraggable implements OnInit, OnDestroy {
       if (this.dragEffect) event.dataTransfer.effectAllowed = this.dragEffect;
       event.dataTransfer.setData(MIME, scopes(this.scope).join('|'));
     }
-    this.el.classList.add('wt-draggable-dragging');
+    this.el.classList.add('wu-draggable-dragging');
     this.onDragStart.emit(event);
   }
 
   @HostListener('dragend', ['$event'])
   dragend(event: DragEvent): void {
-    this.el.classList.remove('wt-draggable-dragging');
+    this.el.classList.remove('wu-draggable-dragging');
     this.fromHandle = !this.dragHandle;
     this.onDragEnd.emit(event);
   }
@@ -92,20 +92,20 @@ export class WtDraggable implements OnInit, OnDestroy {
 }
 
 /**
- * A drop zone for wtDraggable elements of the same scope: `<td wtDroppable="students" (onDrop)="place(cell)">`
- * (`pDroppable` works too). While something hovers over it, it has the class `wt-droppable-over`.
+ * A drop zone for wuDraggable elements of the same scope: `<td wuDroppable="students" (onDrop)="place(cell)">`
+ * (`pDroppable` works too). While something hovers over it, it has the class `wu-droppable-over`.
  */
 @Directive({
-  selector: '[wtDroppable], [pDroppable]',
+  selector: '[wuDroppable], [pDroppable]',
   standalone: true,
-  host: { class: 'wt-droppable p-droppable' },
+  host: { class: 'wu-droppable p-droppable' },
 })
-export class WtDroppable {
-  @Input() set wtDroppable(v: Scope) { this.scope = v; }
+export class WuDroppable {
+  @Input() set wuDroppable(v: Scope) { this.scope = v; }
   @Input() set pDroppable(v: Scope) { this.scope = v; }
   /** `'copy'`, `'move'`, `'link'` or `'none'`: the pointer the browser shows over it. */
   @Input() dropEffect?: DataTransfer['dropEffect'];
-  @Input() set wtDroppableDisabled(v: unknown) { this.disabled = ɵtoBool(v); }
+  @Input() set wuDroppableDisabled(v: unknown) { this.disabled = ɵtoBool(v); }
   @Input() set pDroppableDisabled(v: unknown) { this.disabled = ɵtoBool(v); }
 
   @Output() readonly onDragEnter = new EventEmitter<DragEvent>();
@@ -119,7 +119,7 @@ export class WtDroppable {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
 
   constructor() {
-    inject(ɵWtStyleLoader).load('dragdrop', WT_DRAGDROP_CSS);
+    inject(ɵWuStyleLoader).load('dragdrop', WU_DRAGDROP_CSS);
   }
 
   @HostListener('dragenter', ['$event'])
@@ -128,7 +128,7 @@ export class WtDroppable {
     event.preventDefault();
     if (this.dropEffect && event.dataTransfer) event.dataTransfer.dropEffect = this.dropEffect;
     if (this.depth++ === 0) {
-      this.el.classList.add('wt-droppable-over', 'p-draggable-enter');
+      this.el.classList.add('wu-droppable-over', 'p-draggable-enter');
       this.onDragEnter.emit(event);
     }
   }
@@ -145,14 +145,14 @@ export class WtDroppable {
     if (this.disabled) return;
     if (--this.depth > 0) return;
     this.depth = 0;
-    this.el.classList.remove('wt-droppable-over', 'p-draggable-enter');
+    this.el.classList.remove('wu-droppable-over', 'p-draggable-enter');
     this.onDragLeave.emit(event);
   }
 
   @HostListener('drop', ['$event'])
   drop(event: DragEvent): void {
     this.depth = 0;
-    this.el.classList.remove('wt-droppable-over', 'p-draggable-enter');
+    this.el.classList.remove('wu-droppable-over', 'p-draggable-enter');
     if (this.disabled || !this.accepts(event)) return;
     event.preventDefault();
     this.onDrop.emit(event);

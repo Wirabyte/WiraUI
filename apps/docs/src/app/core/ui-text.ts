@@ -1,7 +1,7 @@
 /** Short UI strings of the docs chrome, Thai and English side by side. Use with `{{ 'key' | t }}` or `i18n.t('key')`. */
 export const UI = {
-  'site.title': { th: 'WiraTheme · ชุด UI ที่เข้าใจงานไทย', en: 'WiraTheme · UI components, Thai-first' },
-  'site.home': { th: 'WiraTheme หน้าแรก', en: 'WiraTheme home' },
+  'site.title': { th: 'WiraUI · ชุด UI ที่เข้าใจงานไทย', en: 'WiraUI · UI components, Thai-first' },
+  'site.home': { th: 'WiraUI หน้าแรก', en: 'WiraUI home' },
 
   'lang.label': { th: 'ภาษา', en: 'Language' },
   'top.menu': { th: 'เมนูเอกสาร', en: 'Docs menu' },
@@ -10,7 +10,7 @@ export const UI = {
   'top.light': { th: 'ใช้โหมดสว่าง', en: 'Switch to light mode' },
   'top.dark': { th: 'ใช้โหมดมืด', en: 'Switch to dark mode' },
   'top.theme': { th: 'ปรับธีม', en: 'Customize theme' },
-  'top.version': { th: 'รุ่นของ wiratheme', en: 'wiratheme version' },
+  'top.version': { th: 'รุ่นของ wiraui', en: 'wiraui version' },
   'version.latest': { th: 'ล่าสุด', en: 'latest' },
   'version.active': { th: 'ดูแลอยู่', en: 'active' },
   'version.maintenance': { th: 'แก้เฉพาะบั๊ก', en: 'maintenance' },
@@ -21,7 +21,7 @@ export const UI = {
   'pager.label': { th: 'หน้าก่อนหน้าและถัดไป', en: 'Previous and next page' },
   'pager.prev': { th: 'ก่อนหน้า', en: 'Previous' },
   'pager.next': { th: 'ถัดไป', en: 'Next' },
-  'footer.license': { th: 'WiraTheme · MIT License · โดย Wirabyte', en: 'WiraTheme · MIT License · by Wirabyte' },
+  'footer.license': { th: 'WiraUI · MIT License · โดย Wirabyte', en: 'WiraUI · MIT License · by Wirabyte' },
   'footer.sample': { th: 'ชื่อและข้อมูลในตัวอย่างทั้งหมดเป็นข้อมูลสมมติ', en: 'All names and figures in the examples are made up.' },
   'toc.title': { th: 'ในหน้านี้', en: 'On this page' },
 
@@ -54,7 +54,7 @@ export const UI = {
   'config.display': { th: 'การแสดงผล', en: 'Display' },
   'config.dark': { th: 'โหมดมืด', en: 'Dark mode' },
   'config.close': { th: 'ปิดแผงปรับธีม', en: 'Close the theme panel' },
-  'config.designer': { th: 'เปิดสตูดิโอธีม', en: 'Open WiraTheme Studio' },
+  'config.designer': { th: 'เปิดสตูดิโอธีม', en: 'Open WiraUI Studio' },
 
   'code.copy': { th: 'คัดลอก', en: 'Copy' },
   'code.copied': { th: 'คัดลอกแล้ว', en: 'Copied' },

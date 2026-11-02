@@ -1,10 +1,10 @@
-/* wt-drawer (and wt-sidebar). Shared by wiratheme v1, v2 and v3. The <dialog> fills the window as the mask; the panel
+/* wu-drawer (and wu-sidebar). Shared by wiraui v1, v2 and v3. The <dialog> fills the window as the mask; the panel
    sits against one edge and slides in from it. Without `modal` the mask lets clicks through to the page. */
-@layer wiratheme.components {
-  :is(wt-drawer, wt-sidebar) {
+@layer wiraui.components {
+  :is(wu-drawer, wu-sidebar) {
     display: contents;
   }
-  .wt-drawer-mask:where([open]) {
+  .wu-drawer-mask:where([open]) {
     position: fixed;
     inset: 0;
     box-sizing: border-box;
@@ -18,180 +18,180 @@
     overflow: hidden;
     border: 0;
     background: transparent;
-    color: var(--wt-text);
+    color: var(--wu-text);
   }
-  .wt-drawer-mask::backdrop {
-    background: var(--wt-mask);
-    animation: wt-drawer-fade 0.2s ease;
+  .wu-drawer-mask::backdrop {
+    background: var(--wu-mask);
+    animation: wu-drawer-fade 0.2s ease;
   }
-  .wt-drawer-mask.wt-drawer-leaving::backdrop {
+  .wu-drawer-mask.wu-drawer-leaving::backdrop {
     opacity: 0;
     transition: opacity 0.2s ease;
   }
-  .wt-drawer-mask[open]:not(.wt-drawer-modal) {
+  .wu-drawer-mask[open]:not(.wu-drawer-modal) {
     z-index: 1100;
     pointer-events: none;
   }
-  .wt-drawer-mask:not(.wt-drawer-modal) .wt-drawer {
+  .wu-drawer-mask:not(.wu-drawer-modal) .wu-drawer {
     pointer-events: auto;
   }
-  .wt-drawer-mask-left {
+  .wu-drawer-mask-left {
     justify-content: flex-start;
   }
-  .wt-drawer-mask-right {
+  .wu-drawer-mask-right {
     justify-content: flex-end;
   }
-  .wt-drawer-mask-top {
+  .wu-drawer-mask-top {
     align-items: flex-start;
   }
-  .wt-drawer-mask-bottom {
+  .wu-drawer-mask-bottom {
     align-items: flex-end;
   }
-  .wt-drawer {
+  .wu-drawer {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     max-width: 100%;
     max-height: 100%;
-    border: 0 solid var(--wt-border);
-    background: var(--wt-drawer-bg);
-    color: var(--wt-text);
-    box-shadow: var(--wt-drawer-shadow);
+    border: 0 solid var(--wu-border);
+    background: var(--wu-drawer-bg);
+    color: var(--wu-text);
+    box-shadow: var(--wu-drawer-shadow);
     outline: none;
   }
-  .wt-drawer-left,
-  .wt-drawer-right {
-    width: var(--wt-drawer-size);
+  .wu-drawer-left,
+  .wu-drawer-right {
+    width: var(--wu-drawer-size);
     height: 100%;
   }
-  .wt-drawer-left {
-    border-right-width: var(--wt-drawer-border-width);
-    animation: wt-drawer-from-left 0.2s ease;
+  .wu-drawer-left {
+    border-right-width: var(--wu-drawer-border-width);
+    animation: wu-drawer-from-left 0.2s ease;
   }
-  .wt-drawer-right {
-    border-left-width: var(--wt-drawer-border-width);
-    animation: wt-drawer-from-right 0.2s ease;
+  .wu-drawer-right {
+    border-left-width: var(--wu-drawer-border-width);
+    animation: wu-drawer-from-right 0.2s ease;
   }
-  .wt-drawer-top,
-  .wt-drawer-bottom {
+  .wu-drawer-top,
+  .wu-drawer-bottom {
     width: 100%;
     min-height: 10rem;
   }
-  .wt-drawer-top {
-    border-bottom-width: var(--wt-drawer-border-width);
-    animation: wt-drawer-from-top 0.2s ease;
+  .wu-drawer-top {
+    border-bottom-width: var(--wu-drawer-border-width);
+    animation: wu-drawer-from-top 0.2s ease;
   }
-  .wt-drawer-bottom {
-    border-top-width: var(--wt-drawer-border-width);
-    animation: wt-drawer-from-bottom 0.2s ease;
+  .wu-drawer-bottom {
+    border-top-width: var(--wu-drawer-border-width);
+    animation: wu-drawer-from-bottom 0.2s ease;
   }
-  .wt-drawer-full {
+  .wu-drawer-full {
     width: 100%;
     height: 100%;
-    animation: wt-drawer-fade 0.2s ease;
+    animation: wu-drawer-fade 0.2s ease;
   }
   /* Slide back out: new animation names, so they run (the open ones have finished). */
-  .wt-drawer-leaving .wt-drawer {
+  .wu-drawer-leaving .wu-drawer {
     animation-duration: 0.2s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
   }
-  .wt-drawer-leaving .wt-drawer-left {
-    animation-name: wt-drawer-to-left;
+  .wu-drawer-leaving .wu-drawer-left {
+    animation-name: wu-drawer-to-left;
   }
-  .wt-drawer-leaving .wt-drawer-right {
-    animation-name: wt-drawer-to-right;
+  .wu-drawer-leaving .wu-drawer-right {
+    animation-name: wu-drawer-to-right;
   }
-  .wt-drawer-leaving .wt-drawer-top {
-    animation-name: wt-drawer-to-top;
+  .wu-drawer-leaving .wu-drawer-top {
+    animation-name: wu-drawer-to-top;
   }
-  .wt-drawer-leaving .wt-drawer-bottom {
-    animation-name: wt-drawer-to-bottom;
+  .wu-drawer-leaving .wu-drawer-bottom {
+    animation-name: wu-drawer-to-bottom;
   }
-  .wt-drawer-leaving .wt-drawer-full {
-    animation-name: wt-drawer-fade-out;
+  .wu-drawer-leaving .wu-drawer-full {
+    animation-name: wu-drawer-fade-out;
   }
-  .wt-drawer-header {
+  .wu-drawer-header {
     display: flex;
     flex: none;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: var(--wt-drawer-header-padding);
+    padding: var(--wu-drawer-header-padding);
   }
-  .wt-drawer-title {
+  .wu-drawer-title {
     min-width: 0;
-    font-size: var(--wt-drawer-title-size);
-    font-weight: var(--wt-drawer-title-weight);
+    font-size: var(--wu-drawer-title-size);
+    font-weight: var(--wu-drawer-title-weight);
   }
-  .wt-drawer-close {
+  .wu-drawer-close {
     flex: none;
     margin-left: auto;
   }
-  .wt-drawer-content {
+  .wu-drawer-content {
     flex: 1 1 auto;
     min-height: 0;
-    padding: var(--wt-drawer-content-padding);
+    padding: var(--wu-drawer-content-padding);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  .wt-drawer-footer {
+  .wu-drawer-footer {
     flex: none;
-    padding: var(--wt-drawer-content-padding);
+    padding: var(--wu-drawer-content-padding);
   }
-  @keyframes wt-drawer-from-left {
+  @keyframes wu-drawer-from-left {
     from {
       translate: -100% 0;
     }
   }
-  @keyframes wt-drawer-from-right {
+  @keyframes wu-drawer-from-right {
     from {
       translate: 100% 0;
     }
   }
-  @keyframes wt-drawer-from-top {
+  @keyframes wu-drawer-from-top {
     from {
       translate: 0 -100%;
     }
   }
-  @keyframes wt-drawer-from-bottom {
+  @keyframes wu-drawer-from-bottom {
     from {
       translate: 0 100%;
     }
   }
-  @keyframes wt-drawer-fade {
+  @keyframes wu-drawer-fade {
     from {
       opacity: 0;
     }
   }
-  @keyframes wt-drawer-to-left {
+  @keyframes wu-drawer-to-left {
     to {
       translate: -100% 0;
     }
   }
-  @keyframes wt-drawer-to-right {
+  @keyframes wu-drawer-to-right {
     to {
       translate: 100% 0;
     }
   }
-  @keyframes wt-drawer-to-top {
+  @keyframes wu-drawer-to-top {
     to {
       translate: 0 -100%;
     }
   }
-  @keyframes wt-drawer-to-bottom {
+  @keyframes wu-drawer-to-bottom {
     to {
       translate: 0 100%;
     }
   }
-  @keyframes wt-drawer-fade-out {
+  @keyframes wu-drawer-fade-out {
     to {
       opacity: 0;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-drawer,
-    .wt-drawer-mask::backdrop {
+    .wu-drawer,
+    .wu-drawer-mask::backdrop {
       animation: none !important;
     }
   }

@@ -6,12 +6,12 @@ export const BREADCRUMB_DOC: ComponentDoc = {
   title: 'Breadcrumb',
   group: 'Navigation',
   entry: 'breadcrumb',
-  standalone: 'WtBreadcrumb',
-  module: 'WtBreadcrumbModule',
-  selector: 'wt-breadcrumb',
+  standalone: 'WuBreadcrumb',
+  module: 'WuBreadcrumbModule',
+  selector: 'wu-breadcrumb',
   description: {
-    th: 'บอกว่าหน้านี้อยู่ตรงไหนของแอป เป็นลิงก์ย้อนกลับไปทีละชั้น รายการเป็นเมนูแบบเดียวกับ wt-menu (routerLink, url หรือ command) รายการสุดท้ายคือหน้าปัจจุบัน',
-    en: 'Shows where the page sits in the app, with a link back to each level. Items are menu items as in wt-menu (routerLink, url or command); the last one is the current page.',
+    th: 'บอกว่าหน้านี้อยู่ตรงไหนของแอป เป็นลิงก์ย้อนกลับไปทีละชั้น รายการเป็นเมนูแบบเดียวกับ wu-menu (routerLink, url หรือ command) รายการสุดท้ายคือหน้าปัจจุบัน',
+    en: 'Shows where the page sits in the app, with a link back to each level. Items are menu items as in wu-menu (routerLink, url or command); the last one is the current page.',
   },
   english: {
     'นักเรียน': 'Students',
@@ -33,15 +33,15 @@ export const BREADCRUMB_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtBreadcrumbModule</code>) และ standalone (<code>WtBreadcrumb</code>)',
-        en: 'Works as an NgModule (<code>WtBreadcrumbModule</code>) or standalone (<code>WtBreadcrumb</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuBreadcrumbModule</code>) และ standalone (<code>WuBreadcrumb</code>)',
+        en: 'Works as an NgModule (<code>WuBreadcrumbModule</code>) or standalone (<code>WuBreadcrumb</code>).',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[model]</code> คือรายการในเส้นทาง และ <code>[home]</code> คือรายการแรก (ไม่ใส่ <code>icon</code> จะได้ไอคอนบ้านในตัว พร้อมชื่อ <code>homeAriaLabel</code> หรือคำจาก locale) · รายการสุดท้ายได้ <code>aria-current="page"</code> และ class <code>wt-breadcrumb-current</code> · <code>command</code> ทำงานเมื่อกด และ <code>(onItemClick)</code> ได้ <code>{ originalEvent, item }</code> ทุกครั้งที่กดรายการ · ชื่อของทั้งแถบมาจาก <code>ariaLabel</code> หรือ locale',
-        en: '<code>[model]</code> is the trail and <code>[home]</code> the first item (with no <code>icon</code> it gets the built-in house, named by <code>homeAriaLabel</code> or the locale) · the last item gets <code>aria-current="page"</code> and the <code>wt-breadcrumb-current</code> class · <code>command</code> runs on press, and <code>(onItemClick)</code> brings <code>{ originalEvent, item }</code> for every item pressed · the trail\'s own name comes from <code>ariaLabel</code> or the locale.',
+        th: '<code>[model]</code> คือรายการในเส้นทาง และ <code>[home]</code> คือรายการแรก (ไม่ใส่ <code>icon</code> จะได้ไอคอนบ้านในตัว พร้อมชื่อ <code>homeAriaLabel</code> หรือคำจาก locale) · รายการสุดท้ายได้ <code>aria-current="page"</code> และ class <code>wu-breadcrumb-current</code> · <code>command</code> ทำงานเมื่อกด และ <code>(onItemClick)</code> ได้ <code>{ originalEvent, item }</code> ทุกครั้งที่กดรายการ · ชื่อของทั้งแถบมาจาก <code>ariaLabel</code> หรือ locale',
+        en: '<code>[model]</code> is the trail and <code>[home]</code> the first item (with no <code>icon</code> it gets the built-in house, named by <code>homeAriaLabel</code> or the locale) · the last item gets <code>aria-current="page"</code> and the <code>wu-breadcrumb-current</code> class · <code>command</code> runs on press, and <code>(onItemClick)</code> brings <code>{ originalEvent, item }</code> for every item pressed · the trail\'s own name comes from <code>ariaLabel</code> or the locale.',
       },
     },
     links: {
@@ -61,16 +61,16 @@ export const BREADCRUMB_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-breadcrumb&gt;</code> เป็น <code>&lt;wt-breadcrumb&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) รายการเป็น <code>MenuItem</code> แบบเดิม class <code>p-breadcrumb</code>, <code>p-menuitem-link</code> และ <code>p-menuitem-text</code> อยู่คู่กับ class <code>wt-*</code>',
-        en: 'Change <code>&lt;p-breadcrumb&gt;</code> to <code>&lt;wt-breadcrumb&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="item"</code> keeps working), and items are the same <code>MenuItem</code> shape. The <code>p-breadcrumb</code>, <code>p-menuitem-link</code> and <code>p-menuitem-text</code> classes sit next to the <code>wt-*</code> ones.',
+        th: 'เปลี่ยน <code>&lt;p-breadcrumb&gt;</code> เป็น <code>&lt;wu-breadcrumb&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) รายการเป็น <code>MenuItem</code> แบบเดิม class <code>p-breadcrumb</code>, <code>p-menuitem-link</code> และ <code>p-menuitem-text</code> อยู่คู่กับ class <code>wu-*</code>',
+        en: 'Change <code>&lt;p-breadcrumb&gt;</code> to <code>&lt;wu-breadcrumb&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="item"</code> keeps working), and items are the same <code>MenuItem</code> shape. The <code>p-breadcrumb</code>, <code>p-menuitem-link</code> and <code>p-menuitem-text</code> classes sit next to the <code>wu-*</code> ones.',
       },
     },
   },
   code: {
-    basic: `<wt-breadcrumb [model]="trail" [home]="home" homeAriaLabel="หน้าแรก" (onItemClick)="pressed($event)"></wt-breadcrumb>`,
-    links: `<wt-breadcrumb [model]="reportTrail" [home]="{ icon: 'wi wi-home', routerLink: '/' }"></wt-breadcrumb>`,
+    basic: `<wu-breadcrumb [model]="trail" [home]="home" homeAriaLabel="หน้าแรก" (onItemClick)="pressed($event)"></wu-breadcrumb>`,
+    links: `<wu-breadcrumb [model]="reportTrail" [home]="{ icon: 'wi wi-home', routerLink: '/' }"></wu-breadcrumb>`,
     templates: {
-      v3: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
+      v3: `<wu-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
   <ng-template #item let-item>
     @if (item.icon) {
       <i [class]="item.icon"></i>
@@ -78,22 +78,22 @@ export const BREADCRUMB_DOC: ComponentDoc = {
     <span>{{ item.label }}</span>
   </ng-template>
   <ng-template #separator>/</ng-template>
-</wt-breadcrumb>`,
-      classic: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
-  <ng-template wtTemplate="item" let-item>
+</wu-breadcrumb>`,
+      classic: `<wu-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
+  <ng-template wuTemplate="item" let-item>
     <i *ngIf="item.icon" [class]="item.icon"></i>
     <span>{{ item.label }}</span>
   </ng-template>
-  <ng-template wtTemplate="separator">/</ng-template>
-</wt-breadcrumb>`,
+  <ng-template wuTemplate="separator">/</ng-template>
+</wu-breadcrumb>`,
     },
   },
   ts: {
-    basic: `import { WtBreadcrumbItemClickEvent } from 'wiratheme/breadcrumb';
-import { WtMenuItem } from 'wiratheme/menu';
+    basic: `import { WuBreadcrumbItemClickEvent } from 'wiraui/breadcrumb';
+import { WuMenuItem } from 'wiraui/menu';
 
-home: WtMenuItem = { command: (event) => this.go(event) };
-trail: WtMenuItem[] = [
+home: WuMenuItem = { command: (event) => this.go(event) };
+trail: WuMenuItem[] = [
   { label: 'ระบบทะเบียน', command: (event) => this.go(event) },
   { label: 'ห้องเรียน', icon: 'wi wi-users', command: (event) => this.go(event) },
   { label: 'ม.1/1', command: (event) => this.go(event) },
@@ -102,14 +102,14 @@ trail: WtMenuItem[] = [
 lastPressed = '';
 
 /** ไปหน้าห้อง */
-go(event: { item?: WtMenuItem }): void {
+go(event: { item?: WuMenuItem }): void {
   this.currentView = event.item?.label ?? '';
 }
 
-pressed(event: WtBreadcrumbItemClickEvent): void {
+pressed(event: WuBreadcrumbItemClickEvent): void {
   this.lastPressed = event.item.label ?? 'หน้าแรก';
 }`,
-    links: `reportTrail: WtMenuItem[] = [
+    links: `reportTrail: WuMenuItem[] = [
   { label: 'รายงาน', routerLink: '/reports' },
   { label: 'ผลการเรียน', routerLink: '/reports/grades', queryParams: { term: '1/2569' } },
   { label: 'คู่มือ', url: 'https://example.com/guide', target: '_blank' },
@@ -121,8 +121,8 @@ pressed(event: WtBreadcrumbItemClickEvent): void {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('model', 'WtMenuItem[]', undefined, 'รายการในเส้นทาง (รายการสุดท้ายคือหน้าปัจจุบัน)', 'The trail (the last item is the current page)'),
-        row('home', 'WtMenuItem', undefined, 'รายการแรก ไม่ใส่ icon ได้ไอคอนบ้านในตัว', 'The first item; with no icon it gets the built-in house'),
+        row('model', 'WuMenuItem[]', undefined, 'รายการในเส้นทาง (รายการสุดท้ายคือหน้าปัจจุบัน)', 'The trail (the last item is the current page)'),
+        row('home', 'WuMenuItem', undefined, 'รายการแรก ไม่ใส่ icon ได้ไอคอนบ้านในตัว', 'The first item; with no icon it gets the built-in house'),
         row('homeAriaLabel', 'string', 'locale', 'ชื่อของรายการแรกเมื่อไม่มี label', 'Name of the first item when it has no label'),
         row('ariaLabel', 'string', 'locale', 'ชื่อของทั้งแถบ', 'Name of the whole trail'),
         STYLE_ROW,
@@ -145,13 +145,13 @@ pressed(event: WtBreadcrumbItemClickEvent): void {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onItemClick', 'WtBreadcrumbItemClickEvent', undefined, 'กดรายการ (รวม home)', 'An item was pressed (home too)')],
+      rows: [row('onItemClick', 'WuBreadcrumbItemClickEvent', undefined, 'กดรายการ (รวม home)', 'An item was pressed (home too)')],
     },
     {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (item)', undefined, 'เนื้อในแต่ละลิงก์', 'What is inside each link'),
         row('separator', '—', undefined, 'ตัวคั่นระหว่างรายการ', 'Between items'),
@@ -160,20 +160,20 @@ pressed(event: WtBreadcrumbItemClickEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtBreadcrumbItemClickEvent {
+      code: `interface WuBreadcrumbItemClickEvent {
   originalEvent: Event;
-  item: WtMenuItem;   // จาก 'wiratheme/menu'
+  item: WuMenuItem;   // จาก 'wiraui/menu'
 }`,
     },
   ],
   tokens: [
-    tok('--wt-breadcrumb-padding', 'ระยะในแถบ', 'Padding of the trail'),
-    tok('--wt-breadcrumb-bg', 'พื้นของแถบ', 'Background'),
-    tok('--wt-breadcrumb-border-width', 'ขอบของแถบ', 'Border width'),
-    tok('--wt-breadcrumb-gap', 'ระยะระหว่างรายการกับตัวคั่น', 'Gap between items and separators'),
-    tok('--wt-breadcrumb-link-color', 'สีลิงก์', 'Link colour'),
-    tok('--wt-breadcrumb-link-hover-color', 'สีลิงก์เมื่อชี้', 'Link colour on hover'),
-    tok('--wt-breadcrumb-current-color', 'สีของหน้าปัจจุบัน', 'Colour of the current page'),
-    tok('--wt-breadcrumb-current-weight', 'น้ำหนักตัวอักษรของหน้าปัจจุบัน', 'Font weight of the current page'),
+    tok('--wu-breadcrumb-padding', 'ระยะในแถบ', 'Padding of the trail'),
+    tok('--wu-breadcrumb-bg', 'พื้นของแถบ', 'Background'),
+    tok('--wu-breadcrumb-border-width', 'ขอบของแถบ', 'Border width'),
+    tok('--wu-breadcrumb-gap', 'ระยะระหว่างรายการกับตัวคั่น', 'Gap between items and separators'),
+    tok('--wu-breadcrumb-link-color', 'สีลิงก์', 'Link colour'),
+    tok('--wu-breadcrumb-link-hover-color', 'สีลิงก์เมื่อชี้', 'Link colour on hover'),
+    tok('--wu-breadcrumb-current-color', 'สีของหน้าปัจจุบัน', 'Colour of the current page'),
+    tok('--wu-breadcrumb-current-weight', 'น้ำหนักตัวอักษรของหน้าปัจจุบัน', 'Font weight of the current page'),
   ],
 };

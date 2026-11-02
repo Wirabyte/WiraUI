@@ -12,15 +12,15 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { WtMessageSeverity, WtMessageSize, WtMessageVariant } from './message.types';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { WuMessageSeverity, WuMessageSize, WuMessageVariant } from './message.types';
 
 /**
- * Inline status message: `<wt-message severity="warn" text="กรุณาตรวจสอบข้อมูล" closable>`.
+ * Inline status message: `<wu-message severity="warn" text="กรุณาตรวจสอบข้อมูล" closable>`.
  * Projected content follows `text`. `life` (ms) closes it automatically; closing emits `onClose`.
  */
 @Component({
-  selector: 'wt-message',
+  selector: 'wu-message',
   standalone: true,
   imports: [NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
   templateUrl: './message.component.html',
@@ -28,8 +28,8 @@ import { WtMessageSeverity, WtMessageSize, WtMessageVariant } from './message.ty
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtMessage implements OnInit, OnDestroy {
-  @Input() severity: WtMessageSeverity = 'info';
+export class WuMessage implements OnInit, OnDestroy {
+  @Input() severity: WuMessageSeverity = 'info';
   @Input() text?: string;
   /** `[escape]="false"` shows `text` as HTML (sanitised by Angular). Default true. */
   @Input() set escape(v: unknown) { this._escape = v === undefined || ɵtoBool(v); }
@@ -42,8 +42,8 @@ export class WtMessage implements OnInit, OnDestroy {
   /** Close automatically after this many milliseconds. */
   @Input() set life(v: unknown) { this._life = Number(v) || 0; }
   get life(): number { return this._life; }
-  @Input() size?: WtMessageSize;
-  @Input() variant?: WtMessageVariant;
+  @Input() size?: WuMessageSize;
+  @Input() variant?: WuMessageVariant;
 
   @Output() readonly onClose = new EventEmitter<Event | null>();
 
@@ -55,12 +55,12 @@ export class WtMessage implements OnInit, OnDestroy {
   private _closable = false;
   private _life = 0;
   private timer: ReturnType<typeof setTimeout> | null = null;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -92,10 +92,10 @@ export class WtMessage implements OnInit, OnDestroy {
   }
   get baseClasses(): string {
     const sev = this.sev;
-    const c = ['wt-message', 'p-inline-message', 'p-component', 'wt-message-' + sev, 'p-inline-message-' + (sev === 'danger' ? 'error' : sev)];
-    if (this.size === 'small') c.push('wt-message-sm');
-    if (this.size === 'large') c.push('wt-message-lg');
-    if (this.variant) c.push('wt-message-' + this.variant);
+    const c = ['wu-message', 'p-inline-message', 'p-component', 'wu-message-' + sev, 'p-inline-message-' + (sev === 'danger' ? 'error' : sev)];
+    if (this.size === 'small') c.push('wu-message-sm');
+    if (this.size === 'large') c.push('wu-message-lg');
+    if (this.variant) c.push('wu-message-' + this.variant);
     return c.join(' ');
   }
 

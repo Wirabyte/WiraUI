@@ -22,33 +22,33 @@ import {
   ɵfindTemplate,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const PHONE = '(max-width: 575.98px)';
 
 /**
- * A menu whose items open submenus beside them: `<wt-tieredMenu [model]="items">` in place, or a popup from a button
+ * A menu whose items open submenus beside them: `<wu-tieredMenu [model]="items">` in place, or a popup from a button
  * (`[popup]="true"` + `menu.toggle($event)`). Submenus open on hover, click or Arrow Right; on phones they open
  * below their item instead. Items are menu items (`label`, `icon`, `items`, `routerLink`, `url`, `command`,
  * `separator`, `disabled`).
  */
 @Component({
-  selector: 'wt-tieredmenu, wt-tieredMenu, wt-tiered-menu',
+  selector: 'wu-tieredmenu, wu-tieredMenu, wu-tiered-menu',
   standalone: true,
-  exportAs: 'wtTieredMenu',
+  exportAs: 'wuTieredMenu',
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './tieredmenu.component.html',
   styleUrls: ['./tieredmenu.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtTieredMenu implements OnDestroy {
-  @Input() model: WtMenuItem[] | null | undefined;
+export class WuTieredMenu implements OnDestroy {
+  @Input() model: WuMenuItem[] | null | undefined;
   @Input() set popup(v: unknown) { this._popup = ɵtoBool(v); }
   get popup(): boolean { return this._popup; }
   /** Submenus open when the pointer rests on their item. Default true. */
@@ -73,12 +73,12 @@ export class WtTieredMenu implements OnDestroy {
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('submenuicon', { descendants: false }) protected submenuIconRef?: unknown;
   @ViewChild('panel') protected panelRef?: ElementRef<HTMLElement>;
 
-  readonly menuId = ɵuniqueId('wt-tieredmenu');
+  readonly menuId = ɵuniqueId('wu-tieredmenu');
   /** The popup is open. */
   visible = false;
   /** Keys of the open items, one per level (`'0'`, `'0_2'`, …). */
@@ -90,13 +90,13 @@ export class WtTieredMenu implements OnDestroy {
   private anchor: HTMLElement | null = null;
   private keyActivated = false;
   private hoverOpened: { key: string; at: number } | null = null;
-  private popupRef: ɵWtPopup | null = null;
+  private popupRef: ɵWuPopup | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -111,7 +111,7 @@ export class WtTieredMenu implements OnDestroy {
   get submenuIconTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.submenuIconRef) || ɵfindTemplate(this.templates, 'submenuicon');
   }
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return (items || []).filter((it) => it && it.visible !== false);
   }
   keyOf(parent: string, index: number): string {
@@ -120,16 +120,16 @@ export class WtTieredMenu implements OnDestroy {
   itemId(key: string): string {
     return `${this.menuId}_${key}`;
   }
-  hasChildren(item: WtMenuItem): boolean {
+  hasChildren(item: WuMenuItem): boolean {
     return this.visibleOf(item.items).length > 0;
   }
   isOpen(key: string): boolean {
     return this.openPath.includes(key);
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
   /** Roving tab stop: one item of the inline menu is reachable with Tab, arrows do the rest. */
@@ -155,10 +155,10 @@ export class WtTieredMenu implements OnDestroy {
     this.cdr.detectChanges();
     const panel = this.panelRef?.nativeElement;
     if (panel && this.anchor) {
-      this.popupRef = new ɵWtPopup(this.anchor, panel, {
+      this.popupRef = new ɵWuPopup(this.anchor, panel, {
         sheet: false,
-        sheetClass: 'wt-tieredmenu-sheet',
-        modalClass: 'wt-tieredmenu-modal',
+        sheetClass: 'wu-tieredmenu-sheet',
+        modalClass: 'wu-tieredmenu-modal',
         onOutside: () => this.hide(),
         onEscape: () => this.hide(true),
       });
@@ -184,7 +184,7 @@ export class WtTieredMenu implements OnDestroy {
 
   // ---------- pointer ----------
 
-  itemEnter(item: WtMenuItem, key: string): void {
+  itemEnter(item: WuMenuItem, key: string): void {
     if (this.phone || item.disabled) return;
     if (!this._autoDisplay && !this.openPath.length) return;
     const opens = this.hasChildren(item) && !this.isOpen(key);
@@ -192,7 +192,7 @@ export class WtTieredMenu implements OnDestroy {
     if (opens) this.hoverOpened = { key, at: Date.now() };
   }
 
-  itemClick(event: MouseEvent | KeyboardEvent, item: WtMenuItem, key: string): void {
+  itemClick(event: MouseEvent | KeyboardEvent, item: WuMenuItem, key: string): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -220,7 +220,7 @@ export class WtTieredMenu implements OnDestroy {
   }
 
   focusIn(event: FocusEvent): void {
-    const key = (event.target as HTMLElement).getAttribute?.('data-wt-key');
+    const key = (event.target as HTMLElement).getAttribute?.('data-wu-key');
     if (key !== null && key !== undefined) this.focusedKey = key;
   }
 
@@ -237,7 +237,7 @@ export class WtTieredMenu implements OnDestroy {
   // ---------- keyboard ----------
 
   keydown(event: KeyboardEvent): void {
-    const key = (event.target as HTMLElement).getAttribute('data-wt-key');
+    const key = (event.target as HTMLElement).getAttribute('data-wu-key');
     if (key === null) return;
     const parent = key.includes('_') ? key.slice(0, key.lastIndexOf('_')) : '';
     const item = this.itemAt(key);
@@ -326,21 +326,21 @@ export class WtTieredMenu implements OnDestroy {
   /** Flips a submenu to the other side, or lifts it, when it would leave the window. */
   private fit(key: string): void {
     const li = this.host.ownerDocument.getElementById(this.itemId(key))?.closest('li');
-    const sub = li?.querySelector(':scope > .wt-tieredmenu-submenu') as HTMLElement | null;
+    const sub = li?.querySelector(':scope > .wu-tieredmenu-submenu') as HTMLElement | null;
     const win = this.doc.defaultView;
     if (!sub || !win || this.phone) return;
-    sub.classList.remove('wt-tieredmenu-submenu-flip');
+    sub.classList.remove('wu-tieredmenu-submenu-flip');
     sub.style.top = '';
     const r = sub.getBoundingClientRect();
     const vw = this.doc.documentElement.clientWidth || win.innerWidth;
     const vh = this.doc.documentElement.clientHeight || win.innerHeight;
-    if (r.right > vw - 4) sub.classList.add('wt-tieredmenu-submenu-flip');
+    if (r.right > vw - 4) sub.classList.add('wu-tieredmenu-submenu-flip');
     if (r.bottom > vh - 4) sub.style.top = `${Math.max(-(r.top - 4), vh - 4 - r.bottom)}px`;
   }
 
-  private itemAt(key: string): WtMenuItem | null {
+  private itemAt(key: string): WuMenuItem | null {
     let list = this.visibleOf(this.model);
-    let item: WtMenuItem | null = null;
+    let item: WuMenuItem | null = null;
     for (const part of key.split('_')) {
       item = list[Number(part)] || null;
       if (!item) return null;

@@ -1,11 +1,11 @@
-// Builds the WiraTheme UI Kit plugin for Figma (dist/manifest.json, dist/code.js, dist/ui.html).
+// Builds the WiraUI UI Kit plugin for Figma (dist/manifest.json, dist/code.js, dist/ui.html).
 //
 // Figma needs plain colours and pixels, while the theme CSS speaks var(), color-mix(), calc() and rem. So each v3
 // preset's built theme (packages/angular-v3/dist/themes/<preset>/theme.css) is loaded into Chromium and every
-// --wt-* token is read back as the browser computes it, once for light (:root) and once for dark (:root.wt-dark).
+// --wu-* token is read back as the browser computes it, once for light (:root) and once for dark (:root.wu-dark).
 // The icons come from wiraicon's built SVGs (packages/icons/dist/svg/regular).
 //
-// Run `pnpm --filter @wiratheme-build/angular-v3 build` and `pnpm build:icons` first.
+// Run `pnpm --filter @wiraui-build/angular-v3 build` and `pnpm build:icons` first.
 import { createRequire } from 'node:module';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -30,28 +30,28 @@ const catalog = core.VERSION_CATALOG[3];
 // Colours the CSS mixes on the fly (color-mix with a percentage token), computed here so Figma gets them as plain
 // colours: the outlined border and hover tint of each button colour, the tag fills, the message borders.
 const SEVERITIES = ['primary', 'secondary', 'success', 'info', 'warn', 'danger', 'help', 'contrast'];
-const tone = (s) => (s === 'primary' ? 'var(--wt-primary-color)' : s === 'secondary' ? 'var(--wt-button-secondary-tone)' : s === 'contrast' ? 'var(--wt-text)' : `var(--wt-${s}-color)`);
+const tone = (s) => (s === 'primary' ? 'var(--wu-primary-color)' : s === 'secondary' ? 'var(--wu-button-secondary-tone)' : s === 'contrast' ? 'var(--wu-text)' : `var(--wu-${s}-color)`);
 const tagParts = (s) =>
   s === 'primary'
-    ? ['var(--wt-primary-color)', 'var(--wt-primary-contrast)', 'var(--wt-primary-soft)', 'var(--wt-primary-soft-text)']
+    ? ['var(--wu-primary-color)', 'var(--wu-primary-contrast)', 'var(--wu-primary-soft)', 'var(--wu-primary-soft-text)']
     : s === 'secondary'
-      ? ['var(--wt-button-secondary-bg)', 'var(--wt-button-secondary-color)', 'var(--wt-chip-bg)', 'var(--wt-chip-color)']
+      ? ['var(--wu-button-secondary-bg)', 'var(--wu-button-secondary-color)', 'var(--wu-chip-bg)', 'var(--wu-chip-color)']
       : s === 'contrast'
-        ? ['var(--wt-text)', 'var(--wt-card-bg)', 'var(--wt-text)', 'var(--wt-card-bg)']
-        : [`var(--wt-${s}-color)`, `var(--wt-${s}-contrast)`, `var(--wt-${s}-bg)`, `var(--wt-${s}-text)`];
+        ? ['var(--wu-text)', 'var(--wu-card-bg)', 'var(--wu-text)', 'var(--wu-card-bg)']
+        : [`var(--wu-${s}-color)`, `var(--wu-${s}-contrast)`, `var(--wu-${s}-bg)`, `var(--wu-${s}-text)`];
 const DERIVED = {};
 for (const s of SEVERITIES) {
-  DERIVED[`kit-button-${s}-outlined-border`] = `color-mix(in srgb, ${tone(s)} var(--wt-button-outlined-border-mix), transparent)`;
-  DERIVED[`kit-button-${s}-tint`] = `color-mix(in srgb, ${tone(s)} var(--wt-button-tint), transparent)`;
+  DERIVED[`kit-button-${s}-outlined-border`] = `color-mix(in srgb, ${tone(s)} var(--wu-button-outlined-border-mix), transparent)`;
+  DERIVED[`kit-button-${s}-tint`] = `color-mix(in srgb, ${tone(s)} var(--wu-button-tint), transparent)`;
   DERIVED[`kit-button-${s}-tone`] = tone(s);
   const [solid, onSolid, soft, onSoft] = tagParts(s);
-  DERIVED[`kit-tag-${s}-bg`] = `color-mix(in srgb, ${solid} var(--wt-tag-fill), ${soft})`;
-  DERIVED[`kit-tag-${s}-color`] = `color-mix(in srgb, ${onSolid} var(--wt-tag-fill), ${onSoft})`;
+  DERIVED[`kit-tag-${s}-bg`] = `color-mix(in srgb, ${solid} var(--wu-tag-fill), ${soft})`;
+  DERIVED[`kit-tag-${s}-color`] = `color-mix(in srgb, ${onSolid} var(--wu-tag-fill), ${onSoft})`;
 }
-for (const s of ['success', 'info', 'warn', 'danger', 'help']) DERIVED[`kit-message-${s}-border`] = `color-mix(in srgb, var(--wt-${s}-color) 40%, transparent)`;
+for (const s of ['success', 'info', 'warn', 'danger', 'help']) DERIVED[`kit-message-${s}-border`] = `color-mix(in srgb, var(--wu-${s}-color) 40%, transparent)`;
 const presets = catalog.presets;
 
-/** Runs in the page: every --wt-* token of the loaded theme, as concrete values, for the current root class. */
+/** Runs in the page: every --wu-* token of the loaded theme, as concrete values, for the current root class. */
 function readTokens({ names, derived }) {
   const probe = document.getElementById('probe');
   const rootStyle = getComputedStyle(document.documentElement);
@@ -85,7 +85,7 @@ function readTokens({ names, derived }) {
   };
   const out = {};
   for (const name of names) {
-    const raw = rootStyle.getPropertyValue(`--wt-${name}`).trim();
+    const raw = rootStyle.getPropertyValue(`--wu-${name}`).trim();
     if (!raw) continue;
     // Colours
     if (CSS.supports('color', raw)) {
@@ -147,10 +147,10 @@ const page = await browser.newPage();
 const data = { generated: new Date().toISOString(), version: 3, defaultPreset: catalog.defaultPreset, presets: [] };
 for (const id of presets) {
   const css = readFileSync(join(themesDir, id, 'theme.css'), 'utf8');
-  const names = [...new Set([...css.matchAll(/--wt-([a-z0-9-]+)\s*:/g)].map((m) => m[1]))];
+  const names = [...new Set([...css.matchAll(/--wu-([a-z0-9-]+)\s*:/g)].map((m) => m[1]))];
   await page.setContent(`<!doctype html><html><head><style>${css}</style></head><body><div id="probe"></div></body></html>`);
   const light = await page.evaluate(readTokens, { names, derived: DERIVED });
-  await page.evaluate(() => document.documentElement.classList.add('wt-dark'));
+  await page.evaluate(() => document.documentElement.classList.add('wu-dark'));
   const dark = await page.evaluate(readTokens, { names, derived: DERIVED });
   const config = core.defaults(id);
   data.presets.push({ id, label: core.PRESET_NAMES[id] || id, fontFamily: config.fontFamily, fontSize: config.fontSize, lineHeight: config.lineHeight, scheme: config.scheme, light, dark });
@@ -169,7 +169,7 @@ mkdirSync(dist, { recursive: true });
 const code = ts.transpileModule(readFileSync(join(pkg, 'src', 'code.ts'), 'utf8'), {
   compilerOptions: { target: ts.ScriptTarget.ES2017, module: ts.ModuleKind.None, removeComments: false },
 }).outputText;
-writeFileSync(join(dist, 'code.js'), `// Generated by packages/figma/scripts/build.mjs: do not edit.\nvar WT_DATA = ${JSON.stringify(data)};\n${code}`);
+writeFileSync(join(dist, 'code.js'), `// Generated by packages/figma/scripts/build.mjs: do not edit.\nvar WU_DATA = ${JSON.stringify(data)};\n${code}`);
 const ui = readFileSync(join(pkg, 'src', 'ui.html'), 'utf8').replace(
   '/*PRESETS*/[]',
   JSON.stringify(data.presets.map((p) => ({ id: p.id, label: p.label, font: p.fontFamily, primary: p.light['primary-color']?.v, isDefault: p.id === data.defaultPreset }))),
@@ -186,7 +186,7 @@ const groupOf = (name) => {
 mkdirSync(join(dist, 'tokens'), { recursive: true });
 for (const p of data.presets)
   for (const mode of ['light', 'dark']) {
-    const doc = { $description: `WiraTheme ${p.label} (${mode}): the --wt-* tokens as the browser computes them.` };
+    const doc = { $description: `WiraUI ${p.label} (${mode}): the --wu-* tokens as the browser computes them.` };
     for (const [name, t] of Object.entries(p[mode])) {
       if (name.startsWith('kit-')) continue;
       const token =
@@ -202,7 +202,7 @@ for (const p of data.presets)
       let node = doc;
       const path = groupOf(name);
       for (const seg of path.slice(0, -1)) node = node[seg] ??= {};
-      node[path[path.length - 1]] = { ...token, $extensions: { 'com.wiratheme': { css: `--wt-${name}` } } };
+      node[path[path.length - 1]] = { ...token, $extensions: { 'com.wiraui': { css: `--wu-${name}` } } };
     }
     writeFileSync(join(dist, 'tokens', `${p.id}.${mode}.json`), JSON.stringify(doc, null, 2) + '\n');
   }

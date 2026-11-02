@@ -13,8 +13,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtMenuItem } from 'wiratheme/config';
-import { WtTieredMenu } from 'wiratheme/tieredmenu';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuMenuItem } from 'wiraui/config';
+import { WuTieredMenu } from 'wiraui/tieredmenu';
 
 /** The element a `target` stands for: an element, an ElementRef, an element id, or a component that has one. */
 function targetElement(target: unknown, doc: Document): HTMLElement | null {
@@ -26,34 +26,34 @@ function targetElement(target: unknown, doc: Document): HTMLElement | null {
 }
 
 /**
- * A menu at the pointer on right-click: `<wt-contextMenu [model]="items" [target]="box">`, or for the whole page
- * `[global]="true"`, or opened from code with `menu.show($event)`. Items may have submenus (as in wt-tieredMenu).
+ * A menu at the pointer on right-click: `<wu-contextMenu [model]="items" [target]="box">`, or for the whole page
+ * `[global]="true"`, or opened from code with `menu.show($event)`. Items may have submenus (as in wu-tieredMenu).
  * The keyboard's context-menu key (or Shift + F10) opens it at the focused element.
  */
 @Component({
-  selector: 'wt-contextmenu, wt-contextMenu, wt-context-menu',
+  selector: 'wu-contextmenu, wu-contextMenu, wu-context-menu',
   standalone: true,
-  exportAs: 'wtContextMenu',
-  imports: [WtTieredMenu],
+  exportAs: 'wuContextMenu',
+  imports: [WuTieredMenu],
   template: `
-    <span #anchor class="wt-contextmenu-anchor" aria-hidden="true"></span>
-    <wt-tieredMenu
+    <span #anchor class="wu-contextmenu-anchor" aria-hidden="true"></span>
+    <wu-tieredMenu
       #menu
       [model]="model"
       [popup]="true"
-      [styleClass]="'wt-contextmenu p-contextmenu ' + (styleClass || '')"
+      [styleClass]="'wu-contextmenu p-contextmenu ' + (styleClass || '')"
       [style]="style || null"
       [ariaLabel]="ariaLabel"
       (onShow)="onShow.emit()"
       (onHide)="onHide.emit()"
-    ></wt-tieredMenu>
+    ></wu-tieredMenu>
   `,
   styles: [
     `
-      :is(wt-contextmenu, wt-context-menu) {
+      :is(wu-contextmenu, wu-context-menu) {
         display: contents;
       }
-      .wt-contextmenu-anchor {
+      .wu-contextmenu-anchor {
         position: fixed;
         width: 0;
         height: 0;
@@ -64,8 +64,8 @@ function targetElement(target: unknown, doc: Document): HTMLElement | null {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtContextMenu implements AfterViewInit, OnDestroy {
-  @Input() model: WtMenuItem[] | null | undefined;
+export class WuContextMenu implements AfterViewInit, OnDestroy {
+  @Input() model: WuMenuItem[] | null | undefined;
   /** Right-clicks on this element open the menu (an element, an ElementRef, an id or a component). */
   @Input() set target(v: unknown) { this._target = v; this.listen(); }
   /** Right-clicks anywhere on the page open it. */
@@ -84,7 +84,7 @@ export class WtContextMenu implements AfterViewInit, OnDestroy {
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
-  @ViewChild('menu') protected menu?: WtTieredMenu;
+  @ViewChild('menu') protected menu?: WuTieredMenu;
   @ViewChild('anchor') protected anchorRef?: ElementRef<HTMLElement>;
 
   private _target: unknown;
@@ -96,7 +96,7 @@ export class WtContextMenu implements AfterViewInit, OnDestroy {
   private readonly zone = inject(NgZone);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {

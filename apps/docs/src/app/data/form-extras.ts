@@ -6,12 +6,12 @@ const formsImport = {
   en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.',
 };
 const fieldTokens = [
-  tok('--wt-field-bg', 'พื้นของช่อง', 'Field background'),
-  tok('--wt-field-border', 'ขอบ', 'Border'),
-  tok('--wt-field-padding-x', 'ระยะซ้ายขวา (icon และ label อิงค่านี้)', 'Horizontal padding (icons and labels follow it)'),
-  tok('--wt-input-radius', 'ความมนของมุม', 'Corner radius'),
-  tok('--wt-field-placeholder', 'สีของ icon และ label ที่ยังไม่ลอย', 'Icon and resting label colour'),
-  tok('--wt-primary-color', 'สี label ที่ลอยตอนโฟกัส', 'Floated label colour on focus'),
+  tok('--wu-field-bg', 'พื้นของช่อง', 'Field background'),
+  tok('--wu-field-border', 'ขอบ', 'Border'),
+  tok('--wu-field-padding-x', 'ระยะซ้ายขวา (icon และ label อิงค่านี้)', 'Horizontal padding (icons and labels follow it)'),
+  tok('--wu-input-radius', 'ความมนของมุม', 'Corner radius'),
+  tok('--wu-field-placeholder', 'สีของ icon และ label ที่ยังไม่ลอย', 'Icon and resting label colour'),
+  tok('--wu-primary-color', 'สี label ที่ลอยตอนโฟกัส', 'Floated label colour on focus'),
 ];
 
 export const ICONFIELD_DOC: ComponentDoc = {
@@ -19,37 +19,37 @@ export const ICONFIELD_DOC: ComponentDoc = {
   title: 'IconField',
   group: 'Form',
   entry: 'iconfield',
-  standalone: 'WtIconField, WtInputIcon',
-  module: 'WtIconFieldModule',
-  selector: 'wt-iconfield',
+  standalone: 'WuIconField, WuInputIcon',
+  module: 'WuIconFieldModule',
+  selector: 'wu-iconfield',
   description: {
     th: 'ใส่ icon ไว้ในช่องกรอก วาง icon ก่อนช่องจะอยู่ซ้าย วางหลังช่องจะอยู่ขวา',
     en: 'An icon inside a field: put the icon before the input for the left, after it for the right.',
   },
   sections: {
-    import: { title: 'Import', text: { th: '<code>WtIconField</code> และ <code>WtInputIcon</code> อยู่ใน <code>WtIconFieldModule</code>', en: '<code>WtIconField</code> and <code>WtInputIcon</code> come with <code>WtIconFieldModule</code>.' } },
+    import: { title: 'Import', text: { th: '<code>WuIconField</code> และ <code>WuInputIcon</code> อยู่ใน <code>WuIconFieldModule</code>', en: '<code>WuIconField</code> and <code>WuInputIcon</code> come with <code>WuIconFieldModule</code>.' } },
     basic: { title: { th: 'ซ้ายและขวา', en: 'Left and right' } },
     position: {
       title: { th: 'ตั้งด้านของ icon', en: 'Setting the icon side' },
       text: {
-        th: '<code>iconPosition="left"</code> หรือ <code>"right"</code> บน <code>wt-iconfield</code> ชนะลำดับใน markup แบบที่ template เดิมเขียน (icon อยู่ก่อนช่องแต่ไปอยู่ขวา) tag <code>wt-iconField</code> / <code>wt-inputIcon</code> ก็ใช้ได้',
-        en: '<code>iconPosition="left"</code> or <code>"right"</code> on <code>wt-iconfield</code> wins over the markup order, as older templates write it (the icon first, shown on the right). The <code>wt-iconField</code> / <code>wt-inputIcon</code> tags work too.',
+        th: '<code>iconPosition="left"</code> หรือ <code>"right"</code> บน <code>wu-iconfield</code> ชนะลำดับใน markup แบบที่ template เดิมเขียน (icon อยู่ก่อนช่องแต่ไปอยู่ขวา) tag <code>wu-iconField</code> / <code>wu-inputIcon</code> ก็ใช้ได้',
+        en: '<code>iconPosition="left"</code> or <code>"right"</code> on <code>wu-iconfield</code> wins over the markup order, as older templates write it (the icon first, shown on the right). The <code>wu-iconField</code> / <code>wu-inputIcon</code> tags work too.',
       },
     },
   },
   code: {
-    position: `<wt-iconfield iconPosition="right">
-  <wt-inputicon icon="wi wi-search"></wt-inputicon>
-  <input wtInputText placeholder="ค้นหา" />
-</wt-iconfield>`,
-    basic: `<wt-iconfield>
-  <wt-inputicon icon="wi wi-search"></wt-inputicon>
-  <input wtInputText placeholder="ค้นหา" />
-</wt-iconfield>
-<wt-iconfield>
-  <input wtInputText placeholder="อีเมล" />
-  <wt-inputicon icon="wi wi-envelope"></wt-inputicon>
-</wt-iconfield>`,
+    position: `<wu-iconfield iconPosition="right">
+  <wu-inputicon icon="wi wi-search"></wu-inputicon>
+  <input wuInputText placeholder="ค้นหา" />
+</wu-iconfield>`,
+    basic: `<wu-iconfield>
+  <wu-inputicon icon="wi wi-search"></wu-inputicon>
+  <input wuInputText placeholder="ค้นหา" />
+</wu-iconfield>
+<wu-iconfield>
+  <input wuInputText placeholder="อีเมล" />
+  <wu-inputicon icon="wi wi-envelope"></wu-inputicon>
+</wu-iconfield>`,
   },
   api: [
     {
@@ -57,17 +57,17 @@ export const ICONFIELD_DOC: ComponentDoc = {
       title: 'Elements',
       typeLabel: { th: 'ชนิด', en: 'Kind' },
       rows: [
-        row('wt-iconfield', 'element', undefined, 'ครอบ icon กับช่องกรอก', 'Wraps the icon and the field'),
-        row('wt-inputicon', 'element', undefined, 'icon ก่อนช่องอยู่ซ้าย หลังช่องอยู่ขวา', 'Before the field it sits left, after it right'),
+        row('wu-iconfield', 'element', undefined, 'ครอบ icon กับช่องกรอก', 'Wraps the icon and the field'),
+        row('wu-inputicon', 'element', undefined, 'icon ก่อนช่องอยู่ซ้าย หลังช่องอยู่ขวา', 'Before the field it sits left, after it right'),
       ],
     },
     {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('iconPosition (wt-iconfield)', "'left' | 'right'", undefined, 'ด้านของ icon ชนะลำดับใน markup', 'The icon side; wins over the markup order'),
-        row('icon (wt-inputicon)', 'string', undefined, 'class ของ icon (หรือวาง <svg> ไว้ข้างใน)', 'Icon class (or project an <svg>)'),
-        row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wt-iconfield / wt-inputicon', 'Extra class and style on wt-iconfield / wt-inputicon'),
+        row('iconPosition (wu-iconfield)', "'left' | 'right'", undefined, 'ด้านของ icon ชนะลำดับใน markup', 'The icon side; wins over the markup order'),
+        row('icon (wu-inputicon)', 'string', undefined, 'class ของ icon (หรือวาง <svg> ไว้ข้างใน)', 'Icon class (or project an <svg>)'),
+        row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wu-iconfield / wu-inputicon', 'Extra class and style on wu-iconfield / wu-inputicon'),
       ],
     },
   ],
@@ -79,9 +79,9 @@ export const INPUTGROUP_DOC: ComponentDoc = {
   title: 'InputGroup',
   group: 'Form',
   entry: 'inputgroup',
-  standalone: 'WtInputGroup, WtInputGroupAddon',
-  module: 'WtInputGroupModule',
-  selector: 'wt-inputgroup',
+  standalone: 'WuInputGroup, WuInputGroupAddon',
+  module: 'WuInputGroupModule',
+  selector: 'wu-inputgroup',
   description: {
     th: 'ต่อช่องกรอก ส่วนเสริม (add-on) และปุ่มเป็นแถวเดียวที่ใช้ขอบร่วมกัน',
     en: 'Joins fields, add-ons and buttons into one row with shared borders.',
@@ -93,24 +93,24 @@ export const INPUTGROUP_DOC: ComponentDoc = {
     'ค้นหาคำสั่งซื้อ': 'Search orders',
   },
   sections: {
-    import: { title: 'Import', text: { th: '<code>WtInputGroup</code> และ <code>WtInputGroupAddon</code> อยู่ใน <code>WtInputGroupModule</code>', en: '<code>WtInputGroup</code> and <code>WtInputGroupAddon</code> come with <code>WtInputGroupModule</code>.' } },
+    import: { title: 'Import', text: { th: '<code>WuInputGroup</code> และ <code>WuInputGroupAddon</code> อยู่ใน <code>WuInputGroupModule</code>', en: '<code>WuInputGroup</code> and <code>WuInputGroupAddon</code> come with <code>WuInputGroupModule</code>.' } },
     addon: { title: 'Add-on' },
     button: { title: { th: 'คู่กับปุ่ม', en: 'With a button' } },
   },
   code: {
-    addon: `<wt-inputgroup>
-  <wt-inputgroup-addon><i class="wi wi-user"></i></wt-inputgroup-addon>
-  <input wtInputText placeholder="ชื่อผู้ใช้" />
-</wt-inputgroup>
-<wt-inputgroup>
-  <wt-inputgroup-addon>฿</wt-inputgroup-addon>
-  <input wtInputText placeholder="ราคา" />
-  <wt-inputgroup-addon>.00</wt-inputgroup-addon>
-</wt-inputgroup>`,
-    button: `<wt-inputgroup>
-  <input wtInputText placeholder="ค้นหาคำสั่งซื้อ" />
-  <wt-button label="ค้นหา" icon="wi wi-search"></wt-button>
-</wt-inputgroup>`,
+    addon: `<wu-inputgroup>
+  <wu-inputgroup-addon><i class="wi wi-user"></i></wu-inputgroup-addon>
+  <input wuInputText placeholder="ชื่อผู้ใช้" />
+</wu-inputgroup>
+<wu-inputgroup>
+  <wu-inputgroup-addon>฿</wu-inputgroup-addon>
+  <input wuInputText placeholder="ราคา" />
+  <wu-inputgroup-addon>.00</wu-inputgroup-addon>
+</wu-inputgroup>`,
+    button: `<wu-inputgroup>
+  <input wuInputText placeholder="ค้นหาคำสั่งซื้อ" />
+  <wu-button label="ค้นหา" icon="wi wi-search"></wu-button>
+</wu-inputgroup>`,
   },
   api: [
     {
@@ -118,23 +118,23 @@ export const INPUTGROUP_DOC: ComponentDoc = {
       title: 'Elements',
       typeLabel: { th: 'ชนิด', en: 'Kind' },
       rows: [
-        row('wt-inputgroup', 'element', undefined, 'ครอบทั้งแถว', 'Wraps the row'),
-        row('wt-inputgroup-addon', 'element', undefined, 'ข้อความหรือ icon ติดกับช่อง เช่น สกุลเงินหรือหน่วย', 'Text or an icon attached to the field, e.g. a currency or unit'),
+        row('wu-inputgroup', 'element', undefined, 'ครอบทั้งแถว', 'Wraps the row'),
+        row('wu-inputgroup-addon', 'element', undefined, 'ข้อความหรือ icon ติดกับช่อง เช่น สกุลเงินหรือหน่วย', 'Text or an icon attached to the field, e.g. a currency or unit'),
       ],
     },
     {
       id: 'api-inputs',
       title: 'Inputs',
-      note: { th: 'tag wt-inputGroup / wt-inputGroupAddon ก็ใช้ได้', en: 'The wt-inputGroup / wt-inputGroupAddon tags work too.' },
-      rows: [row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wt-inputgroup / wt-inputgroup-addon', 'Extra class and style on wt-inputgroup / wt-inputgroup-addon')],
+      note: { th: 'tag wu-inputGroup / wu-inputGroupAddon ก็ใช้ได้', en: 'The wu-inputGroup / wu-inputGroupAddon tags work too.' },
+      rows: [row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่มของ wu-inputgroup / wu-inputgroup-addon', 'Extra class and style on wu-inputgroup / wu-inputgroup-addon')],
     },
   ],
   tokens: [
-    tok('--wt-field-bg', 'พื้นของช่อง', 'Field background'),
-    tok('--wt-field-border', 'ขอบร่วม', 'Shared border'),
-    tok('--wt-field-padding-x', 'ระยะของ add-on', 'Add-on padding'),
-    tok('--wt-input-radius', 'ความมนที่หัวและท้ายแถว', 'Radius at both ends'),
-    tok('--wt-field-placeholder', 'สีของ add-on', 'Add-on colour'),
+    tok('--wu-field-bg', 'พื้นของช่อง', 'Field background'),
+    tok('--wu-field-border', 'ขอบร่วม', 'Shared border'),
+    tok('--wu-field-padding-x', 'ระยะของ add-on', 'Add-on padding'),
+    tok('--wu-input-radius', 'ความมนที่หัวและท้ายแถว', 'Radius at both ends'),
+    tok('--wu-field-placeholder', 'สีของ add-on', 'Add-on colour'),
   ],
 };
 
@@ -143,9 +143,9 @@ export const FLOATLABEL_DOC: ComponentDoc = {
   title: 'FloatLabel',
   group: 'Form',
   entry: 'floatlabel',
-  standalone: 'WtFloatLabel',
-  module: 'WtFloatLabelModule',
-  selector: 'wt-floatlabel',
+  standalone: 'WuFloatLabel',
+  module: 'WuFloatLabelModule',
+  selector: 'wu-floatlabel',
   description: {
     th: 'label ที่อยู่ในช่อง แล้วลอยขึ้นเมื่อโฟกัสหรือมีค่า วาง label ไว้หลังช่องกรอกเสมอ',
     en: 'A label that sits in the field and floats away on focus or once there is a value. The label always comes after the field.',
@@ -155,17 +155,17 @@ export const FLOATLABEL_DOC: ComponentDoc = {
   },
   sections: {
     import: { title: 'Import', text: formsImport },
-    basic: { title: 'Basic', text: { th: 'label ลอยเมื่อโฟกัสหรือมีค่า (ช่องที่ใช้ <code>wtInputText</code> / <code>wtTextarea</code> ได้ class <code>wt-filled</code> อัตโนมัติ)', en: 'The label floats on focus or once there is a value (<code>wtInputText</code> / <code>wtTextarea</code> add <code>wt-filled</code> for you).' } },
+    basic: { title: 'Basic', text: { th: 'label ลอยเมื่อโฟกัสหรือมีค่า (ช่องที่ใช้ <code>wuInputText</code> / <code>wuTextarea</code> ได้ class <code>wu-filled</code> อัตโนมัติ)', en: 'The label floats on focus or once there is a value (<code>wuInputText</code> / <code>wuTextarea</code> add <code>wu-filled</code> for you).' } },
     variants: { title: 'Variants', text: { th: '<code>over</code> เหนือช่อง · <code>on</code> บนเส้นขอบ · <code>in</code> ในช่องซึ่งสูงขึ้นให้พอ', en: '<code>over</code> above the field · <code>on</code> on the border · <code>in</code> inside a taller field.' } },
   },
   code: {
-    basic: `<wt-floatlabel>
-  <input wtInputText id="fl-name" name="name" [(ngModel)]="name" />
+    basic: `<wu-floatlabel>
+  <input wuInputText id="fl-name" name="name" [(ngModel)]="name" />
   <label for="fl-name">ชื่อ-นามสกุล</label>
-</wt-floatlabel>`,
-    variants: `<wt-floatlabel variant="over">…</wt-floatlabel>
-<wt-floatlabel variant="on">…</wt-floatlabel>
-<wt-floatlabel variant="in">…</wt-floatlabel>`,
+</wu-floatlabel>`,
+    variants: `<wu-floatlabel variant="over">…</wu-floatlabel>
+<wu-floatlabel variant="on">…</wu-floatlabel>
+<wu-floatlabel variant="in">…</wu-floatlabel>`,
   },
   api: [{ id: 'api-inputs', title: 'Inputs', rows: [row('variant', "'over' | 'on' | 'in'", "'over'", 'ตำแหน่งของ label เมื่อลอย', 'Where the floated label sits'), STYLE_ROW] }],
   tokens: fieldTokens,
@@ -176,10 +176,10 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
   title: 'ToggleButton',
   group: 'Form',
   entry: 'togglebutton',
-  standalone: 'WtToggleButton',
-  module: 'WtToggleButtonModule',
+  standalone: 'WuToggleButton',
+  module: 'WuToggleButtonModule',
   forms: true,
-  selector: 'wt-togglebutton',
+  selector: 'wu-togglebutton',
   description: { th: 'ปุ่มเปิด / ปิดที่เก็บค่าเป็น boolean มีข้อความและ icon แยกตามสถานะ', en: 'An on / off button holding a boolean, with its own label and icon per state.' },
   english: {
     'เล็ก': 'Small',
@@ -206,18 +206,18 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
     disabled: { title: { th: 'Disabled และ Invalid', en: 'Disabled and Invalid' } },
   },
   code: {
-    sizes: `<wt-togglebutton name="pinned" [(ngModel)]="pinned" size="small" onLabel="เล็ก" offLabel="เล็ก"></wt-togglebutton>
-<wt-togglebutton name="pinned" [(ngModel)]="pinned" onLabel="ปกติ" offLabel="ปกติ"></wt-togglebutton>
-<wt-togglebutton name="pinned" [(ngModel)]="pinned" size="large" onLabel="ใหญ่" offLabel="ใหญ่"></wt-togglebutton>`,
-    basic: `<wt-togglebutton name="pinned" [(ngModel)]="pinned"></wt-togglebutton>`,
-    labels: `<wt-togglebutton name="following" [(ngModel)]="following" onLabel="ติดตามแล้ว" offLabel="ติดตาม"
-  onIcon="wi wi-check" offIcon="wi wi-plus"></wt-togglebutton>`,
+    sizes: `<wu-togglebutton name="pinned" [(ngModel)]="pinned" size="small" onLabel="เล็ก" offLabel="เล็ก"></wu-togglebutton>
+<wu-togglebutton name="pinned" [(ngModel)]="pinned" onLabel="ปกติ" offLabel="ปกติ"></wu-togglebutton>
+<wu-togglebutton name="pinned" [(ngModel)]="pinned" size="large" onLabel="ใหญ่" offLabel="ใหญ่"></wu-togglebutton>`,
+    basic: `<wu-togglebutton name="pinned" [(ngModel)]="pinned"></wu-togglebutton>`,
+    labels: `<wu-togglebutton name="following" [(ngModel)]="following" onLabel="ติดตามแล้ว" offLabel="ติดตาม"
+  onIcon="wi wi-check" offIcon="wi wi-plus"></wu-togglebutton>`,
     reactive: `<form [formGroup]="form">
-  <wt-togglebutton formControlName="notify" onLabel="แจ้งเตือนเปิด"
-    offLabel="แจ้งเตือนปิด"></wt-togglebutton>
+  <wu-togglebutton formControlName="notify" onLabel="แจ้งเตือนเปิด"
+    offLabel="แจ้งเตือนปิด"></wu-togglebutton>
 </form>`,
-    disabled: `<wt-togglebutton [ngModel]="true" [disabled]="true" onLabel="ปิดอยู่"></wt-togglebutton>
-<wt-togglebutton [invalid]="true" offLabel="Invalid"></wt-togglebutton>`,
+    disabled: `<wu-togglebutton [ngModel]="true" [disabled]="true" onLabel="ปิดอยู่"></wu-togglebutton>
+<wu-togglebutton [invalid]="true" offLabel="Invalid"></wu-togglebutton>`,
   },
   ts: { reactive: `form = new FormGroup({ notify: new FormControl(true) });` },
   api: [
@@ -237,19 +237,19 @@ export const TOGGLEBUTTON_DOC: ComponentDoc = {
         STYLE_ROW,
       ],
     },
-    { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onChange', 'WtToggleButtonChangeEvent', undefined, 'สลับสถานะ', 'Toggled')] },
-    { id: 'api-types', title: 'Types', code: `interface WtToggleButtonChangeEvent {\n  checked: boolean;\n  originalEvent: Event;\n}` },
+    { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onChange', 'WuToggleButtonChangeEvent', undefined, 'สลับสถานะ', 'Toggled')] },
+    { id: 'api-types', title: 'Types', code: `interface WuToggleButtonChangeEvent {\n  checked: boolean;\n  originalEvent: Event;\n}` },
   ],
   tokens: [
-    tok('--wt-togglebutton-bg', 'พื้น', 'Background'),
-    tok('--wt-togglebutton-border', 'ขอบ', 'Border'),
-    tok('--wt-togglebutton-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-togglebutton-hover-color', 'สีตัวอักษรตอนชี้', 'Hover text colour'),
-    tok('--wt-togglebutton-checked-bg', 'พื้นเมื่อเปิด', 'Background when on'),
-    tok('--wt-togglebutton-checked-color', 'สีตัวอักษรเมื่อเปิด', 'Text colour when on'),
-    tok('--wt-togglebutton-chip-bg', 'พื้นของแถบด้านในเมื่อเปิด', 'Inner chip background when on'),
-    tok('--wt-togglebutton-padding', 'ระยะรอบแถบด้านใน', 'Padding around the inner chip'),
-    tok('--wt-togglebutton-content-padding-x', 'ระยะซ้ายขวาของข้อความ', 'Label horizontal padding'),
+    tok('--wu-togglebutton-bg', 'พื้น', 'Background'),
+    tok('--wu-togglebutton-border', 'ขอบ', 'Border'),
+    tok('--wu-togglebutton-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-togglebutton-hover-color', 'สีตัวอักษรตอนชี้', 'Hover text colour'),
+    tok('--wu-togglebutton-checked-bg', 'พื้นเมื่อเปิด', 'Background when on'),
+    tok('--wu-togglebutton-checked-color', 'สีตัวอักษรเมื่อเปิด', 'Text colour when on'),
+    tok('--wu-togglebutton-chip-bg', 'พื้นของแถบด้านในเมื่อเปิด', 'Inner chip background when on'),
+    tok('--wu-togglebutton-padding', 'ระยะรอบแถบด้านใน', 'Padding around the inner chip'),
+    tok('--wu-togglebutton-content-padding-x', 'ระยะซ้ายขวาของข้อความ', 'Label horizontal padding'),
   ],
 };
 
@@ -258,10 +258,10 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
   title: 'SelectButton',
   group: 'Form',
   entry: 'selectbutton',
-  standalone: 'WtSelectButton',
-  module: 'WtSelectButtonModule',
+  standalone: 'WuSelectButton',
+  module: 'WuSelectButtonModule',
   forms: true,
-  selector: 'wt-selectbutton',
+  selector: 'wu-selectbutton',
   description: { th: 'เลือกจากปุ่มที่เรียงติดกัน เลือกได้ข้อเดียวหรือหลายข้อ และขึ้นบรรทัดใหม่เมื่อจอแคบ', en: 'Pick from joined buttons, one or several, wrapping on narrow screens.' },
   english: {
     'จ': 'Mon',
@@ -299,26 +299,26 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
     },
   },
   code: {
-    item: `<wt-selectbutton name="view" [(ngModel)]="view" [options]="views" optionLabel="label" optionValue="value"
+    item: `<wu-selectbutton name="view" [(ngModel)]="view" [options]="views" optionLabel="label" optionValue="value"
   [unselectable]="true">
   <ng-template #item let-option let-i="index">
     <i [class]="option.icon"></i> {{ i + 1 }}. {{ option.label }}
   </ng-template>
-</wt-selectbutton>`,
-    sizes: `<wt-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
-  [(ngModel)]="plan" size="small"></wt-selectbutton>
-<wt-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
-  [(ngModel)]="plan"></wt-selectbutton>
-<wt-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
-  [(ngModel)]="plan" size="large"></wt-selectbutton>`,
-    basic: `<wt-selectbutton [options]="plans" optionLabel="label" optionValue="value"
-  name="plan" [(ngModel)]="plan"></wt-selectbutton>`,
-    multiple: `<wt-selectbutton [options]="days" name="workdays" [(ngModel)]="workdays" [multiple]="true"></wt-selectbutton>`,
-    required: `<wt-selectbutton [options]="['วัน', 'สัปดาห์', 'เดือน']" name="range" [(ngModel)]="range"
-  [allowEmpty]="false"></wt-selectbutton>`,
+</wu-selectbutton>`,
+    sizes: `<wu-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
+  [(ngModel)]="plan" size="small"></wu-selectbutton>
+<wu-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
+  [(ngModel)]="plan"></wu-selectbutton>
+<wu-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
+  [(ngModel)]="plan" size="large"></wu-selectbutton>`,
+    basic: `<wu-selectbutton [options]="plans" optionLabel="label" optionValue="value"
+  name="plan" [(ngModel)]="plan"></wu-selectbutton>`,
+    multiple: `<wu-selectbutton [options]="days" name="workdays" [(ngModel)]="workdays" [multiple]="true"></wu-selectbutton>`,
+    required: `<wu-selectbutton [options]="['วัน', 'สัปดาห์', 'เดือน']" name="range" [(ngModel)]="range"
+  [allowEmpty]="false"></wu-selectbutton>`,
     reactive: `<form [formGroup]="form">
-  <wt-selectbutton [options]="plans" optionLabel="label" optionValue="value"
-    optionDisabled="disabled" formControlName="plan"></wt-selectbutton>
+  <wu-selectbutton [options]="plans" optionLabel="label" optionValue="value"
+    optionDisabled="disabled" formControlName="plan"></wu-selectbutton>
 </form>`,
   },
   ts: {
@@ -366,30 +366,30 @@ form = new FormGroup({ plan: new FormControl('free') });`,
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtSelectButtonChangeEvent', undefined, 'ค่าเปลี่ยน', 'Value changed'),
-        row('onOptionClick', 'WtSelectButtonOptionClickEvent', undefined, 'กดตัวเลือก', 'An option was clicked'),
+        row('onChange', 'WuSelectButtonChangeEvent', undefined, 'ค่าเปลี่ยน', 'Value changed'),
+        row('onOptionClick', 'WuSelectButtonOptionClickEvent', undefined, 'กดตัวเลือก', 'An option was clicked'),
       ],
     },
     {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write it as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write it as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [row('item', '$implicit (option) · index', undefined, 'แต่ละตัวเลือก', 'Each option')],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtSelectButtonChangeEvent {\n  value: unknown;\n  originalEvent: Event;\n}\ninterface WtSelectButtonOptionClickEvent {\n  option: unknown;\n  index: number;\n  originalEvent: Event;\n}`,
+      code: `interface WuSelectButtonChangeEvent {\n  value: unknown;\n  originalEvent: Event;\n}\ninterface WuSelectButtonOptionClickEvent {\n  option: unknown;\n  index: number;\n  originalEvent: Event;\n}`,
     },
   ],
   tokens: [
-    tok('--wt-togglebutton-bg', 'พื้น (ใช้ token เดียวกับ ToggleButton)', 'Background (shares ToggleButton tokens)'),
-    tok('--wt-togglebutton-border', 'ขอบ', 'Border'),
-    tok('--wt-togglebutton-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-togglebutton-checked-bg', 'พื้นของตัวที่เลือก', 'Selected background'),
-    tok('--wt-togglebutton-checked-color', 'สีตัวอักษรของตัวที่เลือก', 'Selected text colour'),
-    tok('--wt-togglebutton-content-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-togglebutton-bg', 'พื้น (ใช้ token เดียวกับ ToggleButton)', 'Background (shares ToggleButton tokens)'),
+    tok('--wu-togglebutton-border', 'ขอบ', 'Border'),
+    tok('--wu-togglebutton-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-togglebutton-checked-bg', 'พื้นของตัวที่เลือก', 'Selected background'),
+    tok('--wu-togglebutton-checked-color', 'สีตัวอักษรของตัวที่เลือก', 'Selected text colour'),
+    tok('--wu-togglebutton-content-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
   ],
 };
 
@@ -398,10 +398,10 @@ export const RATING_DOC: ComponentDoc = {
   title: 'Rating',
   group: 'Form',
   entry: 'rating',
-  standalone: 'WtRating',
-  module: 'WtRatingModule',
+  standalone: 'WuRating',
+  module: 'WuRatingModule',
   forms: true,
-  selector: 'wt-rating',
+  selector: 'wu-rating',
   description: { th: 'ให้คะแนนเป็นดาว ข้างในเป็น radio จริง จึงใช้ปุ่มลูกศรเลือกได้', en: 'A star rating built on real radios, so arrow keys work.' },
   english: {
     'ความพึงพอใจ': 'Satisfaction',
@@ -414,11 +414,11 @@ export const RATING_DOC: ComponentDoc = {
     readonly: { title: { th: 'Readonly และ Disabled', en: 'Readonly and Disabled' } },
   },
   code: {
-    basic: `<wt-rating name="score" [(ngModel)]="score" ariaLabel="ความพึงพอใจ"
-  (onRate)="rated = $event.value"></wt-rating>`,
-    stars: `<wt-rating name="score10" [(ngModel)]="score10" [stars]="10"></wt-rating>`,
-    readonly: `<wt-rating [ngModel]="4" [readonly]="true"></wt-rating>
-<wt-rating [ngModel]="2" [disabled]="true"></wt-rating>`,
+    basic: `<wu-rating name="score" [(ngModel)]="score" ariaLabel="ความพึงพอใจ"
+  (onRate)="rated = $event.value"></wu-rating>`,
+    stars: `<wu-rating name="score10" [(ngModel)]="score10" [stars]="10"></wu-rating>`,
+    readonly: `<wu-rating [ngModel]="4" [readonly]="true"></wu-rating>
+<wu-rating [ngModel]="2" [disabled]="true"></wu-rating>`,
   },
   api: [
     {
@@ -432,14 +432,14 @@ export const RATING_DOC: ComponentDoc = {
         STYLE_ROW,
       ],
     },
-    { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onRate', 'WtRatingRateEvent', undefined, 'ผู้ใช้ให้คะแนน', 'The user rated')] },
-    { id: 'api-types', title: 'Types', code: `interface WtRatingRateEvent {\n  value: number;\n  originalEvent: Event;\n}` },
+    { id: 'api-outputs', title: 'Outputs', typeLabel: 'Event', rows: [row('onRate', 'WuRatingRateEvent', undefined, 'ผู้ใช้ให้คะแนน', 'The user rated')] },
+    { id: 'api-types', title: 'Types', code: `interface WuRatingRateEvent {\n  value: number;\n  originalEvent: Event;\n}` },
   ],
   tokens: [
-    tok('--wt-rating-icon-size', 'ขนาดดาว', 'Star size'),
-    tok('--wt-rating-icon-color', 'สีดาวที่ยังไม่เลือก', 'Empty star colour'),
-    tok('--wt-rating-icon-active-color', 'สีดาวที่เลือก', 'Selected star colour'),
-    tok('--wt-rating-gap', 'ระยะระหว่างดาว', 'Gap between stars'),
+    tok('--wu-rating-icon-size', 'ขนาดดาว', 'Star size'),
+    tok('--wu-rating-icon-color', 'สีดาวที่ยังไม่เลือก', 'Empty star colour'),
+    tok('--wu-rating-icon-active-color', 'สีดาวที่เลือก', 'Selected star colour'),
+    tok('--wu-rating-gap', 'ระยะระหว่างดาว', 'Gap between stars'),
   ],
 };
 
@@ -448,10 +448,10 @@ export const PASSWORD_DOC: ComponentDoc = {
   title: 'Password',
   group: 'Form',
   entry: 'password',
-  standalone: 'WtPassword',
-  module: 'WtPasswordModule',
+  standalone: 'WuPassword',
+  module: 'WuPasswordModule',
   forms: true,
-  selector: 'wt-password',
+  selector: 'wu-password',
   description: {
     th: 'ช่องรหัสผ่านที่มีแถบวัดความแข็งแรงเปิดเป็นแผงใต้ช่องขณะโฟกัส (ไม่ดันเนื้อหาด้านล่าง) และปุ่มแสดง / ซ่อนรหัส',
     en: 'A password field whose strength meter opens as a panel under it while it has focus (it never pushes the content), with a show / hide toggle.',
@@ -489,26 +489,26 @@ export const PASSWORD_DOC: ComponentDoc = {
     reactive: { title: 'Reactive Forms' },
   },
   code: {
-    sizes: `<wt-password name="password" [(ngModel)]="password" size="small" [feedback]="false"
-  placeholder="เล็ก"></wt-password>
-<wt-password name="password" [(ngModel)]="password" [feedback]="false" placeholder="ปกติ"></wt-password>
-<wt-password name="password" [(ngModel)]="password" size="large" [feedback]="false"
-  placeholder="ใหญ่"></wt-password>`,
-    basic: `<wt-password name="password" [(ngModel)]="password" placeholder="รหัสผ่าน"
-  ariaLabel="รหัสผ่าน"></wt-password>`,
-    toggle: `<wt-password name="pin" [(ngModel)]="pin" [feedback]="false" [toggleMask]="true"
-  placeholder="PIN" ariaLabel="PIN"></wt-password>`,
-    labels: `<wt-password
+    sizes: `<wu-password name="password" [(ngModel)]="password" size="small" [feedback]="false"
+  placeholder="เล็ก"></wu-password>
+<wu-password name="password" [(ngModel)]="password" [feedback]="false" placeholder="ปกติ"></wu-password>
+<wu-password name="password" [(ngModel)]="password" size="large" [feedback]="false"
+  placeholder="ใหญ่"></wu-password>`,
+    basic: `<wu-password name="password" [(ngModel)]="password" placeholder="รหัสผ่าน"
+  ariaLabel="รหัสผ่าน"></wu-password>`,
+    toggle: `<wu-password name="pin" [(ngModel)]="pin" [feedback]="false" [toggleMask]="true"
+  placeholder="PIN" ariaLabel="PIN"></wu-password>`,
+    labels: `<wu-password
   name="secret" [(ngModel)]="secret"
   promptLabel="ตั้งรหัสอย่างน้อย 8 ตัว"
   weakLabel="ง่ายไป"
   mediumLabel="พอใช้"
   strongLabel="ดีมาก"
   strongRegex="^(?=.*[A-Z])(?=.*[0-9]).{10,}$"
-  ></wt-password>`,
+  ></wu-password>`,
     reactive: `<form [formGroup]="form">
-  <wt-password formControlName="password" [toggleMask]="true" [fluid]="true"
-    placeholder="อย่างน้อย 8 ตัวอักษร"></wt-password>
+  <wu-password formControlName="password" [toggleMask]="true" [fluid]="true"
+    placeholder="อย่างน้อย 8 ตัวอักษร"></wu-password>
 </form>`,
   },
   ts: { reactive: `form = new FormGroup({\n  password: new FormControl('', [Validators.required, Validators.minLength(8)]),\n});` },
@@ -541,10 +541,10 @@ export const PASSWORD_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-password-meter-bg', 'พื้นของแถบวัด', 'Meter track'),
-    tok('--wt-password-meter-height', 'ความสูงของแถบวัด', 'Meter height'),
-    tok('--wt-danger-color', 'แถบระดับอ่อน', 'Weak level'),
-    tok('--wt-warn-color', 'แถบระดับพอใช้', 'Medium level'),
-    tok('--wt-success-color', 'แถบระดับแข็งแรง', 'Strong level'),
+    tok('--wu-password-meter-bg', 'พื้นของแถบวัด', 'Meter track'),
+    tok('--wu-password-meter-height', 'ความสูงของแถบวัด', 'Meter height'),
+    tok('--wu-danger-color', 'แถบระดับอ่อน', 'Weak level'),
+    tok('--wu-warn-color', 'แถบระดับพอใช้', 'Medium level'),
+    tok('--wu-success-color', 'แถบระดับแข็งแรง', 'Strong level'),
   ],
 };

@@ -1,12 +1,12 @@
-export type { DatePickerValue, DatePickerView, DateSelectionMode, HourFormat } from 'wiratheme/core';
+export type { DatePickerValue, DatePickerView, DateSelectionMode, HourFormat } from 'wiraui/core';
 
 /** `'button'`: a button joined to the right of the field. `'input'`: an icon inside the field. */
-export type WtDatePickerIconDisplay = 'button' | 'input';
+export type WuDatePickerIconDisplay = 'button' | 'input';
 /** `'date'`: the model is a Date (or Date[]). `'string'`: the text the field shows, in `dateFormat`. */
-export type WtDatePickerDataType = 'date' | 'string';
+export type WuDatePickerDataType = 'date' | 'string';
 
 /** `month` is 1–12. */
-export interface WtDatePickerMonthChangeEvent {
+export interface WuDatePickerMonthChangeEvent {
   month: number;
   year: number;
 }

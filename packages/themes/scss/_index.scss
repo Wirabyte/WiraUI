@@ -1,6 +1,6 @@
-// WiraTheme theme: `@use 'wiratheme/theme' with ($preset: 'mali', $primary: #10b981, …);`
-// or a ready-made theme: `@use 'wiratheme/theme' with ($theme: 'sila-light-teal');`
-// Emits the same --wt-* tokens as computeTokens() + tokensToCss() in @wiratheme/core
+// WiraUI theme: `@use 'wiraui/theme' with ($preset: 'mali', $primary: #10b981, …);`
+// or a ready-made theme: `@use 'wiraui/theme' with ($theme: 'sila-light-teal');`
+// Emits the same --wu-* tokens as computeTokens() + tokensToCss() in @wiraui/core
 // (test/parity.test.ts compiles both supported Sass versions against it). Every setting is
 // optional; anything left out comes from the theme or preset.
 @use 'sass:list';
@@ -38,7 +38,7 @@ $shadow: null !default;
 $focus-ring: null !default;
 $transition: null !default; // ms
 $ripple: null !default;
-// 'none' | 'class' (.wt-dark on <html>) | 'media' (prefers-color-scheme)
+// 'none' | 'class' (.wu-dark on <html>) | 'media' (prefers-color-scheme)
 $dark-mode: 'class' !default;
 // 'light' | 'dark' (dark colours only, like Sayan and Ratri)
 $scheme: null !default;
@@ -67,7 +67,7 @@ $components: () !default;
 @function -id($value, $what, $options) {
   $id: -name($value);
   @if not $id or not list.index($options, $id) {
-    @error 'wiratheme: #{$what} must be one of #{$options}, got `#{meta.inspect($value)}`.';
+    @error 'wiraui: #{$what} must be one of #{$options}, got `#{meta.inspect($value)}`.';
   }
   @return $id;
 }
@@ -81,7 +81,7 @@ $components: () !default;
   @if meta.type-of($value) == 'number' and (math.is-unitless($value) or math.unit($value) == 'px') {
     @return -strip($value);
   }
-  @error 'wiratheme: #{$what} must be a px length like 14px, got `#{meta.inspect($value)}`.';
+  @error 'wiraui: #{$what} must be a px length like 14px, got `#{meta.inspect($value)}`.';
 }
 
 @function -ms($value, $what) {
@@ -93,7 +93,7 @@ $components: () !default;
       @return -strip($value) * 1000;
     }
   }
-  @error 'wiratheme: #{$what} must be a time like 150ms, got `#{meta.inspect($value)}`.';
+  @error 'wiraui: #{$what} must be a time like 150ms, got `#{meta.inspect($value)}`.';
 }
 
 @function -is-map($value) {
@@ -110,23 +110,23 @@ $components: () !default;
         $v: map.get($value, '#{$s}');
       }
       @if $v == null {
-        @error 'wiratheme: #{$what} is missing shade #{$s}; give every shade 50-950 or a single hex colour.';
+        @error 'wiraui: #{$what} is missing shade #{$s}; give every shade 50-950 or a single hex colour.';
       }
-      $out: map.merge($out, ($s: color.wt-hex(color.wt-rgb($v, '#{$what} #{$s}'))));
+      $out: map.merge($out, ($s: color.wu-hex(color.wu-rgb($v, '#{$what} #{$s}'))));
     }
     @return $out;
   }
-  $rgb: color.wt-try-rgb($value);
+  $rgb: color.wu-try-rgb($value);
   @if not $rgb and meta.type-of($value) == 'string' {
     $hex: map.get(data.$primary-swatches, -name($value));
     @if $hex {
-      $rgb: color.wt-rgb($hex);
+      $rgb: color.wu-rgb($hex);
     }
   }
   @if not $rgb {
-    @error 'wiratheme: #{$what} must be a hex colour like #00a86b, a map of shades 50-950, or a swatch name in quotes like \'sky\', got `#{meta.inspect($value)}`.';
+    @error 'wiraui: #{$what} must be a hex colour like #00a86b, a map of shades 50-950, or a swatch name in quotes like \'sky\', got `#{meta.inspect($value)}`.';
   }
-  @return color.wt-palette($rgb);
+  @return color.wu-palette($rgb);
 }
 
 // ('Kanit', sans-serif) → "'Kanit', sans-serif"; a single name gets `, sans-serif` like core.
@@ -151,7 +151,7 @@ $components: () !default;
   @if meta.type-of($value) == 'list' {
     @return "'#{meta.inspect($value)}', sans-serif";
   }
-  @error 'wiratheme: $font-family must be a list like (\'Kanit\', sans-serif), got `#{meta.inspect($value)}`.';
+  @error 'wiraui: $font-family must be a list like (\'Kanit\', sans-serif), got `#{meta.inspect($value)}`.';
 }
 
 // ---------- settings, with gaps filled from the theme and preset ----------
@@ -160,7 +160,7 @@ $components: () !default;
 $-theme: ();
 @if $theme != null {
   @if $preset != null {
-    @error 'wiratheme: set $theme or $preset, not both (a theme already names its preset).';
+    @error 'wiraui: set $theme or $preset, not both (a theme already names its preset).';
   }
   $-theme-id: -id($theme, '$theme', list.join(map.keys(data.$classic-themes), map.keys(data.$presets)));
   $-theme: map.get(data.$classic-themes, $-theme-id);
@@ -201,25 +201,25 @@ $-font-size: -px(-or($font-size, font-size), '$font-size');
 $-transition: -ms(-or($transition, transition), '$transition');
 $-line-height: -or($line-height, line-height);
 @if meta.type-of($-line-height) != 'number' {
-  @error 'wiratheme: $line-height must be a number like 1.6, got `#{meta.inspect($-line-height)}`.';
+  @error 'wiraui: $line-height must be a number like 1.6, got `#{meta.inspect($-line-height)}`.';
 }
 // No token of its own; checked so a typo fails here rather than silently.
 @if meta.type-of(-or($ripple, ripple)) != 'bool' {
-  @error 'wiratheme: $ripple must be true or false, got `#{meta.inspect($ripple)}`.';
+  @error 'wiraui: $ripple must be true or false, got `#{meta.inspect($ripple)}`.';
 }
 $-primary-contrast: -or($primary-contrast, primary-contrast);
 @if $-primary-contrast != null {
-  $-primary-contrast: color.wt-hex(color.wt-rgb($-primary-contrast, '$primary-contrast'));
+  $-primary-contrast: color.wu-hex(color.wu-rgb($-primary-contrast, '$primary-contrast'));
 }
 
 $-semantic: ();
 @if $semantic != null {
   @if not -is-map($semantic) {
-    @error 'wiratheme: $semantic must be a map like (success: #22c55e), got `#{meta.inspect($semantic)}`.';
+    @error 'wiraui: $semantic must be a map like (success: #22c55e), got `#{meta.inspect($semantic)}`.';
   }
   @each $k, $v in $semantic {
     @if not list.index(data.$semantic-keys, $k) {
-      @error 'wiratheme: unknown $semantic key `#{$k}`; use #{data.$semantic-keys}.';
+      @error 'wiraui: unknown $semantic key `#{$k}`; use #{data.$semantic-keys}.';
     }
   }
   $-semantic: $semantic;
@@ -235,15 +235,15 @@ $-semantic: ();
 }
 
 @if not -is-map($components) {
-  @error 'wiratheme: $components must be a map like (card: (body-gap: 0px)), got `#{meta.inspect($components)}`.';
+  @error 'wiraui: $components must be a map like (card: (body-gap: 0px)), got `#{meta.inspect($components)}`.';
 }
 @each $id, $group in $components {
   @if not -is-map($group) {
-    @error 'wiratheme: $components.#{$id} must be a map like (radius: 8px), got `#{meta.inspect($group)}`.';
+    @error 'wiraui: $components.#{$id} must be a map like (radius: 8px), got `#{meta.inspect($group)}`.';
   }
   @each $key, $v in $group {
     @if not -spec($id, $key) {
-      @error 'wiratheme: unknown component token `#{$id}.#{$key}`.';
+      @error 'wiraui: unknown component token `#{$id}.#{$key}`.';
     }
   }
 }
@@ -270,8 +270,8 @@ $-primary-palette: -palette($-primary-in, '$primary');
 @each $s in data.$shades {
   $-light: map.merge($-light, ('primary-#{$s}': map.get($-primary-palette, $s)));
 }
-$-light: map.merge($-light, ('primary-contrast-auto': color.wt-best-on(map.get($-primary-palette, 500), $-s950)));
-$-dark: map.merge($-dark, ('primary-contrast-auto': color.wt-best-on(map.get($-primary-palette, 400), $-s950)));
+$-light: map.merge($-light, ('primary-contrast-auto': color.wu-best-on(map.get($-primary-palette, 500), $-s950)));
+$-dark: map.merge($-dark, ('primary-contrast-auto': color.wu-best-on(map.get($-primary-palette, 400), $-s950)));
 
 // semanticTokens
 @each $k in data.$semantic-keys {
@@ -283,8 +283,8 @@ $-dark: map.merge($-dark, ('primary-contrast-auto': color.wt-best-on(map.get($-p
   @each $s in data.$shades {
     $-light: map.merge($-light, ('#{$k}-#{$s}': map.get($pal, $s)));
   }
-  $-light: map.merge($-light, ('#{$k}-contrast-auto': color.wt-best-on(map.get($pal, 600), $-s950)));
-  $-dark: map.merge($-dark, ('#{$k}-contrast-auto': color.wt-best-on(map.get($pal, 400), $-s950)));
+  $-light: map.merge($-light, ('#{$k}-contrast-auto': color.wu-best-on(map.get($pal, 600), $-s950)));
+  $-dark: map.merge($-dark, ('#{$k}-contrast-auto': color.wu-best-on(map.get($pal, 400), $-s950)));
 }
 
 // fontTokens, radiusTokens, densityTokens, shadowTokens
@@ -331,7 +331,7 @@ $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
   $what: '$components.#{map.get($spec, id)}.#{map.get($spec, key)}';
   @if map.get($spec, type) == 'bool' {
     @if meta.type-of($v) != 'bool' {
-      @error 'wiratheme: #{$what} must be true or false, got `#{meta.inspect($v)}`.';
+      @error 'wiraui: #{$what} must be true or false, got `#{meta.inspect($v)}`.';
     }
     $light: null;
     $dark: ();
@@ -341,15 +341,15 @@ $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
         $light: '1px';
       }
     } @else if $css == 'tag-radius' {
-      $light: 'var(--wt-radius-md)';
+      $light: 'var(--wu-radius-md)';
       @if $v {
-        $light: 'var(--wt-radius-full)';
+        $light: 'var(--wu-radius-full)';
       }
     } @else if $css == 'table-stripe-bg' {
-      $light: 'var(--wt-table-row-bg)';
+      $light: 'var(--wu-table-row-bg)';
       @if $v {
-        $light: 'var(--wt-surface-50)';
-        $dark: ($css: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))');
+        $light: 'var(--wu-surface-50)';
+        $dark: ($css: 'color-mix(in srgb, var(--wu-surface-700) 40%, var(--wu-surface-800))');
       }
     }
     @return (light: ($css: $light), dark: $dark);
@@ -358,7 +358,7 @@ $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
     @return (light: ($css: '#{$v}'), dark: ());
   }
   @if meta.type-of($v) != 'number' {
-    @error 'wiratheme: #{$what} must be a number, got `#{meta.inspect($v)}`.';
+    @error 'wiraui: #{$what} must be a number, got `#{meta.inspect($v)}`.';
   }
   // Like core, px tokens take a bare or px number; any other unit is passed through as written.
   @if map.get($spec, type) == 'px' and (math.is-unitless($v) or math.unit($v) == 'px') {
@@ -393,13 +393,13 @@ $-compat: map.get(data.$compat, $-generation);
 
 // ---------- output (mirrors tokensToCss with extra `theme-source: scss`) ----------
 
-@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;
+@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;
 
-@layer wiratheme.tokens {
+@layer wiraui.tokens {
   :root {
-    --wt-theme-source: scss;
+    --wu-theme-source: scss;
     @each $k, $v in $-light {
-      --wt-#{$k}: #{$v};
+      --wu-#{$k}: #{$v};
     }
     @each $k, $v in $-compat {
       #{$k}: #{$v};
@@ -407,16 +407,16 @@ $-compat: map.get(data.$compat, $-generation);
   }
 
   @if list.length($-dark) > 0 and $-dark-mode == 'class' {
-    :root.wt-dark {
+    :root.wu-dark {
       @each $k, $v in $-dark {
-        --wt-#{$k}: #{$v};
+        --wu-#{$k}: #{$v};
       }
     }
   } @else if list.length($-dark) > 0 and $-dark-mode == 'media' {
     @media (prefers-color-scheme: dark) {
       :root {
         @each $k, $v in $-dark {
-          --wt-#{$k}: #{$v};
+          --wu-#{$k}: #{$v};
         }
       }
     }

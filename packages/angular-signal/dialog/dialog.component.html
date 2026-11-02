@@ -1,10 +1,10 @@
 @if (rendered) {
   <dialog
     #mask
-    class="wt-dialog-mask p-dialog-mask p-overlay-mask p-overlay-mask-enter"
+    class="wu-dialog-mask p-dialog-mask p-overlay-mask p-overlay-mask-enter"
     [ngClass]="(maskStyleClass || '') + ' ' + positionClasses"
-    [class.wt-dialog-modal]="modal"
-    [class.wt-dialog-leaving]="leaving"
+    [class.wu-dialog-modal]="modal"
+    [class.wu-dialog-leaving]="leaving"
     [attr.aria-labelledby]="labelledBy"
     (keydown)="keydown($event)"
     (cancel)="cancel($event)"
@@ -15,27 +15,27 @@
     <div
       #panel
       tabindex="-1"
-      class="wt-dialog p-dialog p-component"
+      class="wu-dialog p-dialog p-component"
       [ngClass]="styleClass || ''"
       [ngStyle]="panelStyle"
-      [class.wt-dialog-maximized]="maximized"
+      [class.wu-dialog-maximized]="maximized"
       [class.p-dialog-maximized]="maximized"
-      [class.wt-dialog-draggable]="draggable"
-      [class.wt-dialog-headerless]="!showHeader"
+      [class.wu-dialog-draggable]="draggable"
+      [class.wu-dialog-headerless]="!showHeader"
     >
       @if (headlessTemplate) {
         <ng-container [ngTemplateOutlet]="headlessTemplate"></ng-container>
       } @else {
         @if (showHeader) {
-          <div class="wt-dialog-header p-dialog-header" (pointerdown)="headerPointerdown($event)">
+          <div class="wu-dialog-header p-dialog-header" (pointerdown)="headerPointerdown($event)">
             @if (headerTemplate) {
-              <div class="wt-dialog-title p-dialog-title" [id]="titleId"><ng-container [ngTemplateOutlet]="headerTemplate"></ng-container></div>
+              <div class="wu-dialog-title p-dialog-title" [id]="titleId"><ng-container [ngTemplateOutlet]="headerTemplate"></ng-container></div>
             } @else {
-              <span class="wt-dialog-title p-dialog-title" [id]="titleId">{{ header }}</span>
+              <span class="wu-dialog-title p-dialog-title" [id]="titleId">{{ header }}</span>
             }
-            <div class="wt-dialog-header-actions p-dialog-header-actions">
+            <div class="wu-dialog-header-actions p-dialog-header-actions">
               @if (maximizable) {
-                <button type="button" class="wt-dialog-icon p-dialog-maximize-button" [attr.aria-label]="maximized ? t.collapse : t.expand" (click)="toggleMaximize()">
+                <button type="button" class="wu-dialog-icon p-dialog-maximize-button" [attr.aria-label]="maximized ? t.collapse : t.expand" (click)="toggleMaximize()">
                   @if (maximized ? minimizeIcon : maximizeIcon) {
                     <i [class]="(maximized ? minimizeIcon : maximizeIcon) || ''"></i>
                   } @else if (maximized) {
@@ -46,7 +46,7 @@
                 </button>
               }
               @if (closable) {
-                <button type="button" class="wt-dialog-icon p-dialog-close-button" [attr.aria-label]="closeAriaLabel || t.close" (click)="close($event)">
+                <button type="button" class="wu-dialog-icon p-dialog-close-button" [attr.aria-label]="closeAriaLabel || t.close" (click)="close($event)">
                   @if (closeIconTemplate) {
                     <ng-container [ngTemplateOutlet]="closeIconTemplate"></ng-container>
                   } @else if (closeIcon) {
@@ -59,15 +59,15 @@
             </div>
           </div>
         }
-        <div class="wt-dialog-content p-dialog-content" [ngClass]="contentStyleClass || ''" [ngStyle]="contentStyle || null">
+        <div class="wu-dialog-content p-dialog-content" [ngClass]="contentStyleClass || ''" [ngStyle]="contentStyle || null">
           <ng-content></ng-content>
           @if (contentTemplate) {
             <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
           }
         </div>
         @if (hasFooter) {
-          <div class="wt-dialog-footer p-dialog-footer">
-            <ng-content select="[wtDialogFooter], wt-footer"></ng-content>
+          <div class="wu-dialog-footer p-dialog-footer">
+            <ng-content select="[wuDialogFooter], wu-footer"></ng-content>
             @if (footerTemplate) {
               <ng-container [ngTemplateOutlet]="footerTemplate"></ng-container>
             }

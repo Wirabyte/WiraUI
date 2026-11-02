@@ -82,9 +82,9 @@ describe('flow export: SVG', () => {
     expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" width="340" height="80" viewBox="0 0 340 80"')).toBe(true);
     expect(svg).toContain('<title>แผนภาพ</title>');
     expect(svg.match(/<rect [^>]*rx="6"/g)).toHaveLength(2);
-    expect(svg).toContain('<marker id="wt-flow-svg-marker-arrowclosed-');
+    expect(svg).toContain('<marker id="wu-flow-svg-marker-arrowclosed-');
     // The curve stops short of the arrowhead and runs straight into it.
-    expect(svg).toMatch(/<path d="M50,40 C[^"]+ 250,-9.7 L250,0" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url\(#wt-flow-svg-marker-arrowclosed-[^"]+\)"\/>/);
+    expect(svg).toMatch(/<path d="M50,40 C[^"]+ 250,-9.7 L250,0" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url\(#wu-flow-svg-marker-arrowclosed-[^"]+\)"\/>/);
     // Text is escaped.
     expect(svg).toContain('จบ &lt;ok&gt;');
     expect(svg).toContain('ไป &amp; กลับ');

@@ -1,24 +1,24 @@
 <nav
-  class="wt-navbar"
+  class="wu-navbar"
   [class]="styleClass || ''"
-  [class.wt-navbar-solid]="variantName === 'solid'"
-  [class.wt-navbar-glass]="variantName === 'glass'"
-  [class.wt-navbar-transparent]="variantName === 'transparent'"
-  [class.wt-navbar-mobile]="folded"
-  [class.wt-navbar-open]="menuOpen"
-  [class.wt-navbar-has-aside]="!!aside"
+  [class.wu-navbar-solid]="variantName === 'solid'"
+  [class.wu-navbar-glass]="variantName === 'glass'"
+  [class.wu-navbar-transparent]="variantName === 'transparent'"
+  [class.wu-navbar-mobile]="folded"
+  [class.wu-navbar-open]="menuOpen"
+  [class.wu-navbar-has-aside]="!!aside"
   [style]="rootStyle"
   [attr.aria-label]="navLabel"
   (focusout)="focusOut($event)"
 >
-  <div class="wt-navbar-container">
-    <!-- Driving a wt-aside-menu, the menu button comes first (it controls the aside, not the links). -->
+  <div class="wu-navbar-container">
+    <!-- Driving a wu-aside-menu, the menu button comes first (it controls the aside, not the links). -->
     <ng-container *ngIf="showMenuButton && aside">
       <ng-container *ngTemplateOutlet="menuButton"></ng-container>
     </ng-container>
 
-    <div class="wt-navbar-start">
-      <ng-content select="[wtNavbarBrand]"></ng-content>
+    <div class="wu-navbar-start">
+      <ng-content select="[wuNavbarBrand]"></ng-content>
       <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
     </div>
 
@@ -26,26 +26,26 @@
       <ng-container *ngTemplateOutlet="menuButton"></ng-container>
     </ng-container>
 
-    <div #links class="wt-navbar-links" [id]="panelId" [hidden]="linksHidden" (click)="linksClick($event)">
-      <ul *ngIf="items.length" class="wt-navbar-list" role="list">
+    <div #links class="wu-navbar-links" [id]="panelId" [hidden]="linksHidden" (click)="linksClick($event)">
+      <ul *ngIf="items.length" class="wu-navbar-list" role="list">
         <ng-container *ngIf="folded; else wideItems">
           <ng-container *ngTemplateOutlet="narrowList; context: { $implicit: items, parent: '' }"></ng-container>
         </ng-container>
         <ng-template #wideItems>
           <ng-container *ngFor="let item of items; let i = index">
-            <li *ngIf="item.separator" class="wt-navbar-separator" aria-hidden="true"></li>
+            <li *ngIf="item.separator" class="wu-navbar-separator" aria-hidden="true"></li>
             <li
               *ngIf="!item.separator"
-              class="wt-navbar-item"
+              class="wu-navbar-item"
               [ngClass]="item.styleClass || ''"
               [ngStyle]="item.style || null"
-              [class.wt-navbar-item-disabled]="item.disabled"
+              [class.wu-navbar-item-disabled]="item.disabled"
             >
               <ng-container *ngIf="hasChildren(item); else wideLeaf">
                 <button
                   type="button"
-                  class="wt-navbar-link wt-navbar-dropdown"
-                  [class.wt-navbar-link-active]="holdsActive(item)"
+                  class="wu-navbar-link wu-navbar-dropdown"
+                  [class.wu-navbar-link-active]="holdsActive(item)"
                   aria-haspopup="menu"
                   [attr.aria-expanded]="openKey === keyOf('', i)"
                   [attr.id]="item.id || null"
@@ -56,17 +56,17 @@
                   (keydown)="dropdownKeydown($event, item, menu)"
                 >
                   <ng-container *ngTemplateOutlet="content; context: { $implicit: item }"></ng-container>
-                  <svg class="wt-navbar-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path></svg>
+                  <svg class="wu-navbar-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path></svg>
                 </button>
-                <wt-menu
+                <wu-menu
                   #menu
                   [model]="item.items"
                   [popup]="true"
-                  styleClass="wt-navbar-menu"
+                  styleClass="wu-navbar-menu"
                   [ariaLabel]="item.label"
                   (onShow)="menuShown(keyOf('', i))"
                   (onHide)="menuHidden(keyOf('', i))"
-                ></wt-menu>
+                ></wu-menu>
               </ng-container>
               <ng-template #wideLeaf>
                 <ng-container *ngTemplateOutlet="leaf; context: { $implicit: item }"></ng-container>
@@ -75,37 +75,37 @@
           </ng-container>
         </ng-template>
       </ul>
-      <ng-content select="[wtNavbarLinks]"></ng-content>
+      <ng-content select="[wuNavbarLinks]"></ng-content>
     </div>
 
-    <div class="wt-navbar-end">
-      <ng-content select="[wtNavbarEnd]"></ng-content>
+    <div class="wu-navbar-end">
+      <ng-content select="[wuNavbarEnd]"></ng-content>
       <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
     </div>
   </div>
 </nav>
 
-<!-- The menu button: the narrow-screen links panel, or the linked wt-aside-menu. -->
+<!-- The menu button: the narrow-screen links panel, or the linked wu-aside-menu. -->
 <ng-template #menuButton>
   <button
     #toggleButton
     type="button"
-    class="wt-navbar-toggle"
+    class="wu-navbar-toggle"
     [attr.aria-expanded]="menuButtonExpanded"
     [attr.aria-controls]="menuButtonControls"
     [attr.aria-label]="toggleLabel"
     (click)="toggle()"
   >
     <ng-container *ngIf="menuButtonOpen; else closedIcon">
-      <span *ngIf="closeIcon; else crossIcon" [class]="'wt-navbar-toggle-icon ' + closeIcon" aria-hidden="true"></span>
+      <span *ngIf="closeIcon; else crossIcon" [class]="'wu-navbar-toggle-icon ' + closeIcon" aria-hidden="true"></span>
       <ng-template #crossIcon>
-        <svg class="wt-navbar-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+        <svg class="wu-navbar-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
       </ng-template>
     </ng-container>
     <ng-template #closedIcon>
-      <span *ngIf="menuIcon; else barsIcon" [class]="'wt-navbar-toggle-icon ' + menuIcon" aria-hidden="true"></span>
+      <span *ngIf="menuIcon; else barsIcon" [class]="'wu-navbar-toggle-icon ' + menuIcon" aria-hidden="true"></span>
       <ng-template #barsIcon>
-        <svg class="wt-navbar-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"></path></svg>
+        <svg class="wu-navbar-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"></path></svg>
       </ng-template>
     </ng-template>
   </button>
@@ -114,19 +114,19 @@
 <!-- Narrow screens: the items stacked in the panel; items with children expand in place, at any depth. -->
 <ng-template #narrowList let-list let-parent="parent">
   <ng-container *ngFor="let item of list; let j = index">
-    <li *ngIf="item.separator" class="wt-navbar-separator" aria-hidden="true"></li>
+    <li *ngIf="item.separator" class="wu-navbar-separator" aria-hidden="true"></li>
     <li
       *ngIf="!item.separator"
-      class="wt-navbar-item"
+      class="wu-navbar-item"
       [ngClass]="item.styleClass || ''"
       [ngStyle]="item.style || null"
-      [class.wt-navbar-item-disabled]="item.disabled"
+      [class.wu-navbar-item-disabled]="item.disabled"
     >
       <ng-container *ngIf="hasChildren(item); else narrowLeaf">
         <button
           type="button"
-          class="wt-navbar-link wt-navbar-dropdown"
-          [class.wt-navbar-link-active]="holdsActive(item)"
+          class="wu-navbar-link wu-navbar-dropdown"
+          [class.wu-navbar-link-active]="holdsActive(item)"
           [attr.aria-expanded]="isExpanded(keyOf(parent, j))"
           [attr.aria-controls]="subId(keyOf(parent, j))"
           [attr.id]="item.id || null"
@@ -136,9 +136,9 @@
           (click)="toggleExpanded(item, keyOf(parent, j))"
         >
           <ng-container *ngTemplateOutlet="content; context: { $implicit: item }"></ng-container>
-          <svg class="wt-navbar-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path></svg>
+          <svg class="wu-navbar-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"></path></svg>
         </button>
-        <ul class="wt-navbar-sublist" role="list" [id]="subId(keyOf(parent, j))" [hidden]="!isExpanded(keyOf(parent, j))">
+        <ul class="wu-navbar-sublist" role="list" [id]="subId(keyOf(parent, j))" [hidden]="!isExpanded(keyOf(parent, j))">
           <ng-container *ngTemplateOutlet="narrowList; context: { $implicit: visibleOf(item.items), parent: keyOf(parent, j) }"></ng-container>
         </ul>
       </ng-container>
@@ -153,7 +153,7 @@
 <ng-template #leaf let-item>
   <a
     *ngIf="routed(item); else plainLink"
-    class="wt-navbar-link"
+    class="wu-navbar-link"
     [attr.id]="item.id || null"
     [attr.title]="item.title || null"
     [attr.target]="item.target || null"
@@ -166,7 +166,7 @@
     [skipLocationChange]="!!item.skipLocationChange"
     [replaceUrl]="!!item.replaceUrl"
     [state]="item.state"
-    routerLinkActive="wt-navbar-link-active"
+    routerLinkActive="wu-navbar-link-active"
     ariaCurrentWhenActive="page"
     [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
     (click)="itemClick($event, item)"
@@ -176,9 +176,9 @@
   <ng-template #plainLink>
     <a
       *ngIf="item.url; else commandButton"
-      class="wt-navbar-link"
-      [class.wt-navbar-link-active]="isActive(item)"
-      [class.wt-navbar-link-disabled]="item.disabled"
+      class="wu-navbar-link"
+      [class.wu-navbar-link-active]="isActive(item)"
+      [class.wu-navbar-link-disabled]="item.disabled"
       [attr.href]="hrefOf(item)"
       [attr.target]="item.target || null"
       [attr.aria-current]="isActive(item) ? 'page' : null"
@@ -193,8 +193,8 @@
     <ng-template #commandButton>
       <button
         type="button"
-        class="wt-navbar-link"
-        [class.wt-navbar-link-active]="isActive(item)"
+        class="wu-navbar-link"
+        [class.wu-navbar-link-active]="isActive(item)"
         [attr.aria-current]="isActive(item) ? 'page' : null"
         [attr.id]="item.id || null"
         [attr.title]="item.title || null"
@@ -213,9 +213,9 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
   </ng-container>
   <ng-template #defaultContent>
-    <span *ngIf="item.icon" class="wt-navbar-link-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
-    <span *ngIf="item.label && item.escape !== false" class="wt-navbar-link-label">{{ item.label }}</span>
-    <span *ngIf="item.label && item.escape === false" class="wt-navbar-link-label" [innerHTML]="item.label"></span>
-    <span *ngIf="item.badge" class="wt-navbar-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    <span *ngIf="item.icon" class="wu-navbar-link-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    <span *ngIf="item.label && item.escape !== false" class="wu-navbar-link-label">{{ item.label }}</span>
+    <span *ngIf="item.label && item.escape === false" class="wu-navbar-link-label" [innerHTML]="item.label"></span>
+    <span *ngIf="item.badge" class="wu-navbar-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
   </ng-template>
 </ng-template>

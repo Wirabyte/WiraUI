@@ -1,3 +1,3 @@
-/** Named `wtSize`, not `size`: `size` is a native <input> attribute. */
-export type WtInputSize = 'small' | 'large';
-export type WtInputVariant = 'outlined' | 'filled';
+/** Named `wuSize`, not `size`: `size` is a native <input> attribute. */
+export type WuInputSize = 'small' | 'large';
+export type WuInputVariant = 'outlined' | 'filled';

@@ -12,11 +12,11 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 
-/** A real <fieldset> with a legend, optionally collapsible: `<wt-fieldset legend="ที่อยู่" toggleable [(collapsed)]="closed">`. */
+/** A real <fieldset> with a legend, optionally collapsible: `<wu-fieldset legend="ที่อยู่" toggleable [(collapsed)]="closed">`. */
 @Component({
-  selector: 'wt-fieldset',
+  selector: 'wu-fieldset',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './fieldset.component.html',
@@ -24,8 +24,8 @@ import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SK
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtFieldset {
-  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+export class WuFieldset {
+  @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
   @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
@@ -40,12 +40,12 @@ export class WtFieldset {
   @Output() readonly collapsedChange = new EventEmitter<boolean>();
   @Output() readonly onToggle = new EventEmitter<{ collapsed: boolean }>();
 
-  readonly contentId = ɵuniqueId('wt-fieldset-content');
+  readonly contentId = ɵuniqueId('wu-fieldset-content');
   private _toggleable = false;
   private _collapsed = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get isCollapsed(): boolean {
@@ -66,9 +66,9 @@ export class WtFieldset {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-fieldset', 'p-fieldset', 'p-component'];
-    if (this._toggleable) c.push('wt-fieldset-toggleable', 'p-fieldset-toggleable');
-    if (this.isCollapsed) c.push('wt-fieldset-collapsed');
+    const c = ['wu-fieldset', 'p-fieldset', 'p-component'];
+    if (this._toggleable) c.push('wu-fieldset-toggleable', 'p-fieldset-toggleable');
+    if (this.isCollapsed) c.push('wu-fieldset-collapsed');
     return c.join(' ');
   }
 

@@ -2,14 +2,14 @@ import { DOCUMENT, NgFor } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Routes } from '@angular/router';
-import { WtButtonModule } from 'wiratheme/button';
-import { WtCheckboxModule } from 'wiratheme/checkbox';
-import { provideWiraTheme } from 'wiratheme/config';
-import { computeTokens, ThemeConfig } from 'wiratheme/core';
-import { LL } from 'wiratheme/presets';
-import { WtProgressBarModule } from 'wiratheme/progressbar';
-import { WtTagModule } from 'wiratheme/tag';
-import { WtToggleSwitchModule } from 'wiratheme/toggleswitch';
+import { WuButtonModule } from 'wiraui/button';
+import { WuCheckboxModule } from 'wiraui/checkbox';
+import { provideWiraUI } from 'wiraui/config';
+import { computeTokens, ThemeConfig } from 'wiraui/core';
+import { LL } from 'wiraui/presets';
+import { WuProgressBarModule } from 'wiraui/progressbar';
+import { WuTagModule } from 'wiraui/tag';
+import { WuToggleSwitchModule } from 'wiraui/toggleswitch';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
 import { HASU } from '../core/secrets';
 
@@ -37,7 +37,7 @@ const UNITS: Unit[] = [
 @Component({
   selector: 'docs-secret-hasu',
   standalone: true,
-  imports: [NgFor, FormsModule, RouterLink, WtButtonModule, WtCheckboxModule, WtProgressBarModule, WtTagModule, WtToggleSwitchModule],
+  imports: [NgFor, FormsModule, RouterLink, WuButtonModule, WuCheckboxModule, WuProgressBarModule, WuTagModule, WuToggleSwitchModule],
   encapsulation: ViewEncapsulation.None,
   template: `
     <main class="docs-hasu">
@@ -45,8 +45,8 @@ const UNITS: Unit[] = [
       <header class="docs-hasu-mast">
         <svg class="docs-hasu-lotus" viewBox="-36 -34 72 52" aria-hidden="true"><path [attr.d]="lotus" /></svg>
         <div>
-          <p class="docs-hasu-logo" lang="ja">ウィラテーマ<span>蓮のプリセット</span></p>
-          <p class="docs-hasu-logo-en">WIRATHEME · HASU PRESET · LL</p>
+          <p class="docs-hasu-logo" lang="ja">ウィラUI<span>蓮のプリセット</span></p>
+          <p class="docs-hasu-logo-en">WIRAUI · HASU PRESET · LL</p>
         </div>
       </header>
 
@@ -58,7 +58,7 @@ const UNITS: Unit[] = [
       <section class="docs-hasu-panel">
         <p class="docs-hasu-lead">
           เจอหน้าลับแล้ว ในไลบรารีมีธีมซ่อนชื่อ <b>LL</b> สีแดงของโรงเรียนบนกระดาษสีครีม ตัวอักษรไทยแบบมีหัว ไม่มีเมนูไหนแสดง เปิดใช้ได้ด้วยชื่ออย่างเดียว
-          <span lang="en">You found it. WiraTheme hides a preset called LL; nothing lists it, only its name turns it on.</span>
+          <span lang="en">You found it. WiraUI hides a preset called LL; nothing lists it, only its name turns it on.</span>
         </p>
         <p class="docs-hasu-unlocked" role="status">
           ปลดล็อก preset <b>Hasu</b> ในแผงแต่งธีมกับ Studio ของเว็บนี้แล้ว{{ wasUnlocked ? '' : ' (ครั้งแรก!)' }}
@@ -88,30 +88,30 @@ const UNITS: Unit[] = [
         <div class="docs-hasu-grid">
           <section class="docs-hasu-preview" [style]="previewStyle" aria-label="LL preset">
             <div class="docs-hasu-row">
-              <wt-button label="บันทึก" icon="wi wi-heart"></wt-button>
-              <wt-button label="ยกเลิก" severity="secondary"></wt-button>
-              <wt-button label="ลองดู" [outlined]="true"></wt-button>
-              <wt-button label="ลบ" severity="danger" [text]="true"></wt-button>
+              <wu-button label="บันทึก" icon="wi wi-heart"></wu-button>
+              <wu-button label="ยกเลิก" severity="secondary"></wu-button>
+              <wu-button label="ลองดู" [outlined]="true"></wu-button>
+              <wu-button label="ลบ" severity="danger" [text]="true"></wu-button>
             </div>
             <div class="docs-hasu-row">
-              <wt-tag value="蓮ノ空"></wt-tag>
-              <wt-tag value="Cerise Bouquet" severity="danger"></wt-tag>
-              <wt-tag value="DOLLCHESTRA" severity="info"></wt-tag>
-              <wt-tag value="Mira-Cra Park!" severity="warn"></wt-tag>
-              <wt-tag value="Edel Note" styleClass="docs-hasu-edel"></wt-tag>
+              <wu-tag value="蓮ノ空"></wu-tag>
+              <wu-tag value="Cerise Bouquet" severity="danger"></wu-tag>
+              <wu-tag value="DOLLCHESTRA" severity="info"></wu-tag>
+              <wu-tag value="Mira-Cra Park!" severity="warn"></wu-tag>
+              <wu-tag value="Edel Note" styleClass="docs-hasu-edel"></wu-tag>
             </div>
             <div class="docs-hasu-row">
-              <wt-checkbox [(ngModel)]="cheer" [binary]="true" inputId="hasu-cheer" label="เชียร์ทุกวัน"></wt-checkbox>
-              <wt-toggleswitch [(ngModel)]="practice" inputId="hasu-practice"></wt-toggleswitch>
+              <wu-checkbox [(ngModel)]="cheer" [binary]="true" inputId="hasu-cheer" label="เชียร์ทุกวัน"></wu-checkbox>
+              <wu-toggleswitch [(ngModel)]="practice" inputId="hasu-practice"></wu-toggleswitch>
               <label for="hasu-practice">ซ้อมหลังเลิกเรียน</label>
             </div>
-            <wt-progressBar [value]="105"></wt-progressBar>
+            <wu-progressBar [value]="105"></wu-progressBar>
           </section>
           <div class="docs-hasu-name">
             <span class="docs-hasu-label">PRESET</span>
             <p class="docs-hasu-name-box"><ruby>LL<rt lang="ja">はす</rt></ruby></p>
-            <code>&#64;use 'wiratheme/theme' with ($preset: 'll');</code>
-            <code>provideWiraTheme(&#123; preset: LL &#125;)  // import &#123; LL &#125; from 'wiratheme/presets'</code>
+            <code>&#64;use 'wiraui/theme' with ($preset: 'll');</code>
+            <code>provideWiraUI(&#123; preset: LL &#125;)  // import &#123; LL &#125; from 'wiraui/presets'</code>
           </div>
         </div>
       </section>
@@ -342,9 +342,9 @@ const UNITS: Unit[] = [
         gap: 1rem;
         padding: 1.25rem;
         border: 1px solid var(--docs-hasu-line);
-        background: var(--wt-card-bg);
-        color: var(--wt-text);
-        font-family: var(--wt-font-family);
+        background: var(--wu-card-bg);
+        color: var(--wu-text);
+        font-family: var(--wu-font-family);
         text-align: start;
       }
       .docs-hasu-row {
@@ -438,11 +438,11 @@ export class SecretHasu implements OnInit, OnDestroy {
   private restyle(): void {
     const config: ThemeConfig = { ...LL.config, ...(this.unit ? { primary: this.unit.color } : {}) };
     const style: Record<string, string> = {};
-    for (const [k, v] of Object.entries(computeTokens(config).light)) style[`--wt-${k}`] = String(v);
+    for (const [k, v] of Object.entries(computeTokens(config).light)) style[`--wu-${k}`] = String(v);
     this.previewStyle = style;
   }
 }
 
 export const SECRET_ROUTES: Routes = [
-  { path: '', component: SecretHasu, title: 'WiraTheme · 蓮', providers: [provideWiraTheme({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
+  { path: '', component: SecretHasu, title: 'WiraUI · 蓮', providers: [provideWiraUI({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
 ];

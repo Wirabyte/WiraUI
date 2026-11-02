@@ -1,5 +1,5 @@
 /** The animations, by the names apps already use in `data-aos`. */
-export type WtAnimation =
+export type WuAnimation =
   | 'fade'
   | 'fade-up'
   | 'fade-down'
@@ -28,7 +28,7 @@ export type WtAnimation =
   | 'zoom-out-left'
   | 'zoom-out-right';
 
-export interface WtAnimateOptions {
+export interface WuAnimateOptions {
   /** Pixels from the bottom of the screen where an element starts animating. Default 120. */
   offset?: number;
   /** Milliseconds. Default 0. */

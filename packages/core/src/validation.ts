@@ -1,4 +1,4 @@
-import { TH_LOCALE, WtLocale, WtValidationMessages } from './thai/locale';
+import { TH_LOCALE, WuLocale, WuValidationMessages } from './thai/locale';
 
 /** The errors of a form control, as Angular gives them (`{ required: true, minlength: { requiredLength: 8 } }`). */
 export type ValidationErrorsLike = Record<string, unknown> | null | undefined;
@@ -10,20 +10,20 @@ export type ValidationErrorsLike = Record<string, unknown> | null | undefined;
  */
 export function validationMessage(
   errors: ValidationErrorsLike,
-  o: { locale?: WtLocale; label?: string; overrides?: Partial<Record<string, string>> } = {},
+  o: { locale?: WuLocale; label?: string; overrides?: Partial<Record<string, string>> } = {},
 ): string {
   if (!errors) return '';
   const keys = Object.keys(errors);
   if (!keys.length) return '';
   const key = keys[0];
   const detail = errors[key];
-  const m: WtValidationMessages = (o.locale || TH_LOCALE).validation || TH_LOCALE.validation;
+  const m: WuValidationMessages = (o.locale || TH_LOCALE).validation || TH_LOCALE.validation;
   const own = o.overrides?.[key];
   let text: string;
   if (own) text = own;
   else if (typeof detail === 'string') text = detail;
   else if (key === 'required') text = o.label ? m.requiredLabel : m.required;
-  else if (key in m) text = m[key as keyof WtValidationMessages];
+  else if (key in m) text = m[key as keyof WuValidationMessages];
   else text = m.invalid;
   const values: Record<string, unknown> = { label: o.label ?? '', ...(typeof detail === 'object' && detail ? (detail as Record<string, unknown>) : {}) };
   return text.replace(/\{(\w+)\}/g, (_, name: string) => (values[name] === undefined ? '' : String(values[name])));

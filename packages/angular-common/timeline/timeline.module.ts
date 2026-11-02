@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtTimeline } from './timeline.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuTimeline } from './timeline.component';
 
-/** For NgModule apps (with `WtTemplate` for `pTemplate="content"` / `"opposite"` / `"marker"`). */
+/** For NgModule apps (with `WuTemplate` for `pTemplate="content"` / `"opposite"` / `"marker"`). */
 @NgModule({
-  imports: [WtTimeline, WtTemplate],
-  exports: [WtTimeline, WtTemplate],
+  imports: [WuTimeline, WuTemplate],
+  exports: [WuTimeline, WuTemplate],
 })
-export class WtTimelineModule {}
+export class WuTimelineModule {}

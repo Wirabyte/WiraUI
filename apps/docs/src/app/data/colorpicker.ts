@@ -8,10 +8,10 @@ export const COLORPICKER_DOC: ComponentDoc = {
   title: 'ColorPicker',
   group: 'Form',
   entry: 'colorpicker',
-  standalone: 'WtColorPicker',
-  module: 'WtColorPickerModule',
+  standalone: 'WuColorPicker',
+  module: 'WuColorPickerModule',
   forms: true,
-  selector: 'wt-colorpicker',
+  selector: 'wu-colorpicker',
   description: {
     th: 'เลือกสีจากแผง: พื้นที่ความอิ่มตัวและความสว่าง แถบเฉดสี และช่องพิมพ์รหัส hex เปิดจากปุ่มตัวอย่างสี หรือวางแผงไว้บนหน้าเลย ค่าเป็น #rrggbb, { r, g, b } หรือ { h, s, b }',
     en: 'Pick a colour from a panel: a saturation and brightness area, a hue strip and a hex field. It opens from a swatch, or sits on the page. The value is #rrggbb, { r, g, b } or { h, s, b }.',
@@ -31,8 +31,8 @@ export const COLORPICKER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtColorPickerModule</code>) และ standalone (<code>WtColorPicker</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็กเขียนได้ทั้ง <code>wt-colorpicker</code>, <code>wt-colorPicker</code> และ <code>wt-color-picker</code>',
-        en: 'Works as an NgModule (<code>WtColorPickerModule</code>) or standalone (<code>WtColorPicker</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The tag can be written <code>wt-colorpicker</code>, <code>wt-colorPicker</code> or <code>wt-color-picker</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuColorPickerModule</code>) และ standalone (<code>WuColorPicker</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็กเขียนได้ทั้ง <code>wu-colorpicker</code>, <code>wu-colorPicker</code> และ <code>wu-color-picker</code>',
+        en: 'Works as an NgModule (<code>WuColorPickerModule</code>) or standalone (<code>WuColorPicker</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The tag can be written <code>wu-colorpicker</code>, <code>wu-colorPicker</code> or <code>wu-color-picker</code>.',
       },
     },
     basic: {
@@ -66,22 +66,22 @@ export const COLORPICKER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-colorPicker&gt;</code> เป็น <code>&lt;wt-colorPicker&gt;</code> input และ event ชื่อเดิม แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ transition) · class <code>p-colorpicker</code> อยู่คู่กับ <code>wt-colorpicker</code>',
-        en: 'Change <code>&lt;p-colorPicker&gt;</code> to <code>&lt;wt-colorPicker&gt;</code>; inputs and events keep their names. The panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and the transitions) · the <code>p-colorpicker</code> class sits next to <code>wt-colorpicker</code>.',
+        th: 'เปลี่ยน <code>&lt;p-colorPicker&gt;</code> เป็น <code>&lt;wu-colorPicker&gt;</code> input และ event ชื่อเดิม แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ transition) · class <code>p-colorpicker</code> อยู่คู่กับ <code>wu-colorpicker</code>',
+        en: 'Change <code>&lt;p-colorPicker&gt;</code> to <code>&lt;wu-colorPicker&gt;</code>; inputs and events keep their names. The panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and the transitions) · the <code>p-colorpicker</code> class sits next to <code>wu-colorpicker</code>.',
       },
     },
   },
   code: {
     basic: `<label for="schoolColor">สีประจำโรงเรียน</label>
-<wt-colorPicker inputId="schoolColor" name="schoolColor" [(ngModel)]="schoolColor"></wt-colorPicker>
+<wu-colorPicker inputId="schoolColor" name="schoolColor" [(ngModel)]="schoolColor"></wu-colorPicker>
 <code>{{ schoolColor }}</code>`,
-    inline: `<wt-colorPicker name="noticeColor" [(ngModel)]="noticeColor" format="rgb" [inline]="true" ariaLabel="สีป้ายประกาศ"></wt-colorPicker>
+    inline: `<wu-colorPicker name="noticeColor" [(ngModel)]="noticeColor" format="rgb" [inline]="true" ariaLabel="สีป้ายประกาศ"></wu-colorPicker>
 <code>rgb({{ noticeColor.r }}, {{ noticeColor.g }}, {{ noticeColor.b }})</code>`,
-    format: `<wt-colorPicker name="headerColor" [(ngModel)]="headerColor" format="hsb" defaultColor="0f766e"
-  ariaLabel="สีหัวเกียรติบัตร"></wt-colorPicker>`,
-    events: `<wt-colorPicker name="groupColor" [(ngModel)]="groupColor" ariaLabel="สีของกลุ่มสาระ"
-  (onShow)="logPanel('onShow')" (onHide)="logPanel('onHide')"></wt-colorPicker>
-<wt-colorPicker name="lockedColor" [(ngModel)]="schoolColor" [disabled]="true" ariaLabel="สีประจำโรงเรียน"></wt-colorPicker>`,
+    format: `<wu-colorPicker name="headerColor" [(ngModel)]="headerColor" format="hsb" defaultColor="0f766e"
+  ariaLabel="สีหัวเกียรติบัตร"></wu-colorPicker>`,
+    events: `<wu-colorPicker name="groupColor" [(ngModel)]="groupColor" ariaLabel="สีของกลุ่มสาระ"
+  (onShow)="logPanel('onShow')" (onHide)="logPanel('onHide')"></wu-colorPicker>
+<wu-colorPicker name="lockedColor" [(ngModel)]="schoolColor" [disabled]="true" ariaLabel="สีประจำโรงเรียน"></wu-colorPicker>`,
   },
   ts: {
     basic: `schoolColor = '#0f766e';   // ค่าจาก API`,
@@ -114,7 +114,7 @@ logPanel(name: string): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtColorPickerChangeEvent', undefined, 'สีเปลี่ยน', 'The colour changed'),
+        row('onChange', 'WuColorPickerChangeEvent', undefined, 'สีเปลี่ยน', 'The colour changed'),
         row('onShow · onHide', 'void', undefined, 'แผงเปิด / ปิด', 'The panel opened / closed'),
       ],
     },
@@ -132,16 +132,16 @@ logPanel(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtColorPickerChangeEvent {
+      code: `interface WuColorPickerChangeEvent {
   originalEvent: Event;
   value: string | { r: number; g: number; b: number } | { h: number; s: number; b: number };
 }`,
     },
   ],
   tokens: [
-    tok('--wt-colorpicker-preview-size', 'ขนาดปุ่มตัวอย่างสี', 'Swatch size'),
-    tok('--wt-colorpicker-panel-width', 'ความกว้างของแผง', 'Panel width'),
-    tok('--wt-colorpicker-panel-padding', 'ระยะในแผง', 'Panel padding'),
-    tok('--wt-colorpicker-area-height', 'ความสูงของพื้นที่สี', 'Colour area height'),
+    tok('--wu-colorpicker-preview-size', 'ขนาดปุ่มตัวอย่างสี', 'Swatch size'),
+    tok('--wu-colorpicker-panel-width', 'ความกว้างของแผง', 'Panel width'),
+    tok('--wu-colorpicker-panel-padding', 'ระยะในแผง', 'Panel padding'),
+    tok('--wu-colorpicker-area-height', 'ความสูงของพื้นที่สี', 'Colour area height'),
   ],
 };

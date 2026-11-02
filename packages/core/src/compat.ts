@@ -3,12 +3,12 @@ import { generatePalette, SHADES } from './color';
 import type { TokenMap } from './tokens';
 
 /**
- * CSS variables the classic and styled themes define, re-created on top of WiraTheme tokens so app styles written for
+ * CSS variables the classic and styled themes define, re-created on top of WiraUI tokens so app styles written for
  * those themes keep working after migrating (e.g. `background: var(--surface-ground)` in an app's own styles).
- * Keys are full custom property names (with their own `--`), emitted next to the `--wt-*` tokens.
+ * Keys are full custom property names (with their own `--`), emitted next to the `--wu-*` tokens.
  */
 
-const v = (name: string) => `var(--wt-${name})`;
+const v = (name: string) => `var(--wu-${name})`;
 
 /** Colour palettes those themes expose globally (--blue-500, --p-green-500, …). */
 export const PALETTE_BASES: Record<string, string> = {
@@ -32,7 +32,7 @@ export const PALETTE_BASES: Record<string, string> = {
   amber: '#f59e0b',
 };
 
-/** Classic theme.css variables (wiratheme v1). */
+/** Classic theme.css variables (wiraui v1). */
 function classicAliases(): TokenMap {
   const out: TokenMap = {
     '--primary-color': v('primary-color'),
@@ -75,7 +75,7 @@ function classicAliases(): TokenMap {
   return out;
 }
 
-/** Styled-mode `--p-*` variables (wiratheme v2 and v3). */
+/** Styled-mode `--p-*` variables (wiraui v2 and v3). */
 function styledAliases(): TokenMap {
   const out: TokenMap = {
     '--p-primary-color': v('primary-color'),
@@ -133,7 +133,7 @@ function styledAliases(): TokenMap {
 const CLASSIC = classicAliases();
 const STYLED = styledAliases();
 
-/** Aliases for a generation; WiraTheme's own design has none. */
+/** Aliases for a generation; WiraUI's own design has none. */
 export function compatAliases(generation: Generation): TokenMap {
   if (generation === 'classic') return { ...CLASSIC };
   if (generation === 'styled') return { ...STYLED };

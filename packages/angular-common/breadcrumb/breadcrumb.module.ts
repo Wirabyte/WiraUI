@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtBreadcrumb } from './breadcrumb.component';
+import { WuBreadcrumb } from './breadcrumb.component';
 
-/** For NgModule apps. Standalone apps can import `WtBreadcrumb` directly. */
+/** For NgModule apps. Standalone apps can import `WuBreadcrumb` directly. */
 @NgModule({
-  imports: [WtBreadcrumb],
-  exports: [WtBreadcrumb],
+  imports: [WuBreadcrumb],
+  exports: [WuBreadcrumb],
 })
-export class WtBreadcrumbModule {}
+export class WuBreadcrumbModule {}

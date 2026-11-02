@@ -1,5 +1,5 @@
 /**
- * wt-chart: stream, waterfall, dumbbell, timeline, funnel, box plot, histogram, sunburst / icicle, unit (waffle, dots,
+ * wu-chart: stream, waterfall, dumbbell, timeline, funnel, box plot, histogram, sunburst / icicle, unit (waffle, dots,
  * people) and slope charts. They draw with plain shapes (`model.shapes`) and texts (`model.texts`), each hover target
  * carries its own tooltip and is found with `chartHit()`, and `variant` picks a look. `chartSwapTypes()` lists the kinds
  * the same data can be shown as (the chart's type switcher).
@@ -24,10 +24,10 @@ import { bands, niceScale, scaleLinear } from './scale';
 
 const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
 const approx = (text: string, size: number) => text.length * size * 0.56;
-const UP = 'var(--wt-chart-up)';
-const DOWN = 'var(--wt-chart-down)';
-const TOTAL = 'var(--wt-chart-total)';
-const MUTED = 'var(--wt-chart-muted)';
+const UP = 'var(--wu-chart-up)';
+const DOWN = 'var(--wu-chart-down)';
+const TOTAL = 'var(--wu-chart-total)';
+const MUTED = 'var(--wu-chart-muted)';
 const TURN = Math.PI * 2;
 const r2 = (n: number) => Math.round(n * 100) / 100;
 
@@ -327,7 +327,7 @@ export function streamModel(o: ChartModelOptions, model: ChartModel, palette: st
       if (px > thick.px) thick = { at: j, px, y: (a.val(y0) + a.val(y1)) / 2 };
     }
     const color = colorOf(p.s, p.i, palette);
-    model.shapes.push({ key: `st${p.i}`, kind: 'path', d: bandPath(up, down, 'smooth'), fill: color, opacity: 0.88, className: 'wt-chart-stream', hover: `s${p.i}` });
+    model.shapes.push({ key: `st${p.i}`, kind: 'path', d: bandPath(up, down, 'smooth'), fill: color, opacity: 0.88, className: 'wu-chart-stream', hover: `s${p.i}` });
     // The name inside the layer, where it is thickest.
     const name = p.s.name ?? '';
     if (name && thick.at >= 0 && thick.px >= k.fontSize + 6) {
@@ -392,7 +392,7 @@ export function waterfallModel(o: ChartModelOptions, model: ChartModel, palette:
     } else if (j < parts.length - 1) {
       // Dashed joint from this bar's end to the next bar.
       const y = a.val(p.to);
-      model.shapes.push({ key: `wj${j}`, kind: 'line', x: x + a.bw, y, x2: a.offset(j + 1), y2: y, stroke: MUTED, strokeWidth: 1, dashed: true, className: 'wt-chart-connector' });
+      model.shapes.push({ key: `wj${j}`, kind: 'line', x: x + a.bw, y, x2: a.offset(j + 1), y2: y, stroke: MUTED, strokeWidth: 1, dashed: true, className: 'wu-chart-connector' });
     }
     if (showValues) {
       const up = p.total || p.change >= 0;
@@ -407,9 +407,9 @@ export function waterfallModel(o: ChartModelOptions, model: ChartModel, palette:
     model.hover.push(categoryTarget(a, j, false, `c${j}`, { title: labels[j] ?? '', rows }));
   });
   if (steps && line.length) {
-    model.shapes.push({ key: 'wline', kind: 'path', d: linePath(line), stroke: TOTAL, strokeWidth: 2.5, className: 'wt-chart-line-shape' });
+    model.shapes.push({ key: 'wline', kind: 'path', d: linePath(line), stroke: TOTAL, strokeWidth: 2.5, className: 'wu-chart-line-shape' });
     parts.forEach((p, j) => {
-      if (p.total) model.shapes.push({ key: `wd${j}`, kind: 'circle', x: a.cat(j), y: a.val(p.to), r: 4.5, fill: 'var(--wt-chart-dot-fill)', stroke: TOTAL, strokeWidth: 2.5 });
+      if (p.total) model.shapes.push({ key: `wd${j}`, kind: 'circle', x: a.cat(j), y: a.val(p.to), r: 4.5, fill: 'var(--wu-chart-dot-fill)', stroke: TOTAL, strokeWidth: 2.5 });
     });
   }
   return model;
@@ -466,7 +466,7 @@ export function dumbbellModel(o: ChartModelOptions, model: ChartModel, palette: 
           model.shapes.push({ key: `dl${j}`, kind: 'line', x: x0, y, x2: tip - dir * 8, y2: y, stroke: color, strokeWidth: 3, hover: `r${j}` });
           model.shapes.push({ key: `da${j}`, kind: 'path', d: `M${r2(tip)} ${r2(y)}L${r2(tip - dir * 11)} ${r2(y - 6)}L${r2(tip - dir * 11)} ${r2(y + 6)}Z`, fill: color, hover: `r${j}` });
         }
-        model.shapes.push({ key: `dp${j}`, kind: 'circle', x: x0, y, r: 4.5, fill: 'var(--wt-chart-dot-fill)', stroke: color, strokeWidth: 2.5, hover: `r${j}` });
+        model.shapes.push({ key: `dp${j}`, kind: 'circle', x: x0, y, r: 4.5, fill: 'var(--wu-chart-dot-fill)', stroke: color, strokeWidth: 2.5, hover: `r${j}` });
       } else {
         model.shapes.push({
           key: `dl${j}`,
@@ -488,8 +488,8 @@ export function dumbbellModel(o: ChartModelOptions, model: ChartModel, palette: 
       }
     }
     if (variant !== 'arrow') {
-      if (x0v !== null) model.shapes.push({ key: `da${j}`, kind: 'circle', x: a.val(x0v), y, r: 6, fill: ca, stroke: 'var(--wt-chart-dot-fill)', strokeWidth: 2, enter: 'pop', hover: `r${j}` });
-      if (x1v !== null) model.shapes.push({ key: `db${j}`, kind: 'circle', x: a.val(x1v), y, r: 6, fill: cb, stroke: 'var(--wt-chart-dot-fill)', strokeWidth: 2, enter: 'pop', delay: 120, hover: `r${j}` });
+      if (x0v !== null) model.shapes.push({ key: `da${j}`, kind: 'circle', x: a.val(x0v), y, r: 6, fill: ca, stroke: 'var(--wu-chart-dot-fill)', strokeWidth: 2, enter: 'pop', hover: `r${j}` });
+      if (x1v !== null) model.shapes.push({ key: `db${j}`, kind: 'circle', x: a.val(x1v), y, r: 6, fill: cb, stroke: 'var(--wu-chart-dot-fill)', strokeWidth: 2, enter: 'pop', delay: 120, hover: `r${j}` });
     }
     if (rows.length) model.hover.push(categoryTarget(a, j, true, `r${j}`, { title: labels[j] ?? '', rows }));
   }
@@ -629,8 +629,8 @@ export function timelineModel(o: ChartModelOptions, model: ChartModel, palette: 
     if (thin) {
       const cy = y + laneH * 0.62;
       model.shapes.push({ key: `${key}b`, kind: 'rect', x: x0, y: cy - 3, w, h: 6, rx: 3, fill: it.color, enter: 'grow-x', delay: n * 40, hover: key });
-      model.shapes.push({ key: `${key}s`, kind: 'circle', x: x0, y: cy, r: 5, fill: 'var(--wt-chart-dot-fill)', stroke: it.color, strokeWidth: 2.5, enter: 'pop', delay: n * 40, hover: key });
-      model.shapes.push({ key: `${key}e`, kind: 'circle', x: x0 + w, y: cy, r: 5, fill: it.color, stroke: 'var(--wt-chart-dot-fill)', strokeWidth: 2, enter: 'pop', delay: n * 40 + 200, hover: key });
+      model.shapes.push({ key: `${key}s`, kind: 'circle', x: x0, y: cy, r: 5, fill: 'var(--wu-chart-dot-fill)', stroke: it.color, strokeWidth: 2.5, enter: 'pop', delay: n * 40, hover: key });
+      model.shapes.push({ key: `${key}e`, kind: 'circle', x: x0 + w, y: cy, r: 5, fill: it.color, stroke: 'var(--wu-chart-dot-fill)', strokeWidth: 2, enter: 'pop', delay: n * 40 + 200, hover: key });
       if (it.name) model.texts.push({ x: x0, y: cy - 10, text: it.name, anchor: 'start', baseline: 'auto', strong: true, hover: key });
     } else {
       const h = Math.max(4, laneH - 3);
@@ -849,18 +849,18 @@ export function boxplotModel(o: ChartModelOptions, model: ChartModel, palette: s
         model.shapes.push({ key: `${key}v`, kind: 'path', d, fill: color, opacity: 0.32, stroke: color, strokeWidth: 1.5, enter: 'fade', delay, hover });
         const r = box(st.q1, st.q3, 3);
         model.shapes.push({ key: `${key}q`, kind: 'rect', ...r, rx: 2, fill: color, enter: 'fade', delay, hover });
-        seg('w', c, st.min, c, st.max, 1.5, 'wt-chart-whisker');
+        seg('w', c, st.min, c, st.max, 1.5, 'wu-chart-whisker');
         const m = at(c, st.median);
-        model.shapes.push({ key: `${key}m`, kind: 'circle', x: m.x, y: m.y, r: 3.5, fill: 'var(--wt-chart-dot-fill)', stroke: color, strokeWidth: 2, enter: 'pop', delay, hover });
+        model.shapes.push({ key: `${key}m`, kind: 'circle', x: m.x, y: m.y, r: 3.5, fill: 'var(--wu-chart-dot-fill)', stroke: color, strokeWidth: 2, enter: 'pop', delay, hover });
       } else {
         const faint = variant === 'points';
-        seg('w', c, st.min, c, st.q1, 1.5, 'wt-chart-whisker');
-        seg('W', c, st.q3, c, st.max, 1.5, 'wt-chart-whisker');
-        seg('l', c - w / 4, st.min, c + w / 4, st.min, 1.5, 'wt-chart-whisker');
-        seg('h', c - w / 4, st.max, c + w / 4, st.max, 1.5, 'wt-chart-whisker');
+        seg('w', c, st.min, c, st.q1, 1.5, 'wu-chart-whisker');
+        seg('W', c, st.q3, c, st.max, 1.5, 'wu-chart-whisker');
+        seg('l', c - w / 4, st.min, c + w / 4, st.min, 1.5, 'wu-chart-whisker');
+        seg('h', c - w / 4, st.max, c + w / 4, st.max, 1.5, 'wu-chart-whisker');
         const r = box(st.q1, st.q3, w / 2);
         model.shapes.push({ key: `${key}q`, kind: 'rect', ...r, rx: 4, fill: color, opacity: faint ? 0.12 : 0.28, stroke: color, strokeWidth: 1.5, enter: across ? 'grow-x' : 'grow', delay, hover });
-        seg('m', c - w / 2, st.median, c + w / 2, st.median, 3, 'wt-chart-median');
+        seg('m', c - w / 2, st.median, c + w / 2, st.median, 3, 'wu-chart-median');
         if (faint && b.raw) {
           b.raw.forEach((v, i) => {
             // A steady jitter, the same every time.
@@ -871,7 +871,7 @@ export function boxplotModel(o: ChartModelOptions, model: ChartModel, palette: s
         } else {
           (st.outliers || []).forEach((v, i) => {
             const pt = at(c, v);
-            model.shapes.push({ key: `${key}o${i}`, kind: 'circle', x: pt.x, y: pt.y, r: 3, fill: 'var(--wt-chart-dot-fill)', stroke: color, strokeWidth: 1.5, enter: 'pop', delay, hover });
+            model.shapes.push({ key: `${key}o${i}`, kind: 'circle', x: pt.x, y: pt.y, r: 3, fill: 'var(--wu-chart-dot-fill)', stroke: color, strokeWidth: 1.5, enter: 'pop', delay, hover });
           });
         }
       }
@@ -938,7 +938,7 @@ export function histogramModel(o: ChartModelOptions, model: ChartModel, palette:
       const pts = counts[n].map((c, b) => ({ x: a.nx((edges[b] + edges[b + 1]) / 2), y: a.val(c) }));
       const ends = [{ x: a.nx(edges[0]), y: a.val(0) }, ...pts, { x: a.nx(edges[binCount]), y: a.val(0) }];
       model.shapes.push({ key: `hd${p.i}`, kind: 'path', d: areaPath(ends, a.val(0), 'smooth'), fill: color, fade: true, enter: 'fade', hover: `s${p.i}` });
-      model.shapes.push({ key: `hl${p.i}`, kind: 'path', d: linePath(ends, 'smooth'), stroke: color, strokeWidth: 2.5, enter: 'draw', className: 'wt-chart-line-shape' });
+      model.shapes.push({ key: `hl${p.i}`, kind: 'path', d: linePath(ends, 'smooth'), stroke: color, strokeWidth: 2.5, enter: 'draw', className: 'wu-chart-line-shape' });
     } else {
       counts[n].forEach((c, b) => {
         if (!c) return;
@@ -951,7 +951,7 @@ export function histogramModel(o: ChartModelOptions, model: ChartModel, palette:
     if (!overlap && p.v.length) {
       const mean = p.v.reduce((x, y) => x + y, 0) / p.v.length;
       const x = a.nx(mean);
-      model.references.push({ x1: x, y1: a.plot.y, x2: x, y2: a.plot.y + a.plot.h, color: 'var(--wt-chart-reference-color)', dashed: true, label: { x: x + 4, y: a.plot.y + 2, text: `${k.words.mean} ${k.fmt(mean)}`, anchor: 'start', baseline: 'hanging' } });
+      model.references.push({ x1: x, y1: a.plot.y, x2: x, y2: a.plot.y + a.plot.h, color: 'var(--wu-chart-reference-color)', dashed: true, label: { x: x + 4, y: a.plot.y + 2, text: `${k.words.mean} ${k.fmt(mean)}`, anchor: 'start', baseline: 'hanging' } });
     }
   });
   for (let b = 0; b < binCount; b++) {
@@ -1057,7 +1057,7 @@ export function sunburstModel(o: ChartModelOptions, model: ChartModel, palette: 
       const r1 = r0 + ring;
       if (sweepA > 0.002) {
         const gap = Math.min(0.012, sweepA / 4);
-        model.shapes.push({ key: `u${key}`, kind: 'path', d: arcPath(fit.cx, fit.cy, r0 + 1, r1 - 1, a + gap / 2, a + sweepA - gap / 2), fill: c, opacity: shade(trail.length + d), className: 'wt-chart-sun', hover: key });
+        model.shapes.push({ key: `u${key}`, kind: 'path', d: arcPath(fit.cx, fit.cy, r0 + 1, r1 - 1, a + gap / 2, a + sweepA - gap / 2), fill: c, opacity: shade(trail.length + d), className: 'wu-chart-sun', hover: key });
         // The name along the middle of the slice, when the slice is wide and tall enough.
         const mid = a + sweepA / 2;
         const tw = k.measure(n.name, k.fontSize);
@@ -1232,9 +1232,9 @@ export function slopeModel(o: ChartModelOptions, model: ChartModel, palette: str
     const color = colorFor(p);
     const key = `l${p.i}`;
     const pts = p.v.map((v, j) => (v === null ? null : { x: xOf(j), y: yOf(v) }));
-    model.shapes.push({ key, kind: 'path', d: linePath(pts), stroke: color, strokeWidth: 2.5, className: 'wt-chart-line-shape', enter: 'draw', delay: n * 50, hover: key });
+    model.shapes.push({ key, kind: 'path', d: linePath(pts), stroke: color, strokeWidth: 2.5, className: 'wu-chart-line-shape', enter: 'draw', delay: n * 50, hover: key });
     pts.forEach((pt, j) => {
-      if (pt) model.shapes.push({ key: `${key}d${j}`, kind: 'circle', x: pt.x, y: pt.y, r: 4.5, fill: 'var(--wt-chart-dot-fill)', stroke: color, strokeWidth: 2.5, enter: 'pop', delay: n * 50 + j * 250, hover: key });
+      if (pt) model.shapes.push({ key: `${key}d${j}`, kind: 'circle', x: pt.x, y: pt.y, r: 4.5, fill: 'var(--wu-chart-dot-fill)', stroke: color, strokeWidth: 2.5, enter: 'pop', delay: n * 50 + j * 250, hover: key });
     });
     const [a, b] = [firstOf(p), lastOf(p)];
     model.texts.push({ x: plot.x - 10, y: lefts[n], text: text(p, a, 'left'), anchor: 'end', baseline: 'middle', color: highlight ? undefined : color, hover: key });

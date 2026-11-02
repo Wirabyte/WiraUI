@@ -6,51 +6,51 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-badge value="8"></wt-badge>
-        <wt-badge></wt-badge>
+        <wu-badge value="8"></wu-badge>
+        <wu-badge></wu-badge>
       </docs-demo>
     </docs-section>
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']">
-        <wt-badge value="1" severity="primary"></wt-badge>
-        <wt-badge value="2" severity="secondary"></wt-badge>
-        <wt-badge value="3" severity="success"></wt-badge>
-        <wt-badge value="4" severity="info"></wt-badge>
-        <wt-badge value="5" severity="warn"></wt-badge>
-        <wt-badge value="6" severity="danger"></wt-badge>
-        <wt-badge value="7" severity="help"></wt-badge>
-        <wt-badge value="8" severity="contrast"></wt-badge>
+        <wu-badge value="1" severity="primary"></wu-badge>
+        <wu-badge value="2" severity="secondary"></wu-badge>
+        <wu-badge value="3" severity="success"></wu-badge>
+        <wu-badge value="4" severity="info"></wu-badge>
+        <wu-badge value="5" severity="warn"></wu-badge>
+        <wu-badge value="6" severity="danger"></wu-badge>
+        <wu-badge value="7" severity="help"></wu-badge>
+        <wu-badge value="8" severity="contrast"></wu-badge>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-badge value="2"></wt-badge>
-        <wt-badge value="4" size="large"></wt-badge>
-        <wt-badge value="6" size="xlarge"></wt-badge>
+        <wu-badge value="2"></wu-badge>
+        <wu-badge value="4" size="large"></wu-badge>
+        <wu-badge value="6" size="xlarge"></wu-badge>
       </docs-demo>
     </docs-section>
 
     <docs-section id="inline" [section]="sec['inline']">
       <docs-demo [html]="code['inline']">
-        <span>{{ tx('กล่องข้อความ') }} <wt-badge value="12" severity="danger"></wt-badge></span>
-        <span>{{ tx('สถานะออนไลน์') }} <wt-badge severity="success"></wt-badge></span>
+        <span>{{ tx('กล่องข้อความ') }} <wu-badge value="12" severity="danger"></wu-badge></span>
+        <span>{{ tx('สถานะออนไลน์') }} <wu-badge severity="success"></wu-badge></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="directive" [section]="sec['directive']">
       <docs-demo [html]="code['directive']" [ts]="ts['directive']">
-        <span id="d-badge-bell" class="docs-badge-icon" wtBadge [value]="unread" severity="danger" [badgeDisabled]="!unread"><i class="wi wi-bell"></i></span>
-        <span id="d-badge-mail" class="docs-badge-icon" wtBadge severity="success"><i class="wi wi-envelope"></i></span>
+        <span id="d-badge-bell" class="docs-badge-icon" wuBadge [value]="unread" severity="danger" [badgeDisabled]="!unread"><i class="wi wi-bell"></i></span>
+        <span id="d-badge-mail" class="docs-badge-icon" wuBadge severity="success"><i class="wi wi-envelope"></i></span>
         <span id="d-badge-cal" class="docs-badge-icon" pBadge value="2" badgeSize="large"><i class="wi wi-calendar"></i></span>
-        <wt-button id="d-badge-read" [label]="tx('อ่านทั้งหมด')" severity="secondary" [text]="true" (onClick)="markRead()"></wt-button>
+        <wu-button id="d-badge-read" [label]="tx('อ่านทั้งหมด')" severity="secondary" [text]="true" (onClick)="markRead()"></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="style" [section]="sec['style']">
       <docs-demo [html]="code['style']">
-        <wt-badge id="d-badge-style" value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wt-badge>
+        <wu-badge id="d-badge-style" value="new" styleClass="uppercase" [style]="{ minWidth: '3rem' }"></wu-badge>
       </docs-demo>
     </docs-section>
   </ng-template>

@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { ENTRY_RENAMES, NOT_YET, SYMBOLS, WT_MODULES, WT_TAGS, wtName } from './mapping';
+import { ENTRY_RENAMES, NOT_YET, SYMBOLS, WU_MODULES, WU_TAGS, wuName } from './mapping';
 import { FromPrimeNgOptions } from './schema';
 
 interface Report {
@@ -14,10 +14,10 @@ interface Report {
 const PRIMENG_IMPORT = /^primeng\/([a-z]+)$/;
 
 /**
- * `ng g wiratheme:from-primeng`: moves an app's PrimeNG code over in place. TypeScript imports from `primeng/*` become
- * `wiratheme/*` (NgModules and classes renamed: `DropdownModule` → `WtSelectModule`, `Table` → `WtTable`; the services
- * keep their names), and `<p-…>` tags in templates (`.html` files and inline `template:`) become `<wt-…>` where WiraTheme
- * has them. PrimeNG attributes (`pButton`, `pTemplate`, `pTooltip` …) and `p-*` classes stay: WiraTheme reads them.
+ * `ng g wiraui:from-primeng`: moves an app's PrimeNG code over in place. TypeScript imports from `primeng/*` become
+ * `wiraui/*` (NgModules and classes renamed: `DropdownModule` → `WuSelectModule`, `Table` → `WuTable`; the services
+ * keep their names), and `<p-…>` tags in templates (`.html` files and inline `template:`) become `<wu-…>` where WiraUI
+ * has them. PrimeNG attributes (`pButton`, `pTemplate`, `pTooltip` …) and `p-*` classes stay: WiraUI reads them.
  * Anything it cannot move is left untouched and listed. Run with `--dry-run` first to see the changes.
  */
 export function fromPrimeng(options: FromPrimeNgOptions): Rule {
@@ -31,12 +31,12 @@ export function fromPrimeng(options: FromPrimeNgOptions): Rule {
     });
     const log = context.logger;
     log.info('');
-    log.info(`WiraTheme from PrimeNG: ${report.files} file(s), ${report.imports} import(s), ${report.tags} tag(s) changed.`);
+    log.info(`WiraUI from PrimeNG: ${report.files} file(s), ${report.imports} import(s), ${report.tags} tag(s) changed.`);
     if (report.todo.length) {
       log.warn(`Left for you (${report.todo.length}):`);
       for (const t of report.todo) log.warn('  ' + t);
     }
-    log.info('Next: ng add wiratheme (if not done), then remove primeng and its theme CSS from package.json / angular.json when nothing uses them.');
+    log.info('Next: ng add wiraui (if not done), then remove primeng and its theme CSS from package.json / angular.json when nothing uses them.');
     return tree;
   };
 }
@@ -76,7 +76,7 @@ function migrateTs(tree: Tree, path: string, report: Report, options: FromPrimeN
       report.todo.push(`${path}: import from 'primeng/${entry}' (not named imports)`);
       continue;
     }
-    // Each name goes to its WiraTheme entry; one import line per entry, in place of this one.
+    // Each name goes to its WiraUI entry; one import line per entry, in place of this one.
     const byEntry = new Map<string, string[]>();
     const left: string[] = [];
     for (const el of named.elements) {
@@ -85,19 +85,19 @@ function migrateTs(tree: Tree, path: string, report: Report, options: FromPrimeN
       const target = mapSymbol(entry, imported);
       if (!target) {
         left.push(el.getText(sf));
-        report.todo.push(`${path}: ${imported} from 'primeng/${entry}' has no WiraTheme counterpart`);
+        report.todo.push(`${path}: ${imported} from 'primeng/${entry}' has no WiraUI counterpart`);
         continue;
       }
-      const [name, wtEntry] = target;
+      const [name, wuEntry] = target;
       const spec = el.propertyName ? `${name} as ${local}` : name;
       if (!el.propertyName && name !== imported) renamed.set(local, name);
-      const list = byEntry.get(wtEntry) || [];
+      const list = byEntry.get(wuEntry) || [];
       list.push((el.isTypeOnly ? 'type ' : '') + spec);
-      byEntry.set(wtEntry, list);
+      byEntry.set(wuEntry, list);
     }
     if (!byEntry.size) continue;
     const typeOnly = stmt.importClause?.isTypeOnly ? 'type ' : '';
-    const lines = [...byEntry].map(([e, names]) => `import ${typeOnly}{ ${names.join(', ')} } from 'wiratheme/${e}';`);
+    const lines = [...byEntry].map(([e, names]) => `import ${typeOnly}{ ${names.join(', ')} } from 'wiraui/${e}';`);
     if (left.length) lines.push(`import ${typeOnly}{ ${left.join(', ')} } from 'primeng/${entry}';`);
     edits.push({ start: stmt.getStart(sf), end: stmt.getEnd(), text: lines.join('\n') });
     changedImports += byEntry.size;
@@ -149,14 +149,14 @@ function migrateTs(tree: Tree, path: string, report: Report, options: FromPrimeN
   report.tags += tags;
 }
 
-/** The WiraTheme name and entry of a name imported from `primeng/<entry>`, or null. */
+/** The WiraUI name and entry of a name imported from `primeng/<entry>`, or null. */
 function mapSymbol(entry: string, name: string): [string, string] | null {
   const known = (SYMBOLS[entry] || []).find(([prime]) => prime === name);
   if (known) return [known[1], known[2]];
   if (name.endsWith('Module')) {
-    const wtEntry = ENTRY_RENAMES[entry] || entry;
-    const wt = wtName(name);
-    if (WT_MODULES[wtEntry]?.includes(wt)) return [wt, wtEntry];
+    const wuEntry = ENTRY_RENAMES[entry] || entry;
+    const wu = wuName(name);
+    if (WU_MODULES[wuEntry]?.includes(wu)) return [wu, wuEntry];
   }
   return null;
 }
@@ -175,20 +175,20 @@ function migrateHtml(tree: Tree, path: string, report: Report): void {
   report.tags += result.count;
 }
 
-/** `<p-x …>` / `</p-x>` → `<wt-x …>` / `</wt-x>` where WiraTheme has `wt-x`; the rest is listed. */
+/** `<p-x …>` / `</p-x>` → `<wu-x …>` / `</wu-x>` where WiraUI has `wu-x`; the rest is listed. */
 export function migrateTemplate(text: string, path: string, report: Report): { text: string; count: number } {
   let count = 0;
   const missing = new Set<string>();
   const out = text.replace(/<(\/?)p-([a-zA-Z][\w-]*)(?=[\s/>])/g, (whole, slash: string, name: string) => {
-    if (WT_TAGS.has(name)) {
+    if (WU_TAGS.has(name)) {
       if (!slash) count++;
-      return `<${slash}wt-${name}`;
+      return `<${slash}wu-${name}`;
     }
     missing.add(`p-${name}`);
     return whole;
   });
   for (const tag of missing) {
-    const why = NOT_YET.some((n) => n.toLowerCase() === tag.slice(2).toLowerCase()) ? 'not in WiraTheme yet' : 'no WiraTheme tag';
+    const why = NOT_YET.some((n) => n.toLowerCase() === tag.slice(2).toLowerCase()) ? 'not in WiraUI yet' : 'no WiraUI tag';
     report.todo.push(`${path}: <${tag}> (${why})`);
   }
   return { text: out, count };

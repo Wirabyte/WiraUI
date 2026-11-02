@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 368" preserveAspectRatio="xMidYMid slice">
-  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): a lake at dusk. -->
+  <!-- Sample artwork for the docs (drawn for WiraUI, free to use): a lake at dusk. -->
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#1e3a8a" />

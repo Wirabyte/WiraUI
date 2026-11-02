@@ -1,23 +1,23 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { WtConfig } from 'wiratheme/config';
-import { flattenMessages, I18nMessages, LOCALES, matchLanguage, pickLanguage, translateKey, WtLocale } from 'wiratheme/core';
-import { WT_I18N_OPTIONS } from './i18n.types';
+import { WuConfig } from 'wiraui/config';
+import { flattenMessages, I18nMessages, LOCALES, matchLanguage, pickLanguage, translateKey, WuLocale } from 'wiraui/core';
+import { WU_I18N_OPTIONS } from './i18n.types';
 
 /**
  * The app's current language and its texts. `t('บันทึก')` in code, `{{ 'บันทึก' | t }}` in templates,
- * `use('en')` to switch (a `<wt-language-switch>` does it for the user). The choice is remembered, `<html lang>`
- * follows it, and so do the texts inside WiraTheme components.
+ * `use('en')` to switch (a `<wu-language-switch>` does it for the user). The choice is remembered, `<html lang>`
+ * follows it, and so do the texts inside WiraUI components.
  */
 @Injectable({ providedIn: 'root' })
-export class WtI18n implements OnDestroy {
-  private readonly options = inject(WT_I18N_OPTIONS, { optional: true }) || {};
-  private readonly config = inject(WtConfig);
+export class WuI18n implements OnDestroy {
+  private readonly options = inject(WU_I18N_OPTIONS, { optional: true }) || {};
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly dictionaries = new Map<string, Record<string, string>>();
   private readonly loads = new Map<string, Promise<void>>();
-  private readonly baseLocale: WtLocale = this.config.translation;
+  private readonly baseLocale: WuLocale = this.config.translation;
   private readonly current: BehaviorSubject<string>;
   private readonly changed = new Subject<void>();
 
@@ -115,7 +115,7 @@ export class WtI18n implements OnDestroy {
           },
           (err) => {
             this.loads.delete(language);
-            console.warn(`WiraTheme i18n: could not load the "${language}" messages.`, err);
+            console.warn(`WiraUI i18n: could not load the "${language}" messages.`, err);
           },
         );
       this.loads.set(language, pending);
@@ -129,7 +129,7 @@ export class WtI18n implements OnDestroy {
     const own = this.options.componentLocales;
     if (own === false) return;
     const extra = own && typeof own === 'object' ? own[language] : undefined;
-    // The main language keeps a locale the app set itself in provideWiraTheme({ locale }).
+    // The main language keeps a locale the app set itself in provideWiraUI({ locale }).
     const custom = !Object.values(LOCALES).includes(this.baseLocale);
     const builtIn = language === this.defaultLanguage && custom ? this.baseLocale : LOCALES[language.toLowerCase().split(/[-_]/)[0]];
     if (!builtIn && !extra) return;
@@ -158,6 +158,6 @@ export class WtI18n implements OnDestroy {
 
   private get storageKey(): string | null {
     const key = this.options.storageKey;
-    return key === false ? null : key || 'wt-language';
+    return key === false ? null : key || 'wu-language';
   }
 }

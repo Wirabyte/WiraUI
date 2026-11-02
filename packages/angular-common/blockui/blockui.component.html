@@ -2,7 +2,7 @@
   <div
     *ngIf="onElement; else page"
     #mask
-    class="wt-blockui p-blockui p-component-overlay p-blockui-enter"
+    class="wu-blockui p-blockui p-component-overlay p-blockui-enter"
     [class]="styleClass || ''"
     tabindex="-1"
     role="status"
@@ -13,7 +13,7 @@
   <ng-template #page>
     <dialog
       #mask
-      class="wt-blockui wt-blockui-document p-blockui p-blockui-document p-component-overlay p-blockui-enter"
+      class="wu-blockui wu-blockui-document p-blockui p-blockui-document p-component-overlay p-blockui-enter"
       [class]="styleClass || ''"
       role="status"
       [attr.aria-label]="ariaLabel || null"

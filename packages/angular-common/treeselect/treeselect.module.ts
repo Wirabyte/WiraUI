@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTreeSelect } from './treeselect.component';
+import { WuTreeSelect } from './treeselect.component';
 
-/** For NgModule apps. Standalone apps can import `WtTreeSelect` directly. */
+/** For NgModule apps. Standalone apps can import `WuTreeSelect` directly. */
 @NgModule({
-  imports: [WtTreeSelect],
-  exports: [WtTreeSelect],
+  imports: [WuTreeSelect],
+  exports: [WuTreeSelect],
 })
-export class WtTreeSelectModule {}
+export class WuTreeSelectModule {}

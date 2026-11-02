@@ -48,7 +48,7 @@ test('a second click closes; so does a click outside; disabled items do nothing'
   await item(page, 'ปิดอยู่').click({ force: true });
   await expect(page.locator('#mb-log')).toHaveText('-');
   // Badges and links.
-  await expect(item(page, 'รายงาน').locator('.wt-menubar-badge')).toHaveText('3');
+  await expect(item(page, 'รายงาน').locator('.wu-menubar-badge')).toHaveText('3');
   await expect(item(page, 'คู่มือ')).toHaveAttribute('href', '#menubar');
 });
 
@@ -98,7 +98,7 @@ test('keyboard: one tab stop, arrows across and down, Right to the next menu, Es
 });
 
 test('root submenus open on hover in v2 / v3, after a click in v1 (each era’s default)', async ({ page }) => {
-  const major = await page.locator('#wt-major').textContent();
+  const major = await page.locator('#wu-major').textContent();
   await item(page, 'รายงาน').hover();
   if (major === '1') {
     await expect(menus(page)).toHaveCount(0);
@@ -113,7 +113,7 @@ test('root submenus open on hover in v2 / v3, after a click in v1 (each era’s 
 
 test('narrow screens: a menu button shows the items as a list, submenus open in place', async ({ page }) => {
   await page.setViewportSize({ width: 480, height: 800 });
-  const button = bar(page).locator('.wt-menubar-button');
+  const button = bar(page).locator('.wu-menubar-button');
   await expect(button).toBeVisible();
   await expect(button).toHaveAttribute('aria-expanded', 'false');
   await expect(bar(page).locator('[role="menubar"]')).toHaveCount(0);
@@ -136,16 +136,16 @@ test('narrow screens: a menu button shows the items as a list, submenus open in 
 test('a bar with only start / end slots: no menu, the end slot on the right', async ({ page }) => {
   const shell = page.locator('#mb-shell');
   await expect(shell.locator('[role="menubar"]')).toHaveCount(0);
-  await expect(shell.locator('.wt-menubar-button')).toHaveCount(0);
-  const barBox = (await shell.locator('.wt-menubar').boundingBox())!;
+  await expect(shell.locator('.wu-menubar-button')).toHaveCount(0);
+  const barBox = (await shell.locator('.wu-menubar').boundingBox())!;
   const endBox = (await page.locator('#mb-shell-end').boundingBox())!;
   expect(barBox.x + barBox.width - (endBox.x + endBox.width)).toBeLessThan(40);
-  expect(await shell.locator('.wt-menubar').evaluate((el) => getComputedStyle(el).borderTopLeftRadius)).toBe('0px');
+  expect(await shell.locator('.wu-menubar').evaluate((el) => getComputedStyle(el).borderTopLeftRadius)).toBe('0px');
 });
 
 test('carries the menu class names of its era', async ({ page }) => {
-  const major = await page.locator('#wt-major').textContent();
-  await expect(bar(page).locator('.wt-menubar')).toHaveClass(/p-menubar/);
+  const major = await page.locator('#wu-major').textContent();
+  await expect(bar(page).locator('.wu-menubar')).toHaveClass(/p-menubar/);
   if (major === '1') await expect(bar(page).locator('li.p-menuitem')).toHaveCount(5);
   else await expect(bar(page).locator('li.p-menubar-item')).toHaveCount(5);
 });

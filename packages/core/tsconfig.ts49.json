@@ -1,5 +1,5 @@
 {
-  "//": "Type-checks the source with TypeScript 4.9, the compiler wiratheme@1 (Angular 15) uses. Run via: node node_modules/typescript-49/bin/tsc -p tsconfig.ts49.json",
+  "//": "Type-checks the source with TypeScript 4.9, the compiler wiraui@1 (Angular 15) uses. Run via: node node_modules/typescript-49/bin/tsc -p tsconfig.ts49.json",
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
     "noEmit": true

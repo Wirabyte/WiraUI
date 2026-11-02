@@ -2,20 +2,20 @@
   <p class="docs-eyebrow">Getting Started</p>
   <h1 class="docs-h1">{{ en() ? 'Configuration' : 'ตั้งค่า' }}</h1>
   @if (en()) {
-    <p class="docs-lead">Everything is set once in <code>provideWiraTheme()</code>. What changes at run time goes through <code>WtConfig</code> and <code>WtThemeService</code>.</p>
+    <p class="docs-lead">Everything is set once in <code>provideWiraUI()</code>. What changes at run time goes through <code>WuConfig</code> and <code>WuThemeService</code>.</p>
   } @else {
-    <p class="docs-lead">ทุกอย่างตั้งที่ <code>provideWiraTheme()</code> ครั้งเดียว ส่วนที่ต้องเปลี่ยนตอนแอปทำงานใช้ <code>WtConfig</code> และ <code>WtThemeService</code></p>
+    <p class="docs-lead">ทุกอย่างตั้งที่ <code>provideWiraUI()</code> ครั้งเดียว ส่วนที่ต้องเปลี่ยนตอนแอปทำงานใช้ <code>WuConfig</code> และ <code>WuThemeService</code></p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · Angular {{ v.angular }}</span>
   </div>
 </header>
 
-<docs-section id="provider" title="provideWiraTheme">
+<docs-section id="provider" title="provideWiraUI">
   @if (en()) {
-    <p>Works in NgModules and standalone apps from Angular 15 on. <code>WiraThemeModule.forRoot()</code> is there if you prefer the NgModule style.</p>
+    <p>Works in NgModules and standalone apps from Angular 15 on. <code>WiraUIModule.forRoot()</code> is there if you prefer the NgModule style.</p>
   } @else {
-    <p>ใช้ได้ทั้งใน NgModule และ standalone ตั้งแต่ Angular 15 ส่วน <code>WiraThemeModule.forRoot()</code> มีไว้ให้คนที่คุ้นกับสไตล์ NgModule</p>
+    <p>ใช้ได้ทั้งใน NgModule และ standalone ตั้งแต่ Angular 15 ส่วน <code>WiraUIModule.forRoot()</code> มีไว้ให้คนที่คุ้นกับสไตล์ NgModule</p>
   }
   <docs-code-tabs [tabs]="local(providerTabs)"></docs-code-tabs>
 </docs-section>
@@ -44,9 +44,9 @@
           <td><span class="docs-muted">–</span></td>
           <td>
             @if (en()) {
-              Changes on top of the main theme; they beat the SCSS / CSS file through <code>&#64;layer wiratheme.overrides</code>.
+              Changes on top of the main theme; they beat the SCSS / CSS file through <code>&#64;layer wiraui.overrides</code>.
             } @else {
-              ค่าที่ปรับทับธีมหลัก ชนะไฟล์ SCSS / CSS ผ่าน <code>&#64;layer wiratheme.overrides</code>
+              ค่าที่ปรับทับธีมหลัก ชนะไฟล์ SCSS / CSS ผ่าน <code>&#64;layer wiraui.overrides</code>
             }
           </td>
         </tr>
@@ -56,9 +56,9 @@
           <td><code>'class'</code></td>
           <td>
             @if (en()) {
-              Dark mode for tokens written from TypeScript: off, toggled with <code>.wt-dark</code> on <code>&lt;html&gt;</code>, or following <code>prefers-color-scheme</code>.
+              Dark mode for tokens written from TypeScript: off, toggled with <code>.wu-dark</code> on <code>&lt;html&gt;</code>, or following <code>prefers-color-scheme</code>.
             } @else {
-              dark mode ของ token ที่ TS เขียน: ปิด, สลับด้วย <code>.wt-dark</code> บน <code>&lt;html&gt;</code> หรือตาม <code>prefers-color-scheme</code>
+              dark mode ของ token ที่ TS เขียน: ปิด, สลับด้วย <code>.wu-dark</code> บน <code>&lt;html&gt;</code> หรือตาม <code>prefers-color-scheme</code>
             }
           </td>
         </tr>
@@ -69,10 +69,10 @@
           <td>
             @if (en()) {
               A class on <code>&lt;html&gt;</code> such as <code>'.my-dark'</code>, <code>'system'</code> (follow the OS) or <code>'none'</code>. When set it wins
-              over <code>darkMode</code>, and <code>setDarkMode()</code> toggles this class instead of <code>.wt-dark</code>. Keep the class your app already uses.
+              over <code>darkMode</code>, and <code>setDarkMode()</code> toggles this class instead of <code>.wu-dark</code>. Keep the class your app already uses.
             } @else {
               class บน <code>&lt;html&gt;</code> เช่น <code>'.my-dark'</code>, <code>'system'</code> (ตาม OS) หรือ <code>'none'</code> ถ้าตั้งไว้จะชนะ <code>darkMode</code>
-              และ <code>setDarkMode()</code> จะสลับ class นี้แทน <code>.wt-dark</code> ใช้ class เดิมที่แอปใช้อยู่ได้เลย
+              และ <code>setDarkMode()</code> จะสลับ class นี้แทน <code>.wu-dark</code> ใช้ class เดิมที่แอปใช้อยู่ได้เลย
             }
           </td>
         </tr>
@@ -83,10 +83,10 @@
           <td>
             @if (en()) {
               <code>'dark'</code> when the main theme is dark-only (sayan-*, ratri-*, sila-dark-*), so <code>overrides</code> apply without a dark class.
-              Usually not needed: a TS preset knows it, and SCSS / CSS files write <code>--wt-scheme</code>.
+              Usually not needed: a TS preset knows it, and SCSS / CSS files write <code>--wu-scheme</code>.
             } @else {
               <code>'dark'</code> เมื่อธีมหลักเป็นธีมมืดอย่างเดียว (sayan-*, ratri-*, sila-dark-*) เพื่อให้ <code>overrides</code> มีผลโดยไม่ต้องมี class dark
-              ปกติไม่ต้องตั้ง: preset จาก TS รู้เอง และไฟล์ SCSS / CSS เขียน <code>--wt-scheme</code> ไว้ให้
+              ปกติไม่ต้องตั้ง: preset จาก TS รู้เอง และไฟล์ SCSS / CSS เขียน <code>--wu-scheme</code> ไว้ให้
             }
           </td>
         </tr>
@@ -98,7 +98,7 @@
         </tr>
         <tr>
           <td><code class="docs-api-name">locale</code></td>
-          <td><code class="docs-api-type">'th' | 'en' | WtLocale</code></td>
+          <td><code class="docs-api-type">'th' | 'en' | WuLocale</code></td>
           <td><code>'th'</code></td>
           <td>{{ en() ? 'Language of the text inside components.' : 'ภาษาของข้อความใน component' }}</td>
         </tr>
@@ -139,16 +139,16 @@
 
 <docs-section id="locale" [title]="{ th: 'ภาษาไทยและ พ.ศ.', en: 'Thai and the Buddhist calendar' }">
   @if (en()) {
-    <p>The Thai locale and Buddhist calendar are the defaults. To change a few words, call <code>WtConfig.setTranslation()</code> once at app level.</p>
+    <p>The Thai locale and Buddhist calendar are the defaults. To change a few words, call <code>WuConfig.setTranslation()</code> once at app level.</p>
   } @else {
-    <p>locale <code>th</code> และปฏิทิน พ.ศ. เป็นค่าเริ่มต้น ไม่ต้องตั้งอะไรเพิ่ม ถ้าอยากแก้บางคำใช้ <code>WtConfig.setTranslation()</code> ครั้งเดียวที่ระดับแอป</p>
+    <p>locale <code>th</code> และปฏิทิน พ.ศ. เป็นค่าเริ่มต้น ไม่ต้องตั้งอะไรเพิ่ม ถ้าอยากแก้บางคำใช้ <code>WuConfig.setTranslation()</code> ครั้งเดียวที่ระดับแอป</p>
   }
   <docs-code [code]="local(s.TRANSLATION)" lang="ts"></docs-code>
 </docs-section>
 
-<docs-section id="runtime" title="WtThemeService">
+<docs-section id="runtime" title="WuThemeService">
   @if (en()) {
-    <p>The same service behind this site's theme button and the WiraTheme Studio: change the theme while the app runs, no reload.</p>
+    <p>The same service behind this site's theme button and the WiraUI Studio: change the theme while the app runs, no reload.</p>
   } @else {
     <p>service เดียวกับที่ปุ่มปรับธีมบนเว็บนี้และ สตูดิโอธีม ใช้ เปลี่ยนธีมตอนแอปทำงานได้โดยไม่ต้อง reload</p>
   }
@@ -175,8 +175,8 @@
 <docs-section id="version-check" [title]="{ th: 'ตรวจรุ่นตอนเริ่มแอป', en: 'Version check at start-up' }">
   @if (en()) {
     <p>
-      <code>provideWiraTheme()</code> and every component check <code>VERSION.major</code> of <code>&#64;angular/core</code>. Outside {{ v.angular }} they throw
-      and name the <code>wiratheme&#64;</code> major to install instead.
+      <code>provideWiraUI()</code> and every component check <code>VERSION.major</code> of <code>&#64;angular/core</code>. Outside {{ v.angular }} they throw
+      and name the <code>wiraui&#64;</code> major to install instead.
     </p>
     <div class="docs-note docs-note-warn">
       <docs-icon name="alert"></docs-icon>
@@ -184,8 +184,8 @@
     </div>
   } @else {
     <p>
-      <code>provideWiraTheme()</code> และ constructor ของทุก component ตรวจ <code>VERSION.major</code> ของ <code>&#64;angular/core</code>
-      ถ้าไม่อยู่ในช่วง {{ v.angular }} จะ throw error พร้อมบอกว่าควรติดตั้ง <code>wiratheme&#64;</code> รุ่นไหน
+      <code>provideWiraUI()</code> และ constructor ของทุก component ตรวจ <code>VERSION.major</code> ของ <code>&#64;angular/core</code>
+      ถ้าไม่อยู่ในช่วง {{ v.angular }} จะ throw error พร้อมบอกว่าควรติดตั้ง <code>wiraui&#64;</code> รุ่นไหน
     </p>
     <div class="docs-note docs-note-warn">
       <docs-icon name="alert"></docs-icon>

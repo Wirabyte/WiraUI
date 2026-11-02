@@ -12,16 +12,16 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
-import { ɵspinnerColors, ɵspinnerMulticolor, WtProgressSpinnerLabelPosition } from './progressspinner.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
+import { ɵspinnerColors, ɵspinnerMulticolor, WuProgressSpinnerLabelPosition } from './progressspinner.types';
 
 /**
- * Busy indicator: `<wt-progress-spinner style="width: 2rem; height: 2rem">`. The preset sets its default size and
+ * Busy indicator: `<wu-progress-spinner style="width: 2rem; height: 2rem">`. The preset sets its default size and
  * colours; `[multicolor]` / `[colors]` change the colours it cycles through. With `label` (or a `label` template) the
  * text sits under the ring (or beside it, `labelPosition="right"`), centred for you.
  */
 @Component({
-  selector: 'wt-progress-spinner, wt-progressspinner, wt-progressSpinner',
+  selector: 'wu-progress-spinner, wu-progressspinner, wu-progressSpinner',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './progressspinner.component.html',
@@ -29,7 +29,7 @@ import { ɵspinnerColors, ɵspinnerMulticolor, WtProgressSpinnerLabelPosition } 
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtProgressSpinner implements OnDestroy {
+export class WuProgressSpinner implements OnDestroy {
   @Input() strokeWidth = '2';
   @Input() fill = 'none';
   @Input() animationDuration = '2s';
@@ -43,7 +43,7 @@ export class WtProgressSpinner implements OnDestroy {
   @Input() colors?: readonly string[] | null;
   /** Text under the ring (or beside it), centred: `label="กำลังโหลด…"`. A `label` template takes its place. */
   @Input() label?: string | null;
-  @Input() labelPosition: WtProgressSpinnerLabelPosition = 'bottom';
+  @Input() labelPosition: WuProgressSpinnerLabelPosition = 'bottom';
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   @Input() styleClass?: string | null;
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
@@ -51,14 +51,14 @@ export class WtProgressSpinner implements OnDestroy {
   @Input() style?: Record<string, any> | string | null;
 
   @ContentChild('label', { descendants: false }) protected labelRef?: unknown;
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
 
   private _multicolor: boolean | undefined;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -74,14 +74,14 @@ export class WtProgressSpinner implements OnDestroy {
     const v = this.size;
     return v === null || v === undefined || v === '' ? null : typeof v === 'number' || /^\d+(\.\d+)?$/.test(String(v)) ? `${v}px` : String(v);
   }
-  /** `<ng-template #label>` (or `wtTemplate="label"`): own content under the ring. */
+  /** `<ng-template #label>` (or `wuTemplate="label"`): own content under the ring. */
   get labelTemplate(): TemplateRef<unknown> | null {
     return (this.labelRef instanceof TemplateRef ? this.labelRef : null) || ɵfindTemplate(this.templates, 'label');
   }
-  @HostBinding('class.wt-progress-spinner-host-labelled') get labelled(): boolean {
+  @HostBinding('class.wu-progress-spinner-host-labelled') get labelled(): boolean {
     return !!this.label || !!this.labelTemplate;
   }
-  @HostBinding('class.wt-progress-spinner-host-right') get beside(): boolean {
+  @HostBinding('class.wu-progress-spinner-host-right') get beside(): boolean {
     return this.labelled && this.labelPosition === 'right';
   }
   /** A size in the `[style]` object (or `size`) sizes the host too (the ring fills the host) — unless there is a label. */

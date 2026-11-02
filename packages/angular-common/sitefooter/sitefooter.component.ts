@@ -12,20 +12,20 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { TH_LOCALE } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { TH_LOCALE } from 'wiraui/core';
 
 /** `'columns'` (default): the brand beside columns of links. `'simple'`: one row. `'centered'`: everything centred. */
-export type WtSiteFooterLook = 'columns' | 'simple' | 'centered';
+export type WuSiteFooterLook = 'columns' | 'simple' | 'centered';
 
 /** `(onItemClick)`: a link was clicked. */
-export interface WtSiteFooterItemClickEvent {
+export interface WuSiteFooterItemClickEvent {
   originalEvent: Event;
-  item: WtMenuItem;
+  item: WuMenuItem;
 }
 
 /**
- * The foot of a site or app: `<wt-site-footer brand="WiraTheme" [model]="columns" [social]="social" [legal]="legal">`.
+ * The foot of a site or app: `<wu-site-footer brand="WiraUI" [model]="columns" [social]="social" [legal]="legal">`.
  * `model` items with `items` are columns of links (a heading each), items without are plain links; `social` are icon
  * links; `legal` sit in the bottom row after the copyright (default `© <year> <brand>`). Links are menu items (`label`,
  * `url`, `routerLink`, `command`, `target`). On narrow widths the columns fold into headings that open (the footer
@@ -33,22 +33,22 @@ export interface WtSiteFooterItemClickEvent {
  * `brand` (your own brand block), `end` (a newsletter form or app badges) and `bottom` (more in the bottom row).
  */
 @Component({
-  selector: 'wt-site-footer',
+  selector: 'wu-site-footer',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink],
   templateUrl: './sitefooter.component.html',
   styleUrls: ['./sitefooter.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-site-footer-host' },
+  host: { class: 'wu-site-footer-host' },
 })
-export class WtSiteFooter implements OnDestroy {
+export class WuSiteFooter implements OnDestroy {
   /** Columns (items with `items`) or plain links. */
-  @Input() model: WtMenuItem[] | null | undefined;
+  @Input() model: WuMenuItem[] | null | undefined;
   /** Icon links: `{ icon: 'wi wi-github', url: '…', label: 'GitHub' }` (the label is read out). */
-  @Input() social: WtMenuItem[] | null | undefined;
+  @Input() social: WuMenuItem[] | null | undefined;
   /** Links in the bottom row: privacy, terms. */
-  @Input() legal: WtMenuItem[] | null | undefined;
+  @Input() legal: WuMenuItem[] | null | undefined;
   @Input() brand?: string | null;
   /** A logo image beside the brand name. */
   @Input() logo?: string | null;
@@ -56,10 +56,10 @@ export class WtSiteFooter implements OnDestroy {
   /** Default `© <this year> <brand>`; `''` for none. */
   @Input() copyright?: string | null;
   /** `'columns'` (default), `'simple'` or `'centered'`. */
-  @Input() set look(v: WtSiteFooterLook | string | null | undefined) {
+  @Input() set look(v: WuSiteFooterLook | string | null | undefined) {
     this._look = v === 'simple' || v === 'centered' ? v : 'columns';
   }
-  get look(): WtSiteFooterLook {
+  get look(): WuSiteFooterLook {
     return this._look;
   }
   /** A button that scrolls the page back to the top. */
@@ -69,20 +69,20 @@ export class WtSiteFooter implements OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
 
-  @Output() readonly onItemClick = new EventEmitter<WtSiteFooterItemClickEvent>();
+  @Output() readonly onItemClick = new EventEmitter<WuSiteFooterItemClickEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
 
   /** Columns opened on narrow widths, by index. */
   readonly open = new Set<number>();
 
-  private _look: WtSiteFooterLook = 'columns';
-  private readonly config = inject(WtConfig);
+  private _look: WuSiteFooterLook = 'columns';
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -94,16 +94,16 @@ export class WtSiteFooter implements OnDestroy {
   get words(): (typeof TH_LOCALE)['siteFooter'] {
     return this.config.translation.siteFooter ?? TH_LOCALE.siteFooter;
   }
-  get columns(): WtMenuItem[] {
+  get columns(): WuMenuItem[] {
     return (this.model || []).filter((i) => i && i.visible !== false && Array.isArray(i.items));
   }
-  get links(): WtMenuItem[] {
+  get links(): WuMenuItem[] {
     return (this.model || []).filter((i) => i && i.visible !== false && !Array.isArray(i.items));
   }
-  get socials(): WtMenuItem[] {
+  get socials(): WuMenuItem[] {
     return (this.social || []).filter((i) => i && i.visible !== false);
   }
-  get legals(): WtMenuItem[] {
+  get legals(): WuMenuItem[] {
     return (this.legal || []).filter((i) => i && i.visible !== false);
   }
   get copyrightText(): string {
@@ -123,13 +123,13 @@ export class WtSiteFooter implements OnDestroy {
     return ɵfindTemplate(this.templates?.toArray(), 'bottom');
   }
   get classes(): string[] {
-    return ['wt-site-footer', `wt-site-footer-${this._look}`, this.styleClass || ''];
+    return ['wu-site-footer', `wu-site-footer-${this._look}`, this.styleClass || ''];
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get rootStyle(): Record<string, any> | null {
     return this.style && typeof this.style === 'object' ? this.style : null;
   }
-  hasRoute(item: WtMenuItem): boolean {
+  hasRoute(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
 
@@ -140,7 +140,7 @@ export class WtSiteFooter implements OnDestroy {
     else this.open.add(index);
   }
 
-  pick(item: WtMenuItem, event: Event): void {
+  pick(item: WuMenuItem, event: Event): void {
     if (item.disabled) {
       event.preventDefault();
       return;

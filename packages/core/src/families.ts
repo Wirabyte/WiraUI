@@ -12,11 +12,11 @@ export interface FamilyTokens {
   dark: TokenMap;
 }
 
-const v = (name: string) => `var(--wt-${name})`;
+const v = (name: string) => `var(--wu-${name})`;
 const s = (n: number) => v(`surface-${n}`);
 const p = (n: number) => v(`primary-${n}`);
 /** Paddings scale with the density knob. */
-const pad = (rem: string) => `calc(${rem} * var(--wt-density))`;
+const pad = (rem: string) => `calc(${rem} * var(--wu-density))`;
 const tint = (ref: string, pct: number) => `color-mix(in srgb, ${ref} ${pct}%, transparent)`;
 const WHITE_87 = 'rgba(255, 255, 255, 0.87)';
 
@@ -291,7 +291,7 @@ const MALI: FamilyTokens = merge(
       'togglebutton-padding': '0.25rem',
       'togglebutton-content-padding-y': '0.25rem',
       'togglebutton-content-padding-x': '0.75rem',
-      'selectbutton-option-radius': 'calc(var(--wt-input-radius) - var(--wt-togglebutton-padding) / 2)',
+      'selectbutton-option-radius': 'calc(var(--wu-input-radius) - var(--wu-togglebutton-padding) / 2)',
       'selectbutton-end-radius': v('selectbutton-option-radius'),
       'selectbutton-divider': '0px',
       'rating-gap': '0.25rem',
@@ -925,7 +925,7 @@ const MALI: FamilyTokens = merge(
       'empty-state-description-color': v('text-muted'),
       'empty-state-description-size': v('font-size'),
       'empty-state-actions-gap': '0.5rem',
-      // charts: ten series colours (the first is the theme's primary), and wt-chart's text, grid and tooltip
+      // charts: ten series colours (the first is the theme's primary), and wu-chart's text, grid and tooltip
       'chart-1': v('primary-color'),
       'chart-2': '#f59e0b',
       'chart-3': '#6366f1',
@@ -1070,13 +1070,13 @@ const MALI: FamilyTokens = merge(
       'result-content-radius': v('radius-md'),
       'result-content-padding': `${pad('1rem')} ${pad('1.25rem')}`,
 
-      'glass-bg': 'color-mix(in srgb, var(--wt-surface-0) 60%, transparent)',
+      'glass-bg': 'color-mix(in srgb, var(--wu-surface-0) 60%, transparent)',
       'glass-blur': '20px',
       'glass-saturate': '180%',
-      'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 65%, transparent)',
+      'glass-border': 'color-mix(in srgb, var(--wu-surface-0) 65%, transparent)',
       'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.7)',
       'glass-shadow': '0 8px 32px rgba(15, 23, 42, 0.18)',
-      'primary-gradient': 'linear-gradient(135deg, var(--wt-primary-400), var(--wt-primary-600))',
+      'primary-gradient': 'linear-gradient(135deg, var(--wu-primary-400), var(--wu-primary-600))',
       backdrop: v('ground'),
     },
     dark: {
@@ -1122,8 +1122,8 @@ const MALI: FamilyTokens = merge(
       'flow-grid-dot-color': tint(v('text-muted'), 35),
       'flow-minimap-mask': tint(v('ground'), 75),
 
-      'glass-bg': 'color-mix(in srgb, var(--wt-surface-800) 55%, transparent)',
-      'glass-border': 'color-mix(in srgb, var(--wt-surface-0) 14%, transparent)',
+      'glass-bg': 'color-mix(in srgb, var(--wu-surface-800) 55%, transparent)',
+      'glass-border': 'color-mix(in srgb, var(--wu-surface-0) 14%, transparent)',
       'glass-highlight': 'inset 0 1px 0 rgba(255, 255, 255, 0.18)',
       'glass-shadow': '0 8px 32px rgba(0, 0, 0, 0.4)',
     },
@@ -1397,7 +1397,7 @@ const SILA_CLASSIC: FamilyTokens = merge(MALI, {
     'togglebutton-content-padding-y': pad('0.75rem'),
     'togglebutton-content-padding-x': pad('1.25rem'),
     'selectbutton-option-radius': '0px',
-    'selectbutton-end-radius': 'calc(var(--wt-input-radius) - 1px)',
+    'selectbutton-end-radius': 'calc(var(--wu-input-radius) - 1px)',
     'selectbutton-divider': '1px',
     'rating-icon-size': '1.143rem',
     'rating-icon-color': s(600),
@@ -1747,7 +1747,7 @@ const MATERIAL_CLASSIC: FamilyTokens = merge(MATERIAL, whiteOnColor(s(950)), {
   },
 });
 
-// ---------- WiraTheme's own design ----------
+// ---------- WiraUI's own design ----------
 
 const WIRA: FamilyTokens = merge(
   MALI,
@@ -1773,7 +1773,7 @@ const WIRA: FamilyTokens = merge(
       'card-body-gap': '8px',
       'card-radius': v('radius-lg'),
       'card-border-width': '1px',
-      'card-title-size': 'calc(var(--wt-font-size) * 1.25)',
+      'card-title-size': 'calc(var(--wu-font-size) * 1.25)',
       'card-title-weight': '600',
       'card-title-gap': '2px',
       'button-secondary-tone': v('text-muted'),

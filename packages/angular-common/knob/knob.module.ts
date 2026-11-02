@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtKnob } from './knob.component';
+import { WuKnob } from './knob.component';
 
-/** For NgModule apps. Standalone apps can import `WtKnob` directly. */
+/** For NgModule apps. Standalone apps can import `WuKnob` directly. */
 @NgModule({
-  imports: [WtKnob],
-  exports: [WtKnob],
+  imports: [WuKnob],
+  exports: [WuKnob],
 })
-export class WtKnobModule {}
+export class WuKnobModule {}

@@ -4,9 +4,9 @@ import { row, tok } from './doc-helpers';
 const BOOL = 'boolean';
 
 /** The menu of the Basic sample (the demos build the same one, with commands: the docs have no router). */
-const MENU_TS = `import { WtMenuItem, WtMenuItemCommandEvent } from 'wiratheme/menu';
+const MENU_TS = `import { WuMenuItem, WuMenuItemCommandEvent } from 'wiraui/menu';
 
-menu: WtMenuItem[] = [
+menu: WuMenuItem[] = [
   { label: 'แดชบอร์ด', icon: 'wi wi-home', command: (event) => this.go(event) },
   {
     label: 'นักเรียน',
@@ -45,9 +45,9 @@ menu: WtMenuItem[] = [
   { label: 'สำรองข้อมูล', icon: 'wi wi-save', disabled: true },
 ];
 /** แอปที่ไม่ใช้ router บอกหน้าปัจจุบันเอง: กลุ่มที่มีหน้านี้อยู่เปิดเอง */
-currentPage: WtMenuItem | null = this.menu[1].items?.[0] ?? null;
+currentPage: WuMenuItem | null = this.menu[1].items?.[0] ?? null;
 
-go(event: WtMenuItemCommandEvent): void {
+go(event: WuMenuItemCommandEvent): void {
   this.currentPage = event.item ?? null;
 }`;
 
@@ -56,9 +56,9 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   title: 'Aside Menu',
   group: 'Navigation',
   entry: 'asidemenu',
-  standalone: 'WtAsideMenu',
-  module: 'WtAsideMenuModule',
-  selector: 'wt-aside-menu',
+  standalone: 'WuAsideMenu',
+  module: 'WuAsideMenuModule',
+  selector: 'wu-aside-menu',
   description: {
     th: 'เมนูด้านข้างสำหรับแอประบบหลังบ้าน บนจอกว้างเป็นคอลัมน์สูงเต็มจอที่ติดอยู่ข้างเนื้อหาและเลื่อนในตัวเอง กลุ่มเมนูกางในที่ได้หลายชั้น ย่อเหลือแถบไอคอนได้ บนมือถือเป็นแผงที่เลื่อนออกมาจากขอบจอ และใช้คู่กับ Navbar เป็นโครงหน้าแอปได้ทันที',
     en: 'Side navigation for admin-style apps. On wide screens it is a full-height column that stays beside the content and scrolls on its own; groups expand in place at any depth, and it collapses to an icon rail. On phones it is an off-canvas panel, and with Navbar it makes a ready-made app layout.',
@@ -114,15 +114,15 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtAsideMenuModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtAsideMenu</code>) รายการเป็น <code>WtMenuItem</code> จาก <code>wiratheme/menu</code> รูปแบบเดียวกับเมนูอื่น ๆ',
-        en: 'Works as an NgModule (<code>WtAsideMenuModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtAsideMenu</code>). Items are <code>WtMenuItem</code> from <code>wiratheme/menu</code>, the same shape as the other menus.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuAsideMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuAsideMenu</code>) รายการเป็น <code>WuMenuItem</code> จาก <code>wiraui/menu</code> รูปแบบเดียวกับเมนูอื่น ๆ',
+        en: 'Works as an NgModule (<code>WuAsideMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuAsideMenu</code>). Items are <code>WuMenuItem</code> from <code>wiraui/menu</code>, the same shape as the other menus.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: 'วาง <code>&lt;wt-aside-menu&gt;</code> คู่กับเนื้อหาใน flex row (<code>.app-layout { display: flex }</code> และ <code>.app-content { flex: 1; min-width: 0 }</code>) บนจอกว้างเมนูเป็นคอลัมน์ sticky สูง <code>100dvh</code> ลบด้วย <code>--wt-aside-menu-top</code> และเลื่อนในตัวเอง · <code>[model]</code> คือรายการ กลุ่มที่มี <code>items</code> กางในที่ได้หลายชั้น และกลุ่มที่มีหน้าปัจจุบันอยู่ข้างในเปิดเองพร้อมสีเน้น · ลิงก์ <code>routerLink</code> รู้หน้าปัจจุบันเอง ส่วนรายการ <code>url</code> / <code>command</code> บอกด้วย <code>[activeItem]</code> (ตัวอย่างในหน้านี้ไม่มี router จึงใช้ command) · <code>badge</code>, <code>disabled</code>, <code>visible: false</code> และ <code>{ separator: true }</code> ใช้ได้ · โลโก้ใส่เป็น element ที่มี <code>wtAsideMenuStart</code> · บนจอแคบเมนูหลบไปเป็นแผงข้างจอ ตัวอย่างนี้จึงมีปุ่มเปิดเมนู (<code>side.mobile</code> บอกว่าอยู่ในโหมดจอแคบ)',
-        en: 'Put <code>&lt;wt-aside-menu&gt;</code> next to the content in a flex row (<code>.app-layout { display: flex }</code> and <code>.app-content { flex: 1; min-width: 0 }</code>). On wide screens it is a sticky column <code>100dvh</code> tall minus <code>--wt-aside-menu-top</code> that scrolls on its own · <code>[model]</code> holds the items; groups with <code>items</code> expand in place at any depth, and the groups holding the current page open by themselves and are highlighted · <code>routerLink</code> items know the current page on their own; mark a <code>url</code> / <code>command</code> item with <code>[activeItem]</code> (the demos here have no router, so they use commands) · <code>badge</code>, <code>disabled</code>, <code>visible: false</code> and <code>{ separator: true }</code> work · the brand is an element with <code>wtAsideMenuStart</code> · on narrow screens the menu moves into an off-canvas panel, so this demo has a button that opens it (<code>side.mobile</code> says the narrow layout is on).',
+        th: 'วาง <code>&lt;wu-aside-menu&gt;</code> คู่กับเนื้อหาใน flex row (<code>.app-layout { display: flex }</code> และ <code>.app-content { flex: 1; min-width: 0 }</code>) บนจอกว้างเมนูเป็นคอลัมน์ sticky สูง <code>100dvh</code> ลบด้วย <code>--wu-aside-menu-top</code> และเลื่อนในตัวเอง · <code>[model]</code> คือรายการ กลุ่มที่มี <code>items</code> กางในที่ได้หลายชั้น และกลุ่มที่มีหน้าปัจจุบันอยู่ข้างในเปิดเองพร้อมสีเน้น · ลิงก์ <code>routerLink</code> รู้หน้าปัจจุบันเอง ส่วนรายการ <code>url</code> / <code>command</code> บอกด้วย <code>[activeItem]</code> (ตัวอย่างในหน้านี้ไม่มี router จึงใช้ command) · <code>badge</code>, <code>disabled</code>, <code>visible: false</code> และ <code>{ separator: true }</code> ใช้ได้ · โลโก้ใส่เป็น element ที่มี <code>wuAsideMenuStart</code> · บนจอแคบเมนูหลบไปเป็นแผงข้างจอ ตัวอย่างนี้จึงมีปุ่มเปิดเมนู (<code>side.mobile</code> บอกว่าอยู่ในโหมดจอแคบ)',
+        en: 'Put <code>&lt;wu-aside-menu&gt;</code> next to the content in a flex row (<code>.app-layout { display: flex }</code> and <code>.app-content { flex: 1; min-width: 0 }</code>). On wide screens it is a sticky column <code>100dvh</code> tall minus <code>--wu-aside-menu-top</code> that scrolls on its own · <code>[model]</code> holds the items; groups with <code>items</code> expand in place at any depth, and the groups holding the current page open by themselves and are highlighted · <code>routerLink</code> items know the current page on their own; mark a <code>url</code> / <code>command</code> item with <code>[activeItem]</code> (the demos here have no router, so they use commands) · <code>badge</code>, <code>disabled</code>, <code>visible: false</code> and <code>{ separator: true }</code> work · the brand is an element with <code>wuAsideMenuStart</code> · on narrow screens the menu moves into an off-canvas panel, so this demo has a button that opens it (<code>side.mobile</code> says the narrow layout is on).',
       },
     },
     links: {
@@ -149,8 +149,8 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     templates: {
       title: { th: 'Slot และ Template', en: 'Slots and templates' },
       text: {
-        th: 'หัวเมนูใส่เป็น element ที่มี <code>wtAsideMenuStart</code> หรือ template <code>start</code> ส่วนท้ายใส่ <code>wtAsideMenuEnd</code> หรือ template <code>end</code> ทั้งสอง template ได้ <code>let-collapsed</code> จึงซ่อนชื่อตอนย่อได้ · template <code>item</code> วาดเนื้อในรายการเอง (ได้ <code>let-item</code> และ <code>collapsed</code>) ลิงก์ การกด และ aria ยังเป็นของ component · ใส่ class <code>wt-aside-menu-icon</code> และ <code>wt-aside-menu-label</code> ให้หน้าตาเหมือนเดิม ข้อความที่มี <code>wt-aside-menu-label</code> ถูกซ่อนจากตาเองตอนย่อ (โปรแกรมอ่านจอยังอ่านได้) · รายการเก็บ field ของแอปเองได้ เช่น <code>isNew</code>',
-        en: 'The header is an element with <code>wtAsideMenuStart</code> or the <code>start</code> template, the footer <code>wtAsideMenuEnd</code> or the <code>end</code> template; both templates get <code>let-collapsed</code>, so a name can hide while collapsed · the <code>item</code> template draws what is inside each item (it gets <code>let-item</code> and <code>collapsed</code>); the link, the press and the aria stay the component\'s · give the parts <code>wt-aside-menu-icon</code> and <code>wt-aside-menu-label</code> for the usual look; text with <code>wt-aside-menu-label</code> is hidden from view on the rail by itself (screen readers still read it) · items can carry fields of your own, like <code>isNew</code>.',
+        th: 'หัวเมนูใส่เป็น element ที่มี <code>wuAsideMenuStart</code> หรือ template <code>start</code> ส่วนท้ายใส่ <code>wuAsideMenuEnd</code> หรือ template <code>end</code> ทั้งสอง template ได้ <code>let-collapsed</code> จึงซ่อนชื่อตอนย่อได้ · template <code>item</code> วาดเนื้อในรายการเอง (ได้ <code>let-item</code> และ <code>collapsed</code>) ลิงก์ การกด และ aria ยังเป็นของ component · ใส่ class <code>wu-aside-menu-icon</code> และ <code>wu-aside-menu-label</code> ให้หน้าตาเหมือนเดิม ข้อความที่มี <code>wu-aside-menu-label</code> ถูกซ่อนจากตาเองตอนย่อ (โปรแกรมอ่านจอยังอ่านได้) · รายการเก็บ field ของแอปเองได้ เช่น <code>isNew</code>',
+        en: 'The header is an element with <code>wuAsideMenuStart</code> or the <code>start</code> template, the footer <code>wuAsideMenuEnd</code> or the <code>end</code> template; both templates get <code>let-collapsed</code>, so a name can hide while collapsed · the <code>item</code> template draws what is inside each item (it gets <code>let-item</code> and <code>collapsed</code>); the link, the press and the aria stay the component\'s · give the parts <code>wu-aside-menu-icon</code> and <code>wu-aside-menu-label</code> for the usual look; text with <code>wu-aside-menu-label</code> is hidden from view on the rail by itself (screen readers still read it) · items can carry fields of your own, like <code>isNew</code>.',
       },
     },
     mobile: {
@@ -163,8 +163,8 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     navbar: {
       title: { th: 'คู่กับ Navbar', en: 'With Navbar' },
       text: {
-        th: '<code>&lt;wt-navbar [aside]="side"&gt;</code> คู่กับ <code>&lt;wt-aside-menu #side&gt;</code> ผูกปุ่มเมนูของแถบเข้ากับเมนูด้านข้างโดยไม่ต้องเขียนโค้ดเพิ่ม: ปุ่มย้ายไปอยู่หน้าโลโก้ บนจอแคบกดแล้วเปิดเมนูด้านข้าง และลิงก์ใน <code>[model]</code> ของแถบย้ายเข้าไปเป็นกลุ่มแรกของเมนู บนจอกว้างกดแล้วย่อ / ขยายเมนู (<code>[asideCollapse]="false"</code> ให้ปุ่มมีเฉพาะจอแคบ) · <code>aria-expanded</code> และ <code>aria-controls</code> ของปุ่มตามเมนูด้านข้าง · แถบที่ติดด้านบน (<code>[sticky]="true"</code>) ให้ตั้ง <code>--wt-aside-menu-top</code> เป็นความสูงของแถบ (เช่น <code>var(--wt-navbar-height)</code>) เมนูจะติดอยู่ใต้แถบและสูงพอดีจอ',
-        en: '<code>&lt;wt-navbar [aside]="side"&gt;</code> with <code>&lt;wt-aside-menu #side&gt;</code> ties the bar\'s menu button to the side menu with no code of your own: the button moves before the brand; on narrow screens it opens the side menu and the bar\'s <code>[model]</code> links move into it as its first group; on wide screens it collapses / expands the menu (<code>[asideCollapse]="false"</code> keeps the button to narrow screens) · the button\'s <code>aria-expanded</code> and <code>aria-controls</code> follow the side menu · with a sticky bar (<code>[sticky]="true"</code>), set <code>--wt-aside-menu-top</code> to the bar\'s height (e.g. <code>var(--wt-navbar-height)</code>) and the menu sits under the bar, as tall as the rest of the window.',
+        th: '<code>&lt;wu-navbar [aside]="side"&gt;</code> คู่กับ <code>&lt;wu-aside-menu #side&gt;</code> ผูกปุ่มเมนูของแถบเข้ากับเมนูด้านข้างโดยไม่ต้องเขียนโค้ดเพิ่ม: ปุ่มย้ายไปอยู่หน้าโลโก้ บนจอแคบกดแล้วเปิดเมนูด้านข้าง และลิงก์ใน <code>[model]</code> ของแถบย้ายเข้าไปเป็นกลุ่มแรกของเมนู บนจอกว้างกดแล้วย่อ / ขยายเมนู (<code>[asideCollapse]="false"</code> ให้ปุ่มมีเฉพาะจอแคบ) · <code>aria-expanded</code> และ <code>aria-controls</code> ของปุ่มตามเมนูด้านข้าง · แถบที่ติดด้านบน (<code>[sticky]="true"</code>) ให้ตั้ง <code>--wu-aside-menu-top</code> เป็นความสูงของแถบ (เช่น <code>var(--wu-navbar-height)</code>) เมนูจะติดอยู่ใต้แถบและสูงพอดีจอ',
+        en: '<code>&lt;wu-navbar [aside]="side"&gt;</code> with <code>&lt;wu-aside-menu #side&gt;</code> ties the bar\'s menu button to the side menu with no code of your own: the button moves before the brand; on narrow screens it opens the side menu and the bar\'s <code>[model]</code> links move into it as its first group; on wide screens it collapses / expands the menu (<code>[asideCollapse]="false"</code> keeps the button to narrow screens) · the button\'s <code>aria-expanded</code> and <code>aria-controls</code> follow the side menu · with a sticky bar (<code>[sticky]="true"</code>), set <code>--wu-aside-menu-top</code> to the bar\'s height (e.g. <code>var(--wu-navbar-height)</code>) and the menu sits under the bar, as tall as the rest of the window.',
       },
     },
     keyboard: {
@@ -177,41 +177,41 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เมนูข้างที่แอปประกอบเองจากเมนูแบบพับได้ แผงเลื่อนบนมือถือ และ CSS media query เปลี่ยนเป็น <code>&lt;wt-aside-menu&gt;</code> ได้: ย้ายรายการเมนูเดิมมาเป็น <code>[model]</code> (รูปแบบ <code>MenuItem</code> เดิม <code>routerLink</code> และ <code>expanded</code> ใช้ต่อได้) โลโก้เป็น <code>wtAsideMenuStart</code> ปุ่มผู้ใช้เป็น <code>wtAsideMenuEnd</code> ปุ่ม hamburger ของแถบบนผูกด้วย <code>[aside]</code> แล้วลบโค้ดเปิด / ปิดเมนูบนมือถือ media query และ CSS ความสูง / sticky ของเดิมออก',
-        en: 'A side menu an app builds from a collapsible menu, a phone drawer and CSS media queries becomes <code>&lt;wt-aside-menu&gt;</code>: move the menu items to <code>[model]</code> (the same <code>MenuItem</code> shape; <code>routerLink</code> and <code>expanded</code> keep working), the logo to <code>wtAsideMenuStart</code> and the user button to <code>wtAsideMenuEnd</code>, tie the top bar\'s hamburger with <code>[aside]</code>, then delete the old mobile open/close code, media queries and height / sticky CSS.',
+        th: 'เมนูข้างที่แอปประกอบเองจากเมนูแบบพับได้ แผงเลื่อนบนมือถือ และ CSS media query เปลี่ยนเป็น <code>&lt;wu-aside-menu&gt;</code> ได้: ย้ายรายการเมนูเดิมมาเป็น <code>[model]</code> (รูปแบบ <code>MenuItem</code> เดิม <code>routerLink</code> และ <code>expanded</code> ใช้ต่อได้) โลโก้เป็น <code>wuAsideMenuStart</code> ปุ่มผู้ใช้เป็น <code>wuAsideMenuEnd</code> ปุ่ม hamburger ของแถบบนผูกด้วย <code>[aside]</code> แล้วลบโค้ดเปิด / ปิดเมนูบนมือถือ media query และ CSS ความสูง / sticky ของเดิมออก',
+        en: 'A side menu an app builds from a collapsible menu, a phone drawer and CSS media queries becomes <code>&lt;wu-aside-menu&gt;</code>: move the menu items to <code>[model]</code> (the same <code>MenuItem</code> shape; <code>routerLink</code> and <code>expanded</code> keep working), the logo to <code>wuAsideMenuStart</code> and the user button to <code>wuAsideMenuEnd</code>, tie the top bar\'s hamburger with <code>[aside]</code>, then delete the old mobile open/close code, media queries and height / sticky CSS.',
       },
     },
   },
   code: {
     basic: {
       v3: `<div class="app-layout">
-  <wt-aside-menu #side [model]="menu" [activeItem]="currentPage">
-    <a wtAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
-  </wt-aside-menu>
+  <wu-aside-menu #side [model]="menu" [activeItem]="currentPage">
+    <a wuAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
+  </wu-aside-menu>
   <main class="app-content">
     <!-- ปุ่มนี้มีเฉพาะจอแคบ -->
     @if (side.mobile) {
-      <wt-button icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
+      <wu-button icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wu-button>
     }
     <h2>{{ currentPage?.label }}</h2>
   </main>
 </div>`,
       classic: `<div class="app-layout">
-  <wt-aside-menu #side [model]="menu" [activeItem]="currentPage">
-    <a wtAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
-  </wt-aside-menu>
+  <wu-aside-menu #side [model]="menu" [activeItem]="currentPage">
+    <a wuAsideMenuStart class="app-brand" routerLink="/">วิระ</a>
+  </wu-aside-menu>
   <main class="app-content">
     <!-- ปุ่มนี้มีเฉพาะจอแคบ -->
-    <wt-button *ngIf="side.mobile" icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wt-button>
+    <wu-button *ngIf="side.mobile" icon="wi wi-bars" [text]="true" ariaLabel="เปิดเมนู" (onClick)="side.open()"></wu-button>
     <h2>{{ currentPage?.label }}</h2>
   </main>
 </div>`,
     },
-    links: `<wt-aside-menu [model]="menu"></wt-aside-menu>`,
-    collapsed: `<wt-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true"></wt-aside-menu>`,
-    sections: `<wt-aside-menu [model]="menu" [sections]="true" [multiple]="false"></wt-aside-menu>`,
+    links: `<wu-aside-menu [model]="menu"></wu-aside-menu>`,
+    collapsed: `<wu-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true"></wu-aside-menu>`,
+    sections: `<wu-aside-menu [model]="menu" [sections]="true" [multiple]="false"></wu-aside-menu>`,
     templates: {
-      v3: `<wt-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true">
+      v3: `<wu-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true">
   <ng-template #start let-collapsed>
     <img src="assets/logo.svg" alt="" width="28" height="28" />
     @if (!collapsed) {
@@ -220,47 +220,47 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #item let-item let-collapsed="collapsed">
     @if (item.icon) {
-      <i class="wt-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
+      <i class="wu-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
     }
-    <span class="wt-aside-menu-label">{{ item.label }}</span>
+    <span class="wu-aside-menu-label">{{ item.label }}</span>
     @if (item.isNew && !collapsed) {
-      <wt-tag value="ใหม่" severity="success"></wt-tag>
+      <wu-tag value="ใหม่" severity="success"></wu-tag>
     }
   </ng-template>
   <ng-template #end let-collapsed>
     <div class="app-user">
-      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+      <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
       @if (!collapsed) {
         <span>ครูสมหญิง ใจดี</span>
       }
     </div>
   </ng-template>
-</wt-aside-menu>`,
-      classic: `<wt-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true">
-  <ng-template wtTemplate="start" let-collapsed>
+</wu-aside-menu>`,
+      classic: `<wu-aside-menu [model]="menu" [(collapsed)]="isMenuCollapsed" [showCollapseButton]="true">
+  <ng-template wuTemplate="start" let-collapsed>
     <img src="assets/logo.svg" alt="" width="28" height="28" />
     <b *ngIf="!collapsed">โรงเรียนวิระ</b>
   </ng-template>
-  <ng-template wtTemplate="item" let-item let-collapsed="collapsed">
-    <i *ngIf="item.icon" class="wt-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
-    <span class="wt-aside-menu-label">{{ item.label }}</span>
-    <wt-tag *ngIf="item.isNew && !collapsed" value="ใหม่" severity="success"></wt-tag>
+  <ng-template wuTemplate="item" let-item let-collapsed="collapsed">
+    <i *ngIf="item.icon" class="wu-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
+    <span class="wu-aside-menu-label">{{ item.label }}</span>
+    <wu-tag *ngIf="item.isNew && !collapsed" value="ใหม่" severity="success"></wu-tag>
   </ng-template>
-  <ng-template wtTemplate="end" let-collapsed>
+  <ng-template wuTemplate="end" let-collapsed>
     <div class="app-user">
-      <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+      <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
       <span *ngIf="!collapsed">ครูสมหญิง ใจดี</span>
     </div>
   </ng-template>
-</wt-aside-menu>`,
+</wu-aside-menu>`,
     },
-    mobile: `<wt-button label="เมนู" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wt-button>
-<wt-aside-menu [model]="menu" [(visible)]="isMenuOpen" breakpoint="768px"></wt-aside-menu>`,
-    navbar: `<wt-navbar [model]="links" [aside]="side" [sticky]="true">
-  <a wtNavbarBrand routerLink="/">วิระ</a>
-</wt-navbar>
+    mobile: `<wu-button label="เมนู" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wu-button>
+<wu-aside-menu [model]="menu" [(visible)]="isMenuOpen" breakpoint="768px"></wu-aside-menu>`,
+    navbar: `<wu-navbar [model]="links" [aside]="side" [sticky]="true">
+  <a wuNavbarBrand routerLink="/">วิระ</a>
+</wu-navbar>
 <div class="app-layout">
-  <wt-aside-menu #side [model]="menu"></wt-aside-menu>
+  <wu-aside-menu #side [model]="menu"></wu-aside-menu>
   <main class="app-content">
     <router-outlet></router-outlet>
   </main>
@@ -268,7 +268,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   },
   ts: {
     basic: MENU_TS,
-    links: `menu: WtMenuItem[] = [
+    links: `menu: WuMenuItem[] = [
   { label: 'แดชบอร์ด', icon: 'wi wi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
   {
     label: 'นักเรียน',
@@ -284,7 +284,7 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   { label: 'ออกจากระบบ', icon: 'wi wi-sign-out', command: () => this.signOut() },
 ];`,
     collapsed: `isMenuCollapsed = true;   // จำค่าไว้ใช้ครั้งหน้าก็ได้`,
-    sections: `menu: WtMenuItem[] = [
+    sections: `menu: WuMenuItem[] = [
   {
     label: 'งานทะเบียน',
     items: [
@@ -319,18 +319,18 @@ export const ASIDEMENU_DOC: ComponentDoc = {
   },
 ];`,
     templates: `isMenuCollapsed = false;
-menu: WtMenuItem[] = [
+menu: WuMenuItem[] = [
   { label: 'แดชบอร์ด', icon: 'wi wi-home', routerLink: '/', routerLinkActiveOptions: { exact: true } },
   { label: 'ประกาศ', icon: 'wi wi-bell', routerLink: '/notices', isNew: true },
   { label: 'รายชื่อนักเรียน', icon: 'wi wi-list', routerLink: '/students' },
   { label: 'ตั้งค่า', icon: 'wi wi-cog', routerLink: '/settings' },
 ];`,
     mobile: `isMenuOpen = false;`,
-    navbar: `links: WtMenuItem[] = [
+    navbar: `links: WuMenuItem[] = [
   { label: 'ข่าวสาร', routerLink: '/news' },
   { label: 'ปฏิทิน', routerLink: '/calendar' },
 ];
-menu: WtMenuItem[] = [
+menu: WuMenuItem[] = [
   // …
 ];`,
   },
@@ -339,8 +339,8 @@ menu: WtMenuItem[] = [
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('model', 'WtMenuItem[]', '[]', 'รายการเมนู กลุ่มที่มี items กางในที่ได้หลายชั้น', 'The menu; groups with items expand in place at any depth'),
-        row('activeItem', 'WtMenuItem | null', undefined, 'หน้าปัจจุบันเมื่อเป็นรายการ url / command (routerLink ใช้ routerLinkActive เอง) กลุ่มที่มีรายการนี้เปิดเองและได้สีเน้น', 'The current page when it is a url / command item (routerLink items use routerLinkActive); its groups open and are highlighted'),
+        row('model', 'WuMenuItem[]', '[]', 'รายการเมนู กลุ่มที่มี items กางในที่ได้หลายชั้น', 'The menu; groups with items expand in place at any depth'),
+        row('activeItem', 'WuMenuItem | null', undefined, 'หน้าปัจจุบันเมื่อเป็นรายการ url / command (routerLink ใช้ routerLinkActive เอง) กลุ่มที่มีรายการนี้เปิดเองและได้สีเน้น', 'The current page when it is a url / command item (routerLink items use routerLinkActive); its groups open and are highlighted'),
         row('multiple', BOOL, 'true', 'กลุ่มระดับเดียวกันเปิดค้างได้หลายกลุ่ม false: เปิดกลุ่มใหม่แล้วกลุ่มอื่นพับ', 'Several groups of a level stay open; false folds the open siblings'),
         row('sections', BOOL, 'false', 'รายการระดับบนที่มี items เป็นหัวข้อ รายการข้างในแสดงตลอด', 'Top-level items with items become headings whose items always show'),
         row('collapsed', BOOL, 'false', 'ย่อเหลือแถบไอคอน (สองทาง [(collapsed)] เฉพาะจอกว้าง)', 'The icon rail (two-way [(collapsed)], wide screens)'),
@@ -348,7 +348,7 @@ menu: WtMenuItem[] = [
         row('showCollapseButton', BOOL, 'false', 'ปุ่ม "ย่อเมนู / ขยายเมนู" ที่ท้ายเมนู (จอกว้าง)', 'A "Collapse menu / Expand menu" button at the bottom (wide screens)'),
         row('breakpoint', 'string | number', "'960px'", 'กว้างเท่านี้หรือน้อยกว่าเป็นแผงบนมือถือ (ตัวเลข = px)', 'At this width or less it is the phone panel (a number means px)'),
         row('ariaLabel', 'string', 'locale', 'ชื่อของ landmark nav (ค่าเริ่มต้นจาก sideNavigation "เมนูด้านข้าง")', 'Name of the nav landmark (default: sideNavigation, "Side menu")'),
-        row('styleClass · style', 'string · object', undefined, 'class และ style ของ element nav (ความกว้างตั้งด้วย token --wt-aside-menu-width)', 'Class and style of the nav element (set the width with the --wt-aside-menu-width token)'),
+        row('styleClass · style', 'string · object', undefined, 'class และ style ของ element nav (ความกว้างตั้งด้วย token --wu-aside-menu-width)', 'Class and style of the nav element (set the width with the --wu-aside-menu-width token)'),
       ],
     },
     {
@@ -356,7 +356,7 @@ menu: WtMenuItem[] = [
       title: { th: 'ฟิลด์ของรายการ', en: 'Item fields' },
       rows: [
         row('label · icon · title', 'string', undefined, 'ข้อความ ไอคอน และ title (ตอนย่อ label เป็น tooltip)', 'Text, icon and title (on the rail the label is the tooltip)'),
-        row('items · expanded', 'WtMenuItem[] · boolean', undefined, 'รายการย่อย ซ้อนได้หลายชั้น · กางอยู่หรือไม่ (เมนูเปลี่ยนค่านี้ใน model)', 'Children, to any depth · open or not (the menu sets it on the model)'),
+        row('items · expanded', 'WuMenuItem[] · boolean', undefined, 'รายการย่อย ซ้อนได้หลายชั้น · กางอยู่หรือไม่ (เมนูเปลี่ยนค่านี้ใน model)', 'Children, to any depth · open or not (the menu sets it on the model)'),
         row(
           'routerLink · queryParams · fragment · routerLinkActiveOptions · queryParamsHandling · preserveFragment · skipLocationChange · replaceUrl · state',
           'any',
@@ -365,7 +365,7 @@ menu: WtMenuItem[] = [
           'A router link with routerLinkActive and aria-current="page" (routerLinkActiveOptions defaults to { exact: false })'
         ),
         row('url · target', 'string', undefined, 'ลิงก์ธรรมดา', 'A plain link'),
-        row('command', '(event: WtMenuItemCommandEvent) => void', undefined, 'ทำงานเมื่อกด (บนมือถือแผงปิดก่อน)', 'Runs on press (on phones the panel closes first)'),
+        row('command', '(event: WuMenuItemCommandEvent) => void', undefined, 'ทำงานเมื่อกด (บนมือถือแผงปิดก่อน)', 'Runs on press (on phones the panel closes first)'),
         row('badge · badgeStyleClass', 'string', undefined, 'ตัวเลขท้ายรายการ (ตอนย่อเหลือเป็นจุด)', 'A count after the item (a dot on the rail)'),
         row('disabled · visible', BOOL, 'false · true', 'กดไม่ได้ · ไม่แสดง', 'Blocked · hidden'),
         row('separator', BOOL, 'false', 'เส้นคั่นแทนรายการ', 'A separator line instead of an item'),
@@ -401,62 +401,62 @@ menu: WtMenuItem[] = [
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #start หรือ wtTemplate="start" ก็ได้ · slot แบบ attribute: wtAsideMenuStart, wtAsideMenuEnd',
-        en: 'Write them as #start or wtTemplate="start" · attribute slots: wtAsideMenuStart, wtAsideMenuEnd.',
+        th: 'เขียนเป็น #start หรือ wuTemplate="start" ก็ได้ · slot แบบ attribute: wuAsideMenuStart, wuAsideMenuEnd',
+        en: 'Write them as #start or wuTemplate="start" · attribute slots: wuAsideMenuStart, wuAsideMenuEnd.',
       },
       rows: [
-        row('start', '$implicit (collapsed) · collapsed', undefined, 'หัวเมนู (หรือ element ที่มี wtAsideMenuStart)', 'The header (or an element with wtAsideMenuStart)'),
-        row('end', '$implicit (collapsed) · collapsed', undefined, 'ท้ายเมนู เหนือปุ่มย่อเมนู (หรือ element ที่มี wtAsideMenuEnd)', 'The footer, above the collapse button (or an element with wtAsideMenuEnd)'),
+        row('start', '$implicit (collapsed) · collapsed', undefined, 'หัวเมนู (หรือ element ที่มี wuAsideMenuStart)', 'The header (or an element with wuAsideMenuStart)'),
+        row('end', '$implicit (collapsed) · collapsed', undefined, 'ท้ายเมนู เหนือปุ่มย่อเมนู (หรือ element ที่มี wuAsideMenuEnd)', 'The footer, above the collapse button (or an element with wuAsideMenuEnd)'),
         row('item', '$implicit (item) · collapsed', undefined, 'เนื้อในแต่ละรายการและปุ่มกลุ่ม แทนไอคอน label badge และลูกศร', 'What is inside each item and group button, in place of icon, label, badge and arrow'),
       ],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtMenuItem, WtMenuItemCommandEvent } from 'wiratheme/menu';
+      code: `import { WuMenuItem, WuMenuItemCommandEvent } from 'wiraui/menu';
 
 // context ของ template start / end
-interface WtAsideMenuSlotContext {
+interface WuAsideMenuSlotContext {
   $implicit: boolean;   // ย่ออยู่ (แถบไอคอน)
   collapsed: boolean;
 }
 
 // context ของ template item
-interface WtAsideMenuItemContext {
-  $implicit: WtMenuItem;
+interface WuAsideMenuItemContext {
+  $implicit: WuMenuItem;
   collapsed: boolean;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-aside-menu-width', 'ความกว้างบนจอกว้าง', 'Width on wide screens'),
-    tok('--wt-aside-menu-collapsed-width', 'ความกว้างตอนย่อเป็นแถบไอคอน', 'Width of the icon rail'),
-    tok('--wt-aside-menu-mobile-width', 'ความกว้างของแผงบนมือถือ', 'Width of the phone panel'),
-    tok('--wt-aside-menu-top', 'ระยะจากขอบบนตอน sticky (เช่น ความสูงของแถบบน) ความสูงคือ 100dvh ลบค่านี้', 'Offset from the top while sticky (e.g. the top bar\'s height); the height is 100dvh minus this'),
-    tok('--wt-aside-menu-z-index', 'ลำดับชั้นของแผงบนมือถือและพื้นหลัง', 'Stacking order of the phone panel and its mask'),
-    tok('--wt-aside-menu-bg', 'พื้นของเมนู', 'Background'),
-    tok('--wt-aside-menu-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-aside-menu-border-width', 'เส้นขอบด้านข้างและเส้นเหนือส่วนท้าย', 'Width of the side border and the line above the footer'),
-    tok('--wt-aside-menu-border-color', 'สีเส้นขอบและเส้นคั่น', 'Colour of the border and separators'),
-    tok('--wt-aside-menu-padding', 'ระยะในของหัว เนื้อหา และท้าย', 'Padding of the header, body and footer'),
-    tok('--wt-aside-menu-mobile-shadow', 'เงาของแผงบนมือถือ', 'Shadow of the phone panel'),
-    tok('--wt-aside-menu-item-height', 'ความสูงต่ำสุดของรายการ (นิ้วกดง่าย)', 'Minimum height of an item (easy to tap)'),
-    tok('--wt-aside-menu-item-padding', 'ระยะในรายการ', 'Item padding'),
-    tok('--wt-aside-menu-item-gap', 'ระยะระหว่างไอคอน ข้อความ และ badge', 'Gap between icon, label and badge'),
-    tok('--wt-aside-menu-item-radius', 'มุมโค้งของรายการ', 'Item corner radius'),
-    tok('--wt-aside-menu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
-    tok('--wt-aside-menu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
-    tok('--wt-aside-menu-item-hover-bg', 'พื้นรายการเมื่อชี้หรือโฟกัส', 'Item background on hover or focus'),
-    tok('--wt-aside-menu-item-active-bg', 'พื้นของหน้าปัจจุบัน (ใส่ var(--wt-primary-gradient) ได้พื้นไล่สี)', 'Background of the current page (var(--wt-primary-gradient) gives a gradient)'),
-    tok('--wt-aside-menu-item-active-color', 'สีตัวอักษรของหน้าปัจจุบัน', 'Text of the current page'),
-    tok('--wt-aside-menu-group-active-color', 'สีของกลุ่มที่มีหน้าปัจจุบันอยู่ข้างใน', 'Colour of a group holding the current page'),
-    tok('--wt-aside-menu-indent', 'ระยะเยื้องของรายการย่อยแต่ละชั้น', 'Indent of each nested level'),
-    tok('--wt-aside-menu-section-color', 'สีของหัวข้อ (sections)', 'Section heading colour (sections)'),
-    tok('--wt-aside-menu-section-size', 'ขนาดตัวอักษรของหัวข้อ', 'Section heading font size'),
-    tok('--wt-aside-menu-section-padding', 'ระยะในของหัวข้อ', 'Section heading padding'),
+    tok('--wu-aside-menu-width', 'ความกว้างบนจอกว้าง', 'Width on wide screens'),
+    tok('--wu-aside-menu-collapsed-width', 'ความกว้างตอนย่อเป็นแถบไอคอน', 'Width of the icon rail'),
+    tok('--wu-aside-menu-mobile-width', 'ความกว้างของแผงบนมือถือ', 'Width of the phone panel'),
+    tok('--wu-aside-menu-top', 'ระยะจากขอบบนตอน sticky (เช่น ความสูงของแถบบน) ความสูงคือ 100dvh ลบค่านี้', 'Offset from the top while sticky (e.g. the top bar\'s height); the height is 100dvh minus this'),
+    tok('--wu-aside-menu-z-index', 'ลำดับชั้นของแผงบนมือถือและพื้นหลัง', 'Stacking order of the phone panel and its mask'),
+    tok('--wu-aside-menu-bg', 'พื้นของเมนู', 'Background'),
+    tok('--wu-aside-menu-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-aside-menu-border-width', 'เส้นขอบด้านข้างและเส้นเหนือส่วนท้าย', 'Width of the side border and the line above the footer'),
+    tok('--wu-aside-menu-border-color', 'สีเส้นขอบและเส้นคั่น', 'Colour of the border and separators'),
+    tok('--wu-aside-menu-padding', 'ระยะในของหัว เนื้อหา และท้าย', 'Padding of the header, body and footer'),
+    tok('--wu-aside-menu-mobile-shadow', 'เงาของแผงบนมือถือ', 'Shadow of the phone panel'),
+    tok('--wu-aside-menu-item-height', 'ความสูงต่ำสุดของรายการ (นิ้วกดง่าย)', 'Minimum height of an item (easy to tap)'),
+    tok('--wu-aside-menu-item-padding', 'ระยะในรายการ', 'Item padding'),
+    tok('--wu-aside-menu-item-gap', 'ระยะระหว่างไอคอน ข้อความ และ badge', 'Gap between icon, label and badge'),
+    tok('--wu-aside-menu-item-radius', 'มุมโค้งของรายการ', 'Item corner radius'),
+    tok('--wu-aside-menu-item-color', 'สีตัวอักษรของรายการ', 'Item text'),
+    tok('--wu-aside-menu-item-icon-color', 'สีไอคอนของรายการ', 'Item icon'),
+    tok('--wu-aside-menu-item-hover-bg', 'พื้นรายการเมื่อชี้หรือโฟกัส', 'Item background on hover or focus'),
+    tok('--wu-aside-menu-item-active-bg', 'พื้นของหน้าปัจจุบัน (ใส่ var(--wu-primary-gradient) ได้พื้นไล่สี)', 'Background of the current page (var(--wu-primary-gradient) gives a gradient)'),
+    tok('--wu-aside-menu-item-active-color', 'สีตัวอักษรของหน้าปัจจุบัน', 'Text of the current page'),
+    tok('--wu-aside-menu-group-active-color', 'สีของกลุ่มที่มีหน้าปัจจุบันอยู่ข้างใน', 'Colour of a group holding the current page'),
+    tok('--wu-aside-menu-indent', 'ระยะเยื้องของรายการย่อยแต่ละชั้น', 'Indent of each nested level'),
+    tok('--wu-aside-menu-section-color', 'สีของหัวข้อ (sections)', 'Section heading colour (sections)'),
+    tok('--wu-aside-menu-section-size', 'ขนาดตัวอักษรของหัวข้อ', 'Section heading font size'),
+    tok('--wu-aside-menu-section-padding', 'ระยะในของหัวข้อ', 'Section heading padding'),
   ],
   themingNote: {
-    th: 'Aside Menu อ่านค่าจาก CSS variable เหล่านี้ (ค่าในคอลัมน์ขวาคือค่าของธีมที่หน้านี้ใช้อยู่) · หน้าปัจจุบันแบบพื้นไล่สี: <code>--wt-aside-menu-item-active-bg: var(--wt-primary-gradient)</code> · เมนูที่อยู่ใต้แถบบนที่ติดด้านบน: ตั้ง <code>--wt-aside-menu-top</code> เป็นความสูงของแถบ',
-    en: 'Aside Menu reads these CSS variables (the right-hand column shows the value of the theme on this page) · for a gradient current page: <code>--wt-aside-menu-item-active-bg: var(--wt-primary-gradient)</code> · under a sticky top bar: set <code>--wt-aside-menu-top</code> to the bar\'s height.',
+    th: 'Aside Menu อ่านค่าจาก CSS variable เหล่านี้ (ค่าในคอลัมน์ขวาคือค่าของธีมที่หน้านี้ใช้อยู่) · หน้าปัจจุบันแบบพื้นไล่สี: <code>--wu-aside-menu-item-active-bg: var(--wu-primary-gradient)</code> · เมนูที่อยู่ใต้แถบบนที่ติดด้านบน: ตั้ง <code>--wu-aside-menu-top</code> เป็นความสูงของแถบ',
+    en: 'Aside Menu reads these CSS variables (the right-hand column shows the value of the theme on this page) · for a gradient current page: <code>--wu-aside-menu-item-active-bg: var(--wu-primary-gradient)</code> · under a sticky top bar: set <code>--wu-aside-menu-top</code> to the bar\'s height.',
   },
 };

@@ -8,7 +8,7 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
         <div class="docs-demo-labelled">
           <label for="d-ts-attachment">{{ tx('เอกสารที่แนบ') }}</label>
-          <wt-treeSelect
+          <wu-treeSelect
             id="d-ts-basic"
             inputId="d-ts-attachment"
             name="attachment"
@@ -19,7 +19,7 @@
             [showClear]="true"
             (onClear)="clearedField()"
             [style]="{ width: '20rem' }"
-          ></wt-treeSelect>
+          ></wu-treeSelect>
         </div>
         <span class="docs-demo-output">ngModel: <code id="d-ts-basic-value">{{ attachment?.label || 'null' }}</code> · onClear: <code id="d-ts-cleared">{{ cleared }}</code></span>
       </docs-demo>
@@ -29,7 +29,7 @@
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']">
         <div class="docs-demo-labelled">
           <label for="d-ts-rooms">{{ tx('ห้องที่รับผิดชอบ') }}</label>
-          <wt-tree-select
+          <wu-tree-select
             id="d-ts-multi"
             inputId="d-ts-rooms"
             name="myRooms"
@@ -39,7 +39,7 @@
             display="chip"
             [placeholder]="tx('เลือกห้องที่รับผิดชอบ')"
             [style]="{ width: '20rem' }"
-          ></wt-tree-select>
+          ></wu-tree-select>
         </div>
         <span class="docs-demo-output">{{ tx('ห้องที่รับผิดชอบ') }}: <code id="d-ts-multi-count">{{ roomCount() }}</code></span>
       </docs-demo>
@@ -48,7 +48,7 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="value"></docs-slot-note>
       <docs-demo [html]="code['templates']">
-        <wt-treeSelect
+        <wu-treeSelect
           id="d-ts-tpl"
           name="styledAttachment"
           [(ngModel)]="styledAttachment"
@@ -65,7 +65,7 @@
               <span class="docs-ts-placeholder">{{ placeholder }}</span>
             }
           </ng-template>
-        </wt-treeSelect>
+        </wu-treeSelect>
       </docs-demo>
     </docs-section>
 

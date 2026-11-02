@@ -1,4 +1,4 @@
-// The Flow page: the classes its samples use (written as an app would, on WiraTheme tokens, so they follow the
+// The Flow page: the classes its samples use (written as an app would, on WiraUI tokens, so they follow the
 // preset and dark mode) and a few bits of the docs' own demo layout around the diagrams.
 
 // ---------- node templates ----------
@@ -11,12 +11,12 @@
 }
 .flow-card > .wi {
   flex: none;
-  color: var(--wt-primary-color);
+  color: var(--wu-primary-color);
   font-size: 1.125rem;
 }
 .flow-card small {
   display: block;
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 .flow-avatar {
   display: grid;
@@ -25,8 +25,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--wt-primary-soft);
-  color: var(--wt-primary-soft-text);
+  background: var(--wu-primary-soft);
+  color: var(--wu-primary-soft-text);
 }
 .flow-decision {
   border-style: dashed;
@@ -39,7 +39,7 @@
   gap: 0.375rem;
 }
 .flow-task .wi-lock {
-  color: var(--wt-warn-color);
+  color: var(--wu-warn-color);
 }
 
 // ---------- edges ----------
@@ -49,10 +49,10 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.125rem 0.25rem 0.125rem 0.5rem;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 999px;
-  background: var(--wt-card-bg);
-  color: var(--wt-text);
+  background: var(--wu-card-bg);
+  color: var(--wu-text);
   font-size: 0.75rem;
 }
 .flow-edge-remove {
@@ -63,13 +63,13 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--wt-danger-bg);
-  color: var(--wt-danger-text);
+  background: var(--wu-danger-bg);
+  color: var(--wu-danger-text);
   font-size: 0.75rem;
   cursor: pointer;
 }
 .flow-edge-remove:focus-visible {
-  outline: 2px solid var(--wt-primary-color);
+  outline: 2px solid var(--wu-primary-color);
   outline-offset: 1px;
 }
 
@@ -81,39 +81,39 @@
   font-weight: 600;
 }
 .flow-note[data-tone='yellow'] {
-  background: var(--wt-warn-bg);
-  color: var(--wt-warn-text);
+  background: var(--wu-warn-bg);
+  color: var(--wu-warn-text);
 }
 .flow-note[data-tone='green'] {
-  background: var(--wt-success-bg);
-  color: var(--wt-success-text);
+  background: var(--wu-success-bg);
+  color: var(--wu-success-text);
 }
 .flow-note[data-tone='blue'] {
-  background: var(--wt-info-bg);
-  color: var(--wt-info-text);
+  background: var(--wu-info-bg);
+  color: var(--wu-info-text);
 }
 .flow-swatch {
   flex: none;
   width: 1.5rem;
   height: 1.5rem;
   padding: 0;
-  border: 2px solid var(--wt-card-bg);
+  border: 2px solid var(--wu-card-bg);
   border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--wt-border);
+  box-shadow: 0 0 0 1px var(--wu-border);
   cursor: pointer;
 }
 .flow-swatch:focus-visible {
-  outline: 2px solid var(--wt-primary-color);
+  outline: 2px solid var(--wu-primary-color);
   outline-offset: 2px;
 }
 .flow-swatch[data-tone='yellow'] {
-  background: var(--wt-warn-color);
+  background: var(--wu-warn-color);
 }
 .flow-swatch[data-tone='green'] {
-  background: var(--wt-success-color);
+  background: var(--wu-success-color);
 }
 .flow-swatch[data-tone='blue'] {
-  background: var(--wt-info-color);
+  background: var(--wu-info-color);
 }
 
 // ---------- the palette to drag new nodes from ----------
@@ -129,24 +129,24 @@
   gap: 6px;
   min-height: 36px;
   padding: 6px 14px;
-  border: 1px solid var(--wt-border);
+  border: 1px solid var(--wu-border);
   border-radius: 999px;
-  background: var(--wt-card-bg);
-  color: var(--wt-text);
+  background: var(--wu-card-bg);
+  color: var(--wu-text);
   font: inherit;
   font-size: 14px;
   cursor: grab;
   touch-action: manipulation;
 }
 .flow-palette-item:hover {
-  border-color: var(--wt-primary-color);
+  border-color: var(--wu-primary-color);
 }
 .flow-palette-item:focus-visible {
-  outline: 2px solid var(--wt-primary-color);
+  outline: 2px solid var(--wu-primary-color);
   outline-offset: 2px;
 }
 .flow-palette-item .wi {
-  color: var(--wt-primary-color);
+  color: var(--wu-primary-color);
 }
 
 // ---------- docs layout around the diagrams ----------
@@ -167,7 +167,7 @@
   height: auto;
   border: 1px solid var(--docs-border);
   border-radius: 10px;
-  background: var(--wt-card-bg);
+  background: var(--wu-card-bg);
 }
 .docs-flow-json {
   max-height: 14rem;

@@ -1,4 +1,4 @@
-/** wt-flow: rectangles, snapping, extents, handle points, hit-testing, alignment guides and the resizer's maths. */
+/** wu-flow: rectangles, snapping, extents, handle points, hit-testing, alignment guides and the resizer's maths. */
 import type {
   FlowBox,
   FlowConnectionMode,

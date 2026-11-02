@@ -22,29 +22,29 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵlistItemLabel, ɵWT_PICKLIST_CSS, ɵWtListDrag, WtPickListFilterOptions } from 'wiratheme/picklist';
-import { FilterMatchMode, ListState, moveBottom, moveDown, moveItemsTo, moveTop, moveUp, WtLocale } from 'wiratheme/core';
-import { WtOrderListFilterEvent, WtOrderListSelectionChangeEvent } from './orderlist.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵlistItemLabel, ɵWU_PICKLIST_CSS, ɵWuListDrag, WuPickListFilterOptions } from 'wiraui/picklist';
+import { FilterMatchMode, ListState, moveBottom, moveDown, moveItemsTo, moveTop, moveUp, WuLocale } from 'wiraui/core';
+import { WuOrderListFilterEvent, WuOrderListSelectionChangeEvent } from './orderlist.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 type Reorder = 'up' | 'top' | 'down' | 'bottom';
 const REORDER = { up: moveUp, top: moveTop, down: moveDown, bottom: moveBottom } as const;
 
 /**
- * What wt-orderlist does, shared by the v1 and v2/v3 templates: one list the user puts in order with the buttons
+ * What wu-orderlist does, shared by the v1 and v2/v3 templates: one list the user puts in order with the buttons
  * beside it or by dragging (`[dragdrop]="true"`). `value` is reordered in place, as apps expect, and emitted as
  * `valueChange`; `(onReorder)` gives the items that moved.
  */
 @Directive()
-export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
+export abstract class ɵWuOrderListBase implements AfterContentInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set value(v: any[] | null | undefined) {
     this._value = Array.isArray(v) ? v : [];
@@ -75,9 +75,9 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
   @Input() trackBy?: TrackByFunction<any>;
   @Input() set dragdrop(v: unknown) { this._dragdrop = ɵtoBool(v); }
   get dragdrop(): boolean { return this._dragdrop; }
-  /** See wt-picklist: true in v1, false in v2 / v3 unless set. */
+  /** See wu-picklist: true in v1, false in v2 / v3 unless set. */
   @Input() set metaKeySelection(v: unknown) {
-    this._metaKey = v === undefined || v === null ? WT_VERSION_INFO.major === 1 : ɵtoBool(v);
+    this._metaKey = v === undefined || v === null ? WU_VERSION_INFO.major === 1 : ɵtoBool(v);
   }
   get metaKeySelection(): boolean { return this._metaKey; }
   /** Side of the order buttons: `'left'` (default) or `'right'`. */
@@ -112,37 +112,37 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
   @Output() readonly onReorder = new EventEmitter<unknown[]>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly selectionChange = new EventEmitter<any[]>();
-  @Output() readonly onSelectionChange = new EventEmitter<WtOrderListSelectionChangeEvent>();
-  @Output() readonly onFilterEvent = new EventEmitter<WtOrderListFilterEvent>();
+  @Output() readonly onSelectionChange = new EventEmitter<WuOrderListSelectionChangeEvent>();
+  @Output() readonly onFilterEvent = new EventEmitter<WuOrderListFilterEvent>();
   @Output() readonly onFocus = new EventEmitter<Event>();
   @Output() readonly onBlur = new EventEmitter<Event>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly valueChange = new EventEmitter<any[]>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('filter', { descendants: false }) protected filterRef?: unknown;
   @ContentChild('empty', { descendants: false }) protected emptyRef?: unknown;
   @ContentChild('emptyfilter', { descendants: false }) protected emptyFilterRef?: unknown;
 
-  readonly baseId = ɵuniqueId('wt-orderlist');
-  readonly major: number = WT_VERSION_INFO.major;
+  readonly baseId = ɵuniqueId('wu-orderlist');
+  readonly major: number = WU_VERSION_INFO.major;
   stacked = false;
   focused = false;
   readonly list = new ListState(() => this._value, () => ({ filterBy: this.filterBy, matchMode: this.filterMatchMode, dataKey: this.dataKey }));
-  readonly drag: ɵWtListDrag;
-  readonly filterOptions: WtPickListFilterOptions = { filter: (v) => this.setFilter(v), reset: () => this.setFilter('') };
+  readonly drag: ɵWuListDrag;
+  readonly filterOptions: WuPickListFilterOptions = { filter: (v) => this.setFilter(v), reset: () => this.setFilter('') };
   readonly trackAny: TrackByFunction<unknown> = (i, item) => (this.trackBy ? this.trackBy(i, item) : item);
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly i18n = ɵrefreshOnTranslation();
   private _value: unknown[] = [];
   private _dragdrop = false;
-  private _metaKey = WT_VERSION_INFO.major === 1;
+  private _metaKey = WU_VERSION_INFO.major === 1;
   private _disabled = false;
   private _striped = false;
   private _breakpoint = '960px';
@@ -155,16 +155,16 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    styles.load('button', ɵWT_BUTTON_CSS);
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('picklist', ɵWT_PICKLIST_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    styles.load('button', ɵWU_BUTTON_CSS);
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('picklist', ɵWU_PICKLIST_CSS);
     const el = this.host;
-    this.drag = new ɵWtListDrag(
+    this.drag = new ɵWuListDrag(
       {
         get root() {
-          return el.querySelector('.wt-orderlist') as HTMLElement | null;
+          return el.querySelector('.wu-orderlist') as HTMLElement | null;
         },
         canDrag: () => this._dragdrop && !this._disabled && !this.list.query.trim(),
         itemsFor: (_list, index) => this.dragItems(index),
@@ -188,7 +188,7 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get itemTemplate(): TemplateRef<unknown> | null {
@@ -253,7 +253,7 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
     return { $implicit: item, index, selected: this.isSelected(item) };
   }
   buttonClass(extra: string): string {
-    return ɵbuttonClass(this.major === 1 ? '' : 'p-button-secondary') + ' wt-btn-icon-only ' + extra;
+    return ɵbuttonClass(this.major === 1 ? '' : 'p-button-secondary') + ' wu-btn-icon-only ' + extra;
   }
 
   // ---------- actions ----------
@@ -300,7 +300,7 @@ export abstract class ɵWtOrderListBase implements AfterContentInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  /** The same keys as each list of wt-picklist; Alt + ↑ / ↓ moves the selected items. */
+  /** The same keys as each list of wu-picklist; Alt + ↑ / ↓ moves the selected items. */
   listKeydown(event: KeyboardEvent): void {
     const st = this.list;
     const list = this._value;

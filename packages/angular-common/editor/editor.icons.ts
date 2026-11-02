@@ -1,10 +1,10 @@
-import type { EditorTool } from 'wiratheme/core';
+import type { EditorTool } from 'wiraui/core';
 
 const svg = (body: string, fill = false) =>
-  `<svg class="wt-editor-icon" viewBox="0 0 20 20" ${fill ? 'fill="currentColor" stroke="none"' : 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true" focusable="false">${body}</svg>`;
+  `<svg class="wu-editor-icon" viewBox="0 0 20 20" ${fill ? 'fill="currentColor" stroke="none"' : 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true" focusable="false">${body}</svg>`;
 
 /** The editor's built-in icons (inline SVG, they follow the text colour). */
-export const ɵWT_EDITOR_ICONS: Record<string, string> = {
+export const ɵWU_EDITOR_ICONS: Record<string, string> = {
   undo: svg('<path d="M7.5 5 4 8.5 7.5 12"/><path d="M4 8.5h8a4 4 0 0 1 0 8h-2"/>'),
   redo: svg('<path d="M12.5 5 16 8.5 12.5 12"/><path d="M16 8.5H8a4 4 0 0 0 0 8h2"/>'),
   bold: svg('<path d="M6 4h5a3.25 3.25 0 0 1 0 6.5H6zM6 10.5h6a3.25 3.25 0 0 1 0 6.5H6z" stroke-width="2"/>'),
@@ -40,7 +40,7 @@ export const ɵWT_EDITOR_ICONS: Record<string, string> = {
   heading: svg('<path d="M5 4v12M15 4v12M5 10h10"/>'),
   fontSize: svg('<path d="m2.5 15 4-10 4 10M4 11.5h5M12 15l2.75-6.5L17.5 15M12.9 13h3.7"/>'),
   fontFamily: svg('<path d="M5 15 9 4h2l4 11M6.5 11h7"/>'),
-  chevron: '<svg class="wt-editor-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg>',
+  chevron: '<svg class="wu-editor-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg>',
   trash: svg('<path d="M4 6h12M8 6V4h4v2M5.5 6l.7 10h7.6l.7-10M8.5 9v4.5M11.5 9v4.5"/>'),
   check: svg('<path d="m4.5 10.5 3.5 3.5 7.5-8"/>'),
   upload: svg('<path d="M10 13V4M6.5 7.5 10 4l3.5 3.5M4 13v3h12v-3"/>'),
@@ -61,7 +61,7 @@ export const ɵWT_EDITOR_ICONS: Record<string, string> = {
 };
 
 /** What a Quill toolbar control in an app's `header` template stands for. */
-export interface ɵWtQuillTool {
+export interface ɵWuQuillTool {
   tool: EditorTool;
   /** Drawn as a labelled dropdown (block style, size, font). */
   dropdown?: boolean;
@@ -70,7 +70,7 @@ export interface ɵWtQuillTool {
 }
 
 /** Reads `ql-bold`, `ql-list` + value, `select.ql-header` and the rest; null for controls the editor does not offer. */
-export function ɵquillTool(el: HTMLElement): ɵWtQuillTool | null {
+export function ɵquillTool(el: HTMLElement): ɵWuQuillTool | null {
   const has = (c: string) => el.classList.contains(c);
   const value = (el.getAttribute('value') || '').trim();
   const select = el.tagName === 'SELECT';

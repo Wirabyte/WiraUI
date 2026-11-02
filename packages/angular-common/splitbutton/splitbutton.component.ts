@@ -1,28 +1,28 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, ɵWtStyleLoader, WtConfig, WtMenuItem } from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { WtMenu } from 'wiratheme/menu';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader, WuConfig, WuMenuItem } from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { WuMenu } from 'wiraui/menu';
 
 /**
- * A button with a default action and a menu of others: `<wt-splitButton label="บันทึก" icon="pi pi-save"
+ * A button with a default action and a menu of others: `<wu-splitButton label="บันทึก" icon="pi pi-save"
  * [model]="moreActions" (onClick)="save()">`. The arrow opens the menu (also Alt + Arrow Down); the menu is the
- * wt-menu popup.
+ * wu-menu popup.
  */
 @Component({
-  selector: 'wt-splitbutton, wt-splitButton, wt-split-button',
+  selector: 'wu-splitbutton, wu-splitButton, wu-split-button',
   standalone: true,
-  imports: [NgIf, WtMenu],
+  imports: [NgIf, WuMenu],
   templateUrl: './splitbutton.component.html',
   styleUrls: ['./splitbutton.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtSplitButton implements OnDestroy {
+export class WuSplitButton implements OnDestroy {
   @Input() label?: string;
   @Input() icon?: string;
   @Input() iconPos: 'left' | 'right' = 'left';
-  @Input() model: WtMenuItem[] | null = null;
+  @Input() model: WuMenuItem[] | null = null;
   @Input() severity?: string | null;
   @Input() set raised(v: unknown) { this._raised = ɵtoBool(v); }
   @Input() set rounded(v: unknown) { this._rounded = ɵtoBool(v); }
@@ -58,7 +58,7 @@ export class WtSplitButton implements OnDestroy {
   @Output() readonly onMenuShow = new EventEmitter<void>();
   @Output() readonly onMenuHide = new EventEmitter<void>();
 
-  @ViewChild('menu') protected menu?: WtMenu;
+  @ViewChild('menu') protected menu?: WuMenu;
   menuOpen = false;
   private _raised = false;
   private _rounded = false;
@@ -68,12 +68,12 @@ export class WtSplitButton implements OnDestroy {
   private _buttonDisabled = false;
   private _menuDisabled = false;
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnDestroy(): void {
@@ -97,10 +97,10 @@ export class WtSplitButton implements OnDestroy {
     return c.join(' ');
   }
   get mainClass(): string {
-    return ɵbuttonClass(this.look) + ' wt-splitbutton-main p-splitbutton-button p-splitbutton-defaultbutton' + (this.label ? '' : ' wt-btn-icon-only');
+    return ɵbuttonClass(this.look) + ' wu-splitbutton-main p-splitbutton-button p-splitbutton-defaultbutton' + (this.label ? '' : ' wu-btn-icon-only');
   }
   get dropdownClass(): string {
-    return ɵbuttonClass(this.look) + ' wt-btn-icon-only wt-splitbutton-dropdown p-splitbutton-dropdown p-splitbutton-menubutton';
+    return ɵbuttonClass(this.look) + ' wu-btn-icon-only wu-splitbutton-dropdown p-splitbutton-dropdown p-splitbutton-menubutton';
   }
   get expandLabel(): string {
     return this.expandAriaLabel || this.config.translation.showOptions;
@@ -119,7 +119,7 @@ export class WtSplitButton implements OnDestroy {
 
   /** Opens or closes the menu under the whole split button. */
   toggleMenu(): void {
-    const root = this.host.querySelector('.wt-splitbutton') as HTMLElement | null;
+    const root = this.host.querySelector('.wu-splitbutton') as HTMLElement | null;
     this.menu?.toggle({ currentTarget: root } as unknown as Event);
   }
 

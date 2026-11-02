@@ -1,5 +1,5 @@
 <div [class]="classes()" [style]="rootStyle()" [attr.role]="sev() === 'danger' || sev() === 'warn' ? 'alert' : 'status'">
-  <span class="wt-message-icon p-message-icon" aria-hidden="true">
+  <span class="wu-message-icon p-message-icon" aria-hidden="true">
     @if (icon()) {
       <span [class]="icon()"></span>
     } @else {
@@ -19,7 +19,7 @@
       }
     }
   </span>
-  <div class="wt-message-text p-message-text">
+  <div class="wu-message-text p-message-text">
     @if (text()) {
       @if (escape()) {
         {{ text() }}
@@ -30,7 +30,7 @@
     <ng-content></ng-content>
   </div>
   @if (closable()) {
-    <button type="button" class="wt-message-close p-message-close-button" [attr.aria-label]="closeLabel()" (click)="close($event)">
+    <button type="button" class="wu-message-close p-message-close-button" [attr.aria-label]="closeLabel()" (click)="close($event)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
     </button>
   }

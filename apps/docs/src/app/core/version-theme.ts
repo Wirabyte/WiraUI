@@ -32,10 +32,10 @@ export interface ThemeCustom {
 
 export const NO_CUSTOM: ThemeCustom = { presetId: null, primary: null, surface: null };
 
-/** UI size of the demos (WtThemeService.setScale). */
+/** UI size of the demos (WuThemeService.setScale). */
 export type DocsScale = 'sm' | 'md' | 'lg';
 
-/** One wiratheme major's theme API, so docs-wide code can theme whichever version is showing. */
+/** One wiraui major's theme API, so docs-wide code can theme whichever version is showing. */
 export interface DocsVersionTheme {
   readonly version: DocVersionId;
   /** Key of the configurator state: the version id, or e.g. 'landing' for a page with its own look. */
@@ -50,20 +50,20 @@ export interface DocsVersionTheme {
   info(id: string): PresetInfo | undefined;
   /** `ripple` null = the preset's own choice (on for Material). */
   apply(custom: ThemeCustom, dark: boolean, ripple: boolean | null, scale: DocsScale): void;
-  /** Component texts and calendar follow the site language (WtConfig.setTranslation). */
+  /** Component texts and calendar follow the site language (WuConfig.setTranslation). */
   setLocale(lang: Lang): void;
-  /** The version's own token engine and exporters (`wiratheme/core`), for WiraTheme Studio. */
+  /** The version's own token engine and exporters (`wiraui/core`), for WiraUI Studio. */
   readonly core: StudioCore;
   /** A fresh copy of a listed theme's config: what the studio starts from and resets to. */
   config(id: string): StudioConfig;
-  /** Applies a studio config through WtThemeService as a TypeScript preset (token edits are written by DocsState). */
+  /** Applies a studio config through WuThemeService as a TypeScript preset (token edits are written by DocsState). */
   applyStudio(config: StudioConfig, name: string, dark: boolean, ripple: boolean | null, scale: DocsScale): void;
 }
 
 export const DOCS_THEME = new InjectionToken<DocsVersionTheme>('DOCS_THEME');
 export const DOCS_VERSION = new InjectionToken<DocVersion>('DOCS_VERSION');
 
-/** The subset of each version's WtThemeService the docs call. Typed loosely: each major has its own types. */
+/** The subset of each version's WuThemeService the docs call. Typed loosely: each major has its own types. */
 interface ThemeServiceLike<P> {
   setPreset(preset: P): void;
   setPrimary(hex: string): void;
@@ -73,7 +73,7 @@ interface ThemeServiceLike<P> {
   setScale(scale: 'sm' | 'md' | 'lg' | null): void;
 }
 
-/** `wiratheme/presets` (or -v1 / -v2). */
+/** `wiraui/presets` (or -v1 / -v2). */
 interface PresetsModule<P> {
   VERSION_CATALOG: Record<number, { themes: string[]; defaultTheme: string }>;
   presetsFor(major: 1 | 2 | 3): P[];
@@ -112,7 +112,7 @@ export function presetGroups(presets: PresetInfo[]): PresetGroup[] {
   return groups;
 }
 
-/** The subset of each version's WtConfig the docs touch. */
+/** The subset of each version's WuConfig the docs touch. */
 interface ConfigLike {
   ripple: boolean;
   calendar: string;
@@ -221,7 +221,7 @@ export function versionTheme<P>(
     applyStudio(studio, name, dark, ripple, scale) {
       service.setScale(scale);
       // The shape definePreset() returns: the whole theme from one config, written to the tokens layer.
-      service.setPreset({ wtPreset: true, name: name || 'Studio', config: studio, overrides: [] } as unknown as P);
+      service.setPreset({ wuPreset: true, name: name || 'Studio', config: studio, overrides: [] } as unknown as P);
       ensureFont((studio as { fontFamily?: unknown }).fontFamily);
       service.setOverrides({});
       service.setDarkMode(dark);

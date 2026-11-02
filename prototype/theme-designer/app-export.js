@@ -6,11 +6,11 @@
   const $ = (s) => document.querySelector(s);
 
   const FORMATS = [
-    { id: 'scss', tab: '.scss', file: 'src/theme/wiratheme.theme.scss', gen: WT.toSCSS },
-    { id: 'css', tab: '.css', file: 'src/theme/wiratheme.theme.css', gen: WT.toCSS },
-    { id: 'ts-overrides', tab: 'overrides.ts', file: 'src/theme/wiratheme.overrides.ts', gen: WT.toTSOverrides },
-    { id: 'ts-preset', tab: 'preset.ts', file: 'src/theme/wiratheme.preset.ts', gen: WT.toTSPreset },
-    { id: 'json', tab: '.json', file: 'src/theme/wiratheme.theme.json', gen: WT.toJSON },
+    { id: 'scss', tab: '.scss', file: 'src/theme/wiraui.theme.scss', gen: WU.toSCSS },
+    { id: 'css', tab: '.css', file: 'src/theme/wiraui.theme.css', gen: WU.toCSS },
+    { id: 'ts-overrides', tab: 'overrides.ts', file: 'src/theme/wiraui.overrides.ts', gen: WU.toTSOverrides },
+    { id: 'ts-preset', tab: 'preset.ts', file: 'src/theme/wiraui.preset.ts', gen: WU.toTSPreset },
+    { id: 'json', tab: '.json', file: 'src/theme/wiraui.theme.json', gen: WU.toJSON },
   ];
   let fmt = 'scss', files = null;
 
@@ -40,7 +40,7 @@
     const cfg = S.cfg;
     if (!files) files = Object.fromEntries(FORMATS.map((f) => [f.id, f.gen(cfg)]));
     const f = FORMATS.find((x) => x.id === fmt);
-    const steps = WT.installSteps(cfg, fmt, S.ng, S.app);
+    const steps = WU.installSteps(cfg, fmt, S.ng, S.app);
     const segBtn = (key, v, label) => `<button type="button" data-ex="${key}" data-v="${v}" aria-pressed="${S[key] === v}">${label}</button>`;
     const noDl = dl === null;
     $('#dlg-export').innerHTML = `<div class="m-wrap">
@@ -75,12 +75,12 @@
     if (!d) { status(t('dlUnavailable'), true); return; }
     try {
       let req;
-      if (kind === 'json') req = { filename: 'wiratheme.theme.json', data: files.json };
+      if (kind === 'json') req = { filename: 'wiraui.theme.json', data: files.json };
       else {
         const zip = new JSZip();
-        zip.file('README.md', WT.readme(S.cfg, S.ng, S.app));
+        zip.file('README.md', WU.readme(S.cfg, S.ng, S.app));
         FORMATS.forEach((f) => zip.file(f.file, files[f.id]));
-        req = { filename: 'wiratheme-theme.zip', data: await zip.generateAsync({ type: 'blob' }) };
+        req = { filename: 'wiraui-theme.zip', data: await zip.generateAsync({ type: 'blob' }) };
       }
       await d.save(req);
       status(t('saved'));
@@ -98,7 +98,7 @@
     if (b.dataset.ex) { S[b.dataset.ex] = b.dataset.v; A.save(); renderExport(); }
     else if (b.dataset.fmt) { fmt = b.dataset.fmt; renderExport(); }
     else if (b.dataset.copy === 'main') copy(files[fmt], b);
-    else if (b.dataset.copy === 'step') copy(WT.installSteps(S.cfg, fmt, S.ng, S.app)[Number(b.dataset.i)].code, b);
+    else if (b.dataset.copy === 'step') copy(WU.installSteps(S.cfg, fmt, S.ng, S.app)[Number(b.dataset.i)].code, b);
     else if (b.dataset.dl) download(b.dataset.dl);
   });
   $('#btn-export').addEventListener('click', () => { files = null; renderExport(); ex.showModal(); });
@@ -112,7 +112,7 @@
         <p class="hint">${esc(t('im_hint'))}</p>
         <div class="hexrow"><button type="button" class="ubtn" data-pick>${t('chooseFile')}</button><span class="hint" id="im-fname"></span>
           <input type="file" id="im-file" accept=".scss,.css,.ts,.json,.txt,.md" style="position:absolute;width:1px;height:1px;opacity:0" tabindex="-1" aria-hidden="true"></div>
-        <textarea class="paste" id="im-text" spellcheck="false" aria-label="${t('im_title')}" placeholder="// wiratheme-config {&quot;v&quot;:1, …}"></textarea>
+        <textarea class="paste" id="im-text" spellcheck="false" aria-label="${t('im_title')}" placeholder="// wiraui-config {&quot;v&quot;:1, …}"></textarea>
         <div class="err" id="im-err" role="alert" hidden></div>
       </div>
       <div class="m-foot"><span class="spacer"></span>
@@ -127,7 +127,7 @@
     else if (b.hasAttribute('data-apply')) {
       const err = $('#im-err');
       try {
-        const cfg = WT.parseImport($('#im-text').value);
+        const cfg = WU.parseImport($('#im-text').value);
         im.close(); A.setConfig(cfg); A.snack(t('imported'));
       } catch (x) {
         err.hidden = false;
@@ -143,7 +143,7 @@
   });
   $('#btn-import').addEventListener('click', () => { renderImport(); im.showModal(); });
 
-  window.addEventListener('wt-lang', () => {
+  window.addEventListener('wu-lang', () => {
     if (ex.open) renderExport();
     if (im.open) { const v = $('#im-text').value; renderImport(); $('#im-text').value = v; }
   });

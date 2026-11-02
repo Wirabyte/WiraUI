@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ng-add": {
-      "description": "Add WiraTheme to an Angular app",
+      "description": "Add WiraUI to an Angular app",
       "factory": "./ng-add/index.cjs#ngAdd",
       "schema": "./ng-add/schema.json",
       "aliases": [
@@ -10,7 +10,7 @@
       ]
     },
     "from-primeng": {
-      "description": "Move PrimeNG imports and <p-…> tags in this workspace to WiraTheme (try --dry-run first)",
+      "description": "Move PrimeNG imports and <p-…> tags in this workspace to WiraUI (try --dry-run first)",
       "factory": "./from-primeng/index.cjs#fromPrimeng",
       "schema": "./from-primeng/schema.json",
       "aliases": [

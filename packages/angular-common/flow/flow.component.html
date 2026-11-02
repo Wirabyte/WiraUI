@@ -1,6 +1,6 @@
 <div
   #root
-  class="wt-flow"
+  class="wu-flow"
   [class]="styleClass || ''"
   [style]="rootStyle"
   tabindex="0"
@@ -8,12 +8,12 @@
   [attr.aria-label]="ariaLabel || text('flowLabel')"
   [attr.aria-describedby]="paneHintId"
 >
-  <div class="wt-flow-backgrounds">
-    <ng-content select="wt-flow-background, [wtFlowBackground]"></ng-content>
+  <div class="wu-flow-backgrounds">
+    <ng-content select="wu-flow-background, [wuFlowBackground]"></ng-content>
   </div>
-  <div #pane class="wt-flow-pane" [class.wt-flow-pane-pannable]="panOnDrag !== false">
-    <div #viewportEl class="wt-flow-viewport">
-      <svg class="wt-flow-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <div #pane class="wu-flow-pane" [class.wu-flow-pane-pannable]="panOnDrag !== false">
+    <div #viewportEl class="wu-flow-viewport">
+      <svg class="wu-flow-defs" width="0" height="0" aria-hidden="true" focusable="false">
         <defs>
           <svg:marker
             *ngFor="let m of markers; trackBy: trackById"
@@ -40,11 +40,11 @@
       </svg>
 
       <!-- Nodes come first so Tab reaches them before edges. z-index is doubled: edges even (under the nodes of their level), nodes and edge labels odd (labels after the nodes in the DOM, so a label stays readable over a node it crosses). -->
-      <div class="wt-flow-nodes">
+      <div class="wu-flow-nodes">
         <div
           *ngFor="let n of renderedNodes; trackBy: trackById"
-          [wtFlowNodeWrapper]="n.id"
-          class="wt-flow-node"
+          [wuFlowNodeWrapper]="n.id"
+          class="wu-flow-node"
           [class]="n.classes"
           [attr.data-id]="n.id"
           [style]="n.style"
@@ -63,21 +63,21 @@
               <ng-container *ngTemplateOutlet="n.template; context: n.ctx; injector: n.injector"></ng-container>
             </ng-container>
             <ng-container *ngSwitchCase="'component'">
-              <ng-container [wtFlowNodeComponent]="n.component" [wtFlowNodeContext]="n.ctx"></ng-container>
+              <ng-container [wuFlowNodeComponent]="n.component" [wuFlowNodeContext]="n.ctx"></ng-container>
             </ng-container>
             <ng-container *ngSwitchDefault>
-              <wt-flow-handle *ngIf="n.hasTarget" type="target" [position]="n.targetPosition"></wt-flow-handle>
-              <div *ngIf="n.label" class="wt-flow-node-label">{{ n.label }}</div>
-              <wt-flow-handle *ngIf="n.hasSource" type="source" [position]="n.sourcePosition"></wt-flow-handle>
+              <wu-flow-handle *ngIf="n.hasTarget" type="target" [position]="n.targetPosition"></wu-flow-handle>
+              <div *ngIf="n.label" class="wu-flow-node-label">{{ n.label }}</div>
+              <wu-flow-handle *ngIf="n.hasSource" type="source" [position]="n.sourcePosition"></wu-flow-handle>
             </ng-container>
           </ng-container>
         </div>
       </div>
 
-      <svg *ngFor="let layer of edgeLayers; trackBy: trackLayer" class="wt-flow-edges" [style.z-index]="layer.z * 2">
+      <svg *ngFor="let layer of edgeLayers; trackBy: trackLayer" class="wu-flow-edges" [style.z-index]="layer.z * 2">
         <svg:g
           *ngFor="let e of layer.edges; trackBy: trackById"
-          class="wt-flow-edge"
+          class="wu-flow-edge"
           [class]="e.classes"
           [attr.data-id]="e.id"
           [attr.tabindex]="e.focusable ? 0 : null"
@@ -91,23 +91,23 @@
           </ng-container>
           <ng-template #plainEdge>
             <svg:path
-              class="wt-flow-edge-path"
+              class="wu-flow-edge-path"
               [attr.d]="e.path"
               [attr.marker-start]="e.markerStart"
               [attr.marker-end]="e.markerEnd"
               [style]="e.style"
             ></svg:path>
           </ng-template>
-          <svg:path *ngIf="e.interactionWidth > 0" class="wt-flow-edge-interaction" [attr.d]="e.path" [attr.stroke-width]="e.interactionWidth"></svg:path>
-          <svg:circle *ngIf="e.updateSource" class="wt-flow-edge-updater" data-end="source" [attr.cx]="e.sourceX" [attr.cy]="e.sourceY" [attr.r]="reconnectRadius"></svg:circle>
-          <svg:circle *ngIf="e.updateTarget" class="wt-flow-edge-updater" data-end="target" [attr.cx]="e.targetX" [attr.cy]="e.targetY" [attr.r]="reconnectRadius"></svg:circle>
+          <svg:path *ngIf="e.interactionWidth > 0" class="wu-flow-edge-interaction" [attr.d]="e.path" [attr.stroke-width]="e.interactionWidth"></svg:path>
+          <svg:circle *ngIf="e.updateSource" class="wu-flow-edge-updater" data-end="source" [attr.cx]="e.sourceX" [attr.cy]="e.sourceY" [attr.r]="reconnectRadius"></svg:circle>
+          <svg:circle *ngIf="e.updateTarget" class="wu-flow-edge-updater" data-end="target" [attr.cx]="e.targetX" [attr.cy]="e.targetY" [attr.r]="reconnectRadius"></svg:circle>
         </svg:g>
       </svg>
 
-      <div class="wt-flow-edge-labels">
+      <div class="wu-flow-edge-labels">
         <div
           *ngFor="let e of labelEdges; trackBy: trackById"
-          class="wt-flow-edge-label"
+          class="wu-flow-edge-label"
           [class]="e.labelClasses"
           [attr.data-id]="e.id"
           [style]="e.labelBoxStyle"
@@ -118,29 +118,29 @@
             <ng-container *ngTemplateOutlet="e.labelTemplate; context: e.ctx"></ng-container>
           </ng-container>
           <ng-template #labelText>
-            <span class="wt-flow-edge-label-text" [style]="e.labelStyle">{{ e.label }}</span>
+            <span class="wu-flow-edge-label-text" [style]="e.labelStyle">{{ e.label }}</span>
           </ng-template>
         </div>
       </div>
 
-      <svg *ngIf="connectionLine || guides.length" class="wt-flow-overlay" aria-hidden="true">
+      <svg *ngIf="connectionLine || guides.length" class="wu-flow-overlay" aria-hidden="true">
         <svg:g
           *ngIf="connectionLine as line"
-          class="wt-flow-connection"
-          [class.wt-flow-connection-valid]="line.valid === true"
-          [class.wt-flow-connection-invalid]="line.valid === false"
+          class="wu-flow-connection"
+          [class.wu-flow-connection-valid]="line.valid === true"
+          [class.wu-flow-connection-invalid]="line.valid === false"
         >
           <ng-container *ngIf="connectionLineTemplate; else plainLine">
             <ng-container *ngTemplateOutlet="connectionLineTemplate; context: line.ctx"></ng-container>
           </ng-container>
           <ng-template #plainLine>
-            <svg:path class="wt-flow-connection-path" [attr.d]="line.path" [style]="connectionLineStyle || null"></svg:path>
+            <svg:path class="wu-flow-connection-path" [attr.d]="line.path" [style]="connectionLineStyle || null"></svg:path>
           </ng-template>
         </svg:g>
         <ng-container *ngFor="let gd of guides; trackBy: trackGuide">
           <svg:line
             *ngIf="gd.orientation === 'vertical'"
-            class="wt-flow-guide"
+            class="wu-flow-guide"
             [attr.x1]="gd.at"
             [attr.x2]="gd.at"
             [attr.y1]="gd.from"
@@ -148,7 +148,7 @@
           ></svg:line>
           <svg:line
             *ngIf="gd.orientation === 'horizontal'"
-            class="wt-flow-guide"
+            class="wu-flow-guide"
             [attr.x1]="gd.from"
             [attr.x2]="gd.to"
             [attr.y1]="gd.at"
@@ -160,7 +160,7 @@
 
     <div
       *ngIf="selectionRect as r"
-      class="wt-flow-selection"
+      class="wu-flow-selection"
       [style.left.px]="r.x"
       [style.top.px]="r.y"
       [style.width.px]="r.width"
@@ -170,8 +170,8 @@
 
   <ng-content></ng-content>
 
-  <div class="wt-flow-sr-only" [attr.id]="paneHintId">{{ text('flowPaneHint') }}</div>
-  <div class="wt-flow-sr-only" [attr.id]="nodeHintId">{{ text('flowNodeHint') }}</div>
-  <div class="wt-flow-sr-only" [attr.id]="edgeHintId">{{ text('flowEdgeHint') }}</div>
-  <div #live class="wt-flow-sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div class="wu-flow-sr-only" [attr.id]="paneHintId">{{ text('flowPaneHint') }}</div>
+  <div class="wu-flow-sr-only" [attr.id]="nodeHintId">{{ text('flowNodeHint') }}</div>
+  <div class="wu-flow-sr-only" [attr.id]="edgeHintId">{{ text('flowEdgeHint') }}</div>
+  <div #live class="wu-flow-sr-only" aria-live="polite" aria-atomic="true"></div>
 </div>

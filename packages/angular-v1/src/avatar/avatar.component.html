@@ -1,6 +1,6 @@
 <div [class]="classes" [style]="rootStyle" [attr.role]="ariaLabel ? 'img' : null" [attr.aria-label]="ariaLabel || null">
   <img *ngIf="showImage" [src]="image" [alt]="ariaLabel || label || ''" (error)="imageError($event)" />
-  <span *ngIf="!showImage && label" class="wt-avatar-text p-avatar-text">{{ label }}</span>
-  <span *ngIf="!showImage && !label && icon" [class]="'wt-avatar-icon p-avatar-icon ' + icon" aria-hidden="true"></span>
+  <span *ngIf="!showImage && label" class="wu-avatar-text p-avatar-text">{{ label }}</span>
+  <span *ngIf="!showImage && !label && icon" [class]="'wu-avatar-icon p-avatar-icon ' + icon" aria-hidden="true"></span>
   <ng-content></ng-content>
 </div>

@@ -11,21 +11,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtRatingRateEvent } from './rating.types';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuRatingRateEvent } from './rating.types';
 
-/** Star rating for ngModel and reactive forms: `<wt-rating [(ngModel)]="score" [stars]="5">`. Arrow keys move between stars. */
+/** Star rating for ngModel and reactive forms: `<wu-rating [(ngModel)]="score" [stars]="5">`. Arrow keys move between stars. */
 @Component({
-  selector: 'wt-rating',
+  selector: 'wu-rating',
   standalone: true,
   imports: [NgFor],
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtRating), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuRating), multi: true }],
 })
-export class WtRating implements ControlValueAccessor {
+export class WuRating implements ControlValueAccessor {
   @Input() set stars(v: unknown) {
     const n = Math.max(0, Number(v) || 0);
     this._stars = n;
@@ -38,9 +38,9 @@ export class WtRating implements ControlValueAccessor {
   get disabled(): boolean { return this._disabled; }
   @Input() ariaLabel?: string;
 
-  @Output() readonly onRate = new EventEmitter<WtRatingRateEvent>();
+  @Output() readonly onRate = new EventEmitter<WuRatingRateEvent>();
 
-  readonly name = ɵuniqueId('wt-rating');
+  readonly name = ɵuniqueId('wu-rating');
   value: number | null = null;
   starList = [1, 2, 3, 4, 5];
   private _stars = 5;
@@ -53,7 +53,7 @@ export class WtRating implements ControlValueAccessor {
   onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get isDisabled(): boolean {
@@ -76,16 +76,16 @@ export class WtRating implements ControlValueAccessor {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-rating', 'p-rating', 'p-component'];
-    if (this._readonly) c.push('wt-rating-readonly', 'p-readonly');
-    if (this.isDisabled) c.push('wt-rating-disabled', 'p-disabled');
+    const c = ['wu-rating', 'p-rating', 'p-component'];
+    if (this._readonly) c.push('wu-rating-readonly', 'p-readonly');
+    if (this.isDisabled) c.push('wu-rating-disabled', 'p-disabled');
     return c.join(' ');
   }
 
   /** Our classes plus the classic-era names (`p-rating-item-active`). */
   optionClasses(star: number): string {
     const shown = this.hover ?? this.value ?? 0;
-    return star <= shown ? 'wt-rating-option wt-rating-option-active p-rating-item p-rating-item-active' : 'wt-rating-option p-rating-item';
+    return star <= shown ? 'wu-rating-option wu-rating-option-active p-rating-item p-rating-item-active' : 'wu-rating-option p-rating-item';
   }
 
   preview(star: number | null): void {

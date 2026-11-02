@@ -1,12 +1,12 @@
-/* wt-dock. Shared by wiratheme v1, v2 and v3. Launcher icons along an edge of the nearest positioned parent. The mac
-   look: a frosted shelf whose icons swell under the pointer (each icon's --wt-dock-scale, set as the pointer moves),
+/* wu-dock. Shared by wiraui v1, v2 and v3. Launcher icons along an edge of the nearest positioned parent. The mac
+   look: a frosted shelf whose icons swell under the pointer (each icon's --wu-dock-scale, set as the pointer moves),
    a dot under running apps, a name above the icon pointed at, a bounce on click. The windows look: a full-width frosted
    taskbar, icons centred after a start slot, a tray slot at the end, a bar under running apps. */
-@layer wiratheme.components {
-  wt-dock {
+@layer wiraui.components {
+  wu-dock {
     display: contents;
   }
-  .wt-dock {
+  .wu-dock {
     position: absolute;
     z-index: 1;
     display: flex;
@@ -14,139 +14,139 @@
     justify-content: center;
     pointer-events: none;
   }
-  .wt-dock-bottom {
+  .wu-dock-bottom {
     bottom: 0;
     left: 0;
     width: 100%;
   }
-  .wt-dock-top {
+  .wu-dock-top {
     top: 0;
     left: 0;
     width: 100%;
   }
-  .wt-dock-left {
+  .wu-dock-left {
     top: 0;
     left: 0;
     height: 100%;
   }
-  .wt-dock-right {
+  .wu-dock-right {
     top: 0;
     right: 0;
     height: 100%;
   }
-  .wt-dock-list-container {
+  .wu-dock-list-container {
     display: flex;
     align-items: flex-end;
-    gap: var(--wt-dock-gap);
-    padding: var(--wt-dock-padding);
+    gap: var(--wu-dock-gap);
+    padding: var(--wu-dock-padding);
     pointer-events: auto;
   }
-  .wt-dock-left .wt-dock-list-container,
-  .wt-dock-right .wt-dock-list-container {
+  .wu-dock-left .wu-dock-list-container,
+  .wu-dock-right .wu-dock-list-container {
     flex-direction: column;
   }
-  .wt-dock-spacer {
+  .wu-dock-spacer {
     display: none;
   }
-  .wt-dock-center,
-  .wt-dock-list {
+  .wu-dock-center,
+  .wu-dock-list {
     display: flex;
     align-items: flex-end;
-    gap: var(--wt-dock-gap);
+    gap: var(--wu-dock-gap);
   }
-  .wt-dock-list {
+  .wu-dock-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-dock-top .wt-dock-list-container,
-  .wt-dock-top .wt-dock-center,
-  .wt-dock-top .wt-dock-list {
+  .wu-dock-top .wu-dock-list-container,
+  .wu-dock-top .wu-dock-center,
+  .wu-dock-top .wu-dock-list {
     align-items: flex-start;
   }
-  .wt-dock-left .wt-dock-center,
-  .wt-dock-left .wt-dock-list,
-  .wt-dock-right .wt-dock-center,
-  .wt-dock-right .wt-dock-list {
+  .wu-dock-left .wu-dock-center,
+  .wu-dock-left .wu-dock-list,
+  .wu-dock-right .wu-dock-center,
+  .wu-dock-right .wu-dock-list {
     flex-direction: column;
     align-items: flex-start;
   }
-  .wt-dock-right .wt-dock-list-container,
-  .wt-dock-right .wt-dock-center,
-  .wt-dock-right .wt-dock-list {
+  .wu-dock-right .wu-dock-list-container,
+  .wu-dock-right .wu-dock-center,
+  .wu-dock-right .wu-dock-list {
     align-items: flex-end;
   }
-  .wt-dock-end:empty,
-  .wt-dock-start:empty {
+  .wu-dock-end:empty,
+  .wu-dock-start:empty {
     display: none;
   }
 
   /* An icon's slot: along the dock it grows with the icon, so the neighbours make room; across the dock it keeps the
      shelf's size, and the icon grows out of the shelf (up from a bottom dock, down from a top one, sideways from the
      sides), as on macOS. */
-  .wt-dock-item {
+  .wu-dock-item {
     position: relative;
     flex: none;
-    width: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1));
-    height: var(--wt-dock-item-size);
+    width: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1));
+    height: var(--wu-dock-item-size);
     transition: width 0.12s ease-out;
   }
-  .wt-dock-left .wt-dock-item,
-  .wt-dock-right .wt-dock-item {
-    width: var(--wt-dock-item-size);
-    height: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1));
+  .wu-dock-left .wu-dock-item,
+  .wu-dock-right .wu-dock-item {
+    width: var(--wu-dock-item-size);
+    height: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1));
     transition: height 0.12s ease-out;
   }
-  .wt-dock-action {
+  .wu-dock-action {
     position: absolute;
     bottom: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1));
-    height: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1));
+    width: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1));
+    height: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1));
     transition:
       width 0.12s ease-out,
       height 0.12s ease-out;
-    border-radius: var(--wt-dock-item-radius);
-    color: var(--wt-dock-icon-color);
+    border-radius: var(--wu-dock-item-radius);
+    color: var(--wu-dock-icon-color);
     text-decoration: none;
     outline: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
-  .wt-dock-top .wt-dock-action {
+  .wu-dock-top .wu-dock-action {
     top: 0;
     bottom: auto;
   }
-  .wt-dock-left .wt-dock-action {
+  .wu-dock-left .wu-dock-action {
     top: 0;
     bottom: auto;
   }
-  .wt-dock-right .wt-dock-action {
+  .wu-dock-right .wu-dock-action {
     top: 0;
     right: 0;
     bottom: auto;
     left: auto;
   }
-  .wt-dock-action:focus-visible {
-    box-shadow: var(--wt-control-focus-shadow);
-    outline: var(--wt-control-focus-outline);
+  .wu-dock-action:focus-visible {
+    box-shadow: var(--wu-control-focus-shadow);
+    outline: var(--wu-control-focus-outline);
     outline-offset: 2px;
   }
-  .wt-dock-icon {
-    font-size: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) * 0.55);
+  .wu-dock-icon {
+    font-size: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) * 0.55);
     line-height: 1;
   }
-  .wt-dock-image {
+  .wu-dock-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
     -webkit-user-drag: none;
     user-select: none;
   }
-  .wt-dock-badge {
+  .wu-dock-badge {
     position: absolute;
     top: -0.25rem;
     right: -0.25rem;
@@ -154,137 +154,137 @@
     height: 1.125rem;
     padding: 0 0.3rem;
     border-radius: 999px;
-    background: var(--wt-danger-color);
+    background: var(--wu-danger-color);
     color: #ffffff;
     font-size: 0.6875rem;
     font-weight: 700;
     line-height: 1.125rem;
     text-align: center;
   }
-  .wt-dock-item-disabled {
+  .wu-dock-item-disabled {
     opacity: 0.45;
   }
-  .wt-dock-item-disabled .wt-dock-action {
+  .wu-dock-item-disabled .wu-dock-action {
     cursor: default;
   }
-  .wt-dock-separator {
+  .wu-dock-separator {
     flex: none;
     align-self: stretch;
     width: 1px;
     margin: 0.25rem 0.125rem;
-    background: var(--wt-dock-separator);
+    background: var(--wu-dock-separator);
   }
-  .wt-dock-left .wt-dock-separator,
-  .wt-dock-right .wt-dock-separator {
+  .wu-dock-left .wu-dock-separator,
+  .wu-dock-right .wu-dock-separator {
     width: auto;
     height: 1px;
     margin: 0.125rem 0.25rem;
   }
 
   /* The name, over the icon pointed at (beside it on the left and right). */
-  .wt-dock-tip {
+  .wu-dock-tip {
     position: absolute;
-    bottom: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) + 0.75rem);
+    bottom: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) + 0.75rem);
     left: 50%;
     padding: 0.25rem 0.625rem;
-    border-radius: var(--wt-radius-sm);
-    background: var(--wt-dock-tip-bg);
-    color: var(--wt-dock-tip-color);
-    font-family: var(--wt-font-family);
+    border-radius: var(--wu-radius-sm);
+    background: var(--wu-dock-tip-bg);
+    color: var(--wu-dock-tip-color);
+    font-family: var(--wu-font-family);
     font-size: 0.8125rem;
     white-space: nowrap;
     opacity: 0;
     transform: translate(-50%, 0.25rem);
     pointer-events: none;
     transition:
-      opacity var(--wt-transition),
-      transform var(--wt-transition);
+      opacity var(--wu-transition),
+      transform var(--wu-transition);
   }
-  .wt-dock-top .wt-dock-tip {
-    top: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) + 0.75rem);
+  .wu-dock-top .wu-dock-tip {
+    top: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) + 0.75rem);
     bottom: auto;
     transform: translate(-50%, -0.25rem);
   }
-  .wt-dock-left .wt-dock-tip,
-  .wt-dock-right .wt-dock-tip {
+  .wu-dock-left .wu-dock-tip,
+  .wu-dock-right .wu-dock-tip {
     top: 50%;
     bottom: auto;
     transform: translate(0, -50%);
   }
-  .wt-dock-left .wt-dock-tip {
-    left: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) + 0.75rem);
+  .wu-dock-left .wu-dock-tip {
+    left: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) + 0.75rem);
   }
-  .wt-dock-right .wt-dock-tip {
-    right: calc(var(--wt-dock-item-size) * var(--wt-dock-scale, 1) + 0.75rem);
+  .wu-dock-right .wu-dock-tip {
+    right: calc(var(--wu-dock-item-size) * var(--wu-dock-scale, 1) + 0.75rem);
     left: auto;
   }
-  .wt-dock-item:hover .wt-dock-tip,
-  .wt-dock-item:focus-within .wt-dock-tip {
+  .wu-dock-item:hover .wu-dock-tip,
+  .wu-dock-item:focus-within .wu-dock-tip {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-  .wt-dock-left .wt-dock-item:hover .wt-dock-tip,
-  .wt-dock-left .wt-dock-item:focus-within .wt-dock-tip,
-  .wt-dock-right .wt-dock-item:hover .wt-dock-tip,
-  .wt-dock-right .wt-dock-item:focus-within .wt-dock-tip {
+  .wu-dock-left .wu-dock-item:hover .wu-dock-tip,
+  .wu-dock-left .wu-dock-item:focus-within .wu-dock-tip,
+  .wu-dock-right .wu-dock-item:hover .wu-dock-tip,
+  .wu-dock-right .wu-dock-item:focus-within .wu-dock-tip {
     transform: translate(0, -50%);
   }
 
   /* Running apps: a dot under the icon (on the far side of the edge). */
-  .wt-dock-dot {
+  .wu-dock-dot {
     position: absolute;
     bottom: -0.4rem;
     left: 50%;
     width: 0.25rem;
     height: 0.25rem;
     border-radius: 50%;
-    background: var(--wt-dock-dot);
+    background: var(--wu-dock-dot);
     opacity: 0;
     transform: translateX(-50%);
     transition:
-      opacity var(--wt-transition),
-      width var(--wt-transition);
+      opacity var(--wu-transition),
+      width var(--wu-transition);
   }
-  .wt-dock-top .wt-dock-dot {
+  .wu-dock-top .wu-dock-dot {
     top: -0.4rem;
     bottom: auto;
   }
-  .wt-dock-left .wt-dock-dot,
-  .wt-dock-right .wt-dock-dot {
+  .wu-dock-left .wu-dock-dot,
+  .wu-dock-right .wu-dock-dot {
     top: 50%;
     bottom: auto;
     transform: translateY(-50%);
   }
-  .wt-dock-left .wt-dock-dot {
+  .wu-dock-left .wu-dock-dot {
     left: -0.4rem;
   }
-  .wt-dock-right .wt-dock-dot {
+  .wu-dock-right .wu-dock-dot {
     right: -0.4rem;
     left: auto;
   }
-  .wt-dock-item-active .wt-dock-dot {
+  .wu-dock-item-active .wu-dock-dot {
     opacity: 1;
   }
 
   /* The mac look: a frosted shelf. */
-  .wt-dock-look-mac {
-    padding: var(--wt-dock-edge);
+  .wu-dock-look-mac {
+    padding: var(--wu-dock-edge);
   }
-  .wt-dock-look-mac .wt-dock-list-container {
-    border: 1px solid var(--wt-dock-border);
-    border-radius: var(--wt-dock-radius);
-    background: var(--wt-dock-bg);
-    box-shadow: var(--wt-dock-shadow);
+  .wu-dock-look-mac .wu-dock-list-container {
+    border: 1px solid var(--wu-dock-border);
+    border-radius: var(--wu-dock-radius);
+    background: var(--wu-dock-bg);
+    box-shadow: var(--wu-dock-shadow);
     -webkit-backdrop-filter: blur(20px) saturate(1.6);
     backdrop-filter: blur(20px) saturate(1.6);
   }
-  .wt-dock-look-mac .wt-dock-bounce .wt-dock-action {
-    animation: wt-dock-bounce 1.1s ease;
+  .wu-dock-look-mac .wu-dock-bounce .wu-dock-action {
+    animation: wu-dock-bounce 1.1s ease;
   }
-  .wt-dock-look-mac.wt-dock-top .wt-dock-bounce .wt-dock-action {
-    animation-name: wt-dock-bounce-down;
+  .wu-dock-look-mac.wu-dock-top .wu-dock-bounce .wu-dock-action {
+    animation-name: wu-dock-bounce-down;
   }
-  @keyframes wt-dock-bounce {
+  @keyframes wu-dock-bounce {
     15%,
     55% {
       transform: translateY(-40%);
@@ -295,7 +295,7 @@
       transform: translateY(0);
     }
   }
-  @keyframes wt-dock-bounce-down {
+  @keyframes wu-dock-bounce-down {
     15%,
     55% {
       transform: translateY(40%);
@@ -308,113 +308,113 @@
   }
 
   /* The windows look: a full-width frosted taskbar, icons centred, a tray at the end. */
-  .wt-dock-look-windows .wt-dock-list-container {
+  .wu-dock-look-windows .wu-dock-list-container {
     display: grid;
     /* Icons in the middle; the tray at the end keeps its width, pushing the icons left on a narrow bar. */
     grid-template-columns: minmax(0, 1fr) auto minmax(max-content, 1fr);
     align-items: center;
     box-sizing: border-box;
     width: 100%;
-    min-height: var(--wt-dock-taskbar-height);
+    min-height: var(--wu-dock-taskbar-height);
     padding: 0 0.75rem;
-    border-top: 1px solid var(--wt-dock-taskbar-border);
-    background: var(--wt-dock-taskbar-bg);
+    border-top: 1px solid var(--wu-dock-taskbar-border);
+    background: var(--wu-dock-taskbar-bg);
     -webkit-backdrop-filter: blur(30px) saturate(1.5);
     backdrop-filter: blur(30px) saturate(1.5);
   }
-  .wt-dock-look-windows.wt-dock-top .wt-dock-list-container {
+  .wu-dock-look-windows.wu-dock-top .wu-dock-list-container {
     border-top: 0;
-    border-bottom: 1px solid var(--wt-dock-taskbar-border);
+    border-bottom: 1px solid var(--wu-dock-taskbar-border);
   }
-  .wt-dock-look-windows.wt-dock-left .wt-dock-list-container,
-  .wt-dock-look-windows.wt-dock-right .wt-dock-list-container {
+  .wu-dock-look-windows.wu-dock-left .wu-dock-list-container,
+  .wu-dock-look-windows.wu-dock-right .wu-dock-list-container {
     grid-template-columns: auto;
     grid-template-rows: 1fr auto 1fr;
     width: auto;
     height: 100%;
-    min-width: var(--wt-dock-taskbar-height);
+    min-width: var(--wu-dock-taskbar-height);
     padding: 0.75rem 0;
   }
-  .wt-dock-look-windows .wt-dock-spacer {
+  .wu-dock-look-windows .wu-dock-spacer {
     display: block;
   }
-  .wt-dock-look-windows .wt-dock-center,
-  .wt-dock-look-windows .wt-dock-list {
+  .wu-dock-look-windows .wu-dock-center,
+  .wu-dock-look-windows .wu-dock-list {
     align-items: center;
     gap: 0.25rem;
   }
-  .wt-dock-look-windows .wt-dock-end {
+  .wu-dock-look-windows .wu-dock-end {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 0.5rem;
     min-width: 0;
   }
-  .wt-dock-look-windows.wt-dock-left .wt-dock-end,
-  .wt-dock-look-windows.wt-dock-right .wt-dock-end {
+  .wu-dock-look-windows.wu-dock-left .wu-dock-end,
+  .wu-dock-look-windows.wu-dock-right .wu-dock-end {
     flex-direction: column;
     justify-content: flex-end;
   }
-  .wt-dock-look-windows .wt-dock-action {
-    border-radius: var(--wt-radius-sm);
+  .wu-dock-look-windows .wu-dock-action {
+    border-radius: var(--wu-radius-sm);
     transition:
-      background var(--wt-transition),
+      background var(--wu-transition),
       transform 0.1s ease;
   }
-  .wt-dock-look-windows .wt-dock-action:hover,
-  .wt-dock-look-windows .wt-dock-item-current .wt-dock-action {
-    background: var(--wt-dock-taskbar-hover);
+  .wu-dock-look-windows .wu-dock-action:hover,
+  .wu-dock-look-windows .wu-dock-item-current .wu-dock-action {
+    background: var(--wu-dock-taskbar-hover);
   }
-  .wt-dock-look-windows .wt-dock-action:active {
+  .wu-dock-look-windows .wu-dock-action:active {
     transform: scale(0.9);
   }
-  .wt-dock-look-windows .wt-dock-icon {
-    font-size: calc(var(--wt-dock-item-size) * 0.5);
+  .wu-dock-look-windows .wu-dock-icon {
+    font-size: calc(var(--wu-dock-item-size) * 0.5);
   }
-  .wt-dock-look-windows .wt-dock-tip {
+  .wu-dock-look-windows .wu-dock-tip {
     bottom: calc(100% + 0.625rem);
-    border: 1px solid var(--wt-dock-taskbar-border);
-    background: var(--wt-dock-taskbar-tip-bg);
-    color: var(--wt-dock-taskbar-tip-color);
-    box-shadow: var(--wt-dock-shadow);
+    border: 1px solid var(--wu-dock-taskbar-border);
+    background: var(--wu-dock-taskbar-tip-bg);
+    color: var(--wu-dock-taskbar-tip-color);
+    box-shadow: var(--wu-dock-shadow);
   }
-  .wt-dock-look-windows .wt-dock-dot {
+  .wu-dock-look-windows .wu-dock-dot {
     bottom: 0.125rem;
     width: 0.375rem;
     height: 0.1875rem;
     border-radius: 2px;
-    background: var(--wt-dock-taskbar-indicator);
+    background: var(--wu-dock-taskbar-indicator);
   }
-  .wt-dock-look-windows.wt-dock-top .wt-dock-dot {
+  .wu-dock-look-windows.wu-dock-top .wu-dock-dot {
     top: 0.125rem;
   }
-  .wt-dock-look-windows.wt-dock-left .wt-dock-dot {
+  .wu-dock-look-windows.wu-dock-left .wu-dock-dot {
     left: 0.125rem;
     width: 0.1875rem;
     height: 0.375rem;
   }
-  .wt-dock-look-windows.wt-dock-right .wt-dock-dot {
+  .wu-dock-look-windows.wu-dock-right .wu-dock-dot {
     right: 0.125rem;
     width: 0.1875rem;
     height: 0.375rem;
   }
-  .wt-dock-look-windows .wt-dock-item-current .wt-dock-dot {
+  .wu-dock-look-windows .wu-dock-item-current .wu-dock-dot {
     width: 1rem;
   }
-  .wt-dock-look-windows.wt-dock-left .wt-dock-item-current .wt-dock-dot,
-  .wt-dock-look-windows.wt-dock-right .wt-dock-item-current .wt-dock-dot {
+  .wu-dock-look-windows.wu-dock-left .wu-dock-item-current .wu-dock-dot,
+  .wu-dock-look-windows.wu-dock-right .wu-dock-item-current .wu-dock-dot {
     width: 0.1875rem;
     height: 1rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .wt-dock-item,
-    .wt-dock-action,
-    .wt-dock-tip,
-    .wt-dock-dot {
+    .wu-dock-item,
+    .wu-dock-action,
+    .wu-dock-tip,
+    .wu-dock-dot {
       transition: none;
     }
-    .wt-dock-look-mac .wt-dock-bounce .wt-dock-action {
+    .wu-dock-look-mac .wu-dock-bounce .wu-dock-action {
       animation: none;
     }
   }

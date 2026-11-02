@@ -1,22 +1,22 @@
 import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { WtEmptyStateType } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { WuEmptyStateType } from 'wiraui/core';
 
-export type { WtEmptyStateType };
-export type WtEmptyStateSize = 'small' | 'normal' | 'large';
+export type { WuEmptyStateType };
+export type WuEmptyStateSize = 'small' | 'normal' | 'large';
 
-const TYPES: readonly WtEmptyStateType[] = ['nodata', 'search', 'inbox', 'folder', 'error', 'offline'];
+const TYPES: readonly WuEmptyStateType[] = ['nodata', 'search', 'inbox', 'folder', 'error', 'offline'];
 
 /**
  * What a list, table or page shows when there is nothing in it:
- * `<wt-empty-state type="search"><wt-button label="ล้างตัวกรอง" (onClick)="clear()"></wt-button></wt-empty-state>`.
+ * `<wu-empty-state type="search"><wu-button label="ล้างตัวกรอง" (onClick)="clear()"></wu-button></wu-empty-state>`.
  * A drawing per `type` (no data, nothing found, empty inbox, empty folder, failed load, offline) in the theme's colours,
  * a title and a line under it in the app's language (both replaceable), and whatever is inside the tag as actions.
  * `icon` or `image` replace the drawing; `size="small"` fits inside a table's empty row.
  */
 @Component({
-  selector: 'wt-empty-state, wt-emptyState, wt-empty',
+  selector: 'wu-empty-state, wu-emptyState, wu-empty',
   standalone: true,
   imports: [NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
   templateUrl: './emptystate.component.html',
@@ -24,14 +24,14 @@ const TYPES: readonly WtEmptyStateType[] = ['nodata', 'search', 'inbox', 'folder
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // `title` is an input here: keep it off the host so the whole block gets no browser tooltip.
-  host: { class: 'wt-empty-state-host', '[attr.title]': 'null' },
+  host: { class: 'wu-empty-state-host', '[attr.title]': 'null' },
 })
-export class WtEmptyState implements OnDestroy {
+export class WuEmptyState implements OnDestroy {
   /** Which drawing and default text. Default `'nodata'`. */
-  @Input() set type(v: WtEmptyStateType | string | null | undefined) {
-    this._type = TYPES.includes(v as WtEmptyStateType) ? (v as WtEmptyStateType) : 'nodata';
+  @Input() set type(v: WuEmptyStateType | string | null | undefined) {
+    this._type = TYPES.includes(v as WuEmptyStateType) ? (v as WuEmptyStateType) : 'nodata';
   }
-  get type(): WtEmptyStateType {
+  get type(): WuEmptyStateType {
     return this._type;
   }
   /** The title. Default: the locale's title for `type`; `''` shows none. */
@@ -46,17 +46,17 @@ export class WtEmptyState implements OnDestroy {
   /** `false` leaves out the drawing (and icon / image). */
   @Input() showImage: boolean | string | null | undefined = true;
   /** `'small'` for inside tables and cards, `'large'` for a whole page. */
-  @Input() size: WtEmptyStateSize | null | undefined = 'normal';
+  @Input() size: WuEmptyStateSize | null | undefined = 'normal';
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
 
-  private _type: WtEmptyStateType = 'nodata';
-  private readonly config = inject(WtConfig);
+  private _type: WuEmptyStateType = 'nodata';
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -75,7 +75,7 @@ export class WtEmptyState implements OnDestroy {
     return this.showImage !== false && this.showImage !== 'false';
   }
   get sizeClass(): string {
-    return this.size === 'small' ? 'wt-empty-state-sm' : this.size === 'large' ? 'wt-empty-state-lg' : '';
+    return this.size === 'small' ? 'wu-empty-state-sm' : this.size === 'large' ? 'wu-empty-state-lg' : '';
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get rootStyle(): Record<string, any> | null {

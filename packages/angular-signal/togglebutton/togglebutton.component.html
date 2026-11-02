@@ -9,15 +9,15 @@
   (click)="toggle($event)"
   (blur)="onTouched()"
 >
-  <span class="wt-togglebutton-content p-togglebutton-content">
+  <span class="wu-togglebutton-content p-togglebutton-content">
     @if (icon() && iconPos() === 'left') {
-      <span [class]="'wt-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
+      <span [class]="'wu-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
     }
     @if (label()) {
-      <span class="wt-togglebutton-label p-togglebutton-label">{{ label() }}</span>
+      <span class="wu-togglebutton-label p-togglebutton-label">{{ label() }}</span>
     }
     @if (icon() && iconPos() === 'right') {
-      <span [class]="'wt-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
+      <span [class]="'wu-togglebutton-icon p-togglebutton-icon ' + icon()" aria-hidden="true"></span>
     }
   </span>
 </button>

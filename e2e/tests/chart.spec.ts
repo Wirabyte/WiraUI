@@ -24,7 +24,7 @@ test('draws a Chart.js chart on a canvas with the theme font; a click on a bar r
   // The chart took the theme's font family.
   const font = await page.evaluate(() => {
     const host = document.querySelector('#ch') as HTMLElement;
-    return getComputedStyle(host).getPropertyValue('--wt-font-family').trim();
+    return getComputedStyle(host).getPropertyValue('--wu-font-family').trim();
   });
   expect(font.length).toBeGreaterThan(0);
   // Click the middle of the third bar's column, low enough to hit the bar.

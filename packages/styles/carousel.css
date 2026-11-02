@@ -1,58 +1,58 @@
-/* wt-carousel. Shared by wiratheme v1, v2 and v3. Items in a row (or a column) that slide a page at a time, round arrow
+/* wu-carousel. Shared by wiraui v1, v2 and v3. Items in a row (or a column) that slide a page at a time, round arrow
    buttons beside them and a row of bars under them. Items out of view are inert, so Tab never lands on a hidden one. */
-@layer wiratheme.components {
-  wt-carousel {
+@layer wiraui.components {
+  wu-carousel {
     display: block;
     max-width: 100%;
     min-width: 0;
   }
-  .wt-carousel {
+  .wu-carousel {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     max-width: 100%;
     min-width: 0;
-    color: var(--wt-text);
+    color: var(--wu-text);
   }
-  .wt-carousel-content-container {
+  .wu-carousel-content-container {
     display: flex;
     flex-direction: column;
     min-width: 0;
   }
-  .wt-carousel-content {
+  .wu-carousel-content {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--wt-carousel-content-gap);
+    gap: var(--wu-carousel-content-gap);
     min-width: 0;
   }
-  .wt-carousel-vertical .wt-carousel-content {
+  .wu-carousel-vertical .wu-carousel-content {
     flex-direction: column;
     align-items: stretch;
   }
-  .wt-carousel-viewport {
+  .wu-carousel-viewport {
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
     touch-action: pan-y;
   }
-  .wt-carousel-vertical .wt-carousel-viewport {
+  .wu-carousel-vertical .wu-carousel-viewport {
     width: 100%;
     touch-action: pan-x;
   }
-  .wt-carousel-item-list {
+  .wu-carousel-item-list {
     display: flex;
     flex-direction: row;
-    transition: transform var(--wt-carousel-transition-duration) ease;
+    transition: transform var(--wu-carousel-transition-duration) ease;
   }
-  .wt-carousel-vertical .wt-carousel-item-list {
+  .wu-carousel-vertical .wu-carousel-item-list {
     flex-direction: column;
     height: 100%;
   }
-  .wt-carousel-item-list.wt-carousel-still {
+  .wu-carousel-item-list.wu-carousel-still {
     transition: none;
   }
-  .wt-carousel-item {
+  .wu-carousel-item {
     box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
@@ -60,91 +60,91 @@
     min-height: 0;
     overflow: hidden;
   }
-  .wt-carousel-prev-button,
-  .wt-carousel-next-button {
+  .wu-carousel-prev-button,
+  .wu-carousel-next-button {
     display: grid;
     flex: none;
     place-items: center;
     align-self: center;
-    width: var(--wt-carousel-nav-size);
-    height: var(--wt-carousel-nav-size);
+    width: var(--wu-carousel-nav-size);
+    height: var(--wu-carousel-nav-size);
     margin: 0;
     padding: 0;
     border: 0;
     border-radius: 50%;
     background: transparent;
-    color: var(--wt-carousel-nav-color);
+    color: var(--wu-carousel-nav-color);
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-carousel-prev-button svg,
-  .wt-carousel-next-button svg {
+  .wu-carousel-prev-button svg,
+  .wu-carousel-next-button svg {
     width: 1rem;
     height: 1rem;
   }
-  .wt-carousel-prev-button:not([aria-disabled='true']):hover,
-  .wt-carousel-next-button:not([aria-disabled='true']):hover {
-    background: var(--wt-carousel-nav-hover-bg);
-    color: var(--wt-carousel-nav-hover-color);
+  .wu-carousel-prev-button:not([aria-disabled='true']):hover,
+  .wu-carousel-next-button:not([aria-disabled='true']):hover {
+    background: var(--wu-carousel-nav-hover-bg);
+    color: var(--wu-carousel-nav-hover-color);
   }
   /* Still focusable at an end (focus is not lost under the keyboard), just greyed out. */
-  .wt-carousel-prev-button[aria-disabled='true'],
-  .wt-carousel-next-button[aria-disabled='true'] {
-    opacity: var(--wt-disabled-opacity);
+  .wu-carousel-prev-button[aria-disabled='true'],
+  .wu-carousel-next-button[aria-disabled='true'] {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-carousel-prev-button:focus-visible,
-  .wt-carousel-next-button:focus-visible,
-  .wt-carousel-indicator-button:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-carousel-prev-button:focus-visible,
+  .wu-carousel-next-button:focus-visible,
+  .wu-carousel-indicator-button:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-carousel-indicator-list {
+  .wu-carousel-indicator-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--wt-carousel-indicator-gap);
+    gap: var(--wu-carousel-indicator-gap);
     margin: 0;
-    padding: var(--wt-carousel-indicator-list-padding);
+    padding: var(--wu-carousel-indicator-list-padding);
     list-style: none;
   }
-  .wt-carousel-indicator {
+  .wu-carousel-indicator {
     display: flex;
   }
   /* A 1.5rem tall target around a thin bar. */
-  .wt-carousel-indicator-button {
+  .wu-carousel-indicator-button {
     display: grid;
     place-items: center;
-    min-width: var(--wt-carousel-indicator-width);
+    min-width: var(--wu-carousel-indicator-width);
     min-height: 1.5rem;
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: var(--wt-carousel-indicator-radius);
+    border-radius: var(--wu-carousel-indicator-radius);
     background: none;
     cursor: pointer;
   }
-  .wt-carousel-indicator-button::after {
+  .wu-carousel-indicator-button::after {
     content: '';
-    width: var(--wt-carousel-indicator-width);
-    height: var(--wt-carousel-indicator-height);
-    border-radius: var(--wt-carousel-indicator-radius);
-    background: var(--wt-carousel-indicator-bg);
-    transition: background-color var(--wt-transition);
+    width: var(--wu-carousel-indicator-width);
+    height: var(--wu-carousel-indicator-height);
+    border-radius: var(--wu-carousel-indicator-radius);
+    background: var(--wu-carousel-indicator-bg);
+    transition: background-color var(--wu-transition);
   }
-  .wt-carousel-indicator-button:hover::after {
-    background: var(--wt-carousel-indicator-hover-bg);
+  .wu-carousel-indicator-button:hover::after {
+    background: var(--wu-carousel-indicator-hover-bg);
   }
-  .wt-carousel-indicator-active .wt-carousel-indicator-button::after {
-    background: var(--wt-carousel-indicator-active-bg);
+  .wu-carousel-indicator-active .wu-carousel-indicator-button::after {
+    background: var(--wu-carousel-indicator-active-bg);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-carousel-item-list {
+    .wu-carousel-item-list {
       transition: none;
     }
   }

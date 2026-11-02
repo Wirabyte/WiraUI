@@ -6,22 +6,22 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-toggleswitch id="d-notify" [(ngModel)]="newsletter" [label]="tx('รับข่าวสารทางอีเมล')"></wt-toggleswitch>
+        <wu-toggleswitch id="d-notify" [(ngModel)]="newsletter" [label]="tx('รับข่าวสารทางอีเมล')"></wu-toggleswitch>
         <span class="docs-demo-output">newsletter: <code id="d-notify-value">{{ newsletter | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-toggleswitch [(ngModel)]="sizeValue" size="small" [label]="tx('เล็ก')"></wt-toggleswitch>
-        <wt-toggleswitch [(ngModel)]="sizeValue" [label]="tx('ปกติ')"></wt-toggleswitch>
-        <wt-toggleswitch [(ngModel)]="sizeValue" size="large" [label]="tx('ใหญ่')"></wt-toggleswitch>
+        <wu-toggleswitch [(ngModel)]="sizeValue" size="small" [label]="tx('เล็ก')"></wu-toggleswitch>
+        <wu-toggleswitch [(ngModel)]="sizeValue" [label]="tx('ปกติ')"></wu-toggleswitch>
+        <wu-toggleswitch [(ngModel)]="sizeValue" size="large" [label]="tx('ใหญ่')"></wu-toggleswitch>
       </docs-demo>
     </docs-section>
 
     <docs-section id="values" [section]="sec['values']">
       <docs-demo [html]="code['values']">
-        <wt-toggleswitch id="d-active" [(ngModel)]="status" trueValue="active" falseValue="inactive" [label]="tx('เปิดใช้งานบัญชี')"></wt-toggleswitch>
+        <wu-toggleswitch id="d-active" [(ngModel)]="status" trueValue="active" falseValue="inactive" [label]="tx('เปิดใช้งานบัญชี')"></wu-toggleswitch>
         <span class="docs-demo-output">status: <code id="d-active-value">{{ status | json }}</code></span>
       </docs-demo>
     </docs-section>
@@ -29,17 +29,17 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-toggleswitch id="r-email" formControlName="email" [label]="tx('แจ้งเตือนทางอีเมล')"></wt-toggleswitch>
-          <wt-toggleswitch id="r-sms" formControlName="sms" [label]="tx('แจ้งเตือนทาง SMS')"></wt-toggleswitch>
+          <wu-toggleswitch id="r-email" formControlName="email" [label]="tx('แจ้งเตือนทางอีเมล')"></wu-toggleswitch>
+          <wu-toggleswitch id="r-sms" formControlName="sms" [label]="tx('แจ้งเตือนทาง SMS')"></wu-toggleswitch>
         </form>
         <div class="docs-demo-actions">
-          <wt-button
+          <wu-button
             id="r-lock"
             [label]="form.controls.sms.disabled ? 'enable() SMS' : 'disable() SMS'"
             size="small"
             severity="secondary"
             (onClick)="toggleLock()"
-          ></wt-button>
+          ></wu-button>
           <span class="docs-demo-output">value: <code id="r-value">{{ form.getRawValue() | json }}</code></span>
         </div>
       </docs-demo>
@@ -47,9 +47,9 @@
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <wt-toggleswitch [ngModel]="true" [disabled]="true" [label]="tx('ปิดอยู่ (เปิด)')"></wt-toggleswitch>
-        <wt-toggleswitch [ngModel]="false" [disabled]="true" [label]="tx('ปิดอยู่')"></wt-toggleswitch>
-        <wt-toggleswitch [invalid]="true" label="Invalid"></wt-toggleswitch>
+        <wu-toggleswitch [ngModel]="true" [disabled]="true" [label]="tx('ปิดอยู่ (เปิด)')"></wu-toggleswitch>
+        <wu-toggleswitch [ngModel]="false" [disabled]="true" [label]="tx('ปิดอยู่')"></wu-toggleswitch>
+        <wu-toggleswitch [invalid]="true" label="Invalid"></wu-toggleswitch>
       </docs-demo>
     </docs-section>
   </ng-template>

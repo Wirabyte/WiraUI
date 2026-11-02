@@ -13,11 +13,11 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 
-/** A real <fieldset> with a legend, optionally collapsible: `<wt-fieldset legend="ที่อยู่" toggleable [(collapsed)]="closed">`. */
+/** A real <fieldset> with a legend, optionally collapsible: `<wu-fieldset legend="ที่อยู่" toggleable [(collapsed)]="closed">`. */
 @Component({
-  selector: 'wt-fieldset',
+  selector: 'wu-fieldset',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './fieldset.component.html',
@@ -25,8 +25,8 @@ import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWT_SKIP_VERSION
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtFieldset {
-  private readonly slotTemplates = contentChildren(WtTemplate);
+export class WuFieldset {
+  private readonly slotTemplates = contentChildren(WuTemplate);
   private readonly headerRef = contentChild('header', { read: TemplateRef });
   readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
   readonly legend = input<string>();
@@ -36,7 +36,7 @@ export class WtFieldset {
 
   readonly onToggle = output<{ collapsed: boolean }>();
 
-  readonly contentId = ɵuniqueId('wt-fieldset-content');
+  readonly contentId = ɵuniqueId('wu-fieldset-content');
   readonly isCollapsed = computed(() => this.toggleable() && !!this.collapsed());
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   readonly styleClass = input<string | null | undefined>();
@@ -52,14 +52,14 @@ export class WtFieldset {
   });
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
-    const c = ['wt-fieldset', 'p-fieldset', 'p-component'];
-    if (this.toggleable()) c.push('wt-fieldset-toggleable', 'p-fieldset-toggleable');
-    if (this.isCollapsed()) c.push('wt-fieldset-collapsed');
+    const c = ['wu-fieldset', 'p-fieldset', 'p-component'];
+    if (this.toggleable()) c.push('wu-fieldset-toggleable', 'p-fieldset-toggleable');
+    if (this.isCollapsed()) c.push('wu-fieldset-collapsed');
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   toggle(): void {

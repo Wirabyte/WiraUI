@@ -1,4 +1,4 @@
-/** What wt-fileupload needs to know about a file; a browser `File` fits. */
+/** What wu-fileupload needs to know about a file; a browser `File` fits. */
 export interface FileLike {
   name: string;
   size: number;

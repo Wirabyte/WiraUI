@@ -1,11 +1,11 @@
-/* wt-tree. Shared by wiratheme v1, v2 and v3. Rows indented by depth, an arrow that turns as a node opens, check boxes
-   from wt-checkbox's stylesheet and the search box from wt-select's (both loaded with it). */
-@layer wiratheme.components {
-  wt-tree {
+/* wu-tree. Shared by wiraui v1, v2 and v3. Rows indented by depth, an arrow that turns as a node opens, check boxes
+   from wu-checkbox's stylesheet and the search box from wu-select's (both loaded with it). */
+@layer wiraui.components {
+  wu-tree {
     display: block;
     max-width: 100%;
   }
-  .wt-tree {
+  .wu-tree {
     position: relative;
     box-sizing: border-box;
     max-width: 100%;
@@ -13,54 +13,54 @@
     flex-direction: column;
     gap: 0.5rem;
     min-width: 0;
-    padding: var(--wt-tree-padding);
-    border: var(--wt-tree-border-width) solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-tree-bg);
-    color: var(--wt-text);
+    padding: var(--wu-tree-padding);
+    border: var(--wu-tree-border-width) solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-tree-bg);
+    color: var(--wu-text);
   }
-  .wt-tree-container-wrap {
+  .wu-tree-container-wrap {
     position: relative;
     min-height: 0;
     overflow: auto;
   }
-  .wt-tree-container {
+  .wu-tree-container {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-tree-gap);
+    gap: var(--wu-tree-gap);
     margin: 0;
     padding: 0;
     list-style: none;
     outline: none;
   }
-  .wt-tree-node {
+  .wu-tree-node {
     outline: none;
   }
-  .wt-tree-node-content {
+  .wu-tree-node-content {
     display: flex;
     align-items: center;
     gap: 0.25rem;
     min-width: 0;
-    padding-block: var(--wt-tree-node-padding-y);
-    padding-inline-end: var(--wt-tree-node-padding-x);
-    border-radius: var(--wt-tree-node-radius);
-    color: var(--wt-text);
+    padding-block: var(--wu-tree-node-padding-y);
+    padding-inline-end: var(--wu-tree-node-padding-x);
+    border-radius: var(--wu-tree-node-radius);
+    color: var(--wu-text);
     user-select: none;
   }
-  .wt-tree-node-selectable {
+  .wu-tree-node-selectable {
     cursor: pointer;
   }
-  .wt-tree-node-selectable:not(.wt-tree-node-selected):hover {
-    background: var(--wt-hover-bg);
+  .wu-tree-node-selectable:not(.wu-tree-node-selected):hover {
+    background: var(--wu-hover-bg);
   }
-  .wt-tree-node:focus-visible > .wt-tree-node-content {
-    box-shadow: inset 0 0 0 2px var(--wt-field-focus-border);
+  .wu-tree-node:focus-visible > .wu-tree-node-content {
+    box-shadow: inset 0 0 0 2px var(--wu-field-focus-border);
   }
-  .wt-tree-node-selected {
-    background: var(--wt-select-option-selected-bg);
-    color: var(--wt-select-option-selected-color);
+  .wu-tree-node-selected {
+    background: var(--wu-select-option-selected-bg);
+    color: var(--wu-select-option-selected-color);
   }
-  .wt-tree-toggler {
+  .wu-tree-toggler {
     display: inline-grid;
     flex: none;
     place-items: center;
@@ -70,61 +70,61 @@
     border: 0;
     border-radius: 50%;
     background: transparent;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     cursor: pointer;
   }
-  .wt-tree-toggler:hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-text);
+  .wu-tree-toggler:hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-text);
   }
-  .wt-tree-toggler svg {
+  .wu-tree-toggler svg {
     width: 0.875rem;
     height: 0.875rem;
     transition: rotate 0.15s ease;
   }
-  .wt-tree-toggler-open svg {
+  .wu-tree-toggler-open svg {
     rotate: 90deg;
   }
-  [dir='rtl'] .wt-tree-toggler:not(.wt-tree-toggler-open) svg {
+  [dir='rtl'] .wu-tree-toggler:not(.wu-tree-toggler-open) svg {
     rotate: 180deg;
   }
-  .wt-tree-toggler-hidden {
+  .wu-tree-toggler-hidden {
     visibility: hidden;
   }
-  .wt-tree-check {
+  .wu-tree-check {
     flex: none;
     margin-inline-end: 0.25rem;
     pointer-events: none;
   }
-  .wt-tree-check-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-tree-check-disabled {
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-tree-node-icon {
+  .wu-tree-node-icon {
     flex: none;
     margin-inline-end: 0.25rem;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
   }
-  .wt-tree-node-selected .wt-tree-node-icon,
-  .wt-tree-node-selected .wt-tree-toggler {
+  .wu-tree-node-selected .wu-tree-node-icon,
+  .wu-tree-node-selected .wu-tree-toggler {
     color: inherit;
   }
-  .wt-tree-node-label {
+  .wu-tree-node-label {
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  .wt-tree-empty {
-    padding: var(--wt-tree-node-padding-y) var(--wt-tree-node-padding-x);
-    color: var(--wt-text-muted);
+  .wu-tree-empty {
+    padding: var(--wu-tree-node-padding-y) var(--wu-tree-node-padding-x);
+    color: var(--wu-text-muted);
   }
-  .wt-tree-mask {
+  .wu-tree-mask {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: color-mix(in srgb, var(--wt-tree-bg) 65%, transparent);
+    background: color-mix(in srgb, var(--wu-tree-bg) 65%, transparent);
   }
-  .wt-tree-spinner {
+  .wu-tree-spinner {
     display: block;
     box-sizing: border-box;
     width: 0.875rem;
@@ -132,24 +132,24 @@
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: wt-tree-spin 0.75s linear infinite;
+    animation: wu-tree-spin 0.75s linear infinite;
   }
-  .wt-tree-spinner-lg {
+  .wu-tree-spinner-lg {
     width: 2rem;
     height: 2rem;
     border-width: 3px;
-    color: var(--wt-primary-color);
+    color: var(--wu-primary-color);
   }
-  @keyframes wt-tree-spin {
+  @keyframes wu-tree-spin {
     to {
       transform: rotate(360deg);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-tree-toggler svg {
+    .wu-tree-toggler svg {
       transition: none;
     }
-    .wt-tree-spinner {
+    .wu-tree-spinner {
       animation-duration: 2s;
     }
   }

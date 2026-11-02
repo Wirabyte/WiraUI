@@ -11,14 +11,14 @@
           <input id="d-ic-file" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
         </div>
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-basic"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
             [aspectRatio]="1"
             (imageCropped)="basicCropped($event)"
             (loadImageFailed)="loadImageFailed()"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         @if (isLoadFailed) {
           <span id="d-ic-failed" class="docs-demo-output">{{ tx('เปิดรูปไม่ได้') }}</span>
@@ -34,16 +34,16 @@
 
     <docs-section id="ratio" [section]="sec['ratio']">
       <docs-demo [html]="code['ratio']" [ts]="ts['ratio']" layout="stack">
-        <wt-selectbutton id="d-ic-ratio" [options]="local(ratios)" optionLabel="label" optionValue="value" [(ngModel)]="ratio" [allowEmpty]="false"></wt-selectbutton>
+        <wu-selectbutton id="d-ic-ratio" [options]="local(ratios)" optionLabel="label" optionValue="value" [(ngModel)]="ratio" [allowEmpty]="false"></wu-selectbutton>
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-ratio-cropper"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
             [aspectRatio]="ratio"
             [maintainAspectRatio]="ratio !== 'free'"
             (imageCropped)="ratioCropped($event)"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <span class="docs-demo-output">
           aspectRatio: <code id="d-ic-ratio-value">{{ ratio }}</code> · imageCropped: <code id="d-ic-ratio-size">{{ sizeOf(ratioResult) }}</code>
@@ -54,7 +54,7 @@
     <docs-section id="round" [section]="sec['round']">
       <docs-demo [html]="code['round']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-round"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
@@ -62,7 +62,7 @@
             [roundCropper]="true"
             [resizeToWidth]="256"
             (imageCropped)="avatarCropped($event)"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
           @if (avatarResult?.objectUrl; as url) {
@@ -77,7 +77,7 @@
       <docs-demo [html]="code['toolbar']" [ts]="ts['toolbar']" layout="stack">
         <div class="docs-demo-labelled">
           <span id="d-ic-toolbar-label">{{ tx('ปุ่มในแถบเครื่องมือ') }}</span>
-          <wt-selectbutton
+          <wu-selectbutton
             id="d-ic-toolbar-pick"
             [options]="local(toolbarChoices)"
             optionLabel="label"
@@ -85,15 +85,15 @@
             [(ngModel)]="toolbarChoice"
             [allowEmpty]="false"
             ariaLabelledBy="d-ic-toolbar-label"
-          ></wt-selectbutton>
+          ></wu-selectbutton>
         </div>
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-toolbar"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
             [toolbar]="toolbars[toolbarChoice]"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <span class="docs-demo-output">toolbar: <code id="d-ic-toolbar-value">{{ toolbars[toolbarChoice] | json }}</code></span>
       </docs-demo>
@@ -102,11 +102,11 @@
     <docs-section id="tools-template" [section]="sec['tools-template']">
       <docs-demo [html]="code['tools-template']" [ts]="ts['tools-template']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper id="d-ic-own-tools" [imageBase64]="samplePhoto" [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
+          <wu-imagecropper id="d-ic-own-tools" [imageBase64]="samplePhoto" [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
             <ng-template #tools let-cropper>
-              <wt-button id="d-ic-use" [label]="tx('ใช้รูปนี้')" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wt-button>
+              <wu-button id="d-ic-use" [label]="tx('ใช้รูปนี้')" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wu-button>
             </ng-template>
-          </wt-imagecropper>
+          </wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
           @if (usedResult?.objectUrl; as url) {
@@ -117,7 +117,7 @@
       </docs-demo>
       <docs-demo [html]="code['tools-rotate']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-rotate-only"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
@@ -125,7 +125,7 @@
             [(transform)]="ownTransform"
           >
             <ng-template #tools let-cropper>
-              <wt-button
+              <wu-button
                 id="d-ic-own-left"
                 icon="wi wi-undo"
                 severity="secondary"
@@ -133,8 +133,8 @@
                 [rounded]="true"
                 [ariaLabel]="tx('หมุนซ้าย')"
                 (onClick)="cropper.rotateLeft()"
-              ></wt-button>
-              <wt-button
+              ></wu-button>
+              <wu-button
                 id="d-ic-own-right"
                 icon="wi wi-refresh"
                 severity="secondary"
@@ -142,9 +142,9 @@
                 [rounded]="true"
                 [ariaLabel]="tx('หมุนขวา')"
                 (onClick)="cropper.rotateRight()"
-              ></wt-button>
+              ></wu-button>
             </ng-template>
-          </wt-imagecropper>
+          </wu-imagecropper>
         </div>
         <span class="docs-demo-output">rotate: <code id="d-ic-own-rotate">{{ ownTransform.rotate || 0 }}°</code></span>
       </docs-demo>
@@ -153,7 +153,7 @@
     <docs-section id="output" [section]="sec['output']">
       <docs-demo [html]="code['output']" [ts]="ts['output']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-output"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
@@ -164,7 +164,7 @@
             [onlyScaleDown]="true"
             backgroundColor="#ffffff"
             (imageCropped)="resizedCropped($event)"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
           @if (resizedResult?.objectUrl; as url) {
@@ -180,7 +180,7 @@
     <docs-section id="tools" [section]="sec['tools']">
       <docs-demo [html]="code['tools']" [ts]="ts['tools']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             #photoCropper
             id="d-ic-tools"
             [imageBase64]="samplePhoto"
@@ -189,16 +189,16 @@
             [showToolbar]="false"
             [autoCrop]="false"
             [(transform)]="transform"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
-          <wt-button id="d-ic-rotate-left" [label]="tx('หมุนซ้าย')" icon="wi wi-undo" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateLeft()"></wt-button>
-          <wt-button id="d-ic-rotate-right" [label]="tx('หมุนขวา')" icon="wi wi-refresh" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateRight()"></wt-button>
-          <wt-button id="d-ic-flip" [label]="tx('พลิกแนวนอน')" severity="secondary" [outlined]="true" (onClick)="photoCropper.flipHorizontal()"></wt-button>
-          <wt-button id="d-ic-zoom-in" [label]="tx('ซูมเข้า')" icon="wi wi-plus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomIn()"></wt-button>
-          <wt-button id="d-ic-zoom-out" [label]="tx('ซูมออก')" icon="wi wi-minus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomOut()"></wt-button>
-          <wt-button id="d-ic-reset" [label]="tx('เริ่มใหม่')" severity="secondary" [text]="true" (onClick)="photoCropper.reset()"></wt-button>
-          <wt-button id="d-ic-crop" [label]="tx('ตัดรูป')" icon="wi wi-check" (onClick)="cropNow(photoCropper)"></wt-button>
+          <wu-button id="d-ic-rotate-left" [label]="tx('หมุนซ้าย')" icon="wi wi-undo" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateLeft()"></wu-button>
+          <wu-button id="d-ic-rotate-right" [label]="tx('หมุนขวา')" icon="wi wi-refresh" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateRight()"></wu-button>
+          <wu-button id="d-ic-flip" [label]="tx('พลิกแนวนอน')" severity="secondary" [outlined]="true" (onClick)="photoCropper.flipHorizontal()"></wu-button>
+          <wu-button id="d-ic-zoom-in" [label]="tx('ซูมเข้า')" icon="wi wi-plus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomIn()"></wu-button>
+          <wu-button id="d-ic-zoom-out" [label]="tx('ซูมออก')" icon="wi wi-minus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomOut()"></wu-button>
+          <wu-button id="d-ic-reset" [label]="tx('เริ่มใหม่')" severity="secondary" [text]="true" (onClick)="photoCropper.reset()"></wu-button>
+          <wu-button id="d-ic-crop" [label]="tx('ตัดรูป')" icon="wi wi-check" (onClick)="cropNow(photoCropper)"></wu-button>
         </div>
         <div class="docs-demo-actions">
           @if (manualResult?.objectUrl; as url) {
@@ -215,7 +215,7 @@
       <docs-demo [html]="code['output-type']" [ts]="ts['output-type']" layout="stack">
         <div class="docs-demo-labelled">
           <span id="d-ic-type-label">{{ tx('ชนิดผลลัพธ์') }} (output)</span>
-          <wt-selectbutton
+          <wu-selectbutton
             id="d-ic-type-pick"
             [options]="outputKinds"
             optionLabel="label"
@@ -223,10 +223,10 @@
             [(ngModel)]="outputKind"
             [allowEmpty]="false"
             ariaLabelledBy="d-ic-type-label"
-          ></wt-selectbutton>
+          ></wu-selectbutton>
         </div>
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             #typeCropper
             id="d-ic-type"
             [imageBase64]="samplePhoto"
@@ -235,11 +235,11 @@
             [resizeToWidth]="256"
             [output]="outputKind"
             (imageCropped)="typedCropped($event)"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
-          <wt-button id="d-ic-crop-blob" label="crop('blob')" severity="secondary" [outlined]="true" size="small" (onClick)="cropAs(typeCropper, 'blob')"></wt-button>
-          <wt-button id="d-ic-crop-base64" label="crop('base64')" severity="secondary" [outlined]="true" size="small" (onClick)="cropAs(typeCropper, 'base64')"></wt-button>
+          <wu-button id="d-ic-crop-blob" label="crop('blob')" severity="secondary" [outlined]="true" size="small" (onClick)="cropAs(typeCropper, 'blob')"></wu-button>
+          <wu-button id="d-ic-crop-base64" label="crop('base64')" severity="secondary" [outlined]="true" size="small" (onClick)="cropAs(typeCropper, 'base64')"></wu-button>
         </div>
         <dl class="docs-ic-fields">
           <dt>from</dt>
@@ -257,7 +257,7 @@
     <docs-section id="upload" [section]="sec['upload']">
       <docs-demo [html]="code['upload']" [ts]="ts['upload']" layout="stack">
         <div [style]="cropperBoxStyle">
-          <wt-imagecropper
+          <wu-imagecropper
             id="d-ic-upload"
             [imageBase64]="samplePhoto"
             [imageChangedEvent]="imageChangedEvent"
@@ -265,10 +265,10 @@
             [resizeToWidth]="512"
             [onlyScaleDown]="true"
             (imageCropped)="photoCropped($event)"
-          ></wt-imagecropper>
+          ></wu-imagecropper>
         </div>
         <div class="docs-demo-actions">
-          <wt-button id="d-ic-save" [label]="tx('บันทึกรูป')" icon="wi wi-upload" [loading]="isApiSaving" [disabled]="!photoResult?.blob" (onClick)="savePhoto()"></wt-button>
+          <wu-button id="d-ic-save" [label]="tx('บันทึกรูป')" icon="wi wi-upload" [loading]="isApiSaving" [disabled]="!photoResult?.blob" (onClick)="savePhoto()"></wu-button>
           <span class="docs-demo-output">
             {{ tx('บันทึกแล้ว') }}: <code id="d-ic-saved">{{ savedCount }}</code> {{ tx('ครั้ง') }} · blob: <code id="d-ic-upload-kb">{{ kb(photoResult) }}</code>
           </span>

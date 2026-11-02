@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtSelectButton } from './selectbutton.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuSelectButton } from './selectbutton.component';
 
-/** For NgModule apps. Standalone apps can import `WtSelectButton` directly. */
+/** For NgModule apps. Standalone apps can import `WuSelectButton` directly. */
 @NgModule({
-  imports: [WtSelectButton, WtTemplate],
-  exports: [WtSelectButton, WtTemplate],
+  imports: [WuSelectButton, WuTemplate],
+  exports: [WuSelectButton, WuTemplate],
 })
-export class WtSelectButtonModule {}
+export class WuSelectButtonModule {}

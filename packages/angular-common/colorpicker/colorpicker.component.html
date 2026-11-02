@@ -1,8 +1,8 @@
 <div
-  class="wt-colorpicker p-colorpicker p-component"
-  [class.wt-colorpicker-inline]="inline"
+  class="wu-colorpicker p-colorpicker p-component"
+  [class.wu-colorpicker-inline]="inline"
   [class.p-colorpicker-overlay]="!inline"
-  [class.wt-colorpicker-disabled]="disabled"
+  [class.wu-colorpicker-disabled]="disabled"
   [class.p-disabled]="disabled"
   [class]="styleClass || ''"
   [style]="rootStyle"
@@ -11,7 +11,7 @@
     *ngIf="!inline"
     #preview
     type="button"
-    class="wt-colorpicker-preview p-colorpicker-preview p-inputtext"
+    class="wu-colorpicker-preview p-colorpicker-preview p-inputtext"
     [id]="inputId || null"
     [disabled]="disabled"
     [attr.tabindex]="tabindex"
@@ -21,20 +21,20 @@
     (click)="toggle()"
     (keydown)="previewKeydown($event)"
   >
-    <span class="wt-colorpicker-preview-color" [style.background-color]="hex" aria-hidden="true"></span>
+    <span class="wu-colorpicker-preview-color" [style.background-color]="hex" aria-hidden="true"></span>
   </button>
   <div
     *ngIf="inline || open"
     #panel
-    class="wt-colorpicker-panel p-colorpicker-panel"
+    class="wu-colorpicker-panel p-colorpicker-panel"
     [attr.popover]="inline ? null : 'manual'"
-    [class.wt-colorpicker-overlay-panel]="!inline"
+    [class.wu-colorpicker-overlay-panel]="!inline"
     [class.p-colorpicker-panel-inline]="inline"
     [attr.role]="inline ? 'group' : 'dialog'"
     [attr.aria-label]="ariaLabel || t.colorPicker"
   >
     <div
-      class="wt-colorpicker-area p-colorpicker-color-selector"
+      class="wu-colorpicker-area p-colorpicker-color-selector"
       role="slider"
       [style.background-color]="hueColor"
       [attr.tabindex]="disabled ? null : 0"
@@ -44,10 +44,10 @@
       (pointerdown)="areaDown($event)"
       (keydown)="areaKey($event)"
     >
-      <span class="wt-colorpicker-area-handle p-colorpicker-color-handle" [style.left.%]="hsb.s" [style.top.%]="100 - hsb.b" [style.background-color]="hex"></span>
+      <span class="wu-colorpicker-area-handle p-colorpicker-color-handle" [style.left.%]="hsb.s" [style.top.%]="100 - hsb.b" [style.background-color]="hex"></span>
     </div>
     <div
-      class="wt-colorpicker-hue p-colorpicker-hue"
+      class="wu-colorpicker-hue p-colorpicker-hue"
       role="slider"
       aria-valuemin="0"
       aria-valuemax="360"
@@ -58,13 +58,13 @@
       (pointerdown)="hueDown($event)"
       (keydown)="hueKey($event)"
     >
-      <span class="wt-colorpicker-hue-handle p-colorpicker-hue-handle" [style.left.%]="hsb.h / 3.6" [style.background-color]="hueColor"></span>
+      <span class="wu-colorpicker-hue-handle p-colorpicker-hue-handle" [style.left.%]="hsb.h / 3.6" [style.background-color]="hueColor"></span>
     </div>
-    <div class="wt-colorpicker-footer">
-      <span class="wt-colorpicker-swatch" [style.background-color]="hex" aria-hidden="true"></span>
+    <div class="wu-colorpicker-footer">
+      <span class="wu-colorpicker-swatch" [style.background-color]="hex" aria-hidden="true"></span>
       <input
         type="text"
-        class="wt-inputtext wt-colorpicker-hex"
+        class="wu-inputtext wu-colorpicker-hex"
         maxlength="7"
         spellcheck="false"
         autocomplete="off"

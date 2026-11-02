@@ -7,89 +7,89 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="content"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-stepper id="d-stp-basic" [(value)]="step">
-          <wt-step-list>
-            <wt-step [value]="1">{{ tx('ข้อมูลพื้นฐาน') }}</wt-step>
-            <wt-step [value]="2">{{ tx('ที่อยู่') }}</wt-step>
-            <wt-step [value]="3">{{ tx('ยืนยัน') }}</wt-step>
-          </wt-step-list>
-          <wt-step-panels>
-            <wt-step-panel [value]="1">
+        <wu-stepper id="d-stp-basic" [(value)]="step">
+          <wu-step-list>
+            <wu-step [value]="1">{{ tx('ข้อมูลพื้นฐาน') }}</wu-step>
+            <wu-step [value]="2">{{ tx('ที่อยู่') }}</wu-step>
+            <wu-step [value]="3">{{ tx('ยืนยัน') }}</wu-step>
+          </wu-step-list>
+          <wu-step-panels>
+            <wu-step-panel [value]="1">
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('กรอกชื่อ วันเกิด และเลขประจำตัวประชาชน') }}</p>
                 <div class="docs-steps-actions">
                   <span></span>
-                  <wt-button id="d-stp-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
+                  <wu-button id="d-stp-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-            <wt-step-panel [value]="2">
+            </wu-step-panel>
+            <wu-step-panel [value]="2">
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ที่อยู่ตามทะเบียนบ้านและที่อยู่ปัจจุบัน') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button id="d-stp-back-2" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                  <wt-button id="d-stp-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
+                  <wu-button id="d-stp-back-2" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wu-button>
+                  <wu-button id="d-stp-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-            <wt-step-panel [value]="3">
+            </wu-step-panel>
+            <wu-step-panel [value]="3">
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ตรวจข้อมูลอีกครั้งก่อนส่งใบสมัคร') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button id="d-stp-back-3" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
+                  <wu-button id="d-stp-back-3" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-          </wt-step-panels>
-        </wt-stepper>
+            </wu-step-panel>
+          </wu-step-panels>
+        </wu-stepper>
         <span class="docs-demo-output">step: <code id="d-stp-basic-value">{{ step }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="linear" [section]="sec['linear']">
       <docs-demo [html]="code['linear']" [ts]="ts['linear']" layout="stack">
-        <wt-stepper id="d-stp-linear" [(value)]="applyStep" [linear]="true">
-          <wt-step-list>
-            <wt-step [value]="1">{{ tx('ผู้สมัคร') }}</wt-step>
-            <wt-step [value]="2">{{ tx('ผู้ปกครอง') }}</wt-step>
-            <wt-step [value]="3">{{ tx('ส่งใบสมัคร') }}</wt-step>
-          </wt-step-list>
-          <wt-step-panels>
-            <wt-step-panel [value]="1">
+        <wu-stepper id="d-stp-linear" [(value)]="applyStep" [linear]="true">
+          <wu-step-list>
+            <wu-step [value]="1">{{ tx('ผู้สมัคร') }}</wu-step>
+            <wu-step [value]="2">{{ tx('ผู้ปกครอง') }}</wu-step>
+            <wu-step [value]="3">{{ tx('ส่งใบสมัคร') }}</wu-step>
+          </wu-step-list>
+          <wu-step-panels>
+            <wu-step-panel [value]="1">
               <ng-template #content let-activateCallback="activateCallback">
                 <div class="docs-stp-form">
                   <label for="d-stp-name">{{ tx('ชื่อ - สกุลผู้สมัคร') }}</label>
-                  <input id="d-stp-name" name="studentName" wtInputText [(ngModel)]="studentName" />
+                  <input id="d-stp-name" name="studentName" wuInputText [(ngModel)]="studentName" />
                   <div class="docs-steps-actions">
                     <span></span>
-                    <wt-button id="d-stp-linear-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="!studentName.trim()" (onClick)="activateCallback(2)"></wt-button>
+                    <wu-button id="d-stp-linear-next-1" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="!studentName.trim()" (onClick)="activateCallback(2)"></wu-button>
                   </div>
                 </div>
               </ng-template>
-            </wt-step-panel>
-            <wt-step-panel [value]="2">
+            </wu-step-panel>
+            <wu-step-panel [value]="2">
               <ng-template #content let-activateCallback="activateCallback">
                 <div class="docs-stp-form">
                   <label for="d-stp-phone">{{ tx('เบอร์โทรผู้ปกครอง') }}</label>
-                  <input id="d-stp-phone" name="parentPhone" wtInputText inputmode="tel" [(ngModel)]="parentPhone" />
+                  <input id="d-stp-phone" name="parentPhone" wuInputText inputmode="tel" [(ngModel)]="parentPhone" />
                   <div class="docs-steps-actions">
-                    <wt-button id="d-stp-linear-back-2" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                    <wt-button id="d-stp-linear-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10" (onClick)="activateCallback(3)"></wt-button>
+                    <wu-button id="d-stp-linear-back-2" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wu-button>
+                    <wu-button id="d-stp-linear-next-2" [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" [disabled]="parentPhone.length !== 10" (onClick)="activateCallback(3)"></wu-button>
                   </div>
                 </div>
               </ng-template>
-            </wt-step-panel>
-            <wt-step-panel [value]="3">
+            </wu-step-panel>
+            <wu-step-panel [value]="3">
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p" id="d-stp-summary">{{ studentName }} · {{ parentPhone }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button id="d-stp-linear-back-3" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" [disabled]="isApiSaving" (onClick)="activateCallback(2)"></wt-button>
-                  <wt-button id="d-stp-submit" [label]="tx('ส่งใบสมัคร')" icon="wi wi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wt-button>
+                  <wu-button id="d-stp-linear-back-3" [label]="tx('ย้อนกลับ')" severity="secondary" [text]="true" [disabled]="isApiSaving" (onClick)="activateCallback(2)"></wu-button>
+                  <wu-button id="d-stp-submit" [label]="tx('ส่งใบสมัคร')" icon="wi wi-send" [loading]="isApiSaving" (onClick)="submitApplication()"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-          </wt-step-panels>
-        </wt-stepper>
+            </wu-step-panel>
+          </wu-step-panels>
+        </wu-stepper>
         <span class="docs-demo-output">
           applyStep: <code id="d-stp-linear-value">{{ applyStep }}</code>
           @if (submitted) {
@@ -101,66 +101,66 @@
 
     <docs-section id="vertical" [section]="sec['vertical']">
       <docs-demo [html]="code['vertical']" [ts]="ts['vertical']" layout="stack">
-        <wt-stepper id="d-stp-vertical" [(value)]="setupStep">
-          <wt-step-item [value]="1">
-            <wt-step>{{ tx('เลือกปีการศึกษา') }}</wt-step>
-            <wt-step-panel>
+        <wu-stepper id="d-stp-vertical" [(value)]="setupStep">
+          <wu-step-item [value]="1">
+            <wu-step>{{ tx('เลือกปีการศึกษา') }}</wu-step>
+            <wu-step-panel>
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ปีการศึกษาและภาคเรียนที่จะเปิดรับสมัคร') }}</p>
                 <div class="docs-steps-actions">
                   <span></span>
-                  <wt-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wt-button>
+                  <wu-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(2)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-          </wt-step-item>
-          <wt-step-item [value]="2">
-            <wt-step>{{ tx('ตั้งค่ารอบสมัคร') }}</wt-step>
-            <wt-step-panel>
+            </wu-step-panel>
+          </wu-step-item>
+          <wu-step-item [value]="2">
+            <wu-step>{{ tx('ตั้งค่ารอบสมัคร') }}</wu-step>
+            <wu-step-panel>
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('วันเปิด ปิดรับสมัคร และจำนวนที่รับ') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wt-button>
-                  <wt-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wt-button>
+                  <wu-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(1)"></wu-button>
+                  <wu-button [label]="tx('ถัดไป')" icon="wi wi-chevron-right" iconPos="right" (onClick)="activateCallback(3)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-          </wt-step-item>
-          <wt-step-item [value]="3">
-            <wt-step>{{ tx('เปิดระบบ') }}</wt-step>
-            <wt-step-panel>
+            </wu-step-panel>
+          </wu-step-item>
+          <wu-step-item [value]="3">
+            <wu-step>{{ tx('เปิดระบบ') }}</wu-step>
+            <wu-step-panel>
               <ng-template #content let-activateCallback="activateCallback">
                 <p class="docs-demo-p">{{ tx('ตรวจทานแล้วเปิดให้ผู้สมัครเข้าใช้งาน') }}</p>
                 <div class="docs-steps-actions">
-                  <wt-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wt-button>
+                  <wu-button [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" (onClick)="activateCallback(2)"></wu-button>
                 </div>
               </ng-template>
-            </wt-step-panel>
-          </wt-step-item>
-        </wt-stepper>
+            </wu-step-panel>
+          </wu-step-item>
+        </wu-stepper>
         <span class="docs-demo-output">setupStep: <code id="d-stp-vertical-value">{{ setupStep }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="progress" [section]="sec['progress']">
       <docs-demo [html]="code['progress']" [ts]="ts['progress']" layout="stack">
-        <wt-stepper id="d-stp-progress" [value]="applicationStatus">
-          <wt-step-list>
-            <wt-step value="submitted" [disabled]="true">{{ tx('ส่งใบสมัคร') }}</wt-step>
-            <wt-step value="checking" [disabled]="true">{{ tx('ตรวจเอกสาร') }}</wt-step>
-            <wt-step value="interview" [disabled]="true">{{ tx('สัมภาษณ์') }}</wt-step>
-            <wt-step value="result" [disabled]="true">{{ tx('ประกาศผล') }}</wt-step>
-          </wt-step-list>
-        </wt-stepper>
+        <wu-stepper id="d-stp-progress" [value]="applicationStatus">
+          <wu-step-list>
+            <wu-step value="submitted" [disabled]="true">{{ tx('ส่งใบสมัคร') }}</wu-step>
+            <wu-step value="checking" [disabled]="true">{{ tx('ตรวจเอกสาร') }}</wu-step>
+            <wu-step value="interview" [disabled]="true">{{ tx('สัมภาษณ์') }}</wu-step>
+            <wu-step value="result" [disabled]="true">{{ tx('ประกาศผล') }}</wu-step>
+          </wu-step-list>
+        </wu-stepper>
       </docs-demo>
     </docs-section>
 
     <docs-section id="header" [section]="sec['header']">
       <docs-demo [html]="code['header']" [ts]="ts['header']" layout="stack">
-        <wt-stepper id="d-stp-header" [(value)]="paymentStep">
-          <wt-step-list>
+        <wu-stepper id="d-stp-header" [(value)]="paymentStep">
+          <wu-step-list>
             @for (s of local(paymentSteps); track s.value) {
-              <wt-step [value]="s.value">
+              <wu-step [value]="s.value">
                 <ng-template #content let-activateCallback="activateCallback" let-active="active">
                   <button
                     type="button"
@@ -172,40 +172,40 @@
                     <i [class]="s.icon"></i> <span class="docs-stp-head-label">{{ s.label }}</span>
                   </button>
                 </ng-template>
-              </wt-step>
+              </wu-step>
             }
-          </wt-step-list>
-          <wt-step-panels>
-            <wt-step-panel [value]="1">{{ tx('กรอกชื่อผู้ชำระและอีเมลสำหรับส่งใบเสร็จ') }}</wt-step-panel>
-            <wt-step-panel [value]="2">{{ tx('เลือกโอนผ่านธนาคารหรือชำระที่ห้องการเงิน') }}</wt-step-panel>
-            <wt-step-panel [value]="3">{{ tx('ดาวน์โหลดใบเสร็จได้หลังเจ้าหน้าที่ตรวจแล้ว') }}</wt-step-panel>
-          </wt-step-panels>
-        </wt-stepper>
+          </wu-step-list>
+          <wu-step-panels>
+            <wu-step-panel [value]="1">{{ tx('กรอกชื่อผู้ชำระและอีเมลสำหรับส่งใบเสร็จ') }}</wu-step-panel>
+            <wu-step-panel [value]="2">{{ tx('เลือกโอนผ่านธนาคารหรือชำระที่ห้องการเงิน') }}</wu-step-panel>
+            <wu-step-panel [value]="3">{{ tx('ดาวน์โหลดใบเสร็จได้หลังเจ้าหน้าที่ตรวจแล้ว') }}</wu-step-panel>
+          </wu-step-panels>
+        </wu-stepper>
         <span class="docs-demo-output">paymentStep: <code id="d-stp-header-value">{{ paymentStep }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="label" [section]="sec['label']">
       <docs-demo [html]="code['label']" [ts]="ts['label']" layout="stack">
-        <wt-stepper id="d-stp-label" [(value)]="enrolStep" labelPosition="bottom">
-          <wt-step-list>
-            <wt-step [value]="1" [subtitle]="tx('ชื่อและวันเกิด')">{{ tx('ข้อมูลพื้นฐาน') }}</wt-step>
-            <wt-step [value]="2" [subtitle]="tx('ตามทะเบียนบ้าน')">{{ tx('ที่อยู่') }}</wt-step>
-            <wt-step [value]="3" [subtitle]="tx('ตรวจแล้วส่ง')">{{ tx('ยืนยัน') }}</wt-step>
-          </wt-step-list>
-          <wt-step-panels>
-            <wt-step-panel [value]="1">{{ tx('กรอกชื่อ วันเกิด และเลขประจำตัวประชาชน') }}</wt-step-panel>
-            <wt-step-panel [value]="2">{{ tx('ที่อยู่ตามทะเบียนบ้านและที่อยู่ปัจจุบัน') }}</wt-step-panel>
-            <wt-step-panel [value]="3">{{ tx('ตรวจข้อมูลอีกครั้งก่อนส่งใบสมัคร') }}</wt-step-panel>
-          </wt-step-panels>
-        </wt-stepper>
+        <wu-stepper id="d-stp-label" [(value)]="enrolStep" labelPosition="bottom">
+          <wu-step-list>
+            <wu-step [value]="1" [subtitle]="tx('ชื่อและวันเกิด')">{{ tx('ข้อมูลพื้นฐาน') }}</wu-step>
+            <wu-step [value]="2" [subtitle]="tx('ตามทะเบียนบ้าน')">{{ tx('ที่อยู่') }}</wu-step>
+            <wu-step [value]="3" [subtitle]="tx('ตรวจแล้วส่ง')">{{ tx('ยืนยัน') }}</wu-step>
+          </wu-step-list>
+          <wu-step-panels>
+            <wu-step-panel [value]="1">{{ tx('กรอกชื่อ วันเกิด และเลขประจำตัวประชาชน') }}</wu-step-panel>
+            <wu-step-panel [value]="2">{{ tx('ที่อยู่ตามทะเบียนบ้านและที่อยู่ปัจจุบัน') }}</wu-step-panel>
+            <wu-step-panel [value]="3">{{ tx('ตรวจข้อมูลอีกครั้งก่อนส่งใบสมัคร') }}</wu-step-panel>
+          </wu-step-panels>
+        </wu-stepper>
         <span class="docs-demo-output">enrolStep: <code id="d-stp-label-value">{{ enrolStep }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="model" [section]="sec['model']">
       <docs-demo [html]="code['model']" [ts]="ts['model']" layout="stack">
-        <wt-stepper id="d-stp-model" [model]="local(applySteps)" [(activeIndex)]="stepIndex"></wt-stepper>
+        <wu-stepper id="d-stp-model" [model]="local(applySteps)" [(activeIndex)]="stepIndex"></wu-stepper>
         <span class="docs-demo-output">
           activeIndex: <code id="d-stp-model-index">{{ stepIndex }}</code> · {{ tx('ขั้นที่เลือกล่าสุด') }}:
           <code id="d-stp-model-command">{{ lastStep || '-' }}</code>
@@ -215,17 +215,17 @@
 
     <docs-section id="readonly" [section]="sec['readonly']">
       <docs-demo [html]="code['readonly']" [ts]="ts['readonly']" layout="stack">
-        <wt-stepper id="d-stp-readonly" [model]="local(trackSteps)" [activeIndex]="trackIndex" [readonly]="true" labelPosition="bottom"></wt-stepper>
+        <wu-stepper id="d-stp-readonly" [model]="local(trackSteps)" [activeIndex]="trackIndex" [readonly]="true" labelPosition="bottom"></wu-stepper>
         <div class="docs-steps-actions">
-          <wt-button id="d-stp-track-back" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" [disabled]="trackIndex === 0" (onClick)="trackBack()"></wt-button>
-          <wt-button
+          <wu-button id="d-stp-track-back" [label]="tx('ย้อนกลับ')" icon="wi wi-chevron-left" severity="secondary" [text]="true" [disabled]="trackIndex === 0" (onClick)="trackBack()"></wu-button>
+          <wu-button
             id="d-stp-track-next"
             [label]="tx('ถัดไป')"
             icon="wi wi-chevron-right"
             iconPos="right"
             [disabled]="trackIndex === trackSteps.length - 1"
             (onClick)="trackNext()"
-          ></wt-button>
+          ></wu-button>
         </div>
       </docs-demo>
     </docs-section>

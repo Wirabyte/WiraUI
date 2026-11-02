@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, NgZone } from '@angular/core';
 
 /** Set to 'on' in localStorage to see the reveal under browser automation too (the e2e case that checks it). */
-export const REVEAL_STORE = 'wiratheme-docs-reveal';
+export const REVEAL_STORE = 'wiraui-docs-reveal';
 
 /**
  * Half the sparkle's size over the radius it surely covers: the four-point star (styles/_base.scss) reaches in to
@@ -19,7 +19,7 @@ type ViewTransitionDoc = Document & { startViewTransition?: (update: () => void)
 
 /**
  * A theme change (dark / light, a colour, a surface, a preset, the UI size) shown as a View Transition: the new look
- * grows out of the control that was pressed through a four-point sparkle (✦), the WiraTheme mark, in about 0.7 s.
+ * grows out of the control that was pressed through a four-point sparkle (✦), the WiraUI mark, in about 0.7 s.
  * Falls back to an instant change without the API, for people who prefer reduced motion, and under browser
  * automation (navigator.webdriver), so tests that flip a theme and read it straight away stay exact.
  */

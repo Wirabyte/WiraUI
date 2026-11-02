@@ -9,17 +9,17 @@
         <div #studentForm id="d-bu-target" class="docs-bu-form">
           <b>{{ tx('ข้อมูลนักเรียน') }}</b>
           <label for="d-bu-name">{{ tx('ชื่อ - สกุล') }}</label>
-          <input id="d-bu-name" name="studentName" wtInputText [(ngModel)]="studentName" />
-          <wt-button id="d-bu-inner" [label]="tx('ปุ่มด้านใน')" severity="secondary" [outlined]="true" (onClick)="pressInside()"></wt-button>
+          <input id="d-bu-name" name="studentName" wuInputText [(ngModel)]="studentName" />
+          <wu-button id="d-bu-inner" [label]="tx('ปุ่มด้านใน')" severity="secondary" [outlined]="true" (onClick)="pressInside()"></wu-button>
         </div>
-        <wt-blockUI id="d-bu-block" [blocked]="isApiSaving" [target]="studentForm" [ariaLabel]="tx('กำลังบันทึก')">
+        <wu-blockUI id="d-bu-block" [blocked]="isApiSaving" [target]="studentForm" [ariaLabel]="tx('กำลังบันทึก')">
           <span class="docs-bu-msg">
-            <wt-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wt-progress-spinner>
+            <wu-progress-spinner [style]="{ width: '2rem', height: '2rem' }"></wu-progress-spinner>
             <span>{{ tx('กำลังบันทึก') }}</span>
           </span>
-        </wt-blockUI>
+        </wu-blockUI>
         <div class="docs-demo-actions">
-          <wt-button id="d-bu-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wt-button>
+          <wu-button id="d-bu-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="save()"></wu-button>
           <span class="docs-demo-output">
             saved: <code id="d-bu-saved">{{ savedCount }}</code> · {{ tx('ปุ่มด้านใน') }}: <code id="d-bu-inner-count">{{ innerPresses }}</code>
           </span>
@@ -29,13 +29,13 @@
 
     <docs-section id="document" [section]="sec['document']">
       <docs-demo [html]="code['document']" [ts]="ts['document']">
-        <wt-blockUI id="d-bu-page" [blocked]="isApiSending" [ariaLabel]="tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้')">
+        <wu-blockUI id="d-bu-page" [blocked]="isApiSending" [ariaLabel]="tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้')">
           <span class="docs-bu-page-msg">
-            <wt-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wt-progress-spinner>
+            <wu-progress-spinner [style]="{ width: '3rem', height: '3rem' }"></wu-progress-spinner>
             <p>{{ tx('กำลังส่งผลการเรียน กรุณาอย่าปิดหน้านี้') }}</p>
           </span>
-        </wt-blockUI>
-        <wt-button id="d-bu-send" [label]="tx('ส่งผลการเรียน')" icon="wi wi-send" (onClick)="sendGrades()"></wt-button>
+        </wu-blockUI>
+        <wu-button id="d-bu-send" [label]="tx('ส่งผลการเรียน')" icon="wi wi-send" (onClick)="sendGrades()"></wu-button>
         <span class="docs-demo-output">sent: <code id="d-bu-sent">{{ sentCount }}</code></span>
       </docs-demo>
     </docs-section>

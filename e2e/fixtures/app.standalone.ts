@@ -1,231 +1,231 @@
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { WIRATHEME_MAJOR } from 'wiratheme';
-import type { MenuItem, Message, TreeNode } from 'wiratheme/api';
-import { WtButton, WtButtonDirective } from 'wiratheme/button';
-import { WtCard } from 'wiratheme/card';
-import { WtCheckbox } from 'wiratheme/checkbox';
-import { definePreset, palette, Siam, WtConfig, WtThemeService } from 'wiratheme/config';
-import { base64ToFile, EN_LOCALE } from 'wiratheme/core';
-import { WtAlert, WtAlertService } from 'wiratheme/alert';
-import { WtConfirmationService } from 'wiratheme/confirmdialog';
-import { WtMessageService } from 'wiratheme/toast';
-import { WtInputText } from 'wiratheme/inputtext';
-import { WtRadioButton } from 'wiratheme/radiobutton';
-import { WtTextarea } from 'wiratheme/textarea';
-import { WtToggleSwitch } from 'wiratheme/toggleswitch';
-import { WtTag } from 'wiratheme/tag';
-import { WtBadge } from 'wiratheme/badge';
-import { WtChip } from 'wiratheme/chip';
-import { WtAvatar, WtAvatarGroup } from 'wiratheme/avatar';
-import { WtDivider } from 'wiratheme/divider';
-import { WtSkeleton } from 'wiratheme/skeleton';
-import { WtProgressBar } from 'wiratheme/progressbar';
-import { WtProgressSpinner } from 'wiratheme/progressspinner';
-import { WtMessage } from 'wiratheme/message';
-import { WtPanel } from 'wiratheme/panel';
-import { WtFieldset } from 'wiratheme/fieldset';
-import { WtIconField, WtInputIcon } from 'wiratheme/iconfield';
-import { WtInputGroup, WtInputGroupAddon } from 'wiratheme/inputgroup';
-import { WtFloatLabel } from 'wiratheme/floatlabel';
-import { WtToggleButton } from 'wiratheme/togglebutton';
-import { WtSelectButton } from 'wiratheme/selectbutton';
-import { WtRating } from 'wiratheme/rating';
-import { WtPassword } from 'wiratheme/password';
-import { WtAccordion, WtAccordionContent, WtAccordionHeader, WtAccordionPanel, WtAccordionTab } from 'wiratheme/accordion';
-import { WtTab, WtTabList, WtTabPanel, WtTabPanels, WtTabs } from 'wiratheme/tabs';
-import { WtInputNumber } from 'wiratheme/inputnumber';
-import { WtDatePicker } from 'wiratheme/datepicker';
-import { WtDialog } from 'wiratheme/dialog';
-import { WtTemplate } from 'wiratheme/config';
-import { WtConfirmDialog } from 'wiratheme/confirmdialog';
-import { WtToast } from 'wiratheme/toast';
-import { WtTooltip } from 'wiratheme/tooltip';
-import { WtPopover } from 'wiratheme/popover';
-import { WtAnimate } from 'wiratheme/animate';
-import { WtMeterGroup } from 'wiratheme/metergroup';
-import { WtSelect } from 'wiratheme/select';
-import { WtTableModule } from 'wiratheme/table';
-import { WtMenubar } from 'wiratheme/menubar';
-import { WtMenu } from 'wiratheme/menu';
-import { WtTabMenu } from 'wiratheme/tabmenu';
-import { WtMultiSelect } from 'wiratheme/multiselect';
-import { WtInputMask } from 'wiratheme/inputmask';
-import { WtMessages } from 'wiratheme/message';
-import { WtTimeline } from 'wiratheme/timeline';
-import { WtChartJs } from 'wiratheme/chartjs';
-import { WtImage } from 'wiratheme/image';
-import { WtAutoComplete } from 'wiratheme/autocomplete';
-import { WtPanelMenu } from 'wiratheme/panelmenu';
-import { WtSteps } from 'wiratheme/steps';
-import { WtPickList } from 'wiratheme/picklist';
-import { WtOrderList } from 'wiratheme/orderlist';
-import { WtFileUpload } from 'wiratheme/fileupload';
-import { WtEditor, WtEditorContent } from 'wiratheme/editor';
-import { WtRipple } from 'wiratheme/ripple';
-import { WtKeyFilter } from 'wiratheme/keyfilter';
-import { WtBadgeDirective } from 'wiratheme/badge';
-import { WtFooter } from 'wiratheme/card';
-import { WtToolbar } from 'wiratheme/toolbar';
-import { WtStep, WtStepItem, WtStepList, WtStepPanel, WtStepPanels, WtStepper } from 'wiratheme/stepper';
-import { WtValidationModule } from 'wiratheme/validation';
-import { WtSlider } from 'wiratheme/slider';
-import { WtSplitButton } from 'wiratheme/splitbutton';
-import { WtListbox } from 'wiratheme/listbox';
-import { WtGalleria } from 'wiratheme/galleria';
-import { WtColorPicker } from 'wiratheme/colorpicker';
-import { WtBreadcrumb } from 'wiratheme/breadcrumb';
-import { WtInplace } from 'wiratheme/inplace';
-import { WtBlockUI } from 'wiratheme/blockui';
-import { WtScrollPanel } from 'wiratheme/scrollpanel';
-import { WtScroller } from 'wiratheme/scroller';
-import { WtDrawer } from 'wiratheme/drawer';
-import { WtTieredMenu } from 'wiratheme/tieredmenu';
-import { WtContextMenu } from 'wiratheme/contextmenu';
-import { WtTree } from 'wiratheme/tree';
-import { WtTreeSelect } from 'wiratheme/treeselect';
-import { WtDraggable, WtDroppable } from 'wiratheme/dragdrop';
-import { WtNavbar } from 'wiratheme/navbar';
-import { WtAsideMenu } from 'wiratheme/asidemenu';
-import { WtImageCropper } from 'wiratheme/imagecropper';
-import { WtTerminal, WtTerminalService } from 'wiratheme/terminal';
-import { WtImageCompare } from 'wiratheme/imagecompare';
-import { WtCarousel } from 'wiratheme/carousel';
-import { WtSplitter, WtSplitterPanel } from 'wiratheme/splitter';
-import { WtOrganizationChart } from 'wiratheme/organizationchart';
-import { WtKnob } from 'wiratheme/knob';
-import { WtInputOtp } from 'wiratheme/inputotp';
-import { applyEdgeChanges, applyNodeChanges, WtFlowModule } from 'wiratheme/flow';
-import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WtFlow, WtFlowSelectionChange } from 'wiratheme/flow';
-import { WtI18n, WtLanguageSwitch, WtTranslateLongPipe, WtTranslatePipe } from 'wiratheme/i18n';
-import type { CropperPosition, WtImageCroppedEvent } from 'wiratheme/imagecropper';
+import { WIRAUI_MAJOR } from 'wiraui';
+import type { MenuItem, Message, TreeNode } from 'wiraui/api';
+import { WuButton, WuButtonDirective } from 'wiraui/button';
+import { WuCard } from 'wiraui/card';
+import { WuCheckbox } from 'wiraui/checkbox';
+import { definePreset, palette, Siam, WuConfig, WuThemeService } from 'wiraui/config';
+import { base64ToFile, EN_LOCALE } from 'wiraui/core';
+import { WuAlert, WuAlertService } from 'wiraui/alert';
+import { WuConfirmationService } from 'wiraui/confirmdialog';
+import { WuMessageService } from 'wiraui/toast';
+import { WuInputText } from 'wiraui/inputtext';
+import { WuRadioButton } from 'wiraui/radiobutton';
+import { WuTextarea } from 'wiraui/textarea';
+import { WuToggleSwitch } from 'wiraui/toggleswitch';
+import { WuTag } from 'wiraui/tag';
+import { WuBadge } from 'wiraui/badge';
+import { WuChip } from 'wiraui/chip';
+import { WuAvatar, WuAvatarGroup } from 'wiraui/avatar';
+import { WuDivider } from 'wiraui/divider';
+import { WuSkeleton } from 'wiraui/skeleton';
+import { WuProgressBar } from 'wiraui/progressbar';
+import { WuProgressSpinner } from 'wiraui/progressspinner';
+import { WuMessage } from 'wiraui/message';
+import { WuPanel } from 'wiraui/panel';
+import { WuFieldset } from 'wiraui/fieldset';
+import { WuIconField, WuInputIcon } from 'wiraui/iconfield';
+import { WuInputGroup, WuInputGroupAddon } from 'wiraui/inputgroup';
+import { WuFloatLabel } from 'wiraui/floatlabel';
+import { WuToggleButton } from 'wiraui/togglebutton';
+import { WuSelectButton } from 'wiraui/selectbutton';
+import { WuRating } from 'wiraui/rating';
+import { WuPassword } from 'wiraui/password';
+import { WuAccordion, WuAccordionContent, WuAccordionHeader, WuAccordionPanel, WuAccordionTab } from 'wiraui/accordion';
+import { WuTab, WuTabList, WuTabPanel, WuTabPanels, WuTabs } from 'wiraui/tabs';
+import { WuInputNumber } from 'wiraui/inputnumber';
+import { WuDatePicker } from 'wiraui/datepicker';
+import { WuDialog } from 'wiraui/dialog';
+import { WuTemplate } from 'wiraui/config';
+import { WuConfirmDialog } from 'wiraui/confirmdialog';
+import { WuToast } from 'wiraui/toast';
+import { WuTooltip } from 'wiraui/tooltip';
+import { WuPopover } from 'wiraui/popover';
+import { WuAnimate } from 'wiraui/animate';
+import { WuMeterGroup } from 'wiraui/metergroup';
+import { WuSelect } from 'wiraui/select';
+import { WuTableModule } from 'wiraui/table';
+import { WuMenubar } from 'wiraui/menubar';
+import { WuMenu } from 'wiraui/menu';
+import { WuTabMenu } from 'wiraui/tabmenu';
+import { WuMultiSelect } from 'wiraui/multiselect';
+import { WuInputMask } from 'wiraui/inputmask';
+import { WuMessages } from 'wiraui/message';
+import { WuTimeline } from 'wiraui/timeline';
+import { WuChartJs } from 'wiraui/chartjs';
+import { WuImage } from 'wiraui/image';
+import { WuAutoComplete } from 'wiraui/autocomplete';
+import { WuPanelMenu } from 'wiraui/panelmenu';
+import { WuSteps } from 'wiraui/steps';
+import { WuPickList } from 'wiraui/picklist';
+import { WuOrderList } from 'wiraui/orderlist';
+import { WuFileUpload } from 'wiraui/fileupload';
+import { WuEditor, WuEditorContent } from 'wiraui/editor';
+import { WuRipple } from 'wiraui/ripple';
+import { WuKeyFilter } from 'wiraui/keyfilter';
+import { WuBadgeDirective } from 'wiraui/badge';
+import { WuFooter } from 'wiraui/card';
+import { WuToolbar } from 'wiraui/toolbar';
+import { WuStep, WuStepItem, WuStepList, WuStepPanel, WuStepPanels, WuStepper } from 'wiraui/stepper';
+import { WuValidationModule } from 'wiraui/validation';
+import { WuSlider } from 'wiraui/slider';
+import { WuSplitButton } from 'wiraui/splitbutton';
+import { WuListbox } from 'wiraui/listbox';
+import { WuGalleria } from 'wiraui/galleria';
+import { WuColorPicker } from 'wiraui/colorpicker';
+import { WuBreadcrumb } from 'wiraui/breadcrumb';
+import { WuInplace } from 'wiraui/inplace';
+import { WuBlockUI } from 'wiraui/blockui';
+import { WuScrollPanel } from 'wiraui/scrollpanel';
+import { WuScroller } from 'wiraui/scroller';
+import { WuDrawer } from 'wiraui/drawer';
+import { WuTieredMenu } from 'wiraui/tieredmenu';
+import { WuContextMenu } from 'wiraui/contextmenu';
+import { WuTree } from 'wiraui/tree';
+import { WuTreeSelect } from 'wiraui/treeselect';
+import { WuDraggable, WuDroppable } from 'wiraui/dragdrop';
+import { WuNavbar } from 'wiraui/navbar';
+import { WuAsideMenu } from 'wiraui/asidemenu';
+import { WuImageCropper } from 'wiraui/imagecropper';
+import { WuTerminal, WuTerminalService } from 'wiraui/terminal';
+import { WuImageCompare } from 'wiraui/imagecompare';
+import { WuCarousel } from 'wiraui/carousel';
+import { WuSplitter, WuSplitterPanel } from 'wiraui/splitter';
+import { WuOrganizationChart } from 'wiraui/organizationchart';
+import { WuKnob } from 'wiraui/knob';
+import { WuInputOtp } from 'wiraui/inputotp';
+import { applyEdgeChanges, applyNodeChanges, WuFlowModule } from 'wiraui/flow';
+import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WuFlow, WuFlowSelectionChange } from 'wiraui/flow';
+import { WuI18n, WuLanguageSwitch, WuTranslateLongPipe, WuTranslatePipe } from 'wiraui/i18n';
+import type { CropperPosition, WuImageCroppedEvent } from 'wiraui/imagecropper';
 
 @Component({
   selector: 'app-root',
   imports: [
     FormsModule,
-    WtMenubar,
-    WtMenu,
-    WtTabMenu,
-    WtMultiSelect,
-    WtInputMask,
-    WtMessages,
-    WtTimeline,
-    WtChartJs,
-    WtImage,
-    WtAutoComplete,
-    WtPanelMenu,
-    WtSteps,
-    WtPickList,
-    WtOrderList,
-    WtFileUpload,
-    WtEditor,
-    WtEditorContent,
-    WtRipple,
-    WtKeyFilter,
-    WtBadgeDirective,
-    WtFooter,
-    WtStepper,
-    WtStepList,
-    WtStep,
-    WtStepPanels,
-    WtStepPanel,
-    WtStepItem,
+    WuMenubar,
+    WuMenu,
+    WuTabMenu,
+    WuMultiSelect,
+    WuInputMask,
+    WuMessages,
+    WuTimeline,
+    WuChartJs,
+    WuImage,
+    WuAutoComplete,
+    WuPanelMenu,
+    WuSteps,
+    WuPickList,
+    WuOrderList,
+    WuFileUpload,
+    WuEditor,
+    WuEditorContent,
+    WuRipple,
+    WuKeyFilter,
+    WuBadgeDirective,
+    WuFooter,
+    WuStepper,
+    WuStepList,
+    WuStep,
+    WuStepPanels,
+    WuStepPanel,
+    WuStepItem,
     ReactiveFormsModule,
     JsonPipe,
     NgFor,
     NgIf,
-    WtButton,
-    WtCard,
-    WtInputText,
-    WtTextarea,
-    WtCheckbox,
-    WtRadioButton,
-    WtToggleSwitch,
-    WtTag,
-    WtBadge,
-    WtChip,
-    WtAvatar,
-    WtAvatarGroup,
-    WtDivider,
-    WtSkeleton,
-    WtProgressBar,
-    WtProgressSpinner,
-    WtMessage,
-    WtPanel,
-    WtFieldset,
-    WtIconField,
-    WtInputIcon,
-    WtInputGroup,
-    WtInputGroupAddon,
-    WtFloatLabel,
-    WtToggleButton,
-    WtSelectButton,
-    WtRating,
-    WtPassword,
-    WtToolbar,
-    WtAccordion,
-    WtAccordionTab,
-    WtAccordionPanel,
-    WtAccordionHeader,
-    WtAccordionContent,
-    WtTabs,
-    WtTabPanel,
-    WtTabList,
-    WtTab,
-    WtTabPanels,
-    WtInputNumber,
-    WtDatePicker,
-    WtDialog,
-    WtTemplate,
-    WtConfirmDialog,
-    WtToast,
-    WtTooltip,
-    WtPopover,
-    WtAnimate,
-    WtButtonDirective,
-    WtMeterGroup,
-    WtSelect,
-    WtTableModule,
-    WtValidationModule,
-    WtSlider,
-    WtSplitButton,
-    WtListbox,
-    WtGalleria,
-    WtColorPicker,
-    WtBreadcrumb,
-    WtInplace,
-    WtBlockUI,
-    WtScrollPanel,
-    WtScroller,
-    WtDrawer,
-    WtTieredMenu,
-    WtContextMenu,
-    WtTree,
-    WtTreeSelect,
-    WtDraggable,
-    WtDroppable,
-    WtNavbar,
-    WtAsideMenu,
-    WtImageCropper,
-    WtTerminal,
-    WtImageCompare,
-    WtCarousel,
-    WtSplitter,
-    WtSplitterPanel,
-    WtOrganizationChart,
-    WtKnob,
-    WtInputOtp,
-    WtFlowModule,
-    WtLanguageSwitch,
-    WtTranslatePipe,
-    WtTranslateLongPipe,
+    WuButton,
+    WuCard,
+    WuInputText,
+    WuTextarea,
+    WuCheckbox,
+    WuRadioButton,
+    WuToggleSwitch,
+    WuTag,
+    WuBadge,
+    WuChip,
+    WuAvatar,
+    WuAvatarGroup,
+    WuDivider,
+    WuSkeleton,
+    WuProgressBar,
+    WuProgressSpinner,
+    WuMessage,
+    WuPanel,
+    WuFieldset,
+    WuIconField,
+    WuInputIcon,
+    WuInputGroup,
+    WuInputGroupAddon,
+    WuFloatLabel,
+    WuToggleButton,
+    WuSelectButton,
+    WuRating,
+    WuPassword,
+    WuToolbar,
+    WuAccordion,
+    WuAccordionTab,
+    WuAccordionPanel,
+    WuAccordionHeader,
+    WuAccordionContent,
+    WuTabs,
+    WuTabPanel,
+    WuTabList,
+    WuTab,
+    WuTabPanels,
+    WuInputNumber,
+    WuDatePicker,
+    WuDialog,
+    WuTemplate,
+    WuConfirmDialog,
+    WuToast,
+    WuTooltip,
+    WuPopover,
+    WuAnimate,
+    WuButtonDirective,
+    WuMeterGroup,
+    WuSelect,
+    WuTableModule,
+    WuValidationModule,
+    WuSlider,
+    WuSplitButton,
+    WuListbox,
+    WuGalleria,
+    WuColorPicker,
+    WuBreadcrumb,
+    WuInplace,
+    WuBlockUI,
+    WuScrollPanel,
+    WuScroller,
+    WuDrawer,
+    WuTieredMenu,
+    WuContextMenu,
+    WuTree,
+    WuTreeSelect,
+    WuDraggable,
+    WuDroppable,
+    WuNavbar,
+    WuAsideMenu,
+    WuImageCropper,
+    WuTerminal,
+    WuImageCompare,
+    WuCarousel,
+    WuSplitter,
+    WuSplitterPanel,
+    WuOrganizationChart,
+    WuKnob,
+    WuInputOtp,
+    WuFlowModule,
+    WuLanguageSwitch,
+    WuTranslatePipe,
+    WuTranslateLongPipe,
   ],
   templateUrl: './app.component.html',
 })
 export class App {
-  readonly major = WIRATHEME_MAJOR;
+  readonly major = WIRAUI_MAJOR;
   readonly ngVersion = VERSION.full;
   saved = 0;
   removed = 0;
@@ -377,7 +377,7 @@ export class App {
 
   /** Records the query on the window as it is asked, so a test can tell it came on the key itself. */
   findSchoolNow(e: { query: string }): void {
-    (globalThis as unknown as { wtAsked?: string }).wtAsked = e.query;
+    (globalThis as unknown as { wuAsked?: string }).wuAsked = e.query;
     this.findSchool(e);
   }
   ac = { school: null as unknown, free: null as unknown, plain: null as unknown };
@@ -520,14 +520,14 @@ export class App {
     notify: new FormControl(false, { nonNullable: true }),
   });
 
-  /** The page's own texts in Thai and English (wiratheme/i18n). */
+  /** The page's own texts in Thai and English (wiraui/i18n). */
   readonly i18n = this.setupI18n();
-  private readonly theme = inject(WtThemeService);
-  private readonly config = inject(WtConfig);
+  private readonly theme = inject(WuThemeService);
+  private readonly config = inject(WuConfig);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly alert = inject(WtAlertService);
-  private readonly confirmation = inject(WtConfirmationService);
-  private readonly messages = inject(WtMessageService);
+  private readonly alert = inject(WuAlertService);
+  private readonly confirmation = inject(WuConfirmationService);
+  private readonly messages = inject(WuMessageService);
 
   readonly save = () =>
     new Promise<void>((resolve) =>
@@ -544,7 +544,7 @@ export class App {
 
   /** Through the static facade, as code that called a global alert function does. */
   askAlert(): void {
-    WtAlert.fire({
+    WuAlert.fire({
       title: 'ลบรายการนี้?',
       text: 'กู้คืนไม่ได้',
       icon: 'warning',
@@ -798,7 +798,7 @@ export class App {
   icFile: Blob | null = this.icImage ? base64ToFile(this.icImage) : null;
   icBox: CropperPosition | null = null;
   icRatioBox: CropperPosition | null = null;
-  icCropped: WtImageCroppedEvent | null = null;
+  icCropped: WuImageCroppedEvent | null = null;
   icRatioSize = '';
   icFreeSize = '';
 
@@ -822,7 +822,7 @@ export class App {
   }
 
   // ---------- terminal, image compare, carousel, splitter, organization chart, knob, input otp (parity2.spec) ----------
-  private readonly terminal = inject(WtTerminalService);
+  private readonly terminal = inject(WuTerminalService);
   readonly terminalAnswers = this.terminal.commandHandler.subscribe((text) => this.answer(text));
   icmpValue = 50;
   crsItems = ['#fca5a5', '#fdba74', '#86efac', '#93c5fd', '#c4b5fd', '#f9a8d4'].map((color, i) => ({ title: 'ข่าว ' + (i + 1), color }));
@@ -875,7 +875,7 @@ export class App {
   }
 
   // ---------- flow (flow.spec) ----------
-  // wt-flow (#flow): two-way binding
+  // wu-flow (#flow): two-way binding
   flowNodes: FlowNode[] = [
     { id: 'start', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
     { id: 'wira', type: 'person', position: { x: 280, y: 70 }, ariaLabel: 'วิระ', data: { name: 'วิระ', role: 'ครูประจำชั้น' } },
@@ -894,7 +894,7 @@ export class App {
   flowSel = '';
   flowSvgSize = 0;
 
-  // ---------- wt-flow (#flow-controlled): the page applies the changes ----------
+  // ---------- wu-flow (#flow-controlled): the page applies the changes ----------
   flowCtlNodes: FlowNode[] = [
     { id: 'a', position: { x: 0, y: 0 }, data: { label: 'ก' } },
     { id: 'b', position: { x: 200, y: 80 }, data: { label: 'ข' } },
@@ -914,11 +914,11 @@ export class App {
     return `${Math.round(v.x)},${Math.round(v.y)},${v.zoom.toFixed(2)}`;
   }
 
-  flowSelection(e: WtFlowSelectionChange): string {
+  flowSelection(e: WuFlowSelectionChange): string {
     return e.nodes.map((n) => n.id).join(',') + '|' + e.edges.map((x) => x.id).join(',');
   }
 
-  flowRoundTrip(flow: WtFlow): void {
+  flowRoundTrip(flow: WuFlow): void {
     const json = JSON.stringify(flow.toJSON());
     this.note('flow:json:' + (flow.fromJSON(json) ? JSON.parse(json).nodes.length : 'failed'));
   }
@@ -935,8 +935,8 @@ export class App {
     return this.flowCtlNodes.map((n) => `${n.id}@${Math.round(n.position.x)},${Math.round(n.position.y)}${n.selected ? '*' : ''}`).join(' ');
   }
 
-  setupI18n(): WtI18n {
-    const i18n = inject(WtI18n);
+  setupI18n(): WuI18n {
+    const i18n = inject(WuI18n);
     i18n.add('th', { menu: { home: 'หน้าแรก' } });
     i18n.add('en', { 'บันทึก': 'Save', 'สวัสดี {name}': 'Hello {name}', menu: { home: 'Home' } });
     return i18n;

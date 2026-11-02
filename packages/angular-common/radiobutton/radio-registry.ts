@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 
-/** What the registry needs from a radio button. Implemented by WtRadioButton in every version. */
-export interface ɵWtRadioAccessor {
+/** What the registry needs from a radio button. Implemented by WuRadioButton in every version. */
+export interface ɵWuRadioAccessor {
   /** The NgControl on the same element, looked up lazily (null without forms). */
   readonly ngControlRef: NgControl | null;
   /** Re-reads the group value so this radio shows checked or unchecked. */
@@ -16,19 +16,19 @@ export interface ɵWtRadioAccessor {
  * NgModel bound to the same field.
  */
 @Injectable({ providedIn: 'root' })
-export class ɵWtRadioRegistry {
-  private readonly accessors: ɵWtRadioAccessor[] = [];
+export class ɵWuRadioRegistry {
+  private readonly accessors: ɵWuRadioAccessor[] = [];
 
-  add(accessor: ɵWtRadioAccessor): void {
+  add(accessor: ɵWuRadioAccessor): void {
     this.accessors.push(accessor);
   }
 
-  remove(accessor: ɵWtRadioAccessor): void {
+  remove(accessor: ɵWuRadioAccessor): void {
     const i = this.accessors.indexOf(accessor);
     if (i >= 0) this.accessors.splice(i, 1);
   }
 
-  select(accessor: ɵWtRadioAccessor, value: unknown): void {
+  select(accessor: ɵWuRadioAccessor, value: unknown): void {
     const control = controlOf(accessor);
     if (!control) return;
     for (const other of this.accessors) {
@@ -37,6 +37,6 @@ export class ɵWtRadioRegistry {
   }
 }
 
-function controlOf(a: ɵWtRadioAccessor): AbstractControl | null {
+function controlOf(a: ɵWuRadioAccessor): AbstractControl | null {
   return (a.ngControlRef && a.ngControlRef.control) || null;
 }

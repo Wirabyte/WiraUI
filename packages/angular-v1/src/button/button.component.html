@@ -8,10 +8,10 @@
   (click)="handleClick($event)"
   (pointerdown)="handlePointerDown($event)"
 >
-  <span *ngIf="busy" class="wt-btn-spinner p-button-loading-icon" aria-hidden="true"></span>
-  <span *ngIf="showIcon && iconPos === 'left'" [class]="'wt-btn-icon p-button-icon p-button-icon-left ' + icon" aria-hidden="true"></span>
-  <span *ngIf="label" class="wt-btn-label p-button-label">{{ label }}</span>
+  <span *ngIf="busy" class="wu-btn-spinner p-button-loading-icon" aria-hidden="true"></span>
+  <span *ngIf="showIcon && iconPos === 'left'" [class]="'wu-btn-icon p-button-icon p-button-icon-left ' + icon" aria-hidden="true"></span>
+  <span *ngIf="label" class="wu-btn-label p-button-label">{{ label }}</span>
   <ng-content></ng-content>
-  <span *ngIf="showIcon && iconPos === 'right'" [class]="'wt-btn-icon p-button-icon p-button-icon-right ' + icon" aria-hidden="true"></span>
-  <span *ngIf="hasBadge" class="wt-btn-badge p-badge p-component" [class]="badgeSeverity ? 'wt-btn-badge-' + badgeSeverity + ' p-badge-' + badgeSeverity : ''">{{ badge }}</span>
+  <span *ngIf="showIcon && iconPos === 'right'" [class]="'wu-btn-icon p-button-icon p-button-icon-right ' + icon" aria-hidden="true"></span>
+  <span *ngIf="hasBadge" class="wu-btn-badge p-badge p-component" [class]="badgeSeverity ? 'wu-btn-badge-' + badgeSeverity + ' p-badge-' + badgeSeverity : ''">{{ badge }}</span>
 </button>

@@ -6,17 +6,17 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-toggleswitch id="d-rp-switch" name="ripple" [ngModel]="state.rippleOn()" (ngModelChange)="setRipple($event)" [label]="tx('เปิด ripple ทั้งแอป')"></wt-toggleswitch>
+        <wu-toggleswitch id="d-rp-switch" name="ripple" [ngModel]="state.rippleOn()" (ngModelChange)="setRipple($event)" [label]="tx('เปิด ripple ทั้งแอป')"></wu-toggleswitch>
         <div class="docs-rp-row">
-          <div id="d-rp-card" class="docs-rp-card" wtRipple>
+          <div id="d-rp-card" class="docs-rp-card" wuRipple>
             <b>{{ tx('ข่าวประชาสัมพันธ์') }}</b>
             <p class="docs-demo-p">{{ tx('กดที่การ์ดเพื่ออ่านต่อ') }}</p>
           </div>
           <ul class="docs-rp-list">
-            <li id="d-rp-item" wtRipple>{{ tx('ตารางเรียน') }}</li>
-            <li wtRipple>{{ tx('ผลการเรียน') }}</li>
+            <li id="d-rp-item" wuRipple>{{ tx('ตารางเรียน') }}</li>
+            <li wuRipple>{{ tx('ผลการเรียน') }}</li>
           </ul>
-          <div id="d-rp-off" class="docs-rp-card" wtRipple [wtRippleDisabled]="true">{{ tx('ไม่มีคลื่นที่นี่') }}</div>
+          <div id="d-rp-off" class="docs-rp-card" wuRipple [wuRippleDisabled]="true">{{ tx('ไม่มีคลื่นที่นี่') }}</div>
         </div>
       </docs-demo>
     </docs-section>

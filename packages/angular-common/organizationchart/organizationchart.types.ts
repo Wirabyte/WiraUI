@@ -1,12 +1,12 @@
-import type { TreeNode } from 'wiratheme/core';
+import type { TreeNode } from 'wiraui/core';
 
 /** `(onNodeSelect)`, `(onNodeUnselect)`, `(onNodeExpand)`, `(onNodeCollapse)`: the node and the event behind it. */
-export interface WtOrganizationChartNodeEvent {
+export interface WuOrganizationChartNodeEvent {
   originalEvent: Event;
   node: TreeNode;
 }
 
-export type OrganizationChartNodeSelectEvent = WtOrganizationChartNodeEvent;
-export type OrganizationChartNodeUnSelectEvent = WtOrganizationChartNodeEvent;
-export type OrganizationChartNodeExpandEvent = WtOrganizationChartNodeEvent;
-export type OrganizationChartNodeCollapseEvent = WtOrganizationChartNodeEvent;
+export type OrganizationChartNodeSelectEvent = WuOrganizationChartNodeEvent;
+export type OrganizationChartNodeUnSelectEvent = WuOrganizationChartNodeEvent;
+export type OrganizationChartNodeExpandEvent = WuOrganizationChartNodeEvent;
+export type OrganizationChartNodeCollapseEvent = WuOrganizationChartNodeEvent;

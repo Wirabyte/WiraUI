@@ -1,7 +1,7 @@
-import { EditorSnapshot, safeEditorImage, safeEditorUrl } from 'wiratheme/core';
+import { EditorSnapshot, safeEditorImage, safeEditorUrl } from 'wiraui/core';
 
 /**
- * DOM helpers of wt-editor, free of Angular: selection save / restore, the HTML cleaner used for values, pastes and
+ * DOM helpers of wu-editor, free of Angular: selection save / restore, the HTML cleaner used for values, pastes and
  * drops, block lookups and the table operations.
  */
 
@@ -180,7 +180,7 @@ const ALLOWED: Record<string, string[]> = {
 const RENAME: Record<string, string> = { B: 'STRONG', I: 'EM', STRIKE: 'S', DEL: 'S', INS: 'U', DIV: 'P', H7: 'P', ARTICLE: 'P', SECTION: 'P' };
 const INLINE_TAGS = new Set(['STRONG', 'EM', 'U', 'S', 'SUB', 'SUP', 'CODE', 'A']);
 const STYLE_PROPS = ['color', 'background-color', 'text-align', 'font-size', 'font-family', 'width', 'margin-left', 'padding-left'];
-const CLASS_OK = /^(ql-(align|indent|size|font|direction)-[\w-]+|ql-syntax|wt-image-(left|center|right|inline)|wt-editor-table)$/;
+const CLASS_OK = /^(ql-(align|indent|size|font|direction)-[\w-]+|ql-syntax|wu-image-(left|center|right|inline)|wu-editor-table)$/;
 
 export interface CleanOptions {
   /** Extra link protocols to keep besides http(s), mailto and tel. */
@@ -394,7 +394,7 @@ function newCell(doc: Document, tag: 'td' | 'th'): HTMLTableCellElement {
 /** A new table, `rows` × `cols`, with a header row when asked. */
 export function createTable(doc: Document, rows: number, cols: number, headerRow: boolean): HTMLTableElement {
   const table = doc.createElement('table');
-  table.className = 'wt-editor-table';
+  table.className = 'wu-editor-table';
   if (headerRow) {
     const thead = table.createTHead();
     const tr = thead.insertRow();

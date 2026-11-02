@@ -1,10 +1,10 @@
-# WiraTheme UI Kit สำหรับ Figma
+# WiraUI UI Kit สำหรับ Figma
 
-plugin สำหรับ Figma (แบบ development) ที่สร้าง UI Kit ของ WiraTheme ลงในไฟล์ Figma จาก token จริงของไลบรารี ค่าสี ระยะ และมุมโค้งทุกค่าคำนวณจากธีมที่ build แล้ว ไม่ได้กรอกเอง เมื่อไลบรารีเปลี่ยน แค่ build ใหม่แล้วสร้าง kit ใหม่
+plugin สำหรับ Figma (แบบ development) ที่สร้าง UI Kit ของ WiraUI ลงในไฟล์ Figma จาก token จริงของไลบรารี ค่าสี ระยะ และมุมโค้งทุกค่าคำนวณจากธีมที่ build แล้ว ไม่ได้กรอกเอง เมื่อไลบรารีเปลี่ยน แค่ build ใหม่แล้วสร้าง kit ใหม่
 
 ## สร้างอะไรให้บ้าง
 
-- **Variables:** collection `WiraTheme · <preset>` มีตัวแปร 848 ตัว (สี, ระยะ, ตัวเลข) และ 2 mode คือ Light / Dark ชื่อแบ่งกลุ่มเป็น `palette/primary/500`, `button/secondary-bg`, `field/focus-border` … และคำอธิบายของแต่ละตัวคือชื่อ CSS (`--wt-…`)
+- **Variables:** collection `WiraUI · <preset>` มีตัวแปร 848 ตัว (สี, ระยะ, ตัวเลข) และ 2 mode คือ Light / Dark ชื่อแบ่งกลุ่มเป็น `palette/primary/500`, `button/secondary-bg`, `field/focus-border` … และคำอธิบายของแต่ละตัวคือชื่อ CSS (`--wu-…`)
   - Figma แพลนฟรีให้ collection ละ mode เดียว ถ้าเป็นแพลนนี้ ค่า Dark จะไปอยู่อีก collection ชื่อ `… · Dark`
 - **Styles:**
   - Text styles: Heading H1–H4, Body, Label, Caption, Code ใช้ฟอนต์ของ preset
@@ -29,7 +29,7 @@ plugin สำหรับ Figma (แบบ development) ที่สร้าง
 ต้อง build ธีม v3 และ icon ก่อน:
 
 ```bash
-pnpm build:core && pnpm --filter @wiratheme-build/angular-v3 build && pnpm build:icons
+pnpm build:core && pnpm --filter @wiraui-build/angular-v3 build && pnpm build:icons
 pnpm build:figma
 ```
 
@@ -51,7 +51,7 @@ pnpm build:figma
 
 1. เปิด **Figma desktop** (plugin แบบ development ใช้ในเว็บไม่ได้) แล้วเปิดไฟล์ใหม่หรือไฟล์ที่จะเก็บ kit
 2. เมนู **Plugins → Development → Import plugin from manifest…** เลือก `packages/figma/dist/manifest.json`
-3. เปิด **Plugins → Development → WiraTheme UI Kit** เลือก preset และติ๊กส่วนที่ต้องการ แล้วกด **Build the kit**
+3. เปิด **Plugins → Development → WiraUI UI Kit** เลือก preset และติ๊กส่วนที่ต้องการ แล้วกด **Build the kit**
 
 plugin จะสร้างหน้า `Foundations · <preset>`, `Components · <preset>` และ `Icons · <preset>` ใช้เวลาไม่ถึงนาที ถ้าต้องการหลาย preset ให้สร้างทีละตัว แต่ละตัวได้ collection และหน้าของตัวเอง
 

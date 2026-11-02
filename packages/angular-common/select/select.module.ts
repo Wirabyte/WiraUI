@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtSelect } from './select.component';
+import { WuSelect } from './select.component';
 
-/** For NgModule apps. Standalone apps can import `WtSelect` directly. */
+/** For NgModule apps. Standalone apps can import `WuSelect` directly. */
 @NgModule({
-  imports: [WtSelect],
-  exports: [WtSelect],
+  imports: [WuSelect],
+  exports: [WuSelect],
 })
-export class WtSelectModule {}
+export class WuSelectModule {}

@@ -19,16 +19,16 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { WtFooter, WtHeader } from 'wiratheme/card';
+import { WuFooter, WuHeader } from 'wiraui/card';
 import {
   ɵassertSupportedAngular,
   ɵfindTemplate,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   carouselClampPage,
   carouselFirst,
@@ -38,9 +38,9 @@ import {
   carouselRepage,
   carouselStep,
   CarouselResponsiveOptions,
-  WtLocale,
-} from 'wiratheme/core';
-import { WtCarouselButtonProps, WtCarouselPageEvent } from './carousel.types';
+  WuLocale,
+} from 'wiraui/core';
+import { WuCarouselButtonProps, WuCarouselPageEvent } from './carousel.types';
 
 /** One drawn item: a real one, or a copy at either end that makes a circular carousel wrap smoothly. */
 interface Entry {
@@ -55,23 +55,23 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
 const SWIPE_THRESHOLD = 20;
 
 /**
- * Items a page at a time: `<wt-carousel [value]="news" [numVisible]="3" [numScroll]="1" [responsiveOptions]="sizes">` +
- * `<ng-template wtTemplate="item" let-item>`. Arrow buttons and the bars underneath change page (Tab to the bars, then
+ * Items a page at a time: `<wu-carousel [value]="news" [numVisible]="3" [numScroll]="1" [responsiveOptions]="sizes">` +
+ * `<ng-template wuTemplate="item" let-item>`. Arrow buttons and the bars underneath change page (Tab to the bars, then
  * ← / → / Home / End and Enter), touch screens swipe, `[circular]="true"` wraps round, `autoplayInterval` turns pages by
  * itself (paused while the pointer or the focus is on it, stopped once the user changes page), `orientation="vertical"`
  * stacks the items in `verticalViewPortHeight`. `[(page)]` binds the page; `(onPage)` reports each change.
  */
 @Component({
-  selector: 'wt-carousel',
+  selector: 'wu-carousel',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-carousel-host' },
+  host: { class: 'wu-carousel-host' },
 })
-export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
+export class WuCarousel implements OnInit, AfterViewChecked, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() set value(v: any[] | null | undefined) {
     this._value = Array.isArray(v) ? v : [];
@@ -152,20 +152,20 @@ export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
   /** The arrow buttons: an `icon` class replaces the chevron; the other button options are accepted. */
-  @Input() prevButtonProps?: WtCarouselButtonProps | null;
-  @Input() nextButtonProps?: WtCarouselButtonProps | null;
+  @Input() prevButtonProps?: WuCarouselButtonProps | null;
+  @Input() nextButtonProps?: WuCarouselButtonProps | null;
 
-  @Output() readonly onPage = new EventEmitter<WtCarouselPageEvent>();
+  @Output() readonly onPage = new EventEmitter<WuCarouselPageEvent>();
   @Output() readonly pageChange = new EventEmitter<number>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) protected footerRef?: unknown;
   @ContentChild('previousicon', { descendants: false }) protected previousIconRef?: unknown;
   @ContentChild('nexticon', { descendants: false }) protected nextIconRef?: unknown;
-  @ContentChild(WtHeader) protected headerFacet?: WtHeader;
-  @ContentChild(WtFooter) protected footerFacet?: WtFooter;
+  @ContentChild(WuHeader) protected headerFacet?: WuHeader;
+  @ContentChild(WuFooter) protected footerFacet?: WuFooter;
   @ViewChild('itemsContainer') protected listRef?: ElementRef<HTMLElement>;
   @ViewChild('indicatorContent') protected indicatorsRef?: ElementRef<HTMLElement>;
 
@@ -198,11 +198,11 @@ export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -228,7 +228,7 @@ export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -356,7 +356,7 @@ export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
   onIndicatorKeydown(event: KeyboardEvent): void {
     const list = this.indicatorsRef?.nativeElement;
     if (!list) return;
-    const buttons = Array.from(list.querySelectorAll<HTMLElement>('.wt-carousel-indicator-button'));
+    const buttons = Array.from(list.querySelectorAll<HTMLElement>('.wu-carousel-indicator-button'));
     const i = buttons.indexOf(event.target as HTMLElement);
     if (i < 0) return;
     let j: number;
@@ -520,12 +520,12 @@ export class WtCarousel implements OnInit, AfterViewChecked, OnDestroy {
     const offset = this.isCircular() ? this.first + this.numVisibleNow : this.first;
     const shift = `${-offset * (100 / this.numVisibleNow)}%`;
     const transform = this.vertical ? `translate3d(0, ${shift}, 0)` : `translate3d(${shift}, 0, 0)`;
-    if (!animate) list.classList.add('wt-carousel-still');
+    if (!animate) list.classList.add('wu-carousel-still');
     list.style.transform = transform;
     if (!animate) {
       // Apply the jump before slides are allowed again.
       void list.offsetHeight;
-      list.classList.remove('wt-carousel-still');
+      list.classList.remove('wu-carousel-still');
       return;
     }
     if (this.settleTo === null) return;

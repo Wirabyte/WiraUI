@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtSiteFooter } from './sitefooter.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuSiteFooter } from './sitefooter.component';
 
-/** For NgModule apps (with `WtTemplate` for the `brand`, `end` and `bottom` slots). Standalone apps can import `WtSiteFooter` directly. */
+/** For NgModule apps (with `WuTemplate` for the `brand`, `end` and `bottom` slots). Standalone apps can import `WuSiteFooter` directly. */
 @NgModule({
-  imports: [WtSiteFooter, WtTemplate],
-  exports: [WtSiteFooter, WtTemplate],
+  imports: [WuSiteFooter, WuTemplate],
+  exports: [WuSiteFooter, WuTemplate],
 })
-export class WtSiteFooterModule {}
+export class WuSiteFooterModule {}

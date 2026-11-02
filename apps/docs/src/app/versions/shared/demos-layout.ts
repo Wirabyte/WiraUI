@@ -5,7 +5,7 @@ import { drawSamplePhoto } from './demos-cropper';
 import { MenuEntry, SimpleDemo } from './demos';
 
 /*
- * State and handlers behind the layout pages (Navbar). Like demos.ts, no wiratheme import: the same template compiles
+ * State and handlers behind the layout pages (Navbar). Like demos.ts, no wiraui import: the same template compiles
  * against v1, v2 and v3, so events are typed by their shape.
  */
 

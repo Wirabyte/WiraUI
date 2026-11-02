@@ -11,10 +11,10 @@ import {
   ThemeOverrides,
   ThemePreset,
   tokensToCss,
-} from 'wiratheme/core';
-import { WT_OPTIONS, WtScale } from './options';
+} from 'wiraui/core';
+import { WU_OPTIONS, WuScale } from './options';
 
-const STYLE_ATTR = 'data-wt-style';
+const STYLE_ATTR = 'data-wu-style';
 const SCALE_PX: Record<string, number> = { sm: 12, md: 14, lg: 16 };
 
 /**
@@ -23,14 +23,14 @@ const SCALE_PX: Record<string, number> = { sm: 12, md: 14, lg: 16 };
  * (and the `tokens` layer when a preset is given instead of a file).
  */
 @Injectable({ providedIn: 'root' })
-export class WtThemeService {
+export class WuThemeService {
   private readonly doc = inject(DOCUMENT);
-  private readonly options = inject(WT_OPTIONS, { optional: true }) || {};
+  private readonly options = inject(WU_OPTIONS, { optional: true }) || {};
   private preset: ThemePreset | null = this.options.preset || null;
   private overrides: ThemeOverrides = this.options.overrides || {};
   private initialized = false;
 
-  /** Called once by `provideWiraTheme()`. Safe to call again. */
+  /** Called once by `provideWiraUI()`. Safe to call again. */
   init(): void {
     if (this.initialized) return;
     this.initialized = true;
@@ -68,7 +68,7 @@ export class WtThemeService {
     this.patch({ semantic: { primary: palette(hex) } });
   }
 
-  /** Adds or removes the dark-mode class on `<html>` (`wt-dark`, or the class `darkModeSelector` names). */
+  /** Adds or removes the dark-mode class on `<html>` (`wu-dark`, or the class `darkModeSelector` names). */
   setDarkMode(dark: boolean): void {
     this.doc.documentElement.classList.toggle(this.darkClass(), dark);
   }
@@ -81,14 +81,14 @@ export class WtThemeService {
    * Makes the whole UI smaller or larger by setting the root font size, which every rem in the theme follows:
    * `'sm'` 12px, `'md'` 14px, `'lg'` 16px, or a number of px. `null` hands the size back to the page's CSS.
    */
-  setScale(scale: WtScale | null): void {
+  setScale(scale: WuScale | null): void {
     const px = scale === null ? 0 : typeof scale === 'number' ? scale : SCALE_PX[scale] || 0;
     this.doc.documentElement.style.fontSize = px > 0 ? `${px}px` : '';
   }
 
   private darkClass(): string {
     const sel = this.options.darkModeSelector;
-    return sel && /^\.[\w-]+$/.test(sel) ? sel.slice(1) : 'wt-dark';
+    return sel && /^\.[\w-]+$/.test(sel) ? sel.slice(1) : 'wu-dark';
   }
 
   private darkMode(): DarkMode {
@@ -104,7 +104,7 @@ export class WtThemeService {
     if (this.preset) return this.preset.config.scheme;
     const win = this.doc.defaultView;
     if (!win || typeof win.getComputedStyle !== 'function') return 'light';
-    return win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wt-scheme').trim() === 'dark' ? 'dark' : 'light';
+    return win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wu-scheme').trim() === 'dark' ? 'dark' : 'light';
   }
 
   private cssOptions() {
@@ -126,7 +126,7 @@ export class WtThemeService {
   private writeOverrides(): void {
     const t = overridesToTokens(this.overrides, this.scheme());
     const empty = !Object.keys(t.light).length && !Object.keys(t.dark).length;
-    this.style('overrides', empty ? '' : tokensToCss(t, { ...this.cssOptions(), layer: 'wiratheme.overrides' }));
+    this.style('overrides', empty ? '' : tokensToCss(t, { ...this.cssOptions(), layer: 'wiraui.overrides' }));
   }
 
   private style(name: string, css: string, first = false): void {
@@ -146,10 +146,10 @@ export class WtThemeService {
     const win = this.doc.defaultView;
     if (!win || typeof win.getComputedStyle !== 'function') return;
     win.setTimeout(() => {
-      const source = win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wt-theme-source').trim();
+      const source = win.getComputedStyle(this.doc.documentElement).getPropertyValue('--wu-theme-source').trim();
       if (source) {
         console.warn(
-          `[wiratheme] Both a ${source} theme file and a TypeScript preset are loaded; keep one. ` +
+          `[wiraui] Both a ${source} theme file and a TypeScript preset are loaded; keep one. ` +
             `To adjust a theme file, use overrides instead of a preset.`
         );
       }

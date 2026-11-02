@@ -22,7 +22,7 @@ const NEWS_TS = `news = [
 const CARD = `  <ng-template #item let-news>
     <article class="news-card">
       <img [src]="news.image" [alt]="news.title" />
-      <wt-tag [value]="news.tag"></wt-tag>
+      <wu-tag [value]="news.tag"></wu-tag>
       <h3>{{ news.title }}</h3>
       <p>{{ news.text }}</p>
     </article>
@@ -33,9 +33,9 @@ export const CAROUSEL_DOC: ComponentDoc = {
   title: 'Carousel',
   group: 'Media',
   entry: 'carousel',
-  standalone: 'WtCarousel',
-  module: 'WtCarouselModule',
-  selector: 'wt-carousel',
+  standalone: 'WuCarousel',
+  module: 'WuCarouselModule',
+  selector: 'wu-carousel',
   description: {
     th: 'แสดงรายการทีละหลายชิ้นในแถวที่เลื่อนได้ เช่น ข่าวประชาสัมพันธ์ ผลงาน หรือสินค้า มีลูกศรและแถบบอกหน้า เปลี่ยนจำนวนที่เห็นตามความกว้างจอ เลื่อนเองได้ วนกลับได้ ปัดบนจอสัมผัสได้ และวางแนวตั้งได้',
     en: 'Shows a few items at a time in a row that slides, such as news, work or products, with arrows and page bars. It shows fewer items on narrower screens, can play by itself and wrap around, takes swipes, and can run vertically.',
@@ -72,8 +72,8 @@ export const CAROUSEL_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtCarouselModule</code> มี <code>wtTemplate</code>, <code>&lt;wt-header&gt;</code> และ <code>&lt;wt-footer&gt;</code> ให้ด้วย) และ standalone (<code>WtCarousel</code>)',
-        en: 'Works as an NgModule (<code>WtCarouselModule</code>, which brings <code>wtTemplate</code>, <code>&lt;wt-header&gt;</code> and <code>&lt;wt-footer&gt;</code>) or standalone (<code>WtCarousel</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuCarouselModule</code> มี <code>wuTemplate</code>, <code>&lt;wu-header&gt;</code> และ <code>&lt;wu-footer&gt;</code> ให้ด้วย) และ standalone (<code>WuCarousel</code>)',
+        en: 'Works as an NgModule (<code>WuCarouselModule</code>, which brings <code>wuTemplate</code>, <code>&lt;wu-header&gt;</code> and <code>&lt;wu-footer&gt;</code>) or standalone (<code>WuCarousel</code>).',
       },
     },
     basic: {
@@ -107,8 +107,8 @@ export const CAROUSEL_DOC: ComponentDoc = {
     templates: {
       title: { th: 'Template และปุ่ม', en: 'Templates and buttons' },
       text: {
-        th: 'template <code>header</code> / <code>footer</code> (หรือ <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code>) วางเหนือและใต้แถบ · <code>previousicon</code> / <code>nexticon</code> วาดไอคอนลูกศรเอง หรือใช้ <code>prevButtonProps</code> / <code>nextButtonProps</code> ใส่ <code>icon</code> และ <code>ariaLabel</code> · <code>[showNavigators]="false"</code> / <code>[showIndicators]="false"</code> ซ่อนลูกศร / แถบ · <code>contentClass</code>, <code>indicatorsContentClass</code>, <code>indicatorStyleClass</code> และ <code>indicatorStyle</code> แต่งแต่ละส่วน',
-        en: 'The <code>header</code> / <code>footer</code> templates (or <code>&lt;wt-header&gt;</code> / <code>&lt;wt-footer&gt;</code>) sit above and below · <code>previousicon</code> / <code>nexticon</code> draw the arrows, or <code>prevButtonProps</code> / <code>nextButtonProps</code> set an <code>icon</code> and an <code>ariaLabel</code> · <code>[showNavigators]="false"</code> / <code>[showIndicators]="false"</code> hide the arrows / bars · <code>contentClass</code>, <code>indicatorsContentClass</code>, <code>indicatorStyleClass</code> and <code>indicatorStyle</code> style each part.',
+        th: 'template <code>header</code> / <code>footer</code> (หรือ <code>&lt;wu-header&gt;</code> / <code>&lt;wu-footer&gt;</code>) วางเหนือและใต้แถบ · <code>previousicon</code> / <code>nexticon</code> วาดไอคอนลูกศรเอง หรือใช้ <code>prevButtonProps</code> / <code>nextButtonProps</code> ใส่ <code>icon</code> และ <code>ariaLabel</code> · <code>[showNavigators]="false"</code> / <code>[showIndicators]="false"</code> ซ่อนลูกศร / แถบ · <code>contentClass</code>, <code>indicatorsContentClass</code>, <code>indicatorStyleClass</code> และ <code>indicatorStyle</code> แต่งแต่ละส่วน',
+        en: 'The <code>header</code> / <code>footer</code> templates (or <code>&lt;wu-header&gt;</code> / <code>&lt;wu-footer&gt;</code>) sit above and below · <code>previousicon</code> / <code>nexticon</code> draw the arrows, or <code>prevButtonProps</code> / <code>nextButtonProps</code> set an <code>icon</code> and an <code>ariaLabel</code> · <code>[showNavigators]="false"</code> / <code>[showIndicators]="false"</code> hide the arrows / bars · <code>contentClass</code>, <code>indicatorsContentClass</code>, <code>indicatorStyleClass</code> and <code>indicatorStyle</code> style each part.',
       },
     },
     keyboard: {
@@ -121,39 +121,39 @@ export const CAROUSEL_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-carousel&gt;</code> เป็น <code>&lt;wt-carousel&gt;</code> input และ event ใช้ชื่อเดิมทั้งหมด (<code>value</code>, <code>page</code>, <code>numVisible</code>, <code>numScroll</code>, <code>responsiveOptions</code>, <code>orientation</code>, <code>verticalViewPortHeight</code>, <code>circular</code>, <code>autoplayInterval</code>, <code>showIndicators</code>, <code>showNavigators</code>, <code>onPage</code>) และ <code>pTemplate="item"</code> / <code>header</code> / <code>footer</code> ใช้ได้เหมือนเดิม',
-        en: 'Change <code>&lt;p-carousel&gt;</code> to <code>&lt;wt-carousel&gt;</code>; every input and event keeps its name (<code>value</code>, <code>page</code>, <code>numVisible</code>, <code>numScroll</code>, <code>responsiveOptions</code>, <code>orientation</code>, <code>verticalViewPortHeight</code>, <code>circular</code>, <code>autoplayInterval</code>, <code>showIndicators</code>, <code>showNavigators</code>, <code>onPage</code>), and <code>pTemplate="item"</code> / <code>header</code> / <code>footer</code> keep working.',
+        th: 'เปลี่ยน <code>&lt;p-carousel&gt;</code> เป็น <code>&lt;wu-carousel&gt;</code> input และ event ใช้ชื่อเดิมทั้งหมด (<code>value</code>, <code>page</code>, <code>numVisible</code>, <code>numScroll</code>, <code>responsiveOptions</code>, <code>orientation</code>, <code>verticalViewPortHeight</code>, <code>circular</code>, <code>autoplayInterval</code>, <code>showIndicators</code>, <code>showNavigators</code>, <code>onPage</code>) และ <code>pTemplate="item"</code> / <code>header</code> / <code>footer</code> ใช้ได้เหมือนเดิม',
+        en: 'Change <code>&lt;p-carousel&gt;</code> to <code>&lt;wu-carousel&gt;</code>; every input and event keeps its name (<code>value</code>, <code>page</code>, <code>numVisible</code>, <code>numScroll</code>, <code>responsiveOptions</code>, <code>orientation</code>, <code>verticalViewPortHeight</code>, <code>circular</code>, <code>autoplayInterval</code>, <code>showIndicators</code>, <code>showNavigators</code>, <code>onPage</code>), and <code>pTemplate="item"</code> / <code>header</code> / <code>footer</code> keep working.',
       },
     },
   },
   code: {
-    basic: `<wt-carousel [value]="news" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+    basic: `<wu-carousel [value]="news" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
 ${CARD}
-</wt-carousel>`,
-    circular: `<wt-carousel [value]="news" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
+</wu-carousel>`,
+    circular: `<wu-carousel [value]="news" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
   [responsiveOptions]="responsiveOptions">
 ${CARD}
-</wt-carousel>`,
-    vertical: `<wt-carousel [value]="news" orientation="vertical" verticalViewPortHeight="320px" [style]="{ maxWidth: '24rem' }">
+</wu-carousel>`,
+    vertical: `<wu-carousel [value]="news" orientation="vertical" verticalViewPortHeight="320px" [style]="{ maxWidth: '24rem' }">
 ${CARD}
-</wt-carousel>`,
+</wu-carousel>`,
     page: {
-      v3: `<wt-carousel [value]="news" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
+      v3: `<wu-carousel [value]="news" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
 ${CARD}
-</wt-carousel>
-<wt-button label="หน้าแรก" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wt-button>
-<wt-button label="หน้าสุดท้าย" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wt-button>
+</wu-carousel>
+<wu-button label="หน้าแรก" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wu-button>
+<wu-button label="หน้าสุดท้าย" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wu-button>
 @if (lastPage !== null) {
   <span>onPage: {{ lastPage }}</span>
 }`,
-      classic: `<wt-carousel [value]="news" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
-${CARD.replace('<ng-template #item', '<ng-template wtTemplate="item"')}
-</wt-carousel>
-<wt-button label="หน้าแรก" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wt-button>
-<wt-button label="หน้าสุดท้าย" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wt-button>
+      classic: `<wu-carousel [value]="news" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
+${CARD.replace('<ng-template #item', '<ng-template wuTemplate="item"')}
+</wu-carousel>
+<wu-button label="หน้าแรก" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wu-button>
+<wu-button label="หน้าสุดท้าย" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wu-button>
 <span *ngIf="lastPage !== null">onPage: {{ lastPage }}</span>`,
     },
-    templates: `<wt-carousel [value]="news" [numVisible]="3" [numScroll]="3" [responsiveOptions]="responsiveOptions"
+    templates: `<wu-carousel [value]="news" [numVisible]="3" [numScroll]="3" [responsiveOptions]="responsiveOptions"
   [prevButtonProps]="{ icon: 'wi wi-arrow-left', ariaLabel: 'ข่าวก่อนหน้า' }"
   [nextButtonProps]="{ icon: 'wi wi-arrow-right', ariaLabel: 'ข่าวถัดไป' }">
   <ng-template #header>
@@ -161,9 +161,9 @@ ${CARD.replace('<ng-template #item', '<ng-template wtTemplate="item"')}
   </ng-template>
 ${CARD}
   <ng-template #footer>
-    <wt-button label="ดูข่าวทั้งหมด" icon="wi wi-arrow-right" iconPos="right" [text]="true" (onClick)="openNews()"></wt-button>
+    <wu-button label="ดูข่าวทั้งหมด" icon="wi wi-arrow-right" iconPos="right" [text]="true" (onClick)="openNews()"></wu-button>
   </ng-template>
-</wt-carousel>`,
+</wu-carousel>`,
   },
   ts: {
     basic: NEWS_TS + `
@@ -214,8 +214,8 @@ paged(event: { page: number }): void {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้ · header / footer ใช้ <wt-header> / <wt-footer> แทนได้',
-        en: 'Write them as #item, wtTemplate="item" or pTemplate="item" · header / footer can be <wt-header> / <wt-footer> instead.',
+        th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้ · header / footer ใช้ <wu-header> / <wu-footer> แทนได้',
+        en: 'Write them as #item, wuTemplate="item" or pTemplate="item" · header / footer can be <wu-header> / <wu-footer> instead.',
       },
       rows: [
         row('item', '$implicit (item), index', undefined, 'แต่ละชิ้น', 'Each item'),
@@ -225,19 +225,19 @@ paged(event: { page: number }): void {
     },
   ],
   tokens: [
-    tok('--wt-carousel-content-gap', 'ระยะระหว่างลูกศรกับรายการ', 'Gap between the arrows and the items'),
-    tok('--wt-carousel-nav-size', 'ขนาดปุ่มลูกศร', 'Arrow button size'),
-    tok('--wt-carousel-nav-color', 'สีลูกศร', 'Arrow colour'),
-    tok('--wt-carousel-nav-hover-bg', 'พื้นปุ่มลูกศรเมื่อชี้', 'Arrow button background on hover'),
-    tok('--wt-carousel-nav-hover-color', 'สีลูกศรเมื่อชี้', 'Arrow colour on hover'),
-    tok('--wt-carousel-indicator-list-padding', 'ระยะรอบแถวแถบบอกหน้า', 'Padding around the bar row'),
-    tok('--wt-carousel-indicator-gap', 'ระยะระหว่างแถบ', 'Gap between bars'),
-    tok('--wt-carousel-indicator-width', 'ความกว้างของแถบ', 'Bar width'),
-    tok('--wt-carousel-indicator-height', 'ความสูงของแถบ', 'Bar height'),
-    tok('--wt-carousel-indicator-radius', 'มุมโค้งของแถบ', 'Bar corner radius'),
-    tok('--wt-carousel-indicator-bg', 'สีแถบ', 'Bar colour'),
-    tok('--wt-carousel-indicator-hover-bg', 'สีแถบเมื่อชี้', 'Bar colour on hover'),
-    tok('--wt-carousel-indicator-active-bg', 'สีแถบของหน้าปัจจุบัน', 'Bar colour of the current page'),
-    tok('--wt-carousel-transition-duration', 'เวลาของการเลื่อน', 'Slide duration'),
+    tok('--wu-carousel-content-gap', 'ระยะระหว่างลูกศรกับรายการ', 'Gap between the arrows and the items'),
+    tok('--wu-carousel-nav-size', 'ขนาดปุ่มลูกศร', 'Arrow button size'),
+    tok('--wu-carousel-nav-color', 'สีลูกศร', 'Arrow colour'),
+    tok('--wu-carousel-nav-hover-bg', 'พื้นปุ่มลูกศรเมื่อชี้', 'Arrow button background on hover'),
+    tok('--wu-carousel-nav-hover-color', 'สีลูกศรเมื่อชี้', 'Arrow colour on hover'),
+    tok('--wu-carousel-indicator-list-padding', 'ระยะรอบแถวแถบบอกหน้า', 'Padding around the bar row'),
+    tok('--wu-carousel-indicator-gap', 'ระยะระหว่างแถบ', 'Gap between bars'),
+    tok('--wu-carousel-indicator-width', 'ความกว้างของแถบ', 'Bar width'),
+    tok('--wu-carousel-indicator-height', 'ความสูงของแถบ', 'Bar height'),
+    tok('--wu-carousel-indicator-radius', 'มุมโค้งของแถบ', 'Bar corner radius'),
+    tok('--wu-carousel-indicator-bg', 'สีแถบ', 'Bar colour'),
+    tok('--wu-carousel-indicator-hover-bg', 'สีแถบเมื่อชี้', 'Bar colour on hover'),
+    tok('--wu-carousel-indicator-active-bg', 'สีแถบของหน้าปัจจุบัน', 'Bar colour of the current page'),
+    tok('--wu-carousel-transition-duration', 'เวลาของการเลื่อน', 'Slide duration'),
   ],
 };

@@ -26,13 +26,13 @@ import {
   ɵfocusable,
   ɵsize,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtPopup,
-  WtSize,
-  ɵWtStyleLoader,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuPopup,
+  WuSize,
+  ɵWuStyleLoader,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   CalendarSystem,
   classicDateFormat,
@@ -46,11 +46,11 @@ import {
   sameDay,
   TimeUnit,
   toDate,
-  WtLocale,
+  WuLocale,
   YearCell,
-} from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { WtDatePickerDataType, WtDatePickerIconDisplay, WtDatePickerMonthChangeEvent } from './datepicker.types';
+} from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { WuDatePickerDataType, WuDatePickerIconDisplay, WuDatePickerMonthChangeEvent } from './datepicker.types';
 
 const PHONE = '(max-width: 575.98px)';
 const template = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
@@ -70,34 +70,34 @@ function yearRange(v: string | undefined, calendar: CalendarSystem): [number, nu
 }
 
 /**
- * Date and time field: `<wt-datepicker [(ngModel)]="due" dateFormat="dd/mm/yy" showIcon>`.
+ * Date and time field: `<wu-datepicker [(ngModel)]="due" dateFormat="dd/mm/yy" showIcon>`.
  * The model is a Date (Date[] for `selectionMode` multiple and range), or text in `dateFormat` with `dataType="string"`.
  * Years show in พ.ศ. by default (`calendar`, or `isBudhistYear`). `showTime` adds hour and minute fields (and seconds
  * with `showSeconds`) that take up / down buttons, arrow keys and typing; `readonlyInput` locks the main field and
  * `timeReadonlyInput` locks the time fields, separately. Opens in the top layer: no appendTo needed.
  */
 @Component({
-  selector: 'wt-datepicker, wt-datePicker, wt-calendar, wt-date-picker',
+  selector: 'wu-datepicker, wu-datePicker, wu-calendar, wu-date-picker',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './datepicker.component.html',
   styleUrl: './datepicker.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtDatePicker), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuDatePicker), multi: true }],
   host: {
-    '[class.wt-datepicker-sm]': "sizeKey() === 'sm'",
+    '[class.wu-datepicker-sm]': "sizeKey() === 'sm'",
     '[class.p-datepicker-sm]': "sizeKey() === 'sm'",
-    '[class.wt-datepicker-lg]': "sizeKey() === 'lg'",
+    '[class.wu-datepicker-lg]': "sizeKey() === 'lg'",
     '[class.p-datepicker-lg]': "sizeKey() === 'lg'",
-    '[class.wt-datepicker-fluid]': 'fluid()',
-    '[class.wt-filled]': 'filled',
+    '[class.wu-datepicker-fluid]': 'fluid()',
+    '[class.wu-filled]': 'filled',
     '[class.p-inputwrapper-filled]': 'filled',
     '[class.p-inputwrapper-focus]': 'focused || open',
     '(focusout)': 'focusOut($event)',
   },
 })
-export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, OnDestroy {
+export class WuDatePicker implements ControlValueAccessor, OnChanges, OnInit, OnDestroy {
   // ---------- what can be picked ----------
   readonly selectionMode = input<DateSelectionMode>('single');
   /** The smallest thing picked: `'month'` or `'year'` make a month or year picker. */
@@ -119,12 +119,12 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   // ---------- how it reads ----------
   /** `dd/mm/yy` style: d dd (day), m mm (month), M MM (month name), y yy (2- / 4-digit year), D DD (day name). Default: the locale's. */
   readonly dateFormat = input<string>();
-  /** `'buddhist'` shows years as พ.ศ.; the model stays an ordinary Date. Default: `WtConfig.calendar` (พ.ศ.). */
+  /** `'buddhist'` shows years as พ.ศ.; the model stays an ordinary Date. Default: `WuConfig.calendar` (พ.ศ.). */
   readonly calendar = input<CalendarSystem>();
   /** `true` is `calendar="buddhist"`, `false` is `calendar="gregorian"`. Both spellings work. */
   readonly isBudhistYear = input<boolean | null, unknown>(null, { transform: toOptionalBool });
   readonly isBuddhistYear = input<boolean | null, unknown>(null, { transform: toOptionalBool });
-  readonly dataType = input<WtDatePickerDataType>('date');
+  readonly dataType = input<WuDatePickerDataType>('date');
   /** Keep text that does not parse in the field on blur, instead of putting back the current value. */
   readonly keepInvalid = input(false, { transform: booleanAttribute });
 
@@ -155,7 +155,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
-  readonly size = input<WtSize>();
+  readonly size = input<WuSize>();
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly required = input(false, { transform: booleanAttribute });
   readonly fluid = input(false, { transform: booleanAttribute });
@@ -164,7 +164,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   readonly showIcon = input(false, { transform: booleanAttribute });
   /** Icon class instead of the built-in calendar icon, e.g. `pi pi-clock`. */
   readonly icon = input<string>();
-  readonly iconDisplay = input<WtDatePickerIconDisplay>('button');
+  readonly iconDisplay = input<WuDatePickerIconDisplay>('button');
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   /** A × in the field that empties it. */
   readonly showClear = input(false, { transform: booleanAttribute });
@@ -194,10 +194,10 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   readonly onClear = output<void>();
   readonly onTodayClick = output<Event>();
   readonly onClearClick = output<Event>();
-  readonly onMonthChange = output<WtDatePickerMonthChangeEvent>();
-  readonly onYearChange = output<WtDatePickerMonthChangeEvent>();
+  readonly onMonthChange = output<WuDatePickerMonthChangeEvent>();
+  readonly onYearChange = output<WuDatePickerMonthChangeEvent>();
 
-  private readonly templates = contentChildren(WtTemplate);
+  private readonly templates = contentChildren(WuTemplate);
   private readonly inputIconRef = contentChild('inputicon', { descendants: false });
   private readonly triggerIconRef = contentChild('triggericon', { descendants: false });
   private readonly dateRef = contentChild('date', { descendants: false });
@@ -205,7 +205,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private readonly dayRef = contentChild('day', { descendants: false });
   /** Context of the icon templates: `let-clickCallBack="clickCallBack"`, then `(click)="clickCallBack($event)"` opens or closes. */
   readonly iconContext = { clickCallBack: () => this.toggle() };
-  /** `<ng-template #inputicon>` (or `wtTemplate="inputicon"`): the icon inside the field. */
+  /** `<ng-template #inputicon>` (or `wuTemplate="inputicon"`): the icon inside the field. */
   readonly inputIconTemplate = computed(() => template(this.inputIconRef()) || ɵfindTemplate(this.templates(), 'inputicon'));
   /** `<ng-template #triggericon>`: the icon of the button beside the field. */
   readonly triggerIconTemplate = computed(() => template(this.triggerIconRef()) || ɵfindTemplate(this.templates(), 'triggericon'));
@@ -226,7 +226,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   weekdays: { day: number; short: string; long: string }[] = [];
   /** What the field shows: the value, or the text being typed. */
   inputText = '';
-  readonly panelId = ɵuniqueId('wt-datepicker-panel');
+  readonly panelId = ɵuniqueId('wu-datepicker-panel');
 
   readonly isReadonly = computed(() => this.readonlyInput() || this.readOnlyInput());
   readonly isTimeReadonly = computed(() => this.timeReadonlyInput() || this.timeReadOnlyInput());
@@ -240,10 +240,10 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private timeDraft: { unit: TimeUnit; text: string } | null = null;
   /** The time field was just focused or stepped: the next digit replaces it instead of adding to it. */
   private timeFresh = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private repeat: ReturnType<typeof setTimeout> | null = null;
-  private readonly autoId = ɵuniqueId('wt-datepicker');
-  private readonly config = inject(WtConfig);
+  private readonly autoId = ɵuniqueId('wu-datepicker');
+  private readonly config = inject(WuConfig);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
@@ -257,8 +257,8 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnChanges(): void {
@@ -280,7 +280,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
 
   // ---------- template helpers ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get id(): string {
@@ -322,10 +322,10 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
     this.cdr.detectChanges();
     const panel = this.panelRef()?.nativeElement;
     if (!panel) return;
-    this.popup = new ɵWtPopup(this.rootRef().nativeElement, panel, {
+    this.popup = new ɵWuPopup(this.rootRef().nativeElement, panel, {
       touch: this.touchUI(),
-      sheetClass: 'wt-datepicker-sheet',
-      modalClass: 'wt-datepicker-modal',
+      sheetClass: 'wu-datepicker-sheet',
+      modalClass: 'wu-datepicker-modal',
       onOutside: () => this.hide(),
     });
     this.popup.open();
@@ -440,7 +440,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
    */
   panelMousedown(event: MouseEvent): void {
     const t = event.target as HTMLElement;
-    if (!t.closest('input, .wt-datepicker-cell')) event.preventDefault();
+    if (!t.closest('input, .wu-datepicker-cell')) event.preventDefault();
   }
 
   panelKeydown(event: KeyboardEvent): void {
@@ -575,7 +575,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
     if (this.timeDraft && this.timeDraft.unit === unit) this.timeDraft = { unit, text: this.state.timeText(unit) };
     // Keep the stepped field selected so typing replaces it. Render first: writing the value drops a selection.
     const active = this.doc.activeElement as HTMLInputElement | null;
-    if (active && active.classList.contains('wt-datepicker-time-input') && active.getAttribute('data-unit') === unit) {
+    if (active && active.classList.contains('wu-datepicker-time-input') && active.getAttribute('data-unit') === unit) {
       this.cdr.detectChanges();
       active.select();
     }
@@ -762,7 +762,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private focusCell(onlyInside = false): void {
     const panel = this.panelRef()?.nativeElement;
     if (!panel || (onlyInside && !panel.contains(this.doc.activeElement))) return;
-    panel.querySelector<HTMLElement>('.wt-datepicker-cell[tabindex="0"]')?.focus();
+    panel.querySelector<HTMLElement>('.wu-datepicker-cell[tabindex="0"]')?.focus();
   }
 
   private focusInput(): void {
@@ -776,7 +776,7 @@ export class WtDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private focusNextTime(current: HTMLElement): void {
     const panel = this.panelRef()?.nativeElement;
     if (!panel) return;
-    const fields = Array.from(panel.querySelectorAll<HTMLElement>('.wt-datepicker-time-input, .wt-datepicker-time-period'));
+    const fields = Array.from(panel.querySelectorAll<HTMLElement>('.wu-datepicker-time-input, .wu-datepicker-time-period'));
     const next = fields[fields.indexOf(current) + 1];
     if (next) next.focus();
   }

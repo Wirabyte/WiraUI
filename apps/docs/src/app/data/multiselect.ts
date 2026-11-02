@@ -31,7 +31,7 @@ const REGIONS_TS = `regions = [
 ];`;
 
 /** One multiselect line, the way most samples start. */
-const FIELD = `<wt-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="provinces" optionLabel="name_th"
+const FIELD = `<wu-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="provinces" optionLabel="name_th"
   optionValue="id"`;
 
 export const MULTISELECT_DOC: ComponentDoc = {
@@ -39,10 +39,10 @@ export const MULTISELECT_DOC: ComponentDoc = {
   title: 'MultiSelect',
   group: 'Form',
   entry: 'multiselect',
-  standalone: 'WtMultiSelect',
-  module: 'WtMultiSelectModule',
+  standalone: 'WuMultiSelect',
+  module: 'WuMultiSelectModule',
   forms: true,
-  selector: 'wt-multiselect',
+  selector: 'wu-multiselect',
   description: {
     th: 'เลือกได้หลายตัวเลือกจากรายการเดียว ค่าเป็น array มีช่องค้นหาและติ๊กทั้งหมดในตัว แสดงเป็นข้อความหรือชิป และรายการเปิดค้างไว้ระหว่างเลือก ใช้ช่องและรายการชุดเดียวกับ Select',
     en: 'Pick several options from one list. The value is an array, search and check-all are built in, choices show as text or chips, and the list stays open while you pick. It shares its field and list with Select.',
@@ -91,8 +91,8 @@ export const MULTISELECT_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wt-multiSelect</code> ก็ใช้ได้ ค่าเป็น array เสมอ ช่องค้นหา (<code>filter</code>) และช่องติ๊กทั้งหมด (<code>showToggleAll</code>) เปิดอยู่แล้วโดยไม่ต้องใส่',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>; the <code>wt-multiSelect</code> selector works too. The value is always an array. The search box (<code>filter</code>) and the check-all box (<code>showToggleAll</code>) are on by default.',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wu-multiSelect</code> ก็ใช้ได้ ค่าเป็น array เสมอ ช่องค้นหา (<code>filter</code>) และช่องติ๊กทั้งหมด (<code>showToggleAll</code>) เปิดอยู่แล้วโดยไม่ต้องใส่',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>; the <code>wu-multiSelect</code> selector works too. The value is always an array. The search box (<code>filter</code>) and the check-all box (<code>showToggleAll</code>) are on by default.',
       },
     },
     basic: {
@@ -158,8 +158,8 @@ export const MULTISELECT_DOC: ComponentDoc = {
     look: {
       title: { th: 'ความกว้างและแบบพื้นทึบ', en: 'Width and filled' },
       text: {
-        th: 'กว้าง 14rem เหมือน Select (<code>--wt-select-width</code>) แต่ไม่เกินกล่องที่อยู่ · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
-        en: '14rem wide like Select (<code>--wt-select-width</code>), never wider than its container · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
+        th: 'กว้าง 14rem เหมือน Select (<code>--wu-select-width</code>) แต่ไม่เกินกล่องที่อยู่ · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
+        en: '14rem wide like Select (<code>--wu-select-width</code>), never wider than its container · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
       },
     },
     templates: {
@@ -194,36 +194,36 @@ export const MULTISELECT_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ไม่ต้องใช้ appendTo และย้ายโค้ดเดิม', en: 'No appendTo, and moving existing code' },
       text: {
-        th: 'รายการเปิดใน top layer ของ browser จึงไม่ถูกตัดใน dialog หรือกล่องที่ <code>overflow: hidden</code> template เดิมที่ใช้ <code>p-multiSelect</code> เปลี่ยนเป็น <code>wt-multiselect</code> ได้เลย input ส่วนใหญ่ชื่อเดิม (<code>defaultLabel</code>, <code>maxSelectedLabels</code>, <code>selectedItemsLabel</code>, <code>display="chip"</code>, template <code>selectedItems</code>) ส่วน <code>appendTo</code>, <code>virtualScroll</code>, <code>lazy</code> และ <code>autofocusFilter</code> รับไว้แต่ไม่มีผล',
-        en: 'The list opens in the browser top layer, so dialogs and <code>overflow: hidden</code> boxes never clip it. Templates using <code>p-multiSelect</code> switch to <code>wt-multiselect</code> with most inputs unchanged (<code>defaultLabel</code>, <code>maxSelectedLabels</code>, <code>selectedItemsLabel</code>, <code>display="chip"</code>, the <code>selectedItems</code> template); <code>appendTo</code>, <code>virtualScroll</code>, <code>lazy</code> and <code>autofocusFilter</code> are accepted and ignored.',
+        th: 'รายการเปิดใน top layer ของ browser จึงไม่ถูกตัดใน dialog หรือกล่องที่ <code>overflow: hidden</code> template เดิมที่ใช้ <code>p-multiSelect</code> เปลี่ยนเป็น <code>wu-multiselect</code> ได้เลย input ส่วนใหญ่ชื่อเดิม (<code>defaultLabel</code>, <code>maxSelectedLabels</code>, <code>selectedItemsLabel</code>, <code>display="chip"</code>, template <code>selectedItems</code>) ส่วน <code>appendTo</code>, <code>virtualScroll</code>, <code>lazy</code> และ <code>autofocusFilter</code> รับไว้แต่ไม่มีผล',
+        en: 'The list opens in the browser top layer, so dialogs and <code>overflow: hidden</code> boxes never clip it. Templates using <code>p-multiSelect</code> switch to <code>wu-multiselect</code> with most inputs unchanged (<code>defaultLabel</code>, <code>maxSelectedLabels</code>, <code>selectedItemsLabel</code>, <code>display="chip"</code>, the <code>selectedItems</code> template); <code>appendTo</code>, <code>virtualScroll</code>, <code>lazy</code> and <code>autofocusFilter</code> are accepted and ignored.',
       },
     },
   },
   code: {
     basic: `<label for="provinces">จังหวัด</label>
-<wt-multiselect inputId="provinces" name="provinceIds" [(ngModel)]="provinceIds" [options]="provinces"
-  optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด"></wt-multiselect>`,
+<wu-multiselect inputId="provinces" name="provinceIds" [(ngModel)]="provinceIds" [options]="provinces"
+  optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด"></wu-multiselect>`,
     labels: `${FIELD} [maxSelectedLabels]="2" selectedItemsLabel="เลือกแล้ว {0} จังหวัด"
-  defaultLabel="จังหวัดที่ดูแล"></wt-multiselect>`,
-    chips: `${FIELD} display="chip" placeholder="เลือกจังหวัด"></wt-multiselect>`,
+  defaultLabel="จังหวัดที่ดูแล"></wu-multiselect>`,
+    chips: `${FIELD} display="chip" placeholder="เลือกจังหวัด"></wu-multiselect>`,
     chipsNarrow: `${FIELD} display="chip" [maxSelectedLabels]="5"
-  [style]="{ width: '14rem' }"></wt-multiselect>`,
-    limit: `${FIELD} [selectionLimit]="2" placeholder="เลือกได้ไม่เกิน 2 จังหวัด"></wt-multiselect>`,
+  [style]="{ width: '14rem' }"></wu-multiselect>`,
+    limit: `${FIELD} [selectionLimit]="2" placeholder="เลือกได้ไม่เกิน 2 จังหวัด"></wu-multiselect>`,
     toggleall: `${FIELD} placeholder="เลือกจังหวัด"
-  (onSelectAllChange)="allChanged($event)"></wt-multiselect>`,
-    group: `<wt-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="regions" [group]="true"
-  optionLabel="name_th" optionValue="id" placeholder="เลือกตามภาค"></wt-multiselect>`,
-    disabled: `<wt-multiselect name="levelIds" [(ngModel)]="levelIds" [options]="levels" optionLabel="name" optionValue="id"
-  optionDisabled="closed" [filter]="false" placeholder="เลือกระดับชั้น"></wt-multiselect>`,
-    clear: `${FIELD} [showClear]="true" placeholder="เลือกจังหวัด"></wt-multiselect>
-${FIELD} [loading]="isOptionsLoading" placeholder="กำลังโหลด…"></wt-multiselect>`,
-    sizes: `${FIELD} size="small" placeholder="เล็ก"></wt-multiselect>
-${FIELD} placeholder="ปกติ"></wt-multiselect>
-${FIELD} size="large" placeholder="ใหญ่"></wt-multiselect>`,
-    look: `${FIELD} [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wt-multiselect>
-${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-multiselect>`,
+  (onSelectAllChange)="allChanged($event)"></wu-multiselect>`,
+    group: `<wu-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="regions" [group]="true"
+  optionLabel="name_th" optionValue="id" placeholder="เลือกตามภาค"></wu-multiselect>`,
+    disabled: `<wu-multiselect name="levelIds" [(ngModel)]="levelIds" [options]="levels" optionLabel="name" optionValue="id"
+  optionDisabled="closed" [filter]="false" placeholder="เลือกระดับชั้น"></wu-multiselect>`,
+    clear: `${FIELD} [showClear]="true" placeholder="เลือกจังหวัด"></wu-multiselect>
+${FIELD} [loading]="isOptionsLoading" placeholder="กำลังโหลด…"></wu-multiselect>`,
+    sizes: `${FIELD} size="small" placeholder="เล็ก"></wu-multiselect>
+${FIELD} placeholder="ปกติ"></wu-multiselect>
+${FIELD} size="large" placeholder="ใหญ่"></wu-multiselect>`,
+    look: `${FIELD} [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wu-multiselect>
+${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wu-multiselect>`,
     templates: {
-      v3: `<wt-multiselect name="picked" [(ngModel)]="picked" [options]="provinces" optionLabel="name_th" dataKey="id"
+      v3: `<wu-multiselect name="picked" [(ngModel)]="picked" [options]="provinces" optionLabel="name_th" dataKey="id"
   placeholder="เลือกจังหวัด">
   <ng-template #item let-p>
     <b class="province-code">{{ p.code }}</b> {{ p.name_th }}
@@ -238,22 +238,22 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-mult
       <span class="text-color-secondary">เลือกจังหวัด</span>
     }
   </ng-template>
-</wt-multiselect>`,
-      classic: `<wt-multiselect name="picked" [(ngModel)]="picked" [options]="provinces" optionLabel="name_th" dataKey="id"
+</wu-multiselect>`,
+      classic: `<wu-multiselect name="picked" [(ngModel)]="picked" [options]="provinces" optionLabel="name_th" dataKey="id"
   placeholder="เลือกจังหวัด">
-  <ng-template wtTemplate="item" let-p>
+  <ng-template wuTemplate="item" let-p>
     <b class="province-code">{{ p.code }}</b> {{ p.name_th }}
   </ng-template>
-  <ng-template wtTemplate="selectedItems" let-values let-removeChip="removeChip">
+  <ng-template wuTemplate="selectedItems" let-values let-removeChip="removeChip">
     <span *ngFor="let p of values" class="province-chip">
       {{ p.code }}
       <button type="button" aria-label="นำออก" (click)="removeChip(p, $event)">×</button>
     </span>
     <span *ngIf="!values.length" class="text-color-secondary">เลือกจังหวัด</span>
   </ng-template>
-</wt-multiselect>`,
+</wu-multiselect>`,
     },
-    moretemplates: `<wt-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="regions" [group]="true"
+    moretemplates: `<wu-multiselect name="provinceIds" [(ngModel)]="provinceIds" [options]="regions" [group]="true"
   optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด">
   <ng-template #group let-g>
     <i class="wi wi-map-marker"></i> {{ g.label }}
@@ -262,19 +262,19 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-mult
     <div class="select-note">เลือกได้หลายจังหวัด</div>
   </ng-template>
   <ng-template #footer>
-    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wu-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wu-button>
   </ng-template>
   <ng-template #emptyfilter>ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template #dropdownicon>
     <i class="wi wi-search"></i>
   </ng-template>
-</wt-multiselect>`,
+</wu-multiselect>`,
     events: `${FIELD} [showClear]="true" placeholder="เลือกจังหวัด"
   (onChange)="changed($event)" (onFilter)="log('onFilter: ' + $event.filter)" (onPanelShow)="log('onPanelShow')"
-  (onPanelHide)="log('onPanelHide')" (onClear)="log('onClear')"></wt-multiselect>`,
+  (onPanelHide)="log('onPanelHide')" (onClear)="log('onClear')"></wu-multiselect>`,
     reactive: `<form [formGroup]="form">
-  <wt-multiselect formControlName="provinces" [options]="provinces" optionLabel="name_th" optionValue="id"
-    placeholder="จังหวัด (ต้องเลือก)"></wt-multiselect>
+  <wu-multiselect formControlName="provinces" [options]="provinces" optionLabel="name_th" optionValue="id"
+    placeholder="จังหวัด (ต้องเลือก)"></wu-multiselect>
 </form>`,
   },
   ts: {
@@ -282,11 +282,11 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-mult
     labels: `provinceIds: number[] = [10, 50, 40];`,
     chips: `provinceIds: number[] = [50, 83];`,
     chipsNarrow: `provinceIds: number[] = [10, 50, 40, 83, 90];`,
-    toggleall: `import { WtMultiSelectSelectAllChangeEvent } from 'wiratheme/multiselect';
+    toggleall: `import { WuMultiSelectSelectAllChangeEvent } from 'wiraui/multiselect';
 
 allChecked: boolean | null = null;
 
-allChanged(event: WtMultiSelectSelectAllChangeEvent): void {
+allChanged(event: WuMultiSelectSelectAllChangeEvent): void {
   this.allChecked = event.checked;
 }`,
     group: REGIONS_TS,
@@ -303,12 +303,12 @@ isOptionsLoading = true;`,
     moretemplates: `addProvince(): void {
   // เปิดฟอร์มเพิ่มจังหวัด
 }`,
-    events: `import { WtMultiSelectChangeEvent } from 'wiratheme/multiselect';
+    events: `import { WuMultiSelectChangeEvent } from 'wiraui/multiselect';
 
 lastChange = '';
 lastEvent = '';
 
-changed(event: WtMultiSelectChangeEvent): void {
+changed(event: WuMultiSelectChangeEvent): void {
   this.lastChange = 'itemValue ' + event.itemValue + ' · value [' + event.value.join(', ') + ']';
 }
 
@@ -342,7 +342,7 @@ log(name: string): void {
         row('showClear · loading', BOOL, 'false', 'ปุ่มล้าง · spinner และล็อกช่อง', 'Clear button · spinner and a locked field'),
         row('disabled · readonly · invalid', BOOL, 'false', 'ปิด · อ่านอย่างเดียว · ขอบสีแดง', 'Disabled · read-only · red border'),
         row('size', "'small' | 'large' | 'sm' | 'lg'", undefined, 'ขนาด', 'Size'),
-        row('fluid', BOOL, 'false', 'กว้างเต็มพื้นที่ (ค่าเริ่มต้นกว้าง 14rem จาก --wt-select-width)', 'Full width (the default is 14rem, from --wt-select-width)'),
+        row('fluid', BOOL, 'false', 'กว้างเต็มพื้นที่ (ค่าเริ่มต้นกว้าง 14rem จาก --wu-select-width)', 'Full width (the default is 14rem, from --wu-select-width)'),
         row('variant', "'outlined' | 'filled'", "'outlined'", 'แบบมีขอบหรือพื้นทึบ', 'Outlined or filled'),
         row('inputId · ariaLabel · ariaLabelledBy · tabindex', 'string', undefined, 'id และชื่อของช่องสำหรับ label / screen reader', 'Id and accessible name of the field'),
         row('styleClass · style · panelStyleClass · panelStyle', 'string · object', undefined, 'class / style ของช่องและรายการ', 'Field and list class / style'),
@@ -369,9 +369,9 @@ log(name: string): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtMultiSelectChangeEvent', undefined, 'ติ๊ก เอาออก ติ๊กทั้งหมด หรือล้าง', 'Ticked, unticked, all ticked or cleared'),
-        row('onFilter', 'WtMultiSelectFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
-        row('onSelectAllChange', 'WtMultiSelectSelectAllChangeEvent', undefined, 'กดช่องติ๊กทั้งหมด (หรือ Ctrl / ⌘ + A)', 'Check-all box used (or Ctrl / ⌘ + A)'),
+        row('onChange', 'WuMultiSelectChangeEvent', undefined, 'ติ๊ก เอาออก ติ๊กทั้งหมด หรือล้าง', 'Ticked, unticked, all ticked or cleared'),
+        row('onFilter', 'WuMultiSelectFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onSelectAllChange', 'WuMultiSelectSelectAllChangeEvent', undefined, 'กดช่องติ๊กทั้งหมด (หรือ Ctrl / ⌘ + A)', 'Check-all box used (or Ctrl / ⌘ + A)'),
         row('onPanelShow · onPanelHide', 'void', undefined, 'รายการเปิด / ปิด', 'List opened / closed'),
         row('onClear', 'Event', undefined, 'กดปุ่มล้าง', 'Clear button pressed'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'โฟกัสเข้า / ออก', 'Focus in / out'),
@@ -381,7 +381,7 @@ log(name: string): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('selectedItems', '$implicit (values) · removeChip', undefined, 'ค่าที่เลือกในช่อง removeChip(value, event) เอาค่าออก', 'The chosen values in the field; removeChip(value, event) removes one'),
         row('item', '$implicit (option) · selected · index', undefined, 'แต่ละแถวในรายการ', 'Each row of the list'),
@@ -404,42 +404,42 @@ log(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtMultiSelectChangeEvent, WtMultiSelectSelectAllChangeEvent } from 'wiratheme/multiselect';
+      code: `import { WuMultiSelectChangeEvent, WuMultiSelectSelectAllChangeEvent } from 'wiraui/multiselect';
 
-interface WtMultiSelectChangeEvent {
+interface WuMultiSelectChangeEvent {
   originalEvent: Event;
   value: unknown[];
   itemValue?: unknown;     // ค่าที่เพิ่งติ๊กหรือเอาออก
 }
-interface WtMultiSelectFilterEvent { originalEvent: Event; filter: string }
-interface WtMultiSelectSelectAllChangeEvent { originalEvent: Event; checked: boolean }
-interface WtMultiSelectSelectedItemsContext {
+interface WuMultiSelectFilterEvent { originalEvent: Event; filter: string }
+interface WuMultiSelectSelectAllChangeEvent { originalEvent: Event; checked: boolean }
+interface WuMultiSelectSelectedItemsContext {
   $implicit: unknown[];
   removeChip: (value: unknown, event?: Event) => void;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-select-width', 'ความกว้างของช่อง (ร่วมกับ Select ค่าเริ่มต้น 14rem · auto = กว้างตามค่า)', 'Field width (shared with Select; 14rem by default, auto sizes to the value)'),
-    tok('--wt-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
-    tok('--wt-field-border', 'ขอบของช่อง', 'Field border'),
-    tok('--wt-input-radius', 'ความมนของช่อง', 'Field radius'),
-    tok('--wt-select-dropdown-width', 'ความกว้างของปุ่มลูกศร', 'Arrow button width'),
-    tok('--wt-select-dropdown-color', 'สีลูกศร', 'Arrow colour'),
-    tok('--wt-overlay-bg', 'พื้นของรายการ', 'List background'),
-    tok('--wt-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
-    tok('--wt-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
-    tok('--wt-select-header-padding', 'ระยะในแถวหัวรายการ (ติ๊กทั้งหมด ค้นหา)', 'List header padding (check-all, search)'),
-    tok('--wt-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
-    tok('--wt-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
-    tok('--wt-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
-    tok('--wt-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
-    tok('--wt-select-option-selected-bg', 'พื้นแถวที่ติ๊ก', 'Ticked row background'),
-    tok('--wt-select-option-selected-color', 'สีตัวอักษรแถวที่ติ๊ก', 'Ticked row text'),
-    tok('--wt-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
-    tok('--wt-chip-bg', 'พื้นของชิป (display="chip")', 'Chip background (display="chip")'),
-    tok('--wt-chip-color', 'สีตัวอักษรของชิป', 'Chip text'),
-    tok('--wt-chip-radius', 'ความมนของชิป', 'Chip radius'),
-    tok('--wt-primary-color', 'สีของช่องติ๊กและขีดของช่องติ๊กทั้งหมด', 'Check boxes and the check-all dash'),
+    tok('--wu-select-width', 'ความกว้างของช่อง (ร่วมกับ Select ค่าเริ่มต้น 14rem · auto = กว้างตามค่า)', 'Field width (shared with Select; 14rem by default, auto sizes to the value)'),
+    tok('--wu-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
+    tok('--wu-field-border', 'ขอบของช่อง', 'Field border'),
+    tok('--wu-input-radius', 'ความมนของช่อง', 'Field radius'),
+    tok('--wu-select-dropdown-width', 'ความกว้างของปุ่มลูกศร', 'Arrow button width'),
+    tok('--wu-select-dropdown-color', 'สีลูกศร', 'Arrow colour'),
+    tok('--wu-overlay-bg', 'พื้นของรายการ', 'List background'),
+    tok('--wu-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
+    tok('--wu-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
+    tok('--wu-select-header-padding', 'ระยะในแถวหัวรายการ (ติ๊กทั้งหมด ค้นหา)', 'List header padding (check-all, search)'),
+    tok('--wu-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
+    tok('--wu-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
+    tok('--wu-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
+    tok('--wu-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
+    tok('--wu-select-option-selected-bg', 'พื้นแถวที่ติ๊ก', 'Ticked row background'),
+    tok('--wu-select-option-selected-color', 'สีตัวอักษรแถวที่ติ๊ก', 'Ticked row text'),
+    tok('--wu-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
+    tok('--wu-chip-bg', 'พื้นของชิป (display="chip")', 'Chip background (display="chip")'),
+    tok('--wu-chip-color', 'สีตัวอักษรของชิป', 'Chip text'),
+    tok('--wu-chip-radius', 'ความมนของชิป', 'Chip radius'),
+    tok('--wu-primary-color', 'สีของช่องติ๊กและขีดของช่องติ๊กทั้งหมด', 'Check boxes and the check-all dash'),
   ],
 };

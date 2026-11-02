@@ -3,18 +3,18 @@
   *ngIf="overlayVisible"
   popover="manual"
   role="dialog"
-  class="wt-popover p-overlaypanel p-component"
+  class="wu-popover p-overlaypanel p-component"
   [ngClass]="styleClass || ''"
   [ngStyle]="style || null"
   (keydown)="keydown($event)"
 >
-  <div class="wt-popover-content p-overlaypanel-content">
+  <div class="wu-popover-content p-overlaypanel-content">
     <ng-content></ng-content><ng-container *ngIf="contentTemplate"><ng-container *ngTemplateOutlet="contentTemplate; context: contentContext"></ng-container></ng-container>
   </div>
   <button
     *ngIf="showCloseIcon"
     type="button"
-    class="wt-popover-close p-overlaypanel-close p-link"
+    class="wu-popover-close p-overlaypanel-close p-link"
     [attr.aria-label]="ariaCloseLabel || t.close"
     (click)="hide()"
   >

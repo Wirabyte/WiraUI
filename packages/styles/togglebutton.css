@@ -1,85 +1,85 @@
-/* wt-togglebutton. Shared by wiratheme v1, v2 and v3. On/off button bound to a boolean.
+/* wu-togglebutton. Shared by wiraui v1, v2 and v3. On/off button bound to a boolean.
    Styled look: a track whose chip rises when on. Classic look: a plain button that turns primary. */
-@layer wiratheme.components {
-  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
-  .wt-togglebutton-sm,
+@layer wiraui.components {
+  /* size="small" | "large" (class names wu-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wu-togglebutton-sm,
   .p-togglebutton-sm {
-    --_tb-scale: var(--wt-size-sm-scale);
+    --_tb-scale: var(--wu-size-sm-scale);
     --_tb-font: 0.875;
   }
-  .wt-togglebutton-lg,
+  .wu-togglebutton-lg,
   .p-togglebutton-lg {
-    --_tb-scale: var(--wt-size-lg-scale);
-    --_tb-font: var(--wt-size-lg-scale);
+    --_tb-scale: var(--wu-size-lg-scale);
+    --_tb-font: var(--wu-size-lg-scale);
   }
-  :is(wt-togglebutton, wt-toggle-button) {
+  :is(wu-togglebutton, wu-toggle-button) {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-togglebutton {
+  .wu-togglebutton {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: var(--wt-togglebutton-padding);
-    border: 1px solid var(--wt-togglebutton-border);
-    border-radius: var(--wt-input-radius);
-    background: var(--wt-togglebutton-bg);
-    color: var(--wt-togglebutton-color);
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-font-size) * var(--_tb-font, 1));
-    font-weight: var(--wt-button-font-weight);
-    line-height: var(--wt-control-line-height);
+    padding: var(--wu-togglebutton-padding);
+    border: 1px solid var(--wu-togglebutton-border);
+    border-radius: var(--wu-input-radius);
+    background: var(--wu-togglebutton-bg);
+    color: var(--wu-togglebutton-color);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-font-size) * var(--_tb-font, 1));
+    font-weight: var(--wu-button-font-weight);
+    line-height: var(--wu-control-line-height);
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      outline-color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-togglebutton:not(:disabled):hover {
-    color: var(--wt-togglebutton-hover-color);
+  .wu-togglebutton:not(:disabled):hover {
+    color: var(--wu-togglebutton-hover-color);
   }
-  .wt-togglebutton-checked {
-    background: var(--wt-togglebutton-checked-bg);
-    border-color: var(--wt-togglebutton-checked-border);
-    color: var(--wt-togglebutton-checked-color);
+  .wu-togglebutton-checked {
+    background: var(--wu-togglebutton-checked-bg);
+    border-color: var(--wu-togglebutton-checked-border);
+    color: var(--wu-togglebutton-checked-color);
   }
-  .wt-togglebutton-checked:not(:disabled):hover {
-    color: var(--wt-togglebutton-checked-color);
+  .wu-togglebutton-checked:not(:disabled):hover {
+    color: var(--wu-togglebutton-checked-color);
   }
-  .wt-togglebutton-content {
+  .wu-togglebutton-content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: calc(var(--wt-togglebutton-content-padding-y) * var(--_tb-scale, 1)) calc(var(--wt-togglebutton-content-padding-x) * var(--_tb-scale, 1));
-    border-radius: calc(var(--wt-input-radius) - var(--wt-togglebutton-padding) / 2);
+    padding: calc(var(--wu-togglebutton-content-padding-y) * var(--_tb-scale, 1)) calc(var(--wu-togglebutton-content-padding-x) * var(--_tb-scale, 1));
+    border-radius: calc(var(--wu-input-radius) - var(--wu-togglebutton-padding) / 2);
     transition:
-      background-color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background-color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-togglebutton-checked .wt-togglebutton-content {
-    background: var(--wt-togglebutton-chip-bg);
-    box-shadow: var(--wt-togglebutton-chip-shadow);
+  .wu-togglebutton-checked .wu-togglebutton-content {
+    background: var(--wu-togglebutton-chip-bg);
+    box-shadow: var(--wu-togglebutton-chip-shadow);
   }
-  .wt-togglebutton-icon {
+  .wu-togglebutton-icon {
     line-height: 1;
   }
-  .wt-togglebutton:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-togglebutton:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-togglebutton:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-togglebutton:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-togglebutton.wt-invalid,
-  :is(wt-togglebutton, wt-toggle-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-togglebutton {
-    border-color: var(--wt-danger-color);
+  .wu-togglebutton.wu-invalid,
+  :is(wu-togglebutton, wu-toggle-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wu-togglebutton {
+    border-color: var(--wu-danger-color);
   }
 }

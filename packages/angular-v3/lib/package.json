@@ -1,8 +1,14 @@
 {
-  "name": "wiratheme",
-  "version": "3.0.0-alpha.0",
-  "description": "WiraTheme UI components for Angular 21+: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
+  "name": "wiraui",
+  "version": "3.0.0-beta.0",
+  "description": "WiraUI UI components for Angular 21+: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
   "license": "MIT",
+  "homepage": "https://github.com/Wirabyte/WiraUI#readme",
+  "bugs": "https://github.com/Wirabyte/WiraUI/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wirabyte/WiraUI.git"
+  },
   "keywords": [
     "angular",
     "ui",
@@ -12,10 +18,10 @@
     "thai"
   ],
   "peerDependencies": {
-    "@angular/common": ">=21.0.0 <22.0.0",
-    "@angular/core": ">=21.0.0 <22.0.0",
-    "@angular/forms": ">=21.0.0 <22.0.0",
-    "@angular/router": ">=21.0.0 <22.0.0",
+    "@angular/common": ">=21.0.0",
+    "@angular/core": ">=21.0.0",
+    "@angular/forms": ">=21.0.0",
+    "@angular/router": ">=21.0.0",
     "chart.js": ">=3.0.0 <5.0.0",
     "rxjs": "^7.4.0"
   },

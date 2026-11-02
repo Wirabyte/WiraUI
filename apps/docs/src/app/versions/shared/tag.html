@@ -6,35 +6,35 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-tag [value]="tx('ใหม่')"></wt-tag>
+        <wu-tag [value]="tx('ใหม่')"></wu-tag>
       </docs-demo>
     </docs-section>
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']">
-        <wt-tag value="primary" severity="primary"></wt-tag>
-        <wt-tag value="secondary" severity="secondary"></wt-tag>
-        <wt-tag value="success" severity="success"></wt-tag>
-        <wt-tag value="info" severity="info"></wt-tag>
-        <wt-tag value="warn" severity="warn"></wt-tag>
-        <wt-tag value="danger" severity="danger"></wt-tag>
-        <wt-tag value="help" severity="help"></wt-tag>
-        <wt-tag value="contrast" severity="contrast"></wt-tag>
+        <wu-tag value="primary" severity="primary"></wu-tag>
+        <wu-tag value="secondary" severity="secondary"></wu-tag>
+        <wu-tag value="success" severity="success"></wu-tag>
+        <wu-tag value="info" severity="info"></wu-tag>
+        <wu-tag value="warn" severity="warn"></wu-tag>
+        <wu-tag value="danger" severity="danger"></wu-tag>
+        <wu-tag value="help" severity="help"></wu-tag>
+        <wu-tag value="contrast" severity="contrast"></wu-tag>
       </docs-demo>
     </docs-section>
 
     <docs-section id="pill" [section]="sec['pill']">
       <docs-demo [html]="code['pill']">
-        <wt-tag [value]="tx('เปิดใช้งาน')" severity="success" [rounded]="true"></wt-tag>
-        <wt-tag [value]="tx('ยืนยันแล้ว')" icon="wi wi-check" severity="info"></wt-tag>
+        <wu-tag [value]="tx('เปิดใช้งาน')" severity="success" [rounded]="true"></wu-tag>
+        <wu-tag [value]="tx('ยืนยันแล้ว')" icon="wi wi-check" severity="info"></wu-tag>
       </docs-demo>
     </docs-section>
 
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']">
-        <wt-tag severity="warn">
+        <wu-tag severity="warn">
           <span class="wi wi-bell"></span> {{ tx('รออนุมัติ 3 รายการ') }}
-        </wt-tag>
+        </wu-tag>
       </docs-demo>
     </docs-section>
   </ng-template>

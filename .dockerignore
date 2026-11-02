@@ -1,0 +1,15 @@
+.git
+**/node_modules
+**/dist
+**/dist-docs
+**/lib-docs
+**/.angular
+**/*.tgz
+apps/docs/vendor
+e2e/test-results
+packages/angular-v*/lib/*
+!packages/angular-v*/lib/package.json
+!packages/angular-v*/lib/ng-package.json
+!packages/angular-v*/lib/tsconfig.lib.json
+packages/icons/lib
+packages/schematics/src/core

@@ -7,7 +7,7 @@ import { DOCS_VERSION } from '../../core/version-theme';
 import { ICONS_CODE, ICONS_SECTIONS, ICONS_WORDS } from '../../data/icons';
 
 /*
- * The Icons page (getting-started/icons). A version page, so its demos use that version's wt-button; the icons
+ * The Icons page (getting-started/icons). A version page, so its demos use that version's wu-button; the icons
  * themselves (wiraicon) are the same in every version. The gallery reads wiraicon/icons.json, which angular.json
  * serves next to the SVG files (wiraicon/svg/<weight>/<name>.svg), so the list is fetched once, not bundled.
  */

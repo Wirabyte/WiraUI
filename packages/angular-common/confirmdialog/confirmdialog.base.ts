@@ -13,11 +13,11 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate, ɵWtStyleLoader } from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
-import { WtConfirmationService } from './confirmation.service';
-import { WtConfirmation, WtConfirmEventType } from './confirmdialog.types';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate, ɵWuStyleLoader } from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
+import { WuConfirmationService } from './confirmation.service';
+import { WuConfirmation, WuConfirmEventType } from './confirmdialog.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 /** Icon classes the built-in icons stand in for, so a page without an icon font still shows them. */
@@ -29,9 +29,9 @@ const BUILT_IN: [RegExp, string][] = [
   [/^(error|danger)$|times-circle|ban/, 'error'],
 ];
 
-/** Shared logic of wt-confirmdialog (v1 and v2/v3 templates). It draws a wt-dialog around the question. */
+/** Shared logic of wu-confirmdialog (v1 and v2/v3 templates). It draws a wu-dialog around the question. */
 @Directive()
-export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
+export abstract class ɵWuConfirmDialogBase implements OnInit, OnDestroy {
   /** Matches `confirm({ key })`, for pages with more than one. */
   /** Accepted for templates moving over: the dialog is always modal. */
   @Input() modal: unknown;
@@ -69,9 +69,9 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
   @Input() transitionOptions: unknown;
   @Input() focusTrap: unknown;
 
-  @Output() readonly onHide = new EventEmitter<WtConfirmEventType>();
+  @Output() readonly onHide = new EventEmitter<WuConfirmEventType>();
 
-  @ContentChildren(WtTemplate) templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) templates?: QueryList<WuTemplate>;
   @ContentChild('header', { descendants: false }) headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) footerRef?: unknown;
   @ContentChild('message', { descendants: false }) messageRef?: unknown;
@@ -79,7 +79,7 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
 
   visible = false;
   /** The confirmation on screen. */
-  confirmation: WtConfirmation | null = null;
+  confirmation: WuConfirmation | null = null;
 
   private _acceptVisible = true;
   private _rejectVisible = true;
@@ -87,29 +87,29 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
   private _closeOnEscape = true;
   private _dismissableMask = false;
   private _blockScroll = true;
-  private lastResult: WtConfirmEventType = WtConfirmEventType.CANCEL;
+  private lastResult: WuConfirmEventType = WuConfirmEventType.CANCEL;
   private sub: Subscription | null = null;
   private stopListening: (() => void) | null = null;
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly service = inject(WtConfirmationService);
-  private readonly config = inject(WtConfig);
+  private readonly service = inject(WuConfirmationService);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnInit(): void {
     this.stopListening = this.service.ɵlisten(this.key);
     this.sub = this.service.requireConfirmation$.subscribe((c) => {
       if (!c) {
-        if (this.visible) this.hide(WtConfirmEventType.CANCEL);
+        if (this.visible) this.hide(WuConfirmEventType.CANCEL);
         return;
       }
       if ((c.key ?? undefined) !== (this.key ?? undefined)) return;
       this.confirmation = c;
-      this.lastResult = WtConfirmEventType.CANCEL;
+      this.lastResult = WuConfirmEventType.CANCEL;
       this.visible = true;
       this.cdr.markForCheck();
     });
@@ -123,10 +123,10 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
 
   // ---------- what the template shows (the confirmation wins over the inputs) ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
-  get c(): WtConfirmation {
+  get c(): WuConfirmation {
     return this.confirmation || {};
   }
   get headerText(): string | undefined {
@@ -186,10 +186,10 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
   /** Reject is a quiet button by default: text in the classic look, secondary outlined in the styled one. */
   protected abstract readonly rejectFallback: string;
   get acceptClasses(): string {
-    return ɵbuttonClass(this.c.acceptButtonStyleClass ?? this.acceptButtonStyleClass) + ' wt-confirmdialog-accept p-confirm-dialog-accept p-confirmdialog-accept-button';
+    return ɵbuttonClass(this.c.acceptButtonStyleClass ?? this.acceptButtonStyleClass) + ' wu-confirmdialog-accept p-confirm-dialog-accept p-confirmdialog-accept-button';
   }
   get rejectClasses(): string {
-    return ɵbuttonClass(this.c.rejectButtonStyleClass ?? this.rejectButtonStyleClass, this.rejectFallback) + ' wt-confirmdialog-reject p-confirm-dialog-reject p-confirmdialog-reject-button';
+    return ɵbuttonClass(this.c.rejectButtonStyleClass ?? this.rejectButtonStyleClass, this.rejectFallback) + ' wu-confirmdialog-reject p-confirm-dialog-reject p-confirmdialog-reject-button';
   }
   get headerTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.headerRef) || ɵfindTemplate(this.templates, 'header');
@@ -219,28 +219,28 @@ export abstract class ɵWtConfirmDialogBase implements OnInit, OnDestroy {
     const c = this.confirmation;
     c?.accept?.();
     this.service.onAccept();
-    this.hide(WtConfirmEventType.ACCEPT);
+    this.hide(WuConfirmEventType.ACCEPT);
   }
 
-  reject(type: WtConfirmEventType = WtConfirmEventType.REJECT): void {
+  reject(type: WuConfirmEventType = WuConfirmEventType.REJECT): void {
     this.confirmation?.reject?.(type);
     this.hide(type);
   }
 
   close(): void {
-    this.reject(WtConfirmEventType.CANCEL);
+    this.reject(WuConfirmEventType.CANCEL);
   }
 
   /** The dialog closed itself (×, Escape, the mask). */
   dialogVisible(v: boolean): void {
-    if (!v && this.visible) this.reject(WtConfirmEventType.CANCEL);
+    if (!v && this.visible) this.reject(WuConfirmEventType.CANCEL);
   }
 
   dialogHidden(): void {
     this.onHide.emit(this.lastResult);
   }
 
-  private hide(result: WtConfirmEventType): void {
+  private hide(result: WuConfirmEventType): void {
     if (!this.visible) return;
     this.lastResult = result;
     this.visible = false;

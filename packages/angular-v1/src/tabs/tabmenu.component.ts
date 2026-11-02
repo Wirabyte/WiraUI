@@ -1,14 +1,14 @@
 import { NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ɵWtTabMenuBase } from './tabmenu.base';
+import { ɵWuTabMenuBase } from './tabmenu.base';
 
 /**
- * Tabs from a menu model, for switching views or routes: `<wt-tabmenu [model]="pages" [(activeItem)]="page">`.
- * Items take `command`, `routerLink` (with the app's router) or `url`; it scrolls sideways like wt-tabs.
+ * Tabs from a menu model, for switching views or routes: `<wu-tabmenu [model]="pages" [(activeItem)]="page">`.
+ * Items take `command`, `routerLink` (with the app's router) or `url`; it scrolls sideways like wu-tabs.
  */
 @Component({
-  selector: 'wt-tabmenu, wt-tabMenu, wt-tab-menu',
+  selector: 'wu-tabmenu, wu-tabMenu, wu-tab-menu',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './tabmenu.component.html',
@@ -16,4 +16,4 @@ import { ɵWtTabMenuBase } from './tabmenu.base';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtTabMenu extends ɵWtTabMenuBase {}
+export class WuTabMenu extends ɵWuTabMenuBase {}

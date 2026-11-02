@@ -1,10 +1,10 @@
 <dialog
   *ngIf="rendered"
   #mask
-  class="wt-drawer-mask p-drawer-mask p-sidebar-mask p-overlay-mask"
-  [ngClass]="(maskStyleClass || '') + ' wt-drawer-mask-' + side"
-  [class.wt-drawer-modal]="modal"
-  [class.wt-drawer-leaving]="leaving"
+  class="wu-drawer-mask p-drawer-mask p-sidebar-mask p-overlay-mask"
+  [ngClass]="(maskStyleClass || '') + ' wu-drawer-mask-' + side"
+  [class.wu-drawer-modal]="modal"
+  [class.wu-drawer-leaving]="leaving"
   [attr.aria-labelledby]="labelledBy"
   [attr.aria-label]="ariaLabel || null"
   (keydown)="keydown($event)"
@@ -13,13 +13,13 @@
   (pointerdown)="maskPointerdown($event)"
   (click)="maskClick($event)"
 >
-  <div class="wt-drawer p-drawer p-sidebar p-component" tabindex="-1" [ngClass]="panelClass" [ngStyle]="style || null">
+  <div class="wu-drawer p-drawer p-sidebar p-component" tabindex="-1" [ngClass]="panelClass" [ngStyle]="style || null">
     <ng-container *ngIf="headlessTemplate; else regular">
       <ng-container *ngTemplateOutlet="headlessTemplate"></ng-container>
     </ng-container>
     <ng-template #regular>
-      <div class="wt-drawer-header p-drawer-header p-sidebar-header">
-        <div class="wt-drawer-title p-drawer-title" [id]="titleId">
+      <div class="wu-drawer-header p-drawer-header p-sidebar-header">
+        <div class="wu-drawer-title p-drawer-title" [id]="titleId">
           <ng-container *ngIf="headerTemplate; else headerText">
             <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
           </ng-container>
@@ -30,18 +30,18 @@
             <ng-container *ngTemplateOutlet="closeIconTemplate"></ng-container>
           </ng-container>
           <ng-template #defaultIcon>
-            <span *ngIf="closeIcon; else cross" [class]="'wt-btn-icon ' + closeIcon" aria-hidden="true"></span>
+            <span *ngIf="closeIcon; else cross" [class]="'wu-btn-icon ' + closeIcon" aria-hidden="true"></span>
             <ng-template #cross>
-              <svg class="wt-btn-icon" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+              <svg class="wu-btn-icon" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
             </ng-template>
           </ng-template>
         </button>
       </div>
-      <div class="wt-drawer-content p-drawer-content p-sidebar-content">
+      <div class="wu-drawer-content p-drawer-content p-sidebar-content">
         <ng-content></ng-content>
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
       </div>
-      <div *ngIf="footerTemplate" class="wt-drawer-footer p-drawer-footer p-sidebar-footer">
+      <div *ngIf="footerTemplate" class="wu-drawer-footer p-drawer-footer p-sidebar-footer">
         <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
       </div>
     </ng-template>

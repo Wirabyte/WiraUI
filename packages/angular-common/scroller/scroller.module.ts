@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtScroller } from './scroller.component';
+import { WuScroller } from './scroller.component';
 
-/** For NgModule apps. Standalone apps can import `WtScroller` directly. */
+/** For NgModule apps. Standalone apps can import `WuScroller` directly. */
 @NgModule({
-  imports: [WtScroller],
-  exports: [WtScroller],
+  imports: [WuScroller],
+  exports: [WuScroller],
 })
-export class WtScrollerModule {}
+export class WuScrollerModule {}

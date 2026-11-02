@@ -11,18 +11,18 @@ test.beforeEach(async ({ page }) => {
 
 test('pages through the rows with a Thai page report; rowIndex counts across pages', async ({ page }) => {
   await expect(main(page).locator('.tbl-row')).toHaveCount(5);
-  await expect(main(page).locator('.wt-paginator-report')).toHaveText('กำลังแสดง 1 ถึง 5 จาก 23 รายการ');
-  await main(page).locator('.wt-paginator-next').click();
-  await expect(main(page).locator('.wt-paginator-report')).toHaveText('กำลังแสดง 6 ถึง 10 จาก 23 รายการ');
+  await expect(main(page).locator('.wu-paginator-report')).toHaveText('กำลังแสดง 1 ถึง 5 จาก 23 รายการ');
+  await main(page).locator('.wu-paginator-next').click();
+  await expect(main(page).locator('.wu-paginator-report')).toHaveText('กำลังแสดง 6 ถึง 10 จาก 23 รายการ');
   await expect(main(page).locator('.tbl-no').first()).toHaveText('6');
-  await main(page).locator('.wt-paginator-last').click();
+  await main(page).locator('.wu-paginator-last').click();
   await expect(main(page).locator('.tbl-row')).toHaveCount(3);
-  await expect(main(page).locator('.wt-paginator-page[aria-current="page"]')).toHaveText('5');
+  await expect(main(page).locator('.wu-paginator-page[aria-current="page"]')).toHaveText('5');
   // Rows per page through the built-in select.
-  await main(page).locator('.wt-paginator-rpp .wt-select').click();
-  await page.locator('.wt-select-overlay [role="option"]').filter({ hasText: '10' }).click();
-  await expect(main(page).locator('.wt-paginator-report')).toHaveText('กำลังแสดง 21 ถึง 23 จาก 23 รายการ');
-  await main(page).locator('.wt-paginator-first').click();
+  await main(page).locator('.wu-paginator-rpp .wu-select').click();
+  await page.locator('.wu-select-overlay [role="option"]').filter({ hasText: '10' }).click();
+  await expect(main(page).locator('.wu-paginator-report')).toHaveText('กำลังแสดง 21 ถึง 23 จาก 23 รายการ');
+  await main(page).locator('.wu-paginator-first').click();
   await expect(main(page).locator('.tbl-row')).toHaveCount(10);
 });
 
@@ -54,7 +54,7 @@ test('the caption search box filters rows (Thai digits too) and shows the empty 
   const search = page.locator('#tbl-search');
   await search.fill('ชยพล');
   await expect.poll(() => names(page)).toEqual(['ชยพล 4', 'ชยพล 12', 'ชยพล 20']);
-  await expect(main(page).locator('.wt-paginator-report')).toHaveText('กำลังแสดง 1 ถึง 3 จาก 3 รายการ');
+  await expect(main(page).locator('.wu-paginator-report')).toHaveText('กำลังแสดง 1 ถึง 3 จาก 3 รายการ');
   await search.fill('ม.๒/๒');
   const rooms = () => main(page).locator('.tbl-row td:nth-child(4)').allTextContents();
   await expect.poll(async () => { const r = await rooms(); return r.length > 0 && r.every((x) => x === 'ม.2/2'); }).toBe(true);
@@ -65,15 +65,15 @@ test('the caption search box filters rows (Thai digits too) and shows the empty 
 });
 
 test('checkboxes select rows; the header checkbox selects every row the search leaves', async ({ page }) => {
-  const boxes = main(page).locator('.tbl-row wt-tablecheckbox input, .tbl-row wt-tableCheckbox input');
+  const boxes = main(page).locator('.tbl-row wu-tablecheckbox input, .tbl-row wu-tableCheckbox input');
   await boxes.nth(0).check();
   await boxes.nth(2).check();
   await expect(page.locator('#tbl-picked')).toHaveText('2');
   await boxes.nth(0).uncheck();
   await expect(page.locator('#tbl-picked')).toHaveText('1');
   // Some rows picked: the header box is filled with a dash in the middle, where the tick goes.
-  const headBox = main(page).locator('thead .wt-checkbox-box');
-  await expect(headBox).toHaveClass(/wt-checkbox-mixed/);
+  const headBox = main(page).locator('thead .wu-checkbox-box');
+  await expect(headBox).toHaveClass(/wu-checkbox-mixed/);
   const look = await headBox.evaluate((el) => {
     const box = getComputedStyle(el);
     const dash = getComputedStyle(el, '::after');
@@ -107,7 +107,7 @@ test('lazy: asks for each page and sort, and shows what the server returns', asy
   const lazy = page.locator('#tbl-lazy');
   await expect(page.locator('#tbl-lazy-log')).toHaveText('page=1 first=0 rows=5 sort=-:1');
   await expect(lazy.locator('.lazy-row')).toHaveCount(5);
-  await lazy.locator('.wt-paginator-next').click();
+  await lazy.locator('.wu-paginator-next').click();
   await expect(page.locator('#tbl-lazy-log')).toHaveText('page=2 first=5 rows=5 sort=-:1');
   await expect(lazy.locator('.lazy-row td').first()).toHaveText('6');
   await lazy.locator('th', { hasText: 'ชื่อ' }).click();
@@ -116,8 +116,8 @@ test('lazy: asks for each page and sort, and shows what the server returns', asy
 
 test('narrow screens: the stack layout turns rows into labelled cards', async ({ page }) => {
   await page.setViewportSize({ width: 480, height: 800 });
-  const single = page.locator('#tbl-single .wt-table');
-  await expect(single).toHaveClass(/wt-table-stacked/);
+  const single = page.locator('#tbl-single .wu-table');
+  await expect(single).toHaveClass(/wu-table-stacked/);
   await expect(page.locator('#tbl-single thead th').first()).toBeHidden();
   await expect(page.locator('#tbl-single .p-column-title').first()).toBeVisible();
   // The main table scrolls sideways inside itself instead of widening the page.
@@ -126,8 +126,8 @@ test('narrow screens: the stack layout turns rows into labelled cards', async ({
 });
 
 test('carries the table class names of its era', async ({ page }) => {
-  const major = await page.locator('#wt-major').textContent();
-  const root = main(page).locator('.wt-table');
+  const major = await page.locator('#wu-major').textContent();
+  const root = main(page).locator('.wu-table');
   await expect(root).toHaveClass(/p-datatable/);
   if (major === '1') await expect(main(page).locator('.p-datatable-wrapper')).toHaveCount(1);
   else await expect(main(page).locator('.p-datatable-table-container')).toHaveCount(1);

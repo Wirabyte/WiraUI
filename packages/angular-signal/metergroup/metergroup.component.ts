@@ -12,24 +12,24 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 import {
   ɵmeterParts,
-  WtMeterContext,
-  WtMeterGroupContext,
-  WtMeterItem,
-  WtMeterLabelPosition,
-  WtMeterOrientation,
+  WuMeterContext,
+  WuMeterGroupContext,
+  WuMeterItem,
+  WuMeterLabelPosition,
+  WuMeterOrientation,
 } from './metergroup.types';
 
 const template = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * Several values on one bar, with a legend: `<wt-metergroup [value]="[{ label: 'รูปภาพ', value: 24 }, …]">`.
+ * Several values on one bar, with a legend: `<wu-metergroup [value]="[{ label: 'รูปภาพ', value: 24 }, …]">`.
  * Values are read against `min`–`max` (0–100 by default).
  */
 @Component({
-  selector: 'wt-metergroup, wt-meterGroup, wt-meter-group',
+  selector: 'wu-metergroup, wu-meterGroup, wu-meter-group',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './metergroup.component.html',
@@ -37,17 +37,17 @@ const template = (v: unknown): TemplateRef<unknown> | null => (v instanceof Temp
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtMeterGroup {
-  readonly value = input<WtMeterItem[] | null | undefined>([]);
+export class WuMeterGroup {
+  readonly value = input<WuMeterItem[] | null | undefined>([]);
   readonly min = input(0, { transform: numberAttribute });
   readonly max = input(100, { transform: numberAttribute });
-  readonly orientation = input<WtMeterOrientation>('horizontal');
+  readonly orientation = input<WuMeterOrientation>('horizontal');
   /** Fill from the other end: right to left, or (vertical) bottom to top. */
   readonly reverse = input(false, { transform: booleanAttribute });
   /** Legend before or after the bar. */
-  readonly labelPosition = input<WtMeterLabelPosition>('end');
+  readonly labelPosition = input<WuMeterLabelPosition>('end');
   /** Legend items in a row or a column. */
-  readonly labelOrientation = input<WtMeterOrientation>('horizontal');
+  readonly labelOrientation = input<WuMeterOrientation>('horizontal');
   readonly styleClass = input<string>();
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,7 +65,7 @@ export class WtMeterGroup {
   private readonly startRef = contentChild('start', { descendants: false });
   private readonly endRef = contentChild('end', { descendants: false });
   private readonly iconRef = contentChild('icon', { descendants: false });
-  private readonly templates = contentChildren(WtTemplate);
+  private readonly templates = contentChildren(WuTemplate);
 
   /** `<ng-template #label let-value let-totalPercent="totalPercent" let-percentages="percentages">`: the whole legend. */
   readonly labelTemplate = computed(() => template(this.labelRef()) || ɵfindTemplate(this.templates(), 'label'));
@@ -78,33 +78,33 @@ export class WtMeterGroup {
   readonly iconTemplate = computed(() => template(this.iconRef()) || ɵfindTemplate(this.templates(), 'icon'));
 
   readonly parts = computed(() => ɵmeterParts(this.value(), this.min(), this.max()));
-  readonly groupContext = computed<WtMeterGroupContext>(() => {
+  readonly groupContext = computed<WuMeterGroupContext>(() => {
     const p = this.parts();
     return { $implicit: p.items, totalPercent: p.totalPercent, percentages: p.percentages };
   });
   readonly classes = computed(() => {
     const o = this.orientation();
-    const c = ['wt-metergroup', 'p-metergroup', 'p-component', `wt-metergroup-${o}`, `p-metergroup-${o}`];
-    if (this.reverse()) c.push('wt-metergroup-reverse');
+    const c = ['wu-metergroup', 'p-metergroup', 'p-component', `wu-metergroup-${o}`, `p-metergroup-${o}`];
+    if (this.reverse()) c.push('wu-metergroup-reverse');
     if (this.styleClass()) c.push(this.styleClass() as string);
     return c.join(' ');
   });
   readonly labelClasses = computed(() => {
     const o = this.labelOrientation();
-    return `wt-metergroup-labels wt-metergroup-labels-${o} p-metergroup-label-list p-metergroup-label-list-${o}`;
+    return `wu-metergroup-labels wu-metergroup-labels-${o} p-metergroup-label-list p-metergroup-label-list-${o}`;
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
-  meterContext(index: number): WtMeterContext {
+  meterContext(index: number): WuMeterContext {
     const p = this.parts();
     return {
       $implicit: p.items[index],
       index,
       orientation: this.orientation(),
-      class: 'wt-metergroup-meter p-metergroup-meter',
+      class: 'wu-metergroup-meter p-metergroup-meter',
       size: p.sizes[index],
       totalPercent: p.totalPercent,
     };

@@ -56,7 +56,7 @@ export class DocsComponentPage {
   });
 
   protected readonly cssExample = computed(() => {
-    const prefix = '--wt-' + this.tokenPrefix();
+    const prefix = '--wu-' + this.tokenPrefix();
     const own = this.doc().tokens.filter((t) => t.name.startsWith(prefix));
     const pickTokens = (own.length ? own : this.doc().tokens).slice(0, 2);
     const en = this.en();
@@ -67,8 +67,8 @@ ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
 
 /* ${en ? 'One part of the page only: the variables reach every component inside' : 'เฉพาะบางส่วนของหน้า: ตัวแปรสืบทอดลงไปถึง component ข้างใน'} */
 .promo-banner {
-  --wt-primary-color: #e11d48;
-  --wt-primary-hover: #be123c;
+  --wu-primary-color: #e11d48;
+  --wu-primary-hover: #be123c;
 }`;
   });
 
@@ -76,8 +76,8 @@ ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
     const raw = this.doc().overrides;
     if (!raw) return '';
     const o = this.en() ? sampleText(this.doc().english).swap(raw) : raw;
-    return `// src/theme/wiratheme.overrides.ts
-import { defineOverrides } from 'wiratheme/config';
+    return `// src/theme/wiraui.overrides.ts
+import { defineOverrides } from 'wiraui/config';
 
 export const wiraOverrides = defineOverrides({
   components: {
@@ -85,7 +85,7 @@ ${o}
   },
 });
 
-// provideWiraTheme({ overrides: wiraOverrides })`;
+// provideWiraUI({ overrides: wiraOverrides })`;
   });
 
   private tokenPrefix(): string {

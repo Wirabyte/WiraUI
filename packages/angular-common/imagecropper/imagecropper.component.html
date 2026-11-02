@@ -1,25 +1,25 @@
 <div
-  class="wt-imagecropper"
-  [class.wt-imagecropper-ready]="shown"
-  [class.wt-imagecropper-empty]="!ready"
-  [class.wt-imagecropper-loading]="loading"
-  [class.wt-imagecropper-failed]="failed"
-  [class.wt-imagecropper-disabled]="disabled"
-  [class.wt-imagecropper-round]="roundCropper"
-  [class.wt-imagecropper-dragging]="dragging"
+  class="wu-imagecropper"
+  [class.wu-imagecropper-ready]="shown"
+  [class.wu-imagecropper-empty]="!ready"
+  [class.wu-imagecropper-loading]="loading"
+  [class.wu-imagecropper-failed]="failed"
+  [class.wu-imagecropper-disabled]="disabled"
+  [class.wu-imagecropper-round]="roundCropper"
+  [class.wu-imagecropper-dragging]="dragging"
   [class]="styleClass || ''"
   [style]="rootStyle"
   role="group"
   [attr.aria-label]="ariaLabel || t.imageCropper"
   [attr.aria-busy]="loading || null"
 >
-  <div #viewport class="wt-imagecropper-viewport">
-    <div #frame class="wt-imagecropper-frame">
+  <div #viewport class="wu-imagecropper-viewport">
+    <div #frame class="wu-imagecropper-frame">
       <div
         #stage
-        class="wt-imagecropper-stage"
-        [class.wt-imagecropper-pannable]="shown && canZoomOut && !disabled"
-        [class.wt-imagecropper-panning]="panning"
+        class="wu-imagecropper-stage"
+        [class.wu-imagecropper-pannable]="shown && canZoomOut && !disabled"
+        [class.wu-imagecropper-panning]="panning"
         [style.visibility]="shown ? null : 'hidden'"
         [style.left.px]="stageX"
         [style.top.px]="stageY"
@@ -29,18 +29,18 @@
       >
         <canvas
           #canvas
-          class="wt-imagecropper-canvas"
+          class="wu-imagecropper-canvas"
           [attr.role]="imageAltText ? 'img' : null"
           [attr.aria-label]="imageAltText || null"
           [attr.aria-hidden]="imageAltText ? null : 'true'"
         ></canvas>
-        <div *ngIf="shown" class="wt-imagecropper-shade" aria-hidden="true">
-          <div class="wt-imagecropper-hole" [style.left.px]="boxX" [style.top.px]="boxY" [style.width.px]="boxW" [style.height.px]="boxH"></div>
+        <div *ngIf="shown" class="wu-imagecropper-shade" aria-hidden="true">
+          <div class="wu-imagecropper-hole" [style.left.px]="boxX" [style.top.px]="boxY" [style.width.px]="boxW" [style.height.px]="boxH"></div>
         </div>
         <div
           *ngIf="shown"
           #box
-          class="wt-imagecropper-box"
+          class="wu-imagecropper-box"
           role="group"
           [attr.tabindex]="disabled ? null : 0"
           [attr.aria-label]="boxLabel"
@@ -52,12 +52,12 @@
           [style.height.px]="boxH"
           (keydown)="boxKey($event)"
         >
-          <span class="wt-imagecropper-grid" aria-hidden="true"></span>
+          <span class="wu-imagecropper-grid" aria-hidden="true"></span>
           <ng-container *ngIf="resizable">
-            <span *ngFor="let e of edges" [class]="'wt-imagecropper-edge wt-imagecropper-edge-' + e" [attr.data-handle]="e" aria-hidden="true"></span>
+            <span *ngFor="let e of edges" [class]="'wu-imagecropper-edge wu-imagecropper-edge-' + e" [attr.data-handle]="e" aria-hidden="true"></span>
             <span
               *ngFor="let h of squares"
-              [class]="'wt-imagecropper-handle wt-imagecropper-handle-' + h + (hideResizeSquares ? ' wt-imagecropper-handle-hidden' : '')"
+              [class]="'wu-imagecropper-handle wu-imagecropper-handle-' + h + (hideResizeSquares ? ' wu-imagecropper-handle-hidden' : '')"
               [attr.data-handle]="h"
               aria-hidden="true"
             ></span>
@@ -65,8 +65,8 @@
         </div>
       </div>
     </div>
-    <span [id]="hintId" class="wt-imagecropper-hint">{{ t.cropAreaHint }}</span>
-    <div *ngIf="!ready" class="wt-imagecropper-status" [attr.role]="failed && !loading ? 'alert' : null">
+    <span [id]="hintId" class="wu-imagecropper-hint">{{ t.cropAreaHint }}</span>
+    <div *ngIf="!ready" class="wu-imagecropper-status" [attr.role]="failed && !loading ? 'alert' : null">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="4" width="18" height="16" rx="2"></rect>
         <circle cx="8.5" cy="9.5" r="1.5"></circle>
@@ -79,19 +79,19 @@
 
   <div
     *ngIf="showToolbar && ready && (toolGroups.length || toolsTemplate)"
-    class="wt-imagecropper-toolbar"
+    class="wu-imagecropper-toolbar"
     role="toolbar"
     [attr.aria-label]="ariaLabel || t.imageCropper"
   >
-    <div *ngFor="let group of toolGroups" class="wt-imagecropper-group" [class.wt-imagecropper-group-zoom]="group.zoom">
+    <div *ngFor="let group of toolGroups" class="wu-imagecropper-group" [class.wu-imagecropper-group-zoom]="group.zoom">
       <ng-container *ngFor="let tool of group.tools" [ngSwitch]="tool">
-        <button *ngSwitchCase="'zoomOut'" type="button" [class]="buttonClass('wt-imagecropper-zoom-out')" [disabled]="disabled || !canZoomOut" [attr.aria-label]="t.zoomOut" [attr.title]="t.zoomOut" (click)="zoomOut()">
+        <button *ngSwitchCase="'zoomOut'" type="button" [class]="buttonClass('wu-imagecropper-zoom-out')" [disabled]="disabled || !canZoomOut" [attr.aria-label]="t.zoomOut" [attr.title]="t.zoomOut" (click)="zoomOut()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20.5 20.5 16 16"></path></svg>
         </button>
         <input
           *ngSwitchCase="'zoomSlider'"
           type="range"
-          class="wt-imagecropper-zoom"
+          class="wu-imagecropper-zoom"
           min="0"
           max="100"
           step="1"
@@ -101,27 +101,27 @@
           [attr.aria-valuetext]="zoomPercent + '%'"
           (input)="zoomSliderInput($event)"
         />
-        <button *ngSwitchCase="'zoomIn'" type="button" [class]="buttonClass('wt-imagecropper-zoom-in')" [disabled]="disabled || !canZoomIn" [attr.aria-label]="t.zoomIn" [attr.title]="t.zoomIn" (click)="zoomIn()">
+        <button *ngSwitchCase="'zoomIn'" type="button" [class]="buttonClass('wu-imagecropper-zoom-in')" [disabled]="disabled || !canZoomIn" [attr.aria-label]="t.zoomIn" [attr.title]="t.zoomIn" (click)="zoomIn()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M11 8v6M20.5 20.5 16 16"></path></svg>
         </button>
-        <button *ngSwitchCase="'rotateLeft'" type="button" [class]="buttonClass('wt-imagecropper-rotate-left')" [disabled]="disabled" [attr.aria-label]="t.rotateLeft" [attr.title]="t.rotateLeft" (click)="rotateLeft()">
+        <button *ngSwitchCase="'rotateLeft'" type="button" [class]="buttonClass('wu-imagecropper-rotate-left')" [disabled]="disabled" [attr.aria-label]="t.rotateLeft" [attr.title]="t.rotateLeft" (click)="rotateLeft()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M4 10a8 8 0 1 1 1.7 7"></path></svg>
         </button>
-        <button *ngSwitchCase="'rotateRight'" type="button" [class]="buttonClass('wt-imagecropper-rotate-right')" [disabled]="disabled" [attr.aria-label]="t.rotateRight" [attr.title]="t.rotateRight" (click)="rotateRight()">
+        <button *ngSwitchCase="'rotateRight'" type="button" [class]="buttonClass('wu-imagecropper-rotate-right')" [disabled]="disabled" [attr.aria-label]="t.rotateRight" [attr.title]="t.rotateRight" (click)="rotateRight()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v6h-6"></path><path d="M20 10A8 8 0 1 0 18.3 17"></path></svg>
         </button>
-        <button *ngSwitchCase="'flipHorizontal'" type="button" [class]="buttonClass('wt-imagecropper-flip-h')" [disabled]="disabled" [attr.aria-label]="t.flipHorizontal" [attr.title]="t.flipHorizontal" (click)="flipHorizontal()">
+        <button *ngSwitchCase="'flipHorizontal'" type="button" [class]="buttonClass('wu-imagecropper-flip-h')" [disabled]="disabled" [attr.aria-label]="t.flipHorizontal" [attr.title]="t.flipHorizontal" (click)="flipHorizontal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18" stroke-dasharray="2 2.5"></path><path d="M9 7 4 17h5z"></path><path d="M15 7l5 10h-5z"></path></svg>
         </button>
-        <button *ngSwitchCase="'flipVertical'" type="button" [class]="buttonClass('wt-imagecropper-flip-v')" [disabled]="disabled" [attr.aria-label]="t.flipVertical" [attr.title]="t.flipVertical" (click)="flipVertical()">
+        <button *ngSwitchCase="'flipVertical'" type="button" [class]="buttonClass('wu-imagecropper-flip-v')" [disabled]="disabled" [attr.aria-label]="t.flipVertical" [attr.title]="t.flipVertical" (click)="flipVertical()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="2 2.5"></path><path d="M7 9 17 4v5z"></path><path d="M7 15l10 5v-5z"></path></svg>
         </button>
-        <button *ngSwitchCase="'reset'" type="button" [class]="buttonClass('wt-imagecropper-reset')" [disabled]="disabled" [attr.aria-label]="t.resetCrop" [attr.title]="t.resetCrop" (click)="reset()">
+        <button *ngSwitchCase="'reset'" type="button" [class]="buttonClass('wu-imagecropper-reset')" [disabled]="disabled" [attr.aria-label]="t.resetCrop" [attr.title]="t.resetCrop" (click)="reset()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v5h5"></path></svg>
         </button>
       </ng-container>
     </div>
-    <div *ngIf="toolsTemplate" class="wt-imagecropper-group wt-imagecropper-group-custom">
+    <div *ngIf="toolsTemplate" class="wu-imagecropper-group wu-imagecropper-group-custom">
       <ng-container *ngTemplateOutlet="toolsTemplate; context: toolsContext"></ng-container>
     </div>
   </div>

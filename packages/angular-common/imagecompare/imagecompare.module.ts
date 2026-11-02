@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtImageCompare } from './imagecompare.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuImageCompare } from './imagecompare.component';
 
-/** For NgModule apps. Standalone apps can import `WtImageCompare` directly. `wtTemplate` (`pTemplate`) comes with it. */
+/** For NgModule apps. Standalone apps can import `WuImageCompare` directly. `wuTemplate` (`pTemplate`) comes with it. */
 @NgModule({
-  imports: [WtImageCompare, WtTemplate],
-  exports: [WtImageCompare, WtTemplate],
+  imports: [WuImageCompare, WuTemplate],
+  exports: [WuImageCompare, WuTemplate],
 })
-export class WtImageCompareModule {}
+export class WuImageCompareModule {}

@@ -13,7 +13,7 @@
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · Angular {{ v.angular }}</span>
   </div>
 </header>
 
@@ -21,22 +21,22 @@
   <ol class="docs-steps">
     @if (en()) {
       <li>
-        <b>Install next to what you have.</b> Run <code>ng add wiratheme</code> and pick the theme closest to your current one
-        ({{ v.major === 1 ? 'e.g. sila-light-teal' : 'e.g. mali' }}). <code>ng add wiratheme --theme</code> also accepts the theme names your team
-        already knows and picks the matching one. WiraTheme has no global reset, so pages you have not moved stay as they are.
+        <b>Install next to what you have.</b> Run <code>ng add wiraui</code> and pick the theme closest to your current one
+        ({{ v.major === 1 ? 'e.g. sila-light-teal' : 'e.g. mali' }}). <code>ng add wiraui --theme</code> also accepts the theme names your team
+        already knows and picks the matching one. WiraUI has no global reset, so pages you have not moved stay as they are.
       </li>
       <li><b>Move one page at a time,</b> starting with pages that use few components.</li>
-      <li><b>Swap tags and imports</b> to <code>wt-*</code> and <code>WtXxxModule</code> / <code>WtXxx</code>; most inputs keep their names.</li>
+      <li><b>Swap tags and imports</b> to <code>wu-*</code> and <code>WuXxxModule</code> / <code>WuXxx</code>; most inputs keep their names.</li>
       <li><b>Keep your CSS.</b> Rules that target the <code>p-*</code> classes or read the theme variables still apply. Switch to tokens later, when convenient.</li>
       <li><b>Remove the old library</b> once no page uses it.</li>
     } @else {
       <li>
-        <b>ติดตั้งคู่กับของเดิม</b> รัน <code>ng add wiratheme</code> แล้วเลือกธีมที่ใกล้กับของเดิม
-        ({{ v.major === 1 ? 'เช่น sila-light-teal' : 'เช่น mali' }}) <code>ng add wiratheme --theme</code> รับชื่อธีมที่ทีมคุ้นเคยอยู่แล้วและเลือกธีมที่ตรงกันให้เอง
-        WiraTheme ไม่มี global reset จึงไม่กระทบหน้าที่ยังไม่ได้ย้าย
+        <b>ติดตั้งคู่กับของเดิม</b> รัน <code>ng add wiraui</code> แล้วเลือกธีมที่ใกล้กับของเดิม
+        ({{ v.major === 1 ? 'เช่น sila-light-teal' : 'เช่น mali' }}) <code>ng add wiraui --theme</code> รับชื่อธีมที่ทีมคุ้นเคยอยู่แล้วและเลือกธีมที่ตรงกันให้เอง
+        WiraUI ไม่มี global reset จึงไม่กระทบหน้าที่ยังไม่ได้ย้าย
       </li>
       <li><b>ย้ายทีละหน้า</b> เริ่มจากหน้าที่ใช้ component น้อยและความเสี่ยงต่ำ</li>
-      <li><b>เปลี่ยน tag และ import</b> เป็น <code>wt-*</code> และ <code>WtXxxModule</code> / <code>WtXxx</code> input ส่วนใหญ่ใช้ชื่อเดิม</li>
+      <li><b>เปลี่ยน tag และ import</b> เป็น <code>wu-*</code> และ <code>WuXxxModule</code> / <code>WuXxx</code> input ส่วนใหญ่ใช้ชื่อเดิม</li>
       <li><b>CSS เดิมใช้ต่อได้</b> CSS ที่แก้คลาส <code>p-*</code> หรืออ่านตัวแปรของธีมยังได้ผล ค่อยเปลี่ยนเป็น token ทีหลังเมื่อสะดวก</li>
       <li><b>เอา library เดิมออก</b> เมื่อไม่มีหน้าไหนใช้แล้ว</li>
     }
@@ -57,301 +57,301 @@
       <tbody>
         <tr>
           <td>Button</td>
-          <td><code>&lt;wt-button&gt;</code></td>
-          <td><code>WtButtonModule</code> · <code>WtButton</code></td>
+          <td><code>&lt;wu-button&gt;</code></td>
+          <td><code>WuButtonModule</code> · <code>WuButton</code></td>
           <td>{{ en() ? '[action] handles loading and double clicks; severity="warning" still works' : '[action] จัดการ loading และกันกดซ้ำให้ · severity="warning" ยังใช้ได้' }}</td>
         </tr>
         <tr>
           <td>Card</td>
-          <td><code>&lt;wt-card&gt;</code></td>
-          <td><code>WtCardModule</code> · <code>WtCard</code></td>
-          <td>{{ en() ? 'Slots are attributes: [wtCardHeader], [wtCardActions], [wtCardFooter]' : 'slot เป็น attribute: [wtCardHeader], [wtCardActions], [wtCardFooter]' }}</td>
+          <td><code>&lt;wu-card&gt;</code></td>
+          <td><code>WuCardModule</code> · <code>WuCard</code></td>
+          <td>{{ en() ? 'Slots are attributes: [wuCardHeader], [wuCardActions], [wuCardFooter]' : 'slot เป็น attribute: [wuCardHeader], [wuCardActions], [wuCardFooter]' }}</td>
         </tr>
         <tr>
           <td>InputText</td>
-          <td><code>input[wtInputText]</code></td>
-          <td><code>WtInputTextModule</code> · <code>WtInputText</code></td>
-          <td>{{ en() ? 'Size is wtSize, because size is a native input attribute' : 'ขนาดใช้ wtSize เพราะ size เป็น attribute ของ input อยู่แล้ว' }}</td>
+          <td><code>input[wuInputText]</code></td>
+          <td><code>WuInputTextModule</code> · <code>WuInputText</code></td>
+          <td>{{ en() ? 'Size is wuSize, because size is a native input attribute' : 'ขนาดใช้ wuSize เพราะ size เป็น attribute ของ input อยู่แล้ว' }}</td>
         </tr>
         <tr>
           <td>Textarea</td>
-          <td><code>textarea[wtTextarea]</code></td>
-          <td><code>WtTextareaModule</code> · <code>WtTextarea</code></td>
+          <td><code>textarea[wuTextarea]</code></td>
+          <td><code>WuTextareaModule</code> · <code>WuTextarea</code></td>
           <td>{{ en() ? 'autoResize also follows values set from code' : 'autoResize ขยายตามค่าที่ตั้งจากโค้ดด้วย' }}</td>
         </tr>
         <tr>
           <td>Checkbox</td>
-          <td><code>&lt;wt-checkbox&gt;</code></td>
-          <td><code>WtCheckboxModule</code> · <code>WtCheckbox</code></td>
+          <td><code>&lt;wu-checkbox&gt;</code></td>
+          <td><code>WuCheckboxModule</code> · <code>WuCheckbox</code></td>
           <td>{{ en() ? 'binary, value, trueValue / falseValue' : 'binary, value, trueValue / falseValue เหมือนเดิม' }}</td>
         </tr>
         <tr>
           <td>RadioButton</td>
-          <td><code>&lt;wt-radiobutton&gt;</code></td>
-          <td><code>WtRadioButtonModule</code> · <code>WtRadioButton</code></td>
+          <td><code>&lt;wu-radiobutton&gt;</code></td>
+          <td><code>WuRadioButtonModule</code> · <code>WuRadioButton</code></td>
           <td>{{ en() ? 'Radios sharing a FormControl update each other' : 'กลุ่มเดียวกันใน Reactive Forms อัปเดตกันเอง' }}</td>
         </tr>
         <tr>
           <td>ToggleSwitch</td>
-          <td><code>&lt;wt-toggleswitch&gt;</code></td>
-          <td><code>WtToggleSwitchModule</code> · <code>WtToggleSwitch</code></td>
-          <td>{{ en() ? 'Built-in label; the tag' : 'มี label ในตัว และ tag' }} <code>&lt;wt-inputSwitch&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}</td>
+          <td><code>&lt;wu-toggleswitch&gt;</code></td>
+          <td><code>WuToggleSwitchModule</code> · <code>WuToggleSwitch</code></td>
+          <td>{{ en() ? 'Built-in label; the tag' : 'มี label ในตัว และ tag' }} <code>&lt;wu-inputSwitch&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}</td>
         </tr>
         <tr>
           <td>{{ en() ? 'Translations' : 'คำแปล' }}</td>
-          <td colspan="2"><code>WtConfig.setTranslation()</code></td>
+          <td colspan="2"><code>WuConfig.setTranslation()</code></td>
           <td>{{ en() ? 'Thai is the default' : 'ภาษาไทยเป็นค่าเริ่มต้นแล้ว' }}</td>
         </tr>
         <tr>
           <td>Tag · Badge · Chip · Avatar · Divider · Skeleton · ProgressBar · Message · Panel · Fieldset</td>
-          <td><code>&lt;wt-tag&gt;</code> · <code>&lt;wt-badge&gt;</code> …</td>
-          <td><code>WtTagModule</code> · <code>WtTag</code> …</td>
+          <td><code>&lt;wu-tag&gt;</code> · <code>&lt;wu-badge&gt;</code> …</td>
+          <td><code>WuTagModule</code> · <code>WuTag</code> …</td>
           <td>
-            {{ en() ? 'Same pattern; ProgressSpinner uses the tag' : 'รูปแบบเดียวกัน ส่วน ProgressSpinner ใช้ tag' }} <code>&lt;wt-progress-spinner&gt;</code>
-            ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-progressSpinner&gt;</code>)
+            {{ en() ? 'Same pattern; ProgressSpinner uses the tag' : 'รูปแบบเดียวกัน ส่วน ProgressSpinner ใช้ tag' }} <code>&lt;wu-progress-spinner&gt;</code>
+            ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-progressSpinner&gt;</code>)
           </td>
         </tr>
         <tr>
           <td>DatePicker</td>
-          <td><code>&lt;wt-datepicker&gt;</code></td>
-          <td><code>WtDatePickerModule</code> · <code>WtDatePicker</code></td>
+          <td><code>&lt;wu-datepicker&gt;</code></td>
+          <td><code>WuDatePickerModule</code> · <code>WuDatePicker</code></td>
           <td>
             {{ en() ? 'dateFormat="dd/mm/yy" as before; years show in the Buddhist era; no appendTo needed; the tag' : 'dateFormat="dd/mm/yy" เหมือนเดิม ปีแสดงเป็น พ.ศ. ไม่ต้องใช้ appendTo และ tag' }}
-            <code>&lt;wt-calendar&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}
+            <code>&lt;wu-calendar&gt;</code> {{ en() ? 'works too' : 'ก็ใช้ได้' }}
           </td>
         </tr>
         <tr>
           <td>Dialog · ConfirmDialog</td>
-          <td><code>&lt;wt-dialog&gt;</code> · <code>&lt;wt-confirmdialog&gt;</code></td>
-          <td><code>WtDialogModule</code> · <code>WtConfirmDialogModule</code></td>
+          <td><code>&lt;wu-dialog&gt;</code> · <code>&lt;wu-confirmdialog&gt;</code></td>
+          <td><code>WuDialogModule</code> · <code>WuConfirmDialogModule</code></td>
           <td>{{ en() ? 'Slots via #footer or the slot attribute templates already use; no appendTo or z-index' : 'slot ใช้ #footer หรือ attribute ของ slot แบบที่ template ใช้อยู่ ไม่ต้องใช้ appendTo หรือ z-index' }}</td>
         </tr>
         <tr>
           <td>Toast · Tooltip · Popover</td>
-          <td><code>&lt;wt-toast&gt;</code> · <code>[wtTooltip]</code> · <code>&lt;wt-popover&gt;</code></td>
-          <td><code>WtToastModule</code> · <code>WtTooltipModule</code> · <code>WtPopoverModule</code></td>
-          <td>{{ en() ? 'The services keep their names in one import:' : 'service ใช้ชื่อเดิมได้จาก import เดียว:' }} <code>wiratheme/api</code></td>
+          <td><code>&lt;wu-toast&gt;</code> · <code>[wuTooltip]</code> · <code>&lt;wu-popover&gt;</code></td>
+          <td><code>WuToastModule</code> · <code>WuTooltipModule</code> · <code>WuPopoverModule</code></td>
+          <td>{{ en() ? 'The services keep their names in one import:' : 'service ใช้ชื่อเดิมได้จาก import เดียว:' }} <code>wiraui/api</code></td>
         </tr>
         <tr>
           <td>AlertDialog</td>
-          <td><code>WtAlert.fire()</code></td>
-          <td><code>WtAlertService</code> · <code>WtAlert</code></td>
+          <td><code>WuAlert.fire()</code></td>
+          <td><code>WuAlertService</code> · <code>WuAlert</code></td>
           <td>{{ en() ? 'Code that called a global alert function changes only its import' : 'โค้ดที่เรียกฟังก์ชัน alert แบบ global แก้แค่บรรทัด import' }}</td>
         </tr>
         <tr>
           <td>Animate on scroll</td>
           <td><code>data-aos="…"</code></td>
-          <td><code>provideWtAnimate()</code></td>
+          <td><code>provideWuAnimate()</code></td>
           <td>{{ en() ? 'The data-aos attributes you already use work as they are' : 'attribute data-aos ที่ใช้อยู่ทำงานได้ทันที' }}</td>
         </tr>
         <tr>
           <td>Select</td>
-          <td><code>&lt;wt-select&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-dropdown</code> / <code>p-select</code>)</td>
-          <td><code>WtSelectModule</code> · <code>WtSelect</code></td>
+          <td><code>&lt;wu-select&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-dropdown</code> / <code>p-select</code>)</td>
+          <td><code>WuSelectModule</code> · <code>WuSelect</code></td>
           <td>{{ en() ? 'Same option inputs and templates; appendTo, virtualScroll and autoDisplayFirst are accepted and ignored' : 'input ของตัวเลือกและ template ชื่อเดิม ส่วน appendTo, virtualScroll และ autoDisplayFirst รับไว้แต่ไม่มีผล' }}</td>
         </tr>
         <tr>
           <td>Table</td>
-          <td><code>&lt;wt-table&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-table</code>)</td>
-          <td><code>WtTableModule</code> · <code>WtTable</code></td>
-          <td>{{ en() ? 'Templates (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, row groups, column filters and their menu (wt-columnFilter), stateKey, exportCSV() and the context menu (pContextMenuRow) keep working, as do the p-datatable-* classes; virtual scroll is not built yet' : 'template (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, การจัดกลุ่มแถว ตัวกรองรายคอลัมน์และเมนูตัวกรอง (wt-columnFilter), stateKey, exportCSV(), เมนูคลิกขวา (pContextMenuRow) และ class p-datatable-* ใช้ต่อได้ ยังไม่มี virtual scroll' }}</td>
+          <td><code>&lt;wu-table&gt;</code> ({{ en() ? 'was' : 'เดิม' }} <code>p-table</code>)</td>
+          <td><code>WuTableModule</code> · <code>WuTable</code></td>
+          <td>{{ en() ? 'Templates (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, row groups, column filters and their menu (wu-columnFilter), stateKey, exportCSV() and the context menu (pContextMenuRow) keep working, as do the p-datatable-* classes; virtual scroll is not built yet' : 'template (pTemplate), pSortableColumn, pSelectableRow, pFrozenColumn, pRowToggler, pReorderableRow, pEditableColumn / pEditableRow, pResizableColumn / pReorderableColumn, การจัดกลุ่มแถว ตัวกรองรายคอลัมน์และเมนูตัวกรอง (wu-columnFilter), stateKey, exportCSV(), เมนูคลิกขวา (pContextMenuRow) และ class p-datatable-* ใช้ต่อได้ ยังไม่มี virtual scroll' }}</td>
         </tr>
         <tr>
           <td>Accordion · Tabs</td>
-          <td><code>&lt;wt-accordion-tab&gt;</code> · <code>&lt;wt-tabs&gt;</code> <code>&lt;wt-tab-panel&gt;</code></td>
-          <td><code>WtAccordionModule</code> · <code>WtTabsModule</code></td>
+          <td><code>&lt;wu-accordion-tab&gt;</code> · <code>&lt;wu-tabs&gt;</code> <code>&lt;wu-tab-panel&gt;</code></td>
+          <td><code>WuAccordionModule</code> · <code>WuTabsModule</code></td>
           <td>
-            {{ en() ? 'The old tags work too:' : 'tag เดิมใช้ได้:' }} <code>&lt;wt-accordionTab&gt;</code>, <code>&lt;wt-tabView&gt;</code> / <code>&lt;wt-tabPanel&gt;</code> ·
-            {{ en() ? 'by value with' : 'แบบ value ใช้' }} <code>wt-accordion-panel</code> / <code>wt-accordion-header</code> / <code>wt-accordion-content</code>
-            {{ en() ? 'and' : 'และ' }} <code>wt-tablist</code> / <code>wt-tab</code> / <code>wt-tabpanels</code>
+            {{ en() ? 'The old tags work too:' : 'tag เดิมใช้ได้:' }} <code>&lt;wu-accordionTab&gt;</code>, <code>&lt;wu-tabView&gt;</code> / <code>&lt;wu-tabPanel&gt;</code> ·
+            {{ en() ? 'by value with' : 'แบบ value ใช้' }} <code>wu-accordion-panel</code> / <code>wu-accordion-header</code> / <code>wu-accordion-content</code>
+            {{ en() ? 'and' : 'และ' }} <code>wu-tablist</code> / <code>wu-tab</code> / <code>wu-tabpanels</code>
           </td>
         </tr>
         <tr>
           <td>MultiSelect</td>
-          <td><code>&lt;wt-multiselect&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-multiSelect&gt;</code>)</td>
-          <td><code>WtMultiSelectModule</code> · <code>WtMultiSelect</code></td>
+          <td><code>&lt;wu-multiselect&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-multiSelect&gt;</code>)</td>
+          <td><code>WuMultiSelectModule</code> · <code>WuMultiSelect</code></td>
           <td>{{ en() ? 'defaultLabel, maxSelectedLabels, selectedItemsLabel, display="chip" and the selectedItems template work as before; appendTo is accepted and ignored' : 'defaultLabel, maxSelectedLabels, selectedItemsLabel, display="chip" และ template selectedItems ใช้ได้เหมือนเดิม ส่วน appendTo รับไว้แต่ไม่มีผล' }}</td>
         </tr>
         <tr>
           <td>AutoComplete</td>
-          <td><code>&lt;wt-autocomplete&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-autoComplete&gt;</code>)</td>
-          <td><code>WtAutoCompleteModule</code> · <code>WtAutoComplete</code></td>
+          <td><code>&lt;wu-autocomplete&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-autoComplete&gt;</code>)</td>
+          <td><code>WuAutoCompleteModule</code> · <code>WuAutoComplete</code></td>
           <td>{{ en() ? 'suggestions, completeMethod, delay, minLength, dropdown, forceSelection and field (optionLabel) as before; optionValue and multiple are not built yet' : 'suggestions, completeMethod, delay, minLength, dropdown, forceSelection และ field (optionLabel) เหมือนเดิม ยังไม่มี optionValue และ multiple' }}</td>
         </tr>
         <tr>
           <td>InputMask</td>
-          <td><code>&lt;wt-inputmask&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-inputMask&gt;</code>)</td>
-          <td><code>WtInputMaskModule</code> · <code>WtInputMask</code></td>
+          <td><code>&lt;wu-inputmask&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-inputMask&gt;</code>)</td>
+          <td><code>WuInputMaskModule</code> · <code>WuInputMask</code></td>
           <td>{{ en() ? 'mask, slotChar, autoClear, unmask and onComplete as before; Thai digits count as 0–9' : 'mask, slotChar, autoClear, unmask และ onComplete เหมือนเดิม เลขไทยใช้ได้เหมือน 0–9' }}</td>
         </tr>
         <tr>
           <td>Menubar · Menu · TabMenu</td>
-          <td><code>&lt;wt-menubar&gt;</code> · <code>&lt;wt-menu&gt;</code> · <code>&lt;wt-tabmenu&gt;</code></td>
-          <td><code>WtMenubarModule</code> · <code>WtMenuModule</code> · <code>WtTabMenuModule</code></td>
-          <td>{{ en() ? 'MenuItem models move over unchanged (MenuItem from' : 'model ของ MenuItem ใช้ต่อได้ไม่ต้องแก้ (MenuItem จาก' }} <code>wiratheme/api</code>{{ en() ? '); popups open in the top layer, so appendTo is accepted and ignored' : ') เมนู popup เปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
+          <td><code>&lt;wu-menubar&gt;</code> · <code>&lt;wu-menu&gt;</code> · <code>&lt;wu-tabmenu&gt;</code></td>
+          <td><code>WuMenubarModule</code> · <code>WuMenuModule</code> · <code>WuTabMenuModule</code></td>
+          <td>{{ en() ? 'MenuItem models move over unchanged (MenuItem from' : 'model ของ MenuItem ใช้ต่อได้ไม่ต้องแก้ (MenuItem จาก' }} <code>wiraui/api</code>{{ en() ? '); popups open in the top layer, so appendTo is accepted and ignored' : ') เมนู popup เปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
         </tr>
         <tr>
           <td>PanelMenu · Steps</td>
-          <td><code>&lt;wt-panelmenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-panelMenu&gt;</code>) · <code>&lt;wt-steps&gt;</code></td>
-          <td><code>WtPanelMenuModule</code> · <code>WtStepsModule</code></td>
+          <td><code>&lt;wu-panelmenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-panelMenu&gt;</code>) · <code>&lt;wu-steps&gt;</code></td>
+          <td><code>WuPanelMenuModule</code> · <code>WuStepsModule</code></td>
           <td>
             {{ en() ? 'MenuItem models with expanded, multiple, activeIndex and readonly work as before; the value-based stepper is the Stepper row below' : 'model ของ MenuItem พร้อม expanded, multiple, activeIndex และ readonly ใช้ได้เหมือนเดิม ส่วนขั้นตอนแบบ value อยู่ในแถว Stepper ด้านล่าง' }}
           </td>
         </tr>
         <tr>
           <td>Stepper</td>
-          <td><code>&lt;wt-stepper&gt;</code> · <code>&lt;wt-step-list&gt;</code> · <code>&lt;wt-step&gt;</code> · <code>&lt;wt-step-panels&gt;</code> · <code>&lt;wt-step-panel&gt;</code> · <code>&lt;wt-step-item&gt;</code></td>
-          <td><code>WtStepperModule</code> · <code>WtStepper</code></td>
+          <td><code>&lt;wu-stepper&gt;</code> · <code>&lt;wu-step-list&gt;</code> · <code>&lt;wu-step&gt;</code> · <code>&lt;wu-step-panels&gt;</code> · <code>&lt;wu-step-panel&gt;</code> · <code>&lt;wu-step-item&gt;</code></td>
+          <td><code>WuStepperModule</code> · <code>WuStepper</code></td>
           <td>{{ en() ? '[(value)], [linear] and #content templates with activateCallback work as before' : '[(value)], [linear] และ template #content ที่มี activateCallback ใช้ได้เหมือนเดิม' }}</td>
         </tr>
         <tr>
           <td>PickList · OrderList</td>
-          <td><code>&lt;wt-picklist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-pickList&gt;</code>) · <code>&lt;wt-orderlist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-orderList&gt;</code>)</td>
-          <td><code>WtPickListModule</code> · <code>WtOrderListModule</code></td>
+          <td><code>&lt;wu-picklist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-pickList&gt;</code>) · <code>&lt;wu-orderlist&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-orderList&gt;</code>)</td>
+          <td><code>WuPickListModule</code> · <code>WuOrderListModule</code></td>
           <td>{{ en() ? 'source / target / value are changed in place as before; dragdrop, filterBy, the item template and the move events keep their names' : 'source / target / value ถูกเปลี่ยนในที่เดิมเหมือนเดิม dragdrop, filterBy, template item และ event การย้ายชื่อเดิม' }}</td>
         </tr>
         <tr>
           <td>FileUpload</td>
-          <td><code>&lt;wt-fileupload&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-fileUpload&gt;</code>)</td>
-          <td><code>WtFileUploadModule</code> · <code>WtFileUpload</code></td>
+          <td><code>&lt;wu-fileupload&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-fileUpload&gt;</code>)</td>
+          <td><code>WuFileUploadModule</code> · <code>WuFileUpload</code></td>
           <td>{{ en() ? 'chooseLabel, maxFileSize, accept, customUpload with uploadHandler, mode="basic", the content / empty templates and clear() work as before; its messages follow the locale' : 'chooseLabel, maxFileSize, accept, customUpload กับ uploadHandler, mode="basic", template content / empty และ clear() ใช้ได้เหมือนเดิม ข้อความแจ้งเป็นภาษาไทย' }}</td>
         </tr>
         <tr>
           <td>Editor</td>
-          <td><code>&lt;wt-editor&gt;</code></td>
-          <td><code>WtEditorModule</code> · <code>WtEditor</code></td>
+          <td><code>&lt;wu-editor&gt;</code></td>
+          <td><code>WuEditorModule</code> · <code>WuEditor</code></td>
           <td>{{ en() ? 'The HTML value (null when empty), [style] height, the header template with ql-* buttons and the stored ql-* classes work as before; nothing else to install' : 'ค่า HTML (ว่างเปล่าคือ null), ความสูงจาก [style], template header ที่มีปุ่ม ql-* และ class ql-* ในเนื้อหาที่บันทึกไว้ใช้ได้เหมือนเดิม ไม่ต้องติดตั้งไลบรารีอื่น' }}</td>
         </tr>
         <tr>
           <td>Ripple · KeyFilter · Badge</td>
-          <td><code>[wtRipple]</code> · <code>[wtKeyFilter]</code> · <code>[wtBadge]</code></td>
-          <td><code>WtRippleModule</code> · <code>WtKeyFilterModule</code> · <code>WtBadgeModule</code></td>
+          <td><code>[wuRipple]</code> · <code>[wuKeyFilter]</code> · <code>[wuBadge]</code></td>
+          <td><code>WuRippleModule</code> · <code>WuKeyFilterModule</code> · <code>WuBadgeModule</code></td>
           <td>{{ en() ? 'pRipple, pKeyFilter (with pValidateOnly) and pBadge keep their attribute names' : 'pRipple, pKeyFilter (พร้อม pValidateOnly) และ pBadge ใช้ชื่อ attribute เดิมได้' }}</td>
         </tr>
         <tr>
           <td>Slider · ColorPicker</td>
-          <td><code>&lt;wt-slider&gt;</code> · <code>&lt;wt-colorPicker&gt;</code></td>
-          <td><code>WtSliderModule</code> · <code>WtColorPickerModule</code></td>
+          <td><code>&lt;wu-slider&gt;</code> · <code>&lt;wu-colorPicker&gt;</code></td>
+          <td><code>WuSliderModule</code> · <code>WuColorPickerModule</code></td>
           <td>{{ en() ? 'ngModel values ([from, to] for a range; hex, rgb or hsb colours), onChange / onSlideEnd and the panel keys work as before' : 'ค่า ngModel (ช่วงเป็น [จาก, ถึง] สีเป็น hex, rgb หรือ hsb), onChange / onSlideEnd และคีย์บอร์ดใช้ได้เหมือนเดิม' }}</td>
         </tr>
         <tr>
           <td>Listbox · TreeSelect</td>
-          <td><code>&lt;wt-listbox&gt;</code> · <code>&lt;wt-treeSelect&gt;</code></td>
-          <td><code>WtListboxModule</code> · <code>WtTreeSelectModule</code></td>
+          <td><code>&lt;wu-listbox&gt;</code> · <code>&lt;wu-treeSelect&gt;</code></td>
+          <td><code>WuListboxModule</code> · <code>WuTreeSelectModule</code></td>
           <td>{{ en() ? 'Option fields, groups, multiple / checkbox, filter and the item / value templates keep their names; the TreeSelect panel opens in the top layer' : 'ฟิลด์ตัวเลือก กลุ่ม multiple / checkbox ค้นหา และ template item / value ชื่อเดิม แผงของ TreeSelect เปิดใน top layer' }}</td>
         </tr>
         <tr>
           <td>SplitButton</td>
-          <td><code>&lt;wt-splitButton&gt;</code></td>
-          <td><code>WtSplitButtonModule</code> · <code>WtSplitButton</code></td>
+          <td><code>&lt;wu-splitButton&gt;</code></td>
+          <td><code>WuSplitButtonModule</code> · <code>WuSplitButton</code></td>
           <td>{{ en() ? 'model, severity and the variants, buttonDisabled / menuButtonDisabled and the menu events work as before; appendTo is not needed' : 'model สีและรูปแบบปุ่ม buttonDisabled / menuButtonDisabled และ event ของเมนูใช้ได้เหมือนเดิม ไม่ต้องใช้ appendTo' }}</td>
         </tr>
         <tr>
           <td>Tree · Scroller</td>
-          <td><code>&lt;wt-tree&gt;</code> · <code>&lt;wt-scroller&gt;</code></td>
-          <td><code>WtTreeModule</code> · <code>WtScrollerModule</code></td>
-          <td>{{ en() ? 'TreeNode (from wiratheme/api), the three selection modes, filter, lazy children and per-type templates; the scroller draws only rows in view, with lazy loading' : 'TreeNode (จาก wiratheme/api) การเลือกทั้งสามแบบ ค้นหา โหลดลูกเมื่อเปิด และ template ตาม type ส่วน scroller วาดเฉพาะแถวที่เห็นและโหลดทีละช่วงได้' }}</td>
+          <td><code>&lt;wu-tree&gt;</code> · <code>&lt;wu-scroller&gt;</code></td>
+          <td><code>WuTreeModule</code> · <code>WuScrollerModule</code></td>
+          <td>{{ en() ? 'TreeNode (from wiraui/api), the three selection modes, filter, lazy children and per-type templates; the scroller draws only rows in view, with lazy loading' : 'TreeNode (จาก wiraui/api) การเลือกทั้งสามแบบ ค้นหา โหลดลูกเมื่อเปิด และ template ตาม type ส่วน scroller วาดเฉพาะแถวที่เห็นและโหลดทีละช่วงได้' }}</td>
         </tr>
         <tr>
           <td>Galleria</td>
-          <td><code>&lt;wt-galleria&gt;</code></td>
-          <td><code>WtGalleriaModule</code> · <code>WtGalleria</code></td>
+          <td><code>&lt;wu-galleria&gt;</code></td>
+          <td><code>WuGalleriaModule</code> · <code>WuGalleria</code></td>
           <td>{{ en() ? 'Thumbnails, indicators, item navigators, autoPlay, responsiveOptions, full screen with [(visible)] and the item / thumbnail / caption templates' : 'รูปย่อ จุด ลูกศร autoPlay, responsiveOptions เต็มจอด้วย [(visible)] และ template item / thumbnail / caption' }}</td>
         </tr>
         <tr>
           <td>Breadcrumb · TieredMenu · ContextMenu</td>
-          <td><code>&lt;wt-breadcrumb&gt;</code> · <code>&lt;wt-tieredMenu&gt;</code> · <code>&lt;wt-contextMenu&gt;</code></td>
-          <td><code>WtBreadcrumbModule</code> · <code>WtTieredMenuModule</code> · <code>WtContextMenuModule</code></td>
+          <td><code>&lt;wu-breadcrumb&gt;</code> · <code>&lt;wu-tieredMenu&gt;</code> · <code>&lt;wu-contextMenu&gt;</code></td>
+          <td><code>WuBreadcrumbModule</code> · <code>WuTieredMenuModule</code> · <code>WuContextMenuModule</code></td>
           <td>{{ en() ? 'MenuItem models, home, popup / toggle(), target / global and show(event) work as before; menus open in the top layer' : 'model แบบ MenuItem, home, popup / toggle(), target / global และ show(event) ใช้ได้เหมือนเดิม เมนูเปิดใน top layer' }}</td>
         </tr>
         <tr>
           <td>ScrollPanel · Inplace</td>
-          <td><code>&lt;wt-scrollPanel&gt;</code> · <code>&lt;wt-inplace&gt;</code></td>
-          <td><code>WtScrollPanelModule</code> · <code>WtInplaceModule</code></td>
+          <td><code>&lt;wu-scrollPanel&gt;</code> · <code>&lt;wu-inplace&gt;</code></td>
+          <td><code>WuScrollPanelModule</code> · <code>WuInplaceModule</code></td>
           <td>{{ en() ? '[style] height, scrollTop() and refresh(); the display / content templates (or pInplaceDisplay / pInplaceContent) and closable' : 'ความสูงจาก [style], scrollTop() และ refresh() ส่วน Inplace ใช้ template display / content (หรือ pInplaceDisplay / pInplaceContent) และ closable' }}</td>
         </tr>
         <tr>
           <td>Drawer · BlockUI</td>
-          <td><code>&lt;wt-drawer&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-sidebar&gt;</code>) · <code>&lt;wt-blockUI&gt;</code></td>
-          <td><code>WtDrawerModule</code> · <code>WtBlockUIModule</code></td>
+          <td><code>&lt;wu-drawer&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-sidebar&gt;</code>) · <code>&lt;wu-blockUI&gt;</code></td>
+          <td><code>WuDrawerModule</code> · <code>WuBlockUIModule</code></td>
           <td>{{ en() ? '[(visible)], position, modal, dismissible, the header / footer templates; [blocked] and [target]; both live in the top layer, so appendTo and the z-index inputs are ignored' : '[(visible)], position, modal, dismissible และ template header / footer ส่วน BlockUI ใช้ [blocked] และ [target] ทั้งสองอยู่ใน top layer จึงไม่ต้องใช้ appendTo และ input ของ z-index' }}</td>
         </tr>
         <tr>
           <td>DragDrop</td>
-          <td><code>[wtDraggable]</code> · <code>[wtDroppable]</code></td>
-          <td><code>WtDragDropModule</code></td>
+          <td><code>[wuDraggable]</code> · <code>[wuDroppable]</code></td>
+          <td><code>WuDragDropModule</code></td>
           <td>{{ en() ? 'pDraggable, pDroppable, dragHandle, the effects and every event keep their names' : 'pDraggable, pDroppable, dragHandle, effect และ event ทุกตัวใช้ชื่อเดิมได้' }}</td>
         </tr>
         <tr>
           <td>Steps · TabMenu</td>
-          <td><code>&lt;wt-steps&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-stepper [model]&gt;</code>) · <code>&lt;wt-tabMenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-tabs [model]&gt;</code>)</td>
-          <td><code>WtStepsModule</code> · <code>WtStepperModule</code> · <code>WtTabMenuModule</code> · <code>WtTabsModule</code></td>
-          <td>{{ en() ? 'Both old tags keep working; for new code one component does both: wt-stepper draws a steps bar from a menu model, and wt-tabs is a tab menu with [model] and [(activeItem)]' : 'แท็กเดิมยังใช้ได้ทั้งคู่ ส่วนโค้ดใหม่ใช้ component เดียวได้: wt-stepper วาดแถบขั้นตอนจาก menu model และ wt-tabs เป็น tab menu ด้วย [model] และ [(activeItem)]' }}</td>
+          <td><code>&lt;wu-steps&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-stepper [model]&gt;</code>) · <code>&lt;wu-tabMenu&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-tabs [model]&gt;</code>)</td>
+          <td><code>WuStepsModule</code> · <code>WuStepperModule</code> · <code>WuTabMenuModule</code> · <code>WuTabsModule</code></td>
+          <td>{{ en() ? 'Both old tags keep working; for new code one component does both: wu-stepper draws a steps bar from a menu model, and wu-tabs is a tab menu with [model] and [(activeItem)]' : 'แท็กเดิมยังใช้ได้ทั้งคู่ ส่วนโค้ดใหม่ใช้ component เดียวได้: wu-stepper วาดแถบขั้นตอนจาก menu model และ wu-tabs เป็น tab menu ด้วย [model] และ [(activeItem)]' }}</td>
         </tr>
         <tr>
           <td>{{ en() ? 'Hand-built top bar and side menu' : 'แถบบนและเมนูด้านข้างที่เขียนเอง' }}</td>
-          <td><code>&lt;wt-navbar [aside]="side"&gt;</code> · <code>&lt;wt-aside-menu #side&gt;</code></td>
-          <td><code>WtNavbarModule</code> · <code>WtAsideMenuModule</code></td>
+          <td><code>&lt;wu-navbar [aside]="side"&gt;</code> · <code>&lt;wu-aside-menu #side&gt;</code></td>
+          <td><code>WuNavbarModule</code> · <code>WuAsideMenuModule</code></td>
           <td>{{ en() ? 'A menubar plus hamburger button and a panel-menu sidebar with media queries become two components: the side menu opens the group of the current page, collapses to icons and becomes an off-canvas panel on phones, and the menu button of the navbar drives it' : 'menubar + ปุ่ม hamburger และ sidebar ที่ทำจาก panel menu + media query เปลี่ยนเป็นสอง component: เมนูด้านข้างเปิดกลุ่มของหน้าปัจจุบันเอง ย่อเหลือไอคอนได้ และเป็นแผงเลื่อนเข้าบนมือถือ โดยปุ่มเมนูของ navbar ควบคุมให้' }}</td>
         </tr>
         <tr>
           <td>Image cropper</td>
-          <td><code>&lt;image-cropper&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wt-imagecropper&gt;</code>)</td>
-          <td><code>WtImageCropperModule</code> · <code>WtImageCropper</code></td>
+          <td><code>&lt;image-cropper&gt;</code> ({{ en() ? 'or' : 'หรือ' }} <code>&lt;wu-imagecropper&gt;</code>)</td>
+          <td><code>WuImageCropperModule</code> · <code>WuImageCropper</code></td>
           <td>{{ en() ? 'The image-cropper tag apps already use keeps its inputs, outputs and ImageCroppedEvent; the result is a blob by default, so code that reads event.base64 sets output="base64"' : 'แท็ก image-cropper ที่แอปใช้อยู่ใช้ input, output และ ImageCroppedEvent ชื่อเดิม ผลลัพธ์เป็น blob โดยค่าเริ่มต้น โค้ดที่อ่าน event.base64 ให้ตั้ง output="base64"' }}</td>
         </tr>
         <tr>
           <td>Terminal · ImageCompare</td>
-          <td><code>&lt;wt-terminal&gt;</code> · <code>&lt;wt-imageCompare&gt;</code></td>
-          <td><code>WtTerminalModule</code> · <code>WtImageCompareModule</code></td>
+          <td><code>&lt;wu-terminal&gt;</code> · <code>&lt;wu-imageCompare&gt;</code></td>
+          <td><code>WuTerminalModule</code> · <code>WuImageCompareModule</code></td>
           <td>{{ en() ? 'TerminalService under its old name (provided in root), welcomeMessage, prompt, ↑ ↓ history and clear; the left / right templates of the compare keep their names' : 'TerminalService ชื่อเดิม (มีที่ root แล้ว) welcomeMessage, prompt, ประวัติด้วย ↑ ↓ และคำสั่ง clear ส่วน template left / right ของการเทียบภาพใช้ชื่อเดิม' }}</td>
         </tr>
         <tr>
           <td>Carousel · Splitter</td>
-          <td><code>&lt;wt-carousel&gt;</code> · <code>&lt;wt-splitter&gt;</code></td>
-          <td><code>WtCarouselModule</code> · <code>WtSplitterModule</code></td>
-          <td>{{ en() ? 'Every carousel input and onPage, with the item / header / footer templates; splitter panels as wt-splitter-panel or the pTemplate="panel" templates, panelSizes, minSizes and stateKey' : 'input ทุกตัวของ carousel และ onPage พร้อม template item / header / footer ส่วน splitter ใช้ช่องเป็น wt-splitter-panel หรือ template pTemplate="panel" แบบเดิม พร้อม panelSizes, minSizes และ stateKey' }}</td>
+          <td><code>&lt;wu-carousel&gt;</code> · <code>&lt;wu-splitter&gt;</code></td>
+          <td><code>WuCarouselModule</code> · <code>WuSplitterModule</code></td>
+          <td>{{ en() ? 'Every carousel input and onPage, with the item / header / footer templates; splitter panels as wu-splitter-panel or the pTemplate="panel" templates, panelSizes, minSizes and stateKey' : 'input ทุกตัวของ carousel และ onPage พร้อม template item / header / footer ส่วน splitter ใช้ช่องเป็น wu-splitter-panel หรือ template pTemplate="panel" แบบเดิม พร้อม panelSizes, minSizes และ stateKey' }}</td>
         </tr>
         <tr>
           <td>OrganizationChart</td>
-          <td><code>&lt;wt-organizationChart&gt;</code></td>
-          <td><code>WtOrganizationChartModule</code> · <code>WtOrganizationChart</code></td>
+          <td><code>&lt;wu-organizationChart&gt;</code></td>
+          <td><code>WuOrganizationChartModule</code> · <code>WuOrganizationChart</code></td>
           <td>{{ en() ? 'The same TreeNode data, single / multiple selection, collapsible, preserveSpace and templates named after node types' : 'ข้อมูล TreeNode ชุดเดิม เลือกได้กล่องเดียว / หลายกล่อง collapsible, preserveSpace และ template ตามชื่อ type ของกล่อง' }}</td>
         </tr>
         <tr>
           <td>Knob · InputOtp</td>
-          <td><code>&lt;wt-knob&gt;</code> · <code>&lt;wt-inputOtp&gt;</code></td>
-          <td><code>WtKnobModule</code> · <code>WtInputOtpModule</code></td>
+          <td><code>&lt;wu-knob&gt;</code> · <code>&lt;wu-inputOtp&gt;</code></td>
+          <td><code>WuKnobModule</code> · <code>WuInputOtpModule</code></td>
           <td>{{ en() ? 'ngModel and reactive forms, the same inputs and events; the one-time code boxes take paste and SMS autofill, and the input template keeps let-token / let-events' : 'ใช้กับ ngModel และ reactive forms input และ event ชื่อเดิม ช่องรหัสยืนยันรับการวางและรหัสจาก SMS และ template input ยังได้ let-token / let-events' }}</td>
         </tr>
         <tr>
           <td>Messages</td>
-          <td><code>&lt;wt-messages&gt;</code></td>
-          <td><code>WtMessagesModule</code> · <code>WtMessages</code></td>
+          <td><code>&lt;wu-messages&gt;</code></td>
+          <td><code>WuMessagesModule</code> · <code>WuMessages</code></td>
           <td>{{ en() ? 'enableService is still on by default: set [enableService]="false" when a toast already shows those messages' : 'enableService ยังเปิดเป็นค่าเริ่มต้น ตั้ง [enableService]="false" เมื่อมี toast แสดงข้อความเหล่านั้นอยู่แล้ว' }}</td>
         </tr>
         <tr>
           <td>Chart</td>
-          <td><code>&lt;wt-chart&gt;</code> · <code>&lt;wt-chartjs&gt;</code></td>
-          <td><code>WtChartModule</code> · <code>WtChartJsModule</code></td>
-          <td>{{ en() ? 'type, data, options, width and height as before. v1 / v2: wt-chart is the Chart.js chart (the app installs chart.js 3 or 4). v3: wt-chart is WiraTheme's own chart, no library, same data and options; keep wt-chartjs for Chart.js plugins' : 'type, data, options, width และ height เหมือนเดิม v1 / v2: wt-chart คือกราฟ Chart.js (แอปติดตั้ง chart.js 3 หรือ 4 เอง) v3: wt-chart คือกราฟของ WiraTheme เอง ไม่ต้องลง library รับ data และ options แบบเดิม ถ้าใช้ปลั๊กอินของ Chart.js ให้ใช้ wt-chartjs' }}</td>
+          <td><code>&lt;wu-chart&gt;</code> · <code>&lt;wu-chartjs&gt;</code></td>
+          <td><code>WuChartModule</code> · <code>WuChartJsModule</code></td>
+          <td>{{ en() ? 'type, data, options, width and height as before. v1 / v2: wu-chart is the Chart.js chart (the app installs chart.js 3 or 4). v3: wu-chart is WiraUI's own chart, no library, same data and options; keep wu-chartjs for Chart.js plugins' : 'type, data, options, width และ height เหมือนเดิม v1 / v2: wu-chart คือกราฟ Chart.js (แอปติดตั้ง chart.js 3 หรือ 4 เอง) v3: wu-chart คือกราฟของ WiraUI เอง ไม่ต้องลง library รับ data และ options แบบเดิม ถ้าใช้ปลั๊กอินของ Chart.js ให้ใช้ wu-chartjs' }}</td>
         </tr>
         <tr>
           <td>Image</td>
-          <td><code>&lt;wt-image&gt;</code></td>
-          <td><code>WtImageModule</code> · <code>WtImage</code></td>
+          <td><code>&lt;wu-image&gt;</code></td>
+          <td><code>WuImageModule</code> · <code>WuImage</code></td>
           <td>{{ en() ? 'preview, imageClass and onImageError as before; the preview opens in the top layer, so appendTo is accepted and ignored' : 'preview, imageClass และ onImageError เหมือนเดิม ภาพขยายเปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
         </tr>
         <tr>
           <td>Timeline</td>
-          <td><code>&lt;wt-timeline&gt;</code></td>
-          <td><code>WtTimelineModule</code> · <code>WtTimeline</code></td>
+          <td><code>&lt;wu-timeline&gt;</code></td>
+          <td><code>WuTimelineModule</code> · <code>WuTimeline</code></td>
           <td>{{ en() ? 'The content / opposite / marker templates and align / layout as before' : 'template content / opposite / marker และ align / layout เหมือนเดิม' }}</td>
         </tr>
         <tr>
           <td>Paginator</td>
-          <td><code>&lt;wt-paginator&gt;</code></td>
-          <td><code>WtPaginatorModule</code> · <code>WtPaginator</code></td>
+          <td><code>&lt;wu-paginator&gt;</code></td>
+          <td><code>WuPaginatorModule</code> · <code>WuPaginator</code></td>
           <td>{{ en() ? 'onPageChange gives a 0-based page; dropdownAppendTo is accepted and ignored' : 'onPageChange ส่ง page ที่เริ่มจาก 0 ส่วน dropdownAppendTo รับไว้แต่ไม่มีผล' }}</td>
         </tr>
       </tbody>
@@ -359,32 +359,32 @@
   </div>
   @if (en()) {
     <p>
-      Most changes are just the tag prefix, and the older tag names are kept too (<code>wt-calendar</code>, <code>wt-inputSwitch</code>,
-      <code>wt-progressSpinner</code>, <code>wt-accordionTab</code>, <code>wt-tabView</code> / <code>wt-tabPanel</code>). Work you wait for
+      Most changes are just the tag prefix, and the older tag names are kept too (<code>wu-calendar</code>, <code>wu-inputSwitch</code>,
+      <code>wu-progressSpinner</code>, <code>wu-accordionTab</code>, <code>wu-tabView</code> / <code>wu-tabPanel</code>). Work you wait for
       (saving, submitting) moves to <code>[action]</code>, with no loading flag to keep.
     </p>
   } @else {
     <p>
-      ส่วนใหญ่เปลี่ยนแค่ prefix ของ tag และชื่อ tag แบบเก่าก็ใช้ได้ (<code>wt-calendar</code>, <code>wt-inputSwitch</code>, <code>wt-progressSpinner</code>,
-      <code>wt-accordionTab</code>, <code>wt-tabView</code> / <code>wt-tabPanel</code>) ส่วนงานที่ต้องรอ (บันทึก, ส่งฟอร์ม) ย้ายไปใช้ <code>[action]</code>
+      ส่วนใหญ่เปลี่ยนแค่ prefix ของ tag และชื่อ tag แบบเก่าก็ใช้ได้ (<code>wu-calendar</code>, <code>wu-inputSwitch</code>, <code>wu-progressSpinner</code>,
+      <code>wu-accordionTab</code>, <code>wu-tabView</code> / <code>wu-tabPanel</code>) ส่วนงานที่ต้องรอ (บันทึก, ส่งฟอร์ม) ย้ายไปใช้ <code>[action]</code>
       แล้วไม่ต้องเขียน flag loading เอง
     </p>
   }
-  <docs-code [code]="local(afterCode)" lang="html" file="WiraTheme"></docs-code>
+  <docs-code [code]="local(afterCode)" lang="html" file="WiraUI"></docs-code>
 </docs-section>
 
 <docs-section id="spellings" [title]="{ th: 'ชื่อ tag หลายแบบ', en: 'Tag spellings' }">
   @if (en()) {
     <p>
       Every component takes its tag in the camelCase spelling older templates use and in kebab case, so <code>p-inputNumber</code> becomes
-      <code>wt-inputNumber</code> (or <code>wt-input-number</code>, or <code>wt-inputnumber</code>) with nothing else to change. Directives keep their
+      <code>wu-inputNumber</code> (or <code>wu-input-number</code>, or <code>wu-inputnumber</code>) with nothing else to change. Directives keep their
       attribute names too: <code>pInputText</code>, <code>pInputTextarea</code>, <code>pTextarea</code>, <code>pRipple</code>, <code>pKeyFilter</code>,
       <code>pBadge</code> and <code>pTemplate</code>.
     </p>
   } @else {
     <p>
-      ทุก component รับ tag ได้ทั้งแบบ camelCase ที่ template เดิมใช้และแบบมีขีด ดังนั้น <code>p-inputNumber</code> เปลี่ยนเป็น <code>wt-inputNumber</code>
-      (หรือ <code>wt-input-number</code> หรือ <code>wt-inputnumber</code>) โดยไม่ต้องแก้อย่างอื่น directive ก็ใช้ชื่อ attribute เดิมได้: <code>pInputText</code>,
+      ทุก component รับ tag ได้ทั้งแบบ camelCase ที่ template เดิมใช้และแบบมีขีด ดังนั้น <code>p-inputNumber</code> เปลี่ยนเป็น <code>wu-inputNumber</code>
+      (หรือ <code>wu-input-number</code> หรือ <code>wu-inputnumber</code>) โดยไม่ต้องแก้อย่างอื่น directive ก็ใช้ชื่อ attribute เดิมได้: <code>pInputText</code>,
       <code>pInputTextarea</code>, <code>pTextarea</code>, <code>pRipple</code>, <code>pKeyFilter</code>, <code>pBadge</code> และ <code>pTemplate</code>
     </p>
   }
@@ -397,27 +397,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td><code>wt-input-number</code></td><td><code>wt-inputNumber</code></td></tr>
-        <tr><td><code>wt-radio-button</code></td><td><code>wt-radioButton</code></td></tr>
-        <tr><td><code>wt-check-box</code> · <code>wt-checkbox</code></td><td><code>wt-checkBox</code></td></tr>
-        <tr><td><code>wt-toggle-button</code></td><td><code>wt-toggleButton</code></td></tr>
-        <tr><td><code>wt-select-button</code></td><td><code>wt-selectButton</code></td></tr>
-        <tr><td><code>wt-progress-bar</code></td><td><code>wt-progressBar</code></td></tr>
-        <tr><td><code>wt-progress-spinner</code></td><td><code>wt-progressSpinner</code></td></tr>
-        <tr><td><code>wt-input-group</code> · <code>wt-input-group-addon</code></td><td><code>wt-inputGroup</code> · <code>wt-inputGroupAddon</code></td></tr>
-        <tr><td><code>wt-icon-field</code> · <code>wt-input-icon</code></td><td><code>wt-iconField</code> · <code>wt-inputIcon</code></td></tr>
-        <tr><td><code>wt-float-label</code></td><td><code>wt-floatLabel</code></td></tr>
-        <tr><td><code>wt-date-picker</code> · <code>wt-input-mask</code></td><td><code>wt-datePicker</code> · <code>wt-inputMask</code></td></tr>
-        <tr><td><code>wt-meter-group</code> · <code>wt-avatar-group</code></td><td><code>wt-meterGroup</code> · <code>wt-avatarGroup</code></td></tr>
-        <tr><td><code>wt-split-button</code> · <code>wt-color-picker</code></td><td><code>wt-splitButton</code> · <code>wt-colorPicker</code></td></tr>
-        <tr><td><code>wt-listbox</code> · <code>wt-tree-select</code></td><td><code>wt-listBox</code> · <code>wt-treeSelect</code></td></tr>
-        <tr><td><code>wt-tiered-menu</code> · <code>wt-context-menu</code></td><td><code>wt-tieredMenu</code> · <code>wt-contextMenu</code></td></tr>
-        <tr><td><code>wt-scroll-panel</code> · <code>wt-block-ui</code></td><td><code>wt-scrollPanel</code> · <code>wt-blockUI</code></td></tr>
-        <tr><td><code>wt-scroller</code> · <code>wt-drawer</code></td><td><code>wt-virtualScroller</code> · <code>wt-sidebar</code></td></tr>
-        <tr><td><code>wt-image-compare</code> · <code>wt-organization-chart</code></td><td><code>wt-imageCompare</code> · <code>wt-organizationChart</code></td></tr>
-        <tr><td><code>wt-input-otp</code> · <code>wt-splitter-panel</code></td><td><code>wt-inputOtp</code> · <code>wt-splitterPanel</code></td></tr>
-        <tr><td><code>[wtDraggable]</code> · <code>[wtDroppable]</code></td><td><code>[pDraggable]</code> · <code>[pDroppable]</code></td></tr>
-        <tr><td><code>textarea[wtTextarea]</code></td><td><code>textarea[pInputTextarea]</code> · <code>[wtInputTextarea]</code> · <code>[pTextarea]</code> · <code>[pInputText]</code></td></tr>
+        <tr><td><code>wu-input-number</code></td><td><code>wu-inputNumber</code></td></tr>
+        <tr><td><code>wu-radio-button</code></td><td><code>wu-radioButton</code></td></tr>
+        <tr><td><code>wu-check-box</code> · <code>wu-checkbox</code></td><td><code>wu-checkBox</code></td></tr>
+        <tr><td><code>wu-toggle-button</code></td><td><code>wu-toggleButton</code></td></tr>
+        <tr><td><code>wu-select-button</code></td><td><code>wu-selectButton</code></td></tr>
+        <tr><td><code>wu-progress-bar</code></td><td><code>wu-progressBar</code></td></tr>
+        <tr><td><code>wu-progress-spinner</code></td><td><code>wu-progressSpinner</code></td></tr>
+        <tr><td><code>wu-input-group</code> · <code>wu-input-group-addon</code></td><td><code>wu-inputGroup</code> · <code>wu-inputGroupAddon</code></td></tr>
+        <tr><td><code>wu-icon-field</code> · <code>wu-input-icon</code></td><td><code>wu-iconField</code> · <code>wu-inputIcon</code></td></tr>
+        <tr><td><code>wu-float-label</code></td><td><code>wu-floatLabel</code></td></tr>
+        <tr><td><code>wu-date-picker</code> · <code>wu-input-mask</code></td><td><code>wu-datePicker</code> · <code>wu-inputMask</code></td></tr>
+        <tr><td><code>wu-meter-group</code> · <code>wu-avatar-group</code></td><td><code>wu-meterGroup</code> · <code>wu-avatarGroup</code></td></tr>
+        <tr><td><code>wu-split-button</code> · <code>wu-color-picker</code></td><td><code>wu-splitButton</code> · <code>wu-colorPicker</code></td></tr>
+        <tr><td><code>wu-listbox</code> · <code>wu-tree-select</code></td><td><code>wu-listBox</code> · <code>wu-treeSelect</code></td></tr>
+        <tr><td><code>wu-tiered-menu</code> · <code>wu-context-menu</code></td><td><code>wu-tieredMenu</code> · <code>wu-contextMenu</code></td></tr>
+        <tr><td><code>wu-scroll-panel</code> · <code>wu-block-ui</code></td><td><code>wu-scrollPanel</code> · <code>wu-blockUI</code></td></tr>
+        <tr><td><code>wu-scroller</code> · <code>wu-drawer</code></td><td><code>wu-virtualScroller</code> · <code>wu-sidebar</code></td></tr>
+        <tr><td><code>wu-image-compare</code> · <code>wu-organization-chart</code></td><td><code>wu-imageCompare</code> · <code>wu-organizationChart</code></td></tr>
+        <tr><td><code>wu-input-otp</code> · <code>wu-splitter-panel</code></td><td><code>wu-inputOtp</code> · <code>wu-splitterPanel</code></td></tr>
+        <tr><td><code>[wuDraggable]</code> · <code>[wuDroppable]</code></td><td><code>[pDraggable]</code> · <code>[pDroppable]</code></td></tr>
+        <tr><td><code>textarea[wuTextarea]</code></td><td><code>textarea[pInputTextarea]</code> · <code>[wuInputTextarea]</code> · <code>[pTextarea]</code> · <code>[pInputText]</code></td></tr>
       </tbody>
     </table>
   </div>
@@ -426,18 +426,18 @@
 <docs-section id="css" [title]="{ th: 'CSS เดิมยังใช้ได้', en: 'Your CSS keeps working' }">
   @if (en()) {
     <p>
-      Templates carry the <code>p-*</code> class names your existing app already uses next to the <code>wt-*</code> classes, and theme files define the
+      Templates carry the <code>p-*</code> class names your existing app already uses next to the <code>wu-*</code> classes, and theme files define the
       CSS variables it already reads.
     </p>
   } @else {
-    <p>template ของ WiraTheme ใส่ชื่อคลาส <code>p-*</code> ที่แอปเดิมใช้อยู่ไว้คู่กับคลาส <code>wt-*</code> และไฟล์ธีมประกาศตัวแปร CSS ชื่อเดิมที่แอปอ่านอยู่</p>
+    <p>template ของ WiraUI ใส่ชื่อคลาส <code>p-*</code> ที่แอปเดิมใช้อยู่ไว้คู่กับคลาส <code>wu-*</code> และไฟล์ธีมประกาศตัวแปร CSS ชื่อเดิมที่แอปอ่านอยู่</p>
   }
   <div class="docs-table-wrap">
     <table class="docs-table">
       <thead>
         <tr>
           <th></th>
-          <th>{{ en() ? 'In' : 'มีใน' }} wiratheme&#64;{{ v.major }}</th>
+          <th>{{ en() ? 'In' : 'มีใน' }} wiraui&#64;{{ v.major }}</th>
         </tr>
       </thead>
       <tbody>
@@ -473,33 +473,45 @@
   <ul class="docs-list">
     @if (en()) {
       @if (v.major === 1) {
-        <li><b>Theme files</b> load <code>wiratheme/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add wiratheme --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
+        <li><b>Theme files</b> load <code>wiraui/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add wiraui --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
       } @else {
-        <li><b>Presets</b> come from <code>wiratheme/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add wiratheme --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
+        <li><b>Presets</b> come from <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add wiraui --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
       }
-      <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/studio')">WiraTheme Studio</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
-      <li><b>No more <code>::ng-deep</code> or <code>!important</code></b>: app CSS always beats WiraTheme's <code>&#64;layer</code>. Move to tokens such as <code>--wt-card-body-gap</code> as you touch each page.</li>
-      <li><b>Utility CSS</b>, grid libraries and Tailwind keep working; WiraTheme ships no utility classes that clash.</li>
+      <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/studio')">WiraUI Studio</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
+      <li><b>No more <code>::ng-deep</code> or <code>!important</code></b>: app CSS always beats WiraUI's <code>&#64;layer</code>. Move to tokens such as <code>--wu-card-body-gap</code> as you touch each page.</li>
+      <li><b>Utility CSS</b>, grid libraries and Tailwind keep working; WiraUI ships no utility classes that clash.</li>
     } @else {
       @if (v.major === 1) {
-        <li><b>ไฟล์ธีม</b> โหลด <code>wiratheme/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add wiratheme --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
+        <li><b>ไฟล์ธีม</b> โหลด <code>wiraui/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add wiraui --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
       } @else {
-        <li><b>preset</b> มาจาก <code>wiratheme/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add wiratheme --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
+        <li><b>preset</b> มาจาก <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add wiraui --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
       }
       <li><b>ธีมที่ export จาก designer รุ่นเก่า</b> สร้างใหม่ใน <a [routerLink]="link('theming/studio')">สตูดิโอธีม</a> ด้วยสีหลักและฟอนต์เดิม แล้ว export เป็น SCSS หรือ CSS</li>
-      <li><b><code>::ng-deep</code> และ <code>!important</code></b> ไม่จำเป็นแล้ว เพราะ CSS ของแอปชนะ <code>&#64;layer</code> ของ WiraTheme เสมอ ค่อย ๆ เปลี่ยนเป็น token เช่น <code>--wt-card-body-gap</code> เมื่อแก้หน้านั้น</li>
-      <li><b>utility CSS</b> แบบ grid หรือ Tailwind ใช้ต่อได้ WiraTheme ไม่มีคลาส utility ที่ชนกัน</li>
+      <li><b><code>::ng-deep</code> และ <code>!important</code></b> ไม่จำเป็นแล้ว เพราะ CSS ของแอปชนะ <code>&#64;layer</code> ของ WiraUI เสมอ ค่อย ๆ เปลี่ยนเป็น token เช่น <code>--wu-card-body-gap</code> เมื่อแก้หน้านั้น</li>
+      <li><b>utility CSS</b> แบบ grid หรือ Tailwind ใช้ต่อได้ WiraUI ไม่มีคลาส utility ที่ชนกัน</li>
     }
   </ul>
 </docs-section>
 
-<docs-section id="schematic" [title]="{ th: 'เครื่องมือย้ายอัตโนมัติ', en: 'Automatic migration' }">
-  <div class="docs-note">
-    <docs-icon name="sparkles"></docs-icon>
+<docs-section id="schematic" [title]="{ th: 'เครื่องมือช่วยย้าย (ไม่บังคับ)', en: 'Migration helper (optional)' }">
+  @if (en()) {
+    <p>
+      If your app uses PrimeNG, you may run this command to rewrite the code for you, or move by hand as above: the choice is yours. Try
+      <code>--dry-run</code> first, which shows the changes without writing any file.
+    </p>
+  } @else {
+    <p>ถ้าแอปเดิมใช้ PrimeNG จะใช้คำสั่งนี้ให้ช่วยเปลี่ยนโค้ด หรือย้ายเองตามขั้นตอนด้านบนก็ได้ เลือกตามที่สะดวก แนะนำให้ลอง <code>--dry-run</code> ก่อน ซึ่งแสดงสิ่งที่จะเปลี่ยนโดยไม่เขียนไฟล์</p>
+  }
+  <docs-code [code]="'ng g wiraui:from-primeng --dry-run'" lang="bash"></docs-code>
+  <ul class="docs-list">
     @if (en()) {
-      <p><b>Coming soon.</b> A schematic will rewrite tags and imports to <code>wt-*</code> for components whose API matches.</p>
+      <li><b>Imports</b> from <code>primeng/*</code> become <code>wiraui/*</code>, including renamed modules (<code>DropdownModule</code> becomes <code>WuSelectModule</code>); services keep their names.</li>
+      <li><b>Tags</b> <code>&lt;p-…&gt;</code> in templates become <code>&lt;wu-…&gt;</code> where a component exists. Attributes such as <code>pTemplate</code> and the <code>p-*</code> classes stay, because WiraUI reads them.</li>
+      <li><b>What it cannot move</b> is listed at the end of the run, for you to handle.</li>
     } @else {
-      <p><b>เร็ว ๆ นี้</b> schematic ที่เปลี่ยน tag และ import เป็น <code>wt-*</code> ให้อัตโนมัติใน component ที่ API ตรงกัน</p>
+      <li><b>import</b> จาก <code>primeng/*</code> เปลี่ยนเป็น <code>wiraui/*</code> รวมถึง module ที่เปลี่ยนชื่อ (<code>DropdownModule</code> เป็น <code>WuSelectModule</code>) ส่วน service ใช้ชื่อเดิม</li>
+      <li><b>tag</b> <code>&lt;p-…&gt;</code> ใน template เปลี่ยนเป็น <code>&lt;wu-…&gt;</code> เฉพาะตัวที่มี component แล้ว ส่วน attribute อย่าง <code>pTemplate</code> และคลาส <code>p-*</code> คงไว้ เพราะ WiraUI อ่านได้</li>
+      <li><b>ส่วนที่ย้ายไม่ได้</b> จะแสดงรายการตอนจบ ให้จัดการต่อเอง</li>
     }
-  </div>
+  </ul>
 </docs-section>

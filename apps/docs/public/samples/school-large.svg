@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 320 200">
-  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the same school, the large file with more detail. -->
+  <!-- Sample artwork for the docs (drawn for WiraUI, free to use): the same school, the large file with more detail. -->
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#7dd3fc" />

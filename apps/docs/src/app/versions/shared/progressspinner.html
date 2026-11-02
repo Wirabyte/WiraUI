@@ -6,44 +6,44 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-progress-spinner [ariaLabel]="tx('กำลังโหลด')"></wt-progress-spinner>
+        <wu-progress-spinner [ariaLabel]="tx('กำลังโหลด')"></wu-progress-spinner>
       </docs-demo>
     </docs-section>
 
     <docs-section id="custom" [section]="sec['custom']">
       <docs-demo [html]="code['custom']">
-        <wt-progress-spinner id="d-spin-size" size="2rem" strokeWidth="6"></wt-progress-spinner>
-        <wt-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wt-progress-spinner>
+        <wu-progress-spinner id="d-spin-size" size="2rem" strokeWidth="6"></wu-progress-spinner>
+        <wu-progress-spinner style="width: 3rem; height: 3rem" fill="#eef2f9" animationDuration=".8s"></wu-progress-spinner>
       </docs-demo>
     </docs-section>
 
     <docs-section id="colors" [section]="sec['colors']">
       <docs-demo [html]="code['colors']" [ts]="ts['colors']">
-        <wt-progress-spinner id="d-spin-multi" [multicolor]="true" size="3rem" [ariaLabel]="tx('กำลังโหลด')"></wt-progress-spinner>
-        <wt-progress-spinner id="d-spin-single" [multicolor]="false" size="3rem" [ariaLabel]="tx('กำลังโหลด')"></wt-progress-spinner>
-        <wt-progress-spinner id="d-spin-brand" [colors]="brandColors" size="3rem" strokeWidth="4" [ariaLabel]="tx('กำลังโหลด')"></wt-progress-spinner>
+        <wu-progress-spinner id="d-spin-multi" [multicolor]="true" size="3rem" [ariaLabel]="tx('กำลังโหลด')"></wu-progress-spinner>
+        <wu-progress-spinner id="d-spin-single" [multicolor]="false" size="3rem" [ariaLabel]="tx('กำลังโหลด')"></wu-progress-spinner>
+        <wu-progress-spinner id="d-spin-brand" [colors]="brandColors" size="3rem" strokeWidth="4" [ariaLabel]="tx('กำลังโหลด')"></wu-progress-spinner>
       </docs-demo>
     </docs-section>
 
     <docs-section id="label" [section]="sec['label']">
       <docs-demo [html]="code['label']" [css]="css['label']" layout="stack">
-        <wt-progress-spinner id="d-spin-block" size="2.5rem" [label]="tx('กำลังโหลดข้อมูล…')" class="loading-card"></wt-progress-spinner>
+        <wu-progress-spinner id="d-spin-block" size="2.5rem" [label]="tx('กำลังโหลดข้อมูล…')" class="loading-card"></wu-progress-spinner>
         <div class="sync-row">
-          <wt-progress-spinner
+          <wu-progress-spinner
             id="d-spin-inline"
             size="1.25rem"
             strokeWidth="5"
             [label]="tx('กำลังซิงก์ 3 รายการ')"
             labelPosition="right"
-          ></wt-progress-spinner>
-          <wt-button [label]="tx('ยกเลิก')" severity="secondary" [text]="true" size="small"></wt-button>
+          ></wu-progress-spinner>
+          <wu-button [label]="tx('ยกเลิก')" severity="secondary" [text]="true" size="small"></wu-button>
         </div>
-        <wt-progress-spinner id="d-spin-template" [multicolor]="true" size="3rem" [ariaLabel]="tx('กำลังเตรียมรายงาน')">
-          <ng-template wtTemplate="label">
+        <wu-progress-spinner id="d-spin-template" [multicolor]="true" size="3rem" [ariaLabel]="tx('กำลังเตรียมรายงาน')">
+          <ng-template wuTemplate="label">
             <strong class="spinner-title">{{ tx('กำลังเตรียมรายงาน') }}</strong>
             <small class="spinner-hint">{{ tx('อาจใช้เวลาราว 1 นาที') }}</small>
           </ng-template>
-        </wt-progress-spinner>
+        </wu-progress-spinner>
       </docs-demo>
     </docs-section>
   </ng-template>

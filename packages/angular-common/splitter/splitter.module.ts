@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtSplitterPanel } from './splitter-panel.component';
-import { WtSplitter } from './splitter.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuSplitterPanel } from './splitter-panel.component';
+import { WuSplitter } from './splitter.component';
 
-/** For NgModule apps. Standalone apps can import `WtSplitter` and `WtSplitterPanel` directly. `wtTemplate` comes with it. */
+/** For NgModule apps. Standalone apps can import `WuSplitter` and `WuSplitterPanel` directly. `wuTemplate` comes with it. */
 @NgModule({
-  imports: [WtSplitter, WtSplitterPanel, WtTemplate],
-  exports: [WtSplitter, WtSplitterPanel, WtTemplate],
+  imports: [WuSplitter, WuSplitterPanel, WuTemplate],
+  exports: [WuSplitter, WuSplitterPanel, WuTemplate],
 })
-export class WtSplitterModule {}
+export class WuSplitterModule {}

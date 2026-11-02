@@ -17,20 +17,20 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('navbar: a labelled nav, links in a row with the current page marked, brand → links → end', async ({ page, browserName }) => {
-  const nav = bar(page).locator('nav.wt-navbar');
+  const nav = bar(page).locator('nav.wu-navbar');
   await expect(nav).toHaveAttribute('aria-label', 'เมนู');
-  await expect(nav).toHaveClass(/wt-navbar-solid/);
+  await expect(nav).toHaveClass(/wu-navbar-solid/);
   // Hidden items are left out; a wide screen has no menu button.
-  await expect(nav.locator('.wt-navbar-list > .wt-navbar-item')).toHaveCount(4);
-  await expect(nav.locator('.wt-navbar-toggle')).toHaveCount(0);
-  const active = nav.locator('.wt-navbar-link-active');
+  await expect(nav.locator('.wu-navbar-list > .wu-navbar-item')).toHaveCount(4);
+  await expect(nav.locator('.wu-navbar-toggle')).toHaveCount(0);
+  const active = nav.locator('.wu-navbar-link-active');
   await expect(active).toHaveCount(1);
   await expect(active).toHaveAttribute('aria-current', 'page');
-  await expect(active.locator('.wt-navbar-link-label')).toHaveText('หน้าแรก');
+  await expect(active.locator('.wu-navbar-link-label')).toHaveText('หน้าแรก');
   await expect(nav.locator('[aria-current]')).toHaveCount(1);
-  const news = nav.locator('a.wt-navbar-link', { hasText: 'ข่าวสาร' });
+  const news = nav.locator('a.wu-navbar-link', { hasText: 'ข่าวสาร' });
   await expect(news).toHaveAttribute('href', '#nv');
-  await expect(news.locator('.wt-navbar-badge')).toHaveText('3');
+  await expect(news.locator('.wu-navbar-badge')).toHaveText('3');
   // A command item is a button.
   await nav.getByRole('button', { name: 'เกี่ยวกับเรา' }).click();
   await expect(log(page)).toContainText('nv:about');
@@ -39,7 +39,7 @@ test('navbar: a labelled nav, links in a row with the current page marked, brand
   const order = await nav.evaluate((el) =>
     [...el.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')]
       .filter((e) => e.getClientRects().length > 0)
-      .map((e) => (e.querySelector('.wt-navbar-link-label') || e).textContent?.trim()),
+      .map((e) => (e.querySelector('.wu-navbar-link-label') || e).textContent?.trim()),
   );
   expect(order).toEqual(['วิระ', 'หน้าแรก', 'ข่าวสาร', 'บริการ', 'เกี่ยวกับเรา', 'เข้าสู่ระบบ']);
   const home = (await nav.getByText('หน้าแรก').boundingBox())!;
@@ -55,12 +55,12 @@ test('navbar: a labelled nav, links in a row with the current page marked, brand
   }
 });
 
-test('navbar dropdown: a menu button opens a wt-menu under it; a pick runs its command; Arrow Down and Escape', async ({ page }) => {
-  const services = bar(page).locator('.wt-navbar-dropdown', { hasText: 'บริการ' });
+test('navbar dropdown: a menu button opens a wu-menu under it; a pick runs its command; Arrow Down and Escape', async ({ page }) => {
+  const services = bar(page).locator('.wu-navbar-dropdown', { hasText: 'บริการ' });
   await expect(services).toHaveAttribute('aria-haspopup', 'menu');
   await expect(services).toHaveAttribute('aria-expanded', 'false');
   await services.click();
-  const menu = bar(page).locator('.wt-menu-overlay');
+  const menu = bar(page).locator('.wu-menu-overlay');
   await expect(menu).toBeVisible();
   await expect(services).toHaveAttribute('aria-expanded', 'true');
   const button = (await services.boundingBox())!;
@@ -88,8 +88,8 @@ test('navbar dropdown: a menu button opens a wt-menu under it; a pick runs its c
 
 test('navbar on a phone: the menu button drops the links under the bar; submenus expand in place; Escape, outside, resize', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
-  const nav = bar(page).locator('nav.wt-navbar');
-  const toggle = nav.locator('.wt-navbar-toggle');
+  const nav = bar(page).locator('nav.wu-navbar');
+  const toggle = nav.locator('.wu-navbar-toggle');
   await expect(toggle).toBeVisible();
   await expect(toggle).toHaveAttribute('aria-label', 'เมนู');
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -111,7 +111,7 @@ test('navbar on a phone: the menu button drops the links under the bar; submenus
   expect(news.y).toBeGreaterThanOrEqual(home.y + home.height - 1);
 
   // An item with children expands in place instead of opening a popup.
-  const services = panel.locator('.wt-navbar-dropdown', { hasText: 'บริการ' });
+  const services = panel.locator('.wu-navbar-dropdown', { hasText: 'บริการ' });
   expect(await services.getAttribute('aria-haspopup')).toBeNull();
   await expect(services).toHaveAttribute('aria-expanded', 'false');
   const sub = page.locator('#' + (await services.getAttribute('aria-controls')));
@@ -119,7 +119,7 @@ test('navbar on a phone: the menu button drops the links under the bar; submenus
   await services.click();
   await expect(services).toHaveAttribute('aria-expanded', 'true');
   await expect(sub).toBeVisible();
-  await expect(bar(page).locator('.wt-menu-overlay')).toHaveCount(0);
+  await expect(bar(page).locator('.wu-menu-overlay')).toHaveCount(0);
   // A pick runs its command and closes the menu.
   await sub.getByRole('button', { name: 'ตารางเรียน' }).click();
   await expect(log(page)).toContainText('nv:schedule');
@@ -149,22 +149,22 @@ test('navbar on a phone: the menu button drops the links under the bar; submenus
   await expect(toggle).toHaveCount(0);
   await expect(panel).toBeVisible();
   await expect.poll(() => log(page).textContent()).toMatch(/nv:menu:false\s*$/);
-  await expect(panel.locator('.wt-navbar-dropdown')).toHaveAttribute('aria-haspopup', 'menu');
+  await expect(panel.locator('.wu-navbar-dropdown')).toHaveAttribute('aria-haspopup', 'menu');
 });
 
 test('navbar sticky: the bar stays at the top while the page scrolls; the host is marked scrolled; transparent fills in', async ({ page }) => {
   const host = bar(page);
-  await expect(host).toHaveClass(/wt-navbar-sticky/);
-  const clear = page.locator('#nv-clear nav.wt-navbar');
-  await expect(clear).toHaveClass(/wt-navbar-transparent/);
+  await expect(host).toHaveClass(/wu-navbar-sticky/);
+  const clear = page.locator('#nv-clear nav.wu-navbar');
+  await expect(clear).toHaveClass(/wu-navbar-transparent/);
   await page.evaluate(() => window.scrollTo(0, 0));
-  await expect(host).not.toHaveClass(/wt-navbar-scrolled/);
+  await expect(host).not.toHaveClass(/wu-navbar-scrolled/);
   await expect.poll(() => clear.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
 
   // Scroll past the bar's own place: it sticks to the top of the window.
   const top = await host.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
   await page.evaluate((y) => window.scrollTo(0, y + 200), top);
-  await expect(host).toHaveClass(/wt-navbar-scrolled/);
+  await expect(host).toHaveClass(/wu-navbar-scrolled/);
   await expect.poll(async () => Math.round((await host.boundingBox())!.y)).toBe(0);
   await expect.poll(() => clear.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
   // A bar that is not sticky scrolls away with the page.
@@ -178,26 +178,26 @@ test('navbar sticky: the bar stays at the top while the page scrolls; the host i
 test('navbar: nothing is wider than a phone, closed or open', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   for (const id of ['#nv-main', '#nv-glass', '#nv-clear']) expect(await overflowing(page, id), id).toEqual([]);
-  await bar(page).locator('.wt-navbar-toggle').click();
-  await bar(page).locator('.wt-navbar-dropdown', { hasText: 'บริการ' }).click();
+  await bar(page).locator('.wu-navbar-toggle').click();
+  await bar(page).locator('.wu-navbar-dropdown', { hasText: 'บริการ' }).click();
   expect(await overflowing(page, '#nv-main')).toEqual([]);
-  expect(await bar(page).locator('.wt-navbar-links').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+  expect(await bar(page).locator('.wu-navbar-links').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
 });
 
 test('navbar slots: start / end templates, projected links, glass, its own breakpoint and icons', async ({ page }) => {
   const glass = page.locator('#nv-glass');
-  const nav = glass.locator('nav.wt-navbar');
+  const nav = glass.locator('nav.wu-navbar');
   await expect(nav).toHaveAttribute('aria-label', 'เมนูเว็บไซต์');
-  await expect(nav).toHaveClass(/wt-navbar-glass/);
-  await expect(glass.locator('.wt-navbar-start .nv-glass-brand')).toHaveText('เว็บไซต์');
-  await expect(glass.locator('.wt-navbar-end .nv-glass-end')).toHaveText('TH');
-  await expect(glass.locator('.wt-navbar-links #nv-proj-link')).toBeVisible();
+  await expect(nav).toHaveClass(/wu-navbar-glass/);
+  await expect(glass.locator('.wu-navbar-start .nv-glass-brand')).toHaveText('เว็บไซต์');
+  await expect(glass.locator('.wu-navbar-end .nv-glass-end')).toHaveText('TH');
+  await expect(glass.locator('.wu-navbar-links #nv-proj-link')).toBeVisible();
   // breakpoint="600px": still a row at 700px, while the main bar (960px) has folded.
   await page.setViewportSize({ width: 700, height: 740 });
-  await expect(glass.locator('.wt-navbar-toggle')).toHaveCount(0);
-  await expect(bar(page).locator('.wt-navbar-toggle')).toBeVisible();
+  await expect(glass.locator('.wu-navbar-toggle')).toHaveCount(0);
+  await expect(bar(page).locator('.wu-navbar-toggle')).toBeVisible();
   await page.setViewportSize({ width: 360, height: 740 });
-  const toggle = glass.locator('.wt-navbar-toggle');
+  const toggle = glass.locator('.wu-navbar-toggle');
   await expect(toggle.locator('.nv-icon-open')).toHaveCount(1);
   await expect(glass.locator('#nv-proj-link')).toBeHidden();
   await toggle.click();

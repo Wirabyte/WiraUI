@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtBottomBar } from './bottombar.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuBottomBar } from './bottombar.component';
 
-/** For NgModule apps (with `WtTemplate` for the `item` slot). Standalone apps can import `WtBottomBar` directly. */
+/** For NgModule apps (with `WuTemplate` for the `item` slot). Standalone apps can import `WuBottomBar` directly. */
 @NgModule({
-  imports: [WtBottomBar, WtTemplate],
-  exports: [WtBottomBar, WtTemplate],
+  imports: [WuBottomBar, WuTemplate],
+  exports: [WuBottomBar, WuTemplate],
 })
-export class WtBottomBarModule {}
+export class WuBottomBarModule {}

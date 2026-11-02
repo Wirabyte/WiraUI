@@ -6,24 +6,24 @@
 
     <docs-section id="addon" [section]="sec['addon']">
       <docs-demo [html]="code['addon']">
-        <wt-inputgroup id="d-inputgroup">
-          <wt-inputgroup-addon><i class="wi wi-user"></i></wt-inputgroup-addon>
-          <input wtInputText [placeholder]="tx('ชื่อผู้ใช้')" [attr.aria-label]="tx('ชื่อผู้ใช้')" />
-        </wt-inputgroup>
-        <wt-inputgroup>
-          <wt-inputgroup-addon>{{ tx('฿') }}</wt-inputgroup-addon>
-          <input wtInputText [placeholder]="tx('ราคา')" [attr.aria-label]="tx('ราคา')" />
-          <wt-inputgroup-addon>.00</wt-inputgroup-addon>
-        </wt-inputgroup>
+        <wu-inputgroup id="d-inputgroup">
+          <wu-inputgroup-addon><i class="wi wi-user"></i></wu-inputgroup-addon>
+          <input wuInputText [placeholder]="tx('ชื่อผู้ใช้')" [attr.aria-label]="tx('ชื่อผู้ใช้')" />
+        </wu-inputgroup>
+        <wu-inputgroup>
+          <wu-inputgroup-addon>{{ tx('฿') }}</wu-inputgroup-addon>
+          <input wuInputText [placeholder]="tx('ราคา')" [attr.aria-label]="tx('ราคา')" />
+          <wu-inputgroup-addon>.00</wu-inputgroup-addon>
+        </wu-inputgroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="button" [section]="sec['button']">
       <docs-demo [html]="code['button']">
-        <wt-inputgroup>
-          <input wtInputText [placeholder]="tx('ค้นหาคำสั่งซื้อ')" [attr.aria-label]="tx('ค้นหาคำสั่งซื้อ')" />
-          <wt-button [label]="tx('ค้นหา')" icon="wi wi-search"></wt-button>
-        </wt-inputgroup>
+        <wu-inputgroup>
+          <input wuInputText [placeholder]="tx('ค้นหาคำสั่งซื้อ')" [attr.aria-label]="tx('ค้นหาคำสั่งซื้อ')" />
+          <wu-button [label]="tx('ค้นหา')" icon="wi wi-search"></wu-button>
+        </wu-inputgroup>
       </docs-demo>
     </docs-section>
   </ng-template>

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtAccordion, WtAccordionContent, WtAccordionHeader, WtAccordionPanel, WtAccordionTab } from './accordion.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuAccordion, WuAccordionContent, WuAccordionHeader, WuAccordionPanel, WuAccordionTab } from './accordion.component';
 
-const ALL = [WtAccordion, WtAccordionTab, WtAccordionPanel, WtAccordionHeader, WtAccordionContent, WtTemplate];
+const ALL = [WuAccordion, WuAccordionTab, WuAccordionPanel, WuAccordionHeader, WuAccordionContent, WuTemplate];
 
-/** For NgModule apps. Standalone apps can import `WtAccordion` and `WtAccordionTab` (or the panel components) directly. */
+/** For NgModule apps. Standalone apps can import `WuAccordion` and `WuAccordionTab` (or the panel components) directly. */
 @NgModule({
   imports: ALL,
   exports: ALL,
 })
-export class WtAccordionModule {}
+export class WuAccordionModule {}

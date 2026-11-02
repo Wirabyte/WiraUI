@@ -1,5 +1,5 @@
 /**
- * wt-flow: the data model. Nodes and edges are plain objects the app owns (shaped like the node/edge objects of the
+ * wu-flow: the data model. Nodes and edges are plain objects the app owns (shaped like the node/edge objects of the
  * popular React flow libraries, so graphs and helpers carry over), and every helper in this folder is a pure function
  * over them. Framework-free: the Angular component renders these and the tests run them without a browser.
  */

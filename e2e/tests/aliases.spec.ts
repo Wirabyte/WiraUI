@@ -7,24 +7,24 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('old tag names render the same components', async ({ page }) => {
-  await expect(page.locator('#al-calendar .wt-datepicker')).toBeVisible();
-  await expect(page.locator('#al-switch .wt-toggleswitch')).toBeVisible();
-  await expect(page.locator('#al-spinner .wt-progress-spinner')).toBeVisible();
+  await expect(page.locator('#al-calendar .wu-datepicker')).toBeVisible();
+  await expect(page.locator('#al-switch .wu-toggleswitch')).toBeVisible();
+  await expect(page.locator('#al-spinner .wu-progress-spinner')).toBeVisible();
   // tabView / tabPanel by index.
   const tabs = page.locator('#al-tabview [role="tab"]');
   await expect(tabs).toHaveText(['หนึ่ง', 'สอง']);
   await tabs.nth(1).click();
   await expect(page.locator('#al-tabview [role="tabpanel"]:visible')).toHaveText('แผงสอง');
   // accordionTab.
-  await page.locator('#al-accordion .wt-accordion-header').click();
-  await expect(page.locator('#al-accordion .wt-accordion-content')).toBeVisible();
-  await expect(page.locator('#al-accordion .wt-accordion-content')).toHaveText('เนื้อหาเดิม');
+  await page.locator('#al-accordion .wu-accordion-header').click();
+  await expect(page.locator('#al-accordion .wu-accordion-content')).toBeVisible();
+  await expect(page.locator('#al-accordion .wu-accordion-content')).toHaveText('เนื้อหาเดิม');
 });
 
 test('tabs by value: [(value)] picks the panel, clicks and arrows change it, disabled tabs are skipped', async ({ page }) => {
   const tabs = page.locator('#vt [role="tab"]');
   const shown = page.locator('#vt [role="tabpanel"]:visible');
-  // No header row is generated from the panels: the tab list is the app's own wt-tab elements.
+  // No header row is generated from the panels: the tab list is the app's own wu-tab elements.
   await expect(tabs).toHaveCount(4);
   await expect(page.locator('#vt [role="tablist"]')).toHaveAttribute('aria-label', 'แท็บตามค่า');
   await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
@@ -48,9 +48,9 @@ test('tabs by value: [(value)] picks the panel, clicks and arrows change it, dis
 });
 
 test('accordion by value: [(value)] opens the panel, a header toggles it, disabled panels stay shut; multiple keeps an array', async ({ page }) => {
-  const headers = page.locator('#va .wt-accordion-header');
+  const headers = page.locator('#va .wu-accordion-header');
   // A shut panel collapses its region to no height and makes it inert (its content keeps its own size inside).
-  const region = (i: number) => page.locator('#va .wt-accordion-content-container').nth(i);
+  const region = (i: number) => page.locator('#va .wu-accordion-content-container').nth(i);
   const height = (i: number) => region(i).evaluate((el) => Math.round(el.getBoundingClientRect().height));
   await expect(headers).toHaveCount(3);
   await expect(headers.nth(0)).toHaveAttribute('aria-expanded', 'true');
@@ -69,8 +69,8 @@ test('accordion by value: [(value)] opens the panel, a header toggles it, disabl
   await headers.nth(0).focus();
   await page.keyboard.press('ArrowDown');
   await expect(headers.nth(1)).toBeFocused();
-  await expect(page.locator('#va .wt-accordion-tab').nth(0)).toHaveClass(/wt-accordion-tab/);
-  const multi = page.locator('#va-multi .wt-accordion-header');
+  await expect(page.locator('#va .wu-accordion-tab').nth(0)).toHaveClass(/wu-accordion-tab/);
+  const multi = page.locator('#va-multi .wu-accordion-header');
   await multi.nth(0).click();
   await expect(page.locator('#va-multi-value')).toHaveText(/\[\s*"b",\s*"a"\s*\]/);
   await multi.nth(1).click();

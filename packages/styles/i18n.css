@@ -1,47 +1,47 @@
-/* wt-language-switch. Shared by wiratheme v1, v2 and v3. A segmented TH | EN control, or a drop-down with a globe. */
-@layer wiratheme.components {
-  :is(wt-language-switch, wt-languageSwitch) {
+/* wu-language-switch. Shared by wiraui v1, v2 and v3. A segmented TH | EN control, or a drop-down with a globe. */
+@layer wiraui.components {
+  :is(wu-language-switch, wu-languageSwitch) {
     display: inline-flex;
     vertical-align: middle;
     max-width: 100%;
   }
-  .wt-languageswitch {
+  .wu-languageswitch {
     --_ls-scale: 1;
     display: inline-flex;
     align-items: center;
     box-sizing: border-box;
     max-width: 100%;
-    border: 1px solid var(--wt-languageswitch-border-color);
-    border-radius: var(--wt-languageswitch-radius);
-    background: var(--wt-languageswitch-bg);
-    color: var(--wt-languageswitch-color);
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-languageswitch-font-size) * var(--_ls-scale));
-    font-weight: var(--wt-languageswitch-font-weight);
+    border: 1px solid var(--wu-languageswitch-border-color);
+    border-radius: var(--wu-languageswitch-radius);
+    background: var(--wu-languageswitch-bg);
+    color: var(--wu-languageswitch-color);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-languageswitch-font-size) * var(--_ls-scale));
+    font-weight: var(--wu-languageswitch-font-weight);
     line-height: 1.25;
   }
-  .wt-languageswitch-sm {
-    --_ls-scale: var(--wt-size-sm-scale);
+  .wu-languageswitch-sm {
+    --_ls-scale: var(--wu-size-sm-scale);
   }
-  .wt-languageswitch-lg {
-    --_ls-scale: var(--wt-size-lg-scale);
+  .wu-languageswitch-lg {
+    --_ls-scale: var(--wu-size-lg-scale);
   }
 
   /* ---------- buttons ---------- */
 
-  .wt-languageswitch-buttons {
-    gap: var(--wt-languageswitch-gap);
-    padding: var(--wt-languageswitch-padding);
+  .wu-languageswitch-buttons {
+    gap: var(--wu-languageswitch-gap);
+    padding: var(--wu-languageswitch-padding);
   }
-  .wt-languageswitch-option {
+  .wu-languageswitch-option {
     flex: 0 1 auto;
     min-width: 0;
-    min-height: calc(var(--wt-languageswitch-item-height) * var(--_ls-scale));
+    min-height: calc(var(--wu-languageswitch-item-height) * var(--_ls-scale));
     margin: 0;
-    padding: var(--wt-languageswitch-item-padding);
+    padding: var(--wu-languageswitch-item-padding);
     overflow: hidden;
     border: 0;
-    border-radius: calc(var(--wt-languageswitch-radius) - var(--wt-languageswitch-padding));
+    border-radius: calc(var(--wu-languageswitch-radius) - var(--wu-languageswitch-padding));
     background: transparent;
     color: inherit;
     font: inherit;
@@ -49,49 +49,49 @@
     white-space: nowrap;
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-languageswitch-option:hover {
-    background: var(--wt-languageswitch-item-hover-bg);
+  .wu-languageswitch-option:hover {
+    background: var(--wu-languageswitch-item-hover-bg);
   }
-  .wt-languageswitch-option.wt-languageswitch-option-active {
-    background: var(--wt-languageswitch-item-active-bg);
-    color: var(--wt-languageswitch-item-active-color);
+  .wu-languageswitch-option.wu-languageswitch-option-active {
+    background: var(--wu-languageswitch-item-active-bg);
+    color: var(--wu-languageswitch-item-active-color);
     cursor: default;
   }
-  .wt-languageswitch-option:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-languageswitch-option:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
 
   /* ---------- drop-down ---------- */
 
-  .wt-languageswitch-select {
+  .wu-languageswitch-select {
     position: relative;
-    min-height: calc(var(--wt-languageswitch-item-height) * var(--_ls-scale) + var(--wt-languageswitch-padding) * 2 + 2px);
+    min-height: calc(var(--wu-languageswitch-item-height) * var(--_ls-scale) + var(--wu-languageswitch-padding) * 2 + 2px);
   }
-  .wt-languageswitch-globe,
-  .wt-languageswitch-arrow {
+  .wu-languageswitch-globe,
+  .wu-languageswitch-arrow {
     position: absolute;
     top: 50%;
     pointer-events: none;
     transform: translateY(-50%);
   }
-  .wt-languageswitch-globe {
+  .wu-languageswitch-globe {
     inset-inline-start: 0.625em;
     width: 1.125em;
     height: 1.125em;
-    color: var(--wt-languageswitch-icon-color);
+    color: var(--wu-languageswitch-icon-color);
   }
-  .wt-languageswitch-arrow {
+  .wu-languageswitch-arrow {
     inset-inline-end: 0.625em;
     width: 0.875em;
     height: 0.875em;
-    color: var(--wt-languageswitch-icon-color);
+    color: var(--wu-languageswitch-icon-color);
   }
-  .wt-languageswitch-native {
+  .wu-languageswitch-native {
     appearance: none;
     -webkit-appearance: none;
     box-sizing: border-box;
@@ -109,19 +109,19 @@
     text-overflow: ellipsis;
     cursor: pointer;
   }
-  .wt-languageswitch-native:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-languageswitch-native:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
   /* The list itself is drawn by the browser: keep its rows readable in dark mode. */
-  .wt-languageswitch-native option {
-    background: var(--wt-overlay-bg);
-    color: var(--wt-text);
+  .wu-languageswitch-native option {
+    background: var(--wu-overlay-bg);
+    color: var(--wu-text);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .wt-languageswitch-option {
+    .wu-languageswitch-option {
       transition: none;
     }
   }

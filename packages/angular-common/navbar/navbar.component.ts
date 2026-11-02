@@ -26,22 +26,22 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
-import { menuHasSubmenu, menuVisible, WtLocale } from 'wiratheme/core';
-import { WtMenu } from 'wiratheme/menu';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
+import { menuHasSubmenu, menuVisible, WuLocale } from 'wiraui/core';
+import { WuMenu } from 'wiraui/menu';
 
 /** `solid`: card background with a bottom border. `glass`: translucent with a backdrop blur. `transparent`: no background until the page scrolls. */
-export type WtNavbarVariant = 'solid' | 'glass' | 'transparent';
+export type WuNavbarVariant = 'solid' | 'glass' | 'transparent';
 
 /**
- * What `[aside]` needs from a wt-aside-menu. Written as a shape so this entry point does not depend on
- * `wiratheme/asidemenu`; pass the menu itself: `<wt-navbar [aside]="sideMenu">` + `<wt-aside-menu #sideMenu>`.
+ * What `[aside]` needs from a wu-aside-menu. Written as a shape so this entry point does not depend on
+ * `wiraui/asidemenu`; pass the menu itself: `<wu-navbar [aside]="sideMenu">` + `<wu-aside-menu #sideMenu>`.
  */
-export interface WtNavbarAside {
+export interface WuNavbarAside {
   readonly mobile: boolean;
   readonly visible: boolean;
   readonly collapsed: boolean;
@@ -49,44 +49,44 @@ export interface WtNavbarAside {
   readonly ɵchanges: Observable<void>;
   toggle(opener?: HTMLElement | null): void;
   toggleCollapsed(): void;
-  ɵattachGuest(guest: { readonly items: WtMenuItem[]; readonly navLabel: string; readonly activeItem?: WtMenuItem | null } | null): void;
+  ɵattachGuest(guest: { readonly items: WuMenuItem[]; readonly navLabel: string; readonly activeItem?: WuMenuItem | null } | null): void;
 }
 
-const VARIANTS: readonly WtNavbarVariant[] = ['solid', 'glass', 'transparent'];
+const VARIANTS: readonly WuNavbarVariant[] = ['solid', 'glass', 'transparent'];
 /** The page counts as scrolled past this many pixels. */
 const SCROLLED_AFTER = 4;
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * The top bar of an app or website: `<wt-navbar [model]="links" [sticky]="true">` with the brand projected as
- * `<a wtNavbarBrand routerLink="/">…</a>` (or `<ng-template wtTemplate="start">`), links from `[model]` and / or
- * `[wtNavbarLinks]` content, and actions as `[wtNavbarEnd]` (or `wtTemplate="end"`). Items with `items` open a
- * wt-menu popup. At and below `breakpoint` the links fold behind a menu button and drop down under the bar, where
+ * The top bar of an app or website: `<wu-navbar [model]="links" [sticky]="true">` with the brand projected as
+ * `<a wuNavbarBrand routerLink="/">…</a>` (or `<ng-template wuTemplate="start">`), links from `[model]` and / or
+ * `[wuNavbarLinks]` content, and actions as `[wuNavbarEnd]` (or `wuTemplate="end"`). Items with `items` open a
+ * wu-menu popup. At and below `breakpoint` the links fold behind a menu button and drop down under the bar, where
  * submenus expand in place.
  */
 @Component({
-  selector: 'wt-navbar',
+  selector: 'wu-navbar',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive, WtMenu],
+  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive, WuMenu],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.wt-navbar-sticky]': 'sticky',
-    '[class.wt-navbar-scrolled]': 'scrolled',
-    '[class.wt-navbar-menu-open]': 'menuOpen',
+    '[class.wu-navbar-sticky]': 'sticky',
+    '[class.wu-navbar-scrolled]': 'scrolled',
+    '[class.wu-navbar-menu-open]': 'menuOpen',
   },
 })
-export class WtNavbar implements OnInit, OnDestroy {
+export class WuNavbar implements OnInit, OnDestroy {
   /** The links. Items with `items` are dropdowns; `routerLink`, `url` and `command` work as in every menu. */
-  @Input() model: WtMenuItem[] | null | undefined;
+  @Input() model: WuMenuItem[] | null | undefined;
   /**
    * The item marked as the current page when it is not a router link (a `url` or `command` item). Router links are
    * marked by the router (`routerLinkActive`, default `{ exact: false }`; pass `routerLinkActiveOptions` per item).
    */
-  @Input() activeItem?: WtMenuItem | null;
+  @Input() activeItem?: WuMenuItem | null;
   /** Width at and below which the links fold behind the menu button (a max-width media query). Default `960px`. */
   @Input() set breakpoint(v: string | number | null | undefined) {
     const s = v === null || v === undefined ? '' : String(v).trim();
@@ -103,7 +103,7 @@ export class WtNavbar implements OnInit, OnDestroy {
   get sticky(): boolean {
     return this._sticky;
   }
-  @Input() variant: WtNavbarVariant = 'solid';
+  @Input() variant: WuNavbarVariant = 'solid';
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
@@ -116,11 +116,11 @@ export class WtNavbar implements OnInit, OnDestroy {
   /** Icon class for the menu button while open, instead of the built-in cross. */
   @Input() closeIcon?: string;
   /**
-   * A wt-aside-menu the menu button drives: on phones it opens and closes the off-canvas aside (the bar's links move
+   * A wu-aside-menu the menu button drives: on phones it opens and closes the off-canvas aside (the bar's links move
    * into it, at the top); on wide screens it collapses the aside to its icon rail (see `asideCollapse`). The bar then
    * folds its links at the aside's breakpoint, and the button sits first, before the brand.
    */
-  @Input() set aside(v: WtNavbarAside | null | undefined) {
+  @Input() set aside(v: WuNavbarAside | null | undefined) {
     const next = v || null;
     if (next === this._aside) return;
     this.asideSub?.unsubscribe();
@@ -134,7 +134,7 @@ export class WtNavbar implements OnInit, OnDestroy {
     }
     this.cdr.markForCheck();
   }
-  get aside(): WtNavbarAside | null {
+  get aside(): WuNavbarAside | null {
     return this._aside;
   }
   /** With `[aside]`, on wide screens: the menu button collapses the aside to its icon rail. Default true; false shows the button on phones only. */
@@ -148,14 +148,14 @@ export class WtNavbar implements OnInit, OnDestroy {
   /** The narrow-screen menu opened (`true`) or closed (`false`). */
   @Output() readonly onMenuToggle = new EventEmitter<boolean>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('start', { descendants: false }) protected startRef?: unknown;
   @ContentChild('end', { descendants: false }) protected endRef?: unknown;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ViewChild('toggleButton') protected toggleRef?: ElementRef<HTMLButtonElement>;
   @ViewChild('links', { static: true }) protected linksRef?: ElementRef<HTMLElement>;
 
-  readonly baseId = ɵuniqueId('wt-navbar');
+  readonly baseId = ɵuniqueId('wu-navbar');
   /** Narrower than `breakpoint`: the links sit behind the menu button. */
   mobile = false;
   /** The narrow-screen menu is open. */
@@ -169,7 +169,7 @@ export class WtNavbar implements OnInit, OnDestroy {
 
   private _breakpoint = '960px';
   private _sticky = false;
-  private _aside: WtNavbarAside | null = null;
+  private _aside: WuNavbarAside | null = null;
   private _asideCollapse = true;
   private asideSub: Subscription | null = null;
   private initialized = false;
@@ -180,14 +180,14 @@ export class WtNavbar implements OnInit, OnDestroy {
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly onQuery = (): void => {
     this.zone.run(() => this.applyQuery());
   };
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -236,13 +236,13 @@ export class WtNavbar implements OnInit, OnDestroy {
     return a ? a.mobile && a.visible : this.menuOpen;
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this.model);
   }
-  get variantName(): WtNavbarVariant {
+  get variantName(): WuNavbarVariant {
     return VARIANTS.includes(this.variant) ? this.variant : 'solid';
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -268,10 +268,10 @@ export class WtNavbar implements OnInit, OnDestroy {
     return asTemplate(this.itemRef) || ɵfindTemplate(this.templates, 'item');
   }
 
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return menuVisible(items);
   }
-  hasChildren(item: WtMenuItem): boolean {
+  hasChildren(item: WuMenuItem): boolean {
     return menuHasSubmenu(item);
   }
   keyOf(parent: string, index: number): string {
@@ -283,20 +283,20 @@ export class WtNavbar implements OnInit, OnDestroy {
   isExpanded(key: string): boolean {
     return this.expanded.includes(key);
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  isActive(item: WtMenuItem): boolean {
+  isActive(item: WuMenuItem): boolean {
     return !!this.activeItem && item === this.activeItem;
   }
   /** A dropdown whose items hold the `activeItem`. */
-  holdsActive(item: WtMenuItem): boolean {
+  holdsActive(item: WuMenuItem): boolean {
     const active = this.activeItem;
     if (!active) return false;
-    const walk = (list: WtMenuItem[] | undefined): boolean => !!list && list.some((it) => it === active || walk(it.items));
+    const walk = (list: WuMenuItem[] | undefined): boolean => !!list && list.some((it) => it === active || walk(it.items));
     return walk(item.items);
   }
 
@@ -338,7 +338,7 @@ export class WtNavbar implements OnInit, OnDestroy {
   // ---------- template events ----------
 
   /** A link or command item (wide or narrow). */
-  itemClick(event: MouseEvent, item: WtMenuItem): void {
+  itemClick(event: MouseEvent, item: WuMenuItem): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -350,13 +350,13 @@ export class WtNavbar implements OnInit, OnDestroy {
   }
 
   /** Wide screens: the dropdown button opens its menu under itself. */
-  dropdownClick(event: MouseEvent, item: WtMenuItem, menu: WtMenu): void {
+  dropdownClick(event: MouseEvent, item: WuMenuItem, menu: WuMenu): void {
     if (item.disabled) return;
     menu.toggle(event);
   }
 
   /** Arrow Down on a dropdown button opens its menu with the first item focused, like a menu button. */
-  dropdownKeydown(event: KeyboardEvent, item: WtMenuItem, menu: WtMenu): void {
+  dropdownKeydown(event: KeyboardEvent, item: WuMenuItem, menu: WuMenu): void {
     if (event.key !== 'ArrowDown' || item.disabled || menu.visible) return;
     event.preventDefault();
     menu.show(event);
@@ -373,7 +373,7 @@ export class WtNavbar implements OnInit, OnDestroy {
   }
 
   /** Narrow screens: an item with children shows them in place; opening one folds its open siblings. */
-  toggleExpanded(item: WtMenuItem, key: string): void {
+  toggleExpanded(item: WuMenuItem, key: string): void {
     if (item.disabled) return;
     if (this.isExpanded(key)) this.expanded = this.expanded.filter((k) => k !== key && !k.startsWith(key + '_'));
     // Keep only the items above this one open, then open it.
@@ -381,12 +381,12 @@ export class WtNavbar implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  /** Links projected with `[wtNavbarLinks]` close the narrow-screen menu too (model items do it in itemClick). */
+  /** Links projected with `[wuNavbarLinks]` close the narrow-screen menu too (model items do it in itemClick). */
   linksClick(event: MouseEvent): void {
     if (!this.menuOpen) return;
     const target = event.target as Element | null;
     const link = target && typeof target.closest === 'function' ? target.closest('a[href]') : null;
-    if (link && !link.closest('.wt-navbar-list')) this.closeAndRefocus();
+    if (link && !link.closest('.wu-navbar-list')) this.closeAndRefocus();
   }
 
   /** Focus moved to an element outside the bar: the narrow-screen menu closes (a click on the page is the outside check's). */

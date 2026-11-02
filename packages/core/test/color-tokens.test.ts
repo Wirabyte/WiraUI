@@ -21,7 +21,7 @@ function loadPrototype(): any {
   const ctx: any = { window: {} };
   const src = readFileSync(new URL('../../../prototype/theme-designer/engine.js', import.meta.url), 'utf8');
   runInNewContext(src, ctx);
-  return ctx.window.WT;
+  return ctx.window.WU;
 }
 
 describe('palette', () => {
@@ -58,15 +58,15 @@ describe('computeTokens', () => {
   it('emits primitives as hex and derived tokens as var() references', () => {
     expect(t.light['primary-500']).toBe('#1e7ae0');
     expect(t.light['surface-950']).toBe('#070b14');
-    expect(t.light['primary-color']).toBe('var(--wt-primary-500)');
-    expect(t.dark['primary-color']).toBe('var(--wt-primary-400)');
-    expect(t.light['card-radius']).toBe('var(--wt-radius-lg)');
+    expect(t.light['primary-color']).toBe('var(--wu-primary-500)');
+    expect(t.dark['primary-color']).toBe('var(--wu-primary-400)');
+    expect(t.light['card-radius']).toBe('var(--wu-radius-lg)');
   });
 
   it('has a full palette and a contrast token for every status colour', () => {
     for (const k of SEMANTIC_KEYS) {
       for (const s of SHADES) expect(t.light[`${k}-${s}`]).toMatch(/^#[0-9a-f]{6}$/);
-      expect(t.light[`${k}-contrast`]).toBe(`var(--wt-${k}-contrast-auto)`);
+      expect(t.light[`${k}-contrast`]).toBe(`var(--wu-${k}-contrast-auto)`);
       expect(t.light[`${k}-contrast-auto`]).toBeDefined();
       expect(t.dark[`${k}-contrast-auto`]).toBeDefined();
     }
@@ -74,8 +74,8 @@ describe('computeTokens', () => {
 
   it('picks the readable text colour for the primary button in the Wira family', () => {
     const yellow = computeTokens(normalize({ preset: 'wira', primary: '#eab308' }));
-    expect(yellow.light['primary-contrast']).toBe('var(--wt-primary-contrast-auto)');
-    expect(yellow.light['primary-contrast-auto']).toBe('var(--wt-surface-950)');
+    expect(yellow.light['primary-contrast']).toBe('var(--wu-primary-contrast-auto)');
+    expect(yellow.light['primary-contrast-auto']).toBe('var(--wu-surface-950)');
     const blue = computeTokens(normalize({ preset: 'wira', primary: '#1d4ed8' }));
     expect(blue.light['primary-contrast-auto']).toBe('#ffffff');
     expect(contrast('#ffffff', '#1d4ed8')).toBeGreaterThan(6);
@@ -91,9 +91,9 @@ describe('computeTokens', () => {
     const tt = computeTokens(c);
     expect(tt.light['card-body-gap']).toBe('0px');
     expect(tt.light['card-border-width']).toBe('0px');
-    expect(tt.light['table-stripe-bg']).toBe('var(--wt-surface-50)');
+    expect(tt.light['table-stripe-bg']).toBe('var(--wu-surface-50)');
     expect(tt.dark['table-stripe-bg']).toContain('color-mix');
-    expect(tt.light['button-radius']).toBe('var(--wt-radius-md)');
+    expect(tt.light['button-radius']).toBe('var(--wu-radius-md)');
   });
 
   it('defines every component token', () => {
@@ -112,14 +112,14 @@ describe('tokensToCss', () => {
   const t = computeTokens(defaults('wira'));
   it('wraps tokens in the tokens layer and a class-based dark block', () => {
     const css = tokensToCss(t, { darkMode: 'class' });
-    expect(css.startsWith('@layer wiratheme.tokens {')).toBe(true);
-    expect(css).toContain(':root.wt-dark {');
-    expect(css).toContain('--wt-primary-500: #1e7ae0;');
+    expect(css.startsWith('@layer wiraui.tokens {')).toBe(true);
+    expect(css).toContain(':root.wu-dark {');
+    expect(css).toContain('--wu-primary-500: #1e7ae0;');
   });
   it('supports media-query dark mode, none, and a custom selector without a layer', () => {
     expect(tokensToCss(t, { darkMode: 'media' })).toContain('@media (prefers-color-scheme: dark)');
-    expect(tokensToCss(t, { darkMode: 'none' })).not.toContain('wt-dark');
-    const scoped = tokensToCss(t, { selector: '[data-wt-version="v1"]', layer: null });
-    expect(scoped.startsWith('[data-wt-version="v1"] {')).toBe(true);
+    expect(tokensToCss(t, { darkMode: 'none' })).not.toContain('wu-dark');
+    const scoped = tokensToCss(t, { selector: '[data-wu-version="v1"]', layer: null });
+    expect(scoped.startsWith('[data-wu-version="v1"] {')).toBe(true);
   });
 });

@@ -1,102 +1,102 @@
-/* wt-slider. Shared by wiratheme v1, v2 and v3. A track with a filled part and one or two round handles; a press on
+/* wu-slider. Shared by wiraui v1, v2 and v3. A track with a filled part and one or two round handles; a press on
    the track jumps there. The hit area is taller than the track so fingers find it. */
-@layer wiratheme.components {
-  wt-slider {
+@layer wiraui.components {
+  wu-slider {
     display: block;
     max-width: 100%;
-    padding: calc(var(--wt-slider-handle-size) / 2) 0;
+    padding: calc(var(--wu-slider-handle-size) / 2) 0;
     touch-action: none;
   }
-  wt-slider.wt-slider-host-vertical {
+  wu-slider.wu-slider-host-vertical {
     display: inline-block;
     height: 12rem;
-    padding: 0 calc(var(--wt-slider-handle-size) / 2);
+    padding: 0 calc(var(--wu-slider-handle-size) / 2);
   }
-  .wt-slider {
+  .wu-slider {
     position: relative;
-    border-radius: var(--wt-radius-full);
-    background: var(--wt-slider-track-bg);
+    border-radius: var(--wu-radius-full);
+    background: var(--wu-slider-track-bg);
     cursor: pointer;
   }
-  .wt-slider-horizontal {
-    height: var(--wt-slider-track-size);
+  .wu-slider-horizontal {
+    height: var(--wu-slider-track-size);
   }
-  .wt-slider-vertical {
-    width: var(--wt-slider-track-size);
+  .wu-slider-vertical {
+    width: var(--wu-slider-track-size);
     height: 100%;
   }
   /* A taller invisible strip to press on. */
-  .wt-slider::before {
+  .wu-slider::before {
     content: '';
     position: absolute;
-    inset: calc(var(--wt-slider-handle-size) / -2) 0;
+    inset: calc(var(--wu-slider-handle-size) / -2) 0;
   }
-  .wt-slider-vertical::before {
-    inset: 0 calc(var(--wt-slider-handle-size) / -2);
+  .wu-slider-vertical::before {
+    inset: 0 calc(var(--wu-slider-handle-size) / -2);
   }
-  .wt-slider-range {
+  .wu-slider-range {
     position: absolute;
     border-radius: inherit;
-    background: var(--wt-primary-color);
+    background: var(--wu-primary-color);
   }
-  .wt-slider-horizontal .wt-slider-range {
+  .wu-slider-horizontal .wu-slider-range {
     top: 0;
     height: 100%;
   }
-  .wt-slider-vertical .wt-slider-range {
+  .wu-slider-vertical .wu-slider-range {
     left: 0;
     width: 100%;
   }
-  .wt-slider-handle {
+  .wu-slider-handle {
     position: absolute;
     box-sizing: border-box;
-    width: var(--wt-slider-handle-size);
-    height: var(--wt-slider-handle-size);
-    border: var(--wt-slider-handle-border-width) solid var(--wt-primary-color);
+    width: var(--wu-slider-handle-size);
+    height: var(--wu-slider-handle-size);
+    border: var(--wu-slider-handle-border-width) solid var(--wu-primary-color);
     border-radius: 50%;
-    background: var(--wt-slider-handle-bg);
-    box-shadow: var(--wt-shadow-sm);
+    background: var(--wu-slider-handle-bg);
+    box-shadow: var(--wu-shadow-sm);
     cursor: grab;
     transition:
       box-shadow 0.15s,
       transform 0.15s;
   }
-  .wt-slider-horizontal .wt-slider-handle {
+  .wu-slider-horizontal .wu-slider-handle {
     top: 50%;
     transform: translate(-50%, -50%);
   }
-  .wt-slider-vertical .wt-slider-handle {
+  .wu-slider-vertical .wu-slider-handle {
     left: 50%;
     transform: translate(-50%, 50%);
   }
-  .wt-slider-handle:focus-visible {
+  .wu-slider-handle:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--wt-primary-color) 25%, transparent);
+    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--wu-primary-color) 25%, transparent);
   }
-  .wt-slider-handle:active {
+  .wu-slider-handle:active {
     cursor: grabbing;
   }
-  .wt-slider-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-slider-disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-slider-disabled .wt-slider-handle {
+  .wu-slider-disabled .wu-slider-handle {
     cursor: default;
   }
   @media (pointer: coarse) {
-    .wt-slider-handle {
-      width: calc(var(--wt-slider-handle-size) * 1.35);
-      height: calc(var(--wt-slider-handle-size) * 1.35);
+    .wu-slider-handle {
+      width: calc(var(--wu-slider-handle-size) * 1.35);
+      height: calc(var(--wu-slider-handle-size) * 1.35);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-slider-handle {
+    .wu-slider-handle {
       transition: none;
     }
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
   @media (pointer: coarse) {
-    .wt-slider-handle::after {
+    .wu-slider-handle::after {
       content: '';
       position: absolute;
       inset: -0.5rem;

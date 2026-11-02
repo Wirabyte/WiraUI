@@ -1,112 +1,112 @@
-/* wt-timeline. Shared by wiratheme v1, v2 and v3. Events along a line: marker and connector in the middle column,
+/* wu-timeline. Shared by wiraui v1, v2 and v3. Events along a line: marker and connector in the middle column,
    content on one side and the optional opposite slot on the other. */
-@layer wiratheme.components {
-  wt-timeline {
+@layer wiraui.components {
+  wu-timeline {
     display: block;
   }
-  .wt-timeline {
+  .wu-timeline {
     display: flex;
     flex-direction: column;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  .wt-timeline-event {
+  .wu-timeline-event {
     position: relative;
     display: flex;
-    min-height: var(--wt-timeline-event-min-height);
+    min-height: var(--wu-timeline-event-min-height);
   }
-  .wt-timeline-event:last-child {
+  .wu-timeline-event:last-child {
     min-height: 0;
   }
-  .wt-timeline-event-opposite,
-  .wt-timeline-event-content {
+  .wu-timeline-event-opposite,
+  .wu-timeline-event-content {
     flex: 1;
     min-width: 0;
-    padding: var(--wt-timeline-content-padding);
+    padding: var(--wu-timeline-content-padding);
   }
-  .wt-timeline-event-separator {
+  .wu-timeline-event-separator {
     flex: none;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .wt-timeline-event-marker {
+  .wu-timeline-event-marker {
     box-sizing: border-box;
     flex: none;
-    width: var(--wt-timeline-marker-size);
-    height: var(--wt-timeline-marker-size);
-    border: var(--wt-timeline-marker-border-width) solid var(--wt-timeline-marker-border-color);
+    width: var(--wu-timeline-marker-size);
+    height: var(--wu-timeline-marker-size);
+    border: var(--wu-timeline-marker-border-width) solid var(--wu-timeline-marker-border-color);
     border-radius: 50%;
-    background: var(--wt-timeline-marker-bg);
+    background: var(--wu-timeline-marker-bg);
   }
-  .wt-timeline-event-connector {
+  .wu-timeline-event-connector {
     flex-grow: 1;
-    width: var(--wt-timeline-connector-size);
-    background: var(--wt-timeline-connector-color);
+    width: var(--wu-timeline-connector-size);
+    background: var(--wu-timeline-connector-color);
   }
 
   /* Vertical: the opposite side reads towards the line. */
-  .wt-timeline-left .wt-timeline-event-opposite {
+  .wu-timeline-left .wu-timeline-event-opposite {
     text-align: right;
   }
-  .wt-timeline-left .wt-timeline-event-content {
+  .wu-timeline-left .wu-timeline-event-content {
     text-align: left;
   }
-  .wt-timeline-right .wt-timeline-event {
+  .wu-timeline-right .wu-timeline-event {
     flex-direction: row-reverse;
   }
-  .wt-timeline-right .wt-timeline-event-opposite {
+  .wu-timeline-right .wu-timeline-event-opposite {
     text-align: left;
   }
-  .wt-timeline-right .wt-timeline-event-content {
+  .wu-timeline-right .wu-timeline-event-content {
     text-align: right;
   }
-  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(even) {
+  .wu-timeline-vertical.wu-timeline-alternate .wu-timeline-event:nth-child(even) {
     flex-direction: row-reverse;
   }
-  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(odd) .wt-timeline-event-opposite {
+  .wu-timeline-vertical.wu-timeline-alternate .wu-timeline-event:nth-child(odd) .wu-timeline-event-opposite {
     text-align: right;
   }
-  .wt-timeline-vertical.wt-timeline-alternate .wt-timeline-event:nth-child(even) .wt-timeline-event-content {
+  .wu-timeline-vertical.wu-timeline-alternate .wu-timeline-event:nth-child(even) .wu-timeline-event-content {
     text-align: right;
   }
   /* No opposite template: the content takes the whole row (alternate keeps both sides). */
-  .wt-timeline-vertical.wt-timeline-no-opposite:not(.wt-timeline-alternate) .wt-timeline-event-opposite {
+  .wu-timeline-vertical.wu-timeline-no-opposite:not(.wu-timeline-alternate) .wu-timeline-event-opposite {
     display: none;
   }
 
   /* Horizontal: events side by side, the line across. */
-  .wt-timeline-horizontal {
+  .wu-timeline-horizontal {
     flex-direction: row;
   }
-  .wt-timeline-horizontal .wt-timeline-event {
+  .wu-timeline-horizontal .wu-timeline-event {
     flex: 1;
     flex-direction: column;
     min-height: 0;
   }
-  .wt-timeline-horizontal .wt-timeline-event:last-child {
+  .wu-timeline-horizontal .wu-timeline-event:last-child {
     flex: 0;
   }
-  .wt-timeline-horizontal .wt-timeline-event-separator {
+  .wu-timeline-horizontal .wu-timeline-event-separator {
     flex-direction: row;
   }
-  .wt-timeline-horizontal .wt-timeline-event-connector {
+  .wu-timeline-horizontal .wu-timeline-event-connector {
     width: 100%;
-    height: var(--wt-timeline-connector-size);
+    height: var(--wu-timeline-connector-size);
   }
-  .wt-timeline-horizontal .wt-timeline-event-opposite,
-  .wt-timeline-horizontal .wt-timeline-event-content {
-    padding: var(--wt-timeline-horizontal-padding);
+  .wu-timeline-horizontal .wu-timeline-event-opposite,
+  .wu-timeline-horizontal .wu-timeline-event-content {
+    padding: var(--wu-timeline-horizontal-padding);
   }
-  .wt-timeline-bottom .wt-timeline-event {
+  .wu-timeline-bottom .wu-timeline-event {
     flex-direction: column-reverse;
   }
-  .wt-timeline-horizontal.wt-timeline-alternate .wt-timeline-event:nth-child(even) {
+  .wu-timeline-horizontal.wu-timeline-alternate .wu-timeline-event:nth-child(even) {
     flex-direction: column-reverse;
   }
-  .wt-timeline-horizontal.wt-timeline-no-opposite:not(.wt-timeline-alternate) .wt-timeline-event-opposite {
+  .wu-timeline-horizontal.wu-timeline-no-opposite:not(.wu-timeline-alternate) .wu-timeline-event-opposite {
     display: none;
   }
 }

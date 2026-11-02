@@ -8,9 +8,9 @@ export const INPUTOTP_DOC: ComponentDoc = {
   title: 'InputOtp',
   group: 'Form',
   entry: 'inputotp',
-  standalone: 'WtInputOtp',
-  module: 'WtInputOtpModule',
-  selector: 'wt-inputOtp',
+  standalone: 'WuInputOtp',
+  module: 'WuInputOtpModule',
+  selector: 'wu-inputOtp',
   forms: true,
   description: {
     th: 'ช่องกรอกรหัสยืนยัน (OTP) แบบหนึ่งตัวต่อช่อง พิมพ์แล้วไปช่องถัดไปเอง ลบแล้วถอยกลับ วางรหัสทั้งชุดได้ และรับรหัสจาก SMS อัตโนมัติบนมือถือได้ ใช้กับ ngModel และ reactive forms',
@@ -31,8 +31,8 @@ export const INPUTOTP_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtInputOtpModule</code> มี <code>wtTemplate</code> ให้ด้วย) และ standalone (<code>WtInputOtp</code>) คู่กับ <code>FormsModule</code> · แท็กเขียนได้ทั้ง <code>wt-inputOtp</code>, <code>wt-inputotp</code> และ <code>wt-input-otp</code>',
-        en: 'Works as an NgModule (<code>WtInputOtpModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtInputOtp</code>), with <code>FormsModule</code> · the tag can be <code>wt-inputOtp</code>, <code>wt-inputotp</code> or <code>wt-input-otp</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuInputOtpModule</code> มี <code>wuTemplate</code> ให้ด้วย) และ standalone (<code>WuInputOtp</code>) คู่กับ <code>FormsModule</code> · แท็กเขียนได้ทั้ง <code>wu-inputOtp</code>, <code>wu-inputotp</code> และ <code>wu-input-otp</code>',
+        en: 'Works as an NgModule (<code>WuInputOtpModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuInputOtp</code>), with <code>FormsModule</code> · the tag can be <code>wu-inputOtp</code>, <code>wu-inputotp</code> or <code>wu-input-otp</code>.',
       },
     },
     basic: {
@@ -80,23 +80,23 @@ export const INPUTOTP_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-inputOtp&gt;</code> เป็น <code>&lt;wt-inputOtp&gt;</code> input, event และ template <code>pTemplate="input"</code> (let-token, let-events, let-index) ใช้ชื่อเดิม',
-        en: 'Change <code>&lt;p-inputOtp&gt;</code> to <code>&lt;wt-inputOtp&gt;</code>; the inputs, events and the <code>pTemplate="input"</code> template (let-token, let-events, let-index) keep their names.',
+        th: 'เปลี่ยน <code>&lt;p-inputOtp&gt;</code> เป็น <code>&lt;wu-inputOtp&gt;</code> input, event และ template <code>pTemplate="input"</code> (let-token, let-events, let-index) ใช้ชื่อเดิม',
+        en: 'Change <code>&lt;p-inputOtp&gt;</code> to <code>&lt;wu-inputOtp&gt;</code>; the inputs, events and the <code>pTemplate="input"</code> template (let-token, let-events, let-index) keep their names.',
       },
     },
   },
   code: {
     basic: `<label id="otp-label">รหัสยืนยัน 6 หลักจาก SMS</label>
-<wt-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabelledBy="otp-label"
-  (onChange)="codeChanged($event)"></wt-inputOtp>
-<wt-button label="ยืนยันรหัส" icon="wi wi-check" [disabled]="code.length < 6" (onClick)="verify()"></wt-button>`,
-    mask: `<wt-inputOtp name="password" [(ngModel)]="password" [mask]="true" ariaLabel="รหัสผ่านชั่วคราว"></wt-inputOtp>`,
-    look: `<wt-inputOtp name="room" [(ngModel)]="room" size="small" variant="filled" ariaLabel="รหัสห้องสอบ"></wt-inputOtp>
-<wt-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" [invalid]="isWrongCode" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS"></wt-inputOtp>
-<wt-inputOtp name="room" [ngModel]="'4821'" [readonly]="true" ariaLabel="รหัสห้องสอบ"></wt-inputOtp>
-<wt-inputOtp name="room" [disabled]="true" ariaLabel="รหัสห้องสอบ"></wt-inputOtp>`,
+<wu-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabelledBy="otp-label"
+  (onChange)="codeChanged($event)"></wu-inputOtp>
+<wu-button label="ยืนยันรหัส" icon="wi wi-check" [disabled]="code.length < 6" (onClick)="verify()"></wu-button>`,
+    mask: `<wu-inputOtp name="password" [(ngModel)]="password" [mask]="true" ariaLabel="รหัสผ่านชั่วคราว"></wu-inputOtp>`,
+    look: `<wu-inputOtp name="room" [(ngModel)]="room" size="small" variant="filled" ariaLabel="รหัสห้องสอบ"></wu-inputOtp>
+<wu-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" [invalid]="isWrongCode" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS"></wu-inputOtp>
+<wu-inputOtp name="room" [ngModel]="'4821'" [readonly]="true" ariaLabel="รหัสห้องสอบ"></wu-inputOtp>
+<wu-inputOtp name="room" [disabled]="true" ariaLabel="รหัสห้องสอบ"></wu-inputOtp>`,
     template: {
-      v3: `<wt-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS">
+      v3: `<wu-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS">
   <ng-template #input let-token let-events="events" let-index="index">
     <input class="otp-box" type="text" inputmode="numeric" maxlength="1" [value]="token"
       (input)="events.input($event)" (keydown)="events.keydown($event)" (paste)="events.paste($event)"
@@ -105,15 +105,15 @@ export const INPUTOTP_DOC: ComponentDoc = {
       <span class="otp-dash">-</span>
     }
   </ng-template>
-</wt-inputOtp>`,
-      classic: `<wt-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS">
-  <ng-template wtTemplate="input" let-token let-events="events" let-index="index">
+</wu-inputOtp>`,
+      classic: `<wu-inputOtp name="code" [(ngModel)]="code" [length]="6" [integerOnly]="true" ariaLabel="รหัสยืนยัน 6 หลักจาก SMS">
+  <ng-template wuTemplate="input" let-token let-events="events" let-index="index">
     <input class="otp-box" type="text" inputmode="numeric" maxlength="1" [value]="token"
       (input)="events.input($event)" (keydown)="events.keydown($event)" (paste)="events.paste($event)"
       (focus)="events.focus($event)" (blur)="events.blur($event)" />
     <span *ngIf="index === 3" class="otp-dash">-</span>
   </ng-template>
-</wt-inputOtp>`,
+</wu-inputOtp>`,
     },
   },
   ts: {
@@ -160,8 +160,8 @@ verify(): void {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #input, wtTemplate="input" หรือ pTemplate="input" ก็ได้',
-        en: 'Write it as #input, wtTemplate="input" or pTemplate="input".',
+        th: 'เขียนเป็น #input, wuTemplate="input" หรือ pTemplate="input" ก็ได้',
+        en: 'Write it as #input, wuTemplate="input" or pTemplate="input".',
       },
       rows: [
         row('input', '$implicit (token), events, index', undefined, 'วาดแต่ละช่องเอง (index เริ่มที่ 1) ผูก events ให้ครบ', 'Draw each box (index starts at 1); wire every event'),
@@ -169,9 +169,9 @@ verify(): void {
     },
   ],
   tokens: [
-    tok('--wt-inputotp-gap', 'ระยะระหว่างช่อง', 'Gap between boxes'),
-    tok('--wt-inputotp-input-width', 'ความกว้างของช่อง', 'Box width'),
-    tok('--wt-inputotp-input-sm-width', 'ความกว้างของช่องเล็ก', 'Small box width'),
-    tok('--wt-inputotp-input-lg-width', 'ความกว้างของช่องใหญ่', 'Large box width'),
+    tok('--wu-inputotp-gap', 'ระยะระหว่างช่อง', 'Gap between boxes'),
+    tok('--wu-inputotp-input-width', 'ความกว้างของช่อง', 'Box width'),
+    tok('--wu-inputotp-input-sm-width', 'ความกว้างของช่องเล็ก', 'Small box width'),
+    tok('--wu-inputotp-input-lg-width', 'ความกว้างของช่องใหญ่', 'Large box width'),
   ],
 };

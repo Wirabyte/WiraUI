@@ -1,7 +1,7 @@
-import { buildExcel, EXCEL_MIME, ExcelSheet, excelSheetFromRows, ExcelTableColumn, ExcelTableOptions, ExcelWorkbook } from 'wiratheme/core';
+import { buildExcel, EXCEL_MIME, ExcelSheet, excelSheetFromRows, ExcelTableColumn, ExcelTableOptions, ExcelWorkbook } from 'wiraui/core';
 
 /** `downloadExcel()` options besides the workbook. */
-export interface WtExcelDownloadOptions {
+export interface WuExcelDownloadOptions {
   /** File name without `.xlsx`. Default `download`. */
   fileName?: string;
   /** The document to save through (server rendering: nothing is saved). Default the global `document`. */
@@ -18,7 +18,7 @@ export async function excelBlob(source: ExcelWorkbook | ExcelSheet): Promise<Blo
  * Builds the workbook (or one sheet) and saves it as `<fileName>.xlsx`:
  * `downloadExcel({ rows: [['ชื่อ', 'คะแนน'], ['วิระ', 18]] }, { fileName: 'scores' })`.
  */
-export async function downloadExcel(source: ExcelWorkbook | ExcelSheet, options: WtExcelDownloadOptions | string = {}): Promise<void> {
+export async function downloadExcel(source: ExcelWorkbook | ExcelSheet, options: WuExcelDownloadOptions | string = {}): Promise<void> {
   const o = typeof options === 'string' ? { fileName: options } : options;
   const doc = o.document ?? (typeof document === 'undefined' ? null : document);
   const win = doc?.defaultView;
@@ -42,7 +42,7 @@ export function downloadRowsAsExcel<T = unknown>(
   rows: readonly T[],
   columns: readonly ExcelTableColumn[],
   options: ExcelTableOptions<T> & { fontName?: string; fontSize?: number; calendar?: 'gregorian' | 'buddhist' } = {},
-  download: WtExcelDownloadOptions | string = {}
+  download: WuExcelDownloadOptions | string = {}
 ): Promise<void> {
   const { fontName, fontSize, calendar, ...sheet } = options;
   return downloadExcel({ sheets: [excelSheetFromRows(rows, columns, sheet)], fontName, fontSize, calendar }, download);

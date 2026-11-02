@@ -28,7 +28,7 @@ const POPULAR = ['getting-started/introduction', 'getting-started/installation',
             <span class="docs-logo-mark" aria-hidden="true">
               <svg viewBox="0 0 32 32"><path d="M7.5 10.5 11.5 22l4.5-9 4.5 9 4-11.5" /></svg>
             </span>
-            <span class="docs-logo-text">WiraTheme</span>
+            <span class="docs-logo-text">WiraUI</span>
           </a>
           <span class="docs-nf-spacer"></span>
           <docs-lang-switch></docs-lang-switch>
@@ -45,7 +45,7 @@ const POPULAR = ['getting-started/introduction', 'getting-started/installation',
             <!-- The site: a node with its handle, and the link that came loose. -->
             <rect x="20" y="64" width="144" height="72" rx="14" class="docs-nf-node" />
             <circle cx="46" cy="100" r="11" class="docs-nf-mark" />
-            <text x="64" y="105" class="docs-nf-label">WiraTheme</text>
+            <text x="64" y="105" class="docs-nf-label">WiraUI</text>
             <g class="docs-nf-swing">
               <path d="M164 100 C 198 100 202 126 230 130" class="docs-nf-edge" />
               <rect x="228" y="123" width="16" height="14" rx="4" transform="rotate(10 236 130)" class="docs-nf-plug" />

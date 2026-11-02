@@ -25,7 +25,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
 import {
   absolutePositions,
   alignmentGuides,
@@ -100,7 +100,7 @@ import {
   wheelDeltaPx,
   wheelZoomFactor,
   zoomAt,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 import type {
   FlowConnection,
   FlowConnectionMode,
@@ -126,41 +126,41 @@ import type {
   FlowTreeLayoutOptions,
   FlowViewport,
   FlowXY,
-} from 'wiratheme/core';
-import { WtFlowHandle } from './flow-handle.component';
-import { ɵWtFlowChange, ɵWtFlowHost, ɵWtFlowNodeBox } from './flow-host';
-import { ɵWtFlowNodeComponentOutlet, ɵWtFlowNodeRegistry, ɵWtFlowNodeWrapper } from './flow-node-outlet';
-import { WtFlowConnectionLineTemplate, WtFlowEdgeLabelTemplate, WtFlowEdgeTemplate, WtFlowNodeTemplate } from './flow-templates';
+} from 'wiraui/core';
+import { WuFlowHandle } from './flow-handle.component';
+import { ɵWuFlowChange, ɵWuFlowHost, ɵWuFlowNodeBox } from './flow-host';
+import { ɵWuFlowNodeComponentOutlet, ɵWuFlowNodeRegistry, ɵWuFlowNodeWrapper } from './flow-node-outlet';
+import { WuFlowConnectionLineTemplate, WuFlowEdgeLabelTemplate, WuFlowEdgeTemplate, WuFlowNodeTemplate } from './flow-templates';
 import {
-  WT_FLOW_NODE,
-  WtFlowApi,
-  WtFlowBeforeDelete,
-  WtFlowConnectEndEvent,
-  WtFlowConnectionLineContext,
-  WtFlowConnectStartEvent,
-  WtFlowDeleteEvent,
-  WtFlowEdgeContext,
-  WtFlowEdgeEvent,
-  WtFlowFitBoundsOptions,
-  WtFlowFitViewOptions,
-  WtFlowMoveEvent,
-  WtFlowNodeComponentEvent,
-  WtFlowNodeContext,
-  WtFlowNodeDragEvent,
-  WtFlowNodeEvent,
-  WtFlowNodeRect,
-  WtFlowReconnectEndEvent,
-  WtFlowReconnectEvent,
-  WtFlowReconnectStartEvent,
-  WtFlowSelectionChange,
-  WtFlowSetCenterOptions,
-  WtFlowViewportOptions,
+  WU_FLOW_NODE,
+  WuFlowApi,
+  WuFlowBeforeDelete,
+  WuFlowConnectEndEvent,
+  WuFlowConnectionLineContext,
+  WuFlowConnectStartEvent,
+  WuFlowDeleteEvent,
+  WuFlowEdgeContext,
+  WuFlowEdgeEvent,
+  WuFlowFitBoundsOptions,
+  WuFlowFitViewOptions,
+  WuFlowMoveEvent,
+  WuFlowNodeComponentEvent,
+  WuFlowNodeContext,
+  WuFlowNodeDragEvent,
+  WuFlowNodeEvent,
+  WuFlowNodeRect,
+  WuFlowReconnectEndEvent,
+  WuFlowReconnectEvent,
+  WuFlowReconnectStartEvent,
+  WuFlowSelectionChange,
+  WuFlowSetCenterOptions,
+  WuFlowViewportOptions,
 } from './flow.types';
 
 // ---------- what the template draws ----------
 
 /** A node as drawn. One object per node id, kept across renders (so its template context and injector stay put). */
-export interface ɵWtFlowNodeView {
+export interface ɵWuFlowNodeView {
   id: string;
   node: FlowNode;
   type: string;
@@ -188,12 +188,12 @@ export interface ɵWtFlowNodeView {
   hasTarget: boolean;
   sourcePosition: FlowPosition;
   targetPosition: FlowPosition;
-  ctx: WtFlowNodeContext;
+  ctx: WuFlowNodeContext;
   injector: Injector;
 }
 
 /** An edge as drawn. */
-export interface ɵWtFlowEdgeView {
+export interface ɵWuFlowEdgeView {
   id: string;
   edge: FlowEdge;
   type: string;
@@ -223,15 +223,15 @@ export interface ɵWtFlowEdgeView {
   ariaLabel: string;
   template: TemplateRef<unknown> | null;
   labelTemplate: TemplateRef<unknown> | null;
-  ctx: WtFlowEdgeContext;
+  ctx: WuFlowEdgeContext;
 }
 
-export interface ɵWtFlowEdgeLayer {
+export interface ɵWuFlowEdgeLayer {
   z: number;
-  edges: ɵWtFlowEdgeView[];
+  edges: ɵWuFlowEdgeView[];
 }
 
-export interface ɵWtFlowMarkerView {
+export interface ɵWuFlowMarkerView {
   id: string;
   shape: string;
   width: number;
@@ -242,14 +242,14 @@ export interface ɵWtFlowMarkerView {
   strokeWidth: number;
 }
 
-export interface ɵWtFlowConnectionView {
+export interface ɵWuFlowConnectionView {
   path: string;
   valid: boolean | null;
-  ctx: WtFlowConnectionLineContext;
+  ctx: WuFlowConnectionLineContext;
 }
 
 /** `layout()`: `algorithm: 'tree'` for org charts, otherwise layered; `fitView` afterwards unless false. */
-export interface WtFlowLayoutOptions extends FlowLayoutOptions, Omit<FlowTreeLayoutOptions, 'nodeSep'> {
+export interface WuFlowLayoutOptions extends FlowLayoutOptions, Omit<FlowTreeLayoutOptions, 'nodeSep'> {
   algorithm?: 'layered' | 'tree';
   fitView?: boolean;
   duration?: number;
@@ -345,7 +345,7 @@ type Gesture = PendingNodeGesture | DragGesture | PanGesture | SelectGesture | C
 const BUILTIN_NODES = new Set(['default', 'input', 'output', 'group']);
 const BUILTIN_EDGES = new Set(FLOW_EDGE_TYPES);
 /** Pressing these inside a node does not start a drag. */
-const NO_DRAG = 'input, textarea, select, button, a[href], [contenteditable=""], [contenteditable="true"], .nodrag, .wt-flow-nodrag';
+const NO_DRAG = 'input, textarea, select, button, a[href], [contenteditable=""], [contenteditable="true"], .nodrag, .wu-flow-nodrag';
 const LONG_PRESS_MS = 500;
 const WHEEL_END_MS = 150;
 
@@ -362,10 +362,10 @@ const isObserved = (e: EventEmitter<unknown>): boolean => {
 };
 
 /**
- * A node-based diagram editor: `<wt-flow [(nodes)]="nodes" [(edges)]="edges" [fitView]="true">` with
- * `<ng-template wtFlowNode="person" let-node>` templates (or the built-in `default` / `input` / `output` / `group`
- * nodes), `<wt-flow-handle>`s where edges attach, and add-ons inside: `<wt-flow-background>`, `<wt-flow-minimap>`,
- * `<wt-flow-controls>`, `<wt-flow-panel>`.
+ * A node-based diagram editor: `<wu-flow [(nodes)]="nodes" [(edges)]="edges" [fitView]="true">` with
+ * `<ng-template wuFlowNode="person" let-node>` templates (or the built-in `default` / `input` / `output` / `group`
+ * nodes), `<wu-flow-handle>`s where edges attach, and add-ons inside: `<wu-flow-background>`, `<wu-flow-minimap>`,
+ * `<wu-flow-controls>`, `<wu-flow-panel>`.
  *
  * Drag nodes (several when selected; snapping, extents, sub-flows, auto-pan near the border), drag from a handle to
  * connect (or click two handles), drag an edge's end to reconnect it, pan by dragging the pane, zoom with the wheel,
@@ -379,19 +379,19 @@ const isObserved = (e: EventEmitter<unknown>): boolean => {
  * `(edgeChanges)` and the app applies them (`applyNodeChanges()`), as in the React flow libraries.
  */
 @Component({
-  selector: 'wt-flow',
+  selector: 'wu-flow',
   standalone: true,
-  imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet, WtFlowHandle, ɵWtFlowNodeWrapper, ɵWtFlowNodeComponentOutlet],
+  imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet, WuFlowHandle, ɵWuFlowNodeWrapper, ɵWuFlowNodeComponentOutlet],
   templateUrl: './flow.component.html',
   styleUrls: ['./flow.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: ɵWtFlowHost, useExisting: forwardRef(() => WtFlow) },
-    { provide: ɵWtFlowNodeRegistry, useExisting: forwardRef(() => WtFlow) },
+    { provide: ɵWuFlowHost, useExisting: forwardRef(() => WuFlow) },
+    { provide: ɵWuFlowNodeRegistry, useExisting: forwardRef(() => WuFlow) },
   ],
 })
-export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
+export class WuFlow implements WuFlowApi, ɵWuFlowHost, ɵWuFlowNodeRegistry, OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   // ---------- the diagram ----------
 
   /** Two-way: `[(nodes)]`. */
@@ -405,7 +405,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   get applyChanges(): boolean {
     return this._apply;
   }
-  /** Components that draw node types: `{ machine: MachineNodeComponent }` (a `wtFlowNode` template wins). */
+  /** Components that draw node types: `{ machine: MachineNodeComponent }` (a `wuFlowNode` template wins). */
   @Input() nodeTypes: Record<string, Type<unknown>> | null | undefined;
   /** Settings every edge starts from (`type`, `animated`, `markerEnd` …); new connections get them too. */
   @Input() defaultEdgeOptions: Partial<FlowEdge> | null | undefined;
@@ -569,7 +569,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   get fitViewOnInit(): boolean {
     return this._fitOnInit;
   }
-  @Input() fitViewOptions: WtFlowFitViewOptions | null | undefined;
+  @Input() fitViewOptions: WuFlowFitViewOptions | null | undefined;
   /** Drag the pane to pan: true (left and middle button), false, or the mouse buttons to use (`[1, 2]`). */
   @Input() panOnDrag: boolean | number[] | string = true;
   /** The wheel pans instead of zooming (Ctrl / ⌘ + wheel still zooms). Default false. */
@@ -631,7 +631,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   /** Held to zoom with the wheel when `panOnScroll` or `zoomOnScroll` say otherwise. Default ⌘ (Ctrl is a pinch). */
   @Input() zoomActivationKeyCode: string | string[] | null = 'Meta';
   /** Asked before deleting: return false, or the subset to delete (may be async). */
-  @Input() beforeDelete: WtFlowBeforeDelete | null | undefined;
+  @Input() beforeDelete: WuFlowBeforeDelete | null | undefined;
 
   // ---------- look ----------
 
@@ -648,45 +648,45 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   @Output() readonly edgeChanges = new EventEmitter<FlowEdgeChange[]>();
   @Output() readonly viewportChange = new EventEmitter<FlowViewport>();
   @Output() readonly interactiveChange = new EventEmitter<boolean>();
-  @Output() readonly selectionChange = new EventEmitter<WtFlowSelectionChange>();
-  @Output() readonly nodeClick = new EventEmitter<WtFlowNodeEvent>();
-  @Output() readonly nodeDoubleClick = new EventEmitter<WtFlowNodeEvent>();
-  @Output() readonly nodeContextMenu = new EventEmitter<WtFlowNodeEvent>();
-  @Output() readonly nodeMouseEnter = new EventEmitter<WtFlowNodeEvent>();
-  @Output() readonly nodeMouseLeave = new EventEmitter<WtFlowNodeEvent>();
-  @Output() readonly nodeDragStart = new EventEmitter<WtFlowNodeDragEvent>();
-  @Output() readonly nodeDrag = new EventEmitter<WtFlowNodeDragEvent>();
-  @Output() readonly nodeDragStop = new EventEmitter<WtFlowNodeDragEvent>();
-  @Output() readonly edgeClick = new EventEmitter<WtFlowEdgeEvent>();
-  @Output() readonly edgeDoubleClick = new EventEmitter<WtFlowEdgeEvent>();
-  @Output() readonly edgeContextMenu = new EventEmitter<WtFlowEdgeEvent>();
-  @Output() readonly edgeMouseEnter = new EventEmitter<WtFlowEdgeEvent>();
-  @Output() readonly edgeMouseLeave = new EventEmitter<WtFlowEdgeEvent>();
+  @Output() readonly selectionChange = new EventEmitter<WuFlowSelectionChange>();
+  @Output() readonly nodeClick = new EventEmitter<WuFlowNodeEvent>();
+  @Output() readonly nodeDoubleClick = new EventEmitter<WuFlowNodeEvent>();
+  @Output() readonly nodeContextMenu = new EventEmitter<WuFlowNodeEvent>();
+  @Output() readonly nodeMouseEnter = new EventEmitter<WuFlowNodeEvent>();
+  @Output() readonly nodeMouseLeave = new EventEmitter<WuFlowNodeEvent>();
+  @Output() readonly nodeDragStart = new EventEmitter<WuFlowNodeDragEvent>();
+  @Output() readonly nodeDrag = new EventEmitter<WuFlowNodeDragEvent>();
+  @Output() readonly nodeDragStop = new EventEmitter<WuFlowNodeDragEvent>();
+  @Output() readonly edgeClick = new EventEmitter<WuFlowEdgeEvent>();
+  @Output() readonly edgeDoubleClick = new EventEmitter<WuFlowEdgeEvent>();
+  @Output() readonly edgeContextMenu = new EventEmitter<WuFlowEdgeEvent>();
+  @Output() readonly edgeMouseEnter = new EventEmitter<WuFlowEdgeEvent>();
+  @Output() readonly edgeMouseLeave = new EventEmitter<WuFlowEdgeEvent>();
   @Output() readonly paneClick = new EventEmitter<MouseEvent>();
   @Output() readonly paneContextMenu = new EventEmitter<MouseEvent>();
-  @Output() readonly moveStart = new EventEmitter<WtFlowMoveEvent>();
-  @Output() readonly move = new EventEmitter<WtFlowMoveEvent>();
-  @Output() readonly moveEnd = new EventEmitter<WtFlowMoveEvent>();
+  @Output() readonly moveStart = new EventEmitter<WuFlowMoveEvent>();
+  @Output() readonly move = new EventEmitter<WuFlowMoveEvent>();
+  @Output() readonly moveEnd = new EventEmitter<WuFlowMoveEvent>();
   @Output() readonly connect = new EventEmitter<FlowConnection>();
-  @Output() readonly connectStart = new EventEmitter<WtFlowConnectStartEvent>();
-  @Output() readonly connectEnd = new EventEmitter<WtFlowConnectEndEvent>();
-  @Output() readonly reconnect = new EventEmitter<WtFlowReconnectEvent>();
-  @Output() readonly reconnectStart = new EventEmitter<WtFlowReconnectStartEvent>();
-  @Output() readonly reconnectEnd = new EventEmitter<WtFlowReconnectEndEvent>();
+  @Output() readonly connectStart = new EventEmitter<WuFlowConnectStartEvent>();
+  @Output() readonly connectEnd = new EventEmitter<WuFlowConnectEndEvent>();
+  @Output() readonly reconnect = new EventEmitter<WuFlowReconnectEvent>();
+  @Output() readonly reconnectStart = new EventEmitter<WuFlowReconnectStartEvent>();
+  @Output() readonly reconnectEnd = new EventEmitter<WuFlowReconnectEndEvent>();
   /** The flow is ready; carries the flow itself (its methods are the API). */
-  @Output() readonly init = new EventEmitter<WtFlow>();
+  @Output() readonly init = new EventEmitter<WuFlow>();
   /** Every node has been measured once. */
   @Output() readonly nodesInitialized = new EventEmitter<FlowNode[]>();
-  @Output() readonly delete = new EventEmitter<WtFlowDeleteEvent>();
-  @Output() readonly nodeComponentEvent = new EventEmitter<WtFlowNodeComponentEvent>();
+  @Output() readonly delete = new EventEmitter<WuFlowDeleteEvent>();
+  @Output() readonly nodeComponentEvent = new EventEmitter<WuFlowNodeComponentEvent>();
 
   // ---------- templates ----------
 
-  @ContentChildren(WtFlowNodeTemplate, { descendants: true }) protected nodeTemplates?: QueryList<WtFlowNodeTemplate>;
-  @ContentChildren(WtFlowEdgeTemplate, { descendants: true }) protected edgeTemplates?: QueryList<WtFlowEdgeTemplate>;
-  @ContentChildren(WtFlowEdgeLabelTemplate, { descendants: true }) protected labelTemplates?: QueryList<WtFlowEdgeLabelTemplate>;
-  @ContentChildren(WtFlowConnectionLineTemplate, { descendants: true }) protected lineTemplates?: QueryList<WtFlowConnectionLineTemplate>;
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuFlowNodeTemplate, { descendants: true }) protected nodeTemplates?: QueryList<WuFlowNodeTemplate>;
+  @ContentChildren(WuFlowEdgeTemplate, { descendants: true }) protected edgeTemplates?: QueryList<WuFlowEdgeTemplate>;
+  @ContentChildren(WuFlowEdgeLabelTemplate, { descendants: true }) protected labelTemplates?: QueryList<WuFlowEdgeLabelTemplate>;
+  @ContentChildren(WuFlowConnectionLineTemplate, { descendants: true }) protected lineTemplates?: QueryList<WuFlowConnectionLineTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('node', { descendants: false }) protected nodeRef?: unknown;
   @ContentChild('edge', { descendants: false }) protected edgeRef?: unknown;
   @ContentChild('edgeLabel', { descendants: false }) protected edgeLabelRef?: unknown;
@@ -698,17 +698,17 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   // ---------- what the template reads ----------
 
-  readonly flowId = ɵuniqueId('wt-flow');
+  readonly flowId = ɵuniqueId('wu-flow');
   readonly paneHintId = this.flowId + '-pane-hint';
   readonly nodeHintId = this.flowId + '-node-hint';
   readonly edgeHintId = this.flowId + '-edge-hint';
   readonly markerViewBox = FLOW_MARKER_VIEWBOX;
   readonly markerRef = FLOW_MARKER_REF;
-  renderedNodes: ɵWtFlowNodeView[] = [];
-  edgeLayers: ɵWtFlowEdgeLayer[] = [];
-  labelEdges: ɵWtFlowEdgeView[] = [];
-  markers: ɵWtFlowMarkerView[] = [];
-  connectionLine: ɵWtFlowConnectionView | null = null;
+  renderedNodes: ɵWuFlowNodeView[] = [];
+  edgeLayers: ɵWuFlowEdgeLayer[] = [];
+  labelEdges: ɵWuFlowEdgeView[] = [];
+  markers: ɵWuFlowMarkerView[] = [];
+  connectionLine: ɵWuFlowConnectionView | null = null;
   guides: FlowGuide[] = [];
   selectionRect: FlowRect | null = null;
   connectionLineTemplate: TemplateRef<unknown> | null = null;
@@ -753,15 +753,15 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private readonly nodeEls = new Map<string, HTMLElement>();
   private readonly pendingHandles = new Set<string>();
   private readonly resizers = new Map<string, () => FlowResizeLimits>();
-  private views = new Map<string, ɵWtFlowNodeView>();
-  private edgeViews = new Map<string, ɵWtFlowEdgeView>();
+  private views = new Map<string, ɵWuFlowNodeView>();
+  private edgeViews = new Map<string, ɵWuFlowEdgeView>();
   private lookup = new Map<string, FlowNode>();
   private dirty = true;
   private nodesToEmit = false;
   private edgesToEmit = false;
   private selectionKey = '';
-  private readonly changeSet = new Set<ɵWtFlowChange>();
-  private readonly listeners = new Set<(changes: ReadonlySet<ɵWtFlowChange>) => void>();
+  private readonly changeSet = new Set<ɵWuFlowChange>();
+  private readonly listeners = new Set<(changes: ReadonlySet<ɵWuFlowChange>) => void>();
   private readonly commitListeners = new Set<(external: boolean) => void>();
   private gesture: Gesture | null = null;
   private readonly pointers = new Map<number, FlowXY>();
@@ -783,7 +783,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private viewInit = false;
   private initialFitDone = false;
   private nodesInitDone = false;
-  private pendingFits: { options: WtFlowFitViewOptions; resolve: (ok: boolean) => void }[] = [];
+  private pendingFits: { options: WuFlowFitViewOptions; resolve: (ok: boolean) => void }[] = [];
   private fitTimer: ReturnType<typeof setTimeout> | null = null;
   private warned = new Set<string>();
   private announceFlip = false;
@@ -795,7 +795,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly translationSub = this.config.translationChange.subscribe(() => {
     this.dirty = true;
@@ -805,7 +805,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     if (this.browser && typeof ResizeObserver !== 'undefined') {
       this.zone.runOutsideAngular(() => {
         this.nodeObserver = new ResizeObserver((entries) => this.nodesResized(entries));
@@ -943,7 +943,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   trackById(_: number, item: { id: string }): string {
     return item.id;
   }
-  trackLayer(_: number, layer: ɵWtFlowEdgeLayer): number {
+  trackLayer(_: number, layer: ɵWuFlowEdgeLayer): number {
     return layer.z;
   }
   trackGuide(i: number): number {
@@ -954,10 +954,10 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   // building what is drawn
   // ======================================================================
 
-  private resolveNode(type: string, cache: Map<string, Pick<ɵWtFlowNodeView, 'render' | 'template' | 'component'>>): Pick<ɵWtFlowNodeView, 'render' | 'template' | 'component'> {
+  private resolveNode(type: string, cache: Map<string, Pick<ɵWuFlowNodeView, 'render' | 'template' | 'component'>>): Pick<ɵWuFlowNodeView, 'render' | 'template' | 'component'> {
     const known = cache.get(type);
     if (known) return known;
-    let out: Pick<ɵWtFlowNodeView, 'render' | 'template' | 'component'> = { render: 'builtin', template: null, component: null };
+    let out: Pick<ɵWuFlowNodeView, 'render' | 'template' | 'component'> = { render: 'builtin', template: null, component: null };
     const specific = this.nodeTemplates?.find((t) => !!t.type && t.type === type);
     const component = this.nodeTypes && Object.prototype.hasOwnProperty.call(this.nodeTypes, type) ? this.nodeTypes[type] : null;
     const generic =
@@ -970,8 +970,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     return out;
   }
 
-  private newNodeView(id: string): ɵWtFlowNodeView {
-    const ctx = { id } as WtFlowNodeContext;
+  private newNodeView(id: string): ɵWuFlowNodeView {
+    const ctx = { id } as WuFlowNodeContext;
     ctx.$implicit = ctx;
     return {
       id,
@@ -1002,7 +1002,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       targetPosition: 'top',
       ctx,
       // No parent: anything else a template injects still comes from where the template was written.
-      injector: Injector.create({ providers: [{ provide: WT_FLOW_NODE, useValue: ctx }] }),
+      injector: Injector.create({ providers: [{ provide: WU_FLOW_NODE, useValue: ctx }] }),
     };
   }
 
@@ -1017,10 +1017,10 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     const zs = computeNodeZ(nodes, { elevateOnSelect: this._elevateNodes });
     const parents = new Set<string>();
     for (const n of nodes) if (n && n.parentId) parents.add(n.parentId);
-    const cache = new Map<string, Pick<ɵWtFlowNodeView, 'render' | 'template' | 'component'>>();
+    const cache = new Map<string, Pick<ɵWuFlowNodeView, 'render' | 'template' | 'component'>>();
     const locked = !this._interactive;
-    const next = new Map<string, ɵWtFlowNodeView>();
-    const all: ɵWtFlowNodeView[] = [];
+    const next = new Map<string, ɵWuFlowNodeView>();
+    const all: ɵWuFlowNodeView[] = [];
     const hiddenIds = new Set<string>();
     for (const node of sortNodesParentsFirst(nodes)) {
       if (!node || typeof node.id !== 'string') continue;
@@ -1063,16 +1063,16 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       v.ariaLabel = node.selected ? `${name}, ${this.text('flowSelectedState')}` : name;
       const pending = this.keyboardFrom && this.keyboardFrom.nodeId === node.id;
       v.classes = [
-        'wt-flow-node-' + safeClass(type),
-        v.render === 'builtin' ? 'wt-flow-node-builtin' : 'wt-flow-node-custom',
-        node.selected ? 'wt-flow-node-selected' : '',
-        node.dragging ? 'wt-flow-node-dragging' : '',
-        node.resizing ? 'wt-flow-node-resizing' : '',
-        v.draggable ? 'wt-flow-node-draggable' : '',
-        v.selectable ? 'wt-flow-node-selectable' : '',
-        v.connectable ? 'wt-flow-node-connectable' : '',
-        parents.has(node.id) ? 'wt-flow-node-parent' : '',
-        pending ? 'wt-flow-node-connect-source' : '',
+        'wu-flow-node-' + safeClass(type),
+        v.render === 'builtin' ? 'wu-flow-node-builtin' : 'wu-flow-node-custom',
+        node.selected ? 'wu-flow-node-selected' : '',
+        node.dragging ? 'wu-flow-node-dragging' : '',
+        node.resizing ? 'wu-flow-node-resizing' : '',
+        v.draggable ? 'wu-flow-node-draggable' : '',
+        v.selectable ? 'wu-flow-node-selectable' : '',
+        v.connectable ? 'wu-flow-node-connectable' : '',
+        parents.has(node.id) ? 'wu-flow-node-parent' : '',
+        pending ? 'wu-flow-node-connect-source' : '',
         node.className || '',
       ]
         .filter(Boolean)
@@ -1116,10 +1116,10 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private rebuildEdges(): void {
     const defaults = this.defaultEdgeOptions || null;
     const locked = !this._interactive;
-    const layers = new Map<number, ɵWtFlowEdgeView[]>();
-    const labels: ɵWtFlowEdgeView[] = [];
-    const markers = new Map<string, ɵWtFlowMarkerView>();
-    const next = new Map<string, ɵWtFlowEdgeView>();
+    const layers = new Map<number, ɵWuFlowEdgeView[]>();
+    const labels: ɵWuFlowEdgeView[] = [];
+    const markers = new Map<string, ɵWuFlowMarkerView>();
+    const next = new Map<string, ɵWuFlowEdgeView>();
     const view = this._onlyVisible && this.paneW > 0 ? viewRect(this.vp, { width: this.paneW, height: this.paneH }) : null;
     const reconnecting = this.gesture && this.gesture.kind === 'connect' && this.gesture.reconnect && this.gesture.moved ? this.gesture.reconnect.edge.id : null;
     for (const raw of this._edges) {
@@ -1129,7 +1129,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       if (!s || !t) {
         if ((!this.lookup.has(raw.source) || !this.lookup.has(raw.target)) && !this.warned.has(raw.id)) {
           this.warned.add(raw.id);
-          console.warn(`[wiratheme] flow: edge "${raw.id}" refers to a node that does not exist (source "${raw.source}", target "${raw.target}").`);
+          console.warn(`[wiraui] flow: edge "${raw.id}" refers to a node that does not exist (source "${raw.source}", target "${raw.target}").`);
         }
         continue;
       }
@@ -1174,16 +1174,16 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       v.hasLabel = !!v.labelTemplate || v.label !== '';
       v.ariaLabel = flowEdgeName(e, s.node, t.node, this.config.translation) + (selected ? `, ${this.text('flowSelectedState')}` : '');
       v.classes = [
-        'wt-flow-edge-' + safeClass(type),
-        selected ? 'wt-flow-edge-selected' : '',
-        e.animated ? 'wt-flow-edge-animated' : '',
-        v.selectable ? 'wt-flow-edge-selectable' : '',
-        reconnecting === raw.id ? 'wt-flow-edge-reconnecting' : '',
+        'wu-flow-edge-' + safeClass(type),
+        selected ? 'wu-flow-edge-selected' : '',
+        e.animated ? 'wu-flow-edge-animated' : '',
+        v.selectable ? 'wu-flow-edge-selectable' : '',
+        reconnecting === raw.id ? 'wu-flow-edge-reconnecting' : '',
         e.className || '',
       ]
         .filter(Boolean)
         .join(' ');
-      v.labelClasses = [selected ? 'wt-flow-edge-label-selected' : '', e.labelShowBg === false ? 'wt-flow-edge-label-plain' : '', v.labelTemplate ? 'wt-flow-edge-label-custom' : ''].filter(Boolean).join(' ');
+      v.labelClasses = [selected ? 'wu-flow-edge-label-selected' : '', e.labelShowBg === false ? 'wu-flow-edge-label-plain' : '', v.labelTemplate ? 'wu-flow-edge-label-custom' : ''].filter(Boolean).join(' ');
       v.labelTransform = `translate(${lx}px, ${ly}px) translate(-50%, -50%)`;
       v.labelStyle = e.labelStyle && typeof e.labelStyle === 'object' ? e.labelStyle : null;
       const box: FlowStyle = { ...(e.labelBgStyle || {}) };
@@ -1225,8 +1225,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     this.markers = Array.from(markers.values());
   }
 
-  private newEdgeView(id: string): ɵWtFlowEdgeView {
-    const ctx = { id } as WtFlowEdgeContext;
+  private newEdgeView(id: string): ɵWuFlowEdgeView {
+    const ctx = { id } as WuFlowEdgeContext;
     ctx.$implicit = ctx;
     return {
       id,
@@ -1278,7 +1278,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   /** `url(#id)` for a marker, adding its definition to `markers`. Default-coloured markers follow the edge colour. */
-  private markerUrl(marker: FlowEdge['markerEnd'], selected: boolean, markers: Map<string, ɵWtFlowMarkerView>): string | null {
+  private markerUrl(marker: FlowEdge['markerEnd'], selected: boolean, markers: Map<string, ɵWuFlowMarkerView>): string | null {
     const m = normalizeMarker(marker);
     if (!m) return null;
     const custom = !!m.color;
@@ -1291,7 +1291,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
         shape: markerShape(m.type),
         width: m.width,
         height: m.height,
-        className: custom ? 'wt-flow-marker-custom' : `wt-flow-marker ${closed ? 'wt-flow-marker-closed' : 'wt-flow-marker-open'}${selected ? ' wt-flow-marker-selected' : ''}`,
+        className: custom ? 'wu-flow-marker-custom' : `wu-flow-marker ${closed ? 'wu-flow-marker-closed' : 'wu-flow-marker-open'}${selected ? ' wu-flow-marker-selected' : ''}`,
         fill: custom ? (closed ? (m.color as string) : 'none') : null,
         stroke: custom ? (m.color as string) : null,
         strokeWidth: Math.round(((m.strokeWidth * 20) / m.width) * 1000) / 1000,
@@ -1518,8 +1518,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     const nr = el.getBoundingClientRect();
     if (!nr.width && !nr.height) return false;
     const out: MeasuredHandles = { source: [], target: [] };
-    el.querySelectorAll('.wt-flow-handle').forEach((h) => {
-      if (h.closest('.wt-flow-node') !== el) return;
+    el.querySelectorAll('.wu-flow-handle').forEach((h) => {
+      if (h.closest('.wu-flow-node') !== el) return;
       const r = h.getBoundingClientRect();
       const type: FlowHandleType = h.getAttribute('data-handletype') === 'target' ? 'target' : 'source';
       const pos = h.getAttribute('data-handlepos');
@@ -1742,33 +1742,33 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     return this.vp.zoom;
   }
 
-  setViewport(viewport: Partial<FlowViewport>, options: WtFlowViewportOptions = {}): Promise<boolean> {
+  setViewport(viewport: Partial<FlowViewport>, options: WuFlowViewportOptions = {}): Promise<boolean> {
     return this.animateTo({ x: num(viewport.x, this.vp.x), y: num(viewport.y, this.vp.y), zoom: num(viewport.zoom, this.vp.zoom) }, options.duration);
   }
 
-  ɵzoomBy(factor: number, anchor?: FlowXY, options: WtFlowViewportOptions = {}): Promise<boolean> {
+  ɵzoomBy(factor: number, anchor?: FlowXY, options: WuFlowViewportOptions = {}): Promise<boolean> {
     const at = anchor || { x: this.paneW / 2, y: this.paneH / 2 };
     return this.animateTo(zoomAt(this.vp, this.vp.zoom * factor, at, this.minZ(), this.maxZ()), options.duration);
   }
 
-  zoomIn(options: WtFlowViewportOptions = {}): Promise<boolean> {
+  zoomIn(options: WuFlowViewportOptions = {}): Promise<boolean> {
     return this.ɵzoomBy(Math.max(1.01, num(this.zoomStep, 1.2)), undefined, options);
   }
 
-  zoomOut(options: WtFlowViewportOptions = {}): Promise<boolean> {
+  zoomOut(options: WuFlowViewportOptions = {}): Promise<boolean> {
     return this.ɵzoomBy(1 / Math.max(1.01, num(this.zoomStep, 1.2)), undefined, options);
   }
 
-  zoomTo(zoom: number, options: WtFlowViewportOptions = {}): Promise<boolean> {
+  zoomTo(zoom: number, options: WuFlowViewportOptions = {}): Promise<boolean> {
     return this.animateTo(zoomAt(this.vp, zoom, { x: this.paneW / 2, y: this.paneH / 2 }, this.minZ(), this.maxZ()), options.duration);
   }
 
-  setCenter(x: number, y: number, options: WtFlowSetCenterOptions = {}): Promise<boolean> {
+  setCenter(x: number, y: number, options: WuFlowSetCenterOptions = {}): Promise<boolean> {
     const zoom = clampZoom(num(options.zoom, this.vp.zoom), this.minZ(), this.maxZ());
     return this.animateTo(viewportForCenter(x, y, zoom, { width: this.paneW, height: this.paneH }), options.duration);
   }
 
-  fitBounds(bounds: FlowRect, options: WtFlowFitBoundsOptions = {}): Promise<boolean> {
+  fitBounds(bounds: FlowRect, options: WuFlowFitBoundsOptions = {}): Promise<boolean> {
     if (!this.paneW || !this.paneH) return Promise.resolve(false);
     return this.animateTo(getViewportForBounds(bounds, this.paneW, this.paneH, this.minZ(), this.maxZ(), options.padding ?? 0.1), options.duration);
   }
@@ -1781,7 +1781,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   /** Fits the nodes (or `options.nodes`) into view; waits for them to be measured first. */
-  fitView(options: WtFlowFitViewOptions = {}): Promise<boolean> {
+  fitView(options: WuFlowFitViewOptions = {}): Promise<boolean> {
     if (!this.browser) return Promise.resolve(false);
     const ids = options.nodes ? new Set(options.nodes.map((n) => (typeof n === 'string' ? n : n.id))) : undefined;
     if (this.viewInit && this.allMeasured(ids)) return this.fitNow(options);
@@ -1801,7 +1801,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     });
   }
 
-  private fitNow(options: WtFlowFitViewOptions): Promise<boolean> {
+  private fitNow(options: WuFlowFitViewOptions): Promise<boolean> {
     if (!this.paneW || !this.paneH) return Promise.resolve(false);
     this.rebuild();
     const ids = options.nodes ? new Set(options.nodes.map((n) => (typeof n === 'string' ? n : n.id))) : null;
@@ -1868,7 +1868,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   // ======================================================================
 
   private ownsElement(el: Element | null): boolean {
-    return !!el && el.closest('.wt-flow') === this.rootRef?.nativeElement;
+    return !!el && el.closest('.wu-flow') === this.rootRef?.nativeElement;
   }
 
   private panButtons(): number[] {
@@ -1930,10 +1930,10 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       }
       return;
     }
-    const handleEl = target.closest('.wt-flow-handle');
-    const updaterEl = target.closest('.wt-flow-edge-updater');
-    const nodeEl = target.closest('.wt-flow-node');
-    const edgeEl = target.closest('.wt-flow-edge, .wt-flow-edge-label');
+    const handleEl = target.closest('.wu-flow-handle');
+    const updaterEl = target.closest('.wu-flow-edge-updater');
+    const nodeEl = target.closest('.wu-flow-node');
+    const edgeEl = target.closest('.wu-flow-edge, .wu-flow-edge-label');
     if (this.panKeyHeld) {
       this.gesture = { ...base, kind: 'pan', startVp: { ...this.vp } };
       return;
@@ -1968,7 +1968,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     }
     if (this.panButtons().includes(0)) {
       this.gesture = { ...base, kind: 'pan', startVp: { ...this.vp } };
-      this.setRootClass('wt-flow-panning', true);
+      this.setRootClass('wu-flow-panning', true);
       if (e.pointerType === 'touch') this.startLongPress();
       return;
     }
@@ -1993,7 +1993,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
           }
         } else if ((g.kind === 'pan' && !pastThreshold(g.startClient, g.lastClient, 6)) || (g.kind === 'click' && g.on === 'pane')) {
           // A long press on the pane starts a selection box there.
-          this.setRootClass('wt-flow-panning', false);
+          this.setRootClass('wu-flow-panning', false);
           if (g.kind === 'pan') this.setVp(g.startVp, null);
           this.startSelection(g, true);
         }
@@ -2011,7 +2011,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private startSelection(base: BaseGesture, additive: boolean): void {
     const keep = additive ? [...Array.from(this.selectedNodeIds()), ...Array.from(this.selectedEdgeIds())] : [];
     this.gesture = { ...base, kind: 'select', startPane: this.clientToPane(base.startClient), keep };
-    this.setRootClass('wt-flow-selecting', true);
+    this.setRootClass('wu-flow-selecting', true);
   }
 
   private startPinch(): void {
@@ -2090,7 +2090,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
         this.stopLongPress();
         if (this.panButtons().includes(0)) {
           this.gesture = { ...g, kind: 'pan', startVp: { ...this.vp } };
-          this.setRootClass('wt-flow-panning', true);
+          this.setRootClass('wu-flow-panning', true);
         } else this.gesture = null;
         break;
     }
@@ -2111,7 +2111,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     if (!g || g.pointerId !== e.pointerId) return;
     this.gesture = null;
     this.stopLongPress();
-    this.setRootClass('wt-flow-panning', false);
+    this.setRootClass('wu-flow-panning', false);
     if (cancelled) {
       if (g.kind === 'drag') this.endDrag(g, e);
       else if (g.kind === 'connect') this.endConnect(g, e, true);
@@ -2134,7 +2134,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
         if (pastThreshold(g.startClient, g.lastClient, 2)) this.endSelection();
         else {
           this.selectionRect = null;
-          this.setRootClass('wt-flow-selecting', false);
+          this.setRootClass('wu-flow-selecting', false);
           this.paneClicked(e);
         }
         break;
@@ -2188,8 +2188,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private doubleClick(e: MouseEvent): void {
     const target = e.target as Element | null;
     if (!target || !this.ownsElement(target)) return;
-    const nodeEl = target.closest('.wt-flow-node');
-    const edgeEl = target.closest('.wt-flow-edge, .wt-flow-edge-label');
+    const nodeEl = target.closest('.wu-flow-node');
+    const edgeEl = target.closest('.wu-flow-edge, .wu-flow-edge-label');
     if (nodeEl) {
       const node = this.lookup.get(nodeEl.getAttribute('data-id') || '');
       if (node && isObserved(this.nodeDoubleClick as EventEmitter<unknown>)) this.emitNow(() => this.nodeDoubleClick.emit({ event: e, node }));
@@ -2209,8 +2209,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private contextMenu(e: MouseEvent): void {
     const target = e.target as Element | null;
     if (!target || !this.ownsElement(target)) return;
-    const nodeEl = target.closest('.wt-flow-node');
-    const edgeEl = target.closest('.wt-flow-edge, .wt-flow-edge-label');
+    const nodeEl = target.closest('.wu-flow-node');
+    const edgeEl = target.closest('.wu-flow-edge, .wu-flow-edge-label');
     if (nodeEl) {
       const node = this.lookup.get(nodeEl.getAttribute('data-id') || '');
       if (node && isObserved(this.nodeContextMenu as EventEmitter<unknown>)) this.emitNow(() => this.nodeContextMenu.emit({ event: e, node }));
@@ -2225,8 +2225,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private pointerOver(e: PointerEvent): void {
     if (e.pointerType === 'touch') return;
     const target = e.target as Element | null;
-    const nodeEl = target?.closest('.wt-flow-node');
-    const edgeEl = target?.closest('.wt-flow-edge, .wt-flow-edge-label');
+    const nodeEl = target?.closest('.wu-flow-node');
+    const edgeEl = target?.closest('.wu-flow-edge, .wu-flow-edge-label');
     const nodeId = nodeEl && this.ownsElement(nodeEl) ? nodeEl.getAttribute('data-id') : null;
     const edgeId = !nodeId && edgeEl && this.ownsElement(edgeEl) ? edgeEl.getAttribute('data-id') : null;
     this.hover(nodeId, edgeId, e);
@@ -2259,7 +2259,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private dragItems(ids: string[]): FlowDragItem[] {
     return dragRoots(ids, this.lookup)
       .map((id) => this.views.get(id))
-      .filter((v): v is ɵWtFlowNodeView => !!v)
+      .filter((v): v is ɵWuFlowNodeView => !!v)
       .map((v) => {
         const parent = v.node.parentId ? this.views.get(v.node.parentId) : undefined;
         return {
@@ -2298,7 +2298,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       current: new Map(),
     };
     this.gesture = drag;
-    this.setRootClass('wt-flow-dragging', true);
+    this.setRootClass('wu-flow-dragging', true);
     if (isObserved(this.nodeDragStart as EventEmitter<unknown>)) {
       const nodes = items.map((it) => this.lookup.get(it.id) as FlowNode);
       this.emitNow(() => this.nodeDragStart.emit({ event: g.event, node: view.node, nodes }));
@@ -2347,7 +2347,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private endDrag(g: DragGesture, e: PointerEvent | null): void {
     this.stopAutoPan();
-    this.setRootClass('wt-flow-dragging', false);
+    this.setRootClass('wu-flow-dragging', false);
     this.guides = [];
     const changes: FlowNodeChange[] = g.items.map((it) => {
       const r = g.current.get(it.id);
@@ -2420,7 +2420,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private endSelection(): void {
     this.selectionRect = null;
-    this.setRootClass('wt-flow-selecting', false);
+    this.setRootClass('wu-flow-selecting', false);
     this.dirty = true;
     this.flushArrays();
     this.announceSelection();
@@ -2441,7 +2441,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     return out;
   }
 
-  private handleInfo(v: ɵWtFlowNodeView, h: MeasuredHandle): HandleInfo {
+  private handleInfo(v: ɵWuFlowNodeView, h: MeasuredHandle): HandleInfo {
     const point =
       h.position === 'top'
         ? { x: v.x + h.x + h.width / 2, y: v.y + h.y }
@@ -2482,7 +2482,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   private handleFromElement(el: Element): HandleInfo | null {
-    const nodeEl = el.closest('.wt-flow-node');
+    const nodeEl = el.closest('.wu-flow-node');
     const nodeId = nodeEl?.getAttribute('data-id');
     const v = nodeId ? this.views.get(nodeId) : undefined;
     if (!nodeId || !v) return null;
@@ -2505,7 +2505,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   private startReconnect(el: Element, base: BaseGesture): boolean {
-    const edgeEl = el.closest('.wt-flow-edge');
+    const edgeEl = el.closest('.wu-flow-edge');
     const edge = this._edges.find((x) => x.id === edgeEl?.getAttribute('data-id'));
     const end = el.getAttribute('data-end') === 'source' ? 'source' : 'target';
     if (!edge || !this._interactive) return false;
@@ -2526,8 +2526,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private beginConnect(g: ConnectGesture): void {
     g.candidates = this.allHandles();
     this.cancelPendingConnection(false);
-    this.setRootClass('wt-flow-connecting', true);
-    this.markHandle(g.from, 'wt-flow-handle-connecting', true);
+    this.setRootClass('wu-flow-connecting', true);
+    this.markHandle(g.from, 'wu-flow-handle-connecting', true);
     if (g.reconnect) {
       this.dirty = true;
       const r = g.reconnect;
@@ -2544,14 +2544,14 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     let target = nearestHandle(p, g.candidates, radius, (h) => handlesCompatible(g.from, h, mode));
     if (!target) {
       // Dropped on a node's body: its nearest fitting handle (or the node itself when it has none).
-      let best: ɵWtFlowNodeView | null = null;
+      let best: ɵWuFlowNodeView | null = null;
       for (const v of this.renderedNodes) {
         if (v.id === g.from.nodeId || v.width <= 0) continue;
         if (!rectsIntersect({ x: p.x, y: p.y, width: 0, height: 0 }, { x: v.x, y: v.y, width: v.width, height: v.height })) continue;
         if (!best || v.z >= best.z) best = v;
       }
       if (best) {
-        const own = g.candidates.filter((h) => h.nodeId === (best as ɵWtFlowNodeView).id && handlesCompatible(g.from, h, mode));
+        const own = g.candidates.filter((h) => h.nodeId === (best as ɵWuFlowNodeView).id && handlesCompatible(g.from, h, mode));
         target = own.length ? nearestHandle(p, own, Infinity) : this.nodeHandle(best.id, g.from.type === 'source' ? 'target' : 'source', p);
       }
     }
@@ -2588,7 +2588,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
       valid,
       fromNodeId: g.from.nodeId,
       fromHandleId: g.from.id,
-    } as WtFlowConnectionLineContext;
+    } as WuFlowConnectionLineContext;
     ctx.$implicit = ctx;
     this.connectionLine = { path, valid, ctx };
     this.dirty = true;
@@ -2599,8 +2599,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     if (h.virtual) return null;
     const nodeEl = this.nodeEls.get(h.nodeId);
     if (!nodeEl) return null;
-    const list = Array.from(nodeEl.querySelectorAll(`.wt-flow-handle[data-handletype="${h.type}"]`));
-    return list.find((el) => (el.getAttribute('data-handleid') || null) === h.id && el.closest('.wt-flow-node') === nodeEl) || null;
+    const list = Array.from(nodeEl.querySelectorAll(`.wu-flow-handle[data-handletype="${h.type}"]`));
+    return list.find((el) => (el.getAttribute('data-handleid') || null) === h.id && el.closest('.wu-flow-node') === nodeEl) || null;
   }
 
   private markHandle(h: HandleInfo | null, cls: string, on: boolean): void {
@@ -2610,19 +2610,19 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private highlight(target: HandleInfo | null, connection: FlowConnection | null): void {
     const el = target ? this.handleElement(target) : null;
-    if (this.highlighted && this.highlighted !== el) this.highlighted.classList.remove('wt-flow-handle-valid', 'wt-flow-handle-invalid');
+    if (this.highlighted && this.highlighted !== el) this.highlighted.classList.remove('wu-flow-handle-valid', 'wu-flow-handle-invalid');
     this.highlighted = el;
     if (el) {
-      el.classList.toggle('wt-flow-handle-valid', !!connection);
-      el.classList.toggle('wt-flow-handle-invalid', !connection);
+      el.classList.toggle('wu-flow-handle-valid', !!connection);
+      el.classList.toggle('wu-flow-handle-invalid', !connection);
     }
   }
 
   private endConnect(g: ConnectGesture, e: PointerEvent | null, cancelled: boolean): void {
     this.stopAutoPan();
     this.highlight(null, null);
-    this.markHandle(g.from, 'wt-flow-handle-connecting', false);
-    this.setRootClass('wt-flow-connecting', false);
+    this.markHandle(g.from, 'wu-flow-handle-connecting', false);
+    this.setRootClass('wu-flow-connecting', false);
     this.connectionLine = null;
     this.dirty = true;
     const connection = cancelled ? null : g.connection;
@@ -2666,12 +2666,12 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     const from = this.clickFrom;
     if (!from) {
       this.clickFrom = h;
-      this.markHandle(h, 'wt-flow-handle-connecting', true);
+      this.markHandle(h, 'wu-flow-handle-connecting', true);
       this.announce(flowFormat(this.text('flowConnectStart'), { name: flowNodeName(this.lookup.get(h.nodeId)) }));
       if (isObserved(this.connectStart as EventEmitter<unknown>)) this.emitNow(() => this.connectStart.emit({ event: e, nodeId: h.nodeId, handleId: h.id, handleType: h.type }));
       return;
     }
-    this.markHandle(from, 'wt-flow-handle-connecting', false);
+    this.markHandle(from, 'wu-flow-handle-connecting', false);
     this.clickFrom = null;
     const connection = h.connectableEnd ? validConnection(from, h, this.connectRules(null)) : null;
     if (connection) this.applyConnect(connection);
@@ -2681,7 +2681,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private cancelPendingConnection(announce: boolean): void {
     if (!this.clickFrom && !this.keyboardFrom) return;
-    if (this.clickFrom) this.markHandle(this.clickFrom, 'wt-flow-handle-connecting', false);
+    if (this.clickFrom) this.markHandle(this.clickFrom, 'wu-flow-handle-connecting', false);
     this.clickFrom = null;
     if (this.keyboardFrom) {
       this.keyboardFrom = null;
@@ -2697,7 +2697,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private wheel(e: WheelEvent): void {
     const target = e.target as Element | null;
-    if (!target || !this.ownsElement(target) || target.closest('.nowheel, .wt-flow-nowheel')) return;
+    if (!target || !this.ownsElement(target) || target.closest('.nowheel, .wu-flow-nowheel')) return;
     this.paneRect = null;
     const at = this.clientToPane({ x: e.clientX, y: e.clientY });
     const pinch = e.ctrlKey;
@@ -2757,7 +2757,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
 
   private focusIn(e: FocusEvent): void {
     const target = e.target as Element | null;
-    const nodeEl = target?.closest('.wt-flow-node');
+    const nodeEl = target?.closest('.wu-flow-node');
     const id = nodeEl && this.ownsElement(nodeEl) && nodeEl === target ? nodeEl.getAttribute('data-id') : null;
     this.focusedNodeId = id;
     if (this.rootRef) this.resetScroll(this.rootRef.nativeElement);
@@ -2775,7 +2775,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   private keyUp(e: KeyboardEvent): void {
     if (keyMatches(e, this.panActivationKeyCode)) {
       this.panKeyHeld = false;
-      this.setRootClass('wt-flow-pan-key', false);
+      this.setRootClass('wu-flow-pan-key', false);
     }
   }
 
@@ -2783,15 +2783,15 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     const target = e.target as Element | null;
     if (!target || !this.ownsElement(target) || isTypingTarget(target)) return;
     const root = this.rootRef?.nativeElement;
-    const nodeEl = target.closest('.wt-flow-node');
-    const edgeEl = target.closest('.wt-flow-edge');
+    const nodeEl = target.closest('.wu-flow-node');
+    const edgeEl = target.closest('.wu-flow-edge');
     const onNode = !!nodeEl && nodeEl === target;
     const onEdge = !!edgeEl && edgeEl === target;
     const onPane = target === root;
     const locked = !this._interactive;
     if (onPane && keyMatches(e, this.panActivationKeyCode) && !e.repeat) {
       this.panKeyHeld = true;
-      this.setRootClass('wt-flow-pan-key', true);
+      this.setRootClass('wu-flow-pan-key', true);
       e.preventDefault();
       return;
     }
@@ -2956,7 +2956,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
         return { type: 'position', id: it.id, position: parent ? { x: it.start.x - parent.x, y: it.start.y - parent.y } : { ...it.start }, dragging: false };
       });
       this.stopAutoPan();
-      this.setRootClass('wt-flow-dragging', false);
+      this.setRootClass('wu-flow-dragging', false);
       this.guides = [];
       this.commitNodes(changes, true);
     } else if (g.kind === 'connect') {
@@ -2965,7 +2965,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     } else if (g.kind === 'select') {
       this.endSelection();
     } else if (g.kind === 'pan') {
-      this.setRootClass('wt-flow-panning', false);
+      this.setRootClass('wu-flow-panning', false);
       this.endMove(null);
     }
     this.requestRender();
@@ -3126,7 +3126,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   /** Lays the nodes out (`layoutFlow`, or `layoutTree` with `algorithm: 'tree'`) and fits the view unless told not to. */
-  layout(options: WtFlowLayoutOptions = {}): Promise<boolean> {
+  layout(options: WuFlowLayoutOptions = {}): Promise<boolean> {
     const sizes = this.sizes;
     const next = options.algorithm === 'tree' ? layoutTree(this._nodes, this._edges, { ...options, sizes }) : layoutFlow(this._nodes, this._edges, { ...options, sizes });
     this.replaceNodes(next, true);
@@ -3145,7 +3145,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   }
 
   /** Loads what `toJSON()` wrote (object or text); false when it is not a diagram. */
-  fromJSON(json: unknown, options: WtFlowViewportOptions = {}): boolean {
+  fromJSON(json: unknown, options: WuFlowViewportOptions = {}): boolean {
     const data = flowFromJSON(json);
     if (!data) return false;
     this.replaceNodes(data.nodes, false);
@@ -3174,13 +3174,13 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     const win = this.doc.defaultView;
     if (!host || !win || !this.browser) return {};
     const probe = this.doc.createElement('div');
-    probe.className = 'wt-flow-probe';
+    probe.className = 'wu-flow-probe';
     probe.setAttribute('aria-hidden', 'true');
     probe.innerHTML =
-      '<div class="wt-flow-node wt-flow-node-default wt-flow-node-builtin"></div>' +
-      '<div class="wt-flow-node wt-flow-node-group wt-flow-node-builtin"></div>' +
-      '<div class="wt-flow-edge-label"></div>' +
-      '<svg class="wt-flow-edges"><path class="wt-flow-edge-path"></path></svg>';
+      '<div class="wu-flow-node wu-flow-node-default wu-flow-node-builtin"></div>' +
+      '<div class="wu-flow-node wu-flow-node-group wu-flow-node-builtin"></div>' +
+      '<div class="wu-flow-edge-label"></div>' +
+      '<svg class="wu-flow-edges"><path class="wu-flow-edge-path"></path></svg>';
     host.appendChild(probe);
     const [node, group, label] = Array.from(probe.children) as HTMLElement[];
     const path = probe.querySelector('path') as SVGPathElement;
@@ -3238,12 +3238,12 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
   // for the add-ons
   // ======================================================================
 
-  ɵlisten(fn: (changes: ReadonlySet<ɵWtFlowChange>) => void): () => void {
+  ɵlisten(fn: (changes: ReadonlySet<ɵWuFlowChange>) => void): () => void {
     this.listeners.add(fn);
     return () => this.listeners.delete(fn);
   }
 
-  /** Called after each finished change (`external`: new nodes / edges came in from the app). Used by `wtFlowHistory`. */
+  /** Called after each finished change (`external`: new nodes / edges came in from the app). Used by `wuFlowHistory`. */
   ɵonCommit(fn: (external: boolean) => void): () => void {
     this.commitListeners.add(fn);
     return () => this.commitListeners.delete(fn);
@@ -3263,8 +3263,8 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     return this.rootRef?.nativeElement || null;
   }
 
-  ɵnodeRects(): WtFlowNodeRect[] {
-    const out: WtFlowNodeRect[] = [];
+  ɵnodeRects(): WuFlowNodeRect[] {
+    const out: WuFlowNodeRect[] = [];
     for (const v of this.views.values()) out.push({ id: v.id, node: v.node, selected: !!v.node.selected, x: v.x, y: v.y, width: v.width, height: v.height });
     return out;
   }
@@ -3279,7 +3279,7 @@ export class WtFlow implements WtFlowApi, ɵWtFlowHost, ɵWtFlowNodeRegistry, On
     return n;
   }
 
-  ɵnodeBox(nodeId: string): ɵWtFlowNodeBox | null {
+  ɵnodeBox(nodeId: string): ɵWuFlowNodeBox | null {
     const v = this.views.get(nodeId);
     if (!v) return null;
     return { position: { ...v.node.position }, absolute: { x: v.x, y: v.y }, width: v.width, height: v.height, parentId: v.node.parentId || null };

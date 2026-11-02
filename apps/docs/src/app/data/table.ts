@@ -73,11 +73,11 @@ const STUDENT_WORDS: SampleWords = {
 
 /** The page report text for the whole app: shown in the TS tab of the report sections. */
 const REPORT_TS = `import { inject } from '@angular/core';
-import { WtConfig } from 'wiratheme/config';
+import { WuConfig } from 'wiraui/config';
 
 // app.component.ts: ทั้งแอปในครั้งเดียว: ทุกตารางและทุก paginator ใช้ข้อความนี้
 export class AppComponent {
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
 
   constructor() {
     this.setPageReport();
@@ -137,25 +137,25 @@ const NAME_ROOM = `  <ng-template #header>
     </tr>
   </ng-template>`;
 
-const ADMIN_HTML = `<wt-table #dt [value]="students" dataKey="id" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50]"
+const ADMIN_HTML = `<wu-table #dt [value]="students" dataKey="id" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50]"
   [showCurrentPageReport]="true" [globalFilterFields]="['code', 'name', 'room']" [filterDelay]="0"
   [tableStyle]="{ 'min-width': '48rem' }">
   <ng-template #caption>
     <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-      <wt-iconfield>
-        <wt-inputicon icon="wi wi-search"></wt-inputicon>
-        <input wtInputText placeholder="ค้นหา รหัส ชื่อ ห้อง" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-      </wt-iconfield>
-      <wt-button label="เพิ่ม" icon="wi wi-plus" (onClick)="addStudent()"></wt-button>
+      <wu-iconfield>
+        <wu-inputicon icon="wi wi-search"></wu-inputicon>
+        <input wuInputText placeholder="ค้นหา รหัส ชื่อ ห้อง" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+      </wu-iconfield>
+      <wu-button label="เพิ่ม" icon="wi wi-plus" (onClick)="addStudent()"></wu-button>
     </div>
   </ng-template>
   <ng-template #header>
     <tr>
       <th style="width: 4rem">ลำดับ</th>
-      <th wtSortableColumn="code">รหัส <wt-sortIcon field="code"></wt-sortIcon></th>
-      <th wtSortableColumn="name">ชื่อ - สกุล <wt-sortIcon field="name"></wt-sortIcon></th>
-      <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
-      <th wtSortableColumn="birthDate">วันเกิด <wt-sortIcon field="birthDate"></wt-sortIcon></th>
+      <th wuSortableColumn="code">รหัส <wu-sortIcon field="code"></wu-sortIcon></th>
+      <th wuSortableColumn="name">ชื่อ - สกุล <wu-sortIcon field="name"></wu-sortIcon></th>
+      <th wuSortableColumn="room">ห้อง <wu-sortIcon field="room"></wu-sortIcon></th>
+      <th wuSortableColumn="birthDate">วันเกิด <wu-sortIcon field="birthDate"></wu-sortIcon></th>
       <th>สถานะ</th>
       <th style="width: 7rem"></th>
     </tr>
@@ -167,10 +167,10 @@ const ADMIN_HTML = `<wt-table #dt [value]="students" dataKey="id" [paginator]="t
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
       <td>{{ thaiDate(s.birthDate) }}</td>
-      <td><wt-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wt-tag></td>
+      <td><wu-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wu-tag></td>
       <td>
-        <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" wtTooltip="แก้ไข" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
-        <wt-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" wtTooltip="ลบ" ariaLabel="ลบ" (onClick)="deleteStudent(s)"></wt-button>
+        <wu-button icon="wi wi-pencil" [rounded]="true" [text]="true" wuTooltip="แก้ไข" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wu-button>
+        <wu-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" wuTooltip="ลบ" ariaLabel="ลบ" (onClick)="deleteStudent(s)"></wu-button>
       </td>
     </tr>
   </ng-template>
@@ -179,16 +179,16 @@ const ADMIN_HTML = `<wt-table #dt [value]="students" dataKey="id" [paginator]="t
       <td colspan="7" class="text-center">ไม่พบนักเรียนที่ค้นหา</td>
     </tr>
   </ng-template>
-</wt-table>`;
+</wu-table>`;
 
 export const TABLE_DOC: ComponentDoc = {
   id: 'table',
   title: 'Table',
   group: 'Data',
   entry: 'table',
-  standalone: 'WtTable',
-  module: 'WtTableModule',
-  selector: 'wt-table',
+  standalone: 'WuTable',
+  module: 'WuTableModule',
+  selector: 'wu-table',
   english: {
     ...STUDENT_WORDS,
     'ลำดับ': 'No.',
@@ -268,8 +268,8 @@ export const TABLE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WtTableModule</code> รวมตาราง directive ของคอลัมน์ / แถว / checkbox และ <code>wtTemplate</code> ไว้แล้ว ถ้าเป็น standalone ให้ import <code>WtTable</code> พร้อม directive ที่ใช้ (<code>WtSortableColumn</code>, <code>WtSortIcon</code>, <code>WtSelectableRow</code>, <code>WtTableCheckbox</code>, <code>WtTableHeaderCheckbox</code>, <code>WtFrozenColumn</code>, <code>WtRowToggler</code>, <code>WtRowGroupHeader</code>, <code>WtColumnFilter</code>) selector <code>wt-datatable</code> ก็ใช้ได้',
-        en: '<code>WtTableModule</code> brings the table, the column / row / checkbox / filter directives and <code>wtTemplate</code>. Standalone: import <code>WtTable</code> plus the directives you use (<code>WtSortableColumn</code>, <code>WtSortIcon</code>, <code>WtSelectableRow</code>, <code>WtTableCheckbox</code>, <code>WtTableHeaderCheckbox</code>, <code>WtFrozenColumn</code>, <code>WtRowToggler</code>, <code>WtRowGroupHeader</code>, <code>WtColumnFilter</code>). The <code>wt-datatable</code> selector works too.',
+        th: '<code>WuTableModule</code> รวมตาราง directive ของคอลัมน์ / แถว / checkbox และ <code>wuTemplate</code> ไว้แล้ว ถ้าเป็น standalone ให้ import <code>WuTable</code> พร้อม directive ที่ใช้ (<code>WuSortableColumn</code>, <code>WuSortIcon</code>, <code>WuSelectableRow</code>, <code>WuTableCheckbox</code>, <code>WuTableHeaderCheckbox</code>, <code>WuFrozenColumn</code>, <code>WuRowToggler</code>, <code>WuRowGroupHeader</code>, <code>WuColumnFilter</code>) selector <code>wu-datatable</code> ก็ใช้ได้',
+        en: '<code>WuTableModule</code> brings the table, the column / row / checkbox / filter directives and <code>wuTemplate</code>. Standalone: import <code>WuTable</code> plus the directives you use (<code>WuSortableColumn</code>, <code>WuSortIcon</code>, <code>WuSelectableRow</code>, <code>WuTableCheckbox</code>, <code>WuTableHeaderCheckbox</code>, <code>WuFrozenColumn</code>, <code>WuRowToggler</code>, <code>WuRowGroupHeader</code>, <code>WuColumnFilter</code>). The <code>wu-datatable</code> selector works too.',
       },
     },
     basic: {
@@ -289,15 +289,15 @@ export const TABLE_DOC: ComponentDoc = {
     report: {
       title: { th: 'ข้อความรายงานหน้า', en: 'Custom report text' },
       text: {
-        th: 'ตั้ง <code>currentPageReportTemplate</code> เพื่อเปลี่ยนข้อความ “กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ” ของตารางนี้ (คู่กับ <code>[showCurrentPageReport]="true"</code>) ใช้ตัวแทนในตารางด้านล่างได้ทุกตัว ถ้าจะเปลี่ยนทั้งแอปในครั้งเดียว ให้ตั้ง <code>pageReport</code> ด้วย <code>WtConfig.setTranslation()</code> (แท็บ TS) ทุกตารางและทุก paginator จะเปลี่ยนตาม',
-        en: 'Set <code>currentPageReportTemplate</code> to replace this table\'s “Showing {first} to {last} of {totalRecords} entries” text (with <code>[showCurrentPageReport]="true"</code>). Every placeholder below works. To change it for the whole app at once, set <code>pageReport</code> with <code>WtConfig.setTranslation()</code> (TS tab): every table and paginator follows.',
+        th: 'ตั้ง <code>currentPageReportTemplate</code> เพื่อเปลี่ยนข้อความ “กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ” ของตารางนี้ (คู่กับ <code>[showCurrentPageReport]="true"</code>) ใช้ตัวแทนในตารางด้านล่างได้ทุกตัว ถ้าจะเปลี่ยนทั้งแอปในครั้งเดียว ให้ตั้ง <code>pageReport</code> ด้วย <code>WuConfig.setTranslation()</code> (แท็บ TS) ทุกตารางและทุก paginator จะเปลี่ยนตาม',
+        en: 'Set <code>currentPageReportTemplate</code> to replace this table\'s “Showing {first} to {last} of {totalRecords} entries” text (with <code>[showCurrentPageReport]="true"</code>). Every placeholder below works. To change it for the whole app at once, set <code>pageReport</code> with <code>WuConfig.setTranslation()</code> (TS tab): every table and paginator follows.',
       },
     },
     sort: {
       title: { th: 'เรียงข้อมูล', en: 'Sorting' },
       text: {
-        th: 'ใส่ <code>wtSortableColumn="field"</code> ที่หัวคอลัมน์ และ <code>&lt;wt-sortIcon field="field"&gt;</code> เป็นลูกศร (<code>pSortableColumn</code> ใช้ได้เหมือนกัน) คลิก กด Enter หรือ Space เพื่อเรียง ใช้ dot path ได้ (<code>club.name</code>) ข้อความเรียงตามพจนานุกรมไทย ตัวเลขในข้อความเรียงแบบตัวเลข (ม.1/2 มาก่อน ม.1/10) ช่องว่างอยู่ท้ายเสมอ ใส่ <code>sortField</code> / <code>[sortOrder]="-1"</code> เพื่อเรียงตั้งแต่เปิด · คลิกคอลัมน์เดิมครั้งที่สองสลับเป็นเรียงจากมากไปน้อย และครั้งที่สามเลิกเรียง (<code>removableSort</code> เปิดอยู่เป็นค่าเริ่มต้น <code>[removableSort]="false"</code> ให้สลับขึ้น / ลงอย่างเดียว)',
-        en: 'Put <code>wtSortableColumn="field"</code> on a header cell and <code>&lt;wt-sortIcon field="field"&gt;</code> for the arrow (<code>pSortableColumn</code> works the same). Click, Enter or Space sorts. Dot paths work (<code>club.name</code>). Thai text sorts in Thai dictionary order, numbers inside text sort as numbers (7/2 before 7/10), and empty cells always go last. <code>sortField</code> / <code>[sortOrder]="-1"</code> sort from the start · a second click on the same column sorts it descending and a third removes the sort (<code>removableSort</code> is on by default; <code>[removableSort]="false"</code> only toggles up / down).',
+        th: 'ใส่ <code>wuSortableColumn="field"</code> ที่หัวคอลัมน์ และ <code>&lt;wu-sortIcon field="field"&gt;</code> เป็นลูกศร (<code>pSortableColumn</code> ใช้ได้เหมือนกัน) คลิก กด Enter หรือ Space เพื่อเรียง ใช้ dot path ได้ (<code>club.name</code>) ข้อความเรียงตามพจนานุกรมไทย ตัวเลขในข้อความเรียงแบบตัวเลข (ม.1/2 มาก่อน ม.1/10) ช่องว่างอยู่ท้ายเสมอ ใส่ <code>sortField</code> / <code>[sortOrder]="-1"</code> เพื่อเรียงตั้งแต่เปิด · คลิกคอลัมน์เดิมครั้งที่สองสลับเป็นเรียงจากมากไปน้อย และครั้งที่สามเลิกเรียง (<code>removableSort</code> เปิดอยู่เป็นค่าเริ่มต้น <code>[removableSort]="false"</code> ให้สลับขึ้น / ลงอย่างเดียว)',
+        en: 'Put <code>wuSortableColumn="field"</code> on a header cell and <code>&lt;wu-sortIcon field="field"&gt;</code> for the arrow (<code>pSortableColumn</code> works the same). Click, Enter or Space sorts. Dot paths work (<code>club.name</code>). Thai text sorts in Thai dictionary order, numbers inside text sort as numbers (7/2 before 7/10), and empty cells always go last. <code>sortField</code> / <code>[sortOrder]="-1"</code> sort from the start · a second click on the same column sorts it descending and a third removes the sort (<code>removableSort</code> is on by default; <code>[removableSort]="false"</code> only toggles up / down).',
       },
     },
     multisort: {
@@ -310,8 +310,8 @@ export const TABLE_DOC: ComponentDoc = {
     search: {
       title: { th: 'ค้นหาทั้งตาราง', en: 'Search the table' },
       text: {
-        th: 'ตั้งชื่อตาราง <code>#dt</code> แล้วให้ช่องค้นหาใน <code>caption</code> เรียก <code>dt.filterGlobal($any($event.target).value, \'contains\')</code> <code>[globalFilterFields]</code> บอก field ที่ค้น (dot path ได้) ไม่สนตัวพิมพ์ และเลขไทยเท่ากับ 0–9 (พิมพ์ ๖๖๐๐๓ ก็เจอ 66003) <code>[filterDelay]="0"</code> ค้นทันทีที่พิมพ์ (ค่าเริ่มต้นรอ 300ms) ใช้ <code>wt-iconfield</code> ใส่ไอคอนแว่นขยาย',
-        en: 'Name the table <code>#dt</code> and let a search box in the <code>caption</code> call <code>dt.filterGlobal($any($event.target).value, \'contains\')</code>. <code>[globalFilterFields]</code> lists the fields to search (dot paths work). Case is ignored and Thai digits count as 0–9 (typing ๖๖๐๐๓ finds 66003). <code>[filterDelay]="0"</code> searches on every key (the default waits 300ms). <code>wt-iconfield</code> adds the magnifier.',
+        th: 'ตั้งชื่อตาราง <code>#dt</code> แล้วให้ช่องค้นหาใน <code>caption</code> เรียก <code>dt.filterGlobal($any($event.target).value, \'contains\')</code> <code>[globalFilterFields]</code> บอก field ที่ค้น (dot path ได้) ไม่สนตัวพิมพ์ และเลขไทยเท่ากับ 0–9 (พิมพ์ ๖๖๐๐๓ ก็เจอ 66003) <code>[filterDelay]="0"</code> ค้นทันทีที่พิมพ์ (ค่าเริ่มต้นรอ 300ms) ใช้ <code>wu-iconfield</code> ใส่ไอคอนแว่นขยาย',
+        en: 'Name the table <code>#dt</code> and let a search box in the <code>caption</code> call <code>dt.filterGlobal($any($event.target).value, \'contains\')</code>. <code>[globalFilterFields]</code> lists the fields to search (dot paths work). Case is ignored and Thai digits count as 0–9 (typing ๖๖๐๐๓ finds 66003). <code>[filterDelay]="0"</code> searches on every key (the default waits 300ms). <code>wu-iconfield</code> adds the magnifier.',
       },
     },
     empty: {
@@ -324,22 +324,22 @@ export const TABLE_DOC: ComponentDoc = {
     loading: {
       title: { th: 'ระหว่างโหลด', en: 'Loading' },
       text: {
-        th: '<code>[loading]="isApiLoading"</code> แสดงม่านพร้อม spinner ทับตาราง หรือใส่ template <code>loadingbody</code> เพื่อแสดงแถว skeleton (<code>wt-skeleton</code>) แทน',
-        en: '<code>[loading]="isApiLoading"</code> lays a veil with a spinner over the table, or give a <code>loadingbody</code> template to show skeleton rows (<code>wt-skeleton</code>) instead.',
+        th: '<code>[loading]="isApiLoading"</code> แสดงม่านพร้อม spinner ทับตาราง หรือใส่ template <code>loadingbody</code> เพื่อแสดงแถว skeleton (<code>wu-skeleton</code>) แทน',
+        en: '<code>[loading]="isApiLoading"</code> lays a veil with a spinner over the table, or give a <code>loadingbody</code> template to show skeleton rows (<code>wu-skeleton</code>) instead.',
       },
     },
     selection: {
       title: { th: 'เลือกแถว', en: 'Selecting rows' },
       text: {
-        th: '<code>selectionMode="single"</code> กับ <code>[wtSelectableRow]="s"</code> ที่ <code>&lt;tr&gt;</code> คลิก Enter หรือ Space เพื่อเลือก ลูกศรขึ้นลงย้ายแถว (<code>pSelectableRow</code> ใช้ได้เหมือนกัน) ค่าที่เลือกอยู่ใน <code>[(selection)]</code> และใส่ <code>dataKey</code> เพื่อเทียบแถวด้วย id',
-        en: '<code>selectionMode="single"</code> with <code>[wtSelectableRow]="s"</code> on the <code>&lt;tr&gt;</code>: click, Enter or Space selects and the arrow keys move between rows (<code>pSelectableRow</code> works the same). The choice lives in <code>[(selection)]</code>; set <code>dataKey</code> to compare rows by id.',
+        th: '<code>selectionMode="single"</code> กับ <code>[wuSelectableRow]="s"</code> ที่ <code>&lt;tr&gt;</code> คลิก Enter หรือ Space เพื่อเลือก ลูกศรขึ้นลงย้ายแถว (<code>pSelectableRow</code> ใช้ได้เหมือนกัน) ค่าที่เลือกอยู่ใน <code>[(selection)]</code> และใส่ <code>dataKey</code> เพื่อเทียบแถวด้วย id',
+        en: '<code>selectionMode="single"</code> with <code>[wuSelectableRow]="s"</code> on the <code>&lt;tr&gt;</code>: click, Enter or Space selects and the arrow keys move between rows (<code>pSelectableRow</code> works the same). The choice lives in <code>[(selection)]</code>; set <code>dataKey</code> to compare rows by id.',
       },
     },
     checkbox: {
       title: { th: 'เลือกด้วย checkbox', en: 'Checkbox selection' },
       text: {
-        th: '<code>&lt;wt-tableCheckbox [value]="s"&gt;</code> ในแต่ละแถว และ <code>&lt;wt-tableHeaderCheckbox&gt;</code> ที่หัวตาราง ซึ่งเลือกทุกแถวที่ค้นหาเหลืออยู่ (<code>[selectionPageOnly]="true"</code> เลือกแค่หน้านี้) <code>[(selection)]</code> เป็น array',
-        en: '<code>&lt;wt-tableCheckbox [value]="s"&gt;</code> in each row and <code>&lt;wt-tableHeaderCheckbox&gt;</code> in the head, which selects every row the search leaves (<code>[selectionPageOnly]="true"</code> keeps it to this page). <code>[(selection)]</code> is an array.',
+        th: '<code>&lt;wu-tableCheckbox [value]="s"&gt;</code> ในแต่ละแถว และ <code>&lt;wu-tableHeaderCheckbox&gt;</code> ที่หัวตาราง ซึ่งเลือกทุกแถวที่ค้นหาเหลืออยู่ (<code>[selectionPageOnly]="true"</code> เลือกแค่หน้านี้) <code>[(selection)]</code> เป็น array',
+        en: '<code>&lt;wu-tableCheckbox [value]="s"&gt;</code> in each row and <code>&lt;wu-tableHeaderCheckbox&gt;</code> in the head, which selects every row the search leaves (<code>[selectionPageOnly]="true"</code> keeps it to this page). <code>[(selection)]</code> is an array.',
       },
     },
     lazy: {
@@ -373,22 +373,22 @@ export const TABLE_DOC: ComponentDoc = {
     frozen: {
       title: { th: 'คอลัมน์ตรึง', en: 'Frozen columns' },
       text: {
-        th: 'ตารางที่กว้างกว่ากล่อง (<code>[tableStyle]="{ \'min-width\': \'80rem\' }"</code>) เลื่อนด้านข้างได้ ใส่ <code>wtFrozenColumn</code> (หรือ <code>pFrozenColumn</code>) ที่ <code>th</code> และ <code>td</code> ของคอลัมน์ที่ต้องการให้อยู่กับที่ คอลัมน์ตรึงแต่ละช่องต่อจากคอลัมน์ตรึงก่อนหน้า · <code>alignFrozen="right"</code> ตรึงไว้ที่ขอบขวา (เช่นปุ่มจัดการ) · <code>[frozen]="false"</code> ปล่อยคอลัมน์นั้น · การ์ดของ <code>responsiveLayout="stack"</code> ไม่ตรึงคอลัมน์ ลองเลื่อนตารางไปทางขวา',
-        en: 'A table wider than its box (<code>[tableStyle]="{ \'min-width\': \'80rem\' }"</code>) scrolls sideways. Put <code>wtFrozenColumn</code> (or <code>pFrozenColumn</code>) on the <code>th</code> and <code>td</code> of the columns that should stay put; each frozen cell sits after the frozen cells before it · <code>alignFrozen="right"</code> pins one to the right edge (say, the action buttons) · <code>[frozen]="false"</code> lets a column go · cards of <code>responsiveLayout="stack"</code> freeze nothing. Scroll the table to the right.',
+        th: 'ตารางที่กว้างกว่ากล่อง (<code>[tableStyle]="{ \'min-width\': \'80rem\' }"</code>) เลื่อนด้านข้างได้ ใส่ <code>wuFrozenColumn</code> (หรือ <code>pFrozenColumn</code>) ที่ <code>th</code> และ <code>td</code> ของคอลัมน์ที่ต้องการให้อยู่กับที่ คอลัมน์ตรึงแต่ละช่องต่อจากคอลัมน์ตรึงก่อนหน้า · <code>alignFrozen="right"</code> ตรึงไว้ที่ขอบขวา (เช่นปุ่มจัดการ) · <code>[frozen]="false"</code> ปล่อยคอลัมน์นั้น · การ์ดของ <code>responsiveLayout="stack"</code> ไม่ตรึงคอลัมน์ ลองเลื่อนตารางไปทางขวา',
+        en: 'A table wider than its box (<code>[tableStyle]="{ \'min-width\': \'80rem\' }"</code>) scrolls sideways. Put <code>wuFrozenColumn</code> (or <code>pFrozenColumn</code>) on the <code>th</code> and <code>td</code> of the columns that should stay put; each frozen cell sits after the frozen cells before it · <code>alignFrozen="right"</code> pins one to the right edge (say, the action buttons) · <code>[frozen]="false"</code> lets a column go · cards of <code>responsiveLayout="stack"</code> freeze nothing. Scroll the table to the right.',
       },
     },
     expansion: {
       title: { th: 'แถวขยาย', en: 'Row expansion' },
       text: {
-        th: 'ปุ่มที่มี <code>[wtRowToggler]="s"</code> (หรือ <code>[pRowToggler]</code>) เปิด / ปิดแถวจาก template <code>rowexpansion</code> (context เดียวกับ <code>body</code> ชื่อ <code>expandedrow</code> ก็ได้) และได้ <code>aria-expanded</code> ให้เอง · ใน <code>body</code> อ่าน <code>let-expanded="expanded"</code> เพื่อเปลี่ยนไอคอน · ใส่ <code>dataKey</code> แล้วบอกแถวที่เปิดด้วย <code>[expandedRowKeys]="{ 1: true }"</code> (object นี้อัปเดตในที่เดิม) · <code>rowExpandMode="single"</code> เปิดได้ทีละแถว · <code>(onRowExpand)</code> / <code>(onRowCollapse)</code> ได้ <code>{ originalEvent, data }</code>',
-        en: 'A button with <code>[wtRowToggler]="s"</code> (or <code>[pRowToggler]</code>) opens and closes the row from the <code>rowexpansion</code> template (same context as <code>body</code>; <code>expandedrow</code> works too) and gets <code>aria-expanded</code> for you · read <code>let-expanded="expanded"</code> in <code>body</code> to turn its icon · with <code>dataKey</code>, <code>[expandedRowKeys]="{ 1: true }"</code> says which rows are open (the object is kept up to date in place) · <code>rowExpandMode="single"</code> keeps one row open at a time · <code>(onRowExpand)</code> / <code>(onRowCollapse)</code> bring <code>{ originalEvent, data }</code>.',
+        th: 'ปุ่มที่มี <code>[wuRowToggler]="s"</code> (หรือ <code>[pRowToggler]</code>) เปิด / ปิดแถวจาก template <code>rowexpansion</code> (context เดียวกับ <code>body</code> ชื่อ <code>expandedrow</code> ก็ได้) และได้ <code>aria-expanded</code> ให้เอง · ใน <code>body</code> อ่าน <code>let-expanded="expanded"</code> เพื่อเปลี่ยนไอคอน · ใส่ <code>dataKey</code> แล้วบอกแถวที่เปิดด้วย <code>[expandedRowKeys]="{ 1: true }"</code> (object นี้อัปเดตในที่เดิม) · <code>rowExpandMode="single"</code> เปิดได้ทีละแถว · <code>(onRowExpand)</code> / <code>(onRowCollapse)</code> ได้ <code>{ originalEvent, data }</code>',
+        en: 'A button with <code>[wuRowToggler]="s"</code> (or <code>[pRowToggler]</code>) opens and closes the row from the <code>rowexpansion</code> template (same context as <code>body</code>; <code>expandedrow</code> works too) and gets <code>aria-expanded</code> for you · read <code>let-expanded="expanded"</code> in <code>body</code> to turn its icon · with <code>dataKey</code>, <code>[expandedRowKeys]="{ 1: true }"</code> says which rows are open (the object is kept up to date in place) · <code>rowExpandMode="single"</code> keeps one row open at a time · <code>(onRowExpand)</code> / <code>(onRowCollapse)</code> bring <code>{ originalEvent, data }</code>.',
       },
     },
     rowgroup: {
       title: { th: 'จัดกลุ่มแถว', en: 'Row groups' },
       text: {
-        th: '<code>rowGroupMode="subheader"</code> กับ <code>groupRowsBy="room"</code> (dot path ได้) แทรกแถวจาก template <code>groupheader</code> ก่อนแต่ละกลุ่ม และ <code>groupfooter</code> หลังกลุ่ม (context เดียวกับ <code>body</code> ของแถวนั้น) แถวหัวกลุ่มเขียนเป็น <code>&lt;tr wtRowGroupHeader&gt;</code> (หรือ <code>pRowGroupHeader</code>) ซึ่งติดอยู่ใต้หัวตารางเมื่อเลื่อน แถวสรุปท้ายกลุ่มใส่ class <code>wt-rowgroup-footer</code> (หรือ <code>p-rowgroup-footer</code>) ให้แยกจากแถวข้อมูล · แถวของกลุ่มเดียวกันต้องอยู่ติดกัน จึงเรียงข้อมูลตาม field ของกลุ่มก่อน',
-        en: '<code>rowGroupMode="subheader"</code> with <code>groupRowsBy="room"</code> (dot paths work) adds a row from the <code>groupheader</code> template before each group and from <code>groupfooter</code> after it (same context as that row\'s <code>body</code>). Write the header row as <code>&lt;tr wtRowGroupHeader&gt;</code> (or <code>pRowGroupHeader</code>); it stays under the table head while scrolling. Give the summary row the class <code>wt-rowgroup-footer</code> (or <code>p-rowgroup-footer</code>) to set it apart from the data rows · rows of a group must sit together, so sort the data by the group field first.',
+        th: '<code>rowGroupMode="subheader"</code> กับ <code>groupRowsBy="room"</code> (dot path ได้) แทรกแถวจาก template <code>groupheader</code> ก่อนแต่ละกลุ่ม และ <code>groupfooter</code> หลังกลุ่ม (context เดียวกับ <code>body</code> ของแถวนั้น) แถวหัวกลุ่มเขียนเป็น <code>&lt;tr wuRowGroupHeader&gt;</code> (หรือ <code>pRowGroupHeader</code>) ซึ่งติดอยู่ใต้หัวตารางเมื่อเลื่อน แถวสรุปท้ายกลุ่มใส่ class <code>wu-rowgroup-footer</code> (หรือ <code>p-rowgroup-footer</code>) ให้แยกจากแถวข้อมูล · แถวของกลุ่มเดียวกันต้องอยู่ติดกัน จึงเรียงข้อมูลตาม field ของกลุ่มก่อน',
+        en: '<code>rowGroupMode="subheader"</code> with <code>groupRowsBy="room"</code> (dot paths work) adds a row from the <code>groupheader</code> template before each group and from <code>groupfooter</code> after it (same context as that row\'s <code>body</code>). Write the header row as <code>&lt;tr wuRowGroupHeader&gt;</code> (or <code>pRowGroupHeader</code>); it stays under the table head while scrolling. Give the summary row the class <code>wu-rowgroup-footer</code> (or <code>p-rowgroup-footer</code>) to set it apart from the data rows · rows of a group must sit together, so sort the data by the group field first.',
       },
     },
     rowspan: {
@@ -401,8 +401,8 @@ export const TABLE_DOC: ComponentDoc = {
     colfilter: {
       title: { th: 'ตัวกรองรายคอลัมน์', en: 'Column filters' },
       text: {
-        th: 'วาง <code>&lt;wt-columnFilter field="name"&gt;</code> ในแถวที่สองของหัวตารางเพื่อได้ช่องค้นหาของคอลัมน์นั้น · <code>type="numeric"</code> / <code>"date"</code> เป็นช่องตัวเลข / วันที่ · <code>type="boolean"</code> เป็นปุ่มที่วนจาก ทั้งหมด → ใช่ → ไม่ใช่ · <code>matchMode</code> (ข้อความค่าเริ่มต้น contains วันที่ dateIs คือวันเดียวกัน นอกนั้น equals) · <code>[delay]</code> รอหลังพิมพ์ (300ms เฉพาะข้อความ) · <code>[showClearButton]</code> ปุ่ม × · template <code>filter</code> (<code>let-value let-filter="filterCallback"</code>) ใส่ control อะไรก็ได้ เช่น <code>wt-select</code> ที่เรียก <code>filter($event.value)</code> · ตัวกรองทำงานร่วมกับการค้นทั้งตารางและการแบ่งหน้า (กลับหน้าแรกเมื่อกรอง) · ตอนนี้วาดเฉพาะแบบแถว (<code>display="menu"</code> แสดงกล่องเดียวกัน) · ตารางมี matchMode <code>dateIs</code>, <code>dateIsNot</code>, <code>dateBefore</code>, <code>dateAfter</code> สำหรับ <code>dt.filter(value, field, mode)</code> ด้วย',
-        en: 'Put <code>&lt;wt-columnFilter field="name"&gt;</code> in a second header row for a search box per column · <code>type="numeric"</code> / <code>"date"</code> give a number / date box · <code>type="boolean"</code> is a button that cycles any → yes → no · <code>matchMode</code> (text defaults to contains, dates to dateIs, the same day, others to equals) · <code>[delay]</code> waits after typing (300ms, text only) · <code>[showClearButton]</code> the × button · a <code>filter</code> template (<code>let-value let-filter="filterCallback"</code>) holds any control, such as a <code>wt-select</code> that calls <code>filter($event.value)</code> · filters work with the table search and paging (back to page 1 on filtering) · only the row display is drawn for now (<code>display="menu"</code> shows the same box) · the table also gained the <code>dateIs</code>, <code>dateIsNot</code>, <code>dateBefore</code> and <code>dateAfter</code> match modes for <code>dt.filter(value, field, mode)</code>.',
+        th: 'วาง <code>&lt;wu-columnFilter field="name"&gt;</code> ในแถวที่สองของหัวตารางเพื่อได้ช่องค้นหาของคอลัมน์นั้น · <code>type="numeric"</code> / <code>"date"</code> เป็นช่องตัวเลข / วันที่ · <code>type="boolean"</code> เป็นปุ่มที่วนจาก ทั้งหมด → ใช่ → ไม่ใช่ · <code>matchMode</code> (ข้อความค่าเริ่มต้น contains วันที่ dateIs คือวันเดียวกัน นอกนั้น equals) · <code>[delay]</code> รอหลังพิมพ์ (300ms เฉพาะข้อความ) · <code>[showClearButton]</code> ปุ่ม × · template <code>filter</code> (<code>let-value let-filter="filterCallback"</code>) ใส่ control อะไรก็ได้ เช่น <code>wu-select</code> ที่เรียก <code>filter($event.value)</code> · ตัวกรองทำงานร่วมกับการค้นทั้งตารางและการแบ่งหน้า (กลับหน้าแรกเมื่อกรอง) · ตอนนี้วาดเฉพาะแบบแถว (<code>display="menu"</code> แสดงกล่องเดียวกัน) · ตารางมี matchMode <code>dateIs</code>, <code>dateIsNot</code>, <code>dateBefore</code>, <code>dateAfter</code> สำหรับ <code>dt.filter(value, field, mode)</code> ด้วย',
+        en: 'Put <code>&lt;wu-columnFilter field="name"&gt;</code> in a second header row for a search box per column · <code>type="numeric"</code> / <code>"date"</code> give a number / date box · <code>type="boolean"</code> is a button that cycles any → yes → no · <code>matchMode</code> (text defaults to contains, dates to dateIs, the same day, others to equals) · <code>[delay]</code> waits after typing (300ms, text only) · <code>[showClearButton]</code> the × button · a <code>filter</code> template (<code>let-value let-filter="filterCallback"</code>) holds any control, such as a <code>wu-select</code> that calls <code>filter($event.value)</code> · filters work with the table search and paging (back to page 1 on filtering) · only the row display is drawn for now (<code>display="menu"</code> shows the same box) · the table also gained the <code>dateIs</code>, <code>dateIsNot</code>, <code>dateBefore</code> and <code>dateAfter</code> match modes for <code>dt.filter(value, field, mode)</code>.',
       },
     },
     export: {
@@ -422,43 +422,43 @@ export const TABLE_DOC: ComponentDoc = {
     reorder: {
       title: { th: 'ลากเรียงแถว', en: 'Row reorder' },
       text: {
-        th: 'ใส่ <code>[wtReorderableRow]="i"</code> (หรือ <code>[pReorderableRow]</code>) ที่ <code>&lt;tr&gt;</code> และ <code>wtReorderableRowHandle</code> (<code>pReorderableRowHandle</code>) ที่ไอคอนจับ ลากแล้วมีเส้นบอกตำแหน่งที่จะวาง <code>Esc</code> ยกเลิก และกด <code>↑</code> / <code>↓</code> ขณะโฟกัสที่ไอคอนจับเพื่อย้ายด้วยคีย์บอร์ด · <code>value</code> ถูกเรียงใหม่ในที่เดิม และ <code>(onRowReorder)</code> ได้ <code>{ dragIndex, dropIndex }</code>',
-        en: 'Put <code>[wtReorderableRow]="i"</code> (or <code>[pReorderableRow]</code>) on the <code>&lt;tr&gt;</code> and <code>wtReorderableRowHandle</code> (<code>pReorderableRowHandle</code>) on the grip. While dragging a line shows where the row lands, <code>Esc</code> cancels, and <code>↑</code> / <code>↓</code> on a focused grip move it from the keyboard · <code>value</code> is reordered in place and <code>(onRowReorder)</code> brings <code>{ dragIndex, dropIndex }</code>.',
+        th: 'ใส่ <code>[wuReorderableRow]="i"</code> (หรือ <code>[pReorderableRow]</code>) ที่ <code>&lt;tr&gt;</code> และ <code>wuReorderableRowHandle</code> (<code>pReorderableRowHandle</code>) ที่ไอคอนจับ ลากแล้วมีเส้นบอกตำแหน่งที่จะวาง <code>Esc</code> ยกเลิก และกด <code>↑</code> / <code>↓</code> ขณะโฟกัสที่ไอคอนจับเพื่อย้ายด้วยคีย์บอร์ด · <code>value</code> ถูกเรียงใหม่ในที่เดิม และ <code>(onRowReorder)</code> ได้ <code>{ dragIndex, dropIndex }</code>',
+        en: 'Put <code>[wuReorderableRow]="i"</code> (or <code>[pReorderableRow]</code>) on the <code>&lt;tr&gt;</code> and <code>wuReorderableRowHandle</code> (<code>pReorderableRowHandle</code>) on the grip. While dragging a line shows where the row lands, <code>Esc</code> cancels, and <code>↑</code> / <code>↓</code> on a focused grip move it from the keyboard · <code>value</code> is reordered in place and <code>(onRowReorder)</code> brings <code>{ dragIndex, dropIndex }</code>.',
       },
     },
     selectmore: {
       title: { th: 'เลือกด้วย radio และการเลือกแบบเดิม', en: 'Radio selection and the older selection habits' },
       text: {
-        th: '<code>&lt;wt-tableRadioButton [value]="s"&gt;</code> เลือกแถวเดียวใน <code>selectionMode="single"</code> · <code>[rowSelectable]="canPick"</code> รับ <code>{ data, index }</code> แล้วคืน true / false แถวที่เลือกไม่ได้กด radio และ checkbox หัวตารางไม่ได้ (ตัวอย่างนี้เลือกได้เฉพาะนักเรียนที่กำลังศึกษา) · <code>[metaKeySelection]="true"</code> คลิกเลือกแถวเดียว Ctrl / ⌘ + คลิกเพิ่ม และใน <code>selectionMode="multiple"</code> <code>Shift</code> + คลิกเลือกเป็นช่วง · <code>[wtSelectableRowDblClick]="s"</code> เลือกด้วยดับเบิลคลิก · <code>compareSelectionBy</code> เทียบแถวด้วย <code>\'deepEquals\'</code> (ค่าเริ่มต้น) หรือ <code>\'equals\'</code>',
-        en: '<code>&lt;wt-tableRadioButton [value]="s"&gt;</code> picks one row in <code>selectionMode="single"</code> · <code>[rowSelectable]="canPick"</code> takes <code>{ data, index }</code> and returns true / false; rows it refuses cannot be picked by their radio or the header checkbox (here only enrolled students can) · <code>[metaKeySelection]="true"</code>: a click picks one row and Ctrl / ⌘ + click adds, and in <code>selectionMode="multiple"</code> <code>Shift</code> + click picks a range · <code>[wtSelectableRowDblClick]="s"</code> selects on double click · <code>compareSelectionBy</code> compares rows by <code>\'deepEquals\'</code> (default) or <code>\'equals\'</code>.',
+        th: '<code>&lt;wu-tableRadioButton [value]="s"&gt;</code> เลือกแถวเดียวใน <code>selectionMode="single"</code> · <code>[rowSelectable]="canPick"</code> รับ <code>{ data, index }</code> แล้วคืน true / false แถวที่เลือกไม่ได้กด radio และ checkbox หัวตารางไม่ได้ (ตัวอย่างนี้เลือกได้เฉพาะนักเรียนที่กำลังศึกษา) · <code>[metaKeySelection]="true"</code> คลิกเลือกแถวเดียว Ctrl / ⌘ + คลิกเพิ่ม และใน <code>selectionMode="multiple"</code> <code>Shift</code> + คลิกเลือกเป็นช่วง · <code>[wuSelectableRowDblClick]="s"</code> เลือกด้วยดับเบิลคลิก · <code>compareSelectionBy</code> เทียบแถวด้วย <code>\'deepEquals\'</code> (ค่าเริ่มต้น) หรือ <code>\'equals\'</code>',
+        en: '<code>&lt;wu-tableRadioButton [value]="s"&gt;</code> picks one row in <code>selectionMode="single"</code> · <code>[rowSelectable]="canPick"</code> takes <code>{ data, index }</code> and returns true / false; rows it refuses cannot be picked by their radio or the header checkbox (here only enrolled students can) · <code>[metaKeySelection]="true"</code>: a click picks one row and Ctrl / ⌘ + click adds, and in <code>selectionMode="multiple"</code> <code>Shift</code> + click picks a range · <code>[wuSelectableRowDblClick]="s"</code> selects on double click · <code>compareSelectionBy</code> compares rows by <code>\'deepEquals\'</code> (default) or <code>\'equals\'</code>.',
       },
     },
     celledit: {
       title: { th: 'แก้ไขในเซลล์', en: 'Cell editing' },
       text: {
-        th: 'ใส่ <code>[wtEditableColumn]="s" wtEditableColumnField="score" [wtEditableColumnRowIndex]="i"</code> (ชื่อ <code>pEditableColumn</code> ก็ได้) ที่ <code>&lt;td&gt;</code> แล้ววาง <code>&lt;wt-cellEditor&gt;</code> ที่มี template <code>input</code> (ช่องแก้ไข) และ <code>output</code> (ค่าที่แสดง) · คลิก หรือกด <code>Enter</code> / <code>F2</code> ที่เซลล์เพื่อแก้ไข · <code>Enter</code> หรือคลิกที่อื่นเก็บค่า · <code>Tab</code> ไปเซลล์ที่แก้ไขได้ถัดไป · <code>Esc</code> ออก · <code>(onEditInit)</code> / <code>(onEditComplete)</code> / <code>(onEditCancel)</code> ได้ <code>{ field, data, index, originalEvent }</code>',
-        en: 'Put <code>[wtEditableColumn]="s" wtEditableColumnField="score" [wtEditableColumnRowIndex]="i"</code> (or the <code>pEditableColumn</code> names) on the <code>&lt;td&gt;</code> and a <code>&lt;wt-cellEditor&gt;</code> with an <code>input</code> template (the field) and an <code>output</code> template (the value) inside · a click, or <code>Enter</code> / <code>F2</code> on the cell, starts editing · <code>Enter</code> or a click elsewhere keeps the value · <code>Tab</code> moves to the next editable cell · <code>Esc</code> leaves · <code>(onEditInit)</code> / <code>(onEditComplete)</code> / <code>(onEditCancel)</code> bring <code>{ field, data, index, originalEvent }</code>.',
+        th: 'ใส่ <code>[wuEditableColumn]="s" wuEditableColumnField="score" [wuEditableColumnRowIndex]="i"</code> (ชื่อ <code>pEditableColumn</code> ก็ได้) ที่ <code>&lt;td&gt;</code> แล้ววาง <code>&lt;wu-cellEditor&gt;</code> ที่มี template <code>input</code> (ช่องแก้ไข) และ <code>output</code> (ค่าที่แสดง) · คลิก หรือกด <code>Enter</code> / <code>F2</code> ที่เซลล์เพื่อแก้ไข · <code>Enter</code> หรือคลิกที่อื่นเก็บค่า · <code>Tab</code> ไปเซลล์ที่แก้ไขได้ถัดไป · <code>Esc</code> ออก · <code>(onEditInit)</code> / <code>(onEditComplete)</code> / <code>(onEditCancel)</code> ได้ <code>{ field, data, index, originalEvent }</code>',
+        en: 'Put <code>[wuEditableColumn]="s" wuEditableColumnField="score" [wuEditableColumnRowIndex]="i"</code> (or the <code>pEditableColumn</code> names) on the <code>&lt;td&gt;</code> and a <code>&lt;wu-cellEditor&gt;</code> with an <code>input</code> template (the field) and an <code>output</code> template (the value) inside · a click, or <code>Enter</code> / <code>F2</code> on the cell, starts editing · <code>Enter</code> or a click elsewhere keeps the value · <code>Tab</code> moves to the next editable cell · <code>Esc</code> leaves · <code>(onEditInit)</code> / <code>(onEditComplete)</code> / <code>(onEditCancel)</code> bring <code>{ field, data, index, originalEvent }</code>.',
       },
     },
     rowedit: {
       title: { th: 'แก้ไขทั้งแถว', en: 'Row editing' },
       text: {
-        th: '<code>editMode="row"</code> กับ <code>dataKey</code> · <code>[wtEditableRow]="s"</code> ที่ <code>&lt;tr&gt;</code> · ปุ่ม <code>wtInitEditableRow</code>, <code>wtSaveEditableRow</code> และ <code>wtCancelEditableRow</code> (ชื่อ <code>pInitEditableRow</code> ฯลฯ ก็ได้) · ใน <code>body</code> อ่าน <code>let-editing="editing"</code> เพื่อสลับปุ่ม · ปุ่มบันทึกยังอยู่ในโหมดแก้ไขถ้ามีช่องที่ <code>ng-invalid</code> (ลองลบชื่อจนว่าง) · <code>[editingRowKeys]</code> บอกแถวที่กำลังแก้ (อัปเดตในที่เดิม) และ <code>initRowEdit()</code> / <code>saveRowEdit()</code> / <code>cancelRowEdit()</code> เรียกจากโค้ดได้ · ตัวอย่างนี้เก็บสำเนาไว้ตอนเริ่ม เพื่อให้ยกเลิกแล้วได้ค่าเดิมคืน',
-        en: '<code>editMode="row"</code> with a <code>dataKey</code> · <code>[wtEditableRow]="s"</code> on the <code>&lt;tr&gt;</code> · <code>wtInitEditableRow</code>, <code>wtSaveEditableRow</code> and <code>wtCancelEditableRow</code> buttons (or the <code>pInitEditableRow</code> names) · read <code>let-editing="editing"</code> in <code>body</code> to swap the buttons · save stays in edit mode while a field is <code>ng-invalid</code> (try clearing the name) · <code>[editingRowKeys]</code> says which rows are being edited (kept up to date in place), and <code>initRowEdit()</code> / <code>saveRowEdit()</code> / <code>cancelRowEdit()</code> work from code · this example keeps a copy when editing starts, so cancel brings the old values back.',
+        th: '<code>editMode="row"</code> กับ <code>dataKey</code> · <code>[wuEditableRow]="s"</code> ที่ <code>&lt;tr&gt;</code> · ปุ่ม <code>wuInitEditableRow</code>, <code>wuSaveEditableRow</code> และ <code>wuCancelEditableRow</code> (ชื่อ <code>pInitEditableRow</code> ฯลฯ ก็ได้) · ใน <code>body</code> อ่าน <code>let-editing="editing"</code> เพื่อสลับปุ่ม · ปุ่มบันทึกยังอยู่ในโหมดแก้ไขถ้ามีช่องที่ <code>ng-invalid</code> (ลองลบชื่อจนว่าง) · <code>[editingRowKeys]</code> บอกแถวที่กำลังแก้ (อัปเดตในที่เดิม) และ <code>initRowEdit()</code> / <code>saveRowEdit()</code> / <code>cancelRowEdit()</code> เรียกจากโค้ดได้ · ตัวอย่างนี้เก็บสำเนาไว้ตอนเริ่ม เพื่อให้ยกเลิกแล้วได้ค่าเดิมคืน',
+        en: '<code>editMode="row"</code> with a <code>dataKey</code> · <code>[wuEditableRow]="s"</code> on the <code>&lt;tr&gt;</code> · <code>wuInitEditableRow</code>, <code>wuSaveEditableRow</code> and <code>wuCancelEditableRow</code> buttons (or the <code>pInitEditableRow</code> names) · read <code>let-editing="editing"</code> in <code>body</code> to swap the buttons · save stays in edit mode while a field is <code>ng-invalid</code> (try clearing the name) · <code>[editingRowKeys]</code> says which rows are being edited (kept up to date in place), and <code>initRowEdit()</code> / <code>saveRowEdit()</code> / <code>cancelRowEdit()</code> work from code · this example keeps a copy when editing starts, so cancel brings the old values back.',
       },
     },
     columns: {
       title: { th: 'ปรับขนาดและย้ายคอลัมน์', en: 'Resizing and moving columns' },
       text: {
-        th: '<code>[resizableColumns]="true"</code> กับ <code>wtResizableColumn</code> (<code>pResizableColumn</code>) ที่ <code>&lt;th&gt;</code>: ลากขอบขวาของหัวคอลัมน์เพื่อปรับความกว้าง · <code>columnResizeMode="fit"</code> (ค่าเริ่มต้น ตารางกว้างเท่าเดิม) หรือ <code>"expand"</code> (ตารางกว้างขึ้น) · <code>(onColResize)</code> ได้ <code>{ element, delta }</code> · <code>[reorderableColumns]="true"</code> กับ <code>wtReorderableColumn</code>: ลากหัวคอลัมน์ไปทางซ้าย / ขวาเพื่อย้าย array <code>columns</code> เปลี่ยนในที่เดิม และ <code>(onColReorder)</code> ได้ <code>{ dragIndex, dropIndex, columns }</code>',
-        en: '<code>[resizableColumns]="true"</code> with <code>wtResizableColumn</code> (<code>pResizableColumn</code>) on the <code>&lt;th&gt;</code>: drag a header\'s right edge to resize · <code>columnResizeMode="fit"</code> (default, the table keeps its width) or <code>"expand"</code> (the table grows) · <code>(onColResize)</code> brings <code>{ element, delta }</code> · <code>[reorderableColumns]="true"</code> with <code>wtReorderableColumn</code>: drag a header sideways to move it; the <code>columns</code> array changes in place and <code>(onColReorder)</code> brings <code>{ dragIndex, dropIndex, columns }</code>.',
+        th: '<code>[resizableColumns]="true"</code> กับ <code>wuResizableColumn</code> (<code>pResizableColumn</code>) ที่ <code>&lt;th&gt;</code>: ลากขอบขวาของหัวคอลัมน์เพื่อปรับความกว้าง · <code>columnResizeMode="fit"</code> (ค่าเริ่มต้น ตารางกว้างเท่าเดิม) หรือ <code>"expand"</code> (ตารางกว้างขึ้น) · <code>(onColResize)</code> ได้ <code>{ element, delta }</code> · <code>[reorderableColumns]="true"</code> กับ <code>wuReorderableColumn</code>: ลากหัวคอลัมน์ไปทางซ้าย / ขวาเพื่อย้าย array <code>columns</code> เปลี่ยนในที่เดิม และ <code>(onColReorder)</code> ได้ <code>{ dragIndex, dropIndex, columns }</code>',
+        en: '<code>[resizableColumns]="true"</code> with <code>wuResizableColumn</code> (<code>pResizableColumn</code>) on the <code>&lt;th&gt;</code>: drag a header\'s right edge to resize · <code>columnResizeMode="fit"</code> (default, the table keeps its width) or <code>"expand"</code> (the table grows) · <code>(onColResize)</code> brings <code>{ element, delta }</code> · <code>[reorderableColumns]="true"</code> with <code>wuReorderableColumn</code>: drag a header sideways to move it; the <code>columns</code> array changes in place and <code>(onColReorder)</code> brings <code>{ dragIndex, dropIndex, columns }</code>.',
       },
     },
     filtermenu: {
       title: { th: 'เมนูตัวกรองในหัวคอลัมน์', en: 'The column filter menu' },
       text: {
-        th: '<code>&lt;wt-columnFilter display="menu" field="score" type="numeric"&gt;</code> วางปุ่มกรองในหัวคอลัมน์ เปิดแผงที่มีวิธีเทียบ (<code>matchModeOptions</code>) ช่องค่า (หรือ template <code>filter</code>) และเพิ่มเงื่อนไขได้ถึง <code>maxConstraints</code> (2) ข้อ รวมด้วย ตรงทุกเงื่อนไข / อย่างน้อยหนึ่งเงื่อนไข แล้วกด ล้าง / ตกลง · <code>showOperator</code>, <code>showAddButton</code>, <code>showApplyButton</code> (ไม่มีปุ่มตกลงจะกรองทันที), <code>showMatchModes</code> และ <code>hideOnClear</code> ปิดเปิดแต่ละส่วน · ตัวกรองของตารางจึงเป็น array ของเงื่อนไขได้: <code>{ score: [{ value: 80, matchMode: \'gte\', operator: \'and\' }, …] }</code> และ <code>dt.filterRules(field, rules, \'and\' | \'or\')</code> ตั้งจากโค้ด · ข้อความในเมนูมาจาก locale',
-        en: '<code>&lt;wt-columnFilter display="menu" field="score" type="numeric"&gt;</code> puts a filter button in the header. Its panel has the match mode (<code>matchModeOptions</code>), the value box (or a <code>filter</code> template) and up to <code>maxConstraints</code> (2) rules joined by match all / match any, with Clear / Apply · <code>showOperator</code>, <code>showAddButton</code>, <code>showApplyButton</code> (without it rules apply at once), <code>showMatchModes</code> and <code>hideOnClear</code> switch the parts · table filters can therefore be lists of rules: <code>{ score: [{ value: 80, matchMode: \'gte\', operator: \'and\' }, …] }</code>, and <code>dt.filterRules(field, rules, \'and\' | \'or\')</code> sets them from code · the menu texts come from the locale.',
+        th: '<code>&lt;wu-columnFilter display="menu" field="score" type="numeric"&gt;</code> วางปุ่มกรองในหัวคอลัมน์ เปิดแผงที่มีวิธีเทียบ (<code>matchModeOptions</code>) ช่องค่า (หรือ template <code>filter</code>) และเพิ่มเงื่อนไขได้ถึง <code>maxConstraints</code> (2) ข้อ รวมด้วย ตรงทุกเงื่อนไข / อย่างน้อยหนึ่งเงื่อนไข แล้วกด ล้าง / ตกลง · <code>showOperator</code>, <code>showAddButton</code>, <code>showApplyButton</code> (ไม่มีปุ่มตกลงจะกรองทันที), <code>showMatchModes</code> และ <code>hideOnClear</code> ปิดเปิดแต่ละส่วน · ตัวกรองของตารางจึงเป็น array ของเงื่อนไขได้: <code>{ score: [{ value: 80, matchMode: \'gte\', operator: \'and\' }, …] }</code> และ <code>dt.filterRules(field, rules, \'and\' | \'or\')</code> ตั้งจากโค้ด · ข้อความในเมนูมาจาก locale',
+        en: '<code>&lt;wu-columnFilter display="menu" field="score" type="numeric"&gt;</code> puts a filter button in the header. Its panel has the match mode (<code>matchModeOptions</code>), the value box (or a <code>filter</code> template) and up to <code>maxConstraints</code> (2) rules joined by match all / match any, with Clear / Apply · <code>showOperator</code>, <code>showAddButton</code>, <code>showApplyButton</code> (without it rules apply at once), <code>showMatchModes</code> and <code>hideOnClear</code> switch the parts · table filters can therefore be lists of rules: <code>{ score: [{ value: 80, matchMode: \'gte\', operator: \'and\' }, …] }</code>, and <code>dt.filterRules(field, rules, \'and\' | \'or\')</code> sets them from code · the menu texts come from the locale.',
       },
     },
     customsort: {
@@ -485,27 +485,27 @@ export const TABLE_DOC: ComponentDoc = {
     contextmenu: {
       title: { th: 'เมนูคลิกขวา', en: 'Context menu' },
       text: {
-        th: '<code>[contextMenu]="studentMenu"</code> คือ wt-contextMenu ที่ไม่มี target และ <code>[wtContextMenuRow]="s"</code> (กับ <code>[wtContextMenuRowIndex]="i"</code>) ที่ <code>&lt;tr&gt;</code> คลิกขวาที่แถวแล้วเมนูเปิดตรงตำแหน่งที่คลิก · <code>[(contextMenuSelection)]</code> คือแถวที่คลิกขวาล่าสุด (แถวนั้นได้เส้นกรอบ) คำสั่งในเมนูจึงรู้ว่าทำกับแถวไหน · <code>contextMenuSelectionMode="joint"</code> ให้คลิกขวาเลือกแถวนั้นด้วย (ค่าเริ่มต้น <code>separate</code> แยกจากการเลือก) · <code>(onContextMenuSelect)</code> ได้ <code>{ originalEvent, data, index }</code> · <code>pContextMenuRow</code> ก็ใช้ได้ และ <code>[wtContextMenuRowDisabled]="true"</code> ปิดเฉพาะแถว',
-        en: '<code>[contextMenu]="studentMenu"</code> is a wt-contextMenu with no target, and <code>[wtContextMenuRow]="s"</code> (with <code>[wtContextMenuRowIndex]="i"</code>) goes on the <code>&lt;tr&gt;</code>: a right-click on a row opens the menu at the pointer · <code>[(contextMenuSelection)]</code> is the row last right-clicked (it gets an outline), so the menu\'s commands know which row to act on · <code>contextMenuSelectionMode="joint"</code> also selects that row (the default, <code>separate</code>, keeps the two apart) · <code>(onContextMenuSelect)</code> brings <code>{ originalEvent, data, index }</code> · <code>pContextMenuRow</code> works too, and <code>[wtContextMenuRowDisabled]="true"</code> turns it off for one row.',
+        th: '<code>[contextMenu]="studentMenu"</code> คือ wu-contextMenu ที่ไม่มี target และ <code>[wuContextMenuRow]="s"</code> (กับ <code>[wuContextMenuRowIndex]="i"</code>) ที่ <code>&lt;tr&gt;</code> คลิกขวาที่แถวแล้วเมนูเปิดตรงตำแหน่งที่คลิก · <code>[(contextMenuSelection)]</code> คือแถวที่คลิกขวาล่าสุด (แถวนั้นได้เส้นกรอบ) คำสั่งในเมนูจึงรู้ว่าทำกับแถวไหน · <code>contextMenuSelectionMode="joint"</code> ให้คลิกขวาเลือกแถวนั้นด้วย (ค่าเริ่มต้น <code>separate</code> แยกจากการเลือก) · <code>(onContextMenuSelect)</code> ได้ <code>{ originalEvent, data, index }</code> · <code>pContextMenuRow</code> ก็ใช้ได้ และ <code>[wuContextMenuRowDisabled]="true"</code> ปิดเฉพาะแถว',
+        en: '<code>[contextMenu]="studentMenu"</code> is a wu-contextMenu with no target, and <code>[wuContextMenuRow]="s"</code> (with <code>[wuContextMenuRowIndex]="i"</code>) goes on the <code>&lt;tr&gt;</code>: a right-click on a row opens the menu at the pointer · <code>[(contextMenuSelection)]</code> is the row last right-clicked (it gets an outline), so the menu\'s commands know which row to act on · <code>contextMenuSelectionMode="joint"</code> also selects that row (the default, <code>separate</code>, keeps the two apart) · <code>(onContextMenuSelect)</code> brings <code>{ originalEvent, data, index }</code> · <code>pContextMenuRow</code> works too, and <code>[wuContextMenuRowDisabled]="true"</code> turns it off for one row.',
       },
     },
     admin: {
       title: { th: 'ตัวอย่างหน้ารายชื่อนักเรียน', en: 'Example: a student list' },
       text: {
-        th: 'หน้าจัดการข้อมูลแบบที่แอปใช้บ่อย ช่องค้นหาและปุ่มเพิ่มใน caption เรียงได้ทุกคอลัมน์หลัก วันเกิดเป็นปีพุทธศักราช สถานะเป็น <code>wt-tag</code> และปุ่มแก้ไข / ลบแบบไอคอนกลมพร้อม tooltip',
-        en: 'An admin page as the apps build it: search and an add button in the caption, sortable main columns, short birth dates (th-TH would give the Buddhist year), status as a <code>wt-tag</code>, and round icon buttons with tooltips to edit or delete.',
+        th: 'หน้าจัดการข้อมูลแบบที่แอปใช้บ่อย ช่องค้นหาและปุ่มเพิ่มใน caption เรียงได้ทุกคอลัมน์หลัก วันเกิดเป็นปีพุทธศักราช สถานะเป็น <code>wu-tag</code> และปุ่มแก้ไข / ลบแบบไอคอนกลมพร้อม tooltip',
+        en: 'An admin page as the apps build it: search and an add button in the caption, sortable main columns, short birth dates (th-TH would give the Buddhist year), status as a <code>wu-tag</code>, and round icon buttons with tooltips to edit or delete.',
       },
     },
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-table&gt;</code> เป็น <code>&lt;wt-table&gt;</code> template (<code>pTemplate="body"</code> ฯลฯ) <code>pSortableColumn</code> <code>pSelectableRow</code> และ class <code>p-datatable-*</code> ใช้ต่อได้ input เดิมที่รับไว้แต่ไม่มีผล: <code>responsive</code>, <code>autoLayout</code>, <code>resizableColumns</code>, <code>reorderableColumns</code>, <code>virtualScroll</code>, <code>paginatorDropdownAppendTo</code> · <code>pFrozenColumn</code>, <code>pRowToggler</code>, <code>pRowGroupHeader</code>, <code>pReorderableRow</code>, <code>pEditableColumn</code>, <code>pEditableRow</code>, <code>pResizableColumn</code>, <code>pReorderableColumn</code>, <code>p-tableRadioButton</code>, <code>p-cellEditor</code> และ <code>&lt;p-columnFilter&gt;</code> (เปลี่ยน prefix เป็น <code>wt-</code>) ใช้ได้ตามหัวข้อด้านบน <code>[contextMenu]</code> กับ <code>pContextMenuRow</code> ใช้ได้ตามหัวข้อเมนูคลิกขวา ส่วนที่ยังไม่มี: virtual scroll (รายการยาวมากใช้ wt-scroller)',
-        en: 'Change <code>&lt;p-table&gt;</code> to <code>&lt;wt-table&gt;</code>. Templates (<code>pTemplate="body"</code> and the rest), <code>pSortableColumn</code>, <code>pSelectableRow</code> and the <code>p-datatable-*</code> classes keep working. Old inputs accepted and ignored: <code>responsive</code>, <code>autoLayout</code>, <code>resizableColumns</code>, <code>reorderableColumns</code>, <code>virtualScroll</code>, <code>paginatorDropdownAppendTo</code>. <code>pFrozenColumn</code>, <code>pRowToggler</code>, <code>pRowGroupHeader</code>, <code>pReorderableRow</code>, <code>pEditableColumn</code>, <code>pEditableRow</code>, <code>pResizableColumn</code>, <code>pReorderableColumn</code>, <code>p-tableRadioButton</code>, <code>p-cellEditor</code> and <code>&lt;p-columnFilter&gt;</code> (with the <code>wt-</code> prefix) work as the sections above show. <code>[contextMenu]</code> with <code>pContextMenuRow</code> works as the context menu section shows. Not built yet: virtual scroll (for very long lists, use wt-scroller).',
+        th: 'เปลี่ยน <code>&lt;p-table&gt;</code> เป็น <code>&lt;wu-table&gt;</code> template (<code>pTemplate="body"</code> ฯลฯ) <code>pSortableColumn</code> <code>pSelectableRow</code> และ class <code>p-datatable-*</code> ใช้ต่อได้ input เดิมที่รับไว้แต่ไม่มีผล: <code>responsive</code>, <code>autoLayout</code>, <code>resizableColumns</code>, <code>reorderableColumns</code>, <code>virtualScroll</code>, <code>paginatorDropdownAppendTo</code> · <code>pFrozenColumn</code>, <code>pRowToggler</code>, <code>pRowGroupHeader</code>, <code>pReorderableRow</code>, <code>pEditableColumn</code>, <code>pEditableRow</code>, <code>pResizableColumn</code>, <code>pReorderableColumn</code>, <code>p-tableRadioButton</code>, <code>p-cellEditor</code> และ <code>&lt;p-columnFilter&gt;</code> (เปลี่ยน prefix เป็น <code>wu-</code>) ใช้ได้ตามหัวข้อด้านบน <code>[contextMenu]</code> กับ <code>pContextMenuRow</code> ใช้ได้ตามหัวข้อเมนูคลิกขวา ส่วนที่ยังไม่มี: virtual scroll (รายการยาวมากใช้ wu-scroller)',
+        en: 'Change <code>&lt;p-table&gt;</code> to <code>&lt;wu-table&gt;</code>. Templates (<code>pTemplate="body"</code> and the rest), <code>pSortableColumn</code>, <code>pSelectableRow</code> and the <code>p-datatable-*</code> classes keep working. Old inputs accepted and ignored: <code>responsive</code>, <code>autoLayout</code>, <code>resizableColumns</code>, <code>reorderableColumns</code>, <code>virtualScroll</code>, <code>paginatorDropdownAppendTo</code>. <code>pFrozenColumn</code>, <code>pRowToggler</code>, <code>pRowGroupHeader</code>, <code>pReorderableRow</code>, <code>pEditableColumn</code>, <code>pEditableRow</code>, <code>pResizableColumn</code>, <code>pReorderableColumn</code>, <code>p-tableRadioButton</code>, <code>p-cellEditor</code> and <code>&lt;p-columnFilter&gt;</code> (with the <code>wu-</code> prefix) work as the sections above show. <code>[contextMenu]</code> with <code>pContextMenuRow</code> works as the context menu section shows. Not built yet: virtual scroll (for very long lists, use wu-scroller).',
       },
     },
   },
   code: {
-    basic: `<wt-table [value]="students" [tableStyle]="{ 'min-width': '32rem' }">
+    basic: `<wu-table [value]="students" [tableStyle]="{ 'min-width': '32rem' }">
   <ng-template #header>
     <tr>
       <th>ลำดับ</th>
@@ -524,22 +524,22 @@ export const TABLE_DOC: ComponentDoc = {
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    paginator: `<wt-table [value]="students" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+</wu-table>`,
+    paginator: `<wu-table [value]="students" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
   [showCurrentPageReport]="true">
 ${HEAD_BODY}
-</wt-table>`,
-    report: `<wt-table [value]="students" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+</wu-table>`,
+    report: `<wu-table [value]="students" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
   currentPageReportTemplate="หน้า {currentPage} จาก {totalPages} · นักเรียน {totalRecords} คน">
 ${HEAD_BODY}
-</wt-table>`,
-    sort: `<wt-table [value]="students" sortField="score" [sortOrder]="-1">
+</wu-table>`,
+    sort: `<wu-table [value]="students" sortField="score" [sortOrder]="-1">
   <ng-template #header>
     <tr>
-      <th wtSortableColumn="name">ชื่อ - สกุล <wt-sortIcon field="name"></wt-sortIcon></th>
-      <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
-      <th wtSortableColumn="club.name">ชุมนุม <wt-sortIcon field="club.name"></wt-sortIcon></th>
-      <th wtSortableColumn="score">คะแนน <wt-sortIcon field="score"></wt-sortIcon></th>
+      <th wuSortableColumn="name">ชื่อ - สกุล <wu-sortIcon field="name"></wu-sortIcon></th>
+      <th wuSortableColumn="room">ห้อง <wu-sortIcon field="room"></wu-sortIcon></th>
+      <th wuSortableColumn="club.name">ชุมนุม <wu-sortIcon field="club.name"></wu-sortIcon></th>
+      <th wuSortableColumn="score">คะแนน <wu-sortIcon field="score"></wu-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
@@ -550,13 +550,13 @@ ${HEAD_BODY}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    multisort: `<wt-table [value]="students" sortMode="multiple">
+</wu-table>`,
+    multisort: `<wu-table [value]="students" sortMode="multiple">
   <ng-template #header>
     <tr>
-      <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
-      <th wtSortableColumn="score">คะแนน <wt-sortIcon field="score"></wt-sortIcon></th>
-      <th wtSortableColumn="name">ชื่อ - สกุล <wt-sortIcon field="name"></wt-sortIcon></th>
+      <th wuSortableColumn="room">ห้อง <wu-sortIcon field="room"></wu-sortIcon></th>
+      <th wuSortableColumn="score">คะแนน <wu-sortIcon field="score"></wu-sortIcon></th>
+      <th wuSortableColumn="name">ชื่อ - สกุล <wu-sortIcon field="name"></wu-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
@@ -566,13 +566,13 @@ ${HEAD_BODY}
       <td>{{ s.name }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    search: `<wt-table #dt [value]="students" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0">
+</wu-table>`,
+    search: `<wu-table #dt [value]="students" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0">
   <ng-template #caption>
-    <wt-iconfield>
-      <wt-inputicon icon="wi wi-search"></wt-inputicon>
-      <input wtInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-    </wt-iconfield>
+    <wu-iconfield>
+      <wu-inputicon icon="wi wi-search"></wu-inputicon>
+      <input wuInputText placeholder="ค้นหานักเรียน" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+    </wu-iconfield>
   </ng-template>
   <ng-template #header>
     <tr>
@@ -588,46 +588,46 @@ ${HEAD_BODY}
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    empty: `<wt-table [value]="students">
+</wu-table>`,
+    empty: `<wu-table [value]="students">
 ${NAME_ROOM}
   <ng-template #emptymessage>
     <tr>
       <td colspan="2" class="text-center">ยังไม่มีนักเรียนในห้องนี้</td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     loading: {
-      v3: `<wt-table [value]="students" [loading]="isApiLoading">
+      v3: `<wu-table [value]="students" [loading]="isApiLoading">
 ${NAME_ROOM}
-</wt-table>
+</wu-table>
 
-<wt-table [value]="students" [loading]="isApiLoading">
+<wu-table [value]="students" [loading]="isApiLoading">
 ${NAME_ROOM}
   <ng-template #loadingbody>
     @for (n of [1, 2, 3]; track n) {
     <tr>
-      <td><wt-skeleton></wt-skeleton></td>
-      <td><wt-skeleton width="4rem"></wt-skeleton></td>
+      <td><wu-skeleton></wu-skeleton></td>
+      <td><wu-skeleton width="4rem"></wu-skeleton></td>
     </tr>
     }
   </ng-template>
-</wt-table>`,
-      classic: `<wt-table [value]="students" [loading]="isApiLoading">
-${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wtTemplate="$1"')}
-</wt-table>
+</wu-table>`,
+      classic: `<wu-table [value]="students" [loading]="isApiLoading">
+${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wuTemplate="$1"')}
+</wu-table>
 
-<wt-table [value]="students" [loading]="isApiLoading">
-${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wtTemplate="$1"')}
-  <ng-template wtTemplate="loadingbody">
+<wu-table [value]="students" [loading]="isApiLoading">
+${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wuTemplate="$1"')}
+  <ng-template wuTemplate="loadingbody">
     <tr *ngFor="let n of [1, 2, 3]">
-      <td><wt-skeleton></wt-skeleton></td>
-      <td><wt-skeleton width="4rem"></wt-skeleton></td>
+      <td><wu-skeleton></wu-skeleton></td>
+      <td><wu-skeleton width="4rem"></wu-skeleton></td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     },
-    selection: `<wt-table [value]="students" selectionMode="single" [(selection)]="selectedStudent" dataKey="id">
+    selection: `<wu-table [value]="students" selectionMode="single" [(selection)]="selectedStudent" dataKey="id">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -635,34 +635,34 @@ ${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wtTemplate="$1"')}
     </tr>
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
-    <tr [wtSelectableRow]="s" [wtSelectableRowIndex]="i">
+    <tr [wuSelectableRow]="s" [wuSelectableRowIndex]="i">
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    checkbox: `<wt-table [value]="students" [(selection)]="selectedStudents" dataKey="id">
+</wu-table>`,
+    checkbox: `<wu-table [value]="students" [(selection)]="selectedStudents" dataKey="id">
   <ng-template #header>
     <tr>
-      <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+      <th style="width: 3rem"><wu-tableHeaderCheckbox></wu-tableHeaderCheckbox></th>
       <th>ชื่อ - สกุล</th>
       <th>ห้อง</th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
     <tr>
-      <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+      <td><wu-tableCheckbox [value]="s"></wu-tableCheckbox></td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    lazy: `<wt-table [value]="students" [lazy]="true" (onLazyLoad)="loadStudents($event)" [paginator]="true" [rows]="10"
+</wu-table>`,
+    lazy: `<wu-table [value]="students" [lazy]="true" (onLazyLoad)="loadStudents($event)" [paginator]="true" [rows]="10"
   [totalRecords]="totalRecords" [loading]="isApiLoading">
   <ng-template #header>
     <tr>
       <th>ลำดับ</th>
-      <th wtSortableColumn="name">ชื่อ - สกุล <wt-sortIcon field="name"></wt-sortIcon></th>
+      <th wuSortableColumn="name">ชื่อ - สกุล <wu-sortIcon field="name"></wu-sortIcon></th>
       <th>ห้อง</th>
     </tr>
   </ng-template>
@@ -673,11 +673,11 @@ ${NAME_ROOM.replace(/<ng-template #([a-z]+)/g, '<ng-template wtTemplate="$1"')}
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    look: `<wt-table [value]="students" [showGridlines]="true" [stripedRows]="true" size="small">
+</wu-table>`,
+    look: `<wu-table [value]="students" [showGridlines]="true" [stripedRows]="true" size="small">
 ${NAME_ROOM}
-</wt-table>`,
-    scroll: `<wt-table [value]="students" [scrollable]="true" scrollHeight="240px" [tableStyle]="{ 'min-width': '50rem' }">
+</wu-table>`,
+    scroll: `<wu-table [value]="students" [scrollable]="true" scrollHeight="240px" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template #header>
     <tr>
       <th>รหัส</th>
@@ -696,8 +696,8 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    stack: `<wt-table [value]="students" responsiveLayout="stack" breakpoint="768px">
+</wu-table>`,
+    stack: `<wu-table [value]="students" responsiveLayout="stack" breakpoint="768px">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -712,36 +712,36 @@ ${NAME_ROOM}
       <td><span class="p-column-title">คะแนน</span>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    frozen: `<wt-table [value]="students" [tableStyle]="{ 'min-width': '80rem' }">
+</wu-table>`,
+    frozen: `<wu-table [value]="students" [tableStyle]="{ 'min-width': '80rem' }">
   <ng-template #header>
     <tr>
-      <th wtFrozenColumn>รหัส</th>
-      <th wtFrozenColumn>ชื่อ - สกุล</th>
+      <th wuFrozenColumn>รหัส</th>
+      <th wuFrozenColumn>ชื่อ - สกุล</th>
       <th>ห้อง</th>
       <th>ชุมนุม</th>
       <th>คะแนน</th>
       <th>สถานะ</th>
       <th>วันเกิด</th>
-      <th wtFrozenColumn alignFrozen="right">จัดการ</th>
+      <th wuFrozenColumn alignFrozen="right">จัดการ</th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
     <tr>
-      <td wtFrozenColumn>{{ s.code }}</td>
-      <td wtFrozenColumn>{{ s.name }}</td>
+      <td wuFrozenColumn>{{ s.code }}</td>
+      <td wuFrozenColumn>{{ s.name }}</td>
       <td>{{ s.room }}</td>
       <td>{{ s.club.name }}</td>
       <td>{{ s.score }}</td>
       <td>{{ s.status }}</td>
       <td>{{ thaiDate(s.birthDate) }}</td>
-      <td wtFrozenColumn alignFrozen="right">
-        <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wt-button>
+      <td wuFrozenColumn alignFrozen="right">
+        <wu-button icon="wi wi-pencil" [rounded]="true" [text]="true" ariaLabel="แก้ไข" (onClick)="editStudent(s)"></wu-button>
       </td>
     </tr>
   </ng-template>
-</wt-table>`,
-    expansion: `<wt-table [value]="students" dataKey="id" [expandedRowKeys]="expandedRows" rowExpandMode="single"
+</wu-table>`,
+    expansion: `<wu-table [value]="students" dataKey="id" [expandedRowKeys]="expandedRows" rowExpandMode="single"
   (onRowExpand)="rowOpened($event)" (onRowCollapse)="rowClosed($event)">
   <ng-template #header>
     <tr>
@@ -754,7 +754,7 @@ ${NAME_ROOM}
   <ng-template #body let-s let-expanded="expanded">
     <tr>
       <td>
-        <button type="button" wtButton [wtRowToggler]="s" [text]="true" [rounded]="true"
+        <button type="button" wuButton [wuRowToggler]="s" [text]="true" [rounded]="true"
           [icon]="expanded ? 'wi wi-chevron-down' : 'wi wi-chevron-right'" [attr.aria-label]="'รายละเอียดของ ' + s.name"></button>
       </td>
       <td>{{ s.name }}</td>
@@ -767,8 +767,8 @@ ${NAME_ROOM}
       <td colspan="4">ชุมนุม {{ s.club.name || '-' }} · สถานะ {{ s.status }} · วันเกิด {{ thaiDate(s.birthDate) }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    rowgroup: `<wt-table [value]="studentsByRoom" rowGroupMode="subheader" groupRowsBy="room" [scrollable]="true"
+</wu-table>`,
+    rowgroup: `<wu-table [value]="studentsByRoom" rowGroupMode="subheader" groupRowsBy="room" [scrollable]="true"
   scrollHeight="320px">
   <ng-template #header>
     <tr>
@@ -778,7 +778,7 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #groupheader let-s>
-    <tr wtRowGroupHeader>
+    <tr wuRowGroupHeader>
       <td colspan="3">ห้อง {{ s.room }}</td>
     </tr>
   </ng-template>
@@ -790,13 +790,13 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #groupfooter let-s>
-    <tr class="wt-rowgroup-footer">
+    <tr class="wu-rowgroup-footer">
       <td colspan="3" class="text-right">{{ roomCount(s.room) }} คน</td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     rowspan: {
-      v3: `<wt-table [value]="studentsByRoom" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
+      v3: `<wu-table [value]="studentsByRoom" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
   <ng-template #header>
     <tr>
       <th>ห้อง</th>
@@ -813,25 +813,25 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-      classic: `<wt-table [value]="studentsByRoom" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
-  <ng-template wtTemplate="header">
+</wu-table>`,
+      classic: `<wu-table [value]="studentsByRoom" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
+  <ng-template wuTemplate="header">
     <tr>
       <th>ห้อง</th>
       <th>ชื่อ - สกุล</th>
       <th>คะแนน</th>
     </tr>
   </ng-template>
-  <ng-template wtTemplate="body" let-s let-rowgroup="rowgroup" let-rowspan="rowspan">
+  <ng-template wuTemplate="body" let-s let-rowgroup="rowgroup" let-rowspan="rowspan">
     <tr>
       <td *ngIf="rowgroup" [attr.rowspan]="rowspan">{{ s.room }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     },
-    colfilter: `<wt-table [value]="students" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '44rem' }">
+    colfilter: `<wu-table [value]="students" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '44rem' }">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -840,17 +840,17 @@ ${NAME_ROOM}
       <th>ชำระค่าบำรุง</th>
     </tr>
     <tr>
-      <th><wt-columnFilter field="name" placeholder="ค้นหาชื่อ"></wt-columnFilter></th>
+      <th><wu-columnFilter field="name" placeholder="ค้นหาชื่อ"></wu-columnFilter></th>
       <th>
-        <wt-columnFilter field="room" matchMode="equals" [showClearButton]="false">
+        <wu-columnFilter field="room" matchMode="equals" [showClearButton]="false">
           <ng-template #filter let-value let-filter="filterCallback">
-            <wt-select [ngModel]="value" [options]="rooms" placeholder="ทุกห้อง" [showClear]="true" [fluid]="true"
-              (onChange)="filter($event.value)"></wt-select>
+            <wu-select [ngModel]="value" [options]="rooms" placeholder="ทุกห้อง" [showClear]="true" [fluid]="true"
+              (onChange)="filter($event.value)"></wu-select>
           </ng-template>
-        </wt-columnFilter>
+        </wu-columnFilter>
       </th>
-      <th><wt-columnFilter field="score" type="numeric" matchMode="gte" placeholder="คะแนนขั้นต่ำ"></wt-columnFilter></th>
-      <th><wt-columnFilter field="paid" type="boolean"></wt-columnFilter></th>
+      <th><wu-columnFilter field="score" type="numeric" matchMode="gte" placeholder="คะแนนขั้นต่ำ"></wu-columnFilter></th>
+      <th><wu-columnFilter field="paid" type="boolean"></wu-columnFilter></th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
@@ -866,20 +866,20 @@ ${NAME_ROOM}
       <td colspan="4" class="text-center">ไม่พบนักเรียนที่ค้นหา</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    export: `<wt-table #dt [value]="students" [columns]="exportColumns" [(selection)]="pickedStudents" dataKey="id"
+</wu-table>`,
+    export: `<wu-table #dt [value]="students" [columns]="exportColumns" [(selection)]="pickedStudents" dataKey="id"
   exportFilename="students" [exportFunction]="exportCell" [scrollable]="true" scrollHeight="240px">
   <ng-template #caption>
     <div class="flex flex-wrap gap-2">
-      <wt-button label="ส่งออก CSV" icon="wi wi-download" (onClick)="dt.exportCSV()"></wt-button>
-      <wt-button label="ส่งออกที่เลือก" icon="wi wi-download" severity="secondary" [outlined]="true"
-        [disabled]="!pickedStudents.length" (onClick)="dt.exportCSV({ selectionOnly: true })"></wt-button>
-      <wt-button label="ดูข้อความ CSV" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(dt)"></wt-button>
+      <wu-button label="ส่งออก CSV" icon="wi wi-download" (onClick)="dt.exportCSV()"></wu-button>
+      <wu-button label="ส่งออกที่เลือก" icon="wi wi-download" severity="secondary" [outlined]="true"
+        [disabled]="!pickedStudents.length" (onClick)="dt.exportCSV({ selectionOnly: true })"></wu-button>
+      <wu-button label="ดูข้อความ CSV" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(dt)"></wu-button>
     </div>
   </ng-template>
   <ng-template #header>
     <tr>
-      <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+      <th style="width: 3rem"><wu-tableHeaderCheckbox></wu-tableHeaderCheckbox></th>
       <th>รหัส</th>
       <th>ชื่อ - สกุล</th>
       <th>ห้อง</th>
@@ -888,20 +888,20 @@ ${NAME_ROOM}
   </ng-template>
   <ng-template #body let-s>
     <tr>
-      <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+      <td><wu-tableCheckbox [value]="s"></wu-tableCheckbox></td>
       <td>{{ s.code }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>
+</wu-table>
 <pre>{{ csvText }}</pre>`,
-    excel: `<wt-table #dt [value]="students" [columns]="excelColumns" exportFilename="students">
+    excel: `<wu-table #dt [value]="students" [columns]="excelColumns" exportFilename="students">
   <ng-template #caption>
     <div class="flex flex-wrap gap-2">
-      <wt-button label="ส่งออก Excel" icon="wi wi-file-excel" (onClick)="dt.exportExcel()"></wt-button>
-      <wt-button label="รายงาน Excel" icon="wi wi-download" severity="secondary" [outlined]="true" (onClick)="dt.exportExcel(report)"></wt-button>
+      <wu-button label="ส่งออก Excel" icon="wi wi-file-excel" (onClick)="dt.exportExcel()"></wu-button>
+      <wu-button label="รายงาน Excel" icon="wi wi-download" severity="secondary" [outlined]="true" (onClick)="dt.exportExcel(report)"></wu-button>
     </div>
   </ng-template>
   <ng-template #header>
@@ -922,8 +922,8 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    reorder: `<wt-table [value]="students" (onRowReorder)="rowMoved($event)">
+</wu-table>`,
+    reorder: `<wu-table [value]="students" (onRowReorder)="rowMoved($event)">
   <ng-template #header>
     <tr>
       <th style="width: 3rem"></th>
@@ -933,15 +933,15 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
-    <tr [wtReorderableRow]="i">
-      <td><span class="wi wi-bars" wtReorderableRowHandle></span></td>
+    <tr [wuReorderableRow]="i">
+      <td><span class="wi wi-bars" wuReorderableRowHandle></span></td>
       <td>{{ i + 1 }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    selectmore: `<wt-table [value]="students" selectionMode="single" [(selection)]="leader" dataKey="id" [rowSelectable]="canPick">
+</wu-table>`,
+    selectmore: `<wu-table [value]="students" selectionMode="single" [(selection)]="leader" dataKey="id" [rowSelectable]="canPick">
   <ng-template #header>
     <tr>
       <th style="width: 3rem"></th>
@@ -951,14 +951,14 @@ ${NAME_ROOM}
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
     <tr>
-      <td><wt-tableRadioButton [value]="s" [index]="i"></wt-tableRadioButton></td>
+      <td><wu-tableRadioButton [value]="s" [index]="i"></wu-tableRadioButton></td>
       <td>{{ s.name }}</td>
       <td>{{ s.status }}</td>
     </tr>
   </ng-template>
-</wt-table>
+</wu-table>
 
-<wt-table [value]="students" selectionMode="multiple" [metaKeySelection]="true" [(selection)]="picked" dataKey="id">
+<wu-table [value]="students" selectionMode="multiple" [metaKeySelection]="true" [(selection)]="picked" dataKey="id">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -966,13 +966,13 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
-    <tr [wtSelectableRow]="s" [wtSelectableRowIndex]="i">
+    <tr [wuSelectableRow]="s" [wuSelectableRowIndex]="i">
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    celledit: `<wt-table [value]="students" dataKey="id" (onEditComplete)="cellSaved($event)">
+</wu-table>`,
+    celledit: `<wu-table [value]="students" dataKey="id" (onEditComplete)="cellSaved($event)">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -981,27 +981,27 @@ ${NAME_ROOM}
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
     <tr>
-      <td [wtEditableColumn]="s" wtEditableColumnField="name" [wtEditableColumnRowIndex]="i">
-        <wt-cellEditor>
+      <td [wuEditableColumn]="s" wuEditableColumnField="name" [wuEditableColumnRowIndex]="i">
+        <wu-cellEditor>
           <ng-template #input>
-            <input wtInputText name="name" [(ngModel)]="s.name" />
+            <input wuInputText name="name" [(ngModel)]="s.name" />
           </ng-template>
           <ng-template #output>{{ s.name }}</ng-template>
-        </wt-cellEditor>
+        </wu-cellEditor>
       </td>
-      <td [wtEditableColumn]="s" wtEditableColumnField="score" [wtEditableColumnRowIndex]="i">
-        <wt-cellEditor>
+      <td [wuEditableColumn]="s" wuEditableColumnField="score" [wuEditableColumnRowIndex]="i">
+        <wu-cellEditor>
           <ng-template #input>
-            <wt-inputnumber name="score" [(ngModel)]="s.score" [min]="0" [max]="100"></wt-inputnumber>
+            <wu-inputnumber name="score" [(ngModel)]="s.score" [min]="0" [max]="100"></wu-inputnumber>
           </ng-template>
           <ng-template #output>{{ s.score }}</ng-template>
-        </wt-cellEditor>
+        </wu-cellEditor>
       </td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     rowedit: {
-      v3: `<wt-table [value]="students" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
+      v3: `<wu-table [value]="students" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -1010,82 +1010,82 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #body let-s let-editing="editing">
-    <tr [wtEditableRow]="s">
+    <tr [wuEditableRow]="s">
       <td>
-        <wt-cellEditor>
+        <wu-cellEditor>
           <ng-template #input>
-            <input wtInputText name="name" [(ngModel)]="s.name" required />
+            <input wuInputText name="name" [(ngModel)]="s.name" required />
           </ng-template>
           <ng-template #output>{{ s.name }}</ng-template>
-        </wt-cellEditor>
+        </wu-cellEditor>
       </td>
       <td>
-        <wt-cellEditor>
+        <wu-cellEditor>
           <ng-template #input>
-            <input wtInputText name="room" [(ngModel)]="s.room" />
+            <input wuInputText name="room" [(ngModel)]="s.room" />
           </ng-template>
           <ng-template #output>{{ s.room }}</ng-template>
-        </wt-cellEditor>
+        </wu-cellEditor>
       </td>
       <td>
         @if (!editing) {
-          <button type="button" wtButton wtInitEditableRow icon="wi wi-pencil" [text]="true" [rounded]="true"
+          <button type="button" wuButton wuInitEditableRow icon="wi wi-pencil" [text]="true" [rounded]="true"
             aria-label="แก้ไข" (click)="startEdit(s)"></button>
         } @else {
-          <button type="button" wtButton wtSaveEditableRow icon="wi wi-check" [text]="true" [rounded]="true"
+          <button type="button" wuButton wuSaveEditableRow icon="wi wi-check" [text]="true" [rounded]="true"
             aria-label="บันทึก" (click)="saveRow(s)"></button>
-          <button type="button" wtButton wtCancelEditableRow icon="wi wi-times" severity="secondary" [text]="true"
+          <button type="button" wuButton wuCancelEditableRow icon="wi wi-times" severity="secondary" [text]="true"
             [rounded]="true" aria-label="ยกเลิก" (click)="cancelRow(s)"></button>
         }
       </td>
     </tr>
   </ng-template>
-</wt-table>`,
-      classic: `<wt-table [value]="students" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
-  <ng-template wtTemplate="header">
+</wu-table>`,
+      classic: `<wu-table [value]="students" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
+  <ng-template wuTemplate="header">
     <tr>
       <th>ชื่อ - สกุล</th>
       <th>ห้อง</th>
       <th style="width: 7rem"></th>
     </tr>
   </ng-template>
-  <ng-template wtTemplate="body" let-s let-editing="editing">
-    <tr [wtEditableRow]="s">
+  <ng-template wuTemplate="body" let-s let-editing="editing">
+    <tr [wuEditableRow]="s">
       <td>
-        <wt-cellEditor>
-          <ng-template wtTemplate="input">
-            <input wtInputText name="name" [(ngModel)]="s.name" required />
+        <wu-cellEditor>
+          <ng-template wuTemplate="input">
+            <input wuInputText name="name" [(ngModel)]="s.name" required />
           </ng-template>
-          <ng-template wtTemplate="output">{{ s.name }}</ng-template>
-        </wt-cellEditor>
+          <ng-template wuTemplate="output">{{ s.name }}</ng-template>
+        </wu-cellEditor>
       </td>
       <td>
-        <wt-cellEditor>
-          <ng-template wtTemplate="input">
-            <input wtInputText name="room" [(ngModel)]="s.room" />
+        <wu-cellEditor>
+          <ng-template wuTemplate="input">
+            <input wuInputText name="room" [(ngModel)]="s.room" />
           </ng-template>
-          <ng-template wtTemplate="output">{{ s.room }}</ng-template>
-        </wt-cellEditor>
+          <ng-template wuTemplate="output">{{ s.room }}</ng-template>
+        </wu-cellEditor>
       </td>
       <td>
-        <button *ngIf="!editing" type="button" wtButton wtInitEditableRow icon="wi wi-pencil" [text]="true"
+        <button *ngIf="!editing" type="button" wuButton wuInitEditableRow icon="wi wi-pencil" [text]="true"
           [rounded]="true" aria-label="แก้ไข" (click)="startEdit(s)"></button>
-        <button *ngIf="editing" type="button" wtButton wtSaveEditableRow icon="wi wi-check" [text]="true"
+        <button *ngIf="editing" type="button" wuButton wuSaveEditableRow icon="wi wi-check" [text]="true"
           [rounded]="true" aria-label="บันทึก" (click)="saveRow(s)"></button>
-        <button *ngIf="editing" type="button" wtButton wtCancelEditableRow icon="wi wi-times" severity="secondary"
+        <button *ngIf="editing" type="button" wuButton wuCancelEditableRow icon="wi wi-times" severity="secondary"
           [text]="true" [rounded]="true" aria-label="ยกเลิก" (click)="cancelRow(s)"></button>
       </td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     },
     columns: {
-      v3: `<wt-table [value]="students" [columns]="cols" [resizableColumns]="true" columnResizeMode="expand"
+      v3: `<wu-table [value]="students" [columns]="cols" [resizableColumns]="true" columnResizeMode="expand"
   [reorderableColumns]="true" (onColResize)="colResized($event)" (onColReorder)="colMoved($event)">
   <ng-template #header let-columns>
     <tr>
       @for (col of columns; track col.field) {
-        <th wtResizableColumn wtReorderableColumn>{{ col.header }}</th>
+        <th wuResizableColumn wuReorderableColumn>{{ col.header }}</th>
       }
     </tr>
   </ng-template>
@@ -1096,36 +1096,36 @@ ${NAME_ROOM}
       }
     </tr>
   </ng-template>
-</wt-table>`,
-      classic: `<wt-table [value]="students" [columns]="cols" [resizableColumns]="true" columnResizeMode="expand"
+</wu-table>`,
+      classic: `<wu-table [value]="students" [columns]="cols" [resizableColumns]="true" columnResizeMode="expand"
   [reorderableColumns]="true" (onColResize)="colResized($event)" (onColReorder)="colMoved($event)">
-  <ng-template wtTemplate="header" let-columns>
+  <ng-template wuTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let col of columns" wtResizableColumn wtReorderableColumn>{{ col.header }}</th>
+      <th *ngFor="let col of columns" wuResizableColumn wuReorderableColumn>{{ col.header }}</th>
     </tr>
   </ng-template>
-  <ng-template wtTemplate="body" let-s let-columns="columns">
+  <ng-template wuTemplate="body" let-s let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">{{ s[col.field] }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
+</wu-table>`,
     },
-    filtermenu: `<wt-table #dt [value]="students" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '32rem' }">
+    filtermenu: `<wu-table #dt [value]="students" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '32rem' }">
   <ng-template #caption>
-    <wt-button label="คะแนน 80–89" severity="secondary" [outlined]="true" (onClick)="scoreBand(dt)"></wt-button>
+    <wu-button label="คะแนน 80–89" severity="secondary" [outlined]="true" (onClick)="scoreBand(dt)"></wu-button>
   </ng-template>
   <ng-template #header>
     <tr>
       <th>
         <div class="flex align-items-center gap-2">
-          ชื่อ - สกุล <wt-columnFilter display="menu" field="name"></wt-columnFilter>
+          ชื่อ - สกุล <wu-columnFilter display="menu" field="name"></wu-columnFilter>
         </div>
       </th>
       <th>ห้อง</th>
       <th>
         <div class="flex align-items-center gap-2">
-          คะแนน <wt-columnFilter display="menu" field="score" type="numeric"></wt-columnFilter>
+          คะแนน <wu-columnFilter display="menu" field="score" type="numeric"></wu-columnFilter>
         </div>
       </th>
     </tr>
@@ -1137,13 +1137,13 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    customsort: `<wt-table [value]="students" [customSort]="true" (sortFunction)="sortStudents($event)" [scrollable]="true"
+</wu-table>`,
+    customsort: `<wu-table [value]="students" [customSort]="true" (sortFunction)="sortStudents($event)" [scrollable]="true"
   scrollHeight="320px">
   <ng-template #header>
     <tr>
-      <th wtSortableColumn="status">สถานะ <wt-sortIcon field="status"></wt-sortIcon></th>
-      <th wtSortableColumn="room">ห้อง <wt-sortIcon field="room"></wt-sortIcon></th>
+      <th wuSortableColumn="status">สถานะ <wu-sortIcon field="status"></wu-sortIcon></th>
+      <th wuSortableColumn="room">ห้อง <wu-sortIcon field="room"></wu-sortIcon></th>
       <th>ชื่อ - สกุล</th>
     </tr>
   </ng-template>
@@ -1154,16 +1154,16 @@ ${NAME_ROOM}
       <td>{{ s.name }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    state: `<wt-table #dt [value]="students" stateKey="students-table" stateStorage="session" [paginator]="true" [rows]="5"
+</wu-table>`,
+    state: `<wu-table #dt [value]="students" stateKey="students-table" stateStorage="session" [paginator]="true" [rows]="5"
   (onStateRestore)="stateRestored()">
   <ng-template #caption>
-    <wt-button label="ลืมสถานะที่จำไว้" severity="secondary" [text]="true" (onClick)="dt.clearState()"></wt-button>
+    <wu-button label="ลืมสถานะที่จำไว้" severity="secondary" [text]="true" (onClick)="dt.clearState()"></wu-button>
   </ng-template>
   <ng-template #header>
     <tr>
-      <th wtSortableColumn="name">ชื่อ - สกุล <wt-sortIcon field="name"></wt-sortIcon></th>
-      <th wtSortableColumn="score">คะแนน <wt-sortIcon field="score"></wt-sortIcon></th>
+      <th wuSortableColumn="name">ชื่อ - สกุล <wu-sortIcon field="name"></wu-sortIcon></th>
+      <th wuSortableColumn="score">คะแนน <wu-sortIcon field="score"></wu-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template #body let-s>
@@ -1172,8 +1172,8 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    frozenrows: `<wt-table [value]="students" [frozenValue]="totals" [scrollable]="true" scrollHeight="240px">
+</wu-table>`,
+    frozenrows: `<wu-table [value]="students" [frozenValue]="totals" [scrollable]="true" scrollHeight="240px">
   <ng-template #header>
     <tr>
       <th>ชื่อ - สกุล</th>
@@ -1192,8 +1192,8 @@ ${NAME_ROOM}
       <td>{{ s.score }}</td>
     </tr>
   </ng-template>
-</wt-table>`,
-    contextmenu: `<wt-table [value]="students" dataKey="id" selectionMode="single" [(selection)]="selectedStudent"
+</wu-table>`,
+    contextmenu: `<wu-table [value]="students" dataKey="id" selectionMode="single" [(selection)]="selectedStudent"
   [contextMenu]="studentMenu" [(contextMenuSelection)]="menuStudent" contextMenuSelectionMode="joint">
   <ng-template #header>
     <tr>
@@ -1203,14 +1203,14 @@ ${NAME_ROOM}
     </tr>
   </ng-template>
   <ng-template #body let-s let-i="rowIndex">
-    <tr [wtSelectableRow]="s" [wtContextMenuRow]="s" [wtContextMenuRowIndex]="i">
+    <tr [wuSelectableRow]="s" [wuContextMenuRow]="s" [wuContextMenuRowIndex]="i">
       <td>{{ s.code }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.room }}</td>
     </tr>
   </ng-template>
-</wt-table>
-<wt-contextMenu #studentMenu [model]="studentActions"></wt-contextMenu>`,
+</wu-table>
+<wu-contextMenu #studentMenu [model]="studentActions"></wu-contextMenu>`,
     admin: ADMIN_HTML,
   },
   ts: {
@@ -1227,13 +1227,13 @@ reload(): void {
 }`,
     selection: `selectedStudent: Student | null = null;`,
     checkbox: `selectedStudents: Student[] = [];`,
-    lazy: `import { WtTableLazyLoadEvent } from 'wiratheme/table';
+    lazy: `import { WuTableLazyLoadEvent } from 'wiraui/table';
 
 students: Student[] = [];
 totalRecords = 0;
 isApiLoading = false;
 
-loadStudents(event: WtTableLazyLoadEvent): void {
+loadStudents(event: WuTableLazyLoadEvent): void {
   this.isApiLoading = true;
   // page เริ่มนับจาก 1 ตรงกับ API ที่นับหน้า
   this.studentService
@@ -1247,16 +1247,16 @@ loadStudents(event: WtTableLazyLoadEvent): void {
     frozen: `editStudent(student: Student): void {
   // เปิดฟอร์มแก้ไข
 }`,
-    expansion: `import { WtTableRowExpandEvent } from 'wiratheme/table';
+    expansion: `import { WuTableRowExpandEvent } from 'wiraui/table';
 
 expandedRows: Record<string, boolean> = { 1: true };   // เปิดแถวแรกไว้ตั้งแต่ต้น
 lastToggle = '';
 
-rowOpened(event: WtTableRowExpandEvent): void {
+rowOpened(event: WuTableRowExpandEvent): void {
   this.lastToggle = 'onRowExpand: ' + (event.data as Student).name;
 }
 
-rowClosed(event: WtTableRowExpandEvent): void {
+rowClosed(event: WuTableRowExpandEvent): void {
   this.lastToggle = 'onRowCollapse: ' + (event.data as Student).name;
 }`,
     rowgroup: `studentsByRoom: Student[] = [];
@@ -1273,7 +1273,7 @@ roomCount(room: string): number {
 }`,
     colfilter: `// แต่ละแถวมี paid: boolean ด้วย
 rooms = ['ม.1/1', 'ม.1/2', 'ม.1/10', 'ม.2/1', 'ม.2/3'];`,
-    export: `import { WtTable } from 'wiratheme/table';
+    export: `import { WuTable } from 'wiraui/table';
 
 exportColumns = [
   { field: 'code', header: 'รหัส' },
@@ -1291,10 +1291,10 @@ formatCell(cell: { data: unknown; field: string }): string {
   return cell.field === 'score' ? Number(cell.data).toFixed(2) : String(cell.data ?? '');
 }
 
-previewCsv(table: WtTable): void {
+previewCsv(table: WuTable): void {
   this.csvText = table.toCSV();
 }`,
-    excel: `import { WtTableExcelOptions } from 'wiratheme/table';
+    excel: `import { WuTableExcelOptions } from 'wiraui/table';
 
 excelColumns = [
   { field: 'code', header: 'รหัส' },
@@ -1304,7 +1304,7 @@ excelColumns = [
   { field: 'score', header: 'คะแนน', exportFormat: '0.00' },
 ];
 
-report: WtTableExcelOptions = {
+report: WuTableExcelOptions = {
   fileName: 'score-report',
   title: 'รายงานคะแนนสอบ',
   subtitle: 'ภาคเรียนที่ 2/2569',
@@ -1324,11 +1324,11 @@ report: WtTableExcelOptions = {
     ]);
   },
 };`,
-    reorder: `import { WtTableRowReorderEvent } from 'wiratheme/table';
+    reorder: `import { WuTableRowReorderEvent } from 'wiraui/table';
 
 lastMove = '';
 
-rowMoved(event: WtTableRowReorderEvent): void {
+rowMoved(event: WuTableRowReorderEvent): void {
   // students ถูกเรียงใหม่ในที่เดิมแล้ว
   this.lastMove = event.dragIndex + ' → ' + event.dropIndex;
 }`,
@@ -1340,11 +1340,11 @@ canPick = this.isEnrolled.bind(this);
 isEnrolled(row: { data: unknown; index?: number }): boolean {
   return (row.data as Student).status === 'กำลังศึกษา';
 }`,
-    celledit: `import { WtTableEditEvent } from 'wiratheme/table';
+    celledit: `import { WuTableEditEvent } from 'wiraui/table';
 
 lastEdit = '';
 
-cellSaved(event: WtTableEditEvent): void {
+cellSaved(event: WuTableEditEvent): void {
   this.lastEdit = event.field + ' · ' + (event.data as Student).name;
 }`,
     rowedit: `editingRows: Record<string, boolean> = {};
@@ -1364,7 +1364,7 @@ cancelRow(student: Student): void {
   Object.assign(student, this.clones[student.id]);
   delete this.clones[student.id];
 }`,
-    columns: `import { WtTableColReorderEvent, WtTableColResizeEvent } from 'wiratheme/table';
+    columns: `import { WuTableColReorderEvent, WuTableColResizeEvent } from 'wiraui/table';
 
 cols = [
   { field: 'code', header: 'รหัส' },
@@ -1374,27 +1374,27 @@ cols = [
 ];
 lastColumns = '';
 
-colResized(event: WtTableColResizeEvent): void {
+colResized(event: WuTableColResizeEvent): void {
   this.lastColumns = 'onColResize: ' + event.delta + 'px';
 }
 
-colMoved(event: WtTableColReorderEvent): void {
+colMoved(event: WuTableColReorderEvent): void {
   this.lastColumns = 'onColReorder: ' + this.cols.map((c) => c.field).join(', ');
 }`,
-    filtermenu: `import { WtTable } from 'wiratheme/table';
+    filtermenu: `import { WuTable } from 'wiraui/table';
 
 /** สองเงื่อนไขของคอลัมน์เดียว: ตั้งแต่ 80 และน้อยกว่า 90 */
-scoreBand(table: WtTable): void {
+scoreBand(table: WuTable): void {
   table.filterRules('score', [
     { value: 80, matchMode: 'gte' },
     { value: 90, matchMode: 'lt' },
   ], 'and');
 }`,
-    customsort: `import { WtTableSortFunctionEvent } from 'wiratheme/table';
+    customsort: `import { WuTableSortFunctionEvent } from 'wiraui/table';
 
 private readonly statusOrder = ['พักการเรียน', 'ย้ายออก', 'กำลังศึกษา'];   // ต้องติดตามก่อน
 
-sortStudents(event: WtTableSortFunctionEvent): void {
+sortStudents(event: WuTableSortFunctionEvent): void {
   const order = event.order ?? 1;
   (event.data as Student[]).sort((a, b) => {
     const result =
@@ -1410,12 +1410,12 @@ stateRestored(): void {
   this.restoredCount++;
 }`,
     frozenrows: `totals = [{ label: 'คะแนนเฉลี่ย', score: 76.6 }];   // จาก API`,
-    contextmenu: `import { WtMenuItem } from 'wiratheme/menu';
+    contextmenu: `import { WuMenuItem } from 'wiraui/menu';
 
 selectedStudent: Student | null = null;
 menuStudent: Student | null = null;   // แถวที่คลิกขวาล่าสุด
 lastAction = '';
-studentActions: WtMenuItem[] = [
+studentActions: WuMenuItem[] = [
   { label: 'ดูประวัติ', icon: 'wi wi-eye', command: () => this.viewStudent() },
   { label: 'ย้ายห้อง', icon: 'wi wi-share-alt', command: () => this.moveStudent() },
   { separator: true },
@@ -1433,7 +1433,7 @@ moveStudent(): void {
 deleteStudent(): void {
   this.lastAction = 'ลบ: ' + this.menuStudent?.name;
 }`,
-    admin: `private readonly alert = inject(WtAlertService);
+    admin: `private readonly alert = inject(WuAlertService);
 students: Student[] = [];
 
 /** th-TH ใช้ปีพุทธศักราช: 14 พ.ค. 2555 */
@@ -1495,7 +1495,7 @@ async deleteStudent(student: Student): Promise<void> {
         row('defaultSortOrder', '1 | -1', '1', 'ทิศทางเมื่อคลิกครั้งแรก', 'Order on the first click'),
         row('resetPageOnSort', BOOL, 'true', 'กลับไปหน้าแรกหลังเรียง', 'Back to page 1 after sorting'),
         row('globalFilterFields', 'string[]', 'ทุก field ชั้นบน', 'field ที่ filterGlobal ค้น (dot path ได้)', 'Fields filterGlobal searches (dot paths work)'),
-        row('filterDelay', 'number', '0', 'รอหลังพิมพ์ก่อนค้น (ms) 0 = ค้นทันที ใช้กับตัวกรองต่อคอลัมน์ด้วย ค่าเริ่มต้นตั้งทั้งแอปได้ที่ provideWiraTheme({ delays: { filter } })', 'Wait after typing before searching (ms); 0 = at once; the column filters follow it; the default is set for the app with provideWiraTheme({ delays: { filter } })'),
+        row('filterDelay', 'number', '0', 'รอหลังพิมพ์ก่อนค้น (ms) 0 = ค้นทันที ใช้กับตัวกรองต่อคอลัมน์ด้วย ค่าเริ่มต้นตั้งทั้งแอปได้ที่ provideWiraUI({ delays: { filter } })', 'Wait after typing before searching (ms); 0 = at once; the column filters follow it; the default is set for the app with provideWiraUI({ delays: { filter } })'),
         row('filters', 'Record<string, FilterMeta>', '{}', 'ตัวกรองรายคอลัมน์', 'Column filters'),
       ],
     },
@@ -1508,7 +1508,7 @@ async deleteStudent(student: Student): Promise<void> {
         row('selectionPageOnly', BOOL, 'false', 'checkbox หัวตารางเลือกแค่หน้านี้', 'The header checkbox selects this page only'),
         row('metaKeySelection', BOOL, 'false', 'คลิกเลือกแถวเดียว Ctrl / ⌘ + คลิกเพิ่ม (Shift + คลิกเลือกเป็นช่วงใน multiple)', 'A click picks one row, Ctrl / ⌘ + click adds (Shift + click picks a range in multiple)'),
         row('rowSelectable', '(row: { data, index }) => boolean', undefined, 'แถวที่เลือกได้ (radio และ checkbox หัวตารางทำตาม)', 'Which rows can be picked (radios and the header checkbox follow it)'),
-        row('contextMenu', 'wt-contextMenu', undefined, 'เมนูที่เปิดเมื่อคลิกขวาที่ wtContextMenuRow', 'The menu a right-click on a wtContextMenuRow opens'),
+        row('contextMenu', 'wu-contextMenu', undefined, 'เมนูที่เปิดเมื่อคลิกขวาที่ wuContextMenuRow', 'The menu a right-click on a wuContextMenuRow opens'),
         row('contextMenuSelection', 'any', undefined, 'แถวที่คลิกขวาล่าสุด ได้เส้นกรอบ ([(contextMenuSelection)])', 'The row last right-clicked, outlined ([(contextMenuSelection)])'),
         row('contextMenuSelectionMode', "'separate' | 'joint'", "'separate'", 'joint: คลิกขวาเลือกแถวนั้นด้วย', 'joint: a right-click also selects the row'),
         row('compareSelectionBy', "'deepEquals' | 'equals'", "'deepEquals'", 'วิธีเทียบแถวที่เลือกเมื่อไม่มี dataKey', 'How selected rows compare without a dataKey'),
@@ -1552,7 +1552,7 @@ async deleteStudent(student: Student): Promise<void> {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #body, wtTemplate="body" หรือ pTemplate="body" ก็ได้', en: 'Write them as #body, wtTemplate="body" or pTemplate="body".' },
+      note: { th: 'เขียนเป็น #body, wuTemplate="body" หรือ pTemplate="body" ก็ได้', en: 'Write them as #body, wuTemplate="body" or pTemplate="body".' },
       rows: [
         row('body', '$implicit (row) · rowIndex · columns · expanded · rowgroup · rowspan', undefined, 'แต่ละแถว rowIndex นับต่อข้ามหน้า (rowgroup / rowspan เมื่อ rowGroupMode="rowspan")', 'Each row; rowIndex carries on across pages (rowgroup / rowspan with rowGroupMode="rowspan")'),
         row('rowexpansion', '$implicit (row) · rowIndex · expanded', undefined, 'แถวที่เปิดใต้แถวที่ขยาย', 'The row shown under an expanded row'),
@@ -1563,7 +1563,7 @@ async deleteStudent(student: Student): Promise<void> {
         row('caption · summary', '—', undefined, 'แถบบนและล่างตาราง (ช่องค้นหา ปุ่ม)', 'Bars above and below the table (search, buttons)'),
         row('emptymessage', '$implicit (columns)', undefined, 'แถวเมื่อไม่มีข้อมูล', 'The row with no data'),
         row('loadingbody', '$implicit (columns)', undefined, 'แถวระหว่างโหลด (แทนม่าน spinner)', 'Rows while loading (instead of the veil)'),
-        row('paginatorleft · paginatorright', '$implicit (WtPageEvent)', undefined, 'ซ้าย / ขวาของแถบแบ่งหน้า', 'Left / right of the paginator'),
+        row('paginatorleft · paginatorright', '$implicit (WuPageEvent)', undefined, 'ซ้าย / ขวาของแถบแบ่งหน้า', 'Left / right of the paginator'),
       ],
     },
     {
@@ -1571,20 +1571,20 @@ async deleteStudent(student: Student): Promise<void> {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onPage', 'WtTablePageEvent', undefined, 'เปลี่ยนหน้าหรือจำนวนแถว', 'Page or page size changed'),
-        row('onSort', 'WtTableSortEvent', undefined, 'เรียงใหม่', 'Sorted'),
-        row('onFilter', 'WtTableFilterEvent', undefined, 'ค้นหา / กรอง', 'Searched / filtered'),
-        row('onLazyLoad', 'WtTableLazyLoadEvent', undefined, 'ต้องโหลดข้อมูล (lazy)', 'Data to load (lazy)'),
-        row('onRowSelect · onRowUnselect', 'WtTableRowSelectEvent', undefined, 'เลือก / เลิกเลือกแถว', 'Row selected / unselected'),
-        row('onContextMenuSelect', 'WtTableContextMenuSelectEvent', undefined, 'คลิกขวาที่แถว (ก่อนเมนูเปิด)', 'A row was right-clicked (before the menu opens)'),
+        row('onPage', 'WuTablePageEvent', undefined, 'เปลี่ยนหน้าหรือจำนวนแถว', 'Page or page size changed'),
+        row('onSort', 'WuTableSortEvent', undefined, 'เรียงใหม่', 'Sorted'),
+        row('onFilter', 'WuTableFilterEvent', undefined, 'ค้นหา / กรอง', 'Searched / filtered'),
+        row('onLazyLoad', 'WuTableLazyLoadEvent', undefined, 'ต้องโหลดข้อมูล (lazy)', 'Data to load (lazy)'),
+        row('onRowSelect · onRowUnselect', 'WuTableRowSelectEvent', undefined, 'เลือก / เลิกเลือกแถว', 'Row selected / unselected'),
+        row('onContextMenuSelect', 'WuTableContextMenuSelectEvent', undefined, 'คลิกขวาที่แถว (ก่อนเมนูเปิด)', 'A row was right-clicked (before the menu opens)'),
         row('contextMenuSelectionChange', 'any', undefined, 'คู่ของ [(contextMenuSelection)]', 'For [(contextMenuSelection)]'),
-        row('onHeaderCheckboxToggle', 'WtTableHeaderCheckboxToggleEvent', undefined, 'กด checkbox หัวตาราง', 'Header checkbox toggled'),
-        row('onRowExpand · onRowCollapse', 'WtTableRowExpandEvent', undefined, 'เปิด / ปิดแถวขยาย', 'Row expanded / collapsed'),
-        row('onRowReorder', 'WtTableRowReorderEvent', undefined, 'ลากเรียงแถว (value เปลี่ยนในที่เดิม)', 'A row was dragged (value changes in place)'),
-        row('onEditInit · onEditComplete · onEditCancel', 'WtTableEditEvent', undefined, 'เริ่ม / เก็บ / ยกเลิกการแก้ไขในเซลล์', 'Cell editing started / kept / cancelled'),
-        row('onColResize · onColReorder', 'WtTableColResizeEvent · WtTableColReorderEvent', undefined, 'ปรับขนาด / ย้ายคอลัมน์', 'A column was resized / moved'),
-        row('sortFunction', 'WtTableSortFunctionEvent', undefined, 'ถึงเวลาเรียง (customSort) เรียง data ในที่เดิม', 'Time to sort (customSort): sort data in place'),
-        row('onStateSave · onStateRestore', 'WtTableState', undefined, 'จำ / คืนสถานะ (stateKey)', 'State saved / restored (stateKey)'),
+        row('onHeaderCheckboxToggle', 'WuTableHeaderCheckboxToggleEvent', undefined, 'กด checkbox หัวตาราง', 'Header checkbox toggled'),
+        row('onRowExpand · onRowCollapse', 'WuTableRowExpandEvent', undefined, 'เปิด / ปิดแถวขยาย', 'Row expanded / collapsed'),
+        row('onRowReorder', 'WuTableRowReorderEvent', undefined, 'ลากเรียงแถว (value เปลี่ยนในที่เดิม)', 'A row was dragged (value changes in place)'),
+        row('onEditInit · onEditComplete · onEditCancel', 'WuTableEditEvent', undefined, 'เริ่ม / เก็บ / ยกเลิกการแก้ไขในเซลล์', 'Cell editing started / kept / cancelled'),
+        row('onColResize · onColReorder', 'WuTableColResizeEvent · WuTableColReorderEvent', undefined, 'ปรับขนาด / ย้ายคอลัมน์', 'A column was resized / moved'),
+        row('sortFunction', 'WuTableSortFunctionEvent', undefined, 'ถึงเวลาเรียง (customSort) เรียง data ในที่เดิม', 'Time to sort (customSort): sort data in place'),
+        row('onStateSave · onStateRestore', 'WuTableState', undefined, 'จำ / คืนสถานะ (stateKey)', 'State saved / restored (stateKey)'),
         row('selectionChange · firstChange · rowsChange', 'any · number · number', undefined, 'คู่ของ [(selection)] [(first)] [(rows)]', 'For [(selection)], [(first)], [(rows)]'),
       ],
     },
@@ -1599,7 +1599,7 @@ async deleteStudent(student: Student): Promise<void> {
         row('clear()', 'void', undefined, 'ล้างคำค้น ตัวกรอง การเรียง และกลับหน้าแรก', 'Clear search, filters and sort, back to page 1'),
         row('exportCSV(options?)', 'void', undefined, 'ดาวน์โหลด CSV (UTF-8 มี BOM) { selectionOnly } เฉพาะที่เลือก { allValues } ไม่สนคำค้น', 'Download a CSV (UTF-8 with a BOM); { selectionOnly } the selection, { allValues } ignore the search'),
         row('toCSV(options?)', 'string', undefined, 'ข้อความ CSV แบบเดียวกับ exportCSV()', 'The CSV text exportCSV() saves'),
-        row('exportExcel(options?)', 'Promise<void>', undefined, 'ดาวน์โหลด .xlsx ที่มีหัวตาราง สไตล์ แถวรวม และสูตร (WtTableExcelOptions)', 'Download an .xlsx with a styled header, totals and formulas (WtTableExcelOptions)'),
+        row('exportExcel(options?)', 'Promise<void>', undefined, 'ดาวน์โหลด .xlsx ที่มีหัวตาราง สไตล์ แถวรวม และสูตร (WuTableExcelOptions)', 'Download an .xlsx with a styled header, totals and formulas (WuTableExcelOptions)'),
         row('toExcel(options?) · toExcelSheet(options?)', 'Promise<Uint8Array> · ExcelSheet', undefined, 'ไฟล์ .xlsx เป็น bytes (เช่น อัปโหลด) · ตารางเป็น sheet ไว้รวมหลายตารางใน buildExcel()', 'The .xlsx as bytes (to upload, say) · the table as a sheet, for several tables in one buildExcel()'),
         row('toggleRowExpansion(row)', 'void', undefined, 'เปิด / ปิดแถวขยายจากโค้ด', 'Open / close a row from code'),
         row("filterRules(field, rules, 'and' | 'or')", 'void', undefined, 'ตั้งหลายเงื่อนไขให้คอลัมน์เดียว (null ลบ)', 'Set several rules on one column (null removes them)'),
@@ -1613,29 +1613,29 @@ async deleteStudent(student: Student): Promise<void> {
       title: 'Directives',
       typeLabel: 'Inputs',
       rows: [
-        row('[wtSortableColumn] · [pSortableColumn]', 'field · …Disabled', undefined, 'หัวคอลัมน์ที่เรียงได้ (คลิก Enter Space, Ctrl/⌘ เพิ่มคอลัมน์)', 'A sortable header (click, Enter, Space; Ctrl/⌘ adds a column)'),
-        row('wt-sortIcon', 'field', undefined, 'ลูกศรและลำดับเมื่อเรียงหลายคอลัมน์', 'The arrow, and the rank in multi-sort'),
-        row('[wtSelectableRow] · [pSelectableRow]', 'row · …Index · …Disabled', undefined, 'แถวที่เลือกได้ (คลิก Enter Space ↑ ↓)', 'A selectable row (click, Enter, Space, ↑ ↓)'),
-        row('[wtContextMenuRow] · [pContextMenuRow]', 'row · …Index · …Disabled', undefined, 'แถวที่คลิกขวาแล้วเปิดเมนูของตาราง', "A row whose right-click opens the table's menu"),
-        row('wt-tableCheckbox', 'value · index · disabled · ariaLabel', undefined, 'checkbox ของแถว', 'A row\'s checkbox'),
-        row('wt-tableHeaderCheckbox', 'disabled · ariaLabel', undefined, 'เลือก / ล้างทุกแถวที่ค้นหาเหลือ', 'Select / clear every row the search leaves'),
-        row('[wtFrozenColumn] · [pFrozenColumn]', 'frozen · alignFrozen', undefined, 'เซลล์ที่อยู่กับที่เมื่อตารางเลื่อนด้านข้าง (alignFrozen="right" ตรึงขวา)', 'A cell that stays put while the table scrolls sideways (alignFrozen="right" pins it right)'),
-        row('[wtRowToggler] · [pRowToggler]', 'row · …Disabled', undefined, 'ปุ่มเปิด / ปิดแถวขยาย (ตั้ง aria-expanded ให้)', 'The button that opens / closes a row (sets aria-expanded)'),
-        row('[wtRowGroupHeader] · [pRowGroupHeader]', '—', undefined, 'แถวหัวกลุ่มใน template groupheader', 'The group header row in a groupheader template'),
-        row('wt-columnFilter', 'field · type · matchMode · placeholder · showClearButton · delay · display · ariaLabel', undefined, 'ตัวกรองของคอลัมน์ (template filter: let-value let-filter="filterCallback")', 'A column filter (filter template: let-value let-filter="filterCallback")'),
-        row('wt-columnFilter display="menu"', 'showOperator · showAddButton · showApplyButton · showMatchModes · matchModeOptions · maxConstraints · hideOnClear', undefined, 'เมนูตัวกรองในหัวคอลัมน์', 'The filter menu in a header'),
-        row('wt-tableRadioButton', 'value · index · disabled · ariaLabel', undefined, 'radio ของแถว (selectionMode="single")', 'A row\'s radio (selectionMode="single")'),
-        row('[wtSelectableRowDblClick] · [pSelectableRowDblClick]', 'row · …Index', undefined, 'เลือกแถวด้วยดับเบิลคลิก', 'Select a row on double click'),
-        row('[wtReorderableRow] · [wtReorderableRowHandle]', 'index · …Disabled', undefined, 'แถวที่ลากเรียงได้และไอคอนจับ (ชื่อ p* ก็ได้)', 'A draggable row and its grip (p* names too)'),
-        row('[wtEditableColumn] · wt-cellEditor', 'row · …Field · …RowIndex · …Disabled', undefined, 'เซลล์ที่แก้ไขได้ (template input / output)', 'An editable cell (input / output templates)'),
-        row('[wtEditableRow] · [wtInitEditableRow] · [wtSaveEditableRow] · [wtCancelEditableRow]', 'row · …Disabled', undefined, 'แถวที่แก้ไขได้และปุ่มของมัน (ชื่อ p* ก็ได้)', 'An editable row and its buttons (p* names too)'),
-        row('[wtResizableColumn] · [wtReorderableColumn]', '…Disabled', undefined, 'หัวคอลัมน์ที่ปรับขนาด / ย้ายได้ (ชื่อ p* ก็ได้)', 'A header that can resize / move (p* names too)'),
+        row('[wuSortableColumn] · [pSortableColumn]', 'field · …Disabled', undefined, 'หัวคอลัมน์ที่เรียงได้ (คลิก Enter Space, Ctrl/⌘ เพิ่มคอลัมน์)', 'A sortable header (click, Enter, Space; Ctrl/⌘ adds a column)'),
+        row('wu-sortIcon', 'field', undefined, 'ลูกศรและลำดับเมื่อเรียงหลายคอลัมน์', 'The arrow, and the rank in multi-sort'),
+        row('[wuSelectableRow] · [pSelectableRow]', 'row · …Index · …Disabled', undefined, 'แถวที่เลือกได้ (คลิก Enter Space ↑ ↓)', 'A selectable row (click, Enter, Space, ↑ ↓)'),
+        row('[wuContextMenuRow] · [pContextMenuRow]', 'row · …Index · …Disabled', undefined, 'แถวที่คลิกขวาแล้วเปิดเมนูของตาราง', "A row whose right-click opens the table's menu"),
+        row('wu-tableCheckbox', 'value · index · disabled · ariaLabel', undefined, 'checkbox ของแถว', 'A row\'s checkbox'),
+        row('wu-tableHeaderCheckbox', 'disabled · ariaLabel', undefined, 'เลือก / ล้างทุกแถวที่ค้นหาเหลือ', 'Select / clear every row the search leaves'),
+        row('[wuFrozenColumn] · [pFrozenColumn]', 'frozen · alignFrozen', undefined, 'เซลล์ที่อยู่กับที่เมื่อตารางเลื่อนด้านข้าง (alignFrozen="right" ตรึงขวา)', 'A cell that stays put while the table scrolls sideways (alignFrozen="right" pins it right)'),
+        row('[wuRowToggler] · [pRowToggler]', 'row · …Disabled', undefined, 'ปุ่มเปิด / ปิดแถวขยาย (ตั้ง aria-expanded ให้)', 'The button that opens / closes a row (sets aria-expanded)'),
+        row('[wuRowGroupHeader] · [pRowGroupHeader]', '—', undefined, 'แถวหัวกลุ่มใน template groupheader', 'The group header row in a groupheader template'),
+        row('wu-columnFilter', 'field · type · matchMode · placeholder · showClearButton · delay · display · ariaLabel', undefined, 'ตัวกรองของคอลัมน์ (template filter: let-value let-filter="filterCallback")', 'A column filter (filter template: let-value let-filter="filterCallback")'),
+        row('wu-columnFilter display="menu"', 'showOperator · showAddButton · showApplyButton · showMatchModes · matchModeOptions · maxConstraints · hideOnClear', undefined, 'เมนูตัวกรองในหัวคอลัมน์', 'The filter menu in a header'),
+        row('wu-tableRadioButton', 'value · index · disabled · ariaLabel', undefined, 'radio ของแถว (selectionMode="single")', 'A row\'s radio (selectionMode="single")'),
+        row('[wuSelectableRowDblClick] · [pSelectableRowDblClick]', 'row · …Index', undefined, 'เลือกแถวด้วยดับเบิลคลิก', 'Select a row on double click'),
+        row('[wuReorderableRow] · [wuReorderableRowHandle]', 'index · …Disabled', undefined, 'แถวที่ลากเรียงได้และไอคอนจับ (ชื่อ p* ก็ได้)', 'A draggable row and its grip (p* names too)'),
+        row('[wuEditableColumn] · wu-cellEditor', 'row · …Field · …RowIndex · …Disabled', undefined, 'เซลล์ที่แก้ไขได้ (template input / output)', 'An editable cell (input / output templates)'),
+        row('[wuEditableRow] · [wuInitEditableRow] · [wuSaveEditableRow] · [wuCancelEditableRow]', 'row · …Disabled', undefined, 'แถวที่แก้ไขได้และปุ่มของมัน (ชื่อ p* ก็ได้)', 'An editable row and its buttons (p* names too)'),
+        row('[wuResizableColumn] · [wuReorderableColumn]', '…Disabled', undefined, 'หัวคอลัมน์ที่ปรับขนาด / ย้ายได้ (ชื่อ p* ก็ได้)', 'A header that can resize / move (p* names too)'),
       ],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtTableLazyLoadEvent {
+      code: `interface WuTableLazyLoadEvent {
   first: number;
   rows: number;
   page: number;            // เริ่มที่ 1
@@ -1645,50 +1645,50 @@ async deleteStudent(student: Student): Promise<void> {
   filters: Record<string, FilterMeta>;
   globalFilter: string | null;
 }
-interface WtTablePageEvent { first: number; rows: number }
-interface WtTableSortEvent { field?: string; order?: number; multisortmeta?: SortMeta[] }
-interface WtTableFilterEvent { filters: Record<string, FilterMeta>; globalFilter: string | null; filteredValue: unknown[] }
-interface WtTableRowSelectEvent { originalEvent: Event; data: unknown; index?: number; type: 'row' | 'checkbox' }
-interface WtTableContextMenuSelectEvent { originalEvent: Event; data: unknown; index?: number }
-interface WtTableHeaderCheckboxToggleEvent { originalEvent: Event; checked: boolean }
-interface WtTableRowExpandEvent { originalEvent?: Event; data: unknown }
-interface WtTableExportOptions { selectionOnly?: boolean; allValues?: boolean }
-type WtTableExportFunction = (cell: { data: unknown; field: string }) => unknown;
-interface WtColumnFilterContext { $implicit: unknown; filterCallback: (value: unknown) => void; field: string; type: string }
+interface WuTablePageEvent { first: number; rows: number }
+interface WuTableSortEvent { field?: string; order?: number; multisortmeta?: SortMeta[] }
+interface WuTableFilterEvent { filters: Record<string, FilterMeta>; globalFilter: string | null; filteredValue: unknown[] }
+interface WuTableRowSelectEvent { originalEvent: Event; data: unknown; index?: number; type: 'row' | 'checkbox' }
+interface WuTableContextMenuSelectEvent { originalEvent: Event; data: unknown; index?: number }
+interface WuTableHeaderCheckboxToggleEvent { originalEvent: Event; checked: boolean }
+interface WuTableRowExpandEvent { originalEvent?: Event; data: unknown }
+interface WuTableExportOptions { selectionOnly?: boolean; allValues?: boolean }
+type WuTableExportFunction = (cell: { data: unknown; field: string }) => unknown;
+interface WuColumnFilterContext { $implicit: unknown; filterCallback: (value: unknown) => void; field: string; type: string }
 interface SortMeta { field: string; order: number }
 interface FilterMeta { value: unknown; matchMode?: FilterMatchMode }
 type FilterMatchMode = 'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notContains' | 'notEquals' | 'lt' | 'lte' | 'gt' | 'gte' | 'in'
   | 'dateIs' | 'dateIsNot' | 'dateBefore' | 'dateAfter';
 type FilterRule = FilterMeta | (FilterMeta & { operator?: 'and' | 'or' })[];
-interface WtTableRowReorderEvent { dragIndex: number; dropIndex: number }
-interface WtTableEditEvent { field: string; data: unknown; index?: number; originalEvent?: Event }
-interface WtTableColResizeEvent { element: HTMLElement; delta: number }
-interface WtTableColReorderEvent { dragIndex: number; dropIndex: number; columns: unknown[] }
-interface WtTableSortFunctionEvent { data: unknown[]; mode: 'single' | 'multiple'; field?: string; order?: number; multiSortMeta?: SortMeta[] }
-interface WtTableState { first?: number; rows?: number; sortField?: string | null; sortOrder?: number; filters?: Record<string, FilterRule>; globalFilter?: string | null; selection?: unknown; expandedRowKeys?: Record<string, boolean> }`,
+interface WuTableRowReorderEvent { dragIndex: number; dropIndex: number }
+interface WuTableEditEvent { field: string; data: unknown; index?: number; originalEvent?: Event }
+interface WuTableColResizeEvent { element: HTMLElement; delta: number }
+interface WuTableColReorderEvent { dragIndex: number; dropIndex: number; columns: unknown[] }
+interface WuTableSortFunctionEvent { data: unknown[]; mode: 'single' | 'multiple'; field?: string; order?: number; multiSortMeta?: SortMeta[] }
+interface WuTableState { first?: number; rows?: number; sortField?: string | null; sortOrder?: number; filters?: Record<string, FilterRule>; globalFilter?: string | null; selection?: unknown; expandedRowKeys?: Record<string, boolean> }`,
     },
   ],
   tokens: [
-    tok('--wt-table-header-bg', 'พื้นของ caption / summary', 'Caption / summary background'),
-    tok('--wt-table-header-padding', 'ระยะใน caption / summary', 'Caption / summary padding'),
-    tok('--wt-table-header-weight', 'น้ำหนักตัวอักษร caption', 'Caption font weight'),
-    tok('--wt-table-header-border-width', 'ขอบของ caption / summary', 'Caption / summary border width'),
-    tok('--wt-table-head-bg', 'พื้นแถวหัวคอลัมน์ (v2 / v3 มีสีอ่อน)', 'Column head row background (tinted in v2 / v3)'),
-    tok('--wt-table-head-color', 'สีตัวอักษรหัวคอลัมน์', 'Column head text'),
-    tok('--wt-table-head-weight', 'น้ำหนักตัวอักษรหัวคอลัมน์', 'Column head weight'),
-    tok('--wt-table-head-hover-bg', 'พื้นหัวคอลัมน์ที่เรียงได้เมื่อชี้', 'Sortable head on hover'),
-    tok('--wt-table-sorted-bg', 'พื้นหัวคอลัมน์ที่กำลังเรียง', 'Sorted head background'),
-    tok('--wt-table-sorted-color', 'สีหัวคอลัมน์ที่กำลังเรียง', 'Sorted head text'),
-    tok('--wt-table-row-bg', 'พื้นแถว', 'Row background'),
-    tok('--wt-table-row-height', 'ความสูงขั้นต่ำของแถว', 'Minimum row height'),
-    tok('--wt-table-row-hover-bg', 'พื้นแถวเมื่อชี้', 'Row on hover'),
-    tok('--wt-table-row-selected-bg', 'พื้นแถวที่เลือก', 'Selected row background'),
-    tok('--wt-table-row-selected-color', 'สีตัวอักษรแถวที่เลือก', 'Selected row text'),
-    tok('--wt-table-row-striped-bg', 'พื้นแถวคู่เมื่อ stripedRows', 'Even rows with stripedRows'),
-    tok('--wt-table-stripe-bg', 'พื้นแถวคู่ของทุกตาราง (ตั้งในธีม)', 'Even rows of every table (set in the theme)'),
-    tok('--wt-table-border-color', 'สีเส้นของตาราง', 'Table line colour'),
-    tok('--wt-table-cell-padding-x', 'ระยะซ้ายขวาในเซลล์', 'Cell horizontal padding'),
-    tok('--wt-table-cell-padding-y', 'ระยะบนล่างในเซลล์', 'Cell vertical padding'),
+    tok('--wu-table-header-bg', 'พื้นของ caption / summary', 'Caption / summary background'),
+    tok('--wu-table-header-padding', 'ระยะใน caption / summary', 'Caption / summary padding'),
+    tok('--wu-table-header-weight', 'น้ำหนักตัวอักษร caption', 'Caption font weight'),
+    tok('--wu-table-header-border-width', 'ขอบของ caption / summary', 'Caption / summary border width'),
+    tok('--wu-table-head-bg', 'พื้นแถวหัวคอลัมน์ (v2 / v3 มีสีอ่อน)', 'Column head row background (tinted in v2 / v3)'),
+    tok('--wu-table-head-color', 'สีตัวอักษรหัวคอลัมน์', 'Column head text'),
+    tok('--wu-table-head-weight', 'น้ำหนักตัวอักษรหัวคอลัมน์', 'Column head weight'),
+    tok('--wu-table-head-hover-bg', 'พื้นหัวคอลัมน์ที่เรียงได้เมื่อชี้', 'Sortable head on hover'),
+    tok('--wu-table-sorted-bg', 'พื้นหัวคอลัมน์ที่กำลังเรียง', 'Sorted head background'),
+    tok('--wu-table-sorted-color', 'สีหัวคอลัมน์ที่กำลังเรียง', 'Sorted head text'),
+    tok('--wu-table-row-bg', 'พื้นแถว', 'Row background'),
+    tok('--wu-table-row-height', 'ความสูงขั้นต่ำของแถว', 'Minimum row height'),
+    tok('--wu-table-row-hover-bg', 'พื้นแถวเมื่อชี้', 'Row on hover'),
+    tok('--wu-table-row-selected-bg', 'พื้นแถวที่เลือก', 'Selected row background'),
+    tok('--wu-table-row-selected-color', 'สีตัวอักษรแถวที่เลือก', 'Selected row text'),
+    tok('--wu-table-row-striped-bg', 'พื้นแถวคู่เมื่อ stripedRows', 'Even rows with stripedRows'),
+    tok('--wu-table-stripe-bg', 'พื้นแถวคู่ของทุกตาราง (ตั้งในธีม)', 'Even rows of every table (set in the theme)'),
+    tok('--wu-table-border-color', 'สีเส้นของตาราง', 'Table line colour'),
+    tok('--wu-table-cell-padding-x', 'ระยะซ้ายขวาในเซลล์', 'Cell horizontal padding'),
+    tok('--wu-table-cell-padding-y', 'ระยะบนล่างในเซลล์', 'Cell vertical padding'),
   ],
 };
 
@@ -1697,9 +1697,9 @@ export const PAGINATOR_DOC: ComponentDoc = {
   title: 'Paginator',
   group: 'Data',
   entry: 'paginator',
-  standalone: 'WtPaginator',
-  module: 'WtPaginatorModule',
-  selector: 'wt-paginator',
+  standalone: 'WuPaginator',
+  module: 'WuPaginatorModule',
+  selector: 'wu-paginator',
   english: {
     ...STUDENT_WORDS,
     'โหลดใหม่': 'Reload',
@@ -1712,7 +1712,7 @@ export const PAGINATOR_DOC: ComponentDoc = {
     en: 'Page controls for lists and cards outside a table: page numbers, a page-size box and a “Showing … of …” report in the reader\'s language. On phones the parts wrap onto their own lines.',
   },
   sections: {
-    import: { title: 'Import', text: { th: 'wt-table ใช้ตัวนี้อยู่แล้ว import เองเมื่อแบ่งหน้าอย่างอื่น', en: 'wt-table already uses it inside; import it yourself to page anything else.' } },
+    import: { title: 'Import', text: { th: 'wu-table ใช้ตัวนี้อยู่แล้ว import เองเมื่อแบ่งหน้าอย่างอื่น', en: 'wu-table already uses it inside; import it yourself to page anything else.' } },
     basic: {
       title: 'Basic',
       text: {
@@ -1730,8 +1730,8 @@ export const PAGINATOR_DOC: ComponentDoc = {
     report: {
       title: { th: 'ข้อความรายงานหน้า', en: 'Custom report text' },
       text: {
-        th: 'ตั้ง <code>currentPageReportTemplate</code> เพื่อเปลี่ยนข้อความ “กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ” ของแถบนี้ (คู่กับ <code>[showCurrentPageReport]="true"</code>) ใช้ตัวแทนในตารางด้านล่างได้ทุกตัว ถ้าจะเปลี่ยนทั้งแอปในครั้งเดียว ให้ตั้ง <code>pageReport</code> ด้วย <code>WtConfig.setTranslation()</code> (แท็บ TS) ทุกตารางและทุก paginator จะเปลี่ยนตาม',
-        en: 'Set <code>currentPageReportTemplate</code> to replace this bar\'s “Showing {first} to {last} of {totalRecords} entries” text (with <code>[showCurrentPageReport]="true"</code>). Every placeholder below works. To change it for the whole app at once, set <code>pageReport</code> with <code>WtConfig.setTranslation()</code> (TS tab): every table and paginator follows.',
+        th: 'ตั้ง <code>currentPageReportTemplate</code> เพื่อเปลี่ยนข้อความ “กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ” ของแถบนี้ (คู่กับ <code>[showCurrentPageReport]="true"</code>) ใช้ตัวแทนในตารางด้านล่างได้ทุกตัว ถ้าจะเปลี่ยนทั้งแอปในครั้งเดียว ให้ตั้ง <code>pageReport</code> ด้วย <code>WuConfig.setTranslation()</code> (แท็บ TS) ทุกตารางและทุก paginator จะเปลี่ยนตาม',
+        en: 'Set <code>currentPageReportTemplate</code> to replace this bar\'s “Showing {first} to {last} of {totalRecords} entries” text (with <code>[showCurrentPageReport]="true"</code>). Every placeholder below works. To change it for the whole app at once, set <code>pageReport</code> with <code>WuConfig.setTranslation()</code> (TS tab): every table and paginator follows.',
       },
     },
     options: {
@@ -1744,8 +1744,8 @@ export const PAGINATOR_DOC: ComponentDoc = {
     templates: {
       title: { th: 'ใส่ของซ้ายและขวา', en: 'Left and right slots' },
       text: {
-        th: 'template <code>start</code> / <code>end</code> วางปุ่มหรือข้อความซ้ายและขวาของแถบ ได้สถานะหน้าเป็น <code>let-p</code> ชื่อเดิม <code>paginatorleft</code> / <code>paginatorright</code> ใช้ได้ในรูป <code>wtTemplate</code> / <code>pTemplate</code> ส่วนใน wt-table ให้ใส่ <code>paginatorleft</code> / <code>paginatorright</code> ที่ตาราง',
-        en: 'The <code>start</code> / <code>end</code> templates put buttons or text on the left and right of the bar, with the page state as <code>let-p</code>. The older names <code>paginatorleft</code> / <code>paginatorright</code> work as <code>wtTemplate</code> / <code>pTemplate</code>; in wt-table, give the table <code>paginatorleft</code> / <code>paginatorright</code>.',
+        th: 'template <code>start</code> / <code>end</code> วางปุ่มหรือข้อความซ้ายและขวาของแถบ ได้สถานะหน้าเป็น <code>let-p</code> ชื่อเดิม <code>paginatorleft</code> / <code>paginatorright</code> ใช้ได้ในรูป <code>wuTemplate</code> / <code>pTemplate</code> ส่วนใน wu-table ให้ใส่ <code>paginatorleft</code> / <code>paginatorright</code> ที่ตาราง',
+        en: 'The <code>start</code> / <code>end</code> templates put buttons or text on the left and right of the bar, with the page state as <code>let-p</code>. The older names <code>paginatorleft</code> / <code>paginatorright</code> work as <code>wuTemplate</code> / <code>pTemplate</code>; in wu-table, give the table <code>paginatorleft</code> / <code>paginatorright</code>.',
       },
     },
   },
@@ -1756,37 +1756,37 @@ export const PAGINATOR_DOC: ComponentDoc = {
   <li>{{ s.name }} · {{ s.room }}</li>
   }
 </ul>
-<wt-paginator [first]="first" [rows]="rows" [totalRecords]="students.length" (onPageChange)="changePage($event)"></wt-paginator>`,
+<wu-paginator [first]="first" [rows]="rows" [totalRecords]="students.length" (onPageChange)="changePage($event)"></wu-paginator>`,
       classic: `<ul class="student-list">
   <li *ngFor="let s of pageItems">{{ s.name }} · {{ s.room }}</li>
 </ul>
-<wt-paginator [first]="first" [rows]="rows" [totalRecords]="students.length" (onPageChange)="changePage($event)"></wt-paginator>`,
+<wu-paginator [first]="first" [rows]="rows" [totalRecords]="students.length" (onPageChange)="changePage($event)"></wu-paginator>`,
     },
-    pagesize: `<wt-paginator [first]="first" [rows]="rows" [totalRecords]="1250" [rowsPerPageOptions]="[10, 20, 50]"
-  [showCurrentPageReport]="true" (onPageChange)="changePage($event)"></wt-paginator>`,
-    report: `<wt-paginator [first]="first" [rows]="rows" [totalRecords]="1250" [showCurrentPageReport]="true"
+    pagesize: `<wu-paginator [first]="first" [rows]="rows" [totalRecords]="1250" [rowsPerPageOptions]="[10, 20, 50]"
+  [showCurrentPageReport]="true" (onPageChange)="changePage($event)"></wu-paginator>`,
+    report: `<wu-paginator [first]="first" [rows]="rows" [totalRecords]="1250" [showCurrentPageReport]="true"
   currentPageReportTemplate="หน้า {currentPage} จาก {totalPages} · นักเรียน {totalRecords} คน"
-  (onPageChange)="changePage($event)"></wt-paginator>`,
-    options: `<wt-paginator [first]="first" [rows]="10" [totalRecords]="1250" [pageLinkSize]="3" [showFirstLastIcon]="false"
-  (onPageChange)="changePage($event)"></wt-paginator>`,
-    templates: `<wt-paginator [first]="first" [rows]="10" [totalRecords]="120" (onPageChange)="changePage($event)">
+  (onPageChange)="changePage($event)"></wu-paginator>`,
+    options: `<wu-paginator [first]="first" [rows]="10" [totalRecords]="1250" [pageLinkSize]="3" [showFirstLastIcon]="false"
+  (onPageChange)="changePage($event)"></wu-paginator>`,
+    templates: `<wu-paginator [first]="first" [rows]="10" [totalRecords]="120" (onPageChange)="changePage($event)">
   <ng-template #start>
-    <wt-button icon="wi wi-refresh" [rounded]="true" [text]="true" ariaLabel="โหลดใหม่" (onClick)="reload()"></wt-button>
+    <wu-button icon="wi wi-refresh" [rounded]="true" [text]="true" ariaLabel="โหลดใหม่" (onClick)="reload()"></wu-button>
   </ng-template>
   <ng-template #end let-p>
     <span>หน้า {{ p.page + 1 }} / {{ p.pageCount }}</span>
   </ng-template>
-</wt-paginator>`,
+</wu-paginator>`,
   },
   ts: {
-    basic: `import { WtPageEvent } from 'wiratheme/paginator';
+    basic: `import { WuPageEvent } from 'wiraui/paginator';
 
 students: Student[] = [];   // จาก API
 first = 0;
 rows = 5;
 pageItems: Student[] = [];
 
-changePage(event: WtPageEvent): void {
+changePage(event: WuPageEvent): void {
   this.first = event.first;
   this.rows = event.rows;
   this.pageItems = this.students.slice(event.first, event.first + event.rows);
@@ -1814,18 +1814,18 @@ changePage(event: WtPageEvent): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      rows: [row('start · end (wtTemplate: paginatorleft · paginatorright)', '$implicit (WtPageEvent)', undefined, 'ซ้าย / ขวาของแถบ', 'Left / right of the bar')],
+      rows: [row('start · end (wuTemplate: paginatorleft · paginatorright)', '$implicit (WuPageEvent)', undefined, 'ซ้าย / ขวาของแถบ', 'Left / right of the bar')],
     },
     {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onPageChange', 'WtPageEvent', undefined, 'เปลี่ยนหน้าหรือจำนวนแถว', 'Page or page size changed')],
+      rows: [row('onPageChange', 'WuPageEvent', undefined, 'เปลี่ยนหน้าหรือจำนวนแถว', 'Page or page size changed')],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtPageEvent {
+      code: `interface WuPageEvent {
   page: number;       // เริ่มที่ 0
   first: number;
   rows: number;
@@ -1834,16 +1834,16 @@ changePage(event: WtPageEvent): void {
     },
   ],
   tokens: [
-    tok('--wt-paginator-bg', 'พื้นของแถบ', 'Bar background'),
-    tok('--wt-paginator-padding', 'ระยะในแถบ', 'Bar padding'),
-    tok('--wt-paginator-gap', 'ระยะระหว่างปุ่ม', 'Gap between buttons'),
-    tok('--wt-paginator-border-width', 'ขอบของแถบ', 'Bar border width'),
-    tok('--wt-paginator-btn-size', 'ขนาดปุ่ม', 'Button size'),
-    tok('--wt-paginator-btn-radius', 'ความมนของปุ่ม', 'Button radius'),
-    tok('--wt-paginator-btn-color', 'สีปุ่ม', 'Button colour'),
-    tok('--wt-paginator-btn-hover-bg', 'พื้นปุ่มเมื่อชี้', 'Button on hover'),
-    tok('--wt-paginator-btn-selected-bg', 'พื้นปุ่มหน้าปัจจุบัน', 'Current page background'),
-    tok('--wt-paginator-btn-selected-color', 'สีปุ่มหน้าปัจจุบัน', 'Current page text'),
-    tok('--wt-paginator-report-color', 'สีข้อความรายงาน', 'Report text colour'),
+    tok('--wu-paginator-bg', 'พื้นของแถบ', 'Bar background'),
+    tok('--wu-paginator-padding', 'ระยะในแถบ', 'Bar padding'),
+    tok('--wu-paginator-gap', 'ระยะระหว่างปุ่ม', 'Gap between buttons'),
+    tok('--wu-paginator-border-width', 'ขอบของแถบ', 'Bar border width'),
+    tok('--wu-paginator-btn-size', 'ขนาดปุ่ม', 'Button size'),
+    tok('--wu-paginator-btn-radius', 'ความมนของปุ่ม', 'Button radius'),
+    tok('--wu-paginator-btn-color', 'สีปุ่ม', 'Button colour'),
+    tok('--wu-paginator-btn-hover-bg', 'พื้นปุ่มเมื่อชี้', 'Button on hover'),
+    tok('--wu-paginator-btn-selected-bg', 'พื้นปุ่มหน้าปัจจุบัน', 'Current page background'),
+    tok('--wu-paginator-btn-selected-color', 'สีปุ่มหน้าปัจจุบัน', 'Current page text'),
+    tok('--wu-paginator-report-color', 'สีข้อความรายงาน', 'Report text colour'),
   ],
 };

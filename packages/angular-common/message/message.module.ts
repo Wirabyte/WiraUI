@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { WtMessage } from './message.component';
-import { WtMessages } from './messages.component';
+import { WuMessage } from './message.component';
+import { WuMessages } from './messages.component';
 
-/** For NgModule apps (wt-message and wt-messages). Standalone apps can import `WtMessage` / `WtMessages` directly. */
+/** For NgModule apps (wu-message and wu-messages). Standalone apps can import `WuMessage` / `WuMessages` directly. */
 @NgModule({
-  imports: [WtMessage, WtMessages],
-  exports: [WtMessage, WtMessages],
+  imports: [WuMessage, WuMessages],
+  exports: [WuMessage, WuMessages],
 })
-export class WtMessageModule {}
+export class WuMessageModule {}
 
 /** The name apps importing the messages list already use; the same module. */
-export { WtMessageModule as WtMessagesModule };
+export { WuMessageModule as WuMessagesModule };

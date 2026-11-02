@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtHeader, WtFooter } from './card-slots';
-import { WtCard } from './card.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuHeader, WuFooter } from './card-slots';
+import { WuCard } from './card.component';
 
-/** For NgModule apps: the card, `<wt-header>` / `<wt-footer>` and `wtTemplate` (`pTemplate`). */
+/** For NgModule apps: the card, `<wu-header>` / `<wu-footer>` and `wuTemplate` (`pTemplate`). */
 @NgModule({
-  imports: [WtCard, WtHeader, WtFooter, WtTemplate],
-  exports: [WtCard, WtHeader, WtFooter, WtTemplate],
+  imports: [WuCard, WuHeader, WuFooter, WuTemplate],
+  exports: [WuCard, WuHeader, WuFooter, WuTemplate],
 })
-export class WtCardModule {}
+export class WuCardModule {}

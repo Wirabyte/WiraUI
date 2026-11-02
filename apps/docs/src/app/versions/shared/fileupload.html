@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-fileupload
+        <wu-fileupload
           #fileUpload
           id="d-fu-basic"
           name="documents"
@@ -19,14 +19,14 @@
           [customUpload]="true"
           [disabled]="isApiSaving"
           (uploadHandler)="uploadDocuments($event, fileUpload)"
-        ></wt-fileupload>
+        ></wu-fileupload>
         <span class="docs-demo-output">{{ tx('ไฟล์ที่ส่งแล้ว') }}: <code id="d-fu-sent">{{ uploadedCount }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="validation" [section]="sec['validation']">
       <docs-demo [html]="code['validation']" [ts]="ts['validation']" layout="stack">
-        <wt-fileupload
+        <wu-fileupload
           id="d-fu-check"
           name="scores"
           accept=".xlsx,.xls"
@@ -38,7 +38,7 @@
           [showUploadButton]="false"
           (onSelect)="picked($event)"
           (onValidationFail)="rejected($event)"
-        ></wt-fileupload>
+        ></wu-fileupload>
         <span class="docs-demo-output">
           onSelect: <code id="d-fu-picked">{{ lastPicked || '-' }}</code> · onValidationFail: <code id="d-fu-problem">{{ lastProblem || '-' }}</code>
         </span>
@@ -47,7 +47,7 @@
 
     <docs-section id="basicmode" [section]="sec['basicmode']">
       <docs-demo [html]="code['basicmode']" [ts]="ts['basicmode']" layout="stack">
-        <wt-fileupload
+        <wu-fileupload
           id="d-fu-single"
           mode="basic"
           name="photo"
@@ -56,7 +56,7 @@
           [chooseLabel]="tx('เลือกรูปนักเรียน')"
           (onSelect)="pickPhoto($event)"
           (onClear)="clearPhoto()"
-        ></wt-fileupload>
+        ></wu-fileupload>
         <span class="docs-demo-output">photo: <code id="d-fu-photo">{{ photo?.name ?? 'null' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -64,7 +64,7 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="empty"></docs-slot-note>
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-fileupload
+        <wu-fileupload
           #attachments
           id="d-fu-tpl"
           name="attachments"
@@ -82,7 +82,7 @@
             <div class="docs-fu-row">
               <i class="wi wi-file"></i>
               <span class="docs-fu-name">{{ file.name }}</span>
-              <wt-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('นำออก')" (onClick)="attachments.remove($event, i)"></wt-button>
+              <wu-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="tx('นำออก')" (onClick)="attachments.remove($event, i)"></wu-button>
             </div>
           </ng-template>
           <ng-template #empty>
@@ -91,7 +91,7 @@
               <p>{{ tx('ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่') }}</p>
             </div>
           </ng-template>
-        </wt-fileupload>
+        </wu-fileupload>
       </docs-demo>
     </docs-section>
 

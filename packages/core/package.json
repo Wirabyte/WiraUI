@@ -1,8 +1,8 @@
 {
-  "name": "@wiratheme/core",
+  "name": "@wiraui/core",
   "version": "0.1.0",
   "private": true,
-  "description": "WiraTheme token engine, exporters and Thai utilities. Framework-free. The Angular builds and the schematics compile this source in (`wiratheme/core`); dist/ is CommonJS for Node tooling only.",
+  "description": "WiraUI token engine, exporters and Thai utilities. Framework-free. The Angular builds and the schematics compile this source in (`wiraui/core`); dist/ is CommonJS for Node tooling only.",
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {

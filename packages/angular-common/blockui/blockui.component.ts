@@ -15,7 +15,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵlockScroll, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵlockScroll, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
@@ -36,12 +36,12 @@ function targetElement(target: unknown): HTMLElement | null {
 }
 
 /**
- * Covers the page, or one element (`[target]="panel"`), while something runs: `<wt-blockUI [blocked]="isApiSaving">`
+ * Covers the page, or one element (`[target]="panel"`), while something runs: `<wu-blockUI [blocked]="isApiSaving">`
  * with what to show in the middle (a spinner, a message) as its content. The page is inert under the cover: no
  * clicks, no Tab into it; covering the whole page also stops it scrolling.
  */
 @Component({
-  selector: 'wt-blockui, wt-blockUI, wt-block-ui',
+  selector: 'wu-blockui, wu-blockUI, wu-block-ui',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './blockui.component.html',
@@ -49,7 +49,7 @@ function targetElement(target: unknown): HTMLElement | null {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtBlockUI implements AfterViewChecked, OnDestroy {
+export class WuBlockUI implements AfterViewChecked, OnDestroy {
   @Input() set blocked(v: unknown) {
     const on = ɵtoBool(v);
     if (on === this._blocked) return;
@@ -70,7 +70,7 @@ export class WtBlockUI implements AfterViewChecked, OnDestroy {
   @Input() autoZIndex: unknown;
   @Input() baseZIndex: unknown;
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   @ViewChild('mask') protected maskRef?: ElementRef<HTMLElement>;
 
@@ -84,7 +84,7 @@ export class WtBlockUI implements AfterViewChecked, OnDestroy {
   private readonly doc = inject(DOCUMENT);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get contentTemplate(): TemplateRef<unknown> | null {
@@ -103,7 +103,7 @@ export class WtBlockUI implements AfterViewChecked, OnDestroy {
     const el = targetElement(this.target);
     if (el) {
       this.host = el;
-      if (this.doc.defaultView?.getComputedStyle(el).position === 'static') el.classList.add('wt-blockui-container');
+      if (this.doc.defaultView?.getComputedStyle(el).position === 'static') el.classList.add('wu-blockui-container');
       el.setAttribute('aria-busy', 'true');
       // What was there goes inert; the cover itself stays live.
       for (const child of Array.from(el.children) as HTMLElement[]) {
@@ -145,7 +145,7 @@ export class WtBlockUI implements AfterViewChecked, OnDestroy {
     this.pending = false;
     for (const el of this.inerted.splice(0)) el.removeAttribute('inert');
     if (this.host) {
-      this.host.classList.remove('wt-blockui-container');
+      this.host.classList.remove('wu-blockui-container');
       this.host.removeAttribute('aria-busy');
       this.host = null;
     }

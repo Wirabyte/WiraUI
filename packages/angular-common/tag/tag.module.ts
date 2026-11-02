@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTag } from './tag.component';
+import { WuTag } from './tag.component';
 
-/** For NgModule apps. Standalone apps can import `WtTag` directly. */
+/** For NgModule apps. Standalone apps can import `WuTag` directly. */
 @NgModule({
-  imports: [WtTag],
-  exports: [WtTag],
+  imports: [WuTag],
+  exports: [WuTag],
 })
-export class WtTagModule {}
+export class WuTagModule {}

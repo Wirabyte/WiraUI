@@ -19,10 +19,10 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 
 /** What the item template gets as `options`. */
-export interface WtScrollerItemOptions {
+export interface WuScrollerItemOptions {
   index: number;
   count: number;
   first: boolean;
@@ -31,28 +31,28 @@ export interface WtScrollerItemOptions {
   odd: boolean;
 }
 /** `(onLazyLoad)` and `(onScrollIndexChange)`: the rows now drawn (`last` excluded). */
-export interface WtScrollerRange {
+export interface WuScrollerRange {
   first: number;
   last: number;
 }
-export interface WtScrollerScrollEvent {
+export interface WuScrollerScrollEvent {
   originalEvent: Event;
 }
 interface Rendered {
   item: unknown;
-  options: WtScrollerItemOptions;
+  options: WuScrollerItemOptions;
 }
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A long list that draws only the rows in view: `<wt-scroller [items]="students" [itemSize]="48" scrollHeight="20rem">`
- * with `<ng-template wtTemplate="item" let-item let-options="options">`. `itemSize` is the row height in pixels
+ * A long list that draws only the rows in view: `<wu-scroller [items]="students" [itemSize]="48" scrollHeight="20rem">`
+ * with `<ng-template wuTemplate="item" let-item let-options="options">`. `itemSize` is the row height in pixels
  * (the width with `orientation="horizontal"`); rows are drawn as tall as they are. `[lazy]="true"` asks for rows
  * with `(onLazyLoad)` as they come into view; `[disabled]="true"` draws them all.
  */
 @Component({
-  selector: 'wt-scroller, wt-virtualScroller, wt-virtual-scroller',
+  selector: 'wu-scroller, wu-virtualScroller, wu-virtual-scroller',
   standalone: true,
   imports: [NgFor, NgIf, NgTemplateOutlet],
   templateUrl: './scroller.component.html',
@@ -60,7 +60,7 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtScroller implements AfterViewInit, OnDestroy {
+export class WuScroller implements AfterViewInit, OnDestroy {
   @Input() set items(v: readonly unknown[] | null | undefined) { this._items = v || []; this.refresh(); }
   get items(): readonly unknown[] { return this._items; }
   /** Row height (or column width) in pixels. Default 40. */
@@ -110,11 +110,11 @@ export class WtScroller implements AfterViewInit, OnDestroy {
   @Input() autoSize: unknown;
   @Input() contentStyleClass: unknown;
 
-  @Output() readonly onLazyLoad = new EventEmitter<WtScrollerRange>();
-  @Output() readonly onScroll = new EventEmitter<WtScrollerScrollEvent>();
-  @Output() readonly onScrollIndexChange = new EventEmitter<WtScrollerRange>();
+  @Output() readonly onLazyLoad = new EventEmitter<WuScrollerRange>();
+  @Output() readonly onScroll = new EventEmitter<WuScrollerScrollEvent>();
+  @Output() readonly onScrollIndexChange = new EventEmitter<WuScrollerRange>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   @ContentChild('loader', { descendants: false }) protected loaderRef?: unknown;
@@ -144,7 +144,7 @@ export class WtScroller implements AfterViewInit, OnDestroy {
   private readonly zone = inject(NgZone);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {
@@ -229,7 +229,7 @@ export class WtScroller implements AfterViewInit, OnDestroy {
   }
 
   /** The rows drawn and the rows in view. */
-  getRenderedRange(): { first: number; last: number; viewport: WtScrollerRange } {
+  getRenderedRange(): { first: number; last: number; viewport: WuScrollerRange } {
     return { first: this.first, last: this.last, viewport: { first: this.viewFirst, last: this.viewLast } };
   }
 

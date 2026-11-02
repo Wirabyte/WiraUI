@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtInputText } from './inputtext.directive';
+import { WuInputText } from './inputtext.directive';
 
-/** For NgModule apps. Standalone apps can import `WtInputText` directly. */
+/** For NgModule apps. Standalone apps can import `WuInputText` directly. */
 @NgModule({
-  imports: [WtInputText],
-  exports: [WtInputText],
+  imports: [WuInputText],
+  exports: [WuInputText],
 })
-export class WtInputTextModule {}
+export class WuInputTextModule {}

@@ -1,27 +1,27 @@
-/* wt-panelmenu. Shared by wiratheme v1, v2 and v3. A side menu of collapsible panels: a header for each root item,
+/* wu-panelmenu. Shared by wiraui v1, v2 and v3. A side menu of collapsible panels: a header for each root item,
    its items (nested as deep as needed) opening under it. Styled look: cards with rounded rows; classic look: grey
    boxed headers over a bordered content box. */
-@layer wiratheme.components {
-  :is(wt-panelmenu, wt-panel-menu) {
+@layer wiraui.components {
+  :is(wu-panelmenu, wu-panel-menu) {
     display: block;
   }
-  .wt-panelmenu {
+  .wu-panelmenu {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-panelmenu-gap);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-panelmenu-item-color);
+    gap: var(--wu-panelmenu-gap);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-panelmenu-item-color);
   }
-  .wt-panelmenu-panel {
-    padding: var(--wt-panelmenu-panel-padding);
-    border: var(--wt-panelmenu-panel-border-width) solid var(--wt-border);
-    border-radius: var(--wt-panelmenu-panel-radius);
-    background: var(--wt-panelmenu-panel-bg);
+  .wu-panelmenu-panel {
+    padding: var(--wu-panelmenu-panel-padding);
+    border: var(--wu-panelmenu-panel-border-width) solid var(--wu-border);
+    border-radius: var(--wu-panelmenu-panel-radius);
+    background: var(--wu-panelmenu-panel-bg);
   }
-  .wt-panelmenu-header-link,
-  .wt-panelmenu-item-link {
+  .wu-panelmenu-header-link,
+  .wu-panelmenu-item-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -35,105 +35,105 @@
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-panelmenu-header-link {
-    padding: var(--wt-panelmenu-header-padding);
-    border: var(--wt-panelmenu-header-border-width) solid var(--wt-border);
-    border-radius: var(--wt-panelmenu-header-radius);
-    background: var(--wt-panelmenu-header-bg);
-    color: var(--wt-panelmenu-header-color);
-    font-weight: var(--wt-panelmenu-header-weight);
+  .wu-panelmenu-header-link {
+    padding: var(--wu-panelmenu-header-padding);
+    border: var(--wu-panelmenu-header-border-width) solid var(--wu-border);
+    border-radius: var(--wu-panelmenu-header-radius);
+    background: var(--wu-panelmenu-header-bg);
+    color: var(--wu-panelmenu-header-color);
+    font-weight: var(--wu-panelmenu-header-weight);
   }
-  .wt-panelmenu-header-active .wt-panelmenu-header-link {
-    border-bottom-right-radius: var(--wt-panelmenu-header-active-radius);
-    border-bottom-left-radius: var(--wt-panelmenu-header-active-radius);
+  .wu-panelmenu-header-active .wu-panelmenu-header-link {
+    border-bottom-right-radius: var(--wu-panelmenu-header-active-radius);
+    border-bottom-left-radius: var(--wu-panelmenu-header-active-radius);
   }
-  .wt-panelmenu-item-link {
-    padding: var(--wt-panelmenu-item-padding);
+  .wu-panelmenu-item-link {
+    padding: var(--wu-panelmenu-item-padding);
     border: 0;
-    border-radius: var(--wt-panelmenu-item-radius);
+    border-radius: var(--wu-panelmenu-item-radius);
     background: transparent;
   }
-  .wt-panelmenu-header:not(.wt-panelmenu-disabled) .wt-panelmenu-header-link:hover,
-  .wt-panelmenu-item:not(.wt-panelmenu-disabled) > .wt-panelmenu-item-content > .wt-panelmenu-item-link:hover {
-    background: var(--wt-panelmenu-item-hover-bg);
+  .wu-panelmenu-header:not(.wu-panelmenu-disabled) .wu-panelmenu-header-link:hover,
+  .wu-panelmenu-item:not(.wu-panelmenu-disabled) > .wu-panelmenu-item-content > .wu-panelmenu-item-link:hover {
+    background: var(--wu-panelmenu-item-hover-bg);
   }
-  .wt-panelmenu-header-link:focus-visible,
-  .wt-panelmenu-item-link:focus-visible {
-    background: var(--wt-panelmenu-item-hover-bg);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: calc(-1 * var(--wt-control-focus-offset) - 1px);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-panelmenu-header-link:focus-visible,
+  .wu-panelmenu-item-link:focus-visible {
+    background: var(--wu-panelmenu-item-hover-bg);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: calc(-1 * var(--wu-control-focus-offset) - 1px);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-panelmenu-link-active {
-    color: var(--wt-primary-color);
+  .wu-panelmenu-link-active {
+    color: var(--wu-primary-color);
   }
-  .wt-panelmenu-disabled > * > .wt-panelmenu-header-link,
-  .wt-panelmenu-disabled > * > .wt-panelmenu-item-link,
-  .wt-panelmenu-header-link:disabled,
-  .wt-panelmenu-item-link:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-panelmenu-disabled > * > .wu-panelmenu-header-link,
+  .wu-panelmenu-disabled > * > .wu-panelmenu-item-link,
+  .wu-panelmenu-header-link:disabled,
+  .wu-panelmenu-item-link:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-panelmenu-header-icon,
-  .wt-panelmenu-item-icon {
+  .wu-panelmenu-header-icon,
+  .wu-panelmenu-item-icon {
     flex: none;
-    color: var(--wt-panelmenu-item-icon-color);
+    color: var(--wu-panelmenu-item-icon-color);
   }
-  .wt-panelmenu-label {
+  .wu-panelmenu-label {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .wt-panelmenu-badge {
+  .wu-panelmenu-badge {
     display: inline-grid;
     place-items: center;
     min-width: 1.25rem;
     height: 1.25rem;
     padding: 0 0.375rem;
     border-radius: 999px;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
   }
   /* Closed: pointing at the label; open: down. */
-  .wt-panelmenu-submenu-icon {
+  .wu-panelmenu-submenu-icon {
     flex: none;
-    order: var(--wt-panelmenu-icon-order);
+    order: var(--wu-panelmenu-icon-order);
     width: 0.875rem;
     height: 0.875rem;
     transform: rotate(-90deg);
-    transition: transform var(--wt-transition);
+    transition: transform var(--wu-transition);
   }
-  [aria-expanded='true'] > .wt-panelmenu-submenu-icon {
+  [aria-expanded='true'] > .wu-panelmenu-submenu-icon {
     transform: none;
   }
 
   /* Collapsing regions: a grid row that grows from nothing to the content's height. */
-  .wt-panelmenu-content-container {
+  .wu-panelmenu-content-container {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--wt-transition) ease;
+    transition: grid-template-rows var(--wu-transition) ease;
   }
-  .wt-panelmenu-header-active + .wt-panelmenu-content-container,
-  .wt-panelmenu-item-active > .wt-panelmenu-content-container {
+  .wu-panelmenu-header-active + .wu-panelmenu-content-container,
+  .wu-panelmenu-item-active > .wu-panelmenu-content-container {
     grid-template-rows: 1fr;
   }
-  .wt-panelmenu-content-inner {
+  .wu-panelmenu-content-inner {
     min-height: 0;
     overflow: hidden;
   }
-  .wt-panelmenu-content {
-    padding: var(--wt-panelmenu-content-padding);
-    border: var(--wt-panelmenu-content-border-width) solid var(--wt-border);
+  .wu-panelmenu-content {
+    padding: var(--wu-panelmenu-content-padding);
+    border: var(--wu-panelmenu-content-border-width) solid var(--wu-border);
     border-top: 0;
-    border-radius: 0 0 var(--wt-panelmenu-panel-radius) var(--wt-panelmenu-panel-radius);
-    background: var(--wt-panelmenu-content-bg);
+    border-radius: 0 0 var(--wu-panelmenu-panel-radius) var(--wu-panelmenu-panel-radius);
+    background: var(--wu-panelmenu-content-bg);
   }
-  .wt-panelmenu-list {
+  .wu-panelmenu-list {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -141,18 +141,18 @@
     padding: 0;
     list-style: none;
   }
-  .wt-panelmenu-submenu {
-    padding-left: var(--wt-panelmenu-submenu-indent);
+  .wu-panelmenu-submenu {
+    padding-left: var(--wu-panelmenu-submenu-indent);
   }
-  .wt-panelmenu-separator {
+  .wu-panelmenu-separator {
     margin: 0.25rem 0;
-    border-top: 1px solid var(--wt-border);
+    border-top: 1px solid var(--wu-border);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-panelmenu-content-container,
-    .wt-panelmenu-submenu-icon,
-    .wt-panelmenu-header-link,
-    .wt-panelmenu-item-link {
+    .wu-panelmenu-content-container,
+    .wu-panelmenu-submenu-icon,
+    .wu-panelmenu-header-link,
+    .wu-panelmenu-item-link {
       transition: none;
     }
   }

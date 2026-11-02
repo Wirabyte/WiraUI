@@ -15,25 +15,25 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
-import { ɵWtRadioAccessor, ɵWtRadioRegistry } from './radio-registry';
-import { WtRadioButtonClickEvent } from './radiobutton.types';
+import { ɵassertSupportedAngular, ɵsize, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuSize } from 'wiraui/config';
+import { ɵWuRadioAccessor, ɵWuRadioRegistry } from './radio-registry';
+import { WuRadioButtonClickEvent } from './radiobutton.types';
 
 /**
  * Radio button for ngModel and reactive forms. Give every radio in a group the same `name`
  * (and the same ngModel field or formControlName); each one has its own `value`.
  */
 @Component({
-  selector: 'wt-radiobutton, wt-radioButton, wt-radio-button',
+  selector: 'wu-radiobutton, wu-radioButton, wu-radio-button',
   standalone: true,
   imports: [NgIf],
   templateUrl: './radiobutton.component.html',
   styleUrls: ['./radiobutton.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtRadioButton), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuRadioButton), multi: true }],
 })
-export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, ɵWtRadioAccessor {
+export class WuRadioButton implements ControlValueAccessor, OnInit, OnDestroy, ɵWuRadioAccessor {
   @Input() value: unknown;
   @Input() name?: string;
   @Input() label?: string;
@@ -53,11 +53,11 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   get disabled(): boolean { return this._disabled; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
-  @Input() size?: WtSize;
-  @HostBinding('class.wt-radiobutton-sm') @HostBinding('class.p-radiobutton-sm') get sizeSm(): boolean {
+  @Input() size?: WuSize;
+  @HostBinding('class.wu-radiobutton-sm') @HostBinding('class.p-radiobutton-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
-  @HostBinding('class.wt-radiobutton-lg') @HostBinding('class.p-radiobutton-lg') get sizeLg(): boolean {
+  @HostBinding('class.wu-radiobutton-lg') @HostBinding('class.p-radiobutton-lg') get sizeLg(): boolean {
     return this.sizeKey === 'lg';
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -65,7 +65,7 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   }
   get invalid(): boolean { return this._invalid; }
 
-  @Output() readonly onClick = new EventEmitter<WtRadioButtonClickEvent>();
+  @Output() readonly onClick = new EventEmitter<WuRadioButtonClickEvent>();
 
   ngControlRef: NgControl | null = null;
 
@@ -73,15 +73,15 @@ export class WtRadioButton implements ControlValueAccessor, OnInit, OnDestroy, �
   private _invalid = false;
   private model: unknown = undefined;
   private formDisabled = false;
-  private readonly autoId = ɵuniqueId('wt-radiobutton');
+  private readonly autoId = ɵuniqueId('wu-radiobutton');
   private readonly injector = inject(Injector);
-  private readonly registry = inject(ɵWtRadioRegistry);
+  private readonly registry = inject(ɵWuRadioRegistry);
   private readonly cdr = inject(ChangeDetectorRef);
   private onModelChange: (value: unknown) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get id(): string {

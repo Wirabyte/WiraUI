@@ -4,20 +4,20 @@ import { describe, expect, it } from 'vitest';
 import * as core from '../../core/src';
 import { renderUtilsPalettes } from '../scripts/scss-data.mjs';
 
-// `@use 'wiratheme/utils'` on the oldest Sass we support (1.58.3, Angular 15) and the current one.
+// `@use 'wiraui/utils'` on the oldest Sass we support (1.58.3, Angular 15) and the current one.
 const require = createRequire(import.meta.url);
 const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((sass) => [`sass ${sass.info.split('\t')[1]}`, sass]);
 const UTILS_DIR = new URL('../utils/', import.meta.url);
 const importer = {
   findFileUrl(url: string) {
-    if (url !== 'wiratheme/utils' && !url.startsWith('wiratheme/utils/')) return null;
-    return new URL(url.slice('wiratheme/utils/'.length) || 'index', UTILS_DIR);
+    if (url !== 'wiraui/utils' && !url.startsWith('wiraui/utils/')) return null;
+    return new URL(url.slice('wiraui/utils/'.length) || 'index', UTILS_DIR);
   },
 };
 
 function compile(sass: any, settings = ''): string {
   const warnings: string[] = [];
-  const source = settings ? `@use 'wiratheme/utils' with (${settings});` : "@use 'wiratheme/utils';";
+  const source = settings ? `@use 'wiraui/utils' with (${settings});` : "@use 'wiraui/utils';";
   const { css } = sass.compileString(source, { importers: [importer], logger: { warn: (m: string) => warnings.push(m), debug: () => {} } });
   expect(warnings, 'Sass warnings').toEqual([]);
   return css;
@@ -34,14 +34,14 @@ function rule(css: string, selector: string, from = 0): string | null {
 describe.each(COMPILERS)('%s', (_name, sass) => {
   const css = compile(sass);
 
-  it('keeps the layer order and wraps everything in wiratheme.utilities', () => {
+  it('keeps the layer order and wraps everything in wiraui.utilities', () => {
     expect(css.startsWith(core.LAYER_ORDER)).toBe(true);
-    expect(css).toContain('@layer wiratheme.utilities {');
+    expect(css).toContain('@layer wiraui.utilities {');
   });
 
   it('has the 12-column grid, mobile-first', () => {
     expect(rule(css, '.grid')).toContain('display: flex; flex-wrap: wrap;');
-    expect(rule(css, '.col-6')).toBe('flex: 0 0 auto; padding: var(--wt-grid-gutter, 0.5rem); width: 50%;');
+    expect(rule(css, '.col-6')).toBe('flex: 0 0 auto; padding: var(--wu-grid-gutter, 0.5rem); width: 50%;');
     expect(rule(css, '.col-offset-3')).toBe('margin-left: 25%;');
     const md = css.indexOf('@media screen and (min-width: 768px)');
     expect(md).toBeGreaterThan(css.indexOf('.col-6 {'));
@@ -67,14 +67,14 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
   });
 
   it('takes colours, radii and shadows from the theme tokens', () => {
-    expect(rule(css, '.text-color-secondary')).toBe('color: var(--wt-text-muted);');
-    expect(rule(css, '.surface-card')).toBe('background-color: var(--wt-card-bg);');
-    expect(rule(css, '.surface-border')).toBe('border-color: var(--wt-border);');
-    expect(rule(css, '.bg-primary')).toBe('background-color: var(--wt-primary-color); color: var(--wt-primary-contrast);');
-    expect(rule(css, '.text-gray-500')).toBe('color: var(--wt-surface-500);');
-    expect(rule(css, '.border-round')).toBe('border-radius: var(--wt-radius-md);');
+    expect(rule(css, '.text-color-secondary')).toBe('color: var(--wu-text-muted);');
+    expect(rule(css, '.surface-card')).toBe('background-color: var(--wu-card-bg);');
+    expect(rule(css, '.surface-border')).toBe('border-color: var(--wu-border);');
+    expect(rule(css, '.bg-primary')).toBe('background-color: var(--wu-primary-color); color: var(--wu-primary-contrast);');
+    expect(rule(css, '.text-gray-500')).toBe('color: var(--wu-surface-500);');
+    expect(rule(css, '.border-round')).toBe('border-radius: var(--wu-radius-md);');
     expect(rule(css, '.text-blue-500')).toBe(`color: ${core.generatePalette(core.PALETTE_BASES['blue'])[500]};`);
-    expect(rule(css, '.shadow-md')).toBe('box-shadow: var(--wt-shadow-md);');
+    expect(rule(css, '.shadow-md')).toBe('box-shadow: var(--wu-shadow-md);');
   });
 
   it('has the form layout helpers', () => {

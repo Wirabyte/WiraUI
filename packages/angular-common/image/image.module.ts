@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtImage } from './image.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuImage } from './image.component';
 
-/** For NgModule apps. Standalone apps can import `WtImage` directly. */
+/** For NgModule apps. Standalone apps can import `WuImage` directly. */
 @NgModule({
-  imports: [WtImage, WtTemplate],
-  exports: [WtImage, WtTemplate],
+  imports: [WuImage, WuTemplate],
+  exports: [WuImage, WuTemplate],
 })
-export class WtImageModule {}
+export class WuImageModule {}

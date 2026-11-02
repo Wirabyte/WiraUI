@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, ContentChild, ContentChildren, Directive, EventEmitter, inject, Input, OnDestroy, Output, QueryList, TemplateRef } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
-import { pageInfo, pageLinks, pageReport, WtLocale } from 'wiratheme/core';
-import { WtPageEvent } from './paginator.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
+import { pageInfo, pageLinks, pageReport, WuLocale } from 'wiraui/core';
+import { WuPageEvent } from './paginator.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const toInt = (v: unknown, fallback: number) => (Number.isFinite(Number(v)) && v !== null && v !== '' ? Math.floor(Number(v)) : fallback);
 
 /**
- * What wt-paginator does, shared by the v1 and v2/v3 templates. Page buttons, a rows-per-page box and a page report
+ * What wu-paginator does, shared by the v1 and v2/v3 templates. Page buttons, a rows-per-page box and a page report
  * in Thai (`กำลังแสดง 11 ถึง 20 จาก 57 รายการ`); the parts wrap onto new lines on narrow screens.
  */
 @Directive()
-export abstract class ɵWtPaginatorBase implements OnDestroy {
+export abstract class ɵWuPaginatorBase implements OnDestroy {
   /** Index of the first row of the current page (0-based). */
   @Input() set first(v: unknown) { this._first = Math.max(0, toInt(v, 0)); }
   get first(): number { return this._first; }
@@ -42,9 +42,9 @@ export abstract class ɵWtPaginatorBase implements OnDestroy {
   @Input() dropdownAppendTo: unknown;
   @Input() showJumpToPageDropdown: unknown;
 
-  @Output() readonly onPageChange = new EventEmitter<WtPageEvent>();
+  @Output() readonly onPageChange = new EventEmitter<WuPageEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('start', { descendants: false }) protected startRef?: unknown;
   @ContentChild('end', { descendants: false }) protected endRef?: unknown;
   /** The names table templates use, for `<ng-template #paginatorleft>` / `#paginatorright` too. */
@@ -52,7 +52,7 @@ export abstract class ɵWtPaginatorBase implements OnDestroy {
   @ContentChild('paginatorright', { descendants: false }) protected rightRef?: unknown;
 
   protected readonly cdr = inject(ChangeDetectorRef);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private _first = 0;
   private _rows = 10;
@@ -69,14 +69,14 @@ export abstract class ɵWtPaginatorBase implements OnDestroy {
   endTemplateInput: TemplateRef<unknown> | null = null;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
     this.i18n.unsubscribe();
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get info(): { page: number; pageCount: number; first: number; last: number } {
@@ -128,7 +128,7 @@ export abstract class ɵWtPaginatorBase implements OnDestroy {
       ɵfindTemplate(this.templates, 'paginatorright')
     );
   }
-  get templateContext(): { $implicit: WtPageEvent } {
+  get templateContext(): { $implicit: WuPageEvent } {
     return { $implicit: this.event() };
   }
   pageAria(page: number): string {
@@ -154,7 +154,7 @@ export abstract class ɵWtPaginatorBase implements OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private event(): WtPageEvent {
+  private event(): WuPageEvent {
     const i = this.info;
     return { page: i.page, first: this._first, rows: this._rows, pageCount: i.pageCount };
   }

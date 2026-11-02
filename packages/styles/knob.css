@@ -1,16 +1,16 @@
-/* wt-knob. Shared by wiratheme v1, v2 and v3. A round dial drawn in SVG: the track, the filled arc and the value in the
+/* wu-knob. Shared by wiraui v1, v2 and v3. A round dial drawn in SVG: the track, the filled arc and the value in the
    middle. Press or drag on it (mouse, pen, touch) or focus it and use the keys. */
-@layer wiratheme.components {
-  wt-knob {
+@layer wiraui.components {
+  wu-knob {
     display: inline-block;
     max-width: 100%;
     vertical-align: middle;
   }
-  .wt-knob {
+  .wu-knob {
     display: inline-block;
     max-width: 100%;
   }
-  .wt-knob svg {
+  .wu-knob svg {
     display: block;
     max-width: 100%;
     height: auto;
@@ -22,39 +22,39 @@
     user-select: none;
     -webkit-user-select: none;
     transition:
-      outline-color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      outline-color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-knob svg:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-knob svg:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-knob-range {
+  .wu-knob-range {
     fill: none;
-    stroke: var(--wt-knob-range-color);
+    stroke: var(--wu-knob-range-color);
     transition: stroke 0.1s ease-in;
   }
-  .wt-knob-value {
+  .wu-knob-value {
     fill: none;
-    stroke: var(--wt-knob-value-color);
+    stroke: var(--wu-knob-value-color);
   }
-  .wt-knob-text {
-    fill: var(--wt-knob-text-color);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-knob-text-size);
+  .wu-knob-text {
+    fill: var(--wu-knob-text-color);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-knob-text-size);
     text-anchor: middle;
   }
-  .wt-knob-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-knob-disabled {
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-knob-disabled svg,
-  .wt-knob-readonly svg {
+  .wu-knob-disabled svg,
+  .wu-knob-readonly svg {
     cursor: default;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-knob svg,
-    .wt-knob-range {
+    .wu-knob svg,
+    .wu-knob-range {
       transition: none;
     }
   }

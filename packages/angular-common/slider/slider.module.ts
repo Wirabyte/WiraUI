@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtSlider } from './slider.component';
+import { WuSlider } from './slider.component';
 
-/** For NgModule apps. Standalone apps can import `WtSlider` directly. */
+/** For NgModule apps. Standalone apps can import `WuSlider` directly. */
 @NgModule({
-  imports: [WtSlider],
-  exports: [WtSlider],
+  imports: [WuSlider],
+  exports: [WuSlider],
 })
-export class WtSliderModule {}
+export class WuSliderModule {}

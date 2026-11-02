@@ -1,24 +1,24 @@
-/* wt-inputmask. Shared by wiratheme v1, v2 and v3. The field is drawn by wt-inputtext's stylesheet (loaded with it);
+/* wu-inputmask. Shared by wiraui v1, v2 and v3. The field is drawn by wu-inputtext's stylesheet (loaded with it);
    this file places the clear button and carries the form's invalid state from the host to the field. */
-@layer wiratheme.components {
-  :is(wt-inputmask, wt-input-mask) {
+@layer wiraui.components {
+  :is(wu-inputmask, wu-input-mask) {
     position: relative;
     display: inline-flex;
     vertical-align: middle;
     max-width: 100%;
   }
-  :is(wt-inputmask, wt-input-mask).wt-inputmask-fluid {
+  :is(wu-inputmask, wu-input-mask).wu-inputmask-fluid {
     display: flex;
     width: 100%;
   }
-  :is(wt-inputmask, wt-input-mask) > .wt-inputtext {
+  :is(wu-inputmask, wu-input-mask) > .wu-inputtext {
     flex: 1 1 auto;
     min-width: 0;
   }
-  :is(wt-inputmask, wt-input-mask):has(> .wt-inputmask-clear) > .wt-inputtext {
+  :is(wu-inputmask, wu-input-mask):has(> .wu-inputmask-clear) > .wu-inputtext {
     padding-right: 2.25rem;
   }
-  .wt-inputmask-clear {
+  .wu-inputmask-clear {
     position: absolute;
     top: 50%;
     right: 0.5rem;
@@ -28,20 +28,20 @@
     height: 1.5rem;
     padding: 0;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-field-placeholder);
+    color: var(--wu-field-placeholder);
     cursor: pointer;
     transform: translateY(-50%);
   }
-  .wt-inputmask-clear:hover {
-    color: var(--wt-field-color);
+  .wu-inputmask-clear:hover {
+    color: var(--wu-field-color);
   }
-  .wt-inputmask-clear svg {
+  .wu-inputmask-clear svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  :is(wt-inputmask, wt-input-mask).ng-invalid:is(.ng-touched, form.ng-submitted *) > .wt-inputtext {
-    border-color: var(--wt-danger-color);
+  :is(wu-inputmask, wu-input-mask).ng-invalid:is(.ng-touched, form.ng-submitted *) > .wu-inputtext {
+    border-color: var(--wu-danger-color);
   }
 }

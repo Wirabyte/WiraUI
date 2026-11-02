@@ -23,29 +23,29 @@ import {
   ɵsize,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WtTemplate,
-} from 'wiratheme/config';
-import { filterItems, firstIndex, lastIndex, sameValue, SelectItem, selectItems, stepIndex, typeaheadIndex, WtLocale } from 'wiratheme/core';
-import { ɵWT_CHECKBOX_CSS } from 'wiratheme/checkbox';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵWT_SELECT_CSS, WtSelectMatchMode } from 'wiratheme/select';
-import { WtMultiSelectChangeEvent, WtMultiSelectFilterEvent, WtMultiSelectSelectAllChangeEvent, WtMultiSelectSelectedItemsContext } from './multiselect.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WuTemplate,
+} from 'wiraui/config';
+import { filterItems, firstIndex, lastIndex, sameValue, SelectItem, selectItems, stepIndex, typeaheadIndex, WuLocale } from 'wiraui/core';
+import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵWU_SELECT_CSS, WuSelectMatchMode } from 'wiraui/select';
+import { WuMultiSelectChangeEvent, WuMultiSelectFilterEvent, WuMultiSelectSelectAllChangeEvent, WuMultiSelectSelectedItemsContext } from './multiselect.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const TYPEAHEAD_MS = 600;
 
 /**
- * What wt-multiselect does, shared by the v1 and v2/v3 templates. Like wt-select (same field, list and stylesheet),
+ * What wu-multiselect does, shared by the v1 and v2/v3 templates. Like wu-select (same field, list and stylesheet),
  * but the value is an array: each row has a check box, the header ticks every row the search leaves, and the field
  * shows the chosen labels, chips, or "{0} items selected" once there are more than `maxSelectedLabels`.
  * Picking keeps the list open; Escape, Tab or a click outside closes it.
  */
 @Directive()
-export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, AfterViewChecked, OnDestroy {
+export abstract class ɵWuMultiSelectBase implements ControlValueAccessor, AfterViewChecked, OnDestroy {
   // ---------- the options ----------
   @Input() set options(v: readonly unknown[] | null | undefined) { this._options = v || []; this.rebuild(); }
   get options(): readonly unknown[] { return this._options; }
@@ -107,7 +107,7 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   @Input() set filter(v: unknown) { this._filter = v === undefined || ɵtoBool(v); }
   get filter(): boolean { return this._filter; }
   @Input() set filterBy(v: string | undefined) { this._filterBy = v; this.applyFilter(); }
-  @Input() set filterMatchMode(v: WtSelectMatchMode | undefined) { this._matchMode = v || 'contains'; this.applyFilter(); }
+  @Input() set filterMatchMode(v: WuSelectMatchMode | undefined) { this._matchMode = v || 'contains'; this.applyFilter(); }
   @Input() filterPlaceholder?: string;
   /** The older spelling of `filterPlaceholder`. */
   @Input() set filterPlaceHolder(v: string | undefined) {
@@ -130,16 +130,16 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   @Input() showTransitionOptions: unknown;
   @Input() hideTransitionOptions: unknown;
 
-  @Output() readonly onChange = new EventEmitter<WtMultiSelectChangeEvent>();
-  @Output() readonly onFilter = new EventEmitter<WtMultiSelectFilterEvent>();
+  @Output() readonly onChange = new EventEmitter<WuMultiSelectChangeEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuMultiSelectFilterEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
   @Output() readonly onPanelShow = new EventEmitter<void>();
   @Output() readonly onPanelHide = new EventEmitter<void>();
   @Output() readonly onClear = new EventEmitter<Event>();
-  @Output() readonly onSelectAllChange = new EventEmitter<WtMultiSelectSelectAllChangeEvent>();
+  @Output() readonly onSelectAllChange = new EventEmitter<WuMultiSelectSelectAllChangeEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('selectedItems', { descendants: false }) protected selectedItemsRef?: unknown;
   @ContentChild('group', { descendants: false }) protected groupRef?: unknown;
@@ -162,7 +162,7 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   focused = false;
   filterText = '';
   activeIndex = -1;
-  readonly baseId = ɵuniqueId('wt-multiselect');
+  readonly baseId = ɵuniqueId('wu-multiselect');
   readonly listId = `${this.baseId}-list`;
   readonly trackIndex = (i: number): number => i;
   /** For the `selectedItems` template. */
@@ -173,7 +173,7 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   private chipKey = '';
   private chipObserver: ResizeObserver | null = null;
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private _options: readonly unknown[] = [];
   private _optionLabel?: string;
@@ -193,22 +193,22 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   private _showToggleAll = true;
   private _filter = true;
   private _filterBy?: string;
-  private _matchMode: WtSelectMatchMode = 'contains';
+  private _matchMode: WuSelectMatchMode = 'contains';
   private _resetFilter = false;
   private formDisabled = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private typed = '';
   private typedAt = 0;
   private onModelChange: (v: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    // The field and the list are drawn by wt-select's stylesheet, the rows' check boxes by wt-checkbox's.
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('select', ɵWT_SELECT_CSS);
-    styles.load('checkbox', ɵWT_CHECKBOX_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    // The field and the list are drawn by wu-select's stylesheet, the rows' check boxes by wu-checkbox's.
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('select', ɵWU_SELECT_CSS);
+    styles.load('checkbox', ɵWU_CHECKBOX_CSS);
   }
 
   ngOnDestroy(): void {
@@ -227,10 +227,10 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
       this.chipKey = '';
       return;
     }
-    const label = this.host.querySelector('.wt-multiselect-label') as HTMLElement | null;
-    const more = label?.querySelector('.wt-multiselect-more') as HTMLElement | null;
+    const label = this.host.querySelector('.wu-multiselect-label') as HTMLElement | null;
+    const more = label?.querySelector('.wu-multiselect-more') as HTMLElement | null;
     if (!label || !more) return;
-    const chips = Array.from(label.querySelectorAll<HTMLElement>('.wt-multiselect-chip'));
+    const chips = Array.from(label.querySelectorAll<HTMLElement>('.wu-multiselect-chip'));
     const key = `${label.clientWidth}|${chips.map((c) => c.textContent).join('\u0001')}`;
     if (!force && key === this.chipKey) return;
     this.chipKey = key;
@@ -263,7 +263,7 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -311,7 +311,7 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
   get someSelected(): boolean {
     return !this.allSelected && this.pickable().some((it) => this.isSelected(it));
   }
-  get selectedItemsContext(): WtMultiSelectSelectedItemsContext {
+  get selectedItemsContext(): WuMultiSelectSelectedItemsContext {
     return { $implicit: this.value, removeChip: this.removeChip };
   }
   get itemTemplate(): TemplateRef<unknown> | null {
@@ -367,10 +367,10 @@ export abstract class ɵWtMultiSelectBase implements ControlValueAccessor, After
     const panel = this.panelRef?.nativeElement;
     const anchor = this.rootRef?.nativeElement;
     if (!panel || !anchor) return;
-    this.popup = new ɵWtPopup(anchor, panel, {
+    this.popup = new ɵWuPopup(anchor, panel, {
       sheet: false,
-      sheetClass: 'wt-select-sheet',
-      modalClass: 'wt-select-modal',
+      sheetClass: 'wu-select-sheet',
+      modalClass: 'wu-select-modal',
       onOutside: () => this.hide(),
       onPosition: (_, box) => (panel.style.minWidth = `${Math.round(box.width)}px`),
     });

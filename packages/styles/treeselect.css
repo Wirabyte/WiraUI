@@ -1,23 +1,23 @@
-/* wt-treeselect. Shared by wiratheme v1, v2 and v3. The field and the panel are wt-select's (its stylesheet is loaded
-   with it), the chips wt-multiSelect's; inside the panel a wt-tree without its own frame. */
-@layer wiratheme.components {
-  :is(wt-treeselect, wt-tree-select) {
+/* wu-treeselect. Shared by wiraui v1, v2 and v3. The field and the panel are wu-select's (its stylesheet is loaded
+   with it), the chips wu-multiSelect's; inside the panel a wu-tree without its own frame. */
+@layer wiraui.components {
+  :is(wu-treeselect, wu-tree-select) {
     display: inline-flex;
     max-width: 100%;
   }
-  .wt-treeselect {
+  .wu-treeselect {
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
   }
-  .wt-treeselect-overlay {
+  .wu-treeselect-overlay {
     display: flex;
     flex-direction: column;
   }
-  .wt-treeselect-tree {
+  .wu-treeselect-tree {
     min-height: 0;
   }
-  .wt-treeselect-tree .wt-treeselect-tree-root {
+  .wu-treeselect-tree .wu-treeselect-tree-root {
     border: 0;
     border-radius: 0;
     background: transparent;

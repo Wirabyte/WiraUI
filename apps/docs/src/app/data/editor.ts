@@ -15,7 +15,7 @@ export const EDITOR_TOOL_ROWS: ApiRow[] = [
   row('clear · source · fullscreen', 'tool', undefined, 'ล้างรูปแบบ ดูโค้ด HTML และเต็มจอ (Esc ออก)', 'Clear formatting, the HTML source and full screen (Esc leaves)'),
 ];
 
-const HEADER_TEMPLATE = `<wt-editor name="policy" [(ngModel)]="policy" [style]="{ height: '320px' }">
+const HEADER_TEMPLATE = `<wu-editor name="policy" [(ngModel)]="policy" [style]="{ height: '320px' }">
   <ng-template #header>
     <span class="ql-formats">
       <select class="ql-size"></select>
@@ -50,17 +50,17 @@ const HEADER_TEMPLATE = `<wt-editor name="policy" [(ngModel)]="policy" [style]="
       <button class="ql-clean"></button>
     </span>
   </ng-template>
-</wt-editor>`;
+</wu-editor>`;
 
 export const EDITOR_DOC: ComponentDoc = {
   id: 'editor',
   title: 'Editor',
   group: 'Form',
   entry: 'editor',
-  standalone: 'WtEditor',
-  module: 'WtEditorModule',
+  standalone: 'WuEditor',
+  module: 'WuEditorModule',
   forms: true,
-  selector: 'wt-editor',
+  selector: 'wu-editor',
   description: {
     th: 'ช่องพิมพ์ข้อความแบบจัดรูปแบบได้ ค่าเป็น HTML ผูกด้วย ngModel มีแถบเครื่องมือหลายชุด ตาราง ลิงก์ รูปภาพ (ฝังในเนื้อหาหรืออัปโหลด) วางจาก Word ได้โดยไม่เละ และแสดงเนื้อหาที่บันทึกไว้ด้วยหน้าตาเดียวกัน',
     en: 'A rich-text field whose value is HTML, bound with ngModel. It has toolbar presets, tables, links and pictures (embedded or uploaded), cleans what is pasted from Word, and shows saved content with the same look.',
@@ -96,7 +96,7 @@ export const EDITOR_DOC: ComponentDoc = {
     'ย่อหน้า': 'paragraph',
     'รูปอัปโหลดแล้ว': 'Image uploaded',
     'ได้ URL ของรูปกลับมา': 'resolves with the picture URL',
-    'ทั้งแอป: ทุก wt-editor ใช้ค่านี้': 'the whole app: every wt-editor uses these',
+    'ทั้งแอป: ทุก wu-editor ใช้ค่านี้': 'the whole app: every wu-editor uses these',
     'ล่าสุด': 'Last event',
     'โหมด': 'Mode',
     'อัปโหลดไปที่ url: ไฟล์ส่งเป็น multipart แล้วอ่าน URL จากคำตอบ': 'upload to a url: the file goes as multipart and the URL is read from the answer',
@@ -109,8 +109,8 @@ export const EDITOR_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WtEditorModule</code> รวม <code>wt-editor</code>, <code>wtEditorContent</code> (แสดงเนื้อหาที่บันทึกไว้) และ <code>wtTemplate</code> ไว้แล้ว ถ้าเป็น standalone ให้ import <code>WtEditor</code> (กับ <code>WtEditorContent</code>) ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ไม่ต้องติดตั้งไลบรารีอื่นเพิ่ม',
-        en: '<code>WtEditorModule</code> brings <code>wt-editor</code>, <code>wtEditorContent</code> (for showing saved content) and <code>wtTemplate</code>. Standalone: import <code>WtEditor</code> (and <code>WtEditorContent</code>). Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>; nothing else needs installing.',
+        th: '<code>WuEditorModule</code> รวม <code>wu-editor</code>, <code>wuEditorContent</code> (แสดงเนื้อหาที่บันทึกไว้) และ <code>wuTemplate</code> ไว้แล้ว ถ้าเป็น standalone ให้ import <code>WuEditor</code> (กับ <code>WuEditorContent</code>) ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ไม่ต้องติดตั้งไลบรารีอื่นเพิ่ม',
+        en: '<code>WuEditorModule</code> brings <code>wu-editor</code>, <code>wuEditorContent</code> (for showing saved content) and <code>wuTemplate</code>. Standalone: import <code>WuEditor</code> (and <code>WuEditorContent</code>). Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>; nothing else needs installing.',
       },
     },
     basic: {
@@ -151,8 +151,8 @@ export const EDITOR_DOC: ComponentDoc = {
     defaults: {
       title: { th: 'ค่าเริ่มต้นทั้งแอป', en: 'App-wide defaults' },
       text: {
-        th: '<code>provideEditorOptions()</code> ตั้งแถบเครื่องมือ การตั้งค่าเครื่องมือ และการอัปโหลดรูปให้ทุก <code>wt-editor</code> ในครั้งเดียว ค่าที่ตั้งบน component ยังชนะ',
-        en: '<code>provideEditorOptions()</code> sets the toolbar, tool options and picture upload for every <code>wt-editor</code> at once; what a component sets still wins.',
+        th: '<code>provideEditorOptions()</code> ตั้งแถบเครื่องมือ การตั้งค่าเครื่องมือ และการอัปโหลดรูปให้ทุก <code>wu-editor</code> ในครั้งเดียว ค่าที่ตั้งบน component ยังชนะ',
+        en: '<code>provideEditorOptions()</code> sets the toolbar, tool options and picture upload for every <code>wu-editor</code> at once; what a component sets still wins.',
       },
     },
     tables: {
@@ -165,8 +165,8 @@ export const EDITOR_DOC: ComponentDoc = {
     view: {
       title: { th: 'แสดงเนื้อหาที่บันทึกไว้', en: 'Showing saved content' },
       text: {
-        th: '<code>&lt;div wtEditorContent [innerHTML]="announcement"&gt;</code> แสดง HTML ที่บันทึกด้วยหน้าตาเดียวกับในช่องพิมพ์ ทั้งหัวข้อ รายการ ข้อความอ้างอิง ตาราง รูป และ class เดิม <code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code> ที่เนื้อหาเก่ามีอยู่ รายการจุดที่บันทึกเป็น <code>&lt;ol&gt;&lt;li data-list="bullet"&gt;</code> ก็แสดงเป็นจุด',
-        en: '<code>&lt;div wtEditorContent [innerHTML]="announcement"&gt;</code> shows saved HTML with the same look as the editor: headings, lists, quotes, tables, pictures and the older <code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code> and <code>ql-font-*</code> classes that stored content carries. Bullet lists saved as <code>&lt;ol&gt;&lt;li data-list="bullet"&gt;</code> show as bullets too.',
+        th: '<code>&lt;div wuEditorContent [innerHTML]="announcement"&gt;</code> แสดง HTML ที่บันทึกด้วยหน้าตาเดียวกับในช่องพิมพ์ ทั้งหัวข้อ รายการ ข้อความอ้างอิง ตาราง รูป และ class เดิม <code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code> ที่เนื้อหาเก่ามีอยู่ รายการจุดที่บันทึกเป็น <code>&lt;ol&gt;&lt;li data-list="bullet"&gt;</code> ก็แสดงเป็นจุด',
+        en: '<code>&lt;div wuEditorContent [innerHTML]="announcement"&gt;</code> shows saved HTML with the same look as the editor: headings, lists, quotes, tables, pictures and the older <code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code> and <code>ql-font-*</code> classes that stored content carries. Bullet lists saved as <code>&lt;ol&gt;&lt;li data-list="bullet"&gt;</code> show as bullets too.',
       },
     },
     readonly: {
@@ -186,8 +186,8 @@ export const EDITOR_DOC: ComponentDoc = {
     events: {
       title: { th: 'Event และ API', en: 'Events and the API' },
       text: {
-        th: '<code>(onInit)</code> ส่ง <code>editor</code> ซึ่งเป็น API ของช่อง (<code>getHTML()</code>, <code>getText()</code>, <code>setHTML()</code>, <code>insertHTML()</code>, <code>insertText()</code>, <code>focus()</code>, <code>undo()</code>, <code>clipboard.dangerouslyPasteHTML()</code> …) หรือใช้ <code>#ed="wtEditor"</code> แล้วเรียก <code>ed.getEditor()</code> (<code>ed.getQuill()</code> สำหรับโค้ดเดิม และ <code>ed.api</code> ก็ได้ object เดียวกัน) ซึ่ง <code>root</code> คือ element ที่พิมพ์ได้ · <code>(onTextChange)</code> ได้ <code>htmlValue</code>, <code>textValue</code> และ <code>source</code> (<code>user</code> / <code>api</code>) · <code>(onSelectionChange)</code> ได้ตำแหน่งที่เลือก · <code>(onFocus)</code> / <code>(onBlur)</code>',
-        en: '<code>(onInit)</code> brings <code>editor</code>, the field\'s API (<code>getHTML()</code>, <code>getText()</code>, <code>setHTML()</code>, <code>insertHTML()</code>, <code>insertText()</code>, <code>focus()</code>, <code>undo()</code>, <code>clipboard.dangerouslyPasteHTML()</code> …), or use <code>#ed="wtEditor"</code> and call <code>ed.getEditor()</code> (<code>ed.getQuill()</code> for code moving over; <code>ed.api</code> is the same object), whose <code>root</code> is the editing element · <code>(onTextChange)</code> brings <code>htmlValue</code>, <code>textValue</code> and <code>source</code> (<code>user</code> / <code>api</code>) · <code>(onSelectionChange)</code> the selected range · <code>(onFocus)</code> / <code>(onBlur)</code>.',
+        th: '<code>(onInit)</code> ส่ง <code>editor</code> ซึ่งเป็น API ของช่อง (<code>getHTML()</code>, <code>getText()</code>, <code>setHTML()</code>, <code>insertHTML()</code>, <code>insertText()</code>, <code>focus()</code>, <code>undo()</code>, <code>clipboard.dangerouslyPasteHTML()</code> …) หรือใช้ <code>#ed="wuEditor"</code> แล้วเรียก <code>ed.getEditor()</code> (<code>ed.getQuill()</code> สำหรับโค้ดเดิม และ <code>ed.api</code> ก็ได้ object เดียวกัน) ซึ่ง <code>root</code> คือ element ที่พิมพ์ได้ · <code>(onTextChange)</code> ได้ <code>htmlValue</code>, <code>textValue</code> และ <code>source</code> (<code>user</code> / <code>api</code>) · <code>(onSelectionChange)</code> ได้ตำแหน่งที่เลือก · <code>(onFocus)</code> / <code>(onBlur)</code>',
+        en: '<code>(onInit)</code> brings <code>editor</code>, the field\'s API (<code>getHTML()</code>, <code>getText()</code>, <code>setHTML()</code>, <code>insertHTML()</code>, <code>insertText()</code>, <code>focus()</code>, <code>undo()</code>, <code>clipboard.dangerouslyPasteHTML()</code> …), or use <code>#ed="wuEditor"</code> and call <code>ed.getEditor()</code> (<code>ed.getQuill()</code> for code moving over; <code>ed.api</code> is the same object), whose <code>root</code> is the editing element · <code>(onTextChange)</code> brings <code>htmlValue</code>, <code>textValue</code> and <code>source</code> (<code>user</code> / <code>api</code>) · <code>(onSelectionChange)</code> the selected range · <code>(onFocus)</code> / <code>(onBlur)</code>.',
       },
     },
     keyboard: {
@@ -200,36 +200,36 @@ export const EDITOR_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-editor&gt;</code> เป็น <code>&lt;wt-editor&gt;</code> ค่าที่บันทึกไว้แสดงได้เหมือนเดิม เพราะ HTML ใหม่ใช้ class ชุดเดิม (<code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code>) · template <code>pTemplate="header"</code> ใช้ต่อได้ · <code>(onTextChange)</code>, <code>(onSelectionChange)</code> และ <code>(onInit)</code> ชื่อเดิม (<code>delta</code> เป็น <code>null</code>) · <code>getEditor()</code> และ <code>getQuill()</code> ยังเรียกได้ คืน API ของช่องที่ <code>root</code> คือ element ที่พิมพ์ได้ (คำสั่งที่มีอยู่ในแท็บคุณสมบัติ) · <code>formats</code>, <code>modules</code>, <code>bounds</code>, <code>scrollingContainer</code> และ <code>debug</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-editor&gt;</code> to <code>&lt;wt-editor&gt;</code>. Saved values show as before, because the new HTML uses the same classes (<code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code>) · <code>pTemplate="header"</code> keeps working · <code>(onTextChange)</code>, <code>(onSelectionChange)</code> and <code>(onInit)</code> keep their names (<code>delta</code> is <code>null</code>) · <code>getEditor()</code> and <code>getQuill()</code> still work and return the field\'s API, whose <code>root</code> is the editing element (the Properties tab lists its calls) · <code>formats</code>, <code>modules</code>, <code>bounds</code>, <code>scrollingContainer</code> and <code>debug</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-editor&gt;</code> เป็น <code>&lt;wu-editor&gt;</code> ค่าที่บันทึกไว้แสดงได้เหมือนเดิม เพราะ HTML ใหม่ใช้ class ชุดเดิม (<code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code>) · template <code>pTemplate="header"</code> ใช้ต่อได้ · <code>(onTextChange)</code>, <code>(onSelectionChange)</code> และ <code>(onInit)</code> ชื่อเดิม (<code>delta</code> เป็น <code>null</code>) · <code>getEditor()</code> และ <code>getQuill()</code> ยังเรียกได้ คืน API ของช่องที่ <code>root</code> คือ element ที่พิมพ์ได้ (คำสั่งที่มีอยู่ในแท็บคุณสมบัติ) · <code>formats</code>, <code>modules</code>, <code>bounds</code>, <code>scrollingContainer</code> และ <code>debug</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-editor&gt;</code> to <code>&lt;wu-editor&gt;</code>. Saved values show as before, because the new HTML uses the same classes (<code>ql-align-*</code>, <code>ql-indent-*</code>, <code>ql-size-*</code>, <code>ql-font-*</code>) · <code>pTemplate="header"</code> keeps working · <code>(onTextChange)</code>, <code>(onSelectionChange)</code> and <code>(onInit)</code> keep their names (<code>delta</code> is <code>null</code>) · <code>getEditor()</code> and <code>getQuill()</code> still work and return the field\'s API, whose <code>root</code> is the editing element (the Properties tab lists its calls) · <code>formats</code>, <code>modules</code>, <code>bounds</code>, <code>scrollingContainer</code> and <code>debug</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-editor name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" placeholder="พิมพ์เนื้อหาข่าว"></wt-editor>
-<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>`,
-    toolbar: `<wt-selectbutton name="preset" [(ngModel)]="preset" [options]="presets" [allowEmpty]="false"></wt-selectbutton>
-<wt-editor name="presetBody" [(ngModel)]="presetBody" [toolbar]="preset" [style]="{ height: '160px' }"></wt-editor>
+    basic: `<wu-editor name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" placeholder="พิมพ์เนื้อหาข่าว"></wu-editor>
+<wu-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wu-button>`,
+    toolbar: `<wu-selectbutton name="preset" [(ngModel)]="preset" [options]="presets" [allowEmpty]="false"></wu-selectbutton>
+<wu-editor name="presetBody" [(ngModel)]="presetBody" [toolbar]="preset" [style]="{ height: '160px' }"></wu-editor>
 
-<wt-editor name="customBody" [(ngModel)]="customBody" [toolbar]="tools" [style]="{ height: '160px' }"></wt-editor>`,
-    options: `<wt-editor name="noticeBody" [(ngModel)]="noticeBody" toolbar="full" [toolOptions]="toolOptions"
-  [style]="{ height: '200px' }"></wt-editor>`,
+<wu-editor name="customBody" [(ngModel)]="customBody" [toolbar]="tools" [style]="{ height: '160px' }"></wu-editor>`,
+    options: `<wu-editor name="noticeBody" [(ngModel)]="noticeBody" toolbar="full" [toolOptions]="toolOptions"
+  [style]="{ height: '200px' }"></wu-editor>`,
     header: HEADER_TEMPLATE,
-    images: `<wt-editor name="newsBody" [(ngModel)]="newsBody" [toolbar]="['bold', 'italic', '|', 'image', '|', 'undo', 'redo']"
+    images: `<wu-editor name="newsBody" [(ngModel)]="newsBody" [toolbar]="['bold', 'italic', '|', 'image', '|', 'undo', 'redo']"
   [imageUpload]="imageUpload" [style]="{ height: '240px' }" (onImageUpload)="imageUploaded($event)"
-  (onImageUploadError)="imageFailed($event)"></wt-editor>`,
+  (onImageUploadError)="imageFailed($event)"></wu-editor>`,
     defaults: `<!-- อัปโหลดไปที่ url: ไฟล์ส่งเป็น multipart แล้วอ่าน URL จากคำตอบ -->
-<wt-editor name="newsBody" [(ngModel)]="newsBody"
-  [imageUpload]="{ url: '/api/news/images', responseUrl: 'data.url', maxSize: 2097152 }"></wt-editor>`,
-    tables: `<wt-editor name="timetable" [(ngModel)]="timetable" [toolbar]="['bold', '|', 'table', '|', 'undo', 'redo']"
-  [toolOptions]="{ table: { rows: 6, cols: 6, headerRow: true } }" [style]="{ height: '260px' }"></wt-editor>`,
-    view: `<div wtEditorContent [innerHTML]="announcement"></div>`,
-    readonly: `<wt-editor name="policy" [ngModel]="policy" [readonly]="true" toolbar="basic"></wt-editor>`,
-    count: `<wt-editor name="summary" [(ngModel)]="summary" toolbar="basic" [showCount]="true" [style]="{ height: '120px' }"></wt-editor>`,
-    events: `<wt-editor #ed="wtEditor" name="letter" [(ngModel)]="letter" toolbar="basic" [style]="{ height: '160px' }"
-  (onInit)="editorReady($event)" (onTextChange)="textChanged($event)"></wt-editor>
-<wt-button label="ใส่จดหมายตัวอย่าง" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
-<wt-button label="ไปที่เนื้อหา" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wt-button>`,
+<wu-editor name="newsBody" [(ngModel)]="newsBody"
+  [imageUpload]="{ url: '/api/news/images', responseUrl: 'data.url', maxSize: 2097152 }"></wu-editor>`,
+    tables: `<wu-editor name="timetable" [(ngModel)]="timetable" [toolbar]="['bold', '|', 'table', '|', 'undo', 'redo']"
+  [toolOptions]="{ table: { rows: 6, cols: 6, headerRow: true } }" [style]="{ height: '260px' }"></wu-editor>`,
+    view: `<div wuEditorContent [innerHTML]="announcement"></div>`,
+    readonly: `<wu-editor name="policy" [ngModel]="policy" [readonly]="true" toolbar="basic"></wu-editor>`,
+    count: `<wu-editor name="summary" [(ngModel)]="summary" toolbar="basic" [showCount]="true" [style]="{ height: '120px' }"></wu-editor>`,
+    events: `<wu-editor #ed="wuEditor" name="letter" [(ngModel)]="letter" toolbar="basic" [style]="{ height: '160px' }"
+  (onInit)="editorReady($event)" (onTextChange)="textChanged($event)"></wu-editor>
+<wu-button label="ใส่จดหมายตัวอย่าง" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wu-button>
+<wu-button label="ไปที่เนื้อหา" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wu-button>`,
   },
   ts: {
     basic: `newsBody: string | null = '<p>โรงเรียนเปิดรับสมัครนักเรียน <strong>ปีการศึกษา 2569</strong></p>';   // ว่างเปล่าคือ null
@@ -241,12 +241,12 @@ saveNews(): void {
     this.isApiSaving = false;
   });
 }`,
-    toolbar: `import { EditorToolbar } from 'wiratheme/editor';
+    toolbar: `import { EditorToolbar } from 'wiraui/editor';
 
 presets = ['basic', 'standard', 'full', 'none'];
 preset: EditorToolbar = 'full';
 tools: EditorToolbar = ['bold', 'italic', '|', 'bulletList', 'orderedList', '|', 'link', 'image', 'table'];`,
-    options: `import { EditorToolOptions } from 'wiratheme/editor';
+    options: `import { EditorToolOptions } from 'wiraui/editor';
 
 toolOptions: EditorToolOptions = {
   headings: [0, 2, 3],   // 0 = ย่อหน้า
@@ -257,9 +257,9 @@ toolOptions: EditorToolOptions = {
   table: { rows: 6, cols: 6, headerRow: true },
   link: { newTab: true },
 };`,
-    images: `import { WtEditorImageUpload, WtEditorImageUploadErrorEvent } from 'wiratheme/editor';
+    images: `import { WuEditorImageUpload, WuEditorImageUploadErrorEvent } from 'wiraui/editor';
 
-imageUpload: WtEditorImageUpload = { upload: this.uploadImage.bind(this), maxSize: 1048576 };
+imageUpload: WuEditorImageUpload = { upload: this.uploadImage.bind(this), maxSize: 1048576 };
 lastEvent = '';
 
 /** ได้ URL ของรูปกลับมา */
@@ -273,11 +273,11 @@ imageUploaded(event: { file: File; url: string }): void {
   this.lastEvent = 'onImageUpload: ' + event.file.name;
 }
 
-imageFailed(event: WtEditorImageUploadErrorEvent): void {
+imageFailed(event: WuEditorImageUploadErrorEvent): void {
   this.lastEvent = 'onImageUploadError: ' + event.reason;
 }`,
-    defaults: `// app.config.ts หรือ providers ของ AppModule: ทั้งแอป: ทุก wt-editor ใช้ค่านี้
-import { provideEditorOptions } from 'wiratheme/editor';
+    defaults: `// app.config.ts หรือ providers ของ AppModule: ทั้งแอป: ทุก wu-editor ใช้ค่านี้
+import { provideEditorOptions } from 'wiraui/editor';
 
 providers: [
   provideEditorOptions({
@@ -292,13 +292,13 @@ timetable = '<p>ตารางสอบกลางภาค</p><table style="w
   + '<tbody><tr><td>คณิตศาสตร์</td><td>จันทร์ 6 ก.ค.</td><td>311</td></tr><tr><td>วิทยาศาสตร์</td><td>อังคาร 7 ก.ค.</td><td>312</td></tr></tbody></table>';`,
     view: `announcement = '<h2>จัดกิจกรรมวันไหว้ครู</h2><p class="ql-align-center">วันพฤหัสบดีที่ 18 มิถุนายน</p>'
   + '<ul><li>แต่งกายชุดนักเรียน</li><li>นำพานไหว้ครูของห้อง</li></ul>';   // ข่าวจาก API`,
-    events: `import { WtEditorApi, WtEditorInitEvent, WtEditorTextChangeEvent } from 'wiratheme/editor';
+    events: `import { WuEditorApi, WuEditorInitEvent, WuEditorTextChangeEvent } from 'wiraui/editor';
 
 letter: string | null = null;
 lastEvent = '';
-private editor: WtEditorApi | null = null;
+private editor: WuEditorApi | null = null;
 
-editorReady(event: WtEditorInitEvent): void {
+editorReady(event: WuEditorInitEvent): void {
   this.editor = event.editor;
 }
 
@@ -306,7 +306,7 @@ useLetterTemplate(): void {
   this.editor?.setHTML('<p>เรียน ผู้ปกครอง</p><p>ขอเชิญประชุมผู้ปกครองวันเสาร์นี้ เวลา 9.00 น.</p>');
 }
 
-textChanged(event: WtEditorTextChangeEvent): void {
+textChanged(event: WuEditorTextChangeEvent): void {
   this.lastEvent = event.source + ' · ' + event.textValue.length;
 }`,
   },
@@ -318,7 +318,7 @@ textChanged(event: WtEditorTextChangeEvent): void {
         row('ngModel · formControlName', 'string | null', 'null', 'ค่าเป็น HTML ว่างเปล่าคือ null', 'The value as HTML; null when empty'),
         row('toolbar', "'basic' | 'standard' | 'full' | 'none' | EditorTool[] | EditorTool[][]", "'standard'", "ชุดเครื่องมือ หรือรายชื่อเครื่องมือที่คั่นกลุ่มด้วย '|'", "A preset, or a list of tools with '|' between groups"),
         row('toolOptions', 'EditorToolOptions', undefined, 'ระดับหัวข้อ รูปแบบย่อหน้าอื่น (blocks) ขนาด แบบตัวอักษร สี การจัดแนว ตาราง และลิงก์', 'Headings, other block styles (blocks), sizes, fonts, colours, alignments, table and links'),
-        row('imageUpload', 'WtEditorImageUpload', 'base64', 'ฝังรูปเป็น base64 หรืออัปโหลดไปที่ url / upload()', 'Embed pictures as base64, or upload them to url / upload()'),
+        row('imageUpload', 'WuEditorImageUpload', 'base64', 'ฝังรูปเป็น base64 หรืออัปโหลดไปที่ url / upload()', 'Embed pictures as base64, or upload them to url / upload()'),
         row('placeholder', 'string', undefined, 'ข้อความเมื่อยังว่าง', 'Text shown while empty'),
         row('readonly', BOOL, 'false', 'แก้ไขไม่ได้ ปิดปุ่มทุกปุ่ม', 'No editing; every tool disabled'),
         row('style', 'object', undefined, "style ของพื้นที่พิมพ์ เช่น { height: '320px' }", "Style of the writing area, e.g. { height: '320px' }"),
@@ -338,7 +338,7 @@ textChanged(event: WtEditorTextChangeEvent): void {
     },
     {
       id: 'api-upload',
-      title: 'WtEditorImageUpload',
+      title: 'WuEditorImageUpload',
       rows: [
         row('mode', "'base64' | 'upload'", "'base64'", 'ฝังในเนื้อหา หรืออัปโหลด (มี url หรือ upload จะเป็น upload)', 'Embed, or upload (url or upload means upload)'),
         row('url · fieldName · method', "string · string · 'POST' | 'PUT'", "undefined · 'file' · 'POST'", 'ที่อยู่ ชื่อ field และวิธีส่ง', 'Address, field name and method'),
@@ -354,35 +354,35 @@ textChanged(event: WtEditorTextChangeEvent): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onTextChange', 'WtEditorTextChangeEvent', undefined, 'เนื้อหาเปลี่ยน', 'The content changed'),
-        row('onSelectionChange', 'WtEditorSelectionChangeEvent', undefined, 'ตำแหน่งที่เลือกเปลี่ยน', 'The selection changed'),
-        row('onInit', 'WtEditorInitEvent', undefined, 'ช่องพร้อมใช้ ได้ API ของช่อง', 'The field is ready, with its API'),
+        row('onTextChange', 'WuEditorTextChangeEvent', undefined, 'เนื้อหาเปลี่ยน', 'The content changed'),
+        row('onSelectionChange', 'WuEditorSelectionChangeEvent', undefined, 'ตำแหน่งที่เลือกเปลี่ยน', 'The selection changed'),
+        row('onInit', 'WuEditorInitEvent', undefined, 'ช่องพร้อมใช้ ได้ API ของช่อง', 'The field is ready, with its API'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'โฟกัสเข้า / ออก', 'Focus in / out'),
         row('onImageUpload', '{ file, url }', undefined, 'อัปโหลดรูปเสร็จ', 'A picture finished uploading'),
-        row('onImageUploadError', 'WtEditorImageUploadErrorEvent', undefined, "รูปไม่ผ่าน ('size' / 'type') หรืออัปโหลดไม่สำเร็จ ('upload')", "A picture was turned away ('size' / 'type') or failed to upload ('upload')"),
+        row('onImageUploadError', 'WuEditorImageUploadErrorEvent', undefined, "รูปไม่ผ่าน ('size' / 'type') หรืออัปโหลดไม่สำเร็จ ('upload')", "A picture was turned away ('size' / 'type') or failed to upload ('upload')"),
       ],
     },
     {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #header, wtTemplate="header" หรือ pTemplate="header" ก็ได้', en: 'Write it as #header, wtTemplate="header" or pTemplate="header".' },
+      note: { th: 'เขียนเป็น #header, wuTemplate="header" หรือ pTemplate="header" ก็ได้', en: 'Write it as #header, wuTemplate="header" or pTemplate="header".' },
       rows: [row('header', '—', undefined, 'แถบเครื่องมือของแอปเอง (ปุ่มและ select ql-*)', 'Your own toolbar (ql-* buttons and selects)')],
     },
     {
       id: 'api-component-methods',
       title: 'Methods',
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน template ref: #ed="wtEditor" แล้ว ed.getEditor()', en: 'Call them through a template ref: #ed="wtEditor", then ed.getEditor().' },
+      note: { th: 'เรียกผ่าน template ref: #ed="wuEditor" แล้ว ed.getEditor()', en: 'Call them through a template ref: #ed="wuEditor", then ed.getEditor().' },
       rows: [
-        row('getEditor() · getQuill()', 'WtEditorApi', undefined, 'API ของช่อง (object เดียวกับ ed.api และ event.editor ของ onInit) root คือ element ที่พิมพ์ได้ getQuill() มีไว้ให้โค้ดเดิม', 'The field\'s API (the same object as ed.api and onInit\'s event.editor); its root is the editing element. getQuill() is there for code moving over'),
+        row('getEditor() · getQuill()', 'WuEditorApi', undefined, 'API ของช่อง (object เดียวกับ ed.api และ event.editor ของ onInit) root คือ element ที่พิมพ์ได้ getQuill() มีไว้ให้โค้ดเดิม', 'The field\'s API (the same object as ed.api and onInit\'s event.editor); its root is the editing element. getQuill() is there for code moving over'),
       ],
     },
     {
       id: 'api-methods',
       title: { th: 'API ของช่อง', en: 'Editor API' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'จาก (onInit) เป็น event.editor หรือ #ed="wtEditor" แล้ว ed.getEditor() (หรือ ed.api)', en: 'From (onInit) as event.editor, or #ed="wtEditor" then ed.getEditor() (or ed.api).' },
+      note: { th: 'จาก (onInit) เป็น event.editor หรือ #ed="wuEditor" แล้ว ed.getEditor() (หรือ ed.api)', en: 'From (onInit) as event.editor, or #ed="wuEditor" then ed.getEditor() (or ed.api).' },
       rows: [
         row('getHTML() · getSemanticHTML() · getText() · getLength()', 'string · string · string · number', undefined, 'เนื้อหาเป็น HTML ข้อความ และความยาว', 'The content as HTML, as text, and its length'),
         row('setHTML(html) · insertHTML(html) · insertText(text)', 'void', undefined, 'แทนเนื้อหา / แทรกที่ตำแหน่งเคอร์เซอร์ (HTML ถูกล้างก่อน)', 'Replace the content / insert at the caret (HTML is cleaned)'),
@@ -396,21 +396,21 @@ textChanged(event: WtEditorTextChangeEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtEditorInitEvent, WtEditorTextChangeEvent, provideEditorOptions } from 'wiratheme/editor';
+      code: `import { WuEditorInitEvent, WuEditorTextChangeEvent, provideEditorOptions } from 'wiraui/editor';
 
-interface WtEditorTextChangeEvent {
+interface WuEditorTextChangeEvent {
   htmlValue: string | null;   // ว่างเปล่าคือ null
   textValue: string;
   delta: null;
   source: 'user' | 'api';
 }
-interface WtEditorSelectionChangeEvent {
+interface WuEditorSelectionChangeEvent {
   range: { index: number; length: number } | null;
   oldRange: { index: number; length: number } | null;
   source: 'user';
 }
-interface WtEditorInitEvent { editor: WtEditorApi }
-interface WtEditorImageUploadErrorEvent { file: File; reason: 'size' | 'type' | 'upload'; message: string }
+interface WuEditorInitEvent { editor: WuEditorApi }
+interface WuEditorImageUploadErrorEvent { file: File; reason: 'size' | 'type' | 'upload'; message: string }
 interface EditorToolOptions {
   headings?: number[];   // 0 = ย่อหน้า
   blocks?: Array<'blockquote' | 'codeBlock'>;
@@ -422,22 +422,22 @@ interface EditorToolOptions {
   table?: { rows?: number; cols?: number; headerRow?: boolean };
   link?: { newTab?: boolean; protocols?: string[] };
 }
-function provideEditorOptions(options: { toolbar?: EditorToolbar; toolOptions?: EditorToolOptions; imageUpload?: WtEditorImageUpload }): Provider;`,
+function provideEditorOptions(options: { toolbar?: EditorToolbar; toolOptions?: EditorToolOptions; imageUpload?: WuEditorImageUpload }): Provider;`,
     },
   ],
   tokens: [
-    tok('--wt-editor-radius', 'ความมนของกล่อง', 'Box radius'),
-    tok('--wt-editor-toolbar-bg', 'พื้นของแถบเครื่องมือ', 'Toolbar background'),
-    tok('--wt-editor-toolbar-padding', 'ระยะในแถบเครื่องมือ', 'Toolbar padding'),
-    tok('--wt-editor-tool-size', 'ขนาดปุ่มเครื่องมือ', 'Tool button size'),
-    tok('--wt-editor-tool-radius', 'ความมนของปุ่มเครื่องมือ', 'Tool button radius'),
-    tok('--wt-editor-tool-hover-bg', 'พื้นปุ่มเมื่อชี้', 'Tool on hover'),
-    tok('--wt-editor-tool-on-bg', 'พื้นปุ่มที่ใช้งานอยู่ (เช่น ตัวหนา)', 'Active tool background (bold on …)'),
-    tok('--wt-editor-tool-on-color', 'สีปุ่มที่ใช้งานอยู่', 'Active tool colour'),
-    tok('--wt-editor-content-padding-y', 'ระยะบนล่างของพื้นที่พิมพ์', 'Writing area vertical padding'),
-    tok('--wt-editor-content-padding-x', 'ระยะซ้ายขวาของพื้นที่พิมพ์', 'Writing area horizontal padding'),
-    tok('--wt-editor-content-min-height', 'ความสูงขั้นต่ำของพื้นที่พิมพ์', 'Minimum writing area height'),
-    tok('--wt-editor-sticky-top', 'ระยะจากขอบบนเมื่อแถบเครื่องมือติด (เช่น ความสูงของแถบเมนูของแอป)', 'Offset of the sticky toolbar (such as your app bar height)'),
-    tok('--wt-primary-color', 'เส้นโฟกัส มุมปรับขนาดรูป และตารางที่เลือก', 'Focus ring, picture resize handle and the picked grid'),
+    tok('--wu-editor-radius', 'ความมนของกล่อง', 'Box radius'),
+    tok('--wu-editor-toolbar-bg', 'พื้นของแถบเครื่องมือ', 'Toolbar background'),
+    tok('--wu-editor-toolbar-padding', 'ระยะในแถบเครื่องมือ', 'Toolbar padding'),
+    tok('--wu-editor-tool-size', 'ขนาดปุ่มเครื่องมือ', 'Tool button size'),
+    tok('--wu-editor-tool-radius', 'ความมนของปุ่มเครื่องมือ', 'Tool button radius'),
+    tok('--wu-editor-tool-hover-bg', 'พื้นปุ่มเมื่อชี้', 'Tool on hover'),
+    tok('--wu-editor-tool-on-bg', 'พื้นปุ่มที่ใช้งานอยู่ (เช่น ตัวหนา)', 'Active tool background (bold on …)'),
+    tok('--wu-editor-tool-on-color', 'สีปุ่มที่ใช้งานอยู่', 'Active tool colour'),
+    tok('--wu-editor-content-padding-y', 'ระยะบนล่างของพื้นที่พิมพ์', 'Writing area vertical padding'),
+    tok('--wu-editor-content-padding-x', 'ระยะซ้ายขวาของพื้นที่พิมพ์', 'Writing area horizontal padding'),
+    tok('--wu-editor-content-min-height', 'ความสูงขั้นต่ำของพื้นที่พิมพ์', 'Minimum writing area height'),
+    tok('--wu-editor-sticky-top', 'ระยะจากขอบบนเมื่อแถบเครื่องมือติด (เช่น ความสูงของแถบเมนูของแอป)', 'Offset of the sticky toolbar (such as your app bar height)'),
+    tok('--wu-primary-color', 'เส้นโฟกัส มุมปรับขนาดรูป และตารางที่เลือก', 'Focus ring, picture resize handle and the picked grid'),
   ],
 };

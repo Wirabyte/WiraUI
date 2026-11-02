@@ -1,15 +1,15 @@
 <div
   #container
   popover="manual"
-  class="wt-toast p-toast p-component"
-  [ngClass]="'wt-toast-' + position + ' p-toast-' + position + ' ' + (styleClass || '')"
+  class="wu-toast p-toast p-component"
+  [ngClass]="'wu-toast-' + position + ' p-toast-' + position + ' ' + (styleClass || '')"
   [ngStyle]="style || null"
 >
   <div
     *ngFor="let item of items; trackBy: trackItem"
-    class="wt-toast-message p-toast-message"
-    [ngClass]="'wt-toast-' + item.severity + ' p-toast-message-' + item.severity + ' ' + (item.message.styleClass || '')"
-    [class.wt-toast-leaving]="item.leaving"
+    class="wu-toast-message p-toast-message"
+    [ngClass]="'wu-toast-' + item.severity + ' p-toast-message-' + item.severity + ' ' + (item.message.styleClass || '')"
+    [class.wu-toast-leaving]="item.leaving"
     [attr.role]="item.severity === 'error' ? 'alert' : 'status'"
     [attr.aria-live]="item.severity === 'error' ? 'assertive' : 'polite'"
     aria-atomic="true"
@@ -20,12 +20,12 @@
       <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: item.message, closeFn: item.closeFn }"></ng-container>
     </ng-container>
     <ng-template #body>
-      <div class="wt-toast-content p-toast-message-content" [ngClass]="item.message.contentStyleClass || ''">
+      <div class="wu-toast-content p-toast-message-content" [ngClass]="item.message.contentStyleClass || ''">
         <ng-container *ngIf="messageTemplate; else plain">
           <ng-container *ngTemplateOutlet="messageTemplate; context: { $implicit: item.message }"></ng-container>
         </ng-container>
         <ng-template #plain>
-          <span class="wt-toast-icon p-toast-message-icon" aria-hidden="true">
+          <span class="wu-toast-icon p-toast-message-icon" aria-hidden="true">
             <i *ngIf="item.message.icon; else svgIcon" [class]="item.message.icon"></i>
             <ng-template #svgIcon>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngSwitch]="item.severity">
@@ -37,15 +37,15 @@
               </svg>
             </ng-template>
           </span>
-          <div class="wt-toast-text p-toast-message-text">
-            <div *ngIf="item.message.summary" class="wt-toast-summary p-toast-summary">{{ item.message.summary }}</div>
-            <div *ngIf="item.message.detail || item.message.text" class="wt-toast-detail p-toast-detail">{{ item.message.detail || item.message.text }}</div>
+          <div class="wu-toast-text p-toast-message-text">
+            <div *ngIf="item.message.summary" class="wu-toast-summary p-toast-summary">{{ item.message.summary }}</div>
+            <div *ngIf="item.message.detail || item.message.text" class="wu-toast-detail p-toast-detail">{{ item.message.detail || item.message.text }}</div>
           </div>
         </ng-template>
         <button
           *ngIf="item.message.closable !== false"
           type="button"
-          class="wt-toast-close p-toast-icon-close p-link"
+          class="wu-toast-close p-toast-icon-close p-link"
           [attr.aria-label]="t.close"
           (click)="close(item)"
         >
@@ -56,6 +56,6 @@
         </button>
       </div>
     </ng-template>
-    <div *ngIf="showTimer && !item.message.sticky" class="wt-toast-timer" aria-hidden="true"><span [style.animation-duration.ms]="item.life"></span></div>
+    <div *ngIf="showTimer && !item.message.sticky" class="wu-toast-timer" aria-hidden="true"><span [style.animation-duration.ms]="item.life"></span></div>
   </div>
 </div>

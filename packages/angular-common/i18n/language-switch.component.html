@@ -2,8 +2,8 @@
   <button
     *ngFor="let o of options; trackBy: trackCode"
     type="button"
-    class="wt-languageswitch-option"
-    [class.wt-languageswitch-option-active]="o.code === current"
+    class="wu-languageswitch-option"
+    [class.wu-languageswitch-option-active]="o.code === current"
     [attr.aria-pressed]="o.code === current"
     [attr.lang]="o.code"
     [attr.title]="o.name"
@@ -15,14 +15,14 @@
 </div>
 <ng-template #dropdown>
   <span [class]="rootClass" [style]="rootStyle">
-    <svg class="wt-languageswitch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg class="wu-languageswitch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="9"></circle>
       <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
     </svg>
-    <select class="wt-languageswitch-native" [attr.aria-label]="ariaLabel || t.language" (change)="selectChange($event)">
+    <select class="wu-languageswitch-native" [attr.aria-label]="ariaLabel || t.language" (change)="selectChange($event)">
       <option *ngFor="let o of options; trackBy: trackCode" [value]="o.code" [selected]="o.code === current" [attr.lang]="o.code">{{ o.label }}</option>
     </select>
-    <svg class="wt-languageswitch-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg class="wu-languageswitch-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="m4 6 4 4 4-4"></path>
     </svg>
   </span>

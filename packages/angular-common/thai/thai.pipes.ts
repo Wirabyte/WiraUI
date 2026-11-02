@@ -1,5 +1,5 @@
 import { inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { ɵrefreshOnTranslation, WtConfig } from 'wiratheme/config';
+import { ɵrefreshOnTranslation, WuConfig } from 'wiraui/config';
 import {
   bahtText,
   CalendarSystem,
@@ -12,22 +12,22 @@ import {
   timeAgo,
   toDateValue,
   toThaiDigits,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 
 export type { ThaiDateFormat };
 
 /**
- * A date in the app's language, with พ.ศ. years in Thai: `{{ born | wtDate }}` → `14 พ.ค. 2555`. Formats:
+ * A date in the app's language, with พ.ศ. years in Thai: `{{ born | wuDate }}` → `14 พ.ค. 2555`. Formats:
  * `short` 14/05/2555 · `medium` 14 พ.ค. 2555 (default) · `long` 14 พฤษภาคม 2555 · `full` วันจันทร์ที่ 14 พฤษภาคม พ.ศ. 2555
  * · `time` 09:30 น. · `shortDateTime` · `dateTime`, or a pattern (`'d MMM yy'`, `"EEEE d MMMM yyyy 'เวลา' HH:mm"`).
  * Takes a Date, a time in ms or text (`'2012-05-14'` is that day, not UTC midnight). The calendar follows
- * `provideWiraTheme({ calendar })` in Thai and is Gregorian in other languages, unless given:
- * `{{ born | wtDate: 'long' : 'gregorian' }}`; a language too: `{{ born | wtDate: 'long' : null : 'en' }}`.
+ * `provideWiraUI({ calendar })` in Thai and is Gregorian in other languages, unless given:
+ * `{{ born | wuDate: 'long' : 'gregorian' }}`; a language too: `{{ born | wuDate: 'long' : null : 'en' }}`.
  * Re-renders by itself when the app's language changes (OnPush and zoneless views included).
  */
-@Pipe({ name: 'wtDate', standalone: true, pure: false })
-export class WtDatePipe implements PipeTransform, OnDestroy {
-  private readonly config = inject(WtConfig);
+@Pipe({ name: 'wuDate', standalone: true, pure: false })
+export class WuDatePipe implements PipeTransform, OnDestroy {
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private lastKey = '';
   private lastLocale: unknown = null;
@@ -53,10 +53,10 @@ export class WtDatePipe implements PipeTransform, OnDestroy {
   }
 }
 
-/** How long ago, in the app's language: `{{ sentAt | wtTimeAgo }}` → `5 นาทีที่ผ่านมา`, `เมื่อวาน`, `in 3 days`. */
-@Pipe({ name: 'wtTimeAgo', standalone: true, pure: false })
-export class WtTimeAgoPipe implements PipeTransform, OnDestroy {
-  private readonly config = inject(WtConfig);
+/** How long ago, in the app's language: `{{ sentAt | wuTimeAgo }}` → `5 นาทีที่ผ่านมา`, `เมื่อวาน`, `in 3 days`. */
+@Pipe({ name: 'wuTimeAgo', standalone: true, pure: false })
+export class WuTimeAgoPipe implements PipeTransform, OnDestroy {
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   transform(value: unknown, lang?: string | null): string {
@@ -68,33 +68,33 @@ export class WtTimeAgoPipe implements PipeTransform, OnDestroy {
   }
 }
 
-/** An amount in Thai words, as Excel's BAHTTEXT: `{{ 1250.5 | wtBahtText }}` → `หนึ่งพันสองร้อยห้าสิบบาทห้าสิบสตางค์`. */
-@Pipe({ name: 'wtBahtText', standalone: true })
-export class WtBahtTextPipe implements PipeTransform {
+/** An amount in Thai words, as Excel's BAHTTEXT: `{{ 1250.5 | wuBahtText }}` → `หนึ่งพันสองร้อยห้าสิบบาทห้าสิบสตางค์`. */
+@Pipe({ name: 'wuBahtText', standalone: true })
+export class WuBahtTextPipe implements PipeTransform {
   transform(value: number | string | null | undefined): string {
     return bahtText(value);
   }
 }
 
-/** A Thai phone number with dashes: `{{ '0812345678' | wtThaiPhone }}` → `081-234-5678` (`+66` too). */
-@Pipe({ name: 'wtThaiPhone', standalone: true })
-export class WtThaiPhonePipe implements PipeTransform {
+/** A Thai phone number with dashes: `{{ '0812345678' | wuThaiPhone }}` → `081-234-5678` (`+66` too). */
+@Pipe({ name: 'wuThaiPhone', standalone: true })
+export class WuThaiPhonePipe implements PipeTransform {
   transform(value: unknown, separator = '-'): string {
     return formatThaiPhone(value, separator);
   }
 }
 
-/** A Thai national ID with dashes: `{{ '1103702345679' | wtThaiId }}` → `1-1037-02345-67-9`. */
-@Pipe({ name: 'wtThaiId', standalone: true })
-export class WtThaiIdPipe implements PipeTransform {
+/** A Thai national ID with dashes: `{{ '1103702345679' | wuThaiId }}` → `1-1037-02345-67-9`. */
+@Pipe({ name: 'wuThaiId', standalone: true })
+export class WuThaiIdPipe implements PipeTransform {
   transform(value: unknown): string {
     return value === null || value === undefined ? '' : formatThaiId(String(value));
   }
 }
 
-/** Thai digits for formal documents: `{{ '2569' | wtThaiDigits }}` → `๒๕๖๙` (works after other pipes too). */
-@Pipe({ name: 'wtThaiDigits', standalone: true })
-export class WtThaiDigitsPipe implements PipeTransform {
+/** Thai digits for formal documents: `{{ '2569' | wuThaiDigits }}` → `๒๕๖๙` (works after other pipes too). */
+@Pipe({ name: 'wuThaiDigits', standalone: true })
+export class WuThaiDigitsPipe implements PipeTransform {
   transform(value: unknown): string {
     return toThaiDigits(value);
   }

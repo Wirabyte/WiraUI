@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtContextMenu } from './contextmenu.component';
+import { WuContextMenu } from './contextmenu.component';
 
-/** For NgModule apps. Standalone apps can import `WtContextMenu` directly. */
+/** For NgModule apps. Standalone apps can import `WuContextMenu` directly. */
 @NgModule({
-  imports: [WtContextMenu],
-  exports: [WtContextMenu],
+  imports: [WuContextMenu],
+  exports: [WuContextMenu],
 })
-export class WtContextMenuModule {}
+export class WuContextMenuModule {}

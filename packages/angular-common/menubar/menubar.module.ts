@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtMenubar } from './menubar.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuMenubar } from './menubar.component';
 
-/** For NgModule apps (with `WtTemplate` for `pTemplate="start"` / `"end"` slots). Standalone apps can import `WtMenubar` directly. */
+/** For NgModule apps (with `WuTemplate` for `pTemplate="start"` / `"end"` slots). Standalone apps can import `WuMenubar` directly. */
 @NgModule({
-  imports: [WtMenubar, WtTemplate],
-  exports: [WtMenubar, WtTemplate],
+  imports: [WuMenubar, WuTemplate],
+  exports: [WuMenubar, WuTemplate],
 })
-export class WtMenubarModule {}
+export class WuMenubarModule {}

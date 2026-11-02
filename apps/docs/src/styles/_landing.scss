@@ -443,7 +443,7 @@ docs-landing {
   gap: 14px;
   align-items: start;
 }
-.lp-demo-grid wt-card {
+.lp-demo-grid wu-card {
   min-width: 0;
 }
 
@@ -471,8 +471,8 @@ docs-landing {
   max-width: 28px;
   min-height: 4px;
   border-radius: 6px 6px 2px 2px;
-  /* Follows the primary colour picked above the demo (the WiraTheme token), not the site's own. */
-  background: linear-gradient(180deg, var(--wt-primary-color, var(--docs-primary)), color-mix(in srgb, var(--wt-primary-color, var(--docs-primary)) 55%, transparent));
+  /* Follows the primary colour picked above the demo (the WiraUI token), not the site's own. */
+  background: linear-gradient(180deg, var(--wu-primary-color, var(--docs-primary)), color-mix(in srgb, var(--wu-primary-color, var(--docs-primary)) 55%, transparent));
 }
 .lp-chart-label {
   color: var(--docs-muted);

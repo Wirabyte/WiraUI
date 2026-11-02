@@ -7,21 +7,21 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-galleria id="d-gal-basic" [value]="local(photos)" [numVisible]="4" [(activeIndex)]="photoIndex" [containerStyle]="{ maxWidth: '40rem' }">
+        <wu-galleria id="d-gal-basic" [value]="local(photos)" [numVisible]="4" [(activeIndex)]="photoIndex" [containerStyle]="{ maxWidth: '40rem' }">
           <ng-template #item let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
           </ng-template>
           <ng-template #thumbnail let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-thumb" />
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
         <span class="docs-demo-output">activeIndex: <code id="d-gal-index">{{ photoIndex }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="indicators" [section]="sec['indicators']">
       <docs-demo [html]="code['indicators']" layout="stack">
-        <wt-galleria
+        <wu-galleria
           id="d-gal-dots"
           [value]="local(photos)"
           [showThumbnails]="false"
@@ -34,13 +34,13 @@
           <ng-template #item let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
       </docs-demo>
     </docs-section>
 
     <docs-section id="caption" [section]="sec['caption']">
       <docs-demo [html]="code['caption']" layout="stack">
-        <wt-galleria
+        <wu-galleria
           id="d-gal-caption"
           [value]="local(photos)"
           [showThumbnails]="false"
@@ -59,13 +59,13 @@
             <b class="docs-gal-caption-title">{{ photo.title }}</b>
             <p class="docs-gal-caption-text">{{ photo.text }}</p>
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
       </docs-demo>
     </docs-section>
 
     <docs-section id="position" [section]="sec['position']">
       <docs-demo [html]="code['position']" [ts]="ts['position']" layout="stack">
-        <wt-galleria
+        <wu-galleria
           id="d-gal-side"
           [value]="local(photos)"
           [numVisible]="4"
@@ -80,13 +80,13 @@
           <ng-template #thumbnail let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-thumb" />
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
       </docs-demo>
     </docs-section>
 
     <docs-section id="autoplay" [section]="sec['autoplay']">
       <docs-demo [html]="code['autoplay']" layout="stack">
-        <wt-galleria
+        <wu-galleria
           #slides
           id="d-gal-play"
           [value]="local(photos)"
@@ -100,10 +100,10 @@
           <ng-template #item let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-photo" />
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
         <div class="docs-demo-actions">
-          <wt-button id="d-gal-start" [label]="tx('เล่นสไลด์')" icon="wi wi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wt-button>
-          <wt-button id="d-gal-stop" [label]="tx('หยุด')" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wt-button>
+          <wu-button id="d-gal-start" [label]="tx('เล่นสไลด์')" icon="wi wi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wu-button>
+          <wu-button id="d-gal-stop" [label]="tx('หยุด')" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wu-button>
           <span class="docs-demo-output">isAutoPlayActive(): <code id="d-gal-playing">{{ slides.isAutoPlayActive() }}</code></span>
         </div>
       </docs-demo>
@@ -118,7 +118,7 @@
             </button>
           }
         </div>
-        <wt-galleria
+        <wu-galleria
           id="d-gal-full"
           [value]="local(photos)"
           [fullScreen]="true"
@@ -131,7 +131,7 @@
           <ng-template #item let-photo>
             <img [src]="photo.src" [alt]="photo.alt" class="docs-gal-full" />
           </ng-template>
-        </wt-galleria>
+        </wu-galleria>
       </docs-demo>
     </docs-section>
 

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "$id": "WiraThemeFromPrimeNg",
-  "title": "Move PrimeNG code to WiraTheme",
+  "$id": "WiraUIFromPrimeNg",
+  "title": "Move PrimeNG code to WiraUI",
   "type": "object",
   "properties": {
     "path": {
@@ -11,7 +11,7 @@
     "templates": {
       "type": "boolean",
       "default": true,
-      "description": "Rename <p-…> tags in templates to <wt-…> as well as the imports."
+      "description": "Rename <p-…> tags in templates to <wu-…> as well as the imports."
     }
   }
 }

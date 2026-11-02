@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtInputMask } from './inputmask.component';
+import { WuInputMask } from './inputmask.component';
 
-/** For NgModule apps. Standalone apps can import `WtInputMask` directly. */
+/** For NgModule apps. Standalone apps can import `WuInputMask` directly. */
 @NgModule({
-  imports: [WtInputMask],
-  exports: [WtInputMask],
+  imports: [WuInputMask],
+  exports: [WuInputMask],
 })
-export class WtInputMaskModule {}
+export class WuInputMaskModule {}

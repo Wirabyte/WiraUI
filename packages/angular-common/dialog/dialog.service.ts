@@ -16,16 +16,16 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { WtDialogFooter } from './dialog.base';
-import { WtDialog } from './dialog.component';
+import { WuDialogFooter } from './dialog.base';
+import { WuDialog } from './dialog.component';
 
 /**
- * How `WtDialogService.open()` shows a component, and the `data` it gets. Inject it in the opened component:
- * `config = inject(WtDialogConfig)` then `this.config.data`.
+ * How `WuDialogService.open()` shows a component, and the `data` it gets. Inject it in the opened component:
+ * `config = inject(WuDialogConfig)` then `this.config.data`.
  */
-export class WtDialogConfig<D = unknown> {
+export class WuDialogConfig<D = unknown> {
   header?: string;
-  /** Anything the opened component needs: `inject(WtDialogConfig).data`. */
+  /** Anything the opened component needs: `inject(WuDialogConfig).data`. */
   data?: D;
   /** `'40rem'`, `'70vw'` … Sets the dialog's width (and `style.width`). */
   width?: string;
@@ -34,7 +34,7 @@ export class WtDialogConfig<D = unknown> {
   styleClass?: string;
   contentStyle?: Record<string, string | number> | null;
   contentStyleClass?: string;
-  /** A component for the footer (it can inject the same WtDialogRef and WtDialogConfig). */
+  /** A component for the footer (it can inject the same WuDialogRef and WuDialogConfig). */
   footer?: Type<unknown>;
   modal?: boolean = true;
   closable?: boolean = true;
@@ -55,7 +55,7 @@ export class WtDialogConfig<D = unknown> {
  * The handle of an opened dialog. `close(result)` closes it; `onClose` (or the `result` promise) brings the result back
  * once it has gone, `undefined` when the user closed it (X, Escape, the mask). Inject it in the opened component.
  */
-export class WtDialogRef<R = unknown> {
+export class WuDialogRef<R = unknown> {
   private readonly closed$ = new Subject<R | undefined>();
   private readonly destroyed$ = new Subject<void>();
   private resolve!: (value: R | undefined) => void;
@@ -95,11 +95,11 @@ export class WtDialogRef<R = unknown> {
 
 /** @internal The dialog around an opened component. */
 @Component({
-  selector: 'wt-dynamic-dialog',
+  selector: 'wu-dynamic-dialog',
   standalone: true,
-  imports: [WtDialog, WtDialogFooter, NgComponentOutlet, NgIf],
+  imports: [WuDialog, WuDialogFooter, NgComponentOutlet, NgIf],
   template: `
-    <wt-dialog
+    <wu-dialog
       [header]="config.header"
       [visible]="visible"
       (visibleChange)="visibleChange($event)"
@@ -120,17 +120,17 @@ export class WtDialogRef<R = unknown> {
       [contentStyleClass]="config.contentStyleClass || ''"
     >
       <ng-container #content></ng-container>
-      <wt-footer *ngIf="config.footer">
+      <wu-footer *ngIf="config.footer">
         <ng-container *ngComponentOutlet="config.footer; injector: injector"></ng-container>
-      </wt-footer>
-    </wt-dialog>
+      </wu-footer>
+    </wu-dialog>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ɵWtDynamicDialog {
+export class ɵWuDynamicDialog {
   component!: Type<unknown>;
-  config!: WtDialogConfig;
+  config!: WuDialogConfig;
   injector!: Injector;
   visible = false;
   dialogStyle: Record<string, string | number> | null = null;
@@ -173,42 +173,42 @@ export class ɵWtDynamicDialog {
 }
 
 /**
- * Opens a component of yours in a dialog, without putting `<wt-dialog>` in the template:
+ * Opens a component of yours in a dialog, without putting `<wu-dialog>` in the template:
  * `const ref = this.dialogs.open(PickStudent, { header: 'เลือกนักเรียน', width: '40rem', data: { room } });`
  * then `ref.onClose.subscribe(student => …)` or `const student = await ref.result`. In the component:
- * `inject(WtDialogConfig).data` and `inject(WtDialogRef).close(student)`. Dialogs stack; Escape closes the top one.
+ * `inject(WuDialogConfig).data` and `inject(WuDialogRef).close(student)`. Dialogs stack; Escape closes the top one.
  */
 @Injectable({ providedIn: 'root' })
-export class WtDialogService {
+export class WuDialogService {
   private readonly appRef = inject(ApplicationRef);
   private readonly environment = inject(EnvironmentInjector);
   private readonly injector = inject(Injector);
   private readonly doc = inject(DOCUMENT);
-  private readonly open$ = new Set<WtDialogRef<unknown>>();
+  private readonly open$ = new Set<WuDialogRef<unknown>>();
 
   /** The dialogs open now, oldest first. */
-  get dialogs(): WtDialogRef<unknown>[] {
+  get dialogs(): WuDialogRef<unknown>[] {
     return [...this.open$];
   }
 
-  open<T, R = unknown, D = unknown>(component: Type<T>, config: WtDialogConfig<D> = {}): WtDialogRef<R> {
-    const ref = new WtDialogRef<R>();
-    const cfg = Object.assign(new WtDialogConfig<D>(), config);
+  open<T, R = unknown, D = unknown>(component: Type<T>, config: WuDialogConfig<D> = {}): WuDialogRef<R> {
+    const ref = new WuDialogRef<R>();
+    const cfg = Object.assign(new WuDialogConfig<D>(), config);
     const injector = Injector.create({
       providers: [
-        { provide: WtDialogRef, useValue: ref },
-        { provide: WtDialogConfig, useValue: cfg },
+        { provide: WuDialogRef, useValue: ref },
+        { provide: WuDialogConfig, useValue: cfg },
       ],
       parent: this.injector,
     });
-    const host: ComponentRef<ɵWtDynamicDialog> = createComponent(ɵWtDynamicDialog, { environmentInjector: this.environment, elementInjector: injector });
+    const host: ComponentRef<ɵWuDynamicDialog> = createComponent(ɵWuDynamicDialog, { environmentInjector: this.environment, elementInjector: injector });
     const dialog = host.instance;
     dialog.component = component;
-    dialog.config = cfg as WtDialogConfig;
+    dialog.config = cfg as WuDialogConfig;
     dialog.injector = injector;
     const remove = () => {
-      if (!this.open$.has(ref as WtDialogRef<unknown>)) return;
-      this.open$.delete(ref as WtDialogRef<unknown>);
+      if (!this.open$.has(ref as WuDialogRef<unknown>)) return;
+      this.open$.delete(ref as WuDialogRef<unknown>);
       this.appRef.detachView(host.hostView);
       host.destroy();
       ref.ɵfinish(dialog.closedResult as R | undefined);
@@ -217,7 +217,7 @@ export class WtDialogService {
     ref.ɵhide = (result) => dialog.hide(result);
     // destroy(): straight away, no animation.
     ref.onDestroy.subscribe(() => remove());
-    this.open$.add(ref as WtDialogRef<unknown>);
+    this.open$.add(ref as WuDialogRef<unknown>);
     this.appRef.attachView(host.hostView);
     this.doc.body.appendChild(host.location.nativeElement);
     host.changeDetectorRef.detectChanges();
@@ -233,5 +233,5 @@ export class WtDialogService {
   }
 }
 
-/** The PrimeNG names, for code moving over: `DialogService`, `DynamicDialogRef`, `DynamicDialogConfig`. */
-export { WtDialogService as DialogService, WtDialogRef as DynamicDialogRef, WtDialogConfig as DynamicDialogConfig };
+/** Older names, for code moving over: `DialogService`, `DynamicDialogRef`, `DynamicDialogConfig`. */
+export { WuDialogService as DialogService, WuDialogRef as DynamicDialogRef, WuDialogConfig as DynamicDialogConfig };

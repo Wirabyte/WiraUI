@@ -1,7 +1,7 @@
 // Runs the real ng-add schematic against an existing app WITHOUT touching it: the app's files are
 // read into an in-memory tree and the result is printed as a diff.
 // Usage: node tools/dry-run-ng-add.mjs <app-dir> [--key=value …]   e.g. --dark-mode=none
-// Needs: pnpm --filter @wiratheme/schematics build
+// Needs: pnpm --filter @wiraui/schematics build
 import { createRequire } from 'node:module';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
@@ -37,7 +37,7 @@ const before = new Map();
   }
 })(appDir);
 
-// Pick the wiratheme major the app's Angular version needs, as `ng add wiratheme` would.
+// Pick the wiraui major the app's Angular version needs, as `ng add wiraui` would.
 const pkg = JSON.parse(before.get('package.json'));
 const angular = parseInt(/(\d+)/.exec(pkg.dependencies['@angular/core'])[1], 10);
 const [v, spec] = Object.entries(VERSIONS).find(([, s]) => angular >= s.min && (s.max === null || angular < s.max));
@@ -47,11 +47,11 @@ for (const f of flags) {
   options[k.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = val;
 }
 
-const runner = new SchematicTestRunner('wiratheme', join(root, 'packages', 'schematics', 'dist', 'collection.json'));
+const runner = new SchematicTestRunner('wiraui', join(root, 'packages', 'schematics', 'dist', 'collection.json'));
 runner.logger.subscribe((e) => console.log(e.message));
 const out = await runner.runSchematic('ng-add', options, tree);
 
-console.log(`\n=== dry run: ${appDir} (Angular ${angular} → wiratheme@${spec.major}, ${v}) — nothing was written ===`);
+console.log(`\n=== dry run: ${appDir} (Angular ${angular} → wiraui@${spec.major}, ${v}) — nothing was written ===`);
 for (const file of out.files.map((f) => f.replace(/^\//, ''))) {
   const now = out.readContent(file);
   const was = before.get(file);

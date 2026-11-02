@@ -1,12 +1,12 @@
 <div
-  class="wt-picklist p-picklist p-component"
-  [class.wt-picklist-wide]="!stacked"
-  [class.wt-picklist-stacked]="stacked"
-  [class.wt-picklist-striped]="stripedRows"
+  class="wu-picklist p-picklist p-component"
+  [class.wu-picklist-wide]="!stacked"
+  [class.wu-picklist-stacked]="stacked"
+  [class.wu-picklist-striped]="stripedRows"
   [class.p-picklist-striped]="stripedRows"
-  [class.wt-picklist-disabled]="disabled"
+  [class.wu-picklist-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-picklist-dragdrop]="dragdrop && !disabled"
+  [class.wu-picklist-dragdrop]="dragdrop && !disabled"
   [ngClass]="styleClass || ''"
   [ngStyle]="style || null"
 >
@@ -14,18 +14,18 @@
     <ng-container *ngTemplateOutlet="reorderControls; context: { $implicit: 'source' }"></ng-container>
   }
   <ng-container *ngTemplateOutlet="listSide; context: { $implicit: 'source' }"></ng-container>
-  <div class="wt-picklist-controls wt-picklist-transfer p-picklist-buttons p-picklist-transfer-buttons p-picklist-controls" role="group">
-    <button type="button" [class]="buttonClass('wt-picklist-move-right')" [disabled]="!canTransfer('source')" [attr.aria-label]="rightButtonAriaLabel || t.moveToTarget" (click)="moveRight($event)">
-      <svg class="wt-picklist-icon wt-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"></path></svg>
+  <div class="wu-picklist-controls wu-picklist-transfer p-picklist-buttons p-picklist-transfer-buttons p-picklist-controls" role="group">
+    <button type="button" [class]="buttonClass('wu-picklist-move-right')" [disabled]="!canTransfer('source')" [attr.aria-label]="rightButtonAriaLabel || t.moveToTarget" (click)="moveRight($event)">
+      <svg class="wu-picklist-icon wu-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-all-right')" [disabled]="!canTransferAll('source')" [attr.aria-label]="allRightButtonAriaLabel || t.moveAllToTarget" (click)="moveAllRight($event)">
-      <svg class="wt-picklist-icon wt-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 3.5 4.5 4.5-4.5 4.5M8.5 3.5 13 8l-4.5 4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-all-right')" [disabled]="!canTransferAll('source')" [attr.aria-label]="allRightButtonAriaLabel || t.moveAllToTarget" (click)="moveAllRight($event)">
+      <svg class="wu-picklist-icon wu-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 3.5 4.5 4.5-4.5 4.5M8.5 3.5 13 8l-4.5 4.5"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-left')" [disabled]="!canTransfer('target')" [attr.aria-label]="leftButtonAriaLabel || t.moveToSource" (click)="moveLeft($event)">
-      <svg class="wt-picklist-icon wt-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-left')" [disabled]="!canTransfer('target')" [attr.aria-label]="leftButtonAriaLabel || t.moveToSource" (click)="moveLeft($event)">
+      <svg class="wu-picklist-icon wu-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-all-left')" [disabled]="!canTransferAll('target')" [attr.aria-label]="allLeftButtonAriaLabel || t.moveAllToSource" (click)="moveAllLeft($event)">
-      <svg class="wt-picklist-icon wt-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 3.5 8 8l4.5 4.5M7.5 3.5 3 8l4.5 4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-all-left')" [disabled]="!canTransferAll('target')" [attr.aria-label]="allLeftButtonAriaLabel || t.moveAllToSource" (click)="moveAllLeft($event)">
+      <svg class="wu-picklist-icon wu-picklist-icon-transfer" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 3.5 8 8l4.5 4.5M7.5 3.5 3 8l4.5 4.5"></path></svg>
     </button>
   </div>
   <ng-container *ngTemplateOutlet="listSide; context: { $implicit: 'target' }"></ng-container>
@@ -36,32 +36,32 @@
 
 <ng-template #listSide let-side>
   <div
-    class="wt-picklist-box p-picklist-list-wrapper"
-    [class.wt-picklist-source]="side === 'source'"
+    class="wu-picklist-box p-picklist-list-wrapper"
+    [class.wu-picklist-source]="side === 'source'"
     [class.p-picklist-source-wrapper]="side === 'source'"
     [class.p-picklist-source-list-container]="side === 'source'"
-    [class.wt-picklist-target]="side === 'target'"
+    [class.wu-picklist-target]="side === 'target'"
     [class.p-picklist-target-wrapper]="side === 'target'"
     [class.p-picklist-target-list-container]="side === 'target'"
   >
     @if (hasHeader(side)) {
-      <div class="wt-picklist-header p-picklist-header" [id]="headerId(side)">
+      <div class="wu-picklist-header p-picklist-header" [id]="headerId(side)">
         @if (headerTemplate(side); as tpl) {
           <ng-container *ngTemplateOutlet="tpl; context: headerContext(side)"></ng-container>
         } @else {
-          <div class="wt-picklist-title p-picklist-title">{{ headerText(side) }}</div>
+          <div class="wu-picklist-title p-picklist-title">{{ headerText(side) }}</div>
         }
       </div>
     }
     @if (showFilter(side)) {
-      <div class="wt-picklist-filter p-picklist-filter-container">
+      <div class="wu-picklist-filter p-picklist-filter-container">
         @if (filterTemplate(side); as tpl) {
           <ng-container *ngTemplateOutlet="tpl; context: { options: filterOptionsOf(side) }"></ng-container>
         } @else {
-          <div class="wt-picklist-filter-field p-picklist-filter p-iconfield">
+          <div class="wu-picklist-filter-field p-picklist-filter p-iconfield">
             <input
               type="text"
-              class="wt-inputtext wt-picklist-filter-input p-picklist-filter-input p-inputtext p-component"
+              class="wu-inputtext wu-picklist-filter-input p-picklist-filter-input p-inputtext p-component"
               role="searchbox"
               autocomplete="off"
               [value]="queryOf(side)"
@@ -71,20 +71,20 @@
               [attr.aria-controls]="listId(side)"
               (input)="filterInput($event, side)"
             />
-            <svg class="wt-picklist-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+            <svg class="wu-picklist-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
           </div>
         }
       </div>
     }
     <ul
-      class="wt-picklist-list p-picklist-list"
+      class="wu-picklist-list p-picklist-list"
       [class.p-picklist-source]="side === 'source'"
       [class.p-picklist-target]="side === 'target'"
-      [class.wt-picklist-list-focused]="focusedList === side"
+      [class.wu-picklist-list-focused]="focusedList === side"
       role="listbox"
       aria-multiselectable="true"
       [id]="listId(side)"
-      [attr.data-wt-list]="side"
+      [attr.data-wu-list]="side"
       [attr.tabindex]="disabled ? -1 : tabindex"
       [attr.aria-labelledby]="hasHeader(side) ? headerId(side) : null"
       [attr.aria-activedescendant]="activeId(side)"
@@ -97,15 +97,15 @@
       @for (item of listOf(side); track trackAny($index, item); let i = $index) {
         @if (isVisible(side, item)) {
           <li
-            class="wt-picklist-item p-picklist-item"
+            class="wu-picklist-item p-picklist-item"
             role="option"
             [id]="itemId(side, i)"
-            [attr.data-wt-index]="i"
+            [attr.data-wu-index]="i"
             [attr.aria-selected]="isSelected(side, item)"
-            [class.wt-picklist-item-selected]="isSelected(side, item)"
+            [class.wu-picklist-item-selected]="isSelected(side, item)"
             [class.p-highlight]="isSelected(side, item)"
             [class.p-picklist-option-selected]="isSelected(side, item)"
-            [class.wt-picklist-item-focused]="isFocused(side, i)"
+            [class.wu-picklist-item-focused]="isFocused(side, i)"
             [class.p-focus]="isFocused(side, i)"
             (pointerdown)="pointerDown($event, side, i)"
             (click)="itemClick($event, side, item, i)"
@@ -114,18 +114,18 @@
             @if (itemTemplate) {
               <ng-container *ngTemplateOutlet="itemTemplate; context: itemContext(side, item, i)"></ng-container>
             } @else {
-              <span class="wt-picklist-item-label">{{ label(item) }}</span>
+              <span class="wu-picklist-item-label">{{ label(item) }}</span>
             }
           </li>
         }
       }
       @if (isEmpty(side)) {
         @if (emptyTemplate(side); as tpl) {
-          <li class="wt-picklist-empty p-picklist-empty-message" role="presentation">
+          <li class="wu-picklist-empty p-picklist-empty-message" role="presentation">
             <ng-container *ngTemplateOutlet="tpl"></ng-container>
           </li>
         } @else if (emptyText(side)) {
-          <li class="wt-picklist-empty p-picklist-empty-message" role="presentation">{{ emptyText(side) }}</li>
+          <li class="wu-picklist-empty p-picklist-empty-message" role="presentation">{{ emptyText(side) }}</li>
         }
       }
     </ul>
@@ -134,24 +134,24 @@
 
 <ng-template #reorderControls let-side>
   <div
-    class="wt-picklist-controls wt-picklist-reorder p-picklist-buttons p-picklist-controls"
-    [class.wt-picklist-source-controls]="side === 'source'"
+    class="wu-picklist-controls wu-picklist-reorder p-picklist-buttons p-picklist-controls"
+    [class.wu-picklist-source-controls]="side === 'source'"
     [class.p-picklist-source-controls]="side === 'source'"
-    [class.wt-picklist-target-controls]="side === 'target'"
+    [class.wu-picklist-target-controls]="side === 'target'"
     [class.p-picklist-target-controls]="side === 'target'"
     role="group"
   >
-    <button type="button" [class]="buttonClass('wt-picklist-move-up')" [disabled]="!canReorder(side)" [attr.aria-label]="upButtonAriaLabel || t.moveUp" (click)="reorder(side, 'up', $event)">
-      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10 8 5.5l4.5 4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-up')" [disabled]="!canReorder(side)" [attr.aria-label]="upButtonAriaLabel || t.moveUp" (click)="reorder(side, 'up', $event)">
+      <svg class="wu-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10 8 5.5l4.5 4.5"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-top')" [disabled]="!canReorder(side)" [attr.aria-label]="topButtonAriaLabel || t.moveTop" (click)="reorder(side, 'top', $event)">
-      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3h9M3.5 11.5 8 7l4.5 4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-top')" [disabled]="!canReorder(side)" [attr.aria-label]="topButtonAriaLabel || t.moveTop" (click)="reorder(side, 'top', $event)">
+      <svg class="wu-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3h9M3.5 11.5 8 7l4.5 4.5"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-down')" [disabled]="!canReorder(side)" [attr.aria-label]="downButtonAriaLabel || t.moveDown" (click)="reorder(side, 'down', $event)">
-      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-down')" [disabled]="!canReorder(side)" [attr.aria-label]="downButtonAriaLabel || t.moveDown" (click)="reorder(side, 'down', $event)">
+      <svg class="wu-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"></path></svg>
     </button>
-    <button type="button" [class]="buttonClass('wt-picklist-move-bottom')" [disabled]="!canReorder(side)" [attr.aria-label]="bottomButtonAriaLabel || t.moveBottom" (click)="reorder(side, 'bottom', $event)">
-      <svg class="wt-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 13h9M3.5 4.5 8 9l4.5-4.5"></path></svg>
+    <button type="button" [class]="buttonClass('wu-picklist-move-bottom')" [disabled]="!canReorder(side)" [attr.aria-label]="bottomButtonAriaLabel || t.moveBottom" (click)="reorder(side, 'bottom', $event)">
+      <svg class="wu-picklist-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 13h9M3.5 4.5 8 9l4.5-4.5"></path></svg>
     </button>
   </div>
 </ng-template>

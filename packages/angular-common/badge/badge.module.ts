@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtBadge } from './badge.component';
-import { WtBadgeDirective } from './badge.directive';
+import { WuBadge } from './badge.component';
+import { WuBadgeDirective } from './badge.directive';
 
-/** For NgModule apps: `wt-badge` and the `wtBadge` (`pBadge`) directive. */
+/** For NgModule apps: `wu-badge` and the `wuBadge` (`pBadge`) directive. */
 @NgModule({
-  imports: [WtBadge, WtBadgeDirective],
-  exports: [WtBadge, WtBadgeDirective],
+  imports: [WuBadge, WuBadgeDirective],
+  exports: [WuBadge, WuBadgeDirective],
 })
-export class WtBadgeModule {}
+export class WuBadgeModule {}

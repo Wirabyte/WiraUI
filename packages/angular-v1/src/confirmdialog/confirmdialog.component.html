@@ -1,4 +1,4 @@
-<wt-dialog
+<wu-dialog
   [visible]="visible"
   (visibleChange)="dialogVisible($event)"
   (onHide)="dialogHidden()"
@@ -9,7 +9,7 @@
   [blockScroll]="scrollBlocked"
   [focusOnShow]="focus !== 'none'"
   [style]="dialogStyle"
-  [styleClass]="'wt-confirmdialog p-confirm-dialog ' + (c.styleClass || styleClass || '')"
+  [styleClass]="'wu-confirmdialog p-confirm-dialog ' + (c.styleClass || styleClass || '')"
   [maskStyleClass]="maskStyleClass"
   [breakpoints]="breakpoints"
   [position]="dialogPosition"
@@ -18,13 +18,13 @@
   [templateHeadless]="headlessTemplate ? headlessWrap : null"
   [templateFooter]="footer"
 >
-  <!-- Only with a confirmation: the content of wt-dialog is created with the page, before any confirm() call. -->
-  <div *ngIf="confirmation" class="wt-confirmdialog-body">
+  <!-- Only with a confirmation: the content of wu-dialog is created with the page, before any confirm() call. -->
+  <div *ngIf="confirmation" class="wu-confirmdialog-body">
     <ng-container *ngIf="messageTemplate; else plain">
       <ng-container *ngTemplateOutlet="messageTemplate; context: { $implicit: confirmation }"></ng-container>
     </ng-container>
     <ng-template #plain>
-      <span *ngIf="builtInIcon" class="wt-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="'wt-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
+      <span *ngIf="builtInIcon" class="wu-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="'wu-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngSwitch]="builtInIcon">
           <circle cx="12" cy="12" r="10"></circle>
           <path *ngSwitchCase="'success'" d="M7.5 12.5l3 3 6-6.5"></path>
@@ -34,11 +34,11 @@
           <path *ngSwitchCase="'question'" d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1.9-1.1 1.8M12 16.5v.5"></path>
         </svg>
       </span>
-      <i *ngIf="iconClass && !builtInIcon" class="wt-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="iconClass"></i>
-      <span class="wt-confirmdialog-message p-confirm-dialog-message">{{ messageText }}</span>
+      <i *ngIf="iconClass && !builtInIcon" class="wu-confirmdialog-icon p-confirm-dialog-icon" [ngClass]="iconClass"></i>
+      <span class="wu-confirmdialog-message p-confirm-dialog-message">{{ messageText }}</span>
     </ng-template>
   </div>
-</wt-dialog>
+</wu-dialog>
 
 <ng-template #headerWrap>
   <ng-container *ngTemplateOutlet="headerTemplate; context: { $implicit: confirmation }"></ng-container>
@@ -59,11 +59,11 @@
       [attr.autofocus]="focus === 'reject' ? '' : null"
       (click)="reject()"
     >
-      <i *ngIf="rejectIconClass; else timesSvg" [class]="rejectIconClass + ' wt-btn-icon'"></i>
+      <i *ngIf="rejectIconClass; else timesSvg" [class]="rejectIconClass + ' wu-btn-icon'"></i>
       <ng-template #timesSvg>
-        <svg class="wt-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
+        <svg class="wu-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
       </ng-template>
-      <span class="wt-btn-label p-button-label">{{ rejectText }}</span>
+      <span class="wu-btn-label p-button-label">{{ rejectText }}</span>
     </button>
     <button
       *ngIf="showAccept"
@@ -73,11 +73,11 @@
       [attr.autofocus]="focus === 'accept' ? '' : null"
       (click)="accept()"
     >
-      <i *ngIf="acceptIconClass; else checkSvg" [class]="acceptIconClass + ' wt-btn-icon'"></i>
+      <i *ngIf="acceptIconClass; else checkSvg" [class]="acceptIconClass + ' wu-btn-icon'"></i>
       <ng-template #checkSvg>
-        <svg class="wt-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"></path></svg>
+        <svg class="wu-btn-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"></path></svg>
       </ng-template>
-      <span class="wt-btn-label p-button-label">{{ acceptText }}</span>
+      <span class="wu-btn-label p-button-label">{{ acceptText }}</span>
     </button>
   </ng-template>
 </ng-template>

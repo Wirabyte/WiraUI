@@ -1,4 +1,4 @@
-/** Terminal (wt-terminal): the command history that ↑ / ↓ walk through, and the built-in clear command. */
+/** Terminal (wu-terminal): the command history that ↑ / ↓ walk through, and the built-in clear command. */
 
 /** History with `command` added at the end: blank lines and a repeat of the last command are left out; keeps the last `max`. */
 export function terminalHistoryAdd(history: readonly string[], command: string | null | undefined, max = 100): string[] {

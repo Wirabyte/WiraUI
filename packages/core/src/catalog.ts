@@ -101,7 +101,7 @@ export const SEMANTIC_DEFAULTS: Record<SemanticKey, string> = {
 
 /**
  * Look families. `classic` is the v1 look (Sila, Arun, Sayan, Ratri, Material themes), `styled` the v2/v3 look (Mali, Sila, Material, Phet presets)
- * (v2 and v3), `wira` is WiraTheme's own design (v3). Each family's tokens live in families.ts.
+ * (v2 and v3), `wira` is WiraUI's own design (v3). Each family's tokens live in families.ts.
  */
 export type FamilyId = 'sila-classic' | 'arun' | 'material-classic' | 'mali' | 'sila' | 'material' | 'phet' | 'wira';
 export type Generation = 'classic' | 'styled' | 'wira';
@@ -167,26 +167,18 @@ export const PRESETS = {
   sila: { ...styled, family: 'sila', label: 'Sila', primary: '#10b981', surface: 'slate', semantic: SILA_SEMANTIC, radius: 6, shadow: 'sila', ripple: false, focusRing: 'ring' },
   material: { ...styled, family: 'material', label: 'Material', fontFamily: 'Roboto', primary: '#10b981', surface: 'slate', semantic: MATERIAL_SEMANTIC, radius: 6, shadow: 'material', ripple: true, focusRing: 'inset' },
   phet: { ...styled, family: 'phet', label: 'Phet', primary: '#10b981', surface: 'slate', semantic: PHET_SEMANTIC, radius: 6, shadow: 'phet', ripple: false, focusRing: 'bold', transition: 0 },
-  // ---- v3: WiraTheme's own ----
+  // ---- v3: WiraUI's own ----
   wira: { family: 'wira', label: 'Wira', primary: '#1e7ae0', surface: 'ink', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Kanit', fontSize: 14, lineHeight: 1.6, radius: 6, density: 'normal', shadow: 'subtle', ripple: false, focusRing: 'ring', transition: 150, scheme: 'light' },
   lanna: { family: 'wira', label: 'Lanna', primary: '#0d9488', surface: 'stone', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Sarabun', fontSize: 15, lineHeight: 1.7, radius: 12, density: 'comfortable', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 200, scheme: 'light' },
   siam: { family: 'wira', label: 'Siam', primary: '#6366f1', surface: 'gray', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Prompt', fontSize: 14, lineHeight: 1.6, radius: 4, density: 'normal', shadow: 'elevated', ripple: true, focusRing: 'outline', transition: 200, scheme: 'light' },
   nakhon: { family: 'wira', label: 'Nakhon', primary: '#3b82f6', surface: 'zinc', semantic: SEMANTIC_DEFAULTS, fontFamily: 'IBM Plex Sans Thai', fontSize: 13, lineHeight: 1.55, radius: 2, density: 'compact', shadow: 'none', ripple: false, focusRing: 'outline', transition: 100, scheme: 'light' },
-  // Hidden: listed by no version, so no menu or prompt shows it; `$preset: 'll'` or `preset: LL` turns it on.
-  // Hasu: school crimson on warm paper, a looped Thai face (classic, and centred beside icons: the Thai serifs ride
-  // high in a control) and square-ish corners; semantics after the units: Cerise
-  // Bouquet red (danger), DOLLCHESTRA blue (info), Mira-Cra Park! yellow (warn), plus lotus-leaf green (success)
-  // and lavender (help).
   ll: { family: 'wira', label: 'LL', primary: '#b8172f', surface: 'stone', semantic: { success: '#3f9e6b', info: '#3b6fd8', warn: '#e8a317', danger: '#e0445c', help: '#9b7be8' }, fontFamily: 'Noto Sans Thai Looped', fontSize: 15, lineHeight: 1.65, radius: 4, density: 'comfortable', shadow: 'subtle', ripple: false, focusRing: 'ring', transition: 200, scheme: 'light' },
-  // Hidden too, and unrelated to LL: the cute sticker-logo look in Wirabyte's own colours (the coral of its W, the
-  // mint-to-sky of its B, on cool slate), a rounded Thai face, soft and round. `$preset: 'kawaii'` or
-  // `preset: WiraKawaii`.
   kawaii: { family: 'wira', label: 'WiraKawaii', primary: '#ee5b5b', surface: 'slate', semantic: { success: '#1fb48a', info: '#3a9fde', warn: '#f5893a', danger: '#d3303f', help: '#8b7cf6' }, fontFamily: 'Itim', fontSize: 15, lineHeight: 1.6, radius: 16, density: 'comfortable', shadow: 'soft', ripple: true, focusRing: 'ring', transition: 200, scheme: 'light' },
   glass: { family: 'wira', label: 'Glass', primary: '#0a84ff', surface: 'slate', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Anuphan', fontSize: 14, lineHeight: 1.6, radius: 14, density: 'normal', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 250, scheme: 'light', material: 'glass' },
 } satisfies Record<string, PresetDefinition>;
 export type PresetId = keyof typeof PRESETS;
 export const PRESET_NAMES = Object.fromEntries(Object.entries(PRESETS).map(([id, p]) => [id, p.label])) as Record<PresetId, string>;
-/** The constant each preset is exported as from `wiratheme/presets` (`'sila-classic'` → `SilaClassic`). */
+/** The constant each preset is exported as from `wiraui/presets` (`'sila-classic'` → `SilaClassic`). */
 export function presetExportName(id: PresetId): string {
   if (id === 'll') return 'LL';
   if (id === 'kawaii') return 'WiraKawaii';
@@ -195,7 +187,7 @@ export function presetExportName(id: PresetId): string {
 
 /**
  * Ready-made classic themes named after the theme folders apps already reference, so `…/themes/sila-light-teal/theme.css`
- * becomes `wiratheme/themes/sila-light-teal/theme.css`. For v2 and v3 every preset is also a theme of its own name.
+ * becomes `wiraui/themes/sila-light-teal/theme.css`. For v2 and v3 every preset is also a theme of its own name.
  */
 export interface NamedTheme {
   preset: PresetId;
@@ -237,7 +229,7 @@ export const CLASSIC_THEMES: Record<string, NamedTheme> = {
 };
 
 export type MajorVersion = 1 | 2 | 3;
-/** What each wiratheme major offers. v1 has the classic looks, v2 the styled ones, v3 adds WiraTheme's own presets. */
+/** What each wiraui major offers. v1 has the classic looks, v2 the styled ones, v3 adds WiraUI's own presets. */
 export const VERSION_CATALOG: Record<MajorVersion, { presets: PresetId[]; defaultPreset: PresetId; themes: string[]; defaultTheme: string }> = {
   1: {
     presets: ['sila-classic', 'arun', 'sayan', 'ratri', 'material-classic'],
@@ -247,7 +239,7 @@ export const VERSION_CATALOG: Record<MajorVersion, { presets: PresetId[]; defaul
   },
   2: { presets: ['mali', 'sila', 'material', 'phet'], defaultPreset: 'mali', themes: ['mali', 'sila', 'material', 'phet'], defaultTheme: 'mali' },
   3: {
-    // WiraTheme's own looks first; Wira is the default.
+    // WiraUI's own looks first; Wira is the default.
     presets: ['wira', 'lanna', 'siam', 'nakhon', 'glass', 'mali', 'sila', 'material', 'phet'],
     defaultPreset: 'wira',
     themes: ['wira', 'lanna', 'siam', 'nakhon', 'glass', 'mali', 'sila', 'material', 'phet'],
@@ -260,7 +252,7 @@ export type ComponentId = 'button' | 'input' | 'card' | 'table' | 'dialog' | 'ta
 export interface ComponentTokenSpec {
   id: ComponentId;
   key: string;
-  /** CSS custom property name without the `--wt-` prefix. */
+  /** CSS custom property name without the `--wu-` prefix. */
   css: string;
   type: 'px' | 'select' | 'bool';
   min?: number;

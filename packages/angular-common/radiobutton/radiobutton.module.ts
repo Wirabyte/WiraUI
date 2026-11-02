@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtRadioButton } from './radiobutton.component';
+import { WuRadioButton } from './radiobutton.component';
 
-/** For NgModule apps. Standalone apps can import `WtRadioButton` directly. */
+/** For NgModule apps. Standalone apps can import `WuRadioButton` directly. */
 @NgModule({
-  imports: [WtRadioButton],
-  exports: [WtRadioButton],
+  imports: [WuRadioButton],
+  exports: [WuRadioButton],
 })
-export class WtRadioButtonModule {}
+export class WuRadioButtonModule {}

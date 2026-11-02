@@ -1,8 +1,8 @@
-export interface WtSelectButtonChangeEvent {
+export interface WuSelectButtonChangeEvent {
   value: unknown;
   originalEvent: Event;
 }
-export interface WtSelectButtonOptionClickEvent {
+export interface WuSelectButtonOptionClickEvent {
   option: unknown;
   index: number;
   originalEvent: Event;

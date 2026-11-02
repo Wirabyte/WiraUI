@@ -1,130 +1,130 @@
-/* wt-accordion and wt-accordion-tab. Shared by wiratheme v1, v2 and v3.
+/* wu-accordion and wu-accordion-tab. Shared by wiraui v1, v2 and v3.
    Styled look: one bordered surface with ruled rows, chevron on the right. Classic look: boxed headers, chevron on the left. */
-@layer wiratheme.components {
-  wt-accordion,
-  wt-accordion-tab,
-  wt-accordiontab,
-  wt-accordion-panel,
-  wt-accordionpanel,
-  wt-accordion-header,
-  wt-accordionheader,
-  wt-accordion-content,
-  wt-accordioncontent {
+@layer wiraui.components {
+  wu-accordion,
+  wu-accordion-tab,
+  wu-accordiontab,
+  wu-accordion-panel,
+  wu-accordionpanel,
+  wu-accordion-header,
+  wu-accordionheader,
+  wu-accordion-content,
+  wu-accordioncontent {
     display: block;
   }
-  .wt-accordion {
+  .wu-accordion {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-accordion-gap);
-    border: var(--wt-accordion-border-width) solid var(--wt-border);
-    border-radius: var(--wt-accordion-root-radius);
-    background: var(--wt-accordion-bg);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    gap: var(--wu-accordion-gap);
+    border: var(--wu-accordion-border-width) solid var(--wu-border);
+    border-radius: var(--wu-accordion-root-radius);
+    background: var(--wu-accordion-bg);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  .wt-accordion-tab {
-    border-bottom: var(--wt-accordion-panel-border-width) solid var(--wt-border);
+  .wu-accordion-tab {
+    border-bottom: var(--wu-accordion-panel-border-width) solid var(--wu-border);
   }
-  /* wt-accordion [gap]: each panel a card of its own (the frame moves from the stack to every panel). */
-  .wt-accordion-separated > .wt-accordion {
+  /* wu-accordion [gap]: each panel a card of its own (the frame moves from the stack to every panel). */
+  .wu-accordion-separated > .wu-accordion {
     border-width: 0;
     border-radius: 0;
     background: transparent;
   }
-  .wt-accordion-separated .wt-accordion-tab,
-  .wt-accordion-separated wt-accordion-tab:last-child > .wt-accordion-tab,
-  .wt-accordion-separated wt-accordiontab:last-child > .wt-accordion-tab,
-  .wt-accordion-separated .wt-accordion > .wt-accordion-tab:last-child {
+  .wu-accordion-separated .wu-accordion-tab,
+  .wu-accordion-separated wu-accordion-tab:last-child > .wu-accordion-tab,
+  .wu-accordion-separated wu-accordiontab:last-child > .wu-accordion-tab,
+  .wu-accordion-separated .wu-accordion > .wu-accordion-tab:last-child {
     overflow: hidden;
-    border: var(--wt-accordion-border-width) solid var(--wt-border);
-    border-radius: var(--wt-accordion-root-radius);
-    background: var(--wt-accordion-bg);
+    border: var(--wu-accordion-border-width) solid var(--wu-border);
+    border-radius: var(--wu-accordion-root-radius);
+    background: var(--wu-accordion-bg);
   }
   /* The surface's own border closes the last row. */
-  wt-accordion-tab:last-child > .wt-accordion-tab,
-  wt-accordiontab:last-child > .wt-accordion-tab,
-  .wt-accordion > .wt-accordion-tab:last-child {
-    border-bottom-width: min(var(--wt-accordion-panel-border-width), calc(1px - var(--wt-accordion-border-width)));
+  wu-accordion-tab:last-child > .wu-accordion-tab,
+  wu-accordiontab:last-child > .wu-accordion-tab,
+  .wu-accordion > .wu-accordion-tab:last-child {
+    border-bottom-width: min(var(--wu-accordion-panel-border-width), calc(1px - var(--wu-accordion-border-width)));
   }
-  .wt-accordion-header {
+  .wu-accordion-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     width: 100%;
     margin: 0;
-    padding: var(--wt-accordion-header-padding);
-    border: var(--wt-accordion-header-border-width) solid var(--wt-border);
-    border-radius: var(--wt-accordion-radius);
-    background: var(--wt-accordion-header-bg);
-    color: var(--wt-accordion-header-color);
+    padding: var(--wu-accordion-header-padding);
+    border: var(--wu-accordion-header-border-width) solid var(--wu-border);
+    border-radius: var(--wu-accordion-radius);
+    background: var(--wu-accordion-header-bg);
+    color: var(--wu-accordion-header-color);
     font: inherit;
-    font-weight: var(--wt-accordion-header-weight);
+    font-weight: var(--wu-accordion-header-weight);
     text-align: left;
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition),
-      border-radius var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition),
+      border-radius var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-accordion-header:not(:disabled):hover,
-  .wt-accordion-tab-active .wt-accordion-header {
-    color: var(--wt-accordion-header-active-color);
+  .wu-accordion-header:not(:disabled):hover,
+  .wu-accordion-tab-active .wu-accordion-header {
+    color: var(--wu-accordion-header-active-color);
   }
-  .wt-accordion-header:focus-visible {
+  .wu-accordion-header:focus-visible {
     position: relative;
     z-index: 1;
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-accordion-header:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-accordion-header:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-accordion-tab-active .wt-accordion-header {
+  .wu-accordion-tab-active .wu-accordion-header {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .wt-accordion-header-text {
+  .wu-accordion-header-text {
     flex: 1;
     min-width: 0;
   }
-  .wt-accordion-toggle-icon {
+  .wu-accordion-toggle-icon {
     flex: none;
-    order: var(--wt-accordion-icon-order);
+    order: var(--wu-accordion-icon-order);
     width: 1rem;
     height: 1rem;
-    transform: rotate(var(--wt-accordion-icon-closed-rotate));
-    transition: transform var(--wt-transition);
+    transform: rotate(var(--wu-accordion-icon-closed-rotate));
+    transition: transform var(--wu-transition);
   }
-  .wt-accordion-tab-active .wt-accordion-toggle-icon {
-    transform: rotate(var(--wt-accordion-icon-open-rotate));
+  .wu-accordion-tab-active .wu-accordion-toggle-icon {
+    transform: rotate(var(--wu-accordion-icon-open-rotate));
   }
-  .wt-accordion-content-container {
+  .wu-accordion-content-container {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--wt-transition) ease;
+    transition: grid-template-rows var(--wu-transition) ease;
   }
-  .wt-accordion-tab-active .wt-accordion-content-container {
+  .wu-accordion-tab-active .wu-accordion-content-container {
     grid-template-rows: 1fr;
   }
-  .wt-accordion-content-inner {
+  .wu-accordion-content-inner {
     min-height: 0;
     overflow: hidden;
   }
-  .wt-accordion-content {
-    padding: var(--wt-accordion-content-padding-top) var(--wt-accordion-content-padding) var(--wt-accordion-content-padding);
-    border: var(--wt-accordion-content-border-width) solid var(--wt-border);
+  .wu-accordion-content {
+    padding: var(--wu-accordion-content-padding-top) var(--wu-accordion-content-padding) var(--wu-accordion-content-padding);
+    border: var(--wu-accordion-content-border-width) solid var(--wu-border);
     border-top: 0;
-    border-radius: 0 0 var(--wt-accordion-radius) var(--wt-accordion-radius);
-    background: var(--wt-accordion-content-bg);
+    border-radius: 0 0 var(--wu-accordion-radius) var(--wu-accordion-radius);
+    background: var(--wu-accordion-content-bg);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-accordion-content-container,
-    .wt-accordion-toggle-icon {
+    .wu-accordion-content-container,
+    .wu-accordion-toggle-icon {
       transition: none;
     }
   }

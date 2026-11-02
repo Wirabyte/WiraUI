@@ -1,21 +1,21 @@
 import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { WtDialog } from 'wiratheme/dialog';
-import { ɵWtConfirmDialogBase } from './confirmdialog.base';
+import { WuDialog } from 'wiraui/dialog';
+import { ɵWuConfirmDialogBase } from './confirmdialog.base';
 
 /**
- * Asks before an action: place `<wt-confirmdialog>` once, then `confirmation.confirm({ message, accept })`.
+ * Asks before an action: place `<wu-confirmdialog>` once, then `confirmation.confirm({ message, accept })`.
  * Custom footers can call `cd.accept()` / `cd.reject()` on `#cd`.
  */
 @Component({
-  selector: 'wt-confirmdialog, wt-confirmDialog, wt-confirm-dialog',
+  selector: 'wu-confirmdialog, wu-confirmDialog, wu-confirm-dialog',
   standalone: true,
-  imports: [NgIf, NgClass, NgSwitch, NgSwitchCase, NgTemplateOutlet, WtDialog],
+  imports: [NgIf, NgClass, NgSwitch, NgSwitchCase, NgTemplateOutlet, WuDialog],
   templateUrl: './confirmdialog.component.html',
   styleUrls: ['./confirmdialog.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtConfirmDialog extends ɵWtConfirmDialogBase {
+export class WuConfirmDialog extends ɵWuConfirmDialogBase {
   protected readonly rejectFallback = 'p-button-text';
 }

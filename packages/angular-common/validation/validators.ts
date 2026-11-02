@@ -1,6 +1,6 @@
 import { Directive, forwardRef, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
-import { isThaiPhone, isValidThaiId } from 'wiratheme/core';
+import { isThaiPhone, isValidThaiId } from 'wiraui/core';
 
 const empty = (v: unknown) => v === null || v === undefined || v === '';
 
@@ -8,7 +8,7 @@ const empty = (v: unknown) => v === null || v === undefined || v === '';
 const matched = new WeakMap<AbstractControl, AbstractControl>();
 
 /** Validators for Thai forms. Empty values pass: pair them with `Validators.required`. */
-export class WtValidators {
+export class WuValidators {
   /** เลขประจำตัวประชาชน 13 หลักที่ check digit ถูกต้อง (dashes allowed). Error: `thaiId`. */
   static thaiId: ValidatorFn = (c) => (empty(c.value) || isValidThaiId(String(c.value)) ? null : { thaiId: true });
 
@@ -32,39 +32,39 @@ export class WtValidators {
   }
 }
 
-/** `<input wtInputText name="id" [(ngModel)]="id" wtThaiId>`: the Thai ID validator for template forms. */
+/** `<input wuInputText name="id" [(ngModel)]="id" wuThaiId>`: the Thai ID validator for template forms. */
 @Directive({
-  selector: '[wtThaiId][ngModel], [wtThaiId][formControlName], [wtThaiId][formControl]',
+  selector: '[wuThaiId][ngModel], [wuThaiId][formControlName], [wuThaiId][formControl]',
   standalone: true,
-  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WtThaiIdValidator), multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WuThaiIdValidator), multi: true }],
 })
-export class WtThaiIdValidator implements Validator {
+export class WuThaiIdValidator implements Validator {
   validate(c: AbstractControl): ValidationErrors | null {
-    return WtValidators.thaiId(c);
+    return WuValidators.thaiId(c);
   }
 }
 
-/** `<input wtInputText name="phone" [(ngModel)]="phone" wtThaiPhone>`: the Thai phone validator for template forms. */
+/** `<input wuInputText name="phone" [(ngModel)]="phone" wuThaiPhone>`: the Thai phone validator for template forms. */
 @Directive({
-  selector: '[wtThaiPhone][ngModel], [wtThaiPhone][formControlName], [wtThaiPhone][formControl]',
+  selector: '[wuThaiPhone][ngModel], [wuThaiPhone][formControlName], [wuThaiPhone][formControl]',
   standalone: true,
-  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WtThaiPhoneValidator), multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WuThaiPhoneValidator), multi: true }],
 })
-export class WtThaiPhoneValidator implements Validator {
+export class WuThaiPhoneValidator implements Validator {
   validate(c: AbstractControl): ValidationErrors | null {
-    return WtValidators.thaiPhone(c);
+    return WuValidators.thaiPhone(c);
   }
 }
 
-/** `<input name="confirm" [(ngModel)]="confirm" wtMatch="password">`: equal to the control named `password`. */
+/** `<input name="confirm" [(ngModel)]="confirm" wuMatch="password">`: equal to the control named `password`. */
 @Directive({
-  selector: '[wtMatch][ngModel], [wtMatch][formControlName], [wtMatch][formControl]',
+  selector: '[wuMatch][ngModel], [wuMatch][formControlName], [wuMatch][formControl]',
   standalone: true,
-  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WtMatchValidator), multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => WuMatchValidator), multi: true }],
 })
-export class WtMatchValidator implements Validator {
-  @Input() wtMatch = '';
+export class WuMatchValidator implements Validator {
+  @Input() wuMatch = '';
   validate(c: AbstractControl): ValidationErrors | null {
-    return WtValidators.match(this.wtMatch)(c);
+    return WuValidators.match(this.wuMatch)(c);
   }
 }

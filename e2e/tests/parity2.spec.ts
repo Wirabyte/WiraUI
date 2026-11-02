@@ -8,7 +8,7 @@ const log = (page: Page) => page.locator('#overlay-log');
 const numberIn = async (page: Page, selector: string) => Number(await page.locator(selector).textContent());
 /** Index of the bar marked as the current page. */
 const currentPage = (carousel: Locator) =>
-  carousel.locator('.wt-carousel-indicator-button').evaluateAll((els) => els.findIndex((e) => e.getAttribute('aria-current') === 'page'));
+  carousel.locator('.wu-carousel-indicator-button').evaluateAll((els) => els.findIndex((e) => e.getAttribute('aria-current') === 'page'));
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -22,27 +22,27 @@ test.describe('terminal', () => {
 
   test('a command goes to the service and its answer shows under it; ↑ / ↓ history; clear', async ({ page }) => {
     const term = page.locator('#term');
-    await expect(term.locator('.wt-terminal-welcome-message')).toHaveText('ยินดีต้อนรับสู่ระบบวิระ');
+    await expect(term.locator('.wu-terminal-welcome-message')).toHaveText('ยินดีต้อนรับสู่ระบบวิระ');
     // A click anywhere on the box puts the cursor on the prompt.
-    await term.locator('.wt-terminal').click({ position: { x: 24, y: 12 } });
-    const input = term.locator('.wt-terminal-prompt-value');
+    await term.locator('.wu-terminal').click({ position: { x: 24, y: 12 } });
+    const input = term.locator('.wu-terminal-prompt-value');
     await expect(input).toBeFocused();
     await expect(input).toHaveAttribute('aria-label', 'พิมพ์คำสั่ง');
-    await expect(term.locator('.wt-terminal-prompt .wt-terminal-prompt-label')).toHaveText('วิระ $');
+    await expect(term.locator('.wu-terminal-prompt .wu-terminal-prompt-label')).toHaveText('วิระ $');
     await input.fill('greet วิระ');
     await input.press('Enter');
-    const commands = term.locator('.wt-terminal-command');
+    const commands = term.locator('.wu-terminal-command');
     await expect(commands).toHaveCount(1);
-    await expect(commands.nth(0).locator('.wt-terminal-prompt-label')).toHaveText('วิระ $');
-    await expect(commands.nth(0).locator('.wt-terminal-command-value')).toHaveText('greet วิระ');
-    await expect(commands.nth(0).locator('.wt-terminal-command-response')).toHaveText('สวัสดี วิระ');
+    await expect(commands.nth(0).locator('.wu-terminal-prompt-label')).toHaveText('วิระ $');
+    await expect(commands.nth(0).locator('.wu-terminal-command-value')).toHaveText('greet วิระ');
+    await expect(commands.nth(0).locator('.wu-terminal-command-response')).toHaveText('สวัสดี วิระ');
     await expect(input).toHaveValue('');
     await input.fill('sum 2 3');
     await input.press('Enter');
-    await expect(commands.nth(1).locator('.wt-terminal-command-response')).toHaveText('5');
+    await expect(commands.nth(1).locator('.wu-terminal-command-response')).toHaveText('5');
     await input.fill('hello');
     await input.press('Enter');
-    await expect(commands.nth(2).locator('.wt-terminal-command-response')).toHaveText('ไม่รู้จักคำสั่ง: hello');
+    await expect(commands.nth(2).locator('.wu-terminal-command-response')).toHaveText('ไม่รู้จักคำสั่ง: hello');
     await expect(term.locator('[role="log"]')).toBeAttached();
     // ↑ brings back earlier commands, ↓ comes back to the line being typed.
     await input.fill('ร่าง');
@@ -62,13 +62,13 @@ test.describe('terminal', () => {
   });
 
   test('the newest line stays in view as commands pile up', async ({ page }) => {
-    const box = page.locator('#term .wt-terminal');
-    const input = page.locator('#term .wt-terminal-prompt-value');
+    const box = page.locator('#term .wu-terminal');
+    const input = page.locator('#term .wu-terminal-prompt-value');
     for (let i = 1; i <= 12; i++) {
       await input.fill('greet ' + i);
       await input.press('Enter');
     }
-    await expect(page.locator('#term .wt-terminal-command')).toHaveCount(12);
+    await expect(page.locator('#term .wu-terminal-command')).toHaveCount(12);
     expect(await box.evaluate((el) => el.scrollHeight > el.clientHeight)).toBe(true);
     await expect.poll(() => box.evaluate((el) => el.scrollHeight - el.scrollTop - el.clientHeight)).toBeLessThan(2);
   });
@@ -80,7 +80,7 @@ test.describe('image compare', () => {
   });
 
   test('a slider handle with ARIA; the keys move the divider and [(value)] follows', async ({ page }) => {
-    const handle = page.locator('#icmp .wt-imagecompare-handle');
+    const handle = page.locator('#icmp .wu-imagecompare-handle');
     await expect(handle).toHaveAttribute('role', 'slider');
     await expect(handle).toHaveAttribute('aria-valuenow', '50');
     await expect(handle).toHaveAttribute('aria-valuemin', '0');
@@ -89,9 +89,9 @@ test.describe('image compare', () => {
     await expect(handle).toHaveAttribute('aria-label', 'เทียบภาพก่อนและหลัง');
     await expect(handle).toHaveAttribute('tabindex', '0');
     // The second one has the default label and both pictures from #left / #right templates.
-    await expect(page.locator('#icmp-refs .wt-imagecompare-handle')).toHaveAttribute('aria-label', 'เลื่อนเพื่อเปรียบเทียบภาพ');
-    await expect(page.locator('#icmp-refs .wt-imagecompare-left .icmp-pic')).toHaveCount(1);
-    await expect(page.locator('#icmp-refs .wt-imagecompare-right .icmp-pic')).toHaveCount(1);
+    await expect(page.locator('#icmp-refs .wu-imagecompare-handle')).toHaveAttribute('aria-label', 'เลื่อนเพื่อเปรียบเทียบภาพ');
+    await expect(page.locator('#icmp-refs .wu-imagecompare-left .icmp-pic')).toHaveCount(1);
+    await expect(page.locator('#icmp-refs .wu-imagecompare-right .icmp-pic')).toHaveCount(1);
     await handle.focus();
     await page.keyboard.press('ArrowRight');
     await expect(page.locator('#icmp-value')).toHaveText('51');
@@ -104,7 +104,7 @@ test.describe('image compare', () => {
   });
 
   test('the right picture shows from the start edge to the divider; a drag moves it', async ({ page }) => {
-    const root = page.locator('#icmp .wt-imagecompare');
+    const root = page.locator('#icmp .wu-imagecompare');
     const box = (await root.boundingBox())!;
     const idAt = (x: number, y: number) => page.evaluate(([px, py]) => document.elementFromPoint(px, py)?.id || '', [x, y]);
     // At 50 %: the right picture on the left half, the left picture on the right half.
@@ -115,7 +115,7 @@ test.describe('image compare', () => {
     await page.mouse.move(box.x + box.width * 0.3, box.y + box.height * 0.25, { steps: 5 });
     await page.mouse.up();
     await expect.poll(async () => Math.abs((await numberIn(page, '#icmp-value')) - 30)).toBeLessThan(1.5);
-    const handle = (await page.locator('#icmp .wt-imagecompare-handle').boundingBox())!;
+    const handle = (await page.locator('#icmp .wu-imagecompare-handle').boundingBox())!;
     expect(Math.abs(handle.x + handle.width / 2 - (box.x + box.width * 0.3))).toBeLessThan(2.5);
     expect(await idAt(box.x + box.width * 0.2, box.y + 10)).toBe('icmp-right');
     expect(await idAt(box.x + box.width * 0.4, box.y + 10)).toBe('icmp-left');
@@ -129,18 +129,18 @@ test.describe('carousel', () => {
 
   test('three in view; the arrows and bars change page; (onPage) and [(page)] follow', async ({ page }) => {
     const crs = page.locator('#crs');
-    await expect(crs.locator('.wt-carousel')).toHaveAttribute('role', 'region');
-    await expect(crs.locator('.wt-carousel')).toHaveAttribute('aria-roledescription', 'ภาพสไลด์');
-    await expect(crs.locator('.wt-carousel-header')).toHaveText('ข่าวประชาสัมพันธ์');
-    const active = crs.locator('.wt-carousel-item-active');
+    await expect(crs.locator('.wu-carousel')).toHaveAttribute('role', 'region');
+    await expect(crs.locator('.wu-carousel')).toHaveAttribute('aria-roledescription', 'ภาพสไลด์');
+    await expect(crs.locator('.wu-carousel-header')).toHaveText('ข่าวประชาสัมพันธ์');
+    const active = crs.locator('.wu-carousel-item-active');
     await expect(active).toHaveCount(3);
     await expect(active.first()).toContainText('ข่าว 1');
     // 6 items, 3 in view, 1 at a time: 4 pages.
-    const dots = crs.locator('.wt-carousel-indicator-button');
+    const dots = crs.locator('.wu-carousel-indicator-button');
     await expect(dots).toHaveCount(4);
     await expect(dots.nth(0)).toHaveAttribute('aria-label', 'หน้า 1');
-    const prev = crs.locator('.wt-carousel-prev-button');
-    const next = crs.locator('.wt-carousel-next-button');
+    const prev = crs.locator('.wu-carousel-prev-button');
+    const next = crs.locator('.wu-carousel-next-button');
     await expect(prev).toHaveAttribute('aria-disabled', 'true');
     await expect(prev).toHaveAttribute('aria-label', 'หน้าก่อน');
     await expect(next).toHaveAttribute('aria-label', 'หน้าถัดไป');
@@ -149,13 +149,13 @@ test.describe('carousel', () => {
     await expect(log(page)).toContainText('crs:page:1');
     await expect(active.first()).toContainText('ข่าว 2');
     // Items out of view are hidden from screen readers and inert; the ones in view are slides with a place.
-    const items = crs.locator('.wt-carousel-item');
+    const items = crs.locator('.wu-carousel-item');
     await expect(items.nth(0)).toHaveAttribute('aria-hidden', 'true');
     await expect(items.nth(0)).toHaveAttribute('inert', '');
     await expect(items.nth(1)).toHaveAttribute('aria-roledescription', 'สไลด์');
     await expect(items.nth(1)).toHaveAttribute('aria-label', 'รายการที่ 2 จาก 6');
     // The first item in view sits at the start of the window.
-    const vp = (await crs.locator('.wt-carousel-viewport').boundingBox())!;
+    const vp = (await crs.locator('.wu-carousel-viewport').boundingBox())!;
     const first = (await active.first().boundingBox())!;
     expect(Math.abs(first.x - vp.x)).toBeLessThan(2);
     await active.first().locator('.crs-read').click();
@@ -172,7 +172,7 @@ test.describe('carousel', () => {
   });
 
   test('the bars are one tab stop: arrows move along them, Enter / Space pick', async ({ page }) => {
-    const dots = page.locator('#crs .wt-carousel-indicator-button');
+    const dots = page.locator('#crs .wu-carousel-indicator-button');
     await expect(dots.nth(0)).toHaveAttribute('tabindex', '0');
     await expect(dots.nth(1)).toHaveAttribute('tabindex', '-1');
     await dots.nth(0).focus();
@@ -190,23 +190,23 @@ test.describe('carousel', () => {
 
   test('circular wraps both ways onto the real items; a sideways swipe changes page; the footer facet', async ({ page }) => {
     const c = page.locator('#crs-circ');
-    const active = c.locator('.wt-carousel-item-active');
+    const active = c.locator('.wu-carousel-item-active');
     // 6 items, 2 at a time: 3 pages; copies of 2 at each end.
-    await expect(c.locator('.wt-carousel-indicator-button')).toHaveCount(3);
-    await expect(c.locator('.wt-carousel-item-clone')).toHaveCount(4);
-    await expect(c.locator('.wt-carousel-item-clone').first()).toHaveAttribute('aria-hidden', 'true');
-    const prev = c.locator('.wt-carousel-prev-button');
+    await expect(c.locator('.wu-carousel-indicator-button')).toHaveCount(3);
+    await expect(c.locator('.wu-carousel-item-clone')).toHaveCount(4);
+    await expect(c.locator('.wu-carousel-item-clone').first()).toHaveAttribute('aria-hidden', 'true');
+    const prev = c.locator('.wu-carousel-prev-button');
     await expect(prev).not.toHaveAttribute('aria-disabled', 'true');
     await prev.click();
-    await expect(c.locator('.wt-carousel-indicator-button').nth(2)).toHaveAttribute('aria-current', 'page');
+    await expect(c.locator('.wu-carousel-indicator-button').nth(2)).toHaveAttribute('aria-current', 'page');
     await expect(active).toHaveText(['ข่าว 5', 'ข่าว 6']);
-    await c.locator('.wt-carousel-next-button').click();
+    await c.locator('.wu-carousel-next-button').click();
     await expect(active).toHaveText(['ข่าว 1', 'ข่าว 2']);
-    const vp = (await c.locator('.wt-carousel-viewport').boundingBox())!;
+    const vp = (await c.locator('.wu-carousel-viewport').boundingBox())!;
     const first = (await active.first().boundingBox())!;
     expect(Math.abs(first.x - vp.x)).toBeLessThan(2);
     // A finger moving left shows the next page.
-    const viewport = c.locator('.wt-carousel-viewport');
+    const viewport = c.locator('.wu-carousel-viewport');
     await viewport.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 7, isPrimary: true, clientX: vp.x + 200, clientY: vp.y + 20 });
     await viewport.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 7, isPrimary: true, clientX: vp.x + 100, clientY: vp.y + 24 });
     await expect(active).toHaveText(['ข่าว 3', 'ข่าว 4']);
@@ -214,43 +214,43 @@ test.describe('carousel', () => {
     await viewport.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 8, isPrimary: true, clientX: vp.x + 200, clientY: vp.y + 20 });
     await viewport.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 8, isPrimary: true, clientX: vp.x + 170, clientY: vp.y + 120 });
     await expect(active).toHaveText(['ข่าว 3', 'ข่าว 4']);
-    await expect(c.locator('.wt-carousel-footer')).toHaveText('ท้ายรายการ');
+    await expect(c.locator('.wu-carousel-footer')).toHaveText('ท้ายรายการ');
   });
 
   test('vertical in its own height; autoplay turns pages, waits while hovered, stops once the user takes over', async ({ page }) => {
     const v = page.locator('#crs-vert');
-    await expect(v.locator('.wt-carousel')).toHaveClass(/wt-carousel-vertical/);
-    const vp = (await v.locator('.wt-carousel-viewport').boundingBox())!;
+    await expect(v.locator('.wu-carousel')).toHaveClass(/wu-carousel-vertical/);
+    const vp = (await v.locator('.wu-carousel-viewport').boundingBox())!;
     expect(Math.round(vp.height)).toBe(160);
-    const item = (await v.locator('.wt-carousel-item-active').boundingBox())!;
+    const item = (await v.locator('.wu-carousel-item-active').boundingBox())!;
     expect(Math.round(item.height)).toBe(160);
-    await expect(v.locator('.wt-carousel-content')).toHaveAttribute('aria-live', 'polite');
+    await expect(v.locator('.wu-carousel-content')).toHaveAttribute('aria-live', 'polite');
     await page.locator('#crs-play').click();
     await expect.poll(() => currentPage(v), { timeout: 5000 }).toBeGreaterThan(0);
-    await expect(v.locator('.wt-carousel-content')).toHaveAttribute('aria-live', 'off');
-    await v.locator('.wt-carousel-viewport').hover();
+    await expect(v.locator('.wu-carousel-content')).toHaveAttribute('aria-live', 'off');
+    await v.locator('.wu-carousel-viewport').hover();
     const held = await currentPage(v);
     await page.waitForTimeout(1200);
     expect(await currentPage(v)).toBe(held);
     await page.mouse.move(0, 0);
     await expect.poll(() => currentPage(v), { timeout: 5000 }).not.toBe(held);
-    await v.locator('.wt-carousel-next-button').click();
+    await v.locator('.wu-carousel-next-button').click();
     await page.mouse.move(0, 0);
     await page.locator('#crs-play').focus();
     const stopped = await currentPage(v);
     await page.waitForTimeout(1200);
     expect(await currentPage(v)).toBe(stopped);
-    await expect(v.locator('.wt-carousel-content')).toHaveAttribute('aria-live', 'polite');
+    await expect(v.locator('.wu-carousel-content')).toHaveAttribute('aria-live', 'polite');
   });
 
   test('on a phone the responsive options show one at a time', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
     const crs = page.locator('#crs');
-    await expect(crs.locator('.wt-carousel-item-active')).toHaveCount(1);
-    await expect(crs.locator('.wt-carousel-indicator-button')).toHaveCount(6);
+    await expect(crs.locator('.wu-carousel-item-active')).toHaveCount(1);
+    await expect(crs.locator('.wu-carousel-indicator-button')).toHaveCount(6);
     await page.setViewportSize({ width: 700, height: 800 });
-    await expect(crs.locator('.wt-carousel-item-active')).toHaveCount(2);
-    await expect(crs.locator('.wt-carousel-indicator-button')).toHaveCount(3);
+    await expect(crs.locator('.wu-carousel-item-active')).toHaveCount(2);
+    await expect(crs.locator('.wu-carousel-indicator-button')).toHaveCount(3);
   });
 });
 
@@ -260,8 +260,8 @@ test.describe('splitter', () => {
   });
 
   test('a gutter is a separator that drags within the minimum sizes; the events report the sizes', async ({ page }) => {
-    const panels = page.locator('#spl > .wt-splitter > .wt-splitter-panel');
-    const gutter = page.locator('#spl > .wt-splitter > .wt-splitter-gutter');
+    const panels = page.locator('#spl > .wu-splitter > .wu-splitter-panel');
+    const gutter = page.locator('#spl > .wu-splitter > .wu-splitter-gutter');
     await expect(panels).toHaveCount(2);
     await expect(gutter).toHaveAttribute('role', 'separator');
     await expect(gutter).toHaveAttribute('aria-orientation', 'vertical');
@@ -270,7 +270,7 @@ test.describe('splitter', () => {
     await expect(gutter).toHaveAttribute('aria-valuemax', '80');
     await expect(gutter).toHaveAttribute('aria-label', 'ปรับขนาดช่อง');
     await expect(gutter).toHaveAttribute('aria-controls', /.+/);
-    const root = page.locator('#spl > .wt-splitter');
+    const root = page.locator('#spl > .wu-splitter');
     const room = await root.evaluate((el) => el.clientWidth - 4);
     const w0 = (await panels.nth(0).boundingBox())!.width;
     expect(Math.abs(w0 / room - 0.3)).toBeLessThan(0.01);
@@ -295,7 +295,7 @@ test.describe('splitter', () => {
   });
 
   test('the keys move a focused gutter by the step; Home / End go to a minimum', async ({ page }) => {
-    const gutter = page.locator('#spl > .wt-splitter > .wt-splitter-gutter');
+    const gutter = page.locator('#spl > .wu-splitter > .wu-splitter-gutter');
     await gutter.focus();
     await page.keyboard.press('ArrowRight');
     await expect.poll(async () => Number(await gutter.getAttribute('aria-valuenow'))).toBeGreaterThan(30);
@@ -313,20 +313,20 @@ test.describe('splitter', () => {
     await expect.poll(async () => Number(await gutter.getAttribute('aria-valuenow'))).toBeLessThan(80);
   });
 
-  test('a vertical splitter inside a panel fills it; wt-splitter-panel sizes; the sizes are remembered', async ({ page }) => {
-    const outerPanels = page.locator('#spl-nested > .wt-splitter > .wt-splitter-panel');
-    const outerGutter = page.locator('#spl-nested > .wt-splitter > .wt-splitter-gutter');
+  test('a vertical splitter inside a panel fills it; wu-splitter-panel sizes; the sizes are remembered', async ({ page }) => {
+    const outerPanels = page.locator('#spl-nested > .wu-splitter > .wu-splitter-panel');
+    const outerGutter = page.locator('#spl-nested > .wu-splitter > .wu-splitter-gutter');
     await expect(outerPanels).toHaveCount(2);
-    // <wt-splitter-panel [size]="40">, the other takes the rest.
+    // <wu-splitter-panel [size]="40">, the other takes the rest.
     await expect(outerGutter).toHaveAttribute('aria-valuenow', '40');
     const inner = page.locator('#spl-inner');
-    await expect(inner.locator('.wt-splitter')).toHaveClass(/wt-splitter-vertical/);
+    await expect(inner.locator('.wu-splitter')).toHaveClass(/wu-splitter-vertical/);
     const panel = (await outerPanels.nth(1).boundingBox())!;
     const box = (await inner.boundingBox())!;
     expect(Math.abs(box.height - panel.height)).toBeLessThan(1.5);
     expect(Math.abs(box.width - panel.width)).toBeLessThan(1.5);
-    expect(await inner.locator('.wt-splitter').evaluate((el) => getComputedStyle(el).borderTopWidth)).toBe('0px');
-    const innerGutter = inner.locator('.wt-splitter-gutter');
+    expect(await inner.locator('.wu-splitter').evaluate((el) => getComputedStyle(el).borderTopWidth)).toBe('0px');
+    const innerGutter = inner.locator('.wu-splitter-gutter');
     await expect(innerGutter).toHaveAttribute('aria-orientation', 'horizontal');
     await innerGutter.focus();
     await page.keyboard.press('ArrowDown');
@@ -342,7 +342,7 @@ test.describe('splitter', () => {
     expect(Number(saved)).toBeGreaterThan(45);
     await page.reload();
     await page.locator('#spl-section').scrollIntoViewIfNeeded();
-    await expect(page.locator('#spl-nested > .wt-splitter > .wt-splitter-gutter')).toHaveAttribute('aria-valuenow', saved!);
+    await expect(page.locator('#spl-nested > .wu-splitter > .wu-splitter-gutter')).toHaveAttribute('aria-valuenow', saved!);
   });
 });
 
@@ -351,14 +351,14 @@ test.describe('organization chart', () => {
     await page.locator('#oc-section').scrollIntoViewIfNeeded();
   });
   /** A box: click near its top so the toggle button at its bottom edge is not hit. */
-  const box = (item: Locator) => item.locator('.wt-organizationchart-node').first();
+  const box = (item: Locator) => item.locator('.wu-organizationchart-node').first();
 
   test('boxes joined by lines; a template by node type; one pick at a time with the mouse', async ({ page }) => {
     const oc = page.locator('#oc');
     await expect(oc.getByRole('tree')).toHaveAttribute('aria-label', 'ผังองค์กร');
     await expect(oc.locator('.oc-person strong')).toHaveText('วิระ ใจดี');
     // The closed group keeps its child hidden (preserveSpace) and out of reach.
-    await expect(oc.locator('.wt-organizationchart-hidden')).toHaveCount(1);
+    await expect(oc.locator('.wu-organizationchart-hidden')).toHaveCount(1);
     await expect(oc.getByRole('treeitem', { name: 'งานอาคารสถานที่' })).toHaveCount(0);
     const academic = oc.getByRole('treeitem', { name: 'ฝ่ายวิชาการ' });
     await expect(academic).toHaveAttribute('aria-expanded', 'true');
@@ -366,9 +366,9 @@ test.describe('organization chart', () => {
     await expect(oc.getByRole('treeitem', { name: 'ฝ่ายบริหารทั่วไป' })).toHaveAttribute('aria-expanded', 'false');
     // The line down from the root starts under the middle of its box.
     const geo = await oc.evaluate((host) => {
-      const rootItem = host.querySelector('.wt-organizationchart-tree > .wt-organizationchart-branch')!;
-      const node = rootItem.querySelector(':scope > .wt-organizationchart-node')!.getBoundingClientRect();
-      const kids = rootItem.querySelector(':scope > .wt-organizationchart-children')!;
+      const rootItem = host.querySelector('.wu-organizationchart-tree > .wu-organizationchart-branch')!;
+      const node = rootItem.querySelector(':scope > .wu-organizationchart-node')!.getBoundingClientRect();
+      const kids = rootItem.querySelector(':scope > .wu-organizationchart-children')!;
       const line = getComputedStyle(kids, '::before');
       return { mid: node.left + node.width / 2, x: kids.getBoundingClientRect().left + parseFloat(line.left), width: line.borderLeftWidth, gap: kids.getBoundingClientRect().top - node.bottom };
     });
@@ -379,7 +379,7 @@ test.describe('organization chart', () => {
     await expect(page.locator('#oc-picked')).toHaveText('ฝ่ายวิชาการ');
     await expect(log(page)).toContainText('oc:select:ฝ่ายวิชาการ');
     await expect(academic).toHaveAttribute('aria-selected', 'true');
-    await expect(box(academic)).toHaveClass(/wt-organizationchart-node-selected/);
+    await expect(box(academic)).toHaveClass(/wu-organizationchart-node-selected/);
     await box(academic).click({ position: { x: 8, y: 6 } });
     await expect(page.locator('#oc-picked')).toHaveText('');
     await expect(log(page)).toContainText('oc:unselect:ฝ่ายวิชาการ');
@@ -414,7 +414,7 @@ test.describe('organization chart', () => {
     await expect(page.locator('#oc-picked')).toHaveText('ฝ่ายบริหารทั่วไป');
     await expect(admin).toHaveAttribute('tabindex', '0');
     // The toggle button opens and closes without picking.
-    const toggle = admin.locator('.wt-organizationchart-node-toggle-button').first();
+    const toggle = admin.locator('.wu-organizationchart-node-toggle-button').first();
     await expect(toggle).toHaveAttribute('aria-label', 'ขยาย');
     await toggle.click();
     await expect(admin).toHaveAttribute('aria-expanded', 'true');
@@ -425,14 +425,14 @@ test.describe('organization chart', () => {
   test('several picks; a wide chart scrolls inside its own box on a phone', async ({ page }) => {
     const m = page.locator('#oc-multi');
     await expect(m.getByRole('tree')).toHaveAttribute('aria-multiselectable', 'true');
-    await expect(m.locator('.wt-organizationchart-node-toggle-button')).toHaveCount(0);
+    await expect(m.locator('.wu-organizationchart-node-toggle-button')).toHaveCount(0);
     await box(m.getByRole('treeitem', { name: 'ฝ่ายวิชาการ' })).click({ position: { x: 8, y: 6 } });
     await box(m.getByRole('treeitem', { name: 'กลุ่มสาระภาษาไทย' })).click({ position: { x: 8, y: 6 } });
     await expect(page.locator('#oc-many')).toHaveText('ฝ่ายวิชาการ,กลุ่มสาระภาษาไทย');
     await box(m.getByRole('treeitem', { name: 'ฝ่ายวิชาการ' })).click({ position: { x: 8, y: 6 } });
     await expect(page.locator('#oc-many')).toHaveText('กลุ่มสาระภาษาไทย');
     await page.setViewportSize({ width: 360, height: 800 });
-    const scroller = m.locator('.wt-organizationchart');
+    const scroller = m.locator('.wu-organizationchart');
     const size = await scroller.evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth, right: el.getBoundingClientRect().right }));
     expect(size.scroll).toBeGreaterThan(size.client);
     expect(size.right).toBeLessThanOrEqual(360);
@@ -453,7 +453,7 @@ test.describe('knob', () => {
     await expect(svg).toHaveAttribute('aria-valuetext', '40%');
     await expect(svg).toHaveAttribute('aria-label', 'ระดับเสียง');
     await expect(svg).toHaveAttribute('tabindex', '0');
-    await expect(page.locator('#kn .wt-knob-text')).toHaveText('40%');
+    await expect(page.locator('#kn .wu-knob-text')).toHaveText('40%');
     await svg.focus();
     await page.keyboard.press('ArrowUp');
     await expect(page.locator('#kn-value')).toHaveText('45');
@@ -470,7 +470,7 @@ test.describe('knob', () => {
     expect(Math.round(b.height)).toBe(100);
     await page.mouse.click(b.x + b.width / 2, b.y + 3);
     await expect(page.locator('#kn-value')).toHaveText('50');
-    await expect(page.locator('#kn .wt-knob-text')).toHaveText('50%');
+    await expect(page.locator('#kn .wu-knob-text')).toHaveText('50%');
     await page.mouse.move(b.x + b.width / 2, b.y + 3);
     await page.mouse.down();
     await page.mouse.move(b.x + b.width - 3, b.y + b.height / 2, { steps: 6 });
@@ -486,14 +486,14 @@ test.describe('knob', () => {
     const b = (await ro.boundingBox())!;
     expect(Math.round(b.width)).toBe(80);
     await page.mouse.click(b.x + 6, b.y + b.height / 2);
-    await expect(page.locator('#kn-ro .wt-knob-text')).toHaveText('70');
-    expect(await page.locator('#kn-ro .wt-knob-value').evaluate((el) => getComputedStyle(el).stroke)).toBe('rgb(225, 29, 72)');
-    expect(await page.locator('#kn-ro .wt-knob-range').evaluate((el) => getComputedStyle(el).stroke)).toBe('rgb(253, 230, 138)');
-    expect(await page.locator('#kn-ro .wt-knob-text').evaluate((el) => getComputedStyle(el).fill)).toBe('rgb(225, 29, 72)');
+    await expect(page.locator('#kn-ro .wu-knob-text')).toHaveText('70');
+    expect(await page.locator('#kn-ro .wu-knob-value').evaluate((el) => getComputedStyle(el).stroke)).toBe('rgb(225, 29, 72)');
+    expect(await page.locator('#kn-ro .wu-knob-range').evaluate((el) => getComputedStyle(el).stroke)).toBe('rgb(253, 230, 138)');
+    expect(await page.locator('#kn-ro .wu-knob-text').evaluate((el) => getComputedStyle(el).fill)).toBe('rgb(225, 29, 72)');
     const dis = page.locator('#kn-dis svg');
     await expect(dis).toHaveAttribute('aria-disabled', 'true');
     await expect(dis).toHaveAttribute('tabindex', '-1');
-    await expect(page.locator('#kn-dis .wt-knob-text')).toHaveCount(0);
+    await expect(page.locator('#kn-dis .wu-knob-text')).toHaveCount(0);
     const rf = page.locator('#kn-rf svg');
     await expect(rf).toHaveAttribute('aria-valuenow', '10');
     await expect(rf).toHaveAttribute('aria-valuemin', '-50');
@@ -501,7 +501,7 @@ test.describe('knob', () => {
     await page.keyboard.press('ArrowLeft');
     await expect(page.locator('#kn-rf-value')).toHaveText('9');
     // A range around zero fills from the top of the dial.
-    await expect(page.locator('#kn-rf .wt-knob-value')).toHaveAttribute('d', /^M 50 10 /);
+    await expect(page.locator('#kn-rf .wu-knob-value')).toHaveAttribute('d', /^M 50 10 /);
   });
 });
 
@@ -574,8 +574,8 @@ test.describe('input otp', () => {
     const masked = page.locator('#otp-mask input');
     await expect(masked).toHaveCount(4);
     await expect(masked.nth(0)).toHaveAttribute('type', 'password');
-    await expect(masked.nth(0)).toHaveClass(/wt-inputtext-sm/);
-    await expect(masked.nth(0)).toHaveClass(/wt-inputtext-filled/);
+    await expect(masked.nth(0)).toHaveClass(/wu-inputtext-sm/);
+    await expect(masked.nth(0)).toHaveClass(/wu-inputtext-filled/);
     await masked.nth(0).focus();
     await page.keyboard.type('ab');
     await expect(page.locator('#otp-secret')).toHaveText('ab');

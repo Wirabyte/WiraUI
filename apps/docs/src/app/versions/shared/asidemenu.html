@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <div id="d-am-basic-shell" [style]="shellStyle">
-          <wt-aside-menu
+          <wu-aside-menu
             #basicSide
             id="d-am-basic"
             [model]="local(basicMenu)"
@@ -15,14 +15,14 @@
             [style.height]="'auto'"
             [style.align-self]="'stretch'"
           >
-            <span wtAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
+            <span wuAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
               <span class="docs-navbar-logo" aria-hidden="true">W</span>
               {{ tx('วิระ') }}
             </span>
-          </wt-aside-menu>
+          </wu-aside-menu>
           <div [style]="pageStyle">
             @if (basicSide.mobile) {
-              <wt-button id="d-am-basic-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="basicSide.open()"></wt-button>
+              <wu-button id="d-am-basic-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="basicSide.open()"></wu-button>
             }
             <b id="d-am-basic-page">{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('เนื้อหาของหน้าอยู่ตรงนี้') }}</span>
@@ -42,7 +42,7 @@
     <docs-section id="collapsed" [section]="sec['collapsed']">
       <docs-demo [html]="code['collapsed']" [ts]="ts['collapsed']" layout="stack">
         <div id="d-am-rail-shell" [style]="shellStyle">
-          <wt-aside-menu
+          <wu-aside-menu
             #railSide
             id="d-am-rail"
             [model]="local(railMenu)"
@@ -52,11 +52,11 @@
             [style.height]="'auto'"
             [style.align-self]="'stretch'"
           >
-            <span wtAsideMenuStart class="docs-navbar-logo" aria-hidden="true" [style.margin-inline]="railSide.rail ? 'auto' : '0'">W</span>
-          </wt-aside-menu>
+            <span wuAsideMenuStart class="docs-navbar-logo" aria-hidden="true" [style.margin-inline]="railSide.rail ? 'auto' : '0'">W</span>
+          </wu-aside-menu>
           <div [style]="pageStyle">
             @if (railSide.mobile) {
-              <wt-button id="d-am-rail-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="railSide.open()"></wt-button>
+              <wu-button id="d-am-rail-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="railSide.open()"></wu-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('กดปุ่มย่อเมนู / ขยายเมนูที่ท้ายเมนู แล้วกดกลุ่มเพื่อเปิดแผงข้างแถบ') }}</span>
@@ -71,7 +71,7 @@
     <docs-section id="sections" [section]="sec['sections']">
       <docs-demo [html]="code['sections']" [ts]="ts['sections']" layout="stack">
         <div id="d-am-sections-shell" [style]="shellStyle">
-          <wt-aside-menu
+          <wu-aside-menu
             #sectionSide
             id="d-am-sections"
             [model]="local(sectionMenu)"
@@ -80,10 +80,10 @@
             [multiple]="false"
             [style.height]="'auto'"
             [style.align-self]="'stretch'"
-          ></wt-aside-menu>
+          ></wu-aside-menu>
           <div [style]="pageStyle">
             @if (sectionSide.mobile) {
-              <wt-button id="d-am-sections-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="sectionSide.open()"></wt-button>
+              <wu-button id="d-am-sections-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="sectionSide.open()"></wu-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">{{ tx('ลองกางตารางเรียน แล้วกางผลการเรียน') }}</span>
@@ -96,7 +96,7 @@
       <docs-slot-note slot="start"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['templates']" layout="stack">
         <div id="d-am-tpl-shell" [style]="shellStyle">
-          <wt-aside-menu
+          <wu-aside-menu
             #templateSide
             id="d-am-tpl"
             [model]="local(templateMenu)"
@@ -114,25 +114,25 @@
             </ng-template>
             <ng-template #item let-item let-collapsed="collapsed">
               @if (item.icon) {
-                <i class="wt-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
+                <i class="wu-aside-menu-icon" [class]="item.icon" aria-hidden="true"></i>
               }
-              <span class="wt-aside-menu-label">{{ item.label }}</span>
+              <span class="wu-aside-menu-label">{{ item.label }}</span>
               @if (item.isNew && !collapsed) {
-                <wt-tag [value]="tx('ใหม่')" severity="success"></wt-tag>
+                <wu-tag [value]="tx('ใหม่')" severity="success"></wu-tag>
               }
             </ng-template>
             <ng-template #end let-collapsed>
               <div [style]="{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: '8px', minWidth: '0' }">
-                <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+                <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
                 @if (!collapsed) {
                   <span>{{ tx('ครูสมหญิง ใจดี') }}</span>
                 }
               </div>
             </ng-template>
-          </wt-aside-menu>
+          </wu-aside-menu>
           <div [style]="pageStyle">
             @if (templateSide.mobile) {
-              <wt-button id="d-am-tpl-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="templateSide.open()"></wt-button>
+              <wu-button id="d-am-tpl-open" icon="wi wi-bars" severity="secondary" [text]="true" [ariaLabel]="tx('เปิดเมนู')" (onClick)="templateSide.open()"></wu-button>
             }
             <b>{{ currentPage }}</b>
             <span class="docs-demo-output">collapsed: <code id="d-am-tpl-collapsed">{{ templateCollapsed }}</code></span>
@@ -143,13 +143,13 @@
 
     <docs-section id="mobile" [section]="sec['mobile']">
       <docs-demo [html]="code['mobile']" [ts]="ts['mobile']">
-        <wt-button id="d-am-phone-open" [label]="tx('เมนู')" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wt-button>
-        <wt-aside-menu id="d-am-phone" [model]="local(phoneMenu)" [activeItem]="activeIn(local(phoneMenu))" [(visible)]="isMenuOpen" breakpoint="4000px">
-          <span wtAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
+        <wu-button id="d-am-phone-open" [label]="tx('เมนู')" icon="wi wi-bars" (onClick)="isMenuOpen = true"></wu-button>
+        <wu-aside-menu id="d-am-phone" [model]="local(phoneMenu)" [activeItem]="activeIn(local(phoneMenu))" [(visible)]="isMenuOpen" breakpoint="4000px">
+          <span wuAsideMenuStart class="docs-navbar-brand" [style]="brandStyle">
             <span class="docs-navbar-logo" aria-hidden="true">W</span>
             {{ tx('วิระ') }}
           </span>
-        </wt-aside-menu>
+        </wu-aside-menu>
         <span class="docs-demo-output">
           visible: <code id="d-am-visible">{{ isMenuOpen }}</code> · {{ tx('หน้าปัจจุบัน') }}: <code>{{ currentPage || '-' }}</code>
         </span>
@@ -159,18 +159,18 @@
     <docs-section id="navbar" [section]="sec['navbar']">
       <docs-demo [html]="code['navbar']" [ts]="ts['navbar']" layout="stack">
         <div id="d-am-nav-shell" [style]="shellColumnStyle">
-          <wt-navbar id="d-am-navbar" class="docs-navbar-demo" [model]="local(navLinks)" [activeItem]="activeIn(local(navLinks))" [aside]="navSide">
-            <span wtNavbarBrand class="docs-navbar-brand">{{ tx('วิระ') }}</span>
-          </wt-navbar>
+          <wu-navbar id="d-am-navbar" class="docs-navbar-demo" [model]="local(navLinks)" [activeItem]="activeIn(local(navLinks))" [aside]="navSide">
+            <span wuNavbarBrand class="docs-navbar-brand">{{ tx('วิระ') }}</span>
+          </wu-navbar>
           <div [style]="rowStyle">
-            <wt-aside-menu
+            <wu-aside-menu
               #navSide
               id="d-am-nav-aside"
               [model]="local(navMenu)"
               [activeItem]="activeIn(local(navMenu))"
               [style.height]="'auto'"
               [style.align-self]="'stretch'"
-            ></wt-aside-menu>
+            ></wu-aside-menu>
             <div [style]="pageStyle">
               <b>{{ currentPage }}</b>
               <span class="docs-demo-output">{{ tx('ปุ่มเมนูบนแถบย่อเมนูด้านข้างบนจอกว้าง และเปิดเมนูบนจอแคบ') }}</span>

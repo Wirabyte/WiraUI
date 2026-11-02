@@ -1,11 +1,11 @@
-/* wt-popover. Shared by wiratheme v1, v2 and v3. A card with an arrow under (or, flipped, over) the element that
+/* wu-popover. Shared by wiraui v1, v2 and v3. A card with an arrow under (or, flipped, over) the element that
    opened it, in the top layer. On phones it keeps its anchor but never gets wider than the screen. */
-@layer wiratheme.components {
-  wt-popover,
-  wt-overlaypanel {
+@layer wiraui.components {
+  wu-popover,
+  wu-overlaypanel {
     display: contents;
   }
-  .wt-popover {
+  .wu-popover {
     position: fixed;
     inset: auto;
     z-index: 1100;
@@ -14,26 +14,26 @@
     margin: 0;
     padding: 0;
     overflow: visible;
-    border: 1px solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-overlay-bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
-    color: var(--wt-text);
-    box-shadow: var(--wt-shadow-md);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    animation: wt-popover-in 0.12s ease-out;
+    border: 1px solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-overlay-bg);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
+    color: var(--wu-text);
+    box-shadow: var(--wu-shadow-md);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    animation: wu-popover-in 0.12s ease-out;
   }
   /* The arrow: a rotated square under the border, at the anchor's middle. */
-  .wt-popover::before {
+  .wu-popover::before {
     content: '';
     position: absolute;
-    top: calc(var(--wt-popover-arrow-size) / -2);
+    top: calc(var(--wu-popover-arrow-size) / -2);
     left: var(--_arrow, 1.25rem);
-    width: var(--wt-popover-arrow-size);
-    height: var(--wt-popover-arrow-size);
-    margin-left: calc(var(--wt-popover-arrow-size) / -2);
+    width: var(--wu-popover-arrow-size);
+    height: var(--wu-popover-arrow-size);
+    margin-left: calc(var(--wu-popover-arrow-size) / -2);
     border: inherit;
     border-right: 0;
     border-bottom: 0;
@@ -41,18 +41,18 @@
     background: inherit;
     transform: rotate(45deg);
   }
-  .wt-popover-flipped::before {
+  .wu-popover-flipped::before {
     top: auto;
-    bottom: calc(var(--wt-popover-arrow-size) / -2);
+    bottom: calc(var(--wu-popover-arrow-size) / -2);
     transform: rotate(225deg);
   }
-  .wt-popover-content {
+  .wu-popover-content {
     position: relative;
-    padding: var(--wt-popover-padding);
+    padding: var(--wu-popover-padding);
     max-height: inherit;
     overflow: auto;
   }
-  .wt-popover-close {
+  .wu-popover-close {
     position: absolute;
     top: -0.75rem;
     right: -0.75rem;
@@ -63,28 +63,28 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     cursor: pointer;
-    box-shadow: var(--wt-shadow-sm);
+    box-shadow: var(--wu-shadow-sm);
   }
-  .wt-popover-close:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-popover-close:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-popover-close svg {
+  .wu-popover-close svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  @keyframes wt-popover-in {
+  @keyframes wu-popover-in {
     from {
       opacity: 0;
       transform: translateY(-0.25rem);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-popover {
+    .wu-popover {
       animation: none;
     }
   }

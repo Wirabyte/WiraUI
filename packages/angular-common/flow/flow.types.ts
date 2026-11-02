@@ -8,7 +8,7 @@ import type {
   FlowRect,
   FlowViewport,
   FlowXY,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 
 export type {
   FlowBox,
@@ -39,21 +39,21 @@ export type {
   FlowTreeLayoutOptions,
   FlowViewport,
   FlowXY,
-} from 'wiratheme/core';
+} from 'wiraui/core';
 
-/** Shorter names for templates and apps: `WtFlowNode<Person>` is a `FlowNode<Person>`. */
+/** Shorter names for templates and apps: `WuFlowNode<Person>` is a `FlowNode<Person>`. */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type WtFlowNode<T = any> = FlowNode<T>;
+export type WuFlowNode<T = any> = FlowNode<T>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type WtFlowEdge<T = any> = FlowEdge<T>;
+export type WuFlowEdge<T = any> = FlowEdge<T>;
 
 /**
- * What a node template gets: `<ng-template wtFlowNode="person" let-node>` makes `node` this object
+ * What a node template gets: `<ng-template wuFlowNode="person" let-node>` makes `node` this object
  * (`node.data`, `node.selected`, `node.id` …); each field is also available by name (`let-data="data"`).
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface WtFlowNodeContext<T = any> {
-  $implicit: WtFlowNodeContext<T>;
+export interface WuFlowNodeContext<T = any> {
+  $implicit: WuFlowNodeContext<T>;
   /** The node object as the app gave it (with the flow's latest position / selection). */
   node: FlowNode<T>;
   id: string;
@@ -76,12 +76,12 @@ export interface WtFlowNodeContext<T = any> {
 }
 
 /**
- * What an edge template gets: `<ng-template wtFlowEdge="special" let-edge>` (draw with `<svg:path [attr.d]="edge.path">`),
- * and `wtFlowEdgeLabel` templates (HTML at `labelX`, `labelY`).
+ * What an edge template gets: `<ng-template wuFlowEdge="special" let-edge>` (draw with `<svg:path [attr.d]="edge.path">`),
+ * and `wuFlowEdgeLabel` templates (HTML at `labelX`, `labelY`).
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface WtFlowEdgeContext<T = any> {
-  $implicit: WtFlowEdgeContext<T>;
+export interface WuFlowEdgeContext<T = any> {
+  $implicit: WuFlowEdgeContext<T>;
   edge: FlowEdge<T>;
   id: string;
   type: string;
@@ -107,9 +107,9 @@ export interface WtFlowEdgeContext<T = any> {
   interactionWidth: number;
 }
 
-/** What a `wtFlowConnectionLine` template gets while a connection is dragged. */
-export interface WtFlowConnectionLineContext {
-  $implicit: WtFlowConnectionLineContext;
+/** What a `wuFlowConnectionLine` template gets while a connection is dragged. */
+export interface WuFlowConnectionLineContext {
+  $implicit: WuFlowConnectionLineContext;
   /** The path of the built-in line, for templates that only restyle it. */
   path: string;
   fromX: number;
@@ -125,16 +125,16 @@ export interface WtFlowConnectionLineContext {
 }
 
 /** Where a panel, the minimap or the controls sit in the pane. */
-export type WtFlowPanelPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'center-left' | 'center-right';
+export type WuFlowPanelPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'center-left' | 'center-right';
 
 // ---------- events ----------
 
-export interface WtFlowNodeEvent {
+export interface WuFlowNodeEvent {
   event: MouseEvent | PointerEvent | KeyboardEvent;
   node: FlowNode;
 }
 
-export interface WtFlowNodeDragEvent {
+export interface WuFlowNodeDragEvent {
   event: PointerEvent | KeyboardEvent | null;
   /** The node under the pointer. */
   node: FlowNode;
@@ -142,60 +142,60 @@ export interface WtFlowNodeDragEvent {
   nodes: FlowNode[];
 }
 
-export interface WtFlowEdgeEvent {
+export interface WuFlowEdgeEvent {
   event: MouseEvent | PointerEvent | KeyboardEvent;
   edge: FlowEdge;
 }
 
-export interface WtFlowMoveEvent {
+export interface WuFlowMoveEvent {
   event: Event | null;
   viewport: FlowViewport;
 }
 
-export interface WtFlowConnectStartEvent {
+export interface WuFlowConnectStartEvent {
   event: PointerEvent | KeyboardEvent | null;
   nodeId: string;
   handleId: string | null;
   handleType: 'source' | 'target';
 }
 
-export interface WtFlowConnectEndEvent {
+export interface WuFlowConnectEndEvent {
   event: PointerEvent | KeyboardEvent | null;
   /** The connection made, or null when the drag ended over nothing it could connect to. */
   connection: FlowConnection | null;
   isValid: boolean;
 }
 
-export interface WtFlowReconnectEvent {
+export interface WuFlowReconnectEvent {
   edge: FlowEdge;
   connection: FlowConnection;
 }
 
-export interface WtFlowReconnectStartEvent {
+export interface WuFlowReconnectStartEvent {
   event: PointerEvent;
   edge: FlowEdge;
   /** The end being moved. */
   handleType: 'source' | 'target';
 }
 
-export interface WtFlowReconnectEndEvent {
+export interface WuFlowReconnectEndEvent {
   event: PointerEvent | null;
   edge: FlowEdge;
   connection: FlowConnection | null;
 }
 
-export interface WtFlowSelectionChange {
+export interface WuFlowSelectionChange {
   nodes: FlowNode[];
   edges: FlowEdge[];
 }
 
-export interface WtFlowDeleteEvent {
+export interface WuFlowDeleteEvent {
   nodes: FlowNode[];
   edges: FlowEdge[];
 }
 
 /** An output of a node component (`nodeTypes`): which node, which output, what it sent. */
-export interface WtFlowNodeComponentEvent {
+export interface WuFlowNodeComponentEvent {
   node: FlowNode;
   name: string;
   value: unknown;
@@ -203,12 +203,12 @@ export interface WtFlowNodeComponentEvent {
 
 // ---------- method options ----------
 
-export interface WtFlowViewportOptions {
+export interface WuFlowViewportOptions {
   /** Animation length in ms (0 = jump; skipped when the user asks for reduced motion). */
   duration?: number;
 }
 
-export interface WtFlowFitViewOptions extends WtFlowViewportOptions {
+export interface WuFlowFitViewOptions extends WuFlowViewportOptions {
   /** Fraction of the pane (`0.1`, the default) or px (`'24px'`). */
   padding?: FlowPadding;
   includeHiddenNodes?: boolean;
@@ -218,30 +218,30 @@ export interface WtFlowFitViewOptions extends WtFlowViewportOptions {
   nodes?: (string | { id: string })[];
 }
 
-export interface WtFlowSetCenterOptions extends WtFlowViewportOptions {
+export interface WuFlowSetCenterOptions extends WuFlowViewportOptions {
   /** Default: the current zoom. */
   zoom?: number;
 }
 
-export interface WtFlowFitBoundsOptions extends WtFlowViewportOptions {
+export interface WuFlowFitBoundsOptions extends WuFlowViewportOptions {
   padding?: FlowPadding;
 }
 
 /** `beforeDelete`: return false to keep everything, or the subset to delete. */
-export type WtFlowBeforeDelete = (elements: { nodes: FlowNode[]; edges: FlowEdge[] }) => boolean | { nodes: FlowNode[]; edges: FlowEdge[] } | Promise<boolean | { nodes: FlowNode[]; edges: FlowEdge[] }>;
+export type WuFlowBeforeDelete = (elements: { nodes: FlowNode[]; edges: FlowEdge[] }) => boolean | { nodes: FlowNode[]; edges: FlowEdge[] } | Promise<boolean | { nodes: FlowNode[]; edges: FlowEdge[] }>;
 
 /** A node's box as add-ons see it. */
-export interface WtFlowNodeRect extends FlowRect {
+export interface WuFlowNodeRect extends FlowRect {
   id: string;
   node: FlowNode;
   selected: boolean;
 }
 
 /**
- * The flow as `(init)` hands it over and `@ViewChild(WtFlow)` sees it: viewport, node and edge methods. Every method
+ * The flow as `(init)` hands it over and `@ViewChild(WuFlow)` sees it: viewport, node and edge methods. Every method
  * works before the first render too (it then applies once the flow is measured).
  */
-export interface WtFlowApi {
+export interface WuFlowApi {
   getNodes(): FlowNode[];
   getEdges(): FlowEdge[];
   getNode(id: string): FlowNode | undefined;
@@ -251,20 +251,20 @@ export interface WtFlowApi {
   addNodes(nodes: FlowNode | FlowNode[]): void;
   addEdges(edges: FlowEdge | FlowEdge[]): void;
   getViewport(): FlowViewport;
-  setViewport(viewport: Partial<FlowViewport>, options?: WtFlowViewportOptions): Promise<boolean>;
+  setViewport(viewport: Partial<FlowViewport>, options?: WuFlowViewportOptions): Promise<boolean>;
   getZoom(): number;
-  zoomIn(options?: WtFlowViewportOptions): Promise<boolean>;
-  zoomOut(options?: WtFlowViewportOptions): Promise<boolean>;
-  zoomTo(zoom: number, options?: WtFlowViewportOptions): Promise<boolean>;
-  fitView(options?: WtFlowFitViewOptions): Promise<boolean>;
-  fitBounds(bounds: FlowRect, options?: WtFlowFitBoundsOptions): Promise<boolean>;
-  setCenter(x: number, y: number, options?: WtFlowSetCenterOptions): Promise<boolean>;
+  zoomIn(options?: WuFlowViewportOptions): Promise<boolean>;
+  zoomOut(options?: WuFlowViewportOptions): Promise<boolean>;
+  zoomTo(zoom: number, options?: WuFlowViewportOptions): Promise<boolean>;
+  fitView(options?: WuFlowFitViewOptions): Promise<boolean>;
+  fitBounds(bounds: FlowRect, options?: WuFlowFitBoundsOptions): Promise<boolean>;
+  setCenter(x: number, y: number, options?: WuFlowSetCenterOptions): Promise<boolean>;
   screenToFlowPosition(point: FlowXY, options?: { snapToGrid?: boolean }): FlowXY;
   flowToScreenPosition(point: FlowXY): FlowXY;
 }
 
 /**
  * Injected inside a node template or node component: the node's context, kept up to date
- * (`inject(WT_FLOW_NODE).selected`).
+ * (`inject(WU_FLOW_NODE).selected`).
  */
-export const WT_FLOW_NODE = new InjectionToken<WtFlowNodeContext>('WT_FLOW_NODE');
+export const WU_FLOW_NODE = new InjectionToken<WuFlowNodeContext>('WU_FLOW_NODE');

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtPaginator } from './paginator.component';
+import { WuPaginator } from './paginator.component';
 
-/** For NgModule apps. Standalone apps can import `WtPaginator` directly. */
+/** For NgModule apps. Standalone apps can import `WuPaginator` directly. */
 @NgModule({
-  imports: [WtPaginator],
-  exports: [WtPaginator],
+  imports: [WuPaginator],
+  exports: [WuPaginator],
 })
-export class WtPaginatorModule {}
+export class WuPaginatorModule {}

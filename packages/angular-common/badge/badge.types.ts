@@ -1,4 +1,4 @@
-import type { WtSeverityInput } from 'wiratheme/config';
+import type { WuSeverityInput } from 'wiraui/config';
 
-export type WtBadgeSeverity = WtSeverityInput;
-export type WtBadgeSize = 'small' | 'large' | 'xlarge';
+export type WuBadgeSeverity = WuSeverityInput;
+export type WuBadgeSize = 'small' | 'large' | 'xlarge';

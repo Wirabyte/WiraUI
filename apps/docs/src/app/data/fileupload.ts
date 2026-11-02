@@ -8,9 +8,9 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
   title: 'FileUpload',
   group: 'Form',
   entry: 'fileupload',
-  standalone: 'WtFileUpload',
-  module: 'WtFileUploadModule',
-  selector: 'wt-fileupload',
+  standalone: 'WuFileUpload',
+  module: 'WuFileUploadModule',
+  selector: 'wu-fileupload',
   description: {
     th: 'เลือกไฟล์หรือลากมาวาง ตรวจชนิดและขนาดไฟล์ให้พร้อมข้อความภาษาไทย แสดงรายการไฟล์พร้อมรูปย่อ แล้วให้โค้ดของแอปอัปโหลดเอง หรือส่งไปที่ url ก็ได้ มีทั้งแบบกล่องเต็มและแบบปุ่มเดียว',
     en: 'Choose files or drop them in. Type and size are checked with messages in the reader\'s language, chosen files are listed with thumbnails, and your own code uploads them (or the component posts them to a url). Comes as a full box or a single button.',
@@ -44,8 +44,8 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtFileUploadModule</code> ซึ่งรวม <code>wtTemplate</code> ไว้แล้ว) และ standalone (<code>WtFileUpload</code>) selector <code>wt-fileUpload</code> ก็ใช้ได้ การส่งไฟล์ไปที่ url ใช้ XMLHttpRequest จึงไม่ต้องตั้ง HttpClient',
-        en: 'Works as an NgModule (<code>WtFileUploadModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtFileUpload</code>). The <code>wt-fileUpload</code> selector works too. Posting to a url uses XMLHttpRequest, so no HttpClient setup is needed.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuFileUploadModule</code> ซึ่งรวม <code>wuTemplate</code> ไว้แล้ว) และ standalone (<code>WuFileUpload</code>) selector <code>wu-fileUpload</code> ก็ใช้ได้ การส่งไฟล์ไปที่ url ใช้ XMLHttpRequest จึงไม่ต้องตั้ง HttpClient',
+        en: 'Works as an NgModule (<code>WuFileUploadModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuFileUpload</code>). The <code>wu-fileUpload</code> selector works too. Posting to a url uses XMLHttpRequest, so no HttpClient setup is needed.',
       },
     },
     basic: {
@@ -93,21 +93,21 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-fileUpload&gt;</code> เป็น <code>&lt;wt-fileupload&gt;</code> (หรือ <code>&lt;wt-fileUpload&gt;</code>) input ชื่อเดิม (<code>chooseLabel</code>, <code>maxFileSize</code>, <code>customUpload</code>, <code>chooseStyleClass</code> …) <code>pTemplate="content"</code> / <code>"empty"</code> ใช้ได้ class <code>p-fileupload-*</code> อยู่คู่กับ <code>wt-fileupload-*</code> และโค้ดที่เรียก <code>fileUpload.clear()</code> หรืออ่าน <code>fileUpload.files</code> ใช้ต่อได้ ส่วน <code>chooseButtonProps</code> / <code>uploadButtonProps</code> / <code>cancelButtonProps</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-fileUpload&gt;</code> to <code>&lt;wt-fileupload&gt;</code> (or <code>&lt;wt-fileUpload&gt;</code>). Inputs keep their names (<code>chooseLabel</code>, <code>maxFileSize</code>, <code>customUpload</code>, <code>chooseStyleClass</code> …), <code>pTemplate="content"</code> / <code>"empty"</code> work, the <code>p-fileupload-*</code> classes sit next to <code>wt-fileupload-*</code>, and code that calls <code>fileUpload.clear()</code> or reads <code>fileUpload.files</code> keeps working. <code>chooseButtonProps</code> / <code>uploadButtonProps</code> / <code>cancelButtonProps</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-fileUpload&gt;</code> เป็น <code>&lt;wu-fileupload&gt;</code> (หรือ <code>&lt;wu-fileUpload&gt;</code>) input ชื่อเดิม (<code>chooseLabel</code>, <code>maxFileSize</code>, <code>customUpload</code>, <code>chooseStyleClass</code> …) <code>pTemplate="content"</code> / <code>"empty"</code> ใช้ได้ class <code>p-fileupload-*</code> อยู่คู่กับ <code>wu-fileupload-*</code> และโค้ดที่เรียก <code>fileUpload.clear()</code> หรืออ่าน <code>fileUpload.files</code> ใช้ต่อได้ ส่วน <code>chooseButtonProps</code> / <code>uploadButtonProps</code> / <code>cancelButtonProps</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-fileUpload&gt;</code> to <code>&lt;wu-fileupload&gt;</code> (or <code>&lt;wu-fileUpload&gt;</code>). Inputs keep their names (<code>chooseLabel</code>, <code>maxFileSize</code>, <code>customUpload</code>, <code>chooseStyleClass</code> …), <code>pTemplate="content"</code> / <code>"empty"</code> work, the <code>p-fileupload-*</code> classes sit next to <code>wu-fileupload-*</code>, and code that calls <code>fileUpload.clear()</code> or reads <code>fileUpload.files</code> keeps working. <code>chooseButtonProps</code> / <code>uploadButtonProps</code> / <code>cancelButtonProps</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-fileupload #fileUpload name="documents" [multiple]="true" accept="image/*,application/pdf"
+    basic: `<wu-fileupload #fileUpload name="documents" [multiple]="true" accept="image/*,application/pdf"
   [maxFileSize]="10485760" chooseLabel="เลือกไฟล์" uploadLabel="อัปโหลด" cancelLabel="ยกเลิก"
-  [customUpload]="true" [disabled]="isApiSaving" (uploadHandler)="uploadDocuments($event, fileUpload)"></wt-fileupload>`,
-    validation: `<wt-fileupload name="scores" accept=".xlsx,.xls" [maxFileSize]="1048576" [fileLimit]="3" [multiple]="true"
+  [customUpload]="true" [disabled]="isApiSaving" (uploadHandler)="uploadDocuments($event, fileUpload)"></wu-fileupload>`,
+    validation: `<wu-fileupload name="scores" accept=".xlsx,.xls" [maxFileSize]="1048576" [fileLimit]="3" [multiple]="true"
   chooseLabel="เลือกไฟล์คะแนน" cancelLabel="ล้าง" [showUploadButton]="false"
-  (onSelect)="picked($event)" (onValidationFail)="rejected($event)"></wt-fileupload>`,
-    basicmode: `<wt-fileupload mode="basic" name="photo" accept="image/*" [maxFileSize]="2097152"
-  chooseLabel="เลือกรูปนักเรียน" (onSelect)="pickPhoto($event)" (onClear)="clearPhoto()"></wt-fileupload>`,
-    templates: `<wt-fileupload #attachments name="attachments" [multiple]="true" accept="image/*,application/pdf"
+  (onSelect)="picked($event)" (onValidationFail)="rejected($event)"></wu-fileupload>`,
+    basicmode: `<wu-fileupload mode="basic" name="photo" accept="image/*" [maxFileSize]="2097152"
+  chooseLabel="เลือกรูปนักเรียน" (onSelect)="pickPhoto($event)" (onClear)="clearPhoto()"></wu-fileupload>`,
+    templates: `<wu-fileupload #attachments name="attachments" [multiple]="true" accept="image/*,application/pdf"
   [maxFileSize]="10485760" chooseLabel="แนบไฟล์" cancelLabel="ล้างทั้งหมด" [showUploadButton]="false">
   <ng-template #toolbar>
     <small class="text-color-secondary">PDF หรือรูป ไม่เกิน 10 MB</small>
@@ -116,8 +116,8 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
     <div class="flex align-items-center gap-2">
       <i class="wi wi-file"></i>
       <span class="flex-1">{{ file.name }}</span>
-      <wt-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" ariaLabel="นำออก"
-        (onClick)="attachments.remove($event, i)"></wt-button>
+      <wu-button icon="wi wi-times" severity="danger" [text]="true" [rounded]="true" ariaLabel="นำออก"
+        (onClick)="attachments.remove($event, i)"></wu-button>
     </div>
   </ng-template>
   <ng-template #empty>
@@ -126,17 +126,17 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
       <p>ลากใบรับรองหรือสำเนาบัตรมาวางที่นี่</p>
     </div>
   </ng-template>
-</wt-fileupload>`,
-    server: `<wt-fileupload name="file" url="/api/students/import" accept=".xlsx" [maxFileSize]="10485760"
+</wu-fileupload>`,
+    server: `<wu-fileupload name="file" url="/api/students/import" accept=".xlsx" [maxFileSize]="10485760"
   chooseLabel="เลือกไฟล์" [headers]="uploadHeaders" (onBeforeUpload)="addClass($event)"
-  (onUpload)="imported($event)" (onError)="importFailed($event)"></wt-fileupload>`,
+  (onUpload)="imported($event)" (onError)="importFailed($event)"></wu-fileupload>`,
   },
   ts: {
-    basic: `import { WtFileUpload, WtFileUploadHandlerEvent } from 'wiratheme/fileupload';
+    basic: `import { WuFileUpload, WuFileUploadHandlerEvent } from 'wiraui/fileupload';
 
 isApiSaving = false;
 
-uploadDocuments(event: WtFileUploadHandlerEvent, fileUpload: WtFileUpload): void {
+uploadDocuments(event: WuFileUploadHandlerEvent, fileUpload: WuFileUpload): void {
   this.isApiSaving = true;
   const formData = new FormData();
   for (const file of event.files) formData.append('documents', file, file.name);
@@ -145,43 +145,43 @@ uploadDocuments(event: WtFileUploadHandlerEvent, fileUpload: WtFileUpload): void
     fileUpload.clear();
   });
 }`,
-    validation: `import { WtFileSelectEvent, WtFileValidationFailEvent } from 'wiratheme/fileupload';
+    validation: `import { WuFileSelectEvent, WuFileValidationFailEvent } from 'wiraui/fileupload';
 
 lastPicked = '';
 lastProblem = '';
 
-picked(event: WtFileSelectEvent): void {
+picked(event: WuFileSelectEvent): void {
   this.lastPicked = event.files.map((f) => f.name).join(', ');   // เฉพาะไฟล์ที่ผ่านการตรวจ
 }
 
-rejected(event: WtFileValidationFailEvent): void {
+rejected(event: WuFileValidationFailEvent): void {
   this.lastProblem = event.reason;
 }`,
-    basicmode: `import { WtFileSelectEvent } from 'wiratheme/fileupload';
+    basicmode: `import { WuFileSelectEvent } from 'wiraui/fileupload';
 
 photo: File | null = null;
 
-pickPhoto(event: WtFileSelectEvent): void {
+pickPhoto(event: WuFileSelectEvent): void {
   this.photo = event.files[0] ?? null;   // ส่งไปพร้อมฟอร์มตอนบันทึก
 }
 
 clearPhoto(): void {
   this.photo = null;
 }`,
-    server: `import { WtFileBeforeUploadEvent, WtFileUploadErrorEvent, WtFileUploadEvent } from 'wiratheme/fileupload';
+    server: `import { WuFileBeforeUploadEvent, WuFileUploadErrorEvent, WuFileUploadEvent } from 'wiraui/fileupload';
 
 uploadHeaders = { Authorization: 'Bearer ' + this.auth.token };
 classId = 12;
 
-addClass(event: WtFileBeforeUploadEvent): void {
+addClass(event: WuFileBeforeUploadEvent): void {
   event.formData.append('classId', String(this.classId));
 }
 
-imported(event: WtFileUploadEvent): void {
+imported(event: WuFileUploadEvent): void {
   this.messageService.add({ severity: 'success', summary: 'นำเข้าแล้ว ' + event.files.length + ' ไฟล์' });
 }
 
-importFailed(event: WtFileUploadErrorEvent): void {
+importFailed(event: WuFileUploadErrorEvent): void {
   this.messageService.add({ severity: 'error', summary: 'นำเข้าไม่สำเร็จ', detail: event.xhr.statusText });
 }`,
   },
@@ -222,13 +222,13 @@ importFailed(event: WtFileUploadErrorEvent): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onSelect', 'WtFileSelectEvent', undefined, 'เลือกไฟล์แล้ว (files คือไฟล์ที่ผ่านการตรวจ)', 'Files chosen (files are the ones that passed)'),
-        row('uploadHandler', 'WtFileUploadHandlerEvent', undefined, 'กดอัปโหลด (customUpload)', 'Upload pressed (customUpload)'),
-        row('onValidationFail', 'WtFileValidationFailEvent', undefined, 'ไฟล์ไม่ผ่านการตรวจ', 'A file was turned away'),
-        row('onRemove · onClear', 'WtFileRemoveEvent · void', undefined, 'นำไฟล์ออกหนึ่งไฟล์ / ล้างทั้งหมด', 'One file removed / all cleared'),
-        row('onBeforeUpload · onSend', 'WtFileBeforeUploadEvent · WtFileSendEvent', undefined, 'ก่อนส่ง (เพิ่ม field ได้) / กำลังส่ง', 'Before posting (add fields) / posting'),
-        row('onProgress', 'WtFileProgressEvent', undefined, 'ความคืบหน้า 0–100', 'Progress 0–100'),
-        row('onUpload · onError', 'WtFileUploadEvent · WtFileUploadErrorEvent', undefined, 'ส่งสำเร็จ (2xx) / ไม่สำเร็จ', 'Posted (2xx) / failed'),
+        row('onSelect', 'WuFileSelectEvent', undefined, 'เลือกไฟล์แล้ว (files คือไฟล์ที่ผ่านการตรวจ)', 'Files chosen (files are the ones that passed)'),
+        row('uploadHandler', 'WuFileUploadHandlerEvent', undefined, 'กดอัปโหลด (customUpload)', 'Upload pressed (customUpload)'),
+        row('onValidationFail', 'WuFileValidationFailEvent', undefined, 'ไฟล์ไม่ผ่านการตรวจ', 'A file was turned away'),
+        row('onRemove · onClear', 'WuFileRemoveEvent · void', undefined, 'นำไฟล์ออกหนึ่งไฟล์ / ล้างทั้งหมด', 'One file removed / all cleared'),
+        row('onBeforeUpload · onSend', 'WuFileBeforeUploadEvent · WuFileSendEvent', undefined, 'ก่อนส่ง (เพิ่ม field ได้) / กำลังส่ง', 'Before posting (add fields) / posting'),
+        row('onProgress', 'WuFileProgressEvent', undefined, 'ความคืบหน้า 0–100', 'Progress 0–100'),
+        row('onUpload · onError', 'WuFileUploadEvent · WuFileUploadErrorEvent', undefined, 'ส่งสำเร็จ (2xx) / ไม่สำเร็จ', 'Posted (2xx) / failed'),
         row('onRemoveUploadedFile', '{ file, index }', undefined, 'นำไฟล์ที่อัปโหลดแล้วออก', 'An uploaded file removed'),
         row('onImageError', 'Event', undefined, 'รูปย่อโหลดไม่ได้', 'A thumbnail failed to load'),
       ],
@@ -237,11 +237,11 @@ importFailed(event: WtFileUploadErrorEvent): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #empty, wtTemplate="empty" หรือ pTemplate="empty" ก็ได้', en: 'Write them as #empty, wtTemplate="empty" or pTemplate="empty".' },
+      note: { th: 'เขียนเป็น #empty, wuTemplate="empty" หรือ pTemplate="empty" ก็ได้', en: 'Write them as #empty, wuTemplate="empty" or pTemplate="empty".' },
       rows: [
         row('file', '$implicit (file) · index', undefined, 'แต่ละไฟล์ที่เลือก', 'Each chosen file'),
-        row('content', 'WtFileUploadContentContext', undefined, 'ใต้ (v1) หรือแทน (v2 / v3) รายการไฟล์', 'Under (v1) or instead of (v2 / v3) the file list'),
-        row('header', 'WtFileUploadContentContext', undefined, 'แทนแถบปุ่มทั้งแถบ', 'Replaces the whole button bar'),
+        row('content', 'WuFileUploadContentContext', undefined, 'ใต้ (v1) หรือแทน (v2 / v3) รายการไฟล์', 'Under (v1) or instead of (v2 / v3) the file list'),
+        row('header', 'WuFileUploadContentContext', undefined, 'แทนแถบปุ่มทั้งแถบ', 'Replaces the whole button bar'),
         row('toolbar', '—', undefined, 'ต่อท้ายแถบปุ่ม', 'After the buttons'),
         row('empty', '—', undefined, 'เมื่อยังไม่มีไฟล์', 'Before any file is chosen'),
       ],
@@ -262,26 +262,26 @@ importFailed(event: WtFileUploadErrorEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtFileSelectEvent, WtFileUploadHandlerEvent, WtFileValidationFailEvent } from 'wiratheme/fileupload';
+      code: `import { WuFileSelectEvent, WuFileUploadHandlerEvent, WuFileValidationFailEvent } from 'wiraui/fileupload';
 
-interface WtFileSelectEvent {
+interface WuFileSelectEvent {
   originalEvent: Event;
   files: File[];           // เฉพาะไฟล์ที่ผ่านการตรวจ
   currentFiles: File[];    // ไฟล์ทั้งหมดที่เลือกอยู่
 }
-interface WtFileUploadHandlerEvent { files: File[] }
-interface WtFileValidationFailEvent {
+interface WuFileUploadHandlerEvent { files: File[] }
+interface WuFileValidationFailEvent {
   file: File | null;       // ไฟล์ที่ถูกปฏิเสธ (null เมื่อเกินจำนวน)
   reason: 'type' | 'size' | 'limit';
   message: string;         // ข้อความที่แสดง
 }
-interface WtFileRemoveEvent { originalEvent: Event; file: File }
-interface WtFileBeforeUploadEvent { formData: FormData }
-interface WtFileSendEvent { xhr: XMLHttpRequest; formData: FormData }
-interface WtFileProgressEvent { originalEvent: ProgressEvent; progress: number }
-interface WtFileUploadEvent { originalEvent: Event | XMLHttpRequest; files: File[] }
-interface WtFileUploadErrorEvent { xhr: XMLHttpRequest; files: File[] }
-interface WtFileUploadContentContext {
+interface WuFileRemoveEvent { originalEvent: Event; file: File }
+interface WuFileBeforeUploadEvent { formData: FormData }
+interface WuFileSendEvent { xhr: XMLHttpRequest; formData: FormData }
+interface WuFileProgressEvent { originalEvent: ProgressEvent; progress: number }
+interface WuFileUploadEvent { originalEvent: Event | XMLHttpRequest; files: File[] }
+interface WuFileUploadErrorEvent { xhr: XMLHttpRequest; files: File[] }
+interface WuFileUploadContentContext {
   $implicit: File[];
   files: File[];
   uploadedFiles: File[];
@@ -296,17 +296,17 @@ interface WtFileUploadContentContext {
     },
   ],
   tokens: [
-    tok('--wt-fileupload-border-width', 'ขอบของกล่อง', 'Box border width'),
-    tok('--wt-fileupload-radius', 'ความมนของกล่อง', 'Box radius'),
-    tok('--wt-fileupload-header-padding', 'ระยะในแถบปุ่ม', 'Button bar padding'),
-    tok('--wt-fileupload-header-border-width', 'ขอบของแถบปุ่ม', 'Button bar border width'),
-    tok('--wt-fileupload-header-radius', 'ความมนของแถบปุ่ม', 'Button bar radius'),
-    tok('--wt-fileupload-header-bg', 'พื้นของแถบปุ่ม', 'Button bar background'),
-    tok('--wt-fileupload-content-padding', 'ระยะในพื้นที่วางไฟล์', 'Drop area padding'),
-    tok('--wt-fileupload-content-border-width', 'ขอบของพื้นที่วางไฟล์', 'Drop area border width'),
-    tok('--wt-fileupload-content-radius', 'ความมนของพื้นที่วางไฟล์', 'Drop area radius'),
-    tok('--wt-fileupload-file-gap', 'ระยะระหว่างแถวของไฟล์', 'Gap between file rows'),
-    tok('--wt-fileupload-thumb-radius', 'ความมนของรูปย่อ', 'Thumbnail radius'),
-    tok('--wt-primary-color', 'เส้นประเมื่อลากไฟล์มาวาง และแถบความคืบหน้า', 'The dashed outline while dropping, and the progress bar'),
+    tok('--wu-fileupload-border-width', 'ขอบของกล่อง', 'Box border width'),
+    tok('--wu-fileupload-radius', 'ความมนของกล่อง', 'Box radius'),
+    tok('--wu-fileupload-header-padding', 'ระยะในแถบปุ่ม', 'Button bar padding'),
+    tok('--wu-fileupload-header-border-width', 'ขอบของแถบปุ่ม', 'Button bar border width'),
+    tok('--wu-fileupload-header-radius', 'ความมนของแถบปุ่ม', 'Button bar radius'),
+    tok('--wu-fileupload-header-bg', 'พื้นของแถบปุ่ม', 'Button bar background'),
+    tok('--wu-fileupload-content-padding', 'ระยะในพื้นที่วางไฟล์', 'Drop area padding'),
+    tok('--wu-fileupload-content-border-width', 'ขอบของพื้นที่วางไฟล์', 'Drop area border width'),
+    tok('--wu-fileupload-content-radius', 'ความมนของพื้นที่วางไฟล์', 'Drop area radius'),
+    tok('--wu-fileupload-file-gap', 'ระยะระหว่างแถวของไฟล์', 'Gap between file rows'),
+    tok('--wu-fileupload-thumb-radius', 'ความมนของรูปย่อ', 'Thumbnail radius'),
+    tok('--wu-primary-color', 'เส้นประเมื่อลากไฟล์มาวาง และแถบความคืบหน้า', 'The dashed outline while dropping, and the progress bar'),
   ],
 };

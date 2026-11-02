@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtToolbar } from './toolbar.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuToolbar } from './toolbar.component';
 
-/** For NgModule apps. Standalone apps can import `WtToolbar` directly. */
+/** For NgModule apps. Standalone apps can import `WuToolbar` directly. */
 @NgModule({
-  imports: [WtToolbar, WtTemplate],
-  exports: [WtToolbar, WtTemplate],
+  imports: [WuToolbar, WuTemplate],
+  exports: [WuToolbar, WuTemplate],
 })
-export class WtToolbarModule {}
+export class WuToolbarModule {}

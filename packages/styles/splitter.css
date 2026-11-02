@@ -1,28 +1,28 @@
-/* wt-splitter. Shared by wiratheme v1, v2 and v3. Panels side by side (or stacked) in a framed box with a thin gutter
+/* wu-splitter. Shared by wiraui v1, v2 and v3. Panels side by side (or stacked) in a framed box with a thin gutter
    between each pair; drag a gutter (mouse, pen, touch) or focus it and use the arrow keys. Panels scroll their own
    content; a splitter inside a panel fills it without a second frame. */
-@layer wiratheme.components {
-  wt-splitter {
+@layer wiraui.components {
+  wu-splitter {
     display: block;
     max-width: 100%;
     min-width: 0;
   }
-  .wt-splitter {
+  .wu-splitter {
     display: flex;
     flex-wrap: nowrap;
     box-sizing: border-box;
     height: 100%;
     max-width: 100%;
     min-width: 0;
-    border: var(--wt-splitter-border-width) solid var(--wt-splitter-border-color);
-    border-radius: var(--wt-splitter-radius);
-    background: var(--wt-splitter-bg);
-    color: var(--wt-splitter-color);
+    border: var(--wu-splitter-border-width) solid var(--wu-splitter-border-color);
+    border-radius: var(--wu-splitter-radius);
+    background: var(--wu-splitter-bg);
+    color: var(--wu-splitter-color);
   }
-  .wt-splitter-vertical {
+  .wu-splitter-vertical {
     flex-direction: column;
   }
-  .wt-splitter-panel {
+  .wu-splitter-panel {
     box-sizing: border-box;
     flex-grow: 1;
     flex-shrink: 1;
@@ -30,14 +30,14 @@
     min-height: 0;
     overflow: auto;
   }
-  .wt-splitter-panel > wt-splitter {
+  .wu-splitter-panel > wu-splitter {
     height: 100%;
   }
-  .wt-splitter-panel > wt-splitter > .wt-splitter {
+  .wu-splitter-panel > wu-splitter > .wu-splitter {
     border: 0;
     border-radius: 0;
   }
-  .wt-splitter-gutter {
+  .wu-splitter-gutter {
     position: relative;
     z-index: 1;
     display: flex;
@@ -45,65 +45,65 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    background: var(--wt-splitter-gutter-bg);
+    background: var(--wu-splitter-gutter-bg);
     outline: none;
     touch-action: none;
-    transition: background-color var(--wt-transition);
+    transition: background-color var(--wu-transition);
   }
-  .wt-splitter-horizontal > .wt-splitter-gutter {
+  .wu-splitter-horizontal > .wu-splitter-gutter {
     cursor: col-resize;
   }
-  .wt-splitter-vertical > .wt-splitter-gutter {
+  .wu-splitter-vertical > .wu-splitter-gutter {
     cursor: row-resize;
   }
-  .wt-splitter-gutter:hover,
-  .wt-splitter-gutter-resizing {
-    background: var(--wt-splitter-gutter-active-bg);
+  .wu-splitter-gutter:hover,
+  .wu-splitter-gutter-resizing {
+    background: var(--wu-splitter-gutter-active-bg);
   }
-  .wt-splitter-gutter:focus-visible {
-    background: var(--wt-splitter-gutter-active-bg);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-splitter-gutter:focus-visible {
+    background: var(--wu-splitter-gutter-active-bg);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-splitter-gutter-handle {
-    border-radius: var(--wt-radius-full);
-    background: var(--wt-splitter-handle-bg);
+  .wu-splitter-gutter-handle {
+    border-radius: var(--wu-radius-full);
+    background: var(--wu-splitter-handle-bg);
     pointer-events: none;
   }
-  .wt-splitter-horizontal > .wt-splitter-gutter > .wt-splitter-gutter-handle {
+  .wu-splitter-horizontal > .wu-splitter-gutter > .wu-splitter-gutter-handle {
     width: 100%;
-    height: var(--wt-splitter-handle-length);
+    height: var(--wu-splitter-handle-length);
   }
-  .wt-splitter-vertical > .wt-splitter-gutter > .wt-splitter-gutter-handle {
-    width: var(--wt-splitter-handle-length);
+  .wu-splitter-vertical > .wu-splitter-gutter > .wu-splitter-gutter-handle {
+    width: var(--wu-splitter-handle-length);
     height: 100%;
   }
   /* Fingers get a wider strip to grab than the gutter draws. */
   @media (pointer: coarse) {
-    .wt-splitter-gutter::before {
+    .wu-splitter-gutter::before {
       content: '';
       position: absolute;
     }
-    .wt-splitter-horizontal > .wt-splitter-gutter::before {
-      inset: 0 calc(var(--wt-splitter-hit-size) / -2);
+    .wu-splitter-horizontal > .wu-splitter-gutter::before {
+      inset: 0 calc(var(--wu-splitter-hit-size) / -2);
     }
-    .wt-splitter-vertical > .wt-splitter-gutter::before {
-      inset: calc(var(--wt-splitter-hit-size) / -2) 0;
+    .wu-splitter-vertical > .wu-splitter-gutter::before {
+      inset: calc(var(--wu-splitter-hit-size) / -2) 0;
     }
   }
-  .wt-splitter-resizing {
+  .wu-splitter-resizing {
     user-select: none;
     -webkit-user-select: none;
   }
-  .wt-splitter-horizontal.wt-splitter-resizing {
+  .wu-splitter-horizontal.wu-splitter-resizing {
     cursor: col-resize;
   }
-  .wt-splitter-vertical.wt-splitter-resizing {
+  .wu-splitter-vertical.wu-splitter-resizing {
     cursor: row-resize;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-splitter-gutter {
+    .wu-splitter-gutter {
       transition: none;
     }
   }

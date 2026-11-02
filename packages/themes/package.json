@@ -1,15 +1,15 @@
 {
-  "name": "@wiratheme/themes",
+  "name": "@wiraui/themes",
   "version": "0.1.0",
   "private": true,
-  "description": "WiraTheme SCSS theme module (`@use 'wiratheme/theme' with (…)`) and prebuilt CSS themes. Copied into every wiratheme build.",
+  "description": "WiraUI SCSS theme module (`@use 'wiraui/theme' with (…)`) and prebuilt CSS themes. Copied into every wiraui build.",
   "scripts": {
     "gen": "node scripts/gen-scss-data.mjs",
     "build": "node scripts/gen-scss-data.mjs && node scripts/build-css.mjs",
     "test": "vitest run"
   },
   "devDependencies": {
-    "@wiratheme/core": "workspace:*",
+    "@wiraui/core": "workspace:*",
     "sass": "^1.80.0",
     "sass-158": "npm:sass@1.58.3",
     "vitest": "^3.2.4"

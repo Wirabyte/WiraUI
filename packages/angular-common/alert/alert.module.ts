@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtAlertDialog } from './alert-dialog.component';
+import { WuAlertDialog } from './alert-dialog.component';
 
-/** For NgModule apps; nothing to declare in templates, as alerts are opened from code (`WtAlertService`, `WtAlert`). */
+/** For NgModule apps; nothing to declare in templates, as alerts are opened from code (`WuAlertService`, `WuAlert`). */
 @NgModule({
-  imports: [WtAlertDialog],
-  exports: [WtAlertDialog],
+  imports: [WuAlertDialog],
+  exports: [WuAlertDialog],
 })
-export class WtAlertModule {}
+export class WuAlertModule {}

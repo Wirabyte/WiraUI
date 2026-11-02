@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtPopover } from './popover.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuPopover } from './popover.component';
 
-/** For NgModule apps. Standalone apps can import `WtPopover` directly. */
+/** For NgModule apps. Standalone apps can import `WuPopover` directly. */
 @NgModule({
-  imports: [WtPopover, WtTemplate],
-  exports: [WtPopover, WtTemplate],
+  imports: [WuPopover, WuTemplate],
+  exports: [WuPopover, WuTemplate],
 })
-export class WtPopoverModule {}
+export class WuPopoverModule {}

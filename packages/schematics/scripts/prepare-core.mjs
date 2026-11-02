@@ -1,4 +1,4 @@
-// The schematics ship inside the wiratheme package and must not depend on another npm package,
+// The schematics ship inside the wiraui package and must not depend on another npm package,
 // so the core source is copied in and compiled to CommonJS with them.
 import { cpSync, rmSync } from 'node:fs';
 

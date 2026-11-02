@@ -1,4 +1,4 @@
-/** wt-flow: undo / redo of whole-diagram snapshots, and the keys for them. */
+/** wu-flow: undo / redo of whole-diagram snapshots, and the keys for them. */
 import { flowDeepEqual } from './changes';
 import type { FlowEdge, FlowNode } from './types';
 

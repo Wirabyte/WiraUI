@@ -1,4 +1,4 @@
-/** wt-chart: value axes with round steps, and category bands. */
+/** wu-chart: value axes with round steps, and category bands. */
 
 export interface NiceScale {
   min: number;

@@ -1,26 +1,26 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, EventEmitter, inject, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import { FlowHistory, flowHistoryKey, isTypingTarget } from 'wiratheme/core';
-import { WtFlow } from './flow.component';
+import { ɵtoBool } from 'wiraui/config';
+import { FlowHistory, flowHistoryKey, isTypingTarget } from 'wiraui/core';
+import { WuFlow } from './flow.component';
 
 /** `(historyChange)`: what undo / redo can do now. */
-export interface WtFlowHistoryState {
+export interface WuFlowHistoryState {
   canUndo: boolean;
   canRedo: boolean;
 }
 
 /**
- * Undo / redo for a flow: `<wt-flow wtFlowHistory #history="wtFlowHistory" …>`. Every finished change (a drag that
+ * Undo / redo for a flow: `<wu-flow wuFlowHistory #history="wuFlowHistory" …>`. Every finished change (a drag that
  * ended, a connection, a delete, a resize, the API) is a step; selecting and measuring are not. Ctrl / ⌘ + Z undoes,
  * Ctrl / ⌘ + Shift + Z and Ctrl + Y redo while the flow has focus; `history.undo()` / `history.redo()` for buttons
  * (`[disabled]="!history.canUndo"`). Undoing hands the earlier arrays to `[(nodes)]` / `[(edges)]` like any change.
  */
 @Directive({
-  selector: 'wt-flow[wtFlowHistory]',
+  selector: 'wu-flow[wuFlowHistory]',
   standalone: true,
-  exportAs: 'wtFlowHistory',
+  exportAs: 'wuFlowHistory',
 })
-export class WtFlowHistory implements OnInit, AfterViewInit, OnDestroy {
+export class WuFlowHistory implements OnInit, AfterViewInit, OnDestroy {
   /** Steps kept. Default 100. */
   @Input() historyLimit = 100;
   /** Ctrl / ⌘ + Z and friends. Default true. */
@@ -31,13 +31,13 @@ export class WtFlowHistory implements OnInit, AfterViewInit, OnDestroy {
     return this._keys;
   }
 
-  @Output() readonly historyChange = new EventEmitter<WtFlowHistoryState>();
+  @Output() readonly historyChange = new EventEmitter<WuFlowHistoryState>();
 
   private _keys = true;
   private history = new FlowHistory();
   private stops: (() => void)[] = [];
   private restoring = false;
-  private readonly flow = inject(WtFlow);
+  private readonly flow = inject(WuFlow);
   private readonly zone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -106,7 +106,7 @@ export class WtFlowHistory implements OnInit, AfterViewInit, OnDestroy {
     this.changed();
   }
 
-  private apply(nodes: ReturnType<WtFlow['getNodes']>, edges: ReturnType<WtFlow['getEdges']>): void {
+  private apply(nodes: ReturnType<WuFlow['getNodes']>, edges: ReturnType<WuFlow['getEdges']>): void {
     this.restoring = true;
     try {
       this.flow.ɵrestore(nodes, edges);

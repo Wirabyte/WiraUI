@@ -3,14 +3,14 @@ import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angula
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink, Routes } from '@angular/router';
-import { WtButtonModule } from 'wiratheme/button';
-import { WtCheckboxModule } from 'wiratheme/checkbox';
-import { provideWiraTheme } from 'wiratheme/config';
-import { computeTokens } from 'wiratheme/core';
-import { WiraKawaii } from 'wiratheme/presets';
-import { WtProgressBarModule } from 'wiratheme/progressbar';
-import { WtTagModule } from 'wiratheme/tag';
-import { WtToggleSwitchModule } from 'wiratheme/toggleswitch';
+import { WuButtonModule } from 'wiraui/button';
+import { WuCheckboxModule } from 'wiraui/checkbox';
+import { provideWiraUI } from 'wiraui/config';
+import { computeTokens } from 'wiraui/core';
+import { WiraKawaii } from 'wiraui/presets';
+import { WuProgressBarModule } from 'wiraui/progressbar';
+import { WuTagModule } from 'wiraui/tag';
+import { WuToggleSwitchModule } from 'wiraui/toggleswitch';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
 import { KAWAII } from '../core/secrets';
 import { KAWAII_LOGO_DECOS, KAWAII_LOGO_STILL_SVG } from './kawaii-logo';
@@ -24,7 +24,7 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
 @Component({
   selector: 'docs-secret-kawaii',
   standalone: true,
-  imports: [NgFor, FormsModule, RouterLink, WtButtonModule, WtCheckboxModule, WtProgressBarModule, WtTagModule, WtToggleSwitchModule],
+  imports: [NgFor, FormsModule, RouterLink, WuButtonModule, WuCheckboxModule, WuProgressBarModule, WuTagModule, WuToggleSwitchModule],
   encapsulation: ViewEncapsulation.None,
   template: `
     <main class="docs-kawaii">
@@ -46,7 +46,7 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
       <h1 class="docs-kawaii-title">น่ารักไว้ก่อนนะคะ ♡</h1>
       <p class="docs-kawaii-lead">
         เย้ เจอหน้าลับแล้วค่ะ! ในไลบรารีของเราแอบมีธีมชื่อ <b>WiraKawaii</b> อยู่ สีแดงฟ้าของ Wirabyte ในลุคโลโก้สติกเกอร์น่ารัก ๆ ไม่มีเมนูไหนพามาเลยนะคะ ต้องเรียกชื่อเท่านั้นถึงจะเปิดใช้ได้ค่ะ
-        <span lang="en">You found it. WiraTheme hides a preset called WiraKawaii, in Wirabyte's coral and sky; nothing lists it, only its name turns it on.</span>
+        <span lang="en">You found it. WiraUI hides a preset called WiraKawaii, in Wirabyte's coral and sky; nothing lists it, only its name turns it on.</span>
       </p>
       <p class="docs-kawaii-unlocked" role="status">
         ♡ ปลดล็อก preset <b>WiraKawaii</b> ในแผงแต่งธีมกับ Studio ของเว็บนี้ให้แล้วนะคะ{{ wasUnlocked ? '' : ' (ครั้งแรกเลยค่ะ!)' }}
@@ -55,33 +55,33 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
 
       <section class="docs-kawaii-preview" [style]="previewStyle" aria-label="WiraKawaii preset">
         <div class="docs-kawaii-row">
-          <wt-button label="บันทึก" icon="wi wi-heart"></wt-button>
-          <wt-button label="ยกเลิก" severity="secondary"></wt-button>
-          <wt-button label="ลองดู" [outlined]="true"></wt-button>
-          <wt-button label="ลบ" severity="danger" [text]="true"></wt-button>
+          <wu-button label="บันทึก" icon="wi wi-heart"></wu-button>
+          <wu-button label="ยกเลิก" severity="secondary"></wu-button>
+          <wu-button label="ลองดู" [outlined]="true"></wu-button>
+          <wu-button label="ลบ" severity="danger" [text]="true"></wu-button>
         </div>
         <div class="docs-kawaii-row" lang="ja">
-          <wt-tag value="かわいい"></wt-tag>
-          <wt-tag value="ふわふわ" severity="success"></wt-tag>
-          <wt-tag value="キラキラ" severity="info"></wt-tag>
-          <wt-tag value="ドキドキ" severity="warn"></wt-tag>
-          <wt-tag value="にゃーん" severity="danger"></wt-tag>
+          <wu-tag value="かわいい"></wu-tag>
+          <wu-tag value="ふわふわ" severity="success"></wu-tag>
+          <wu-tag value="キラキラ" severity="info"></wu-tag>
+          <wu-tag value="ドキドキ" severity="warn"></wu-tag>
+          <wu-tag value="にゃーん" severity="danger"></wu-tag>
         </div>
         <div class="docs-kawaii-row">
-          <wt-checkbox [(ngModel)]="cute" [binary]="true" inputId="kawaii-cute" label="น่ารักทุกวันเลยค่ะ"></wt-checkbox>
-          <wt-toggleswitch [(ngModel)]="sparkle" inputId="kawaii-sparkle"></wt-toggleswitch>
+          <wu-checkbox [(ngModel)]="cute" [binary]="true" inputId="kawaii-cute" label="น่ารักทุกวันเลยค่ะ"></wu-checkbox>
+          <wu-toggleswitch [(ngModel)]="sparkle" inputId="kawaii-sparkle"></wu-toggleswitch>
           <label for="kawaii-sparkle">ประกายวิบวับ</label>
         </div>
-        <wt-progressBar [value]="105"></wt-progressBar>
+        <wu-progressBar [value]="105"></wu-progressBar>
       </section>
 
       <div class="docs-kawaii-code">
-        <code>&#64;use 'wiratheme/theme' with ($preset: 'kawaii');</code>
-        <code>provideWiraTheme(&#123; preset: WiraKawaii &#125;)  // import &#123; WiraKawaii &#125; from 'wiratheme/presets'</code>
+        <code>&#64;use 'wiraui/theme' with ($preset: 'kawaii');</code>
+        <code>provideWiraUI(&#123; preset: WiraKawaii &#125;)  // import &#123; WiraKawaii &#125; from 'wiraui/presets'</code>
       </div>
 
       <div class="docs-kawaii-actions">
-        <a class="docs-kawaii-btn docs-kawaii-btn-main" href="kawaii/wiratheme-logo.svg" download="wiratheme-logo.svg">ดาวน์โหลดโลโก้ (SVG)</a>
+        <a class="docs-kawaii-btn docs-kawaii-btn-main" href="kawaii/wiraui-logo.svg" download="wiraui-logo.svg">ดาวน์โหลดโลโก้ (SVG)</a>
         <a class="docs-kawaii-btn" routerLink="/">กลับหน้าแรก</a>
       </div>
     </main>
@@ -243,9 +243,9 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
         box-sizing: border-box;
         padding: 1.25rem;
         border-radius: 1.25rem;
-        background: var(--wt-card-bg);
-        color: var(--wt-text);
-        font-family: var(--wt-font-family);
+        background: var(--wu-card-bg);
+        color: var(--wu-text);
+        font-family: var(--wu-font-family);
         box-shadow: 0 20px 60px -20px rgba(255, 107, 107, 0.4);
         text-align: start;
       }
@@ -347,7 +347,7 @@ export class SecretKawaii implements OnInit, OnDestroy {
 
   constructor() {
     KAWAII.unlock();
-    for (const [k, v] of Object.entries(computeTokens(WiraKawaii.config).light)) this.previewStyle[`--wt-${k}`] = String(v);
+    for (const [k, v] of Object.entries(computeTokens(WiraKawaii.config).light)) this.previewStyle[`--wu-${k}`] = String(v);
   }
 
   ngOnInit(): void {
@@ -365,5 +365,5 @@ export class SecretKawaii implements OnInit, OnDestroy {
 }
 
 export const SECRET_ROUTES: Routes = [
-  { path: '', component: SecretKawaii, title: 'WiraTheme ♡', providers: [provideWiraTheme({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
+  { path: '', component: SecretKawaii, title: 'WiraUI ♡', providers: [provideWiraUI({ locale: 'th', calendar: 'buddhist' }), THEME_LANDING] },
 ];

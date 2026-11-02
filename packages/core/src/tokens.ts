@@ -19,7 +19,7 @@ import { DarkMode, ThemeConfig } from './config';
 import { apcaContrast, generatePalette, Palette, SHADES } from './color';
 import { FAMILIES } from './families';
 
-/** Token name (without `--wt-`) → CSS value. */
+/** Token name (without `--wu-`) → CSS value. */
 export type TokenMap = Record<string, string>;
 export interface ThemeTokens {
   /** Applies in both modes unless `dark` redefines it. */
@@ -30,7 +30,7 @@ export interface ThemeTokens {
   compat?: TokenMap;
 }
 
-export const SURFACE_DARK_REF = 'var(--wt-surface-950)';
+export const SURFACE_DARK_REF = 'var(--wu-surface-950)';
 
 export function emptyTokens(): ThemeTokens {
   return { light: {}, dark: {} };
@@ -47,7 +47,7 @@ export function mergeTokens(target: ThemeTokens, ...sources: ThemeTokens[]): The
 /** How much worse (in APCA Lc) white text may read than dark text and still be chosen. */
 const WHITE_LEAN = 5;
 
-/** White or the darkest surface, whichever reads better on `bg` (APCA). Same rule as `wt-best-on()` in Sass. */
+/** White or the darkest surface, whichever reads better on `bg` (APCA). Same rule as `wu-best-on()` in Sass. */
 export function bestOn(bg: string, surface950: string): string {
   // APCA, leaning to white (within 5 Lc): solid buttons in teal, blue, red or emerald get white text; light
   // colours such as amber, lime or yellow keep dark text.
@@ -119,7 +119,7 @@ export function shadowTokens(id: ShadowId): ThemeTokens {
   return { light: { 'shadow-sm': s[0], 'shadow-md': s[1], 'shadow-lg': s[2] }, dark: {} };
 }
 
-const RING = '0 0 0 0.2rem var(--wt-focus-ring-color)';
+const RING = '0 0 0 0.2rem var(--wu-focus-ring-color)';
 
 /** Focus styles for buttons/checkboxes/switches (control-*) and text fields (field-*). See FOCUS_STYLES. */
 export function focusTokens(mode: FocusRing): ThemeTokens {
@@ -128,16 +128,16 @@ export function focusTokens(mode: FocusRing): ThemeTokens {
     mode === 'ring'
       ? { ...none, shadow: RING }
       : mode === 'outline'
-        ? { ...none, outline: '1px solid var(--wt-primary-color)', offset: '2px' }
+        ? { ...none, outline: '1px solid var(--wu-primary-color)', offset: '2px' }
         : mode === 'bold'
-          ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '2px' }
+          ? { ...none, outline: '2px solid var(--wu-primary-color)', offset: '2px' }
           : none;
   // Fields turn their border the primary colour; ring and outline add a soft halo that follows the field's radius.
   const field =
     mode === 'inset'
-      ? { ...none, shadow: 'inset 0 0 0 1px var(--wt-field-focus-border)' }
+      ? { ...none, shadow: 'inset 0 0 0 1px var(--wu-field-focus-border)' }
       : mode === 'bold'
-        ? { ...none, outline: '2px solid var(--wt-primary-color)', offset: '-1px' }
+        ? { ...none, outline: '2px solid var(--wu-primary-color)', offset: '-1px' }
         : { ...none, shadow: RING };
   return {
     light: {
@@ -147,9 +147,9 @@ export function focusTokens(mode: FocusRing): ThemeTokens {
       'field-focus-shadow': field.shadow,
       'field-focus-outline': field.outline,
       'field-focus-offset': field.offset,
-      'focus-ring-color': 'color-mix(in srgb, var(--wt-primary-color) 24%, transparent)',
+      'focus-ring-color': 'color-mix(in srgb, var(--wu-primary-color) 24%, transparent)',
     },
-    dark: { 'focus-ring-color': 'color-mix(in srgb, var(--wt-primary-color) 20%, transparent)' },
+    dark: { 'focus-ring-color': 'color-mix(in srgb, var(--wu-primary-color) 20%, transparent)' },
   };
 }
 
@@ -158,18 +158,18 @@ export function transitionTokens(ms: number): ThemeTokens {
 }
 
 /** A colour of the theme at `pct`% opacity. */
-const see = (token: string, pct: number) => `color-mix(in srgb, var(--wt-${token}) ${pct}%, transparent)`;
+const see = (token: string, pct: number) => `color-mix(in srgb, var(--wu-${token}) ${pct}%, transparent)`;
 
 /**
  * Liquid Glass (material `'glass'`): cards, floating layers and buttons are translucent panes that blur and brighten
  * what is behind them, with a bright rim along their edges and a soft lift. Floating layers use a thicker pane so text
- * stays readable over anything. The page behind (`--wt-backdrop`, used by `.surface-ground`) gets soft colour fields
+ * stays readable over anything. The page behind (`--wu-backdrop`, used by `.surface-ground`) gets soft colour fields
  * from the theme, so there is something for the glass to bend. Without backdrop-filter the panes are simply paler.
  */
 export function materialTokens(m: MaterialMode): ThemeTokens {
   if (m !== 'glass') return { light: { material: m }, dark: {} };
-  const pane = 'blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate))';
-  const lifted = 'var(--wt-glass-highlight), var(--wt-glass-shadow)';
+  const pane = 'blur(var(--wu-glass-blur)) saturate(var(--wu-glass-saturate))';
+  const lifted = 'var(--wu-glass-highlight), var(--wu-glass-shadow)';
   return {
     light: {
       material: m,
@@ -186,10 +186,10 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
         `radial-gradient(40rem 30rem at 104% 8%, ${see('help-300', 45)}, transparent 70%)`,
         `radial-gradient(44rem 34rem at 62% 108%, ${see('info-200', 60)}, transparent 70%)`,
         `radial-gradient(30rem 24rem at 22% 78%, ${see('success-200', 40)}, transparent 70%)`,
-        'var(--wt-ground)',
+        'var(--wu-ground)',
       ].join(', '),
-      border: 'var(--wt-glass-border)',
-      'card-bg': 'var(--wt-glass-bg)',
+      border: 'var(--wu-glass-border)',
+      'card-bg': 'var(--wu-glass-bg)',
       'card-backdrop': pane,
       'card-border-width': '1px',
       'card-shadow': lifted,
@@ -203,7 +203,7 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
       'menubar-submenu-shadow': lifted,
       'datepicker-panel-shadow': lifted,
       'toast-shadow': lifted,
-      'dialog-shadow': 'var(--wt-glass-highlight), 0 30px 80px -20px rgba(15, 23, 42, 0.45)',
+      'dialog-shadow': 'var(--wu-glass-highlight), 0 30px 80px -20px rgba(15, 23, 42, 0.45)',
       // Buttons: capsules with a sheen of light inside and a soft lift; secondary ones are clear glass.
       'button-radius': '999px',
       'button-backdrop': 'blur(14px) saturate(180%)',
@@ -212,17 +212,17 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
       'button-secondary-bg': see('surface-0', 55),
       'button-secondary-hover-bg': see('surface-0', 75),
       'button-secondary-active-bg': see('surface-0', 90),
-      'button-secondary-border': 'var(--wt-glass-border)',
-      'glass-solid': 'var(--wt-surface-0)',
+      'button-secondary-border': 'var(--wu-glass-border)',
+      'glass-solid': 'var(--wu-surface-0)',
       // Small parts drawn over a line (the slider's track, the steps' and timeline's connectors, a flow's edges, the
       // org chart's links) are solid: through glass the line would show across them.
-      'slider-handle-bg': 'var(--wt-glass-solid)',
-      'steps-number-bg': 'var(--wt-glass-solid)',
-      'timeline-marker-bg': 'var(--wt-glass-solid)',
-      'organizationchart-toggle-bg': 'var(--wt-glass-solid)',
-      'flow-node-bg': 'var(--wt-glass-solid)',
-      'flow-handle-border': 'var(--wt-glass-solid)',
-      'flow-resizer-handle-bg': 'var(--wt-glass-solid)',
+      'slider-handle-bg': 'var(--wu-glass-solid)',
+      'steps-number-bg': 'var(--wu-glass-solid)',
+      'timeline-marker-bg': 'var(--wu-glass-solid)',
+      'organizationchart-toggle-bg': 'var(--wu-glass-solid)',
+      'flow-node-bg': 'var(--wu-glass-solid)',
+      'flow-handle-border': 'var(--wu-glass-solid)',
+      'flow-resizer-handle-bg': 'var(--wu-glass-solid)',
     },
     dark: {
       'glass-bg': see('surface-900', 46),
@@ -234,20 +234,20 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
         `radial-gradient(48rem 32rem at 6% -6%, ${see('primary-700', 45)}, transparent 70%)`,
         `radial-gradient(40rem 30rem at 104% 8%, ${see('help-800', 45)}, transparent 70%)`,
         `radial-gradient(44rem 34rem at 62% 108%, ${see('info-800', 50)}, transparent 70%)`,
-        'var(--wt-ground)',
+        'var(--wu-ground)',
       ].join(', '),
-      border: 'var(--wt-glass-border)',
-      'card-bg': 'var(--wt-glass-bg)',
+      border: 'var(--wu-glass-border)',
+      'card-bg': 'var(--wu-glass-bg)',
       'field-bg': see('surface-900', 55),
       'overlay-bg': see('surface-800', 72),
       'dialog-bg': see('surface-800', 78),
-      'dialog-shadow': 'var(--wt-glass-highlight), 0 30px 80px -20px rgba(0, 0, 0, 0.7)',
+      'dialog-shadow': 'var(--wu-glass-highlight), 0 30px 80px -20px rgba(0, 0, 0, 0.7)',
       'button-shadow':
         'inset 0 1px 0.5px rgba(255, 255, 255, 0.35), inset 0 10px 14px -10px rgba(255, 255, 255, 0.25), 0 4px 12px -4px rgba(0, 0, 0, 0.5)',
       'button-secondary-bg': see('surface-0', 10),
       'button-secondary-hover-bg': see('surface-0', 16),
       'button-secondary-active-bg': see('surface-0', 22),
-      'glass-solid': 'var(--wt-surface-900)',
+      'glass-solid': 'var(--wu-surface-900)',
     },
   };
 }
@@ -257,11 +257,11 @@ export function materialTokens(m: MaterialMode): ThemeTokens {
 /** Tokens for an explicit component value set in the Designer, SCSS `$components` or TS overrides. */
 export function componentValue(spec: ComponentTokenSpec, v: number | boolean | string): ThemeTokens {
   if (spec.css === 'card-border-width') return { light: { [spec.css]: v ? '1px' : '0px' }, dark: {} };
-  if (spec.css === 'tag-radius') return { light: { [spec.css]: v ? 'var(--wt-radius-full)' : 'var(--wt-radius-md)' }, dark: {} };
+  if (spec.css === 'tag-radius') return { light: { [spec.css]: v ? 'var(--wu-radius-full)' : 'var(--wu-radius-md)' }, dark: {} };
   if (spec.css === 'table-stripe-bg') {
     return v
-      ? { light: { [spec.css]: 'var(--wt-surface-50)' }, dark: { [spec.css]: 'color-mix(in srgb, var(--wt-surface-700) 40%, var(--wt-surface-800))' } }
-      : { light: { [spec.css]: 'var(--wt-table-row-bg)' }, dark: {} };
+      ? { light: { [spec.css]: 'var(--wu-surface-50)' }, dark: { [spec.css]: 'color-mix(in srgb, var(--wu-surface-700) 40%, var(--wu-surface-800))' } }
+      : { light: { [spec.css]: 'var(--wu-table-row-bg)' }, dark: {} };
   }
   if (typeof v === 'string') return { light: { [spec.css]: v }, dark: {} };
   return { light: { [spec.css]: spec.type === 'px' ? v + 'px' : String(v) }, dark: {} };
@@ -310,7 +310,7 @@ export function computeTokens(c: ThemeConfig): ThemeTokens {
     t.light = { ...t.light, ...t.dark };
     t.dark = {};
   }
-  // Read by WtThemeService (overrides on a dark-only theme) and by `color-scheme` in base.css.
+  // Read by WuThemeService (overrides on a dark-only theme) and by `color-scheme` in base.css.
   t.light['scheme'] = c.scheme;
   if (c.scheme === 'light') t.dark['scheme'] = 'dark';
   const compat = compatAliases(generation);
@@ -324,11 +324,11 @@ export interface CssOptions {
   /** Where light tokens live. Default `:root`. */
   selector?: string;
   darkMode?: DarkMode;
-  /** Selector for class-based dark mode. Default `:root.wt-dark`. */
+  /** Selector for class-based dark mode. Default `:root.wu-dark`. */
   darkSelector?: string;
-  /** Cascade layer to wrap the rules in; null for none. Default `wiratheme.tokens`. */
+  /** Cascade layer to wrap the rules in; null for none. Default `wiraui.tokens`. */
   layer?: string | null;
-  /** Extra declarations put first in the light block, e.g. `--wt-theme-source: css`. */
+  /** Extra declarations put first in the light block, e.g. `--wu-theme-source: css`. */
   extra?: TokenMap;
   indent?: string;
 }
@@ -338,11 +338,11 @@ export interface CssOptions {
  * reboot or preflight file) can sit below the components: wrap them in `@layer reset { … }`. Unlayered app CSS still
  * wins over everything, as intended for the app's own styles.
  */
-export const LAYER_ORDER = '@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;';
+export const LAYER_ORDER = '@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;';
 
 function decls(map: TokenMap, indent: string): string {
   return Object.keys(map)
-    .map((k) => `${indent}--wt-${k}: ${map[k]};`)
+    .map((k) => `${indent}--wu-${k}: ${map[k]};`)
     .join('\n');
 }
 function rawDecls(map: TokenMap, indent: string): string {
@@ -355,7 +355,7 @@ function rawDecls(map: TokenMap, indent: string): string {
 export function tokensToCss(t: ThemeTokens, o: CssOptions = {}): string {
   const selector = o.selector || ':root';
   const darkMode = o.darkMode || 'class';
-  const layer = o.layer === undefined ? 'wiratheme.tokens' : o.layer;
+  const layer = o.layer === undefined ? 'wiraui.tokens' : o.layer;
   const pad = layer ? '  ' : '';
   const i1 = pad + '  ';
   const lines: string[] = [];
@@ -366,7 +366,7 @@ export function tokensToCss(t: ThemeTokens, o: CssOptions = {}): string {
   lines.push(`${pad}}`);
   const darkKeys = Object.keys(t.dark);
   if (darkKeys.length && darkMode === 'class') {
-    lines.push('', `${pad}${o.darkSelector || ':root.wt-dark'} {`, decls(t.dark, i1), `${pad}}`);
+    lines.push('', `${pad}${o.darkSelector || ':root.wu-dark'} {`, decls(t.dark, i1), `${pad}}`);
   } else if (darkKeys.length && darkMode === 'media') {
     lines.push('', `${pad}@media (prefers-color-scheme: dark) {`, `${pad}  ${selector} {`, decls(t.dark, i1 + '  '), `${pad}  }`, `${pad}}`);
   }
@@ -374,10 +374,10 @@ export function tokensToCss(t: ThemeTokens, o: CssOptions = {}): string {
   return layer ? `@layer ${layer} {\n${body}\n}\n` : body + '\n';
 }
 
-/** `--wt-x: v; …` for an inline style attribute, with dark values applied when `mode` is dark. */
+/** `--wu-x: v; …` for an inline style attribute, with dark values applied when `mode` is dark. */
 export function tokensToStyle(t: ThemeTokens, mode: 'light' | 'dark' = 'light'): string {
   const all: TokenMap = { ...t.light, ...(mode === 'dark' ? t.dark : {}) };
-  const own = Object.keys(all).map((k) => `--wt-${k}: ${all[k]}`);
+  const own = Object.keys(all).map((k) => `--wu-${k}: ${all[k]}`);
   const compat = t.compat ? Object.keys(t.compat).map((k) => `${k}: ${t.compat![k]}`) : [];
   return own.concat(compat).join('; ');
 }

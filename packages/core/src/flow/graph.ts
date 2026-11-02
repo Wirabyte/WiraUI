@@ -1,4 +1,4 @@
-/** wt-flow: questions about the graph (who links to whom, where nodes are, what is inside a box). */
+/** wu-flow: questions about the graph (who links to whom, where nodes are, what is inside a box). */
 import { expandRect, getBoundsOfRects, overlapArea, rectsIntersect } from './geometry';
 import type { FlowDimensions, FlowEdge, FlowNode, FlowRect, FlowXY } from './types';
 

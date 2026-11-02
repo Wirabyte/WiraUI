@@ -17,57 +17,57 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWT_SKIP_VERSION_CHECK, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { dockScale } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { dockScale } from 'wiraui/core';
 
 /** `(onItemClick)`: the item clicked (or chosen with Enter / Space). */
-export interface WtDockItemClickEvent {
+export interface WuDockItemClickEvent {
   originalEvent: Event;
-  item: WtMenuItem;
+  item: WuMenuItem;
 }
 
 /** Where the dock sits in its box. */
-export type WtDockPosition = 'bottom' | 'top' | 'left' | 'right';
+export type WuDockPosition = 'bottom' | 'top' | 'left' | 'right';
 
 /** `'mac'`: a floating shelf whose icons swell under the pointer. `'windows'`: a full-width taskbar, icons centred. */
-export type WtDockLook = 'mac' | 'windows';
+export type WuDockLook = 'mac' | 'windows';
 
-const POSITIONS: WtDockPosition[] = ['bottom', 'top', 'left', 'right'];
+const POSITIONS: WuDockPosition[] = ['bottom', 'top', 'left', 'right'];
 const BOUNCE_MS = 1100;
 
 /**
  * A row of launcher icons along an edge of its box, like a desktop's dock or taskbar:
- * `<wt-dock [model]="apps" position="bottom">`. Items are menu items (`label`, `icon`, `image`, `command`, `url`,
+ * `<wu-dock [model]="apps" position="bottom">`. Items are menu items (`label`, `icon`, `image`, `command`, `url`,
  * `routerLink`, `disabled`, `badge`); `active: true` marks a running app with a dot (Windows: a bar, wider for the
  * `current` one); `separator: true` draws a divider. `look="mac"` (default) swells the icons under the pointer and bounces
  * one when clicked; `look="windows"` is a full-width taskbar with `start` and `end` slots (start button, clock and tray).
- * `<ng-template wtTemplate="item" let-item>` (or `pTemplate="item"`) draws each icon. It sits absolutely in its nearest
+ * `<ng-template wuTemplate="item" let-item>` (or `pTemplate="item"`) draws each icon. It sits absolutely in its nearest
  * positioned parent, like the dock it replaces. Arrow keys move along it, Home / End jump, Enter or Space opens.
  */
 @Component({
-  selector: 'wt-dock',
+  selector: 'wu-dock',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink],
   templateUrl: './dock.component.html',
   styleUrls: ['./dock.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-dock-host' },
+  host: { class: 'wu-dock-host' },
 })
-export class WtDock implements AfterViewInit, OnDestroy {
-  @Input() model: WtMenuItem[] | null | undefined;
+export class WuDock implements AfterViewInit, OnDestroy {
+  @Input() model: WuMenuItem[] | null | undefined;
   /** `'bottom'` (default), `'top'`, `'left'` or `'right'`. */
-  @Input() set position(v: WtDockPosition | string | null | undefined) {
-    this._position = POSITIONS.includes(v as WtDockPosition) ? (v as WtDockPosition) : 'bottom';
+  @Input() set position(v: WuDockPosition | string | null | undefined) {
+    this._position = POSITIONS.includes(v as WuDockPosition) ? (v as WuDockPosition) : 'bottom';
   }
-  get position(): WtDockPosition {
+  get position(): WuDockPosition {
     return this._position;
   }
   /** `'mac'` (default) or `'windows'`. */
-  @Input() set look(v: WtDockLook | string | null | undefined) {
+  @Input() set look(v: WuDockLook | string | null | undefined) {
     this._look = v === 'windows' ? 'windows' : 'mac';
   }
-  get look(): WtDockLook {
+  get look(): WuDockLook {
     return this._look;
   }
   /** Icons swell under the pointer (the mac look). Default true. */
@@ -82,11 +82,11 @@ export class WtDock implements AfterViewInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
 
-  @Output() readonly onItemClick = new EventEmitter<WtDockItemClickEvent>();
+  @Output() readonly onItemClick = new EventEmitter<WuDockItemClickEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ViewChild('list') private listRef?: ElementRef<HTMLElement>;
 
   /** The item the keys are on (the one in the tab order). */
@@ -94,8 +94,8 @@ export class WtDock implements AfterViewInit, OnDestroy {
   /** The item bouncing after a click (mac). */
   bouncing = -1;
 
-  private _position: WtDockPosition = 'bottom';
-  private _look: WtDockLook = 'mac';
+  private _position: WuDockPosition = 'bottom';
+  private _look: WuDockLook = 'mac';
   private readonly zone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
@@ -107,13 +107,13 @@ export class WtDock implements AfterViewInit, OnDestroy {
   private fit = 0;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {
     const list = this.listRef?.nativeElement;
     if (!list || typeof window === 'undefined') return;
-    const root = this.host.querySelector<HTMLElement>('.wt-dock');
+    const root = this.host.querySelector<HTMLElement>('.wu-dock');
     if (root && typeof ResizeObserver !== 'undefined') {
       // Shrink the icons when the box is too short for them all (on the next frame: changing them inside the observer's
       // callback would trip its loop warning).
@@ -155,7 +155,7 @@ export class WtDock implements AfterViewInit, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return (this.model || []).filter((i) => i && i.visible !== false);
   }
   get vertical(): boolean {
@@ -176,13 +176,13 @@ export class WtDock implements AfterViewInit, OnDestroy {
     return ɵfindTemplate(this.templates?.toArray(), 'end');
   }
   get classes(): string[] {
-    return ['wt-dock', 'p-dock', `wt-dock-${this._position}`, `p-dock-${this._position}`, `wt-dock-look-${this._look}`, this.styleClass || ''];
+    return ['wu-dock', 'p-dock', `wu-dock-${this._position}`, `p-dock-${this._position}`, `wu-dock-look-${this._look}`, this.styleClass || ''];
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get rootStyle(): Record<string, any> | null {
     return this.style && typeof this.style === 'object' ? this.style : null;
   }
-  hasRoute(item: WtMenuItem): boolean {
+  hasRoute(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
   /** The index among the items that take focus (no separators). */
@@ -192,7 +192,7 @@ export class WtDock implements AfterViewInit, OnDestroy {
 
   // ---------- events ----------
 
-  pick(item: WtMenuItem, index: number, event: Event): void {
+  pick(item: WuMenuItem, index: number, event: Event): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -236,7 +236,7 @@ export class WtDock implements AfterViewInit, OnDestroy {
     event.preventDefault();
     this.focusIndex = next;
     this.cdr.markForCheck();
-    this.host.querySelector<HTMLElement>(`.wt-dock-item[data-index="${next}"] .wt-dock-action`)?.focus();
+    this.host.querySelector<HTMLElement>(`.wu-dock-item[data-index="${next}"] .wu-dock-action`)?.focus();
   }
 
   // ---------- magnification ----------
@@ -246,7 +246,7 @@ export class WtDock implements AfterViewInit, OnDestroy {
   }
 
   private icons(): HTMLElement[] {
-    return Array.from(this.listRef?.nativeElement.querySelectorAll<HTMLElement>('.wt-dock-item') ?? []);
+    return Array.from(this.listRef?.nativeElement.querySelectorAll<HTMLElement>('.wu-dock-item') ?? []);
   }
 
   private measure(): void {
@@ -263,12 +263,12 @@ export class WtDock implements AfterViewInit, OnDestroy {
     const at = this.vertical ? e.clientY : e.clientX;
     const max = Number(this.magnification) > 1 ? Number(this.magnification) : 1.8;
     const reach = this.itemSize * 2.6;
-    this.icons().forEach((el, i) => el.style.setProperty('--wt-dock-scale', dockScale(at - (this.centres[i] ?? at), reach, max).toFixed(3)));
+    this.icons().forEach((el, i) => el.style.setProperty('--wu-dock-scale', dockScale(at - (this.centres[i] ?? at), reach, max).toFixed(3)));
   }
 
   private settle(): void {
     this.centres = [];
-    for (const el of this.icons()) el.style.removeProperty('--wt-dock-scale');
+    for (const el of this.icons()) el.style.removeProperty('--wu-dock-scale');
   }
 
   private fitTo(root: HTMLElement): void {

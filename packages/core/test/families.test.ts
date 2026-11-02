@@ -18,15 +18,15 @@ import {
   VERSION_CATALOG,
 } from '../src';
 
-const refs = (value: string) => Array.from(value.matchAll(/var\(--wt-([a-z0-9-]+)/g), (m) => m[1]);
+const refs = (value: string) => Array.from(value.matchAll(/var\(--wu-([a-z0-9-]+)/g), (m) => m[1]);
 
 describe('preset families', () => {
-  it('resolves every var(--wt-…) a theme references, in light and dark', () => {
+  it('resolves every var(--wu-…) a theme references, in light and dark', () => {
     for (const name of [...PRESET_IDS, ...Object.keys(CLASSIC_THEMES)]) {
       const t = computeTokens(themeConfig(name));
       const defined = new Set(Object.keys(t.light));
       for (const map of [t.light, t.dark, t.compat || {}]) {
-        for (const value of Object.values(map)) for (const r of refs(value)) expect(defined.has(r), `${name}: --wt-${r}`).toBe(true);
+        for (const value of Object.values(map)) for (const r of refs(value)) expect(defined.has(r), `${name}: --wu-${r}`).toBe(true);
       }
     }
   });
@@ -38,7 +38,7 @@ describe('preset families', () => {
     expect(used.size).toBeGreaterThan(40);
     for (const name of [...PRESET_IDS, ...Object.keys(CLASSIC_THEMES)]) {
       const t = computeTokens(themeConfig(name));
-      for (const r of used) expect(t.light[r], `${name}: --wt-${r}`).toBeDefined();
+      for (const r of used) expect(t.light[r], `${name}: --wu-${r}`).toBeDefined();
     }
   });
 
@@ -46,7 +46,7 @@ describe('preset families', () => {
     for (const name of [...PRESET_IDS, ...Object.keys(CLASSIC_THEMES)]) {
       const t = computeTokens(themeConfig(name));
       for (const map of [t.light, t.dark]) {
-        for (const [key, value] of Object.entries(map)) expect(/calc\([^()]*\d(?:rem|px|em|%)\s+-?\d/.test(value), `${name}: --wt-${key}: ${value}`).toBe(false);
+        for (const [key, value] of Object.entries(map)) expect(/calc\([^()]*\d(?:rem|px|em|%)\s+-?\d/.test(value), `${name}: --wu-${key}: ${value}`).toBe(false);
       }
     }
   });
@@ -55,10 +55,10 @@ describe('preset families', () => {
     const lara15 = computeTokens(defaults('sila-classic')).light;
     const mali = computeTokens(defaults('mali')).light;
     const material15 = computeTokens(defaults('material-classic')).light;
-    expect(lara15['button-padding-y']).toBe('calc(0.75rem * var(--wt-density))');
+    expect(lara15['button-padding-y']).toBe('calc(0.75rem * var(--wu-density))');
     expect(lara15['button-font-weight']).toBe('700');
     expect(lara15['checkbox-size']).toBe('22px');
-    expect(mali['button-padding-y']).toBe('calc(0.5rem * var(--wt-density))');
+    expect(mali['button-padding-y']).toBe('calc(0.5rem * var(--wu-density))');
     expect(mali['button-font-weight']).toBe('500');
     expect(mali['checkbox-size']).toBe('1.25rem');
     expect(material15['button-text-transform']).toBe('uppercase');
@@ -68,9 +68,9 @@ describe('preset families', () => {
     for (const id of PRESET_IDS) {
       const t = computeTokens(defaults(id));
       const dark = { ...t.light, ...t.dark };
-      expect(dark['card-bg'], id).toBe(t.light['material'] === 'glass' ? 'var(--wt-glass-bg)' : 'var(--wt-surface-800)');
-      expect(dark['text'], id).toBe('var(--wt-surface-200)');
-      expect(dark['ground'], id).not.toBe('var(--wt-surface-950)');
+      expect(dark['card-bg'], id).toBe(t.light['material'] === 'glass' ? 'var(--wu-glass-bg)' : 'var(--wu-surface-800)');
+      expect(dark['text'], id).toBe('var(--wu-surface-200)');
+      expect(dark['ground'], id).not.toBe('var(--wu-surface-950)');
     }
   });
 
@@ -87,10 +87,10 @@ describe('named themes and version catalogs', () => {
     expect([c.preset, c.surface, c.scheme, c.primary]).toEqual(['sila-classic', 'navy', 'dark', '#14b8a6']);
     const t = computeTokens(c);
     expect(t.dark).toEqual({});
-    expect(t.light['primary-color']).toBe('var(--wt-primary-400)');
-    expect(t.light['ground']).toBe('color-mix(in srgb, var(--wt-surface-900) 60%, var(--wt-surface-800))');
+    expect(t.light['primary-color']).toBe('var(--wu-primary-400)');
+    expect(t.light['ground']).toBe('color-mix(in srgb, var(--wu-surface-900) 60%, var(--wu-surface-800))');
     expect(t.light['surface-950']).toBe('#040d19');
-    expect(tokensToCss(t)).not.toContain('wt-dark');
+    expect(tokensToCss(t)).not.toContain('wu-dark');
   });
 
   it('lists only presets that exist, with the default first in reach', () => {
@@ -124,20 +124,20 @@ describe('named themes and version catalogs', () => {
 describe('PrimeNG compatibility variables', () => {
   it('re-creates PrimeNG 15–17 variables for the classic presets', () => {
     const c = computeTokens(defaults('sila-classic')).compat!;
-    expect(c['--surface-ground']).toBe('var(--wt-ground)');
-    expect(c['--primary-color']).toBe('var(--wt-primary-color)');
+    expect(c['--surface-ground']).toBe('var(--wu-ground)');
+    expect(c['--primary-color']).toBe('var(--wu-primary-color)');
     expect(c['--green-500']).toMatch(/^#/);
     expect(c['--p-primary-color']).toBeUndefined();
-    expect(tokensToCss(computeTokens(defaults('sila-classic')))).toContain('  --surface-border: var(--wt-border);');
+    expect(tokensToCss(computeTokens(defaults('sila-classic')))).toContain('  --surface-border: var(--wu-border);');
   });
 
   it('re-creates PrimeNG 18+ variables and reads --p-card-body-gap overrides', () => {
     const t = computeTokens(defaults('mali'));
-    expect(t.compat!['--p-primary-color']).toBe('var(--wt-primary-color)');
+    expect(t.compat!['--p-primary-color']).toBe('var(--wu-primary-color)');
     expect(t.light['card-body-gap']).toBe('var(--p-card-body-gap, 0.5rem)');
   });
 
-  it('adds nothing for WiraTheme’s own presets', () => {
+  it('adds nothing for WiraUI’s own presets', () => {
     expect(computeTokens(defaults('wira')).compat).toBeUndefined();
   });
 });

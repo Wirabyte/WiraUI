@@ -20,22 +20,22 @@ import {
   ɵlockScroll,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const ZOOM = { step: 0.1, min: 0.5, max: 1.5 };
 
 /**
- * What wt-image does, shared by the v1 and v2/v3 templates: an `<img>`, and with `[preview]="true"` a button over it
+ * What wu-image does, shared by the v1 and v2/v3 templates: an `<img>`, and with `[preview]="true"` a button over it
  * that opens the picture full screen (a modal `<dialog>` in the top layer, so `appendTo` is not needed) with rotate and
  * zoom buttons. Escape, the close button or a click beside the picture closes it.
  */
 @Directive()
-export abstract class ɵWtImageBase implements OnDestroy {
+export abstract class ɵWuImageBase implements OnDestroy {
   @Input() src?: string | null;
   @Input() srcSet?: string;
   @Input() sizes?: string;
@@ -63,7 +63,7 @@ export abstract class ɵWtImageBase implements OnDestroy {
   @Output() readonly onHide = new EventEmitter<void>();
   @Output() readonly onImageError = new EventEmitter<Event>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('indicator', { descendants: false }) protected indicatorRef?: unknown;
   @ContentChild('image', { descendants: false }) protected imageRef?: unknown;
   @ContentChild('preview', { descendants: false }) protected previewRef?: unknown;
@@ -77,14 +77,14 @@ export abstract class ɵWtImageBase implements OnDestroy {
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private _preview = false;
   private unlock: (() => void) | null = null;
   private opener: HTMLElement | null = null;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -92,7 +92,7 @@ export abstract class ɵWtImageBase implements OnDestroy {
     this.unlock?.();
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get indicatorTemplate(): TemplateRef<unknown> | null {
@@ -118,7 +118,7 @@ export abstract class ɵWtImageBase implements OnDestroy {
   }
   /** Context for the `preview` template. */
   get previewContext(): { $implicit: string | null; class: string; style: Record<string, string>; previewCallback: () => void } {
-    return { $implicit: this.previewSrc, class: 'wt-image-original p-image-original', style: { transform: this.transform }, previewCallback: () => this.closePreview() };
+    return { $implicit: this.previewSrc, class: 'wu-image-original p-image-original', style: { transform: this.transform }, previewCallback: () => this.closePreview() };
   }
 
   openPreview(event?: Event): void {
@@ -154,7 +154,7 @@ export abstract class ɵWtImageBase implements OnDestroy {
 
   /** A click on the dark area beside the picture closes it; clicks on the picture and the buttons do not. */
   maskClick(event: MouseEvent): void {
-    if (event.target === event.currentTarget || (event.target as HTMLElement).classList?.contains('wt-image-preview-stage')) this.closePreview();
+    if (event.target === event.currentTarget || (event.target as HTMLElement).classList?.contains('wu-image-preview-stage')) this.closePreview();
   }
 
   rotateRight(): void {

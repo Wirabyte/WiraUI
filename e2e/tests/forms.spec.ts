@@ -2,7 +2,7 @@ import { expect, Page, test } from '@playwright/test';
 
 const json = async (page: Page, sel: string) => JSON.parse((await page.locator(sel).textContent()) || '{}');
 
-/** Computed colour of a CSS colour expression in this page (resolves var(--wt-…)). */
+/** Computed colour of a CSS colour expression in this page (resolves var(--wu-…)). */
 const colorOf = (page: Page, expr: string) =>
   page.evaluate((e) => {
     const probe = document.createElement('span');
@@ -15,34 +15,34 @@ const colorOf = (page: Page, expr: string) =>
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#forms-gallery wt-card').first()).toBeVisible();
+  await expect(page.locator('#forms-gallery wu-card').first()).toBeVisible();
 });
 
 test("forms gallery in each major's own look (light and dark)", async ({ page }, info) => {
   await expect(page.locator('#forms-gallery')).toHaveScreenshot(`forms-gallery-${info.project.name}.png`);
   await page.locator('#toggle-dark button').click();
-  await expect(page.locator('html')).toHaveClass(/wt-dark/);
+  await expect(page.locator('html')).toHaveClass(/wu-dark/);
   await expect(page.locator('#forms-gallery')).toHaveScreenshot(`forms-gallery-${info.project.name}-dark.png`);
 });
 
 // One stylesheet serves every major: with the same preset, v1 and v2 must match the baseline v3 writes.
 test('forms gallery renders the same in every version once they share a preset', async ({ page }) => {
   await page.locator('#use-siam button').click();
-  await expect.poll(() => colorOf(page, 'var(--wt-primary-color)')).toBe('rgb(225, 29, 72)');
+  await expect.poll(() => colorOf(page, 'var(--wu-primary-color)')).toBe('rgb(225, 29, 72)');
   await page.mouse.move(0, 0);
   await expect(page.locator('#forms-gallery')).toHaveScreenshot('forms-gallery-siam.png');
 });
 
 test('card shows title, subtitle, actions, footer, and a skeleton while loading', async ({ page }) => {
   const card = page.locator('#card-basic');
-  await expect(card.locator('.wt-card-title')).toHaveText('ข้อมูลผู้สมัคร');
-  await expect(card.locator('.wt-card-subtitle')).toHaveText('กรอกให้ตรงกับทะเบียนบ้าน');
-  await expect(card.locator('.wt-card-actions wt-button')).toBeVisible();
-  await expect(card.locator('.wt-card-footer wt-button')).toHaveCount(2);
+  await expect(card.locator('.wu-card-title')).toHaveText('ข้อมูลผู้สมัคร');
+  await expect(card.locator('.wu-card-subtitle')).toHaveText('กรอกให้ตรงกับทะเบียนบ้าน');
+  await expect(card.locator('.wu-card-actions wu-button')).toBeVisible();
+  await expect(card.locator('.wu-card-footer wu-button')).toHaveCount(2);
   const loading = page.locator('#card-loading');
-  await expect(loading.locator('.wt-card-skeleton')).toBeVisible();
-  await expect(loading.locator('.wt-card-content')).toBeHidden();
-  await expect(loading.locator('.wt-card-footer')).toBeHidden();
+  await expect(loading.locator('.wu-card-skeleton')).toBeVisible();
+  await expect(loading.locator('.wu-card-content')).toBeHidden();
+  await expect(loading.locator('.wu-card-footer')).toBeHidden();
 });
 
 test('ngModel: every control writes back to the model', async ({ page }) => {
@@ -65,7 +65,7 @@ test('ngModel: every control writes back to the model', async ({ page }) => {
   await page.locator('#tdf-plan-sci input').check();
   await expect.poll(async () => (await json(page, '#tdf-model')).docs).toEqual(['photo']);
   await expect.poll(async () => (await json(page, '#tdf-model')).plan).toBe('sci');
-  await expect(page.locator('#tdf-plan-art label')).not.toHaveClass(/wt-radiobutton-checked/);
+  await expect(page.locator('#tdf-plan-art label')).not.toHaveClass(/wu-radiobutton-checked/);
 });
 
 test('ngModel: autoResize textarea grows with its text', async ({ page }) => {
@@ -82,11 +82,11 @@ test('reactive forms: validation, patchValue, radio group and disable', async ({
 
   // Submitting marks everything touched; invalid controls turn the danger colour.
   await page.locator('#rf-submit button').click();
-  const danger = await colorOf(page, 'var(--wt-danger-color)');
+  const danger = await colorOf(page, 'var(--wu-danger-color)');
   await expect(page.locator('#rf-name')).toHaveClass(/ng-invalid.*ng-touched|ng-touched.*ng-invalid/);
   // poll: border-color has a transition
   await expect.poll(() => page.locator('#rf-name').evaluate((el) => getComputedStyle(el).borderTopColor)).toBe(danger);
-  await expect.poll(() => page.locator('#rf-agree .wt-checkbox-box').evaluate((el) => getComputedStyle(el).borderTopColor)).toBe(danger);
+  await expect.poll(() => page.locator('#rf-agree .wu-checkbox-box').evaluate((el) => getComputedStyle(el).borderTopColor)).toBe(danger);
 
   // patchValue reaches every control.
   await page.locator('#rf-patch button').click();
@@ -95,13 +95,13 @@ test('reactive forms: validation, patchValue, radio group and disable', async ({
   await expect(page.locator('#rf-note')).toHaveValue('บรรทัด 1\nบรรทัด 2');
   await expect(page.locator('#rf-agree input')).toBeChecked();
   await expect(page.locator('#rf-plan-art input')).toBeChecked();
-  await expect(page.locator('#rf-plan-art label')).toHaveClass(/wt-radiobutton-checked/);
+  await expect(page.locator('#rf-plan-art label')).toHaveClass(/wu-radiobutton-checked/);
   await expect(page.locator('#rf-notify input')).toBeChecked();
 
   // Picking another radio unchecks the rest of its FormControl group (not only the native input).
   await page.locator('#rf-plan-sci input').check();
-  await expect(page.locator('#rf-plan-art label')).not.toHaveClass(/wt-radiobutton-checked/);
-  await expect(page.locator('#rf-plan-sci label')).toHaveClass(/wt-radiobutton-checked/);
+  await expect(page.locator('#rf-plan-art label')).not.toHaveClass(/wu-radiobutton-checked/);
+  await expect(page.locator('#rf-plan-sci label')).toHaveClass(/wu-radiobutton-checked/);
   await expect.poll(async () => (await json(page, '#rf-value')).plan).toBe('sci');
 
   // form.disable() / enable() reach every control.

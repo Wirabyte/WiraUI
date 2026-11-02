@@ -1,24 +1,24 @@
 <div
   #root
-  class="wt-select wt-autocomplete p-autocomplete p-component"
+  class="wu-select wu-autocomplete p-autocomplete p-component"
   [ngClass]="styleClass || ''"
-  [class.wt-select-open]="open"
-  [class.wt-select-focus]="focused"
+  [class.wu-select-open]="open"
+  [class.wu-select-focus]="focused"
   [class.p-focus]="focused"
-  [class.wt-select-disabled]="disabled"
+  [class.wu-select-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-select-invalid]="invalid"
+  [class.wu-select-invalid]="invalid"
   [class.p-invalid]="invalid"
-  [class.wt-select-filled]="variant === 'filled'"
-  [class.wt-select-sm]="sizeKey === 'sm'"
-  [class.wt-select-lg]="sizeKey === 'lg'"
+  [class.wu-select-filled]="variant === 'filled'"
+  [class.wu-select-sm]="sizeKey === 'sm'"
+  [class.wu-select-lg]="sizeKey === 'lg'"
   [class.p-autocomplete-dd]="dropdown"
   (mousedown)="keepFocus($event)"
 >
   <input
     #field
     type="text"
-    class="wt-select-label wt-select-editable wt-autocomplete-input p-autocomplete-input p-inputtext"
+    class="wu-select-label wu-select-editable wu-autocomplete-input p-autocomplete-input p-inputtext"
     [ngClass]="inputStyleClass || ''"
     [ngStyle]="inputStyle || null"
     role="combobox"
@@ -45,25 +45,25 @@
     (focus)="fieldFocus($event)"
     (blur)="fieldBlur($event)"
   />
-  <button *ngIf="clearable" type="button" class="wt-select-clear p-autocomplete-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+  <button *ngIf="clearable" type="button" class="wu-select-clear p-autocomplete-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
   </button>
   <button
     *ngIf="dropdown; else loaderOnly"
     type="button"
-    class="wt-select-dropdown wt-autocomplete-dropdown p-autocomplete-dropdown p-button"
+    class="wu-select-dropdown wu-autocomplete-dropdown p-autocomplete-dropdown p-button"
     tabindex="-1"
     [attr.aria-label]="t.showOptions"
     [disabled]="disabled"
     (click)="dropdownClick($event)"
   >
-    <span *ngIf="loading; else chevron" class="wt-select-spinner p-autocomplete-loader" aria-hidden="true"></span>
+    <span *ngIf="loading; else chevron" class="wu-select-spinner p-autocomplete-loader" aria-hidden="true"></span>
     <ng-template #chevron>
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg>
     </ng-template>
   </button>
   <ng-template #loaderOnly>
-    <span *ngIf="loading" class="wt-select-dropdown wt-autocomplete-loading" aria-hidden="true"><span class="wt-select-spinner p-autocomplete-loader"></span></span>
+    <span *ngIf="loading" class="wu-select-dropdown wu-autocomplete-loading" aria-hidden="true"><span class="wu-select-spinner p-autocomplete-loader"></span></span>
   </ng-template>
 </div>
 
@@ -71,16 +71,16 @@
   *ngIf="open"
   #panel
   popover="manual"
-  class="wt-select-overlay wt-autocomplete-overlay p-autocomplete-panel p-component"
+  class="wu-select-overlay wu-autocomplete-overlay p-autocomplete-panel p-component"
   [ngClass]="panelStyleClass || ''"
   [ngStyle]="panelStyle || null"
   (mousedown)="keepFocus($event)"
 >
   <ng-container *ngIf="headerTemplate"><ng-container *ngTemplateOutlet="headerTemplate"></ng-container></ng-container>
-  <div class="wt-select-list-container" [style.max-height]="scrollHeight">
-    <ul #listBox class="wt-select-list p-autocomplete-items" role="listbox" [id]="listId" [attr.aria-label]="ariaLabel || placeholder || null">
+  <div class="wu-select-list-container" [style.max-height]="scrollHeight">
+    <ul #listBox class="wu-select-list p-autocomplete-items" role="listbox" [id]="listId" [attr.aria-label]="ariaLabel || placeholder || null">
       <ng-container *ngFor="let item of items; let i = index; trackBy: trackIndex">
-        <li *ngIf="item.group; else option" class="wt-select-group p-autocomplete-item-group" role="presentation">
+        <li *ngIf="item.group; else option" class="wu-select-group p-autocomplete-item-group" role="presentation">
           <ng-container *ngIf="groupTemplate; else groupLabel">
             <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
           </ng-container>
@@ -88,14 +88,14 @@
         </li>
         <ng-template #option>
           <li
-            class="wt-select-option p-autocomplete-item"
+            class="wu-select-option p-autocomplete-item"
             role="option"
             [id]="optionId(i)"
-            [class.wt-select-option-selected]="isSelected(item)"
+            [class.wu-select-option-selected]="isSelected(item)"
             [class.p-highlight]="isSelected(item)"
-            [class.wt-select-option-active]="i === activeIndex"
+            [class.wu-select-option-active]="i === activeIndex"
             [class.p-focus]="i === activeIndex"
-            [class.wt-select-option-disabled]="item.disabled"
+            [class.wu-select-option-disabled]="item.disabled"
             [class.p-disabled]="item.disabled"
             [attr.aria-selected]="isSelected(item)"
             [attr.aria-disabled]="item.disabled || null"
@@ -105,11 +105,11 @@
             <ng-container *ngIf="itemTemplate; else optionLabel">
               <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, index: i }"></ng-container>
             </ng-container>
-            <ng-template #optionLabel><span class="wt-select-option-label">{{ item.label || ' ' }}</span></ng-template>
+            <ng-template #optionLabel><span class="wu-select-option-label">{{ item.label || ' ' }}</span></ng-template>
           </li>
         </ng-template>
       </ng-container>
-      <li *ngIf="!items.length" class="wt-select-empty p-autocomplete-empty-message" role="option" aria-disabled="true">
+      <li *ngIf="!items.length" class="wu-select-empty p-autocomplete-empty-message" role="option" aria-disabled="true">
         <ng-container *ngIf="emptyTemplate; else emptyLabel"><ng-container *ngTemplateOutlet="emptyTemplate"></ng-container></ng-container>
         <ng-template #emptyLabel>{{ emptyText }}</ng-template>
       </li>

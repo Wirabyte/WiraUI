@@ -1,4 +1,4 @@
-<wt-dialog
+<wu-dialog
   [visible]="visible"
   (visibleChange)="dialogVisible($event)"
   (onHide)="dialogHidden()"
@@ -9,7 +9,7 @@
   [blockScroll]="scrollBlocked"
   [focusOnShow]="focus !== 'none'"
   [style]="dialogStyle"
-  [styleClass]="'wt-confirmdialog p-confirmdialog ' + (c.styleClass || styleClass || '')"
+  [styleClass]="'wu-confirmdialog p-confirmdialog ' + (c.styleClass || styleClass || '')"
   [maskStyleClass]="maskStyleClass"
   [breakpoints]="breakpoints"
   [position]="dialogPosition"
@@ -18,14 +18,14 @@
   [templateHeadless]="headlessTemplate ? headlessWrap : null"
   [templateFooter]="footer"
 >
-  <!-- Only with a confirmation: the content of wt-dialog is created with the page, before any confirm() call. -->
+  <!-- Only with a confirmation: the content of wu-dialog is created with the page, before any confirm() call. -->
   @if (confirmation) {
-  <div class="wt-confirmdialog-body">
+  <div class="wu-confirmdialog-body">
     @if (messageTemplate) {
       <ng-container [ngTemplateOutlet]="messageTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
     } @else {
       @if (builtInIcon) {
-        <span class="wt-confirmdialog-icon p-confirmdialog-icon" [ngClass]="'wt-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
+        <span class="wu-confirmdialog-icon p-confirmdialog-icon" [ngClass]="'wu-confirmdialog-icon-' + builtInIcon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             @switch (builtInIcon) {
@@ -38,13 +38,13 @@
           </svg>
         </span>
       } @else if (iconClass) {
-        <i class="wt-confirmdialog-icon p-confirmdialog-icon" [ngClass]="iconClass"></i>
+        <i class="wu-confirmdialog-icon p-confirmdialog-icon" [ngClass]="iconClass"></i>
       }
-      <span class="wt-confirmdialog-message p-confirmdialog-message">{{ messageText }}</span>
+      <span class="wu-confirmdialog-message p-confirmdialog-message">{{ messageText }}</span>
     }
   </div>
   }
-</wt-dialog>
+</wu-dialog>
 
 <ng-template #headerWrap>
   <ng-container [ngTemplateOutlet]="headerTemplate" [ngTemplateOutletContext]="{ $implicit: confirmation }"></ng-container>
@@ -65,9 +65,9 @@
         (click)="reject()"
       >
         @if (rejectIconClass) {
-          <i [class]="rejectIconClass + ' wt-btn-icon'"></i>
+          <i [class]="rejectIconClass + ' wu-btn-icon'"></i>
         }
-        <span class="wt-btn-label p-button-label">{{ rejectText }}</span>
+        <span class="wu-btn-label p-button-label">{{ rejectText }}</span>
       </button>
     }
     @if (showAccept) {
@@ -79,9 +79,9 @@
         (click)="accept()"
       >
         @if (acceptIconClass) {
-          <i [class]="acceptIconClass + ' wt-btn-icon'"></i>
+          <i [class]="acceptIconClass + ' wu-btn-icon'"></i>
         }
-        <span class="wt-btn-label p-button-label">{{ acceptText }}</span>
+        <span class="wu-btn-label p-button-label">{{ acceptText }}</span>
       </button>
     }
   }

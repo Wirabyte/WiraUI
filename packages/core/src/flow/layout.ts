@@ -1,5 +1,5 @@
 /**
- * wt-flow: automatic layout without a third-party library.
+ * wu-flow: automatic layout without a third-party library.
  *
  * `layoutFlow()` draws a directed graph in layers: ranks by longest path (cycles are broken first), long edges get
  * placeholder points in the ranks they cross, the order inside each rank is improved by barycentre sweeps (keeping the

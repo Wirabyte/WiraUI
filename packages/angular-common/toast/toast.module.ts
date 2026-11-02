@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtToast } from './toast.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuToast } from './toast.component';
 
-/** For NgModule apps. Also exports `WtTemplate` for the message and headless slots. */
+/** For NgModule apps. Also exports `WuTemplate` for the message and headless slots. */
 @NgModule({
-  imports: [WtToast, WtTemplate],
-  exports: [WtToast, WtTemplate],
+  imports: [WuToast, WuTemplate],
+  exports: [WuToast, WuTemplate],
 })
-export class WtToastModule {}
+export class WuToastModule {}

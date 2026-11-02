@@ -6,10 +6,10 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
   title: 'ToggleSwitch',
   group: 'Form',
   entry: 'toggleswitch',
-  standalone: 'WtToggleSwitch',
-  module: 'WtToggleSwitchModule',
+  standalone: 'WuToggleSwitch',
+  module: 'WuToggleSwitchModule',
   forms: true,
-  selector: 'wt-toggleswitch',
+  selector: 'wu-toggleswitch',
   description: {
     th: 'สวิตช์เปิด / ปิดสำหรับ ngModel และ Reactive Forms มี label ในตัว และข้างในเป็น checkbox จริงที่มี role="switch"',
     en: 'An on / off switch for ngModel and reactive forms, with a built-in label. Underneath is a real checkbox with role="switch".',
@@ -37,8 +37,8 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wt-inputSwitch</code> (และ <code>wt-toggleSwitch</code>) ใช้ได้เหมือน <code>wt-toggleswitch</code> ย้ายมาแค่เปลี่ยน prefix',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wt-inputSwitch</code> (and <code>wt-toggleSwitch</code>), works the same as <code>wt-toggleswitch</code>, so moving over is a prefix change.',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wu-inputSwitch</code> (และ <code>wu-toggleSwitch</code>) ใช้ได้เหมือน <code>wu-toggleswitch</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wu-inputSwitch</code> (and <code>wu-toggleSwitch</code>), works the same as <code>wu-toggleswitch</code>, so moving over is a prefix change.',
       },
     },
     basic: { title: 'Basic' },
@@ -53,19 +53,19 @@ export const TOGGLESWITCH_DOC: ComponentDoc = {
     disabled: { title: { th: 'Disabled และ Invalid', en: 'Disabled and Invalid' } },
   },
   code: {
-    sizes: `<wt-toggleswitch name="notify" [(ngModel)]="notify" size="small" label="เล็ก"></wt-toggleswitch>
-<wt-toggleswitch name="notify" [(ngModel)]="notify" label="ปกติ"></wt-toggleswitch>
-<wt-toggleswitch name="notify" [(ngModel)]="notify" size="large" label="ใหญ่"></wt-toggleswitch>`,
-    basic: `<wt-toggleswitch id="d-notify" name="newsletter" [(ngModel)]="newsletter" label="รับข่าวสารทางอีเมล"></wt-toggleswitch>`,
-    values: `<wt-toggleswitch name="status" [(ngModel)]="status" trueValue="active" falseValue="inactive"
-  label="เปิดใช้งานบัญชี"></wt-toggleswitch>`,
+    sizes: `<wu-toggleswitch name="notify" [(ngModel)]="notify" size="small" label="เล็ก"></wu-toggleswitch>
+<wu-toggleswitch name="notify" [(ngModel)]="notify" label="ปกติ"></wu-toggleswitch>
+<wu-toggleswitch name="notify" [(ngModel)]="notify" size="large" label="ใหญ่"></wu-toggleswitch>`,
+    basic: `<wu-toggleswitch id="d-notify" name="newsletter" [(ngModel)]="newsletter" label="รับข่าวสารทางอีเมล"></wu-toggleswitch>`,
+    values: `<wu-toggleswitch name="status" [(ngModel)]="status" trueValue="active" falseValue="inactive"
+  label="เปิดใช้งานบัญชี"></wu-toggleswitch>`,
     reactive: `<form [formGroup]="form">
-  <wt-toggleswitch formControlName="email" label="แจ้งเตือนทางอีเมล"></wt-toggleswitch>
-  <wt-toggleswitch formControlName="sms" label="แจ้งเตือนทาง SMS"></wt-toggleswitch>
+  <wu-toggleswitch formControlName="email" label="แจ้งเตือนทางอีเมล"></wu-toggleswitch>
+  <wu-toggleswitch formControlName="sms" label="แจ้งเตือนทาง SMS"></wu-toggleswitch>
 </form>`,
-    disabled: `<wt-toggleswitch [ngModel]="true" [disabled]="true" label="ปิดอยู่ (เปิด)"></wt-toggleswitch>
-<wt-toggleswitch [ngModel]="false" [disabled]="true" label="ปิดอยู่"></wt-toggleswitch>
-<wt-toggleswitch [invalid]="true" label="Invalid"></wt-toggleswitch>`,
+    disabled: `<wu-toggleswitch [ngModel]="true" [disabled]="true" label="ปิดอยู่ (เปิด)"></wu-toggleswitch>
+<wu-toggleswitch [ngModel]="false" [disabled]="true" label="ปิดอยู่"></wu-toggleswitch>
+<wu-toggleswitch [invalid]="true" label="Invalid"></wu-toggleswitch>`,
   },
   ts: {
     reactive: `form = new FormGroup({
@@ -98,28 +98,28 @@ lockSms(): void {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [{ name: 'onChange', type: 'WtToggleSwitchChangeEvent', description: { th: 'สลับสถานะ', en: 'Toggled' } }],
+      rows: [{ name: 'onChange', type: 'WuToggleSwitchChangeEvent', description: { th: 'สลับสถานะ', en: 'Toggled' } }],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtToggleSwitchChangeEvent {
+      code: `interface WuToggleSwitchChangeEvent {
   checked: boolean;
   originalEvent: Event;
 }`,
     },
   ],
   tokens: [
-    { name: '--wt-switch-width', description: { th: 'ความกว้างของราง', en: 'Track width' } },
-    { name: '--wt-switch-height', description: { th: 'ความสูงของราง', en: 'Track height' } },
-    { name: '--wt-switch-track-bg', description: { th: 'สีราง (ปิด)', en: 'Track (off)' } },
-    { name: '--wt-switch-track-checked-bg', description: { th: 'สีราง (เปิด)', en: 'Track (on)' } },
-    { name: '--wt-switch-track-hover-bg', description: { th: 'สีรางตอนชี้', en: 'Track on hover' } },
-    { name: '--wt-switch-handle-bg', description: { th: 'สีปุ่มวงกลม', en: 'Handle colour' } },
-    { name: '--wt-switch-handle-size', description: { th: 'ขนาดปุ่มวงกลม', en: 'Handle size' } },
-    { name: '--wt-switch-handle-shadow', description: { th: 'เงาของปุ่มวงกลม', en: 'Handle shadow' } },
-    { name: '--wt-switch-border-color', description: { th: 'ขอบราง', en: 'Track border' } },
-    { name: '--wt-control-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
-    { name: '--wt-transition', description: { th: 'ความเร็วตอนเลื่อน', en: 'Slide speed' } },
+    { name: '--wu-switch-width', description: { th: 'ความกว้างของราง', en: 'Track width' } },
+    { name: '--wu-switch-height', description: { th: 'ความสูงของราง', en: 'Track height' } },
+    { name: '--wu-switch-track-bg', description: { th: 'สีราง (ปิด)', en: 'Track (off)' } },
+    { name: '--wu-switch-track-checked-bg', description: { th: 'สีราง (เปิด)', en: 'Track (on)' } },
+    { name: '--wu-switch-track-hover-bg', description: { th: 'สีรางตอนชี้', en: 'Track on hover' } },
+    { name: '--wu-switch-handle-bg', description: { th: 'สีปุ่มวงกลม', en: 'Handle colour' } },
+    { name: '--wu-switch-handle-size', description: { th: 'ขนาดปุ่มวงกลม', en: 'Handle size' } },
+    { name: '--wu-switch-handle-shadow', description: { th: 'เงาของปุ่มวงกลม', en: 'Handle shadow' } },
+    { name: '--wu-switch-border-color', description: { th: 'ขอบราง', en: 'Track border' } },
+    { name: '--wu-control-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
+    { name: '--wu-transition', description: { th: 'ความเร็วตอนเลื่อน', en: 'Slide speed' } },
   ],
 };

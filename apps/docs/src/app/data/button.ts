@@ -5,9 +5,9 @@ export const BUTTON_DOC: ComponentDoc = {
   title: 'Button',
   group: 'Button',
   entry: 'button',
-  standalone: 'WtButton',
-  module: 'WtButtonModule',
-  selector: 'wt-button',
+  standalone: 'WuButton',
+  module: 'WuButtonModule',
+  selector: 'wu-button',
   description: {
     th: 'ปุ่มที่มี [action]: ส่งงานที่ต้องรอให้ แล้วปุ่มจะแสดง spinner และกันกดซ้ำเองจนงานเสร็จ ไม่ต้องเขียน flag loading เอง',
     en: 'A button with [action]: give it the work to wait for and it shows a spinner and ignores repeat clicks until the work is done. No loading flag to manage.',
@@ -71,8 +71,8 @@ export const BUTTON_DOC: ComponentDoc = {
     directive: {
       title: { th: 'ใส่บนแท็ก button เดิม', en: 'On an existing button element' },
       text: {
-        th: '<code>wtButton</code> แต่ง <code>&lt;button&gt;</code> หรือ <code>&lt;a&gt;</code> ที่มีอยู่แล้ว รับ <code>label</code>, <code>icon</code>, <code>severity</code>, <code>size</code>, <code>outlined</code>, <code>text</code>, <code>loading</code> และ <code>badge</code> เหมือน <code>wt-button</code> รับการกดด้วย <code>(click)</code> ปกติ attribute ที่ template เดิมใช้อยู่ก็อ่านได้เหมือนกัน',
-        en: '<code>wtButton</code> styles an existing <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>. It takes <code>label</code>, <code>icon</code>, <code>severity</code>, <code>size</code>, <code>outlined</code>, <code>text</code>, <code>loading</code> and <code>badge</code> like <code>wt-button</code>, and clicks are the usual <code>(click)</code>. The attribute your templates already use is read the same.',
+        th: '<code>wuButton</code> แต่ง <code>&lt;button&gt;</code> หรือ <code>&lt;a&gt;</code> ที่มีอยู่แล้ว รับ <code>label</code>, <code>icon</code>, <code>severity</code>, <code>size</code>, <code>outlined</code>, <code>text</code>, <code>loading</code> และ <code>badge</code> เหมือน <code>wu-button</code> รับการกดด้วย <code>(click)</code> ปกติ attribute ที่ template เดิมใช้อยู่ก็อ่านได้เหมือนกัน',
+        en: '<code>wuButton</code> styles an existing <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>. It takes <code>label</code>, <code>icon</code>, <code>severity</code>, <code>size</code>, <code>outlined</code>, <code>text</code>, <code>loading</code> and <code>badge</code> like <code>wu-button</code>, and clicks are the usual <code>(click)</code>. The attribute your templates already use is read the same.',
       },
     },
     styleclass: {
@@ -106,49 +106,49 @@ export const BUTTON_DOC: ComponentDoc = {
     fluid: { title: 'Fluid' },
   },
   code: {
-    basic: `<wt-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wt-button>`,
-    severity: `<wt-button label="Primary"></wt-button>
-<wt-button label="Secondary" severity="secondary"></wt-button>
-<wt-button label="Success" severity="success"></wt-button>
-<wt-button label="Info" severity="info"></wt-button>
-<wt-button label="Warn" severity="warn"></wt-button>
-<wt-button label="Help" severity="help"></wt-button>
-<wt-button label="Danger" severity="danger"></wt-button>
-<wt-button label="Contrast" severity="contrast"></wt-button>`,
-    variants: `<wt-button label="Outlined" [outlined]="true"></wt-button>
-<wt-button label="Outlined" severity="secondary" [outlined]="true"></wt-button>
-<wt-button label="Text" [text]="true"></wt-button>
-<wt-button label="Text" severity="danger" [text]="true"></wt-button>
+    basic: `<wu-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wu-button>`,
+    severity: `<wu-button label="Primary"></wu-button>
+<wu-button label="Secondary" severity="secondary"></wu-button>
+<wu-button label="Success" severity="success"></wu-button>
+<wu-button label="Info" severity="info"></wu-button>
+<wu-button label="Warn" severity="warn"></wu-button>
+<wu-button label="Help" severity="help"></wu-button>
+<wu-button label="Danger" severity="danger"></wu-button>
+<wu-button label="Contrast" severity="contrast"></wu-button>`,
+    variants: `<wu-button label="Outlined" [outlined]="true"></wu-button>
+<wu-button label="Outlined" severity="secondary" [outlined]="true"></wu-button>
+<wu-button label="Text" [text]="true"></wu-button>
+<wu-button label="Text" severity="danger" [text]="true"></wu-button>
 <!-- หรือ variant="outlined" / variant="text" -->`,
-    shape: `<wt-button label="Raised" [raised]="true"></wt-button>
-<wt-button label="Rounded" [rounded]="true"></wt-button>
-<wt-button label="Rounded" severity="secondary" [rounded]="true" [outlined]="true"></wt-button>`,
+    shape: `<wu-button label="Raised" [raised]="true"></wu-button>
+<wu-button label="Rounded" [rounded]="true"></wu-button>
+<wu-button label="Rounded" severity="secondary" [rounded]="true" [outlined]="true"></wu-button>`,
     sizes: {
-      classic: `<wt-button label="เล็ก" size="small"></wt-button>
-<wt-button label="ปกติ"></wt-button>
-<wt-button label="ใหญ่" size="large"></wt-button>
-<!-- class เดิมก็ได้: <wt-button label="เล็ก" styleClass="p-button-sm"></wt-button> -->`,
-      v3: `<wt-button label="เล็ก" size="small"></wt-button>
-<wt-button label="ปกติ"></wt-button>
-<wt-button label="ใหญ่" size="large"></wt-button>`,
+      classic: `<wu-button label="เล็ก" size="small"></wu-button>
+<wu-button label="ปกติ"></wu-button>
+<wu-button label="ใหญ่" size="large"></wu-button>
+<!-- class เดิมก็ได้: <wu-button label="เล็ก" styleClass="p-button-sm"></wu-button> -->`,
+      v3: `<wu-button label="เล็ก" size="small"></wu-button>
+<wu-button label="ปกติ"></wu-button>
+<wu-button label="ใหญ่" size="large"></wu-button>`,
     },
-    directive: `<button wtButton type="button" label="บันทึก" icon="wi wi-save" (click)="save()"></button>
-<button wtButton type="button" label="ลบ" icon="wi wi-trash" severity="danger" [outlined]="true"
+    directive: `<button wuButton type="button" label="บันทึก" icon="wi wi-save" (click)="save()"></button>
+<button wuButton type="button" label="ลบ" icon="wi wi-trash" severity="danger" [outlined]="true"
   (click)="remove()"></button>
-<a wtButton href="/orders" label="ดูคำสั่งซื้อ" severity="secondary" [text]="true"></a>`,
-    styleclass: `<wt-button label="ลบ" icon="wi wi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wt-button>
-<button wtButton type="button" label="ยกเลิก" class="p-button-text p-button-secondary"></button>`,
-    icons: `<wt-button label="บันทึก" icon="wi wi-check"></wt-button>
-<wt-button label="ส่ง" icon="wi wi-send" iconPos="right"></wt-button>
-<wt-button icon="wi wi-search" ariaLabel="ค้นหา"></wt-button>
-<wt-button icon="wi wi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wt-button>`,
-    badge: `<wt-button label="แจ้งเตือน" icon="wi wi-bell" badge="3"></wt-button>
-<wt-button label="ข้อความ" severity="secondary" badge="12" badgeSeverity="danger"></wt-button>
-<wt-button label="ดูคำสั่งซื้อ" [link]="true" [style]="{ minWidth: '8rem' }"></wt-button>`,
-    action: `<wt-button id="demo-save" label="ส่งข้อมูล" icon="wi wi-send" [action]="save"></wt-button>`,
-    loading: `<wt-button label="บันทึกแบบร่าง" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wt-button>
-<wt-button label="ปิดอยู่" [disabled]="true"></wt-button>`,
-    fluid: `<wt-button label="เข้าสู่ระบบ" [fluid]="true"></wt-button>`,
+<a wuButton href="/orders" label="ดูคำสั่งซื้อ" severity="secondary" [text]="true"></a>`,
+    styleclass: `<wu-button label="ลบ" icon="wi wi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"></wu-button>
+<button wuButton type="button" label="ยกเลิก" class="p-button-text p-button-secondary"></button>`,
+    icons: `<wu-button label="บันทึก" icon="wi wi-check"></wu-button>
+<wu-button label="ส่ง" icon="wi wi-send" iconPos="right"></wu-button>
+<wu-button icon="wi wi-search" ariaLabel="ค้นหา"></wu-button>
+<wu-button icon="wi wi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wu-button>`,
+    badge: `<wu-button label="แจ้งเตือน" icon="wi wi-bell" badge="3"></wu-button>
+<wu-button label="ข้อความ" severity="secondary" badge="12" badgeSeverity="danger"></wu-button>
+<wu-button label="ดูคำสั่งซื้อ" [link]="true" [style]="{ minWidth: '8rem' }"></wu-button>`,
+    action: `<wu-button id="demo-save" label="ส่งข้อมูล" icon="wi wi-send" [action]="save"></wu-button>`,
+    loading: `<wu-button label="บันทึกแบบร่าง" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wu-button>
+<wu-button label="ปิดอยู่" [disabled]="true"></wu-button>`,
+    fluid: `<wu-button label="เข้าสู่ระบบ" [fluid]="true"></wu-button>`,
   },
   ts: {
     basic: `save(): void {
@@ -185,7 +185,7 @@ saveDraft(): void {
         { name: 'label', type: 'string', description: { th: 'ข้อความบนปุ่ม', en: 'Button text' } },
         { name: 'icon', type: 'string', description: { th: 'class ของ icon เช่น wi wi-check หรือ fa-solid fa-floppy-disk', en: 'Icon class, e.g. wi wi-check or fa-solid fa-floppy-disk' } },
         { name: 'iconPos', type: "'left' | 'right'", default: "'left'", description: { th: 'ตำแหน่ง icon', en: 'Icon position' } },
-        { name: 'severity', type: 'WtButtonSeverity', default: "'primary'", description: { th: "สีตามความหมาย รับ 'warning' ด้วย", en: "Colour by meaning; 'warning' is accepted too" } },
+        { name: 'severity', type: 'WuButtonSeverity', default: "'primary'", description: { th: "สีตามความหมาย รับ 'warning' ด้วย", en: "Colour by meaning; 'warning' is accepted too" } },
         { name: 'variant', type: "'solid' | 'outlined' | 'text'", default: "'solid'", description: { th: 'รูปแบบของปุ่ม', en: 'Button style' } },
         { name: 'outlined', type: 'boolean', default: 'false', description: { th: 'ทางลัดของ variant="outlined"', en: 'Shorthand for variant="outlined"' } },
         { name: 'text', type: 'boolean', default: 'false', description: { th: 'ทางลัดของ variant="text"', en: 'Shorthand for variant="text"' } },
@@ -197,9 +197,9 @@ saveDraft(): void {
         { name: 'link', type: 'boolean', default: 'false', description: { th: 'ปุ่มหน้าตาแบบลิงก์', en: 'A button that looks like a link' } },
         { name: 'fluid', type: 'boolean', default: 'false', description: { th: 'กว้างเต็มพื้นที่', en: 'Full width' } },
         { name: 'badge', type: 'string | number', description: { th: 'ตัวเลขหรือข้อความเล็กท้ายปุ่ม', en: 'Small count or text at the end' } },
-        { name: 'badgeSeverity', type: 'WtSeverityInput', description: { th: 'สีของ badge', en: 'Badge colour' } },
+        { name: 'badgeSeverity', type: 'WuSeverityInput', description: { th: 'สีของ badge', en: 'Badge colour' } },
         { name: 'loading', type: 'boolean', default: 'false', description: { th: 'แสดง spinner และกดไม่ได้', en: 'Shows a spinner and blocks clicks' } },
-        { name: 'action', type: 'WtButtonAction', description: { th: 'ฟังก์ชันที่คืน Promise หรือ Observable ปุ่มแสดง loading จนงานเสร็จ', en: 'Function returning a Promise or Observable; the button stays loading until it settles' } },
+        { name: 'action', type: 'WuButtonAction', description: { th: 'ฟังก์ชันที่คืน Promise หรือ Observable ปุ่มแสดง loading จนงานเสร็จ', en: 'Function returning a Promise or Observable; the button stays loading until it settles' } },
         { name: 'disabled', type: 'boolean', default: 'false', description: { th: 'ปิดการกด', en: 'Disables the button' } },
         { name: 'type', type: "'button' | 'submit' | 'reset'", default: "'button'", description: { th: 'type ของ <button> ข้างใน', en: 'type of the inner <button>' } },
         { name: 'ariaLabel', type: 'string', description: { th: 'ชื่อสำหรับ screen reader (จำเป็นเมื่อมีแต่ icon)', en: 'Accessible name (needed for icon-only buttons)' } },
@@ -213,11 +213,11 @@ saveDraft(): void {
     },
     {
       id: 'api-directive',
-      title: { th: 'wtButton (directive)', en: 'wtButton (directive)' },
+      title: { th: 'wuButton (directive)', en: 'wuButton (directive)' },
       note: { th: 'ใส่บน <button> หรือ <a> รับการกดด้วย (click)', en: 'On a <button> or <a>; clicks are (click).' },
       rows: [
         { name: 'label · icon · iconPos', type: 'string', description: { th: 'ข้อความและ icon', en: 'Text and icon' } },
-        { name: 'severity · variant · size', type: 'WtButtonSeverity · WtButtonVariant · WtButtonSize', description: { th: 'สี รูปแบบ และขนาด', en: 'Colour, style and size' } },
+        { name: 'severity · variant · size', type: 'WuButtonSeverity · WuButtonVariant · WuButtonSize', description: { th: 'สี รูปแบบ และขนาด', en: 'Colour, style and size' } },
         { name: 'outlined · text · raised · rounded · loading', type: 'boolean', default: 'false', description: { th: 'รูปแบบและสถานะ', en: 'Style and state' } },
         { name: 'badge', type: 'string | number', description: { th: 'ตัวเลขท้ายปุ่ม', en: 'Count at the end' } },
       ],
@@ -225,32 +225,32 @@ saveDraft(): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'warning' | 'danger' | 'help' | 'contrast';
-type WtButtonVariant = 'solid' | 'outlined' | 'text';
-type WtButtonSize = 'small' | 'large' | 'sm' | 'lg';
-type WtButtonAction = () => Promise<unknown> | Observable<unknown> | unknown;`,
+      code: `type WuButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'warning' | 'danger' | 'help' | 'contrast';
+type WuButtonVariant = 'solid' | 'outlined' | 'text';
+type WuButtonSize = 'small' | 'large' | 'sm' | 'lg';
+type WuButtonAction = () => Promise<unknown> | Observable<unknown> | unknown;`,
     },
   ],
   tokens: [
-    { name: '--wt-button-padding-x', description: { th: 'ระยะซ้ายขวา', en: 'Horizontal padding' } },
-    { name: '--wt-button-padding-y', description: { th: 'ระยะบนล่าง', en: 'Vertical padding' } },
-    { name: '--wt-button-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
-    { name: '--wt-button-font-weight', description: { th: 'น้ำหนักตัวอักษร', en: 'Font weight' } },
-    { name: '--wt-control-line-height', description: { th: 'ความสูงบรรทัด (ปุ่มกับช่องกรอกสูงเท่ากัน)', en: 'Line height (buttons and fields match)' } },
-    { name: '--wt-button-gap', description: { th: 'ระยะระหว่าง icon กับข้อความ', en: 'Gap between icon and label' } },
-    { name: '--wt-button-text-transform', description: { th: 'ตัวพิมพ์ (เช่น uppercase ในธีม Material)', en: 'Text case (e.g. uppercase in Material themes)' } },
-    { name: '--wt-primary-color', description: { th: 'พื้นของปุ่มหลัก', en: 'Primary background' } },
-    { name: '--wt-primary-hover', description: { th: 'พื้นตอนชี้', en: 'Hover background' } },
-    { name: '--wt-primary-active', description: { th: 'พื้นตอนกด', en: 'Pressed background' } },
-    { name: '--wt-primary-contrast', description: { th: 'ตัวอักษรบนปุ่มหลัก', en: 'Text on primary' } },
-    { name: '--wt-button-secondary-bg', description: { th: 'พื้นของ severity="secondary"', en: 'severity="secondary" background' } },
-    { name: '--wt-button-secondary-color', description: { th: 'ตัวอักษรของ severity="secondary"', en: 'severity="secondary" text' } },
-    { name: '--wt-danger-color', description: { th: 'พื้นของ severity="danger" (success / info / warn / help แบบเดียวกัน)', en: 'severity="danger" background (success / info / warn / help alike)' } },
-    { name: '--wt-control-focus-shadow', description: { th: 'วงโฟกัสเมื่อใช้คีย์บอร์ด', en: 'Keyboard focus ring' } },
-    { name: '--wt-shadow-md', description: { th: 'เงาของ raised', en: 'raised shadow' } },
-    { name: '--wt-radius-full', description: { th: 'มุมของ rounded และ badge', en: 'rounded and badge corners' } },
-    { name: '--wt-disabled-opacity', description: { th: 'ความจางเมื่อ disabled', en: 'Disabled opacity' } },
-    { name: '--wt-transition', description: { th: 'ความเร็ว transition', en: 'Transition speed' } },
+    { name: '--wu-button-padding-x', description: { th: 'ระยะซ้ายขวา', en: 'Horizontal padding' } },
+    { name: '--wu-button-padding-y', description: { th: 'ระยะบนล่าง', en: 'Vertical padding' } },
+    { name: '--wu-button-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
+    { name: '--wu-button-font-weight', description: { th: 'น้ำหนักตัวอักษร', en: 'Font weight' } },
+    { name: '--wu-control-line-height', description: { th: 'ความสูงบรรทัด (ปุ่มกับช่องกรอกสูงเท่ากัน)', en: 'Line height (buttons and fields match)' } },
+    { name: '--wu-button-gap', description: { th: 'ระยะระหว่าง icon กับข้อความ', en: 'Gap between icon and label' } },
+    { name: '--wu-button-text-transform', description: { th: 'ตัวพิมพ์ (เช่น uppercase ในธีม Material)', en: 'Text case (e.g. uppercase in Material themes)' } },
+    { name: '--wu-primary-color', description: { th: 'พื้นของปุ่มหลัก', en: 'Primary background' } },
+    { name: '--wu-primary-hover', description: { th: 'พื้นตอนชี้', en: 'Hover background' } },
+    { name: '--wu-primary-active', description: { th: 'พื้นตอนกด', en: 'Pressed background' } },
+    { name: '--wu-primary-contrast', description: { th: 'ตัวอักษรบนปุ่มหลัก', en: 'Text on primary' } },
+    { name: '--wu-button-secondary-bg', description: { th: 'พื้นของ severity="secondary"', en: 'severity="secondary" background' } },
+    { name: '--wu-button-secondary-color', description: { th: 'ตัวอักษรของ severity="secondary"', en: 'severity="secondary" text' } },
+    { name: '--wu-danger-color', description: { th: 'พื้นของ severity="danger" (success / info / warn / help แบบเดียวกัน)', en: 'severity="danger" background (success / info / warn / help alike)' } },
+    { name: '--wu-control-focus-shadow', description: { th: 'วงโฟกัสเมื่อใช้คีย์บอร์ด', en: 'Keyboard focus ring' } },
+    { name: '--wu-shadow-md', description: { th: 'เงาของ raised', en: 'raised shadow' } },
+    { name: '--wu-radius-full', description: { th: 'มุมของ rounded และ badge', en: 'rounded and badge corners' } },
+    { name: '--wu-disabled-opacity', description: { th: 'ความจางเมื่อ disabled', en: 'Disabled opacity' } },
+    { name: '--wu-transition', description: { th: 'ความเร็ว transition', en: 'Transition speed' } },
   ],
   overrides: `    button: { fontWeight: 600, radius: '999px', paddingX: '1.25rem' },`,
 };

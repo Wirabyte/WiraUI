@@ -1,9 +1,9 @@
 <div [class]="classes" [style]="rootStyle">
-  <img *ngIf="image" class="wt-chip-image" [src]="image" [alt]="alt || label || ''" (error)="onImageError.emit($event)" />
-  <span *ngIf="!image && icon" [class]="'wt-chip-icon p-chip-icon ' + icon" aria-hidden="true"></span>
-  <span *ngIf="label" class="wt-chip-label p-chip-text">{{ label }}</span>
+  <img *ngIf="image" class="wu-chip-image" [src]="image" [alt]="alt || label || ''" (error)="onImageError.emit($event)" />
+  <span *ngIf="!image && icon" [class]="'wu-chip-icon p-chip-icon ' + icon" aria-hidden="true"></span>
+  <span *ngIf="label" class="wu-chip-label p-chip-text">{{ label }}</span>
   <ng-content></ng-content>
-  <button *ngIf="removable" type="button" class="wt-chip-remove pi-chip-remove-icon" [attr.aria-label]="removeLabel" (click)="remove($event)">
+  <button *ngIf="removable" type="button" class="wu-chip-remove pi-chip-remove-icon" [attr.aria-label]="removeLabel" (click)="remove($event)">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
   </button>
 </div>

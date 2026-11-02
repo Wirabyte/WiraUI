@@ -1,13 +1,13 @@
 /** `warning`, `danger` are read as warn and error. */
-export type WtToastSeverity = 'success' | 'info' | 'warn' | 'warning' | 'error' | 'danger' | 'secondary' | 'contrast';
-export type WtToastPosition = 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center' | 'center';
+export type WuToastSeverity = 'success' | 'info' | 'warn' | 'warning' | 'error' | 'danger' | 'secondary' | 'contrast';
+export type WuToastPosition = 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center' | 'center';
 
 /** One toast. Field names are the ones existing `add()` calls already use. */
-export interface WtToastMessage {
-  severity?: WtToastSeverity | string;
+export interface WuToastMessage {
+  severity?: WuToastSeverity | string;
   summary?: string;
   detail?: string;
-  /** Matches `<wt-toast key="…">`; without a key every toast without one shows it. */
+  /** Matches `<wu-toast key="…">`; without a key every toast without one shows it. */
   key?: string;
   id?: unknown;
   /** Milliseconds on screen. Default: the toast's `life` (3000). */
@@ -25,6 +25,6 @@ export interface WtToastMessage {
   text?: string;
 }
 
-export interface WtToastCloseEvent {
-  message: WtToastMessage;
+export interface WuToastCloseEvent {
+  message: WuToastMessage;
 }

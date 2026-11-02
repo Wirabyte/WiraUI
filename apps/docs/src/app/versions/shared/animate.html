@@ -11,7 +11,7 @@
             <b class="docs-aos-family-name">{{ f.name }}</b>
             <div class="docs-aos-stage">
               @for (a of f.items; track a) {
-                <div class="docs-aos-card" [wtAnimate]="a" [animateOnce]="false" [attr.data-test-aos]="a">
+                <div class="docs-aos-card" [wuAnimate]="a" [animateOnce]="false" [attr.data-test-aos]="a">
                   <code>{{ a }}</code>
                 </div>
               }
@@ -37,8 +37,8 @@
     <docs-section id="directive" [section]="sec['directive']">
       <docs-demo [html]="code['directive']" layout="stack">
         <div class="docs-aos-stage">
-          <div id="d-aos-directive" class="docs-aos-card" wtAnimate="zoom-in" [animateDelay]="200" [animateDuration]="600" [animateOnce]="false">
-            <code>wtAnimate="zoom-in"</code>
+          <div id="d-aos-directive" class="docs-aos-card" wuAnimate="zoom-in" [animateDelay]="200" [animateDuration]="600" [animateOnce]="false">
+            <code>wuAnimate="zoom-in"</code>
           </div>
         </div>
       </docs-demo>

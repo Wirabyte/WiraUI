@@ -1,5 +1,5 @@
 /* Designer UI strings. Thai is the default; EN is the alternate. Preview content stays Thai (sample data). */
-window.WT_I18N = {
+window.WU_I18N = {
   th: {
     tagline: 'ปรับธีมบนเว็บ ดูผลทันที แล้ว export ไปใช้ใน Angular',
     prototype: 'ต้นแบบ',
@@ -15,7 +15,7 @@ window.WT_I18N = {
     radius: 'ความโค้งมุม', density: 'ความหนาแน่น', compact: 'แน่น', normal: 'ปกติ', comfortable: 'โปร่ง',
     shadow: 'เงา', s_none: 'ไม่มี', s_subtle: 'บาง', s_soft: 'นุ่ม', s_elevated: 'ลอย',
     ripple: 'Ripple เมื่อกดปุ่ม', focusRing: 'Focus ring', ring: 'วงแสง', outline: 'เส้นขอบ', transition: 'ความเร็ว transition',
-    darkMode: 'โหมดมืดในไฟล์ที่ export', dm_none: 'ปิด', dm_class: 'สลับด้วย .wt-dark', dm_media: 'ตามระบบ',
+    darkMode: 'โหมดมืดในไฟล์ที่ export', dm_none: 'ปิด', dm_class: 'สลับด้วย .wu-dark', dm_media: 'ตามระบบ',
     darkHint: 'ค่าสีโหมดมืดคำนวณจากสีหลักและสีพื้นผิว สลับดูได้ที่ปุ่ม สว่าง/มืด ด้านบน',
     c_button: 'ปุ่ม', c_input: 'ช่องกรอก', c_card: 'การ์ด', c_table: 'ตาราง', c_dialog: 'Dialog', c_tag: 'Tag',
     k_fontWeight: 'น้ำหนักตัวอักษร', k_radius: 'ความโค้งมุม', k_paddingX: 'ระยะขอบซ้าย-ขวา', k_padding: 'ระยะขอบใน',
@@ -35,7 +35,7 @@ window.WT_I18N = {
     howTo: 'วิธีติดตั้ง', fileLabel: 'ไฟล์', close: 'ปิด',
     im_title: 'นำเข้าธีม', im_hint: 'วางเนื้อหาไฟล์ที่ export จาก Designer (SCSS, CSS, TS หรือ JSON) หรือเลือกไฟล์จากเครื่อง',
     chooseFile: 'เลือกไฟล์', apply: 'นำเข้า', cancel: 'ยกเลิก',
-    errEmpty: 'ยังไม่ได้วางเนื้อหาไฟล์', errNoConfig: 'ไม่พบบรรทัด wiratheme-config ในเนื้อหานี้ ไฟล์ต้องมาจากปุ่มส่งออกของ Designer',
+    errEmpty: 'ยังไม่ได้วางเนื้อหาไฟล์', errNoConfig: 'ไม่พบบรรทัด wiraui-config ในเนื้อหานี้ ไฟล์ต้องมาจากปุ่มส่งออกของ Designer',
     errBad: 'อ่านค่าในไฟล์ไม่ได้ ไฟล์อาจถูกแก้จนรูปแบบเสีย', imported: 'นำเข้าธีมแล้ว',
     presetApplied: 'เปลี่ยนเป็น preset {name} แล้ว', resetDone: 'คืนค่า preset {name} แล้ว',
     resetAsk: 'ล้างค่าที่แก้ทั้งหมดและกลับไปใช้ preset {name}?', resetYes: 'คืนค่า',
@@ -57,7 +57,7 @@ window.WT_I18N = {
     radius: 'Corner radius', density: 'Density', compact: 'Compact', normal: 'Normal', comfortable: 'Comfortable',
     shadow: 'Shadow', s_none: 'None', s_subtle: 'Subtle', s_soft: 'Soft', s_elevated: 'Elevated',
     ripple: 'Ripple on press', focusRing: 'Focus ring', ring: 'Glow', outline: 'Outline', transition: 'Transition speed',
-    darkMode: 'Dark mode in exported files', dm_none: 'Off', dm_class: 'Toggle with .wt-dark', dm_media: 'Follow system',
+    darkMode: 'Dark mode in exported files', dm_none: 'Off', dm_class: 'Toggle with .wu-dark', dm_media: 'Follow system',
     darkHint: 'Dark colors are derived from primary and surface. Use the Light/Dark switch above to check them.',
     c_button: 'Button', c_input: 'Input', c_card: 'Card', c_table: 'Table', c_dialog: 'Dialog', c_tag: 'Tag',
     k_fontWeight: 'Font weight', k_radius: 'Corner radius', k_paddingX: 'Horizontal padding', k_padding: 'Padding',
@@ -77,7 +77,7 @@ window.WT_I18N = {
     howTo: 'How to install', fileLabel: 'File', close: 'Close',
     im_title: 'Import theme', im_hint: 'Paste a file exported from the Designer (SCSS, CSS, TS or JSON), or choose the file.',
     chooseFile: 'Choose file', apply: 'Import', cancel: 'Cancel',
-    errEmpty: 'Nothing pasted yet', errNoConfig: 'No wiratheme-config line found. The file must come from the Designer export.',
+    errEmpty: 'Nothing pasted yet', errNoConfig: 'No wiraui-config line found. The file must come from the Designer export.',
     errBad: 'Could not read the values in this file. It may have been edited out of shape.', imported: 'Theme imported',
     presetApplied: 'Switched to preset {name}', resetDone: 'Reset to preset {name}',
     resetAsk: 'Clear every change and go back to preset {name}?', resetYes: 'Reset',

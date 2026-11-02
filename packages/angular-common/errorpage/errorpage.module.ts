@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtErrorPage } from './errorpage.component';
+import { WuErrorPage } from './errorpage.component';
 
-/** For NgModule apps. Standalone apps can import `WtErrorPage` directly. */
+/** For NgModule apps. Standalone apps can import `WuErrorPage` directly. */
 @NgModule({
-  imports: [WtErrorPage],
-  exports: [WtErrorPage],
+  imports: [WuErrorPage],
+  exports: [WuErrorPage],
 })
-export class WtErrorPageModule {}
+export class WuErrorPageModule {}

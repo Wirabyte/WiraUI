@@ -1,80 +1,80 @@
-/* wt-colorpicker. Shared by wiratheme v1, v2 and v3. A swatch that opens a panel in the top layer (or the panel on the
+/* wu-colorpicker. Shared by wiraui v1, v2 and v3. A swatch that opens a panel in the top layer (or the panel on the
    page, inline): saturation/brightness area, hue strip and a hex field. */
-@layer wiratheme.components {
-  :is(wt-colorpicker, wt-color-picker) {
+@layer wiraui.components {
+  :is(wu-colorpicker, wu-color-picker) {
     display: inline-block;
     vertical-align: middle;
   }
-  .wt-colorpicker {
+  .wu-colorpicker {
     display: inline-block;
   }
   /* A frame like a field with the colour as a tile inside it: the colour never reaches the frame's rounded edge. */
-  .wt-colorpicker-preview {
+  .wu-colorpicker-preview {
     display: block;
     box-sizing: border-box;
-    width: var(--wt-colorpicker-preview-size);
-    height: var(--wt-colorpicker-preview-size);
+    width: var(--wu-colorpicker-preview-size);
+    height: var(--wu-colorpicker-preview-size);
     padding: 3px;
-    border: var(--wt-field-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-input-radius);
-    background: var(--wt-field-bg);
+    border: var(--wu-field-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-input-radius);
+    background: var(--wu-field-bg);
     cursor: pointer;
   }
-  .wt-colorpicker-preview-color {
+  .wu-colorpicker-preview-color {
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: max(2px, calc(var(--wt-input-radius) - 3px));
+    border-radius: max(2px, calc(var(--wu-input-radius) - 3px));
     /* A hairline, so white or very light colours still read as a tile. */
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   }
-  .wt-colorpicker-preview:enabled:hover {
-    border-color: var(--wt-field-hover-border);
+  .wu-colorpicker-preview:enabled:hover {
+    border-color: var(--wu-field-hover-border);
   }
-  .wt-colorpicker-preview:focus-visible {
-    border-color: var(--wt-field-focus-border);
-    outline: var(--wt-field-focus-outline);
-    outline-offset: var(--wt-field-focus-offset);
-    box-shadow: var(--wt-field-focus-shadow);
+  .wu-colorpicker-preview:focus-visible {
+    border-color: var(--wu-field-focus-border);
+    outline: var(--wu-field-focus-outline);
+    outline-offset: var(--wu-field-focus-offset);
+    box-shadow: var(--wu-field-focus-shadow);
   }
-  .wt-colorpicker-preview:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-colorpicker-preview:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-colorpicker-panel {
+  .wu-colorpicker-panel {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    width: var(--wt-colorpicker-panel-width);
+    width: var(--wu-colorpicker-panel-width);
     max-width: calc(100vw - 1rem);
-    padding: var(--wt-colorpicker-panel-padding);
-    border: 1px solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-overlay-bg);
-    color: var(--wt-text);
+    padding: var(--wu-colorpicker-panel-padding);
+    border: 1px solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-overlay-bg);
+    color: var(--wu-text);
   }
-  .wt-colorpicker-overlay-panel {
+  .wu-colorpicker-overlay-panel {
     position: fixed;
     inset: auto;
     z-index: 1200;
     margin: 0;
-    box-shadow: var(--wt-shadow-md);
+    box-shadow: var(--wu-shadow-md);
   }
-  .wt-colorpicker-disabled .wt-colorpicker-panel {
-    opacity: var(--wt-disabled-opacity);
+  .wu-colorpicker-disabled .wu-colorpicker-panel {
+    opacity: var(--wu-disabled-opacity);
     pointer-events: none;
   }
-  .wt-colorpicker-area {
+  .wu-colorpicker-area {
     position: relative;
-    height: var(--wt-colorpicker-area-height);
-    border-radius: var(--wt-radius-sm);
+    height: var(--wu-colorpicker-area-height);
+    border-radius: var(--wu-radius-sm);
     background-image: linear-gradient(to top, #000000, transparent), linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
     cursor: crosshair;
     touch-action: none;
     outline: none;
   }
-  .wt-colorpicker-hue {
+  .wu-colorpicker-hue {
     position: relative;
     height: 0.75rem;
     border-radius: 999px;
@@ -83,8 +83,8 @@
     touch-action: none;
     outline: none;
   }
-  .wt-colorpicker-area-handle,
-  .wt-colorpicker-hue-handle {
+  .wu-colorpicker-area-handle,
+  .wu-colorpicker-hue-handle {
     position: absolute;
     box-sizing: border-box;
     width: 1.125rem;
@@ -95,27 +95,27 @@
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
-  .wt-colorpicker-hue-handle {
+  .wu-colorpicker-hue-handle {
     top: 50%;
   }
-  .wt-colorpicker-area:focus-visible .wt-colorpicker-area-handle,
-  .wt-colorpicker-hue:focus-visible .wt-colorpicker-hue-handle {
-    box-shadow: 0 0 0 2px var(--wt-field-focus-border), 0 1px 3px rgba(0, 0, 0, 0.3);
+  .wu-colorpicker-area:focus-visible .wu-colorpicker-area-handle,
+  .wu-colorpicker-hue:focus-visible .wu-colorpicker-hue-handle {
+    box-shadow: 0 0 0 2px var(--wu-field-focus-border), 0 1px 3px rgba(0, 0, 0, 0.3);
   }
-  .wt-colorpicker-footer {
+  .wu-colorpicker-footer {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-colorpicker-swatch {
+  .wu-colorpicker-swatch {
     flex: none;
     width: 2rem;
     height: 2rem;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     /* An inner hairline instead of a border: the colour does not bleed past a rounded border's edge. */
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
   }
-  .wt-colorpicker-hex.wt-inputtext {
+  .wu-colorpicker-hex.wu-inputtext {
     flex: 1 1 auto;
     min-width: 0;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -123,7 +123,7 @@
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
   @media (pointer: coarse) {
-    .wt-colorpicker-hue::after {
+    .wu-colorpicker-hue::after {
       content: '';
       position: absolute;
       inset: -0.5rem 0;

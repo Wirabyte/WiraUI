@@ -7,8 +7,8 @@ export const ICONS_SECTIONS: Record<string, DocSectionText> = {
   install: {
     title: { th: 'ติดตั้ง', en: 'Installation' },
     text: {
-      th: 'wiraicon เป็น package แยกของ WiraTheme ใช้ได้โดยไม่ต้องมี wiratheme และใช้ได้กับ Angular 15 ขึ้นไป (ทุกรุ่นของ WiraTheme) · ใส่ไฟล์ CSS ครั้งเดียวใน <code>angular.json</code> แล้วใช้เป็น class ได้ทั้งแอป · ถ้าอยากได้ไอคอนเป็น SVG ในหน้า ใช้ component <code>&lt;wi-icon&gt;</code> จาก <code>wiraicon/angular</code> (standalone <code>WiIcon</code> หรือ <code>WiIconModule</code>)',
-      en: 'wiraicon is a separate WiraTheme package: it works without wiratheme and with Angular 15 and later (every WiraTheme version) · add its CSS once in <code>angular.json</code> and the classes work across the app · for icons as inline SVG, use the <code>&lt;wi-icon&gt;</code> component from <code>wiraicon/angular</code> (standalone <code>WiIcon</code>, or <code>WiIconModule</code>).',
+      th: 'wiraicon เป็น package แยกของ WiraUI ใช้ได้โดยไม่ต้องมี wiraui และใช้ได้กับ Angular 15 ขึ้นไป (ทุกรุ่นของ WiraUI) · ใส่ไฟล์ CSS ครั้งเดียวใน <code>angular.json</code> แล้วใช้เป็น class ได้ทั้งแอป · ถ้าอยากได้ไอคอนเป็น SVG ในหน้า ใช้ component <code>&lt;wi-icon&gt;</code> จาก <code>wiraicon/angular</code> (standalone <code>WiIcon</code> หรือ <code>WiIconModule</code>)',
+      en: 'wiraicon is a separate WiraUI package: it works without wiraui and with Angular 15 and later (every WiraUI version) · add its CSS once in <code>angular.json</code> and the classes work across the app · for icons as inline SVG, use the <code>&lt;wi-icon&gt;</code> component from <code>wiraicon/angular</code> (standalone <code>WiIcon</code>, or <code>WiIconModule</code>).',
     },
   },
   classes: {
@@ -28,15 +28,15 @@ export const ICONS_SECTIONS: Record<string, DocSectionText> = {
   size: {
     title: { th: 'ขนาด สี และหมุน', en: 'Size, colour and spin' },
     text: {
-      th: 'ขนาดตาม <code>font-size</code> และสีตาม <code>color</code> เหมือนตัวอักษร (ใช้ token ของธีมได้ เช่น <code>var(--wt-primary-color)</code>) · <code>wi-spin</code> หมุนตลอด เหมาะกับไอคอนกำลังโหลด (ผู้ใช้ที่ตั้งลดการเคลื่อนไหวเห็นหมุนช้าลง) · <code>wi-fw</code> ให้ทุกไอคอนกว้างเท่ากัน รายการจึงตรงกัน',
-      en: 'Size follows <code>font-size</code> and colour follows <code>color</code>, as for text (theme tokens such as <code>var(--wt-primary-color)</code> work) · <code>wi-spin</code> turns the icon round and round, for loading states (slower for people who ask for reduced motion) · <code>wi-fw</code> gives every icon the same width, so lists line up.',
+      th: 'ขนาดตาม <code>font-size</code> และสีตาม <code>color</code> เหมือนตัวอักษร (ใช้ token ของธีมได้ เช่น <code>var(--wu-primary-color)</code>) · <code>wi-spin</code> หมุนตลอด เหมาะกับไอคอนกำลังโหลด (ผู้ใช้ที่ตั้งลดการเคลื่อนไหวเห็นหมุนช้าลง) · <code>wi-fw</code> ให้ทุกไอคอนกว้างเท่ากัน รายการจึงตรงกัน',
+      en: 'Size follows <code>font-size</code> and colour follows <code>color</code>, as for text (theme tokens such as <code>var(--wu-primary-color)</code> work) · <code>wi-spin</code> turns the icon round and round, for loading states (slower for people who ask for reduced motion) · <code>wi-fw</code> gives every icon the same width, so lists line up.',
     },
   },
   buttons: {
     title: { th: 'ในปุ่มและ component', en: 'In buttons and components' },
     text: {
-      th: 'input <code>icon</code> ของ component ใน WiraTheme (ปุ่ม เมนู ช่องค้นหา แท็บ ฯลฯ) รับ class ของไอคอน ใส่ <code>icon="wi wi-save"</code> ได้เลย และใส่ weight เพิ่มได้ เช่น <code>icon="wi wi-trash wi-bold"</code> · ปุ่มที่มีแต่ไอคอนใส่ <code>ariaLabel</code> ด้วยเสมอ',
-      en: 'The <code>icon</code> input of WiraTheme components (buttons, menus, search fields, tabs …) takes icon classes, so write <code>icon="wi wi-save"</code>, with a weight too if you like (<code>icon="wi wi-trash wi-bold"</code>) · an icon-only button always gets an <code>ariaLabel</code>.',
+      th: 'input <code>icon</code> ของ component ใน WiraUI (ปุ่ม เมนู ช่องค้นหา แท็บ ฯลฯ) รับ class ของไอคอน ใส่ <code>icon="wi wi-save"</code> ได้เลย และใส่ weight เพิ่มได้ เช่น <code>icon="wi wi-trash wi-bold"</code> · ปุ่มที่มีแต่ไอคอนใส่ <code>ariaLabel</code> ด้วยเสมอ',
+      en: 'The <code>icon</code> input of WiraUI components (buttons, menus, search fields, tabs …) takes icon classes, so write <code>icon="wi wi-save"</code>, with a weight too if you like (<code>icon="wi wi-trash wi-bold"</code>) · an icon-only button always gets an <code>ariaLabel</code>.',
     },
   },
   component: {
@@ -122,8 +122,8 @@ export class AppModule {}`,
 <i class="wi wi-heart wi-bold"></i>
 <i class="wi wi-heart wi-fill"></i>`,
   size: `<!-- ขนาดตาม font-size สีตาม color -->
-<i class="wi wi-star wi-fill" style="font-size: 2rem; color: var(--wt-warn-color)"></i>
-<i class="wi wi-bell" style="font-size: 1.5rem; color: var(--wt-primary-color)"></i>
+<i class="wi wi-star wi-fill" style="font-size: 2rem; color: var(--wu-warn-color)"></i>
+<i class="wi wi-bell" style="font-size: 1.5rem; color: var(--wu-primary-color)"></i>
 <i class="wi wi-spinner wi-spin" style="font-size: 1.5rem"></i>
 
 <!-- wi-fw: ไอคอนกว้างเท่ากัน รายการตรงกัน -->
@@ -132,20 +132,20 @@ export class AppModule {}`,
   <li><i class="wi wi-users wi-fw"></i> นักเรียน</li>
   <li><i class="wi wi-cog wi-fw"></i> ตั้งค่า</li>
 </ul>`,
-  buttons: `<wt-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wt-button>
-<wt-button label="ส่งออก Excel" icon="wi wi-file-excel" severity="secondary" [outlined]="true" (onClick)="exportExcel()"></wt-button>
-<wt-button icon="wi wi-trash wi-bold" severity="danger" [text]="true" [rounded]="true" ariaLabel="ลบ" (onClick)="remove()"></wt-button>`,
+  buttons: `<wu-button label="บันทึก" icon="wi wi-save" (onClick)="save()"></wu-button>
+<wu-button label="ส่งออก Excel" icon="wi wi-file-excel" severity="secondary" [outlined]="true" (onClick)="exportExcel()"></wu-button>
+<wu-button icon="wi wi-trash wi-bold" severity="danger" [text]="true" [rounded]="true" ariaLabel="ลบ" (onClick)="remove()"></wu-button>`,
   component: `<wi-icon name="check"></wi-icon>
-<wi-icon name="trash" weight="bold" [size]="24" color="var(--wt-danger-color)"></wi-icon>
+<wi-icon name="trash" weight="bold" [size]="24" color="var(--wu-danger-color)"></wi-icon>
 <wi-icon name="info-circle" [size]="24" label="ข้อมูลเพิ่มเติม"></wi-icon>
 <wi-icon name="spinner" [size]="24" [spin]="true"></wi-icon>`,
   migration: `<!-- เดิม -->
 <i class="pi pi-check"></i>
-<wt-button label="บันทึก" icon="pi pi-save"></wt-button>
+<wu-button label="บันทึก" icon="pi pi-save"></wu-button>
 
 <!-- ใหม่: เปลี่ยนแค่ prefix -->
 <i class="wi wi-check"></i>
-<wt-button label="บันทึก" icon="wi wi-save"></wt-button>`,
+<wu-button label="บันทึก" icon="wi wi-save"></wu-button>`,
 };
 
 /** English for the Thai in the samples on the Icons page. */

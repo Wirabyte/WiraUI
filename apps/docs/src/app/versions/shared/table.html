@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="body"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-table id="d-tbl-basic" [value]="local(few)" [tableStyle]="{ 'min-width': '32rem' }">
+        <wu-table id="d-tbl-basic" [value]="local(few)" [tableStyle]="{ 'min-width': '32rem' }">
           <ng-template #header>
             <tr>
               <th>{{ tx('ลำดับ') }}</th>
@@ -26,13 +26,13 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="paginator" [section]="sec['paginator']">
       <docs-demo [html]="code['paginator']" layout="stack">
-        <wt-table id="d-tbl-page" [value]="local(students)" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [showCurrentPageReport]="true">
+        <wu-table id="d-tbl-page" [value]="local(students)" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [showCurrentPageReport]="true">
           <ng-template #header>
             <tr>
               <th>{{ tx('ลำดับ') }}</th>
@@ -47,14 +47,14 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="report" [section]="sec['report']">
       <docs-api-table [group]="placeholders"></docs-api-table>
       <docs-demo [html]="code['report']" [ts]="ts['report']" layout="stack">
-        <wt-table
+        <wu-table
           id="d-tbl-report"
           [value]="local(students)"
           [paginator]="true"
@@ -76,19 +76,19 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sort" [section]="sec['sort']">
       <docs-demo [html]="code['sort']" layout="stack">
-        <wt-table id="d-tbl-sort" [value]="local(students)" sortField="score" [sortOrder]="-1" [scrollable]="true" scrollHeight="320px">
+        <wu-table id="d-tbl-sort" [value]="local(students)" sortField="score" [sortOrder]="-1" [scrollable]="true" scrollHeight="320px">
           <ng-template #header>
             <tr>
-              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
-              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
-              <th wtSortableColumn="club.name">{{ tx('ชุมนุม') }} <wt-sortIcon field="club.name"></wt-sortIcon></th>
-              <th wtSortableColumn="score">{{ tx('คะแนน') }} <wt-sortIcon field="score"></wt-sortIcon></th>
+              <th wuSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wu-sortIcon field="name"></wu-sortIcon></th>
+              <th wuSortableColumn="room">{{ tx('ห้อง') }} <wu-sortIcon field="room"></wu-sortIcon></th>
+              <th wuSortableColumn="club.name">{{ tx('ชุมนุม') }} <wu-sortIcon field="club.name"></wu-sortIcon></th>
+              <th wuSortableColumn="score">{{ tx('คะแนน') }} <wu-sortIcon field="score"></wu-sortIcon></th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
@@ -99,18 +99,18 @@
               <td class="d-tbl-score">{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="multisort" [section]="sec['multisort']">
       <docs-demo [html]="code['multisort']" layout="stack">
-        <wt-table id="d-tbl-multi" [value]="local(students)" sortMode="multiple" [scrollable]="true" scrollHeight="320px">
+        <wu-table id="d-tbl-multi" [value]="local(students)" sortMode="multiple" [scrollable]="true" scrollHeight="320px">
           <ng-template #header>
             <tr>
-              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
-              <th wtSortableColumn="score">{{ tx('คะแนน') }} <wt-sortIcon field="score"></wt-sortIcon></th>
-              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+              <th wuSortableColumn="room">{{ tx('ห้อง') }} <wu-sortIcon field="room"></wu-sortIcon></th>
+              <th wuSortableColumn="score">{{ tx('คะแนน') }} <wu-sortIcon field="score"></wu-sortIcon></th>
+              <th wuSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wu-sortIcon field="name"></wu-sortIcon></th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
@@ -120,18 +120,18 @@
               <td>{{ s.name }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="search" [section]="sec['search']">
       <docs-demo [html]="code['search']" layout="stack">
-        <wt-table #dt id="d-tbl-search" [value]="local(students)" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0" [scrollable]="true" scrollHeight="320px">
+        <wu-table #dt id="d-tbl-search" [value]="local(students)" [globalFilterFields]="['code', 'name', 'room', 'club.name']" [filterDelay]="0" [scrollable]="true" scrollHeight="320px">
           <ng-template #caption>
-            <wt-iconfield>
-              <wt-inputicon icon="wi wi-search"></wt-inputicon>
-              <input id="d-tbl-search-input" wtInputText [placeholder]="tx('ค้นหานักเรียน')" [attr.aria-label]="tx('ค้นหานักเรียน')" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-            </wt-iconfield>
+            <wu-iconfield>
+              <wu-inputicon icon="wi wi-search"></wu-inputicon>
+              <input id="d-tbl-search-input" wuInputText [placeholder]="tx('ค้นหานักเรียน')" [attr.aria-label]="tx('ค้นหานักเรียน')" (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+            </wu-iconfield>
           </ng-template>
           <ng-template #header>
             <tr>
@@ -147,13 +147,13 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="empty" [section]="sec['empty']">
       <docs-demo [html]="code['empty']" layout="grid">
-        <wt-table id="d-tbl-empty" [value]="none">
+        <wu-table id="d-tbl-empty" [value]="none">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -171,8 +171,8 @@
               <td colspan="2" class="docs-table-center">{{ tx('ยังไม่มีนักเรียนในห้องนี้') }}</td>
             </tr>
           </ng-template>
-        </wt-table>
-        <wt-table id="d-tbl-empty-default" [value]="none">
+        </wu-table>
+        <wu-table id="d-tbl-empty-default" [value]="none">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -185,17 +185,17 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="loading" [section]="sec['loading']">
       <docs-demo [html]="code['loading']" [ts]="ts['loading']" layout="stack">
         <div>
-          <wt-button id="d-tbl-reload" icon="wi wi-refresh" [label]="tx('โหลดใหม่')" size="small" severity="secondary" [loading]="isApiLoading" (onClick)="reload()"></wt-button>
+          <wu-button id="d-tbl-reload" icon="wi wi-refresh" [label]="tx('โหลดใหม่')" size="small" severity="secondary" [loading]="isApiLoading" (onClick)="reload()"></wu-button>
         </div>
         <div class="docs-demo-fields">
-          <wt-table id="d-tbl-loading-mask" [value]="local(few)" [loading]="isApiLoading">
+          <wu-table id="d-tbl-loading-mask" [value]="local(few)" [loading]="isApiLoading">
             <ng-template #header>
               <tr>
                 <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -208,8 +208,8 @@
                 <td>{{ s.room }}</td>
               </tr>
             </ng-template>
-          </wt-table>
-          <wt-table id="d-tbl-loading-body" [value]="local(few)" [loading]="isApiLoading">
+          </wu-table>
+          <wu-table id="d-tbl-loading-body" [value]="local(few)" [loading]="isApiLoading">
             <ng-template #header>
               <tr>
                 <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -225,19 +225,19 @@
             <ng-template #loadingbody>
               @for (n of [1, 2, 3, 4, 5]; track n) {
                 <tr>
-                  <td><wt-skeleton></wt-skeleton></td>
-                  <td><wt-skeleton width="4rem"></wt-skeleton></td>
+                  <td><wu-skeleton></wu-skeleton></td>
+                  <td><wu-skeleton width="4rem"></wu-skeleton></td>
                 </tr>
               }
             </ng-template>
-          </wt-table>
+          </wu-table>
         </div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="selection" [section]="sec['selection']">
       <docs-demo [html]="code['selection']" [ts]="ts['selection']" layout="stack">
-        <wt-table id="d-tbl-single" [value]="local(few)" selectionMode="single" [(selection)]="selectedStudent" dataKey="id">
+        <wu-table id="d-tbl-single" [value]="local(few)" selectionMode="single" [(selection)]="selectedStudent" dataKey="id">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -245,41 +245,41 @@
             </tr>
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
-            <tr [wtSelectableRow]="s" [wtSelectableRowIndex]="i">
+            <tr [wuSelectableRow]="s" [wuSelectableRowIndex]="i">
               <td>{{ s.name }}</td>
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">selectedStudent: <code id="d-tbl-single-value">{{ selectedStudent?.name ?? 'null' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="checkbox" [section]="sec['checkbox']">
       <docs-demo [html]="code['checkbox']" [ts]="ts['checkbox']" layout="stack">
-        <wt-table id="d-tbl-check" [value]="local(few)" [(selection)]="selectedStudents" dataKey="id">
+        <wu-table id="d-tbl-check" [value]="local(few)" [(selection)]="selectedStudents" dataKey="id">
           <ng-template #header>
             <tr>
-              <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+              <th style="width: 3rem"><wu-tableHeaderCheckbox></wu-tableHeaderCheckbox></th>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
               <th>{{ tx('ห้อง') }}</th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
             <tr>
-              <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+              <td><wu-tableCheckbox [value]="s"></wu-tableCheckbox></td>
               <td>{{ s.name }}</td>
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">selectedStudents: <code id="d-tbl-check-count">{{ selectedStudents.length }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="lazy" [section]="sec['lazy']">
       <docs-demo [html]="code['lazy']" [ts]="ts['lazy']" layout="stack">
-        <wt-table
+        <wu-table
           id="d-tbl-lazy"
           [value]="lazyRows"
           [lazy]="true"
@@ -293,7 +293,7 @@
           <ng-template #header>
             <tr>
               <th>{{ tx('ลำดับ') }}</th>
-              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
+              <th wuSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wu-sortIcon field="name"></wu-sortIcon></th>
               <th>{{ tx('ห้อง') }}</th>
             </tr>
           </ng-template>
@@ -304,14 +304,14 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">onLazyLoad: <code id="d-tbl-lazy-log">{{ lazyLog || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']" layout="stack">
-        <wt-table id="d-tbl-look" [value]="local(few)" [showGridlines]="true" [stripedRows]="true" size="small">
+        <wu-table id="d-tbl-look" [value]="local(few)" [showGridlines]="true" [stripedRows]="true" size="small">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -324,13 +324,13 @@
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="scroll" [section]="sec['scroll']">
       <docs-demo [html]="code['scroll']" layout="stack">
-        <wt-table id="d-tbl-scroll" [value]="local(students)" [scrollable]="true" scrollHeight="240px" [tableStyle]="{ 'min-width': '50rem' }">
+        <wu-table id="d-tbl-scroll" [value]="local(students)" [scrollable]="true" scrollHeight="240px" [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template #header>
             <tr>
               <th>{{ tx('รหัส') }}</th>
@@ -349,13 +349,13 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="stack" [section]="sec['stack']">
       <docs-demo [html]="code['stack']" layout="stack">
-        <wt-table id="d-tbl-stack" [value]="local(few)" responsiveLayout="stack" breakpoint="768px">
+        <wu-table id="d-tbl-stack" [value]="local(few)" responsiveLayout="stack" breakpoint="768px">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -370,47 +370,47 @@
               <td><span class="p-column-title">{{ tx('คะแนน') }}</span>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="frozen" [section]="sec['frozen']">
       <docs-demo [html]="code['frozen']" [ts]="ts['frozen']" layout="stack">
-        <wt-table id="d-tbl-frozen" [value]="local(frozenRows)" [tableStyle]="{ 'min-width': '80rem' }">
+        <wu-table id="d-tbl-frozen" [value]="local(frozenRows)" [tableStyle]="{ 'min-width': '80rem' }">
           <ng-template #header>
             <tr>
-              <th wtFrozenColumn>{{ tx('รหัส') }}</th>
-              <th wtFrozenColumn>{{ tx('ชื่อ - สกุล') }}</th>
+              <th wuFrozenColumn>{{ tx('รหัส') }}</th>
+              <th wuFrozenColumn>{{ tx('ชื่อ - สกุล') }}</th>
               <th>{{ tx('ห้อง') }}</th>
               <th>{{ tx('ชุมนุม') }}</th>
               <th>{{ tx('คะแนน') }}</th>
               <th>{{ tx('สถานะ') }}</th>
               <th>{{ tx('วันเกิด') }}</th>
-              <th wtFrozenColumn alignFrozen="right">{{ tx('จัดการ') }}</th>
+              <th wuFrozenColumn alignFrozen="right">{{ tx('จัดการ') }}</th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
             <tr>
-              <td wtFrozenColumn class="d-tbl-code">{{ s.code }}</td>
-              <td wtFrozenColumn class="docs-table-nowrap">{{ s.name }}</td>
+              <td wuFrozenColumn class="d-tbl-code">{{ s.code }}</td>
+              <td wuFrozenColumn class="docs-table-nowrap">{{ s.name }}</td>
               <td>{{ s.room }}</td>
               <td>{{ s.club.name }}</td>
               <td>{{ s.score }}</td>
               <td>{{ s.status }}</td>
               <td class="docs-table-nowrap">{{ thaiDate(s.birthDate) }}</td>
-              <td wtFrozenColumn alignFrozen="right" class="d-tbl-actions">
-                <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
+              <td wuFrozenColumn alignFrozen="right" class="d-tbl-actions">
+                <wu-button icon="wi wi-pencil" [rounded]="true" [text]="true" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wu-button>
               </td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-tbl-frozen-action">{{ lastAction || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="expansion" [section]="sec['expansion']">
       <docs-demo [html]="code['expansion']" [ts]="ts['expansion']" layout="stack">
-        <wt-table
+        <wu-table
           id="d-tbl-expand"
           [value]="local(few)"
           dataKey="id"
@@ -432,9 +432,9 @@
               <td>
                 <button
                   type="button"
-                  wtButton
+                  wuButton
                   class="d-tbl-toggler"
-                  [wtRowToggler]="s"
+                  [wuRowToggler]="s"
                   [text]="true"
                   [rounded]="true"
                   [icon]="expanded ? 'wi wi-chevron-down' : 'wi wi-chevron-right'"
@@ -451,14 +451,14 @@
               <td colspan="4">{{ tx('ชุมนุม') }} {{ s.club.name || '-' }} · {{ tx('สถานะ') }} {{ s.status }} · {{ tx('วันเกิด') }} {{ thaiDate(s.birthDate) }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">event: <code id="d-tbl-expand-log">{{ lastToggle || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="rowgroup" [section]="sec['rowgroup']">
       <docs-demo [html]="code['rowgroup']" [ts]="ts['rowgroup']" layout="stack">
-        <wt-table id="d-tbl-group" [value]="local(byRoom)" rowGroupMode="subheader" groupRowsBy="room" [scrollable]="true" scrollHeight="320px">
+        <wu-table id="d-tbl-group" [value]="local(byRoom)" rowGroupMode="subheader" groupRowsBy="room" [scrollable]="true" scrollHeight="320px">
           <ng-template #header>
             <tr>
               <th>{{ tx('รหัส') }}</th>
@@ -467,7 +467,7 @@
             </tr>
           </ng-template>
           <ng-template #groupheader let-s>
-            <tr wtRowGroupHeader>
+            <tr wuRowGroupHeader>
               <td colspan="3">{{ tx('ห้อง') }} {{ s.room }}</td>
             </tr>
           </ng-template>
@@ -479,17 +479,17 @@
             </tr>
           </ng-template>
           <ng-template #groupfooter let-s>
-            <tr class="d-tbl-group-footer wt-rowgroup-footer">
+            <tr class="d-tbl-group-footer wu-rowgroup-footer">
               <td colspan="3" class="docs-table-end">{{ roomCount(s.room) }} {{ tx('คน') }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="rowspan" [section]="sec['rowspan']">
       <docs-demo [html]="code['rowspan']" layout="stack">
-        <wt-table id="d-tbl-span" [value]="local(byRoom)" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
+        <wu-table id="d-tbl-span" [value]="local(byRoom)" rowGroupMode="rowspan" groupRowsBy="room" [showGridlines]="true">
           <ng-template #header>
             <tr>
               <th>{{ tx('ห้อง') }}</th>
@@ -506,13 +506,13 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="colfilter" [section]="sec['colfilter']">
       <docs-demo [html]="code['colfilter']" [ts]="ts['colfilter']" layout="stack">
-        <wt-table id="d-tbl-filter" [value]="local(paidStudents)" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '44rem' }">
+        <wu-table id="d-tbl-filter" [value]="local(paidStudents)" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '44rem' }">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -521,11 +521,11 @@
               <th>{{ tx('ชำระค่าบำรุง') }}</th>
             </tr>
             <tr>
-              <th><wt-columnFilter field="name" [placeholder]="tx('ค้นหาชื่อ')"></wt-columnFilter></th>
+              <th><wu-columnFilter field="name" [placeholder]="tx('ค้นหาชื่อ')"></wu-columnFilter></th>
               <th>
-                <wt-columnFilter field="room" matchMode="equals" [showClearButton]="false">
+                <wu-columnFilter field="room" matchMode="equals" [showClearButton]="false">
                   <ng-template #filter let-value let-filter="filterCallback">
-                    <wt-select
+                    <wu-select
                       [ngModel]="value"
                       [options]="local(rooms)"
                       [placeholder]="tx('ทุกห้อง')"
@@ -533,12 +533,12 @@
                       [showClear]="true"
                       [fluid]="true"
                       (onChange)="filter($event.value)"
-                    ></wt-select>
+                    ></wu-select>
                   </ng-template>
-                </wt-columnFilter>
+                </wu-columnFilter>
               </th>
-              <th><wt-columnFilter field="score" type="numeric" matchMode="gte" [placeholder]="tx('คะแนนขั้นต่ำ')"></wt-columnFilter></th>
-              <th><wt-columnFilter field="paid" type="boolean" [ariaLabel]="tx('ชำระค่าบำรุง')"></wt-columnFilter></th>
+              <th><wu-columnFilter field="score" type="numeric" matchMode="gte" [placeholder]="tx('คะแนนขั้นต่ำ')"></wu-columnFilter></th>
+              <th><wu-columnFilter field="paid" type="boolean" [ariaLabel]="tx('ชำระค่าบำรุง')"></wu-columnFilter></th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
@@ -554,13 +554,13 @@
               <td colspan="4" class="docs-table-center">{{ tx('ไม่พบนักเรียนที่ค้นหา') }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="export" [section]="sec['export']">
       <docs-demo [html]="code['export']" [ts]="ts['export']" layout="stack">
-        <wt-table
+        <wu-table
           #exportTable
           id="d-tbl-export"
           [value]="local(few)"
@@ -574,8 +574,8 @@
         >
           <ng-template #caption>
             <div class="docs-demo-actions">
-              <wt-button id="d-tbl-export-all" [label]="tx('ส่งออก CSV')" icon="wi wi-download" (onClick)="exportTable.exportCSV()"></wt-button>
-              <wt-button
+              <wu-button id="d-tbl-export-all" [label]="tx('ส่งออก CSV')" icon="wi wi-download" (onClick)="exportTable.exportCSV()"></wu-button>
+              <wu-button
                 id="d-tbl-export-picked"
                 [label]="tx('ส่งออกที่เลือก')"
                 icon="wi wi-download"
@@ -583,13 +583,13 @@
                 [outlined]="true"
                 [disabled]="!pickedStudents.length"
                 (onClick)="exportTable.exportCSV({ selectionOnly: true })"
-              ></wt-button>
-              <wt-button id="d-tbl-export-preview" [label]="tx('ดูข้อความ CSV')" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(exportTable)"></wt-button>
+              ></wu-button>
+              <wu-button id="d-tbl-export-preview" [label]="tx('ดูข้อความ CSV')" icon="wi wi-file" severity="secondary" [text]="true" (onClick)="previewCsv(exportTable)"></wu-button>
             </div>
           </ng-template>
           <ng-template #header>
             <tr>
-              <th style="width: 3rem"><wt-tableHeaderCheckbox></wt-tableHeaderCheckbox></th>
+              <th style="width: 3rem"><wu-tableHeaderCheckbox></wu-tableHeaderCheckbox></th>
               <th>{{ tx('รหัส') }}</th>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
               <th>{{ tx('ห้อง') }}</th>
@@ -598,32 +598,32 @@
           </ng-template>
           <ng-template #body let-s>
             <tr>
-              <td><wt-tableCheckbox [value]="s"></wt-tableCheckbox></td>
+              <td><wu-tableCheckbox [value]="s"></wu-tableCheckbox></td>
               <td>{{ s.code }}</td>
               <td>{{ s.name }}</td>
               <td>{{ s.room }}</td>
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <pre id="d-tbl-csv" class="docs-csv">{{ csvText || '-' }}</pre>
       </docs-demo>
     </docs-section>
 
     <docs-section id="excel" [section]="sec['excel']">
       <docs-demo [html]="code['excel']" [ts]="ts['excel']" layout="stack">
-        <wt-table #excelTable id="d-tbl-excel" [value]="local(excelStudents)" [columns]="local(excelColumns)" exportFilename="students">
+        <wu-table #excelTable id="d-tbl-excel" [value]="local(excelStudents)" [columns]="local(excelColumns)" exportFilename="students">
           <ng-template #caption>
             <div class="docs-demo-actions">
-              <wt-button id="d-tbl-excel-plain" [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" (onClick)="exportExcel(excelTable)"></wt-button>
-              <wt-button
+              <wu-button id="d-tbl-excel-plain" [label]="tx('ส่งออก Excel')" icon="wi wi-file-excel" (onClick)="exportExcel(excelTable)"></wu-button>
+              <wu-button
                 id="d-tbl-excel-report"
                 [label]="tx('รายงาน Excel')"
                 icon="wi wi-download"
                 severity="secondary"
                 [outlined]="true"
                 (onClick)="exportExcel(excelTable, excelReport())"
-              ></wt-button>
+              ></wu-button>
             </div>
           </ng-template>
           <ng-template #header>
@@ -644,14 +644,14 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">{{ tx('ไฟล์ล่าสุด') }}: <code id="d-tbl-excel-file">{{ lastExcel || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="reorder" [section]="sec['reorder']">
       <docs-demo [html]="code['reorder']" [ts]="ts['reorder']" layout="stack">
-        <wt-table id="d-tbl-reorder" [value]="reorderRows" (onRowReorder)="rowMoved($event)">
+        <wu-table id="d-tbl-reorder" [value]="reorderRows" (onRowReorder)="rowMoved($event)">
           <ng-template #header>
             <tr>
               <th style="width: 3rem"></th>
@@ -661,14 +661,14 @@
             </tr>
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
-            <tr [wtReorderableRow]="i">
-              <td><span class="wi wi-bars docs-tbl-grip" wtReorderableRowHandle></span></td>
+            <tr [wuReorderableRow]="i">
+              <td><span class="wi wi-bars docs-tbl-grip" wuReorderableRowHandle></span></td>
               <td>{{ i + 1 }}</td>
               <td class="d-tbl-name">{{ s.name }}</td>
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">
           onRowReorder: <code id="d-tbl-reorder-log">{{ lastMove || '-' }}</code> · ids: <code id="d-tbl-reorder-order">{{ idsOf(reorderRows) }}</code>
         </span>
@@ -677,7 +677,7 @@
 
     <docs-section id="selectmore" [section]="sec['selectmore']">
       <docs-demo [html]="code['selectmore']" [ts]="ts['selectmore']" layout="stack">
-        <wt-table id="d-tbl-radio" [value]="local(radioRows)" selectionMode="single" [(selection)]="leader" dataKey="id" [rowSelectable]="canPick">
+        <wu-table id="d-tbl-radio" [value]="local(radioRows)" selectionMode="single" [(selection)]="leader" dataKey="id" [rowSelectable]="canPick">
           <ng-template #header>
             <tr>
               <th style="width: 3rem"></th>
@@ -687,14 +687,14 @@
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
             <tr>
-              <td><wt-tableRadioButton [value]="s" [index]="i"></wt-tableRadioButton></td>
+              <td><wu-tableRadioButton [value]="s" [index]="i"></wu-tableRadioButton></td>
               <td>{{ s.name }}</td>
               <td>{{ s.status }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">leader: <code id="d-tbl-radio-value">{{ leader?.name ?? 'null' }}</code></span>
-        <wt-table id="d-tbl-meta" [value]="local(few)" selectionMode="multiple" [metaKeySelection]="true" [(selection)]="metaPicked" dataKey="id">
+        <wu-table id="d-tbl-meta" [value]="local(few)" selectionMode="multiple" [metaKeySelection]="true" [(selection)]="metaPicked" dataKey="id">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -702,19 +702,19 @@
             </tr>
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
-            <tr [wtSelectableRow]="s" [wtSelectableRowIndex]="i">
+            <tr [wuSelectableRow]="s" [wuSelectableRowIndex]="i">
               <td>{{ s.name }}</td>
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">picked: <code id="d-tbl-meta-value">{{ idsOf(metaPicked) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="celledit" [section]="sec['celledit']">
       <docs-demo [html]="code['celledit']" [ts]="ts['celledit']" layout="stack">
-        <wt-table id="d-tbl-celledit" [value]="editRows" dataKey="id" (onEditComplete)="cellSaved($event)">
+        <wu-table id="d-tbl-celledit" [value]="editRows" dataKey="id" (onEditComplete)="cellSaved($event)">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -723,32 +723,32 @@
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
             <tr>
-              <td class="d-tbl-edit-name" [wtEditableColumn]="s" wtEditableColumnField="name" [wtEditableColumnRowIndex]="i">
-                <wt-cellEditor>
+              <td class="d-tbl-edit-name" [wuEditableColumn]="s" wuEditableColumnField="name" [wuEditableColumnRowIndex]="i">
+                <wu-cellEditor>
                   <ng-template #input>
-                    <input wtInputText name="name" [(ngModel)]="s.name" [attr.aria-label]="tx('ชื่อ - สกุล')" />
+                    <input wuInputText name="name" [(ngModel)]="s.name" [attr.aria-label]="tx('ชื่อ - สกุล')" />
                   </ng-template>
                   <ng-template #output>{{ s.name }}</ng-template>
-                </wt-cellEditor>
+                </wu-cellEditor>
               </td>
-              <td class="d-tbl-edit-score" [wtEditableColumn]="s" wtEditableColumnField="score" [wtEditableColumnRowIndex]="i">
-                <wt-cellEditor>
+              <td class="d-tbl-edit-score" [wuEditableColumn]="s" wuEditableColumnField="score" [wuEditableColumnRowIndex]="i">
+                <wu-cellEditor>
                   <ng-template #input>
-                    <wt-inputnumber name="score" [(ngModel)]="s.score" [min]="0" [max]="100" [ariaLabel]="tx('คะแนน')"></wt-inputnumber>
+                    <wu-inputnumber name="score" [(ngModel)]="s.score" [min]="0" [max]="100" [ariaLabel]="tx('คะแนน')"></wu-inputnumber>
                   </ng-template>
                   <ng-template #output>{{ s.score }}</ng-template>
-                </wt-cellEditor>
+                </wu-cellEditor>
               </td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">onEditComplete: <code id="d-tbl-celledit-log">{{ lastEdit || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="rowedit" [section]="sec['rowedit']">
       <docs-demo [html]="code['rowedit']" [ts]="ts['rowedit']" layout="stack">
-        <wt-table id="d-tbl-rowedit" [value]="rowEditRows" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
+        <wu-table id="d-tbl-rowedit" [value]="rowEditRows" dataKey="id" editMode="row" [editingRowKeys]="editingRows">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -757,41 +757,41 @@
             </tr>
           </ng-template>
           <ng-template #body let-s let-editing="editing">
-            <tr [wtEditableRow]="s">
+            <tr [wuEditableRow]="s">
               <td class="d-tbl-name">
-                <wt-cellEditor>
+                <wu-cellEditor>
                   <ng-template #input>
-                    <input wtInputText name="name" [(ngModel)]="s.name" required [attr.aria-label]="tx('ชื่อ - สกุล')" />
+                    <input wuInputText name="name" [(ngModel)]="s.name" required [attr.aria-label]="tx('ชื่อ - สกุล')" />
                   </ng-template>
                   <ng-template #output>{{ s.name }}</ng-template>
-                </wt-cellEditor>
+                </wu-cellEditor>
               </td>
               <td>
-                <wt-cellEditor>
+                <wu-cellEditor>
                   <ng-template #input>
-                    <input wtInputText name="room" [(ngModel)]="s.room" [attr.aria-label]="tx('ห้อง')" />
+                    <input wuInputText name="room" [(ngModel)]="s.room" [attr.aria-label]="tx('ห้อง')" />
                   </ng-template>
                   <ng-template #output>{{ s.room }}</ng-template>
-                </wt-cellEditor>
+                </wu-cellEditor>
               </td>
               <td class="docs-table-actions">
                 @if (!editing) {
-                  <button type="button" wtButton wtInitEditableRow class="d-tbl-row-edit" icon="wi wi-pencil" [text]="true" [rounded]="true" [attr.aria-label]="tx('แก้ไข')" (click)="startEdit(s)"></button>
+                  <button type="button" wuButton wuInitEditableRow class="d-tbl-row-edit" icon="wi wi-pencil" [text]="true" [rounded]="true" [attr.aria-label]="tx('แก้ไข')" (click)="startEdit(s)"></button>
                 } @else {
-                  <button type="button" wtButton wtSaveEditableRow class="d-tbl-row-save" icon="wi wi-check" [text]="true" [rounded]="true" [attr.aria-label]="tx('บันทึก')" (click)="saveRow(s)"></button>
-                  <button type="button" wtButton wtCancelEditableRow class="d-tbl-row-cancel" icon="wi wi-times" severity="secondary" [text]="true" [rounded]="true" [attr.aria-label]="tx('ยกเลิก')" (click)="cancelRow(s)"></button>
+                  <button type="button" wuButton wuSaveEditableRow class="d-tbl-row-save" icon="wi wi-check" [text]="true" [rounded]="true" [attr.aria-label]="tx('บันทึก')" (click)="saveRow(s)"></button>
+                  <button type="button" wuButton wuCancelEditableRow class="d-tbl-row-cancel" icon="wi wi-times" severity="secondary" [text]="true" [rounded]="true" [attr.aria-label]="tx('ยกเลิก')" (click)="cancelRow(s)"></button>
                 }
               </td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">editingRows: <code id="d-tbl-rowedit-keys">{{ editingRows | json }}</code> · saved: <code id="d-tbl-rowedit-saved">{{ rowsSaved }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="columns" [section]="sec['columns']">
       <docs-demo [html]="code['columns']" [ts]="ts['columns']" layout="stack">
-        <wt-table
+        <wu-table
           id="d-tbl-cols"
           [value]="local(few)"
           [columns]="cols"
@@ -804,7 +804,7 @@
           <ng-template #header let-columns>
             <tr>
               @for (col of columns; track col.field) {
-                <th wtResizableColumn wtReorderableColumn>{{ col.header }}</th>
+                <th wuResizableColumn wuReorderableColumn>{{ col.header }}</th>
               }
             </tr>
           </ng-template>
@@ -815,25 +815,25 @@
               }
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">event: <code id="d-tbl-cols-log">{{ lastColumns || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="filtermenu" [section]="sec['filtermenu']">
       <docs-demo [html]="code['filtermenu']" [ts]="ts['filtermenu']" layout="stack">
-        <wt-table #menuTable id="d-tbl-fmenu" [value]="local(students)" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '32rem' }">
+        <wu-table #menuTable id="d-tbl-fmenu" [value]="local(students)" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '32rem' }">
           <ng-template #caption>
-            <wt-button id="d-tbl-fmenu-band" [label]="tx('คะแนน 80–89')" severity="secondary" [outlined]="true" (onClick)="scoreBand(menuTable)"></wt-button>
+            <wu-button id="d-tbl-fmenu-band" [label]="tx('คะแนน 80–89')" severity="secondary" [outlined]="true" (onClick)="scoreBand(menuTable)"></wu-button>
           </ng-template>
           <ng-template #header>
             <tr>
               <th>
-                <span class="docs-panel-head">{{ tx('ชื่อ - สกุล') }} <wt-columnFilter id="d-tbl-fmenu-name" display="menu" field="name"></wt-columnFilter></span>
+                <span class="docs-panel-head">{{ tx('ชื่อ - สกุล') }} <wu-columnFilter id="d-tbl-fmenu-name" display="menu" field="name"></wu-columnFilter></span>
               </th>
               <th>{{ tx('ห้อง') }}</th>
               <th>
-                <span class="docs-panel-head">{{ tx('คะแนน') }} <wt-columnFilter id="d-tbl-fmenu-score" display="menu" field="score" type="numeric"></wt-columnFilter></span>
+                <span class="docs-panel-head">{{ tx('คะแนน') }} <wu-columnFilter id="d-tbl-fmenu-score" display="menu" field="score" type="numeric"></wu-columnFilter></span>
               </th>
             </tr>
           </ng-template>
@@ -844,17 +844,17 @@
               <td class="d-tbl-score">{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="customsort" [section]="sec['customsort']">
       <docs-demo [html]="code['customsort']" [ts]="ts['customsort']" layout="stack">
-        <wt-table id="d-tbl-csort" [value]="local(students)" [customSort]="true" (sortFunction)="sortStudents($event)" [scrollable]="true" scrollHeight="320px">
+        <wu-table id="d-tbl-csort" [value]="local(students)" [customSort]="true" (sortFunction)="sortStudents($event)" [scrollable]="true" scrollHeight="320px">
           <ng-template #header>
             <tr>
-              <th wtSortableColumn="status">{{ tx('สถานะ') }} <wt-sortIcon field="status"></wt-sortIcon></th>
-              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
+              <th wuSortableColumn="status">{{ tx('สถานะ') }} <wu-sortIcon field="status"></wu-sortIcon></th>
+              <th wuSortableColumn="room">{{ tx('ห้อง') }} <wu-sortIcon field="room"></wu-sortIcon></th>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
             </tr>
           </ng-template>
@@ -865,20 +865,20 @@
               <td>{{ s.name }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="state" [section]="sec['state']">
       <docs-demo [html]="code['state']" [ts]="ts['state']" layout="stack">
-        <wt-table #stateTable id="d-tbl-state" [value]="local(students)" stateKey="students-table" stateStorage="session" [paginator]="true" [rows]="5" (onStateRestore)="stateRestored()">
+        <wu-table #stateTable id="d-tbl-state" [value]="local(students)" stateKey="students-table" stateStorage="session" [paginator]="true" [rows]="5" (onStateRestore)="stateRestored()">
           <ng-template #caption>
-            <wt-button id="d-tbl-state-clear" [label]="tx('ลืมสถานะที่จำไว้')" severity="secondary" [text]="true" (onClick)="stateTable.clearState()"></wt-button>
+            <wu-button id="d-tbl-state-clear" [label]="tx('ลืมสถานะที่จำไว้')" severity="secondary" [text]="true" (onClick)="stateTable.clearState()"></wu-button>
           </ng-template>
           <ng-template #header>
             <tr>
-              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
-              <th wtSortableColumn="score">{{ tx('คะแนน') }} <wt-sortIcon field="score"></wt-sortIcon></th>
+              <th wuSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wu-sortIcon field="name"></wu-sortIcon></th>
+              <th wuSortableColumn="score">{{ tx('คะแนน') }} <wu-sortIcon field="score"></wu-sortIcon></th>
             </tr>
           </ng-template>
           <ng-template #body let-s>
@@ -887,14 +887,14 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">onStateRestore: <code id="d-tbl-state-restored">{{ restoredCount }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="frozenrows" [section]="sec['frozenrows']">
       <docs-demo [html]="code['frozenrows']" [ts]="ts['frozenrows']" layout="stack">
-        <wt-table id="d-tbl-frozenrows" [value]="local(students)" [frozenValue]="totals" [scrollable]="true" scrollHeight="240px">
+        <wu-table id="d-tbl-frozenrows" [value]="local(students)" [frozenValue]="totals" [scrollable]="true" scrollHeight="240px">
           <ng-template #header>
             <tr>
               <th>{{ tx('ชื่อ - สกุล') }}</th>
@@ -913,13 +913,13 @@
               <td>{{ s.score }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
 
     <docs-section id="contextmenu" [section]="sec['contextmenu']">
       <docs-demo [html]="code['contextmenu']" [ts]="ts['contextmenu']" layout="stack">
-        <wt-table
+        <wu-table
           id="d-tbl-ctx"
           [value]="local(few)"
           dataKey="id"
@@ -937,14 +937,14 @@
             </tr>
           </ng-template>
           <ng-template #body let-s let-i="rowIndex">
-            <tr [wtSelectableRow]="s" [wtContextMenuRow]="s" [wtContextMenuRowIndex]="i">
+            <tr [wuSelectableRow]="s" [wuContextMenuRow]="s" [wuContextMenuRowIndex]="i">
               <td>{{ s.code }}</td>
               <td class="d-tbl-name">{{ s.name }}</td>
               <td>{{ s.room }}</td>
             </tr>
           </ng-template>
-        </wt-table>
-        <wt-contextMenu #studentMenu id="d-tbl-ctx-menu" [model]="local(studentActions)"></wt-contextMenu>
+        </wu-table>
+        <wu-contextMenu #studentMenu id="d-tbl-ctx-menu" [model]="local(studentActions)"></wu-contextMenu>
         <span class="docs-demo-output">
           contextMenuSelection: <code id="d-tbl-ctx-row">{{ ctxStudent?.name || '-' }}</code> · selection: <code id="d-tbl-ctx-selected">{{ ctxSelected?.name || '-' }}</code> ·
           {{ tx('คำสั่งล่าสุด') }}: <code id="d-tbl-ctx-action">{{ ctxAction || '-' }}</code>
@@ -954,7 +954,7 @@
 
     <docs-section id="admin" [section]="sec['admin']">
       <docs-demo [html]="code['admin']" [ts]="ts['admin']" layout="stack">
-        <wt-table
+        <wu-table
           #adminTable
           id="d-tbl-admin"
           [value]="adminRows"
@@ -969,20 +969,20 @@
         >
           <ng-template #caption>
             <div class="docs-table-caption">
-              <wt-iconfield>
-                <wt-inputicon icon="wi wi-search"></wt-inputicon>
-                <input id="d-tbl-admin-search" wtInputText [placeholder]="tx('ค้นหา รหัส ชื่อ ห้อง')" [attr.aria-label]="tx('ค้นหา รหัส ชื่อ ห้อง')" (input)="adminTable.filterGlobal($any($event.target).value, 'contains')" />
-              </wt-iconfield>
-              <wt-button id="d-tbl-admin-add" [label]="tx('เพิ่ม')" icon="wi wi-plus" (onClick)="addStudent()"></wt-button>
+              <wu-iconfield>
+                <wu-inputicon icon="wi wi-search"></wu-inputicon>
+                <input id="d-tbl-admin-search" wuInputText [placeholder]="tx('ค้นหา รหัส ชื่อ ห้อง')" [attr.aria-label]="tx('ค้นหา รหัส ชื่อ ห้อง')" (input)="adminTable.filterGlobal($any($event.target).value, 'contains')" />
+              </wu-iconfield>
+              <wu-button id="d-tbl-admin-add" [label]="tx('เพิ่ม')" icon="wi wi-plus" (onClick)="addStudent()"></wu-button>
             </div>
           </ng-template>
           <ng-template #header>
             <tr>
               <th style="width: 4rem">{{ tx('ลำดับ') }}</th>
-              <th wtSortableColumn="code">{{ tx('รหัส') }} <wt-sortIcon field="code"></wt-sortIcon></th>
-              <th wtSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wt-sortIcon field="name"></wt-sortIcon></th>
-              <th wtSortableColumn="room">{{ tx('ห้อง') }} <wt-sortIcon field="room"></wt-sortIcon></th>
-              <th wtSortableColumn="birthDate">{{ tx('วันเกิด') }} <wt-sortIcon field="birthDate"></wt-sortIcon></th>
+              <th wuSortableColumn="code">{{ tx('รหัส') }} <wu-sortIcon field="code"></wu-sortIcon></th>
+              <th wuSortableColumn="name">{{ tx('ชื่อ - สกุล') }} <wu-sortIcon field="name"></wu-sortIcon></th>
+              <th wuSortableColumn="room">{{ tx('ห้อง') }} <wu-sortIcon field="room"></wu-sortIcon></th>
+              <th wuSortableColumn="birthDate">{{ tx('วันเกิด') }} <wu-sortIcon field="birthDate"></wu-sortIcon></th>
               <th>{{ tx('สถานะ') }}</th>
               <th style="width: 7rem"></th>
             </tr>
@@ -994,10 +994,10 @@
               <td class="d-tbl-name">{{ s.name }}</td>
               <td>{{ s.room }}</td>
               <td class="d-tbl-date">{{ thaiDate(s.birthDate) }}</td>
-              <td><wt-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wt-tag></td>
+              <td><wu-tag [value]="s.status" [severity]="statusSeverity(s.status)"></wu-tag></td>
               <td class="docs-table-actions">
-                <wt-button icon="wi wi-pencil" [rounded]="true" [text]="true" [wtTooltip]="tx('แก้ไข')" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wt-button>
-                <wt-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" [wtTooltip]="tx('ลบ')" [ariaLabel]="tx('ลบ')" (onClick)="deleteStudent(s)"></wt-button>
+                <wu-button icon="wi wi-pencil" [rounded]="true" [text]="true" [wuTooltip]="tx('แก้ไข')" [ariaLabel]="tx('แก้ไข')" (onClick)="editStudent(s)"></wu-button>
+                <wu-button icon="wi wi-trash" severity="danger" [rounded]="true" [text]="true" [wuTooltip]="tx('ลบ')" [ariaLabel]="tx('ลบ')" (onClick)="deleteStudent(s)"></wu-button>
               </td>
             </tr>
           </ng-template>
@@ -1006,7 +1006,7 @@
               <td colspan="7" class="docs-table-center">{{ tx('ไม่พบนักเรียนที่ค้นหา') }}</td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
         <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-tbl-admin-action">{{ lastAction || '-' }}</code></span>
       </docs-demo>
     </docs-section>

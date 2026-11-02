@@ -6,37 +6,37 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-scrollPanel id="d-scp-basic" [style]="{ width: '100%', height: '12rem' }" [ariaLabel]="tx('ระเบียบของโรงเรียน')">
+        <wu-scrollPanel id="d-scp-basic" [style]="{ width: '100%', height: '12rem' }" [ariaLabel]="tx('ระเบียบของโรงเรียน')">
           <ol class="docs-scp-list">
             @for (rule of local(rules); track rule) {
               <li>{{ rule }}</li>
             }
           </ol>
-        </wt-scrollPanel>
+        </wu-scrollPanel>
       </docs-demo>
     </docs-section>
 
     <docs-section id="grow" [section]="sec['grow']">
       <docs-demo [html]="code['grow']" [ts]="ts['grow']" layout="stack">
-        <wt-scrollPanel id="d-scp-grow" [style]="{ width: '100%', maxHeight: '10rem' }" [ariaLabel]="tx('ประกาศ')">
+        <wu-scrollPanel id="d-scp-grow" [style]="{ width: '100%', maxHeight: '10rem' }" [ariaLabel]="tx('ประกาศ')">
           @for (notice of notices; track $index) {
             <p class="docs-scp-notice">{{ notice }}</p>
           }
-        </wt-scrollPanel>
-        <wt-button id="d-scp-add" [label]="tx('เพิ่มประกาศ')" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wt-button>
+        </wu-scrollPanel>
+        <wu-button id="d-scp-add" [label]="tx('เพิ่มประกาศ')" icon="wi wi-plus" severity="secondary" (onClick)="addNotice()"></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="methods" [section]="sec['methods']">
       <docs-demo [html]="code['methods']" layout="stack">
-        <wt-scrollPanel #rulesPanel id="d-scp-methods" [style]="{ width: '100%', height: '10rem' }" [step]="40" [ariaLabel]="tx('ระเบียบของโรงเรียน')">
+        <wu-scrollPanel #rulesPanel id="d-scp-methods" [style]="{ width: '100%', height: '10rem' }" [step]="40" [ariaLabel]="tx('ระเบียบของโรงเรียน')">
           <ol class="docs-scp-list">
             @for (rule of local(rules); track rule) {
               <li>{{ rule }}</li>
             }
           </ol>
-        </wt-scrollPanel>
-        <wt-button id="d-scp-top" [label]="tx('กลับขึ้นบน')" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wt-button>
+        </wu-scrollPanel>
+        <wu-button id="d-scp-top" [label]="tx('กลับขึ้นบน')" icon="wi wi-angle-up" severity="secondary" [text]="true" (onClick)="rulesPanel.scrollTop(0)"></wu-button>
       </docs-demo>
     </docs-section>
 

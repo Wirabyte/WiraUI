@@ -1,5 +1,5 @@
-// The presets of every wiratheme major; VERSION_CATALOG says which ones each major offers
-// (v1: the classic looks, v2: the styled looks, v3: v2's plus WiraTheme's own).
+// The presets of every wiraui major; VERSION_CATALOG says which ones each major offers
+// (v1: the classic looks, v2: the styled looks, v3: v2's plus WiraUI's own).
 // v3 also has Glass: frosted, translucent panels that need the backdrop-filter support of current browsers.
 export {
   definePreset,
@@ -24,5 +24,5 @@ export {
   Glass,
   LL,
   WiraKawaii,
-} from 'wiratheme/core';
-export type { ThemePreset } from 'wiratheme/core';
+} from 'wiraui/core';
+export type { ThemePreset } from 'wiraui/core';

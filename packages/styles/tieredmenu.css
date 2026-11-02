@@ -1,117 +1,117 @@
-/* wt-tieredmenu (and wt-contextmenu, which shows one at the pointer). Shared by wiratheme v1, v2 and v3. Items look like
-   wt-menu's; a submenu opens beside its item (flipped when it would leave the window) and below it on phones. */
-@layer wiratheme.components {
-  :is(wt-tieredmenu, wt-tiered-menu) {
+/* wu-tieredmenu (and wu-contextmenu, which shows one at the pointer). Shared by wiraui v1, v2 and v3. Items look like
+   wu-menu's; a submenu opens beside its item (flipped when it would leave the window) and below it on phones. */
+@layer wiraui.components {
+  :is(wu-tieredmenu, wu-tiered-menu) {
     display: block;
   }
-  .wt-tieredmenu {
+  .wu-tieredmenu {
     box-sizing: border-box;
-    min-width: var(--wt-menu-min-width);
+    min-width: var(--wu-menu-min-width);
     max-width: 100%;
-    padding: var(--wt-menu-padding);
-    border: var(--wt-menu-border-width) solid var(--wt-border);
-    border-radius: var(--wt-menu-radius);
-    background: var(--wt-menu-bg);
-    color: var(--wt-menu-item-color);
+    padding: var(--wu-menu-padding);
+    border: var(--wu-menu-border-width) solid var(--wu-border);
+    border-radius: var(--wu-menu-radius);
+    background: var(--wu-menu-bg);
+    color: var(--wu-menu-item-color);
   }
-  .wt-tieredmenu-overlay {
+  .wu-tieredmenu-overlay {
     position: fixed;
     inset: auto;
     z-index: 1200;
     margin: 0;
     overflow: visible;
-    border-width: var(--wt-menu-overlay-border-width);
-    background: var(--wt-menu-overlay-bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
-    box-shadow: var(--wt-menu-shadow);
+    border-width: var(--wu-menu-overlay-border-width);
+    background: var(--wu-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
+    box-shadow: var(--wu-menu-shadow);
   }
-  .wt-tieredmenu-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-tieredmenu-disabled {
+    opacity: var(--wu-disabled-opacity);
     pointer-events: none;
   }
-  .wt-tieredmenu-root-list,
-  .wt-tieredmenu-submenu {
+  .wu-tieredmenu-root-list,
+  .wu-tieredmenu-submenu {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-menu-gap);
+    gap: var(--wu-menu-gap);
     margin: 0;
     padding: 0;
     list-style: none;
     outline: none;
   }
-  .wt-tieredmenu-item {
+  .wu-tieredmenu-item {
     position: relative;
   }
-  .wt-tieredmenu-item-link {
+  .wu-tieredmenu-item-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: var(--wt-menu-item-padding);
-    border-radius: var(--wt-menu-item-radius);
-    color: var(--wt-menu-item-color);
+    padding: var(--wu-menu-item-padding);
+    border-radius: var(--wu-menu-item-radius);
+    color: var(--wu-menu-item-color);
     text-decoration: none;
     cursor: pointer;
     user-select: none;
     outline: none;
   }
-  .wt-tieredmenu-item-link:hover,
-  .wt-tieredmenu-item-active > .wt-tieredmenu-item-content > .wt-tieredmenu-item-link {
-    background: var(--wt-menu-item-hover-bg);
-    color: var(--wt-menu-item-hover-color);
+  .wu-tieredmenu-item-link:hover,
+  .wu-tieredmenu-item-active > .wu-tieredmenu-item-content > .wu-tieredmenu-item-link {
+    background: var(--wu-menu-item-hover-bg);
+    color: var(--wu-menu-item-hover-color);
   }
-  .wt-tieredmenu-item-link:focus-visible {
-    background: var(--wt-menu-item-hover-bg);
-    box-shadow: inset 0 0 0 2px var(--wt-field-focus-border);
+  .wu-tieredmenu-item-link:focus-visible {
+    background: var(--wu-menu-item-hover-bg);
+    box-shadow: inset 0 0 0 2px var(--wu-field-focus-border);
   }
-  .wt-tieredmenu-item-disabled > .wt-tieredmenu-item-content > .wt-tieredmenu-item-link {
-    opacity: var(--wt-disabled-opacity);
+  .wu-tieredmenu-item-disabled > .wu-tieredmenu-item-content > .wu-tieredmenu-item-link {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-tieredmenu-link-active {
-    color: var(--wt-menu-link-active-color);
+  .wu-tieredmenu-link-active {
+    color: var(--wu-menu-link-active-color);
   }
-  .wt-tieredmenu-item-icon {
+  .wu-tieredmenu-item-icon {
     flex: none;
-    color: var(--wt-menu-item-icon-color);
+    color: var(--wu-menu-item-icon-color);
   }
-  .wt-tieredmenu-item-label {
+  .wu-tieredmenu-item-label {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .wt-tieredmenu-submenu-icon {
+  .wu-tieredmenu-submenu-icon {
     flex: none;
     width: 0.875rem;
     height: 0.875rem;
     margin-left: auto;
-    color: var(--wt-menu-item-icon-color);
+    color: var(--wu-menu-item-icon-color);
   }
-  .wt-tieredmenu-separator {
+  .wu-tieredmenu-separator {
     margin: 0.25rem 0;
-    border-top: 1px solid var(--wt-menu-separator-color);
+    border-top: 1px solid var(--wu-menu-separator-color);
   }
-  .wt-tieredmenu-submenu {
+  .wu-tieredmenu-submenu {
     position: absolute;
-    top: calc(var(--wt-menu-padding) * -1);
+    top: calc(var(--wu-menu-padding) * -1);
     left: 100%;
     z-index: 1;
     box-sizing: border-box;
-    min-width: var(--wt-menu-min-width);
-    padding: var(--wt-menu-padding);
-    border: var(--wt-menu-overlay-border-width) solid var(--wt-border);
-    border-radius: var(--wt-menu-radius);
-    background: var(--wt-menu-overlay-bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
-    box-shadow: var(--wt-menu-shadow);
+    min-width: var(--wu-menu-min-width);
+    padding: var(--wu-menu-padding);
+    border: var(--wu-menu-overlay-border-width) solid var(--wu-border);
+    border-radius: var(--wu-menu-radius);
+    background: var(--wu-menu-overlay-bg);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
+    box-shadow: var(--wu-menu-shadow);
   }
-  .wt-tieredmenu-submenu-flip {
+  .wu-tieredmenu-submenu-flip {
     right: 100%;
     left: auto;
   }
   /* Phones: no room beside, so a submenu opens below its item, indented. */
   @media (max-width: 575.98px) {
-    .wt-tieredmenu-submenu {
+    .wu-tieredmenu-submenu {
       position: static;
       min-width: 0;
       padding: 0 0 0 1rem;
@@ -119,7 +119,7 @@
       background: transparent;
       box-shadow: none;
     }
-    .wt-tieredmenu-item-active > .wt-tieredmenu-item-content .wt-tieredmenu-submenu-icon {
+    .wu-tieredmenu-item-active > .wu-tieredmenu-item-content .wu-tieredmenu-submenu-icon {
       rotate: 90deg;
     }
   }

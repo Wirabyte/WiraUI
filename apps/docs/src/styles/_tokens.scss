@@ -1,7 +1,7 @@
 // Docs chrome uses the Wirabyte brand (wirabyte.com). Its primary colour follows the theme on screen: the
-// --docs-primary* tokens read --wt-primary-color, which the active version (or the landing page) writes on :root,
+// --docs-primary* tokens read --wu-primary-color, which the active version (or the landing page) writes on :root,
 // so the theme panel recolours the whole site. Before a theme is applied they fall back to the brand blue.
-// Breakpoints (mobile-first, min-width): sm 576, md 768, lg 992, xl 1200, the same as wiratheme/utils.
+// Breakpoints (mobile-first, min-width): sm 576, md 768, lg 992, xl 1200, the same as wiraui/utils.
 :root {
   --docs-topbar-h: 60px;
   --docs-sidebar-w: 272px;
@@ -25,9 +25,9 @@
   --docs-border: #e3e8f1;
   --docs-border-strong: #cfd7e4;
   --docs-hover: #eef2f9;
-  --docs-primary: var(--wt-primary-color, #1e7ae0);
+  --docs-primary: var(--wu-primary-color, #1e7ae0);
   --docs-primary-hover: color-mix(in srgb, var(--docs-primary) 82%, #000);
-  --docs-primary-contrast: var(--wt-primary-contrast, #ffffff);
+  --docs-primary-contrast: var(--wu-primary-contrast, #ffffff);
   --docs-primary-soft: color-mix(in srgb, var(--docs-primary) 10%, #ffffff);
   // Text in the primary colour on light ground: darkened so light primaries (amber, lime) stay readable.
   --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #000);
@@ -78,7 +78,7 @@
   color-scheme: light;
 }
 
-:root.wt-dark {
+:root.wu-dark {
   // Soft dark: the brand's dark page, lifted a touch.
   --docs-page-bg: #0b1220;
   --docs-ground: #0a111e;
@@ -90,9 +90,9 @@
   --docs-border: #1c2839;
   --docs-border-strong: #2a3a52;
   --docs-hover: #121c2d;
-  --docs-primary: var(--wt-primary-color, #4ea3f7);
+  --docs-primary: var(--wu-primary-color, #4ea3f7);
   --docs-primary-hover: color-mix(in srgb, var(--docs-primary) 78%, #ffffff);
-  --docs-primary-contrast: var(--wt-primary-contrast, #ffffff);
+  --docs-primary-contrast: var(--wu-primary-contrast, #ffffff);
   --docs-primary-soft: color-mix(in srgb, var(--docs-primary) 16%, transparent);
   --docs-primary-soft-text: color-mix(in srgb, var(--docs-primary) 70%, #ffffff);
   --docs-accent: #2dd4bf;
@@ -128,26 +128,26 @@
 // A surface picked in the theme panel (Slate, Gray, Zinc …) tints the site's own neutrals too, so the change is
 // felt across the page and not only in the demos. "Theme" keeps the site's palette.
 :root.docs-surface-custom {
-  --docs-page-bg: var(--wt-surface-100);
-  --docs-ground: var(--wt-surface-200);
-  --docs-surface: var(--wt-surface-0);
-  --docs-overlay: var(--wt-surface-0);
-  --docs-text: var(--wt-surface-900);
-  --docs-text-2: var(--wt-surface-700);
-  --docs-muted: var(--wt-surface-500);
-  --docs-border: var(--wt-surface-200);
-  --docs-border-strong: var(--wt-surface-300);
-  --docs-hover: var(--wt-surface-100);
+  --docs-page-bg: var(--wu-surface-100);
+  --docs-ground: var(--wu-surface-200);
+  --docs-surface: var(--wu-surface-0);
+  --docs-overlay: var(--wu-surface-0);
+  --docs-text: var(--wu-surface-900);
+  --docs-text-2: var(--wu-surface-700);
+  --docs-muted: var(--wu-surface-500);
+  --docs-border: var(--wu-surface-200);
+  --docs-border-strong: var(--wu-surface-300);
+  --docs-hover: var(--wu-surface-100);
 }
-:root.docs-surface-custom.wt-dark {
-  --docs-page-bg: var(--wt-surface-950);
-  --docs-ground: var(--wt-surface-950);
-  --docs-surface: var(--wt-surface-900);
-  --docs-overlay: var(--wt-surface-800);
-  --docs-text: var(--wt-surface-50);
-  --docs-text-2: var(--wt-surface-200);
-  --docs-muted: var(--wt-surface-400);
-  --docs-border: var(--wt-surface-800);
-  --docs-border-strong: var(--wt-surface-700);
-  --docs-hover: var(--wt-surface-800);
+:root.docs-surface-custom.wu-dark {
+  --docs-page-bg: var(--wu-surface-950);
+  --docs-ground: var(--wu-surface-950);
+  --docs-surface: var(--wu-surface-900);
+  --docs-overlay: var(--wu-surface-800);
+  --docs-text: var(--wu-surface-50);
+  --docs-text-2: var(--wu-surface-200);
+  --docs-muted: var(--wu-surface-400);
+  --docs-border: var(--wu-surface-800);
+  --docs-border-strong: var(--wu-surface-700);
+  --docs-hover: var(--wu-surface-800);
 }

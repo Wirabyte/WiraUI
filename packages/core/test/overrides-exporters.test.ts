@@ -25,7 +25,7 @@ function loadPrototypeExporters(): any {
   for (const f of ['engine.js', 'exporters.js']) {
     runInNewContext(readFileSync(new URL(`../../../prototype/theme-designer/${f}`, import.meta.url), 'utf8'), ctx);
   }
-  return ctx.window.WT;
+  return ctx.window.WU;
 }
 
 describe('overrides', () => {
@@ -50,7 +50,7 @@ describe('overrides', () => {
     expect(t.light['density']).toBe('0.8');
     expect(t.light['font-size']).toBe('15px');
     expect(t.light['button-font-weight']).toBe('600');
-    expect(t.light['tag-radius']).toBe('var(--wt-radius-full)');
+    expect(t.light['tag-radius']).toBe('var(--wu-radius-full)');
   });
 
   it('puts dark-only overrides into the dark map', () => {
@@ -90,9 +90,9 @@ describe('exporters', () => {
 
   it('writes CSS with the layer order, theme-source marker and dark block', () => {
     const css = toCSS(defaults(), { date });
-    expect(css).toContain('@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;');
-    expect(css).toContain('--wt-theme-source: css;');
-    expect(css).toContain(':root.wt-dark {');
+    expect(css).toContain('@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;');
+    expect(css).toContain('--wu-theme-source: css;');
+    expect(css).toContain(':root.wu-dark {');
   });
 
   it('imports every file the prototype Designer exports', () => {
@@ -110,14 +110,14 @@ describe('exporters', () => {
   it('explains what went wrong on bad input', () => {
     expect(() => parseImport('')).toThrow('empty');
     expect(() => parseImport('body { color: red }')).toThrow('no-config');
-    expect(() => parseImport('// wiratheme-config {oops}')).toThrow('bad-config');
+    expect(() => parseImport('// wiraui-config {oops}')).toThrow('bad-config');
   });
 
   it('only lists changed values in the TS overrides file', () => {
     expect(toTSOverrides(defaults('siam'), { date })).toContain('nothing differs from the Siam preset yet');
     const ts = toTSOverrides(normalize({ preset: 'wira', surface: 'zinc' }), { date });
     expect(ts).toContain("surface: '{zinc}',");
-    expect(ts).toContain("import { defineOverrides } from 'wiratheme/config';");
+    expect(ts).toContain("import { defineOverrides } from 'wiraui/config';");
     expect(computeTokens(defaults()).light['surface-950']).toBe('#070b14');
   });
 });

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtDivider } from './divider.component';
+import { WuDivider } from './divider.component';
 
-/** For NgModule apps. Standalone apps can import `WtDivider` directly. */
+/** For NgModule apps. Standalone apps can import `WuDivider` directly. */
 @NgModule({
-  imports: [WtDivider],
-  exports: [WtDivider],
+  imports: [WuDivider],
+  exports: [WuDivider],
 })
-export class WtDividerModule {}
+export class WuDividerModule {}

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtIconField, WtInputIcon } from './iconfield.component';
+import { WuIconField, WuInputIcon } from './iconfield.component';
 
-/** For NgModule apps. Standalone apps can import `WtIconField` and `WtInputIcon` directly. */
+/** For NgModule apps. Standalone apps can import `WuIconField` and `WuInputIcon` directly. */
 @NgModule({
-  imports: [WtIconField, WtInputIcon],
-  exports: [WtIconField, WtInputIcon],
+  imports: [WuIconField, WuInputIcon],
+  exports: [WuIconField, WuInputIcon],
 })
-export class WtIconFieldModule {}
+export class WuIconFieldModule {}

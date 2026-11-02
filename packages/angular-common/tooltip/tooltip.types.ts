@@ -1,11 +1,11 @@
-export type WtTooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+export type WuTooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 /** `'hover'` also shows on keyboard focus. */
-export type WtTooltipEvent = 'hover' | 'focus' | 'both';
+export type WuTooltipEvent = 'hover' | 'focus' | 'both';
 
-export interface WtTooltipOptions {
+export interface WuTooltipOptions {
   tooltipLabel?: string;
-  tooltipPosition?: WtTooltipPosition;
-  tooltipEvent?: WtTooltipEvent;
+  tooltipPosition?: WuTooltipPosition;
+  tooltipEvent?: WuTooltipEvent;
   showDelay?: number;
   hideDelay?: number;
   life?: number;

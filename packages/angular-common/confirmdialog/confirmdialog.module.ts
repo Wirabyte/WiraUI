@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtConfirmDialog } from './confirmdialog.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuConfirmDialog } from './confirmdialog.component';
 
-/** For NgModule apps. Also exports `WtTemplate` for the header, message and footer slots. */
+/** For NgModule apps. Also exports `WuTemplate` for the header, message and footer slots. */
 @NgModule({
-  imports: [WtConfirmDialog, WtTemplate],
-  exports: [WtConfirmDialog, WtTemplate],
+  imports: [WuConfirmDialog, WuTemplate],
+  exports: [WuConfirmDialog, WuTemplate],
 })
-export class WtConfirmDialogModule {}
+export class WuConfirmDialogModule {}

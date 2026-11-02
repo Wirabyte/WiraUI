@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="left"></docs-slot-note>
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-imageCompare id="d-icmp" [ariaLabel]="tx('เทียบภาพก่อนและหลังปรับสี')" [style]="{ maxWidth: '36rem' }">
+        <wu-imageCompare id="d-icmp" [ariaLabel]="tx('เทียบภาพก่อนและหลังปรับสี')" [style]="{ maxWidth: '36rem' }">
           <ng-template #left>
             <div class="docs-icmp-pic">
               <img [src]="photo" [alt]="tx('ภาพสีหลังปรับ')" />
@@ -20,24 +20,24 @@
               <span class="docs-icmp-tag" id="d-icmp-before">{{ tx('ก่อน') }}</span>
             </div>
           </ng-template>
-        </wt-imageCompare>
+        </wu-imageCompare>
       </docs-demo>
     </docs-section>
 
     <docs-section id="value" [section]="sec['value']">
       <docs-demo [html]="code['value']" [ts]="ts['value']" layout="stack">
-        <wt-imageCompare id="d-icmp-value" [(value)]="divider" [step]="5" [ariaLabel]="tx('เทียบภาพก่อนและหลังปรับสี')" [style]="{ maxWidth: '36rem' }">
+        <wu-imageCompare id="d-icmp-value" [(value)]="divider" [step]="5" [ariaLabel]="tx('เทียบภาพก่อนและหลังปรับสี')" [style]="{ maxWidth: '36rem' }">
           <ng-template #left>
             <div class="docs-icmp-pic"><img [src]="photo" [alt]="tx('ภาพสีหลังปรับ')" /></div>
           </ng-template>
           <ng-template #right>
             <div class="docs-icmp-pic"><img class="docs-icmp-old" [src]="photo" [alt]="tx('ภาพขาวดำก่อนปรับสี')" /></div>
           </ng-template>
-        </wt-imageCompare>
+        </wu-imageCompare>
         <div class="docs-demo-actions">
-          <wt-button id="d-icmp-25" label="25%" severity="secondary" [outlined]="true" (onClick)="divider = 25"></wt-button>
-          <wt-button id="d-icmp-50" label="50%" severity="secondary" [outlined]="true" (onClick)="divider = 50"></wt-button>
-          <wt-button id="d-icmp-75" label="75%" severity="secondary" [outlined]="true" (onClick)="divider = 75"></wt-button>
+          <wu-button id="d-icmp-25" label="25%" severity="secondary" [outlined]="true" (onClick)="divider = 25"></wu-button>
+          <wu-button id="d-icmp-50" label="50%" severity="secondary" [outlined]="true" (onClick)="divider = 50"></wu-button>
+          <wu-button id="d-icmp-75" label="75%" severity="secondary" [outlined]="true" (onClick)="divider = 75"></wu-button>
           <span class="docs-demo-output">{{ tx('ตำแหน่งเส้นแบ่ง') }}: <code id="d-icmp-value-out">{{ divider }}</code></span>
         </div>
       </docs-demo>

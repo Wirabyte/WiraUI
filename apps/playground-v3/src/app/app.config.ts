@@ -1,11 +1,11 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideWiraTheme } from 'wiratheme/config';
-import { wiraOverrides } from '../theme/wiratheme.overrides';
+import { provideWiraUI } from 'wiraui/config';
+import { wiraOverrides } from '../theme/wiraui.overrides';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideWiraTheme({
+    provideWiraUI({
       overrides: wiraOverrides,
       locale: 'th',
       calendar: 'buddhist',

@@ -11,25 +11,25 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import { ɵWtFlowHost } from './flow-host';
-import type { WtFlowFitViewOptions, WtFlowPanelPosition } from './flow.types';
+import { ɵtoBool } from 'wiraui/config';
+import { ɵWuFlowHost } from './flow-host';
+import type { WuFlowFitViewOptions, WuFlowPanelPosition } from './flow.types';
 
 const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ? fallback : ɵtoBool(v));
 
 /**
- * Zoom in / out, fit view and lock buttons: `<wt-flow-controls position="bottom-left">` inside `<wt-flow>`. Each button
- * has a label in the app's language; put your own buttons inside (`<button class="wt-flow-controls-button">`).
+ * Zoom in / out, fit view and lock buttons: `<wu-flow-controls position="bottom-left">` inside `<wu-flow>`. Each button
+ * has a label in the app's language; put your own buttons inside (`<button class="wu-flow-controls-button">`).
  */
 @Component({
-  selector: 'wt-flow-controls',
+  selector: 'wu-flow-controls',
   standalone: true,
   imports: [NgIf],
   template: `
     <button
       *ngIf="showZoom"
       type="button"
-      class="wt-flow-controls-button wt-flow-controls-zoomin"
+      class="wu-flow-controls-button wu-flow-controls-zoomin"
       [disabled]="atMax"
       [attr.aria-label]="text('flowZoomIn')"
       [attr.title]="text('flowZoomIn')"
@@ -40,7 +40,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
     <button
       *ngIf="showZoom"
       type="button"
-      class="wt-flow-controls-button wt-flow-controls-zoomout"
+      class="wu-flow-controls-button wu-flow-controls-zoomout"
       [disabled]="atMin"
       [attr.aria-label]="text('flowZoomOut')"
       [attr.title]="text('flowZoomOut')"
@@ -51,7 +51,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
     <button
       *ngIf="showFitView"
       type="button"
-      class="wt-flow-controls-button wt-flow-controls-fitview"
+      class="wu-flow-controls-button wu-flow-controls-fitview"
       [attr.aria-label]="text('flowFitView')"
       [attr.title]="text('flowFitView')"
       (click)="fit()"
@@ -63,7 +63,7 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
     <button
       *ngIf="showInteractive"
       type="button"
-      class="wt-flow-controls-button wt-flow-controls-interactive"
+      class="wu-flow-controls-button wu-flow-controls-interactive"
       [attr.aria-pressed]="!interactive"
       [attr.aria-label]="text(interactive ? 'flowLock' : 'flowUnlock')"
       [attr.title]="text(interactive ? 'flowLock' : 'flowUnlock')"
@@ -83,23 +83,23 @@ const bool = (v: unknown, fallback: boolean) => (v === undefined || v === null ?
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'wt-flow-panel wt-flow-controls',
+    class: 'wu-flow-panel wu-flow-controls',
     role: 'toolbar',
     '[attr.aria-label]': "ariaLabel || text('flowControls')",
     '[attr.aria-orientation]': 'orientation',
-    '[class.wt-flow-controls-horizontal]': "orientation === 'horizontal'",
-    '[class.wt-flow-panel-top-left]': "position === 'top-left'",
-    '[class.wt-flow-panel-top-center]': "position === 'top-center'",
-    '[class.wt-flow-panel-top-right]': "position === 'top-right'",
-    '[class.wt-flow-panel-bottom-left]': "!position || position === 'bottom-left'",
-    '[class.wt-flow-panel-bottom-center]': "position === 'bottom-center'",
-    '[class.wt-flow-panel-bottom-right]': "position === 'bottom-right'",
-    '[class.wt-flow-panel-center-left]': "position === 'center-left'",
-    '[class.wt-flow-panel-center-right]': "position === 'center-right'",
+    '[class.wu-flow-controls-horizontal]': "orientation === 'horizontal'",
+    '[class.wu-flow-panel-top-left]': "position === 'top-left'",
+    '[class.wu-flow-panel-top-center]': "position === 'top-center'",
+    '[class.wu-flow-panel-top-right]': "position === 'top-right'",
+    '[class.wu-flow-panel-bottom-left]': "!position || position === 'bottom-left'",
+    '[class.wu-flow-panel-bottom-center]': "position === 'bottom-center'",
+    '[class.wu-flow-panel-bottom-right]': "position === 'bottom-right'",
+    '[class.wu-flow-panel-center-left]': "position === 'center-left'",
+    '[class.wu-flow-panel-center-right]': "position === 'center-right'",
   },
 })
-export class WtFlowControls implements OnInit, OnDestroy {
-  @Input() position: WtFlowPanelPosition = 'bottom-left';
+export class WuFlowControls implements OnInit, OnDestroy {
+  @Input() position: WuFlowPanelPosition = 'bottom-left';
   @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
   @Input() set showZoom(v: unknown) {
     this._zoom = bool(v, true);
@@ -119,7 +119,7 @@ export class WtFlowControls implements OnInit, OnDestroy {
   get showInteractive(): boolean {
     return this._lock;
   }
-  @Input() fitViewOptions: WtFlowFitViewOptions | null | undefined;
+  @Input() fitViewOptions: WuFlowFitViewOptions | null | undefined;
   /** Animation of the buttons in ms. Default 200 (none with reduced motion). */
   @Input() duration = 200;
   @Input() ariaLabel: string | null | undefined;
@@ -137,7 +137,7 @@ export class WtFlowControls implements OnInit, OnDestroy {
   private _lock = true;
   private stop: (() => void) | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
 
   text(key: 'flowZoomIn' | 'flowZoomOut' | 'flowFitView' | 'flowLock' | 'flowUnlock' | 'flowControls'): string {
     return this.host ? this.host.ɵtext(key) : '';

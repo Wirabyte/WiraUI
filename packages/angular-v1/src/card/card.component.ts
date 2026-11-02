@@ -1,18 +1,18 @@
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, Input, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
-import { WtCardVariant } from './card.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
+import { WuCardVariant } from './card.types';
 
 /**
  * Card with `header` / `subheader` inputs and projected slots:
- * `[wtCardHeader]` (top media), `[wtCardActions]` (right of the title), default content, `[wtCardFooter]`.
+ * `[wuCardHeader]` (top media), `[wuCardActions]` (right of the title), default content, `[wuCardFooter]`.
  * The templates apps already use work too: `header`, `title`, `subtitle`, `content`, `footer`
- * (`pTemplate="footer"`, `wtTemplate="footer"` or `#footer`), and `<wt-header>` / `<wt-footer>` elements.
+ * (`pTemplate="footer"`, `wuTemplate="footer"` or `#footer`), and `<wu-header>` / `<wu-footer>` elements.
  * Extras: `variant` (outlined, elevated) and `loading` (skeleton lines instead of content). `glass` is a v3 look:
  * here it shows a plain card.
  */
 @Component({
-  selector: 'wt-card',
+  selector: 'wu-card',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './card.component.html',
@@ -20,7 +20,7 @@ import { WtCardVariant } from './card.types';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtCard {
+export class WuCard {
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   @Input() styleClass?: string | null;
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
@@ -33,11 +33,11 @@ export class WtCard {
   }
   @Input() header?: string;
   @Input() subheader?: string;
-  @Input() variant: WtCardVariant = 'default';
+  @Input() variant: WuCardVariant = 'default';
   @Input() set loading(v: unknown) { this._loading = ɵtoBool(v); }
   get loading(): boolean { return this._loading; }
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
   @ContentChild('title', { read: TemplateRef }) protected titleRef?: TemplateRef<unknown>;
   @ContentChild('subtitle', { read: TemplateRef }) protected subtitleRef?: TemplateRef<unknown>;
@@ -63,13 +63,13 @@ export class WtCard {
   }
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get classes(): string {
-    const c = ['wt-card', 'p-card', 'p-component'];
-    if (this.variant !== 'default' && this.variant !== 'glass') c.push('wt-card-' + this.variant);
-    if (this._loading) c.push('wt-card-loading');
+    const c = ['wu-card', 'p-card', 'p-component'];
+    if (this.variant !== 'default' && this.variant !== 'glass') c.push('wu-card-' + this.variant);
+    if (this._loading) c.push('wu-card-loading');
     if (this.styleClass) c.push(this.styleClass);
     return c.join(' ');
   }

@@ -25,13 +25,13 @@ export const LISTBOX_DOC: ComponentDoc = {
   title: 'Listbox',
   group: 'Form',
   entry: 'listbox',
-  standalone: 'WtListbox',
-  module: 'WtListboxModule',
+  standalone: 'WuListbox',
+  module: 'WuListboxModule',
   forms: true,
-  selector: 'wt-listbox',
+  selector: 'wu-listbox',
   description: {
-    th: 'รายการตัวเลือกที่เปิดค้างไว้บนหน้า เลือกได้ทีละรายการหรือหลายรายการ (มีช่องติ๊กได้) ค้นหาได้ จัดกลุ่มได้ ใช้ฟิลด์ตัวเลือกเหมือน wt-select และใช้คีย์บอร์ดได้ครบ',
-    en: 'A list of options that stays open on the page: pick one or several (with check boxes if you like), search, group. It takes the same option fields as wt-select, and the keyboard works throughout.',
+    th: 'รายการตัวเลือกที่เปิดค้างไว้บนหน้า เลือกได้ทีละรายการหรือหลายรายการ (มีช่องติ๊กได้) ค้นหาได้ จัดกลุ่มได้ ใช้ฟิลด์ตัวเลือกเหมือน wu-select และใช้คีย์บอร์ดได้ครบ',
+    en: 'A list of options that stays open on the page: pick one or several (with check boxes if you like), search, group. It takes the same option fields as wu-select, and the keyboard works throughout.',
   },
   english: {
     'ม.1/1': 'Class 7/1',
@@ -65,8 +65,8 @@ export const LISTBOX_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtListboxModule</code>) และ standalone (<code>WtListbox</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็ก <code>wt-listBox</code> ก็ได้',
-        en: 'Works as an NgModule (<code>WtListboxModule</code>) or standalone (<code>WtListbox</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. <code>wt-listBox</code> works as a tag too.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuListboxModule</code>) และ standalone (<code>WuListbox</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็ก <code>wu-listBox</code> ก็ได้',
+        en: 'Works as an NgModule (<code>WuListboxModule</code>) or standalone (<code>WuListbox</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. <code>wu-listBox</code> works as a tag too.',
       },
     },
     basic: {
@@ -107,26 +107,26 @@ export const LISTBOX_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-listbox&gt;</code> เป็น <code>&lt;wt-listbox&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) class <code>p-listbox</code>, <code>p-listbox-option</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wt-*</code> · <code>virtualScroll</code> และ <code>virtualScrollItemSize</code> รับไว้ แต่วาดทุกตัวเลือก (รายการใน listbox สั้นอยู่แล้ว ถ้ายาวมากใช้ wt-scroller) · <code>lazy</code>, <code>filterLocale</code> และ <code>focusOnHover</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-listbox&gt;</code> to <code>&lt;wt-listbox&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="item"</code> keeps working), and the <code>p-listbox</code>, <code>p-listbox-option</code> and <code>p-highlight</code> classes sit next to the <code>wt-*</code> ones · <code>virtualScroll</code> and <code>virtualScrollItemSize</code> are accepted, but every option is drawn (listbox lists are short; for very long ones use wt-scroller) · <code>lazy</code>, <code>filterLocale</code> and <code>focusOnHover</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-listbox&gt;</code> เป็น <code>&lt;wu-listbox&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) class <code>p-listbox</code>, <code>p-listbox-option</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wu-*</code> · <code>virtualScroll</code> และ <code>virtualScrollItemSize</code> รับไว้ แต่วาดทุกตัวเลือก (รายการใน listbox สั้นอยู่แล้ว ถ้ายาวมากใช้ wu-scroller) · <code>lazy</code>, <code>filterLocale</code> และ <code>focusOnHover</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-listbox&gt;</code> to <code>&lt;wu-listbox&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="item"</code> keeps working), and the <code>p-listbox</code>, <code>p-listbox-option</code> and <code>p-highlight</code> classes sit next to the <code>wu-*</code> ones · <code>virtualScroll</code> and <code>virtualScrollItemSize</code> are accepted, but every option is drawn (listbox lists are short; for very long ones use wu-scroller) · <code>lazy</code>, <code>filterLocale</code> and <code>focusOnHover</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-listbox name="room" [(ngModel)]="room" [options]="rooms" optionLabel="name" optionDisabled="closed"
-  ariaLabel="ห้องเรียน" [style]="{ width: '16rem' }"></wt-listbox>`,
-    multiple: `<wt-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionLabel="name" optionValue="code"
-  optionDisabled="closed" [multiple]="true" [checkbox]="true" [striped]="true" ariaLabel="ห้องเรียน"></wt-listbox>`,
-    filter: `<wt-listbox name="room" [(ngModel)]="room" [options]="rooms" optionLabel="name" [filter]="true" filterBy="name,teacher"
-  filterPlaceholder="ค้นหาห้องหรือครู" emptyFilterMessage="ไม่พบห้อง" scrollHeight="12rem" ariaLabel="ห้องเรียน"></wt-listbox>`,
-    group: `<wt-listbox name="room" [(ngModel)]="room" [options]="roomGroups" [group]="true" optionLabel="name"
+    basic: `<wu-listbox name="room" [(ngModel)]="room" [options]="rooms" optionLabel="name" optionDisabled="closed"
+  ariaLabel="ห้องเรียน" [style]="{ width: '16rem' }"></wu-listbox>`,
+    multiple: `<wu-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionLabel="name" optionValue="code"
+  optionDisabled="closed" [multiple]="true" [checkbox]="true" [striped]="true" ariaLabel="ห้องเรียน"></wu-listbox>`,
+    filter: `<wu-listbox name="room" [(ngModel)]="room" [options]="rooms" optionLabel="name" [filter]="true" filterBy="name,teacher"
+  filterPlaceholder="ค้นหาห้องหรือครู" emptyFilterMessage="ไม่พบห้อง" scrollHeight="12rem" ariaLabel="ห้องเรียน"></wu-listbox>`,
+    group: `<wu-listbox name="room" [(ngModel)]="room" [options]="roomGroups" [group]="true" optionLabel="name"
   ariaLabel="ห้องเรียน">
   <ng-template #group let-grade>
     <i class="wi wi-users"></i> {{ grade.label }}
   </ng-template>
-</wt-listbox>`,
+</wu-listbox>`,
     templates: {
-      v3: `<wt-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionValue="code" optionDisabled="closed"
+      v3: `<wu-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionValue="code" optionDisabled="closed"
   [multiple]="true" ariaLabel="ห้องเรียน" (onDblClick)="openRoom($event)">
   <ng-template #item let-room let-selected="selected">
     <span class="room-name">{{ room.name }}</span>
@@ -138,18 +138,18 @@ export const LISTBOX_DOC: ComponentDoc = {
   <ng-template #footer let-value>
     เลือกแล้ว {{ value?.length || 0 }} ห้อง
   </ng-template>
-</wt-listbox>`,
-      classic: `<wt-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionValue="code" optionDisabled="closed"
+</wu-listbox>`,
+      classic: `<wu-listbox name="roomCodes" [(ngModel)]="roomCodes" [options]="rooms" optionValue="code" optionDisabled="closed"
   [multiple]="true" ariaLabel="ห้องเรียน" (onDblClick)="openRoom($event)">
-  <ng-template wtTemplate="item" let-room let-selected="selected">
+  <ng-template wuTemplate="item" let-room let-selected="selected">
     <span class="room-name">{{ room.name }}</span>
     <small class="room-teacher">{{ room.teacher }}</small>
     <i *ngIf="selected" class="wi wi-check"></i>
   </ng-template>
-  <ng-template wtTemplate="footer" let-value>
+  <ng-template wuTemplate="footer" let-value>
     เลือกแล้ว {{ value?.length || 0 }} ห้อง
   </ng-template>
-</wt-listbox>`,
+</wu-listbox>`,
     },
   },
   ts: {
@@ -160,13 +160,13 @@ room: Room | null = null;`,
   { label: 'ชั้น ม.1', items: [{ code: '101', name: 'ม.1/1' }, { code: '102', name: 'ม.1/2' }] },
   { label: 'ชั้น ม.2', items: [{ code: '201', name: 'ม.2/1' }, { code: '202', name: 'ม.2/2' }] },
 ];`,
-    templates: `import { WtListboxClickEvent } from 'wiratheme/listbox';
+    templates: `import { WuListboxClickEvent } from 'wiraui/listbox';
 
 roomCodes: string[] = [];
 lastOpened = '';
 
 /** ดับเบิลคลิกเพื่อเปิดห้อง */
-openRoom(event: WtListboxClickEvent): void {
+openRoom(event: WuListboxClickEvent): void {
   this.lastOpened = event.option.name;
 }`,
   },
@@ -198,10 +198,10 @@ openRoom(event: WtListboxClickEvent): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtListboxChangeEvent', undefined, 'ค่าเปลี่ยน', 'The value changed'),
-        row('onClick · onDblClick', 'WtListboxClickEvent', undefined, 'คลิก / ดับเบิลคลิกที่ตัวเลือก', 'An option was clicked / double-clicked'),
-        row('onFilter', 'WtListboxFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
-        row('onSelectAllChange', 'WtListboxSelectAllChangeEvent', undefined, 'ติ๊ก / เอาติ๊กออกทั้งหมด', 'Check-all ticked / unticked'),
+        row('onChange', 'WuListboxChangeEvent', undefined, 'ค่าเปลี่ยน', 'The value changed'),
+        row('onClick · onDblClick', 'WuListboxClickEvent', undefined, 'คลิก / ดับเบิลคลิกที่ตัวเลือก', 'An option was clicked / double-clicked'),
+        row('onFilter', 'WuListboxFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onSelectAllChange', 'WuListboxSelectAllChangeEvent', undefined, 'ติ๊ก / เอาติ๊กออกทั้งหมด', 'Check-all ticked / unticked'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'ได้ / เสียโฟกัส', 'Gains / loses focus'),
       ],
     },
@@ -209,7 +209,7 @@ openRoom(event: WtListboxClickEvent): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (option) · selected · index', undefined, 'แต่ละตัวเลือก', 'Each option'),
         row('group', '$implicit (group)', undefined, 'หัวกลุ่ม', 'A group header'),
@@ -225,11 +225,11 @@ openRoom(event: WtListboxClickEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtListboxChangeEvent { originalEvent: Event; value: any }
-interface WtListboxClickEvent { originalEvent: Event; option: any; value: any }
-interface WtListboxFilterEvent { originalEvent: Event; filter: string }
-interface WtListboxSelectAllChangeEvent { originalEvent: Event; checked: boolean }`,
+      code: `interface WuListboxChangeEvent { originalEvent: Event; value: any }
+interface WuListboxClickEvent { originalEvent: Event; option: any; value: any }
+interface WuListboxFilterEvent { originalEvent: Event; filter: string }
+interface WuListboxSelectAllChangeEvent { originalEvent: Event; checked: boolean }`,
     },
   ],
-  tokens: [tok('--wt-listbox-border-width', 'ขอบของกรอบ (สี พื้น และตัวเลือกใช้ token ของ Select)', 'Frame border width (colours, background and options use the Select tokens)')],
+  tokens: [tok('--wu-listbox-border-width', 'ขอบของกรอบ (สี พื้น และตัวเลือกใช้ token ของ Select)', 'Frame border width (colours, background and options use the Select tokens)')],
 };

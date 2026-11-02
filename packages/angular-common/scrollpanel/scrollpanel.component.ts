@@ -12,16 +12,16 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A box whose content scrolls with thin, themed scrollbars: `<wt-scrollPanel [style]="{ width: '100%', height: '12rem' }">`.
+ * A box whose content scrolls with thin, themed scrollbars: `<wu-scrollPanel [style]="{ width: '100%', height: '12rem' }">`.
  * Give it a `height` or a `maxHeight`; the content scrolls inside it, also from the keyboard once focused.
  */
 @Component({
-  selector: 'wt-scrollpanel, wt-scrollPanel, wt-scroll-panel',
+  selector: 'wu-scrollpanel, wu-scrollPanel, wu-scroll-panel',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './scrollpanel.component.html',
@@ -29,7 +29,7 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtScrollPanel {
+export class WuScrollPanel {
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
@@ -37,12 +37,12 @@ export class WtScrollPanel {
   /** Pixels per arrow key press. Default: the browser's own step. */
   @Input() step?: number;
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   @ViewChild('content') protected viewport?: ElementRef<HTMLElement>;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

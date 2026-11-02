@@ -13,9 +13,9 @@ const require = createRequire(import.meta.url);
 const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((sass) => [`sass ${sass.info.split('\t')[1]}`, sass]);
 
 const SCSS_DIR = new URL('../scss/', import.meta.url);
-const PREFIX = 'wiratheme/theme';
+const PREFIX = 'wiraui/theme';
 
-/** Resolves `wiratheme/theme[/x]` to packages/themes/scss, as the published package does. */
+/** Resolves `wiraui/theme[/x]` to packages/themes/scss, as the published package does. */
 const importer = {
   findFileUrl(url: string) {
     if (url !== PREFIX && !url.startsWith(PREFIX + '/')) return null;
@@ -72,15 +72,15 @@ function expectedCss(c: core.ThemeConfig): string {
 
 const DARK_PATH: Record<core.DarkMode, string | null> = {
   none: null,
-  class: '@layer wiratheme.tokens > :root.wt-dark',
-  media: '@layer wiratheme.tokens > @media (prefers-color-scheme: dark) > :root',
+  class: '@layer wiraui.tokens > :root.wu-dark',
+  media: '@layer wiraui.tokens > @media (prefers-color-scheme: dark) > :root',
 };
 
-/** --wt-* tokens without the prefix; anything else (PrimeNG compat variables) goes to `compat`. */
+/** --wu-* tokens without the prefix; anything else (PrimeNG compat variables) goes to `compat`. */
 function tokensOf(decls: [string, string][] | undefined, compat: Record<string, string> = {}): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [name, value] of decls || []) {
-    if (name.startsWith('--wt-')) out[name.slice(5)] = value;
+    if (name.startsWith('--wu-')) out[name.slice(5)] = value;
     else compat[name] = value;
   }
   return out;
@@ -91,7 +91,7 @@ function expectParity(css: string, c: core.ThemeConfig) {
   const got = parseCss(css);
   const t = core.computeTokens(c);
   const compat: Record<string, string> = {};
-  expect(tokensOf(got.blocks['@layer wiratheme.tokens > :root'], compat)).toEqual({ 'theme-source': 'scss', ...t.light });
+  expect(tokensOf(got.blocks['@layer wiraui.tokens > :root'], compat)).toEqual({ 'theme-source': 'scss', ...t.light });
   expect(compat).toEqual(t.compat || {});
   const dark = DARK_PATH[c.darkMode];
   if (dark) expect(tokensOf(got.blocks[dark])).toEqual(t.dark);
@@ -220,19 +220,19 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
 
   describe('accepts hand-written settings', () => {
     it.each(HAND_WRITTEN)('with (%s)', (settings, raw) => {
-      const source = settings ? `@use 'wiratheme/theme' with (${settings});` : "@use 'wiratheme/theme';";
+      const source = settings ? `@use 'wiraui/theme' with (${settings});` : "@use 'wiraui/theme';";
       expectParity(compile(sass, source), core.normalize(raw));
     }, 30000);
 
     it('emits the tokens once however many files load it', () => {
-      const css = compile(sass, "@use 'wiratheme/theme' with ($preset: 'siam');\n@use 'wiratheme/theme/index' as again;");
-      expect(css.match(/--wt-theme-source/g)).toHaveLength(1);
+      const css = compile(sass, "@use 'wiraui/theme' with ($preset: 'siam');\n@use 'wiraui/theme/index' as again;");
+      expect(css.match(/--wu-theme-source/g)).toHaveLength(1);
     });
   });
 
   describe('rejects bad settings with a clear error', () => {
     it.each(BAD)('with (%s)', (settings, message) => {
-      expect(() => compile(sass, `@use 'wiratheme/theme' with (${settings});`)).toThrow(message);
+      expect(() => compile(sass, `@use 'wiraui/theme' with (${settings});`)).toThrow(message);
     });
   });
 
@@ -247,15 +247,15 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
     const surfaces = Object.keys(core.SURFACES) as core.SurfaceId[];
     const source = `@use 'sass:list';
 @use 'sass:map';
-@use 'wiratheme/theme/color';
-@use 'wiratheme/theme/data';
+@use 'wiraui/theme/color';
+@use 'wiraui/theme/data';
 $colours: (${literals.join(', ')});
 a {
   @for $i from 1 through list.length($colours) {
-    $rgb: color.wt-rgb(list.nth($colours, $i));
-    --p-#{$i}: #{map.values(color.wt-palette($rgb))};
+    $rgb: color.wu-rgb(list.nth($colours, $i));
+    --p-#{$i}: #{map.values(color.wu-palette($rgb))};
     @each $id, $scale in data.$surfaces {
-      --b-#{$i}-#{$id}: #{color.wt-best-on(color.wt-hex($rgb), list.nth($scale, 11))};
+      --b-#{$i}-#{$id}: #{color.wu-best-on(color.wu-hex($rgb), list.nth($scale, 11))};
     }
   }
 }`;
@@ -271,54 +271,54 @@ a {
 
   describe('api', () => {
     it('emits nothing when loaded alone', () => {
-      expect(compile(sass, "@use 'wiratheme/theme/api' as wt;").trim()).toBe('');
+      expect(compile(sass, "@use 'wiraui/theme/api' as wu;").trim()).toBe('');
     });
 
     it('provides token(), dark(), media() and glass()', () => {
       const css = compile(
         sass,
-        `@use 'wiratheme/theme/api' as wt;
+        `@use 'wiraui/theme/api' as wu;
 .card {
-  border-color: wt.token(primary-300);
-  @include wt.dark { border-color: wt.token(primary-700); }
-  @include wt.dark('media') { color: wt.token(text); }
-  @include wt.media(md) { padding: 1rem; }
-  @include wt.media(1400px) { padding: 2rem; }
+  border-color: wu.token(primary-300);
+  @include wu.dark { border-color: wu.token(primary-700); }
+  @include wu.dark('media') { color: wu.token(text); }
+  @include wu.media(md) { padding: 1rem; }
+  @include wu.media(1400px) { padding: 2rem; }
 }
-@include wt.dark { --x: 1; }
-.panel { @include wt.glass; }`
+@include wu.dark { --x: 1; }
+.panel { @include wu.glass; }`
       );
       const got = parseCss(css);
-      expect(got.blocks['.card']).toEqual([['border-color', 'var(--wt-primary-300)']]);
-      expect(got.blocks[':root.wt-dark .card']).toEqual([['border-color', 'var(--wt-primary-700)']]);
-      expect(got.blocks['@media (prefers-color-scheme: dark) > .card']).toEqual([['color', 'var(--wt-text)']]);
+      expect(got.blocks['.card']).toEqual([['border-color', 'var(--wu-primary-300)']]);
+      expect(got.blocks[':root.wu-dark .card']).toEqual([['border-color', 'var(--wu-primary-700)']]);
+      expect(got.blocks['@media (prefers-color-scheme: dark) > .card']).toEqual([['color', 'var(--wu-text)']]);
       expect(got.blocks['@media (min-width: 768px) > .card']).toEqual([['padding', '1rem']]);
       expect(got.blocks['@media (min-width: 1400px) > .card']).toEqual([['padding', '2rem']]);
-      expect(got.blocks[':root.wt-dark']).toEqual([['--x', '1']]);
-      expect(got.blocks['.panel']).toEqual([['background', 'var(--wt-card-bg)']]);
-      const filter = 'blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate))';
+      expect(got.blocks[':root.wu-dark']).toEqual([['--x', '1']]);
+      expect(got.blocks['.panel']).toEqual([['background', 'var(--wu-card-bg)']]);
+      const filter = 'blur(var(--wu-glass-blur)) saturate(var(--wu-glass-saturate))';
       expect(got.blocks['@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) > .panel']).toEqual([
-        ['background', 'var(--wt-glass-bg)'],
-        ['border', '1px solid var(--wt-glass-border)'],
-        ['box-shadow', 'var(--wt-glass-highlight), var(--wt-glass-shadow)'],
+        ['background', 'var(--wu-glass-bg)'],
+        ['border', '1px solid var(--wu-glass-border)'],
+        ['box-shadow', 'var(--wu-glass-highlight), var(--wu-glass-shadow)'],
         ['-webkit-backdrop-filter', filter],
         ['backdrop-filter', filter],
       ]);
       expect(got.blocks['@media (prefers-reduced-transparency: reduce) > .panel']).toEqual([
-        ['background', 'var(--wt-card-bg)'],
+        ['background', 'var(--wu-card-bg)'],
         ['-webkit-backdrop-filter', 'none'],
         ['backdrop-filter', 'none'],
       ]);
     });
 
     it('rejects an unknown breakpoint', () => {
-      expect(() => compile(sass, "@use 'wiratheme/theme/api' as wt;\na { @include wt.media(xxl) { b: c; } }")).toThrow(/unknown breakpoint `xxl`/);
+      expect(() => compile(sass, "@use 'wiraui/theme/api' as wu;\na { @include wu.media(xxl) { b: c; } }")).toThrow(/unknown breakpoint `xxl`/);
     });
   });
 });
 
 describe('scss/_data.scss', () => {
-  it('is what scripts/gen-scss-data.mjs writes for the current core (rebuild core, then `pnpm --filter @wiratheme/themes gen`)', () => {
+  it('is what scripts/gen-scss-data.mjs writes for the current core (rebuild core, then `pnpm --filter @wiraui/themes gen`)', () => {
     const committed = readFileSync(new URL('_data.scss', SCSS_DIR), 'utf8').replace(/\r\n/g, '\n');
     expect(committed).toBe(renderScssData(core));
   });

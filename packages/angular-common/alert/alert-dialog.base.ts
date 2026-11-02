@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewChecked, ChangeDetectorRef, Directive, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
-import { ɵlockScroll, ɵuniqueId, WtConfig } from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
-import { WtAlertDismissReason, WtAlertIcon, WtAlertOptions, WtAlertResult } from './alert.types';
+import { ɵlockScroll, ɵuniqueId, WuConfig } from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
+import { WuAlertDismissReason, WuAlertIcon, WuAlertOptions, WuAlertResult } from './alert.types';
 
 type Icon = 'success' | 'error' | 'warning' | 'info' | 'question';
-const ICONS: Record<WtAlertIcon, Icon> = {
+const ICONS: Record<WuAlertIcon, Icon> = {
   success: 'success',
   error: 'error',
   danger: 'error',
@@ -17,15 +17,15 @@ const ICONS: Record<WtAlertIcon, Icon> = {
 };
 
 /**
- * The popup behind `WtAlert.fire()`: one per app, created on first use and reused. Shared logic of the v1 and
+ * The popup behind `WuAlert.fire()`: one per app, created on first use and reused. Shared logic of the v1 and
  * v2/v3 templates. A native modal <dialog>, so it opens above everything, dialogs included.
  */
 @Directive()
-export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy {
+export abstract class ɵWuAlertDialogBase implements AfterViewChecked, OnDestroy {
   @ViewChild('mask') maskRef?: ElementRef<HTMLDialogElement>;
   @ViewChild('popup') popupRef?: ElementRef<HTMLElement>;
 
-  o: WtAlertOptions = {};
+  o: WuAlertOptions = {};
   rendered = false;
   leaving = false;
   loading = false;
@@ -35,11 +35,11 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
   validation: string | null = null;
   /** One entry, changed on every fire, so the icon animation plays again. */
   runs: number[] = [0];
-  readonly titleId = ɵuniqueId('wt-alert-title');
-  readonly textId = ɵuniqueId('wt-alert-text');
+  readonly titleId = ɵuniqueId('wu-alert-title');
+  readonly textId = ɵuniqueId('wu-alert-text');
 
   private run = 0;
-  private resolveFn: ((r: WtAlertResult) => void) | null = null;
+  private resolveFn: ((r: WuAlertResult) => void) | null = null;
   private pendingShow = false;
   private downOnMask = false;
   private closeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -47,10 +47,10 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
   private unlockScroll: (() => void) | null = null;
   private returnFocus: HTMLElement | null = null;
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get confirmText(): string {
@@ -95,9 +95,9 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
     return c[name] || '';
   }
 
-  // ---------- called by WtAlertService ----------
+  // ---------- called by WuAlertService ----------
 
-  open(options: WtAlertOptions): Promise<WtAlertResult> {
+  open(options: WuAlertOptions): Promise<WuAlertResult> {
     // A new alert replaces the one on screen, which resolves as dismissed.
     if (this.resolveFn) this.settle({ isConfirmed: false, isDenied: false, isDismissed: true, dismiss: 'close' }, false);
     this.clearTimers();
@@ -116,7 +116,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
     this.runs = [++this.run];
     this.rendered = true;
     this.pendingShow = true;
-    const promise = new Promise<WtAlertResult>((resolve) => (this.resolveFn = resolve));
+    const promise = new Promise<WuAlertResult>((resolve) => (this.resolveFn = resolve));
     this.render();
     // Opened here, not only in ngAfterViewChecked: this popup lives outside the page's view tree, and in zoneless apps
     // nothing else checks it again.
@@ -125,7 +125,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
   }
 
   /** Closes the alert on screen; it resolves as dismissed. */
-  closeAlert(result?: Partial<WtAlertResult>): void {
+  closeAlert(result?: Partial<WuAlertResult>): void {
     if (!this.resolveFn) return;
     this.settle({ isConfirmed: false, isDenied: false, isDismissed: true, ...result });
   }
@@ -191,7 +191,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
     this.settle({ isConfirmed: false, isDenied: true, isDismissed: false, value: false });
   }
 
-  dismiss(reason: WtAlertDismissReason): void {
+  dismiss(reason: WuAlertDismissReason): void {
     this.settle({ isConfirmed: false, isDenied: false, isDismissed: true, dismiss: reason });
   }
 
@@ -209,7 +209,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
       if (this.o.allowEscapeKey !== false && !this.loading) this.dismiss('esc');
     } else if (event.key === 'Enter' && this.o.allowEnterKey !== false && !event.isComposing) {
       const t = event.target as HTMLElement;
-      if (t.classList.contains('wt-alert-field') && t.tagName === 'INPUT') {
+      if (t.classList.contains('wu-alert-field') && t.tagName === 'INPUT') {
         event.preventDefault();
         this.confirm();
       }
@@ -253,14 +253,14 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
       }
       this.unlockScroll = this.unlockScroll || ɵlockScroll(this.doc);
       // Toasts on screen move back above this alert.
-      this.doc.dispatchEvent(new CustomEvent('wt-modal-open'));
+      this.doc.dispatchEvent(new CustomEvent('wu-modal-open'));
     }
     const field = this.field();
     if (field) for (const [k, v] of Object.entries(this.o.inputAttributes || {})) field.setAttribute(k, v);
     const focus =
       field ||
-      popup.querySelector<HTMLElement>(this.o.focusCancel ? '.wt-alert-cancel' : '.wt-alert-confirm') ||
-      popup.querySelector<HTMLElement>('.wt-alert-button, .wt-alert-close') ||
+      popup.querySelector<HTMLElement>(this.o.focusCancel ? '.wu-alert-cancel' : '.wu-alert-confirm') ||
+      popup.querySelector<HTMLElement>('.wu-alert-button, .wu-alert-close') ||
       popup;
     focus.focus({ preventScroll: true });
     if (this.o.timer) this.timer = setTimeout(() => this.dismiss('timer'), this.o.timer);
@@ -277,7 +277,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
 
   // ---------- internals ----------
 
-  private settle(result: WtAlertResult, animate = true): void {
+  private settle(result: WuAlertResult, animate = true): void {
     const resolve = this.resolveFn;
     this.resolveFn = null;
     this.clearTimers();
@@ -320,7 +320,7 @@ export abstract class ɵWtAlertDialogBase implements AfterViewChecked, OnDestroy
   }
 
   private field(): HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null {
-    return this.popupRef?.nativeElement.querySelector('.wt-alert-field') ?? null;
+    return this.popupRef?.nativeElement.querySelector('.wu-alert-field') ?? null;
   }
 
   private clearTimers(): void {

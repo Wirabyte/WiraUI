@@ -8,9 +8,9 @@
   [attr.aria-label]="label()"
 >
   @if (mode() === 'determinate') {
-    <div class="wt-progressbar-value p-progressbar-value" [style.width.%]="percent()" [style.background]="color() || null">
+    <div class="wu-progressbar-value p-progressbar-value" [style.width.%]="percent()" [style.background]="color() || null">
       @if (showValue() && percent() > 0) {
-        <div class="wt-progressbar-label p-progressbar-label">
+        <div class="wu-progressbar-label p-progressbar-label">
           @if (contentTemplate(); as tpl) {
             <ng-container *ngTemplateOutlet="tpl; context: context()"></ng-container>
           } @else {
@@ -20,6 +20,6 @@
       }
     </div>
   } @else {
-    <div class="wt-progressbar-value p-progressbar-value" [style.background]="color() || null"></div>
+    <div class="wu-progressbar-value p-progressbar-value" [style.background]="color() || null"></div>
   }
 </div>

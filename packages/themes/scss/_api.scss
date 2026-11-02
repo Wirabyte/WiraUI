@@ -1,4 +1,4 @@
-// Helpers for app and component styles: `@use 'wiratheme/theme/api' as wt;`
+// Helpers for app and component styles: `@use 'wiraui/theme/api' as wu;`
 // Emits no CSS of its own, so it can be loaded from any number of files.
 @use 'sass:map';
 @use 'sass:meta';
@@ -12,25 +12,25 @@ $breakpoints: (
   xl: 1200px,
 ) !default;
 
-// token(primary-300) → var(--wt-primary-300)
+// token(primary-300) → var(--wu-primary-300)
 @function token($name) {
-  @return string.unquote('var(--wt-#{$name})');
+  @return string.unquote('var(--wu-#{$name})');
 }
 
-// Styles for dark mode: the `.wt-dark` class on <html> (default), or `$mode: 'media'` for prefers-color-scheme.
+// Styles for dark mode: the `.wu-dark` class on <html> (default), or `$mode: 'media'` for prefers-color-scheme.
 @mixin dark($mode: 'class') {
   @if $mode == 'media' {
     @media (prefers-color-scheme: dark) {
       @content;
     }
   } @else if $mode != 'class' {
-    @error 'wiratheme: dark() $mode must be \'class\' or \'media\', got `#{meta.inspect($mode)}`.';
+    @error 'wiraui: dark() $mode must be \'class\' or \'media\', got `#{meta.inspect($mode)}`.';
   } @else if & {
-    :root.wt-dark & {
+    :root.wu-dark & {
       @content;
     }
   } @else {
-    :root.wt-dark {
+    :root.wu-dark {
       @content;
     }
   }
@@ -42,7 +42,7 @@ $breakpoints: (
   @if meta.type-of($bp) != 'number' {
     $width: map.get($breakpoints, $bp);
     @if not $width {
-      @error 'wiratheme: unknown breakpoint `#{meta.inspect($bp)}`; use #{map.keys($breakpoints)} or a length.';
+      @error 'wiraui: unknown breakpoint `#{meta.inspect($bp)}`; use #{map.keys($breakpoints)} or a length.';
     }
   }
   @media (min-width: $width) {

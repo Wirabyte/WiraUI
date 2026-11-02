@@ -21,10 +21,10 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
 import {
   orgChartIsLeaf,
   orgChartIsOpen,
@@ -33,31 +33,31 @@ import {
   orgChartToggleSelection,
   orgChartVisible,
   TreeNode,
-  WtLocale,
-} from 'wiratheme/core';
-import { WtOrganizationChartNodeEvent } from './organizationchart.types';
+  WuLocale,
+} from 'wiraui/core';
+import { WuOrganizationChartNodeEvent } from './organizationchart.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A tree drawn from the top down, boxes joined by lines: `<wt-organizationChart [value]="chart" selectionMode="single"
+ * A tree drawn from the top down, boxes joined by lines: `<wu-organizationChart [value]="chart" selectionMode="single"
  * [(selection)]="picked" [collapsible]="true">`. `value` holds the root node (TreeNode: `label`, `children`, `expanded`,
  * `type`, `styleClass`, `selectable`); a node's children show while it is `expanded`. Templates by node `type`
- * (`<ng-template wtTemplate="person" let-node>`, `default` for the rest) and `togglericon`. Keys: Tab reaches the chart,
+ * (`<ng-template wuTemplate="person" let-node>`, `default` for the rest) and `togglericon`. Keys: Tab reaches the chart,
  * ↓ opens a node or goes to its first child, ↑ closes it or goes to the parent, ← / → move along a row, Home / End,
  * Enter / Space pick. A chart wider than its place scrolls inside its own box.
  */
 @Component({
-  selector: 'wt-organizationChart, wt-organization-chart, wt-organizationchart',
+  selector: 'wu-organizationChart, wu-organization-chart, wu-organizationchart',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './organizationchart.component.html',
   styleUrls: ['./organizationchart.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-organizationchart-host' },
+  host: { class: 'wu-organizationchart-host' },
 })
-export class WtOrganizationChart implements DoCheck, OnDestroy {
+export class WuOrganizationChart implements DoCheck, OnDestroy {
   /** The chart: the first node is the root. */
   @Input() value: TreeNode[] | null | undefined;
   @Input() styleClass?: string | null;
@@ -80,15 +80,15 @@ export class WtOrganizationChart implements DoCheck, OnDestroy {
   /** Typed loosely, as before: `[(selection)]` binds to a node or an array field. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly selectionChange = new EventEmitter<any>();
-  @Output() readonly onNodeSelect = new EventEmitter<WtOrganizationChartNodeEvent>();
-  @Output() readonly onNodeUnselect = new EventEmitter<WtOrganizationChartNodeEvent>();
-  @Output() readonly onNodeExpand = new EventEmitter<WtOrganizationChartNodeEvent>();
-  @Output() readonly onNodeCollapse = new EventEmitter<WtOrganizationChartNodeEvent>();
+  @Output() readonly onNodeSelect = new EventEmitter<WuOrganizationChartNodeEvent>();
+  @Output() readonly onNodeUnselect = new EventEmitter<WuOrganizationChartNodeEvent>();
+  @Output() readonly onNodeExpand = new EventEmitter<WuOrganizationChartNodeEvent>();
+  @Output() readonly onNodeCollapse = new EventEmitter<WuOrganizationChartNodeEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('togglericon', { descendants: false }) protected togglerIconRef?: unknown;
 
-  readonly chartId = ɵuniqueId('wt-organizationchart');
+  readonly chartId = ɵuniqueId('wu-organizationchart');
   /** The box that takes Tab (one tab stop for the whole chart). */
   tabTarget: TreeNode | null = null;
   private focused: TreeNode | null = null;
@@ -98,11 +98,11 @@ export class WtOrganizationChart implements DoCheck, OnDestroy {
   private _preserveSpace = true;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   /** Apps open, close and relabel nodes in place, so the chart is checked every time its parent is. */
@@ -120,7 +120,7 @@ export class WtOrganizationChart implements DoCheck, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -219,6 +219,6 @@ export class WtOrganizationChart implements DoCheck, OnDestroy {
     this.tabTarget = node;
     this.cdr.markForCheck();
     const label = this.host.ownerDocument.getElementById(this.idOf(node));
-    (label?.closest('.wt-organizationchart-branch') as HTMLElement | null)?.focus();
+    (label?.closest('.wu-organizationchart-branch') as HTMLElement | null)?.focus();
   }
 }

@@ -1,6 +1,6 @@
-import type { WtSeverityInput } from 'wiratheme/config';
+import type { WuSeverityInput } from 'wiraui/config';
 
-export type WtMessageSeverity = WtSeverityInput;
-export type WtMessageSize = 'small' | 'large';
+export type WuMessageSeverity = WuSeverityInput;
+export type WuMessageSize = 'small' | 'large';
 /** outlined: border only; simple: icon and text without a box. */
-export type WtMessageVariant = 'outlined' | 'simple';
+export type WuMessageVariant = 'outlined' | 'simple';

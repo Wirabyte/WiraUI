@@ -1,22 +1,22 @@
 import { NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { WtMessage } from 'wiratheme/message';
-import { ɵWtFileUploadBase } from './fileupload.base';
+import { WuMessage } from 'wiraui/message';
+import { ɵWuFileUploadBase } from './fileupload.base';
 
 /**
- * File chooser with a drop area and a list of the chosen files: `<wt-fileupload accept=".xlsx,.xls"
+ * File chooser with a drop area and a list of the chosen files: `<wu-fileupload accept=".xlsx,.xls"
  * [maxFileSize]="10485760" [customUpload]="true" (uploadHandler)="importExcel($event)">`. `mode="basic"` is a single
- * button. `wt-fileUpload` is the same component.
+ * button. `wu-fileUpload` is the same component.
  */
 @Component({
-  selector: 'wt-fileupload, wt-fileUpload, wt-file-upload',
+  selector: 'wu-fileupload, wu-fileUpload, wu-file-upload',
   standalone: true,
-  exportAs: 'wtFileUpload',
-  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WtMessage],
+  exportAs: 'wuFileUpload',
+  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WuMessage],
   templateUrl: './fileupload.component.html',
   styleUrls: ['./fileupload.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-fileupload-host' },
+  host: { class: 'wu-fileupload-host' },
 })
-export class WtFileUpload extends ɵWtFileUploadBase {}
+export class WuFileUpload extends ɵWuFileUploadBase {}

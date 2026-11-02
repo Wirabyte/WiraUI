@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtAsideMenu } from './asidemenu.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuAsideMenu } from './asidemenu.component';
 
-/** For NgModule apps (with `WtTemplate` for `wtTemplate="start"` / `"end"` / `"item"`). Standalone apps can import `WtAsideMenu` directly. */
+/** For NgModule apps (with `WuTemplate` for `wuTemplate="start"` / `"end"` / `"item"`). Standalone apps can import `WuAsideMenu` directly. */
 @NgModule({
-  imports: [WtAsideMenu, WtTemplate],
-  exports: [WtAsideMenu, WtTemplate],
+  imports: [WuAsideMenu, WuTemplate],
+  exports: [WuAsideMenu, WuTemplate],
 })
-export class WtAsideMenuModule {}
+export class WuAsideMenuModule {}

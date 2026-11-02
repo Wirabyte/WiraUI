@@ -1,34 +1,34 @@
-/* wt-picklist, and the list, item and drag styles wt-orderlist shares. Shared by wiratheme v1, v2 and v3.
-   Narrow screens first: lists stack with the buttons between them in a row; `.wt-picklist-wide` (wider than the
+/* wu-picklist, and the list, item and drag styles wu-orderlist shares. Shared by wiraui v1, v2 and v3.
+   Narrow screens first: lists stack with the buttons between them in a row; `.wu-picklist-wide` (wider than the
    component's `breakpoint`) puts them side by side with the buttons in columns. */
-@layer wiratheme.components {
-  :is(wt-picklist, wt-pick-list),
-  :is(wt-orderlist, wt-order-list) {
+@layer wiraui.components {
+  :is(wu-picklist, wu-pick-list),
+  :is(wu-orderlist, wu-order-list) {
     display: block;
     max-width: 100%;
   }
-  .wt-picklist,
-  .wt-orderlist {
+  .wu-picklist,
+  .wu-orderlist {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-picklist-gap);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    gap: var(--wu-picklist-gap);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  .wt-picklist.wt-picklist-wide,
-  .wt-orderlist.wt-orderlist-wide {
+  .wu-picklist.wu-picklist-wide,
+  .wu-orderlist.wu-orderlist-wide {
     flex-direction: row;
     align-items: stretch;
   }
   /* Order buttons on the right: after the list. */
-  .wt-orderlist-wide.wt-orderlist-controls-right > .wt-picklist-controls {
+  .wu-orderlist-wide.wu-orderlist-controls-right > .wu-picklist-controls {
     order: 1;
   }
 
   /* ---------- buttons ---------- */
-  .wt-picklist-controls {
+  .wu-picklist-controls {
     display: flex;
     flex: none;
     flex-direction: row;
@@ -37,199 +37,199 @@
     justify-content: center;
     gap: 0.5rem;
   }
-  .wt-picklist-wide > .wt-picklist-controls,
-  .wt-orderlist-wide > .wt-picklist-controls {
+  .wu-picklist-wide > .wu-picklist-controls,
+  .wu-orderlist-wide > .wu-picklist-controls {
     flex-direction: column;
     flex-wrap: nowrap;
   }
-  .wt-picklist-icon {
+  .wu-picklist-icon {
     display: block;
     width: 1em;
     height: 1em;
   }
   /* Stacked lists: the transfer arrows point down / up. */
-  .wt-picklist:not(.wt-picklist-wide) .wt-picklist-icon-transfer {
+  .wu-picklist:not(.wu-picklist-wide) .wu-picklist-icon-transfer {
     transform: rotate(90deg);
   }
 
   /* ---------- one list: header, search, items ---------- */
-  .wt-picklist-box {
+  .wu-picklist-box {
     display: flex;
     flex: none;
     flex-direction: column;
     min-width: 0;
-    border: var(--wt-picklist-box-border-width) solid var(--wt-border);
-    border-radius: var(--wt-picklist-box-radius);
-    background: var(--wt-picklist-box-bg);
+    border: var(--wu-picklist-box-border-width) solid var(--wu-border);
+    border-radius: var(--wu-picklist-box-radius);
+    background: var(--wu-picklist-box-bg);
     overflow: hidden;
   }
   /* Side by side the two lists share the width; stacked each keeps its own height. */
-  .wt-picklist-wide > .wt-picklist-box,
-  .wt-orderlist-wide > .wt-picklist-box {
+  .wu-picklist-wide > .wu-picklist-box,
+  .wu-orderlist-wide > .wu-picklist-box {
     flex: 1 1 0;
   }
-  .wt-picklist-header {
+  .wu-picklist-header {
     flex: none;
-    padding: var(--wt-picklist-header-padding);
-    border: solid var(--wt-border);
-    border-width: var(--wt-picklist-header-border-width);
-    border-radius: var(--wt-picklist-header-radius);
-    background: var(--wt-picklist-header-bg);
-    color: var(--wt-text);
-    font-weight: var(--wt-picklist-header-weight);
+    padding: var(--wu-picklist-header-padding);
+    border: solid var(--wu-border);
+    border-width: var(--wu-picklist-header-border-width);
+    border-radius: var(--wu-picklist-header-radius);
+    background: var(--wu-picklist-header-bg);
+    color: var(--wu-text);
+    font-weight: var(--wu-picklist-header-weight);
     overflow-wrap: anywhere;
   }
-  .wt-picklist-filter {
+  .wu-picklist-filter {
     flex: none;
-    padding: var(--wt-picklist-filter-padding);
-    border: solid var(--wt-border);
-    border-width: var(--wt-picklist-filter-border-width);
-    background: var(--wt-picklist-filter-bg);
+    padding: var(--wu-picklist-filter-padding);
+    border: solid var(--wu-border);
+    border-width: var(--wu-picklist-filter-border-width);
+    background: var(--wu-picklist-filter-bg);
   }
-  .wt-picklist-filter-field {
+  .wu-picklist-filter-field {
     position: relative;
   }
-  .wt-picklist-filter-input.wt-inputtext {
+  .wu-picklist-filter-input.wu-inputtext {
     display: block;
     box-sizing: border-box;
     width: 100%;
     padding-right: 2.25rem;
   }
-  .wt-picklist-filter-icon {
+  .wu-picklist-filter-icon {
     position: absolute;
     top: 50%;
     right: 0.75rem;
     width: 1rem;
     height: 1rem;
-    color: var(--wt-field-placeholder);
+    color: var(--wu-field-placeholder);
     transform: translateY(-50%);
     pointer-events: none;
   }
-  .wt-picklist-list {
+  .wu-picklist-list {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    gap: var(--wt-picklist-item-gap);
+    gap: var(--wu-picklist-item-gap);
     box-sizing: border-box;
-    height: var(--wt-picklist-list-height);
-    min-height: var(--wt-picklist-list-min-height);
-    max-height: var(--wt-picklist-list-max-height);
+    height: var(--wu-picklist-list-height);
+    min-height: var(--wu-picklist-list-min-height);
+    max-height: var(--wu-picklist-list-max-height);
     margin: 0;
-    padding: var(--wt-picklist-list-padding);
-    border: var(--wt-picklist-list-border-width) solid var(--wt-border);
-    border-radius: var(--wt-picklist-list-radius);
-    background: var(--wt-card-bg);
+    padding: var(--wu-picklist-list-padding);
+    border: var(--wu-picklist-list-border-width) solid var(--wu-border);
+    border-radius: var(--wu-picklist-list-radius);
+    background: var(--wu-card-bg);
     list-style: none;
     overflow: auto;
     overscroll-behavior: contain;
     outline: none;
   }
-  .wt-picklist-item {
+  .wu-picklist-item {
     position: relative;
     display: flex;
     flex: none;
     align-items: center;
     gap: 0.5rem;
-    padding: var(--wt-picklist-item-padding);
-    border-radius: var(--wt-picklist-item-radius);
-    color: var(--wt-text);
+    padding: var(--wu-picklist-item-padding);
+    border-radius: var(--wu-picklist-item-radius);
+    color: var(--wu-text);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-picklist-item-label {
+  .wu-picklist-item-label {
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  :is(.wt-picklist-striped, .wt-orderlist-striped) .wt-picklist-item:nth-child(even) {
-    background: var(--wt-picklist-item-stripe-bg);
+  :is(.wu-picklist-striped, .wu-orderlist-striped) .wu-picklist-item:nth-child(even) {
+    background: var(--wu-picklist-item-stripe-bg);
   }
-  .wt-picklist-item:hover {
-    background: var(--wt-select-option-hover-bg);
+  .wu-picklist-item:hover {
+    background: var(--wu-select-option-hover-bg);
   }
-  .wt-picklist-item.wt-picklist-item-selected {
-    background: var(--wt-select-option-selected-bg);
-    color: var(--wt-select-option-selected-color);
+  .wu-picklist-item.wu-picklist-item-selected {
+    background: var(--wu-select-option-selected-bg);
+    color: var(--wu-select-option-selected-color);
   }
-  .wt-picklist-list:focus-visible .wt-picklist-item-focused {
-    outline: var(--wt-control-focus-outline);
+  .wu-picklist-list:focus-visible .wu-picklist-item-focused {
+    outline: var(--wu-control-focus-outline);
     outline-offset: -2px;
   }
-  .wt-picklist-list:focus-visible:not(:has(.wt-picklist-item)) {
-    box-shadow: inset 0 0 0 2px var(--wt-primary-color);
+  .wu-picklist-list:focus-visible:not(:has(.wu-picklist-item)) {
+    box-shadow: inset 0 0 0 2px var(--wu-primary-color);
   }
-  .wt-picklist-empty {
-    padding: var(--wt-picklist-item-padding);
-    color: var(--wt-text-muted);
+  .wu-picklist-empty {
+    padding: var(--wu-picklist-item-padding);
+    color: var(--wu-text-muted);
     cursor: default;
   }
-  :is(.wt-picklist-disabled, .wt-orderlist-disabled) .wt-picklist-box {
-    opacity: var(--wt-disabled-opacity);
+  :is(.wu-picklist-disabled, .wu-orderlist-disabled) .wu-picklist-box {
+    opacity: var(--wu-disabled-opacity);
   }
-  :is(.wt-picklist-disabled, .wt-orderlist-disabled) .wt-picklist-item {
+  :is(.wu-picklist-disabled, .wu-orderlist-disabled) .wu-picklist-item {
     cursor: default;
   }
-  :is(.wt-picklist-disabled, .wt-orderlist-disabled) .wt-picklist-item:hover:not(.wt-picklist-item-selected) {
+  :is(.wu-picklist-disabled, .wu-orderlist-disabled) .wu-picklist-item:hover:not(.wu-picklist-item-selected) {
     background: none;
   }
 
   /* ---------- drag and drop ---------- */
   /* A finger scrolls the list vertically; a press-and-hold picks the item up. */
-  :is(.wt-picklist-dragdrop, .wt-orderlist-dragdrop) .wt-picklist-item {
+  :is(.wu-picklist-dragdrop, .wu-orderlist-dragdrop) .wu-picklist-item {
     touch-action: pan-y;
   }
-  .wt-list-dragging,
-  .wt-list-dragging * {
+  .wu-list-dragging,
+  .wu-list-dragging * {
     cursor: grabbing;
   }
-  .wt-list-dragover {
-    background: color-mix(in srgb, var(--wt-primary-color) 4%, var(--wt-card-bg));
+  .wu-list-dragover {
+    background: color-mix(in srgb, var(--wu-primary-color) 4%, var(--wu-card-bg));
   }
-  .wt-list-drop-into {
-    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--wt-primary-color) 60%, transparent);
+  .wu-list-drop-into {
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--wu-primary-color) 60%, transparent);
   }
-  .wt-list-drop-before::before,
-  .wt-list-drop-after::after {
+  .wu-list-drop-before::before,
+  .wu-list-drop-after::after {
     content: '';
     position: absolute;
     right: 0.25rem;
     left: 0.25rem;
     height: 2px;
     border-radius: 1px;
-    background: var(--wt-primary-color);
+    background: var(--wu-primary-color);
     pointer-events: none;
   }
-  .wt-list-drop-before::before {
-    top: calc(-1px - var(--wt-picklist-item-gap) / 2);
+  .wu-list-drop-before::before {
+    top: calc(-1px - var(--wu-picklist-item-gap) / 2);
   }
-  .wt-list-drop-after::after {
-    bottom: calc(-1px - var(--wt-picklist-item-gap) / 2);
+  .wu-list-drop-after::after {
+    bottom: calc(-1px - var(--wu-picklist-item-gap) / 2);
   }
-  .wt-list-drag-ghost {
+  .wu-list-drag-ghost {
     position: fixed;
     inset: 0 auto auto 0;
     z-index: 10000;
     box-sizing: border-box;
     height: auto;
     margin: 0;
-    border: 1px solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-card-bg);
-    color: var(--wt-text);
-    box-shadow: var(--wt-shadow-md);
+    border: 1px solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-card-bg);
+    color: var(--wu-text);
+    box-shadow: var(--wu-shadow-md);
     list-style: none;
     opacity: 0.95;
     overflow: visible;
     pointer-events: none;
   }
-  .wt-list-drag-ghost.wt-picklist-item-selected {
-    background: color-mix(in srgb, var(--wt-select-option-selected-bg) 100%, var(--wt-card-bg));
+  .wu-list-drag-ghost.wu-picklist-item-selected {
+    background: color-mix(in srgb, var(--wu-select-option-selected-bg) 100%, var(--wu-card-bg));
   }
-  .wt-list-drag-count {
+  .wu-list-drag-count {
     position: absolute;
     top: -0.5rem;
     right: -0.5rem;
@@ -239,15 +239,15 @@
     min-width: 1.375rem;
     height: 1.375rem;
     padding: 0 0.375rem;
-    border-radius: var(--wt-radius-full);
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    border-radius: var(--wu-radius-full);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-picklist-item {
+    .wu-picklist-item {
       transition: none;
     }
   }

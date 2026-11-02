@@ -10,9 +10,9 @@ export * from './flow-panel.component';
 export * from './flow-node-toolbar.component';
 export * from './flow-node-resizer.component';
 export * from './flow-history.directive';
-export { ɵWtFlowHost } from './flow-host';
-export type { ɵWtFlowChange, ɵWtFlowNodeBox } from './flow-host';
-export { ɵWtFlowNodeComponentOutlet, ɵWtFlowNodeRegistry, ɵWtFlowNodeWrapper } from './flow-node-outlet';
+export { ɵWuFlowHost } from './flow-host';
+export type { ɵWuFlowChange, ɵWuFlowNodeBox } from './flow-host';
+export { ɵWuFlowNodeComponentOutlet, ɵWuFlowNodeRegistry, ɵWuFlowNodeWrapper } from './flow-node-outlet';
 // The framework-free helpers, so apps import everything flow from one place.
 export {
   addEdge,
@@ -43,4 +43,4 @@ export {
   layoutTree,
   reconnectEdge,
   updateEdge,
-} from 'wiratheme/core';
+} from 'wiraui/core';

@@ -1,50 +1,50 @@
-/* wt-panel. Shared by wiratheme v1, v2 and v3. Titled box that can collapse.
+/* wu-panel. Shared by wiraui v1, v2 and v3. Titled box that can collapse.
    The styled look borders the whole panel; the classic look borders the header and content separately. */
-@layer wiratheme.components {
-  wt-panel {
+@layer wiraui.components {
+  wu-panel {
     display: block;
   }
-  .wt-panel {
-    border: var(--wt-panel-border-width) solid var(--wt-border);
-    border-radius: var(--wt-panel-radius);
-    background: var(--wt-card-bg);
-    color: var(--wt-text);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+  .wu-panel {
+    border: var(--wu-panel-border-width) solid var(--wu-border);
+    border-radius: var(--wu-panel-radius);
+    background: var(--wu-card-bg);
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-panel-header {
+  .wu-panel-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: var(--wt-panel-header-padding);
-    border: var(--wt-panel-section-border-width) solid var(--wt-border);
-    border-radius: var(--wt-panel-radius) var(--wt-panel-radius) 0 0;
-    background: var(--wt-panel-header-bg);
-    color: var(--wt-panel-header-color);
+    padding: var(--wu-panel-header-padding);
+    border: var(--wu-panel-section-border-width) solid var(--wu-border);
+    border-radius: var(--wu-panel-radius) var(--wu-panel-radius) 0 0;
+    background: var(--wu-panel-header-bg);
+    color: var(--wu-panel-header-color);
   }
-  .wt-panel-collapsed .wt-panel-header {
-    border-radius: var(--wt-panel-radius);
+  .wu-panel-collapsed .wu-panel-header {
+    border-radius: var(--wu-panel-radius);
   }
-  .wt-panel-title {
+  .wu-panel-title {
     min-width: 0;
-    font-weight: var(--wt-panel-header-weight);
+    font-weight: var(--wu-panel-header-weight);
   }
   /* 2rem icon buttons that overhang the text line, so a header with icons is as tall as one without. */
-  .wt-panel-icons {
+  .wu-panel-icons {
     display: flex;
     align-items: center;
     gap: 0.25rem;
     margin-left: auto;
-    margin-block: calc((var(--wt-line-height) * 1em - 2rem) / 2);
+    margin-block: calc((var(--wu-line-height) * 1em - 2rem) / 2);
   }
-  .wt-panel-icons .wt-btn-icon-only {
+  .wu-panel-icons .wu-btn-icon-only {
     width: 2rem;
     height: 2rem;
     padding: 0;
   }
-  .wt-panel-toggler {
+  .wu-panel-toggler {
     flex: none;
     display: inline-grid;
     place-items: center;
@@ -54,65 +54,65 @@
     border: 0;
     border-radius: 50%;
     background: transparent;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-panel-toggler:hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-text);
+  .wu-panel-toggler:hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-text);
   }
-  .wt-panel-toggler:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-panel-toggler:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-panel-toggler svg {
+  .wu-panel-toggler svg {
     width: 0.875rem;
     height: 0.875rem;
   }
   /* Collapsing animates the row height; works the same in Chromium, Firefox and Safari 16+. */
-  .wt-panel-content-container {
+  .wu-panel-content-container {
     display: grid;
     grid-template-rows: 1fr;
-    transition: grid-template-rows var(--wt-transition) ease;
+    transition: grid-template-rows var(--wu-transition) ease;
   }
-  .wt-panel-collapsed .wt-panel-content-container {
+  .wu-panel-collapsed .wu-panel-content-container {
     grid-template-rows: 0fr;
   }
-  .wt-panel-content-inner {
+  .wu-panel-content-inner {
     min-height: 0;
     overflow: hidden;
   }
-  .wt-panel-content {
-    padding: var(--wt-panel-content-padding-top) var(--wt-panel-content-padding) var(--wt-panel-content-padding);
-    border: var(--wt-panel-section-border-width) solid var(--wt-border);
+  .wu-panel-content {
+    padding: var(--wu-panel-content-padding-top) var(--wu-panel-content-padding) var(--wu-panel-content-padding);
+    border: var(--wu-panel-section-border-width) solid var(--wu-border);
     border-top: 0;
-    border-radius: 0 0 var(--wt-panel-radius) var(--wt-panel-radius);
+    border-radius: 0 0 var(--wu-panel-radius) var(--wu-panel-radius);
   }
-  .wt-panel-content:has(+ .wt-panel-footer:not(:empty)) {
+  .wu-panel-content:has(+ .wu-panel-footer:not(:empty)) {
     border-radius: 0;
   }
-  .wt-panel-footer {
-    padding: 0 var(--wt-panel-content-padding) var(--wt-panel-content-padding);
-    border: var(--wt-panel-section-border-width) solid var(--wt-border);
+  .wu-panel-footer {
+    padding: 0 var(--wu-panel-content-padding) var(--wu-panel-content-padding);
+    border: var(--wu-panel-section-border-width) solid var(--wu-border);
     border-top: 0;
-    border-radius: 0 0 var(--wt-panel-radius) var(--wt-panel-radius);
+    border-radius: 0 0 var(--wu-panel-radius) var(--wu-panel-radius);
   }
-  /* Buttons inside the projected footer (<div wtPanelFooter>) sit in a spaced row. */
-  .wt-panel-footer > [wtPanelFooter]:has(> wt-button, > button, > a, > .wt-btn) {
+  /* Buttons inside the projected footer (<div wuPanelFooter>) sit in a spaced row. */
+  .wu-panel-footer > [wuPanelFooter]:has(> wu-button, > button, > a, > .wu-btn) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-panel-footer:empty {
+  .wu-panel-footer:empty {
     display: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-panel-content-container {
+    .wu-panel-content-container {
       transition: none;
     }
   }

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
+import { WuTemplate } from 'wiraui/config';
 
-/** `WtTemplate` (`<ng-template wtTemplate="header">`, also read from `pTemplate`) as a module for NgModule apps. */
+/** `WuTemplate` (`<ng-template wuTemplate="header">`, also read from `pTemplate`) as a module for NgModule apps. */
 @NgModule({
-  imports: [WtTemplate],
-  exports: [WtTemplate],
+  imports: [WuTemplate],
+  exports: [WuTemplate],
 })
-export class WtSharedModule {}
+export class WuSharedModule {}

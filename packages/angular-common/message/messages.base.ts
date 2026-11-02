@@ -1,32 +1,32 @@
 import { ChangeDetectorRef, Directive, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵtoBool } from 'wiratheme/config';
-import { WtMessageService, WtToastMessage } from 'wiratheme/toast';
-import { WtMessageSeverity } from './message.types';
+import { ɵtoBool } from 'wiraui/config';
+import { WuMessageService, WuToastMessage } from 'wiraui/toast';
+import { WuMessageSeverity } from './message.types';
 
 /**
- * What wt-messages does, shared by the v1 and v2/v3 templates: a stack of wt-message boxes from an array,
- * `<wt-messages [(value)]="msgs" [closable]="true">`. Closing one removes it from the array.
- * With `enableService` (default true, as before) it also shows what `WtMessageService.add()` sends with the same
+ * What wu-messages does, shared by the v1 and v2/v3 templates: a stack of wu-message boxes from an array,
+ * `<wu-messages [(value)]="msgs" [closable]="true">`. Closing one removes it from the array.
+ * With `enableService` (default true, as before) it also shows what `WuMessageService.add()` sends with the same
  * `key`, so set `[enableService]="false"` when a toast on the page already shows those.
  */
 @Directive()
-export abstract class ɵWtMessagesBase implements OnInit, OnDestroy {
+export abstract class ɵWuMessagesBase implements OnInit, OnDestroy {
   /** The messages: `{ severity, summary, detail, closable?, icon?, life? }`. Two-way: `[(value)]`. */
-  @Input() set value(v: WtToastMessage[] | null | undefined) {
+  @Input() set value(v: WuToastMessage[] | null | undefined) {
     this.messages = v ? [...v] : [];
     this.cdr.markForCheck();
   }
-  get value(): WtToastMessage[] {
+  get value(): WuToastMessage[] {
     return this.messages;
   }
   /** Each box has an × button (unless the message says `closable: false`). Default true. */
   @Input() set closable(v: unknown) { this._closable = v === undefined || ɵtoBool(v); }
   get closable(): boolean { return this._closable; }
-  /** Also show messages sent with `WtMessageService.add()` that carry this component's `key`. Default true. */
+  /** Also show messages sent with `WuMessageService.add()` that carry this component's `key`. Default true. */
   @Input() set enableService(v: unknown) { this._service = v === undefined || ɵtoBool(v); }
   /** Severity of messages that do not give their own. */
-  @Input() severity?: WtMessageSeverity;
+  @Input() severity?: WuMessageSeverity;
   @Input() key?: string;
   /** `false`: summary and detail are HTML (sanitised by Angular). Default true. */
   @Input() set escape(v: unknown) { this._escape = v === undefined || ɵtoBool(v); }
@@ -37,12 +37,12 @@ export abstract class ɵWtMessagesBase implements OnInit, OnDestroy {
   @Input() showTransitionOptions: unknown;
   @Input() hideTransitionOptions: unknown;
 
-  @Output() readonly valueChange = new EventEmitter<WtToastMessage[]>();
-  @Output() readonly onClose = new EventEmitter<WtToastMessage>();
+  @Output() readonly valueChange = new EventEmitter<WuToastMessage[]>();
+  @Output() readonly onClose = new EventEmitter<WuToastMessage>();
 
-  messages: WtToastMessage[] = [];
+  messages: WuToastMessage[] = [];
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly service = inject(WtMessageService, { optional: true });
+  private readonly service = inject(WuMessageService, { optional: true });
   private _closable = true;
   private _service = true;
   private _escape = true;
@@ -69,17 +69,17 @@ export abstract class ɵWtMessagesBase implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
-  severityOf(m: WtToastMessage): WtMessageSeverity {
-    return (m.severity || this.severity || 'info') as WtMessageSeverity;
+  severityOf(m: WuToastMessage): WuMessageSeverity {
+    return (m.severity || this.severity || 'info') as WuMessageSeverity;
   }
-  closableOf(m: WtToastMessage): boolean {
+  closableOf(m: WuToastMessage): boolean {
     return this._closable && m.closable !== false;
   }
-  iconOf(m: WtToastMessage): string | undefined {
+  iconOf(m: WuToastMessage): string | undefined {
     return (m as { icon?: string }).icon;
   }
 
-  remove(m: WtToastMessage): void {
+  remove(m: WuToastMessage): void {
     this.messages = this.messages.filter((x) => x !== m);
     this.valueChange.emit(this.messages);
     this.onClose.emit(m);

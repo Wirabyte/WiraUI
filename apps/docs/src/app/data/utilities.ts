@@ -36,21 +36,21 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
     id: 'overview',
     title: { th: 'Utility classes', en: 'Utility classes' },
     lead: {
-      th: 'class สำเร็จรูปสำหรับ layout, ระยะห่าง, ขนาด, ตัวอักษร และสี มากับ wiratheme ในตัว จึงไม่ต้องติดตั้ง utility library แยก และเปิดหรือปิดได้ตามต้องการ',
-      en: 'Ready-made classes for layout, spacing, sizing, type and colour that ship with wiratheme, so no separate utility library is needed. Switch them on or off as you like.',
+      th: 'class สำเร็จรูปสำหรับ layout, ระยะห่าง, ขนาด, ตัวอักษร และสี มากับ wiraui ในตัว จึงไม่ต้องติดตั้ง utility library แยก และเปิดหรือปิดได้ตามต้องการ',
+      en: 'Ready-made classes for layout, spacing, sizing, type and colour that ship with wiraui, so no separate utility library is needed. Switch them on or off as you like.',
     },
     sections: [
       {
         id: 'what',
         title: { th: 'คืออะไร', en: 'What it is' },
         text: {
-          th: 'ชุด class แบบ <b>mobile-first</b> (<code>md:col-6</code> = ตั้งแต่ 768px ขึ้นไป) ชื่อ class ตรงกับที่แอปเดิมใช้อยู่ template เดิมจึงใช้ต่อได้ สีและมุมอ่านจาก token <code>--wt-*</code> ของธีม จึงเปลี่ยนตาม preset และ dark mode',
-          en: 'A <b>mobile-first</b> set of classes (<code>md:col-6</code> = from 768px up). The class names match what existing apps already use, so templates keep working. Colours and radii read the theme\'s <code>--wt-*</code> tokens, so they follow the preset and dark mode.',
+          th: 'ชุด class แบบ <b>mobile-first</b> (<code>md:col-6</code> = ตั้งแต่ 768px ขึ้นไป) ชื่อ class ตรงกับที่แอปเดิมใช้อยู่ template เดิมจึงใช้ต่อได้ สีและมุมอ่านจาก token <code>--wu-*</code> ของธีม จึงเปลี่ยนตาม preset และ dark mode',
+          en: 'A <b>mobile-first</b> set of classes (<code>md:col-6</code> = from 768px up). The class names match what existing apps already use, so templates keep working. Colours and radii read the theme\'s <code>--wu-*</code> tokens, so they follow the preset and dark mode.',
         },
         demo: `<div class="flex flex-wrap align-items-center gap-3 p-3 surface-card border-1 surface-border border-round-lg shadow-1">
   <div class="docs-u-avatar border-circle">W</div>
   <div class="flex-1 min-w-0">
-    <div class="font-semibold text-color">WiraTheme</div>
+    <div class="font-semibold text-color">WiraUI</div>
     <div class="text-sm text-color-secondary white-space-nowrap overflow-hidden text-overflow-ellipsis">flex · gap · surface · border-round · shadow</div>
   </div>
   <span class="px-2 py-1 border-round bg-primary-100 text-primary-700 text-sm font-medium">utils</span>
@@ -64,10 +64,10 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
           en: '<code>ng add</code> asks whether to add the utility classes (skip with <code>--utils=false</code>), or add them yourself with SCSS or CSS. Leave them out and they are off.',
         },
         code: `// src/styles.scss: ทั้งชุด
-@use 'wiratheme/utils';
+@use 'wiraui/utils';
 
 // หรือเลือกเอง
-@use 'wiratheme/utils' with (
+@use 'wiraui/utils' with (
   $groups: (palette: false, shadows: false),   // ตัดกลุ่มที่ไม่ใช้
   $prefix: 'u-',                               // .u-flex, .md:u-col-6
   $responsive: true,                           // false = ไม่มี sm: md: lg: xl:
@@ -82,7 +82,7 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
         title: { th: 'ใช้แบบ CSS', en: 'As plain CSS' },
         code: `// angular.json → projects.<app>.architect.build.options
 "styles": [
-  "node_modules/wiratheme/utils/utils.min.css",
+  "node_modules/wiraui/utils/utils.min.css",
   "src/styles.css"
 ]`,
         codeLang: 'json',
@@ -91,10 +91,10 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
         id: 'layer',
         title: { th: 'ลำดับการชนะ', en: 'What wins' },
         text: {
-          th: 'class อยู่ใน <code>&#64;layer wiratheme.utilities</code> ระหว่าง components กับ overrides จึงชนะ style ของ component แต่แพ้ CSS ของแอปเอง',
-          en: 'Classes live in <code>&#64;layer wiratheme.utilities</code>, between components and overrides: they beat component styles and lose to your app\'s own CSS.',
+          th: 'class อยู่ใน <code>&#64;layer wiraui.utilities</code> ระหว่าง components กับ overrides จึงชนะ style ของ component แต่แพ้ CSS ของแอปเอง',
+          en: 'Classes live in <code>&#64;layer wiraui.utilities</code>, between components and overrides: they beat component styles and lose to your app\'s own CSS.',
         },
-        code: `@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;`,
+        code: `@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;`,
         codeLang: 'css',
       },
       {
@@ -114,8 +114,8 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
     id: 'grid',
     title: 'Grid',
     lead: {
-      th: 'grid 12 คอลัมน์แบบ flexbox: ใส่ <code>grid</code> ที่ตัวครอบ และ <code>col-*</code> ที่ลูก ปรับระยะห่างด้วย <code>--wt-grid-gutter</code>',
-      en: 'A 12-column flexbox grid: <code>grid</code> on the wrapper, <code>col-*</code> on the children. Change the spacing with <code>--wt-grid-gutter</code>.',
+      th: 'grid 12 คอลัมน์แบบ flexbox: ใส่ <code>grid</code> ที่ตัวครอบ และ <code>col-*</code> ที่ลูก ปรับระยะห่างด้วย <code>--wu-grid-gutter</code>',
+      en: 'A 12-column flexbox grid: <code>grid</code> on the wrapper, <code>col-*</code> on the children. Change the spacing with <code>--wu-grid-gutter</code>.',
     },
     sections: [
       {
@@ -153,11 +153,11 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
         id: 'gutter',
         title: 'Gutter',
         text: {
-          th: '<code>grid-nogutter</code> ไม่มีระยะห่าง หรือตั้ง <code>--wt-grid-gutter</code> บนตัวครอบเพื่อเปลี่ยนเฉพาะจุด',
-          en: '<code>grid-nogutter</code> removes the spacing; set <code>--wt-grid-gutter</code> on a wrapper to change it locally.',
+          th: '<code>grid-nogutter</code> ไม่มีระยะห่าง หรือตั้ง <code>--wu-grid-gutter</code> บนตัวครอบเพื่อเปลี่ยนเฉพาะจุด',
+          en: '<code>grid-nogutter</code> removes the spacing; set <code>--wu-grid-gutter</code> on a wrapper to change it locally.',
         },
         demo: `<div class="grid grid-nogutter">\n${cols(['col-4', 'col-4', 'col-4'])}\n</div>`,
-        code: `<div class="grid grid-nogutter">…</div>\n\n/* หรือ */\n.dense { --wt-grid-gutter: 0.25rem; }`,
+        code: `<div class="grid grid-nogutter">…</div>\n\n/* หรือ */\n.dense { --wu-grid-gutter: 0.25rem; }`,
       },
     ],
   },

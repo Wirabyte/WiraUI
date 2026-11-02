@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtMultiSelect } from './multiselect.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuMultiSelect } from './multiselect.component';
 
-/** For NgModule apps. Standalone apps can import `WtMultiSelect` directly. */
+/** For NgModule apps. Standalone apps can import `WuMultiSelect` directly. */
 @NgModule({
-  imports: [WtMultiSelect, WtTemplate],
-  exports: [WtMultiSelect, WtTemplate],
+  imports: [WuMultiSelect, WuTemplate],
+  exports: [WuMultiSelect, WuTemplate],
 })
-export class WtMultiSelectModule {}
+export class WuMultiSelectModule {}

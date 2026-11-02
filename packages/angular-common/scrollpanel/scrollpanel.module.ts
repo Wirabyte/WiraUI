@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtScrollPanel } from './scrollpanel.component';
+import { WuScrollPanel } from './scrollpanel.component';
 
-/** For NgModule apps. Standalone apps can import `WtScrollPanel` directly. */
+/** For NgModule apps. Standalone apps can import `WuScrollPanel` directly. */
 @NgModule({
-  imports: [WtScrollPanel],
-  exports: [WtScrollPanel],
+  imports: [WuScrollPanel],
+  exports: [WuScrollPanel],
 })
-export class WtScrollPanelModule {}
+export class WuScrollPanelModule {}

@@ -3,7 +3,7 @@
     <div
       #panel
       popover="manual"
-      class="wt-menu wt-menu-overlay p-menu p-menu-overlay p-component"
+      class="wu-menu wu-menu-overlay p-menu p-menu-overlay p-component"
       [ngClass]="styleClass || ''"
       [ngStyle]="style || null"
       (focusin)="focusIn($event)"
@@ -13,17 +13,17 @@
     </div>
   }
 } @else {
-  <div class="wt-menu p-menu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (focusin)="focusIn($event)" (focusout)="focusOut($event)">
+  <div class="wu-menu p-menu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (focusin)="focusIn($event)" (focusout)="focusOut($event)">
     <ng-container *ngTemplateOutlet="body"></ng-container>
   </div>
 }
 
 <ng-template #body>
   @if (startTemplate) {
-    <div class="wt-menu-start p-menu-start"><ng-container *ngTemplateOutlet="startTemplate"></ng-container></div>
+    <div class="wu-menu-start p-menu-start"><ng-container *ngTemplateOutlet="startTemplate"></ng-container></div>
   }
   <ul
-    class="wt-menu-list p-menu-list"
+    class="wu-menu-list p-menu-list"
     role="menu"
     [id]="listId"
     [attr.aria-label]="ariaLabel || null"
@@ -32,9 +32,9 @@
   >
     @for (item of items; track $index; let i = $index) {
       @if (item.separator) {
-        <li class="wt-menu-separator p-menu-separator" role="separator"></li>
+        <li class="wu-menu-separator p-menu-separator" role="separator"></li>
       } @else if (isGroup(item)) {
-        <li class="wt-menu-submenu-label p-menu-submenu-label" role="none" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
+        <li class="wu-menu-submenu-label p-menu-submenu-label" role="none" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
           @if (submenuHeaderTemplate) {
             <ng-container *ngTemplateOutlet="submenuHeaderTemplate; context: { $implicit: item }"></ng-container>
           } @else {
@@ -50,29 +50,29 @@
     }
   </ul>
   @if (endTemplate) {
-    <div class="wt-menu-end p-menu-end"><ng-container *ngTemplateOutlet="endTemplate"></ng-container></div>
+    <div class="wu-menu-end p-menu-end"><ng-container *ngTemplateOutlet="endTemplate"></ng-container></div>
   }
 </ng-template>
 
 <ng-template #row let-item let-key="key">
   @if (item.separator) {
-    <li class="wt-menu-separator p-menu-separator" role="separator"></li>
+    <li class="wu-menu-separator p-menu-separator" role="separator"></li>
   } @else {
     <li
-      class="wt-menu-item p-menu-item"
+      class="wu-menu-item p-menu-item"
       role="none"
       [ngClass]="item.styleClass || ''"
       [ngStyle]="item.style || null"
-      [class.wt-menu-item-disabled]="item.disabled"
+      [class.wu-menu-item-disabled]="item.disabled"
       [class.p-disabled]="item.disabled"
     >
-      <div class="wt-menu-item-content p-menu-item-content">
+      <div class="wu-menu-item-content p-menu-item-content">
         @if (routed(item)) {
           <a
-            class="wt-menu-item-link p-menu-item-link"
+            class="wu-menu-item-link p-menu-item-link"
             role="menuitem"
             [id]="itemId(key)"
-            [attr.data-wt-key]="key"
+            [attr.data-wu-key]="key"
             [attr.tabindex]="tabindexOf(key)"
             [attr.title]="item.title || null"
             [attr.target]="item.target || null"
@@ -85,7 +85,7 @@
             [skipLocationChange]="!!item.skipLocationChange"
             [replaceUrl]="!!item.replaceUrl"
             [state]="item.state"
-            routerLinkActive="wt-menu-link-active p-menu-item-link-active"
+            routerLinkActive="wu-menu-link-active p-menu-item-link-active"
             [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
             (click)="itemClick($event, item, key)"
           >
@@ -93,10 +93,10 @@
           </a>
         } @else {
           <a
-            class="wt-menu-item-link p-menu-item-link"
+            class="wu-menu-item-link p-menu-item-link"
             role="menuitem"
             [id]="itemId(key)"
-            [attr.data-wt-key]="key"
+            [attr.data-wu-key]="key"
             [attr.tabindex]="tabindexOf(key)"
             [attr.href]="hrefOf(item)"
             [attr.title]="item.title || null"
@@ -118,15 +118,15 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
   } @else {
     @if (item.icon) {
-      <span class="wt-menu-item-icon p-menu-item-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+      <span class="wu-menu-item-icon p-menu-item-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
     }
     @if (item.escape === false) {
-      <span class="wt-menu-item-label p-menu-item-label" [innerHTML]="item.label"></span>
+      <span class="wu-menu-item-label p-menu-item-label" [innerHTML]="item.label"></span>
     } @else {
-      <span class="wt-menu-item-label p-menu-item-label">{{ item.label }}</span>
+      <span class="wu-menu-item-label p-menu-item-label">{{ item.label }}</span>
     }
     @if (item.badge) {
-      <span class="wt-menu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+      <span class="wu-menu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
     }
   }
 </ng-template>

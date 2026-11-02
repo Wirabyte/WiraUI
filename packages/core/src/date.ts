@@ -1,5 +1,5 @@
 import { BUDDHIST_OFFSET, CalendarSystem, fromBuddhistYear, parseDate } from './thai/buddhist';
-import { TH_LOCALE, WtLocale } from './thai/locale';
+import { TH_LOCALE, WuLocale } from './thai/locale';
 
 // ---------- day arithmetic (local time; the time of day is kept unless a function says otherwise) ----------
 
@@ -268,7 +268,7 @@ export function timeFormat(o: { hourFormat?: HourFormat; showSeconds?: boolean }
 }
 
 export interface LooseDateOptions {
-  locale?: WtLocale;
+  locale?: WuLocale;
   calendar?: CalendarSystem;
   /** Read hours, minutes and seconds after the date. */
   time?: boolean;
@@ -369,7 +369,7 @@ export function splitDates(text: string, separator: RegExp, parse: (s: string) =
   return current.trim() ? null : out;
 }
 
-function monthByName(lowerText: string, loc: WtLocale): number {
+function monthByName(lowerText: string, loc: WuLocale): number {
   for (const names of [loc.monthNames, loc.monthNamesShort]) {
     const i = names.findIndex((n) => lowerText.indexOf(n.toLowerCase()) >= 0);
     if (i >= 0) return i;

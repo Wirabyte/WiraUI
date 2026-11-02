@@ -2,8 +2,8 @@
 <ul class="docs-dialog-pick">
   @for (s of local(students); track s.id) {
     <li>
-      <wt-button [id]="'d-dlg-pick-' + s.id" [label]="s.name" icon="wi wi-user" [text]="true" (onClick)="pick(s)"></wt-button>
+      <wu-button [id]="'d-dlg-pick-' + s.id" [label]="s.name" icon="wi wi-user" [text]="true" (onClick)="pick(s)"></wu-button>
     </li>
   }
 </ul>
-<wt-button id="d-dlg-pick-cancel" [label]="tx('ยกเลิก')" severity="secondary" [outlined]="true" (onClick)="cancel()"></wt-button>
+<wu-button id="d-dlg-pick-cancel" [label]="tx('ยกเลิก')" severity="secondary" [outlined]="true" (onClick)="cancel()"></wu-button>

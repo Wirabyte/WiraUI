@@ -6,9 +6,9 @@ export const IMAGECOMPARE_DOC: ComponentDoc = {
   title: 'ImageCompare',
   group: 'Media',
   entry: 'imagecompare',
-  standalone: 'WtImageCompare',
-  module: 'WtImageCompareModule',
-  selector: 'wt-imageCompare',
+  standalone: 'WuImageCompare',
+  module: 'WuImageCompareModule',
+  selector: 'wu-imageCompare',
   description: {
     th: 'เทียบภาพสองภาพในกรอบเดียว ลากเส้นแบ่งไปมาเพื่อดูก่อนและหลัง เช่น อาคารก่อนและหลังปรับปรุง หรือภาพก่อนและหลังแต่งสี ใช้เมาส์ นิ้ว หรือคีย์บอร์ดได้',
     en: 'Two pictures in one frame with a divider you drag to compare them, such as a building before and after its renovation, or a photo before and after its colours were fixed. Works with a mouse, a finger or the keyboard.',
@@ -28,8 +28,8 @@ export const IMAGECOMPARE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtImageCompareModule</code> มี <code>wtTemplate</code> ให้ด้วย) และ standalone (<code>WtImageCompare</code>) · แท็กเขียนได้ทั้ง <code>wt-imageCompare</code>, <code>wt-imagecompare</code> และ <code>wt-image-compare</code>',
-        en: 'Works as an NgModule (<code>WtImageCompareModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtImageCompare</code>) · the tag can be <code>wt-imageCompare</code>, <code>wt-imagecompare</code> or <code>wt-image-compare</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuImageCompareModule</code> มี <code>wuTemplate</code> ให้ด้วย) และ standalone (<code>WuImageCompare</code>) · แท็กเขียนได้ทั้ง <code>wu-imageCompare</code>, <code>wu-imagecompare</code> และ <code>wu-image-compare</code>',
+        en: 'Works as an NgModule (<code>WuImageCompareModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuImageCompare</code>) · the tag can be <code>wu-imageCompare</code>, <code>wu-imagecompare</code> or <code>wu-image-compare</code>.',
       },
     },
     basic: {
@@ -56,28 +56,28 @@ export const IMAGECOMPARE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-imageCompare&gt;</code> เป็น <code>&lt;wt-imageCompare&gt;</code> · template <code>pTemplate="left"</code> / <code>pTemplate="right"</code> ใช้ได้เหมือนเดิม (หรือ <code>wtTemplate</code>) และ <code>tabindex</code>, <code>ariaLabel</code>, <code>ariaLabelledby</code> ใช้ชื่อเดิม',
-        en: 'Change <code>&lt;p-imageCompare&gt;</code> to <code>&lt;wt-imageCompare&gt;</code> · <code>pTemplate="left"</code> / <code>pTemplate="right"</code> keep working (or <code>wtTemplate</code>), and <code>tabindex</code>, <code>ariaLabel</code> and <code>ariaLabelledby</code> keep their names.',
+        th: 'เปลี่ยน <code>&lt;p-imageCompare&gt;</code> เป็น <code>&lt;wu-imageCompare&gt;</code> · template <code>pTemplate="left"</code> / <code>pTemplate="right"</code> ใช้ได้เหมือนเดิม (หรือ <code>wuTemplate</code>) และ <code>tabindex</code>, <code>ariaLabel</code>, <code>ariaLabelledby</code> ใช้ชื่อเดิม',
+        en: 'Change <code>&lt;p-imageCompare&gt;</code> to <code>&lt;wu-imageCompare&gt;</code> · <code>pTemplate="left"</code> / <code>pTemplate="right"</code> keep working (or <code>wuTemplate</code>), and <code>tabindex</code>, <code>ariaLabel</code> and <code>ariaLabelledby</code> keep their names.',
       },
     },
   },
   code: {
     basic: `<!-- ภาพหลัง (left) เต็มกรอบ · ภาพก่อน (right) แสดงจากขอบซ้ายถึงเส้นแบ่ง -->
-<wt-imageCompare ariaLabel="เทียบภาพก่อนและหลังปรับสี" [style]="{ maxWidth: '36rem' }">
+<wu-imageCompare ariaLabel="เทียบภาพก่อนและหลังปรับสี" [style]="{ maxWidth: '36rem' }">
   <ng-template #left>
     <img src="photos/school-colour.jpg" alt="ภาพสีหลังปรับ" />
   </ng-template>
   <ng-template #right>
     <img src="photos/school-old.jpg" alt="ภาพขาวดำก่อนปรับสี" />
   </ng-template>
-</wt-imageCompare>`,
-    value: `<wt-imageCompare [(value)]="divider" [step]="5" ariaLabel="เทียบภาพก่อนและหลังปรับสี">
+</wu-imageCompare>`,
+    value: `<wu-imageCompare [(value)]="divider" [step]="5" ariaLabel="เทียบภาพก่อนและหลังปรับสี">
   <ng-template #left><img src="photos/school-colour.jpg" alt="ภาพสีหลังปรับ" /></ng-template>
   <ng-template #right><img src="photos/school-old.jpg" alt="ภาพขาวดำก่อนปรับสี" /></ng-template>
-</wt-imageCompare>
-<wt-button label="25%" severity="secondary" [outlined]="true" (onClick)="divider = 25"></wt-button>
-<wt-button label="50%" severity="secondary" [outlined]="true" (onClick)="divider = 50"></wt-button>
-<wt-button label="75%" severity="secondary" [outlined]="true" (onClick)="divider = 75"></wt-button>`,
+</wu-imageCompare>
+<wu-button label="25%" severity="secondary" [outlined]="true" (onClick)="divider = 25"></wu-button>
+<wu-button label="50%" severity="secondary" [outlined]="true" (onClick)="divider = 50"></wu-button>
+<wu-button label="75%" severity="secondary" [outlined]="true" (onClick)="divider = 75"></wu-button>`,
   },
   ts: {
     value: `divider = 30;   // ตำแหน่งเส้นแบ่ง 0–100 จากขอบซ้าย`,
@@ -105,8 +105,8 @@ export const IMAGECOMPARE_DOC: ComponentDoc = {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #left, wtTemplate="left" หรือ pTemplate="left" ก็ได้',
-        en: 'Write them as #left, wtTemplate="left" or pTemplate="left".',
+        th: 'เขียนเป็น #left, wuTemplate="left" หรือ pTemplate="left" ก็ได้',
+        en: 'Write them as #left, wuTemplate="left" or pTemplate="left".',
       },
       rows: [
         row('left', '—', undefined, 'ภาพที่เต็มกรอบ (เห็นทางขวาของเส้นแบ่ง)', 'The picture that fills the frame (seen right of the divider)'),
@@ -115,14 +115,14 @@ export const IMAGECOMPARE_DOC: ComponentDoc = {
     },
   ],
   tokens: [
-    tok('--wt-imagecompare-aspect-ratio', 'สัดส่วนของกรอบ (ค่าเริ่มต้น 16 / 9)', 'Aspect ratio of the frame (16 / 9 by default)'),
-    tok('--wt-imagecompare-radius', 'มุมโค้งของกรอบ', 'Corner radius'),
-    tok('--wt-imagecompare-bg', 'พื้นกรอบระหว่างโหลดภาพ', 'Frame background while the pictures load'),
-    tok('--wt-imagecompare-divider-width', 'ความหนาเส้นแบ่ง', 'Divider width'),
-    tok('--wt-imagecompare-divider-color', 'สีเส้นแบ่ง', 'Divider colour'),
-    tok('--wt-imagecompare-handle-size', 'ขนาดปุ่มกลม', 'Handle size'),
-    tok('--wt-imagecompare-handle-bg', 'พื้นปุ่มกลม', 'Handle background'),
-    tok('--wt-imagecompare-handle-color', 'สีลูกศรในปุ่ม', 'Handle arrow colour'),
-    tok('--wt-imagecompare-handle-shadow', 'เงาของปุ่ม', 'Handle shadow'),
+    tok('--wu-imagecompare-aspect-ratio', 'สัดส่วนของกรอบ (ค่าเริ่มต้น 16 / 9)', 'Aspect ratio of the frame (16 / 9 by default)'),
+    tok('--wu-imagecompare-radius', 'มุมโค้งของกรอบ', 'Corner radius'),
+    tok('--wu-imagecompare-bg', 'พื้นกรอบระหว่างโหลดภาพ', 'Frame background while the pictures load'),
+    tok('--wu-imagecompare-divider-width', 'ความหนาเส้นแบ่ง', 'Divider width'),
+    tok('--wu-imagecompare-divider-color', 'สีเส้นแบ่ง', 'Divider colour'),
+    tok('--wu-imagecompare-handle-size', 'ขนาดปุ่มกลม', 'Handle size'),
+    tok('--wu-imagecompare-handle-bg', 'พื้นปุ่มกลม', 'Handle background'),
+    tok('--wu-imagecompare-handle-color', 'สีลูกศรในปุ่ม', 'Handle arrow colour'),
+    tok('--wu-imagecompare-handle-shadow', 'เงาของปุ่ม', 'Handle shadow'),
   ],
 };

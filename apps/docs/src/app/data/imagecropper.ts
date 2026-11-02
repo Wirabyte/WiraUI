@@ -9,9 +9,9 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
   title: 'Image Cropper',
   group: 'Media',
   entry: 'imagecropper',
-  standalone: 'WtImageCropper',
-  module: 'WtImageCropperModule',
-  selector: 'wt-imagecropper',
+  standalone: 'WuImageCropper',
+  module: 'WuImageCropperModule',
+  selector: 'wu-imagecropper',
   description: {
     th: 'ตัดรูปก่อนอัปโหลด เช่น รูปโปรไฟล์หรือรูปหน้าปก รับรูปจากช่องเลือกไฟล์ ไฟล์ URL หรือ base64 ลากกรอบเลือกส่วนที่ต้องการ ซูม หมุน และพลิกได้ แล้วได้ผลลัพธ์เป็น Blob หรือ base64 ในขนาดที่กำหนด รูปจากกล้องมือถือถูกหมุนให้ตั้งตรงเอง',
     en: 'Crops a picture before upload, such as a profile photo or a cover. It takes a picture from a file input, a File, a URL or base64; drag the box over the part you want, zoom, turn and mirror, and get a Blob or base64 at the size you ask for. Photos from phone cameras are turned upright on their own.',
@@ -68,7 +68,7 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     'เก็บใน JSON ได้': 'fits in JSON',
     'ครั้งนี้เป็น base64 ไม่ว่า output จะเป็นอะไร': 'base64 this time, whatever output says',
     'ตัวอักษร': 'characters',
-    'ทุก wt-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ': 'every wt-imagecropper in the app starts from these; an input on the component always wins',
+    'ทุก wu-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ': 'every wu-imagecropper in the app starts from these; an input on the component always wins',
     '…provider อื่นของแอป': "…the app's other providers",
     'ได้ base64 แบบ jpeg 85 และแถบ ซูม | หมุน จากค่าของทั้งแอป': 'base64, jpeg at 85 and a zoom | turn toolbar, from the app-wide values',
     'input บน component ชนะ: ตัวนี้ได้ blob แบบ png': 'inputs on the component win: this one gives a png blob',
@@ -79,8 +79,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtImageCropperModule</code>) และ standalone (<code>WtImageCropper</code>) แท็กเขียนได้ทั้ง <code>wt-imagecropper</code>, <code>wt-imageCropper</code>, <code>wt-image-cropper</code> และ <code>image-cropper</code> (แท็กที่แอปใช้อยู่แล้ว) · <code>base64ToFile()</code> import จาก <code>wiratheme/imagecropper</code> (หรือ <code>wiratheme/core</code>) ได้',
-        en: 'Works as an NgModule (<code>WtImageCropperModule</code>) or standalone (<code>WtImageCropper</code>). The tag can be <code>wt-imagecropper</code>, <code>wt-imageCropper</code>, <code>wt-image-cropper</code> or <code>image-cropper</code> (the tag apps already use) · <code>base64ToFile()</code> comes from <code>wiratheme/imagecropper</code> (or <code>wiratheme/core</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuImageCropperModule</code>) และ standalone (<code>WuImageCropper</code>) แท็กเขียนได้ทั้ง <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> และ <code>image-cropper</code> (แท็กที่แอปใช้อยู่แล้ว) · <code>base64ToFile()</code> import จาก <code>wiraui/imagecropper</code> (หรือ <code>wiraui/core</code>) ได้',
+        en: 'Works as an NgModule (<code>WuImageCropperModule</code>) or standalone (<code>WuImageCropper</code>). The tag can be <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> or <code>image-cropper</code> (the tag apps already use) · <code>base64ToFile()</code> comes from <code>wiraui/imagecropper</code> (or <code>wiraui/core</code>).',
       },
     },
     basic: {
@@ -114,8 +114,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     'tools-template': {
       title: { th: 'ปุ่มของแอปในแถบเครื่องมือ', en: 'Your own buttons in the toolbar' },
       text: {
-        th: 'template ชื่อ <code>tools</code> (<code>&lt;ng-template #tools let-cropper&gt;</code> ใน v3 หรือ <code>wtTemplate="tools"</code> ใน v1 / v2) วาดเป็นกลุ่มสุดท้ายของแถบเครื่องมือ <code>let-cropper</code> คือตัว cropper เอง ปุ่มจึงเรียก <code>cropper.crop()</code>, <code>cropper.rotateRight()</code>, <code>cropper.zoomIn()</code>, <code>cropper.reset()</code> ฯลฯ ได้เลยโดยไม่ต้องมี template ref · ตัวอย่างแรกมีปุ่ม <b>ใช้รูปนี้</b> ที่ตัดรูปแล้วแสดงผล ตัวอย่างที่สองใช้ <code>toolbar="none"</code> แล้วมีเฉพาะปุ่มหมุนของแอปเอง',
-        en: 'A template named <code>tools</code> (<code>&lt;ng-template #tools let-cropper&gt;</code> in v3, <code>wtTemplate="tools"</code> in v1 / v2) is drawn as the last group of the toolbar. <code>let-cropper</code> is the cropper itself, so buttons call <code>cropper.crop()</code>, <code>cropper.rotateRight()</code>, <code>cropper.zoomIn()</code>, <code>cropper.reset()</code> and so on with no template ref · the first demo has a <b>Use this photo</b> button that crops and shows the result; the second sets <code>toolbar="none"</code> and keeps only its own turn buttons.',
+        th: 'template ชื่อ <code>tools</code> (<code>&lt;ng-template #tools let-cropper&gt;</code> ใน v3 หรือ <code>wuTemplate="tools"</code> ใน v1 / v2) วาดเป็นกลุ่มสุดท้ายของแถบเครื่องมือ <code>let-cropper</code> คือตัว cropper เอง ปุ่มจึงเรียก <code>cropper.crop()</code>, <code>cropper.rotateRight()</code>, <code>cropper.zoomIn()</code>, <code>cropper.reset()</code> ฯลฯ ได้เลยโดยไม่ต้องมี template ref · ตัวอย่างแรกมีปุ่ม <b>ใช้รูปนี้</b> ที่ตัดรูปแล้วแสดงผล ตัวอย่างที่สองใช้ <code>toolbar="none"</code> แล้วมีเฉพาะปุ่มหมุนของแอปเอง',
+        en: 'A template named <code>tools</code> (<code>&lt;ng-template #tools let-cropper&gt;</code> in v3, <code>wuTemplate="tools"</code> in v1 / v2) is drawn as the last group of the toolbar. <code>let-cropper</code> is the cropper itself, so buttons call <code>cropper.crop()</code>, <code>cropper.rotateRight()</code>, <code>cropper.zoomIn()</code>, <code>cropper.reset()</code> and so on with no template ref · the first demo has a <b>Use this photo</b> button that crops and shows the result; the second sets <code>toolbar="none"</code> and keeps only its own turn buttons.',
       },
     },
     'output-type': {
@@ -149,8 +149,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     defaults: {
       title: { th: 'ค่าเริ่มต้นของทั้งแอป', en: 'App-wide defaults' },
       text: {
-        th: '<code>provideImageCropperOptions()</code> จาก <code>wiratheme/imagecropper</code> ตั้งค่าเริ่มต้นให้ทุก cropper ในแอป: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> และ <code>maxZoom</code> · ใส่ใน <code>providers</code> ของ <code>app.config.ts</code> (v3) หรือของ NgModule (v1 / v2) · input ที่ใส่บน component ชนะค่าเหล่านี้เสมอ',
-        en: '<code>provideImageCropperOptions()</code> from <code>wiratheme/imagecropper</code> sets the starting values of every cropper in the app: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> and <code>maxZoom</code> · put it in the <code>providers</code> of <code>app.config.ts</code> (v3) or of the NgModule (v1 / v2) · an input set on the component always wins over them.',
+        th: '<code>provideImageCropperOptions()</code> จาก <code>wiraui/imagecropper</code> ตั้งค่าเริ่มต้นให้ทุก cropper ในแอป: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> และ <code>maxZoom</code> · ใส่ใน <code>providers</code> ของ <code>app.config.ts</code> (v3) หรือของ NgModule (v1 / v2) · input ที่ใส่บน component ชนะค่าเหล่านี้เสมอ',
+        en: '<code>provideImageCropperOptions()</code> from <code>wiraui/imagecropper</code> sets the starting values of every cropper in the app: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> and <code>maxZoom</code> · put it in the <code>providers</code> of <code>app.config.ts</code> (v3) or of the NgModule (v1 / v2) · an input set on the component always wins over them.',
       },
     },
     limits: {
@@ -170,16 +170,16 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'แอปที่ใช้แท็ก <code>&lt;image-cropper&gt;</code> อยู่แล้ว: import <code>WtImageCropperModule</code> (หรือ <code>WtImageCropper</code>) แทน module เดิม แท็ก input และ event ใช้ชื่อเดิมได้ type ชื่อเดิม (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>) import จาก <code>wiratheme/imagecropper</code> เปลี่ยนแค่ path · ผลลัพธ์ค่าเริ่มต้นเป็น <code>blob</code> โค้ดที่อ่าน <code>event.base64</code> ให้ใส่ <code>output="base64"</code> · ฟังก์ชันแปลง base64 เป็นไฟล์ที่แอปเขียนเองเปลี่ยนเป็น <code>base64ToFile()</code> ได้ · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> และ <code>options</code> รับไว้เพื่อให้ template เดิมใช้ได้',
-        en: 'Apps that already use the <code>&lt;image-cropper&gt;</code> tag: import <code>WtImageCropperModule</code> (or <code>WtImageCropper</code>) instead of the old module; the tag, inputs and events keep their names, and the types keep theirs too (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>), imported from <code>wiratheme/imagecropper</code>, so only the path changes · the result is a <code>blob</code> by default: code that reads <code>event.base64</code> adds <code>output="base64"</code> · a base64-to-file function of your own can become <code>base64ToFile()</code> · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> and <code>options</code> are accepted so existing templates compile.',
+        th: 'แอปที่ใช้แท็ก <code>&lt;image-cropper&gt;</code> อยู่แล้ว: import <code>WuImageCropperModule</code> (หรือ <code>WuImageCropper</code>) แทน module เดิม แท็ก input และ event ใช้ชื่อเดิมได้ type ชื่อเดิม (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>) import จาก <code>wiraui/imagecropper</code> เปลี่ยนแค่ path · ผลลัพธ์ค่าเริ่มต้นเป็น <code>blob</code> โค้ดที่อ่าน <code>event.base64</code> ให้ใส่ <code>output="base64"</code> · ฟังก์ชันแปลง base64 เป็นไฟล์ที่แอปเขียนเองเปลี่ยนเป็น <code>base64ToFile()</code> ได้ · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> และ <code>options</code> รับไว้เพื่อให้ template เดิมใช้ได้',
+        en: 'Apps that already use the <code>&lt;image-cropper&gt;</code> tag: import <code>WuImageCropperModule</code> (or <code>WuImageCropper</code>) instead of the old module; the tag, inputs and events keep their names, and the types keep theirs too (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>), imported from <code>wiraui/imagecropper</code>, so only the path changes · the result is a <code>blob</code> by default: code that reads <code>event.base64</code> adds <code>output="base64"</code> · a base64-to-file function of your own can become <code>base64ToFile()</code> · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> and <code>options</code> are accepted so existing templates compile.',
       },
     },
   },
   code: {
     basic: {
       v3: `<input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1"
-  (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1"
+  (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></wu-imagecropper>
 @if (isLoadFailed) {
   <p>เปิดรูปไม่ได้</p>
 }
@@ -188,94 +188,94 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
   <span>{{ croppedSize }}</span>
 }`,
       classic: `<input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1"
-  (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1"
+  (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></wu-imagecropper>
 <p *ngIf="isLoadFailed">เปิดรูปไม่ได้</p>
 <ng-container *ngIf="croppedUrl">
   <img [src]="croppedUrl" alt="รูปที่ตัดแล้ว" width="160" />
   <span>{{ croppedSize }}</span>
 </ng-container>`,
     },
-    ratio: `<wt-selectbutton [options]="ratios" optionLabel="label" optionValue="value" [(ngModel)]="ratio" [allowEmpty]="false"></wt-selectbutton>
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="ratio" [maintainAspectRatio]="ratio !== 'free'"
-  (imageCropped)="imageCropped($event)"></wt-imagecropper>`,
-    round: `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1" [roundCropper]="true" [resizeToWidth]="256"
-  (imageCropped)="imageCropped($event)"></wt-imagecropper>
+    ratio: `<wu-selectbutton [options]="ratios" optionLabel="label" optionValue="value" [(ngModel)]="ratio" [allowEmpty]="false"></wu-selectbutton>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="ratio" [maintainAspectRatio]="ratio !== 'free'"
+  (imageCropped)="imageCropped($event)"></wu-imagecropper>`,
+    round: `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1" [roundCropper]="true" [resizeToWidth]="256"
+  (imageCropped)="imageCropped($event)"></wu-imagecropper>
 <img [src]="croppedUrl" alt="รูปโปรไฟล์" width="96" height="96" style="border-radius: 50%" />`,
-    output: `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="4 / 3" format="jpeg" [imageQuality]="80"
+    output: `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="4 / 3" format="jpeg" [imageQuality]="80"
   [resizeToWidth]="400" [onlyScaleDown]="true" backgroundColor="#ffffff"
-  (imageCropped)="imageCropped($event)"></wt-imagecropper>`,
-    tools: `<wt-imagecropper #photoCropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="16 / 9"
-  [showToolbar]="false" [autoCrop]="false" [(transform)]="transform"></wt-imagecropper>
-<wt-button label="หมุนซ้าย" icon="wi wi-undo" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateLeft()"></wt-button>
-<wt-button label="หมุนขวา" icon="wi wi-refresh" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateRight()"></wt-button>
-<wt-button label="พลิกแนวนอน" severity="secondary" [outlined]="true" (onClick)="photoCropper.flipHorizontal()"></wt-button>
-<wt-button label="ซูมเข้า" icon="wi wi-plus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomIn()"></wt-button>
-<wt-button label="ซูมออก" icon="wi wi-minus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomOut()"></wt-button>
-<wt-button label="เริ่มใหม่" severity="secondary" [text]="true" (onClick)="photoCropper.reset()"></wt-button>
-<wt-button label="ตัดรูป" icon="wi wi-check" (onClick)="cropNow(photoCropper)"></wt-button>`,
+  (imageCropped)="imageCropped($event)"></wu-imagecropper>`,
+    tools: `<wu-imagecropper #photoCropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="16 / 9"
+  [showToolbar]="false" [autoCrop]="false" [(transform)]="transform"></wu-imagecropper>
+<wu-button label="หมุนซ้าย" icon="wi wi-undo" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateLeft()"></wu-button>
+<wu-button label="หมุนขวา" icon="wi wi-refresh" severity="secondary" [outlined]="true" (onClick)="photoCropper.rotateRight()"></wu-button>
+<wu-button label="พลิกแนวนอน" severity="secondary" [outlined]="true" (onClick)="photoCropper.flipHorizontal()"></wu-button>
+<wu-button label="ซูมเข้า" icon="wi wi-plus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomIn()"></wu-button>
+<wu-button label="ซูมออก" icon="wi wi-minus" severity="secondary" [outlined]="true" (onClick)="photoCropper.zoomOut()"></wu-button>
+<wu-button label="เริ่มใหม่" severity="secondary" [text]="true" (onClick)="photoCropper.reset()"></wu-button>
+<wu-button label="ตัดรูป" icon="wi wi-check" (onClick)="cropNow(photoCropper)"></wu-button>`,
     toolbar: `<!-- ซูม | หมุนซ้าย หมุนขวา -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="['zoom', '|', 'rotateLeft', 'rotateRight']"
-  (imageCropped)="imageCropped($event)"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="['zoom', '|', 'rotateLeft', 'rotateRight']"
+  (imageCropped)="imageCropped($event)"></wu-imagecropper>
 
 <!-- หมุนอย่างเดียว -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="['rotate']"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="['rotate']"></wu-imagecropper>
 
 <!-- ไม่มีปุ่มในตัว (template tools ยังแสดง) -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" toolbar="none"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" toolbar="none"></wu-imagecropper>
 
 <!-- จากตัวแปร -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="tools"></wt-imagecropper>`,
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [toolbar]="tools"></wu-imagecropper>`,
     'tools-template': {
-      v3: `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
+      v3: `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
   <ng-template #tools let-cropper>
-    <wt-button label="ใช้รูปนี้" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wt-button>
+    <wu-button label="ใช้รูปนี้" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wu-button>
   </ng-template>
-</wt-imagecropper>
+</wu-imagecropper>
 @if (photoUrl) {
   <img [src]="photoUrl" alt="รูปที่เลือก" width="120" />
 }`,
-      classic: `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
-  <ng-template wtTemplate="tools" let-cropper>
-    <wt-button label="ใช้รูปนี้" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wt-button>
+      classic: `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1">
+  <ng-template wuTemplate="tools" let-cropper>
+    <wu-button label="ใช้รูปนี้" icon="wi wi-check" size="small" (onClick)="usePhoto(cropper)"></wu-button>
   </ng-template>
-</wt-imagecropper>
+</wu-imagecropper>
 <img *ngIf="photoUrl" [src]="photoUrl" alt="รูปที่เลือก" width="120" />`,
     },
-    'tools-rotate': `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" toolbar="none">
+    'tools-rotate': `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" toolbar="none">
   <ng-template #tools let-cropper>
-    <wt-button icon="wi wi-undo" severity="secondary" [text]="true" [rounded]="true" ariaLabel="หมุนซ้าย" (onClick)="cropper.rotateLeft()"></wt-button>
-    <wt-button icon="wi wi-refresh" severity="secondary" [text]="true" [rounded]="true" ariaLabel="หมุนขวา" (onClick)="cropper.rotateRight()"></wt-button>
+    <wu-button icon="wi wi-undo" severity="secondary" [text]="true" [rounded]="true" ariaLabel="หมุนซ้าย" (onClick)="cropper.rotateLeft()"></wu-button>
+    <wu-button icon="wi wi-refresh" severity="secondary" [text]="true" [rounded]="true" ariaLabel="หมุนขวา" (onClick)="cropper.rotateRight()"></wu-button>
   </ng-template>
-</wt-imagecropper>`,
+</wu-imagecropper>`,
     'output-type': `<!-- output="blob" (ค่าเริ่มต้น): Blob + objectUrl เหมาะกับการอัปโหลดผ่าน FormData -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" output="blob"
-  (imageCropped)="blobCropped($event)"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" output="blob"
+  (imageCropped)="blobCropped($event)"></wu-imagecropper>
 
 <!-- output="base64": data URL เหมาะกับการเก็บเป็นข้อความหรือ JSON -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" output="base64"
-  (imageCropped)="base64Cropped($event)"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" output="base64"
+  (imageCropped)="base64Cropped($event)"></wu-imagecropper>
 
 <!-- เลือกชนิดเฉพาะครั้งตอนเรียก crop() เอง -->
-<wt-imagecropper #photoCropper [imageChangedEvent]="imageChangedEvent" [autoCrop]="false"></wt-imagecropper>
-<wt-button label="บันทึกเป็นข้อความ" icon="wi wi-save" (onClick)="saveAsText(photoCropper)"></wt-button>`,
+<wu-imagecropper #photoCropper [imageChangedEvent]="imageChangedEvent" [autoCrop]="false"></wu-imagecropper>
+<wu-button label="บันทึกเป็นข้อความ" icon="wi wi-save" (onClick)="saveAsText(photoCropper)"></wu-button>`,
     defaults: `<!-- ได้ base64 แบบ jpeg 85 และแถบ ซูม | หมุน จากค่าของทั้งแอป -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)"></wu-imagecropper>
 
 <!-- input บน component ชนะ: ตัวนี้ได้ blob แบบ png -->
-<wt-imagecropper [imageChangedEvent]="imageChangedEvent" output="blob" format="png"
-  (imageCropped)="imageCropped($event)"></wt-imagecropper>`,
-    upload: `<wt-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1" [resizeToWidth]="512" [onlyScaleDown]="true"
-  (imageCropped)="photoCropped($event)"></wt-imagecropper>
-<wt-button label="บันทึกรูป" icon="wi wi-upload" [loading]="isApiSaving" [disabled]="!photoBlob" (onClick)="savePhoto()"></wt-button>`,
-    limits: `<wt-imagecropper [imageFile]="file" aspectRatio="16:9" [cropperMinWidth]="320" [cropperMaxWidth]="1920" [(cropper)]="cropBox"
-  [containWithinAspectRatio]="true" backgroundColor="#ffffff" [canvasRotation]="1" alignImage="left"></wt-imagecropper>
+<wu-imagecropper [imageChangedEvent]="imageChangedEvent" output="blob" format="png"
+  (imageCropped)="imageCropped($event)"></wu-imagecropper>`,
+    upload: `<wu-imagecropper [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1" [resizeToWidth]="512" [onlyScaleDown]="true"
+  (imageCropped)="photoCropped($event)"></wu-imagecropper>
+<wu-button label="บันทึกรูป" icon="wi wi-upload" [loading]="isApiSaving" [disabled]="!photoBlob" (onClick)="savePhoto()"></wu-button>`,
+    limits: `<wu-imagecropper [imageFile]="file" aspectRatio="16:9" [cropperMinWidth]="320" [cropperMaxWidth]="1920" [(cropper)]="cropBox"
+  [containWithinAspectRatio]="true" backgroundColor="#ffffff" [canvasRotation]="1" alignImage="left"></wu-imagecropper>
 
 <!-- กรอบขนาดตายตัว ย้ายได้แต่ปรับขนาดไม่ได้ -->
-<wt-imagecropper [imageFile]="file" [cropperStaticWidth]="600" [cropperStaticHeight]="200"></wt-imagecropper>`,
+<wu-imagecropper [imageFile]="file" [cropperStaticWidth]="600" [cropperStaticHeight]="200"></wu-imagecropper>`,
   },
   ts: {
-    basic: `import { WtImageCroppedEvent } from 'wiratheme/imagecropper';
+    basic: `import { WuImageCroppedEvent } from 'wiraui/imagecropper';
 
 imageChangedEvent: Event | null = null;
 croppedUrl = '';
@@ -287,7 +287,7 @@ fileChangeEvent(event: Event): void {
   this.isLoadFailed = false;
 }
 
-imageCropped(event: WtImageCroppedEvent): void {
+imageCropped(event: WuImageCroppedEvent): void {
   this.croppedUrl = event.objectUrl ?? '';   // component คืน URL เก่าให้เอง
   this.croppedSize = event.width + ' × ' + event.height;
 }
@@ -305,81 +305,81 @@ ratio = '4/3';`,
     output: `croppedSize = '';
 fileSize = '';
 
-imageCropped(event: WtImageCroppedEvent): void {
+imageCropped(event: WuImageCroppedEvent): void {
   this.croppedSize = event.width + ' × ' + event.height;   // ไม่เกิน 400 px
   this.fileSize = Math.round((event.blob?.size ?? 0) / 1024) + ' KB';
 }`,
-    tools: `import { WtImageCropper, WtImageTransform } from 'wiratheme/imagecropper';
+    tools: `import { WuImageCropper, WuImageTransform } from 'wiraui/imagecropper';
 
-transform: WtImageTransform = { scale: 1, rotate: 0, flipH: false, flipV: false };
+transform: WuImageTransform = { scale: 1, rotate: 0, flipH: false, flipV: false };
 croppedUrl = '';
 
-async cropNow(cropper: WtImageCropper): Promise<void> {
+async cropNow(cropper: WuImageCropper): Promise<void> {
   const event = await cropper.crop();   // null เมื่อยังไม่มีรูป
   this.croppedUrl = event?.objectUrl ?? '';
 }`,
-    toolbar: `import { WtImageCropperToolbar } from 'wiratheme/imagecropper';
+    toolbar: `import { WuImageCropperToolbar } from 'wiraui/imagecropper';
 
 // 'full' (ค่าเริ่มต้น) · 'none' · หรือรายการปุ่ม: '|' ขึ้นกลุ่มใหม่
-tools: WtImageCropperToolbar = ['zoomOut', 'zoomIn', '|', 'rotate', '|', 'flipHorizontal', 'reset'];`,
-    'tools-template': `import { WtImageCropper } from 'wiratheme/imagecropper';
+tools: WuImageCropperToolbar = ['zoomOut', 'zoomIn', '|', 'rotate', '|', 'flipHorizontal', 'reset'];`,
+    'tools-template': `import { WuImageCropper } from 'wiraui/imagecropper';
 
 photoUrl = '';
 
-async usePhoto(cropper: WtImageCropper): Promise<void> {
+async usePhoto(cropper: WuImageCropper): Promise<void> {
   const event = await cropper.crop();   // null เมื่อยังไม่มีรูป
   this.photoUrl = event?.objectUrl ?? '';
 }`,
-    'output-type': `import { WtImageCropper, WtImageCroppedEvent } from 'wiratheme/imagecropper';
+    'output-type': `import { WuImageCropper, WuImageCroppedEvent } from 'wiraui/imagecropper';
 
 photoBlob: Blob | null = null;
 previewUrl = '';
 photoBase64 = '';
 
-blobCropped(event: WtImageCroppedEvent): void {
+blobCropped(event: WuImageCroppedEvent): void {
   this.photoBlob = event.blob ?? null;       // ส่งขึ้น server: formData.append('photo', this.photoBlob)
   this.previewUrl = event.objectUrl ?? '';   // ใส่ใน <img> ได้ทันที
 }
 
-base64Cropped(event: WtImageCroppedEvent): void {
+base64Cropped(event: WuImageCroppedEvent): void {
   this.photoBase64 = event.base64 ?? '';     // 'data:image/png;base64,…' เก็บใน JSON ได้
 }
 
-async saveAsText(cropper: WtImageCropper): Promise<void> {
+async saveAsText(cropper: WuImageCropper): Promise<void> {
   const event = await cropper.crop('base64');   // ครั้งนี้เป็น base64 ไม่ว่า output จะเป็นอะไร
   this.photoBase64 = event?.base64 ?? '';
 }`,
     defaults: {
       v3: `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideImageCropperOptions } from 'wiratheme/imagecropper';
+import { provideImageCropperOptions } from 'wiraui/imagecropper';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     // …provider อื่นของแอป
-    // ทุก wt-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ
+    // ทุก wu-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ
     provideImageCropperOptions({ output: 'base64', format: 'jpeg', imageQuality: 85, toolbar: ['zoom', '|', 'rotate'] }),
   ],
 };`,
       classic: `// app.module.ts
 import { NgModule } from '@angular/core';
-import { provideImageCropperOptions, WtImageCropperModule } from 'wiratheme/imagecropper';
+import { provideImageCropperOptions, WuImageCropperModule } from 'wiraui/imagecropper';
 
 @NgModule({
-  imports: [WtImageCropperModule],
+  imports: [WuImageCropperModule],
   providers: [
-    // ทุก wt-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ
+    // ทุก wu-imagecropper ในแอปเริ่มจากค่านี้ input ที่ใส่บน component ชนะเสมอ
     provideImageCropperOptions({ output: 'base64', format: 'jpeg', imageQuality: 85, toolbar: ['zoom', '|', 'rotate'] }),
   ],
 })
 export class AppModule {}`,
     },
-    upload: `import { base64ToFile, WtImageCroppedEvent } from 'wiratheme/imagecropper';
+    upload: `import { base64ToFile, WuImageCroppedEvent } from 'wiraui/imagecropper';
 
 photoBlob: Blob | null = null;
 isApiSaving = false;
 
-photoCropped(event: WtImageCroppedEvent): void {
+photoCropped(event: WuImageCroppedEvent): void {
   this.photoBlob = event.blob ?? null;
   // ถ้าใช้ output="base64" แปลงกลับเป็นไฟล์ด้วย base64ToFile
   // this.photoBlob = base64ToFile(event.base64 ?? '');
@@ -395,7 +395,7 @@ savePhoto(): void {
     error: () => (this.isApiSaving = false),
   });
 }`,
-    limits: `import { CropperPosition } from 'wiratheme/imagecropper';
+    limits: `import { CropperPosition } from 'wiraui/imagecropper';
 
 file: File | null = null;
 /** ตำแหน่งกรอบเป็นพิกเซลของรูป อ่านค่าหรือกำหนดเองได้ */
@@ -426,12 +426,12 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
         row('hideResizeSquares', BOOL, 'false', 'ซ่อนจุดจับ (ยังลากมุมและขอบได้)', 'Hide the handles (corners and edges still drag)'),
         row('cropper', 'CropperPosition', undefined, 'ตำแหน่งกรอบในพิกเซลของรูป (สองทาง [(cropper)])', 'The box in image pixels (two-way [(cropper)])'),
         row('canvasRotation', NUM, '0', 'หมุนทีละ 90° ตามเข็มนาฬิกา (ติดลบ = ทวนเข็ม)', 'Quarter turns clockwise (negative = anticlockwise)'),
-        row('transform', 'WtImageTransform', undefined, 'ซูม มุม และการพลิก (สองทาง [(transform)] แถบเครื่องมือเปลี่ยนค่านี้ด้วย)', 'Zoom, angle and mirroring (two-way [(transform)]; the toolbar changes it too)'),
+        row('transform', 'WuImageTransform', undefined, 'ซูม มุม และการพลิก (สองทาง [(transform)] แถบเครื่องมือเปลี่ยนค่านี้ด้วย)', 'Zoom, angle and mirroring (two-way [(transform)]; the toolbar changes it too)'),
         row('rotation · zoom', NUM, undefined, 'มุมเป็นองศา / ซูม (1 = ทั้งรูป) ใช้แทนค่าใน transform', 'Angle in degrees / zoom (1 = the whole picture); override transform'),
         row('maxZoom', NUM, '10', 'ซูมได้สูงสุด', 'Largest zoom'),
         row('alignImage', "'center' | 'left'", "'center'", 'ตำแหน่งของรูปที่แคบกว่ากล่อง', 'Where a picture narrower than the box sits'),
         row('showToolbar', BOOL, 'true', 'แถบเครื่องมือซูม หมุน พลิก และเริ่มใหม่ (false ซ่อนทั้งแถบ รวม template tools)', 'The zoom / turn / mirror / reset toolbar (false hides the whole bar, tools template included)'),
-        row('toolbar', 'WtImageCropperToolbar', "'full'", "ปุ่มในตัวของแถบ: 'full', 'none' หรือรายการเช่น ['zoom', '|', 'rotateLeft', 'rotateRight'] ('|' ขึ้นกลุ่มใหม่)", "The toolbar's built-in buttons: 'full', 'none' or a list such as ['zoom', '|', 'rotateLeft', 'rotateRight'] ('|' starts a new group)"),
+        row('toolbar', 'WuImageCropperToolbar', "'full'", "ปุ่มในตัวของแถบ: 'full', 'none' หรือรายการเช่น ['zoom', '|', 'rotateLeft', 'rotateRight'] ('|' ขึ้นกลุ่มใหม่)", "The toolbar's built-in buttons: 'full', 'none' or a list such as ['zoom', '|', 'rotateLeft', 'rotateRight'] ('|' starts a new group)"),
         row('disabled', BOOL, 'false', 'ล็อกกรอบและแถบเครื่องมือ', 'Locks the box and the toolbar'),
         row('ariaLabel · imageAltText · cropperFrameAriaLabel', 'string', 'locale', 'ชื่อของทั้ง component คำอธิบายรูป และชื่อของกรอบ', 'Name of the component, description of the picture, and name of the box'),
         STYLE_ROW,
@@ -443,13 +443,13 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('imageCropped', 'WtImageCroppedEvent', undefined, 'รูปที่ตัดแล้ว (หลังทุกการเปลี่ยนแปลงเมื่อ autoCrop)', 'The cropped picture (after each change with autoCrop)'),
+        row('imageCropped', 'WuImageCroppedEvent', undefined, 'รูปที่ตัดแล้ว (หลังทุกการเปลี่ยนแปลงเมื่อ autoCrop)', 'The cropped picture (after each change with autoCrop)'),
         row('startCropImage', 'void', undefined, 'เริ่มตัดรูป (ผลลัพธ์ตามมาใน imageCropped)', 'A crop has started (the result follows in imageCropped)'),
-        row('imageLoaded', 'WtLoadedImage', undefined, 'เปิดรูปแล้ว พร้อมขนาดและค่า EXIF', 'The picture is open, with its sizes and EXIF values'),
+        row('imageLoaded', 'WuLoadedImage', undefined, 'เปิดรูปแล้ว พร้อมขนาดและค่า EXIF', 'The picture is open, with its sizes and EXIF values'),
         row('cropperReady', 'CropDimensions', undefined, 'รูปแสดงแล้ว ขนาดบนจอเป็น CSS pixel', 'The picture is shown; its size on screen in CSS pixels'),
         row('loadImageFailed', 'void', undefined, 'เปิดรูปไม่ได้', 'The picture could not be opened'),
         row('cropperChange', 'CropperPosition', undefined, 'คู่ของ [(cropper)] กรอบย้ายหรือเปลี่ยนขนาด', 'For [(cropper)]: the box moved or resized'),
-        row('transformChange', 'WtImageTransform', undefined, 'คู่ของ [(transform)] ซูม หมุน หรือพลิกจากแถบเครื่องมือ คีย์บอร์ด ล้อเมาส์ หรือนิ้ว', 'For [(transform)]: zoom, turn or mirror from the toolbar, keys, wheel or pinch'),
+        row('transformChange', 'WuImageTransform', undefined, 'คู่ของ [(transform)] ซูม หมุน หรือพลิกจากแถบเครื่องมือ คีย์บอร์ด ล้อเมาส์ หรือนิ้ว', 'For [(transform)]: zoom, turn or mirror from the toolbar, keys, wheel or pinch'),
       ],
     },
     {
@@ -457,7 +457,7 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: 'Methods',
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
-        row('crop(output?)', 'Promise<WtImageCroppedEvent | null>', undefined, 'ตัดตอนนี้ (ส่ง imageCropped ด้วย) null เมื่อยังไม่มีรูป output ใช้แทนค่าของ input ครั้งเดียว', 'Crops now (imageCropped fires too); null while no picture is loaded; output overrides the input for this call'),
+        row('crop(output?)', 'Promise<WuImageCroppedEvent | null>', undefined, 'ตัดตอนนี้ (ส่ง imageCropped ด้วย) null เมื่อยังไม่มีรูป output ใช้แทนค่าของ input ครั้งเดียว', 'Crops now (imageCropped fires too); null while no picture is loaded; output overrides the input for this call'),
         row('resetCrop()', 'void', undefined, 'กรอบกลับขนาดและที่เดิม ซูมกลับเป็น 1', 'The box goes back to its starting size and place, zoom back to 1'),
         row('reset()', 'void', undefined, 'ล้างการซูม หมุน และพลิก แล้ววางกรอบใหม่ (ปุ่มเริ่มใหม่ของแถบเครื่องมือ)', 'Undoes zoom, turns and mirrors and places the box again (the toolbar\'s reset)'),
         row('rotateLeft() · rotateRight()', 'void', undefined, 'หมุนทีละ 90°', 'Turn by a quarter'),
@@ -470,11 +470,11 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #tools หรือ wtTemplate="tools" ก็ได้',
-        en: 'Write it as #tools or wtTemplate="tools".',
+        th: 'เขียนเป็น #tools หรือ wuTemplate="tools" ก็ได้',
+        en: 'Write it as #tools or wuTemplate="tools".',
       },
       rows: [
-        row('tools', '$implicit (WtImageCropper)', undefined, 'ปุ่มของแอปเป็นกลุ่มสุดท้ายของแถบเครื่องมือ let-cropper เรียก crop(), rotateRight(), zoomIn(), reset() ฯลฯ ได้', "The app's own buttons as the toolbar's last group; let-cropper calls crop(), rotateRight(), zoomIn(), reset() and so on"),
+        row('tools', '$implicit (WuImageCropper)', undefined, 'ปุ่มของแอปเป็นกลุ่มสุดท้ายของแถบเครื่องมือ let-cropper เรียก crop(), rotateRight(), zoomIn(), reset() ฯลฯ ได้', "The app's own buttons as the toolbar's last group; let-cropper calls crop(), rotateRight(), zoomIn(), reset() and so on"),
       ],
     },
     {
@@ -482,7 +482,7 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: 'Providers',
       typeLabel: { th: 'ค่า', en: 'Value' },
       rows: [
-        row('provideImageCropperOptions(options)', 'WtImageCropperOptions', undefined, 'ค่าเริ่มต้นของทุก cropper ในแอป (output, format, imageQuality, toolbar, maxZoom) input บน component ชนะ', 'Starting values for every cropper in the app (output, format, imageQuality, toolbar, maxZoom); inputs on a component win'),
+        row('provideImageCropperOptions(options)', 'WuImageCropperOptions', undefined, 'ค่าเริ่มต้นของทุก cropper ในแอป (output, format, imageQuality, toolbar, maxZoom) input บน component ชนะ', 'Starting values for every cropper in the app (output, format, imageQuality, toolbar, maxZoom); inputs on a component win'),
       ],
     },
     {
@@ -490,28 +490,28 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
-        row('base64ToFile(base64, type?)', 'Blob', undefined, 'data URL หรือ base64 เป็น Blob สำหรับ FormData (import จาก wiratheme/imagecropper หรือ wiratheme/core)', 'A data URL or base64 as a Blob for FormData (from wiratheme/imagecropper or wiratheme/core)'),
+        row('base64ToFile(base64, type?)', 'Blob', undefined, 'data URL หรือ base64 เป็น Blob สำหรับ FormData (import จาก wiraui/imagecropper หรือ wiraui/core)', 'A data URL or base64 as a Blob for FormData (from wiraui/imagecropper or wiraui/core)'),
       ],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtImageCropperFormat = 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico';
+      code: `type WuImageCropperFormat = 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico';
 
-type WtImageCropperTool =
+type WuImageCropperTool =
   | 'zoomOut' | 'zoomSlider' | 'zoomIn' | 'rotateLeft' | 'rotateRight' | 'flipHorizontal' | 'flipVertical' | 'reset'
   | 'zoom' | 'rotate' | 'flip';   // zoom = zoomOut + zoomSlider + zoomIn · rotate = ซ้าย + ขวา · flip = แนวนอน + แนวตั้ง
-type WtImageCropperToolbar = 'full' | 'none' | ReadonlyArray<WtImageCropperTool | '|'>;   // '|' ขึ้นกลุ่มใหม่
+type WuImageCropperToolbar = 'full' | 'none' | ReadonlyArray<WuImageCropperTool | '|'>;   // '|' ขึ้นกลุ่มใหม่
 
-interface WtImageCropperOptions {   // provideImageCropperOptions()
+interface WuImageCropperOptions {   // provideImageCropperOptions()
   output?: 'blob' | 'base64';
-  format?: WtImageCropperFormat;
+  format?: WuImageCropperFormat;
   imageQuality?: number;
-  toolbar?: WtImageCropperToolbar;
+  toolbar?: WuImageCropperToolbar;
   maxZoom?: number;
 }
 
-interface WtImageCroppedEvent {
+interface WuImageCroppedEvent {
   blob?: Blob | null;          // output="blob" (ค่าเริ่มต้น)
   objectUrl?: string | null;   // ใส่ใน <img> ได้ทันที
   base64?: string | null;      // output="base64"
@@ -521,14 +521,14 @@ interface WtImageCroppedEvent {
   imagePosition: CropperPosition;     // ตำแหน่งในรูป (พิกเซลของรูป หลังหมุน)
 }
 
-interface WtImageTransform {
+interface WuImageTransform {
   scale?: number;    // 1 = ทั้งรูป
   rotate?: number;   // องศา ตามเข็มนาฬิกา
   flipH?: boolean;
   flipV?: boolean;
 }
 
-interface WtLoadedImage {
+interface WuLoadedImage {
   original: { size: CropDimensions };      // ขนาดในไฟล์
   transformed: { size: CropDimensions };   // ขนาดหลังหมุนตาม EXIF
   exifTransform: { rotate: number; flip: boolean };
@@ -538,26 +538,26 @@ interface CropperPosition { x1: number; y1: number; x2: number; y2: number }
 interface CropDimensions { width: number; height: number }
 
 // ชื่อเดิมใช้ได้เหมือนกัน
-type ImageCroppedEvent = WtImageCroppedEvent;
-type ImageTransform = WtImageTransform;
-type LoadedImage = WtLoadedImage;
+type ImageCroppedEvent = WuImageCroppedEvent;
+type ImageTransform = WuImageTransform;
+type LoadedImage = WuLoadedImage;
 type Dimensions = CropDimensions;
-type OutputFormat = WtImageCropperFormat;`,
+type OutputFormat = WuImageCropperFormat;`,
     },
   ],
   tokens: [
-    tok('--wt-imagecropper-radius', 'มุมโค้งของกล่อง', 'Corner radius of the box'),
-    tok('--wt-imagecropper-border-width', 'เส้นขอบของกล่อง', 'Border width of the box'),
-    tok('--wt-imagecropper-bg', 'พื้นรอบรูป', 'Background around the picture'),
-    tok('--wt-imagecropper-mask', 'สีมืดนอกกรอบ', 'The dim outside the crop box'),
-    tok('--wt-imagecropper-line', 'เส้นขอบของกรอบ', 'Outline of the crop box'),
-    tok('--wt-imagecropper-grid-color', 'เส้นตารางสามส่วนในกรอบ (แสดงตอนลาก)', 'The rule-of-thirds grid in the box (shown while dragging)'),
-    tok('--wt-imagecropper-handle-size', 'ขนาดจุดจับ', 'Handle size'),
-    tok('--wt-imagecropper-handle-bg', 'สีจุดจับ', 'Handle fill'),
-    tok('--wt-imagecropper-handle-border', 'ขอบจุดจับ', 'Handle border'),
-    tok('--wt-imagecropper-min-height', 'ความสูงต่ำสุดตอนยังไม่มีรูป', 'Minimum height while there is no picture'),
-    tok('--wt-imagecropper-max-height', 'ความสูงสูงสุดของรูป', 'Maximum height of the picture'),
-    tok('--wt-imagecropper-toolbar-padding', 'ระยะในแถบเครื่องมือ', 'Toolbar padding'),
-    tok('--wt-imagecropper-toolbar-gap', 'ระยะระหว่างปุ่มในแถบเครื่องมือ', 'Gap between toolbar buttons'),
+    tok('--wu-imagecropper-radius', 'มุมโค้งของกล่อง', 'Corner radius of the box'),
+    tok('--wu-imagecropper-border-width', 'เส้นขอบของกล่อง', 'Border width of the box'),
+    tok('--wu-imagecropper-bg', 'พื้นรอบรูป', 'Background around the picture'),
+    tok('--wu-imagecropper-mask', 'สีมืดนอกกรอบ', 'The dim outside the crop box'),
+    tok('--wu-imagecropper-line', 'เส้นขอบของกรอบ', 'Outline of the crop box'),
+    tok('--wu-imagecropper-grid-color', 'เส้นตารางสามส่วนในกรอบ (แสดงตอนลาก)', 'The rule-of-thirds grid in the box (shown while dragging)'),
+    tok('--wu-imagecropper-handle-size', 'ขนาดจุดจับ', 'Handle size'),
+    tok('--wu-imagecropper-handle-bg', 'สีจุดจับ', 'Handle fill'),
+    tok('--wu-imagecropper-handle-border', 'ขอบจุดจับ', 'Handle border'),
+    tok('--wu-imagecropper-min-height', 'ความสูงต่ำสุดตอนยังไม่มีรูป', 'Minimum height while there is no picture'),
+    tok('--wu-imagecropper-max-height', 'ความสูงสูงสุดของรูป', 'Maximum height of the picture'),
+    tok('--wu-imagecropper-toolbar-padding', 'ระยะในแถบเครื่องมือ', 'Toolbar padding'),
+    tok('--wu-imagecropper-toolbar-gap', 'ระยะระหว่างปุ่มในแถบเครื่องมือ', 'Gap between toolbar buttons'),
   ],
 };

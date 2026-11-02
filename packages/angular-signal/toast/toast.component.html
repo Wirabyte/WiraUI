@@ -1,15 +1,15 @@
 <div
   #container
   popover="manual"
-  class="wt-toast p-toast p-component"
-  [ngClass]="'wt-toast-' + position + ' p-toast-' + position + ' ' + (styleClass || '')"
+  class="wu-toast p-toast p-component"
+  [ngClass]="'wu-toast-' + position + ' p-toast-' + position + ' ' + (styleClass || '')"
   [ngStyle]="style || null"
 >
   @for (item of items; track item.uid) {
     <div
-      class="wt-toast-message p-toast-message"
-      [ngClass]="'wt-toast-' + item.severity + ' p-toast-message-' + item.severity + ' ' + (item.message.styleClass || '')"
-      [class.wt-toast-leaving]="item.leaving"
+      class="wu-toast-message p-toast-message"
+      [ngClass]="'wu-toast-' + item.severity + ' p-toast-message-' + item.severity + ' ' + (item.message.styleClass || '')"
+      [class.wu-toast-leaving]="item.leaving"
       [attr.role]="item.severity === 'error' ? 'alert' : 'status'"
       [attr.aria-live]="item.severity === 'error' ? 'assertive' : 'polite'"
       aria-atomic="true"
@@ -19,11 +19,11 @@
       @if (headlessTemplate) {
         <ng-container [ngTemplateOutlet]="headlessTemplate" [ngTemplateOutletContext]="{ $implicit: item.message, closeFn: item.closeFn }"></ng-container>
       } @else {
-        <div class="wt-toast-content p-toast-message-content" [ngClass]="item.message.contentStyleClass || ''">
+        <div class="wu-toast-content p-toast-message-content" [ngClass]="item.message.contentStyleClass || ''">
           @if (messageTemplate) {
             <ng-container [ngTemplateOutlet]="messageTemplate" [ngTemplateOutletContext]="{ $implicit: item.message }"></ng-container>
           } @else {
-            <span class="wt-toast-icon p-toast-message-icon" aria-hidden="true">
+            <span class="wu-toast-icon p-toast-message-icon" aria-hidden="true">
               @if (item.message.icon) {
                 <i [class]="item.message.icon"></i>
               } @else {
@@ -38,17 +38,17 @@
                 </svg>
               }
             </span>
-            <div class="wt-toast-text p-toast-message-text">
+            <div class="wu-toast-text p-toast-message-text">
               @if (item.message.summary) {
-                <div class="wt-toast-summary p-toast-summary">{{ item.message.summary }}</div>
+                <div class="wu-toast-summary p-toast-summary">{{ item.message.summary }}</div>
               }
               @if (item.message.detail || item.message.text) {
-                <div class="wt-toast-detail p-toast-detail">{{ item.message.detail || item.message.text }}</div>
+                <div class="wu-toast-detail p-toast-detail">{{ item.message.detail || item.message.text }}</div>
               }
             </div>
           }
           @if (item.message.closable !== false) {
-            <button type="button" class="wt-toast-close p-toast-close-button" [attr.aria-label]="t.close" (click)="close(item)">
+            <button type="button" class="wu-toast-close p-toast-close-button" [attr.aria-label]="t.close" (click)="close(item)">
               @if (item.message.closeIcon) {
                 <i [class]="item.message.closeIcon"></i>
               } @else {
@@ -59,7 +59,7 @@
         </div>
       }
       @if (showTimer && !item.message.sticky) {
-        <div class="wt-toast-timer" aria-hidden="true"><span [style.animation-duration.ms]="item.life"></span></div>
+        <div class="wu-toast-timer" aria-hidden="true"><span [style.animation-duration.ms]="item.life"></span></div>
       }
     </div>
   }

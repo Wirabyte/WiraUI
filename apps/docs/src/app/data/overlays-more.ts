@@ -8,12 +8,12 @@ export const TOAST_DOC: ComponentDoc = {
   title: 'Toast',
   group: 'Feedback',
   entry: 'toast',
-  standalone: 'WtToast, WtTemplate',
-  module: 'WtToastModule',
-  selector: 'wt-toast',
+  standalone: 'WuToast, WuTemplate',
+  module: 'WuToastModule',
+  selector: 'wu-toast',
   description: {
-    th: 'ข้อความแจ้งเตือนสั้น ๆ ที่ลอยขึ้นมุมจอแล้วหายไปเอง วาง <wt-toast> ไว้ครั้งเดียวแล้วเรียก WtMessageService.add() จากที่ไหนก็ได้',
-    en: 'Short notices that float in at a corner and go away by themselves. Place <wt-toast> once, then call WtMessageService.add() from anywhere.',
+    th: 'ข้อความแจ้งเตือนสั้น ๆ ที่ลอยขึ้นมุมจอแล้วหายไปเอง วาง <wu-toast> ไว้ครั้งเดียวแล้วเรียก WuMessageService.add() จากที่ไหนก็ได้',
+    en: 'Short notices that float in at a corner and go away by themselves. Place <wu-toast> once, then call WuMessageService.add() from anywhere.',
   },
   english: {
     'ครั้งเดียว เช่นใน app.component.html': 'once, e.g. in app.component.html',
@@ -42,8 +42,8 @@ export const TOAST_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WtMessageService</code> อยู่ใน <code>wiratheme/toast</code> หรือ import จาก <code>wiratheme/api</code> ในชื่อ <code>MessageService</code> (type ของข้อความคือ <code>Message</code>)',
-        en: '<code>WtMessageService</code> comes from <code>wiratheme/toast</code>, or from <code>wiratheme/api</code> as <code>MessageService</code> (the message type is <code>Message</code>).',
+        th: '<code>WuMessageService</code> อยู่ใน <code>wiraui/toast</code> หรือ import จาก <code>wiraui/api</code> ในชื่อ <code>MessageService</code> (type ของข้อความคือ <code>Message</code>)',
+        en: '<code>WuMessageService</code> comes from <code>wiraui/toast</code>, or from <code>wiraui/api</code> as <code>MessageService</code> (the message type is <code>Message</code>).',
       },
     },
     basic: {
@@ -61,8 +61,8 @@ export const TOAST_DOC: ComponentDoc = {
     life: {
       title: { th: 'เวลาแสดงและการปิด', en: 'Time on screen and closing' },
       text: {
-        th: 'เส้นนับถอยหลังด้านล่างวิ่งตาม <code>life</code> (ms ต่อข้อความหรือทั้ง <code>&lt;wt-toast&gt;</code>) เอาเมาส์ชี้แล้วหยุด และเดินต่อจากเวลาที่เหลือเมื่อเอาออก · <code>[showTimer]="false"</code> ปิดเส้นนี้ · <code>sticky</code> ค้างจนกดปิด · ปุ่ม × อยู่มุมขวาบนเสมอ แม้ใช้ template ของตัวเอง (<code>closable: false</code> ซ่อน) · <code>clear()</code> ล้างทั้งหมด · <code>preventDuplicates</code> ข้ามข้อความซ้ำ',
-        en: 'A countdown line along the bottom runs for the <code>life</code> (ms, per message or for the whole <code>&lt;wt-toast&gt;</code>). Hovering pauses it, and the remaining time continues afterwards · <code>[showTimer]="false"</code> turns the line off · <code>sticky</code> stays until closed · the × always sits top-right, custom templates included (<code>closable: false</code> hides it) · <code>clear()</code> removes them all · <code>preventDuplicates</code> skips repeats.',
+        th: 'เส้นนับถอยหลังด้านล่างวิ่งตาม <code>life</code> (ms ต่อข้อความหรือทั้ง <code>&lt;wu-toast&gt;</code>) เอาเมาส์ชี้แล้วหยุด และเดินต่อจากเวลาที่เหลือเมื่อเอาออก · <code>[showTimer]="false"</code> ปิดเส้นนี้ · <code>sticky</code> ค้างจนกดปิด · ปุ่ม × อยู่มุมขวาบนเสมอ แม้ใช้ template ของตัวเอง (<code>closable: false</code> ซ่อน) · <code>clear()</code> ล้างทั้งหมด · <code>preventDuplicates</code> ข้ามข้อความซ้ำ',
+        en: 'A countdown line along the bottom runs for the <code>life</code> (ms, per message or for the whole <code>&lt;wu-toast&gt;</code>). Hovering pauses it, and the remaining time continues afterwards · <code>[showTimer]="false"</code> turns the line off · <code>sticky</code> stays until closed · the × always sits top-right, custom templates included (<code>closable: false</code> hides it) · <code>clear()</code> removes them all · <code>preventDuplicates</code> skips repeats.',
       },
     },
     templates: {
@@ -74,34 +74,34 @@ export const TOAST_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-toast></wt-toast>   <!-- ครั้งเดียว เช่นใน app.component.html -->
+    basic: `<wu-toast></wu-toast>   <!-- ครั้งเดียว เช่นใน app.component.html -->
 
-<wt-button label="บันทึก" (onClick)="save()"></wt-button>`,
-    severity: `<wt-button label="success" severity="success" (onClick)="show('success')"></wt-button>
-<wt-button label="info" severity="info" (onClick)="show('info')"></wt-button>
+<wu-button label="บันทึก" (onClick)="save()"></wu-button>`,
+    severity: `<wu-button label="success" severity="success" (onClick)="show('success')"></wu-button>
+<wu-button label="info" severity="info" (onClick)="show('info')"></wu-button>
 <!-- warn · error · secondary · contrast -->`,
-    position: `<wt-toast key="bl" position="bottom-left"></wt-toast>
-<wt-toast key="tc" position="top-center"></wt-toast>
+    position: `<wu-toast key="bl" position="bottom-left"></wu-toast>
+<wu-toast key="tc" position="top-center"></wu-toast>
 
-<wt-button label="ล่างซ้าย"
-  (onClick)="messages.add({ key: 'bl', severity: 'info', summary: 'ล่างซ้าย' })"></wt-button>`,
-    life: `<wt-button label="ค้างไว้"
-  (onClick)="messages.add({ severity: 'warn', summary: 'ต้องตรวจสอบ', sticky: true })"></wt-button>
-<wt-button label="10 วินาที"
-  (onClick)="messages.add({ severity: 'info', summary: 'แสดง 10 วินาที', life: 10000 })"></wt-button>
-<wt-button label="ล้างทั้งหมด" severity="secondary" (onClick)="messages.clear()"></wt-button>`,
-    templates: `<wt-toast key="invite" position="bottom-right">
+<wu-button label="ล่างซ้าย"
+  (onClick)="messages.add({ key: 'bl', severity: 'info', summary: 'ล่างซ้าย' })"></wu-button>`,
+    life: `<wu-button label="ค้างไว้"
+  (onClick)="messages.add({ severity: 'warn', summary: 'ต้องตรวจสอบ', sticky: true })"></wu-button>
+<wu-button label="10 วินาที"
+  (onClick)="messages.add({ severity: 'info', summary: 'แสดง 10 วินาที', life: 10000 })"></wu-button>
+<wu-button label="ล้างทั้งหมด" severity="secondary" (onClick)="messages.clear()"></wu-button>`,
+    templates: `<wu-toast key="invite" position="bottom-right">
   <ng-template #message let-m>
     <div class="invite">
-      <wt-avatar [label]="m.data.initial" shape="circle"></wt-avatar>
+      <wu-avatar [label]="m.data.initial" shape="circle"></wu-avatar>
       <div><b>{{ m.summary }}</b><p>{{ m.detail }}</p></div>
-      <wt-button label="ดู" size="small" (onClick)="open(m)"></wt-button>
+      <wu-button label="ดู" size="small" (onClick)="open(m)"></wu-button>
     </div>
   </ng-template>
-</wt-toast>`,
+</wu-toast>`,
   },
   ts: {
-    basic: `private readonly messages = inject(WtMessageService);
+    basic: `private readonly messages = inject(WuMessageService);
 
 save(): void {
   this.messages.add({ severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย' });
@@ -124,7 +124,7 @@ save(): void {
       rows: [
         row('severity', "'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast'", undefined, 'สีและ icon (warning, danger ใช้ได้)', 'Colour and icon (warning, danger work too)'),
         row('summary · detail', 'string', undefined, 'หัวข้อและรายละเอียด', 'Title and detail'),
-        row('key', 'string', undefined, 'ส่งไป <wt-toast> ที่ key ตรงกัน', 'Goes to the <wt-toast> with that key'),
+        row('key', 'string', undefined, 'ส่งไป <wu-toast> ที่ key ตรงกัน', 'Goes to the <wu-toast> with that key'),
         row('life', 'number', '3000', 'เวลาแสดง (ms)', 'Time on screen (ms)'),
         row('sticky', BOOL, 'false', 'ค้างจนกดปิด', 'Stays until closed'),
         row('closable', BOOL, 'true', 'ปุ่ม ×', 'The ×'),
@@ -134,7 +134,7 @@ save(): void {
     },
     {
       id: 'api-inputs',
-      title: { th: 'Inputs ของ wt-toast', en: 'wt-toast inputs' },
+      title: { th: 'Inputs ของ wu-toast', en: 'wu-toast inputs' },
       rows: [
         row('key', 'string', undefined, 'แสดงเฉพาะข้อความที่ key ตรงกัน', 'Shows only messages with this key'),
         row('position', "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center' | 'center'", "'top-right'", 'มุมของจอ', 'Corner of the screen'),
@@ -149,11 +149,11 @@ save(): void {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onClose', 'WtToastCloseEvent', undefined, 'ผู้ใช้ปิดข้อความ', 'The user closed a message')],
+      rows: [row('onClose', 'WuToastCloseEvent', undefined, 'ผู้ใช้ปิดข้อความ', 'The user closed a message')],
     },
     {
       id: 'api-service',
-      title: 'WtMessageService',
+      title: 'WuMessageService',
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
         row('add(message)', 'void', undefined, 'แสดงข้อความ', 'Shows a message'),
@@ -163,15 +163,15 @@ save(): void {
     },
   ],
   tokens: [
-    tok('--wt-toast-width', 'ความกว้าง (มือถือเต็มจอ)', 'Width (full on phones)'),
-    tok('--wt-toast-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-toast-border-width', 'ขอบ (เช่น 0 0 0 6px เป็นแถบด้านซ้าย)', 'Border (0 0 0 6px for a left stripe)'),
-    tok('--wt-toast-border-mix', 'ความเข้มของสีขอบ', 'Border colour strength'),
-    tok('--wt-toast-icon-size', 'ขนาด icon', 'Icon size'),
-    tok('--wt-toast-summary-weight', 'น้ำหนักหัวข้อ', 'Summary weight'),
-    tok('--wt-toast-padding', 'ระยะใน', 'Padding'),
-    tok('--wt-toast-shadow', 'เงา', 'Shadow'),
-    tok('--wt-toast-blur', 'ความเบลอของพื้นหลัง', 'Background blur'),
+    tok('--wu-toast-width', 'ความกว้าง (มือถือเต็มจอ)', 'Width (full on phones)'),
+    tok('--wu-toast-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-toast-border-width', 'ขอบ (เช่น 0 0 0 6px เป็นแถบด้านซ้าย)', 'Border (0 0 0 6px for a left stripe)'),
+    tok('--wu-toast-border-mix', 'ความเข้มของสีขอบ', 'Border colour strength'),
+    tok('--wu-toast-icon-size', 'ขนาด icon', 'Icon size'),
+    tok('--wu-toast-summary-weight', 'น้ำหนักหัวข้อ', 'Summary weight'),
+    tok('--wu-toast-padding', 'ระยะใน', 'Padding'),
+    tok('--wu-toast-shadow', 'เงา', 'Shadow'),
+    tok('--wu-toast-blur', 'ความเบลอของพื้นหลัง', 'Background blur'),
   ],
 };
 
@@ -180,9 +180,9 @@ export const TOOLTIP_DOC: ComponentDoc = {
   title: 'Tooltip',
   group: 'Overlay',
   entry: 'tooltip',
-  standalone: 'WtTooltip',
-  module: 'WtTooltipModule',
-  selector: '[wtTooltip]',
+  standalone: 'WuTooltip',
+  module: 'WuTooltipModule',
+  selector: '[wuTooltip]',
   description: {
     th: 'ข้อความอธิบายสั้น ๆ เมื่อชี้หรือโฟกัส ย้ายไปอีกฝั่งเองเมื่อพื้นที่ไม่พอ และเลื่อนตามเมื่อหน้าเลื่อน',
     en: 'A short hint on hover or focus. It flips to the other side when there is no room and follows the page as it scrolls.',
@@ -213,7 +213,7 @@ export const TOOLTIP_DOC: ComponentDoc = {
   sections: {
     import: {
       title: 'Import',
-      text: { th: 'ใส่ <code>wtTooltip</code> บน element ใดก็ได้ (attribute ชื่อเดิม <code>pTooltip</code> ก็ใช้ได้)', en: 'Add <code>wtTooltip</code> to any element (the attribute name older templates use, <code>pTooltip</code>, works too).' },
+      text: { th: 'ใส่ <code>wuTooltip</code> บน element ใดก็ได้ (attribute ชื่อเดิม <code>pTooltip</code> ก็ใช้ได้)', en: 'Add <code>wuTooltip</code> to any element (the attribute name older templates use, <code>pTooltip</code>, works too).' },
     },
     basic: {
       title: 'Position',
@@ -242,25 +242,25 @@ export const TOOLTIP_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="บน" wtTooltip="บันทึกแบบร่าง" tooltipPosition="top"></wt-button>
-<wt-button label="ล่าง" wtTooltip="ส่งออกเป็น Excel" tooltipPosition="bottom"></wt-button>
-<wt-button label="ซ้าย" wtTooltip="ย้อนกลับ" tooltipPosition="left"></wt-button>
-<wt-button label="ขวา" wtTooltip="ถัดไป"></wt-button>`,
-    event: `<input wtInputText wtTooltip="กรอกเลขบัตรประชาชน 13 หลัก" tooltipEvent="focus" placeholder="เลขบัตรประชาชน" />
-<wt-button label="ช้าหน่อย" wtTooltip="แสดงหลัง 500ms" [showDelay]="500" [hideDelay]="300"></wt-button>`,
-    html: `<wt-button label="รายละเอียด" severity="secondary"
-  wtTooltip="<b>แพ็กเกจ Pro</b><br>ผู้ใช้ไม่จำกัด · <a href='https://example.com'>ดูราคา</a>"
-           [escape]="false" tooltipPosition="top"></wt-button>`,
-    options: `<wt-button label="ปิด tooltip" [wtTooltip]="'ไม่แสดง'" [tooltipDisabled]="off"></wt-button>
-<wt-button label="บรรทัดเดียว" wtTooltip="ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่"
-  [fitContent]="true"></wt-button>`,
+    basic: `<wu-button label="บน" wuTooltip="บันทึกแบบร่าง" tooltipPosition="top"></wu-button>
+<wu-button label="ล่าง" wuTooltip="ส่งออกเป็น Excel" tooltipPosition="bottom"></wu-button>
+<wu-button label="ซ้าย" wuTooltip="ย้อนกลับ" tooltipPosition="left"></wu-button>
+<wu-button label="ขวา" wuTooltip="ถัดไป"></wu-button>`,
+    event: `<input wuInputText wuTooltip="กรอกเลขบัตรประชาชน 13 หลัก" tooltipEvent="focus" placeholder="เลขบัตรประชาชน" />
+<wu-button label="ช้าหน่อย" wuTooltip="แสดงหลัง 500ms" [showDelay]="500" [hideDelay]="300"></wu-button>`,
+    html: `<wu-button label="รายละเอียด" severity="secondary"
+  wuTooltip="<b>แพ็กเกจ Pro</b><br>ผู้ใช้ไม่จำกัด · <a href='https://example.com'>ดูราคา</a>"
+           [escape]="false" tooltipPosition="top"></wu-button>`,
+    options: `<wu-button label="ปิด tooltip" [wuTooltip]="'ไม่แสดง'" [tooltipDisabled]="off"></wu-button>
+<wu-button label="บรรทัดเดียว" wuTooltip="ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่"
+  [fitContent]="true"></wu-button>`,
   },
   api: [
     {
       id: 'api-inputs',
       title: 'Inputs',
       rows: [
-        row('wtTooltip · pTooltip', 'string', undefined, 'ข้อความ', 'The text'),
+        row('wuTooltip · pTooltip', 'string', undefined, 'ข้อความ', 'The text'),
         row('tooltipPosition', "'top' | 'bottom' | 'left' | 'right'", "'right'", 'ฝั่งที่แสดง (สลับเองเมื่อไม่พอ)', 'Side (flips when there is no room)'),
         row('tooltipEvent', "'hover' | 'focus' | 'both'", "'hover'", 'เหตุการณ์ที่ทำให้แสดง (hover รวมโฟกัสด้วยคีย์บอร์ด)', 'What shows it (hover includes keyboard focus)'),
         row('showDelay · hideDelay · life', 'number', '0', 'หน่วงก่อนแสดง / ก่อนซ่อน / ซ่อนเองหลัง (ms)', 'Delay before showing / hiding, hide after (ms)'),
@@ -269,7 +269,7 @@ export const TOOLTIP_DOC: ComponentDoc = {
         row('fitContent', BOOL, 'false', 'บรรทัดเดียว', 'One line'),
         row('tooltipStyleClass', 'string', undefined, 'class เพิ่ม', 'Extra class'),
         row('positionTop · positionLeft', 'number', '0', 'เลื่อนเพิ่ม (px)', 'Extra offset (px)'),
-        row('tooltipOptions', 'WtTooltipOptions', undefined, 'ทุกค่าใน object เดียว', 'All of it in one object'),
+        row('tooltipOptions', 'WuTooltipOptions', undefined, 'ทุกค่าใน object เดียว', 'All of it in one object'),
         row('autoHide', 'boolean', 'false', 'true = ซ่อนทันทีที่เมาส์ออกจากปุ่ม (false = เลื่อนไปบน tooltip และกดลิงก์ได้)', 'true hides it as soon as the pointer leaves the target (false lets the pointer move onto it and click links)'),
         row('appendTo · tooltipZIndex · positionStyle', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ (อยู่ใน top layer)', 'Accepted so existing templates compile (top layer)'),
       ],
@@ -277,17 +277,17 @@ export const TOOLTIP_DOC: ComponentDoc = {
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtTooltipPosition = 'top' | 'bottom' | 'left' | 'right';
-type WtTooltipEvent = 'hover' | 'focus' | 'both';`,
+      code: `type WuTooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+type WuTooltipEvent = 'hover' | 'focus' | 'both';`,
     },
   ],
   tokens: [
-    tok('--wt-tooltip-bg', 'พื้น', 'Background'),
-    tok('--wt-tooltip-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-tooltip-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-tooltip-padding', 'ระยะใน', 'Padding'),
-    tok('--wt-tooltip-max-width', 'ความกว้างสูงสุดก่อนตัดบรรทัด', 'Width before it wraps'),
-    tok('--wt-tooltip-shadow', 'เงา', 'Shadow'),
+    tok('--wu-tooltip-bg', 'พื้น', 'Background'),
+    tok('--wu-tooltip-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-tooltip-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-tooltip-padding', 'ระยะใน', 'Padding'),
+    tok('--wu-tooltip-max-width', 'ความกว้างสูงสุดก่อนตัดบรรทัด', 'Width before it wraps'),
+    tok('--wu-tooltip-shadow', 'เงา', 'Shadow'),
   ],
 };
 
@@ -296,9 +296,9 @@ export const POPOVER_DOC: ComponentDoc = {
   title: 'Popover',
   group: 'Overlay',
   entry: 'popover',
-  standalone: 'WtPopover',
-  module: 'WtPopoverModule',
-  selector: 'wt-popover',
+  standalone: 'WuPopover',
+  module: 'WuPopoverModule',
+  selector: 'wu-popover',
   description: {
     th: 'แผงเล็ก ๆ ที่เปิดใต้ปุ่มพร้อมลูกศรชี้ ขึ้นด้านบนเองเมื่อพื้นที่ด้านล่างไม่พอ และปิดเมื่อคลิกข้างนอกหรือกด Esc',
     en: 'A small panel that opens under its button with an arrow pointing at it, flips above when there is no room below, and closes on an outside click or Esc.',
@@ -321,7 +321,7 @@ export const POPOVER_DOC: ComponentDoc = {
   sections: {
     import: {
       title: 'Import',
-      text: { th: 'selector <code>wt-overlaypanel</code> ก็ใช้ได้ สำหรับ template เดิม', en: 'The <code>wt-overlaypanel</code> selector works too, for existing templates.' },
+      text: { th: 'selector <code>wu-overlaypanel</code> ก็ใช้ได้ สำหรับ template เดิม', en: 'The <code>wu-overlaypanel</code> selector works too, for existing templates.' },
     },
     basic: {
       title: 'Basic',
@@ -334,8 +334,8 @@ export const POPOVER_DOC: ComponentDoc = {
     content: {
       title: { th: 'template content และ closeCallback', en: 'The content template and closeCallback' },
       text: {
-        th: 'template <code>content</code> (<code>#content</code>, <code>wtTemplate</code> หรือ <code>pTemplate</code>) ได้ <code>let-closeCallback="closeCallback"</code> ให้ปุ่มข้างในปิดแผงเองได้โดยไม่ต้องใช้ template reference',
-        en: 'A <code>content</code> template (<code>#content</code>, <code>wtTemplate</code> or <code>pTemplate</code>) gets <code>let-closeCallback="closeCallback"</code>, so a button inside closes the panel without a template reference.',
+        th: 'template <code>content</code> (<code>#content</code>, <code>wuTemplate</code> หรือ <code>pTemplate</code>) ได้ <code>let-closeCallback="closeCallback"</code> ให้ปุ่มข้างในปิดแผงเองได้โดยไม่ต้องใช้ template reference',
+        en: 'A <code>content</code> template (<code>#content</code>, <code>wuTemplate</code> or <code>pTemplate</code>) gets <code>let-closeCallback="closeCallback"</code>, so a button inside closes the panel without a template reference.',
       },
     },
     options: {
@@ -347,34 +347,34 @@ export const POPOVER_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="แชร์" icon="wi wi-send" (onClick)="op.toggle($event)"></wt-button>
-<wt-popover #op>
+    basic: `<wu-button label="แชร์" icon="wi wi-send" (onClick)="op.toggle($event)"></wu-button>
+<wu-popover #op>
   <p>ส่งลิงก์ให้ทีม</p>
-  <input wtInputText value="https://example.com/r/10234" [readonly]="true" [fluid]="true" />
-</wt-popover>`,
+  <input wuInputText value="https://example.com/r/10234" [readonly]="true" [fluid]="true" />
+</wu-popover>`,
     select: {
-      classic: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
-  (onClick)="people.toggle($event)"></wt-button>
-<wt-popover #people>
+      classic: `<wu-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
+  (onClick)="people.toggle($event)"></wu-button>
+<wu-popover #people>
   <button *ngFor="let p of team" type="button" class="person" (click)="owner = p; people.hide()">{{ p }}</button>
-</wt-popover>`,
-      v3: `<wt-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
-  (onClick)="people.toggle($event)"></wt-button>
-<wt-popover #people>
+</wu-popover>`,
+      v3: `<wu-button [label]="owner || 'เลือกผู้รับผิดชอบ'" icon="wi wi-user"
+  (onClick)="people.toggle($event)"></wu-button>
+<wu-popover #people>
   @for (p of team; track p) {
   <button type="button" class="person" (click)="owner = p; people.hide()">{{ p }}</button>
   }
-</wt-popover>`,
+</wu-popover>`,
     },
-    content: `<wt-button label="ตั้งค่าการแจ้งเตือน" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
-<wt-popover #notify>
+    content: `<wu-button label="ตั้งค่าการแจ้งเตือน" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wu-button>
+<wu-popover #notify>
   <ng-template #content let-closeCallback="closeCallback">
     <p>รับการแจ้งเตือนทางอีเมลทุกเช้า</p>
-    <wt-button label="ตกลง" size="small" (onClick)="closeCallback()"></wt-button>
+    <wu-button label="ตกลง" size="small" (onClick)="closeCallback()"></wu-button>
   </ng-template>
-</wt-popover>`,
-    options: `<wt-button label="ตัวกรอง" severity="secondary" (onClick)="filters.toggle($event)"></wt-button>
-<wt-popover #filters [showCloseIcon]="true" [dismissable]="false">…</wt-popover>`,
+</wu-popover>`,
+    options: `<wu-button label="ตัวกรอง" severity="secondary" (onClick)="filters.toggle($event)"></wu-button>
+<wu-popover #filters [showCloseIcon]="true" [dismissable]="false">…</wu-popover>`,
   },
   ts: {
     select: `team = ['สมหญิง', 'กมล', 'ณัฐ', 'ปวีณา'];
@@ -411,12 +411,12 @@ owner = '';`,
     },
   ],
   tokens: [
-    tok('--wt-popover-padding', 'ระยะใน', 'Padding'),
-    tok('--wt-popover-arrow-size', 'ขนาดลูกศร', 'Arrow size'),
-    tok('--wt-overlay-bg', 'พื้น', 'Background'),
-    tok('--wt-border', 'ขอบ', 'Border'),
-    tok('--wt-radius-md', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-shadow-md', 'เงา', 'Shadow'),
+    tok('--wu-popover-padding', 'ระยะใน', 'Padding'),
+    tok('--wu-popover-arrow-size', 'ขนาดลูกศร', 'Arrow size'),
+    tok('--wu-overlay-bg', 'พื้น', 'Background'),
+    tok('--wu-border', 'ขอบ', 'Border'),
+    tok('--wu-radius-md', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-shadow-md', 'เงา', 'Shadow'),
   ],
 };
 
@@ -425,16 +425,16 @@ export const ANIMATE_DOC: ComponentDoc = {
   title: 'Animate on scroll',
   group: 'Helpers',
   entry: 'animate',
-  standalone: 'WtAnimate',
-  module: 'WtAnimateModule',
-  selector: '[data-aos] · [wtAnimate]',
+  standalone: 'WuAnimate',
+  module: 'WuAnimateModule',
+  selector: '[data-aos] · [wuAnimate]',
   description: {
-    th: 'ให้ element ค่อย ๆ ปรากฏเมื่อเลื่อนมาถึง ใช้ attribute data-aos ที่มีอยู่ในหน้าแล้วได้ทันที หรือใช้ directive wtAnimate',
-    en: 'Elements animate in as they scroll into view. The data-aos attributes you already use work as they are, or use the wtAnimate directive.',
+    th: 'ให้ element ค่อย ๆ ปรากฏเมื่อเลื่อนมาถึง ใช้ attribute data-aos ที่มีอยู่ในหน้าแล้วได้ทันที หรือใช้ directive wuAnimate',
+    en: 'Elements animate in as they scroll into view. The data-aos attributes you already use work as they are, or use the wuAnimate directive.',
   },
   themingNote: {
-    th: 'ไม่มี token ของธีม จังหวะทั้งหมดมาจาก attribute (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) หรือค่าเริ่มต้นของ <code>provideWtAnimate()</code> CSS อยู่ใน <code>@layer wiratheme.utilities</code>',
-    en: 'There are no theme tokens: timing comes from the attributes (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) or the <code>provideWtAnimate()</code> defaults. The CSS lives in <code>@layer wiratheme.utilities</code>.',
+    th: 'ไม่มี token ของธีม จังหวะทั้งหมดมาจาก attribute (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) หรือค่าเริ่มต้นของ <code>provideWuAnimate()</code> CSS อยู่ใน <code>@layer wiraui.utilities</code>',
+    en: 'There are no theme tokens: timing comes from the attributes (<code>data-aos-duration</code>, <code>-delay</code>, <code>-easing</code>) or the <code>provideWuAnimate()</code> defaults. The CSS lives in <code>@layer wiraui.utilities</code>.',
   },
   english: {
     'หรือ AppModule': 'or AppModule',
@@ -443,8 +443,8 @@ export const ANIMATE_DOC: ComponentDoc = {
     import: {
       title: { th: 'ติดตั้ง', en: 'Setup' },
       text: {
-        th: 'เรียก <code>provideWtAnimate()</code> (หรือ <code>WtAnimateModule.forRoot()</code>) ครั้งเดียว แล้ว element ที่มี <code>data-aos</code> ทั้งหน้าจะทำงาน รวมถึงที่ไม่ได้อยู่ใน template ของ Angular ใน template ที่ใช้ <code>[wtAnimate]</code> ให้ import <code>WtAnimateModule</code> หรือ <code>WtAnimate</code>',
-        en: 'Call <code>provideWtAnimate()</code> (or <code>WtAnimateModule.forRoot()</code>) once and every <code>data-aos</code> element in the page animates, including ones outside Angular templates. Templates that use <code>[wtAnimate]</code> import <code>WtAnimateModule</code> or <code>WtAnimate</code>.',
+        th: 'เรียก <code>provideWuAnimate()</code> (หรือ <code>WuAnimateModule.forRoot()</code>) ครั้งเดียว แล้ว element ที่มี <code>data-aos</code> ทั้งหน้าจะทำงาน รวมถึงที่ไม่ได้อยู่ใน template ของ Angular ใน template ที่ใช้ <code>[wuAnimate]</code> ให้ import <code>WuAnimateModule</code> หรือ <code>WuAnimate</code>',
+        en: 'Call <code>provideWuAnimate()</code> (or <code>WuAnimateModule.forRoot()</code>) once and every <code>data-aos</code> element in the page animates, including ones outside Angular templates. Templates that use <code>[wuAnimate]</code> import <code>WuAnimateModule</code> or <code>WuAnimate</code>.',
       },
     },
     families: {
@@ -463,13 +463,13 @@ export const ANIMATE_DOC: ComponentDoc = {
     },
     directive: {
       title: 'Directive',
-      text: { th: '<code>[wtAnimate]</code> พร้อม <code>animateDelay</code>, <code>animateDuration</code>, <code>animateEasing</code>, <code>animateOffset</code>, <code>animateOnce</code>, <code>animateMirror</code>, <code>animateAnchorPlacement</code>', en: '<code>[wtAnimate]</code> with <code>animateDelay</code>, <code>animateDuration</code>, <code>animateEasing</code>, <code>animateOffset</code>, <code>animateOnce</code>, <code>animateMirror</code>, <code>animateAnchorPlacement</code>.' },
+      text: { th: '<code>[wuAnimate]</code> พร้อม <code>animateDelay</code>, <code>animateDuration</code>, <code>animateEasing</code>, <code>animateOffset</code>, <code>animateOnce</code>, <code>animateMirror</code>, <code>animateAnchorPlacement</code>', en: '<code>[wuAnimate]</code> with <code>animateDelay</code>, <code>animateDuration</code>, <code>animateEasing</code>, <code>animateOffset</code>, <code>animateOnce</code>, <code>animateMirror</code>, <code>animateAnchorPlacement</code>.' },
     },
     a11y: {
       title: { th: 'การเคลื่อนไหวที่ลดลงและเนื้อหาที่ไม่หาย', en: 'Reduced motion and safe content' },
       text: {
-        th: 'ผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหวจะเห็นทุกอย่างทันทีโดยไม่เคลื่อนไหว เฉพาะ element ที่ถูกติดตามเท่านั้นที่เริ่มแบบซ่อน ถ้า script ไม่ทำงาน เนื้อหาก็ยังแสดงตามปกติ เพิ่มเนื้อหานอก Angular แล้วเรียก <code>WtAnimateService.refresh()</code>',
-        en: 'People who ask for reduced motion see everything at once, without movement. Only watched elements start hidden, so content still shows if the script never runs. After adding content outside Angular, call <code>WtAnimateService.refresh()</code>.',
+        th: 'ผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหวจะเห็นทุกอย่างทันทีโดยไม่เคลื่อนไหว เฉพาะ element ที่ถูกติดตามเท่านั้นที่เริ่มแบบซ่อน ถ้า script ไม่ทำงาน เนื้อหาก็ยังแสดงตามปกติ เพิ่มเนื้อหานอก Angular แล้วเรียก <code>WuAnimateService.refresh()</code>',
+        en: 'People who ask for reduced motion see everything at once, without movement. Only watched elements start hidden, so content still shows if the script never runs. After adding content outside Angular, call <code>WuAnimateService.refresh()</code>.',
       },
     },
   },
@@ -481,19 +481,19 @@ export const ANIMATE_DOC: ComponentDoc = {
     timing: `<div data-aos="fade-up" data-aos-delay="0">…</div>
 <div data-aos="fade-up" data-aos-delay="150">…</div>
 <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="800" data-aos-easing="ease-out-back">…</div>`,
-    directive: `<div wtAnimate="zoom-in" [animateDelay]="200" [animateDuration]="600" [animateOnce]="false">…</div>`,
+    directive: `<div wuAnimate="zoom-in" [animateDelay]="200" [animateDuration]="600" [animateOnce]="false">…</div>`,
   },
   ts: {
     import: `// app.config.ts (standalone)
-import { provideWtAnimate } from 'wiratheme/animate';
+import { provideWuAnimate } from 'wiraui/animate';
 
 export const appConfig = {
-  providers: [provideWiraTheme(), provideWtAnimate({ duration: 600, once: true })],
+  providers: [provideWiraUI(), provideWuAnimate({ duration: 600, once: true })],
 };
 
 // หรือ AppModule
-import { WtAnimateModule } from 'wiratheme/animate';
-@NgModule({ imports: [WtAnimateModule.forRoot({ duration: 600 })] })
+import { WuAnimateModule } from 'wiraui/animate';
+@NgModule({ imports: [WuAnimateModule.forRoot({ duration: 600 })] })
 export class AppModule {}`,
   },
   api: [
@@ -501,7 +501,7 @@ export class AppModule {}`,
       id: 'api-attributes',
       title: { th: 'Attributes / Inputs', en: 'Attributes / Inputs' },
       rows: [
-        row('data-aos · wtAnimate', 'WtAnimation', undefined, 'ชื่อท่า', 'Animation name'),
+        row('data-aos · wuAnimate', 'WuAnimation', undefined, 'ชื่อท่า', 'Animation name'),
         row('data-aos-delay · animateDelay', 'number', '0', 'หน่วงก่อนเริ่ม (ms)', 'Delay (ms)'),
         row('data-aos-duration · animateDuration', 'number', '400', 'ระยะเวลา (ms)', 'Duration (ms)'),
         row('data-aos-easing · animateEasing', 'string', "'ease'", 'จังหวะ', 'Easing'),
@@ -516,16 +516,16 @@ export class AppModule {}`,
       title: { th: 'การติดตั้ง', en: 'Setup' },
       typeLabel: { th: 'รับ', en: 'Takes' },
       rows: [
-        row('provideWtAnimate(options?)', 'WtAnimateOptions', undefined, 'เริ่มทำงานตอนแอปเริ่ม', 'Starts with the app'),
-        row('WtAnimateModule.forRoot(options?)', 'WtAnimateOptions', undefined, 'แบบเดียวกันสำหรับ NgModule', 'The same for NgModule apps'),
-        row('WtAnimateService.init(options?) · refresh()', 'WtAnimateOptions', undefined, 'เริ่มเอง / หา element ใหม่', 'Start by hand / look for new elements'),
+        row('provideWuAnimate(options?)', 'WuAnimateOptions', undefined, 'เริ่มทำงานตอนแอปเริ่ม', 'Starts with the app'),
+        row('WuAnimateModule.forRoot(options?)', 'WuAnimateOptions', undefined, 'แบบเดียวกันสำหรับ NgModule', 'The same for NgModule apps'),
+        row('WuAnimateService.init(options?) · refresh()', 'WuAnimateOptions', undefined, 'เริ่มเอง / หา element ใหม่', 'Start by hand / look for new elements'),
         row('disable', BOOL, 'false', 'แสดงทุกอย่างโดยไม่เคลื่อนไหว', 'Show everything without animating'),
       ],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtAnimation =
+      code: `type WuAnimation =
   | 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right'
   | 'fade-up-right' | 'fade-up-left' | 'fade-down-right' | 'fade-down-left'
   | 'flip-up' | 'flip-down' | 'flip-left' | 'flip-right'

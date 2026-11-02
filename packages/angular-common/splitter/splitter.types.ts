@@ -1,9 +1,9 @@
 /** `(onResizeStart)` / `(onResizeEnd)`: the event behind it and every panel's size in %. */
-export interface WtSplitterResizeStartEvent {
+export interface WuSplitterResizeStartEvent {
   originalEvent: Event;
   sizes: number[];
 }
-export type WtSplitterResizeEndEvent = WtSplitterResizeStartEvent;
+export type WuSplitterResizeEndEvent = WuSplitterResizeStartEvent;
 
-export type SplitterResizeStartEvent = WtSplitterResizeStartEvent;
-export type SplitterResizeEndEvent = WtSplitterResizeStartEvent;
+export type SplitterResizeStartEvent = WuSplitterResizeStartEvent;
+export type SplitterResizeEndEvent = WuSplitterResizeStartEvent;

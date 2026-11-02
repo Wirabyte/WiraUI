@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtFieldset } from './fieldset.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuFieldset } from './fieldset.component';
 
-/** For NgModule apps. Standalone apps can import `WtFieldset` directly. */
+/** For NgModule apps. Standalone apps can import `WuFieldset` directly. */
 @NgModule({
-  imports: [WtFieldset, WtTemplate],
-  exports: [WtFieldset, WtTemplate],
+  imports: [WuFieldset, WuTemplate],
+  exports: [WuFieldset, WuTemplate],
 })
-export class WtFieldsetModule {}
+export class WuFieldsetModule {}

@@ -8,9 +8,9 @@ export const SCROLLER_DOC: ComponentDoc = {
   title: 'Scroller',
   group: 'Data',
   entry: 'scroller',
-  standalone: 'WtScroller',
-  module: 'WtScrollerModule',
-  selector: 'wt-scroller',
+  standalone: 'WuScroller',
+  module: 'WuScrollerModule',
+  selector: 'wu-scroller',
   description: {
     th: 'รายการยาวมาก ๆ ที่วาดเฉพาะแถวที่มองเห็น (virtual scroll) รายชื่อหลายพันแถวจึงยังลื่น แนวตั้งหรือแนวนอน และโหลดข้อมูลทีละช่วงเมื่อเลื่อนไปถึงได้',
     en: 'A very long list that draws only the rows in view (virtual scrolling), so thousands of rows stay smooth. Vertical or horizontal, and it can load data a range at a time as the reader scrolls.',
@@ -49,8 +49,8 @@ export const SCROLLER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtScrollerModule</code>) และ standalone (<code>WtScroller</code>) แท็ก <code>wt-virtualScroller</code> แบบเดิมก็ใช้ได้',
-        en: 'Works as an NgModule (<code>WtScrollerModule</code>) or standalone (<code>WtScroller</code>). The older <code>wt-virtualScroller</code> tag works too.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuScrollerModule</code>) และ standalone (<code>WuScroller</code>) แท็ก <code>wu-virtualScroller</code> แบบเดิมก็ใช้ได้',
+        en: 'Works as an NgModule (<code>WuScrollerModule</code>) or standalone (<code>WuScroller</code>). The older <code>wu-virtualScroller</code> tag works too.',
       },
     },
     basic: {
@@ -84,13 +84,13 @@ export const SCROLLER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-scroller&gt;</code> (หรือ <code>&lt;p-virtualScroller&gt;</code>) เป็น <code>&lt;wt-scroller&gt;</code> input, event, template และ method ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) · แถวสูงได้ตามเนื้อหา <code>itemSize</code> ใช้ประมาณตำแหน่ง · <code>step</code>, <code>resizeDelay</code>, <code>autoSize</code> และ <code>contentStyleClass</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-scroller&gt;</code> (or <code>&lt;p-virtualScroller&gt;</code>) to <code>&lt;wt-scroller&gt;</code>; inputs, events, templates and methods keep their names (<code>pTemplate="item"</code> keeps working) · rows may be as tall as their content; <code>itemSize</code> is used to estimate positions · <code>step</code>, <code>resizeDelay</code>, <code>autoSize</code> and <code>contentStyleClass</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-scroller&gt;</code> (หรือ <code>&lt;p-virtualScroller&gt;</code>) เป็น <code>&lt;wu-scroller&gt;</code> input, event, template และ method ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) · แถวสูงได้ตามเนื้อหา <code>itemSize</code> ใช้ประมาณตำแหน่ง · <code>step</code>, <code>resizeDelay</code>, <code>autoSize</code> และ <code>contentStyleClass</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-scroller&gt;</code> (or <code>&lt;p-virtualScroller&gt;</code>) to <code>&lt;wu-scroller&gt;</code>; inputs, events, templates and methods keep their names (<code>pTemplate="item"</code> keeps working) · rows may be as tall as their content; <code>itemSize</code> is used to estimate positions · <code>step</code>, <code>resizeDelay</code>, <code>autoSize</code> and <code>contentStyleClass</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-scroller [items]="students" [itemSize]="40" scrollHeight="20rem">
+    basic: `<wu-scroller [items]="students" [itemSize]="40" scrollHeight="20rem">
   <ng-template #item let-student let-options="options">
     <div class="student-row" [class.student-row-odd]="options.odd">
       <span class="student-no">{{ options.index + 1 }}</span>
@@ -98,17 +98,17 @@ export const SCROLLER_DOC: ComponentDoc = {
       <small>ห้อง {{ student.room }}</small>
     </div>
   </ng-template>
-</wt-scroller>`,
-    horizontal: `<wt-scroller [items]="days" [itemSize]="110" orientation="horizontal" scrollWidth="100%">
+</wu-scroller>`,
+    horizontal: `<wu-scroller [items]="days" [itemSize]="110" orientation="horizontal" scrollWidth="100%">
   <ng-template #item let-day>
     <div class="day-cell">
       <b>วันที่ {{ day.no }}</b>
       <small>{{ day.periods }} คาบ</small>
     </div>
   </ng-template>
-</wt-scroller>`,
+</wu-scroller>`,
     lazy: {
-      v3: `<wt-scroller [items]="lazyStudents" [itemSize]="40" scrollHeight="20rem" [lazy]="true" [delay]="250"
+      v3: `<wu-scroller [items]="lazyStudents" [itemSize]="40" scrollHeight="20rem" [lazy]="true" [delay]="250"
   [loading]="isApiLoading" [showLoader]="true" (onLazyLoad)="loadStudents($event)">
   <ng-template #item let-student let-options="options">
     <div class="student-row">
@@ -116,32 +116,32 @@ export const SCROLLER_DOC: ComponentDoc = {
       @if (student) {
         <span>{{ student.name }}</span>
       } @else {
-        <wt-skeleton width="10rem"></wt-skeleton>
+        <wu-skeleton width="10rem"></wu-skeleton>
       }
     </div>
   </ng-template>
-</wt-scroller>`,
-      classic: `<wt-scroller [items]="lazyStudents" [itemSize]="40" scrollHeight="20rem" [lazy]="true" [delay]="250"
+</wu-scroller>`,
+      classic: `<wu-scroller [items]="lazyStudents" [itemSize]="40" scrollHeight="20rem" [lazy]="true" [delay]="250"
   [loading]="isApiLoading" [showLoader]="true" (onLazyLoad)="loadStudents($event)">
-  <ng-template wtTemplate="item" let-student let-options="options">
+  <ng-template wuTemplate="item" let-student let-options="options">
     <div class="student-row">
       <span class="student-no">{{ options.index + 1 }}</span>
       <span *ngIf="student; else waiting">{{ student.name }}</span>
-      <ng-template #waiting><wt-skeleton width="10rem"></wt-skeleton></ng-template>
+      <ng-template #waiting><wu-skeleton width="10rem"></wu-skeleton></ng-template>
     </div>
   </ng-template>
-</wt-scroller>`,
+</wu-scroller>`,
     },
-    methods: `<wt-scroller #studentList [items]="students" [itemSize]="40" scrollHeight="16rem" (onScrollIndexChange)="rowsInView($event)">
+    methods: `<wu-scroller #studentList [items]="students" [itemSize]="40" scrollHeight="16rem" (onScrollIndexChange)="rowsInView($event)">
   <ng-template #item let-student let-options="options">
     <div class="student-row">
       <span class="student-no">{{ options.index + 1 }}</span>
       <span>{{ student.name }}</span>
     </div>
   </ng-template>
-</wt-scroller>
-<wt-button label="ไปคนที่ 500" severity="secondary" (onClick)="studentList.scrollToIndex(499)"></wt-button>
-<wt-button label="กลับขึ้นบน" severity="secondary" [text]="true" (onClick)="studentList.scrollToIndex(0)"></wt-button>
+</wu-scroller>
+<wu-button label="ไปคนที่ 500" severity="secondary" (onClick)="studentList.scrollToIndex(499)"></wu-button>
+<wu-button label="กลับขึ้นบน" severity="secondary" [text]="true" (onClick)="studentList.scrollToIndex(0)"></wu-button>
 <span>แถวแรกที่เห็น: {{ firstInView + 1 }}</span>`,
   },
   ts: {
@@ -152,12 +152,12 @@ students = Array.from({ length: 1000 }, (_, i) => ({
   room: this.rooms[i % this.rooms.length],
 }));   // สร้าง 1,000 แถว`,
     horizontal: `days = Array.from({ length: 365 }, (_, i) => ({ no: i + 1, periods: 6 + (i % 3) }));`,
-    lazy: `import { WtScrollerRange } from 'wiratheme/scroller';
+    lazy: `import { WuScrollerRange } from 'wiraui/scroller';
 
 lazyStudents: (Student | undefined)[] = Array.from({ length: 1000 });   // จำนวนทั้งหมดจาก API
 isApiLoading = false;
 
-loadStudents(range: WtScrollerRange): void {
+loadStudents(range: WuScrollerRange): void {
   this.isApiLoading = true;
   this.studentService.list(range.first, range.last - range.first).subscribe({   // ช่วงที่ต้องการ
     next: (rows) => {
@@ -169,11 +169,11 @@ loadStudents(range: WtScrollerRange): void {
     error: () => (this.isApiLoading = false),
   });
 }`,
-    methods: `import { WtScrollerRange } from 'wiratheme/scroller';
+    methods: `import { WuScrollerRange } from 'wiraui/scroller';
 
 firstInView = 0;
 
-rowsInView(range: WtScrollerRange): void {
+rowsInView(range: WuScrollerRange): void {
   this.firstInView = range.first;
 }`,
   },
@@ -203,18 +203,18 @@ rowsInView(range: WtScrollerRange): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onLazyLoad', 'WtScrollerRange', undefined, 'ต้องการแถวช่วงนี้ (เมื่อ lazy)', 'This range of rows is needed (with lazy)'),
-        row('onScrollIndexChange', 'WtScrollerRange', undefined, 'ช่วงแถวที่เห็นเปลี่ยน', 'The rows in view changed'),
-        row('onScroll', 'WtScrollerScrollEvent', undefined, 'เลื่อน', 'Scrolled'),
+        row('onLazyLoad', 'WuScrollerRange', undefined, 'ต้องการแถวช่วงนี้ (เมื่อ lazy)', 'This range of rows is needed (with lazy)'),
+        row('onScrollIndexChange', 'WuScrollerRange', undefined, 'ช่วงแถวที่เห็นเปลี่ยน', 'The rows in view changed'),
+        row('onScroll', 'WuScrollerScrollEvent', undefined, 'เลื่อน', 'Scrolled'),
       ],
     },
     {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
-        row('item', '$implicit (row) · options (WtScrollerItemOptions)', undefined, 'แต่ละแถว', 'Each row'),
+        row('item', '$implicit (row) · options (WuScrollerItemOptions)', undefined, 'แต่ละแถว', 'Each row'),
         row('content', '$implicit (rows drawn) · options', undefined, 'วาดแถวที่ต้องแสดงทั้งชุดเอง', 'Draw the rows in view yourself'),
         row('loader', 'options', undefined, 'แทนตัวหมุนระหว่างโหลด', 'Replaces the spinner while loading'),
       ],
@@ -231,9 +231,9 @@ rowsInView(range: WtScrollerRange): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtScrollerItemOptions { index: number; count: number; first: boolean; last: boolean; even: boolean; odd: boolean }
-interface WtScrollerRange { first: number; last: number }   // ไม่รวม last
-interface WtScrollerScrollEvent { originalEvent: Event }`,
+      code: `interface WuScrollerItemOptions { index: number; count: number; first: boolean; last: boolean; even: boolean; odd: boolean }
+interface WuScrollerRange { first: number; last: number }   // ไม่รวม last
+interface WuScrollerScrollEvent { originalEvent: Event }`,
     },
   ],
   tokens: [],

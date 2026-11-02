@@ -1,7 +1,7 @@
 {
-  "name": "@wiratheme-build/angular-v1",
+  "name": "@wiraui-build/angular-v1",
   "private": true,
-  "description": "Build shell for wiratheme@1 (Angular 15–17). Classic-API components live in src/; config, core and shared CSS are synced in by tools/sync-sources.mjs.",
+  "description": "Build shell for wiraui@1 (Angular 15–17). Classic-API components live in src/; config, core and shared CSS are synced in by tools/sync-sources.mjs.",
   "scripts": {
     "sync": "node ../../tools/sync-sources.mjs v1",
     "build": "node ../../tools/sync-sources.mjs v1 && ng-packagr -p lib/ng-package.json -c lib/tsconfig.lib.json && node ../../tools/finish-package.mjs v1",

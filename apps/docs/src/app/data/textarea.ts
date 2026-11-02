@@ -5,13 +5,13 @@ export const TEXTAREA_DOC: ComponentDoc = {
   title: 'Textarea',
   group: 'Form',
   entry: 'textarea',
-  standalone: 'WtTextarea',
-  module: 'WtTextareaModule',
+  standalone: 'WuTextarea',
+  module: 'WuTextareaModule',
   forms: true,
-  selector: 'textarea[wtTextarea]',
+  selector: 'textarea[wuTextarea]',
   description: {
-    th: 'directive ที่แต่ง <textarea> แบบเดียวกับ wtInputText พร้อม autoResize ที่ขยายตามข้อความ รวมถึงค่าที่ตั้งจากโค้ดผ่าน ngModel หรือ form control',
-    en: 'Styles a <textarea> like wtInputText, with autoResize that grows with the text, including values set from code through ngModel or a form control.',
+    th: 'directive ที่แต่ง <textarea> แบบเดียวกับ wuInputText พร้อม autoResize ที่ขยายตามข้อความ รวมถึงค่าที่ตั้งจากโค้ดผ่าน ngModel หรือ form control',
+    en: 'Styles a <textarea> like wuInputText, with autoResize that grows with the text, including values set from code through ngModel or a form control.',
   },
   english: {
     'ข้อความถึงทีมงาน': 'A note to the team',
@@ -29,8 +29,8 @@ export const TEXTAREA_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> attribute <code>wtTextarea</code>, <code>wtInputTextarea</code>, <code>pInputTextarea</code> และ <code>pTextarea</code> บน <code>&lt;textarea&gt;</code> ทำงานเหมือนกันทุกตัว (<code>wtInputText</code> / <code>pInputText</code> บน textarea ก็ได้)',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wtTextarea</code>, <code>wtInputTextarea</code>, <code>pInputTextarea</code> and <code>pTextarea</code> attributes on a <code>&lt;textarea&gt;</code> all work the same (so do <code>wtInputText</code> / <code>pInputText</code> on a textarea).',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> attribute <code>wuTextarea</code>, <code>wuInputTextarea</code>, <code>pInputTextarea</code> และ <code>pTextarea</code> บน <code>&lt;textarea&gt;</code> ทำงานเหมือนกันทุกตัว (<code>wuInputText</code> / <code>pInputText</code> บน textarea ก็ได้)',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wuTextarea</code>, <code>wuInputTextarea</code>, <code>pInputTextarea</code> and <code>pTextarea</code> attributes on a <code>&lt;textarea&gt;</code> all work the same (so do <code>wuInputText</code> / <code>pInputText</code> on a textarea).',
       },
     },
     basic: { title: 'Basic' },
@@ -46,17 +46,17 @@ export const TEXTAREA_DOC: ComponentDoc = {
     disabled: { title: { th: 'Disabled และ Invalid', en: 'Disabled and Invalid' } },
   },
   code: {
-    basic: `<textarea wtTextarea name="note" [(ngModel)]="note" rows="3" placeholder="ข้อความถึงทีมงาน"></textarea>`,
-    autoresize: `<textarea id="d-note" wtTextarea [autoResize]="true" rows="1" name="address" [(ngModel)]="address"
+    basic: `<textarea wuTextarea name="note" [(ngModel)]="note" rows="3" placeholder="ข้อความถึงทีมงาน"></textarea>`,
+    autoresize: `<textarea id="d-note" wuTextarea [autoResize]="true" rows="1" name="address" [(ngModel)]="address"
   placeholder="ที่อยู่สำหรับจัดส่ง (ขยายตามข้อความ)"></textarea>`,
     reactive: `<form [formGroup]="form">
-  <textarea wtTextarea [autoResize]="true" formControlName="details" rows="2"
+  <textarea wuTextarea [autoResize]="true" formControlName="details" rows="2"
     placeholder="รายละเอียดปัญหา (อย่างน้อย 10 ตัวอักษร)"></textarea>
 </form>`,
-    variants: `<textarea wtTextarea wtSize="small" rows="2" placeholder="Small"></textarea>
-<textarea wtTextarea variant="filled" rows="2" placeholder="Filled"></textarea>`,
-    disabled: `<textarea wtTextarea rows="2" [disabled]="true">ปิดอยู่</textarea>
-<textarea wtTextarea rows="2" [invalid]="true" placeholder="Invalid"></textarea>`,
+    variants: `<textarea wuTextarea wuSize="small" rows="2" placeholder="Small"></textarea>
+<textarea wuTextarea variant="filled" rows="2" placeholder="Filled"></textarea>`,
+    disabled: `<textarea wuTextarea rows="2" [disabled]="true">ปิดอยู่</textarea>
+<textarea wuTextarea rows="2" [invalid]="true" placeholder="Invalid"></textarea>`,
   },
   ts: {
     reactive: `form = new FormGroup({
@@ -78,7 +78,7 @@ fill(): void {
       },
       rows: [
         { name: 'autoResize', type: 'boolean', default: 'false', description: { th: 'ขยายความสูงตามข้อความ (ซ่อน scrollbar และปุ่มลากขยาย)', en: 'Grows with the text (hides the scrollbar and resize handle)' } },
-        { name: 'wtSize', type: "'small' | 'large'", description: { th: 'ขนาด', en: 'Size' } },
+        { name: 'wuSize', type: "'small' | 'large'", description: { th: 'ขนาด', en: 'Size' } },
         { name: 'variant', type: "'outlined' | 'filled'", default: "'outlined'", description: { th: 'แบบมีขอบ หรือแบบพื้นทึบ', en: 'Bordered or filled' } },
         { name: 'fluid', type: 'boolean', default: 'false', description: { th: 'กว้างเต็มพื้นที่', en: 'Full width' } },
         { name: 'invalid', type: 'boolean', default: 'false', description: { th: 'บังคับขึ้นสีแดง', en: 'Forces the error style' } },
@@ -86,20 +86,20 @@ fill(): void {
     },
   ],
   tokens: [
-    { name: '--wt-field-bg', description: { th: 'พื้นของช่อง', en: 'Field background' } },
-    { name: '--wt-field-color', description: { th: 'สีตัวอักษร', en: 'Text colour' } },
-    { name: '--wt-field-border', description: { th: 'ขอบ', en: 'Border' } },
-    { name: '--wt-field-border-width', description: { th: 'ความหนาขอบ', en: 'Border width' } },
-    { name: '--wt-field-hover-border', description: { th: 'ขอบตอนชี้', en: 'Hover border' } },
-    { name: '--wt-field-focus-border', description: { th: 'ขอบตอนโฟกัส', en: 'Focus border' } },
-    { name: '--wt-field-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
-    { name: '--wt-field-padding-x', description: { th: 'ระยะซ้ายขวา', en: 'Horizontal padding' } },
-    { name: '--wt-field-padding-y', description: { th: 'ระยะบนล่าง', en: 'Vertical padding' } },
-    { name: '--wt-input-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
-    { name: '--wt-field-placeholder', description: { th: 'สี placeholder', en: 'Placeholder colour' } },
-    { name: '--wt-field-filled-bg', description: { th: 'พื้นของ variant="filled"', en: 'variant="filled" background' } },
-    { name: '--wt-field-disabled-bg', description: { th: 'พื้นเมื่อ disabled / readonly', en: 'Disabled / readonly background' } },
-    { name: '--wt-danger-color', description: { th: 'ขอบเมื่อ invalid', en: 'Invalid border' } },
+    { name: '--wu-field-bg', description: { th: 'พื้นของช่อง', en: 'Field background' } },
+    { name: '--wu-field-color', description: { th: 'สีตัวอักษร', en: 'Text colour' } },
+    { name: '--wu-field-border', description: { th: 'ขอบ', en: 'Border' } },
+    { name: '--wu-field-border-width', description: { th: 'ความหนาขอบ', en: 'Border width' } },
+    { name: '--wu-field-hover-border', description: { th: 'ขอบตอนชี้', en: 'Hover border' } },
+    { name: '--wu-field-focus-border', description: { th: 'ขอบตอนโฟกัส', en: 'Focus border' } },
+    { name: '--wu-field-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
+    { name: '--wu-field-padding-x', description: { th: 'ระยะซ้ายขวา', en: 'Horizontal padding' } },
+    { name: '--wu-field-padding-y', description: { th: 'ระยะบนล่าง', en: 'Vertical padding' } },
+    { name: '--wu-input-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
+    { name: '--wu-field-placeholder', description: { th: 'สี placeholder', en: 'Placeholder colour' } },
+    { name: '--wu-field-filled-bg', description: { th: 'พื้นของ variant="filled"', en: 'variant="filled" background' } },
+    { name: '--wu-field-disabled-bg', description: { th: 'พื้นเมื่อ disabled / readonly', en: 'Disabled / readonly background' } },
+    { name: '--wu-danger-color', description: { th: 'ขอบเมื่อ invalid', en: 'Invalid border' } },
   ],
   overrides: `    input: { radius: '10px' },   // Textarea ใช้ token เดียวกับ InputText`,
 };

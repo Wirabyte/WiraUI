@@ -4,7 +4,7 @@ const model = async (page: Page) => JSON.parse((await page.locator('#num-model')
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#numbers wt-inputnumber').first()).toBeVisible();
+  await expect(page.locator('#numbers wu-inputnumber').first()).toBeVisible();
 });
 
 test('shows baht, reads whatever is typed or pasted, and reformats on blur', async ({ page }) => {
@@ -52,10 +52,10 @@ test('horizontal buttons step by decimals and keep the suffix', async ({ page })
   const weight = page.locator('#num-weight input');
   await expect(weight).toHaveValue('60 กก.');
   await expect(weight).toHaveAttribute('inputmode', 'decimal');
-  await page.locator('#num-weight .wt-inputnumber-button').last().click();
+  await page.locator('#num-weight .wu-inputnumber-button').last().click();
   await expect.poll(() => model(page)).toMatchObject({ weight: 60.5 });
-  await page.locator('#num-weight .wt-inputnumber-button').first().click();
-  await page.locator('#num-weight .wt-inputnumber-button').first().click();
+  await page.locator('#num-weight .wu-inputnumber-button').first().click();
+  await page.locator('#num-weight .wu-inputnumber-button').first().click();
   await expect.poll(() => model(page)).toMatchObject({ weight: 59.5 });
   await page.locator('#num-price input').focus();
   await expect(weight).toHaveValue('59.5 กก.');

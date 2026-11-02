@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtDraggable, WtDroppable } from './dragdrop.directive';
+import { WuDraggable, WuDroppable } from './dragdrop.directive';
 
-/** For NgModule apps. Standalone apps can import `WtDraggable` and `WtDroppable` directly. */
+/** For NgModule apps. Standalone apps can import `WuDraggable` and `WuDroppable` directly. */
 @NgModule({
-  imports: [WtDraggable, WtDroppable],
-  exports: [WtDraggable, WtDroppable],
+  imports: [WuDraggable, WuDroppable],
+  exports: [WuDraggable, WuDroppable],
 })
-export class WtDragDropModule {}
+export class WuDragDropModule {}

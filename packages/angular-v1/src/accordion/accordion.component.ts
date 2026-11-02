@@ -19,25 +19,25 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
-import { ɵaccordionGap, WtAccordionTabEvent } from './accordion.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
+import { ɵaccordionGap, WuAccordionTabEvent } from './accordion.types';
 
 /**
  * Stack of collapsible sections, written either way apps already write them:
- * - `<wt-accordion [(activeIndex)]="i"><wt-accordion-tab header="…">…</wt-accordion-tab></wt-accordion>` (index);
- * - `<wt-accordion [(value)]="open"><wt-accordion-panel value="a"><wt-accordion-header>…</wt-accordion-header>
- *   <wt-accordion-content>…</wt-accordion-content></wt-accordion-panel></wt-accordion>` (value).
+ * - `<wu-accordion [(activeIndex)]="i"><wu-accordion-tab header="…">…</wu-accordion-tab></wu-accordion>` (index);
+ * - `<wu-accordion [(value)]="open"><wu-accordion-panel value="a"><wu-accordion-header>…</wu-accordion-header>
+ *   <wu-accordion-content>…</wu-accordion-content></wu-accordion-panel></wu-accordion>` (value).
  * With `multiple` the index / value is an array. Arrow keys, Home and End move between headers.
  */
 @Component({
-  selector: 'wt-accordion',
+  selector: 'wu-accordion',
   standalone: true,
-  template: '<div class="wt-accordion p-accordion p-component" [class]="styleClass || \'\'" [style]="rootStyle"><ng-content></ng-content></div>',
+  template: '<div class="wu-accordion p-accordion p-component" [class]="styleClass || \'\'" [style]="rootStyle"><ng-content></ng-content></div>',
   styleUrls: ['./accordion.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtAccordion implements AfterContentInit, OnDestroy {
+export class WuAccordion implements AfterContentInit, OnDestroy {
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   @Input() styleClass?: string | null;
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
@@ -55,8 +55,8 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
    * own; `[gap]="false"` joins them. Left out: the theme's look.
    */
   @Input() set gap(v: string | number | boolean | null | undefined) { this.gapLength = ɵaccordionGap(v); }
-  @HostBinding('style.--wt-accordion-gap') gapLength: string | null = null;
-  @HostBinding('class.wt-accordion-separated') get separated(): boolean {
+  @HostBinding('style.--wu-accordion-gap') gapLength: string | null = null;
+  @HostBinding('class.wu-accordion-separated') get separated(): boolean {
     return !!this.gapLength && parseFloat(this.gapLength) !== 0;
   }
   /** Two-way: `[(activeIndex)]`. */
@@ -67,16 +67,16 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
   get activeIndex(): number | number[] | null { return this._activeIndex; }
 
   @Output() readonly activeIndexChange = new EventEmitter<number | number[] | null>();
-  /** Two-way: `[(value)]` with `wt-accordion-panel`: the open panel's value (an array with `multiple`). Typed `any`. */
+  /** Two-way: `[(value)]` with `wu-accordion-panel`: the open panel's value (an array with `multiple`). Typed `any`. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly valueChange = new EventEmitter<any>();
-  @Output() readonly onOpen = new EventEmitter<WtAccordionTabEvent>();
-  @Output() readonly onClose = new EventEmitter<WtAccordionTabEvent>();
+  @Output() readonly onOpen = new EventEmitter<WuAccordionTabEvent>();
+  @Output() readonly onClose = new EventEmitter<WuAccordionTabEvent>();
 
-  @ContentChildren(forwardRef(() => WtAccordionTab)) tabList?: QueryList<WtAccordionTab>;
-  @ContentChildren(forwardRef(() => WtAccordionPanel)) panelList?: QueryList<WtAccordionPanel>;
+  @ContentChildren(forwardRef(() => WuAccordionTab)) tabList?: QueryList<WuAccordionTab>;
+  @ContentChildren(forwardRef(() => WuAccordionPanel)) panelList?: QueryList<WuAccordionPanel>;
 
   private _multiple = false;
   private _activeIndex: number | number[] | null = null;
@@ -84,7 +84,7 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterContentInit(): void {
@@ -96,17 +96,17 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  get tabs(): WtAccordionTab[] {
+  get tabs(): WuAccordionTab[] {
     return this.tabList ? this.tabList.toArray() : [];
   }
 
-  isActive(tab: WtAccordionTab): boolean {
+  isActive(tab: WuAccordionTab): boolean {
     const index = this.tabs.indexOf(tab);
     const current = this._activeIndex;
     return (Array.isArray(current) ? current.includes(index) : current === index) || tab.selected;
   }
 
-  toggle(tab: WtAccordionTab): void {
+  toggle(tab: WuAccordionTab): void {
     const index = this.tabs.indexOf(tab);
     const open = this.isActive(tab);
     const current = this._activeIndex;
@@ -132,7 +132,7 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
     return Array.isArray(current) ? current.includes(value) : current !== undefined && current !== null && current === value;
   }
 
-  togglePanel(panel: WtAccordionPanel): void {
+  togglePanel(panel: WuAccordionPanel): void {
     const value = panel.value;
     const open = this.isValueActive(value);
     const current = this.value;
@@ -151,7 +151,7 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
 
   /** Arrow keys, Home and End move focus between the headers (the WAI-ARIA accordion pattern). */
   moveFocus(from: { headerEl(): HTMLButtonElement }, key: string): boolean {
-    const headers = Array.from(this.el.nativeElement.querySelectorAll<HTMLButtonElement>('.wt-accordion-header:not(:disabled)'));
+    const headers = Array.from(this.el.nativeElement.querySelectorAll<HTMLButtonElement>('.wu-accordion-header:not(:disabled)'));
     const current = headers.indexOf(from.headerEl());
     if (current < 0 || !headers.length) return false;
     const n = headers.length;
@@ -167,9 +167,9 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
   }
 }
 
-/** One section of a `wt-accordion`: `header` text, projected content, `disabled`, and `[(selected)]` to open it from outside. */
+/** One section of a `wu-accordion`: `header` text, projected content, `disabled`, and `[(selected)]` to open it from outside. */
 @Component({
-  selector: 'wt-accordion-tab, wt-accordiontab, wt-accordionTab',
+  selector: 'wu-accordion-tab, wu-accordiontab, wu-accordionTab',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './accordion-tab.component.html',
@@ -177,8 +177,8 @@ export class WtAccordion implements AfterContentInit, OnDestroy {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtAccordionTab {
-  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+export class WuAccordionTab {
+  @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
   @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
@@ -196,11 +196,11 @@ export class WtAccordionTab {
 
   @Output() readonly selectedChange = new EventEmitter<boolean>();
 
-  readonly headerId = ɵuniqueId('wt-accordion-header');
-  readonly contentId = ɵuniqueId('wt-accordion-content');
+  readonly headerId = ɵuniqueId('wu-accordion-header');
+  readonly contentId = ɵuniqueId('wu-accordion-content');
   private _disabled = false;
   private _selected = false;
-  private readonly accordion = inject(WtAccordion, { optional: true });
+  private readonly accordion = inject(WuAccordion, { optional: true });
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -209,11 +209,11 @@ export class WtAccordionTab {
   }
   /** Our classes plus the classic-era names (`p-accordion-tab-active`, `p-highlight`). */
   get classes(): string {
-    return this.active ? 'wt-accordion-tab wt-accordion-tab-active p-accordion-tab p-accordion-tab-active' : 'wt-accordion-tab p-accordion-tab';
+    return this.active ? 'wu-accordion-tab wu-accordion-tab-active p-accordion-tab p-accordion-tab-active' : 'wu-accordion-tab p-accordion-tab';
   }
 
   headerEl(): HTMLButtonElement {
-    return this.el.nativeElement.querySelector('.wt-accordion-header') as HTMLButtonElement;
+    return this.el.nativeElement.querySelector('.wu-accordion-header') as HTMLButtonElement;
   }
 
   setSelected(value: boolean): void {
@@ -238,38 +238,38 @@ export class WtAccordionTab {
 }
 
 /**
- * One section when the accordion is written by value: `<wt-accordion-panel value="a" [disabled]="…">` with a
- * `wt-accordion-header` and a `wt-accordion-content` inside.
+ * One section when the accordion is written by value: `<wu-accordion-panel value="a" [disabled]="…">` with a
+ * `wu-accordion-header` and a `wu-accordion-content` inside.
  */
 @Component({
-  selector: 'wt-accordion-panel, wt-accordionpanel',
+  selector: 'wu-accordion-panel, wu-accordionpanel',
   standalone: true,
   template: '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-accordion-tab p-accordion-tab' },
+  host: { class: 'wu-accordion-tab p-accordion-tab' },
 })
-export class WtAccordionPanel {
+export class WuAccordionPanel {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any;
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
 
-  readonly headerId = ɵuniqueId('wt-accordion-header');
-  readonly contentId = ɵuniqueId('wt-accordion-content');
+  readonly headerId = ɵuniqueId('wu-accordion-header');
+  readonly contentId = ɵuniqueId('wu-accordion-content');
   private _disabled = false;
-  /** Open state when used without a wt-accordion. */
+  /** Open state when used without a wu-accordion. */
   private own = false;
-  private readonly accordion = inject(WtAccordion, { optional: true });
+  private readonly accordion = inject(WuAccordion, { optional: true });
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  @HostBinding('class.wt-accordion-tab-active') @HostBinding('class.p-accordion-tab-active')
+  @HostBinding('class.wu-accordion-tab-active') @HostBinding('class.p-accordion-tab-active')
   get active(): boolean {
     return this.accordion ? this.accordion.isValueActive(this.value) : this.own;
   }
 
   headerEl(): HTMLButtonElement {
-    return this.el.nativeElement.querySelector('.wt-accordion-header') as HTMLButtonElement;
+    return this.el.nativeElement.querySelector('.wu-accordion-header') as HTMLButtonElement;
   }
 
   toggle(): void {
@@ -283,14 +283,14 @@ export class WtAccordionPanel {
   }
 }
 
-/** The header button of a `wt-accordion-panel`; its content is the title. Checked with its page (it reads the panel). */
+/** The header button of a `wu-accordion-panel`; its content is the title. Checked with its page (it reads the panel). */
 @Component({
-  selector: 'wt-accordion-header, wt-accordionheader',
+  selector: 'wu-accordion-header, wu-accordionheader',
   standalone: true,
   template: `
     <button
       type="button"
-      class="wt-accordion-header p-accordion-header-link"
+      class="wu-accordion-header p-accordion-header-link"
       [id]="panel?.headerId"
       [attr.aria-expanded]="panel?.active ?? false"
       [attr.aria-controls]="panel?.contentId"
@@ -298,31 +298,31 @@ export class WtAccordionPanel {
       (click)="panel?.toggle()"
       (keydown)="panel?.onKeydown($event)"
     >
-      <svg class="wt-accordion-toggle-icon p-accordion-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
-      <span class="wt-accordion-header-text p-accordion-header-text"><ng-content></ng-content></span>
+      <svg class="wu-accordion-toggle-icon p-accordion-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
+      <span class="wu-accordion-header-text p-accordion-header-text"><ng-content></ng-content></span>
     </button>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class WtAccordionHeader {
-  readonly panel = inject(WtAccordionPanel, { optional: true });
+export class WuAccordionHeader {
+  readonly panel = inject(WuAccordionPanel, { optional: true });
 }
 
-/** The collapsible content of a `wt-accordion-panel`. Checked with its page (it reads the panel). */
+/** The collapsible content of a `wu-accordion-panel`. Checked with its page (it reads the panel). */
 @Component({
-  selector: 'wt-accordion-content, wt-accordioncontent',
+  selector: 'wu-accordion-content, wu-accordioncontent',
   standalone: true,
   template: `
-    <div class="wt-accordion-content-container p-toggleable-content" role="region" [id]="panel?.contentId" [attr.aria-labelledby]="panel?.headerId" [attr.inert]="panel?.active ? null : ''">
-      <div class="wt-accordion-content-inner">
-        <div class="wt-accordion-content p-accordion-content"><ng-content></ng-content></div>
+    <div class="wu-accordion-content-container p-toggleable-content" role="region" [id]="panel?.contentId" [attr.aria-labelledby]="panel?.headerId" [attr.inert]="panel?.active ? null : ''">
+      <div class="wu-accordion-content-inner">
+        <div class="wu-accordion-content p-accordion-content"><ng-content></ng-content></div>
       </div>
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class WtAccordionContent {
-  readonly panel = inject(WtAccordionPanel, { optional: true });
+export class WuAccordionContent {
+  readonly panel = inject(WuAccordionPanel, { optional: true });
 }

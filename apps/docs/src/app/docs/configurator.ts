@@ -4,7 +4,7 @@ import { DocsState } from '../core/docs-state';
 import { DocsThemeReveal } from '../core/theme-reveal';
 import { DocsScale, presetGroups } from '../core/version-theme';
 
-/** Same swatches as @wiratheme/core PRIMARY_SWATCHES / SURFACES; kept here so the shell needs no wiratheme import. */
+/** Same swatches as @wiraui/core PRIMARY_SWATCHES / SURFACES; kept here so the shell needs no wiraui import. */
 const PRIMARIES = [
   ['wira', '#00a86b'],
   ['emerald', '#10b981'],
@@ -57,7 +57,7 @@ const SURFACES = [
           </span>
           <div class="docs-studio-heading">
             <b id="docs-studio-title">{{ 'config.title' | t }}</b>
-            <span>wiratheme {{ version() }} · <code>{{ state.activePresetId() }}</code></span>
+            <span>wiraui {{ version() }} · <code>{{ state.activePresetId() }}</code></span>
           </div>
           <button type="button" class="docs-link-btn" id="docs-config-reset" (click)="reveal($event, 'reset')">
             <docs-icon name="refresh"></docs-icon>{{ 'config.reset' | t }}

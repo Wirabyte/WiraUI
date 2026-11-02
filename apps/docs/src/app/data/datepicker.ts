@@ -5,26 +5,26 @@ const BOOL = 'boolean';
 
 /** The English page runs Gregorian, so its third field shows the other era: the Buddhist one Thai apps use. */
 const FORMAT_EN = `<!-- Mar 12, 2026 (the English locale default) -->
-<wt-datepicker name="date" [(ngModel)]="date"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date"></wu-datepicker>
 
 <!-- 12/03/2026 -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy"></wu-datepicker>
 
 <!-- 12/03/2569: the Buddhist era, the default in Thai apps -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" calendar="buddhist"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" calendar="buddhist"></wu-datepicker>
 
 <!-- Thursday 12 Mar 26 -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wt-datepicker>`;
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wu-datepicker>`;
 
 export const DATEPICKER_DOC: ComponentDoc = {
   id: 'datepicker',
   title: 'DatePicker',
   group: 'Form',
   entry: 'datepicker',
-  standalone: 'WtDatePicker',
-  module: 'WtDatePickerModule',
+  standalone: 'WuDatePicker',
+  module: 'WuDatePickerModule',
   forms: true,
-  selector: 'wt-datepicker',
+  selector: 'wu-datepicker',
   description: {
     th: 'ช่องวันที่และเวลา ปีเป็น พ.ศ. เป็นค่าเริ่มต้น แต่ model เป็น Date แบบ ค.ศ. ปกติเสมอ พิมพ์วันที่ได้หลายแบบ เลือกช่วงหรือหลายวันได้ และบนมือถือเปิดเป็นแผ่นจากด้านล่าง',
     en: 'A date and time field. Years show in the Buddhist era by default while the model stays an ordinary Date. It reads dates typed in many ways, picks ranges or several days, and opens as a bottom sheet on phones.',
@@ -74,8 +74,8 @@ export const DATEPICKER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wt-calendar</code> (และ <code>wt-datePicker</code>) ใช้ได้เหมือน <code>wt-datepicker</code> ย้ายมาแค่เปลี่ยน prefix',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wt-calendar</code> (and <code>wt-datePicker</code>), works the same as <code>wt-datepicker</code>, so moving over is a prefix change.',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> ชื่อ tag ที่แอปใช้อยู่ <code>wu-calendar</code> (และ <code>wu-datePicker</code>) ใช้ได้เหมือน <code>wu-datepicker</code> ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The tag name apps already use, <code>wu-calendar</code> (and <code>wu-datePicker</code>), works the same as <code>wu-datepicker</code>, so moving over is a prefix change.',
       },
     },
     basic: {
@@ -88,8 +88,8 @@ export const DATEPICKER_DOC: ComponentDoc = {
     format: {
       title: { th: 'รูปแบบวันที่และ พ.ศ. / ค.ศ.', en: 'Date format and era' },
       text: {
-        th: '<code>dateFormat</code> ใช้รูปแบบ <code>dd/mm/yy</code> แบบที่ template เดิมใช้: <code>d</code> <code>dd</code> วัน · <code>m</code> <code>mm</code> เดือน · <code>M</code> <code>MM</code> ชื่อเดือนย่อ / เต็ม · <code>y</code> <code>yy</code> ปี 2 / 4 หลัก · <code>D</code> <code>DD</code> ชื่อวันย่อ / เต็ม · <code>\'ข้อความ\'</code> ค่าเริ่มต้นตาม locale (ไทย <code>d MMMM yyyy</code>) ปีแสดงเป็น พ.ศ. ตาม <code>WtConfig.calendar</code> ใช้ <code>calendar="gregorian"</code> หรือ <code>[isBudhistYear]="false"</code> (สะกด <code>isBuddhistYear</code> ก็ได้) เพื่อแสดง ค.ศ. ส่วน model เป็น Date แบบ ค.ศ. เสมอ',
-        en: '<code>dateFormat</code> uses the <code>dd/mm/yy</code> style existing templates use: <code>d</code> <code>dd</code> day · <code>m</code> <code>mm</code> month · <code>M</code> <code>MM</code> short / long month name · <code>y</code> <code>yy</code> 2- / 4-digit year · <code>D</code> <code>DD</code> short / long day name · <code>\'text\'</code>. The default comes from the locale (English <code>MMM d, yyyy</code>, Thai <code>d MMMM yyyy</code>). The era follows <code>WtConfig.calendar</code>: Thai apps show the Buddhist era by default, this English page the Gregorian one. Set <code>calendar="buddhist"</code> or <code>"gregorian"</code> per field (the third field here shows B.E. 2569), or use <code>[isBudhistYear]="false"</code> (<code>isBuddhistYear</code> works too). The model is always an ordinary Date.',
+        th: '<code>dateFormat</code> ใช้รูปแบบ <code>dd/mm/yy</code> แบบที่ template เดิมใช้: <code>d</code> <code>dd</code> วัน · <code>m</code> <code>mm</code> เดือน · <code>M</code> <code>MM</code> ชื่อเดือนย่อ / เต็ม · <code>y</code> <code>yy</code> ปี 2 / 4 หลัก · <code>D</code> <code>DD</code> ชื่อวันย่อ / เต็ม · <code>\'ข้อความ\'</code> ค่าเริ่มต้นตาม locale (ไทย <code>d MMMM yyyy</code>) ปีแสดงเป็น พ.ศ. ตาม <code>WuConfig.calendar</code> ใช้ <code>calendar="gregorian"</code> หรือ <code>[isBudhistYear]="false"</code> (สะกด <code>isBuddhistYear</code> ก็ได้) เพื่อแสดง ค.ศ. ส่วน model เป็น Date แบบ ค.ศ. เสมอ',
+        en: '<code>dateFormat</code> uses the <code>dd/mm/yy</code> style existing templates use: <code>d</code> <code>dd</code> day · <code>m</code> <code>mm</code> month · <code>M</code> <code>MM</code> short / long month name · <code>y</code> <code>yy</code> 2- / 4-digit year · <code>D</code> <code>DD</code> short / long day name · <code>\'text\'</code>. The default comes from the locale (English <code>MMM d, yyyy</code>, Thai <code>d MMMM yyyy</code>). The era follows <code>WuConfig.calendar</code>: Thai apps show the Buddhist era by default, this English page the Gregorian one. Set <code>calendar="buddhist"</code> or <code>"gregorian"</code> per field (the third field here shows B.E. 2569), or use <code>[isBudhistYear]="false"</code> (<code>isBuddhistYear</code> works too). The model is always an ordinary Date.',
       },
     },
     datatype: {
@@ -163,8 +163,8 @@ export const DATEPICKER_DOC: ComponentDoc = {
     datetemplate: {
       title: { th: 'ปรับแต่งวันในปฏิทิน', en: 'Custom day cells' },
       text: {
-        th: 'template <code>date</code> ได้วันเป็น <code>let-date</code> มี <code>date.day</code>, <code>.month</code>, <code>.year</code>, <code>.today</code> และ <code>.selectable</code> ตัวอย่างนี้ใส่จุดในวันที่มีนัด ถ้าหน้านั้นมี field ชื่อ <code>date</code> อยู่แล้ว ให้ตั้งชื่อ template เป็น <code>#day</code> (หรือ <code>wtTemplate="date"</code>) แทน เพราะชื่อ <code>#date</code> จะบังชื่อ field',
-        en: 'The <code>date</code> template gets the day as <code>let-date</code>, with <code>date.day</code>, <code>.month</code>, <code>.year</code>, <code>.today</code> and <code>.selectable</code>. Here a dot marks the days with appointments. If the page already has a field called <code>date</code>, name the template <code>#day</code> (or use <code>wtTemplate="date"</code>): <code>#date</code> would shadow the field.',
+        th: 'template <code>date</code> ได้วันเป็น <code>let-date</code> มี <code>date.day</code>, <code>.month</code>, <code>.year</code>, <code>.today</code> และ <code>.selectable</code> ตัวอย่างนี้ใส่จุดในวันที่มีนัด ถ้าหน้านั้นมี field ชื่อ <code>date</code> อยู่แล้ว ให้ตั้งชื่อ template เป็น <code>#day</code> (หรือ <code>wuTemplate="date"</code>) แทน เพราะชื่อ <code>#date</code> จะบังชื่อ field',
+        en: 'The <code>date</code> template gets the day as <code>let-date</code>, with <code>date.day</code>, <code>.month</code>, <code>.year</code>, <code>.today</code> and <code>.selectable</code>. Here a dot marks the days with appointments. If the page already has a field called <code>date</code>, name the template <code>#day</code> (or use <code>wuTemplate="date"</code>): <code>#date</code> would shadow the field.',
       },
     },
     buttonbar: {
@@ -199,72 +199,72 @@ export const DATEPICKER_DOC: ComponentDoc = {
     },
   },
   code: {
-    sizes: `<wt-datepicker name="date" [(ngModel)]="date" size="small" dateFormat="dd/mm/yy" [showIcon]="true"></wt-datepicker>
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"></wt-datepicker>
-<wt-datepicker name="date" [(ngModel)]="date" size="large" dateFormat="dd/mm/yy" [showIcon]="true"></wt-datepicker>`,
-    basic: `<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"
-  ariaLabel="วันนัดหมาย"></wt-datepicker>`,
-    icons: `<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"></wt-datepicker>
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"
-  iconDisplay="input"></wt-datepicker>
-<wt-datepicker name="time" [(ngModel)]="time" [timeOnly]="true" [showIcon]="true"
-  iconDisplay="input"></wt-datepicker>`,
-    customicons: `<wt-datepicker name="time" [(ngModel)]="time" [timeOnly]="true" [showIcon]="true" iconDisplay="input">
+    sizes: `<wu-datepicker name="date" [(ngModel)]="date" size="small" dateFormat="dd/mm/yy" [showIcon]="true"></wu-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"></wu-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" size="large" dateFormat="dd/mm/yy" [showIcon]="true"></wu-datepicker>`,
+    basic: `<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"
+  ariaLabel="วันนัดหมาย"></wu-datepicker>`,
+    icons: `<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"></wu-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true"
+  iconDisplay="input"></wu-datepicker>
+<wu-datepicker name="time" [(ngModel)]="time" [timeOnly]="true" [showIcon]="true"
+  iconDisplay="input"></wu-datepicker>`,
+    customicons: `<wu-datepicker name="time" [(ngModel)]="time" [timeOnly]="true" [showIcon]="true" iconDisplay="input">
   <ng-template #inputicon let-clickCallBack="clickCallBack">
     <i class="wi wi-clock" (click)="clickCallBack($event)"></i>
   </ng-template>
-</wt-datepicker>
+</wu-datepicker>
 
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true">
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" [showIcon]="true">
   <ng-template #triggericon>
     <i class="wi wi-calendar-plus"></i>
   </ng-template>
-</wt-datepicker>`,
-    datetemplate: `<wt-datepicker name="appointment" [(ngModel)]="appointment" [inline]="true">
+</wu-datepicker>`,
+    datetemplate: `<wu-datepicker name="appointment" [(ngModel)]="appointment" [inline]="true">
   <ng-template #date let-date>
     <span [class.has-event]="events.includes(date.day) && date.selectable">{{ date.day }}</span>
   </ng-template>
-</wt-datepicker>`,
+</wu-datepicker>`,
     format: {
       en: FORMAT_EN,
       th: `<!-- 12 มีนาคม 2569 (ค่าเริ่มต้นของภาษาไทย) -->
-<wt-datepicker name="date" [(ngModel)]="date"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date"></wu-datepicker>
 
 <!-- 12/03/2569 -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy"></wu-datepicker>
 
 <!-- 12/03/2026 -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" calendar="gregorian"></wt-datepicker>
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="dd/mm/yy" calendar="gregorian"></wu-datepicker>
 
 <!-- พฤหัสบดี 12 มี.ค. 69 -->
-<wt-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wt-datepicker>`,
+<wu-datepicker name="date" [(ngModel)]="date" dateFormat="DD d M y"></wu-datepicker>`,
     },
-    datatype: `<wt-datepicker name="dueText" [(ngModel)]="dueText" dataType="string" dateFormat="dd/mm/yy"></wt-datepicker>`,
-    typing: `<wt-datepicker name="typed" [(ngModel)]="typed" dateFormat="dd/mm/yy" [showOnFocus]="false"
-  placeholder="เช่น 5/4/2569 หรือ 5 เม.ย. 69"></wt-datepicker>`,
-    time: `<wt-datepicker name="meeting" [(ngModel)]="meeting" [showTime]="true" [showSeconds]="true"
-  [stepMinute]="5"></wt-datepicker>`,
+    datatype: `<wu-datepicker name="dueText" [(ngModel)]="dueText" dataType="string" dateFormat="dd/mm/yy"></wu-datepicker>`,
+    typing: `<wu-datepicker name="typed" [(ngModel)]="typed" dateFormat="dd/mm/yy" [showOnFocus]="false"
+  placeholder="เช่น 5/4/2569 หรือ 5 เม.ย. 69"></wu-datepicker>`,
+    time: `<wu-datepicker name="meeting" [(ngModel)]="meeting" [showTime]="true" [showSeconds]="true"
+  [stepMinute]="5"></wu-datepicker>`,
     readonly: `<!-- เลือกวันจากปฏิทินเท่านั้น แต่พิมพ์เวลาได้ -->
-<wt-datepicker name="start" [(ngModel)]="start" [showTime]="true" [readonlyInput]="true"></wt-datepicker>
+<wu-datepicker name="start" [(ngModel)]="start" [showTime]="true" [readonlyInput]="true"></wu-datepicker>
 
 <!-- พิมพ์วันที่ได้ แต่เวลาปรับด้วยปุ่มหรือลูกศรเท่านั้น -->
-<wt-datepicker name="start" [(ngModel)]="start" [showTime]="true" [timeReadonlyInput]="true"></wt-datepicker>`,
-    range: `<wt-datepicker name="stay" [(ngModel)]="stay" selectionMode="range" dateFormat="d M y"
-  [showIcon]="true"></wt-datepicker>`,
-    multiple: `<wt-datepicker name="shifts" [(ngModel)]="shifts" selectionMode="multiple" [maxDateCount]="3"
-  dateFormat="d M" [showIcon]="true"></wt-datepicker>`,
-    views: `<wt-datepicker name="month" [(ngModel)]="month" view="month" dateFormat="MM yy"></wt-datepicker>
-<wt-datepicker name="year" [(ngModel)]="year" view="year" dateFormat="yy"></wt-datepicker>`,
-    timeonly: `<wt-datepicker name="alarm" [(ngModel)]="alarm" [timeOnly]="true" hourFormat="12"></wt-datepicker>`,
-    limits: `<wt-datepicker name="visit" [(ngModel)]="visit" [minDate]="minDate" [maxDate]="maxDate"
-  [disabledDays]="[0, 6]" [disabledDates]="holidays" [showIcon]="true"></wt-datepicker>`,
-    buttonbar: `<wt-datepicker name="due" [(ngModel)]="due" [showButtonBar]="true" [showClear]="true"
-  [showIcon]="true" iconDisplay="input"></wt-datepicker>`,
-    inline: `<wt-datepicker name="date" [(ngModel)]="date" [inline]="true"></wt-datepicker>`,
-    touch: `<wt-datepicker name="date" [(ngModel)]="date" [touchUI]="true" [showIcon]="true"></wt-datepicker>`,
+<wu-datepicker name="start" [(ngModel)]="start" [showTime]="true" [timeReadonlyInput]="true"></wu-datepicker>`,
+    range: `<wu-datepicker name="stay" [(ngModel)]="stay" selectionMode="range" dateFormat="d M y"
+  [showIcon]="true"></wu-datepicker>`,
+    multiple: `<wu-datepicker name="shifts" [(ngModel)]="shifts" selectionMode="multiple" [maxDateCount]="3"
+  dateFormat="d M" [showIcon]="true"></wu-datepicker>`,
+    views: `<wu-datepicker name="month" [(ngModel)]="month" view="month" dateFormat="MM yy"></wu-datepicker>
+<wu-datepicker name="year" [(ngModel)]="year" view="year" dateFormat="yy"></wu-datepicker>`,
+    timeonly: `<wu-datepicker name="alarm" [(ngModel)]="alarm" [timeOnly]="true" hourFormat="12"></wu-datepicker>`,
+    limits: `<wu-datepicker name="visit" [(ngModel)]="visit" [minDate]="minDate" [maxDate]="maxDate"
+  [disabledDays]="[0, 6]" [disabledDates]="holidays" [showIcon]="true"></wu-datepicker>`,
+    buttonbar: `<wu-datepicker name="due" [(ngModel)]="due" [showButtonBar]="true" [showClear]="true"
+  [showIcon]="true" iconDisplay="input"></wu-datepicker>`,
+    inline: `<wu-datepicker name="date" [(ngModel)]="date" [inline]="true"></wu-datepicker>`,
+    touch: `<wu-datepicker name="date" [(ngModel)]="date" [touchUI]="true" [showIcon]="true"></wu-datepicker>`,
     reactive: `<form [formGroup]="form">
-  <wt-datepicker formControlName="birthday" dateFormat="dd/mm/yy" [showIcon]="true"
-    [maxDate]="today" placeholder="วว/ดด/ปปปป"></wt-datepicker>
+  <wu-datepicker formControlName="birthday" dateFormat="dd/mm/yy" [showIcon]="true"
+    [maxDate]="today" placeholder="วว/ดด/ปปปป"></wu-datepicker>
 </form>`,
   },
   ts: {
@@ -315,7 +315,7 @@ form = new FormGroup({
       title: { th: 'Inputs · รูปแบบ', en: 'Inputs · format' },
       rows: [
         row('dateFormat', 'string', 'locale', 'รูปแบบแบบ dd/mm/yy (ไทย d MMMM yyyy)', 'dd/mm/yy-style format (Thai d MMMM yyyy)'),
-        row('calendar', "'buddhist' | 'gregorian'", 'WtConfig.calendar', 'ปีที่แสดง', 'Era shown'),
+        row('calendar', "'buddhist' | 'gregorian'", 'WuConfig.calendar', 'ปีที่แสดง', 'Era shown'),
         row('isBudhistYear · isBuddhistYear', BOOL, undefined, 'false = แสดง ค.ศ. (ใช้ชื่อไหนก็ได้)', 'false shows the Gregorian era (either spelling)'),
         row('dataType', "'date' | 'string'", "'date'", 'model เป็น Date หรือข้อความในช่อง', 'Model is a Date or the field text'),
         row('keepInvalid', BOOL, 'false', 'เก็บข้อความที่อ่านไม่ได้ไว้ตอนออกจากช่อง', 'Keep unreadable text on blur'),
@@ -376,7 +376,7 @@ form = new FormGroup({
         row('onShow · onClose', 'void', undefined, 'แผงเปิด / ปิด', 'Panel opened / closed'),
         row('onClear', 'void', undefined, 'ล้างค่า (× หรือปุ่มล้าง)', 'Cleared (× or the Clear button)'),
         row('onTodayClick · onClearClick', 'Event', undefined, 'กดปุ่ม วันนี้ / ล้าง', 'Today / Clear clicked'),
-        row('onMonthChange · onYearChange', 'WtDatePickerMonthChangeEvent', undefined, 'เปลี่ยนเดือน / ปีที่แสดง', 'Shown month / year changed'),
+        row('onMonthChange · onYearChange', 'WuDatePickerMonthChangeEvent', undefined, 'เปลี่ยนเดือน / ปีที่แสดง', 'Shown month / year changed'),
       ],
     },
     {
@@ -385,35 +385,35 @@ form = new FormGroup({
       code: `type DateSelectionMode = 'single' | 'multiple' | 'range';
 type DatePickerView = 'date' | 'month' | 'year';
 type HourFormat = '12' | '24';
-type WtDatePickerIconDisplay = 'button' | 'input';
-type WtDatePickerDataType = 'date' | 'string';
+type WuDatePickerIconDisplay = 'button' | 'input';
+type WuDatePickerDataType = 'date' | 'string';
 
-interface WtDatePickerMonthChangeEvent {
+interface WuDatePickerMonthChangeEvent {
   month: number; // 1–12
   year: number;  // ค.ศ.
 }`,
     },
   ],
   tokens: [
-    tok('--wt-datepicker-panel-padding', 'ระยะในแผง', 'Panel padding'),
-    tok('--wt-datepicker-panel-radius', 'ความมนของแผง', 'Panel radius'),
-    tok('--wt-datepicker-panel-shadow', 'เงาของแผง', 'Panel shadow'),
-    tok('--wt-datepicker-header-border', 'เส้นใต้หัวปฏิทิน', 'Header divider'),
-    tok('--wt-datepicker-title-weight', 'น้ำหนักตัวอักษรของหัว', 'Title weight'),
-    tok('--wt-datepicker-weekday-weight', 'น้ำหนักตัวอักษรชื่อวัน', 'Weekday weight'),
-    tok('--wt-datepicker-cell-size', 'ขนาดช่องวัน', 'Day cell size'),
-    tok('--wt-datepicker-cell-gap', 'ระยะระหว่างช่อง', 'Gap between cells'),
-    tok('--wt-datepicker-cell-radius', 'ความมนของช่อง', 'Cell radius'),
-    tok('--wt-datepicker-hover-bg', 'พื้นตอนชี้', 'Hover background'),
-    tok('--wt-datepicker-selected-bg', 'พื้นวันที่เลือก', 'Selected background'),
-    tok('--wt-datepicker-selected-color', 'สีตัวอักษรวันที่เลือก', 'Selected text'),
-    tok('--wt-datepicker-range-bg', 'พื้นวันในช่วง', 'In-range background'),
-    tok('--wt-datepicker-range-color', 'สีตัวอักษรวันในช่วง', 'In-range text'),
-    tok('--wt-datepicker-today-bg', 'พื้นของวันนี้', 'Today background'),
-    tok('--wt-datepicker-today-color', 'สีตัวอักษรของวันนี้', 'Today text'),
-    tok('--wt-datepicker-dropdown-bg', 'พื้นปุ่มปฏิทิน', 'Calendar button background'),
-    tok('--wt-datepicker-dropdown-hover-bg', 'พื้นปุ่มปฏิทินตอนชี้', 'Calendar button hover'),
-    tok('--wt-datepicker-dropdown-color', 'สี icon ของปุ่ม', 'Calendar button icon'),
-    tok('--wt-datepicker-dropdown-border', 'ขอบปุ่มปฏิทิน', 'Calendar button border'),
+    tok('--wu-datepicker-panel-padding', 'ระยะในแผง', 'Panel padding'),
+    tok('--wu-datepicker-panel-radius', 'ความมนของแผง', 'Panel radius'),
+    tok('--wu-datepicker-panel-shadow', 'เงาของแผง', 'Panel shadow'),
+    tok('--wu-datepicker-header-border', 'เส้นใต้หัวปฏิทิน', 'Header divider'),
+    tok('--wu-datepicker-title-weight', 'น้ำหนักตัวอักษรของหัว', 'Title weight'),
+    tok('--wu-datepicker-weekday-weight', 'น้ำหนักตัวอักษรชื่อวัน', 'Weekday weight'),
+    tok('--wu-datepicker-cell-size', 'ขนาดช่องวัน', 'Day cell size'),
+    tok('--wu-datepicker-cell-gap', 'ระยะระหว่างช่อง', 'Gap between cells'),
+    tok('--wu-datepicker-cell-radius', 'ความมนของช่อง', 'Cell radius'),
+    tok('--wu-datepicker-hover-bg', 'พื้นตอนชี้', 'Hover background'),
+    tok('--wu-datepicker-selected-bg', 'พื้นวันที่เลือก', 'Selected background'),
+    tok('--wu-datepicker-selected-color', 'สีตัวอักษรวันที่เลือก', 'Selected text'),
+    tok('--wu-datepicker-range-bg', 'พื้นวันในช่วง', 'In-range background'),
+    tok('--wu-datepicker-range-color', 'สีตัวอักษรวันในช่วง', 'In-range text'),
+    tok('--wu-datepicker-today-bg', 'พื้นของวันนี้', 'Today background'),
+    tok('--wu-datepicker-today-color', 'สีตัวอักษรของวันนี้', 'Today text'),
+    tok('--wu-datepicker-dropdown-bg', 'พื้นปุ่มปฏิทิน', 'Calendar button background'),
+    tok('--wu-datepicker-dropdown-hover-bg', 'พื้นปุ่มปฏิทินตอนชี้', 'Calendar button hover'),
+    tok('--wu-datepicker-dropdown-color', 'สี icon ของปุ่ม', 'Calendar button icon'),
+    tok('--wu-datepicker-dropdown-border', 'ขอบปุ่มปฏิทิน', 'Calendar button border'),
   ],
 };

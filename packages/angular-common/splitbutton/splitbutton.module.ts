@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtSplitButton } from './splitbutton.component';
+import { WuSplitButton } from './splitbutton.component';
 
-/** For NgModule apps. Standalone apps can import `WtSplitButton` directly. */
+/** For NgModule apps. Standalone apps can import `WuSplitButton` directly. */
 @NgModule({
-  imports: [WtSplitButton],
-  exports: [WtSplitButton],
+  imports: [WuSplitButton],
+  exports: [WuSplitButton],
 })
-export class WtSplitButtonModule {}
+export class WuSplitButtonModule {}

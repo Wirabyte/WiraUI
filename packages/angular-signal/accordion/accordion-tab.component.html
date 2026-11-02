@@ -1,7 +1,7 @@
 <div [class]="classes()">
   <button
     type="button"
-    class="wt-accordion-header p-accordionheader"
+    class="wu-accordion-header p-accordionheader"
     [id]="headerId"
     [attr.aria-expanded]="active()"
     [attr.aria-controls]="contentId"
@@ -9,8 +9,8 @@
     (click)="toggle()"
     (keydown)="onKeydown($event)"
   >
-    <svg class="wt-accordion-toggle-icon p-accordionheader-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
-    <span class="wt-accordion-header-text">
+    <svg class="wu-accordion-toggle-icon p-accordionheader-toggle-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg>
+    <span class="wu-accordion-header-text">
       @if (headerTemplate(); as t) {
         <ng-container *ngTemplateOutlet="t"></ng-container>
       } @else {
@@ -18,9 +18,9 @@
       }
     </span>
   </button>
-  <div class="wt-accordion-content-container p-accordioncontent" [id]="contentId" role="region" [attr.aria-labelledby]="headerId" [attr.inert]="active() ? null : ''">
-    <div class="wt-accordion-content-inner">
-      <div class="wt-accordion-content p-accordioncontent-content">
+  <div class="wu-accordion-content-container p-accordioncontent" [id]="contentId" role="region" [attr.aria-labelledby]="headerId" [attr.inert]="active() ? null : ''">
+    <div class="wu-accordion-content-inner">
+      <div class="wu-accordion-content p-accordioncontent-content">
         <ng-content></ng-content>
         @if (contentTemplate() && active()) {
           <ng-container *ngTemplateOutlet="contentTemplate()"></ng-container>

@@ -15,7 +15,7 @@
     <span class="docs-logo-mark" aria-hidden="true">
       <svg viewBox="0 0 32 32"><path d="M7.5 10.5 11.5 22l4.5-9 4.5 9 4-11.5" /></svg>
     </span>
-    <span class="docs-logo-text">WiraTheme</span>
+    <span class="docs-logo-text">WiraUI</span>
   </a>
 
   <button type="button" class="docs-search-btn" id="docs-search" (click)="openSearch()" [attr.aria-label]="'top.searchAria' | t">
@@ -58,9 +58,9 @@
     }
   </div>
 
-  <!-- The version switcher: wiratheme v3's own select (not the OS list), each version with its Angular range and status. -->
+  <!-- The version switcher: wiraui v3's own select (not the OS list), each version with its Angular range and status. -->
   <div class="docs-version-select">
-    <wt-select
+    <wu-select
       id="docs-version"
       [options]="versions"
       optionLabel="label"
@@ -79,7 +79,7 @@
           <span class="docs-status" [attr.data-status]="v.status">{{ statusKey(v.status) | t }}</span>
         </span>
       </ng-template>
-    </wt-select>
+    </wu-select>
   </div>
 </header>
 
@@ -147,7 +147,7 @@
   <main class="docs-main" id="docs-main">
     <div class="docs-main-row" [class.docs-has-aside-toc]="asideToc()">
       <div class="docs-main-col">
-        <!-- WiraTheme Studio needs the width for its editor and preview side by side. -->
+        <!-- WiraUI Studio needs the width for its editor and preview side by side. -->
         <article class="docs-article" [class.docs-article-wide]="path() === 'theming/studio'">
           <router-outlet></router-outlet>
         </article>

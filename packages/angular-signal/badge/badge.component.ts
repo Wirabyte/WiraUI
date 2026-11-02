@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵseverity, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtBadgeSeverity, WtBadgeSize } from './badge.types';
+import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuBadgeSeverity, WuBadgeSize } from './badge.types';
 
-/** Count or status pill: `<wt-badge value="8" severity="danger">`. Without a value it is a dot. */
+/** Count or status pill: `<wu-badge value="8" severity="danger">`. Without a value it is a dot. */
 @Component({
-  selector: 'wt-badge',
+  selector: 'wu-badge',
   standalone: true,
   templateUrl: './badge.component.html',
   styleUrl: './badge.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtBadge {
+export class WuBadge {
   readonly value = input<string | number | null>();
-  readonly severity = input<WtBadgeSeverity>();
-  readonly size = input<WtBadgeSize>();
+  readonly severity = input<WuBadgeSeverity>();
+  readonly size = input<WuBadgeSize>();
 
   readonly hasValue = computed(() => this.value() !== undefined && this.value() !== null && this.value() !== '');
   /** Classes for the root element, as before (`styleClass="w-full"`). */
@@ -32,17 +32,17 @@ export class WtBadge {
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
     const sev = ɵseverity(this.severity());
-    const c = ['wt-badge', 'p-badge', 'p-component'];
-    if (sev !== 'primary') c.push('wt-badge-' + sev, 'p-badge-' + sev);
+    const c = ['wu-badge', 'p-badge', 'p-component'];
+    if (sev !== 'primary') c.push('wu-badge-' + sev, 'p-badge-' + sev);
     const size = this.size();
-    if (size === 'small') c.push('wt-badge-sm', 'p-badge-sm');
-    if (size === 'large') c.push('wt-badge-lg', 'p-badge-lg');
-    if (size === 'xlarge') c.push('wt-badge-xl', 'p-badge-xl');
-    if (!this.hasValue()) c.push('wt-badge-dot', 'p-badge-dot');
+    if (size === 'small') c.push('wu-badge-sm', 'p-badge-sm');
+    if (size === 'large') c.push('wu-badge-lg', 'p-badge-lg');
+    if (size === 'xlarge') c.push('wu-badge-xl', 'p-badge-xl');
+    if (!this.hasValue()) c.push('wu-badge-dot', 'p-badge-dot');
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 }

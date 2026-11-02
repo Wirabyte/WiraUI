@@ -8,9 +8,9 @@ export const CHARTJS_DOC: ComponentDoc = {
   title: 'ChartJS',
   group: 'Charts',
   entry: 'chartjs',
-  standalone: 'WtChartJs',
-  module: 'WtChartJsModule',
-  selector: 'wt-chartjs',
+  standalone: 'WuChartJs',
+  module: 'WuChartJsModule',
+  selector: 'wu-chartjs',
   requires: [
     {
       name: 'Chart.js',
@@ -95,8 +95,8 @@ export const CHARTJS_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtChartJsModule</code>) และ standalone (<code>WtChartJs</code>) และอ้างถึงด้วย <code>#c="wtChartJs"</code> ได้ wt-chartjs วาดด้วย Chart.js (โหลด <code>chart.js/auto</code> ซึ่งมีกราฟครบทุกแบบ) แอปต้องติดตั้ง Chart.js 3 หรือ 4 เองด้วย <code>npm install chart.js</code> เป็น peer dependency แบบไม่บังคับ แอปที่ไม่ใช้กราฟจึงไม่ต้องลง',
-        en: 'Works as an NgModule (<code>WtChartJsModule</code>) or standalone (<code>WtChartJs</code>), and is exported as <code>#c="wtChartJs"</code>. wt-chartjs draws with Chart.js (it loads <code>chart.js/auto</code>, which has every chart type). The app installs Chart.js 3 or 4 itself with <code>npm install chart.js</code>: it is an optional peer dependency, so apps without charts never need it.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuChartJsModule</code>) และ standalone (<code>WuChartJs</code>) และอ้างถึงด้วย <code>#c="wuChartJs"</code> ได้ wu-chartjs วาดด้วย Chart.js (โหลด <code>chart.js/auto</code> ซึ่งมีกราฟครบทุกแบบ) แอปต้องติดตั้ง Chart.js 3 หรือ 4 เองด้วย <code>npm install chart.js</code> เป็น peer dependency แบบไม่บังคับ แอปที่ไม่ใช้กราฟจึงไม่ต้องลง',
+        en: 'Works as an NgModule (<code>WuChartJsModule</code>) or standalone (<code>WuChartJs</code>), and is exported as <code>#c="wuChartJs"</code>. wu-chartjs draws with Chart.js (it loads <code>chart.js/auto</code>, which has every chart type). The app installs Chart.js 3 or 4 itself with <code>npm install chart.js</code>: it is an optional peer dependency, so apps without charts never need it.',
       },
     },
     basic: {
@@ -137,8 +137,8 @@ export const CHARTJS_DOC: ComponentDoc = {
     theme: {
       title: { th: 'สีจากธีม', en: 'Theme colours' },
       text: {
-        th: 'อ่านสีของธีมจาก CSS variable ด้วย <code>getComputedStyle</code> เช่น <code>--wt-primary-color</code> และ <code>--wt-primary-300</code> แล้วใส่ใน dataset สีเปลี่ยนเมื่อเปลี่ยนธีมหรือโหมดมืด จึงสร้าง data ใหม่ตอนนั้น (ลองเปลี่ยนธีมที่ปุ่มด้านบนของเว็บ แล้วกดปุ่มในตัวอย่าง)',
-        en: 'Read theme colours from CSS variables with <code>getComputedStyle</code>, such as <code>--wt-primary-color</code> and <code>--wt-primary-300</code>, and put them in the datasets. They change with the theme or dark mode, so build new data then (change the theme with the button at the top of the site, then press the button in the sample).',
+        th: 'อ่านสีของธีมจาก CSS variable ด้วย <code>getComputedStyle</code> เช่น <code>--wu-primary-color</code> และ <code>--wu-primary-300</code> แล้วใส่ใน dataset สีเปลี่ยนเมื่อเปลี่ยนธีมหรือโหมดมืด จึงสร้าง data ใหม่ตอนนั้น (ลองเปลี่ยนธีมที่ปุ่มด้านบนของเว็บ แล้วกดปุ่มในตัวอย่าง)',
+        en: 'Read theme colours from CSS variables with <code>getComputedStyle</code>, such as <code>--wu-primary-color</code> and <code>--wu-primary-300</code>, and put them in the datasets. They change with the theme or dark mode, so build new data then (change the theme with the button at the top of the site, then press the button in the sample).',
       },
     },
     click: {
@@ -165,40 +165,40 @@ export const CHARTJS_DOC: ComponentDoc = {
     refresh: {
       title: { th: 'แก้ข้อมูลแล้ววาดใหม่ (refresh)', en: 'Change data, then refresh' },
       text: {
-        th: 'ถ้าแก้ <code>data</code> ที่เดิม (push ค่าใหม่) กราฟยังไม่รู้ ให้เรียก <code>refresh()</code> ผ่าน template reference <code>#attendanceChart="wtChartJs"</code> หรือ <code>@ViewChild</code> ส่วนการส่ง object ใหม่ให้ <code>[data]</code> สร้างกราฟใหม่เอง',
-        en: 'When you change <code>data</code> in place (pushing a value), the chart does not know: call <code>refresh()</code> through a template reference, <code>#attendanceChart="wtChartJs"</code>, or <code>@ViewChild</code>. Passing a new object to <code>[data]</code> rebuilds the chart on its own.',
+        th: 'ถ้าแก้ <code>data</code> ที่เดิม (push ค่าใหม่) กราฟยังไม่รู้ ให้เรียก <code>refresh()</code> ผ่าน template reference <code>#attendanceChart="wuChartJs"</code> หรือ <code>@ViewChild</code> ส่วนการส่ง object ใหม่ให้ <code>[data]</code> สร้างกราฟใหม่เอง',
+        en: 'When you change <code>data</code> in place (pushing a value), the chart does not know: call <code>refresh()</code> through a template reference, <code>#attendanceChart="wuChartJs"</code>, or <code>@ViewChild</code>. Passing a new object to <code>[data]</code> rebuilds the chart on its own.',
       },
     },
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-chart&gt;</code> เป็น <code>&lt;wt-chartjs&gt;</code> (v1 / v2 ใช้ชื่อ <code>&lt;wt-chart&gt;</code> ได้ด้วย เป็น component เดียวกัน ส่วน v3 <code>&lt;wt-chart&gt;</code> คือกราฟของ WiraTheme เองที่รับ data / options แบบเดียวกันโดยไม่ต้องลง Chart.js) input เดิมใช้ได้ทั้งหมด (type, data, options, plugins, width, height, responsive) และ <code>(onDataSelect)</code> ส่งค่าแบบเดิม Chart.js ยังเป็นของแอปเอง (3 หรือ 4) ส่วน <code>generateLegend()</code> มีไว้ให้โค้ดเดิม',
-        en: 'Change <code>&lt;p-chart&gt;</code> to <code>&lt;wt-chartjs&gt;</code> (in v1 / v2 <code>&lt;wt-chart&gt;</code> is the same component; in v3 <code>&lt;wt-chart&gt;</code> is WiraTheme’s own chart, which takes the same data and options without Chart.js). Every existing input works (type, data, options, plugins, width, height, responsive) and <code>(onDataSelect)</code> sends the same value. Chart.js stays the app\'s own (3 or 4); <code>generateLegend()</code> is kept for existing code.',
+        th: 'เปลี่ยน <code>&lt;p-chart&gt;</code> เป็น <code>&lt;wu-chartjs&gt;</code> (v1 / v2 ใช้ชื่อ <code>&lt;wu-chart&gt;</code> ได้ด้วย เป็น component เดียวกัน ส่วน v3 <code>&lt;wu-chart&gt;</code> คือกราฟของ WiraUI เองที่รับ data / options แบบเดียวกันโดยไม่ต้องลง Chart.js) input เดิมใช้ได้ทั้งหมด (type, data, options, plugins, width, height, responsive) และ <code>(onDataSelect)</code> ส่งค่าแบบเดิม Chart.js ยังเป็นของแอปเอง (3 หรือ 4) ส่วน <code>generateLegend()</code> มีไว้ให้โค้ดเดิม',
+        en: 'Change <code>&lt;p-chart&gt;</code> to <code>&lt;wu-chartjs&gt;</code> (in v1 / v2 <code>&lt;wu-chart&gt;</code> is the same component; in v3 <code>&lt;wu-chart&gt;</code> is WiraUI’s own chart, which takes the same data and options without Chart.js). Every existing input works (type, data, options, plugins, width, height, responsive) and <code>(onDataSelect)</code> sends the same value. Chart.js stays the app\'s own (3 or 4); <code>generateLegend()</code> is kept for existing code.',
       },
     },
   },
   code: {
-    basic: `<wt-chartjs type="bar" [data]="salesData" height="280px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wt-chartjs>`,
-    line: `<wt-chartjs type="line" [data]="visitData" [options]="visitOptions" height="280px" ariaLabel="ผู้เข้าชมรายวัน"></wt-chartjs>`,
-    pie: `<wt-chartjs type="pie" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wt-chartjs>
-<wt-chartjs type="doughnut" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wt-chartjs>`,
-    stacked: `<wt-chartjs type="bar" [data]="genderData" [options]="stackedOptions" height="240px" ariaLabel="นักเรียนแยกตามชั้นและเพศ"></wt-chartjs>`,
-    mixed: `<wt-chartjs type="bar" [data]="targetData" height="280px" ariaLabel="ยอดขายเทียบเป้าหมาย"></wt-chartjs>`,
-    theme: `<wt-chartjs type="bar" [data]="themeData" height="260px" ariaLabel="รายรับปีนี้เทียบปีที่แล้ว"></wt-chartjs>
-<wt-button label="ใช้สีของธีมตอนนี้" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wt-button>`,
-    click: `<wt-chartjs type="bar" [data]="scoreData" [options]="scoreOptions" height="260px" ariaLabel="คะแนนเฉลี่ยรายวิชา"
-  (onDataSelect)="pick($event)"></wt-chartjs>
+    basic: `<wu-chartjs type="bar" [data]="salesData" height="280px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wu-chartjs>`,
+    line: `<wu-chartjs type="line" [data]="visitData" [options]="visitOptions" height="280px" ariaLabel="ผู้เข้าชมรายวัน"></wu-chartjs>`,
+    pie: `<wu-chartjs type="pie" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wu-chartjs>
+<wu-chartjs type="doughnut" [data]="spendData" height="260px" ariaLabel="ค่าใช้จ่ายตามหมวด"></wu-chartjs>`,
+    stacked: `<wu-chartjs type="bar" [data]="genderData" [options]="stackedOptions" height="240px" ariaLabel="นักเรียนแยกตามชั้นและเพศ"></wu-chartjs>`,
+    mixed: `<wu-chartjs type="bar" [data]="targetData" height="280px" ariaLabel="ยอดขายเทียบเป้าหมาย"></wu-chartjs>`,
+    theme: `<wu-chartjs type="bar" [data]="themeData" height="260px" ariaLabel="รายรับปีนี้เทียบปีที่แล้ว"></wu-chartjs>
+<wu-button label="ใช้สีของธีมตอนนี้" icon="wi wi-palette" severity="secondary" [outlined]="true" (onClick)="useThemeColors()"></wu-button>`,
+    click: `<wu-chartjs type="bar" [data]="scoreData" [options]="scoreOptions" height="260px" ariaLabel="คะแนนเฉลี่ยรายวิชา"
+  (onDataSelect)="pick($event)"></wu-chartjs>
 <p>ที่เลือก: {{ picked }}</p>`,
-    plugins: `<wt-chartjs type="doughnut" [data]="levelData" [options]="levelOptions" [plugins]="[centerText]" height="260px"
-  ariaLabel="นักเรียนแยกตามระดับชั้น"></wt-chartjs>`,
+    plugins: `<wu-chartjs type="doughnut" [data]="levelData" [options]="levelOptions" [plugins]="[centerText]" height="260px"
+  ariaLabel="นักเรียนแยกตามระดับชั้น"></wu-chartjs>`,
     size: `<!-- กว้างเต็มกล่อง สูง 200px -->
-<wt-chartjs type="line" [data]="visitData" height="200px" ariaLabel="ผู้เข้าชมรายวัน"></wt-chartjs>
+<wu-chartjs type="line" [data]="visitData" height="200px" ariaLabel="ผู้เข้าชมรายวัน"></wu-chartjs>
 
 <!-- กว้าง 480px แต่ไม่เกินกล่องที่อยู่ (จอแคบหดตาม) -->
-<wt-chartjs type="bar" [data]="salesData" width="480px" height="200px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wt-chartjs>`,
-    refresh: `<wt-chartjs #attendanceChart="wtChartJs" type="line" [data]="attendance" height="240px"
-  ariaLabel="นักเรียนที่มาเรียนรายสัปดาห์"></wt-chartjs>
-<wt-button label="เพิ่มสัปดาห์" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wt-button>`,
+<wu-chartjs type="bar" [data]="salesData" width="480px" height="200px" ariaLabel="รายรับและรายจ่ายรายเดือน"></wu-chartjs>`,
+    refresh: `<wu-chartjs #attendanceChart="wuChartJs" type="line" [data]="attendance" height="240px"
+  ariaLabel="นักเรียนที่มาเรียนรายสัปดาห์"></wu-chartjs>
+<wu-button label="เพิ่มสัปดาห์" icon="wi wi-plus" (onClick)="addWeek(attendanceChart)"></wu-button>`,
   },
   ts: {
     basic: `import { ChartData } from 'chart.js';
@@ -264,13 +264,13 @@ themeChartData(): ChartData<'bar'> {
   return {
     labels: ${MONTHS},
     datasets: [
-      { label: 'ปีนี้', data: [52, 61, 70, 66, 74, 80], backgroundColor: css.getPropertyValue('--wt-primary-color').trim() },
-      { label: 'ปีที่แล้ว', data: [45, 50, 58, 60, 63, 69], backgroundColor: css.getPropertyValue('--wt-primary-300').trim() },
+      { label: 'ปีนี้', data: [52, 61, 70, 66, 74, 80], backgroundColor: css.getPropertyValue('--wu-primary-color').trim() },
+      { label: 'ปีที่แล้ว', data: [45, 50, 58, 60, 63, 69], backgroundColor: css.getPropertyValue('--wu-primary-300').trim() },
     ],
   };
 }`,
     click: `import { ChartData, ChartOptions } from 'chart.js';
-import { WtChartJsDataSelectEvent } from 'wiratheme/chartjs';
+import { WuChartJsDataSelectEvent } from 'wiraui/chartjs';
 
 scoreData: ChartData<'bar'> = {
   labels: ['คณิตศาสตร์', 'วิทยาศาสตร์', 'ภาษาไทย', 'ภาษาอังกฤษ', 'สังคมศึกษา'],
@@ -282,7 +282,7 @@ scoreOptions: ChartOptions<'bar'> = {
 };
 picked = 'คลิกที่แท่ง';
 
-pick(event: WtChartJsDataSelectEvent): void {
+pick(event: WuChartJsDataSelectEvent): void {
   const { datasetIndex, index } = event.element as { datasetIndex: number; index: number };
   this.picked = this.scoreData.labels![index] + ': ' + this.scoreData.datasets[datasetIndex].data[index];
 }`,
@@ -315,14 +315,14 @@ centerText: Plugin<'doughnut', { text: string }> = {
   },
 };`,
     refresh: `import { ChartData } from 'chart.js';
-import { WtChartJs } from 'wiratheme/chartjs';
+import { WuChartJs } from 'wiraui/chartjs';
 
 attendance: ChartData<'line'> = {
   labels: ['สัปดาห์ 1', 'สัปดาห์ 2', 'สัปดาห์ 3', 'สัปดาห์ 4', 'สัปดาห์ 5'],
   datasets: [{ label: 'นักเรียนที่มาเรียน', data: [1180, 1204, 1192, 1215, 1198], borderColor: '#10b981', tension: 0.3 }],
 };
 
-addWeek(chart: WtChartJs): void {
+addWeek(chart: WuChartJs): void {
   // แก้ data ที่เดิม แล้วสั่งวาดใหม่
   const week = this.attendance.labels!.length + 1;
   this.attendance.labels!.push('สัปดาห์ ' + week);
@@ -353,13 +353,13 @@ addWeek(chart: WtChartJs): void {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onDataSelect', 'WtChartJsDataSelectEvent', undefined, 'คลิกที่แท่ง จุด หรือชิ้น', 'A bar, point or slice was clicked')],
+      rows: [row('onDataSelect', 'WuChartJsDataSelectEvent', undefined, 'คลิกที่แท่ง จุด หรือชิ้น', 'A bar, point or slice was clicked')],
     },
     {
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน template reference เช่น #c="wtChartJs" หรือ @ViewChild(WtChartJs)', en: 'Call them through a template reference such as #c="wtChartJs", or @ViewChild(WtChartJs).' },
+      note: { th: 'เรียกผ่าน template reference เช่น #c="wuChartJs" หรือ @ViewChild(WuChartJs)', en: 'Call them through a template reference such as #c="wuChartJs", or @ViewChild(WuChartJs).' },
       rows: [
         row('refresh()', 'void', undefined, 'วาดใหม่ด้วย data ปัจจุบัน (หลังแก้ที่เดิม)', 'Redraw with the current data (after changes in place)'),
         row('reinit()', 'void', undefined, 'สร้างกราฟใหม่ทั้งหมด', 'Build the chart again from scratch'),
@@ -371,9 +371,9 @@ addWeek(chart: WtChartJs): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtChartJsDataSelectEvent } from 'wiratheme/chartjs';
+      code: `import { WuChartJsDataSelectEvent } from 'wiraui/chartjs';
 
-interface WtChartJsDataSelectEvent {
+interface WuChartJsDataSelectEvent {
   originalEvent: MouseEvent;
   element: unknown;     // ของ Chart.js: { datasetIndex, index, element }
   dataset: unknown[];   // ทุก element ของ dataset ที่คลิก
@@ -381,13 +381,13 @@ interface WtChartJsDataSelectEvent {
     },
   ],
   themingNote: {
-    th: 'wt-chartjs ไม่มี token ของตัวเอง ตอนสร้างกราฟจะอ่านตัวแปรด้านล่างแล้วใช้เป็นฟอนต์ของกราฟ (ภาษาไทยด้วย) สีตัวอักษร และสีเส้น เว้นแต่แอปตั้ง <code>Chart.defaults</code> เองหรือส่ง <code>font</code> / <code>color</code> / <code>borderColor</code> มาใน options ส่วนสีของ dataset เป็นค่าของ Chart.js ใช้สีของธีมได้โดยอ่านตัวแปร เช่น <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wt-primary-color\')</code> (ดูหัวข้อสีจากธีมในแท็บตัวอย่าง) และสร้าง data ใหม่หลังเปลี่ยนธีม',
-    en: 'wt-chartjs has no tokens of its own. When it builds a chart it reads the variables below and uses them for the chart\'s font (Thai included), text colour and line colour, unless the app set <code>Chart.defaults</code> itself or passes <code>font</code> / <code>color</code> / <code>borderColor</code> in the options. Dataset colours are Chart.js values: use the theme\'s by reading a variable, e.g. <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wt-primary-color\')</code> (see Theme colours on the Examples tab), and build new data after a theme change.',
+    th: 'wu-chartjs ไม่มี token ของตัวเอง ตอนสร้างกราฟจะอ่านตัวแปรด้านล่างแล้วใช้เป็นฟอนต์ของกราฟ (ภาษาไทยด้วย) สีตัวอักษร และสีเส้น เว้นแต่แอปตั้ง <code>Chart.defaults</code> เองหรือส่ง <code>font</code> / <code>color</code> / <code>borderColor</code> มาใน options ส่วนสีของ dataset เป็นค่าของ Chart.js ใช้สีของธีมได้โดยอ่านตัวแปร เช่น <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wu-primary-color\')</code> (ดูหัวข้อสีจากธีมในแท็บตัวอย่าง) และสร้าง data ใหม่หลังเปลี่ยนธีม',
+    en: 'wu-chartjs has no tokens of its own. When it builds a chart it reads the variables below and uses them for the chart\'s font (Thai included), text colour and line colour, unless the app set <code>Chart.defaults</code> itself or passes <code>font</code> / <code>color</code> / <code>borderColor</code> in the options. Dataset colours are Chart.js values: use the theme\'s by reading a variable, e.g. <code>getComputedStyle(document.documentElement).getPropertyValue(\'--wu-primary-color\')</code> (see Theme colours on the Examples tab), and build new data after a theme change.',
   },
   tokens: [
-    tok('--wt-font-family', 'ฟอนต์ของกราฟ (ป้าย แกน คำอธิบาย)', 'Chart font (labels, axes, legend)'),
-    tok('--wt-text-muted', 'สีตัวอักษรของกราฟ', 'Chart text colour'),
-    tok('--wt-border', 'สีเส้นตารางและเส้นขอบ', 'Grid and border line colour'),
-    tok('--wt-primary-color', 'สีหลัก ใช้ใน dataset ได้ (อ่านด้วย getComputedStyle)', 'The primary colour, for datasets (read it with getComputedStyle)'),
+    tok('--wu-font-family', 'ฟอนต์ของกราฟ (ป้าย แกน คำอธิบาย)', 'Chart font (labels, axes, legend)'),
+    tok('--wu-text-muted', 'สีตัวอักษรของกราฟ', 'Chart text colour'),
+    tok('--wu-border', 'สีเส้นตารางและเส้นขอบ', 'Grid and border line colour'),
+    tok('--wu-primary-color', 'สีหลัก ใช้ใน dataset ได้ (อ่านด้วย getComputedStyle)', 'The primary colour, for datasets (read it with getComputedStyle)'),
   ],
 };

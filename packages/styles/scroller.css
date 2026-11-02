@@ -1,11 +1,11 @@
-/* wt-scroller. Shared by wiratheme v1, v2 and v3. A scrolling box with a spacer as long as every row would be; the rows
+/* wu-scroller. Shared by wiraui v1, v2 and v3. A scrolling box with a spacer as long as every row would be; the rows
    in view (and a few either side) are drawn in a layer moved to where they belong. */
-@layer wiratheme.components {
-  :is(wt-scroller, wt-virtual-scroller) {
+@layer wiraui.components {
+  :is(wu-scroller, wu-virtual-scroller) {
     display: block;
     max-width: 100%;
   }
-  .wt-scroller {
+  .wu-scroller {
     position: relative;
     box-sizing: border-box;
     overflow: auto;
@@ -13,27 +13,27 @@
     outline: none;
     scrollbar-width: thin;
   }
-  .wt-scroller:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--wt-field-focus-border);
+  .wu-scroller:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--wu-field-focus-border);
   }
-  .wt-scroller-inline {
+  .wu-scroller-inline {
     overflow: visible;
   }
   /* In the flow, so a box given no height grows to its rows; the transform moves it, the spacer sets the scroll length. */
-  .wt-scroller-content {
+  .wu-scroller-content {
     position: relative;
     min-width: 100%;
     will-change: transform;
   }
-  .wt-scroller-inline .wt-scroller-content {
+  .wu-scroller-inline .wu-scroller-content {
     will-change: auto;
   }
-  .wt-scroller-horizontal .wt-scroller-content {
+  .wu-scroller-horizontal .wu-scroller-content {
     display: flex;
     min-width: 0;
     min-height: 100%;
   }
-  .wt-scroller-spacer {
+  .wu-scroller-spacer {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,36 +42,36 @@
     pointer-events: none;
   }
   /* Pinned to the top of the view while rows load. */
-  .wt-scroller-loader {
+  .wu-scroller-loader {
     position: sticky;
     top: 0;
     left: 0;
     z-index: 1;
     height: 0;
-    color: var(--wt-primary-color);
+    color: var(--wu-primary-color);
   }
-  .wt-scroller-loader > * {
+  .wu-scroller-loader > * {
     position: absolute;
     top: 0.75rem;
     left: 50%;
     translate: -50% 0;
   }
-  .wt-scroller-spinner {
+  .wu-scroller-spinner {
     width: 1.75rem;
     height: 1.75rem;
     padding: 0.25rem;
     border-radius: 50%;
-    background: var(--wt-card-bg);
-    box-shadow: var(--wt-shadow-md);
-    animation: wt-scroller-spin 0.8s linear infinite;
+    background: var(--wu-card-bg);
+    box-shadow: var(--wu-shadow-md);
+    animation: wu-scroller-spin 0.8s linear infinite;
   }
-  @keyframes wt-scroller-spin {
+  @keyframes wu-scroller-spin {
     to {
       transform: rotate(360deg);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-scroller-spinner {
+    .wu-scroller-spinner {
       animation-duration: 2s;
     }
   }

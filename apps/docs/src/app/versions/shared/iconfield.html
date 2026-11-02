@@ -6,23 +6,23 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-iconfield id="d-iconfield">
-          <wt-inputicon icon="wi wi-search"></wt-inputicon>
-          <input wtInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
-        </wt-iconfield>
-        <wt-iconfield>
-          <input wtInputText [placeholder]="tx('อีเมล')" [attr.aria-label]="tx('อีเมล')" />
-          <wt-inputicon icon="wi wi-envelope"></wt-inputicon>
-        </wt-iconfield>
+        <wu-iconfield id="d-iconfield">
+          <wu-inputicon icon="wi wi-search"></wu-inputicon>
+          <input wuInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
+        </wu-iconfield>
+        <wu-iconfield>
+          <input wuInputText [placeholder]="tx('อีเมล')" [attr.aria-label]="tx('อีเมล')" />
+          <wu-inputicon icon="wi wi-envelope"></wu-inputicon>
+        </wu-iconfield>
       </docs-demo>
     </docs-section>
 
     <docs-section id="position" [section]="sec['position']">
       <docs-demo [html]="code['position']">
-        <wt-iconfield id="d-iconfield-right" iconPosition="right">
-          <wt-inputicon icon="wi wi-search"></wt-inputicon>
-          <input wtInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
-        </wt-iconfield>
+        <wu-iconfield id="d-iconfield-right" iconPosition="right">
+          <wu-inputicon icon="wi wi-search"></wu-inputicon>
+          <input wuInputText [placeholder]="tx('ค้นหา')" [attr.aria-label]="tx('ค้นหา')" />
+        </wu-iconfield>
       </docs-demo>
     </docs-section>
   </ng-template>

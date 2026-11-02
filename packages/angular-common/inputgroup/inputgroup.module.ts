@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtInputGroup, WtInputGroupAddon } from './inputgroup.component';
+import { WuInputGroup, WuInputGroupAddon } from './inputgroup.component';
 
-/** For NgModule apps. Standalone apps can import `WtInputGroup` and `WtInputGroupAddon` directly. */
+/** For NgModule apps. Standalone apps can import `WuInputGroup` and `WuInputGroupAddon` directly. */
 @NgModule({
-  imports: [WtInputGroup, WtInputGroupAddon],
-  exports: [WtInputGroup, WtInputGroupAddon],
+  imports: [WuInputGroup, WuInputGroupAddon],
+  exports: [WuInputGroup, WuInputGroupAddon],
 })
-export class WtInputGroupModule {}
+export class WuInputGroupModule {}

@@ -24,36 +24,36 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵWT_SELECT_CSS } from 'wiratheme/select';
-import { ɵWT_MULTISELECT_CSS } from 'wiratheme/multiselect';
-import { WtTree, WtTreeFilterEvent, WtTreeNodeEvent } from 'wiratheme/tree';
-import { sameNode, treeParents, TreeFilterMode, TreeNode, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵWU_SELECT_CSS } from 'wiraui/select';
+import { ɵWU_MULTISELECT_CSS } from 'wiraui/multiselect';
+import { WuTree, WuTreeFilterEvent, WuTreeNodeEvent } from 'wiraui/tree';
+import { sameNode, treeParents, TreeFilterMode, TreeNode, WuLocale } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A field that opens a tree to pick from: `<wt-treeSelect [options]="nodes" [(ngModel)]="node" placeholder="เลือก">`.
+ * A field that opens a tree to pick from: `<wu-treeSelect [options]="nodes" [(ngModel)]="node" placeholder="เลือก">`.
  * One node by default; `selectionMode="multiple"` or `"checkbox"` picks several (shown as text or chips,
  * `display="chip"`). It can search (`[filter]="true"`) and be cleared (`[showClear]="true"`); opening it shows the
  * picked nodes with their parents open.
  */
 @Component({
-  selector: 'wt-treeselect, wt-treeSelect, wt-tree-select',
+  selector: 'wu-treeselect, wu-treeSelect, wu-tree-select',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WtTree],
+  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WuTree],
   templateUrl: './treeselect.component.html',
   styleUrls: ['./treeselect.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtTreeSelect), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuTreeSelect), multi: true }],
 })
-export class WtTreeSelect implements ControlValueAccessor, OnDestroy {
+export class WuTreeSelect implements ControlValueAccessor, OnDestroy {
   @Input() options: TreeNode[] | null | undefined;
   @Input() selectionMode: 'single' | 'multiple' | 'checkbox' = 'single';
   @Input() placeholder?: string;
@@ -109,24 +109,24 @@ export class WtTreeSelect implements ControlValueAccessor, OnDestroy {
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
   @Output() readonly onClear = new EventEmitter<void>();
-  @Output() readonly onFilter = new EventEmitter<WtTreeFilterEvent>();
-  @Output() readonly onNodeSelect = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeUnselect = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeExpand = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeCollapse = new EventEmitter<WtTreeNodeEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuTreeFilterEvent>();
+  @Output() readonly onNodeSelect = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeUnselect = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeExpand = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeCollapse = new EventEmitter<WuTreeNodeEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('value', { descendants: false }) protected valueRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) protected footerRef?: unknown;
   @ViewChild('root') protected rootRef?: ElementRef<HTMLElement>;
   @ViewChild('focusInput') protected focusRef?: ElementRef<HTMLInputElement>;
   @ViewChild('panel') protected panelRef?: ElementRef<HTMLElement>;
-  @ViewChild(WtTree) protected tree?: WtTree;
+  @ViewChild(WuTree) protected tree?: WuTree;
 
-  readonly baseId = ɵuniqueId('wt-treeselect');
+  readonly baseId = ɵuniqueId('wu-treeselect');
   open = false;
   focused = false;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -140,19 +140,19 @@ export class WtTreeSelect implements ControlValueAccessor, OnDestroy {
   private _disabled = false;
   private _loading = false;
   private formDisabled = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private onModel: (v: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    // The field and panel are drawn by wt-select's stylesheet, the chips by wt-multiSelect's.
-    styles.load('select', ɵWT_SELECT_CSS);
-    styles.load('multiselect', ɵWT_MULTISELECT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    // The field and panel are drawn by wu-select's stylesheet, the chips by wu-multiSelect's.
+    styles.load('select', ɵWU_SELECT_CSS);
+    styles.load('multiselect', ɵWU_MULTISELECT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -162,7 +162,7 @@ export class WtTreeSelect implements ControlValueAccessor, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -220,17 +220,17 @@ export class WtTreeSelect implements ControlValueAccessor, OnDestroy {
     const anchor = this.rootRef?.nativeElement;
     const panel = this.panelRef?.nativeElement;
     if (anchor && panel) {
-      this.popup = new ɵWtPopup(anchor, panel, {
+      this.popup = new ɵWuPopup(anchor, panel, {
         sheet: false,
-        sheetClass: 'wt-select-sheet',
-        modalClass: 'wt-select-modal',
+        sheetClass: 'wu-select-sheet',
+        modalClass: 'wu-select-modal',
         onOutside: () => this.hide(),
         onEscape: () => this.hide(true),
         onPosition: (_, box) => (panel.style.minWidth = `${Math.round(box.width)}px`),
       });
       this.popup.open();
       // Into the tree: the search box, else the picked (or first) node.
-      const target = (panel.querySelector('.wt-tree-filter-container input') || panel.querySelector('[role="treeitem"][tabindex="0"]')) as HTMLElement | null;
+      const target = (panel.querySelector('.wu-tree-filter-container input') || panel.querySelector('[role="treeitem"][tabindex="0"]')) as HTMLElement | null;
       if (target && event?.type !== 'mousedown') target.focus({ preventScroll: true });
       const row = panel.querySelector('[role="treeitem"][tabindex="0"]') as HTMLElement | null;
       row?.scrollIntoView({ block: 'nearest' });

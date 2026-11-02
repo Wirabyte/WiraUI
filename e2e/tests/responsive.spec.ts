@@ -69,7 +69,7 @@ test.describe('on a touch phone', () => {
         'input:not([type="hidden"])',
         'select',
       ].join(',');
-      const own = (el: Element | null) => !!el && /(^|\s)wt-/.test(el.getAttribute('class') || '');
+      const own = (el: Element | null) => !!el && /(^|\s)wu-/.test(el.getAttribute('class') || '');
       /** The element's box grown by an absolutely positioned ::before / ::after that extends its hit area. */
       const hitBox = (el: Element) => {
         const r = el.getBoundingClientRect();
@@ -86,7 +86,7 @@ test.describe('on a touch phone', () => {
       };
       const out: string[] = [];
       for (const el of document.querySelectorAll<HTMLElement>(sel)) {
-        // WiraTheme's own parts only (a native input counts through its wt- parent); the test page's own buttons are not the library's.
+        // WiraUI's own parts only (a native input counts through its wu- parent); the test page's own buttons are not the library's.
         if (!own(el) && !(el.tagName === 'INPUT' && own(el.parentElement))) continue;
         if (el.closest('[aria-hidden="true"], [inert]')) continue;
         const s = getComputedStyle(el);

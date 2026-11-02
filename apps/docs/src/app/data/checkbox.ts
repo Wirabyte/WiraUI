@@ -6,10 +6,10 @@ export const CHECKBOX_DOC: ComponentDoc = {
   title: 'Checkbox',
   group: 'Form',
   entry: 'checkbox',
-  standalone: 'WtCheckbox',
-  module: 'WtCheckboxModule',
+  standalone: 'WuCheckbox',
+  module: 'WuCheckboxModule',
   forms: true,
-  selector: 'wt-checkbox',
+  selector: 'wu-checkbox',
   description: {
     th: 'ช่องติ๊กที่ใช้ได้ทั้ง ngModel และ Reactive Forms มี 2 โหมด: binary (ค่าเป็น true / false) หรือแบบกลุ่ม (ค่าเป็น array)',
     en: 'A checkbox for ngModel and reactive forms, in two modes: binary (true / false) or a group whose value is an array.',
@@ -77,27 +77,27 @@ export const CHECKBOX_DOC: ComponentDoc = {
     },
   },
   code: {
-    sizes: `<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" size="small" label="เล็ก"></wt-checkbox>
-<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ปกติ"></wt-checkbox>
-<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" size="large" label="ใหญ่"></wt-checkbox>`,
-    basic: `<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไขการใช้งาน"></wt-checkbox>`,
+    sizes: `<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" size="small" label="เล็ก"></wu-checkbox>
+<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ปกติ"></wu-checkbox>
+<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" size="large" label="ใหญ่"></wu-checkbox>`,
+    basic: `<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไขการใช้งาน"></wu-checkbox>`,
     group: {
-      classic: `<wt-checkbox *ngFor="let t of topics" name="topic" [value]="t.value" [label]="t.label"
-  [(ngModel)]="selected"></wt-checkbox>`,
+      classic: `<wu-checkbox *ngFor="let t of topics" name="topic" [value]="t.value" [label]="t.label"
+  [(ngModel)]="selected"></wu-checkbox>`,
       v3: `@for (t of topics; track t.value) {
-<wt-checkbox name="topic" [value]="t.value" [label]="t.label" [(ngModel)]="selected"></wt-checkbox>
+<wu-checkbox name="topic" [value]="t.value" [label]="t.label" [(ngModel)]="selected"></wu-checkbox>
 }`,
     },
     reactive: `<form [formGroup]="form">
-  <wt-checkbox formControlName="terms" [binary]="true" label="ยอมรับเงื่อนไขการใช้งาน"></wt-checkbox>
-  <wt-checkbox formControlName="privacy" [binary]="true" label="ยินยอมตามนโยบายความเป็นส่วนตัว"></wt-checkbox>
+  <wu-checkbox formControlName="terms" [binary]="true" label="ยอมรับเงื่อนไขการใช้งาน"></wu-checkbox>
+  <wu-checkbox formControlName="privacy" [binary]="true" label="ยินยอมตามนโยบายความเป็นส่วนตัว"></wu-checkbox>
 </form>`,
-    values: `<wt-checkbox name="newsletter" [(ngModel)]="newsletter" [binary]="true" trueValue="Y" falseValue="N"
-  label="รับข่าวสารทางอีเมล"></wt-checkbox>`,
-    disabled: `<wt-checkbox [ngModel]="true" [binary]="true" [disabled]="true" label="ปิดอยู่ (ติ๊กแล้ว)"></wt-checkbox>
-<wt-checkbox [ngModel]="false" [binary]="true" [disabled]="true" label="ปิดอยู่"></wt-checkbox>`,
-    invalid: `<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" [invalid]="true"
-  label="ต้องยอมรับก่อนดำเนินการต่อ"></wt-checkbox>`,
+    values: `<wu-checkbox name="newsletter" [(ngModel)]="newsletter" [binary]="true" trueValue="Y" falseValue="N"
+  label="รับข่าวสารทางอีเมล"></wu-checkbox>`,
+    disabled: `<wu-checkbox [ngModel]="true" [binary]="true" [disabled]="true" label="ปิดอยู่ (ติ๊กแล้ว)"></wu-checkbox>
+<wu-checkbox [ngModel]="false" [binary]="true" [disabled]="true" label="ปิดอยู่"></wu-checkbox>`,
+    invalid: `<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" [invalid]="true"
+  label="ต้องยอมรับก่อนดำเนินการต่อ"></wu-checkbox>`,
   },
   ts: {
     group: `topics = [
@@ -136,28 +136,28 @@ selected: string[] = ['deals'];`,
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [{ name: 'onChange', type: 'WtCheckboxChangeEvent', description: { th: 'ติ๊กหรือเอาออก', en: 'Checked or unchecked' } }],
+      rows: [{ name: 'onChange', type: 'WuCheckboxChangeEvent', description: { th: 'ติ๊กหรือเอาออก', en: 'Checked or unchecked' } }],
     },
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtCheckboxChangeEvent {
+      code: `interface WuCheckboxChangeEvent {
   checked: boolean;
   originalEvent: Event;
 }`,
     },
   ],
   tokens: [
-    { name: '--wt-checkbox-size', description: { th: 'ขนาดช่อง', en: 'Box size' } },
-    { name: '--wt-checkbox-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
-    { name: '--wt-checkbox-border-width', description: { th: 'ความหนาขอบ', en: 'Border width' } },
-    { name: '--wt-checkbox-hover-border', description: { th: 'ขอบตอนชี้', en: 'Hover border' } },
-    { name: '--wt-checkbox-icon-size', description: { th: 'ขนาดเครื่องหมายถูก', en: 'Check mark size' } },
-    { name: '--wt-field-bg', description: { th: 'พื้นของช่อง', en: 'Box background' } },
-    { name: '--wt-field-border', description: { th: 'ขอบของช่อง', en: 'Box border' } },
-    { name: '--wt-primary-color', description: { th: 'พื้นเมื่อติ๊ก', en: 'Checked background' } },
-    { name: '--wt-primary-contrast', description: { th: 'สีเครื่องหมายถูก', en: 'Check mark colour' } },
-    { name: '--wt-control-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
-    { name: '--wt-text', description: { th: 'สีของ label', en: 'Label colour' } },
+    { name: '--wu-checkbox-size', description: { th: 'ขนาดช่อง', en: 'Box size' } },
+    { name: '--wu-checkbox-radius', description: { th: 'ความมนของมุม', en: 'Corner radius' } },
+    { name: '--wu-checkbox-border-width', description: { th: 'ความหนาขอบ', en: 'Border width' } },
+    { name: '--wu-checkbox-hover-border', description: { th: 'ขอบตอนชี้', en: 'Hover border' } },
+    { name: '--wu-checkbox-icon-size', description: { th: 'ขนาดเครื่องหมายถูก', en: 'Check mark size' } },
+    { name: '--wu-field-bg', description: { th: 'พื้นของช่อง', en: 'Box background' } },
+    { name: '--wu-field-border', description: { th: 'ขอบของช่อง', en: 'Box border' } },
+    { name: '--wu-primary-color', description: { th: 'พื้นเมื่อติ๊ก', en: 'Checked background' } },
+    { name: '--wu-primary-contrast', description: { th: 'สีเครื่องหมายถูก', en: 'Check mark colour' } },
+    { name: '--wu-control-focus-shadow', description: { th: 'วงโฟกัส', en: 'Focus ring' } },
+    { name: '--wu-text', description: { th: 'สีของ label', en: 'Label colour' } },
   ],
 };

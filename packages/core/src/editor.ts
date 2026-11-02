@@ -1,5 +1,5 @@
 /**
- * Framework-free parts of wt-editor: the toolbar vocabulary and its presets, per-tool options, the undo history,
+ * Framework-free parts of wu-editor: the toolbar vocabulary and its presets, per-tool options, the undo history,
  * and helpers for the HTML value. The editing itself (DOM, selection) lives in the Angular entry.
  */
 
@@ -272,7 +272,7 @@ export interface EditorSnapshot {
 }
 
 /**
- * Undo / redo for wt-editor. Typing is grouped: snapshots pushed within `mergeMs` of each other with `merge: true`
+ * Undo / redo for wu-editor. Typing is grouped: snapshots pushed within `mergeMs` of each other with `merge: true`
  * replace the newest step instead of adding one, so one undo removes a burst of typing.
  */
 export class EditorHistory {

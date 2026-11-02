@@ -2,7 +2,7 @@ import { sameValue } from './select';
 import { filterGlobal, FilterMatchMode } from './table';
 
 /**
- * Lists the user orders by hand: wt-picklist (two lists, items move between them) and wt-orderlist (one list).
+ * Lists the user orders by hand: wu-picklist (two lists, items move between them) and wu-orderlist (one list).
  * The arrays are changed in place, as apps expect: they bind `[source]="available"` and read `available` again in
  * `(onMoveToTarget)`.
  */

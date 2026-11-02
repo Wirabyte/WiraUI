@@ -1,33 +1,33 @@
-/* wt-radiobutton. Shared by wiratheme v1, v2 and v3. Same structure as wt-checkbox. */
-@layer wiratheme.components {
-  :is(wt-radiobutton, wt-radio-button) {
+/* wu-radiobutton. Shared by wiraui v1, v2 and v3. Same structure as wu-checkbox. */
+@layer wiraui.components {
+  :is(wu-radiobutton, wu-radio-button) {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-radiobutton {
+  .wu-radiobutton {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
     user-select: none;
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-font-size) * var(--_rb-font, 1));
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-font-size) * var(--_rb-font, 1));
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
-  .wt-radiobutton-sm,
+  /* size="small" | "large" (class names wu-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wu-radiobutton-sm,
   .p-radiobutton-sm {
-    --_rb-scale: var(--wt-size-sm-scale);
+    --_rb-scale: var(--wu-size-sm-scale);
     --_rb-font: 0.875;
   }
-  .wt-radiobutton-lg,
+  .wu-radiobutton-lg,
   .p-radiobutton-lg {
-    --_rb-scale: var(--wt-size-lg-scale);
-    --_rb-font: var(--wt-size-lg-scale);
+    --_rb-scale: var(--wu-size-lg-scale);
+    --_rb-font: var(--wu-size-lg-scale);
   }
-  .wt-radiobutton-input {
+  .wu-radiobutton-input {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -37,63 +37,63 @@
     cursor: inherit;
     z-index: 1;
   }
-  .wt-radiobutton-control {
+  .wu-radiobutton-control {
     display: inline-flex;
     flex: none;
   }
-  .wt-radiobutton-box {
+  .wu-radiobutton-box {
     flex: none;
     display: grid;
     place-items: center;
-    width: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
-    height: calc(var(--wt-radio-size) * var(--_rb-scale, 1));
+    width: calc(var(--wu-radio-size) * var(--_rb-scale, 1));
+    height: calc(var(--wu-radio-size) * var(--_rb-scale, 1));
     /* Whole, even pixels: a size like 17.5px (1.25rem at 14px) is snapped to 18 × 17 and the circle looks dented,
        and an odd size leaves the dot half a pixel off centre. Browsers without round() keep the line above. */
-    width: round(calc(var(--wt-radio-size) * var(--_rb-scale, 1)), 2px);
-    height: round(calc(var(--wt-radio-size) * var(--_rb-scale, 1)), 2px);
+    width: round(calc(var(--wu-radio-size) * var(--_rb-scale, 1)), 2px);
+    height: round(calc(var(--wu-radio-size) * var(--_rb-scale, 1)), 2px);
     box-sizing: border-box;
-    border: var(--wt-radio-border-width) solid var(--wt-field-border);
+    border: var(--wu-radio-border-width) solid var(--wu-field-border);
     border-radius: 50%;
-    background: var(--wt-field-bg);
-    box-shadow: var(--wt-field-shadow);
+    background: var(--wu-field-bg);
+    box-shadow: var(--wu-field-shadow);
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      outline-color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-radiobutton-dot {
-    width: calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1));
-    height: calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1));
-    width: round(calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1)), 2px);
-    height: round(calc(var(--wt-radio-dot-size) * var(--_rb-scale, 1)), 2px);
+  .wu-radiobutton-dot {
+    width: calc(var(--wu-radio-dot-size) * var(--_rb-scale, 1));
+    height: calc(var(--wu-radio-dot-size) * var(--_rb-scale, 1));
+    width: round(calc(var(--wu-radio-dot-size) * var(--_rb-scale, 1)), 2px);
+    height: round(calc(var(--wu-radio-dot-size) * var(--_rb-scale, 1)), 2px);
     border-radius: 50%;
-    background: var(--wt-radio-dot-color);
+    background: var(--wu-radio-dot-color);
     transform: scale(0);
-    transition: transform var(--wt-transition);
+    transition: transform var(--wu-transition);
   }
-  .wt-radiobutton:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
-    border-color: var(--wt-checkbox-hover-border);
+  .wu-radiobutton:not(.wu-radiobutton-disabled):hover .wu-radiobutton-box {
+    border-color: var(--wu-checkbox-hover-border);
   }
-  .wt-radiobutton-checked .wt-radiobutton-box,
-  .wt-radiobutton-checked:not(.wt-radiobutton-disabled):hover .wt-radiobutton-box {
-    background: var(--wt-radio-checked-bg);
-    border-color: var(--wt-radio-checked-border);
+  .wu-radiobutton-checked .wu-radiobutton-box,
+  .wu-radiobutton-checked:not(.wu-radiobutton-disabled):hover .wu-radiobutton-box {
+    background: var(--wu-radio-checked-bg);
+    border-color: var(--wu-radio-checked-border);
   }
-  .wt-radiobutton-checked .wt-radiobutton-dot {
+  .wu-radiobutton-checked .wu-radiobutton-dot {
     transform: scale(1);
   }
-  .wt-radiobutton-input:focus-visible + .wt-radiobutton-control .wt-radiobutton-box {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-radiobutton-input:focus-visible + .wu-radiobutton-control .wu-radiobutton-box {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-radiobutton-disabled {
+  .wu-radiobutton-disabled {
     cursor: default;
-    opacity: var(--wt-disabled-opacity);
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-radiobutton.wt-invalid .wt-radiobutton-box,
-  :is(wt-radiobutton, wt-radio-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-radiobutton-box {
-    border-color: var(--wt-danger-color);
+  .wu-radiobutton.wu-invalid .wu-radiobutton-box,
+  :is(wu-radiobutton, wu-radio-button).ng-invalid:is(.ng-touched, form.ng-submitted *) .wu-radiobutton-box {
+    border-color: var(--wu-danger-color);
   }
 }

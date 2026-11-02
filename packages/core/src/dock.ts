@@ -1,4 +1,4 @@
-/** wt-dock: the macOS-style magnification, framework-free. */
+/** wu-dock: the macOS-style magnification, framework-free. */
 
 /**
  * How much a dock icon grows with the pointer `distance` px from its centre: `max` right under the pointer, easing

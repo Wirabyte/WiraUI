@@ -6,9 +6,9 @@ export const SPLITTER_DOC: ComponentDoc = {
   title: 'Splitter',
   group: 'Layout',
   entry: 'splitter',
-  standalone: 'WtSplitter',
-  module: 'WtSplitterModule',
-  selector: 'wt-splitter',
+  standalone: 'WuSplitter',
+  module: 'WuSplitterModule',
+  selector: 'wu-splitter',
   description: {
     th: 'แบ่งพื้นที่เป็นช่องที่ปรับขนาดได้ด้วยการลากเส้นแบ่ง แนวนอนหรือแนวตั้ง ซ้อนกันได้ กำหนดขนาดต่ำสุดได้ จำขนาดที่ผู้ใช้ปรับไว้ได้ และใช้คีย์บอร์ดได้',
     en: 'Splits an area into panels people resize by dragging the gutter between them: side by side or stacked, nested, with smallest sizes, sizes remembered for the user, and the keyboard.',
@@ -32,22 +32,22 @@ export const SPLITTER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtSplitterModule</code>) และ standalone (<code>WtSplitter</code> กับ <code>WtSplitterPanel</code>) · แต่ละช่องเป็น <code>&lt;wt-splitter-panel&gt;</code> (เขียน <code>wt-splitterPanel</code> ก็ได้) หรือ <code>&lt;ng-template pTemplate="panel"&gt;</code> แบบ template เดิม',
-        en: 'Works as an NgModule (<code>WtSplitterModule</code>) or standalone (<code>WtSplitter</code> and <code>WtSplitterPanel</code>) · each panel is a <code>&lt;wt-splitter-panel&gt;</code> (or <code>wt-splitterPanel</code>), or an <code>&lt;ng-template pTemplate="panel"&gt;</code> as in existing templates.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuSplitterModule</code>) และ standalone (<code>WuSplitter</code> กับ <code>WuSplitterPanel</code>) · แต่ละช่องเป็น <code>&lt;wu-splitter-panel&gt;</code> (เขียน <code>wu-splitterPanel</code> ก็ได้) หรือ <code>&lt;ng-template pTemplate="panel"&gt;</code> แบบ template เดิม',
+        en: 'Works as an NgModule (<code>WuSplitterModule</code>) or standalone (<code>WuSplitter</code> and <code>WuSplitterPanel</code>) · each panel is a <code>&lt;wu-splitter-panel&gt;</code> (or <code>wu-splitterPanel</code>), or an <code>&lt;ng-template pTemplate="panel"&gt;</code> as in existing templates.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: 'ใส่ช่องเป็น <code>&lt;wt-splitter-panel&gt;</code> ตามลำดับ <code>[size]</code> คือขนาดเริ่มต้นเป็น % ช่องที่ไม่ใส่แบ่งพื้นที่ที่เหลือเท่า ๆ กัน · ลากเส้นแบ่งเพื่อปรับ ความสูงของทั้งชุดกำหนดด้วย <code>[style]</code>',
-        en: 'Put the panels in order as <code>&lt;wt-splitter-panel&gt;</code>; <code>[size]</code> is the starting size in %, and panels without one share what is left equally · drag the gutter to resize; set the height of the whole with <code>[style]</code>.',
+        th: 'ใส่ช่องเป็น <code>&lt;wu-splitter-panel&gt;</code> ตามลำดับ <code>[size]</code> คือขนาดเริ่มต้นเป็น % ช่องที่ไม่ใส่แบ่งพื้นที่ที่เหลือเท่า ๆ กัน · ลากเส้นแบ่งเพื่อปรับ ความสูงของทั้งชุดกำหนดด้วย <code>[style]</code>',
+        en: 'Put the panels in order as <code>&lt;wu-splitter-panel&gt;</code>; <code>[size]</code> is the starting size in %, and panels without one share what is left equally · drag the gutter to resize; set the height of the whole with <code>[style]</code>.',
       },
     },
     vertical: {
       title: { th: 'แนวตั้งและซ้อนกัน', en: 'Vertical and nested' },
       text: {
-        th: '<code>layout="vertical"</code> เรียงช่องจากบนลงล่าง · ใส่ wt-splitter ในช่องของอีกตัวเพื่อแบ่งซ้อน เช่น เมนูทางซ้าย กับเนื้อหาและบันทึกย่อซ้อนกันทางขวา',
-        en: '<code>layout="vertical"</code> stacks the panels from top to bottom · put a wt-splitter inside a panel of another to nest them, such as a menu on the left with content over notes on the right.',
+        th: '<code>layout="vertical"</code> เรียงช่องจากบนลงล่าง · ใส่ wu-splitter ในช่องของอีกตัวเพื่อแบ่งซ้อน เช่น เมนูทางซ้าย กับเนื้อหาและบันทึกย่อซ้อนกันทางขวา',
+        en: '<code>layout="vertical"</code> stacks the panels from top to bottom · put a wu-splitter inside a panel of another to nest them, such as a menu on the left with content over notes on the right.',
       },
     },
     sizes: {
@@ -74,45 +74,45 @@ export const SPLITTER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-splitter&gt;</code> เป็น <code>&lt;wt-splitter&gt;</code> input และ event ใช้ชื่อเดิม (<code>layout</code>, <code>panelSizes</code>, <code>minSizes</code>, <code>gutterSize</code>, <code>stateKey</code>, <code>stateStorage</code>, <code>step</code>, <code>onResizeStart</code>, <code>onResizeEnd</code>) และช่องแบบ <code>&lt;ng-template pTemplate="panel"&gt;</code> ใช้ได้เหมือนเดิม',
-        en: 'Change <code>&lt;p-splitter&gt;</code> to <code>&lt;wt-splitter&gt;</code>; the inputs and events keep their names (<code>layout</code>, <code>panelSizes</code>, <code>minSizes</code>, <code>gutterSize</code>, <code>stateKey</code>, <code>stateStorage</code>, <code>step</code>, <code>onResizeStart</code>, <code>onResizeEnd</code>), and panels as <code>&lt;ng-template pTemplate="panel"&gt;</code> keep working.',
+        th: 'เปลี่ยน <code>&lt;p-splitter&gt;</code> เป็น <code>&lt;wu-splitter&gt;</code> input และ event ใช้ชื่อเดิม (<code>layout</code>, <code>panelSizes</code>, <code>minSizes</code>, <code>gutterSize</code>, <code>stateKey</code>, <code>stateStorage</code>, <code>step</code>, <code>onResizeStart</code>, <code>onResizeEnd</code>) และช่องแบบ <code>&lt;ng-template pTemplate="panel"&gt;</code> ใช้ได้เหมือนเดิม',
+        en: 'Change <code>&lt;p-splitter&gt;</code> to <code>&lt;wu-splitter&gt;</code>; the inputs and events keep their names (<code>layout</code>, <code>panelSizes</code>, <code>minSizes</code>, <code>gutterSize</code>, <code>stateKey</code>, <code>stateStorage</code>, <code>step</code>, <code>onResizeStart</code>, <code>onResizeEnd</code>), and panels as <code>&lt;ng-template pTemplate="panel"&gt;</code> keep working.',
       },
     },
   },
   code: {
-    basic: `<wt-splitter [style]="{ height: '16rem' }">
-  <wt-splitter-panel [size]="30">
+    basic: `<wu-splitter [style]="{ height: '16rem' }">
+  <wu-splitter-panel [size]="30">
     <h3>ห้องเรียน</h3>
     <ul>
       <li>ม.1/1</li>
       <li>ม.1/2</li>
       <li>ม.2/1</li>
     </ul>
-  </wt-splitter-panel>
-  <wt-splitter-panel [size]="70">
+  </wu-splitter-panel>
+  <wu-splitter-panel [size]="70">
     <h3>รายชื่อนักเรียน</h3>
     <p>เลือกห้องทางซ้ายเพื่อดูรายชื่อ</p>
-  </wt-splitter-panel>
-</wt-splitter>`,
-    vertical: `<wt-splitter [style]="{ height: '20rem' }">
-  <wt-splitter-panel [size]="25">เมนู</wt-splitter-panel>
-  <wt-splitter-panel [size]="75">
-    <wt-splitter layout="vertical">
-      <wt-splitter-panel [size]="65">เนื้อหา</wt-splitter-panel>
-      <wt-splitter-panel [size]="35">บันทึกย่อ</wt-splitter-panel>
-    </wt-splitter>
-  </wt-splitter-panel>
-</wt-splitter>`,
-    sizes: `<wt-splitter [(panelSizes)]="sizes" [minSizes]="[20, 30]" [gutterSize]="6" [step]="10"
+  </wu-splitter-panel>
+</wu-splitter>`,
+    vertical: `<wu-splitter [style]="{ height: '20rem' }">
+  <wu-splitter-panel [size]="25">เมนู</wu-splitter-panel>
+  <wu-splitter-panel [size]="75">
+    <wu-splitter layout="vertical">
+      <wu-splitter-panel [size]="65">เนื้อหา</wu-splitter-panel>
+      <wu-splitter-panel [size]="35">บันทึกย่อ</wu-splitter-panel>
+    </wu-splitter>
+  </wu-splitter-panel>
+</wu-splitter>`,
+    sizes: `<wu-splitter [(panelSizes)]="sizes" [minSizes]="[20, 30]" [gutterSize]="6" [step]="10"
   (onResizeEnd)="resized($event)" [style]="{ height: '12rem' }">
-  <wt-splitter-panel>เมนู</wt-splitter-panel>         <!-- ช่องนี้แคบสุด 20% -->
-  <wt-splitter-panel>ตัวอย่างก่อนพิมพ์</wt-splitter-panel>
-</wt-splitter>`,
+  <wu-splitter-panel>เมนู</wu-splitter-panel>         <!-- ช่องนี้แคบสุด 20% -->
+  <wu-splitter-panel>ตัวอย่างก่อนพิมพ์</wu-splitter-panel>
+</wu-splitter>`,
     state: `<!-- บันทึกขนาดที่ผู้ใช้ลากไว้ -->
-<wt-splitter stateKey="report-layout" stateStorage="local" [style]="{ height: '12rem' }">
-  <wt-splitter-panel [size]="40">เมนู</wt-splitter-panel>
-  <wt-splitter-panel [size]="60">ตัวอย่างก่อนพิมพ์</wt-splitter-panel>
-</wt-splitter>`,
+<wu-splitter stateKey="report-layout" stateStorage="local" [style]="{ height: '12rem' }">
+  <wu-splitter-panel [size]="40">เมนู</wu-splitter-panel>
+  <wu-splitter-panel [size]="60">ตัวอย่างก่อนพิมพ์</wu-splitter-panel>
+</wu-splitter>`,
   },
   ts: {
     sizes: `sizes = [35, 65];   // ขนาดเป็น % ของแต่ละช่อง
@@ -140,7 +140,7 @@ resized(event: { sizes: number[] }): void {
     },
     {
       id: 'api-panel',
-      title: 'wt-splitter-panel',
+      title: 'wu-splitter-panel',
       rows: [
         row('size', 'number', undefined, 'ขนาดเริ่มต้นเป็น %', 'Starting size in %'),
         row('minSize', 'number', undefined, 'ขนาดเล็กสุดเป็น %', 'Smallest size in %'),
@@ -159,15 +159,15 @@ resized(event: { sizes: number[] }): void {
     },
   ],
   tokens: [
-    tok('--wt-splitter-bg', 'พื้นของช่อง', 'Panel background'),
-    tok('--wt-splitter-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-splitter-border-width', 'ความหนาขอบ', 'Border width'),
-    tok('--wt-splitter-border-color', 'สีขอบ', 'Border colour'),
-    tok('--wt-splitter-radius', 'มุมโค้ง', 'Corner radius'),
-    tok('--wt-splitter-gutter-bg', 'สีเส้นแบ่ง', 'Gutter colour'),
-    tok('--wt-splitter-gutter-active-bg', 'สีเส้นแบ่งตอนลากหรือโฟกัส', 'Gutter colour while dragged or focused'),
-    tok('--wt-splitter-handle-length', 'ความยาวของจับที่เส้นแบ่ง', 'Length of the grip on the gutter'),
-    tok('--wt-splitter-handle-bg', 'สีของจับ', 'Grip colour'),
-    tok('--wt-splitter-hit-size', 'ความกว้างของพื้นที่ที่กดได้รอบเส้นแบ่ง', 'Width of the area around the gutter that takes a press'),
+    tok('--wu-splitter-bg', 'พื้นของช่อง', 'Panel background'),
+    tok('--wu-splitter-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-splitter-border-width', 'ความหนาขอบ', 'Border width'),
+    tok('--wu-splitter-border-color', 'สีขอบ', 'Border colour'),
+    tok('--wu-splitter-radius', 'มุมโค้ง', 'Corner radius'),
+    tok('--wu-splitter-gutter-bg', 'สีเส้นแบ่ง', 'Gutter colour'),
+    tok('--wu-splitter-gutter-active-bg', 'สีเส้นแบ่งตอนลากหรือโฟกัส', 'Gutter colour while dragged or focused'),
+    tok('--wu-splitter-handle-length', 'ความยาวของจับที่เส้นแบ่ง', 'Length of the grip on the gutter'),
+    tok('--wu-splitter-handle-bg', 'สีของจับ', 'Grip colour'),
+    tok('--wu-splitter-hit-size', 'ความกว้างของพื้นที่ที่กดได้รอบเส้นแบ่ง', 'Width of the area around the gutter that takes a press'),
   ],
 };

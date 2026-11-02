@@ -1,22 +1,22 @@
 @if (model()) {
-  <wt-tabmenu
+  <wu-tabmenu
     [model]="model()"
     [activeItem]="activeItem()"
     (activeItemChange)="activeItem.set($event)"
     [ariaLabel]="ariaLabel()"
     [styleClass]="styleClass() || undefined"
     [style]="rootStyle()"
-  ></wt-tabmenu>
+  ></wu-tabmenu>
 } @else {
-<div class="wt-tabs p-tabs p-component" [class]="styleClass() || ''" [style]="rootStyle()">
+<div class="wu-tabs p-tabs p-component" [class]="styleClass() || ''" [style]="rootStyle()">
   @if (!valueMode()) {
-  <div class="wt-tabs-nav p-tablist">
+  <div class="wu-tabs-nav p-tablist">
   @if (canPrev()) {
-    <button type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tablist-prev-button" tabindex="-1" aria-hidden="true" (click)="page(-1)">
+    <button type="button" class="wu-tabs-nav-btn wu-tabs-prev p-tablist-prev-button" tabindex="-1" aria-hidden="true" (click)="page(-1)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   }
-  <div #list class="wt-tablist p-tablist-tab-list" role="tablist" [attr.aria-label]="ariaLabel() || null" (scroll)="updateArrows()">
+  <div #list class="wu-tablist p-tablist-tab-list" role="tablist" [attr.aria-label]="ariaLabel() || null" (scroll)="updateArrows()">
     @for (panel of panels(); track panel; let i = $index) {
       <button
         type="button"
@@ -31,7 +31,7 @@
         (keydown)="onKeydown($event, i)"
       >
         @if (panel.leftIcon()) {
-          <span [class]="'wt-tab-icon ' + panel.leftIcon()" aria-hidden="true"></span>
+          <span [class]="'wu-tab-icon ' + panel.leftIcon()" aria-hidden="true"></span>
         }
         @if (panel.headerTemplate(); as t) {
           <ng-container *ngTemplateOutlet="t"></ng-container>
@@ -42,13 +42,13 @@
     }
   </div>
   @if (canNext()) {
-    <button type="button" class="wt-tabs-nav-btn wt-tabs-next p-tablist-next-button" tabindex="-1" aria-hidden="true" (click)="page(1)">
+    <button type="button" class="wu-tabs-nav-btn wu-tabs-next p-tablist-next-button" tabindex="-1" aria-hidden="true" (click)="page(1)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   }
   </div>
   }
-  <!-- By value the content is the wt-tablist and wt-tabpanels themselves. -->
-  <div [class]="valueMode() ? 'wt-tabs-content' : 'wt-tabpanels p-tabpanels'"><ng-content></ng-content></div>
+  <!-- By value the content is the wu-tablist and wu-tabpanels themselves. -->
+  <div [class]="valueMode() ? 'wu-tabs-content' : 'wu-tabpanels p-tabpanels'"><ng-content></ng-content></div>
 </div>
 }

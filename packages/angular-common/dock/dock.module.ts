@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtDock } from './dock.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuDock } from './dock.component';
 
-/** For NgModule apps (with `WtTemplate` for `pTemplate="item"`, `start` and `end`). Standalone apps can import `WtDock` directly. */
+/** For NgModule apps (with `WuTemplate` for `pTemplate="item"`, `start` and `end`). Standalone apps can import `WuDock` directly. */
 @NgModule({
-  imports: [WtDock, WtTemplate],
-  exports: [WtDock, WtTemplate],
+  imports: [WuDock, WuTemplate],
+  exports: [WuDock, WuTemplate],
 })
-export class WtDockModule {}
+export class WuDockModule {}

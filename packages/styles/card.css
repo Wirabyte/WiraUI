@@ -1,130 +1,130 @@
-/* wt-card. Shared by wiratheme v1, v2 and v3. Empty slots collapse, so spacing only sits between real parts.
+/* wu-card. Shared by wiraui v1, v2 and v3. Empty slots collapse, so spacing only sits between real parts.
    Spacing tokens follow both layouts: v1 presets pad the content and footer (classic),
    v2/v3 presets put a gap between the parts of the body (styled). */
-@layer wiratheme.components {
-  wt-card {
+@layer wiraui.components {
+  wu-card {
     display: block;
   }
-  .wt-card {
-    background: var(--wt-card-bg);
-    color: var(--wt-text);
-    border: var(--wt-card-border-width) solid var(--wt-border);
-    border-radius: var(--wt-card-radius);
-    box-shadow: var(--wt-card-shadow);
-    -webkit-backdrop-filter: var(--wt-card-backdrop);
-    backdrop-filter: var(--wt-card-backdrop);
+  .wu-card {
+    background: var(--wu-card-bg);
+    color: var(--wu-text);
+    border: var(--wu-card-border-width) solid var(--wu-border);
+    border-radius: var(--wu-card-radius);
+    box-shadow: var(--wu-card-shadow);
+    -webkit-backdrop-filter: var(--wu-card-backdrop);
+    backdrop-filter: var(--wu-card-backdrop);
     overflow: hidden;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-card-outlined {
+  .wu-card-outlined {
     border-width: 1px;
     box-shadow: none;
   }
-  .wt-card-elevated {
+  .wu-card-elevated {
     border-width: 0;
-    box-shadow: var(--wt-shadow-md);
+    box-shadow: var(--wu-shadow-md);
   }
-  .wt-card-glass {
-    background: var(--wt-card-bg);
-    border: 1px solid var(--wt-glass-border);
-    box-shadow: var(--wt-glass-highlight), var(--wt-glass-shadow);
+  .wu-card-glass {
+    background: var(--wu-card-bg);
+    border: 1px solid var(--wu-glass-border);
+    box-shadow: var(--wu-glass-highlight), var(--wu-glass-shadow);
   }
   @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .wt-card-glass {
-      background: var(--wt-glass-bg);
-      -webkit-backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
-      backdrop-filter: blur(var(--wt-glass-blur)) saturate(var(--wt-glass-saturate));
+    .wu-card-glass {
+      background: var(--wu-glass-bg);
+      -webkit-backdrop-filter: blur(var(--wu-glass-blur)) saturate(var(--wu-glass-saturate));
+      backdrop-filter: blur(var(--wu-glass-blur)) saturate(var(--wu-glass-saturate));
     }
   }
 
-  .wt-card-header:empty,
-  .wt-card-actions:empty,
-  .wt-card-footer:empty,
-  .wt-card-content:empty,
-  .wt-card-content[hidden],
-  .wt-card-caption:not(:has(> :not(:empty))) {
+  .wu-card-header:empty,
+  .wu-card-actions:empty,
+  .wu-card-footer:empty,
+  .wu-card-content:empty,
+  .wu-card-content[hidden],
+  .wu-card-caption:not(:has(> :not(:empty))) {
     display: none;
   }
-  .wt-card-header img {
+  .wu-card-header img {
     display: block;
     width: 100%;
   }
-  .wt-card-body {
+  .wu-card-body {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-card-body-gap);
-    padding: var(--wt-card-padding);
+    gap: var(--wu-card-body-gap);
+    padding: var(--wu-card-padding);
   }
-  .wt-card-caption {
+  .wu-card-caption {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.75rem;
-    margin-bottom: var(--wt-card-caption-gap);
+    margin-bottom: var(--wu-card-caption-gap);
   }
-  .wt-card-titles {
+  .wu-card-titles {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-card-title-gap);
+    gap: var(--wu-card-title-gap);
     min-width: 0;
   }
-  .wt-card-title {
-    font-size: var(--wt-card-title-size);
-    font-weight: var(--wt-card-title-weight);
+  .wu-card-title {
+    font-size: var(--wu-card-title-size);
+    font-weight: var(--wu-card-title-weight);
     line-height: 1.35;
   }
-  .wt-card-subtitle {
-    color: var(--wt-text-muted);
+  .wu-card-subtitle {
+    color: var(--wu-text-muted);
   }
-  .wt-card-actions {
+  .wu-card-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-shrink: 0;
   }
-  .wt-card-content {
-    padding: var(--wt-card-content-padding-y) 0;
+  .wu-card-content {
+    padding: var(--wu-card-content-padding-y) 0;
   }
-  .wt-card-footer {
+  .wu-card-footer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
-    padding-top: var(--wt-card-footer-padding-top);
+    padding-top: var(--wu-card-footer-padding-top);
   }
 
-  /* Buttons inside the wrapper the app projects (<div wtCardFooter>) get the slot's spacing too. */
-  .wt-card-footer > [wtCardFooter]:has(> wt-button, > button, > a, > .wt-btn),
-  .wt-card-actions > [wtCardActions]:has(> wt-button, > button, > a, > .wt-btn) {
+  /* Buttons inside the wrapper the app projects (<div wuCardFooter>) get the slot's spacing too. */
+  .wu-card-footer > [wuCardFooter]:has(> wu-button, > button, > a, > .wu-btn),
+  .wu-card-actions > [wuCardActions]:has(> wu-button, > button, > a, > .wu-btn) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
   }
 
-  .wt-card-skeleton {
+  .wu-card-skeleton {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: var(--wt-card-content-padding-y) 0;
+    padding: var(--wu-card-content-padding-y) 0;
   }
-  .wt-card-skeleton span {
+  .wu-card-skeleton span {
     display: block;
     height: 0.9em;
-    border-radius: var(--wt-radius-sm);
-    background: linear-gradient(90deg, var(--wt-hover-bg) 25%, var(--wt-border) 50%, var(--wt-hover-bg) 75%);
+    border-radius: var(--wu-radius-sm);
+    background: linear-gradient(90deg, var(--wu-hover-bg) 25%, var(--wu-border) 50%, var(--wu-hover-bg) 75%);
     background-size: 300% 100%;
-    animation: wt-card-shine 1.4s ease infinite;
+    animation: wu-card-shine 1.4s ease infinite;
   }
-  .wt-card-skeleton span:nth-child(2) {
+  .wu-card-skeleton span:nth-child(2) {
     width: 85%;
   }
-  .wt-card-skeleton span:nth-child(3) {
+  .wu-card-skeleton span:nth-child(3) {
     width: 60%;
   }
-  @keyframes wt-card-shine {
+  @keyframes wu-card-shine {
     from {
       background-position: 100% 0;
     }
@@ -133,7 +133,7 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-card-skeleton span {
+    .wu-card-skeleton span {
       animation: none;
     }
   }

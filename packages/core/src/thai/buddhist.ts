@@ -1,4 +1,4 @@
-import { TH_LOCALE, WtLocale } from './locale';
+import { TH_LOCALE, WuLocale } from './locale';
 
 /** `'buddhist'` shows and reads years as พ.ศ.; values stay ordinary `Date` objects (ค.ศ.) either way. */
 export type CalendarSystem = 'gregorian' | 'buddhist';
@@ -13,7 +13,7 @@ export function fromBuddhistYear(buddhistYear: number): number {
 }
 
 export interface DateFormatOptions {
-  locale?: WtLocale;
+  locale?: WuLocale;
   calendar?: CalendarSystem;
 }
 

@@ -18,27 +18,27 @@ import {
   ɵassertSupportedAngular,
   ɵfindTemplate,
   ɵrefreshOnTranslation,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
 
 /** `(onItemClick)`: the item clicked. */
-export interface WtBreadcrumbItemClickEvent {
+export interface WuBreadcrumbItemClickEvent {
   originalEvent: Event;
-  item: WtMenuItem;
+  item: WuMenuItem;
 }
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * Where the page sits: `<wt-breadcrumb [model]="trail" [home]="{ icon: 'pi pi-home', routerLink: '/' }">`. Items
+ * Where the page sits: `<wu-breadcrumb [model]="trail" [home]="{ icon: 'pi pi-home', routerLink: '/' }">`. Items
  * are menu items (`label`, `icon`, `routerLink`, `url`, `command`); the last one is marked as the current page.
  */
 @Component({
-  selector: 'wt-breadcrumb',
+  selector: 'wu-breadcrumb',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './breadcrumb.component.html',
@@ -46,41 +46,41 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtBreadcrumb implements OnDestroy {
-  @Input() model: WtMenuItem[] | null | undefined;
+export class WuBreadcrumb implements OnDestroy {
+  @Input() model: WuMenuItem[] | null | undefined;
   /** The first link, usually an icon to the start page. */
-  @Input() home?: WtMenuItem | null;
+  @Input() home?: WuMenuItem | null;
   @Input() homeAriaLabel?: string;
   @Input() ariaLabel?: string;
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
 
-  @Output() readonly onItemClick = new EventEmitter<WtBreadcrumbItemClickEvent>();
+  @Output() readonly onItemClick = new EventEmitter<WuBreadcrumbItemClickEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('separator', { descendants: false }) protected separatorRef?: unknown;
 
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
     this.i18n.unsubscribe();
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get rootStyle(): Record<string, any> | null {
     return this.style && typeof this.style === 'object' ? this.style : null;
   }
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return (this.model || []).filter((it) => it && it.visible !== false);
   }
   get itemTemplate(): TemplateRef<unknown> | null {
@@ -93,14 +93,14 @@ export class WtBreadcrumb implements OnDestroy {
     return this.homeAriaLabel || this.home?.label || this.t.home;
   }
 
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
 
-  itemClick(event: MouseEvent, item: WtMenuItem): void {
+  itemClick(event: MouseEvent, item: WuMenuItem): void {
     if (item.disabled) {
       event.preventDefault();
       return;

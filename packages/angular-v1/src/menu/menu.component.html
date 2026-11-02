@@ -3,7 +3,7 @@
     *ngIf="visible"
     #panel
     popover="manual"
-    class="wt-menu wt-menu-overlay p-menu p-menu-overlay p-component"
+    class="wu-menu wu-menu-overlay p-menu p-menu-overlay p-component"
     [ngClass]="styleClass || ''"
     [ngStyle]="style || null"
     (focusin)="focusIn($event)"
@@ -13,15 +13,15 @@
   </div>
 </ng-container>
 <ng-template #inline>
-  <div class="wt-menu p-menu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (focusin)="focusIn($event)" (focusout)="focusOut($event)">
+  <div class="wu-menu p-menu p-component" [ngClass]="styleClass || ''" [ngStyle]="style || null" (focusin)="focusIn($event)" (focusout)="focusOut($event)">
     <ng-container *ngTemplateOutlet="body"></ng-container>
   </div>
 </ng-template>
 
 <ng-template #body>
-  <div *ngIf="startTemplate" class="wt-menu-start p-menu-start"><ng-container *ngTemplateOutlet="startTemplate"></ng-container></div>
+  <div *ngIf="startTemplate" class="wu-menu-start p-menu-start"><ng-container *ngTemplateOutlet="startTemplate"></ng-container></div>
   <ul
-    class="wt-menu-list p-menu-list p-reset"
+    class="wu-menu-list p-menu-list p-reset"
     role="menu"
     [id]="listId"
     [attr.aria-label]="ariaLabel || null"
@@ -29,9 +29,9 @@
     (keydown)="keydown($event)"
   >
     <ng-container *ngFor="let item of items; let i = index; trackBy: trackIndex">
-      <li *ngIf="item.separator" class="wt-menu-separator p-menu-separator" role="separator"></li>
+      <li *ngIf="item.separator" class="wu-menu-separator p-menu-separator" role="separator"></li>
       <ng-container *ngIf="!item.separator && isGroup(item)">
-        <li class="wt-menu-submenu-label p-submenu-header" role="none" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
+        <li class="wu-menu-submenu-label p-submenu-header" role="none" [ngClass]="item.styleClass || ''" [ngStyle]="item.style || null">
           <ng-container *ngIf="submenuHeaderTemplate; else headerText">
             <ng-container *ngTemplateOutlet="submenuHeaderTemplate; context: { $implicit: item }"></ng-container>
           </ng-container>
@@ -46,26 +46,26 @@
       </ng-container>
     </ng-container>
   </ul>
-  <div *ngIf="endTemplate" class="wt-menu-end p-menu-end"><ng-container *ngTemplateOutlet="endTemplate"></ng-container></div>
+  <div *ngIf="endTemplate" class="wu-menu-end p-menu-end"><ng-container *ngTemplateOutlet="endTemplate"></ng-container></div>
 </ng-template>
 
 <ng-template #row let-item let-key="key">
-  <li *ngIf="item.separator; else entry" class="wt-menu-separator p-menu-separator" role="separator"></li>
+  <li *ngIf="item.separator; else entry" class="wu-menu-separator p-menu-separator" role="separator"></li>
   <ng-template #entry>
     <li
-      class="wt-menu-item p-menuitem"
+      class="wu-menu-item p-menuitem"
       role="none"
       [ngClass]="item.styleClass || ''"
       [ngStyle]="item.style || null"
-      [class.wt-menu-item-disabled]="item.disabled"
+      [class.wu-menu-item-disabled]="item.disabled"
     >
-      <div class="wt-menu-item-content">
+      <div class="wu-menu-item-content">
         <a
           *ngIf="routed(item); else plain"
-          class="wt-menu-item-link p-menuitem-link"
+          class="wu-menu-item-link p-menuitem-link"
           role="menuitem"
           [id]="itemId(key)"
-          [attr.data-wt-key]="key"
+          [attr.data-wu-key]="key"
           [attr.tabindex]="tabindexOf(key)"
           [attr.title]="item.title || null"
           [attr.target]="item.target || null"
@@ -78,7 +78,7 @@
           [skipLocationChange]="!!item.skipLocationChange"
           [replaceUrl]="!!item.replaceUrl"
           [state]="item.state"
-          routerLinkActive="wt-menu-link-active p-menuitem-link-active"
+          routerLinkActive="wu-menu-link-active p-menuitem-link-active"
           [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
           (click)="itemClick($event, item, key)"
         >
@@ -86,11 +86,11 @@
         </a>
         <ng-template #plain>
           <a
-            class="wt-menu-item-link p-menuitem-link"
+            class="wu-menu-item-link p-menuitem-link"
             role="menuitem"
             [class.p-disabled]="item.disabled"
             [id]="itemId(key)"
-            [attr.data-wt-key]="key"
+            [attr.data-wu-key]="key"
             [attr.tabindex]="tabindexOf(key)"
             [attr.href]="hrefOf(item)"
             [attr.title]="item.title || null"
@@ -112,9 +112,9 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
   </ng-container>
   <ng-template #defaultContent>
-    <span *ngIf="item.icon" class="wt-menu-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
-    <span *ngIf="item.escape === false; else textLabel" class="wt-menu-item-label p-menuitem-text" [innerHTML]="item.label"></span>
-    <ng-template #textLabel><span class="wt-menu-item-label p-menuitem-text">{{ item.label }}</span></ng-template>
-    <span *ngIf="item.badge" class="wt-menu-badge p-menuitem-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    <span *ngIf="item.icon" class="wu-menu-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    <span *ngIf="item.escape === false; else textLabel" class="wu-menu-item-label p-menuitem-text" [innerHTML]="item.label"></span>
+    <ng-template #textLabel><span class="wu-menu-item-label p-menuitem-text">{{ item.label }}</span></ng-template>
+    <span *ngIf="item.badge" class="wu-menu-badge p-menuitem-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
   </ng-template>
 </ng-template>

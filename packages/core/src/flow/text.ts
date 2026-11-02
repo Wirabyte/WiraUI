@@ -1,12 +1,12 @@
 /**
- * wt-flow: the words it shows and announces. They are `WtLocale` keys; a locale object without them (an app's own,
+ * wu-flow: the words it shows and announces. They are `WuLocale` keys; a locale object without them (an app's own,
  * older translation) falls back to the built-in Thai or English by its `code`.
  */
 import { EN_LOCALE, TH_LOCALE } from '../thai/locale';
-import type { WtLocale } from '../thai/locale';
+import type { WuLocale } from '../thai/locale';
 import type { FlowEdge, FlowNode } from './types';
 
-/** The `WtLocale` keys wt-flow reads (Thai and English texts live in `thai/locale.ts`). */
+/** The `WuLocale` keys wu-flow reads (Thai and English texts live in `thai/locale.ts`). */
 export const FLOW_TEXT_KEYS = [
   'flowLabel',
   'flowNode',
@@ -42,7 +42,7 @@ export const FLOW_TEXT_KEYS = [
 
 export type FlowTextKey = (typeof FLOW_TEXT_KEYS)[number];
 
-export type FlowTexts = Pick<WtLocale, FlowTextKey>;
+export type FlowTexts = Pick<WuLocale, FlowTextKey>;
 
 /** A flow text from `locale` (any object with the keys, plus `code: 'th' | 'en'`), else the built-in Thai / English. */
 export function flowText(locale: { code?: string } | null | undefined, key: FlowTextKey): string {

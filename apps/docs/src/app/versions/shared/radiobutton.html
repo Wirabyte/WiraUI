@@ -6,32 +6,32 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-radiobutton id="d-free" name="plan" value="free" [(ngModel)]="plan" label="Free"></wt-radiobutton>
-        <wt-radiobutton id="d-pro" name="plan" value="pro" [(ngModel)]="plan" label="Pro"></wt-radiobutton>
-        <wt-radiobutton id="d-team" name="plan" value="team" [(ngModel)]="plan" label="Team"></wt-radiobutton>
+        <wu-radiobutton id="d-free" name="plan" value="free" [(ngModel)]="plan" label="Free"></wu-radiobutton>
+        <wu-radiobutton id="d-pro" name="plan" value="pro" [(ngModel)]="plan" label="Pro"></wu-radiobutton>
+        <wu-radiobutton id="d-team" name="plan" value="team" [(ngModel)]="plan" label="Team"></wu-radiobutton>
         <span class="docs-demo-output">plan: <code id="d-plan">{{ plan | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-radiobutton name="demo-size" value="sm" [(ngModel)]="sizeValue" size="small" [label]="tx('เล็ก')"></wt-radiobutton>
-        <wt-radiobutton name="demo-size" value="md" [(ngModel)]="sizeValue" [label]="tx('ปกติ')"></wt-radiobutton>
-        <wt-radiobutton name="demo-size" value="lg" [(ngModel)]="sizeValue" size="large" [label]="tx('ใหญ่')"></wt-radiobutton>
+        <wu-radiobutton name="demo-size" value="sm" [(ngModel)]="sizeValue" size="small" [label]="tx('เล็ก')"></wu-radiobutton>
+        <wu-radiobutton name="demo-size" value="md" [(ngModel)]="sizeValue" [label]="tx('ปกติ')"></wu-radiobutton>
+        <wu-radiobutton name="demo-size" value="lg" [(ngModel)]="sizeValue" size="large" [label]="tx('ใหญ่')"></wu-radiobutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="layout" [section]="sec['layout']">
       <docs-demo [html]="code['layout']" layout="stack">
         <div id="d-radio-stack" class="docs-radio-stack">
-          <wt-radiobutton name="d-delivery" value="standard" [(ngModel)]="delivery" [label]="tx('ส่งธรรมดา (3–5 วัน)')"></wt-radiobutton>
-          <wt-radiobutton name="d-delivery" value="express" [(ngModel)]="delivery" [label]="tx('ส่งด่วน (1–2 วัน)')"></wt-radiobutton>
-          <wt-radiobutton name="d-delivery" value="pickup" [(ngModel)]="delivery" [label]="tx('รับเองที่สาขา')"></wt-radiobutton>
+          <wu-radiobutton name="d-delivery" value="standard" [(ngModel)]="delivery" [label]="tx('ส่งธรรมดา (3–5 วัน)')"></wu-radiobutton>
+          <wu-radiobutton name="d-delivery" value="express" [(ngModel)]="delivery" [label]="tx('ส่งด่วน (1–2 วัน)')"></wu-radiobutton>
+          <wu-radiobutton name="d-delivery" value="pickup" [(ngModel)]="delivery" [label]="tx('รับเองที่สาขา')"></wu-radiobutton>
         </div>
         <div id="d-radio-row" class="docs-radio-row">
-          <wt-radiobutton name="d-payment" value="card" [(ngModel)]="payment" [label]="tx('บัตรเครดิต')"></wt-radiobutton>
-          <wt-radiobutton name="d-payment" value="transfer" [(ngModel)]="payment" [label]="tx('โอนเงิน')"></wt-radiobutton>
-          <wt-radiobutton name="d-payment" value="qr" [(ngModel)]="payment" [label]="tx('QR พร้อมเพย์')"></wt-radiobutton>
+          <wu-radiobutton name="d-payment" value="card" [(ngModel)]="payment" [label]="tx('บัตรเครดิต')"></wu-radiobutton>
+          <wu-radiobutton name="d-payment" value="transfer" [(ngModel)]="payment" [label]="tx('โอนเงิน')"></wu-radiobutton>
+          <wu-radiobutton name="d-payment" value="qr" [(ngModel)]="payment" [label]="tx('QR พร้อมเพย์')"></wu-radiobutton>
         </div>
       </docs-demo>
     </docs-section>
@@ -39,11 +39,11 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-radiobutton id="r-monthly" name="billing" value="monthly" formControlName="billing" [label]="tx('รายเดือน')"></wt-radiobutton>
-          <wt-radiobutton id="r-yearly" name="billing" value="yearly" formControlName="billing" [label]="tx('รายปี')"></wt-radiobutton>
+          <wu-radiobutton id="r-monthly" name="billing" value="monthly" formControlName="billing" [label]="tx('รายเดือน')"></wu-radiobutton>
+          <wu-radiobutton id="r-yearly" name="billing" value="yearly" formControlName="billing" [label]="tx('รายปี')"></wu-radiobutton>
         </form>
         <div class="docs-demo-actions">
-          <wt-button id="r-patch" label="patchValue('yearly')" size="small" severity="secondary" (onClick)="patch()"></wt-button>
+          <wu-button id="r-patch" label="patchValue('yearly')" size="small" severity="secondary" (onClick)="patch()"></wu-button>
           <span class="docs-demo-output">billing: <code id="r-billing">{{ form.value.billing | json }}</code> · valid: <b id="r-valid">{{ form.valid }}</b></span>
         </div>
       </docs-demo>
@@ -52,7 +52,7 @@
     <docs-section id="dynamic" [section]="sec['dynamic']">
       <docs-demo [html]="code['dynamic']" [ts]="ts['dynamic']">
         @for (s of sizes; track s.value) {
-          <wt-radiobutton name="size" [value]="s.value" [label]="s.label" [(ngModel)]="size"></wt-radiobutton>
+          <wu-radiobutton name="size" [value]="s.value" [label]="s.label" [(ngModel)]="size"></wu-radiobutton>
         }
         <span class="docs-demo-output">size: <code>{{ size | json }}</code></span>
       </docs-demo>
@@ -60,14 +60,14 @@
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <wt-radiobutton name="d" value="a" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่ (เลือกแล้ว)')"></wt-radiobutton>
-        <wt-radiobutton name="d" value="b" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่')"></wt-radiobutton>
+        <wu-radiobutton name="d" value="a" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่ (เลือกแล้ว)')"></wu-radiobutton>
+        <wu-radiobutton name="d" value="b" [ngModel]="'a'" [disabled]="true" [label]="tx('ปิดอยู่')"></wu-radiobutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="invalid" [section]="sec['invalid']">
       <docs-demo [html]="code['invalid']">
-        <wt-radiobutton name="i" value="x" [invalid]="true" [label]="tx('ต้องเลือก 1 ข้อ')"></wt-radiobutton>
+        <wu-radiobutton name="i" value="x" [invalid]="true" [label]="tx('ต้องเลือก 1 ข้อ')"></wu-radiobutton>
       </docs-demo>
     </docs-section>
   </ng-template>

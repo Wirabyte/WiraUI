@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtProgressSpinner } from './progressspinner.component';
+import { WuProgressSpinner } from './progressspinner.component';
 
-/** For NgModule apps. Standalone apps can import `WtProgressSpinner` directly. */
+/** For NgModule apps. Standalone apps can import `WuProgressSpinner` directly. */
 @NgModule({
-  imports: [WtProgressSpinner],
-  exports: [WtProgressSpinner],
+  imports: [WuProgressSpinner],
+  exports: [WuProgressSpinner],
 })
-export class WtProgressSpinnerModule {}
+export class WuProgressSpinnerModule {}

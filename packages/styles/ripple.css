@@ -1,19 +1,19 @@
-/* wtRipple / pRipple. Shared by wiratheme v1, v2 and v3. The element clips the ink that spreads from the press. */
-@layer wiratheme.components {
-  .wt-ripple {
+/* wuRipple / pRipple. Shared by wiraui v1, v2 and v3. The element clips the ink that spreads from the press. */
+@layer wiraui.components {
+  .wu-ripple {
     position: relative;
     overflow: hidden;
   }
-  .wt-ripple > .wt-ripple-ink {
+  .wu-ripple > .wu-ripple-ink {
     position: absolute;
     border-radius: 50%;
     background: currentColor;
     opacity: 0.22;
     transform: scale(0);
-    animation: wt-ripple-spread 560ms ease-out forwards;
+    animation: wu-ripple-spread 560ms ease-out forwards;
     pointer-events: none;
   }
-  @keyframes wt-ripple-spread {
+  @keyframes wu-ripple-spread {
     to {
       opacity: 0;
       transform: scale(2.2);

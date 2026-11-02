@@ -4,8 +4,8 @@
     <h1 class="docs-h1">{{ doc().title }}</h1>
     <p class="docs-lead">{{ doc().description | loc }}</p>
     <div class="docs-meta">
-      <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ version.major }} · Angular {{ version.angular }}</span>
-      <span class="docs-chip"><code>wiratheme/{{ doc().entry }}</code></span>
+      <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ version.major }} · Angular {{ version.angular }}</span>
+      <span class="docs-chip"><code>wiraui/{{ doc().entry }}</code></span>
       <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
     </div>
     @for (r of doc().requires || []; track r.install) {
@@ -73,11 +73,11 @@
     <docs-section id="override-css" [title]="{ th: 'แก้ด้วย CSS', en: 'Override with CSS' }">
       @if (en()) {
         <p>
-          Component CSS lives in <code>&#64;layer wiratheme.components</code>. Your app's CSS is not in a layer, so it always wins, with no
+          Component CSS lives in <code>&#64;layer wiraui.components</code>. Your app's CSS is not in a layer, so it always wins, with no
           <code>!important</code> or <code>::ng-deep</code>.
         </p>
       } @else {
-        <p>CSS ของ component อยู่ใน <code>&#64;layer wiratheme.components</code> ส่วน CSS ของแอปไม่อยู่ใน layer จึงชนะทุกครั้งโดยไม่ต้องใช้ <code>!important</code> หรือ <code>::ng-deep</code></p>
+        <p>CSS ของ component อยู่ใน <code>&#64;layer wiraui.components</code> ส่วน CSS ของแอปไม่อยู่ใน layer จึงชนะทุกครั้งโดยไม่ต้องใช้ <code>!important</code> หรือ <code>::ng-deep</code></p>
       }
       <docs-code [code]="cssExample()" lang="css" file="styles.css"></docs-code>
     </docs-section>
@@ -92,16 +92,16 @@
         <docs-code [code]="tsExample()" lang="ts"></docs-code>
       </docs-section>
     }
-    <docs-section id="designer" [title]="{ th: 'สตูดิโอธีม', en: 'WiraTheme Studio' }">
+    <docs-section id="designer" [title]="{ th: 'สตูดิโอธีม', en: 'WiraUI Studio' }">
       @if (en()) {
         <p>
           Adjust these values on screen and export SCSS, CSS, TypeScript or JSON from the
-          <a [routerLink]="['/', version.id, 'theming', 'studio']">WiraTheme Studio</a>.
+          <a [routerLink]="['/', version.id, 'theming', 'studio']">WiraUI Studio</a>.
         </p>
       } @else {
         <p>
           ปรับค่าเหล่านี้บนหน้าจอแล้ว export เป็น SCSS, CSS, TypeScript หรือ JSON ได้จาก
-          <a [routerLink]="['/', version.id, 'theming', 'studio']">สตูดิโอธีม (WiraTheme Studio)</a>
+          <a [routerLink]="['/', version.id, 'theming', 'studio']">สตูดิโอธีม (WiraUI Studio)</a>
         </p>
       }
     </docs-section>

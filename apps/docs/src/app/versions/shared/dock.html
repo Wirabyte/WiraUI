@@ -6,9 +6,9 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-selectbutton id="d-dock-position" [options]="local(positions)" optionLabel="label" optionValue="value" [(ngModel)]="position" [allowEmpty]="false"></wt-selectbutton>
+        <wu-selectbutton id="d-dock-position" [options]="local(positions)" optionLabel="label" optionValue="value" [(ngModel)]="position" [allowEmpty]="false"></wu-selectbutton>
         <div class="docs-desk docs-desk-basic" id="d-dock-basic">
-          <wt-dock [model]="local(basicApps)" [position]="position" ariaLabel="Dock"></wt-dock>
+          <wu-dock [model]="local(basicApps)" [position]="position" ariaLabel="Dock"></wu-dock>
         </div>
       </docs-demo>
     </docs-section>
@@ -18,7 +18,7 @@
         <div class="docs-desk docs-desk-mac" id="d-dock-mac">
           <div class="docs-mac-bar">
             <span class="docs-mac-logo" aria-hidden="true">W</span>
-            <wt-menubar [model]="local(menus)" styleClass="docs-mac-menu"></wt-menubar>
+            <wu-menubar [model]="local(menus)" styleClass="docs-mac-menu"></wu-menubar>
             <span class="docs-mac-tray" aria-hidden="true">
               <i class="wi wi-wifi"></i><i class="wi wi-battery"></i><i class="wi wi-search"></i><span>{{ time }}</span>
             </span>
@@ -35,11 +35,11 @@
               </div>
             </section>
           }
-          <wt-dock [model]="local(macApps)" ariaLabel="Dock">
-            <ng-template wtTemplate="item" let-item>
+          <wu-dock [model]="local(macApps)" ariaLabel="Dock">
+            <ng-template wuTemplate="item" let-item>
               <span class="docs-app" [style.background]="item.color"><i [class]="item.icon"></i></span>
             </ng-template>
-          </wt-dock>
+          </wu-dock>
         </div>
       </docs-demo>
     </docs-section>
@@ -74,20 +74,20 @@
               </div>
             </div>
           }
-          <wt-dock [model]="local(winApps)" look="windows" ariaLabel="Taskbar">
-            <ng-template wtTemplate="start">
+          <wu-dock [model]="local(winApps)" look="windows" ariaLabel="Taskbar">
+            <ng-template wuTemplate="start">
               <button type="button" class="docs-win-startbtn" id="d-dock-startbtn" [attr.aria-expanded]="startOpen" aria-label="Start" (click)="startOpen = !startOpen">
                 <i class="wi wi-th-large"></i>
               </button>
             </ng-template>
-            <ng-template wtTemplate="item" let-item>
+            <ng-template wuTemplate="item" let-item>
               <span class="docs-app docs-app-small" [style.background]="item.color"><i [class]="item.icon"></i></span>
             </ng-template>
-            <ng-template wtTemplate="end">
+            <ng-template wuTemplate="end">
               <span class="docs-win-tray" aria-hidden="true"><i class="wi wi-wifi"></i><i class="wi wi-volume-up"></i><i class="wi wi-battery"></i></span>
               <span class="docs-win-clock">{{ time }}<br />{{ date }}</span>
             </ng-template>
-          </wt-dock>
+          </wu-dock>
         </div>
       </docs-demo>
     </docs-section>
@@ -99,8 +99,8 @@
 <ng-template #appBody let-w>
   @switch (w.id) {
     @case ('terminal') {
-      <pre class="docs-app-terminal">wira@school ~ % ng add wiratheme
-✔ Installed wiratheme 3.0.0
+      <pre class="docs-app-terminal">wira@school ~ % ng add wiraui
+✔ Installed wiraui 3.0.0
 wira@school ~ % <span class="docs-caret"></span></pre>
     }
     @case ('photos') {

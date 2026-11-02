@@ -1,10 +1,10 @@
 <div
-  class="wt-carousel p-carousel p-component"
+  class="wu-carousel p-carousel p-component"
   role="region"
   [attr.aria-roledescription]="t.carousel"
-  [class.wt-carousel-horizontal]="!vertical"
+  [class.wu-carousel-horizontal]="!vertical"
   [class.p-carousel-horizontal]="!vertical"
-  [class.wt-carousel-vertical]="vertical"
+  [class.wu-carousel-vertical]="vertical"
   [class.p-carousel-vertical]="vertical"
   [ngClass]="styleClass || ''"
   [ngStyle]="rootStyle"
@@ -13,16 +13,16 @@
   (focusin)="pause(true)"
   (focusout)="pause(false)"
 >
-  <div *ngIf="hasHeader" class="wt-carousel-header p-carousel-header">
-    <ng-content select="wt-header"></ng-content>
+  <div *ngIf="hasHeader" class="wu-carousel-header p-carousel-header">
+    <ng-content select="wu-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
   </div>
-  <div class="wt-carousel-content-container p-carousel-content-container p-carousel-container" [ngClass]="contentClass || ''">
-    <div class="wt-carousel-content p-carousel-content" [attr.aria-live]="live">
+  <div class="wu-carousel-content-container p-carousel-content-container p-carousel-container" [ngClass]="contentClass || ''">
+    <div class="wu-carousel-content p-carousel-content" [attr.aria-live]="live">
       <button
         *ngIf="showNavigators"
         type="button"
-        class="wt-carousel-prev-button p-carousel-prev-button p-carousel-prev"
+        class="wu-carousel-prev-button p-carousel-prev-button p-carousel-prev"
         [ngClass]="prevButtonProps?.styleClass || ''"
         [class.p-disabled]="isBackwardNavDisabled()"
         [attr.aria-disabled]="isBackwardNavDisabled() || null"
@@ -39,23 +39,23 @@
         </ng-template>
       </button>
       <div
-        class="wt-carousel-viewport p-carousel-viewport p-carousel-items-content"
+        class="wu-carousel-viewport p-carousel-viewport p-carousel-items-content"
         [style.height]="vertical ? verticalViewPortHeight : null"
         (pointerdown)="pointerdown($event)"
         (pointerup)="pointerup($event)"
         (pointercancel)="pointerup($event)"
       >
-        <div #itemsContainer class="wt-carousel-item-list p-carousel-item-list p-carousel-items-container" (transitionend)="transitionEnd($event)">
+        <div #itemsContainer class="wu-carousel-item-list p-carousel-item-list p-carousel-items-container" (transitionend)="transitionEnd($event)">
           <div
             *ngFor="let e of entries; trackBy: trackEntry"
-            class="wt-carousel-item p-carousel-item"
-            [class.wt-carousel-item-clone]="e.clone"
+            class="wu-carousel-item p-carousel-item"
+            [class.wu-carousel-item-clone]="e.clone"
             [class.p-carousel-item-clone]="e.clone"
-            [class.wt-carousel-item-active]="inView(e)"
+            [class.wu-carousel-item-active]="inView(e)"
             [class.p-carousel-item-active]="inView(e)"
-            [class.wt-carousel-item-start]="!e.clone && e.index === first"
+            [class.wu-carousel-item-start]="!e.clone && e.index === first"
             [class.p-carousel-item-start]="!e.clone && e.index === first"
-            [class.wt-carousel-item-end]="!e.clone && e.index === first + numVisibleNow - 1"
+            [class.wu-carousel-item-end]="!e.clone && e.index === first + numVisibleNow - 1"
             [class.p-carousel-item-end]="!e.clone && e.index === first + numVisibleNow - 1"
             [style.flex-basis.%]="basis"
             [attr.role]="e.clone ? null : 'group'"
@@ -71,7 +71,7 @@
       <button
         *ngIf="showNavigators"
         type="button"
-        class="wt-carousel-next-button p-carousel-next-button p-carousel-next"
+        class="wu-carousel-next-button p-carousel-next-button p-carousel-next"
         [ngClass]="nextButtonProps?.styleClass || ''"
         [class.p-disabled]="isForwardNavDisabled()"
         [attr.aria-disabled]="isForwardNavDisabled() || null"
@@ -91,7 +91,7 @@
     <ul
       #indicatorContent
       *ngIf="showIndicators && pageCount > 0"
-      class="wt-carousel-indicator-list p-carousel-indicator-list p-carousel-indicators"
+      class="wu-carousel-indicator-list p-carousel-indicator-list p-carousel-indicators"
       [ngClass]="indicatorsContentClass || ''"
       [ngStyle]="indicatorsContentStyle || null"
       (keydown)="onIndicatorKeydown($event)"
@@ -99,15 +99,15 @@
     >
       <li
         *ngFor="let i of pages"
-        class="wt-carousel-indicator p-carousel-indicator"
-        [class.wt-carousel-indicator-active]="i === page"
+        class="wu-carousel-indicator p-carousel-indicator"
+        [class.wu-carousel-indicator-active]="i === page"
         [class.p-carousel-indicator-active]="i === page"
         [class.p-highlight]="i === page"
         [ngClass]="indicatorStyleClass || ''"
       >
         <button
           type="button"
-          class="wt-carousel-indicator-button p-carousel-indicator-button"
+          class="wu-carousel-indicator-button p-carousel-indicator-button"
           [ngStyle]="indicatorStyle || null"
           [attr.aria-label]="pageLabel(i)"
           [attr.aria-current]="i === page ? 'page' : null"
@@ -117,8 +117,8 @@
       </li>
     </ul>
   </div>
-  <div *ngIf="hasFooter" class="wt-carousel-footer p-carousel-footer">
-    <ng-content select="wt-footer"></ng-content>
+  <div *ngIf="hasFooter" class="wu-carousel-footer p-carousel-footer">
+    <ng-content select="wu-footer"></ng-content>
     <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
   </div>
 </div>

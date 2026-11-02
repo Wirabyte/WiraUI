@@ -1,5 +1,5 @@
-/* WiraTheme token engine (prototype).
-   Same model the real @wiratheme/core would ship: config -> tokens -> SCSS / CSS / TS / JSON. */
+/* WiraUI token engine (prototype).
+   Same model the real @wiraui/core would ship: config -> tokens -> SCSS / CSS / TS / JSON. */
 (function (global) {
   'use strict';
 
@@ -250,7 +250,7 @@
   // Inline style string for a preview root, light or dark.
   function cssVars(tokens, mode) {
     const all = Object.assign({}, tokens.light, mode === 'dark' ? tokens.dark : {});
-    return Object.keys(all).map((k) => `--wt-${k}: ${all[k]}`).join('; ');
+    return Object.keys(all).map((k) => `--wu-${k}: ${all[k]}`).join('; ');
   }
 
   // ---------- diff against preset ----------
@@ -297,7 +297,7 @@
     return out;
   }
 
-  global.WT = {
+  global.WU = {
     SHADES, PRIMARY_SWATCHES, SURFACES, FONTS, DENSITY, SHADOWS, PRESETS, COMPONENTS, SEMANTIC_DEFAULTS,
     hexToRgb, rgbToHex, isHex, mix, contrast, palette,
     defaults, normalize, componentValue, primaryPalette, surfacePalette, computeTokens, cssVars, diff, checks,

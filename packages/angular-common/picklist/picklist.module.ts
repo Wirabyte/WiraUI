@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtPickList } from './picklist.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuPickList } from './picklist.component';
 
-/** For NgModule apps: the pick list and `wtTemplate` (`pTemplate`). Standalone apps can import `WtPickList` directly. */
+/** For NgModule apps: the pick list and `wuTemplate` (`pTemplate`). Standalone apps can import `WuPickList` directly. */
 @NgModule({
-  imports: [WtPickList, WtTemplate],
-  exports: [WtPickList, WtTemplate],
+  imports: [WuPickList, WuTemplate],
+  exports: [WuPickList, WuTemplate],
 })
-export class WtPickListModule {}
+export class WuPickListModule {}

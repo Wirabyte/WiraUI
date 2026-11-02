@@ -1,8 +1,14 @@
 {
-  "name": "wiratheme",
-  "version": "1.0.0-alpha.0",
-  "description": "WiraTheme UI components for Angular 15–17: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
+  "name": "wiraui",
+  "version": "1.0.0-beta.0",
+  "description": "WiraUI UI components for Angular 15–17: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
   "license": "MIT",
+  "homepage": "https://github.com/Wirabyte/WiraUI#readme",
+  "bugs": "https://github.com/Wirabyte/WiraUI/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wirabyte/WiraUI.git"
+  },
   "keywords": [
     "angular",
     "ui",

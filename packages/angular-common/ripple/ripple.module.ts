@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtRipple } from './ripple.directive';
+import { WuRipple } from './ripple.directive';
 
-/** For NgModule apps. Standalone apps can import `WtRipple` directly. */
+/** For NgModule apps. Standalone apps can import `WuRipple` directly. */
 @NgModule({
-  imports: [WtRipple],
-  exports: [WtRipple],
+  imports: [WuRipple],
+  exports: [WuRipple],
 })
-export class WtRippleModule {}
+export class WuRippleModule {}

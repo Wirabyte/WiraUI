@@ -227,10 +227,10 @@ describe('flow edges: arrowheads', () => {
         { markerEnd: 'arrow', markerStart: 'arrow' },
         { markerEnd: { type: 'arrowclosed', color: 'red' } },
       ],
-      'wt',
+      'wu',
       '#999'
     );
-    expect(list.map((x) => x.id)).toEqual(['wt-arrow-_999-14x14-1_5', 'wt-arrowclosed-red-14x14-1_5']);
+    expect(list.map((x) => x.id)).toEqual(['wu-arrow-_999-14x14-1_5', 'wu-arrowclosed-red-14x14-1_5']);
     expect(markerShape('arrowclosed').endsWith('Z')).toBe(true);
     expect(markerShape('arrow').includes('Z')).toBe(false);
   });

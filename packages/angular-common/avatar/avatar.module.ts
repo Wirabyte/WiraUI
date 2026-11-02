@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtAvatar, WtAvatarGroup } from './avatar.component';
+import { WuAvatar, WuAvatarGroup } from './avatar.component';
 
-/** For NgModule apps. Standalone apps can import `WtAvatar`, `WtAvatarGroup` directly. */
+/** For NgModule apps. Standalone apps can import `WuAvatar`, `WuAvatarGroup` directly. */
 @NgModule({
-  imports: [WtAvatar, WtAvatarGroup],
-  exports: [WtAvatar, WtAvatarGroup],
+  imports: [WuAvatar, WuAvatarGroup],
+  exports: [WuAvatar, WuAvatarGroup],
 })
-export class WtAvatarModule {}
+export class WuAvatarModule {}

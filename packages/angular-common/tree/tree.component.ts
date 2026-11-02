@@ -22,27 +22,27 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵWT_CHECKBOX_CSS } from 'wiratheme/checkbox';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵWT_SELECT_CSS } from 'wiratheme/select';
-import { filterTree, sameNode, toggleTreeCheck, TreeCheckState, treeCheckStates, TreeFilterMode, TreeNode, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵWU_SELECT_CSS } from 'wiraui/select';
+import { filterTree, sameNode, toggleTreeCheck, TreeCheckState, treeCheckStates, TreeFilterMode, TreeNode, WuLocale } from 'wiraui/core';
 
 /** `(onNodeSelect)`, `(onNodeExpand)` and the like: the node and the event behind it. */
-export interface WtTreeNodeEvent {
+export interface WuTreeNodeEvent {
   originalEvent: Event;
   node: TreeNode;
 }
-export interface WtTreeFilterEvent {
+export interface WuTreeFilterEvent {
   filter: string;
   filteredValue: TreeNode[];
 }
 /** One drawn row: a node at its depth. */
-export interface WtTreeRow {
+export interface WuTreeRow {
   node: TreeNode;
   key: string;
   level: number;
@@ -54,13 +54,13 @@ export interface WtTreeRow {
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A tree of nodes that open and close: `<wt-tree [value]="nodes" selectionMode="checkbox" [(selection)]="picked">`.
+ * A tree of nodes that open and close: `<wu-tree [value]="nodes" selectionMode="checkbox" [(selection)]="picked">`.
  * Nodes are TreeNode objects (`label`, `children`, `expanded`, `icon`, `leaf`, `selectable`, `type`). It can pick
  * one node, several, or tick boxes that spread to children and parents; search (`[filter]="true"`); load children
  * when a node opens (`leaf: false` + `(onNodeExpand)`). Keyboard: arrows move and open/close, Enter / Space pick.
  */
 @Component({
-  selector: 'wt-tree',
+  selector: 'wu-tree',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './tree.component.html',
@@ -68,7 +68,7 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtTree implements DoCheck, OnDestroy {
+export class WuTree implements DoCheck, OnDestroy {
   @Input() value: TreeNode[] | null | undefined;
   @Input() selectionMode?: 'single' | 'multiple' | 'checkbox' | null;
   /** Two-way: `[(selection)]`. A node (single) or an array of nodes. */
@@ -95,7 +95,7 @@ export class WtTree implements DoCheck, OnDestroy {
   get loading(): boolean { return this._loading; }
   /** Height before the tree scrolls. */
   @Input() scrollHeight?: string;
-  /** A wt-contextMenu to open on right-click. */
+  /** A wu-contextMenu to open on right-click. */
   @Input() contextMenu?: { show(event: Event): void } | null;
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,22 +118,22 @@ export class WtTree implements DoCheck, OnDestroy {
   /** Typed loosely, as before: `[(selection)]` binds to a node or an array field. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly selectionChange = new EventEmitter<any>();
-  @Output() readonly onNodeSelect = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeUnselect = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeExpand = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeCollapse = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeDoubleClick = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onNodeContextMenuSelect = new EventEmitter<WtTreeNodeEvent>();
-  @Output() readonly onFilter = new EventEmitter<WtTreeFilterEvent>();
+  @Output() readonly onNodeSelect = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeUnselect = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeExpand = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeCollapse = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeDoubleClick = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onNodeContextMenuSelect = new EventEmitter<WuTreeNodeEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuTreeFilterEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) protected footerRef?: unknown;
   @ContentChild('empty', { descendants: false }) protected emptyRef?: unknown;
   @ContentChild('togglericon', { descendants: false }) protected togglerIconRef?: unknown;
 
-  readonly treeId = ɵuniqueId('wt-tree');
-  rows: WtTreeRow[] = [];
+  readonly treeId = ɵuniqueId('wu-tree');
+  rows: WuTreeRow[] = [];
   query = '';
   focusedKey: string | null = null;
   private _down = true;
@@ -150,16 +150,16 @@ export class WtTree implements DoCheck, OnDestroy {
   private signature = '';
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    // The search box is drawn by wt-select's stylesheet, the check boxes by wt-checkbox's.
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('select', ɵWT_SELECT_CSS);
-    styles.load('checkbox', ɵWT_CHECKBOX_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    // The search box is drawn by wu-select's stylesheet, the check boxes by wu-checkbox's.
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('select', ɵWU_SELECT_CSS);
+    styles.load('checkbox', ɵWU_CHECKBOX_CSS);
   }
 
   /** Nodes are changed in place by apps (`expanded`, lazy `children`), so the rows are rebuilt on every check. */
@@ -180,7 +180,7 @@ export class WtTree implements DoCheck, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -208,10 +208,10 @@ export class WtTree implements DoCheck, OnDestroy {
   nodeTemplate(node: TreeNode): TemplateRef<unknown> | null {
     return ɵfindTemplate(this.templates, node.type || 'default') || ɵfindTemplate(this.templates, 'default');
   }
-  rowId(row: WtTreeRow): string {
+  rowId(row: WuTreeRow): string {
     return `${this.treeId}-${row.key}`;
   }
-  trackRow(_: number, row: WtTreeRow): string {
+  trackRow(_: number, row: WuTreeRow): string {
     return row.key;
   }
   hasChildren(node: TreeNode): boolean {
@@ -247,7 +247,7 @@ export class WtTree implements DoCheck, OnDestroy {
 
   // ---------- pointer ----------
 
-  toggle(event: Event, row: WtTreeRow): void {
+  toggle(event: Event, row: WuTreeRow): void {
     event.stopPropagation();
     const node = row.node;
     if (this.isLeaf(node)) return;
@@ -264,7 +264,7 @@ export class WtTree implements DoCheck, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  nodeClick(event: MouseEvent | KeyboardEvent, row: WtTreeRow): void {
+  nodeClick(event: MouseEvent | KeyboardEvent, row: WuTreeRow): void {
     this.focusedKey = row.key;
     const node = row.node;
     if (!this.selectable(node)) {
@@ -302,11 +302,11 @@ export class WtTree implements DoCheck, OnDestroy {
     }
   }
 
-  nodeDblClick(event: MouseEvent, row: WtTreeRow): void {
+  nodeDblClick(event: MouseEvent, row: WuTreeRow): void {
     this.onNodeDoubleClick.emit({ originalEvent: event, node: row.node });
   }
 
-  nodeContextMenu(event: MouseEvent, row: WtTreeRow): void {
+  nodeContextMenu(event: MouseEvent, row: WuTreeRow): void {
     if (!this.contextMenu) return;
     event.preventDefault();
     this.focusedKey = row.key;
@@ -335,13 +335,13 @@ export class WtTree implements DoCheck, OnDestroy {
   // ---------- keyboard ----------
 
   focusIn(event: FocusEvent): void {
-    const key = (event.target as HTMLElement).getAttribute?.('data-wt-key');
+    const key = (event.target as HTMLElement).getAttribute?.('data-wu-key');
     if (key) this.focusedKey = key;
   }
 
   keydown(event: KeyboardEvent): void {
     const el = event.target as HTMLElement;
-    const key = el.getAttribute('data-wt-key');
+    const key = el.getAttribute('data-wu-key');
     if (!key) return;
     const i = this.rows.findIndex((r) => r.key === key);
     const row = this.rows[i];
@@ -384,7 +384,7 @@ export class WtTree implements DoCheck, OnDestroy {
 
   // ---------- internals ----------
 
-  private focusRow(row: WtTreeRow | undefined): void {
+  private focusRow(row: WuTreeRow | undefined): void {
     if (!row) return;
     this.focusedKey = row.key;
     this.cdr.detectChanges();
@@ -422,7 +422,7 @@ export class WtTree implements DoCheck, OnDestroy {
 
   private rebuild(): void {
     this.filterSet = this._filter && this.query ? filterTree(this.value, this.query, this.filterBy, this.filterMode) : null;
-    const out: WtTreeRow[] = [];
+    const out: WuTreeRow[] = [];
     const visit = (nodes: TreeNode[] | undefined, level: number, parent: TreeNode | null, prefix: string) => {
       const list = (nodes || []).filter((n) => n && (!this.filterSet || this.filterSet.has(n)));
       list.forEach((node, idx) => {

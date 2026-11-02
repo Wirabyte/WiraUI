@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
-  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the science fair. -->
+  <!-- Sample artwork for the docs (drawn for WiraUI, free to use): the science fair. -->
   <rect width="320" height="200" fill="#ede9fe" />
   <rect y="130" width="320" height="70" fill="#c4b5fd" />
   <rect x="40" y="118" width="240" height="14" rx="3" fill="#78350f" />

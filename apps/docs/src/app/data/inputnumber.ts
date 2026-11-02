@@ -6,10 +6,10 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
   title: 'InputNumber',
   group: 'Form',
   entry: 'inputnumber',
-  standalone: 'WtInputNumber',
-  module: 'WtInputNumberModule',
+  standalone: 'WuInputNumber',
+  module: 'WuInputNumberModule',
   forms: true,
-  selector: 'wt-inputnumber',
+  selector: 'wu-inputnumber',
   description: {
     th: 'ช่องตัวเลขที่ค่าใน model เป็น number จริง แสดงค่าที่จัดรูปแบบแล้ว (฿1,234.50, 60 กก.) อ่านสิ่งที่พิมพ์หรือวางโดยไม่สน ฿ และจุลภาค แล้วจัดรูปแบบใหม่ตอนออกจากช่อง',
     en: 'A number field whose model is a real number. It shows the formatted value (฿1,234.50, 60 kg), reads typed or pasted text ignoring ฿ and commas, and reformats when you leave the field.',
@@ -78,48 +78,48 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
     clear: {
       title: { th: 'ปุ่มล้าง ปุ่มเพิ่ม / ลด และ input ข้างใน', en: 'Clear button, step buttons and the inner input' },
       text: {
-        th: '<code>[showClear]="true"</code> เพิ่มปุ่ม × เมื่อมีค่า และส่ง <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> และ <code>incrementButtonClass</code> / <code>decrementButtonClass</code> ตกแต่งปุ่มเพิ่ม / ลด · <code>inputStyleClass</code> / <code>inputStyle</code> ใส่ที่ <code>&lt;input&gt;</code> ข้างใน · <code>autocomplete</code> · <code>(onKeyDown)</code> ได้ทุกปุ่มที่กดในช่อง · tag <code>wt-inputNumber</code> / <code>wt-input-number</code> ก็ใช้ได้',
-        en: '<code>[showClear]="true"</code> adds an × once there is a value and emits <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> and <code>incrementButtonClass</code> / <code>decrementButtonClass</code> style the step buttons · <code>inputStyleClass</code> / <code>inputStyle</code> go on the inner <code>&lt;input&gt;</code> · <code>autocomplete</code> · <code>(onKeyDown)</code> brings every key pressed in the field · the <code>wt-inputNumber</code> / <code>wt-input-number</code> tags work too.',
+        th: '<code>[showClear]="true"</code> เพิ่มปุ่ม × เมื่อมีค่า และส่ง <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> และ <code>incrementButtonClass</code> / <code>decrementButtonClass</code> ตกแต่งปุ่มเพิ่ม / ลด · <code>inputStyleClass</code> / <code>inputStyle</code> ใส่ที่ <code>&lt;input&gt;</code> ข้างใน · <code>autocomplete</code> · <code>(onKeyDown)</code> ได้ทุกปุ่มที่กดในช่อง · tag <code>wu-inputNumber</code> / <code>wu-input-number</code> ก็ใช้ได้',
+        en: '<code>[showClear]="true"</code> adds an × once there is a value and emits <code>(onClear)</code> · <code>incrementButtonIcon</code> / <code>decrementButtonIcon</code> and <code>incrementButtonClass</code> / <code>decrementButtonClass</code> style the step buttons · <code>inputStyleClass</code> / <code>inputStyle</code> go on the inner <code>&lt;input&gt;</code> · <code>autocomplete</code> · <code>(onKeyDown)</code> brings every key pressed in the field · the <code>wu-inputNumber</code> / <code>wu-input-number</code> tags work too.',
       },
     },
     disabled: { title: { th: 'Disabled, Readonly และ Invalid', en: 'Disabled, Readonly and Invalid' } },
     helpers: {
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       text: {
-        th: 'ฟังก์ชันที่ช่องนี้ใช้ export จาก <code>wiratheme/core</code> ใช้จัดรูปแบบตัวเลขในตารางหรือรายงานให้ตรงกับช่องกรอกได้',
-        en: 'The functions behind the field are exported from <code>wiratheme/core</code>, so tables and reports can format numbers the same way. They default to th-TH (hence ฿), and <code>parseNumber()</code> reads Thai digits as well, which is why the sample keeps ๑,๒๓๔.๕๐.',
+        th: 'ฟังก์ชันที่ช่องนี้ใช้ export จาก <code>wiraui/core</code> ใช้จัดรูปแบบตัวเลขในตารางหรือรายงานให้ตรงกับช่องกรอกได้',
+        en: 'The functions behind the field are exported from <code>wiraui/core</code>, so tables and reports can format numbers the same way. They default to th-TH (hence ฿), and <code>parseNumber()</code> reads Thai digits as well, which is why the sample keeps ๑,๒๓๔.๕๐.',
       },
     },
   },
   code: {
-    typing: `<wt-inputnumber name="weight" [(ngModel)]="weight" [min]="0" [max]="200" [maxFractionDigits]="1"
-  suffix=" กก." placeholder="0 – 200"></wt-inputnumber>
-<wt-inputnumber name="price" [(ngModel)]="price" mode="currency" [min]="0"></wt-inputnumber>`,
-    sizes: `<wt-inputnumber name="quantity" [(ngModel)]="quantity" size="small" [showButtons]="true"></wt-inputnumber>
-<wt-inputnumber name="quantity" [(ngModel)]="quantity" [showButtons]="true"></wt-inputnumber>
-<wt-inputnumber name="quantity" [(ngModel)]="quantity" size="large" [showButtons]="true"></wt-inputnumber>`,
-    basic: `<wt-inputnumber name="quantity" [(ngModel)]="quantity" placeholder="จำนวน" ariaLabel="จำนวน"></wt-inputnumber>`,
-    currency: `<wt-inputnumber name="price" [(ngModel)]="price" mode="currency" ariaLabel="ราคา"></wt-inputnumber>
-<wt-inputnumber name="price" [(ngModel)]="price" mode="currency" currency="USD" locale="en-US"
-  ariaLabel="Price"></wt-inputnumber>`,
-    fraction: `<wt-inputnumber name="rate" [(ngModel)]="rate" [minFractionDigits]="2" [maxFractionDigits]="4"></wt-inputnumber>
-<wt-inputnumber name="year" [(ngModel)]="year" [useGrouping]="false"></wt-inputnumber>`,
-    affix: `<wt-inputnumber name="weight" [(ngModel)]="weight" suffix=" กก." [maxFractionDigits]="1"></wt-inputnumber>
-<wt-inputnumber name="discount" [(ngModel)]="discount" prefix="ลด " suffix="%" [min]="0" [max]="100"></wt-inputnumber>`,
-    buttons: `<wt-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" [min]="1" [max]="10"></wt-inputnumber>
-<wt-inputnumber name="volume" [(ngModel)]="volume" [showButtons]="true" buttonLayout="horizontal"
-  [step]="0.5" [min]="0" [max]="5" [maxFractionDigits]="1"></wt-inputnumber>`,
+    typing: `<wu-inputnumber name="weight" [(ngModel)]="weight" [min]="0" [max]="200" [maxFractionDigits]="1"
+  suffix=" กก." placeholder="0 – 200"></wu-inputnumber>
+<wu-inputnumber name="price" [(ngModel)]="price" mode="currency" [min]="0"></wu-inputnumber>`,
+    sizes: `<wu-inputnumber name="quantity" [(ngModel)]="quantity" size="small" [showButtons]="true"></wu-inputnumber>
+<wu-inputnumber name="quantity" [(ngModel)]="quantity" [showButtons]="true"></wu-inputnumber>
+<wu-inputnumber name="quantity" [(ngModel)]="quantity" size="large" [showButtons]="true"></wu-inputnumber>`,
+    basic: `<wu-inputnumber name="quantity" [(ngModel)]="quantity" placeholder="จำนวน" ariaLabel="จำนวน"></wu-inputnumber>`,
+    currency: `<wu-inputnumber name="price" [(ngModel)]="price" mode="currency" ariaLabel="ราคา"></wu-inputnumber>
+<wu-inputnumber name="price" [(ngModel)]="price" mode="currency" currency="USD" locale="en-US"
+  ariaLabel="Price"></wu-inputnumber>`,
+    fraction: `<wu-inputnumber name="rate" [(ngModel)]="rate" [minFractionDigits]="2" [maxFractionDigits]="4"></wu-inputnumber>
+<wu-inputnumber name="year" [(ngModel)]="year" [useGrouping]="false"></wu-inputnumber>`,
+    affix: `<wu-inputnumber name="weight" [(ngModel)]="weight" suffix=" กก." [maxFractionDigits]="1"></wu-inputnumber>
+<wu-inputnumber name="discount" [(ngModel)]="discount" prefix="ลด " suffix="%" [min]="0" [max]="100"></wu-inputnumber>`,
+    buttons: `<wu-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" [min]="1" [max]="10"></wu-inputnumber>
+<wu-inputnumber name="volume" [(ngModel)]="volume" [showButtons]="true" buttonLayout="horizontal"
+  [step]="0.5" [min]="0" [max]="5" [maxFractionDigits]="1"></wu-inputnumber>`,
     reactive: `<form [formGroup]="form">
-  <wt-inputnumber formControlName="budget" mode="currency" [fluid]="true" ariaLabel="งบประมาณ"></wt-inputnumber>
+  <wu-inputnumber formControlName="budget" mode="currency" [fluid]="true" ariaLabel="งบประมาณ"></wu-inputnumber>
 </form>`,
-    clear: `<wt-inputnumber name="fee" [(ngModel)]="fee" mode="currency" [showClear]="true" (onClear)="feeCleared()"
-  inputStyleClass="text-right" [inputStyle]="{ width: '10rem' }" autocomplete="off"></wt-inputnumber>
-<wt-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" buttonLayout="horizontal" [min]="1"
+    clear: `<wu-inputnumber name="fee" [(ngModel)]="fee" mode="currency" [showClear]="true" (onClear)="feeCleared()"
+  inputStyleClass="text-right" [inputStyle]="{ width: '10rem' }" autocomplete="off"></wu-inputnumber>
+<wu-inputnumber name="seats" [(ngModel)]="seats" [showButtons]="true" buttonLayout="horizontal" [min]="1"
   incrementButtonIcon="wi wi-plus" decrementButtonIcon="wi wi-minus" incrementButtonClass="p-button-success"
-  decrementButtonClass="p-button-danger" (onKeyDown)="keyPressed($event)"></wt-inputnumber>`,
-    disabled: `<wt-inputnumber [ngModel]="1500" [disabled]="true"></wt-inputnumber>
-<wt-inputnumber [ngModel]="1500" [readonly]="true"></wt-inputnumber>
-<wt-inputnumber [invalid]="true" placeholder="ต้องกรอก"></wt-inputnumber>`,
+  decrementButtonClass="p-button-danger" (onKeyDown)="keyPressed($event)"></wu-inputnumber>`,
+    disabled: `<wu-inputnumber [ngModel]="1500" [disabled]="true"></wu-inputnumber>
+<wu-inputnumber [ngModel]="1500" [readonly]="true"></wu-inputnumber>
+<wu-inputnumber [invalid]="true" placeholder="ต้องกรอก"></wu-inputnumber>`,
   },
   ts: {
     basic: `quantity: number | null = 1200;`,
@@ -138,7 +138,7 @@ keyPressed(event: KeyboardEvent): void {
     reactive: `form = new FormGroup({
   budget: new FormControl(50000, [Validators.required, Validators.max(100000)]),
 });`,
-    helpers: `import { clampNumber, formatNumber, parseNumber, stepNumber } from 'wiratheme/core';
+    helpers: `import { clampNumber, formatNumber, parseNumber, stepNumber } from 'wiraui/core';
 
 formatNumber(1234.5, { mode: 'currency' });   // '฿1,234.50'
 formatNumber(60, { suffix: ' กก.' });          // '60 กก.'
@@ -184,7 +184,7 @@ clampNumber(120, { max: 100 });                // 100`,
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onInput', 'WtInputNumberInputEvent', undefined, 'พิมพ์ (พร้อมค่าที่อ่านได้)', 'Typed (with the parsed value)'),
+        row('onInput', 'WuInputNumberInputEvent', undefined, 'พิมพ์ (พร้อมค่าที่อ่านได้)', 'Typed (with the parsed value)'),
         row('onFocus', 'FocusEvent', undefined, 'เข้าช่อง', 'Focused'),
         row('onBlur', 'FocusEvent', undefined, 'ออกจากช่อง', 'Blurred'),
         row('onClear', 'void', undefined, 'กดปุ่มล้าง', 'The clear button was pressed'),
@@ -194,22 +194,22 @@ clampNumber(120, { max: 100 });                // 100`,
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtInputNumberMode = 'decimal' | 'currency';
-type WtInputNumberButtonLayout = 'stacked' | 'horizontal';
-interface WtInputNumberInputEvent {
+      code: `type WuInputNumberMode = 'decimal' | 'currency';
+type WuInputNumberButtonLayout = 'stacked' | 'horizontal';
+interface WuInputNumberInputEvent {
   value: number | null;
   originalEvent: Event;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-inputnumber-button-width', 'ความกว้างของปุ่ม', 'Button width'),
-    tok('--wt-inputnumber-button-bg', 'พื้นของปุ่ม', 'Button background'),
-    tok('--wt-inputnumber-button-hover-bg', 'พื้นของปุ่มตอนชี้', 'Button hover background'),
-    tok('--wt-inputnumber-button-color', 'สีของปุ่ม', 'Button colour'),
-    tok('--wt-inputnumber-button-hover-color', 'สีของปุ่มตอนชี้', 'Button hover colour'),
-    tok('--wt-inputnumber-button-border', 'ขอบของปุ่ม', 'Button border'),
-    tok('--wt-input-radius', 'ความมนของมุม (ร่วมกับ InputText)', 'Corner radius (shared with InputText)'),
-    tok('--wt-danger-color', 'ขอบเมื่อ invalid', 'Invalid border'),
+    tok('--wu-inputnumber-button-width', 'ความกว้างของปุ่ม', 'Button width'),
+    tok('--wu-inputnumber-button-bg', 'พื้นของปุ่ม', 'Button background'),
+    tok('--wu-inputnumber-button-hover-bg', 'พื้นของปุ่มตอนชี้', 'Button hover background'),
+    tok('--wu-inputnumber-button-color', 'สีของปุ่ม', 'Button colour'),
+    tok('--wu-inputnumber-button-hover-color', 'สีของปุ่มตอนชี้', 'Button hover colour'),
+    tok('--wu-inputnumber-button-border', 'ขอบของปุ่ม', 'Button border'),
+    tok('--wu-input-radius', 'ความมนของมุม (ร่วมกับ InputText)', 'Corner radius (shared with InputText)'),
+    tok('--wu-danger-color', 'ขอบเมื่อ invalid', 'Invalid border'),
   ],
 };

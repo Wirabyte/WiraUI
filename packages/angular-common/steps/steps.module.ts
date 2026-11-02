@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtSteps } from './steps.component';
+import { WuSteps } from './steps.component';
 
-/** For NgModule apps. Standalone apps can import `WtSteps` directly. */
+/** For NgModule apps. Standalone apps can import `WuSteps` directly. */
 @NgModule({
-  imports: [WtSteps],
-  exports: [WtSteps],
+  imports: [WuSteps],
+  exports: [WuSteps],
 })
-export class WtStepsModule {}
+export class WuStepsModule {}

@@ -1,59 +1,59 @@
-/* wt-tag. Shared by wiratheme v1, v2 and v3. `--wt-tag-fill` picks the look: 0% = soft tint with coloured
+/* wu-tag. Shared by wiraui v1, v2 and v3. `--wu-tag-fill` picks the look: 0% = soft tint with coloured
    text (styled), 100% = solid colour with contrast text (classic). */
-@layer wiratheme.components {
-  wt-tag {
+@layer wiraui.components {
+  wu-tag {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-tag {
-    --_solid: var(--wt-primary-color);
-    --_on-solid: var(--wt-primary-contrast);
-    --_soft: var(--wt-primary-soft);
-    --_on-soft: var(--wt-primary-soft-text);
+  .wu-tag {
+    --_solid: var(--wu-primary-color);
+    --_on-solid: var(--wu-primary-contrast);
+    --_soft: var(--wu-primary-soft);
+    --_on-soft: var(--wu-primary-soft-text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--wt-tag-gap);
+    gap: var(--wu-tag-gap);
     max-width: 100%;
-    padding: var(--wt-tag-padding-y) var(--wt-tag-padding-x);
-    border-radius: var(--wt-tag-radius);
-    background: color-mix(in srgb, var(--_solid) var(--wt-tag-fill), var(--_soft));
-    color: color-mix(in srgb, var(--_on-solid) var(--wt-tag-fill), var(--_on-soft));
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-tag-font-size);
-    font-weight: var(--wt-tag-font-weight);
+    padding: var(--wu-tag-padding-y) var(--wu-tag-padding-x);
+    border-radius: var(--wu-tag-radius);
+    background: color-mix(in srgb, var(--_solid) var(--wu-tag-fill), var(--_soft));
+    color: color-mix(in srgb, var(--_on-solid) var(--wu-tag-fill), var(--_on-soft));
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-tag-font-size);
+    font-weight: var(--wu-tag-font-weight);
     /* Thai marks above and below the line need room. */
     line-height: 1.4;
     white-space: nowrap;
   }
-  .wt-tag-label {
+  .wu-tag-label {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .wt-tag-rounded {
-    border-radius: var(--wt-radius-full);
+  .wu-tag-rounded {
+    border-radius: var(--wu-radius-full);
   }
-  .wt-tag-icon {
+  .wu-tag-icon {
     line-height: 1;
     font-size: 0.9em;
   }
   /* Icons put inside the content sit on the text's baseline; lower them to the middle of the letters, as icon
      fonts are usually aligned, so they line up with the built-in icon. */
-  .wt-tag-label > :is(.pi, .fa, .fas, .far, .fab, .material-icons, i, svg, img) {
+  .wu-tag-label > :is(.pi, .fa, .fas, .far, .fab, .material-icons, i, svg, img) {
     font-size: 0.9em;
     line-height: 1;
     vertical-align: -0.125em;
   }
-  .wt-tag-secondary {
-    --_solid: var(--wt-button-secondary-bg);
-    --_on-solid: var(--wt-button-secondary-color);
-    --_soft: var(--wt-chip-bg);
-    --_on-soft: var(--wt-chip-color);
+  .wu-tag-secondary {
+    --_solid: var(--wu-button-secondary-bg);
+    --_on-solid: var(--wu-button-secondary-color);
+    --_soft: var(--wu-chip-bg);
+    --_on-soft: var(--wu-chip-color);
   }
-  .wt-tag-success { --_solid: var(--wt-success-color); --_on-solid: var(--wt-success-contrast); --_soft: var(--wt-success-bg); --_on-soft: var(--wt-success-text); }
-  .wt-tag-info { --_solid: var(--wt-info-color); --_on-solid: var(--wt-info-contrast); --_soft: var(--wt-info-bg); --_on-soft: var(--wt-info-text); }
-  .wt-tag-warn { --_solid: var(--wt-warn-color); --_on-solid: var(--wt-warn-contrast); --_soft: var(--wt-warn-bg); --_on-soft: var(--wt-warn-text); }
-  .wt-tag-danger { --_solid: var(--wt-danger-color); --_on-solid: var(--wt-danger-contrast); --_soft: var(--wt-danger-bg); --_on-soft: var(--wt-danger-text); }
-  .wt-tag-help { --_solid: var(--wt-help-color); --_on-solid: var(--wt-help-contrast); --_soft: var(--wt-help-bg); --_on-soft: var(--wt-help-text); }
-  .wt-tag-contrast { --_solid: var(--wt-text); --_on-solid: var(--wt-card-bg); --_soft: var(--wt-text); --_on-soft: var(--wt-card-bg); }
+  .wu-tag-success { --_solid: var(--wu-success-color); --_on-solid: var(--wu-success-contrast); --_soft: var(--wu-success-bg); --_on-soft: var(--wu-success-text); }
+  .wu-tag-info { --_solid: var(--wu-info-color); --_on-solid: var(--wu-info-contrast); --_soft: var(--wu-info-bg); --_on-soft: var(--wu-info-text); }
+  .wu-tag-warn { --_solid: var(--wu-warn-color); --_on-solid: var(--wu-warn-contrast); --_soft: var(--wu-warn-bg); --_on-soft: var(--wu-warn-text); }
+  .wu-tag-danger { --_solid: var(--wu-danger-color); --_on-solid: var(--wu-danger-contrast); --_soft: var(--wu-danger-bg); --_on-soft: var(--wu-danger-text); }
+  .wu-tag-help { --_solid: var(--wu-help-color); --_on-solid: var(--wu-help-contrast); --_soft: var(--wu-help-bg); --_on-soft: var(--wu-help-text); }
+  .wu-tag-contrast { --_solid: var(--wu-text); --_on-solid: var(--wu-card-bg); --_soft: var(--wu-text); --_on-soft: var(--wu-card-bg); }
 }

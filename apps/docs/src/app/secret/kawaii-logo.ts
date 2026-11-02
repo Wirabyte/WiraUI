@@ -1,4 +1,4 @@
-// The WiraTheme sticker logo of the WiraKawaii secret page, as SVG markup. The page draws it inline (so it can
+// The WiraUI sticker logo of the WiraKawaii secret page, as SVG markup. The page draws it inline (so it can
 // animate) and offers the same markup as a download. Like the cute logos of the dev-tool trend it keeps the brand's
 // own colours, here Wirabyte's: the coral-to-orange of its W, the mint-to-sky of its B, the navy of its badge. Fonts: Fredoka and M PLUS Rounded 1c (Google Fonts, OFL).
 
@@ -42,9 +42,8 @@ const KANA = [
   ['ウ', '#ff8a85'],
   ['ィ', '#6cc8ef'],
   ['ラ', '#ffa36b'],
-  ['テ', '#5bbde9'],
-  ['ー', '#ff8a85'],
-  ['マ', '#5fdcbd'],
+  ['U', '#5bbde9'],
+  ['I', '#ff8a85'],
 ];
 
 const W = 960;
@@ -69,7 +68,7 @@ const STILL = [
   // The name.
   sticker('Wira', 96, 352, 236, 'url(#kw-main)', 34, 'letter-spacing="8" rotate="-7 4 -3 6"'),
   `<g transform="rotate(-6 700 400)">`,
-  sticker('Theme', 548, 418, 112, 'url(#kw-tail)', 24, 'letter-spacing="3" rotate="4 -3 5 -2 4"'),
+  sticker('UI', 566, 418, 150, 'url(#kw-tail)', 26, 'letter-spacing="6" rotate="5 -4"'),
   `</g>`,
   // Wirabyte's round WB badge, as a sticker.
   `<g transform="translate(900 84) rotate(10)">`,
@@ -104,7 +103,7 @@ const decoInPlace = (k: Deco) => stickerShape(k.d, `translate(${k.x} ${k.y}) ${k
 
 /** The whole logo in one SVG: the download. */
 export const KAWAII_LOGO_SVG = [
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="WiraTheme">`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="WiraUI">`,
   DEFS,
   STILL,
   DECOS.map(decoInPlace).join(''),
@@ -112,7 +111,7 @@ export const KAWAII_LOGO_SVG = [
 ].join('');
 
 /** The still parts only: the page draws the moving ones as separate layers on top. */
-export const KAWAII_LOGO_STILL_SVG = [`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="WiraTheme">`, DEFS, STILL, `</svg>`].join('');
+export const KAWAII_LOGO_STILL_SVG = [`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="WiraUI">`, DEFS, STILL, `</svg>`].join('');
 
 /**
  * Each moving part as its own small SVG, placed in percent of the logo box. They animate with CSS transforms on

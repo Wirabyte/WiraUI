@@ -1,4 +1,4 @@
-export interface WtToggleButtonChangeEvent {
+export interface WuToggleButtonChangeEvent {
   checked: boolean;
   originalEvent: Event;
 }

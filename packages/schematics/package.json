@@ -1,8 +1,8 @@
 {
-  "name": "@wiratheme/schematics",
+  "name": "@wiraui/schematics",
   "version": "0.1.0",
   "private": true,
-  "description": "ng add / ng update for wiratheme. Compiled against the Angular 15 devkit API so it runs in every supported CLI (15–21+) on Node 18+.",
+  "description": "ng add / ng update for wiraui. Compiled against the Angular 15 devkit API so it runs in every supported CLI (15–21+) on Node 18+.",
   "scripts": {
     "build": "node scripts/prepare-core.mjs && tsc -p tsconfig.json && node scripts/copy-assets.mjs",
     "test": "pnpm run build && vitest run"

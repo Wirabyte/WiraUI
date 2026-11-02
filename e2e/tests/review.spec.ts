@@ -14,15 +14,15 @@ test('sizes: small < default < large for buttons and checkboxes; pButton and p-b
   const lg = await height(page, '#btn-lg button');
   expect(sm).toBeLessThan(md);
   expect(md).toBeLessThan(lg);
-  expect(await height(page, '#cb-sm .wt-checkbox-box')).toBeLessThan(await height(page, '#cb-lg .wt-checkbox-box'));
+  expect(await height(page, '#cb-sm .wu-checkbox-box')).toBeLessThan(await height(page, '#cb-lg .wu-checkbox-box'));
 
   const pbtn = page.locator('#pbtn');
-  await expect(pbtn).toHaveClass(/wt-btn/);
-  await expect(pbtn).toHaveClass(/wt-btn-danger/);
-  await expect(pbtn).toHaveClass(/wt-btn-sm/);
-  await expect(pbtn.locator('.wt-btn-label')).toHaveText('ปุ่มเดิม');
+  await expect(pbtn).toHaveClass(/wu-btn/);
+  await expect(pbtn).toHaveClass(/wu-btn-danger/);
+  await expect(pbtn).toHaveClass(/wu-btn-sm/);
+  await expect(pbtn.locator('.wu-btn-label')).toHaveText('ปุ่มเดิม');
   expect(await height(page, '#pbtn')).toBeCloseTo(sm, 0);
-  await expect(page.locator('#btn-styleclass button')).toHaveClass(/wt-btn-outlined/);
+  await expect(page.locator('#btn-styleclass button')).toHaveClass(/wu-btn-outlined/);
 });
 
 test('scale: setScale sets the root font size and the controls follow', async ({ page }) => {
@@ -60,7 +60,7 @@ test('validation: errors appear on submit or touch, in Thai, and fields turn red
   await expect(page.locator('#v-phone-err')).toBeHidden();
 });
 
-test('validation: wtMatch checks again when the field it copies changes', async ({ page }) => {
+test('validation: wuMatch checks again when the field it copies changes', async ({ page }) => {
   const pw = page.locator('#v-pw');
   const again = page.locator('#v-pw2');
   await pw.fill('secret1');
@@ -91,7 +91,7 @@ test('password: the strength meter opens as a panel and does not push the page',
   const y = await top();
   await page.locator('#pw input').focus();
   await page.keyboard.type('Ab12');
-  const panel = page.locator('.wt-password-panel');
+  const panel = page.locator('.wu-password-panel');
   await expect(panel).toBeVisible();
   expect(await top()).toBeCloseTo(y, 0);
   await page.locator('#pw input').blur();
@@ -99,34 +99,34 @@ test('password: the strength meter opens as a panel and does not push the page',
 });
 
 test('progressbar counts items and takes a content template; metergroup draws its parts', async ({ page }) => {
-  await expect(page.locator('#pb-count .wt-progressbar-label')).toHaveText('1,000 / 2,500 รายการ');
+  await expect(page.locator('#pb-count .wu-progressbar-label')).toHaveText('1,000 / 2,500 รายการ');
   await expect(page.locator('#pb-count [role="progressbar"]')).toHaveAttribute('aria-valuemax', '2500');
-  const width = await page.locator('#pb-count .wt-progressbar-value').evaluate((el) => el.style.width);
+  const width = await page.locator('#pb-count .wu-progressbar-value').evaluate((el) => el.style.width);
   expect(width).toBe('40%');
-  await expect(page.locator('#pb-tpl .wt-progressbar-label')).toHaveText('50/100');
+  await expect(page.locator('#pb-tpl .wu-progressbar-label')).toHaveText('50/100');
 
-  const meters = page.locator('#mg .wt-metergroup-meter');
+  const meters = page.locator('#mg .wu-metergroup-meter');
   await expect(meters).toHaveCount(3);
   expect(await meters.nth(2).evaluate((el) => el.style.width)).toBe('24%');
-  await expect(page.locator('#mg .wt-metergroup-label').nth(0)).toContainText('แอป (16%)');
+  await expect(page.locator('#mg .wu-metergroup-label').nth(0)).toContainText('แอป (16%)');
   await expect(page.locator('#mg [role="meter"]')).toHaveAttribute('aria-valuenow', '48');
 });
 
 test('tabs: a row that overflows shows arrows instead of a scrollbar, and keeps the chosen tab in view', async ({ page }) => {
-  const list = page.locator('#tabs-many .wt-tablist');
+  const list = page.locator('#tabs-many .wu-tablist');
   expect(await list.evaluate((el) => el.offsetHeight - el.clientHeight)).toBe(0);
-  await expect(page.locator('#tabs-many .wt-tabs-next')).toBeVisible();
-  await expect(page.locator('#tabs-many .wt-tabs-prev')).toHaveCount(0);
-  await page.locator('#tabs-many .wt-tabs-next').click();
-  await expect(page.locator('#tabs-many .wt-tabs-prev')).toBeVisible();
+  await expect(page.locator('#tabs-many .wu-tabs-next')).toBeVisible();
+  await expect(page.locator('#tabs-many .wu-tabs-prev')).toHaveCount(0);
+  await page.locator('#tabs-many .wu-tabs-next').click();
+  await expect(page.locator('#tabs-many .wu-tabs-prev')).toBeVisible();
 
-  await page.locator('#tabs-many .wt-tab').first().focus();
+  await page.locator('#tabs-many .wu-tab').first().focus();
   await page.keyboard.press('End');
   await expect(page.locator('#tab-aug')).toBeVisible();
   const inView = () =>
     page.evaluate(() => {
-      const list = document.querySelector('#tabs-many .wt-tablist') as HTMLElement;
-      const tab = list.querySelector('.wt-tab-active') as HTMLElement;
+      const list = document.querySelector('#tabs-many .wu-tablist') as HTMLElement;
+      const tab = list.querySelector('.wu-tab-active') as HTMLElement;
       const l = list.getBoundingClientRect();
       const t = tab.getBoundingClientRect();
       return t.left >= l.left - 1 && t.right <= l.right + 1;
@@ -136,7 +136,7 @@ test('tabs: a row that overflows shows arrows instead of a scrollbar, and keeps 
 
 test('dialog position="bottom" sits at the bottom of the window', async ({ page }) => {
   await page.locator('#open-bottom button').click();
-  const panel = page.locator('#dlg-bottom .wt-dialog');
+  const panel = page.locator('#dlg-bottom .wu-dialog');
   await expect(panel).toBeVisible();
   const { bottom, vh } = await panel.evaluate((el) => ({ bottom: el.getBoundingClientRect().bottom, vh: window.innerHeight }));
   expect(vh - bottom).toBeLessThan(40);
@@ -145,10 +145,10 @@ test('dialog position="bottom" sits at the bottom of the window', async ({ page 
 test('tooltip: the pointer can move onto it and click its link', async ({ page }) => {
   const target = page.locator('#tip-link button');
   await target.hover();
-  const tip = page.locator('.wt-tooltip');
+  const tip = page.locator('.wu-tooltip');
   await expect(tip).toBeVisible();
   const box = (await tip.boundingBox())!;
-  // The tooltip sits over the middle of wt-button, which this page stretches across the row: along the row to under
+  // The tooltip sits over the middle of wu-button, which this page stretches across the row: along the row to under
   // it, then up. Resting over the gap between the two keeps it (the gap belongs to the tooltip).
   const host = (await page.locator('#tip-link').boundingBox())!;
   const x = box.x + box.width / 2;
@@ -166,16 +166,16 @@ test('tooltip: the pointer can move onto it and click its link', async ({ page }
 
 test('alert: cancel comes first and confirm last, in screen and Tab order', async ({ page }) => {
   await page.locator('#open-question button').click();
-  const buttons = page.locator('wt-alertdialog dialog .wt-alert-actions button');
+  const buttons = page.locator('wu-alertdialog dialog .wu-alert-actions button');
   await expect(buttons).toHaveCount(2);
-  await expect(buttons.nth(0)).toHaveClass(/wt-alert-cancel/);
-  await expect(buttons.nth(1)).toHaveClass(/wt-alert-confirm/);
+  await expect(buttons.nth(0)).toHaveClass(/wu-alert-cancel/);
+  await expect(buttons.nth(1)).toHaveClass(/wu-alert-confirm/);
   await page.keyboard.press('Escape');
 });
 
 test('toast: a countdown line runs for the toast life', async ({ page }) => {
   await page.locator('#open-toast button').click();
-  const line = page.locator('.wt-toast-timer span').first();
+  const line = page.locator('.wu-toast-timer span').first();
   await expect(line).toBeAttached();
   expect(await line.evaluate((el) => (el as HTMLElement).style.animationDuration)).toBe('2500ms');
 });

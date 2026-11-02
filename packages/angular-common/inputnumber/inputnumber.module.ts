@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtInputNumber } from './inputnumber.component';
+import { WuInputNumber } from './inputnumber.component';
 
-/** For NgModule apps. Standalone apps can import `WtInputNumber` directly. */
+/** For NgModule apps. Standalone apps can import `WuInputNumber` directly. */
 @NgModule({
-  imports: [WtInputNumber],
-  exports: [WtInputNumber],
+  imports: [WuInputNumber],
+  exports: [WuInputNumber],
 })
-export class WtInputNumberModule {}
+export class WuInputNumberModule {}

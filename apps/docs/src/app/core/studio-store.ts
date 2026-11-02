@@ -1,10 +1,10 @@
 /*
- * WiraTheme Studio state: the theme being edited, kept per docs version and saved in localStorage.
- * No wiratheme import here (DocsState is in the initial bundle): the engine of the version on screen
+ * WiraUI Studio state: the theme being edited, kept per docs version and saved in localStorage.
+ * No wiraui import here (DocsState is in the initial bundle): the engine of the version on screen
  * reaches the studio through DocsVersionTheme.core, typed by the StudioCore shape below.
  */
 
-/** Token name (without `--wt-`) → CSS value. */
+/** Token name (without `--wu-`) → CSS value. */
 export type TokenMap = Record<string, string>;
 
 /** Token edits made in the studio. `light` applies in both modes unless `dark` redefines it, as in the theme itself. */
@@ -15,7 +15,7 @@ export interface StudioTokens {
 
 export type CustomMode = 'both' | 'light' | 'dark';
 
-/** A free `--wt-*` override from the Custom tab. */
+/** A free `--wu-*` override from the Custom tab. */
 export interface StudioCustomRow {
   name: string;
   value: string;
@@ -84,7 +84,7 @@ export interface StudioCssOptions {
   extra?: TokenMap;
 }
 
-/** What the studio uses from `wiratheme/core` (each version module passes its own copy). */
+/** What the studio uses from `wiraui/core` (each version module passes its own copy). */
 export interface StudioCore {
   readonly CORE_VERSION: string;
   readonly CONFIG_MARKER: string;
@@ -111,9 +111,9 @@ export interface StudioCore {
   parseImport(text: string): StudioConfig;
 }
 
-export const STUDIO_STORE = 'wiratheme-docs-studio';
+export const STUDIO_STORE = 'wiraui-docs-studio';
 /** Second marker line in exported files: the studio's own edits, so an import brings them back too. */
-export const STUDIO_MARKER = 'wiratheme-studio';
+export const STUDIO_MARKER = 'wiraui-studio';
 
 export const TOKEN_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -122,20 +122,20 @@ export function safeValue(value: string): boolean {
   return value.trim() !== '' && !/[;{}<>\n\r]/.test(value.replace(/\{[a-z0-9-]+\}/g, ''));
 }
 
-/** `{field-bg}` → `var(--wt-field-bg)`; anything else is kept as typed. */
+/** `{field-bg}` → `var(--wu-field-bg)`; anything else is kept as typed. */
 export function toCssValue(display: string): string {
-  return display.trim().replace(/\{([a-z0-9-]+)\}/g, 'var(--wt-$1)');
+  return display.trim().replace(/\{([a-z0-9-]+)\}/g, 'var(--wu-$1)');
 }
 
-/** `var(--wt-field-bg)` → `{field-bg}`, the way the studio shows a reference. */
+/** `var(--wu-field-bg)` → `{field-bg}`, the way the studio shows a reference. */
 export function toDisplay(css: string): string {
-  return css.replace(/var\(--wt-([a-z0-9-]+)\)/g, '{$1}');
+  return css.replace(/var\(--wu-([a-z0-9-]+)\)/g, '{$1}');
 }
 
-/** Token names a value refers to (`{x}` or `var(--wt-x)`). */
+/** Token names a value refers to (`{x}` or `var(--wu-x)`). */
 export function refsOf(value: string): string[] {
   const out: string[] = [];
-  const re = /(?:\{|var\(--wt-)([a-z0-9-]+)[})]/g;
+  const re = /(?:\{|var\(--wu-)([a-z0-9-]+)[})]/g;
   for (let m = re.exec(value); m; m = re.exec(value)) out.push(m[1]);
   return out;
 }
@@ -161,7 +161,7 @@ export function cleanExtras(raw: unknown): Pick<StudioTheme, 'name' | 'base' | '
   if (Array.isArray(r['custom'])) {
     for (const row of r['custom'] as unknown[]) {
       const c = (row && typeof row === 'object' ? row : {}) as Record<string, unknown>;
-      const name = typeof c['name'] === 'string' ? c['name'].trim().replace(/^--wt-/, '') : '';
+      const name = typeof c['name'] === 'string' ? c['name'].trim().replace(/^--wu-/, '') : '';
       const value = typeof c['value'] === 'string' ? c['value'] : '';
       const mode: CustomMode = c['mode'] === 'light' || c['mode'] === 'dark' ? c['mode'] : 'both';
       if (name.length <= 80 && value.length <= 400) custom.push({ name, value, mode });
@@ -217,7 +217,7 @@ export function writeStudio(all: Record<string, StudioTheme>): boolean {
 export function customTokens(rows: readonly StudioCustomRow[]): StudioTokens {
   const out: StudioTokens = { light: {}, dark: {} };
   for (const r of rows) {
-    const name = r.name.trim().replace(/^--wt-/, '');
+    const name = r.name.trim().replace(/^--wu-/, '');
     if (!TOKEN_NAME.test(name) || !safeValue(r.value)) continue;
     const value = toCssValue(r.value);
     if (r.mode !== 'dark') out.light[name] = value;
@@ -240,16 +240,16 @@ export function hasEdits(e: StudioTokens): boolean {
 
 const decls = (map: TokenMap, indent: string) =>
   Object.keys(map)
-    .map((k) => `${indent}--wt-${k}: ${map[k]};`)
+    .map((k) => `${indent}--wu-${k}: ${map[k]};`)
     .join('\n');
 
 /**
- * The edits as a `wiratheme.tokens` block. It sits after the theme's own block in the same layer, so it wins by
+ * The edits as a `wiraui.tokens` block. It sits after the theme's own block in the same layer, so it wins by
  * order and keeps the theme's rule that a dark value (higher specificity) beats a light one in dark mode.
  */
-export function editsCss(e: StudioTokens, darkMode = 'class', darkSelector = ':root.wt-dark'): string {
+export function editsCss(e: StudioTokens, darkMode = 'class', darkSelector = ':root.wu-dark'): string {
   if (!hasEdits(e)) return '';
-  const lines = ['@layer wiratheme.tokens {'];
+  const lines = ['@layer wiraui.tokens {'];
   if (Object.keys(e.light).length) lines.push('  :root {', decls(e.light, '    '), '  }');
   if (Object.keys(e.dark).length && darkMode === 'class') lines.push(`  ${darkSelector} {`, decls(e.dark, '    '), '  }');
   if (Object.keys(e.dark).length && darkMode === 'media') {

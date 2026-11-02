@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewChild } from '@angular/core';
 
 /**
- * One panel of a wt-splitter, written as an element: `<wt-splitter-panel [size]="30" [minSize]="10">…</wt-splitter-panel>`
- * (`wt-splitterPanel` too). The splitter draws its content in the panel box; `size` / `minSize` (in %) are used when
+ * One panel of a wu-splitter, written as an element: `<wu-splitter-panel [size]="30" [minSize]="10">…</wu-splitter-panel>`
+ * (`wu-splitterPanel` too). The splitter draws its content in the panel box; `size` / `minSize` (in %) are used when
  * the splitter's own `panelSizes` / `minSizes` leave them out.
  */
 @Component({
-  selector: 'wt-splitterPanel, wt-splitter-panel, wt-splitterpanel',
+  selector: 'wu-splitterPanel, wu-splitter-panel, wu-splitterpanel',
   standalone: true,
   template: '<ng-template #content><ng-content></ng-content></ng-template>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtSplitterPanel {
+export class WuSplitterPanel {
   /** Starting size in %. */
   @Input() size?: number | string | null;
   /** Smallest size in %. */

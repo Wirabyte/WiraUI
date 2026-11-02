@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize, ɵWtStyleLoader } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize, ɵWuStyleLoader } from 'wiraui/config';
 import {
   acceptsNumberInput,
   acceptsNumberText,
@@ -26,29 +26,29 @@ import {
   NumberTypingRules,
   parseNumber,
   stepNumber,
-} from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { WtInputNumberButtonLayout, WtInputNumberInputEvent, WtInputNumberMode } from './inputnumber.types';
+} from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { WuInputNumberButtonLayout, WuInputNumberInputEvent, WuInputNumberMode } from './inputnumber.types';
 
 const optionalNumber = (v: unknown): number | null => (v === null || v === undefined || v === '' || isNaN(Number(v)) ? null : Number(v));
 
 /**
- * Number field: `<wt-inputnumber [(ngModel)]="price" mode="currency" [min]="0" showButtons>`.
+ * Number field: `<wu-inputnumber [(ngModel)]="price" mode="currency" [min]="0" showButtons>`.
  * Shows the formatted value (`฿1,234.50`) while idle and plain digits while typing; the model is a number or null.
  * ArrowUp/ArrowDown step the value; phones get the numeric keypad.
  */
 @Component({
-  selector: 'wt-inputnumber, wt-inputNumber, wt-input-number',
+  selector: 'wu-inputnumber, wu-inputNumber, wu-input-number',
   standalone: true,
   imports: [NgIf],
   templateUrl: './inputnumber.component.html',
   styleUrls: ['./inputnumber.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtInputNumber), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuInputNumber), multi: true }],
 })
-export class WtInputNumber implements ControlValueAccessor, OnDestroy {
-  @Input() mode: WtInputNumberMode = 'decimal';
+export class WuInputNumber implements ControlValueAccessor, OnDestroy {
+  @Input() mode: WuInputNumberMode = 'decimal';
   /** ISO 4217 code for currency mode. Default THB. */
   @Input() currency = 'THB';
   /** BCP 47 locale. Default: th-TH, or en-US when the app's locale is English. */
@@ -63,7 +63,7 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
   @Input() set step(v: unknown) { this._step = optionalNumber(v) ?? 1; }
   @Input() set showButtons(v: unknown) { this._showButtons = ɵtoBool(v); }
   get showButtons(): boolean { return this._showButtons; }
-  @Input() buttonLayout: WtInputNumberButtonLayout = 'stacked';
+  @Input() buttonLayout: WuInputNumberButtonLayout = 'stacked';
   @Input() prefix?: string;
   @Input() suffix?: string;
   @Input() placeholder?: string;
@@ -75,11 +75,11 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
   get readonly(): boolean { return this._readonly; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
-  @Input() size?: WtSize;
-  @HostBinding('class.wt-inputnumber-sm') @HostBinding('class.p-inputnumber-sm') get sizeSm(): boolean {
+  @Input() size?: WuSize;
+  @HostBinding('class.wu-inputnumber-sm') @HostBinding('class.p-inputnumber-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
-  @HostBinding('class.wt-inputnumber-lg') @HostBinding('class.p-inputnumber-lg') get sizeLg(): boolean {
+  @HostBinding('class.wu-inputnumber-lg') @HostBinding('class.p-inputnumber-lg') get sizeLg(): boolean {
     return this.sizeKey === 'lg';
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -103,7 +103,7 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
   @Output() readonly onKeyDown = new EventEmitter<KeyboardEvent>();
   @Output() readonly onClear = new EventEmitter<void>();
   private _showClear = false;
-  private readonly wtConfig = inject(WtConfig);
+  private readonly wuConfig = inject(WuConfig);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get inputStyleObject(): Record<string, any> | null {
     return this.inputStyle && typeof this.inputStyle === 'object' ? this.inputStyle : null;
@@ -112,16 +112,16 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
     return this._showClear && this.value !== null && !this.isDisabled && !this.readonly;
   }
   get clearLabel(): string {
-    return this.wtConfig.translation.clear;
+    return this.wuConfig.translation.clear;
   }
-  @Output() readonly onInput = new EventEmitter<WtInputNumberInputEvent>();
+  @Output() readonly onInput = new EventEmitter<WuInputNumberInputEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @HostBinding('class.wt-inputnumber-fluid') get fluidClass(): boolean {
+  @HostBinding('class.wu-inputnumber-fluid') get fluidClass(): boolean {
     return this._fluid;
   }
-  @HostBinding('class.wt-filled') @HostBinding('class.p-inputwrapper-filled') get filled(): boolean {
+  @HostBinding('class.wu-filled') @HostBinding('class.p-inputwrapper-filled') get filled(): boolean {
     return this.value !== null;
   }
 
@@ -141,16 +141,16 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
   private _fluid = false;
   private formDisabled = false;
   private repeat: ReturnType<typeof setTimeout> | null = null;
-  private readonly autoId = ɵuniqueId('wt-inputnumber');
-  private readonly config = inject(WtConfig);
+  private readonly autoId = ɵuniqueId('wu-inputnumber');
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly cdr = inject(ChangeDetectorRef);
   private onModelChange: (value: number | null) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -203,8 +203,8 @@ export class WtInputNumber implements ControlValueAccessor, OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-inputnumber', 'p-inputnumber', 'p-component'];
-    if (this._showButtons) c.push('wt-inputnumber-' + this.buttonLayout, 'p-inputnumber-buttons-' + this.buttonLayout);
+    const c = ['wu-inputnumber', 'p-inputnumber', 'p-component'];
+    if (this._showButtons) c.push('wu-inputnumber-' + this.buttonLayout, 'p-inputnumber-buttons-' + this.buttonLayout);
     return c.join(' ');
   }
 

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { WtDialogConfig, WtDialogRef } from 'wiratheme-v2/dialog';
+import { WuDialogConfig, WuDialogRef } from 'wiraui-v2/dialog';
 import {
   ButtonDemo,
   CardDemo,
@@ -102,7 +102,7 @@ import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-state
 import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
 import { ThaiDemo } from '../shared/demos-thai';
 
-// Shared templates compiled against wiratheme@2 components (DocsV2Module imports the v1 modules).
+// Shared templates compiled against wiraui@2 components (DocsV2Module imports the v1 modules).
 
 @Component({ selector: 'docs-button-v2', templateUrl: '../shared/button.html', standalone: false })
 export class ButtonPageV2 extends ButtonDemo {}
@@ -398,9 +398,9 @@ export class BottomBarPageV2 extends BottomBarDemo {}
 @Component({ selector: 'docs-thai-v2', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV2 extends ThaiDemo {}
 
-/** What the Dialog page's WtDialogService sample opens (this version's dialog ref and config). */
+/** What the Dialog page's WuDialogService sample opens (this version's dialog ref and config). */
 @Component({ selector: 'docs-pick-student-v2', templateUrl: '../shared/dialog-pick.html', standalone: false })
 export class PickStudentV2 extends PickStudentBase {
-  protected readonly ref = inject(WtDialogRef);
-  protected readonly config = inject(WtDialogConfig);
+  protected readonly ref = inject(WuDialogRef);
+  protected readonly config = inject(WuDialogConfig);
 }

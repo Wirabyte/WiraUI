@@ -6,7 +6,7 @@ import { CodeTab } from '../../shared/code-tabs';
 import { SimpleDemo, wait } from './demos';
 
 /*
- * State and handlers behind the Image Cropper page. Like demos.ts, no wiratheme import: the same template compiles
+ * State and handlers behind the Image Cropper page. Like demos.ts, no wiraui import: the same template compiles
  * against v1, v2 and v3, so events and the cropper's methods are typed by their shape.
  */
 

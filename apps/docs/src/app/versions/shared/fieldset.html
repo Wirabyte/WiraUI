@@ -6,29 +6,29 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-fieldset [legend]="tx('ที่อยู่สำหรับจัดส่ง')">
+        <wu-fieldset [legend]="tx('ที่อยู่สำหรับจัดส่ง')">
           <p class="docs-demo-p">{{ tx('99/1 ถนนตัวอย่าง แขวงตัวอย่าง กรุงเทพฯ 10000') }}</p>
-        </wt-fieldset>
+        </wu-fieldset>
       </docs-demo>
     </docs-section>
 
     <docs-section id="toggleable" [section]="sec['toggleable']">
       <docs-demo [html]="code['toggleable']" [ts]="ts['toggleable']" layout="stack">
-        <wt-fieldset id="d-fieldset" [legend]="tx('ข้อมูลเพิ่มเติม')" [toggleable]="true" [(collapsed)]="moreClosed">
+        <wu-fieldset id="d-fieldset" [legend]="tx('ข้อมูลเพิ่มเติม')" [toggleable]="true" [(collapsed)]="moreClosed">
           <p class="docs-demo-p">{{ tx('หมายเหตุสำหรับทีมงาน') }}</p>
-        </wt-fieldset>
+        </wu-fieldset>
         <span class="docs-demo-output">collapsed: <code id="d-fieldset-state">{{ moreClosed }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="header" [section]="sec['header']">
       <docs-demo [html]="code['header']" layout="stack">
-        <wt-fieldset id="d-fieldset-tpl">
+        <wu-fieldset id="d-fieldset-tpl">
           <ng-template #header>
             <span class="docs-panel-head"><i class="wi wi-phone"></i> {{ tx('ผู้ติดต่อฉุกเฉิน') }}</span>
           </ng-template>
           <p class="docs-demo-p">{{ tx('นางสมศรี ใจดี · 081-234-5678') }}</p>
-        </wt-fieldset>
+        </wu-fieldset>
       </docs-demo>
     </docs-section>
   </ng-template>

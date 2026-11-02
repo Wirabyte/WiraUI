@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtSkeleton } from './skeleton.component';
+import { WuSkeleton } from './skeleton.component';
 
-/** For NgModule apps. Standalone apps can import `WtSkeleton` directly. */
+/** For NgModule apps. Standalone apps can import `WuSkeleton` directly. */
 @NgModule({
-  imports: [WtSkeleton],
-  exports: [WtSkeleton],
+  imports: [WuSkeleton],
+  exports: [WuSkeleton],
 })
-export class WtSkeletonModule {}
+export class WuSkeletonModule {}

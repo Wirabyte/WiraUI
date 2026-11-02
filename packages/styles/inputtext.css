@@ -1,143 +1,143 @@
-/* input[wtInputText] and textarea[wtTextarea]. Shared by wiratheme v1, v2 and v3; loaded at run time by the directives. */
-@layer wiratheme.components {
-  .wt-inputtext {
+/* input[wuInputText] and textarea[wuTextarea]. Shared by wiraui v1, v2 and v3; loaded at run time by the directives. */
+@layer wiraui.components {
+  .wu-inputtext {
     box-sizing: border-box;
     max-width: 100%;
     margin: 0;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-control-line-height);
-    color: var(--wt-field-color);
-    background: var(--wt-field-bg);
-    border: var(--wt-field-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-input-radius);
-    padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
-    box-shadow: var(--wt-field-shadow);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-control-line-height);
+    color: var(--wu-field-color);
+    background: var(--wu-field-bg);
+    border: var(--wu-field-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-input-radius);
+    padding: var(--wu-field-padding-y) var(--wu-field-padding-x);
+    box-shadow: var(--wu-field-shadow);
     outline: none;
     appearance: none;
     transition:
-      border-color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      background-color var(--wt-transition),
-      outline-color var(--wt-transition);
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      background-color var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-inputtext::placeholder {
-    color: var(--wt-field-placeholder);
+  .wu-inputtext::placeholder {
+    color: var(--wu-field-placeholder);
     opacity: 1;
   }
   /* A native <select> drawn as a field: its own arrow goes with `appearance: none`, so it gets a chevron here
      (two small wedges in the muted text colour, so it follows the theme and dark mode). */
-  select.wt-inputtext {
-    padding-inline-end: calc(var(--wt-field-padding-x) + 1.25rem);
+  select.wu-inputtext {
+    padding-inline-end: calc(var(--wu-field-padding-x) + 1.25rem);
     background-image:
-      linear-gradient(45deg, transparent 50%, var(--wt-text-muted) 50%),
-      linear-gradient(135deg, var(--wt-text-muted) 50%, transparent 50%);
+      linear-gradient(45deg, transparent 50%, var(--wu-text-muted) 50%),
+      linear-gradient(135deg, var(--wu-text-muted) 50%, transparent 50%);
     background-position:
-      calc(100% - var(--wt-field-padding-x) - 0.5rem) 52%,
-      calc(100% - var(--wt-field-padding-x) - 0.1875rem) 52%;
+      calc(100% - var(--wu-field-padding-x) - 0.5rem) 52%,
+      calc(100% - var(--wu-field-padding-x) - 0.1875rem) 52%;
     background-size:
       0.3125rem 0.3125rem,
       0.3125rem 0.3125rem;
     background-repeat: no-repeat;
     cursor: pointer;
   }
-  select.wt-inputtext[multiple],
-  select.wt-inputtext[size]:not([size='1']) {
-    padding-inline-end: var(--wt-field-padding-x);
+  select.wu-inputtext[multiple],
+  select.wu-inputtext[size]:not([size='1']) {
+    padding-inline-end: var(--wu-field-padding-x);
     background-image: none;
   }
-  .wt-inputtext:enabled:hover {
-    border-color: var(--wt-field-hover-border);
+  .wu-inputtext:enabled:hover {
+    border-color: var(--wu-field-hover-border);
   }
-  .wt-inputtext:enabled:focus {
-    border-color: var(--wt-field-focus-border);
-    box-shadow: var(--wt-field-focus-shadow);
-    outline: var(--wt-field-focus-outline);
-    outline-offset: var(--wt-field-focus-offset);
+  .wu-inputtext:enabled:focus {
+    border-color: var(--wu-field-focus-border);
+    box-shadow: var(--wu-field-focus-shadow);
+    outline: var(--wu-field-focus-outline);
+    outline-offset: var(--wu-field-focus-offset);
   }
-  .wt-inputtext:disabled {
-    background: var(--wt-field-disabled-bg);
-    color: var(--wt-field-disabled-color);
-    opacity: var(--wt-field-disabled-opacity);
+  .wu-inputtext:disabled {
+    background: var(--wu-field-disabled-bg);
+    color: var(--wu-field-disabled-color);
+    opacity: var(--wu-field-disabled-opacity);
     cursor: default;
   }
-  .wt-inputtext[readonly] {
-    background: var(--wt-field-disabled-bg);
+  .wu-inputtext[readonly] {
+    background: var(--wu-field-disabled-bg);
   }
-  .wt-inputtext-filled {
-    background: var(--wt-field-filled-bg);
+  .wu-inputtext-filled {
+    background: var(--wu-field-filled-bg);
   }
-  .wt-inputtext-filled:enabled:focus {
-    background: var(--wt-field-bg);
+  .wu-inputtext-filled:enabled:focus {
+    background: var(--wu-field-bg);
   }
-  .wt-inputtext-sm,
-  .wt-inputtext.p-inputtext-sm,
-  .p-inputtext-sm .wt-inputtext {
-    font-size: calc(var(--wt-font-size) * 0.875);
-    padding: calc(var(--wt-field-padding-y) * var(--wt-size-sm-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-sm-scale));
+  .wu-inputtext-sm,
+  .wu-inputtext.p-inputtext-sm,
+  .p-inputtext-sm .wu-inputtext {
+    font-size: calc(var(--wu-font-size) * 0.875);
+    padding: calc(var(--wu-field-padding-y) * var(--wu-size-sm-scale)) calc(var(--wu-field-padding-x) * var(--wu-size-sm-scale));
   }
-  .wt-inputtext-lg,
-  .wt-inputtext.p-inputtext-lg,
-  .p-inputtext-lg .wt-inputtext {
-    font-size: calc(var(--wt-font-size) * var(--wt-size-lg-scale));
-    padding: calc(var(--wt-field-padding-y) * var(--wt-size-lg-scale)) calc(var(--wt-field-padding-x) * var(--wt-size-lg-scale));
+  .wu-inputtext-lg,
+  .wu-inputtext.p-inputtext-lg,
+  .p-inputtext-lg .wu-inputtext {
+    font-size: calc(var(--wu-font-size) * var(--wu-size-lg-scale));
+    padding: calc(var(--wu-field-padding-y) * var(--wu-size-lg-scale)) calc(var(--wu-field-padding-x) * var(--wu-size-lg-scale));
   }
-  .wt-inputtext-fluid {
+  .wu-inputtext-fluid {
     width: 100%;
   }
   /* Invalid: forced with [invalid], or by itself once a form control is invalid and touched, or its form was submitted. */
-  .wt-inputtext.wt-invalid,
-  .wt-inputtext.ng-invalid:is(.ng-touched, form.ng-submitted *) {
-    border-color: var(--wt-danger-color);
+  .wu-inputtext.wu-invalid,
+  .wu-inputtext.ng-invalid:is(.ng-touched, form.ng-submitted *) {
+    border-color: var(--wu-danger-color);
   }
 
   /* Number fields without the browser's tiny up/down buttons (the arrow keys and the wheel still step). */
-  .wt-inputtext[type='number'] {
+  .wu-inputtext[type='number'] {
     -moz-appearance: textfield;
     appearance: textfield;
   }
-  .wt-inputtext[type='number']::-webkit-inner-spin-button,
-  .wt-inputtext[type='number']::-webkit-outer-spin-button {
+  .wu-inputtext[type='number']::-webkit-inner-spin-button,
+  .wu-inputtext[type='number']::-webkit-outer-spin-button {
     margin: 0;
     -webkit-appearance: none;
     appearance: none;
   }
 
-  /* Field errors: wt-field-error, and the p-error class existing templates put on <small>. */
-  .wt-field-error,
+  /* Field errors: wu-field-error, and the p-error class existing templates put on <small>. */
+  .wu-field-error,
   .p-error {
     display: block;
     margin-top: 0.25rem;
-    color: var(--wt-danger-color);
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-font-size) * 0.875);
+    color: var(--wu-danger-color);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-font-size) * 0.875);
     line-height: 1.4;
   }
-  wt-field-error[hidden] {
+  wu-field-error[hidden] {
     display: none;
   }
-  .wt-inputtext.p-invalid {
-    border-color: var(--wt-danger-color);
+  .wu-inputtext.p-invalid {
+    border-color: var(--wu-danger-color);
   }
 
-  .wt-textarea {
+  .wu-textarea {
     resize: vertical;
-    line-height: var(--wt-line-height);
+    line-height: var(--wu-line-height);
   }
-  .wt-textarea-autoresize {
+  .wu-textarea-autoresize {
     resize: none;
     overflow: hidden;
   }
 
-  /* ---- Icon inside a field: wt-iconfield, and the older .p-input-icon-left / -right markup ---- */
-  .wt-iconfield,
+  /* ---- Icon inside a field: wu-iconfield, and the older .p-input-icon-left / -right markup ---- */
+  .wu-iconfield,
   .p-input-icon-left,
   .p-input-icon-right {
     position: relative;
     display: inline-block;
     max-width: 100%;
   }
-  .wt-inputicon,
+  .wu-inputicon,
   .p-input-icon-left > i,
   .p-input-icon-right > i,
   .p-input-icon-left > svg,
@@ -151,190 +151,190 @@
     width: 1rem;
     height: 1rem;
     margin-top: -0.5rem;
-    color: var(--wt-field-placeholder);
+    color: var(--wu-field-placeholder);
     line-height: 1;
   }
-  .wt-inputicon svg {
+  .wu-inputicon svg {
     width: 1rem;
     height: 1rem;
   }
-  .wt-iconfield > .wt-inputicon:first-child,
+  .wu-iconfield > .wu-inputicon:first-child,
   .p-input-icon-left > i:first-of-type,
   .p-input-icon-left > svg:first-of-type {
-    left: var(--wt-field-padding-x);
+    left: var(--wu-field-padding-x);
   }
-  .wt-iconfield > .wt-inputicon:last-child,
+  .wu-iconfield > .wu-inputicon:last-child,
   .p-input-icon-right > i:last-of-type,
   .p-input-icon-right > svg:last-of-type {
-    right: var(--wt-field-padding-x);
+    right: var(--wu-field-padding-x);
   }
-  .wt-iconfield > .wt-inputicon:first-child ~ .wt-inputtext,
-  .p-input-icon-left > .wt-inputtext,
+  .wu-iconfield > .wu-inputicon:first-child ~ .wu-inputtext,
+  .p-input-icon-left > .wu-inputtext,
   .p-input-icon-left > .p-inputtext {
-    padding-left: calc(var(--wt-field-padding-x) * 2 + 1rem);
+    padding-left: calc(var(--wu-field-padding-x) * 2 + 1rem);
   }
-  .wt-iconfield > .wt-inputtext:not(:last-child),
-  .p-input-icon-right > .wt-inputtext,
+  .wu-iconfield > .wu-inputtext:not(:last-child),
+  .p-input-icon-right > .wu-inputtext,
   .p-input-icon-right > .p-inputtext {
-    padding-right: calc(var(--wt-field-padding-x) * 2 + 1rem);
+    padding-right: calc(var(--wu-field-padding-x) * 2 + 1rem);
   }
   /* iconPosition="left" / "right" wins over the markup order. */
-  .wt-iconfield.wt-iconfield-left > .wt-inputicon {
+  .wu-iconfield.wu-iconfield-left > .wu-inputicon {
     right: auto;
-    left: var(--wt-field-padding-x);
+    left: var(--wu-field-padding-x);
   }
-  .wt-iconfield.wt-iconfield-right > .wt-inputicon {
-    right: var(--wt-field-padding-x);
+  .wu-iconfield.wu-iconfield-right > .wu-inputicon {
+    right: var(--wu-field-padding-x);
     left: auto;
   }
-  .wt-iconfield.wt-iconfield-left > .wt-inputicon ~ .wt-inputtext,
-  .wt-iconfield.wt-iconfield-left > .wt-inputtext:not(:last-child) {
-    padding-right: var(--wt-field-padding-x);
-    padding-left: calc(var(--wt-field-padding-x) * 2 + 1rem);
+  .wu-iconfield.wu-iconfield-left > .wu-inputicon ~ .wu-inputtext,
+  .wu-iconfield.wu-iconfield-left > .wu-inputtext:not(:last-child) {
+    padding-right: var(--wu-field-padding-x);
+    padding-left: calc(var(--wu-field-padding-x) * 2 + 1rem);
   }
-  .wt-iconfield.wt-iconfield-right > .wt-inputicon ~ .wt-inputtext,
-  .wt-iconfield.wt-iconfield-right > .wt-inputtext:not(:last-child) {
-    padding-right: calc(var(--wt-field-padding-x) * 2 + 1rem);
-    padding-left: var(--wt-field-padding-x);
+  .wu-iconfield.wu-iconfield-right > .wu-inputicon ~ .wu-inputtext,
+  .wu-iconfield.wu-iconfield-right > .wu-inputtext:not(:last-child) {
+    padding-right: calc(var(--wu-field-padding-x) * 2 + 1rem);
+    padding-left: var(--wu-field-padding-x);
   }
 
-  /* ---- Fields, add-ons and buttons joined in one row: wt-inputgroup, and .p-inputgroup ---- */
-  .wt-inputgroup,
+  /* ---- Fields, add-ons and buttons joined in one row: wu-inputgroup, and .p-inputgroup ---- */
+  .wu-inputgroup,
   .p-inputgroup {
     display: flex;
     align-items: stretch;
     width: 100%;
     min-width: 0;
   }
-  .wt-inputgroup-addon,
+  .wu-inputgroup-addon,
   .p-inputgroup-addon {
     flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
     /* Every short addon (an icon, ฿, @) gets the same width, so fields in a form line up. */
-    min-width: var(--wt-inputgroup-addon-min-width);
+    min-width: var(--wu-inputgroup-addon-min-width);
     box-sizing: border-box;
-    padding: var(--wt-field-padding-y) 0.5rem;
-    border: var(--wt-field-border-width) solid var(--wt-field-border);
-    background: var(--wt-field-filled-bg);
-    color: var(--wt-text-muted);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-control-line-height);
+    padding: var(--wu-field-padding-y) 0.5rem;
+    border: var(--wu-field-border-width) solid var(--wu-field-border);
+    background: var(--wu-field-filled-bg);
+    color: var(--wu-text-muted);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-control-line-height);
     white-space: nowrap;
   }
-  .wt-inputgroup > .wt-inputtext,
+  .wu-inputgroup > .wu-inputtext,
   .p-inputgroup > .p-inputtext,
-  .wt-inputgroup > :is(wt-iconfield, wt-icon-field),
-  .wt-inputgroup > :is(wt-floatlabel, wt-float-label) {
+  .wu-inputgroup > :is(wu-iconfield, wu-icon-field),
+  .wu-inputgroup > :is(wu-floatlabel, wu-float-label) {
     flex: 1 1 auto;
     width: 1%;
     min-width: 0;
   }
-  .wt-inputgroup > :is(wt-iconfield, wt-icon-field) > .wt-inputtext,
-  .wt-inputgroup > :is(wt-floatlabel, wt-float-label) > .wt-inputtext {
+  .wu-inputgroup > :is(wu-iconfield, wu-icon-field) > .wu-inputtext,
+  .wu-inputgroup > :is(wu-floatlabel, wu-float-label) > .wu-inputtext {
     width: 100%;
   }
   /* Neighbours share one border line; the focused field draws on top. */
-  .wt-inputgroup > :not(:first-child),
+  .wu-inputgroup > :not(:first-child),
   .p-inputgroup > :not(:first-child) {
-    margin-left: calc(var(--wt-field-border-width) * -1);
+    margin-left: calc(var(--wu-field-border-width) * -1);
   }
-  .wt-inputgroup > :focus,
-  .wt-inputgroup > :focus-within,
+  .wu-inputgroup > :focus,
+  .wu-inputgroup > :focus-within,
   .p-inputgroup > :focus,
   .p-inputgroup > :focus-within {
     position: relative;
     z-index: 1;
   }
-  .wt-inputgroup > *,
-  .wt-inputgroup > * > .wt-inputtext,
-  .wt-inputgroup > wt-button > .wt-btn,
+  .wu-inputgroup > *,
+  .wu-inputgroup > * > .wu-inputtext,
+  .wu-inputgroup > wu-button > .wu-btn,
   .p-inputgroup > *,
   .p-inputgroup > .p-button {
     border-radius: 0;
   }
-  .wt-inputgroup > :first-child,
-  .wt-inputgroup > :first-child > .wt-inputtext,
-  .wt-inputgroup > wt-button:first-child > .wt-btn,
+  .wu-inputgroup > :first-child,
+  .wu-inputgroup > :first-child > .wu-inputtext,
+  .wu-inputgroup > wu-button:first-child > .wu-btn,
   .p-inputgroup > :first-child {
-    border-top-left-radius: var(--wt-input-radius);
-    border-bottom-left-radius: var(--wt-input-radius);
+    border-top-left-radius: var(--wu-input-radius);
+    border-bottom-left-radius: var(--wu-input-radius);
   }
-  .wt-inputgroup > :last-child,
-  .wt-inputgroup > :last-child > .wt-inputtext,
-  .wt-inputgroup > wt-button:last-child > .wt-btn,
+  .wu-inputgroup > :last-child,
+  .wu-inputgroup > :last-child > .wu-inputtext,
+  .wu-inputgroup > wu-button:last-child > .wu-btn,
   .p-inputgroup > :last-child {
-    border-top-right-radius: var(--wt-input-radius);
-    border-bottom-right-radius: var(--wt-input-radius);
+    border-top-right-radius: var(--wu-input-radius);
+    border-bottom-right-radius: var(--wu-input-radius);
   }
-  .wt-inputgroup > wt-button > .wt-btn {
+  .wu-inputgroup > wu-button > .wu-btn {
     height: 100%;
   }
 
-  /* ---- Floating label: wt-floatlabel (over / on / in), and .p-float-label ---- */
-  .wt-floatlabel,
+  /* ---- Floating label: wu-floatlabel (over / on / in), and .p-float-label ---- */
+  .wu-floatlabel,
   .p-float-label {
     position: relative;
     display: block;
   }
-  .wt-floatlabel > label,
+  .wu-floatlabel > label,
   .p-float-label > label {
     position: absolute;
     top: 50%;
-    left: var(--wt-field-padding-x);
+    left: var(--wu-field-padding-x);
     margin-top: -0.5em;
-    max-width: calc(100% - var(--wt-field-padding-x) * 2);
+    max-width: calc(100% - var(--wu-field-padding-x) * 2);
     overflow: hidden;
-    color: var(--wt-field-placeholder);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
+    color: var(--wu-field-placeholder);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
     line-height: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
     pointer-events: none;
     transition-property: top, margin, font-size, color, background-color;
-    transition-duration: var(--wt-transition);
+    transition-duration: var(--wu-transition);
   }
-  .wt-floatlabel > textarea ~ label,
+  .wu-floatlabel > textarea ~ label,
   .p-float-label > textarea ~ label {
-    top: var(--wt-field-padding-y);
+    top: var(--wu-field-padding-y);
     margin-top: 0;
   }
   /* Floated: the field has focus or a value. :is() keeps the rule if a browser lacks :autofill. */
   /* Above the field with room for Thai vowels below the line and for the focus ring. */
-  .wt-floatlabel > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label,
+  .wu-floatlabel > :is(:focus, :focus-within, .wu-filled, :autofill) ~ label,
   .p-float-label > :is(:focus, .p-filled, .p-inputwrapper-filled, :autofill) ~ label {
     top: calc(-1.4em - 0.375rem);
     margin-top: 0;
     font-size: 0.75rem;
     line-height: 1.4;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
   }
-  .wt-floatlabel > :is(:focus, :focus-within) ~ label,
+  .wu-floatlabel > :is(:focus, :focus-within) ~ label,
   .p-float-label > :focus ~ label {
-    color: var(--wt-primary-color);
+    color: var(--wu-primary-color);
   }
   /* on: the floated label sits on the top border. */
-  .wt-floatlabel-on > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label {
+  .wu-floatlabel-on > :is(:focus, :focus-within, .wu-filled, :autofill) ~ label {
     top: 0;
     margin-top: -0.7em;
     padding: 0 0.25rem;
-    left: calc(var(--wt-field-padding-x) - 0.25rem);
-    background: var(--wt-field-bg);
+    left: calc(var(--wu-field-padding-x) - 0.25rem);
+    background: var(--wu-field-bg);
   }
   /* in: the field grows and the floated label sits inside its top edge. */
-  .wt-floatlabel-in > .wt-inputtext {
-    padding-top: calc(var(--wt-field-padding-y) + 0.875rem);
-    padding-bottom: calc(var(--wt-field-padding-y) * 0.5);
+  .wu-floatlabel-in > .wu-inputtext {
+    padding-top: calc(var(--wu-field-padding-y) + 0.875rem);
+    padding-bottom: calc(var(--wu-field-padding-y) * 0.5);
   }
-  .wt-floatlabel-in > :is(:focus, :focus-within, .wt-filled, :autofill) ~ label {
-    top: calc(var(--wt-field-padding-y) * 0.5);
+  .wu-floatlabel-in > :is(:focus, :focus-within, .wu-filled, :autofill) ~ label {
+    top: calc(var(--wu-field-padding-y) * 0.5);
     line-height: 1.4;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-floatlabel > label,
+    .wu-floatlabel > label,
     .p-float-label > label {
       transition: none;
     }

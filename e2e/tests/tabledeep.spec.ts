@@ -1,7 +1,7 @@
 import { expect, Locator, Page, test } from '@playwright/test';
 
 const deep = (page: Page) => page.locator('#tbl-deep');
-const names = (page: Page) => deep(page).locator('tbody:not(.wt-table-frozen-tbody) tr.deep-row td:nth-child(3) .deep-out').allTextContents();
+const names = (page: Page) => deep(page).locator('tbody:not(.wu-table-frozen-tbody) tr.deep-row td:nth-child(3) .deep-out').allTextContents();
 const log = (page: Page) => page.locator('#overlay-log');
 
 async function dragTo(page: Page, from: Locator, to: { x: number; y: number }): Promise<void> {
@@ -28,18 +28,18 @@ test('row reorder: drag a row by its handle, or move it with the arrow keys', as
   await deep(page).locator('.deep-handle').nth(0).focus();
   await page.keyboard.press('ArrowDown');
   await expect.poll(() => names(page)).toEqual(['จิราพร', 'ขวัญใจ', 'กมล', 'ชยพล']);
-  await expect(page.locator('.wt-row-drop-above, .wt-row-drop-below, .wt-row-dragging')).toHaveCount(0);
+  await expect(page.locator('.wu-row-drop-above, .wu-row-drop-below, .wu-row-dragging')).toHaveCount(0);
 });
 
 test('radio selection respects rowSelectable; the selection comes back after a reload (stateKey)', async ({ page }) => {
-  const radios = deep(page).locator('wt-tableradiobutton input');
+  const radios = deep(page).locator('wu-tableradiobutton input');
   await expect(radios.nth(2)).toBeDisabled();
   await radios.nth(1).check();
   await expect(page.locator('#deep-picked')).toHaveText('ขวัญใจ');
   await page.reload();
   await deep(page).scrollIntoViewIfNeeded();
   await expect(page.locator('#deep-picked')).toHaveText('ขวัญใจ');
-  await expect(deep(page).locator('wt-tableradiobutton input').nth(1)).toBeChecked();
+  await expect(deep(page).locator('wu-tableradiobutton input').nth(1)).toBeChecked();
 });
 
 test('cell editing: click opens the input, Enter keeps it, Tab moves on, Escape leaves', async ({ page }) => {
@@ -78,7 +78,7 @@ test('row editing: edit, save, invalid stays, cancel', async ({ page }) => {
 test('columns: drag the grip to resize, drag the header to reorder', async ({ page }) => {
   const th = deep(page).locator('th.deep-th').first();
   const before = (await th.boundingBox())!;
-  const grip = th.locator('.wt-column-resizer');
+  const grip = th.locator('.wu-column-resizer');
   const g = (await grip.boundingBox())!;
   await page.mouse.move(g.x + g.width / 2, g.y + g.height / 2);
   await page.mouse.down();
@@ -95,35 +95,35 @@ test('columns: drag the grip to resize, drag the header to reorder', async ({ pa
 });
 
 test('filter menu: match mode and value, a second rule with match any, clear', async ({ page }) => {
-  const btn = deep(page).locator('.wt-column-filter-menu-button');
+  const btn = deep(page).locator('.wu-column-filter-menu-button');
   await btn.click();
-  const panel = page.locator('.wt-column-filter-overlay');
+  const panel = page.locator('.wu-column-filter-overlay');
   await expect(panel).toBeVisible();
   await panel.locator('select').first().selectOption('gte');
   await panel.locator('input').first().fill('70');
-  await panel.locator('.wt-column-filter-menu-apply').click();
+  await panel.locator('.wu-column-filter-menu-apply').click();
   await expect(panel).toHaveCount(0);
   await expect.poll(() => names(page)).toEqual(['ขวัญใจ', 'ชยพล']);
-  await expect(btn).toHaveClass(/wt-column-filter-active/);
+  await expect(btn).toHaveClass(/wu-column-filter-active/);
   await btn.click();
-  await panel.locator('.wt-column-filter-add').click();
-  await panel.locator('.wt-column-filter-operator select').selectOption('or');
-  await panel.locator('.wt-column-filter-rule').nth(1).locator('select').selectOption('lte');
-  await panel.locator('.wt-column-filter-rule').nth(1).locator('input').fill('40');
-  await panel.locator('.wt-column-filter-menu-apply').click();
+  await panel.locator('.wu-column-filter-add').click();
+  await panel.locator('.wu-column-filter-operator select').selectOption('or');
+  await panel.locator('.wu-column-filter-rule').nth(1).locator('select').selectOption('lte');
+  await panel.locator('.wu-column-filter-rule').nth(1).locator('input').fill('40');
+  await panel.locator('.wu-column-filter-menu-apply').click();
   await expect.poll(() => names(page)).toEqual(['กมล', 'ขวัญใจ', 'ชยพล']);
   await btn.click();
-  await panel.locator('.wt-column-filter-menu-clear').click();
+  await panel.locator('.wu-column-filter-menu-clear').click();
   await page.keyboard.press('Escape');
   await expect.poll(() => names(page)).toHaveLength(4);
-  await expect(btn).not.toHaveClass(/wt-column-filter-active/);
+  await expect(btn).not.toHaveClass(/wu-column-filter-active/);
 });
 
 test('custom sort hands the rows to sortFunction; frozen rows stay on top', async ({ page }) => {
   await deep(page).locator('th.deep-th').nth(1).click();
   await expect(log(page)).toContainText('customsort:score');
-  await expect.poll(() => deep(page).locator('tbody:not(.wt-table-frozen-tbody) tr.deep-row td:nth-child(4) .deep-out').allTextContents()).toEqual(['40', '60', '75', '90']);
-  await expect(deep(page).locator('tbody.wt-table-frozen-tbody tr.deep-frozen')).toContainText('รวม');
+  await expect.poll(() => deep(page).locator('tbody:not(.wu-table-frozen-tbody) tr.deep-row td:nth-child(4) .deep-out').allTextContents()).toEqual(['40', '60', '75', '90']);
+  await expect(deep(page).locator('tbody.wu-table-frozen-tbody tr.deep-frozen')).toContainText('รวม');
   const frozen = (await deep(page).locator('tr.deep-frozen').boundingBox())!;
   const first = (await deep(page).locator('tr.deep-row').first().boundingBox())!;
   expect(frozen.y).toBeLessThan(first.y);

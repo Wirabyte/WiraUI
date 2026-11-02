@@ -27,10 +27,10 @@ export const SELECT_DOC: ComponentDoc = {
   title: 'Select',
   group: 'Form',
   entry: 'select',
-  standalone: 'WtSelect',
-  module: 'WtSelectModule',
+  standalone: 'WuSelect',
+  module: 'WuSelectModule',
   forms: true,
-  selector: 'wt-select',
+  selector: 'wu-select',
   description: {
     th: 'ช่องเลือกจากรายการ ค้นหาภาษาไทยได้ จัดกลุ่ม ปรับแต่งแต่ละแถวด้วย template ใช้คีย์บอร์ดได้ครบ และรายการเปิดใน top layer จึงไม่ต้องใช้ appendTo',
     en: 'Pick from a list, with Thai search, groups, templates for each row and full keyboard support. The list opens in the top layer, so no appendTo is needed.',
@@ -87,8 +87,8 @@ export const SELECT_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wt-dropdown</code> ก็ใช้ได้',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wt-dropdown</code> selector works too.',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wu-dropdown</code> ก็ใช้ได้',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wu-dropdown</code> selector works too.',
       },
     },
     basic: {
@@ -147,8 +147,8 @@ export const SELECT_DOC: ComponentDoc = {
     look: {
       title: { th: 'ความกว้างและแบบพื้นทึบ', en: 'Width and filled' },
       text: {
-        th: 'ค่าเริ่มต้นกว้างมาตรฐาน 14rem (<code>--wt-select-width</code>) แต่ไม่เกินกล่องที่อยู่ ค่าที่ยาวกว่าช่องลงท้ายด้วย … · ตั้ง <code>--wt-select-width: auto</code> ให้กว้างตามค่า · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
-        en: 'By default the field is a standard 14rem wide (<code>--wt-select-width</code>), never wider than its container; long values end in …. Set <code>--wt-select-width: auto</code> to size it to the value · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
+        th: 'ค่าเริ่มต้นกว้างมาตรฐาน 14rem (<code>--wu-select-width</code>) แต่ไม่เกินกล่องที่อยู่ ค่าที่ยาวกว่าช่องลงท้ายด้วย … · ตั้ง <code>--wu-select-width: auto</code> ให้กว้างตามค่า · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
+        en: 'By default the field is a standard 14rem wide (<code>--wu-select-width</code>), never wider than its container; long values end in …. Set <code>--wu-select-width: auto</code> to size it to the value · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
       },
     },
     invalid: {
@@ -173,24 +173,24 @@ export const SELECT_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ไม่ต้องใช้ appendTo และย้ายโค้ดเดิม', en: 'No appendTo, and moving existing code' },
       text: {
-        th: 'รายการเปิดใน top layer ของ browser จึงไม่ถูกตัดใน dialog หรือกล่องที่ <code>overflow: hidden</code> template เดิมที่ใช้ <code>p-dropdown</code> หรือ <code>p-select</code> เปลี่ยนเป็น <code>wt-select</code> ได้เลย input ส่วนใหญ่ชื่อเดิม ส่วน <code>appendTo</code>, <code>virtualScroll</code> และ <code>autoDisplayFirst</code> รับไว้แต่ไม่มีผล',
-        en: 'The list opens in the browser top layer, so dialogs and <code>overflow: hidden</code> boxes never clip it. Templates using <code>p-dropdown</code> or <code>p-select</code> switch to <code>wt-select</code> with most inputs unchanged; <code>appendTo</code>, <code>virtualScroll</code> and <code>autoDisplayFirst</code> are accepted and ignored.',
+        th: 'รายการเปิดใน top layer ของ browser จึงไม่ถูกตัดใน dialog หรือกล่องที่ <code>overflow: hidden</code> template เดิมที่ใช้ <code>p-dropdown</code> หรือ <code>p-select</code> เปลี่ยนเป็น <code>wu-select</code> ได้เลย input ส่วนใหญ่ชื่อเดิม ส่วน <code>appendTo</code>, <code>virtualScroll</code> และ <code>autoDisplayFirst</code> รับไว้แต่ไม่มีผล',
+        en: 'The list opens in the browser top layer, so dialogs and <code>overflow: hidden</code> boxes never clip it. Templates using <code>p-dropdown</code> or <code>p-select</code> switch to <code>wu-select</code> with most inputs unchanged; <code>appendTo</code>, <code>virtualScroll</code> and <code>autoDisplayFirst</code> are accepted and ignored.',
       },
     },
   },
   code: {
     basic: `<label for="province">จังหวัด</label>
-<wt-select inputId="province" name="provinceId" [(ngModel)]="provinceId" [options]="provinces"
-  optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด"></wt-select>`,
-    filter: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [filter]="true" filterBy="name_th,name_en,code" placeholder="ค้นหาจังหวัด"></wt-select>`,
-    clear: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [showClear]="true" placeholder="เลือกจังหวัด"></wt-select>`,
-    group: `<wt-select name="province" [(ngModel)]="province" [options]="regions" [group]="true" optionLabel="name_th"
-  optionValue="id" placeholder="เลือกตามภาค"></wt-select>`,
-    disabled: `<wt-select name="level" [(ngModel)]="level" [options]="levels" optionLabel="name" optionValue="id"
-  optionDisabled="closed" placeholder="เลือกระดับชั้น"></wt-select>`,
-    templates: `<wt-select name="province" [(ngModel)]="province" [options]="provinces" optionLabel="name_th"
+<wu-select inputId="province" name="provinceId" [(ngModel)]="provinceId" [options]="provinces"
+  optionLabel="name_th" optionValue="id" placeholder="เลือกจังหวัด"></wu-select>`,
+    filter: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [filter]="true" filterBy="name_th,name_en,code" placeholder="ค้นหาจังหวัด"></wu-select>`,
+    clear: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [showClear]="true" placeholder="เลือกจังหวัด"></wu-select>`,
+    group: `<wu-select name="province" [(ngModel)]="province" [options]="regions" [group]="true" optionLabel="name_th"
+  optionValue="id" placeholder="เลือกตามภาค"></wu-select>`,
+    disabled: `<wu-select name="level" [(ngModel)]="level" [options]="levels" optionLabel="name" optionValue="id"
+  optionDisabled="closed" placeholder="เลือกระดับชั้น"></wu-select>`,
+    templates: `<wu-select name="province" [(ngModel)]="province" [options]="provinces" optionLabel="name_th"
   dataKey="id" placeholder="เลือกจังหวัด">
   <ng-template #item let-p>
     <b class="province-code">{{ p.code }}</b> {{ p.name_th }}
@@ -198,8 +198,8 @@ export const SELECT_DOC: ComponentDoc = {
   <ng-template #selectedItem let-p>
     <span>{{ p.code }} · {{ p.name_th }}</span>
   </ng-template>
-</wt-select>`,
-    moretemplates: `<wt-select name="province" [(ngModel)]="province" [options]="regions" [group]="true" optionLabel="name_th"
+</wu-select>`,
+    moretemplates: `<wu-select name="province" [(ngModel)]="province" [options]="regions" [group]="true" optionLabel="name_th"
   optionValue="id" [filter]="true" placeholder="เลือกจังหวัด">
   <ng-template #group let-g>
     <i class="wi wi-map-marker"></i> {{ g.label }}
@@ -208,39 +208,39 @@ export const SELECT_DOC: ComponentDoc = {
     <div class="select-note">เลือกได้ 1 จังหวัด</div>
   </ng-template>
   <ng-template #footer>
-    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wu-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wu-button>
   </ng-template>
   <ng-template #emptyfilter>ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template #dropdownicon>
     <i class="wi wi-search"></i>
   </ng-template>
-</wt-select>`,
-    editable: `<wt-select name="title" [(ngModel)]="title" [options]="titles" [editable]="true"
-  placeholder="คำนำหน้า"></wt-select>`,
-    loading: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [loading]="isOptionsLoading" placeholder="กำลังโหลด…"></wt-select>`,
-    checkmark: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [checkmark]="true" placeholder="เลือกจังหวัด"></wt-select>`,
-    sizes: `<wt-select name="small" [(ngModel)]="small" [options]="titles" size="small" placeholder="เล็ก"></wt-select>
-<wt-select name="normal" [(ngModel)]="normal" [options]="titles" placeholder="ปกติ"></wt-select>
-<wt-select name="large" [(ngModel)]="large" [options]="titles" size="large" placeholder="ใหญ่"></wt-select>`,
-    look: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wt-select>
-<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" variant="filled" placeholder="แบบพื้นทึบ"></wt-select>
-<div style="--wt-select-width: auto">
-  <wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-    optionValue="id" placeholder="กว้างตามค่า"></wt-select>
+</wu-select>`,
+    editable: `<wu-select name="title" [(ngModel)]="title" [options]="titles" [editable]="true"
+  placeholder="คำนำหน้า"></wu-select>`,
+    loading: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [loading]="isOptionsLoading" placeholder="กำลังโหลด…"></wu-select>`,
+    checkmark: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [checkmark]="true" placeholder="เลือกจังหวัด"></wu-select>`,
+    sizes: `<wu-select name="small" [(ngModel)]="small" [options]="titles" size="small" placeholder="เล็ก"></wu-select>
+<wu-select name="normal" [(ngModel)]="normal" [options]="titles" placeholder="ปกติ"></wu-select>
+<wu-select name="large" [(ngModel)]="large" [options]="titles" size="large" placeholder="ใหญ่"></wu-select>`,
+    look: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wu-select>
+<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" variant="filled" placeholder="แบบพื้นทึบ"></wu-select>
+<div style="--wu-select-width: auto">
+  <wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+    optionValue="id" placeholder="กว้างตามค่า"></wu-select>
 </div>`,
-    invalid: `<wt-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
-  optionValue="id" [required]="true" placeholder="จังหวัด (ต้องเลือก)"></wt-select>
-<wt-select name="other" [(ngModel)]="other" [options]="provinces" optionLabel="name_th" [invalid]="true"
-  placeholder="Invalid"></wt-select>`,
-    datakey: `<wt-select name="province" [(ngModel)]="province" [options]="provinces" optionLabel="name_th"
-  dataKey="id" placeholder="เลือกจังหวัด"></wt-select>`,
+    invalid: `<wu-select name="provinceId" [(ngModel)]="provinceId" [options]="provinces" optionLabel="name_th"
+  optionValue="id" [required]="true" placeholder="จังหวัด (ต้องเลือก)"></wu-select>
+<wu-select name="other" [(ngModel)]="other" [options]="provinces" optionLabel="name_th" [invalid]="true"
+  placeholder="Invalid"></wu-select>`,
+    datakey: `<wu-select name="province" [(ngModel)]="province" [options]="provinces" optionLabel="name_th"
+  dataKey="id" placeholder="เลือกจังหวัด"></wu-select>`,
     reactive: `<form [formGroup]="form">
-  <wt-select formControlName="level" [options]="levels" optionLabel="name" optionValue="id"
-    placeholder="ระดับชั้น"></wt-select>
+  <wu-select formControlName="level" [options]="levels" optionLabel="name" optionValue="id"
+    placeholder="ระดับชั้น"></wu-select>
 </form>`,
   },
   ts: {
@@ -311,7 +311,7 @@ reload(): void {
       title: { th: 'Inputs · ช่อง', en: 'Inputs · field' },
       rows: [
         row('size', "'small' | 'large' | 'sm' | 'lg'", undefined, 'ขนาด', 'Size'),
-        row('fluid', BOOL, 'false', 'กว้างเต็มพื้นที่ (ค่าเริ่มต้นกว้าง 14rem จาก --wt-select-width)', 'Full width (the default is 14rem, from --wt-select-width)'),
+        row('fluid', BOOL, 'false', 'กว้างเต็มพื้นที่ (ค่าเริ่มต้นกว้าง 14rem จาก --wu-select-width)', 'Full width (the default is 14rem, from --wu-select-width)'),
         row('variant', "'outlined' | 'filled'", "'outlined'", 'มีขอบหรือพื้นทึบ', 'Bordered or filled'),
         row('disabled · readonly · invalid', BOOL, 'false', 'สถานะ', 'States'),
         row('inputId · ariaLabel · ariaLabelledBy · tabindex', 'string', undefined, 'id และชื่อสำหรับ screen reader', 'id and accessible names'),
@@ -335,8 +335,8 @@ reload(): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtSelectChangeEvent', undefined, 'ค่าเปลี่ยน', 'Value changed'),
-        row('onFilter', 'WtSelectFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onChange', 'WuSelectChangeEvent', undefined, 'ค่าเปลี่ยน', 'Value changed'),
+        row('onFilter', 'WuSelectFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
         row('onShow · onHide', 'void', undefined, 'รายการเปิด / ปิด', 'List opened / closed'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'เข้า / ออกจากช่อง', 'Field focus / blur'),
         row('onClear', 'Event', undefined, 'กดปุ่มล้าง', 'Clear pressed'),
@@ -346,37 +346,37 @@ reload(): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtSelectChangeEvent {
+      code: `interface WuSelectChangeEvent {
   originalEvent: Event | null;
   value: unknown;
 }
-interface WtSelectFilterEvent {
+interface WuSelectFilterEvent {
   originalEvent: Event;
   filter: string;
 }
-type WtSelectMatchMode = 'contains' | 'startsWith' | 'endsWith' | 'equals';`,
+type WuSelectMatchMode = 'contains' | 'startsWith' | 'endsWith' | 'equals';`,
     },
   ],
   tokens: [
-    tok('--wt-select-width', 'ความกว้างของช่อง (ค่าเริ่มต้น 14rem ไม่เกินกล่องที่อยู่ · auto = กว้างตามค่า)', 'Field width (14rem by default, never wider than its container; auto sizes to the value)'),
-    tok('--wt-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
-    tok('--wt-field-border', 'ขอบของช่อง', 'Field border'),
-    tok('--wt-input-radius', 'ความมนของช่อง', 'Field radius'),
-    tok('--wt-select-dropdown-width', 'ความกว้างของปุ่มลูกศร', 'Arrow button width'),
-    tok('--wt-select-dropdown-color', 'สีลูกศร', 'Arrow colour'),
-    tok('--wt-overlay-bg', 'พื้นของรายการ', 'List background'),
-    tok('--wt-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
-    tok('--wt-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
-    tok('--wt-select-overlay-border-width', 'ขอบของรายการ', 'List border width'),
-    tok('--wt-select-header-padding', 'ระยะในส่วนค้นหา / header', 'Search / header padding'),
-    tok('--wt-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
-    tok('--wt-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
-    tok('--wt-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
-    tok('--wt-select-option-radius', 'ความมนของแถว', 'Row radius'),
-    tok('--wt-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
-    tok('--wt-select-option-selected-bg', 'พื้นแถวที่เลือก', 'Chosen row background'),
-    tok('--wt-select-option-selected-color', 'สีตัวอักษรแถวที่เลือก', 'Chosen row text'),
-    tok('--wt-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
-    tok('--wt-select-group-weight', 'น้ำหนักหัวกลุ่ม', 'Group header weight'),
+    tok('--wu-select-width', 'ความกว้างของช่อง (ค่าเริ่มต้น 14rem ไม่เกินกล่องที่อยู่ · auto = กว้างตามค่า)', 'Field width (14rem by default, never wider than its container; auto sizes to the value)'),
+    tok('--wu-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
+    tok('--wu-field-border', 'ขอบของช่อง', 'Field border'),
+    tok('--wu-input-radius', 'ความมนของช่อง', 'Field radius'),
+    tok('--wu-select-dropdown-width', 'ความกว้างของปุ่มลูกศร', 'Arrow button width'),
+    tok('--wu-select-dropdown-color', 'สีลูกศร', 'Arrow colour'),
+    tok('--wu-overlay-bg', 'พื้นของรายการ', 'List background'),
+    tok('--wu-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
+    tok('--wu-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
+    tok('--wu-select-overlay-border-width', 'ขอบของรายการ', 'List border width'),
+    tok('--wu-select-header-padding', 'ระยะในส่วนค้นหา / header', 'Search / header padding'),
+    tok('--wu-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
+    tok('--wu-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
+    tok('--wu-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
+    tok('--wu-select-option-radius', 'ความมนของแถว', 'Row radius'),
+    tok('--wu-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
+    tok('--wu-select-option-selected-bg', 'พื้นแถวที่เลือก', 'Chosen row background'),
+    tok('--wu-select-option-selected-color', 'สีตัวอักษรแถวที่เลือก', 'Chosen row text'),
+    tok('--wu-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
+    tok('--wu-select-group-weight', 'น้ำหนักหัวกลุ่ม', 'Group header weight'),
   ],
 };

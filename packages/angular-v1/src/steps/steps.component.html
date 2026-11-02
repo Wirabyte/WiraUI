@@ -1,28 +1,28 @@
 <nav
-  class="wt-steps p-steps p-component"
-  [class.wt-steps-readonly]="readonly"
+  class="wu-steps p-steps p-component"
+  [class.wu-steps-readonly]="readonly"
   [class.p-readonly]="readonly"
-  [class.wt-steps-label-right]="labelPosition === 'right' && orientation !== 'vertical'"
-  [class.wt-steps-vertical]="orientation === 'vertical'"
+  [class.wu-steps-label-right]="labelPosition === 'right' && orientation !== 'vertical'"
+  [class.wu-steps-vertical]="orientation === 'vertical'"
   [ngClass]="styleClass || ''" [ngStyle]="style || null">
-  <ol class="wt-steps-list" (keydown)="keydown($event)">
+  <ol class="wu-steps-list" (keydown)="keydown($event)">
     <li
       *ngFor="let item of items; let i = index; trackBy: trackIndex"
-      class="wt-steps-item p-steps-item"
+      class="wu-steps-item p-steps-item"
       [ngClass]="item.styleClass || ''"
       [ngStyle]="item.style || null"
-      [class.wt-steps-item-active]="isActive(i)"
+      [class.wu-steps-item-active]="isActive(i)"
       [class.p-highlight]="isActive(i)"
       [class.p-steps-current]="isActive(i)"
-      [class.wt-steps-item-complete]="isComplete(i)"
-      [class.wt-steps-item-disabled]="item.disabled"
+      [class.wu-steps-item-complete]="isComplete(i)"
+      [class.wu-steps-item-disabled]="item.disabled"
       [class.p-disabled]="item.disabled"
     >
       <a
         *ngIf="routed(item); else plain"
-        class="wt-steps-link p-menuitem-link"
+        class="wu-steps-link p-menuitem-link"
         [id]="itemId(i)"
-        [attr.data-wt-index]="i"
+        [attr.data-wu-index]="i"
         [attr.tabindex]="tabindexOf(i)"
         [attr.aria-current]="isActive(i) ? 'step' : null"
         [attr.title]="item.title || null"
@@ -37,9 +37,9 @@
       </a>
       <ng-template #plain>
         <a
-          class="wt-steps-link p-menuitem-link"
+          class="wu-steps-link p-menuitem-link"
           [id]="itemId(i)"
-          [attr.data-wt-index]="i"
+          [attr.data-wu-index]="i"
           [attr.href]="hrefOf(item)"
           [attr.tabindex]="tabindexOf(i)"
           [attr.role]="pickable(item) && !hrefOf(item) ? 'button' : null"
@@ -56,9 +56,9 @@
 </nav>
 
 <ng-template #content let-item let-index="index">
-  <span class="wt-steps-number p-steps-number" aria-hidden="true">{{ index + 1 }}</span>
-  <span class="wt-steps-text">
-    <span class="wt-steps-label p-steps-title">{{ item.label }}</span>
-    <span *ngIf="$any(item).subtitle" class="wt-steps-subtitle">{{ $any(item).subtitle }}</span>
+  <span class="wu-steps-number p-steps-number" aria-hidden="true">{{ index + 1 }}</span>
+  <span class="wu-steps-text">
+    <span class="wu-steps-label p-steps-title">{{ item.label }}</span>
+    <span *ngIf="$any(item).subtitle" class="wu-steps-subtitle">{{ $any(item).subtitle }}</span>
   </span>
 </ng-template>

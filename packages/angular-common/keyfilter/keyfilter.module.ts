@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtKeyFilter } from './keyfilter.directive';
+import { WuKeyFilter } from './keyfilter.directive';
 
-/** For NgModule apps. Standalone apps can import `WtKeyFilter` directly. */
+/** For NgModule apps. Standalone apps can import `WuKeyFilter` directly. */
 @NgModule({
-  imports: [WtKeyFilter],
-  exports: [WtKeyFilter],
+  imports: [WuKeyFilter],
+  exports: [WuKeyFilter],
 })
-export class WtKeyFilterModule {}
+export class WuKeyFilterModule {}

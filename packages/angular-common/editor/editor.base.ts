@@ -24,15 +24,15 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WT_VERSION_INFO,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WU_VERSION_INFO,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
 import {
   acceptsFile,
   EditorHistory,
@@ -50,9 +50,9 @@ import {
   safeEditorImage,
   safeEditorUrl,
   TH_LOCALE,
-  WtEditorMessages,
-  WtLocale,
-} from 'wiratheme/core';
+  WuEditorMessages,
+  WuLocale,
+} from 'wiraui/core';
 import {
   adjacentCell,
   blockOf,
@@ -82,16 +82,16 @@ import {
   toggleHeaderRow,
 } from './editor.dom';
 import {
-  WtEditorApi,
-  WtEditorImageUpload,
-  WtEditorImageUploadErrorEvent,
-  WtEditorInitEvent,
-  WtEditorPanel,
-  WtEditorSelectionChangeEvent,
-  WtEditorTextChangeEvent,
-  WT_EDITOR_OPTIONS,
+  WuEditorApi,
+  WuEditorImageUpload,
+  WuEditorImageUploadErrorEvent,
+  WuEditorInitEvent,
+  WuEditorPanel,
+  WuEditorSelectionChangeEvent,
+  WuEditorTextChangeEvent,
+  WU_EDITOR_OPTIONS,
 } from './editor.types';
-import { ɵquillTool, ɵWT_EDITOR_ICONS } from './editor.icons';
+import { ɵquillTool, ɵWU_EDITOR_ICONS } from './editor.icons';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const QUILL_SIZES: Record<string, string> = { '0.75em': 'small', '1.5em': 'large', '2.5em': 'huge' };
@@ -116,7 +116,7 @@ function pathValue(obj: unknown, path: string): unknown {
 }
 
 /** State of the toolbar at the caret. */
-export interface ɵWtEditorState {
+export interface ɵWuEditorState {
   bold: boolean;
   italic: boolean;
   underline: boolean;
@@ -137,7 +137,7 @@ export interface ɵWtEditorState {
   fontFamily: string;
 }
 
-const EMPTY_STATE: ɵWtEditorState = {
+const EMPTY_STATE: ɵWuEditorState = {
   bold: false,
   italic: false,
   underline: false,
@@ -158,7 +158,7 @@ const EMPTY_STATE: ɵWtEditorState = {
 };
 
 /**
- * What wt-editor does, shared by the v1 and v2/v3 templates: a rich-text editor written for WiraTheme (no third-party
+ * What wu-editor does, shared by the v1 and v2/v3 templates: a rich-text editor written for WiraUI (no third-party
  * editor inside). The value is HTML through `[(ngModel)]` / forms (null when empty, as before), with the class names
  * values saved earlier use (`ql-align-center`, `ql-indent-1`, `ql-size-large`) so stored content keeps its look.
  *
@@ -168,7 +168,7 @@ const EMPTY_STATE: ɵWtEditorState = {
  * aligned), undo / redo, paste clean-up, source view, full screen and a word count.
  */
 @Directive()
-export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export abstract class ɵWuEditorBase implements ControlValueAccessor, AfterViewInit, OnDestroy {
   /** Tools to show: a preset, a list with `'|'` between groups, or a list of groups. Default `'standard'`. */
   @Input() set toolbar(v: EditorToolbar | null | undefined) {
     this._toolbar = v ?? null;
@@ -180,7 +180,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     this.opts = editorToolOptions({ ...(this.defaults.toolOptions || {}), ...(v || {}) });
   }
   /** Pictures: `{ mode: 'base64' }`, or `{ url: '/api/upload', responseUrl: 'data.url' }`, or `{ upload: file => … }`. */
-  @Input() imageUpload?: WtEditorImageUpload | null;
+  @Input() imageUpload?: WuEditorImageUpload | null;
   @Input() placeholder?: string;
   @Input() set readonly(v: unknown) {
     this._readonly = ɵtoBool(v);
@@ -216,15 +216,15 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   @Input() scrollingContainer: unknown;
   @Input() debug: unknown;
 
-  @Output() readonly onTextChange = new EventEmitter<WtEditorTextChangeEvent>();
-  @Output() readonly onSelectionChange = new EventEmitter<WtEditorSelectionChangeEvent>();
-  @Output() readonly onInit = new EventEmitter<WtEditorInitEvent>();
+  @Output() readonly onTextChange = new EventEmitter<WuEditorTextChangeEvent>();
+  @Output() readonly onSelectionChange = new EventEmitter<WuEditorSelectionChangeEvent>();
+  @Output() readonly onInit = new EventEmitter<WuEditorInitEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
   @Output() readonly onImageUpload = new EventEmitter<{ file: File; url: string }>();
-  @Output() readonly onImageUploadError = new EventEmitter<WtEditorImageUploadErrorEvent>();
+  @Output() readonly onImageUploadError = new EventEmitter<WuEditorImageUploadErrorEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ViewChild('area') protected areaRef?: ElementRef<HTMLElement>;
   @ViewChild('toolbarEl') protected toolbarRef?: ElementRef<HTMLElement>;
@@ -232,12 +232,12 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   @ViewChild('imageInput') protected imageInputRef?: ElementRef<HTMLInputElement>;
   @ViewChild('frameEl') protected frameRef?: ElementRef<HTMLElement>;
 
-  readonly major: number = WT_VERSION_INFO.major;
-  readonly icons = ɵWT_EDITOR_ICONS;
-  readonly baseId = ɵuniqueId('wt-editor');
+  readonly major: number = WU_VERSION_INFO.major;
+  readonly icons = ɵWU_EDITOR_ICONS;
+  readonly baseId = ɵuniqueId('wu-editor');
   groups: EditorTool[][] = editorToolbarGroups(null);
   opts = editorToolOptions(null);
-  state: ɵWtEditorState = { ...EMPTY_STATE };
+  state: ɵWuEditorState = { ...EMPTY_STATE };
   focused = false;
   empty = true;
   disabled = false;
@@ -248,7 +248,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   canUndo = false;
   canRedo = false;
   /** The open panel and what it is about. */
-  panel: WtEditorPanel | null = null;
+  panel: WuEditorPanel | null = null;
   panelAnchor: HTMLElement | null = null;
   /** Table grid picker: rows × cols under the pointer. */
   gridHover = { rows: 0, cols: 0 };
@@ -265,7 +265,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   frame = { top: 0, left: 0, width: 0, height: 0 };
   /** Messages shown under the content (upload failures …), cleared after a while. */
   notices: string[] = [];
-  readonly api: WtEditorApi;
+  readonly api: WuEditorApi;
   readonly imageAligns: Array<'inline' | 'left' | 'center' | 'right'> = ['inline', 'left', 'center', 'right'];
   readonly imageWidths = [25, 50, 75, 100];
   readonly tableInserts: Array<'rowAbove' | 'rowBelow' | 'colLeft' | 'colRight'> = ['rowAbove', 'rowBelow', 'colLeft', 'colRight'];
@@ -273,9 +273,9 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
   protected readonly zone = inject(NgZone);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly defaults = inject(WT_EDITOR_OPTIONS, { optional: true }) || {};
+  private readonly defaults = inject(WU_EDITOR_OPTIONS, { optional: true }) || {};
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly history = new EditorHistory();
   private _toolbar: EditorToolbar | null = null;
@@ -287,7 +287,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   private lastEmitted: string | null = null;
   private savedRange: Range | null = null;
   private lastSelection: { index: number; length: number } | null = null;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private unlockScroll: (() => void) | null = null;
   private cleanups: Array<() => void> = [];
   private stateFrame = 0;
@@ -297,10 +297,10 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   private viewReady = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    styles.load('button', ɵWT_BUTTON_CSS);
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    styles.load('button', ɵWU_BUTTON_CSS);
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
     this.groups = editorToolbarGroups(this.defaults.toolbar ?? null, 'standard');
     this.opts = editorToolOptions(this.defaults.toolOptions);
     const self = this;
@@ -371,12 +371,12 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   }
 
   /** The calls apps make on the editor from code (the same object `(onInit)` hands over). */
-  getEditor(): WtEditorApi {
+  getEditor(): WuEditorApi {
     return this.api;
   }
 
   /** The same as getEditor(), for code moving over. */
-  getQuill(): WtEditorApi {
+  getQuill(): WuEditorApi {
     return this.api;
   }
 
@@ -407,10 +407,10 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
-  get m(): WtEditorMessages {
+  get m(): WuEditorMessages {
     return this.config.translation.editor || TH_LOCALE.editor;
   }
   get headerTemplate(): TemplateRef<unknown> | null {
@@ -537,7 +537,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   imageAlignIs(a: string): boolean {
     const img = this.selectedImage;
     if (!img) return false;
-    const cur = prefixedClass(img, 'wt-image-') || 'inline';
+    const cur = prefixedClass(img, 'wu-image-') || 'inline';
     return cur === a;
   }
 
@@ -783,7 +783,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   private tablePointerMove(event: PointerEvent): void {
     if (this.locked || event.buttons) return;
     const hit = this.columnEdgeAt(event);
-    if (!!hit !== !!this.resizeHover || hit?.col !== this.resizeHover?.col) this.area.classList.toggle('wt-editor-col-resize', !!hit);
+    if (!!hit !== !!this.resizeHover || hit?.col !== this.resizeHover?.col) this.area.classList.toggle('wu-editor-col-resize', !!hit);
     this.resizeHover = hit;
   }
 
@@ -822,7 +822,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
       if (this.cellPick) {
         // The caret goes back to the first cell; the picked cells stay marked.
         caretIn(this.cellPick.from);
-        this.area.classList.remove('wt-editor-picking');
+        this.area.classList.remove('wu-editor-picking');
       }
     };
     doc.addEventListener('pointermove', move);
@@ -832,16 +832,16 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   private pickCells(table: HTMLTableElement, from: HTMLTableCellElement, to: HTMLTableCellElement): void {
     this.cellPick = { table, from, to };
     const picked = new Set(cellsInRect(table, cellRect(table, from, to)));
-    table.querySelectorAll('td, th').forEach((c) => c.classList.toggle('wt-editor-cell-picked', picked.has(c as HTMLTableCellElement)));
-    this.area.classList.add('wt-editor-picking');
+    table.querySelectorAll('td, th').forEach((c) => c.classList.toggle('wu-editor-cell-picked', picked.has(c as HTMLTableCellElement)));
+    this.area.classList.add('wu-editor-picking');
     if (this.panel !== 'tableBar' || this.panelAnchor !== table) this.openPanel('tableBar', table);
     this.cdr.markForCheck();
   }
 
   private clearCellPick(): void {
     if (!this.cellPick) return;
-    this.cellPick.table.querySelectorAll('.wt-editor-cell-picked').forEach((c) => c.classList.remove('wt-editor-cell-picked'));
-    this.area.classList.remove('wt-editor-picking');
+    this.cellPick.table.querySelectorAll('.wu-editor-cell-picked').forEach((c) => c.classList.remove('wu-editor-cell-picked'));
+    this.area.classList.remove('wu-editor-picking');
     this.cellPick = null;
     this.cdr.markForCheck();
   }
@@ -878,7 +878,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     const min = 24;
     const last = col >= cols.length - 1;
     const doc = this.doc;
-    this.area.classList.add('wt-editor-resizing');
+    this.area.classList.add('wu-editor-resizing');
     const move = (e: PointerEvent) => {
       const dx = e.clientX - start;
       if (last) {
@@ -900,7 +900,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     const up = () => {
       doc.removeEventListener('pointermove', move);
       doc.removeEventListener('pointerup', up);
-      this.area.classList.remove('wt-editor-resizing');
+      this.area.classList.remove('wu-editor-resizing');
       this.zone.run(() => this.afterTableResize());
     };
     doc.addEventListener('pointermove', move);
@@ -1032,7 +1032,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   setImageAlign(a: 'inline' | 'left' | 'center' | 'right'): void {
     const img = this.selectedImage;
     if (!img) return;
-    setPrefixedClass(img, 'wt-image-', a === 'inline' ? null : a);
+    setPrefixedClass(img, 'wu-image-', a === 'inline' ? null : a);
     this.afterDomChange();
     this.placeFrame();
   }
@@ -1113,21 +1113,21 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
       // Show the picture at once, from memory, while it uploads.
       const win = this.doc.defaultView as (Window & typeof globalThis) | null;
       const temp = win?.URL?.createObjectURL ? win.URL.createObjectURL(file) : await this.readAsDataUrl(file);
-      const marker = `wt-up-${Math.random().toString(36).slice(2)}`;
-      this.exec(() => this.doc.execCommand('insertHTML', false, `<img src="${temp}" alt="" class="wt-image-uploading" data-wt-upload="${marker}">`));
+      const marker = `wu-up-${Math.random().toString(36).slice(2)}`;
+      this.exec(() => this.doc.execCommand('insertHTML', false, `<img src="${temp}" alt="" class="wu-image-uploading" data-wu-upload="${marker}">`));
       try {
         const url = await this.upload(file);
-        const img = this.area.querySelector(`img[data-wt-upload="${marker}"]`);
+        const img = this.area.querySelector(`img[data-wu-upload="${marker}"]`);
         if (img) {
           img.setAttribute('src', url);
-          img.classList.remove('wt-image-uploading');
+          img.classList.remove('wu-image-uploading');
           if (!img.classList.length) img.removeAttribute('class');
-          img.removeAttribute('data-wt-upload');
+          img.removeAttribute('data-wu-upload');
         }
         this.onImageUpload.emit({ file, url });
         this.afterDomChange();
       } catch (error) {
-        this.area.querySelector(`img[data-wt-upload="${marker}"]`)?.remove();
+        this.area.querySelector(`img[data-wu-upload="${marker}"]`)?.remove();
         this.fail(file, 'upload', this.m.uploadFailed, error);
         this.afterDomChange();
       } finally {
@@ -1311,7 +1311,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
 
   // ---------- panels ----------
 
-  openPanel(kind: WtEditorPanel, anchor: HTMLElement | null): void {
+  openPanel(kind: WuEditorPanel, anchor: HTMLElement | null): void {
     if (this.panel === kind && this.panelAnchor === anchor) return this.closePanel(true);
     this.closePanel(false);
     if (!['imageMenu', 'linkMenu', 'tableBar'].includes(kind)) this.saveRange();
@@ -1335,15 +1335,15 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     this.cdr.detectChanges();
     const panel = this.panelRef?.nativeElement;
     if (!panel) return;
-    this.popup = new ɵWtPopup(this.panelAnchor, panel, {
+    this.popup = new ɵWuPopup(this.panelAnchor, panel, {
       onOutside: () => this.zone.run(() => this.closePanel(false)),
       onEscape: (e) =>
         this.zone.run(() => {
           e.preventDefault();
           this.closePanel(true);
         }),
-      sheetClass: 'wt-editor-panel-sheet',
-      modalClass: 'wt-editor-panel-modal',
+      sheetClass: 'wu-editor-panel-sheet',
+      modalClass: 'wu-editor-panel-modal',
       sheet: false,
       gap: 6,
     });
@@ -1485,8 +1485,8 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     if (!r || r.collapsed) return;
     // The browser wraps the selection in <font>; each one becomes a span with our class or style.
     this.doc.execCommand('styleWithCSS', false, 'false');
-    this.doc.execCommand(kind === 'fontSize' ? 'fontSize' : 'fontName', false, kind === 'fontSize' ? '7' : 'wt-marker');
-    const fonts = Array.from(this.area.querySelectorAll<HTMLElement>(kind === 'fontSize' ? 'font[size="7"]' : 'font[face="wt-marker"]'));
+    this.doc.execCommand(kind === 'fontSize' ? 'fontSize' : 'fontName', false, kind === 'fontSize' ? '7' : 'wu-marker');
+    const fonts = Array.from(this.area.querySelectorAll<HTMLElement>(kind === 'fontSize' ? 'font[size="7"]' : 'font[face="wu-marker"]'));
     for (const f of fonts) {
       // Inner spans carrying the same property give way to the new value.
       f.querySelectorAll<HTMLElement>('span').forEach((s) => {
@@ -1586,7 +1586,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
    */
   private toggleFullscreen(): void {
     this.fullscreen = !this.fullscreen;
-    const root = this.host.querySelector('.wt-editor') as (HTMLElement & { showPopover?: () => void; hidePopover?: () => void }) | null;
+    const root = this.host.querySelector('.wu-editor') as (HTMLElement & { showPopover?: () => void; hidePopover?: () => void }) | null;
     if (this.fullscreen) {
       this.unlockScroll = ɵlockScroll(this.doc);
       if (root && typeof root.showPopover === 'function') {
@@ -1690,7 +1690,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
       link: !!closestIn(node, this.area, 'a'),
       table: !!closestIn(node, this.area, 'td, th'),
       heading: headingEl ? Number(headingEl.tagName.slice(1)) : 0,
-      align: ((block && (prefixedClass(block, 'ql-align-') || block.style.textAlign)) || 'left') as ɵWtEditorState['align'],
+      align: ((block && (prefixedClass(block, 'ql-align-') || block.style.textAlign)) || 'left') as ɵWuEditorState['align'],
       fontSize: size ? Object.keys(QUILL_SIZES).find((k) => QUILL_SIZES[k] === size) || '' : sizeSpan?.style.fontSize || '',
       fontFamily: font || fontSpan?.style.fontFamily || '',
     };
@@ -1731,8 +1731,8 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     if (!this.viewReady) return this.value || '';
     if (this.sourceMode) return cleanEditorHtml(this.sourceText, this.doc, this.cleanOpts);
     const copy = this.area.cloneNode(true) as HTMLElement;
-    copy.querySelectorAll('img.wt-image-uploading').forEach((i) => i.remove());
-    copy.querySelectorAll('.wt-image-selected').forEach((i) => i.classList.remove('wt-image-selected'));
+    copy.querySelectorAll('img.wu-image-uploading').forEach((i) => i.remove());
+    copy.querySelectorAll('.wu-image-selected').forEach((i) => i.classList.remove('wu-image-selected'));
     const html = cleanEditorHtml(copy.innerHTML, this.doc, this.cleanOpts);
     return html === '<p><br></p>' ? '' : html;
   }
@@ -1779,7 +1779,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
       const color = f.getAttribute('color');
       if (color) span.style.color = color;
       const face = f.getAttribute('face');
-      if (face && face !== 'wt-marker') span.style.fontFamily = face;
+      if (face && face !== 'wu-marker') span.style.fontFamily = face;
       while (f.firstChild) span.appendChild(f.firstChild);
       f.replaceWith(span);
       if (!span.attributes.length) span.replaceWith(...Array.from(span.childNodes));
@@ -1843,9 +1843,9 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
 
   private selectImage(img: HTMLImageElement | null): void {
     if (this.selectedImage === img) return;
-    this.selectedImage?.classList.remove('wt-image-selected');
+    this.selectedImage?.classList.remove('wu-image-selected');
     this.selectedImage = img;
-    img?.classList.add('wt-image-selected');
+    img?.classList.add('wu-image-selected');
     this.placeFrame();
   }
 
@@ -1871,7 +1871,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     const bar = this.toolbarRef?.nativeElement;
     if (!bar) return [];
     return Array.from(bar.querySelectorAll<HTMLElement>('button, select')).filter(
-      (el) => !(el as HTMLButtonElement).disabled && el.offsetParent !== null && !el.closest('.wt-editor-hidden')
+      (el) => !(el as HTMLButtonElement).disabled && el.offsetParent !== null && !el.closest('.wu-editor-hidden')
     );
   }
 
@@ -1883,10 +1883,10 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   }
 
   private toolbarButton(tool: EditorTool): HTMLElement | null {
-    return this.toolbarRef?.nativeElement.querySelector(`[data-wt-tool="${tool}"]`) || null;
+    return this.toolbarRef?.nativeElement.querySelector(`[data-wu-tool="${tool}"]`) || null;
   }
 
-  private fail(file: File, reason: WtEditorImageUploadErrorEvent['reason'], message: string, error?: unknown): void {
+  private fail(file: File, reason: WuEditorImageUploadErrorEvent['reason'], message: string, error?: unknown): void {
     this.onImageUploadError.emit({ file, reason, message, error });
     this.notices = [...this.notices, message];
     this.cdr.markForCheck();
@@ -1896,7 +1896,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     }, 6000);
   }
 
-  private get uploadConfig(): WtEditorImageUpload {
+  private get uploadConfig(): WuEditorImageUpload {
     return { ...(this.defaults.imageUpload || {}), ...(this.imageUpload || {}) };
   }
 
@@ -1964,27 +1964,27 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     if (!bar) return;
     const wire = () => {
       bar.querySelectorAll<HTMLElement>('button[class*="ql-"], select[class*="ql-"]').forEach((el) => {
-        if (el.dataset['wtWired']) return;
-        el.dataset['wtWired'] = '1';
+        if (el.dataset['wuWired']) return;
+        el.dataset['wuWired'] = '1';
         const info = ɵquillTool(el);
         if (!info) {
-          el.classList.add('wt-editor-hidden');
+          el.classList.add('wu-editor-hidden');
           return;
         }
         if (el.tagName === 'SELECT') {
           // A Quill select becomes one of our dropdown buttons; the select stays hidden.
-          el.classList.add('wt-editor-hidden');
+          el.classList.add('wu-editor-hidden');
           const btn = this.doc.createElement('button');
           btn.type = 'button';
-          btn.className = 'wt-editor-tool wt-editor-tool-quill' + (info.dropdown ? ' wt-editor-dropdown' : '');
+          btn.className = 'wu-editor-tool wu-editor-tool-quill' + (info.dropdown ? ' wu-editor-dropdown' : '');
           btn.setAttribute('aria-haspopup', 'true');
           btn.setAttribute('aria-label', this.toolLabel(info.tool));
           btn.title = this.toolLabel(info.tool);
-          btn.dataset['wtTool'] = info.tool;
+          btn.dataset['wuTool'] = info.tool;
           btn.innerHTML = info.dropdown
-            ? `<span class="wt-editor-dropdown-label"></span>${this.icons['chevron']}`
+            ? `<span class="wu-editor-dropdown-label"></span>${this.icons['chevron']}`
             : this.icons[this.toolIcon(info.tool)] || '';
-          if (info.tool === 'align') btn.dataset['wtAlignIcon'] = this.toolIcon('align');
+          if (info.tool === 'align') btn.dataset['wuAlignIcon'] = this.toolIcon('align');
           el.insertAdjacentElement('afterend', btn);
           const values = Array.from((el as HTMLSelectElement).options).map((o) => o.value);
           btn.addEventListener('mousedown', (e) => e.preventDefault());
@@ -2004,13 +2004,13 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
         }
         const b = el as HTMLButtonElement;
         b.type = 'button';
-        b.classList.add('wt-editor-tool');
-        b.dataset['wtTool'] = info.tool;
+        b.classList.add('wu-editor-tool');
+        b.dataset['wuTool'] = info.tool;
         if (!b.getAttribute('aria-label')) b.setAttribute('aria-label', this.toolLabel(info.tool));
         if (!b.title) b.title = this.toolLabel(info.tool);
         if (info.heading) {
-          b.dataset['wtHeading'] = String(info.heading);
-          if (!b.innerHTML.trim()) b.innerHTML = `<span class="wt-editor-heading-mark">H${info.heading}</span>`;
+          b.dataset['wuHeading'] = String(info.heading);
+          if (!b.innerHTML.trim()) b.innerHTML = `<span class="wu-editor-heading-mark">H${info.heading}</span>`;
           b.setAttribute('aria-label', this.headingLabel(info.heading));
         }
         if (!b.innerHTML.trim()) b.innerHTML = this.icons[info.tool] || '';
@@ -2031,7 +2031,7 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
     if (win?.MutationObserver) {
       // Only new, unwired controls matter; our own label updates must not set it off again.
       this.quillObserver = new win.MutationObserver(() => {
-        if (bar.querySelector('button[class*="ql-"]:not([data-wt-wired]), select[class*="ql-"]:not([data-wt-wired])')) wire();
+        if (bar.querySelector('button[class*="ql-"]:not([data-wu-wired]), select[class*="ql-"]:not([data-wu-wired])')) wire();
       });
       this.quillObserver.observe(bar, { childList: true, subtree: true });
     }
@@ -2040,22 +2040,22 @@ export abstract class ɵWtEditorBase implements ControlValueAccessor, AfterViewI
   private syncQuillToolbar(): void {
     const bar = this.toolbarRef?.nativeElement;
     if (!bar || !this.headerTemplate) return;
-    bar.querySelectorAll<HTMLElement>('[data-wt-tool]').forEach((el) => {
-      const tool = el.dataset['wtTool'] as EditorTool;
-      const level = Number(el.dataset['wtHeading'] || 0);
+    bar.querySelectorAll<HTMLElement>('[data-wu-tool]').forEach((el) => {
+      const tool = el.dataset['wuTool'] as EditorTool;
+      const level = Number(el.dataset['wuHeading'] || 0);
       const on = level ? this.state.heading === level : this.isOn(tool);
       el.classList.toggle('ql-active', on);
-      el.classList.toggle('wt-editor-tool-on', on);
+      el.classList.toggle('wu-editor-tool-on', on);
       if (el.tagName === 'BUTTON' && (level || !this.hasMenu(tool))) el.setAttribute('aria-pressed', String(on));
       const off = this.isDisabled(tool);
       if ((el as HTMLButtonElement).disabled !== off) (el as HTMLButtonElement).disabled = off;
       // The align button shows the current alignment.
-      const alignIcon = el.dataset['wtAlignIcon'];
+      const alignIcon = el.dataset['wuAlignIcon'];
       if (alignIcon && alignIcon !== this.toolIcon('align')) {
-        el.dataset['wtAlignIcon'] = this.toolIcon('align');
+        el.dataset['wuAlignIcon'] = this.toolIcon('align');
         el.innerHTML = this.icons[this.toolIcon('align')] || '';
       }
-      const label = el.querySelector('.wt-editor-dropdown-label');
+      const label = el.querySelector('.wu-editor-dropdown-label');
       const text = this.dropdownLabel(tool);
       if (label && label.textContent !== text) label.textContent = text;
     });

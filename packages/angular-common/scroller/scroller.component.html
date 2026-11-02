@@ -1,9 +1,9 @@
 <div
   #viewport
-  class="wt-scroller p-scroller p-component"
-  [class.wt-scroller-horizontal]="horizontal"
+  class="wu-scroller p-scroller p-component"
+  [class.wu-scroller-horizontal]="horizontal"
   [class.p-scroller-horizontal]="horizontal"
-  [class.wt-scroller-inline]="!virtual"
+  [class.wu-scroller-inline]="!virtual"
   [class.p-scroller-inline]="inline"
   [class.p-scroller-disabled]="disabled"
   [class]="styleClass || ''"
@@ -12,17 +12,17 @@
   [style.width]="scrollWidth || null"
   [attr.tabindex]="virtual ? tabindex : null"
 >
-  <div *ngIf="showLoader && loading && !loaderDisabled" class="wt-scroller-loader p-scroller-loader" role="status">
+  <div *ngIf="showLoader && loading && !loaderDisabled" class="wu-scroller-loader p-scroller-loader" role="status">
     <ng-container *ngIf="loaderTemplate; else spinner">
       <ng-container *ngTemplateOutlet="loaderTemplate; context: { options: contentOptions }"></ng-container>
     </ng-container>
     <ng-template #spinner>
-      <svg class="wt-scroller-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>
+      <svg class="wu-scroller-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>
     </ng-template>
   </div>
   <div
-    class="wt-scroller-content p-scroller-content"
-    [class.wt-scroller-loading]="loading"
+    class="wu-scroller-content p-scroller-content"
+    [class.wu-scroller-loading]="loading"
     [class.p-scroller-loading]="loading"
     [style.transform]="contentTransform"
   >
@@ -37,7 +37,7 @@
   </div>
   <div
     *ngIf="virtual && showSpacer"
-    class="wt-scroller-spacer p-scroller-spacer"
+    class="wu-scroller-spacer p-scroller-spacer"
     aria-hidden="true"
     [style.height.px]="horizontal ? null : spacerSize"
     [style.width.px]="horizontal ? spacerSize : null"

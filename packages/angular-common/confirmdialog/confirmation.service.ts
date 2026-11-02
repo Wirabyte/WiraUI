@@ -1,9 +1,9 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { WtAlertIcon, WtAlertService } from 'wiratheme/alert';
-import { WtConfirmation, WtConfirmEventType } from './confirmdialog.types';
+import { WuAlertIcon, WuAlertService } from 'wiraui/alert';
+import { WuConfirmation, WuConfirmEventType } from './confirmdialog.types';
 
-const ALERT_ICONS: [RegExp, WtAlertIcon][] = [
+const ALERT_ICONS: [RegExp, WuAlertIcon][] = [
   [/exclamation|warn/, 'warning'],
   [/question/, 'question'],
   [/info/, 'info'],
@@ -12,21 +12,21 @@ const ALERT_ICONS: [RegExp, WtAlertIcon][] = [
 ];
 
 /**
- * Asks a question in `<wt-confirmdialog>`: `confirmation.confirm({ message: 'ลบรายการนี้?', accept: () => … })`.
- * Provided in root, and can also be provided per component as apps already do. When no `<wt-confirmdialog>` with that
+ * Asks a question in `<wu-confirmdialog>`: `confirmation.confirm({ message: 'ลบรายการนี้?', accept: () => … })`.
+ * Provided in root, and can also be provided per component as apps already do. When no `<wu-confirmdialog>` with that
  * key is on the page, the question opens as a ready-made alert instead, so it is never silently lost.
  */
 @Injectable({ providedIn: 'root' })
-export class WtConfirmationService {
-  private readonly requireSource = new Subject<WtConfirmation | null>();
-  private readonly acceptSource = new Subject<WtConfirmation | null>();
-  /** Emits each confirmation (null to close). `<wt-confirmdialog>` listens. */
-  readonly requireConfirmation$: Observable<WtConfirmation | null> = this.requireSource.asObservable();
-  readonly accept: Observable<WtConfirmation | null> = this.acceptSource.asObservable();
+export class WuConfirmationService {
+  private readonly requireSource = new Subject<WuConfirmation | null>();
+  private readonly acceptSource = new Subject<WuConfirmation | null>();
+  /** Emits each confirmation (null to close). `<wu-confirmdialog>` listens. */
+  readonly requireConfirmation$: Observable<WuConfirmation | null> = this.requireSource.asObservable();
+  readonly accept: Observable<WuConfirmation | null> = this.acceptSource.asObservable();
   private readonly listeners = new Map<string, number>();
   private readonly injector = inject(Injector);
 
-  confirm(confirmation: WtConfirmation): this {
+  confirm(confirmation: WuConfirmation): this {
     if (this.listeners.get(confirmation.key ?? '')) this.requireSource.next(confirmation);
     else this.fallback(confirmation);
     return this;
@@ -48,10 +48,10 @@ export class WtConfirmationService {
     return () => this.listeners.set(k, (this.listeners.get(k) || 1) - 1);
   }
 
-  private fallback(c: WtConfirmation): void {
+  private fallback(c: WuConfirmation): void {
     const icon = c.icon ? ALERT_ICONS.find(([re]) => re.test(c.icon as string))?.[1] ?? 'question' : 'question';
     this.injector
-      .get(WtAlertService)
+      .get(WuAlertService)
       .fire({
         title: c.header,
         text: c.message,
@@ -66,7 +66,7 @@ export class WtConfirmationService {
       })
       .then((r) => {
         if (r.isConfirmed) c.accept?.();
-        else c.reject?.(r.dismiss === 'cancel' ? WtConfirmEventType.REJECT : WtConfirmEventType.CANCEL);
+        else c.reject?.(r.dismiss === 'cancel' ? WuConfirmEventType.REJECT : WuConfirmEventType.CANCEL);
       });
   }
 }

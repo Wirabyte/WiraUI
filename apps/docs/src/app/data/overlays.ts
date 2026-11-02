@@ -13,9 +13,9 @@ export const DIALOG_DOC: ComponentDoc = {
   title: 'Dialog',
   group: 'Overlay',
   entry: 'dialog',
-  standalone: 'WtDialog, WtDialogFooter, WtTemplate',
-  module: 'WtDialogModule',
-  selector: 'wt-dialog',
+  standalone: 'WuDialog, WuDialogFooter, WuTemplate',
+  module: 'WuDialogModule',
+  selector: 'wu-dialog',
   description: {
     th: 'กล่องโต้ตอบที่สร้างจาก <dialog> ของ browser เปิดใน top layer โฟกัสวนอยู่ข้างในและกลับไปที่ปุ่มเดิมเมื่อปิด และล็อกการเลื่อนหน้าระหว่างเปิด',
     en: 'A dialog built on the browser\'s own <dialog>, opened in the top layer. Focus stays inside and returns when it closes, and the page stops scrolling behind it.',
@@ -53,7 +53,7 @@ export const DIALOG_DOC: ComponentDoc = {
   sections: {
     import: {
       title: 'Import',
-      text: { th: '<code>WtDialogModule</code> มี <code>WtTemplate</code> และ <code>wt-footer</code> มาด้วย', en: '<code>WtDialogModule</code> also brings <code>WtTemplate</code> and <code>wt-footer</code>.' },
+      text: { th: '<code>WuDialogModule</code> มี <code>WuTemplate</code> และ <code>wu-footer</code> มาด้วย', en: '<code>WuDialogModule</code> also brings <code>WuTemplate</code> and <code>wu-footer</code>.' },
     },
     basic: {
       title: 'Basic',
@@ -65,8 +65,8 @@ export const DIALOG_DOC: ComponentDoc = {
     slots: {
       title: { th: 'หัวและท้ายแบบกำหนดเอง', en: 'Custom header and footer' },
       text: {
-        th: 'ใช้ <code>&lt;ng-template #header&gt;</code> / <code>#footer</code> หรือ <code>wtTemplate="header"</code> / <code>"footer"</code> (มี <code>content</code>, <code>headless</code>, <code>closeicon</code> ด้วย) หรือวางเนื้อหาใน <code>&lt;wt-footer&gt;</code> / <code>[wtDialogFooter]</code>',
-        en: 'Use <code>&lt;ng-template #header&gt;</code> / <code>#footer</code>, or <code>wtTemplate="header"</code> / <code>"footer"</code> (also <code>content</code>, <code>headless</code>, <code>closeicon</code>), or put the footer in <code>&lt;wt-footer&gt;</code> / <code>[wtDialogFooter]</code>.',
+        th: 'ใช้ <code>&lt;ng-template #header&gt;</code> / <code>#footer</code> หรือ <code>wuTemplate="header"</code> / <code>"footer"</code> (มี <code>content</code>, <code>headless</code>, <code>closeicon</code> ด้วย) หรือวางเนื้อหาใน <code>&lt;wu-footer&gt;</code> / <code>[wuDialogFooter]</code>',
+        en: 'Use <code>&lt;ng-template #header&gt;</code> / <code>#footer</code>, or <code>wuTemplate="header"</code> / <code>"footer"</code> (also <code>content</code>, <code>headless</code>, <code>closeicon</code>), or put the footer in <code>&lt;wu-footer&gt;</code> / <code>[wuDialogFooter]</code>.',
       },
     },
     position: {
@@ -95,10 +95,10 @@ export const DIALOG_DOC: ComponentDoc = {
       text: { th: '<code>#headless</code> วาดทั้งกล่องเอง ส่วนการเปิดปิด โฟกัส และ top layer ยังทำงานเหมือนเดิม', en: '<code>#headless</code> draws the whole box yourself; opening, focus and the top layer still work.' },
     },
     service: {
-      title: { th: 'เปิดจากโค้ด (WtDialogService)', en: 'Opening from code (WtDialogService)' },
+      title: { th: 'เปิดจากโค้ด (WuDialogService)', en: 'Opening from code (WuDialogService)' },
       text: {
-        th: '<code>WtDialogService.open(Component, config)</code> เปิด component ของแอปใน dialog โดยไม่ต้องเขียน <code>&lt;wt-dialog&gt;</code> ในหน้า · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (component ของปุ่มท้าย), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · ใน component ที่เปิด: <code>inject(WtDialogConfig).data</code> และ <code>inject(WtDialogRef).close(ผลลัพธ์)</code> · ผลลัพธ์กลับมาทาง <code>ref.onClose</code> หรือ <code>await ref.result</code> (ปิดด้วย X / Esc / คลิกพื้นหลังได้ <code>undefined</code>) · เปิดซ้อนกันได้ · <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> ชื่อเดิมก็ import ได้',
-        en: '<code>WtDialogService.open(Component, config)</code> opens a component of yours in a dialog, with no <code>&lt;wt-dialog&gt;</code> in the page · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (a component for the buttons), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · in the opened component: <code>inject(WtDialogConfig).data</code> and <code>inject(WtDialogRef).close(result)</code> · the result comes back through <code>ref.onClose</code> or <code>await ref.result</code> (closing with X / Esc / the mask gives <code>undefined</code>) · dialogs stack · the old names <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> import too.',
+        th: '<code>WuDialogService.open(Component, config)</code> เปิด component ของแอปใน dialog โดยไม่ต้องเขียน <code>&lt;wu-dialog&gt;</code> ในหน้า · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (component ของปุ่มท้าย), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · ใน component ที่เปิด: <code>inject(WuDialogConfig).data</code> และ <code>inject(WuDialogRef).close(ผลลัพธ์)</code> · ผลลัพธ์กลับมาทาง <code>ref.onClose</code> หรือ <code>await ref.result</code> (ปิดด้วย X / Esc / คลิกพื้นหลังได้ <code>undefined</code>) · เปิดซ้อนกันได้ · <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> ชื่อเดิมก็ import ได้',
+        en: '<code>WuDialogService.open(Component, config)</code> opens a component of yours in a dialog, with no <code>&lt;wu-dialog&gt;</code> in the page · config: <code>header</code>, <code>width</code>, <code>data</code>, <code>footer</code> (a component for the buttons), <code>maximizable</code>, <code>dismissableMask</code>, <code>closable</code>, <code>position</code>, <code>breakpoints</code>, <code>style</code> … · in the opened component: <code>inject(WuDialogConfig).data</code> and <code>inject(WuDialogRef).close(result)</code> · the result comes back through <code>ref.onClose</code> or <code>await ref.result</code> (closing with X / Esc / the mask gives <code>undefined</code>) · dialogs stack · the old names <code>DialogService</code>, <code>DynamicDialogRef</code>, <code>DynamicDialogConfig</code> import too.',
       },
     },
     a11y: {
@@ -110,57 +110,57 @@ export const DIALOG_DOC: ComponentDoc = {
     },
   },
   code: {
-    basic: `<wt-button label="แก้ไขโปรไฟล์" icon="wi wi-user" (onClick)="visible = true"></wt-button>
+    basic: `<wu-button label="แก้ไขโปรไฟล์" icon="wi wi-user" (onClick)="visible = true"></wu-button>
 
-<wt-dialog header="แก้ไขโปรไฟล์" [(visible)]="visible" [style]="{ width: '28rem' }">
+<wu-dialog header="แก้ไขโปรไฟล์" [(visible)]="visible" [style]="{ width: '28rem' }">
   <label for="profile-name">ชื่อที่แสดง</label>
-  <input wtInputText id="profile-name" name="name" [(ngModel)]="name" [fluid]="true" />
+  <input wuInputText id="profile-name" name="name" [(ngModel)]="name" [fluid]="true" />
   <ng-template #footer>
-    <wt-button label="ยกเลิก" severity="secondary" [text]="true" (onClick)="visible = false"></wt-button>
-    <wt-button label="บันทึก" (onClick)="visible = false"></wt-button>
+    <wu-button label="ยกเลิก" severity="secondary" [text]="true" (onClick)="visible = false"></wu-button>
+    <wu-button label="บันทึก" (onClick)="visible = false"></wu-button>
   </ng-template>
-</wt-dialog>`,
-    slots: `<wt-dialog [(visible)]="visible" [style]="{ width: '26rem' }">
+</wu-dialog>`,
+    slots: `<wu-dialog [(visible)]="visible" [style]="{ width: '26rem' }">
   <ng-template #header>
-    <wt-avatar label="ส" shape="circle"></wt-avatar>
+    <wu-avatar label="ส" shape="circle"></wu-avatar>
     <b>สมหญิง ใจดี</b>
   </ng-template>
   <p>ส่งข้อความหาสมาชิกในทีม</p>
-  <wt-footer>
-    <wt-button label="ส่ง" icon="wi wi-send" (onClick)="visible = false"></wt-button>
-  </wt-footer>
-</wt-dialog>`,
-    position: `<wt-dialog header="ตำแหน่ง" [(visible)]="visible" [position]="position" [style]="{ width: '20rem' }">
+  <wu-footer>
+    <wu-button label="ส่ง" icon="wi wi-send" (onClick)="visible = false"></wu-button>
+  </wu-footer>
+</wu-dialog>`,
+    position: `<wu-dialog header="ตำแหน่ง" [(visible)]="visible" [position]="position" [style]="{ width: '20rem' }">
   …
-</wt-dialog>`,
-    responsive: `<wt-dialog header="รายงานประจำเดือน" [(visible)]="visible" [maximizable]="true"
+</wu-dialog>`,
+    responsive: `<wu-dialog header="รายงานประจำเดือน" [(visible)]="visible" [maximizable]="true"
   [style]="{ width: '50vw' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   …
-</wt-dialog>`,
-    modeless: `<wt-dialog header="โน้ต" [(visible)]="visible" [modal]="false" [draggable]="true" position="right"></wt-dialog>
-<wt-dialog header="รายละเอียด" [(visible)]="visible2" [dismissableMask]="true"></wt-dialog>`,
-    headless: `<wt-dialog [(visible)]="visible" [style]="{ width: '22rem' }">
+</wu-dialog>`,
+    modeless: `<wu-dialog header="โน้ต" [(visible)]="visible" [modal]="false" [draggable]="true" position="right"></wu-dialog>
+<wu-dialog header="รายละเอียด" [(visible)]="visible2" [dismissableMask]="true"></wu-dialog>`,
+    headless: `<wu-dialog [(visible)]="visible" [style]="{ width: '22rem' }">
   <ng-template #headless>
     <div class="promo">
       <h3>ทดลองใช้แพ็กเกจ Pro ฟรี 14 วัน</h3>
-      <wt-button label="เริ่มเลย" (onClick)="visible = false"></wt-button>
-      <wt-button label="ไว้ทีหลัง" [text]="true" (onClick)="visible = false"></wt-button>
+      <wu-button label="เริ่มเลย" (onClick)="visible = false"></wu-button>
+      <wu-button label="ไว้ทีหลัง" [text]="true" (onClick)="visible = false"></wu-button>
     </div>
   </ng-template>
-</wt-dialog>`,
-    service: `<wt-button label="เลือกหัวหน้าห้อง" icon="wi wi-users" (onClick)="pickLeader()"></wt-button>
+</wu-dialog>`,
+    service: `<wu-button label="เลือกหัวหน้าห้อง" icon="wi wi-users" (onClick)="pickLeader()"></wu-button>
 <p>หัวหน้าห้อง: {{ leader }}</p>`,
   },
   ts: {
     basic: `visible = false;
 name = 'สมหญิง ใจดี';`,
     service: `import { Component, inject } from '@angular/core';
-import { WtButton } from 'wiratheme/button';
-import { WtDialogConfig, WtDialogRef, WtDialogService } from 'wiratheme/dialog';
+import { WuButton } from 'wiraui/button';
+import { WuDialogConfig, WuDialogRef, WuDialogService } from 'wiraui/dialog';
 
 // หน้าที่เปิด dialog
 export class ClassroomPage {
-  private readonly dialogs = inject(WtDialogService);
+  private readonly dialogs = inject(WuDialogService);
   leader = '-';
 
   async pickLeader(): Promise<void> {
@@ -173,18 +173,18 @@ export class ClassroomPage {
 // component ที่อยู่ใน dialog
 @Component({
   selector: 'app-pick-student',
-  imports: [WtButton],
+  imports: [WuButton],
   template: \`
     <p>ห้อง {{ config.data.room }}</p>
     @for (s of students; track s.id) {
-      <wt-button [label]="s.name" [text]="true" (onClick)="ref.close(s)"></wt-button>
+      <wu-button [label]="s.name" [text]="true" (onClick)="ref.close(s)"></wu-button>
     }
-    <wt-button label="ยกเลิก" severity="secondary" (onClick)="ref.close()"></wt-button>
+    <wu-button label="ยกเลิก" severity="secondary" (onClick)="ref.close()"></wu-button>
   \`,
 })
 export class PickStudent {
-  readonly ref = inject(WtDialogRef<Student>);
-  readonly config = inject(WtDialogConfig<{ room: string }>);
+  readonly ref = inject(WuDialogRef<Student>);
+  readonly config = inject(WuDialogConfig<{ room: string }>);
   readonly students = STUDENTS;
 }`,
   },
@@ -218,9 +218,9 @@ export class PickStudent {
       title: 'Templates',
       typeLabel: { th: 'ใช้', en: 'Use' },
       rows: [
-        row('header · footer · content · closeicon', 'ng-template', undefined, '#ชื่อ หรือ wtTemplate="ชื่อ"', '#name or wtTemplate="name"'),
+        row('header · footer · content · closeicon', 'ng-template', undefined, '#ชื่อ หรือ wuTemplate="ชื่อ"', '#name or wuTemplate="name"'),
         row('headless', 'ng-template', undefined, 'วาดทั้งกล่องเอง', 'Draw the whole box'),
-        row('wt-footer · [wtDialogFooter]', 'element', undefined, 'เนื้อหาส่วนท้ายแบบไม่ต้องใช้ template', 'Footer content without a template'),
+        row('wu-footer · [wuDialogFooter]', 'element', undefined, 'เนื้อหาส่วนท้ายแบบไม่ต้องใช้ template', 'Footer content without a template'),
       ],
     },
     {
@@ -230,22 +230,22 @@ export class PickStudent {
       rows: [
         row('visibleChange', BOOL, undefined, 'เปิด / ปิด', 'Opened / closed'),
         row('onShow · onHide', 'void', undefined, 'แสดงแล้ว / ปิดแล้ว', 'Shown / hidden'),
-        row('onMaximize', 'WtDialogMaximizeEvent', undefined, 'ขยาย / ย่อ', 'Maximized / restored'),
+        row('onMaximize', 'WuDialogMaximizeEvent', undefined, 'ขยาย / ย่อ', 'Maximized / restored'),
       ],
     },
-    { id: 'api-types', title: 'Types', code: `interface WtDialogMaximizeEvent {\n  maximized: boolean;\n}` },
+    { id: 'api-types', title: 'Types', code: `interface WuDialogMaximizeEvent {\n  maximized: boolean;\n}` },
   ],
   tokens: [
-    tok('--wt-dialog-bg', 'พื้นกล่อง', 'Box background'),
-    tok('--wt-dialog-border', 'ขอบ', 'Border'),
-    tok('--wt-dialog-shadow', 'เงา', 'Shadow'),
-    tok('--wt-dialog-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-dialog-header-padding', 'ระยะในหัว', 'Header padding'),
-    tok('--wt-dialog-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
-    tok('--wt-dialog-footer-padding', 'ระยะในส่วนท้าย', 'Footer padding'),
-    tok('--wt-dialog-title-size', 'ขนาดหัวข้อ', 'Title size'),
-    tok('--wt-dialog-title-weight', 'น้ำหนักหัวข้อ', 'Title weight'),
-    tok('--wt-dialog-divider', 'เส้นคั่นหัวและท้าย (0 = ไม่มี)', 'Header / footer divider (0 = none)'),
+    tok('--wu-dialog-bg', 'พื้นกล่อง', 'Box background'),
+    tok('--wu-dialog-border', 'ขอบ', 'Border'),
+    tok('--wu-dialog-shadow', 'เงา', 'Shadow'),
+    tok('--wu-dialog-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-dialog-header-padding', 'ระยะในหัว', 'Header padding'),
+    tok('--wu-dialog-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
+    tok('--wu-dialog-footer-padding', 'ระยะในส่วนท้าย', 'Footer padding'),
+    tok('--wu-dialog-title-size', 'ขนาดหัวข้อ', 'Title size'),
+    tok('--wu-dialog-title-weight', 'น้ำหนักหัวข้อ', 'Title weight'),
+    tok('--wu-dialog-divider', 'เส้นคั่นหัวและท้าย (0 = ไม่มี)', 'Header / footer divider (0 = none)'),
   ],
 };
 
@@ -254,9 +254,9 @@ export const ALERT_DOC: ComponentDoc = {
   title: 'AlertDialog',
   group: 'Overlay',
   entry: 'alert',
-  standalone: 'WtAlertService',
-  module: 'WtAlertModule',
-  selector: 'WtAlertService · WtAlert',
+  standalone: 'WuAlertService',
+  module: 'WuAlertModule',
+  selector: 'WuAlertService · WuAlert',
   description: {
     th: 'กล่องแจ้งเตือนสำเร็จรูปที่เรียกจากโค้ด มี icon เคลื่อนไหว หัวข้อ ข้อความ ช่องกรอก ปุ่มยืนยัน / ปฏิเสธ / ยกเลิก ตัวนับเวลา และคืนผลเป็น Promise',
     en: 'A ready-made alert opened from code: an animated icon, title, text, an optional input, confirm / deny / cancel buttons and a timer, resolving to a Promise.',
@@ -291,7 +291,7 @@ export const ALERT_DOC: ComponentDoc = {
     'คัดลอกลิงก์': 'Copy link',
     'ซิงก์ข้อมูล': 'Sync data',
     'เรียกแบบ static': 'Static call',
-    'หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraTheme() ใน app.config.ts / AppModule)': 'or call it from anywhere (needs provideWiraTheme() in app.config.ts / AppModule)',
+    'หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraUI() ใน app.config.ts / AppModule)': 'or call it from anywhere (needs provideWiraUI() in app.config.ts / AppModule)',
     'ลบรายการนี้?': 'Delete this item?',
     'ลบแล้วกู้คืนไม่ได้': 'This cannot be undone.',
     'ลบเลย': 'Delete',
@@ -336,8 +336,8 @@ export const ALERT_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ไม่ต้องวางอะไรใน template เรียก <code>WtAlertService</code> จากโค้ด หรือใช้ <code>WtAlert</code> แบบ static ที่เรียกได้จากทุกที่ (ต้องมี <code>provideWiraTheme()</code> ใน providers ของแอป)',
-        en: 'Nothing goes in a template: call <code>WtAlertService</code> from code, or the static <code>WtAlert</code> from anywhere (it needs <code>provideWiraTheme()</code> in the app providers).',
+        th: 'ไม่ต้องวางอะไรใน template เรียก <code>WuAlertService</code> จากโค้ด หรือใช้ <code>WuAlert</code> แบบ static ที่เรียกได้จากทุกที่ (ต้องมี <code>provideWiraUI()</code> ใน providers ของแอป)',
+        en: 'Nothing goes in a template: call <code>WuAlertService</code> from code, or the static <code>WuAlert</code> from anywhere (it needs <code>provideWiraUI()</code> in the app providers).',
       },
     },
     basic: {
@@ -390,45 +390,45 @@ export const ALERT_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'โค้ดที่เรียกฟังก์ชัน alert แบบ global อยู่แล้วย้ายมาใช้ <code>WtAlert.fire({...})</code> ได้ object ของ option ที่ส่งให้ <code>fire()</code> อยู่แล้วใช้ต่อได้เลย ชื่อ option และรูปแบบผลลัพธ์เหมือนเดิม ปุ่มนี้เรียกผ่าน <code>WtAlert</code> แบบ static',
-        en: 'Code that already calls a global alert function moves to <code>WtAlert.fire({...})</code>: the option objects it already passes to <code>fire()</code> keep working, with the same option names and result shape. This button goes through the static <code>WtAlert</code>.',
+        th: 'โค้ดที่เรียกฟังก์ชัน alert แบบ global อยู่แล้วย้ายมาใช้ <code>WuAlert.fire({...})</code> ได้ object ของ option ที่ส่งให้ <code>fire()</code> อยู่แล้วใช้ต่อได้เลย ชื่อ option และรูปแบบผลลัพธ์เหมือนเดิม ปุ่มนี้เรียกผ่าน <code>WuAlert</code> แบบ static',
+        en: 'Code that already calls a global alert function moves to <code>WuAlert.fire({...})</code>: the option objects it already passes to <code>fire()</code> keep working, with the same option names and result shape. This button goes through the static <code>WuAlert</code>.',
       },
     },
   },
   code: {
-    basic: `<wt-button label="สำเร็จ" severity="success"
-  (onClick)="alert.fire('บันทึกแล้ว', 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย', 'success')"></wt-button>
-<wt-button label="ผิดพลาด" severity="danger"
-  (onClick)="alert.fire('บันทึกไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง', 'error')"></wt-button>
-<wt-button label="เตือน" severity="warn"
-  (onClick)="alert.fire('ใกล้หมดเวลา', 'เหลือเวลาอีก 5 นาที', 'warning')"></wt-button>
-<wt-button label="ข้อมูล" severity="info"
-  (onClick)="alert.fire('มีเวอร์ชันใหม่', 'รีเฟรชหน้าเพื่อใช้งาน', 'info')"></wt-button>
-<wt-button label="คำถาม" severity="help"
-  (onClick)="alert.fire('ต้องการความช่วยเหลือ?', 'ติดต่อทีมงานได้ทุกวัน', 'question')"></wt-button>`,
-    question: `<wt-button label="ลบรายการ" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>`,
-    deny: `<wt-button label="ออกจากหน้านี้" severity="secondary" (onClick)="leave()"></wt-button>`,
-    inputs: `<wt-button label="อีเมล" (onClick)="askEmail()"></wt-button>
-<wt-button label="สาขา" (onClick)="askBranch()"></wt-button>`,
-    preconfirm: `<wt-button label="ส่งคำขอ" (onClick)="request()"></wt-button>`,
-    timer: `<wt-button label="บันทึกอัตโนมัติ" (onClick)="autosave()"></wt-button>`,
-    custom: `<wt-button label="โปรโมชัน" (onClick)="promo()"></wt-button>`,
-    helpers: `<wt-button label="ออกจากระบบ" (onClick)="logout()"></wt-button>
-<wt-button label="คัดลอกลิงก์" (onClick)="copied()"></wt-button>
-<wt-button label="ซิงก์ข้อมูล" (onClick)="sync()"></wt-button>`,
-    migration: `<wt-button label="เรียกแบบ static" (onClick)="legacy()"></wt-button>`,
+    basic: `<wu-button label="สำเร็จ" severity="success"
+  (onClick)="alert.fire('บันทึกแล้ว', 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย', 'success')"></wu-button>
+<wu-button label="ผิดพลาด" severity="danger"
+  (onClick)="alert.fire('บันทึกไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง', 'error')"></wu-button>
+<wu-button label="เตือน" severity="warn"
+  (onClick)="alert.fire('ใกล้หมดเวลา', 'เหลือเวลาอีก 5 นาที', 'warning')"></wu-button>
+<wu-button label="ข้อมูล" severity="info"
+  (onClick)="alert.fire('มีเวอร์ชันใหม่', 'รีเฟรชหน้าเพื่อใช้งาน', 'info')"></wu-button>
+<wu-button label="คำถาม" severity="help"
+  (onClick)="alert.fire('ต้องการความช่วยเหลือ?', 'ติดต่อทีมงานได้ทุกวัน', 'question')"></wu-button>`,
+    question: `<wu-button label="ลบรายการ" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wu-button>`,
+    deny: `<wu-button label="ออกจากหน้านี้" severity="secondary" (onClick)="leave()"></wu-button>`,
+    inputs: `<wu-button label="อีเมล" (onClick)="askEmail()"></wu-button>
+<wu-button label="สาขา" (onClick)="askBranch()"></wu-button>`,
+    preconfirm: `<wu-button label="ส่งคำขอ" (onClick)="request()"></wu-button>`,
+    timer: `<wu-button label="บันทึกอัตโนมัติ" (onClick)="autosave()"></wu-button>`,
+    custom: `<wu-button label="โปรโมชัน" (onClick)="promo()"></wu-button>`,
+    helpers: `<wu-button label="ออกจากระบบ" (onClick)="logout()"></wu-button>
+<wu-button label="คัดลอกลิงก์" (onClick)="copied()"></wu-button>
+<wu-button label="ซิงก์ข้อมูล" (onClick)="sync()"></wu-button>`,
+    migration: `<wu-button label="เรียกแบบ static" (onClick)="legacy()"></wu-button>`,
   },
   ts: {
     import: `import { inject } from '@angular/core';
-import { WtAlertService } from 'wiratheme/alert';
+import { WuAlertService } from 'wiraui/alert';
 
 export class OrdersComponent {
-  readonly alert = inject(WtAlertService);
+  readonly alert = inject(WuAlertService);
 }
 
-// หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraTheme() ใน app.config.ts / AppModule)
-import { WtAlert } from 'wiratheme/alert';
-WtAlert.fire('บันทึกแล้ว', '', 'success');`,
+// หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraUI() ใน app.config.ts / AppModule)
+import { WuAlert } from 'wiraui/alert';
+WuAlert.fire('บันทึกแล้ว', '', 'success');`,
     question: `async remove(): Promise<void> {
   const r = await this.alert.fire({
     title: 'ลบรายการนี้?',
@@ -524,10 +524,10 @@ async sync(): Promise<void> {
   await this.api.sync();
   this.alert.close();
 }`,
-    migration: `import { WtAlert } from 'wiratheme/alert';
+    migration: `import { WuAlert } from 'wiraui/alert';
 
 // object ของ option ที่ใช้อยู่ส่งต่อให้ fire() ได้เลย
-const r = await WtAlert.fire({
+const r = await WuAlert.fire({
   title: 'ลบรายการนี้?',
   text: 'ลบแล้วกู้คืนไม่ได้',
   icon: 'warning',
@@ -535,17 +535,17 @@ const r = await WtAlert.fire({
   confirmButtonText: 'ลบ',
   cancelButtonText: 'ยกเลิก',
 });
-if (r.isConfirmed) WtAlert.fire({ title: 'ลบแล้ว', icon: 'success' });`,
+if (r.isConfirmed) WuAlert.fire({ title: 'ลบแล้ว', icon: 'success' });`,
   },
   api: [
     {
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'มีทั้งใน WtAlertService และ WtAlert (static)', en: 'On WtAlertService and the static WtAlert.' },
+      note: { th: 'มีทั้งใน WuAlertService และ WuAlert (static)', en: 'On WuAlertService and the static WuAlert.' },
       rows: [
-        row('fire(options) · fire(title, text?, icon?)', 'Promise<WtAlertResult>', undefined, 'เปิดกล่อง', 'Opens an alert'),
-        row('success · error · warning · info · question (title, text?)', 'Promise<WtAlertResult>', undefined, 'ทางลัดตาม icon', 'Shortcuts per icon'),
+        row('fire(options) · fire(title, text?, icon?)', 'Promise<WuAlertResult>', undefined, 'เปิดกล่อง', 'Opens an alert'),
+        row('success · error · warning · info · question (title, text?)', 'Promise<WuAlertResult>', undefined, 'ทางลัดตาม icon', 'Shortcuts per icon'),
         row('confirm(options | title, text?)', 'Promise<boolean>', undefined, 'คำถามใช่ / ไม่ (โฟกัสปุ่มยกเลิก)', 'Yes / no question (cancel focused)'),
         row('mixin(defaults)', '{ fire }', undefined, 'ชุดค่าเริ่มต้นไว้ใช้ซ้ำ', 'A preset to reuse'),
         row('close(result?)', 'void', undefined, 'ปิดกล่องที่เปิดอยู่', 'Closes the open alert'),
@@ -560,7 +560,7 @@ if (r.isConfirmed) WtAlert.fire({ title: 'ลบแล้ว', icon: 'success' }
       title: 'Options',
       rows: [
         row('title · text · html · footer', 'string', undefined, 'เนื้อหา (html ผ่าน sanitizer)', 'Content (html is sanitized)'),
-        row('icon · iconColor', 'WtAlertIcon · string', undefined, 'icon เคลื่อนไหวและสี', 'Animated icon and its colour'),
+        row('icon · iconColor', 'WuAlertIcon · string', undefined, 'icon เคลื่อนไหวและสี', 'Animated icon and its colour'),
         row('confirmButtonText · cancelButtonText · denyButtonText', 'string', 'locale', 'ข้อความปุ่ม', 'Button texts'),
         row('showConfirmButton · showCancelButton · showDenyButton · showCloseButton', BOOL, 'true · false · false · false', 'ปุ่มที่แสดง', 'Buttons shown'),
         row('confirmButtonColor · cancelButtonColor · denyButtonColor', 'string', undefined, 'สีพื้นปุ่ม (สี CSS ใดก็ได้)', 'Button colours (any CSS colour)'),
@@ -568,7 +568,7 @@ if (r.isConfirmed) WtAlert.fire({ title: 'ลบแล้ว', icon: 'success' }
         row('focusConfirm · focusCancel', BOOL, 'false', 'ปุ่มที่โฟกัสเมื่อเปิด', 'Which button has focus when it opens'),
         row('allowOutsideClick · allowEscapeKey · allowEnterKey', 'boolean', 'true', 'วิธีปิดและยืนยัน', 'Ways to close and confirm'),
         row('timer · timerProgressBar', 'number · boolean', undefined, 'ปิดเองตามเวลา', 'Close after a while'),
-        row('input · inputValue · inputPlaceholder · inputLabel · inputOptions · inputAttributes', 'WtAlertInput …', undefined, 'ช่องกรอก', 'Input'),
+        row('input · inputValue · inputPlaceholder · inputLabel · inputOptions · inputAttributes', 'WuAlertInput …', undefined, 'ช่องกรอก', 'Input'),
         row('inputValidator · validationMessage', 'function · string', undefined, 'ตรวจค่าก่อนยืนยัน', 'Check the value before confirming'),
         row('preConfirm · showLoaderOnConfirm', 'function · boolean', undefined, 'ทำงานก่อนปิด พร้อม spinner', 'Work before closing, with a spinner'),
         row('didOpen · willClose · didClose', 'function', undefined, 'จังหวะเปิด / ปิด', 'Open / close hooks'),
@@ -578,28 +578,28 @@ if (r.isConfirmed) WtAlert.fire({ title: 'ลบแล้ว', icon: 'success' }
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question' | 'danger' | 'warn' | 'help';
-type WtAlertInput = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'radio' | 'checkbox';
-type WtAlertDismissReason = 'cancel' | 'backdrop' | 'close' | 'esc' | 'timer';
+      code: `type WuAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question' | 'danger' | 'warn' | 'help';
+type WuAlertInput = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'radio' | 'checkbox';
+type WuAlertDismissReason = 'cancel' | 'backdrop' | 'close' | 'esc' | 'timer';
 
-interface WtAlertResult<T = any> {
+interface WuAlertResult<T = any> {
   isConfirmed: boolean;
   isDenied: boolean;
   isDismissed: boolean;
   value?: T;          // true เมื่อยืนยัน หรือค่าที่กรอก / ผลของ preConfirm, false เมื่อปฏิเสธ
-  dismiss?: WtAlertDismissReason;
+  dismiss?: WuAlertDismissReason;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-alert-width', 'ความกว้าง', 'Width'),
-    tok('--wt-alert-padding', 'ระยะใน', 'Padding'),
-    tok('--wt-alert-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-alert-icon-size', 'ขนาด icon', 'Icon size'),
-    tok('--wt-alert-title-size', 'ขนาดหัวข้อ', 'Title size'),
-    tok('--wt-dialog-bg', 'พื้น (ร่วมกับ Dialog)', 'Background (shared with Dialog)'),
-    tok('--wt-dialog-border', 'ขอบ', 'Border'),
-    tok('--wt-dialog-shadow', 'เงา', 'Shadow'),
+    tok('--wu-alert-width', 'ความกว้าง', 'Width'),
+    tok('--wu-alert-padding', 'ระยะใน', 'Padding'),
+    tok('--wu-alert-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-alert-icon-size', 'ขนาด icon', 'Icon size'),
+    tok('--wu-alert-title-size', 'ขนาดหัวข้อ', 'Title size'),
+    tok('--wu-dialog-bg', 'พื้น (ร่วมกับ Dialog)', 'Background (shared with Dialog)'),
+    tok('--wu-dialog-border', 'ขอบ', 'Border'),
+    tok('--wu-dialog-shadow', 'เงา', 'Shadow'),
   ],
 };
 
@@ -608,12 +608,12 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
   title: 'ConfirmDialog',
   group: 'Overlay',
   entry: 'confirmdialog',
-  standalone: 'WtConfirmDialog',
-  module: 'WtConfirmDialogModule',
-  selector: 'wt-confirmdialog',
+  standalone: 'WuConfirmDialog',
+  module: 'WuConfirmDialogModule',
+  selector: 'wu-confirmdialog',
   description: {
-    th: 'กล่องยืนยันที่เรียกจาก service: วาง <wt-confirmdialog> ไว้ครั้งเดียว แล้วเรียก confirm() พร้อมข้อความ ปุ่ม และ callback',
-    en: 'A confirmation asked through a service: place <wt-confirmdialog> once, then call confirm() with the message, buttons and callbacks.',
+    th: 'กล่องยืนยันที่เรียกจาก service: วาง <wu-confirmdialog> ไว้ครั้งเดียว แล้วเรียก confirm() พร้อมข้อความ ปุ่ม และ callback',
+    en: 'A confirmation asked through a service: place <wu-confirmdialog> once, then call confirm() with the message, buttons and callbacks.',
   },
   english: {
     'ลบลูกค้า': 'Delete customer',
@@ -633,7 +633,7 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     'บันทึกแบบร่างแล้ว': 'Draft saved',
     'กมล ชวนคุณเข้าร่วมทีม "การตลาด"': 'Kevin invited you to the "Marketing" team',
     'เข้าร่วมแล้ว': 'Joined',
-    'ไม่มี <wt-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน': 'no <wt-confirmdialog key="none"> on the page: it opens as an AlertDialog instead',
+    'ไม่มี <wu-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน': 'no <wu-confirmdialog key="none"> on the page: it opens as an AlertDialog instead',
     'ส่งออกไฟล์?': 'Export the file?',
     'ไฟล์จะถูกส่งไปที่อีเมลของคุณ': 'The file goes to your email.',
     'ส่งออกแล้ว': 'Exported',
@@ -642,8 +642,8 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WtConfirmationService</code> อยู่ใน <code>wiratheme/confirmdialog</code> หรือ import จาก <code>wiratheme/api</code> พร้อมชื่อที่แอปใช้อยู่ (<code>ConfirmationService</code>, <code>ConfirmEventType</code>) ซึ่งรวม <code>MessageService</code>, <code>WtTemplate</code> / <code>SharedModule</code> และ <code>WtAlert</code> ไว้ใน import เดียว',
-        en: '<code>WtConfirmationService</code> comes from <code>wiratheme/confirmdialog</code>, or from <code>wiratheme/api</code> under the names apps already use (<code>ConfirmationService</code>, <code>ConfirmEventType</code>), together with <code>MessageService</code>, <code>WtTemplate</code> / <code>SharedModule</code> and <code>WtAlert</code> in one import.',
+        th: '<code>WuConfirmationService</code> อยู่ใน <code>wiraui/confirmdialog</code> หรือ import จาก <code>wiraui/api</code> พร้อมชื่อที่แอปใช้อยู่ (<code>ConfirmationService</code>, <code>ConfirmEventType</code>) ซึ่งรวม <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> และ <code>WuAlert</code> ไว้ใน import เดียว',
+        en: '<code>WuConfirmationService</code> comes from <code>wiraui/confirmdialog</code>, or from <code>wiraui/api</code> under the names apps already use (<code>ConfirmationService</code>, <code>ConfirmEventType</code>), together with <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> and <code>WuAlert</code> in one import.',
       },
     },
     basic: {
@@ -662,7 +662,7 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     },
     key: {
       title: { th: 'หลายกล่องในหน้าเดียว', en: 'Several on a page' },
-      text: { th: 'ใส่ <code>key</code> ให้ <code>&lt;wt-confirmdialog&gt;</code> และ <code>confirm()</code> ให้ตรงกัน แต่ละกล่องตั้ง <code>position</code> และ style ของตัวเองได้', en: 'Give <code>&lt;wt-confirmdialog&gt;</code> and <code>confirm()</code> the same <code>key</code>; each dialog keeps its own <code>position</code> and style.' },
+      text: { th: 'ใส่ <code>key</code> ให้ <code>&lt;wu-confirmdialog&gt;</code> และ <code>confirm()</code> ให้ตรงกัน แต่ละกล่องตั้ง <code>position</code> และ style ของตัวเองได้', en: 'Give <code>&lt;wu-confirmdialog&gt;</code> and <code>confirm()</code> the same <code>key</code>; each dialog keeps its own <code>position</code> and style.' },
     },
     templates: {
       title: 'Templates',
@@ -674,40 +674,40 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     fallback: {
       title: { th: 'ไม่มีกล่องในหน้า', en: 'No dialog on the page' },
       text: {
-        th: 'ถ้าไม่มี <code>&lt;wt-confirmdialog&gt;</code> ที่ key ตรงกันในหน้า คำถามจะเปิดเป็น AlertDialog แทน ไม่หายไปเฉย ๆ',
-        en: 'When no <code>&lt;wt-confirmdialog&gt;</code> with that key is on the page, the question opens as an AlertDialog instead of getting lost.',
+        th: 'ถ้าไม่มี <code>&lt;wu-confirmdialog&gt;</code> ที่ key ตรงกันในหน้า คำถามจะเปิดเป็น AlertDialog แทน ไม่หายไปเฉย ๆ',
+        en: 'When no <code>&lt;wu-confirmdialog&gt;</code> with that key is on the page, the question opens as an AlertDialog instead of getting lost.',
       },
     },
   },
   code: {
-    basic: `<wt-confirmdialog></wt-confirmdialog>
-<wt-button label="ลบลูกค้า" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>`,
-    icons: `<wt-button label="warning" (onClick)="ask('warning')"></wt-button>
-<wt-button label="question" (onClick)="ask('question')"></wt-button>
+    basic: `<wu-confirmdialog></wu-confirmdialog>
+<wu-button label="ลบลูกค้า" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wu-button>`,
+    icons: `<wu-button label="warning" (onClick)="ask('warning')"></wu-button>
+<wu-button label="question" (onClick)="ask('question')"></wu-button>
 <!-- info · success · error -->`,
-    key: `<wt-confirmdialog key="top" position="top"></wt-confirmdialog>
-<wt-button label="ยืนยันด้านบน" (onClick)="askTop()"></wt-button>`,
-    templates: `<wt-confirmdialog key="custom" #cd>
+    key: `<wu-confirmdialog key="top" position="top"></wu-confirmdialog>
+<wu-button label="ยืนยันด้านบน" (onClick)="askTop()"></wu-button>`,
+    templates: `<wu-confirmdialog key="custom" #cd>
   <ng-template #message let-c>
     <div class="invite">
-      <wt-avatar label="ก" shape="circle" size="large"></wt-avatar>
+      <wu-avatar label="ก" shape="circle" size="large"></wu-avatar>
       <p>{{ c?.message }}</p>
     </div>
   </ng-template>
   <ng-template #footer>
-    <wt-button label="ไว้ก่อน" [text]="true" (onClick)="cd.reject()"></wt-button>
-    <wt-button label="เข้าร่วม" icon="wi wi-check" (onClick)="cd.accept()"></wt-button>
+    <wu-button label="ไว้ก่อน" [text]="true" (onClick)="cd.reject()"></wu-button>
+    <wu-button label="เข้าร่วม" icon="wi wi-check" (onClick)="cd.accept()"></wu-button>
   </ng-template>
-</wt-confirmdialog>`,
-    fallback: `<wt-button label="ถามโดยไม่มีกล่อง" (onClick)="askNowhere()"></wt-button>`,
+</wu-confirmdialog>`,
+    fallback: `<wu-button label="ถามโดยไม่มีกล่อง" (onClick)="askNowhere()"></wu-button>`,
   },
   ts: {
     import: `import { inject } from '@angular/core';
-import { WtConfirmationService, WtConfirmEventType } from 'wiratheme/confirmdialog';
-// หรือ: import { ConfirmationService, ConfirmEventType } from 'wiratheme/api';
+import { WuConfirmationService, WuConfirmEventType } from 'wiraui/confirmdialog';
+// หรือ: import { ConfirmationService, ConfirmEventType } from 'wiraui/api';
 
 export class CustomersComponent {
-  private readonly confirmation = inject(WtConfirmationService);
+  private readonly confirmation = inject(WuConfirmationService);
 }`,
     basic: `remove(): void {
   this.confirmation.confirm({
@@ -719,8 +719,8 @@ export class CustomersComponent {
     acceptButtonStyleClass: 'p-button-danger',
     defaultFocus: 'reject',
     accept: () => (this.result = 'ลบแล้ว'),
-    reject: (type: WtConfirmEventType) =>
-      (this.result = type === WtConfirmEventType.CANCEL ? 'ปิดไป' : 'ยกเลิก'),
+    reject: (type: WuConfirmEventType) =>
+      (this.result = type === WuConfirmEventType.CANCEL ? 'ปิดไป' : 'ยกเลิก'),
   });
 }`,
     icons: `ask(icon: string): void {
@@ -738,7 +738,7 @@ export class CustomersComponent {
   });
 }`,
     fallback: `askNowhere(): void {
-  // ไม่มี <wt-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน
+  // ไม่มี <wu-confirmdialog key="none"> ในหน้า: เปิดเป็น AlertDialog แทน
   this.confirmation.confirm({ key: 'none', header: 'ส่งออกไฟล์?', message: 'ไฟล์จะถูกส่งไปที่อีเมลของคุณ', icon: 'info' });
 }`,
   },
@@ -750,7 +750,7 @@ export class CustomersComponent {
         row('message · header', 'string', undefined, 'ข้อความและหัวข้อ', 'Message and title'),
         row('icon', 'string', undefined, 'warning, question, info, success, error หรือ class ของ icon', 'warning, question, info, success, error or an icon class'),
         row('accept', '() => void', undefined, 'กดยืนยัน', 'Confirmed'),
-        row('reject', '(type: WtConfirmEventType) => void', undefined, 'กดปฏิเสธ (REJECT) หรือปิดไป (CANCEL)', 'Rejected (REJECT) or closed (CANCEL)'),
+        row('reject', '(type: WuConfirmEventType) => void', undefined, 'กดปฏิเสธ (REJECT) หรือปิดไป (CANCEL)', 'Rejected (REJECT) or closed (CANCEL)'),
         row('acceptLabel · rejectLabel · acceptIcon · rejectIcon', 'string', 'locale', 'ข้อความและ icon ของปุ่ม', 'Button texts and icons'),
         row('acceptVisible · rejectVisible', BOOL, 'true', 'แสดงปุ่ม', 'Show the button'),
         row('acceptButtonStyleClass · rejectButtonStyleClass', 'string', undefined, 'class ของปุ่ม', 'Button classes'),
@@ -762,7 +762,7 @@ export class CustomersComponent {
     },
     {
       id: 'api-inputs',
-      title: { th: 'Inputs ของ wt-confirmdialog', en: 'wt-confirmdialog inputs' },
+      title: { th: 'Inputs ของ wu-confirmdialog', en: 'wu-confirmdialog inputs' },
       note: { th: 'ค่าเริ่มต้นเมื่อ confirm() ไม่ได้ระบุ', en: 'Defaults when confirm() leaves them out.' },
       rows: [
         row('key', 'string', undefined, 'ฟังเฉพาะ confirm() ที่ key ตรงกัน', 'Listens to confirm() with this key'),
@@ -776,7 +776,7 @@ export class CustomersComponent {
       id: 'api-outputs',
       title: 'Outputs',
       typeLabel: 'Event',
-      rows: [row('onHide', 'WtConfirmEventType', undefined, 'ปิดแล้ว พร้อมผล', 'Closed, with the outcome')],
+      rows: [row('onHide', 'WuConfirmEventType', undefined, 'ปิดแล้ว พร้อมผล', 'Closed, with the outcome')],
     },
     {
       id: 'api-dialog-methods',
@@ -790,7 +790,7 @@ export class CustomersComponent {
     },
     {
       id: 'api-service',
-      title: 'WtConfirmationService',
+      title: 'WuConfirmationService',
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
         row('confirm(confirmation)', 'this', undefined, 'ถามคำถาม', 'Asks'),
@@ -801,7 +801,7 @@ export class CustomersComponent {
     {
       id: 'api-types',
       title: 'Types',
-      code: `enum WtConfirmEventType {
+      code: `enum WuConfirmEventType {
   ACCEPT = 0,
   REJECT = 1,
   CANCEL = 2,
@@ -809,15 +809,15 @@ export class CustomersComponent {
     },
   ],
   tokens: [
-    tok('--wt-dialog-bg', 'พื้นกล่อง (ใช้ token ของ Dialog)', 'Box background (Dialog tokens)'),
-    tok('--wt-dialog-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-dialog-header-padding', 'ระยะในหัว', 'Header padding'),
-    tok('--wt-dialog-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
-    tok('--wt-dialog-footer-padding', 'ระยะในส่วนท้าย', 'Footer padding'),
-    tok('--wt-warn-color', 'สี icon warning', 'Warning icon colour'),
-    tok('--wt-help-color', 'สี icon question', 'Question icon colour'),
-    tok('--wt-info-color', 'สี icon info', 'Info icon colour'),
-    tok('--wt-success-color', 'สี icon success', 'Success icon colour'),
-    tok('--wt-danger-color', 'สี icon error', 'Error icon colour'),
+    tok('--wu-dialog-bg', 'พื้นกล่อง (ใช้ token ของ Dialog)', 'Box background (Dialog tokens)'),
+    tok('--wu-dialog-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-dialog-header-padding', 'ระยะในหัว', 'Header padding'),
+    tok('--wu-dialog-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
+    tok('--wu-dialog-footer-padding', 'ระยะในส่วนท้าย', 'Footer padding'),
+    tok('--wu-warn-color', 'สี icon warning', 'Warning icon colour'),
+    tok('--wu-help-color', 'สี icon question', 'Question icon colour'),
+    tok('--wu-info-color', 'สี icon info', 'Info icon colour'),
+    tok('--wu-success-color', 'สี icon success', 'Success icon colour'),
+    tok('--wu-danger-color', 'สี icon error', 'Error icon colour'),
   ],
 };

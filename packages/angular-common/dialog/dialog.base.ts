@@ -24,26 +24,26 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
-import { WtDialogMaximizeEvent } from './dialog.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
+import { WuDialogMaximizeEvent } from './dialog.types';
 
-/** Marks projected footer content: `<div wtDialogFooter>…</div>` or `<wt-footer>…</wt-footer>`. */
-@Directive({ selector: '[wtDialogFooter], wt-footer', standalone: true })
-export class WtDialogFooter {}
+/** Marks projected footer content: `<div wuDialogFooter>…</div>` or `<wu-footer>…</wu-footer>`. */
+@Directive({ selector: '[wuDialogFooter], wu-footer', standalone: true })
+export class WuDialogFooter {}
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const CORNERS: Record<string, string> = { topleft: 'top-left', topright: 'top-right', bottomleft: 'bottom-left', bottomright: 'bottom-right' };
 
 /**
- * What wt-dialog does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
+ * What wu-dialog does, shared by the v1 and v2/v3 templates (they differ only in control flow and era class names).
  * The dialog is a native `<dialog>`: showModal() puts it in the top layer, traps focus and makes the page inert.
  */
 @Directive()
-export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnDestroy {
+export abstract class ɵWuDialogBase implements OnChanges, AfterViewChecked, OnDestroy {
   /** Title text. A `header` template replaces it. */
   @Input() header?: string;
   @Input() set visible(v: unknown) {
@@ -98,7 +98,7 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
   @Input() responsive: unknown;
   @Input() transitionOptions: unknown;
 
-  /** Slot templates passed in by components that wrap wt-dialog (wt-confirmdialog); apps use `wtTemplate` or `#name`. */
+  /** Slot templates passed in by components that wrap wu-dialog (wu-confirmdialog); apps use `wuTemplate` or `#name`. */
   @Input() templateHeader?: TemplateRef<unknown> | null;
   @Input() templateFooter?: TemplateRef<unknown> | null;
   @Input() templateHeadless?: TemplateRef<unknown> | null;
@@ -106,15 +106,15 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
   @Output() readonly visibleChange = new EventEmitter<boolean>();
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
-  @Output() readonly onMaximize = new EventEmitter<WtDialogMaximizeEvent>();
+  @Output() readonly onMaximize = new EventEmitter<WuDialogMaximizeEvent>();
 
-  @ContentChildren(WtTemplate) templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) templates?: QueryList<WuTemplate>;
   @ContentChild('header', { descendants: false }) headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) footerRef?: unknown;
   @ContentChild('content', { descendants: false }) contentRef?: unknown;
   @ContentChild('headless', { descendants: false }) headlessRef?: unknown;
   @ContentChild('closeicon', { descendants: false }) closeIconRef?: unknown;
-  @ContentChild(WtDialogFooter) footerProjected?: WtDialogFooter;
+  @ContentChild(WuDialogFooter) footerProjected?: WuDialogFooter;
 
   @ViewChild('mask') maskRef?: ElementRef<HTMLDialogElement>;
   @ViewChild('panel') panelRef?: ElementRef<HTMLElement>;
@@ -125,7 +125,7 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
   maximized = false;
   /** Styles of the dialog box: `style` plus the width `breakpoints` pick. */
   panelStyle: Record<string, string | number> | null = null;
-  readonly titleId = ɵuniqueId('wt-dialog-title');
+  readonly titleId = ɵuniqueId('wu-dialog-title');
 
   private _visible = false;
   private _modal = true;
@@ -145,15 +145,15 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
   private returnFocus: HTMLElement | null = null;
   private stopResize: (() => void) | null = null;
   protected readonly cdr = inject(ChangeDetectorRef);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get headerTemplate(): TemplateRef<unknown> | null {
@@ -185,7 +185,7 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
   get positionClasses(): string {
     const key = this.positionKey;
     if (key === 'center') return '';
-    return `wt-dialog-${key} p-dialog-${CORNERS[key] || key}`;
+    return `wu-dialog-${key} p-dialog-${CORNERS[key] || key}`;
   }
 
   ngOnChanges(): void {
@@ -207,7 +207,7 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
     }
     if (this._blockScroll ?? this._modal) this.unlockScroll = ɵlockScroll(this.doc);
     // Toasts on screen move back above this modal.
-    if (this._modal) this.doc.dispatchEvent(new CustomEvent('wt-modal-open'));
+    if (this._modal) this.doc.dispatchEvent(new CustomEvent('wu-modal-open'));
     this.watchBreakpoints();
     if (this._focusOnShow) this.focusFirst();
     // After this check: listeners may change state the parent shows.
@@ -351,7 +351,7 @@ export abstract class ɵWtDialogBase implements OnChanges, AfterViewChecked, OnD
     if (!panel) return;
     const auto = panel.querySelector<HTMLElement>('[autofocus]');
     // The close button rather than the first field, so phones do not raise the keyboard on open.
-    const target = auto || panel.querySelector<HTMLElement>('.wt-dialog-header-actions button') || ɵfocusable(panel)[0] || panel;
+    const target = auto || panel.querySelector<HTMLElement>('.wu-dialog-header-actions button') || ɵfocusable(panel)[0] || panel;
     target.focus({ preventScroll: true });
   }
 

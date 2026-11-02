@@ -1,5 +1,5 @@
-/* Docs site styles. WiraTheme tokens (--wt-*) come from the preset of the version on screen,
-   applied at run time by that version's WtThemeService (see core/version-theme.ts). */
+/* Docs site styles. WiraUI tokens (--wu-*) come from the preset of the version on screen,
+   applied at run time by that version's WuThemeService (see core/version-theme.ts). */
 @use 'styles/tokens';
 @use 'styles/base';
 @use 'styles/layout';

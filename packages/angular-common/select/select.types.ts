@@ -1,11 +1,11 @@
-export type WtSelectMatchMode = 'contains' | 'startsWith' | 'endsWith' | 'equals';
+export type WuSelectMatchMode = 'contains' | 'startsWith' | 'endsWith' | 'equals';
 
-export interface WtSelectChangeEvent {
+export interface WuSelectChangeEvent {
   originalEvent: Event | null;
   value: unknown;
 }
 
-export interface WtSelectFilterEvent {
+export interface WuSelectFilterEvent {
   originalEvent: Event;
   filter: string;
 }

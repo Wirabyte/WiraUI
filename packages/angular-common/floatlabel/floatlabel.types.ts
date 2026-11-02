@@ -1,1 +1,1 @@
-export type WtFloatLabelVariant = 'over' | 'on' | 'in';
+export type WuFloatLabelVariant = 'over' | 'on' | 'in';

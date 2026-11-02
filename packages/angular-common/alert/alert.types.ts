@@ -1,19 +1,19 @@
 /** The animated icon at the top. `danger`, `warn` and `help` are read as error, warning and question. */
-export type WtAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question' | 'danger' | 'warn' | 'help';
-export type WtAlertInput = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'radio' | 'checkbox';
+export type WuAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question' | 'danger' | 'warn' | 'help';
+export type WuAlertInput = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'radio' | 'checkbox';
 /** Why an alert closed without a confirm or a deny. */
-export type WtAlertDismissReason = 'cancel' | 'backdrop' | 'close' | 'esc' | 'timer';
+export type WuAlertDismissReason = 'cancel' | 'backdrop' | 'close' | 'esc' | 'timer';
 
 /**
- * What `WtAlert.fire()` takes. Names and defaults follow the alert library most apps already call, so options move
+ * What `WuAlert.fire()` takes. Names and defaults follow the alert library most apps already call, so options move
  * over as they are.
  */
-export interface WtAlertOptions {
+export interface WuAlertOptions {
   title?: string;
   text?: string;
   /** HTML body instead of `text`. Angular sanitizes it: no scripts or event handlers. */
   html?: string;
-  icon?: WtAlertIcon;
+  icon?: WuAlertIcon;
   iconColor?: string;
   /** HTML under the buttons, e.g. a help link. */
   footer?: string;
@@ -50,7 +50,7 @@ export interface WtAlertOptions {
   timer?: number;
   timerProgressBar?: boolean;
 
-  input?: WtAlertInput;
+  input?: WuAlertInput;
   inputValue?: string | number | boolean;
   inputPlaceholder?: string;
   inputLabel?: string;
@@ -79,11 +79,11 @@ export interface WtAlertOptions {
   customClass?: string | { popup?: string; title?: string; htmlContainer?: string; confirmButton?: string; cancelButton?: string; denyButton?: string };
 }
 
-export interface WtAlertResult<T = any> {
+export interface WuAlertResult<T = any> {
   isConfirmed: boolean;
   isDenied: boolean;
   isDismissed: boolean;
   /** `true` on confirm (or the input value / preConfirm result), `false` on deny, absent when dismissed. */
   value?: T;
-  dismiss?: WtAlertDismissReason;
+  dismiss?: WuAlertDismissReason;
 }

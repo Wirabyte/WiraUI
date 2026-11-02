@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 const collection = fileURLToPath(new URL('../dist/collection.json', import.meta.url));
-const runner = new SchematicTestRunner('wiratheme', collection);
+const runner = new SchematicTestRunner('wiraui', collection);
 
 /** Shaped like a typical v1 app: Angular 15, NgModule, styles.scss that already imports Kanit and PrimeNG. */
 function moduleApp(angular = '^15.2.0'): UnitTestTree {
@@ -73,21 +73,21 @@ function standaloneApp(): UnitTestTree {
 
 const base = { theme: 'auto', utils: true, primary: '', font: 'auto', locale: 'th-buddhist', darkMode: 'none', angularRange: '>=15.0.0 <18.0.0' };
 
-describe('ng add wiratheme', () => {
+describe('ng add wiraui', () => {
   it('sets up an NgModule + SCSS app', async () => {
     const t = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp());
-    const theme = t.readContent('src/theme/wiratheme.theme.scss');
-    expect(theme).toContain("@use 'wiratheme/theme' with (");
-    expect(theme).toContain('wiratheme-config {');
-    // Angular 15 → wiratheme@1, whose default is the classic teal look (sila-light-teal).
+    const theme = t.readContent('src/theme/wiraui.theme.scss');
+    expect(theme).toContain("@use 'wiraui/theme' with (");
+    expect(theme).toContain('wiraui-config {');
+    // Angular 15 → wiraui@1, whose default is the classic teal look (sila-light-teal).
     expect(theme).toContain("$preset: 'sila-classic',");
     expect(theme).toContain('    500: #14b8a6,');
-    expect(t.readContent('src/styles.scss').startsWith("@use 'theme/wiratheme.theme';\n@use 'wiratheme/utils';\n@import")).toBe(true);
+    expect(t.readContent('src/styles.scss').startsWith("@use 'theme/wiraui.theme';\n@use 'wiraui/utils';\n@import")).toBe(true);
     const mod = t.readContent('src/app/app.module.ts');
-    expect(mod).toContain("import { provideWiraTheme } from 'wiratheme/config';");
-    expect(mod).toContain("import { wiraOverrides } from '../theme/wiratheme.overrides';");
-    expect(mod).toContain("providers: [MessageService, provideWiraTheme({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'none' })],");
-    expect(t.exists('src/theme/wiratheme.overrides.ts')).toBe(true);
+    expect(mod).toContain("import { provideWiraUI } from 'wiraui/config';");
+    expect(mod).toContain("import { wiraOverrides } from '../theme/wiraui.overrides';");
+    expect(mod).toContain("providers: [MessageService, provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'none' })],");
+    expect(t.exists('src/theme/wiraui.overrides.ts')).toBe(true);
     // Kanit is already imported in styles.scss, so no second <link>.
     expect(t.readContent('src/index.html')).not.toContain('fonts.googleapis.com');
   });
@@ -95,59 +95,59 @@ describe('ng add wiratheme', () => {
   it('is safe to run twice', async () => {
     const once = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp());
     const twice = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, once);
-    expect(twice.readContent('src/app/app.module.ts').match(/provideWiraTheme\(/g)).toHaveLength(1);
-    expect(twice.readContent('src/styles.scss').match(/wiratheme\.theme/g)).toHaveLength(1);
-    expect(twice.readContent('src/styles.scss').match(/wiratheme\/utils/g)).toHaveLength(1);
+    expect(twice.readContent('src/app/app.module.ts').match(/provideWiraUI\(/g)).toHaveLength(1);
+    expect(twice.readContent('src/styles.scss').match(/wiraui\.theme/g)).toHaveLength(1);
+    expect(twice.readContent('src/styles.scss').match(/wiraui\/utils/g)).toHaveLength(1);
   });
 
   it('sets up a standalone + CSS app with the chosen preset, colour and font', async () => {
     const t = await runner.runSchematic(
       'ng-add',
-      { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto', theme: 'siam', primary: '#2563EB', font: 'Sarabun', darkMode: 'class' },
+      { ...base, angularRange: '>=21.0.0', style: 'auto', structure: 'auto', theme: 'siam', primary: '#2563EB', font: 'Sarabun', darkMode: 'class' },
       standaloneApp()
     );
-    const css = t.readContent('src/theme/wiratheme.theme.css');
-    expect(css).toContain('--wt-primary-500: #2563eb;');
-    expect(css).toContain("--wt-font-family: 'Sarabun', sans-serif;");
-    expect(css).toContain(':root.wt-dark {');
+    const css = t.readContent('src/theme/wiraui.theme.css');
+    expect(css).toContain('--wu-primary-500: #2563eb;');
+    expect(css).toContain("--wu-font-family: 'Sarabun', sans-serif;");
+    expect(css).toContain(':root.wu-dark {');
     const ws = JSON.parse(t.readContent('angular.json'));
-    expect(ws.projects.web.architect.build.options.styles).toEqual(['node_modules/wiratheme/utils/utils.css', 'src/theme/wiratheme.theme.css', 'src/styles.css']);
+    expect(ws.projects.web.architect.build.options.styles).toEqual(['node_modules/wiraui/utils/utils.css', 'src/theme/wiraui.theme.css', 'src/styles.css']);
     const cfg = t.readContent('src/app/app.config.ts');
-    expect(cfg).toContain("import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';\nimport { provideWiraTheme } from 'wiratheme/config';");
-    expect(cfg).toContain("providers: [provideZonelessChangeDetection(), provideWiraTheme({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'class' })],");
+    expect(cfg).toContain("import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';\nimport { provideWiraUI } from 'wiraui/config';");
+    expect(cfg).toContain("providers: [provideZonelessChangeDetection(), provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'class' })],");
     expect(t.readContent('src/index.html')).toContain('family=Sarabun:wght@400;500;600;700');
   });
 
   it('leaves the utilities out with --utils=false', async () => {
     const t = await runner.runSchematic('ng-add', { ...base, utils: false, style: 'auto', structure: 'auto' }, moduleApp());
-    expect(t.readContent('src/styles.scss')).not.toContain('wiratheme/utils');
-    const css = await runner.runSchematic('ng-add', { ...base, utils: false, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
-    expect(JSON.parse(css.readContent('angular.json')).projects.web.architect.build.options.styles).not.toContain('node_modules/wiratheme/utils/utils.css');
+    expect(t.readContent('src/styles.scss')).not.toContain('wiraui/utils');
+    const css = await runner.runSchematic('ng-add', { ...base, utils: false, angularRange: '>=21.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
+    expect(JSON.parse(css.readContent('angular.json')).projects.web.architect.build.options.styles).not.toContain('node_modules/wiraui/utils/utils.css');
   });
 
   it('offers each major its own themes', async () => {
     const sayan = await runner.runSchematic('ng-add', { ...base, style: 'css', structure: 'auto', theme: 'sayan-blue' }, moduleApp());
-    const css = sayan.readContent('src/theme/wiratheme.theme.css');
-    expect(css).toContain('--surface-ground: var(--wt-ground);');
-    expect(css).toContain('--wt-scheme: dark;');
-    expect(css).not.toContain('wt-dark');
+    const css = sayan.readContent('src/theme/wiraui.theme.css');
+    expect(css).toContain('--surface-ground: var(--wu-ground);');
+    expect(css).toContain('--wu-scheme: dark;');
+    expect(css).not.toContain('wu-dark');
     await expect(runner.runSchematic('ng-add', { ...base, style: 'css', structure: 'auto', theme: 'mali' }, moduleApp())).rejects.toThrow(
-      /wiratheme@1 has no theme "mali"; choose one of: sila-light-blue/
+      /wiraui@1 has no theme "mali"; choose one of: sila-light-blue/
     );
-    // v3 starts from WiraTheme's own Wira preset, which has no --p-* aliases (apps that need them pick mali).
-    const wira = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
-    const wiraCss = wira.readContent('src/theme/wiratheme.theme.css');
-    expect(wiraCss).toContain('--wt-primary-500: #1e7ae0;');
+    // v3 starts from WiraUI's own Wira preset, which has no --p-* aliases (apps that need them pick mali).
+    const wira = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'auto', structure: 'auto' }, standaloneApp());
+    const wiraCss = wira.readContent('src/theme/wiraui.theme.css');
+    expect(wiraCss).toContain('--wu-primary-500: #1e7ae0;');
     expect(wiraCss).not.toContain('--p-primary-color');
-    const mali = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'css', structure: 'auto', theme: 'mali' }, standaloneApp());
-    expect(mali.readContent('src/theme/wiratheme.theme.css')).toContain('--p-primary-color: var(--wt-primary-color);');
+    const mali = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'css', structure: 'auto', theme: 'mali' }, standaloneApp());
+    expect(mali.readContent('src/theme/wiraui.theme.css')).toContain('--p-primary-color: var(--wu-primary-color);');
   });
 
-  it('accepts the theme names teams already know and maps them to WiraTheme names', async () => {
+  it('accepts the theme names teams already know and maps them to WiraUI names', async () => {
     const v1 = await runner.runSchematic('ng-add', { ...base, style: 'css', structure: 'auto', theme: 'lara-light-blue' }, moduleApp());
-    expect(v1.readContent('src/theme/wiratheme.theme.css')).toContain('--wt-primary-500: #3b82f6;');
-    const v3 = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'css', structure: 'auto', theme: 'Aura' }, standaloneApp());
-    expect(v3.readContent('src/theme/wiratheme.theme.css')).toContain('--wt-primary-500: #10b981;');
+    expect(v1.readContent('src/theme/wiraui.theme.css')).toContain('--wu-primary-500: #3b82f6;');
+    const v3 = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'css', structure: 'auto', theme: 'Aura' }, standaloneApp());
+    expect(v3.readContent('src/theme/wiraui.theme.css')).toContain('--wu-primary-500: #10b981;');
   });
 
   it('reads angular.json with comments and trailing commas, like the Angular CLI does', async () => {
@@ -155,15 +155,22 @@ describe('ng add wiratheme', () => {
     const ws = t.readContent('angular.json').replace('"styles":["src/styles.scss"]', '"styles":["src/styles.scss",] /* app styles */');
     t.overwrite('angular.json', '// workspace\n' + ws.replace('}}}}}', '},}}}}'));
     const out = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, t);
-    expect(out.readContent('src/app/app.module.ts')).toContain('provideWiraTheme(');
+    expect(out.readContent('src/app/app.module.ts')).toContain('provideWiraUI(');
   });
 
   it('refuses an Angular version outside its range and names the right major', async () => {
     await expect(runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp('^18.2.0'))).rejects.toThrow(
-      /Angular 15–17.*Angular 18.*ng add wiratheme@2/s
+      /Angular 15–17.*Angular 18.*ng add wiraui@2/s
     );
-    await expect(runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0 <22.0.0', style: 'auto', structure: 'auto' }, moduleApp('^19.0.0'))).rejects.toThrow(
-      /wiratheme@2/
+    await expect(runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'auto', structure: 'auto' }, moduleApp('^19.0.0'))).rejects.toThrow(
+      /wiraui@2/
     );
+  });
+
+  it('takes Angular 22 and every newer major on wiraui@3', async () => {
+    for (const angular of ['^21.0.0', '^22.2.0', '^23.0.0']) {
+      const out = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'auto', structure: 'auto' }, moduleApp(angular));
+      expect(out.readContent('src/app/app.module.ts')).toContain('provideWiraUI(');
+    }
   });
 });

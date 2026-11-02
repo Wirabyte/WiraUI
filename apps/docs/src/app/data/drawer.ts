@@ -8,9 +8,9 @@ export const DRAWER_DOC: ComponentDoc = {
   title: 'Drawer',
   group: 'Overlay',
   entry: 'drawer',
-  standalone: 'WtDrawer',
-  module: 'WtDrawerModule',
-  selector: 'wt-drawer',
+  standalone: 'WuDrawer',
+  module: 'WuDrawerModule',
+  selector: 'wu-drawer',
   description: {
     th: 'แผงที่เลื่อนเข้ามาจากขอบจอ (ซ้าย ขวา บน ล่าง หรือเต็มจอ) สำหรับเมนูข้าง ตัวกรอง หรือฟอร์มสั้น ๆ เป็น dialog ของเบราว์เซอร์: หน้าเบื้องหลังกดไม่ได้ โฟกัสอยู่ข้างใน ปิดด้วยปุ่ม × Esc หรือคลิกพื้นหลัง',
     en: 'A panel that slides in from an edge of the window (left, right, top, bottom or full screen) for a side menu, filters or a short form. It is a native dialog: the page behind cannot be pressed, focus stays inside, and the × button, Esc or a click on the backdrop close it.',
@@ -49,15 +49,15 @@ export const DRAWER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtDrawerModule</code>) และ standalone (<code>WtDrawer</code>) แท็ก <code>wt-sidebar</code> แบบเดิมก็ใช้ได้ (<code>WtSidebar</code> เป็นชื่อเดียวกัน)',
-        en: 'Works as an NgModule (<code>WtDrawerModule</code>) or standalone (<code>WtDrawer</code>). The older <code>wt-sidebar</code> tag works too (<code>WtSidebar</code> is the same class).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuDrawerModule</code>) และ standalone (<code>WuDrawer</code>) แท็ก <code>wu-sidebar</code> แบบเดิมก็ใช้ได้ (<code>WuSidebar</code> เป็นชื่อเดียวกัน)',
+        en: 'Works as an NgModule (<code>WuDrawerModule</code>) or standalone (<code>WuDrawer</code>). The older <code>wu-sidebar</code> tag works too (<code>WuSidebar</code> is the same class).',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[(visible)]</code> เปิด / ปิด และ <code>header</code> คือหัว (เป็นชื่อของ dialog ด้วย) · เปิดแล้วโฟกัสเข้าแผง Tab วนอยู่ข้างใน ปิดแล้วโฟกัสกลับที่ปุ่มที่เปิด · ปิดด้วยปุ่ม × (<code>[showCloseIcon]="false"</code> ซ่อน), <code>Esc</code> (<code>[closeOnEscape]="false"</code> ปิดการใช้) หรือคลิกพื้นหลัง (<code>[dismissible]="false"</code> ปิดการใช้) · ความกว้างเริ่มต้น 20rem จาก token <code>--wt-drawer-size</code> และบนมือถือไม่กว้างเกินจอ',
-        en: '<code>[(visible)]</code> opens and closes it, and <code>header</code> is the title (also the dialog\'s name) · opening puts focus in the panel and Tab cycles inside; closing gives focus back to the button that opened it · close it with the × button (<code>[showCloseIcon]="false"</code> hides it), <code>Esc</code> (<code>[closeOnEscape]="false"</code> turns it off) or a click on the backdrop (<code>[dismissible]="false"</code> turns it off) · it is 20rem wide by default (token <code>--wt-drawer-size</code>) and never wider than a phone screen.',
+        th: '<code>[(visible)]</code> เปิด / ปิด และ <code>header</code> คือหัว (เป็นชื่อของ dialog ด้วย) · เปิดแล้วโฟกัสเข้าแผง Tab วนอยู่ข้างใน ปิดแล้วโฟกัสกลับที่ปุ่มที่เปิด · ปิดด้วยปุ่ม × (<code>[showCloseIcon]="false"</code> ซ่อน), <code>Esc</code> (<code>[closeOnEscape]="false"</code> ปิดการใช้) หรือคลิกพื้นหลัง (<code>[dismissible]="false"</code> ปิดการใช้) · ความกว้างเริ่มต้น 20rem จาก token <code>--wu-drawer-size</code> และบนมือถือไม่กว้างเกินจอ',
+        en: '<code>[(visible)]</code> opens and closes it, and <code>header</code> is the title (also the dialog\'s name) · opening puts focus in the panel and Tab cycles inside; closing gives focus back to the button that opened it · close it with the × button (<code>[showCloseIcon]="false"</code> hides it), <code>Esc</code> (<code>[closeOnEscape]="false"</code> turns it off) or a click on the backdrop (<code>[dismissible]="false"</code> turns it off) · it is 20rem wide by default (token <code>--wu-drawer-size</code>) and never wider than a phone screen.',
       },
     },
     position: {
@@ -91,60 +91,60 @@ export const DRAWER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-drawer&gt;</code> หรือ <code>&lt;p-sidebar&gt;</code> เป็น <code>&lt;wt-drawer&gt;</code> (<code>&lt;wt-sidebar&gt;</code> ก็ได้) input, event และ template ชื่อเดิม (<code>pTemplate="footer"</code> ใช้ต่อได้) · แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ <code>transitionOptions</code>) · class <code>p-drawer</code> และ <code>p-sidebar</code> อยู่คู่กับ class <code>wt-drawer</code>',
-        en: 'Change <code>&lt;p-drawer&gt;</code> or <code>&lt;p-sidebar&gt;</code> to <code>&lt;wt-drawer&gt;</code> (<code>&lt;wt-sidebar&gt;</code> works too); inputs, events and templates keep their names (<code>pTemplate="footer"</code> keeps working) · the panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and <code>transitionOptions</code>) · the <code>p-drawer</code> and <code>p-sidebar</code> classes sit next to <code>wt-drawer</code>.',
+        th: 'เปลี่ยน <code>&lt;p-drawer&gt;</code> หรือ <code>&lt;p-sidebar&gt;</code> เป็น <code>&lt;wu-drawer&gt;</code> (<code>&lt;wu-sidebar&gt;</code> ก็ได้) input, event และ template ชื่อเดิม (<code>pTemplate="footer"</code> ใช้ต่อได้) · แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>autoZIndex</code>, <code>baseZIndex</code> และ <code>transitionOptions</code>) · class <code>p-drawer</code> และ <code>p-sidebar</code> อยู่คู่กับ class <code>wu-drawer</code>',
+        en: 'Change <code>&lt;p-drawer&gt;</code> or <code>&lt;p-sidebar&gt;</code> to <code>&lt;wu-drawer&gt;</code> (<code>&lt;wu-sidebar&gt;</code> works too); inputs, events and templates keep their names (<code>pTemplate="footer"</code> keeps working) · the panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>autoZIndex</code>, <code>baseZIndex</code> and <code>transitionOptions</code>) · the <code>p-drawer</code> and <code>p-sidebar</code> classes sit next to <code>wu-drawer</code>.',
       },
     },
   },
   code: {
-    basic: `<wt-button label="เปิดเมนู" icon="wi wi-bars" (onClick)="menuOpen = true"></wt-button>
-<wt-drawer header="เมนู" [(visible)]="menuOpen">
-  <wt-menu [model]="menuItems" [style]="{ width: '100%', border: 'none' }" ariaLabel="เมนู"></wt-menu>
-</wt-drawer>`,
-    position: `<wt-button label="ซ้าย" severity="secondary" (onClick)="openAt('left')"></wt-button>
-<wt-button label="ขวา" severity="secondary" (onClick)="openAt('right')"></wt-button>
-<wt-button label="บน" severity="secondary" (onClick)="openAt('top')"></wt-button>
-<wt-button label="ล่าง" severity="secondary" (onClick)="openAt('bottom')"></wt-button>
-<wt-button label="เต็มจอ" severity="secondary" (onClick)="openAt('full')"></wt-button>
-<wt-drawer header="แจ้งเตือน" [position]="side" [(visible)]="noticeOpen">
+    basic: `<wu-button label="เปิดเมนู" icon="wi wi-bars" (onClick)="menuOpen = true"></wu-button>
+<wu-drawer header="เมนู" [(visible)]="menuOpen">
+  <wu-menu [model]="menuItems" [style]="{ width: '100%', border: 'none' }" ariaLabel="เมนู"></wu-menu>
+</wu-drawer>`,
+    position: `<wu-button label="ซ้าย" severity="secondary" (onClick)="openAt('left')"></wu-button>
+<wu-button label="ขวา" severity="secondary" (onClick)="openAt('right')"></wu-button>
+<wu-button label="บน" severity="secondary" (onClick)="openAt('top')"></wu-button>
+<wu-button label="ล่าง" severity="secondary" (onClick)="openAt('bottom')"></wu-button>
+<wu-button label="เต็มจอ" severity="secondary" (onClick)="openAt('full')"></wu-button>
+<wu-drawer header="แจ้งเตือน" [position]="side" [(visible)]="noticeOpen">
   <p>มีการบ้านใหม่ 2 วิชา</p>
   <p>ประกาศวันหยุดเพิ่ม</p>
-</wt-drawer>`,
-    templates: `<wt-button label="แก้ไขข้อมูลติดต่อ" icon="wi wi-pencil" severity="secondary" (onClick)="contactOpen = true"></wt-button>
-<wt-drawer [(visible)]="contactOpen" position="right" [style]="{ width: '24rem' }">
+</wu-drawer>`,
+    templates: `<wu-button label="แก้ไขข้อมูลติดต่อ" icon="wi wi-pencil" severity="secondary" (onClick)="contactOpen = true"></wu-button>
+<wu-drawer [(visible)]="contactOpen" position="right" [style]="{ width: '24rem' }">
   <ng-template #header>
-    <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+    <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
     <span>สมหญิง ใจดี</span>
   </ng-template>
   <label for="parentPhone">เบอร์โทรผู้ปกครอง</label>
-  <input id="parentPhone" name="parentPhone" wtInputText [(ngModel)]="parentPhone" />
+  <input id="parentPhone" name="parentPhone" wuInputText [(ngModel)]="parentPhone" />
   <ng-template #footer>
-    <wt-button label="ยกเลิก" severity="secondary" [text]="true" (onClick)="contactOpen = false"></wt-button>
-    <wt-button label="บันทึก" icon="wi wi-check" [loading]="isApiSaving" (onClick)="saveContact()"></wt-button>
+    <wu-button label="ยกเลิก" severity="secondary" [text]="true" (onClick)="contactOpen = false"></wu-button>
+    <wu-button label="บันทึก" icon="wi wi-check" [loading]="isApiSaving" (onClick)="saveContact()"></wu-button>
   </ng-template>
-</wt-drawer>`,
-    headless: `<wt-button label="ตัวอย่างใบประกาศ" icon="wi wi-image" severity="secondary" (onClick)="previewOpen = true"></wt-button>
-<wt-drawer #preview [(visible)]="previewOpen" position="bottom" [style]="{ height: '16rem' }">
+</wu-drawer>`,
+    headless: `<wu-button label="ตัวอย่างใบประกาศ" icon="wi wi-image" severity="secondary" (onClick)="previewOpen = true"></wu-button>
+<wu-drawer #preview [(visible)]="previewOpen" position="bottom" [style]="{ height: '16rem' }">
   <ng-template #headless>
     <div class="certificate-preview">
       <img src="samples/card-cover.svg" alt="ตัวอย่างใบประกาศ" />
-      <wt-button icon="wi wi-times" [rounded]="true" [text]="true" ariaLabel="ปิด" (onClick)="preview.hide()"></wt-button>
+      <wu-button icon="wi wi-times" [rounded]="true" [text]="true" ariaLabel="ปิด" (onClick)="preview.hide()"></wu-button>
     </div>
   </ng-template>
-</wt-drawer>`,
-    modal: `<wt-button label="แชตกับครู" icon="wi wi-inbox" severity="secondary" (onClick)="chatOpen = true"></wt-button>
-<wt-drawer header="แชตกับครู" position="right" [modal]="false" [(visible)]="chatOpen">
-  <input name="message" wtInputText [(ngModel)]="message" placeholder="พิมพ์ข้อความ" />
-</wt-drawer>`,
+</wu-drawer>`,
+    modal: `<wu-button label="แชตกับครู" icon="wi wi-inbox" severity="secondary" (onClick)="chatOpen = true"></wu-button>
+<wu-drawer header="แชตกับครู" position="right" [modal]="false" [(visible)]="chatOpen">
+  <input name="message" wuInputText [(ngModel)]="message" placeholder="พิมพ์ข้อความ" />
+</wu-drawer>`,
   },
   ts: {
     basic: `import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { WtMenuItem } from 'wiratheme/menu';
+import { WuMenuItem } from 'wiraui/menu';
 
 private readonly router = inject(Router);
 menuOpen = false;
-menuItems: WtMenuItem[] = [
+menuItems: WuMenuItem[] = [
   { label: 'หน้าแรก', icon: 'wi wi-home', command: () => this.goTo('/') },
   { label: 'นักเรียน', icon: 'wi wi-users', command: () => this.goTo('/students') },
   { label: 'ตารางเรียน', icon: 'wi wi-calendar', command: () => this.goTo('/timetable') },
@@ -155,12 +155,12 @@ goTo(path: string): void {
   this.menuOpen = false;
   this.router.navigateByUrl(path);
 }`,
-    position: `import { WtDrawerPosition } from 'wiratheme/drawer';
+    position: `import { WuDrawerPosition } from 'wiraui/drawer';
 
-side: WtDrawerPosition = 'left';
+side: WuDrawerPosition = 'left';
 noticeOpen = false;
 
-openAt(side: WtDrawerPosition): void {
+openAt(side: WuDrawerPosition): void {
   this.side = side;
   this.noticeOpen = true;
 }`,
@@ -214,7 +214,7 @@ message = '';`,
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #footer, wtTemplate="footer" หรือ pTemplate="footer" ก็ได้', en: 'Write them as #footer, wtTemplate="footer" or pTemplate="footer".' },
+      note: { th: 'เขียนเป็น #footer, wuTemplate="footer" หรือ pTemplate="footer" ก็ได้', en: 'Write them as #footer, wuTemplate="footer" or pTemplate="footer".' },
       rows: [
         row('header', '—', undefined, 'แทนหัว', 'Replaces the title'),
         row('content', '—', undefined, 'เนื้อหา (ใส่ในแท็กตรง ๆ ก็ได้)', 'The content (or put it straight inside the tag)'),
@@ -234,17 +234,17 @@ message = '';`,
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtDrawerPosition = 'left' | 'right' | 'top' | 'bottom' | 'full';`,
+      code: `type WuDrawerPosition = 'left' | 'right' | 'top' | 'bottom' | 'full';`,
     },
   ],
   tokens: [
-    tok('--wt-drawer-size', 'ความกว้าง (ซ้าย / ขวา) หรือความสูง (บน / ล่าง)', 'Width (left / right) or height (top / bottom)'),
-    tok('--wt-drawer-bg', 'พื้นของแผง', 'Panel background'),
-    tok('--wt-drawer-border-width', 'ขอบของแผง', 'Panel border width'),
-    tok('--wt-drawer-shadow', 'เงาของแผง', 'Panel shadow'),
-    tok('--wt-drawer-header-padding', 'ระยะในหัว', 'Header padding'),
-    tok('--wt-drawer-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
-    tok('--wt-drawer-title-size', 'ขนาดตัวอักษรหัว', 'Title font size'),
-    tok('--wt-drawer-title-weight', 'น้ำหนักตัวอักษรหัว', 'Title font weight'),
+    tok('--wu-drawer-size', 'ความกว้าง (ซ้าย / ขวา) หรือความสูง (บน / ล่าง)', 'Width (left / right) or height (top / bottom)'),
+    tok('--wu-drawer-bg', 'พื้นของแผง', 'Panel background'),
+    tok('--wu-drawer-border-width', 'ขอบของแผง', 'Panel border width'),
+    tok('--wu-drawer-shadow', 'เงาของแผง', 'Panel shadow'),
+    tok('--wu-drawer-header-padding', 'ระยะในหัว', 'Header padding'),
+    tok('--wu-drawer-content-padding', 'ระยะในเนื้อหา', 'Content padding'),
+    tok('--wu-drawer-title-size', 'ขนาดตัวอักษรหัว', 'Title font size'),
+    tok('--wu-drawer-title-weight', 'น้ำหนักตัวอักษรหัว', 'Title font weight'),
   ],
 };

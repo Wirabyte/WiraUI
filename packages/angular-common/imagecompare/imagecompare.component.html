@@ -1,7 +1,7 @@
 <div
-  class="wt-imagecompare p-imagecompare p-component"
-  [class.wt-imagecompare-dragging]="dragging"
-  [class.wt-imagecompare-rtl]="rtl"
+  class="wu-imagecompare p-imagecompare p-component"
+  [class.wu-imagecompare-dragging]="dragging"
+  [class.wu-imagecompare-rtl]="rtl"
   [ngClass]="styleClass || ''"
   [ngStyle]="rootStyle"
   (pointerdown)="pointerdown($event)"
@@ -9,15 +9,15 @@
   (pointerup)="pointerup($event)"
   (pointercancel)="pointerup($event)"
 >
-  <div class="wt-imagecompare-item wt-imagecompare-left">
+  <div class="wu-imagecompare-item wu-imagecompare-left">
     <ng-container *ngTemplateOutlet="leftTemplate"></ng-container>
   </div>
-  <div class="wt-imagecompare-item wt-imagecompare-right" [style.clip-path]="clip">
+  <div class="wu-imagecompare-item wu-imagecompare-right" [style.clip-path]="clip">
     <ng-container *ngTemplateOutlet="rightTemplate"></ng-container>
   </div>
-  <div class="wt-imagecompare-divider" aria-hidden="true" [style.left.%]="edge"></div>
+  <div class="wu-imagecompare-divider" aria-hidden="true" [style.left.%]="edge"></div>
   <div
-    class="wt-imagecompare-handle p-imagecompare-slider"
+    class="wu-imagecompare-handle p-imagecompare-slider"
     role="slider"
     aria-valuemin="0"
     aria-valuemax="100"

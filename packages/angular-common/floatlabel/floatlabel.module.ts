@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtFloatLabel } from './floatlabel.component';
+import { WuFloatLabel } from './floatlabel.component';
 
-/** For NgModule apps. Standalone apps can import `WtFloatLabel` directly. */
+/** For NgModule apps. Standalone apps can import `WuFloatLabel` directly. */
 @NgModule({
-  imports: [WtFloatLabel],
-  exports: [WtFloatLabel],
+  imports: [WuFloatLabel],
+  exports: [WuFloatLabel],
 })
-export class WtFloatLabelModule {}
+export class WuFloatLabelModule {}

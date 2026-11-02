@@ -32,9 +32,9 @@ import { DOCS_THEME, DOCS_VERSION } from '../../core/version-theme';
 import { DOCS_PAGES } from './version-routes';
 
 /*
- * WiraTheme Studio: every token of the theme on screen, edited live. Like demos.ts, no wiratheme import: the engine
+ * WiraUI Studio: every token of the theme on screen, edited live. Like demos.ts, no wiraui import: the engine
  * of the version on screen (computeTokens, the exporters, parseImport) comes from DOCS_THEME.core, and edits go
- * through DocsState, which applies them with that version's WtThemeService and saves them in localStorage.
+ * through DocsState, which applies them with that version's WuThemeService and saves them in localStorage.
  */
 
 export type StudioTab = 'primitive' | 'semantic' | 'component' | 'custom' | 'settings';
@@ -67,7 +67,7 @@ export interface StudioField {
   token: string | null;
   conf: ConfKey | null;
   label: string;
-  /** `--wt-…` under the label. */
+  /** `--wu-…` under the label. */
   sub: string;
   kind: FieldKind;
   /** Shown value: references as `{token}`. */
@@ -284,11 +284,11 @@ const COLOR_VALUE = /^(#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|color-mix\(|color\(|oklc
 const CONF_UNIT: Partial<Record<ConfKey, string>> = { radius: 'px', transition: 'ms', fontSize: 'px', lineHeight: '' };
 
 export const EXPORT_FILES: Record<ExportFormat, string> = {
-  scss: 'wiratheme.theme.scss',
-  css: 'wiratheme.theme.css',
-  preset: 'wiratheme.preset.ts',
-  overrides: 'wiratheme.overrides.ts',
-  json: 'wiratheme.theme.json',
+  scss: 'wiraui.theme.scss',
+  css: 'wiraui.theme.css',
+  preset: 'wiraui.preset.ts',
+  overrides: 'wiraui.overrides.ts',
+  json: 'wiraui.theme.json',
 };
 
 const SCSS_KEYS: Record<string, keyof StudioConfig> = {
@@ -343,8 +343,8 @@ function toHex(c: [number, number, number, number], under: [number, number, numb
 }
 
 /** The preview's choice and layout, remembered in this browser. */
-const PREVIEW_STORE = 'wiratheme-docs-studio-preview';
-const LAYOUT_STORE = 'wiratheme-docs-studio-layout';
+const PREVIEW_STORE = 'wiraui-docs-studio-preview';
+const LAYOUT_STORE = 'wiraui-docs-studio-layout';
 
 function readStore(key: string): string | null {
   try {
@@ -487,7 +487,7 @@ export abstract class StudioDemo {
     const kind = (name: string, depth: number): FieldKind => {
       if (out[name]) return out[name];
       const v = (t.light[name] ?? t.dark[name] ?? e.light[name] ?? e.dark[name] ?? '').trim();
-      const ref = /^var\(--wt-([a-z0-9-]+)\)$/.exec(v);
+      const ref = /^var\(--wu-([a-z0-9-]+)\)$/.exec(v);
       const k: FieldKind = ref && depth < 12 ? kind(ref[1], depth + 1) : COLOR_VALUE.test(v) ? 'color' : 'text';
       out[name] = k;
       return k;
@@ -535,7 +535,7 @@ export abstract class StudioDemo {
     return false;
   }
 
-  protected tokenField(token: string, label: string, primitive = false, sub = '--wt-' + token): StudioField {
+  protected tokenField(token: string, label: string, primitive = false, sub = '--wu-' + token): StudioField {
     const mode: Mode = primitive ? 'light' : this.mode();
     const css = this.eff(token, mode);
     const value = toDisplay(css);
@@ -572,7 +572,7 @@ export abstract class StudioDemo {
       token: null,
       conf: key,
       label,
-      sub: token ? '--wt-' + token : '',
+      sub: token ? '--wu-' + token : '',
       kind: options ? 'select' : 'text',
       value,
       options,
@@ -787,7 +787,7 @@ export abstract class StudioDemo {
     const q = this.q();
     return this.theme()
       .custom.map((r, index) => {
-        const name = r.name.trim().replace(/^--wt-/, '');
+        const name = r.name.trim().replace(/^--wu-/, '');
         const literal = r.value.trim();
         const ref = /^\{([a-z0-9-]+)\}$/.exec(literal);
         return {
@@ -823,7 +823,7 @@ export abstract class StudioDemo {
     const i = row.index;
     if (!st.custom[i]) return;
     const next = { ...st.custom[i] };
-    if (field === 'name') next.name = value.trim().replace(/^--wt-/, '');
+    if (field === 'name') next.name = value.trim().replace(/^--wu-/, '');
     else if (field === 'value') next.value = value.trim();
     else next.mode = value as CustomMode;
     st.custom[i] = next;
@@ -846,7 +846,7 @@ export abstract class StudioDemo {
   readonly presetOptions = computed<StudioOption[]>(() => [...this.vt.presets, ...this.vt.secretPresets()].map((p) => ({ label: p.name === p.id ? p.id : `${p.name} (${p.id})`, value: p.id })));
   readonly densityOptions = computed<StudioOption[]>(() => Object.keys(this.core.DENSITY).map((v) => ({ label: `${v} (×${this.core.DENSITY[v]})`, value: v })));
   readonly darkModeOptions = computed<StudioOption[]>(() => [
-    { label: this.en() ? 'Class: .wt-dark on <html>' : 'class: ใส่ .wt-dark ที่ <html>', value: 'class' },
+    { label: this.en() ? 'Class: .wu-dark on <html>' : 'class: ใส่ .wu-dark ที่ <html>', value: 'class' },
     { label: this.en() ? 'Follow the OS setting' : 'ตามการตั้งค่าของระบบ', value: 'media' },
     { label: this.en() ? 'None (light only)' : 'ไม่มี (สว่างอย่างเดียว)', value: 'none' },
   ]);
@@ -916,7 +916,7 @@ export abstract class StudioDemo {
   }
 
   protected customHex(row: StudioCustomVM): string {
-    return this.hexes()[row.name.trim().replace(/^--wt-/, '')] || '';
+    return this.hexes()[row.name.trim().replace(/^--wu-/, '')] || '';
   }
 
   /** Typing applies after a short pause; leaving the field or Enter applies at once. */
@@ -929,7 +929,7 @@ export abstract class StudioDemo {
     );
   }
 
-  // ---------- suggestions (wt-autocomplete) for the font and the custom token names ----------
+  // ---------- suggestions (wu-autocomplete) for the font and the custom token names ----------
   readonly fontHits = signal<string[]>([]);
   readonly nameHits = signal<string[]>([]);
 
@@ -939,7 +939,7 @@ export abstract class StudioDemo {
   }
 
   protected findTokenNames(event: { query?: string }): void {
-    const q = (event.query || '').trim().toLowerCase().replace(/^--wt-/, '');
+    const q = (event.query || '').trim().toLowerCase().replace(/^--wu-/, '');
     this.nameHits.set(this.tokenNames().filter((n) => n.includes(q)).slice(0, 50));
   }
 
@@ -1137,7 +1137,7 @@ export abstract class StudioDemo {
         this.componentGroups().forEach((g) => add(g.fields));
         break;
       case 'custom':
-        this.customRows().forEach((r) => r.color && out.add(r.name.trim().replace(/^--wt-/, '')));
+        this.customRows().forEach((r) => r.color && out.add(r.name.trim().replace(/^--wu-/, '')));
         break;
     }
     return [...out];
@@ -1156,7 +1156,7 @@ export abstract class StudioDemo {
     const next: Record<string, string> = { ...cur };
     let changed = false;
     const read = (name: string) => {
-      this.probe!.style.backgroundColor = `var(--wt-${name})`;
+      this.probe!.style.backgroundColor = `var(--wu-${name})`;
       return parseColor(view.getComputedStyle(this.probe!).backgroundColor);
     };
     const under = read('card-bg');
@@ -1173,15 +1173,15 @@ export abstract class StudioDemo {
 
   // ---------- export ----------
   /**
-   * The docs install v1 and v2 under other names (wiratheme-v1/…); apps install `wiratheme`, so files say that.
+   * The docs install v1 and v2 under other names (wiraui-v1/…); apps install `wiraui`, so files say that.
    * Every exporter's text comes through here.
    */
   private out(text: string): string {
-    return text.replace(/wiratheme-v\d(?=\/)/g, 'wiratheme');
+    return text.replace(/wiraui-v\d(?=\/)/g, 'wiraui');
   }
 
   private exportOptions(): StudioExportOptions {
-    return { generator: `WiraTheme Studio · wiratheme@${this.v.major}` };
+    return { generator: `WiraUI Studio · wiraui@${this.v.major}` };
   }
 
   /** The config plus every edit as one token set (what the page shows). */
@@ -1243,7 +1243,7 @@ export abstract class StudioDemo {
     const b = this.baseCfg();
     const base = this.theme().base;
     const lines = text.split('\n');
-    const start = lines.findIndex((l) => l.startsWith("@use 'wiratheme/theme' with ("));
+    const start = lines.findIndex((l) => l.startsWith("@use 'wiraui/theme' with ("));
     const end = lines.lastIndexOf(');');
     if (start < 0 || end < start) return text;
     const chunks: { name: string; lines: string[] }[] = [];
@@ -1278,21 +1278,21 @@ export abstract class StudioDemo {
   private scssFile(all: boolean): string {
     const text = this.out(this.core.toSCSS(this.cfg(), this.exportOptions()));
     const body = this.withStudio(all ? text : this.trimScss(text), false);
-    return body + this.editsBlock('// Token edits from WiraTheme Studio (no Sass setting for these). Same layer as the theme, after it, so they win.');
+    return body + this.editsBlock('// Token edits from WiraUI Studio (no Sass setting for these). Same layer as the theme, after it, so they win.');
   }
 
   private cssFile(all: boolean): string {
     const c = this.cfg();
     if (all) {
       const text = this.withStudio(this.out(this.core.toCSS(c, this.exportOptions())), true);
-      return text + this.editsBlock('/* Token edits from WiraTheme Studio: same layer as the theme, after it, so they win. */');
+      return text + this.editsBlock('/* Token edits from WiraUI Studio: same layer as the theme, after it, so they win. */');
     }
     // Header and layer order as toCSS writes them, then only the tokens that differ from the starting theme's file.
     const head = this.out(this.core.toCSS(c, this.exportOptions())).split('\n');
     const layer = head.indexOf(this.core.LAYER_ORDER);
     const file = this.v.major === 1 || this.theme().base === c.preset ? `themes/${this.theme().base}/theme.css` : `themes/${c.preset}/theme.css`;
     const lines = head.slice(0, layer + 1).map((l) =>
-      l.includes(EXPORT_FILES.css) ? l.replace(EXPORT_FILES.css, `${EXPORT_FILES.css} (changes only)`) : /^\s+Use:/.test(l) ? `   Use: angular.json → styles, after "node_modules/wiratheme/${file}"` : l
+      l.includes(EXPORT_FILES.css) ? l.replace(EXPORT_FILES.css, `${EXPORT_FILES.css} (changes only)`) : /^\s+Use:/.test(l) ? `   Use: angular.json → styles, after "node_modules/wiraui/${file}"` : l
     );
     const diff = this.diffTokens();
     const body = hasEdits(diff) ? editsCss(diff, c.darkMode) : '/* Nothing differs from the theme yet. */\n';
@@ -1306,9 +1306,9 @@ export abstract class StudioDemo {
     const t = this.tokens();
     const dark = { ...e.dark };
     if (!this.darkOnly()) for (const k of Object.keys(e.light)) if (t.dark[k] !== undefined && dark[k] === undefined) dark[k] = t.dark[k];
-    const css = editsCss({ light: e.light, dark }, this.cfg().darkMode).replace('@layer wiratheme.tokens', '@layer wiratheme.overrides');
+    const css = editsCss({ light: e.light, dark }, this.cfg().darkMode).replace('@layer wiraui.tokens', '@layer wiraui.overrides');
     return (
-      '\n// Token edits from WiraTheme Studio have no TypeScript setting. Put this in src/styles.css\n' +
+      '\n// Token edits from WiraUI Studio have no TypeScript setting. Put this in src/styles.css\n' +
       '// (overrides layer, so it wins over the theme):\n' +
       css
         .trimEnd()
@@ -1368,11 +1368,11 @@ export abstract class StudioDemo {
       case 'scss':
         return all
           ? en
-            ? 'Every setting written out. Put @use \'theme/wiratheme.theme\'; on the first line of src/styles.scss.'
-            : 'เขียนทุกค่าออกมา ใส่ @use \'theme/wiratheme.theme\'; ไว้บรรทัดแรกของ src/styles.scss'
+            ? 'Every setting written out. Put @use \'theme/wiraui.theme\'; on the first line of src/styles.scss.'
+            : 'เขียนทุกค่าออกมา ใส่ @use \'theme/wiraui.theme\'; ไว้บรรทัดแรกของ src/styles.scss'
           : en
-            ? `Only the settings that differ from ${base}; the rest comes from the preset. Put @use 'theme/wiratheme.theme'; on the first line of src/styles.scss.`
-            : `เฉพาะค่าที่ต่างจาก ${base} ที่เหลือมาจาก preset ใส่ @use 'theme/wiratheme.theme'; ไว้บรรทัดแรกของ src/styles.scss`;
+            ? `Only the settings that differ from ${base}; the rest comes from the preset. Put @use 'theme/wiraui.theme'; on the first line of src/styles.scss.`
+            : `เฉพาะค่าที่ต่างจาก ${base} ที่เหลือมาจาก preset ใส่ @use 'theme/wiraui.theme'; ไว้บรรทัดแรกของ src/styles.scss`;
       case 'css':
         return all
           ? en
@@ -1383,12 +1383,12 @@ export abstract class StudioDemo {
             : `เฉพาะ token ที่ต่าง ใส่ใน angular.json ต่อจากไฟล์ธีมสำเร็จรูปของ ${base}`;
       case 'preset':
         return en
-          ? 'A theme in TypeScript only: provideWiraTheme({ preset: AppTheme }). It always lists what differs from the preset.'
-          : 'ธีมจาก TypeScript อย่างเดียว: provideWiraTheme({ preset: AppTheme }) เขียนเฉพาะค่าที่ต่างจาก preset เสมอ';
+          ? 'A theme in TypeScript only: provideWiraUI({ preset: AppTheme }). It always lists what differs from the preset.'
+          : 'ธีมจาก TypeScript อย่างเดียว: provideWiraUI({ preset: AppTheme }) เขียนเฉพาะค่าที่ต่างจาก preset เสมอ';
       case 'overrides':
         return en
-          ? 'Goes with a theme file: provideWiraTheme({ overrides: wiraOverrides }). It always lists what differs from the preset.'
-          : 'ใช้คู่กับไฟล์ธีม: provideWiraTheme({ overrides: wiraOverrides }) เขียนเฉพาะค่าที่ต่างจาก preset เสมอ';
+          ? 'Goes with a theme file: provideWiraUI({ overrides: wiraOverrides }). It always lists what differs from the preset.'
+          : 'ใช้คู่กับไฟล์ธีม: provideWiraUI({ overrides: wiraOverrides }) เขียนเฉพาะค่าที่ต่างจาก preset เสมอ';
       case 'json':
         return en ? 'The config and the tokens; import it here again to keep editing.' : 'config และ token เก็บไว้ หรือนำเข้ากลับมาแก้ต่อที่นี่';
     }
@@ -1468,7 +1468,7 @@ export abstract class StudioDemo {
       const code = e instanceof Error ? e.message : '';
       const msg: Record<string, Text> = {
         empty: t2('ไฟล์ว่าง', 'The file is empty.'),
-        'no-config': t2('ไม่พบข้อมูลธีมในไฟล์นี้ (บรรทัด wiratheme-config)', 'No theme found in this file (no wiratheme-config line).'),
+        'no-config': t2('ไม่พบข้อมูลธีมในไฟล์นี้ (บรรทัด wiraui-config)', 'No theme found in this file (no wiraui-config line).'),
         'bad-config': t2('ข้อมูลธีมในไฟล์เสียหาย', 'The theme data in this file is damaged.'),
       };
       this.notice.set({ severity: 'error', text: this.pick(msg[code] || msg['bad-config']) });
@@ -1484,8 +1484,8 @@ export abstract class StudioDemo {
         : {
             severity: 'warn',
             text: this.en()
-              ? `Imported ${fileName}. Its preset (${config.preset}) is not part of wiratheme@${this.v.major}; it is shown as is.`
-              : `นำเข้า ${fileName} แล้ว preset ของไฟล์ (${config.preset}) ไม่มีใน wiratheme@${this.v.major} จึงแสดงตามไฟล์`,
+              ? `Imported ${fileName}. Its preset (${config.preset}) is not part of wiraui@${this.v.major}; it is shown as is.`
+              : `นำเข้า ${fileName} แล้ว preset ของไฟล์ (${config.preset}) ไม่มีใน wiraui@${this.v.major} จึงแสดงตามไฟล์`,
           }
     );
   }

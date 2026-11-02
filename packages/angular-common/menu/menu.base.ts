@@ -19,33 +19,33 @@ import {
   ɵfindTemplate,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  WtMenuItem,
-  WtTemplate,
-} from 'wiratheme/config';
-import { menuFocusable, menuHasSubmenu, menuKey, menuTypeahead, menuVisible } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  WuMenuItem,
+  WuTemplate,
+} from 'wiraui/config';
+import { menuFocusable, menuHasSubmenu, menuKey, menuTypeahead, menuVisible } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /** One focusable row, in the order the menu shows them. */
 interface MenuRow {
   key: string;
-  item: WtMenuItem;
+  item: WuMenuItem;
 }
 
 /**
- * What wt-menu does, shared by the v1 and v2/v3 templates. A list of commands and links, shown in place (a side menu)
+ * What wu-menu does, shared by the v1 and v2/v3 templates. A list of commands and links, shown in place (a side menu)
  * or as a popup opened from a button with `menu.toggle($event)`. Items with `items` become a labelled group.
  * The popup sits in the top layer, so `appendTo="body"` is not needed (it is accepted and ignored).
  */
 @Directive()
-export abstract class ɵWtMenuBase implements OnDestroy {
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+export abstract class ɵWuMenuBase implements OnDestroy {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v || [];
     if (!this.rows.some((r) => r.key === this.tabKey)) this.tabKey = '';
   }
-  get model(): WtMenuItem[] {
+  get model(): WuMenuItem[] {
     return this._model;
   }
   /** Show the menu as a popup, opened with `toggle($event)` / `show($event)` from a button. */
@@ -72,14 +72,14 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('start', { descendants: false }) protected startRef?: unknown;
   @ContentChild('end', { descendants: false }) protected endRef?: unknown;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('submenuheader', { descendants: false }) protected headerRef?: unknown;
   @ViewChild('panel') protected panelRef?: ElementRef<HTMLElement>;
 
-  readonly baseId = ɵuniqueId('wt-menu');
+  readonly baseId = ɵuniqueId('wu-menu');
   readonly trackIndex = (i: number): number => i;
   /** The popup is open. */
   visible = false;
@@ -87,9 +87,9 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
-  private _model: WtMenuItem[] = [];
+  private _model: WuMenuItem[] = [];
   private _popup = false;
-  private popupRef: ɵWtPopup | null = null;
+  private popupRef: ɵWuPopup | null = null;
   private anchor: HTMLElement | null = null;
   /** Row that holds the inline menu's single tab stop. */
   private tabKey = '';
@@ -98,7 +98,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   private typedTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -108,7 +108,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this._model);
   }
   get startTemplate(): TemplateRef<unknown> | null {
@@ -126,10 +126,10 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   get listId(): string {
     return (this.id || this.baseId) + '-list';
   }
-  visibleOf(items: WtMenuItem[] | null | undefined): WtMenuItem[] {
+  visibleOf(items: WuMenuItem[] | null | undefined): WuMenuItem[] {
     return menuVisible(items);
   }
-  isGroup(item: WtMenuItem): boolean {
+  isGroup(item: WuMenuItem): boolean {
     return menuHasSubmenu(item);
   }
   keyOf(parent: string, index: number): string {
@@ -142,10 +142,10 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   tabindexOf(key: string): number {
     return !this._popup && key === this.currentTabKey() ? 0 : -1;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
 
@@ -165,10 +165,10 @@ export abstract class ɵWtMenuBase implements OnDestroy {
     this.cdr.detectChanges();
     const panel = this.panelRef?.nativeElement;
     if (panel && this.anchor) {
-      this.popupRef = new ɵWtPopup(this.anchor, panel, {
+      this.popupRef = new ɵWuPopup(this.anchor, panel, {
         sheet: false,
-        sheetClass: 'wt-menu-sheet',
-        modalClass: 'wt-menu-modal',
+        sheetClass: 'wu-menu-sheet',
+        modalClass: 'wu-menu-modal',
         onOutside: () => this.hide(),
         onEscape: () => this.hide(true),
       });
@@ -193,7 +193,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
 
   // ---------- picking ----------
 
-  itemClick(event: MouseEvent, item: WtMenuItem, key: string): void {
+  itemClick(event: MouseEvent, item: WuMenuItem, key: string): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -202,7 +202,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   }
 
   keydown(event: KeyboardEvent): void {
-    const key = (event.target as HTMLElement | null)?.closest?.('[data-wt-key]')?.getAttribute('data-wt-key');
+    const key = (event.target as HTMLElement | null)?.closest?.('[data-wu-key]')?.getAttribute('data-wu-key');
     const rows = this.rows;
     if (!rows.length) return;
     const at = rows.findIndex((r) => r.key === key);
@@ -248,7 +248,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
   }
 
   focusIn(event: FocusEvent): void {
-    const key = (event.target as HTMLElement | null)?.closest?.('[data-wt-key]')?.getAttribute('data-wt-key');
+    const key = (event.target as HTMLElement | null)?.closest?.('[data-wu-key]')?.getAttribute('data-wu-key');
     if (key && !this._popup) {
       this.tabKey = key;
       this.cdr.markForCheck();
@@ -287,7 +287,7 @@ export abstract class ɵWtMenuBase implements OnDestroy {
     return out;
   }
 
-  private activate(event: Event, item: WtMenuItem, key: string): void {
+  private activate(event: Event, item: WuMenuItem, key: string): void {
     if (item.disabled) return;
     const keyboard = event instanceof KeyboardEvent;
     // Keyboard activation of a link follows it like a click (which runs the command); plain items run it here.

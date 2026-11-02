@@ -246,12 +246,12 @@ export abstract class PresetsDemo extends DemoPage {
   protected scssCode(): string {
     const id = this.state.activePresetId();
     return this.v.major === 1
-      ? `@use 'wiratheme/theme' with (\n  $theme: '${id}',\n);`
-      : `@use 'wiratheme/theme' with (\n  $preset: '${id}',\n);`;
+      ? `@use 'wiraui/theme' with (\n  $theme: '${id}',\n);`
+      : `@use 'wiraui/theme' with (\n  $preset: '${id}',\n);`;
   }
 
   protected cssCode(): string {
-    return `"styles": ["node_modules/wiratheme/themes/${this.state.activePresetId()}/theme.css", "src/styles.css"]`;
+    return `"styles": ["node_modules/wiraui/themes/${this.state.activePresetId()}/theme.css", "src/styles.css"]`;
   }
 }
 
@@ -326,7 +326,7 @@ export abstract class FieldsetDemo extends SimpleDemo {
   moreClosed = false;
 }
 
-/** A message for wt-messages (the docs keep no wiratheme import here). */
+/** A message for wu-messages (the docs keep no wiraui import here). */
 type Notice = { severity: string; summary: string; detail: string; closable?: boolean; key?: string; life?: number };
 
 export abstract class MessageDemo extends SimpleDemo {
@@ -582,7 +582,7 @@ export abstract class DatePickerDemo extends SimpleDemo {
 
 /**
  * The component the Dialog page's service sample opens. Each version declares a subclass that injects its own
- * WtDialogRef and WtDialogConfig (this file imports no wiratheme).
+ * WuDialogRef and WuDialogConfig (this file imports no wiraui).
  */
 export abstract class PickStudentBase extends SimpleDemo {
   protected readonly doc = DIALOG_DOC;
@@ -823,7 +823,7 @@ export abstract class ConfirmDialogDemo extends OverlayDemo {
       acceptButtonStyleClass: 'p-button-danger',
       defaultFocus: 'reject',
       accept: () => (this.result = this.tx('ลบแล้ว')),
-      // 2 = WtConfirmEventType.CANCEL: closed with the ×, Esc or the mask
+      // 2 = WuConfirmEventType.CANCEL: closed with the ×, Esc or the mask
       reject: (type: number) => (this.result = this.tx(type === 2 ? 'ปิดไป' : 'ยกเลิก')),
     }));
   }
@@ -972,7 +972,7 @@ export abstract class ValidationDemo extends SimpleDemo {
   branchCode = '12345';
   nickname = '';
   templateResult = '';
-  /** Each version module provides its own WtValidators (the match validator reads the sibling control). */
+  /** Each version module provides its own WuValidators (the match validator reads the sibling control). */
   protected readonly validators = inject(DOCS_VALIDATORS);
   form = new FormGroup({
     thaiId: new FormControl('', [Validators.required, this.validators.thaiId]),
@@ -1040,7 +1040,7 @@ export abstract class SelectDemo extends SimpleDemo {
 }
 
 type Student = { id: number; code: string; name: string; room: string; score: number; club: { name: string }; status: string; birthDate: string };
-/** The parts of the table's lazy-load event and the paginator's page event the demos read (no wiratheme import here). */
+/** The parts of the table's lazy-load event and the paginator's page event the demos read (no wiraui import here). */
 type LazyEvent = { first: number; rows: number; page: number; sortField?: string | null; sortOrder?: number };
 type PageEvent = { page: number; first: number; rows: number; pageCount: number };
 
@@ -1404,7 +1404,7 @@ export abstract class PaginatorDemo extends SimpleDemo {
   }
 }
 
-/** A menu item as the Menubar demos build it (no wiratheme import here); `local()` hands the components English copies. */
+/** A menu item as the Menubar demos build it (no wiraui import here); `local()` hands the components English copies. */
 export type MenuEntry = {
   label?: string;
   icon?: string;
@@ -1624,7 +1624,7 @@ export abstract class TabMenuDemo extends SimpleDemo {
 }
 
 /* ---------- MultiSelect page ---------- */
-/** The parts of the multiselect events the demos read (no wiratheme import here). */
+/** The parts of the multiselect events the demos read (no wiraui import here). */
 type MultiChange = { value: unknown[]; itemValue?: unknown };
 
 export abstract class MultiSelectDemo extends SimpleDemo {
@@ -1740,7 +1740,7 @@ export abstract class TimelineDemo extends SimpleDemo {
 }
 
 /* ---------- Chart page ---------- */
-/** Chart.js data as the demos build it (no chart.js import here); the templates hand `local()` copies to wt-chart. */
+/** Chart.js data as the demos build it (no chart.js import here); the templates hand `local()` copies to wu-chart. */
 type ChartDataset = { label?: string; data: number[]; [key: string]: unknown };
 type ChartDataLike = { labels: string[]; datasets: ChartDataset[] };
 /** The parts of a Chart.js chart the centre-label plugin draws with. */
@@ -1838,12 +1838,12 @@ export abstract class ChartJsDemo extends SimpleDemo {
 
   themeChartData(): ChartDataLike {
     const css = getComputedStyle(document.documentElement);
-    this.themeColor = css.getPropertyValue('--wt-primary-color').trim();
+    this.themeColor = css.getPropertyValue('--wu-primary-color').trim();
     return {
       labels: CHART_MONTHS,
       datasets: [
         { label: 'ปีนี้', data: [52, 61, 70, 66, 74, 80], backgroundColor: this.themeColor },
-        { label: 'ปีที่แล้ว', data: [45, 50, 58, 60, 63, 69], backgroundColor: css.getPropertyValue('--wt-primary-300').trim() },
+        { label: 'ปีที่แล้ว', data: [45, 50, 58, 60, 63, 69], backgroundColor: css.getPropertyValue('--wu-primary-300').trim() },
       ],
     };
   }
@@ -2233,7 +2233,7 @@ export abstract class StepperDemo extends SimpleDemo {
 type Permission = { id: number; code: string; name: string; module: string };
 type FlowRank = { id: number; rank: string; person: string };
 type Elective = { id: number; name: string; teacher: string };
-/** The part of the pick list move events the demos read (no wiratheme import here). */
+/** The part of the pick list move events the demos read (no wiraui import here). */
 type ListMove = { items: unknown[] };
 
 const PERMISSIONS: Permission[] = [
@@ -2377,7 +2377,7 @@ export abstract class OrderListDemo extends SimpleDemo {
 }
 
 /* ---------- FileUpload page ---------- */
-/** The parts of the file upload component and events the demos use (no wiratheme import here). */
+/** The parts of the file upload component and events the demos use (no wiraui import here). */
 type FileUploadRef = { clear(): void };
 type FileSelect = { files: File[] };
 
@@ -2442,7 +2442,7 @@ export abstract class KeyFilterDemo extends SimpleDemo {
 }
 
 /* ---------- Editor page ---------- */
-/** The parts of the editor's API and events the demos use (no wiratheme import here). */
+/** The parts of the editor's API and events the demos use (no wiraui import here). */
 type EditorApiLike = { setHTML(html: string): void };
 
 export abstract class EditorDemo extends SimpleDemo {

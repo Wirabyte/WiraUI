@@ -1,4 +1,4 @@
-/** wt-chart: SVG path data for lines, areas, slices and bars with rounded ends. */
+/** wu-chart: SVG path data for lines, areas, slices and bars with rounded ends. */
 
 export interface ChartPoint {
   x: number;

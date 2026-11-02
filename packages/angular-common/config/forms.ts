@@ -1,4 +1,4 @@
-/** `<wt-checkbox binary>` and `[binary]="true"` both mean true; Angular 15 has no booleanAttribute. */
+/** `<wu-checkbox binary>` and `[binary]="true"` both mean true; Angular 15 has no booleanAttribute. */
 export function ɵtoBool(value: unknown): boolean {
   return value === '' || value === true || value === 'true';
 }
@@ -37,7 +37,7 @@ export function ɵsameValue(a: unknown, b: unknown, dataKey?: string): boolean {
 }
 
 /** `size` of a component: small or large (also `sm` / `lg`). Leave out for the regular size. */
-export type WtSize = 'small' | 'large' | 'sm' | 'lg';
+export type WuSize = 'small' | 'large' | 'sm' | 'lg';
 
 /** `'sm'`, `'lg'` or null for a `size` input, whichever spelling was used. */
 export function ɵsize(v: unknown): 'sm' | 'lg' | null {

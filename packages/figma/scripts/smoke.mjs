@@ -314,7 +314,7 @@ function makeFigma() {
   return { figma, stats };
 }
 
-const presets = JSON.parse(/var WT_DATA = (\{.*\});\n/.exec(code)[1]).presets.map((p) => p.id);
+const presets = JSON.parse(/var WU_DATA = (\{.*\});\n/.exec(code)[1]).presets.map((p) => p.id);
 let failed = 0;
 for (const preset of presets) {
   const { figma, stats } = makeFigma();

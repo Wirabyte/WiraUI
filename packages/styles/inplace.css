@@ -1,38 +1,38 @@
-/* wt-inplace. Shared by wiratheme v1, v2 and v3. Text with a hover tint that turns into its editor on click. */
-@layer wiratheme.components {
-  wt-inplace {
+/* wu-inplace. Shared by wiraui v1, v2 and v3. Text with a hover tint that turns into its editor on click. */
+@layer wiraui.components {
+  wu-inplace {
     display: inline-block;
     max-width: 100%;
   }
-  .wt-inplace-display {
+  .wu-inplace-display {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     max-width: 100%;
-    padding: var(--wt-inplace-padding);
-    border-radius: var(--wt-radius-sm);
+    padding: var(--wu-inplace-padding);
+    border-radius: var(--wu-radius-sm);
     cursor: pointer;
     transition: background-color 0.15s;
   }
-  .wt-inplace-display:not(.wt-inplace-disabled):hover {
-    background: var(--wt-hover-bg);
+  .wu-inplace-display:not(.wu-inplace-disabled):hover {
+    background: var(--wu-hover-bg);
   }
-  .wt-inplace-display:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-inplace-display:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-inplace-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-inplace-disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-inplace-content {
+  .wu-inplace-content {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     max-width: 100%;
   }
-  .wt-inplace-close {
+  .wu-inplace-close {
     flex: none;
   }
 }

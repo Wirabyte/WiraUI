@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-picklist
+        <wu-picklist
           id="d-pl-basic"
           [source]="basicSource"
           [target]="basicTarget"
@@ -20,14 +20,14 @@
             <div class="docs-pl-name">{{ p.name }}</div>
             <small class="docs-pl-meta">{{ p.module }}</small>
           </ng-template>
-        </wt-picklist>
+        </wu-picklist>
         <span class="docs-demo-output">userPermissions: <code id="d-pl-basic-value">{{ codesOf(basicTarget) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="dragdrop" [section]="sec['dragdrop']">
       <docs-demo [html]="code['dragdrop']" [ts]="ts['dragdrop']" layout="stack">
-        <wt-picklist
+        <wu-picklist
           id="d-pl-drag"
           [source]="ranks"
           [target]="flow"
@@ -42,9 +42,9 @@
             <div class="docs-pl-name">{{ r.rank }}</div>
             <small class="docs-pl-meta">{{ r.person || tx('(ยังไม่กำหนดผู้รับผิดชอบ)') }}</small>
           </ng-template>
-        </wt-picklist>
+        </wu-picklist>
         <div class="docs-demo-actions">
-          <wt-button id="d-pl-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>
+          <wu-button id="d-pl-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wu-button>
           <span class="docs-demo-output">flow: <code id="d-pl-flow">{{ idsOf(flow) }}</code> · {{ tx('บันทึกแล้ว') }}: <code id="d-pl-saved">{{ savedFlow || '-' }}</code></span>
         </div>
       </docs-demo>
@@ -52,7 +52,7 @@
 
     <docs-section id="filter" [section]="sec['filter']">
       <docs-demo [html]="code['filter']" layout="stack">
-        <wt-picklist
+        <wu-picklist
           id="d-pl-filter"
           [source]="filterSource"
           [target]="filterTarget"
@@ -67,14 +67,14 @@
           <ng-template #item let-p>
             {{ p.name }} <small class="docs-pl-meta">· {{ p.module }}</small>
           </ng-template>
-        </wt-picklist>
+        </wu-picklist>
         <span class="docs-demo-output">userPermissions: <code id="d-pl-filter-value">{{ codesOf(filterTarget) }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-picklist
+        <wu-picklist
           id="d-pl-tpl"
           [source]="moreSource"
           [target]="moreTarget"
@@ -89,14 +89,14 @@
           </ng-template>
           <ng-template #emptymessagetarget>{{ tx('ยังไม่ได้ให้สิทธิ์ใด ๆ') }}</ng-template>
           <ng-template #emptyfiltermessagesource>{{ tx('ไม่พบสิทธิ์ที่ค้นหา') }}</ng-template>
-        </wt-picklist>
+        </wu-picklist>
       </docs-demo>
     </docs-section>
 
     <docs-section id="events" [section]="sec['events']">
       <docs-demo [html]="code['events']" [ts]="ts['events']" layout="stack">
-        <wt-picklist
-          #pl="wtPickList"
+        <wu-picklist
+          #pl="wuPickList"
           id="d-pl-events"
           [source]="eventSource"
           [target]="eventTarget"
@@ -111,10 +111,10 @@
           (onTargetReorder)="logMove('onTargetReorder', $event)"
         >
           <ng-template #item let-p>{{ p.name }}</ng-template>
-        </wt-picklist>
+        </wu-picklist>
         <div class="docs-demo-actions">
-          <wt-button id="d-pl-all-right" [label]="tx('ให้ทุกสิทธิ์')" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wt-button>
-          <wt-button id="d-pl-all-left" [label]="tx('ถอนทุกสิทธิ์')" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>
+          <wu-button id="d-pl-all-right" [label]="tx('ให้ทุกสิทธิ์')" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wu-button>
+          <wu-button id="d-pl-all-left" [label]="tx('ถอนทุกสิทธิ์')" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wu-button>
         </div>
         <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-pl-event">{{ lastEvent || '-' }}</code></span>
       </docs-demo>
@@ -122,7 +122,7 @@
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']" layout="stack">
-        <wt-picklist
+        <wu-picklist
           id="d-pl-look"
           [source]="lookSource"
           [target]="lookTarget"
@@ -133,7 +133,7 @@
           [stripedRows]="true"
           [showSourceControls]="false"
           [showTargetControls]="false"
-        ></wt-picklist>
+        ></wu-picklist>
       </docs-demo>
     </docs-section>
 

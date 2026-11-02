@@ -1,0 +1,51 @@
+name: Publish
+
+# Run by hand from the Actions tab, one package at a time. It is a dry run unless `dry_run` is turned off.
+# The first time, publish v3 first: npm points `latest` at the first version a package ever publishes.
+# Needs the secret NPM_TOKEN. The repository variable WU_NPM_REGISTRY sets another registry (default: npmjs).
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Which package
+        type: choice
+        required: true
+        options: [v3, v2, v1, icons]
+      dry_run:
+        description: Dry run (uploads nothing)
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish ${{ inputs.package }}${{ inputs.dry_run && ' (dry run)' || '' }}
+    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: ${{ vars.WU_NPM_REGISTRY || 'https://registry.npmjs.org' }}
+      - run: pnpm install --frozen-lockfile
+      - name: Build
+        env:
+          CI: 'true'
+        run: pnpm pack:all
+      - name: Test
+        run: pnpm test
+      - name: Publish
+        id: publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: node tools/publish.mjs ${{ inputs.package }} ${{ inputs.dry_run && '--dry-run' || '' }}
+      - name: Tag the commit
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git tag "${{ steps.publish.outputs.release }}"
+          git push origin "${{ steps.publish.outputs.release }}"

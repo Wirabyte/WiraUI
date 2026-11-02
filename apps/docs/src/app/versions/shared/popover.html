@@ -6,52 +6,52 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-button id="d-popover-btn" [label]="tx('แชร์')" icon="wi wi-send" (onClick)="op.toggle($event)"></wt-button>
-        <wt-popover #op id="d-popover">
+        <wu-button id="d-popover-btn" [label]="tx('แชร์')" icon="wi wi-send" (onClick)="op.toggle($event)"></wu-button>
+        <wu-popover #op id="d-popover">
           <div class="docs-popover-body">
             <p class="docs-demo-p">{{ tx('ส่งลิงก์ให้ทีม') }}</p>
-            <input wtInputText value="https://example.com/r/10234" [readonly]="true" [fluid]="true" [attr.aria-label]="tx('ลิงก์')" />
+            <input wuInputText value="https://example.com/r/10234" [readonly]="true" [fluid]="true" [attr.aria-label]="tx('ลิงก์')" />
           </div>
-        </wt-popover>
+        </wu-popover>
       </docs-demo>
     </docs-section>
 
     <docs-section id="select" [section]="sec['select']">
       <docs-demo [html]="code['select']" [ts]="ts['select']">
-        <wt-button id="d-popover-owner" [label]="owner || tx('เลือกผู้รับผิดชอบ')" icon="wi wi-user" severity="secondary" (onClick)="people.toggle($event)"></wt-button>
-        <wt-popover #people>
+        <wu-button id="d-popover-owner" [label]="owner || tx('เลือกผู้รับผิดชอบ')" icon="wi wi-user" severity="secondary" (onClick)="people.toggle($event)"></wu-button>
+        <wu-popover #people>
           <div class="docs-popover-list">
             @for (p of local(team); track p) {
               <button type="button" class="docs-popover-item" (click)="owner = p; people.hide()">{{ p }}</button>
             }
           </div>
-        </wt-popover>
+        </wu-popover>
         <span class="docs-demo-output">owner: <code id="d-popover-owner-value">{{ owner || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="content" [section]="sec['content']">
       <docs-demo [html]="code['content']">
-        <wt-button id="d-pop-notify" [label]="tx('ตั้งค่าการแจ้งเตือน')" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wt-button>
-        <wt-popover #notify id="d-pop-notify-panel">
+        <wu-button id="d-pop-notify" [label]="tx('ตั้งค่าการแจ้งเตือน')" icon="wi wi-bell" severity="secondary" (onClick)="notify.toggle($event)"></wu-button>
+        <wu-popover #notify id="d-pop-notify-panel">
           <ng-template #content let-closeCallback="closeCallback">
             <p class="docs-demo-p">{{ tx('รับการแจ้งเตือนทางอีเมลทุกเช้า') }}</p>
-            <wt-button id="d-pop-notify-ok" [label]="tx('ตกลง')" size="small" (onClick)="closeCallback()"></wt-button>
+            <wu-button id="d-pop-notify-ok" [label]="tx('ตกลง')" size="small" (onClick)="closeCallback()"></wu-button>
           </ng-template>
-        </wt-popover>
+        </wu-popover>
       </docs-demo>
     </docs-section>
 
     <docs-section id="options" [section]="sec['options']">
       <docs-demo [html]="code['options']">
-        <wt-button [label]="tx('ตัวกรอง')" severity="secondary" [outlined]="true" (onClick)="filters.toggle($event)"></wt-button>
-        <wt-popover #filters [showCloseIcon]="true" [dismissable]="false">
+        <wu-button [label]="tx('ตัวกรอง')" severity="secondary" [outlined]="true" (onClick)="filters.toggle($event)"></wu-button>
+        <wu-popover #filters [showCloseIcon]="true" [dismissable]="false">
           <div class="docs-popover-body">
             <b>{{ tx('ตัวกรอง') }}</b>
-            <wt-checkbox [ngModel]="true" [binary]="true" [label]="tx('ชำระแล้ว')"></wt-checkbox>
-            <wt-checkbox [ngModel]="false" [binary]="true" [label]="tx('รอจัดส่ง')"></wt-checkbox>
+            <wu-checkbox [ngModel]="true" [binary]="true" [label]="tx('ชำระแล้ว')"></wu-checkbox>
+            <wu-checkbox [ngModel]="false" [binary]="true" [label]="tx('รอจัดส่ง')"></wu-checkbox>
           </div>
-        </wt-popover>
+        </wu-popover>
       </docs-demo>
     </docs-section>
   </ng-template>

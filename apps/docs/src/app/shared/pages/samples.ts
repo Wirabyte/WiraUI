@@ -3,7 +3,7 @@ import { SampleWords } from '../../core/sample-text';
 
 /** Code shown on the Getting Started and Theming pages (DESIGN.md §5–§8). */
 
-export const NG_ADD = 'ng add wiratheme';
+export const NG_ADD = 'ng add wiraui';
 
 /** Default theme of each major: v1 starts from sila-light-teal, v2 from Mali, v3 from Wira. */
 export function defaultTheme(v: DocVersion): string {
@@ -17,54 +17,54 @@ export function ngAddPrompts(v: DocVersion): string {
       ? 'Sila light (default) · Sila dark · Arun light · Sayan dim dark · Ratri dark · Material light · Material dark'
       : v.major === 2
         ? 'Mali: clean, modern (default) · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast'
-        : "Wira: WiraTheme's own look (default) · Lanna: soft, rounded · Siam: elevated, with ripple · Nakhon: sharp, dense · Glass: Liquid Glass, translucent · Mali: clean, modern · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast";
+        : "Wira: WiraUI's own look (default) · Lanna: soft, rounded · Siam: elevated, with ripple · Nakhon: sharp, dense · Glass: Liquid Glass, translucent · Mali: clean, modern · Sila: bold, roomy · Material: Material Design · Phet: sharp, high contrast";
   const row = (q: string, choices?: string) => (choices ? `? ${q.padEnd(48)}› ${choices}` : `? ${q}`);
   return [
     row('How should the main theme be loaded?', 'Detect from the project (recommended) · SCSS · CSS'),
     row('App structure?', 'Detect from main.ts (recommended) · NgModule · Standalone'),
     row('Theme?', `This version's default · ${themes}`),
-    row('Add WiraTheme utility classes (grid, flex, spacing)?'),
+    row('Add WiraUI utility classes (grid, flex, spacing)?'),
     row('Primary colour hex (empty = preset colour)'),
     row('Font?', "Preset's font (skipped if already loaded) · Kanit · Sarabun · Prompt · Noto Sans Thai · IBM Plex Sans Thai · Anuphan · Inter · Roboto · Don't set a font"),
     row('Language and calendar?', 'Thai, Buddhist calendar (B.E.) · Thai, Gregorian calendar (A.D.) · English'),
-    row('Dark mode?', 'Off · Toggle with the .wt-dark class · Follow the OS setting'),
+    row('Dark mode?', 'Off · Toggle with the .wu-dark class · Follow the OS setting'),
   ].join('\n');
 }
 
 /** What ng add prints when it is done (SCSS + NgModule). */
 export function ngAddResult(v: DocVersion): string {
   const theme = defaultTheme(v);
-  return `WiraTheme: SCSS · NgModule · ${theme} · <primary>
-  ✔ created src/theme/wiratheme.theme.scss
-  ✔ src/styles.scss: added @use 'theme/wiratheme.theme'
-  ✔ created src/theme/wiratheme.overrides.ts
-  ✔ src/styles.scss: added @use 'wiratheme/utils';
-  ✔ src/app/app.module.ts: added provideWiraTheme() to the providers of AppModule
-Next: import WtButtonModule (NgModule) or WtButton (standalone) from wiratheme/button, then use <wt-button label="Save"></wt-button>`;
+  return `WiraUI: SCSS · NgModule · ${theme} · <primary>
+  ✔ created src/theme/wiraui.theme.scss
+  ✔ src/styles.scss: added @use 'theme/wiraui.theme'
+  ✔ created src/theme/wiraui.overrides.ts
+  ✔ src/styles.scss: added @use 'wiraui/utils';
+  ✔ src/app/app.module.ts: added provideWiraUI() to the providers of AppModule
+Next: import WuButtonModule (NgModule) or WuButton (standalone) from wiraui/button, then use <wu-button label="Save"></wu-button>`;
 }
 
 export function ngAddFlags(v: DocVersion): string {
   return `# ใช้ค่าที่ตรวจพบและค่าเริ่มต้นทั้งหมด ไม่ถามอะไร
-ng add wiratheme --defaults
+ng add wiraui --defaults
 
 # หรือส่งเป็น flag ทีละข้อ
-ng add wiratheme --style=scss --structure=module --theme=${defaultTheme(v)} --primary=#00a86b`;
+ng add wiraui --style=scss --structure=module --theme=${defaultTheme(v)} --primary=#00a86b`;
 }
 
 export function providerNgModule(v: DocVersion): string {
   return `// app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideWiraTheme } from 'wiratheme/config';
-import { WtButtonModule } from 'wiratheme/button';
-import { wiraOverrides } from '../theme/wiratheme.overrides';
+import { provideWiraUI } from 'wiraui/config';
+import { WuButtonModule } from 'wiraui/button';
+import { wiraOverrides } from '../theme/wiraui.overrides';
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, WtButtonModule],
+  imports: [BrowserModule, WuButtonModule],
   providers: [
-    provideWiraTheme({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist' }),
+    provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist' }),
   ],
   bootstrap: [AppComponent],
 })
@@ -86,34 +86,34 @@ export function providerStandalone(v: DocVersion): string {
         : `import { ApplicationConfig } from '@angular/core';`;
   return `// app.config.ts
 ${coreImport}
-import { provideWiraTheme } from 'wiratheme/config';
-import { wiraOverrides } from '../theme/wiratheme.overrides';
+import { provideWiraUI } from 'wiraui/config';
+import { wiraOverrides } from '../theme/wiraui.overrides';
 
 export const appConfig: ApplicationConfig = {
   providers: [${zoneless}
-    provideWiraTheme({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist' }),
+    provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist' }),
   ],
 };`;
 }
 
 export const PROVIDER_FOR_ROOT = `// ถ้าชอบสไตล์ forRoot แบบ NgModule
-import { WiraThemeModule } from 'wiratheme/config';
+import { WiraUIModule } from 'wiraui/config';
 
 @NgModule({
-  imports: [WiraThemeModule.forRoot({ locale: 'th', calendar: 'buddhist' })],
+  imports: [WiraUIModule.forRoot({ locale: 'th', calendar: 'buddhist' })],
 })
 export class AppModule {}`;
 
 export function scssTheme(v: DocVersion): string {
   if (v.major === 1) {
-    return `// src/theme/wiratheme.theme.scss
+    return `// src/theme/wiraui.theme.scss
 // ชื่อธีมเดียวกับโฟลเดอร์ธีมที่แอปเดิมใช้อยู่
-@use 'wiratheme/theme' with (
+@use 'wiraui/theme' with (
   $theme: 'sila-light-teal',
 );
 
 // หรือเริ่มจาก preset ของยุคนี้แล้วปรับเอง
-// @use 'wiratheme/theme' with (
+// @use 'wiraui/theme' with (
 //   $preset: 'sila-classic',            // sila-classic · arun · sayan · ratri · material-classic
 //   $primary: #00a86b,                  // ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้
 //   $primary-contrast: #ffffff,         // ตัวอักษรบนปุ่มหลัก
@@ -123,8 +123,8 @@ export function scssTheme(v: DocVersion): string {
 // );`;
   }
   const presets = v.major === 2 ? 'mali · sila · material · phet' : 'wira · lanna · siam · nakhon · glass · mali · sila · material · phet';
-  return `// src/theme/wiratheme.theme.scss
-@use 'wiratheme/theme' with (
+  return `// src/theme/wiraui.theme.scss
+@use 'wiraui/theme' with (
   $preset: '${defaultTheme(v)}',${' '.repeat(Math.max(1, 26 - defaultTheme(v).length))}// ${presets}
   $primary: #06b6d4,                    // ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้
   $primary-contrast: #ffffff,           // ตัวอักษรบนปุ่มหลัก
@@ -139,22 +139,22 @@ export function scssTheme(v: DocVersion): string {
   )
 );
 
-// @use 'wiratheme/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
+// @use 'wiraui/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
 }
 
 export const SCSS_STYLES = `// src/styles.scss (บรรทัดแรก)
-@use 'theme/wiratheme.theme';`;
+@use 'theme/wiraui.theme';`;
 
 export const SCSS_API = `// ไฟล์ SCSS ของ component ในแอป: โมดูล API ไม่ปล่อย CSS ซ้ำ
-@use 'wiratheme/theme/api' as wt;
+@use 'wiraui/theme/api' as wu;
 
 .student-card {
-  border-color: wt.token(primary-300);   // → var(--wt-primary-300)
+  border-color: wu.token(primary-300);   // → var(--wu-primary-300)
 
-  @include wt.dark {
-    border-color: wt.token(primary-700);
+  @include wu.dark {
+    border-color: wu.token(primary-700);
   }
-  @include wt.media(md) {
+  @include wu.media(md) {
     padding: 1rem;
   }
 }`;
@@ -162,10 +162,10 @@ export const SCSS_API = `// ไฟล์ SCSS ของ component ในแอ�
 export function cssAngularJson(v: DocVersion): string {
   const file =
     v.major === 1
-      ? `"node_modules/wiratheme/themes/sila-light-teal/theme.css",   // ชื่อโฟลเดอร์ธีมเดิมของแอป`
+      ? `"node_modules/wiraui/themes/sila-light-teal/theme.css",   // ชื่อโฟลเดอร์ธีมเดิมของแอป`
       : v.major === 2
-        ? `"node_modules/wiratheme/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`
-        : `"node_modules/wiratheme/themes/wira/theme.css",              // หรือ themes/wira/<สี>.css เช่น cyan.css`;
+        ? `"node_modules/wiraui/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`
+        : `"node_modules/wiraui/themes/wira/theme.css",              // หรือ themes/wira/<สี>.css เช่น cyan.css`;
   return `// angular.json → projects.<app>.architect.build.options
 "styles": [
   ${file}
@@ -182,14 +182,14 @@ export function cssOverride(v: DocVersion): string {
    var(--p-content-border-radius), var(--p-<สี>-<เฉด>) … ใช้ต่อได้ */`;
   return `/* src/styles.css: CSS ของแอปไม่อยู่ใน @layer จึงชนะธีมทั้งหมด */
 :root {
-  --wt-primary-color: #00a86b;
-  --wt-primary-contrast: #ffffff;    /* ตัวอักษรขาวบนปุ่มหลักตามแบรนด์ */
-  --wt-card-body-gap: 0;
+  --wu-primary-color: #00a86b;
+  --wu-primary-contrast: #ffffff;    /* ตัวอักษรขาวบนปุ่มหลักตามแบรนด์ */
+  --wu-card-body-gap: 0;
 }
 
-/* dark mode แบบ class: ใส่ .wt-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector) */
-:root.wt-dark {
-  --wt-ground: #0b1220;
+/* dark mode แบบ class: ใส่ .wu-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector) */
+:root.wu-dark {
+  --wu-ground: #0b1220;
 }
 
 ${compat}`;
@@ -197,21 +197,21 @@ ${compat}`;
 
 export const CSS_SCOPED = `/* ทั้งโซน เช่น ฝั่ง admin ใช้สีหลักอีกสี */
 .admin-area {
-  --wt-primary-color: #e11d48;
-  --wt-primary-hover: #be123c;
-  --wt-primary-active: #9f1239;
+  --wu-primary-color: #e11d48;
+  --wu-primary-hover: #be123c;
+  --wu-primary-active: #9f1239;
 }`;
 
-export const LAYER_ORDER = `@layer reset, wiratheme.tokens, wiratheme.components, wiratheme.utilities, wiratheme.overrides;`;
+export const LAYER_ORDER = `@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;`;
 
-export const LAYER_STACK = `แพ้ / loses   wiratheme.tokens       ← ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)
-              wiratheme.components   ← CSS ของ component (อ่านแค่ var(--wt-*))
-              wiratheme.utilities    ← utility class (wiratheme/utils) ถ้าเปิดใช้
-              wiratheme.overrides    ← overrides จาก TS / WtThemeService
+export const LAYER_STACK = `แพ้ / loses   wiraui.tokens       ← ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)
+              wiraui.components   ← CSS ของ component (อ่านแค่ var(--wu-*))
+              wiraui.utilities    ← utility class (wiraui/utils) ถ้าเปิดใช้
+              wiraui.overrides    ← overrides จาก TS / WuThemeService
 ชนะ / wins    CSS ของแอปเอง          ← ไม่อยู่ใน layer จึงชนะโดยไม่ต้องใช้ !important`;
 
-export const TS_OVERRIDES = `// src/theme/wiratheme.overrides.ts (ng add สร้างไฟล์นี้ให้ เริ่มต้นว่าง)
-import { defineOverrides, palette } from 'wiratheme/config';
+export const TS_OVERRIDES = `// src/theme/wiraui.overrides.ts (ng add สร้างไฟล์นี้ให้ เริ่มต้นว่าง)
+import { defineOverrides, palette } from 'wiraui/config';
 
 export const wiraOverrides = defineOverrides({
   semantic: {
@@ -232,9 +232,9 @@ export const wiraOverrides = defineOverrides({
 export function tsPreset(v: DocVersion, id: string, name: string, dark: boolean): string {
   const named = v.major === 1 || !/^[A-Z]/.test(name);
   const base = named ? `themePreset('${id}')` : name;
-  const importLine = named ? `import { themePreset } from 'wiratheme/presets';` : `import { ${name} } from 'wiratheme/presets';`;
+  const importLine = named ? `import { themePreset } from 'wiraui/presets';` : `import { ${name} } from 'wiraui/presets';`;
   return `// ใช้ TypeScript อย่างเดียว ไม่มีไฟล์ธีม SCSS / CSS
-import { definePreset, palette, provideWiraTheme } from 'wiratheme/config';
+import { definePreset, palette, provideWiraUI } from 'wiraui/config';
 ${importLine}
 
 const School = definePreset(${base}, {${dark ? "\n  scheme: 'dark',                                   // ธีมมืดอย่างเดียว ไม่ต้องสลับ class" : ''}
@@ -244,24 +244,24 @@ const School = definePreset(${base}, {${dark ? "\n  scheme: 'dark',             
   },
 });
 
-provideWiraTheme({ preset: School });`;
+provideWiraUI({ preset: School });`;
 }
 
 export const TS_RUNTIME = `import { inject } from '@angular/core';
-import { WtThemeService } from 'wiratheme/config';
+import { WuThemeService } from 'wiraui/config';
 
-const theme = inject(WtThemeService);
+const theme = inject(WuThemeService);
 theme.setPrimary('#2563eb');                       // ทุกเฉดและ token ที่อ้างถึงเปลี่ยนตาม
-theme.setDarkMode(true);                           // สลับ .wt-dark ที่ <html>
+theme.setDarkMode(true);                           // สลับ .wu-dark ที่ <html>
 theme.patch({ components: { button: { radius: '999px' } } });
 theme.setOverrides({});                            // ล้าง overrides ทั้งหมด
 theme.setScale('md');                              // ขนาด UI: 'sm' 12px · 'md' 14px · 'lg' 16px`;
 
-export const SCALE = `// app.config.ts (หรือ WiraThemeModule.forRoot({ ... }) ใน AppModule)
-provideWiraTheme({ scale: 'md' });   // root font size 14px: ทุกค่า rem ย่อตาม ทั้ง UI เล็กลงเท่ากัน
+export const SCALE = `// app.config.ts (หรือ WiraUIModule.forRoot({ ... }) ใน AppModule)
+provideWiraUI({ scale: 'md' });   // root font size 14px: ทุกค่า rem ย่อตาม ทั้ง UI เล็กลงเท่ากัน
 
 // เปลี่ยนตอน runtime
-const theme = inject(WtThemeService);
+const theme = inject(WuThemeService);
 theme.setScale('lg');    // 16px
 theme.setScale(15);      // กำหนดเป็น px ก็ได้
 theme.setScale(null);    // คืนให้ CSS ของหน้าเว็บกำหนดเอง`;
@@ -269,9 +269,9 @@ theme.setScale(null);    // คืนให้ CSS ของหน้าเว�
 export function firstComponent(v: DocVersion): string {
   return v.major === 1
     ? `<!-- app.component.html -->
-<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>`
+<wu-button label="บันทึก" icon="wi wi-check" [action]="save"></wu-button>`
     : `<!-- app.component.html -->
-<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>`;
+<wu-button label="บันทึก" icon="wi wi-check" [action]="save"></wu-button>`;
 }
 
 export const FIRST_COMPONENT_TS = `export class AppComponent {
@@ -285,19 +285,19 @@ export const FIRST_COMPONENT_TS = `export class AppComponent {
 }`;
 
 export const TRANSLATION = `import { inject } from '@angular/core';
-import { WtConfig } from 'wiratheme/config';
+import { WuConfig } from 'wiraui/config';
 
 // ตั้งครั้งเดียวที่ระดับแอป: locale 'th' มีในตัวแล้ว แก้เฉพาะคำที่อยากเปลี่ยน
-inject(WtConfig).setTranslation({ emptyMessage: 'ไม่พบข้อมูลที่ค้นหา' });`;
+inject(WuConfig).setTranslation({ emptyMessage: 'ไม่พบข้อมูลที่ค้นหา' });`;
 
-export const MIGRATE_AFTER = `<wt-button label="บันทึก" icon="wi wi-check" [action]="save"></wt-button>
-<input wtInputText name="name" [(ngModel)]="name" />
-<wt-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไข"></wt-checkbox>
-<wt-card header="โปรไฟล์">…</wt-card>`;
+export const MIGRATE_AFTER = `<wu-button label="บันทึก" icon="wi wi-check" [action]="save"></wu-button>
+<input wuInputText name="name" [(ngModel)]="name" />
+<wu-checkbox name="agree" [(ngModel)]="agree" [binary]="true" label="ยอมรับเงื่อนไข"></wu-checkbox>
+<wu-card header="โปรไฟล์">…</wu-card>`;
 
 export function migrateCss(v: DocVersion): string {
   if (v.major === 1) {
-    return `/* CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraTheme มีคลาสเหล่านี้คู่กับ wt-* */
+    return `/* CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraUI มีคลาสเหล่านี้คู่กับ wu-* */
 .p-button.p-button-warning { font-weight: 600; }
 .p-card .p-card-body { padding: 1rem; }
 .p-checkbox .p-checkbox-box.p-highlight { border-radius: 4px; }
@@ -309,9 +309,9 @@ export function migrateCss(v: DocVersion): string {
 .badge-ok { color: var(--green-500); }
 
 /* ทางที่แนะนำต่อจากนี้: ตั้ง token ครั้งเดียว ไม่ต้องใช้ ::ng-deep / !important */
-:root { --wt-card-body-gap: 0; }`;
+:root { --wu-card-body-gap: 0; }`;
   }
-  return `/* CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraTheme มีคลาสเหล่านี้คู่กับ wt-* */
+  return `/* CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraUI มีคลาสเหล่านี้คู่กับ wu-* */
 .p-button.p-button-warn { font-weight: 600; }
 .p-checkbox.p-checkbox-checked { --my-accent: var(--p-primary-color); }
 .p-toggleswitch { vertical-align: middle; }
@@ -322,7 +322,7 @@ export function migrateCss(v: DocVersion): string {
 .badge-ok { color: var(--p-green-500); }
 
 /* ทางที่แนะนำต่อจากนี้: ตั้ง token ครั้งเดียว ไม่ต้องใช้ ::ng-deep / !important */
-:root { --wt-card-body-gap: 0; }`;
+:root { --wu-card-body-gap: 0; }`;
 }
 
 /** English for the Thai in the samples above (see core/sample-text.ts). */
@@ -349,15 +349,15 @@ export const GUIDE_WORDS: SampleWords = {
   'ใช้ต่อได้': 'keep working',
   'CSS ของแอปไม่อยู่ใน @layer จึงชนะธีมทั้งหมด': "the app's CSS is not in a @layer, so it beats the whole theme",
   'ตัวอักษรขาวบนปุ่มหลักตามแบรนด์': 'white text on primary buttons, as the brand wants',
-  'dark mode แบบ class: ใส่ .wt-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector)':
-    'class-based dark mode: put .wt-dark on <html> (or the class set in darkModeSelector)',
+  'dark mode แบบ class: ใส่ .wu-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector)':
+    'class-based dark mode: put .wu-dark on <html> (or the class set in darkModeSelector)',
   'ทั้งโซน เช่น ฝั่ง admin ใช้สีหลักอีกสี': 'a whole area, e.g. the admin side, in another primary colour',
   'แพ้ / loses   ': 'loses         ',
   'ชนะ / wins    ': 'wins          ',
   'ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)': 'the main theme from SCSS / CSS (or a TS preset)',
-  'CSS ของ component (อ่านแค่ var(--wt-*))': 'component CSS (reads only var(--wt-*))',
-  'utility class (wiratheme/utils) ถ้าเปิดใช้': 'utility classes (wiratheme/utils), if enabled',
-  'overrides จาก TS / WtThemeService': 'overrides from TS / WtThemeService',
+  'CSS ของ component (อ่านแค่ var(--wu-*))': 'component CSS (reads only var(--wu-*))',
+  'utility class (wiraui/utils) ถ้าเปิดใช้': 'utility classes (wiraui/utils), if enabled',
+  'overrides จาก TS / WuThemeService': 'overrides from TS / WuThemeService',
   'CSS ของแอปเอง          ': "your app's CSS         ",
   'ไม่อยู่ใน layer จึงชนะโดยไม่ต้องใช้ !important': 'not in a layer, so it wins with no !important',
   '(ng add สร้างไฟล์นี้ให้ เริ่มต้นว่าง)': '(ng add creates it, empty)',
@@ -366,10 +366,10 @@ export const GUIDE_WORDS: SampleWords = {
   'ใช้ TypeScript อย่างเดียว ไม่มีไฟล์ธีม SCSS / CSS': 'TypeScript only, no SCSS / CSS theme file',
   'ธีมมืดอย่างเดียว ไม่ต้องสลับ class': 'dark only, no class to toggle',
   'ทุกเฉดและ token ที่อ้างถึงเปลี่ยนตาม': 'every shade, and every token that uses them, follows',
-  'สลับ .wt-dark ที่ <html>': 'toggles .wt-dark on <html>',
+  'สลับ .wu-dark ที่ <html>': 'toggles .wu-dark on <html>',
   'ล้าง overrides ทั้งหมด': 'clears every override',
   "ขนาด UI: 'sm' 12px · 'md' 14px · 'lg' 16px": "UI size: 'sm' 12px · 'md' 14px · 'lg' 16px",
-  '(หรือ WiraThemeModule.forRoot({ ... }) ใน AppModule)': '(or WiraThemeModule.forRoot({ ... }) in AppModule)',
+  '(หรือ WiraUIModule.forRoot({ ... }) ใน AppModule)': '(or WiraUIModule.forRoot({ ... }) in AppModule)',
   'ทุกค่า rem ย่อตาม ทั้ง UI เล็กลงเท่ากัน': 'every rem value follows, so the whole UI shrinks evenly',
   'เปลี่ยนตอน runtime': 'change it at runtime',
   'กำหนดเป็น px ก็ได้': 'or a px value',
@@ -382,8 +382,8 @@ export const GUIDE_WORDS: SampleWords = {
   'ไม่พบข้อมูลที่ค้นหา': 'Nothing matches your search',
   'ยอมรับเงื่อนไข': 'I accept the terms',
   'โปรไฟล์': 'Profile',
-  'CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraTheme มีคลาสเหล่านี้คู่กับ wt-*':
-    "The app's existing CSS for these classes still works: WiraTheme templates carry them next to wt-*",
+  'CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraUI มีคลาสเหล่านี้คู่กับ wu-*':
+    "The app's existing CSS for these classes still works: WiraUI templates carry them next to wu-*",
   'ตัวแปรชื่อเดิมของธีมมีให้ครบ': "Every variable name of the old theme is there",
   'ทางที่แนะนำต่อจากนี้: ตั้ง token ครั้งเดียว ไม่ต้องใช้ ::ng-deep / !important': 'From here on: set a token once, no ::ng-deep / !important',
   'ตัวแปรชื่อเดิมมีให้ และค่าที่แอปตั้งเองก็ยังมีผล': 'The old variable names are there, and values the app sets still apply',

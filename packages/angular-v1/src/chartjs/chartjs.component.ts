@@ -1,18 +1,18 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ɵWtChartJsBase } from './chartjs.base';
+import { ɵWuChartJsBase } from './chartjs.base';
 
 /**
- * A Chart.js chart: `<wt-chartjs type="bar" [data]="data" [options]="options" height="320px">`. The app installs
- * chart.js 3 or 4. WiraTheme's own chart, with no library, is `<wt-chart>` (wiratheme/chart, v3).
+ * A Chart.js chart: `<wu-chartjs type="bar" [data]="data" [options]="options" height="320px">`. The app installs
+ * chart.js 3 or 4. WiraUI's own chart, with no library, is `<wu-chart>` (wiraui/chart, v3).
  */
 @Component({
-  selector: 'wt-chartjs, wt-chartJs',
+  selector: 'wu-chartjs, wu-chartJs',
   standalone: true,
-  exportAs: 'wtChartJs',
+  exportAs: 'wuChartJs',
   imports: [NgClass, NgStyle],
   template: `
-    <div class="wt-chartjs p-chart" [ngClass]="styleClass || ''" [ngStyle]="style || null" [style.width]="fixedWidth" [style.height]="fixedHeight">
+    <div class="wu-chartjs p-chart" [ngClass]="styleClass || ''" [ngStyle]="style || null" [style.width]="fixedWidth" [style.height]="fixedHeight">
       <canvas
         #canvas
         role="img"
@@ -28,4 +28,4 @@ import { ɵWtChartJsBase } from './chartjs.base';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtChartJs extends ɵWtChartJsBase {}
+export class WuChartJs extends ɵWuChartJsBase {}

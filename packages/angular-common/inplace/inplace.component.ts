@@ -21,23 +21,23 @@ import {
   ɵfocusable,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { WuLocale } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * Shows a value as text until it is clicked, then the editor for it: `<wt-inplace>` with
- * `<ng-template wtTemplate="display">` and `<ng-template wtTemplate="content" let-closeCallback="closeCallback">`.
+ * Shows a value as text until it is clicked, then the editor for it: `<wu-inplace>` with
+ * `<ng-template wuTemplate="display">` and `<ng-template wuTemplate="content" let-closeCallback="closeCallback">`.
  * `[closable]="true"` adds a close button (Escape closes too); the content template also gets `closeCallback`.
  */
 @Component({
-  selector: 'wt-inplace',
+  selector: 'wu-inplace',
   standalone: true,
   imports: [NgIf, NgTemplateOutlet],
   templateUrl: './inplace.component.html',
@@ -45,7 +45,7 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtInplace implements OnDestroy {
+export class WuInplace implements OnDestroy {
   @Input() set active(v: unknown) { this._active = ɵtoBool(v); }
   get active(): boolean { return this._active; }
   @Input() set closable(v: unknown) { this._closable = ɵtoBool(v); }
@@ -66,7 +66,7 @@ export class WtInplace implements OnDestroy {
   /** Two-way: `[(active)]`. */
   @Output() readonly activeChange = new EventEmitter<boolean>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('display', { descendants: false }) protected displayRef?: unknown;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
   @ContentChild('closeicon', { descendants: false }) protected closeIconRef?: unknown;
@@ -79,19 +79,19 @@ export class WtInplace implements OnDestroy {
   private _preventClick = false;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   ngOnDestroy(): void {
     this.i18n.unsubscribe();
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,7 +108,7 @@ export class WtInplace implements OnDestroy {
     return asTemplate(this.closeIconRef) || ɵfindTemplate(this.templates, 'closeicon');
   }
   get closeClass(): string {
-    return ɵbuttonClass('p-button-text p-button-secondary') + ' wt-btn-icon-only wt-inplace-close p-inplace-content-close';
+    return ɵbuttonClass('p-button-text p-button-secondary') + ' wu-btn-icon-only wu-inplace-close p-inplace-content-close';
   }
 
   displayClick(event: Event): void {
@@ -136,9 +136,9 @@ export class WtInplace implements OnDestroy {
     this.activeChange.emit(true);
     this.onActivate.emit(event);
     this.cdr.detectChanges();
-    const content = this.host.querySelector('.wt-inplace-content') as HTMLElement | null;
+    const content = this.host.querySelector('.wu-inplace-content') as HTMLElement | null;
     if (content) {
-      const first = ɵfocusable(content).find((el) => !el.classList.contains('wt-inplace-close'));
+      const first = ɵfocusable(content).find((el) => !el.classList.contains('wu-inplace-close'));
       first?.focus();
     }
   }
@@ -146,12 +146,12 @@ export class WtInplace implements OnDestroy {
   /** Back to the text; focus returns to it when it was inside. */
   deactivate(event?: Event): void {
     if (!this._active) return;
-    const content = this.host.querySelector('.wt-inplace-content');
+    const content = this.host.querySelector('.wu-inplace-content');
     const hadFocus = !!content && content.contains(this.host.ownerDocument.activeElement);
     this._active = false;
     this.activeChange.emit(false);
     this.onDeactivate.emit(event);
     this.cdr.detectChanges();
-    if (hadFocus) (this.host.querySelector('.wt-inplace-display') as HTMLElement | null)?.focus();
+    if (hadFocus) (this.host.querySelector('.wu-inplace-display') as HTMLElement | null)?.focus();
   }
 }

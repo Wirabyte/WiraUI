@@ -24,14 +24,14 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵWT_CHECKBOX_CSS } from 'wiratheme/checkbox';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵWT_SELECT_CSS } from 'wiratheme/select';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵWU_SELECT_CSS } from 'wiraui/select';
 import {
   filterItems,
   firstIndex,
@@ -42,28 +42,28 @@ import {
   SelectMatchMode,
   stepIndex,
   typeaheadIndex,
-  WtLocale,
-} from 'wiratheme/core';
+  WuLocale,
+} from 'wiraui/core';
 
 /** `(onChange)`: the new value. */
-export interface WtListboxChangeEvent {
+export interface WuListboxChangeEvent {
   originalEvent: Event;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
 }
 /** `(onClick)` / `(onDblClick)`: the option under the pointer and the value after the click. */
-export interface WtListboxClickEvent {
+export interface WuListboxClickEvent {
   originalEvent: Event;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   option: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
 }
-export interface WtListboxFilterEvent {
+export interface WuListboxFilterEvent {
   originalEvent: Event;
   filter: string;
 }
-export interface WtListboxSelectAllChangeEvent {
+export interface WuListboxSelectAllChangeEvent {
   originalEvent: Event;
   checked: boolean;
 }
@@ -72,22 +72,22 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
 
 /**
  * A list that stays open on the page, for picking one option or several (`[multiple]="true"`, with check boxes
- * via `[checkbox]="true"`): `<wt-listbox [options]="rooms" [(ngModel)]="room" optionLabel="name">`. It takes the
- * same option fields as wt-select (`optionLabel`, `optionValue`, `optionDisabled`, groups) and can search
+ * via `[checkbox]="true"`): `<wu-listbox [options]="rooms" [(ngModel)]="room" optionLabel="name">`. It takes the
+ * same option fields as wu-select (`optionLabel`, `optionValue`, `optionDisabled`, groups) and can search
  * (`[filter]="true"`). Keyboard: arrows move, Enter / Space pick, Home / End, typing jumps to a label;
  * in a multiple list Shift + arrows extend and Ctrl + A picks all.
  */
 @Component({
-  selector: 'wt-listbox, wt-listBox',
+  selector: 'wu-listbox, wu-listBox',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './listbox.component.html',
   styleUrls: ['./listbox.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtListbox), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuListbox), multi: true }],
 })
-export class WtListbox implements ControlValueAccessor, OnDestroy {
+export class WuListbox implements ControlValueAccessor, OnDestroy {
   @Input() set options(v: readonly unknown[] | null | undefined) { this._options = v || []; this.rebuild(); }
   get options(): readonly unknown[] { return this._options; }
   @Input() set optionLabel(v: string | undefined) { this._label = v; this.rebuild(); }
@@ -154,15 +154,15 @@ export class WtListbox implements ControlValueAccessor, OnDestroy {
   @Input() focusOnHover: unknown;
   @Input() highlightOnSelect: unknown;
 
-  @Output() readonly onChange = new EventEmitter<WtListboxChangeEvent>();
-  @Output() readonly onClick = new EventEmitter<WtListboxClickEvent>();
-  @Output() readonly onDblClick = new EventEmitter<WtListboxClickEvent>();
-  @Output() readonly onFilter = new EventEmitter<WtListboxFilterEvent>();
-  @Output() readonly onSelectAllChange = new EventEmitter<WtListboxSelectAllChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuListboxChangeEvent>();
+  @Output() readonly onClick = new EventEmitter<WuListboxClickEvent>();
+  @Output() readonly onDblClick = new EventEmitter<WuListboxClickEvent>();
+  @Output() readonly onFilter = new EventEmitter<WuListboxFilterEvent>();
+  @Output() readonly onSelectAllChange = new EventEmitter<WuListboxSelectAllChangeEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('group', { descendants: false }) protected groupRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
@@ -171,7 +171,7 @@ export class WtListbox implements ControlValueAccessor, OnDestroy {
   @ContentChild('emptyfilter', { descendants: false }) protected emptyFilterRef?: unknown;
   @ViewChild('list') protected listRef?: ElementRef<HTMLUListElement>;
 
-  readonly listId = ɵuniqueId('wt-listbox');
+  readonly listId = ɵuniqueId('wu-listbox');
   /** Every row (groups flattened) and the rows the search leaves. */
   items: SelectItem[] = [];
   visible: SelectItem[] = [];
@@ -203,16 +203,16 @@ export class WtListbox implements ControlValueAccessor, OnDestroy {
   private onModel: (v: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    // The rows are drawn by wt-select's stylesheet, the check boxes by wt-checkbox's.
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('select', ɵWT_SELECT_CSS);
-    styles.load('checkbox', ɵWT_CHECKBOX_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    // The rows are drawn by wu-select's stylesheet, the check boxes by wu-checkbox's.
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('select', ɵWU_SELECT_CSS);
+    styles.load('checkbox', ɵWU_CHECKBOX_CSS);
   }
 
   ngOnDestroy(): void {
@@ -222,7 +222,7 @@ export class WtListbox implements ControlValueAccessor, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

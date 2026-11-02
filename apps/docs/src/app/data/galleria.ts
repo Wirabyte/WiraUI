@@ -23,9 +23,9 @@ export const GALLERIA_DOC: ComponentDoc = {
   title: 'Galleria',
   group: 'Media',
   entry: 'galleria',
-  standalone: 'WtGalleria',
-  module: 'WtGalleriaModule',
-  selector: 'wt-galleria',
+  standalone: 'WuGalleria',
+  module: 'WuGalleriaModule',
+  selector: 'wu-galleria',
   description: {
     th: 'แสดงรูปทีละรูป พร้อมรูปย่อ จุดบอกตำแหน่ง และลูกศร เลื่อนเองเป็นสไลด์ได้ (หยุดเมื่อชี้อยู่) วนกลับรูปแรกได้ ปัดบนจอสัมผัสได้ และเปิดเต็มจอได้',
     en: 'Shows images one at a time with thumbnails, dots and arrows. It can play by itself (pausing while the pointer is over it), wrap round, be swiped on touch screens and open full screen.',
@@ -55,8 +55,8 @@ export const GALLERIA_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtGalleriaModule</code>) และ standalone (<code>WtGalleria</code>)',
-        en: 'Works as an NgModule (<code>WtGalleriaModule</code>) or standalone (<code>WtGalleria</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuGalleriaModule</code>) และ standalone (<code>WuGalleria</code>)',
+        en: 'Works as an NgModule (<code>WuGalleriaModule</code>) or standalone (<code>WuGalleria</code>).',
       },
     },
     basic: {
@@ -104,27 +104,27 @@ export const GALLERIA_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-galleria&gt;</code> เป็น <code>&lt;wt-galleria&gt;</code> input, template และ method ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) class <code>p-galleria-*</code> อยู่คู่กับ class <code>wt-galleria-*</code> · <code>baseZIndex</code> และ <code>transitionOptions</code> รับไว้แต่ไม่มีผล (ชั้นเต็มจออยู่ใน top layer)',
-        en: 'Change <code>&lt;p-galleria&gt;</code> to <code>&lt;wt-galleria&gt;</code>; inputs, templates and methods keep their names (<code>pTemplate="item"</code> keeps working), and the <code>p-galleria-*</code> classes sit next to the <code>wt-galleria-*</code> ones · <code>baseZIndex</code> and <code>transitionOptions</code> are accepted and ignored (the full-screen layer is in the top layer).',
+        th: 'เปลี่ยน <code>&lt;p-galleria&gt;</code> เป็น <code>&lt;wu-galleria&gt;</code> input, template และ method ชื่อเดิม (<code>pTemplate="item"</code> ใช้ต่อได้) class <code>p-galleria-*</code> อยู่คู่กับ class <code>wu-galleria-*</code> · <code>baseZIndex</code> และ <code>transitionOptions</code> รับไว้แต่ไม่มีผล (ชั้นเต็มจออยู่ใน top layer)',
+        en: 'Change <code>&lt;p-galleria&gt;</code> to <code>&lt;wu-galleria&gt;</code>; inputs, templates and methods keep their names (<code>pTemplate="item"</code> keeps working), and the <code>p-galleria-*</code> classes sit next to the <code>wu-galleria-*</code> ones · <code>baseZIndex</code> and <code>transitionOptions</code> are accepted and ignored (the full-screen layer is in the top layer).',
       },
     },
   },
   code: {
-    basic: `<wt-galleria [value]="photos" [numVisible]="4" [(activeIndex)]="photoIndex" [containerStyle]="{ maxWidth: '40rem' }">
+    basic: `<wu-galleria [value]="photos" [numVisible]="4" [(activeIndex)]="photoIndex" [containerStyle]="{ maxWidth: '40rem' }">
   <ng-template #item let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-photo" />
   </ng-template>
   <ng-template #thumbnail let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-thumb" />
   </ng-template>
-</wt-galleria>`,
-    indicators: `<wt-galleria [value]="photos" [showThumbnails]="false" [showIndicators]="true" [showIndicatorsOnItem]="true"
+</wu-galleria>`,
+    indicators: `<wu-galleria [value]="photos" [showThumbnails]="false" [showIndicators]="true" [showIndicatorsOnItem]="true"
   [showItemNavigators]="true" [circular]="true" [containerStyle]="{ maxWidth: '40rem' }">
   <ng-template #item let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-photo" />
   </ng-template>
-</wt-galleria>`,
-    caption: `<wt-galleria [value]="photos" [showThumbnails]="false" [showItemNavigators]="true" [showItemNavigatorsOnHover]="true"
+</wu-galleria>`,
+    caption: `<wu-galleria [value]="photos" [showThumbnails]="false" [showItemNavigators]="true" [showItemNavigatorsOnHover]="true"
   [showIndicators]="true" [containerStyle]="{ maxWidth: '40rem' }">
   <ng-template #header>
     <h3 class="gallery-title">ภาพกิจกรรม</h3>
@@ -136,8 +136,8 @@ export const GALLERIA_DOC: ComponentDoc = {
     <b>{{ photo.title }}</b>
     <p>{{ photo.text }}</p>
   </ng-template>
-</wt-galleria>`,
-    position: `<wt-galleria [value]="photos" [numVisible]="4" [responsiveOptions]="responsiveOptions" thumbnailsPosition="left"
+</wu-galleria>`,
+    position: `<wu-galleria [value]="photos" [numVisible]="4" [responsiveOptions]="responsiveOptions" thumbnailsPosition="left"
   verticalThumbnailViewPortHeight="280px" [containerStyle]="{ maxWidth: '40rem' }">
   <ng-template #item let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-photo" />
@@ -145,15 +145,15 @@ export const GALLERIA_DOC: ComponentDoc = {
   <ng-template #thumbnail let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-thumb" />
   </ng-template>
-</wt-galleria>`,
-    autoplay: `<wt-galleria #slides [value]="photos" [showThumbnails]="false" [showIndicators]="true" [autoPlay]="true"
+</wu-galleria>`,
+    autoplay: `<wu-galleria #slides [value]="photos" [showThumbnails]="false" [showIndicators]="true" [autoPlay]="true"
   [circular]="true" [transitionInterval]="3000" [containerStyle]="{ maxWidth: '40rem' }">
   <ng-template #item let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-photo" />
   </ng-template>
-</wt-galleria>
-<wt-button label="เล่นสไลด์" icon="wi wi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wt-button>
-<wt-button label="หยุด" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wt-button>`,
+</wu-galleria>
+<wu-button label="เล่นสไลด์" icon="wi wi-refresh" severity="secondary" (onClick)="slides.startSlideShow()"></wu-button>
+<wu-button label="หยุด" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="slides.stopSlideShow()"></wu-button>`,
     fullscreen: {
       v3: `<div class="photo-grid">
   @for (photo of photos; track photo.src; let i = $index) {
@@ -162,31 +162,31 @@ export const GALLERIA_DOC: ComponentDoc = {
     </button>
   }
 </div>
-<wt-galleria [value]="photos" [fullScreen]="true" [(visible)]="galleryOpen" [(activeIndex)]="photoIndex"
+<wu-galleria [value]="photos" [fullScreen]="true" [(visible)]="galleryOpen" [(activeIndex)]="photoIndex"
   [showThumbnails]="false" [showItemNavigators]="true" [circular]="true">
   <ng-template #item let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-full" />
   </ng-template>
-</wt-galleria>`,
+</wu-galleria>`,
       classic: `<div class="photo-grid">
   <button *ngFor="let photo of photos; let i = index" type="button" class="photo-button" (click)="openPhoto(i)">
     <img [src]="photo.src" [alt]="photo.alt" />
   </button>
 </div>
-<wt-galleria [value]="photos" [fullScreen]="true" [(visible)]="galleryOpen" [(activeIndex)]="photoIndex"
+<wu-galleria [value]="photos" [fullScreen]="true" [(visible)]="galleryOpen" [(activeIndex)]="photoIndex"
   [showThumbnails]="false" [showItemNavigators]="true" [circular]="true">
-  <ng-template wtTemplate="item" let-photo>
+  <ng-template wuTemplate="item" let-photo>
     <img [src]="photo.src" [alt]="photo.alt" class="gallery-full" />
   </ng-template>
-</wt-galleria>`,
+</wu-galleria>`,
     },
   },
   ts: {
     basic: `${PHOTOS_TS}
 photoIndex = 0;`,
-    position: `import { WtGalleriaResponsiveOptions } from 'wiratheme/galleria';
+    position: `import { WuGalleriaResponsiveOptions } from 'wiraui/galleria';
 
-responsiveOptions: WtGalleriaResponsiveOptions[] = [
+responsiveOptions: WuGalleriaResponsiveOptions[] = [
   { breakpoint: '768px', numVisible: 2 },   // จอกว้างไม่เกิน 768px: รูปย่อ 2 รูป
 ];`,
     fullscreen: `galleryOpen = false;
@@ -206,7 +206,7 @@ openPhoto(index: number): void {
         row('value', 'any[]', undefined, 'รายการรูป', 'The photos'),
         row('activeIndex', 'number', '0', 'รูปที่แสดง (สองทาง [(activeIndex)])', 'The photo on show (two-way [(activeIndex)])'),
         row('numVisible', 'number', '3', 'จำนวนรูปย่อที่เห็น', 'Thumbnails in view'),
-        row('responsiveOptions', 'WtGalleriaResponsiveOptions[]', undefined, 'จำนวนรูปย่อตามความกว้างหน้าต่าง', 'Thumbnails by window width'),
+        row('responsiveOptions', 'WuGalleriaResponsiveOptions[]', undefined, 'จำนวนรูปย่อตามความกว้างหน้าต่าง', 'Thumbnails by window width'),
         row('showThumbnails · showThumbnailNavigators', BOOL, 'true · true', 'แถบรูปย่อและลูกศรของแถบ', 'The thumbnail strip and its arrows'),
         row('showIndicators · showIndicatorsOnItem · changeItemOnIndicatorHover', BOOL, 'false', 'จุดบอกตำแหน่ง วางบนรูป และเปลี่ยนรูปเมื่อชี้', 'Dots, on the photo, and change on hover'),
         row('showItemNavigators · showItemNavigatorsOnHover', BOOL, 'false', 'ลูกศรบนรูป และแสดงเมื่อชี้เท่านั้น', 'Arrows on the photo, and only on hover'),
@@ -233,7 +233,7 @@ openPhoto(index: number): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (photo) · index', undefined, 'รูปใหญ่', 'The big photo'),
         row('thumbnail', '$implicit (photo) · index', undefined, 'รูปย่อ', 'A thumbnail'),
@@ -253,19 +253,19 @@ openPhoto(index: number): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtGalleriaResponsiveOptions {
+      code: `interface WuGalleriaResponsiveOptions {
   breakpoint: string;   // '768px': ใช้เมื่อหน้าต่างกว้างไม่เกินนี้
   numVisible: number;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-galleria-radius', 'ความมนของรูป', 'Photo radius'),
-    tok('--wt-galleria-nav-size', 'ขนาดลูกศร', 'Arrow size'),
-    tok('--wt-galleria-indicator-size', 'ขนาดจุด', 'Dot size'),
-    tok('--wt-galleria-indicator-bg', 'สีจุด', 'Dot colour'),
-    tok('--wt-galleria-indicator-active-bg', 'สีจุดของรูปปัจจุบัน', 'Colour of the current dot'),
-    tok('--wt-galleria-thumbnail-gap', 'ระยะระหว่างรูปย่อ', 'Gap between thumbnails'),
-    tok('--wt-galleria-thumbnail-radius', 'ความมนของรูปย่อ', 'Thumbnail radius'),
+    tok('--wu-galleria-radius', 'ความมนของรูป', 'Photo radius'),
+    tok('--wu-galleria-nav-size', 'ขนาดลูกศร', 'Arrow size'),
+    tok('--wu-galleria-indicator-size', 'ขนาดจุด', 'Dot size'),
+    tok('--wu-galleria-indicator-bg', 'สีจุด', 'Dot colour'),
+    tok('--wu-galleria-indicator-active-bg', 'สีจุดของรูปปัจจุบัน', 'Colour of the current dot'),
+    tok('--wu-galleria-thumbnail-gap', 'ระยะระหว่างรูปย่อ', 'Gap between thumbnails'),
+    tok('--wu-galleria-thumbnail-radius', 'ความมนของรูปย่อ', 'Thumbnail radius'),
   ],
 };

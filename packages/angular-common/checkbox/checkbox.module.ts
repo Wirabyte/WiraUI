@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtCheckbox } from './checkbox.component';
+import { WuCheckbox } from './checkbox.component';
 
-/** For NgModule apps. Standalone apps can import `WtCheckbox` directly. */
+/** For NgModule apps. Standalone apps can import `WuCheckbox` directly. */
 @NgModule({
-  imports: [WtCheckbox],
-  exports: [WtCheckbox],
+  imports: [WuCheckbox],
+  exports: [WuCheckbox],
 })
-export class WtCheckboxModule {}
+export class WuCheckboxModule {}

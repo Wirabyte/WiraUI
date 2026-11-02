@@ -10,8 +10,8 @@ const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((s
 const SCSS_DIR = new URL('../scss/', import.meta.url);
 const importer = {
   findFileUrl(url: string) {
-    if (url !== 'wiratheme/theme' && !url.startsWith('wiratheme/theme/')) return null;
-    return new URL(url.slice('wiratheme/theme/'.length) || 'index', SCSS_DIR);
+    if (url !== 'wiraui/theme' && !url.startsWith('wiraui/theme/')) return null;
+    return new URL(url.slice('wiraui/theme/'.length) || 'index', SCSS_DIR);
   },
 };
 
@@ -20,13 +20,13 @@ function prototype(): any {
   for (const f of ['engine.js', 'exporters.js']) {
     runInNewContext(readFileSync(new URL(`../../../prototype/theme-designer/${f}`, import.meta.url), 'utf8'), ctx);
   }
-  return ctx.window.WT;
+  return ctx.window.WU;
 }
 
 function declarations(css: string): Record<string, string> {
   const out: Record<string, string> = {};
   const root = /:root\s*\{([^}]*)\}/.exec(css);
-  for (const m of (root ? root[1] : '').matchAll(/--wt-([\w-]+):\s*([^;]+);/g)) out[m[1]] = m[2].trim();
+  for (const m of (root ? root[1] : '').matchAll(/--wu-([\w-]+):\s*([^;]+);/g)) out[m[1]] = m[2].trim();
   return out;
 }
 

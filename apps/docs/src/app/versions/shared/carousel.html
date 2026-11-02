@@ -7,17 +7,17 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-carousel id="d-crs" [value]="local(news)" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <wu-carousel id="d-crs" [value]="local(news)" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
           <ng-template #item let-news>
             <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
           </ng-template>
-        </wt-carousel>
+        </wu-carousel>
       </docs-demo>
     </docs-section>
 
     <docs-section id="circular" [section]="sec['circular']">
       <docs-demo [html]="code['circular']" layout="stack">
-        <wt-carousel
+        <wu-carousel
           id="d-crs-circ"
           [value]="local(news)"
           [numVisible]="3"
@@ -29,30 +29,30 @@
           <ng-template #item let-news>
             <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
           </ng-template>
-        </wt-carousel>
+        </wu-carousel>
       </docs-demo>
     </docs-section>
 
     <docs-section id="vertical" [section]="sec['vertical']">
       <docs-demo [html]="code['vertical']" layout="stack">
-        <wt-carousel id="d-crs-vert" [value]="local(news)" orientation="vertical" verticalViewPortHeight="320px" [style]="{ maxWidth: '24rem' }">
+        <wu-carousel id="d-crs-vert" [value]="local(news)" orientation="vertical" verticalViewPortHeight="320px" [style]="{ maxWidth: '24rem' }">
           <ng-template #item let-news>
             <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
           </ng-template>
-        </wt-carousel>
+        </wu-carousel>
       </docs-demo>
     </docs-section>
 
     <docs-section id="page" [section]="sec['page']">
       <docs-demo [html]="code['page']" [ts]="ts['page']" layout="stack">
-        <wt-carousel id="d-crs-page" [value]="local(news)" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
+        <wu-carousel id="d-crs-page" [value]="local(news)" [numVisible]="2" [numScroll]="2" [(page)]="page" (onPage)="paged($event)">
           <ng-template #item let-news>
             <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
           </ng-template>
-        </wt-carousel>
+        </wu-carousel>
         <div class="docs-demo-actions">
-          <wt-button id="d-crs-first" [label]="tx('หน้าแรก')" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wt-button>
-          <wt-button id="d-crs-last" [label]="tx('หน้าสุดท้าย')" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wt-button>
+          <wu-button id="d-crs-first" [label]="tx('หน้าแรก')" icon="wi wi-angle-double-left" severity="secondary" [outlined]="true" (onClick)="page = 0"></wu-button>
+          <wu-button id="d-crs-last" [label]="tx('หน้าสุดท้าย')" icon="wi wi-angle-double-right" iconPos="right" severity="secondary" [outlined]="true" (onClick)="page = 2"></wu-button>
           <span class="docs-demo-output">page: <code id="d-crs-page-value">{{ page }}</code> · onPage: <code id="d-crs-onpage">{{ lastPage ?? '-' }}</code></span>
         </div>
       </docs-demo>
@@ -60,7 +60,7 @@
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-carousel
+        <wu-carousel
           id="d-crs-tpl"
           [value]="local(news)"
           [numVisible]="3"
@@ -76,9 +76,9 @@
             <ng-container *ngTemplateOutlet="newsCard; context: { $implicit: news }"></ng-container>
           </ng-template>
           <ng-template #footer>
-            <wt-button id="d-crs-all" [label]="tx('ดูข่าวทั้งหมด')" icon="wi wi-arrow-right" iconPos="right" [text]="true" (onClick)="openNews()"></wt-button>
+            <wu-button id="d-crs-all" [label]="tx('ดูข่าวทั้งหมด')" icon="wi wi-arrow-right" iconPos="right" [text]="true" (onClick)="openNews()"></wu-button>
           </ng-template>
-        </wt-carousel>
+        </wu-carousel>
         <span class="docs-demo-output">openNews(): <code id="d-crs-all-count">{{ allNews }}</code></span>
       </docs-demo>
     </docs-section>
@@ -93,7 +93,7 @@
   <article class="docs-crs-card">
     <img [src]="news.image" [alt]="news.title" />
     <div class="docs-crs-body">
-      <wt-tag [value]="news.tag"></wt-tag>
+      <wu-tag [value]="news.tag"></wu-tag>
       <h4 class="docs-crs-title">{{ news.title }}</h4>
       <p class="docs-crs-text">{{ news.text }}</p>
     </div>

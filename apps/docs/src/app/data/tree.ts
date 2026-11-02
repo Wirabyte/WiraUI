@@ -3,7 +3,7 @@ import { row, STYLE_ROW, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-/** A tree node as the demos build it (no wiratheme import here). */
+/** A tree node as the demos build it (no wiraui import here). */
 export interface DocTreeNode {
   key?: string;
   label?: string;
@@ -67,7 +67,7 @@ export function schoolFolders(): DocTreeNode[] {
   ];
 }
 
-const FOLDERS_TS = `import type { TreeNode } from 'wiratheme/api';
+const FOLDERS_TS = `import type { TreeNode } from 'wiraui/api';
 
 folders: TreeNode[] = [
   {
@@ -142,9 +142,9 @@ export const TREE_DOC: ComponentDoc = {
   title: 'Tree',
   group: 'Data',
   entry: 'tree',
-  standalone: 'WtTree',
-  module: 'WtTreeModule',
-  selector: 'wt-tree',
+  standalone: 'WuTree',
+  module: 'WuTreeModule',
+  selector: 'wu-tree',
   description: {
     th: 'แสดงข้อมูลเป็นลำดับชั้นที่เปิดปิดได้ เช่นโฟลเดอร์เอกสารหรือโครงสร้างหน่วยงาน เลือกทีละรายการ หลายรายการ หรือติ๊กที่กระจายไปยังลูกและพ่อ ค้นหาได้ และโหลดลูกเมื่อเปิดได้',
     en: 'Shows data as levels that open and close, such as document folders or an organisation chart. Pick one node, several, or tick boxes that spread to children and parents; search; load children when a node opens.',
@@ -154,8 +154,8 @@ export const TREE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTreeModule</code>) และ standalone (<code>WtTree</code>) type ของ node คือ <code>TreeNode</code> จาก <code>wiratheme/api</code>',
-        en: 'Works as an NgModule (<code>WtTreeModule</code>) or standalone (<code>WtTree</code>). Nodes are typed <code>TreeNode</code> from <code>wiratheme/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTreeModule</code>) และ standalone (<code>WuTree</code>) type ของ node คือ <code>TreeNode</code> จาก <code>wiraui/api</code>',
+        en: 'Works as an NgModule (<code>WuTreeModule</code>) or standalone (<code>WuTree</code>). Nodes are typed <code>TreeNode</code> from <code>wiraui/api</code>.',
       },
     },
     basic: {
@@ -196,44 +196,44 @@ export const TREE_DOC: ComponentDoc = {
     templates: {
       title: { th: 'Template และเมนูคลิกขวา', en: 'Templates and the context menu' },
       text: {
-        th: 'template ตาม <code>type</code> ของ node: <code>wtTemplate="file"</code> สำหรับ node ที่ <code>type: \'file\'</code> และ <code>wtTemplate="default"</code> สำหรับที่เหลือ (ได้ <code>let-node</code>) ชื่อ template นี้เขียนแบบ <code>wtTemplate</code> ในทุกรุ่นเพราะเป็นชื่อตามข้อมูล · <code>header</code>, <code>footer</code>, <code>empty</code> และ <code>togglericon</code> · <code>[contextMenu]="fileMenu"</code> ต่อกับ wt-contextMenu: คลิกขวาที่ node แล้วเมนูเปิด และ <code>(onNodeContextMenuSelect)</code> บอกว่าเป็น node ไหน · <code>(onNodeDoubleClick)</code> เหมาะกับการเปิดไฟล์',
-        en: 'Templates by node <code>type</code>: <code>wtTemplate="file"</code> for nodes with <code>type: \'file\'</code> and <code>wtTemplate="default"</code> for the rest (both get <code>let-node</code>); these names come from your data, so they are written <code>wtTemplate</code> in every version · <code>header</code>, <code>footer</code>, <code>empty</code> and <code>togglericon</code> · <code>[contextMenu]="fileMenu"</code> connects a wt-contextMenu: a right-click on a node opens it, and <code>(onNodeContextMenuSelect)</code> says which node · <code>(onNodeDoubleClick)</code> suits opening a file.',
+        th: 'template ตาม <code>type</code> ของ node: <code>wuTemplate="file"</code> สำหรับ node ที่ <code>type: \'file\'</code> และ <code>wuTemplate="default"</code> สำหรับที่เหลือ (ได้ <code>let-node</code>) ชื่อ template นี้เขียนแบบ <code>wuTemplate</code> ในทุกรุ่นเพราะเป็นชื่อตามข้อมูล · <code>header</code>, <code>footer</code>, <code>empty</code> และ <code>togglericon</code> · <code>[contextMenu]="fileMenu"</code> ต่อกับ wu-contextMenu: คลิกขวาที่ node แล้วเมนูเปิด และ <code>(onNodeContextMenuSelect)</code> บอกว่าเป็น node ไหน · <code>(onNodeDoubleClick)</code> เหมาะกับการเปิดไฟล์',
+        en: 'Templates by node <code>type</code>: <code>wuTemplate="file"</code> for nodes with <code>type: \'file\'</code> and <code>wuTemplate="default"</code> for the rest (both get <code>let-node</code>); these names come from your data, so they are written <code>wuTemplate</code> in every version · <code>header</code>, <code>footer</code>, <code>empty</code> and <code>togglericon</code> · <code>[contextMenu]="fileMenu"</code> connects a wu-contextMenu: a right-click on a node opens it, and <code>(onNodeContextMenuSelect)</code> says which node · <code>(onNodeDoubleClick)</code> suits opening a file.',
       },
     },
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-tree&gt;</code> เป็น <code>&lt;wt-tree&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="default"</code> และ template ตาม type ใช้ต่อได้) <code>TreeNode</code> import จาก <code>wiratheme/api</code> · class <code>p-tree</code>, <code>p-treenode</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wt-*</code> · การลากวาง node (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> และ <code>layout="horizontal"</code> รับไว้แต่ยังไม่มีผล',
-        en: 'Change <code>&lt;p-tree&gt;</code> to <code>&lt;wt-tree&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="default"</code> and the per-type templates keep working), and <code>TreeNode</code> is imported from <code>wiratheme/api</code> · the <code>p-tree</code>, <code>p-treenode</code> and <code>p-highlight</code> classes sit next to the <code>wt-*</code> ones · node drag and drop (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> and <code>layout="horizontal"</code> are accepted but not built yet.',
+        th: 'เปลี่ยน <code>&lt;p-tree&gt;</code> เป็น <code>&lt;wu-tree&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="default"</code> และ template ตาม type ใช้ต่อได้) <code>TreeNode</code> import จาก <code>wiraui/api</code> · class <code>p-tree</code>, <code>p-treenode</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wu-*</code> · การลากวาง node (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> และ <code>layout="horizontal"</code> รับไว้แต่ยังไม่มีผล',
+        en: 'Change <code>&lt;p-tree&gt;</code> to <code>&lt;wu-tree&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="default"</code> and the per-type templates keep working), and <code>TreeNode</code> is imported from <code>wiraui/api</code> · the <code>p-tree</code>, <code>p-treenode</code> and <code>p-highlight</code> classes sit next to the <code>wu-*</code> ones · node drag and drop (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> and <code>layout="horizontal"</code> are accepted but not built yet.',
       },
     },
   },
   code: {
-    basic: `<wt-tree [value]="folders" ariaLabel="เอกสารของโรงเรียน" [style]="{ maxWidth: '24rem' }"></wt-tree>`,
-    selection: `<wt-tree [value]="folders" selectionMode="single" [(selection)]="pickedFile" dataKey="key" ariaLabel="เอกสารของโรงเรียน"></wt-tree>
+    basic: `<wu-tree [value]="folders" ariaLabel="เอกสารของโรงเรียน" [style]="{ maxWidth: '24rem' }"></wu-tree>`,
+    selection: `<wu-tree [value]="folders" selectionMode="single" [(selection)]="pickedFile" dataKey="key" ariaLabel="เอกสารของโรงเรียน"></wu-tree>
 <span>เลือกอยู่: {{ pickedFile?.label }}</span>`,
-    checkbox: `<wt-tree [value]="folders" selectionMode="checkbox" [(selection)]="tickedFiles" ariaLabel="เอกสารของโรงเรียน"></wt-tree>
+    checkbox: `<wu-tree [value]="folders" selectionMode="checkbox" [(selection)]="tickedFiles" ariaLabel="เอกสารของโรงเรียน"></wu-tree>
 <span>เลือกแล้ว {{ tickedFiles.length }} ไฟล์</span>`,
-    filter: `<wt-tree [value]="folders" [filter]="true" filterMode="lenient" filterPlaceholder="ค้นหาเอกสาร"
-  scrollHeight="18rem" ariaLabel="เอกสารของโรงเรียน"></wt-tree>`,
-    lazy: `<wt-tree [value]="grades" (onNodeExpand)="loadRooms($event)" ariaLabel="ห้องเรียน"></wt-tree>`,
-    templates: `<wt-tree [value]="folders" selectionMode="single" [(selection)]="pickedFile" [contextMenu]="fileMenu"
+    filter: `<wu-tree [value]="folders" [filter]="true" filterMode="lenient" filterPlaceholder="ค้นหาเอกสาร"
+  scrollHeight="18rem" ariaLabel="เอกสารของโรงเรียน"></wu-tree>`,
+    lazy: `<wu-tree [value]="grades" (onNodeExpand)="loadRooms($event)" ariaLabel="ห้องเรียน"></wu-tree>`,
+    templates: `<wu-tree [value]="folders" selectionMode="single" [(selection)]="pickedFile" [contextMenu]="fileMenu"
   (onNodeContextMenuSelect)="pickNode($event)" (onNodeDoubleClick)="openFile($event)" ariaLabel="เอกสารของโรงเรียน">
-  <ng-template wtTemplate="default" let-node>
+  <ng-template wuTemplate="default" let-node>
     <b>{{ node.label }}</b>
   </ng-template>
-  <ng-template wtTemplate="file" let-node>
+  <ng-template wuTemplate="file" let-node>
     <span>{{ node.label }}</span>
     <small class="file-size">{{ node.data }}</small>
   </ng-template>
-</wt-tree>
-<wt-contextMenu #fileMenu [model]="fileActions"></wt-contextMenu>`,
+</wu-tree>
+<wu-contextMenu #fileMenu [model]="fileActions"></wu-contextMenu>`,
   },
   ts: {
     basic: FOLDERS_TS,
     selection: `pickedFile: TreeNode | null = null;`,
     checkbox: `tickedFiles: TreeNode[] = [];`,
-    lazy: `import { WtTreeNodeEvent } from 'wiratheme/tree';
+    lazy: `import { WuTreeNodeEvent } from 'wiraui/tree';
 
 grades: TreeNode[] = [
   { key: 'm1', label: 'ชั้น ม.1', leaf: false },
@@ -242,7 +242,7 @@ grades: TreeNode[] = [
 ];
 
 /** โหลดห้องเมื่อเปิดชั้น */
-loadRooms(event: WtTreeNodeEvent): void {
+loadRooms(event: WuTreeNodeEvent): void {
   const node = event.node;
   if (node.children) return;
   node.loading = true;
@@ -251,21 +251,21 @@ loadRooms(event: WtTreeNodeEvent): void {
     node.loading = false;
   });
 }`,
-    templates: `import { WtTreeNodeEvent } from 'wiratheme/tree';
-import { WtMenuItem } from 'wiratheme/menu';
+    templates: `import { WuTreeNodeEvent } from 'wiraui/tree';
+import { WuMenuItem } from 'wiraui/menu';
 
 // โฟลเดอร์ใช้ template default ไฟล์ใช้ template file
-fileActions: WtMenuItem[] = [
+fileActions: WuMenuItem[] = [
   { label: 'ดาวน์โหลด', icon: 'wi wi-download', command: (event) => this.run(event) },
   { label: 'เปลี่ยนชื่อ', icon: 'wi wi-pencil', command: (event) => this.run(event) },
   { label: 'ลบ', icon: 'wi wi-trash', command: (event) => this.run(event) },
 ];
 
-pickNode(event: WtTreeNodeEvent): void {
+pickNode(event: WuTreeNodeEvent): void {
   this.pickedFile = event.node;
 }
 
-openFile(event: WtTreeNodeEvent): void {
+openFile(event: WuTreeNodeEvent): void {
   this.lastOpened = event.node.label ?? '';
 }`,
   },
@@ -284,7 +284,7 @@ openFile(event: WtTreeNodeEvent): void {
         row('emptyMessage', 'string', 'locale', 'ข้อความเมื่อไม่มี node (ค้นไม่เจอใช้ emptyFilterMessage ของ locale)', 'Text when there are no nodes (a search with no result uses the locale\'s emptyFilterMessage)'),
         row('loading', BOOL, 'false', 'สถานะโหลดของทั้ง tree', 'The whole tree is loading'),
         row('scrollHeight', 'string', undefined, 'ความสูงก่อนเลื่อน', 'Height before it scrolls'),
-        row('contextMenu', 'wt-contextMenu', undefined, 'เมนูที่เปิดเมื่อคลิกขวาที่ node', 'The menu a right-click on a node opens'),
+        row('contextMenu', 'wu-contextMenu', undefined, 'เมนูที่เปิดเมื่อคลิกขวาที่ node', 'The menu a right-click on a node opens'),
         row('ariaLabel · ariaLabelledBy · togglerAriaLabel', 'string', undefined, 'ชื่อของ tree และของปุ่มเปิดปิด', 'Names of the tree and of the toggle buttons'),
         STYLE_ROW,
         row('layout · lazy · virtualScroll · virtualScrollItemSize · draggableNodes · droppableNodes · validateDrop · filterLocale · trackBy · indentation', 'unknown', undefined, 'รับไว้เพื่อให้ template เดิมใช้ได้ ยังไม่มีผล', 'Accepted so existing templates compile; no effect yet'),
@@ -308,18 +308,18 @@ openFile(event: WtTreeNodeEvent): void {
       typeLabel: 'Event',
       rows: [
         row('selectionChange', 'TreeNode | TreeNode[]', undefined, 'คู่ของ [(selection)]', 'For [(selection)]'),
-        row('onNodeSelect · onNodeUnselect', 'WtTreeNodeEvent', undefined, 'เลือก / เอาออก', 'Picked / unpicked'),
-        row('onNodeExpand · onNodeCollapse', 'WtTreeNodeEvent', undefined, 'เปิด / ปิด node', 'A node opened / closed'),
-        row('onNodeDoubleClick', 'WtTreeNodeEvent', undefined, 'ดับเบิลคลิกที่ node', 'A node was double-clicked'),
-        row('onNodeContextMenuSelect', 'WtTreeNodeEvent', undefined, 'คลิกขวาที่ node (เมื่อมี contextMenu)', 'A node was right-clicked (with a contextMenu)'),
-        row('onFilter', 'WtTreeFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onNodeSelect · onNodeUnselect', 'WuTreeNodeEvent', undefined, 'เลือก / เอาออก', 'Picked / unpicked'),
+        row('onNodeExpand · onNodeCollapse', 'WuTreeNodeEvent', undefined, 'เปิด / ปิด node', 'A node opened / closed'),
+        row('onNodeDoubleClick', 'WuTreeNodeEvent', undefined, 'ดับเบิลคลิกที่ node', 'A node was double-clicked'),
+        row('onNodeContextMenuSelect', 'WuTreeNodeEvent', undefined, 'คลิกขวาที่ node (เมื่อมี contextMenu)', 'A node was right-clicked (with a contextMenu)'),
+        row('onFilter', 'WuTreeFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
       ],
     },
     {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'template ตาม type เขียนเป็น wtTemplate="ชื่อ type" (หรือ pTemplate) ส่วน header / footer / empty / togglericon เขียนเป็น #ชื่อ ก็ได้', en: 'Per-type templates are written wtTemplate="type name" (or pTemplate); header / footer / empty / togglericon can also be #name.' },
+      note: { th: 'template ตาม type เขียนเป็น wuTemplate="ชื่อ type" (หรือ pTemplate) ส่วน header / footer / empty / togglericon เขียนเป็น #ชื่อ ก็ได้', en: 'Per-type templates are written wuTemplate="type name" (or pTemplate); header / footer / empty / togglericon can also be #name.' },
       rows: [
         row('default · <type>', '$implicit (node)', undefined, 'เนื้อในแถวของ node', 'What is inside a node\'s row'),
         row('header · footer', '—', undefined, 'เหนือ / ใต้ tree', 'Above / below the tree'),
@@ -335,19 +335,19 @@ openFile(event: WtTreeNodeEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import type { TreeNode } from 'wiratheme/api';
+      code: `import type { TreeNode } from 'wiraui/api';
 
-interface WtTreeNodeEvent { originalEvent: Event; node: TreeNode }
-interface WtTreeFilterEvent { filter: string; filteredValue: TreeNode[] }`,
+interface WuTreeNodeEvent { originalEvent: Event; node: TreeNode }
+interface WuTreeFilterEvent { filter: string; filteredValue: TreeNode[] }`,
     },
   ],
   tokens: [
-    tok('--wt-tree-padding', 'ระยะในกรอบ', 'Frame padding'),
-    tok('--wt-tree-bg', 'พื้นของกรอบ', 'Frame background'),
-    tok('--wt-tree-border-width', 'ขอบของกรอบ', 'Frame border width'),
-    tok('--wt-tree-gap', 'ระยะระหว่างแถว', 'Gap between rows'),
-    tok('--wt-tree-node-padding-x · --wt-tree-node-padding-y', 'ระยะในแถว', 'Row padding'),
-    tok('--wt-tree-node-radius', 'ความมนของแถว', 'Row radius'),
+    tok('--wu-tree-padding', 'ระยะในกรอบ', 'Frame padding'),
+    tok('--wu-tree-bg', 'พื้นของกรอบ', 'Frame background'),
+    tok('--wu-tree-border-width', 'ขอบของกรอบ', 'Frame border width'),
+    tok('--wu-tree-gap', 'ระยะระหว่างแถว', 'Gap between rows'),
+    tok('--wu-tree-node-padding-x · --wu-tree-node-padding-y', 'ระยะในแถว', 'Row padding'),
+    tok('--wu-tree-node-radius', 'ความมนของแถว', 'Row radius'),
   ],
 };
 
@@ -356,10 +356,10 @@ export const TREESELECT_DOC: ComponentDoc = {
   title: 'TreeSelect',
   group: 'Form',
   entry: 'treeselect',
-  standalone: 'WtTreeSelect',
-  module: 'WtTreeSelectModule',
+  standalone: 'WuTreeSelect',
+  module: 'WuTreeSelectModule',
   forms: true,
-  selector: 'wt-treeselect',
+  selector: 'wu-treeselect',
   description: {
     th: 'ช่องเลือกที่เปิดเป็น tree ให้เลือก node เดียวหรือหลาย node (แสดงเป็นข้อความหรือ chip) ค้นหาได้ ล้างค่าได้ และเมื่อเปิดจะเปิดพ่อของ node ที่เลือกไว้ให้เห็นทันที',
     en: 'A field that opens a tree to pick one node or several (shown as text or chips). It can search and be cleared, and opening it shows the picked nodes with their parents open.',
@@ -369,22 +369,22 @@ export const TREESELECT_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTreeSelectModule</code>) และ standalone (<code>WtTreeSelect</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็กเขียนได้ทั้ง <code>wt-treeselect</code>, <code>wt-treeSelect</code> และ <code>wt-tree-select</code>',
-        en: 'Works as an NgModule (<code>WtTreeSelectModule</code>) or standalone (<code>WtTreeSelect</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The tag can be written <code>wt-treeselect</code>, <code>wt-treeSelect</code> or <code>wt-tree-select</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTreeSelectModule</code>) และ standalone (<code>WuTreeSelect</code>) ใช้คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> แท็กเขียนได้ทั้ง <code>wu-treeselect</code>, <code>wu-treeSelect</code> และ <code>wu-tree-select</code>',
+        en: 'Works as an NgModule (<code>WuTreeSelectModule</code>) or standalone (<code>WuTreeSelect</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The tag can be written <code>wu-treeselect</code>, <code>wu-treeSelect</code> or <code>wu-tree-select</code>.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[options]</code> คือ node แบบเดียวกับ wt-tree และ <code>[(ngModel)]</code> ได้ node ที่เลือก เลือกแล้วแผงปิด · เปิดใหม่จะเห็น node ที่เลือกพร้อมพ่อที่เปิดไว้ · <code>[filter]="true"</code> ค้นหาในแผง (<code>[resetFilterOnHide]="false"</code> เก็บคำค้นไว้) · <code>[showClear]="true"</code> มีปุ่มล้าง และ <code>(onClear)</code> · คีย์บอร์ด: <code>↓</code> / <code>Enter</code> / <code>Space</code> เปิด ใช้ลูกศรใน tree, <code>Esc</code> ปิดแล้วโฟกัสกลับ, <code>Tab</code> ออกและปิด',
-        en: '<code>[options]</code> are nodes as in wt-tree and <code>[(ngModel)]</code> gets the picked node; a pick closes the panel · reopening shows the picked node with its parents open · <code>[filter]="true"</code> searches in the panel (<code>[resetFilterOnHide]="false"</code> keeps the text) · <code>[showClear]="true"</code> adds a clear button, with <code>(onClear)</code> · keyboard: <code>↓</code> / <code>Enter</code> / <code>Space</code> open it and the arrows work in the tree, <code>Esc</code> closes and gives focus back, <code>Tab</code> leaves and closes.',
+        th: '<code>[options]</code> คือ node แบบเดียวกับ wu-tree และ <code>[(ngModel)]</code> ได้ node ที่เลือก เลือกแล้วแผงปิด · เปิดใหม่จะเห็น node ที่เลือกพร้อมพ่อที่เปิดไว้ · <code>[filter]="true"</code> ค้นหาในแผง (<code>[resetFilterOnHide]="false"</code> เก็บคำค้นไว้) · <code>[showClear]="true"</code> มีปุ่มล้าง และ <code>(onClear)</code> · คีย์บอร์ด: <code>↓</code> / <code>Enter</code> / <code>Space</code> เปิด ใช้ลูกศรใน tree, <code>Esc</code> ปิดแล้วโฟกัสกลับ, <code>Tab</code> ออกและปิด',
+        en: '<code>[options]</code> are nodes as in wu-tree and <code>[(ngModel)]</code> gets the picked node; a pick closes the panel · reopening shows the picked node with its parents open · <code>[filter]="true"</code> searches in the panel (<code>[resetFilterOnHide]="false"</code> keeps the text) · <code>[showClear]="true"</code> adds a clear button, with <code>(onClear)</code> · keyboard: <code>↓</code> / <code>Enter</code> / <code>Space</code> open it and the arrows work in the tree, <code>Esc</code> closes and gives focus back, <code>Tab</code> leaves and closes.',
       },
     },
     multiple: {
       title: { th: 'เลือกหลาย node', en: 'Several nodes' },
       text: {
-        th: '<code>selectionMode="checkbox"</code> (หรือ <code>"multiple"</code>) ค่าเป็น array ติ๊กกระจายไปลูกและพ่อเหมือน wt-tree · <code>display="chip"</code> แสดงที่เลือกเป็น chip (ค่าเริ่มต้น <code>comma</code> เป็นข้อความคั่นจุลภาค)',
-        en: '<code>selectionMode="checkbox"</code> (or <code>"multiple"</code>) makes the value an array; ticks spread to children and parents as in wt-tree · <code>display="chip"</code> shows the picks as chips (<code>comma</code>, the default, as comma-separated text).',
+        th: '<code>selectionMode="checkbox"</code> (หรือ <code>"multiple"</code>) ค่าเป็น array ติ๊กกระจายไปลูกและพ่อเหมือน wu-tree · <code>display="chip"</code> แสดงที่เลือกเป็น chip (ค่าเริ่มต้น <code>comma</code> เป็นข้อความคั่นจุลภาค)',
+        en: '<code>selectionMode="checkbox"</code> (or <code>"multiple"</code>) makes the value an array; ticks spread to children and parents as in wu-tree · <code>display="chip"</code> shows the picks as chips (<code>comma</code>, the default, as comma-separated text).',
       },
     },
     templates: {
@@ -397,20 +397,20 @@ export const TREESELECT_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-treeSelect&gt;</code> เป็น <code>&lt;wt-treeSelect&gt;</code> input, event และ template ชื่อเดิม แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>fluid</code>, transition และ <code>virtualScroll</code>) · class <code>p-treeselect</code> อยู่คู่กับ <code>wt-treeselect</code>',
-        en: 'Change <code>&lt;p-treeSelect&gt;</code> to <code>&lt;wt-treeSelect&gt;</code>; inputs, events and templates keep their names. The panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>fluid</code>, the transitions and <code>virtualScroll</code>) · the <code>p-treeselect</code> class sits next to <code>wt-treeselect</code>.',
+        th: 'เปลี่ยน <code>&lt;p-treeSelect&gt;</code> เป็น <code>&lt;wu-treeSelect&gt;</code> input, event และ template ชื่อเดิม แผงเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>fluid</code>, transition และ <code>virtualScroll</code>) · class <code>p-treeselect</code> อยู่คู่กับ <code>wu-treeselect</code>',
+        en: 'Change <code>&lt;p-treeSelect&gt;</code> to <code>&lt;wu-treeSelect&gt;</code>; inputs, events and templates keep their names. The panel opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>fluid</code>, the transitions and <code>virtualScroll</code>) · the <code>p-treeselect</code> class sits next to <code>wu-treeselect</code>.',
       },
     },
   },
   code: {
     basic: `<label for="attachment">เอกสารที่แนบ</label>
-<wt-treeSelect inputId="attachment" name="attachment" [(ngModel)]="attachment" [options]="folders" placeholder="เลือกเอกสาร"
-  [filter]="true" [showClear]="true" [style]="{ width: '20rem' }"></wt-treeSelect>`,
+<wu-treeSelect inputId="attachment" name="attachment" [(ngModel)]="attachment" [options]="folders" placeholder="เลือกเอกสาร"
+  [filter]="true" [showClear]="true" [style]="{ width: '20rem' }"></wu-treeSelect>`,
     multiple: `<label for="myRooms">ห้องที่รับผิดชอบ</label>
-<wt-treeSelect inputId="myRooms" name="myRooms" [(ngModel)]="myRooms" [options]="roomTree" selectionMode="checkbox"
-  display="chip" placeholder="เลือกห้องที่รับผิดชอบ" [style]="{ width: '20rem' }"></wt-treeSelect>`,
+<wu-treeSelect inputId="myRooms" name="myRooms" [(ngModel)]="myRooms" [options]="roomTree" selectionMode="checkbox"
+  display="chip" placeholder="เลือกห้องที่รับผิดชอบ" [style]="{ width: '20rem' }"></wu-treeSelect>`,
     templates: {
-      v3: `<wt-treeSelect name="attachment" [(ngModel)]="attachment" [options]="folders" variant="filled" ariaLabel="เอกสารที่แนบ"
+      v3: `<wu-treeSelect name="attachment" [(ngModel)]="attachment" [options]="folders" variant="filled" ariaLabel="เอกสารที่แนบ"
   [style]="{ width: '20rem' }">
   <ng-template #value let-node let-placeholder="placeholder">
     @if (node) {
@@ -419,14 +419,14 @@ export const TREESELECT_DOC: ComponentDoc = {
       <span class="muted">{{ placeholder }}</span>
     }
   </ng-template>
-</wt-treeSelect>`,
-      classic: `<wt-treeSelect name="attachment" [(ngModel)]="attachment" [options]="folders" variant="filled" ariaLabel="เอกสารที่แนบ"
+</wu-treeSelect>`,
+      classic: `<wu-treeSelect name="attachment" [(ngModel)]="attachment" [options]="folders" variant="filled" ariaLabel="เอกสารที่แนบ"
   [style]="{ width: '20rem' }">
-  <ng-template wtTemplate="value" let-node let-placeholder="placeholder">
+  <ng-template wuTemplate="value" let-node let-placeholder="placeholder">
     <ng-container *ngIf="node; else empty"><i [class]="node.icon"></i> {{ node.label }}</ng-container>
     <ng-template #empty><span class="muted">{{ placeholder }}</span></ng-template>
   </ng-template>
-</wt-treeSelect>`,
+</wu-treeSelect>`,
     },
   },
   ts: {
@@ -449,7 +449,7 @@ myRooms: TreeNode[] = [];`,
         row('display', "'comma' | 'chip'", "'comma'", 'แสดงหลายค่าเป็นข้อความหรือ chip', 'Several picks as text or chips'),
         row('filter · filterBy · filterMode · filterPlaceholder · resetFilterOnHide', "boolean · string · 'lenient' | 'strict' · string · boolean", "false · 'label' · 'lenient' · — · true", 'ช่องค้นหาในแผง', 'The search box in the panel'),
         row('showClear', BOOL, 'false', 'ปุ่มล้างค่า', 'A clear button'),
-        row('metaKeySelection · propagateSelectionUp · propagateSelectionDown · dataKey', 'boolean · boolean · boolean · string', 'false · true · true', 'การเลือกแบบเดียวกับ wt-tree', 'Picking as in wt-tree'),
+        row('metaKeySelection · propagateSelectionUp · propagateSelectionDown · dataKey', 'boolean · boolean · boolean · string', 'false · true · true', 'การเลือกแบบเดียวกับ wu-tree', 'Picking as in wu-tree'),
         row('emptyMessage', 'string', 'locale', 'เมื่อไม่มี node / ค้นไม่เจอ', 'No nodes / nothing found'),
         row('disabled · loading', BOOL, 'false', 'ปิดการใช้งาน / กำลังโหลด', 'Turned off / loading'),
         row('scrollHeight', 'string', "'400px'", 'ความสูงของ tree ก่อนเลื่อน', 'Tree height before it scrolls'),
@@ -467,8 +467,8 @@ myRooms: TreeNode[] = [];`,
       rows: [
         row('onShow · onHide', 'void', undefined, 'แผงเปิด / ปิด', 'The panel opened / closed'),
         row('onClear', 'void', undefined, 'กดปุ่มล้าง', 'The clear button was pressed'),
-        row('onFilter', 'WtTreeFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
-        row('onNodeSelect · onNodeUnselect · onNodeExpand · onNodeCollapse', 'WtTreeNodeEvent', undefined, 'event ของ tree ในแผง', 'Events of the tree in the panel'),
+        row('onFilter', 'WuTreeFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onNodeSelect · onNodeUnselect · onNodeExpand · onNodeCollapse', 'WuTreeNodeEvent', undefined, 'event ของ tree ในแผง', 'Events of the tree in the panel'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'ได้ / เสียโฟกัส', 'Gains / loses focus'),
       ],
     },
@@ -476,7 +476,7 @@ myRooms: TreeNode[] = [];`,
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #value, wtTemplate="value" หรือ pTemplate="value" ก็ได้', en: 'Write them as #value, wtTemplate="value" or pTemplate="value".' },
+      note: { th: 'เขียนเป็น #value, wuTemplate="value" หรือ pTemplate="value" ก็ได้', en: 'Write them as #value, wuTemplate="value" or pTemplate="value".' },
       rows: [
         row('value', '$implicit (value) · placeholder', undefined, 'ค่าที่เลือกในช่อง', 'The picked value in the field'),
         row('header · footer', '$implicit (value) · options', undefined, 'เหนือ / ใต้ tree ในแผง', 'Above / below the tree in the panel'),

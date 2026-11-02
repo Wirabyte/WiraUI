@@ -3,7 +3,7 @@
     *ngIf="visible"
     #panel
     popover="manual"
-    class="wt-tieredmenu wt-tieredmenu-overlay p-tieredmenu p-tieredmenu-overlay p-component"
+    class="wu-tieredmenu wu-tieredmenu-overlay p-tieredmenu p-tieredmenu-overlay p-component"
     [ngClass]="styleClass || ''"
     [ngStyle]="style || null"
     (focusin)="focusIn($event)"
@@ -14,10 +14,10 @@
 </ng-container>
 <ng-template #inline>
   <div
-    class="wt-tieredmenu p-tieredmenu p-component"
+    class="wu-tieredmenu p-tieredmenu p-component"
     [ngClass]="styleClass || ''"
     [ngStyle]="style || null"
-    [class.wt-tieredmenu-disabled]="disabled"
+    [class.wu-tieredmenu-disabled]="disabled"
     [class.p-disabled]="disabled"
     (focusin)="focusIn($event)"
     (focusout)="focusOut($event)"
@@ -29,33 +29,33 @@
 
 <ng-template #list let-items let-parent="parent" let-root="root">
   <ul
-    [class]="root ? 'wt-tieredmenu-root-list p-tieredmenu-root-list' : 'wt-tieredmenu-submenu p-tieredmenu-submenu p-submenu-list'"
+    [class]="root ? 'wu-tieredmenu-root-list p-tieredmenu-root-list' : 'wu-tieredmenu-submenu p-tieredmenu-submenu p-submenu-list'"
     role="menu"
     [attr.aria-label]="root ? ariaLabel || null : null"
     [attr.aria-labelledby]="root ? ariaLabelledBy || null : parent ? itemId(parent) : null"
   >
     <ng-container *ngFor="let item of items; let i = index">
-      <li *ngIf="item.separator; else entry" class="wt-tieredmenu-separator p-tieredmenu-separator p-menuitem-separator" role="separator"></li>
+      <li *ngIf="item.separator; else entry" class="wu-tieredmenu-separator p-tieredmenu-separator p-menuitem-separator" role="separator"></li>
       <ng-template #entry>
         <li
-          class="wt-tieredmenu-item p-tieredmenu-item p-menuitem"
+          class="wu-tieredmenu-item p-tieredmenu-item p-menuitem"
           role="none"
           [ngClass]="item.styleClass || ''"
           [ngStyle]="item.style || null"
-          [class.wt-tieredmenu-item-active]="isOpen(keyOf(parent, i))"
+          [class.wu-tieredmenu-item-active]="isOpen(keyOf(parent, i))"
           [class.p-tieredmenu-item-active]="isOpen(keyOf(parent, i))"
           [class.p-menuitem-active]="isOpen(keyOf(parent, i))"
-          [class.wt-tieredmenu-item-disabled]="item.disabled"
+          [class.wu-tieredmenu-item-disabled]="item.disabled"
           [class.p-disabled]="item.disabled"
           (mouseenter)="itemEnter(item, keyOf(parent, i))"
         >
-          <div class="wt-tieredmenu-item-content p-tieredmenu-item-content">
+          <div class="wu-tieredmenu-item-content p-tieredmenu-item-content">
             <a
               *ngIf="routed(item) && !hasChildren(item); else plain"
-              class="wt-tieredmenu-item-link p-tieredmenu-item-link p-menuitem-link"
+              class="wu-tieredmenu-item-link p-tieredmenu-item-link p-menuitem-link"
               role="menuitem"
               [id]="itemId(keyOf(parent, i))"
-              [attr.data-wt-key]="keyOf(parent, i)"
+              [attr.data-wu-key]="keyOf(parent, i)"
               [attr.tabindex]="tabindexOf(keyOf(parent, i))"
               [attr.title]="item.title || null"
               [attr.target]="item.target || null"
@@ -68,7 +68,7 @@
               [skipLocationChange]="!!item.skipLocationChange"
               [replaceUrl]="!!item.replaceUrl"
               [state]="item.state"
-              routerLinkActive="wt-tieredmenu-link-active p-menuitem-link-active"
+              routerLinkActive="wu-tieredmenu-link-active p-menuitem-link-active"
               [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
               (click)="itemClick($event, item, keyOf(parent, i))"
             >
@@ -76,10 +76,10 @@
             </a>
             <ng-template #plain>
               <a
-                class="wt-tieredmenu-item-link p-tieredmenu-item-link p-menuitem-link"
+                class="wu-tieredmenu-item-link p-tieredmenu-item-link p-menuitem-link"
                 role="menuitem"
                 [id]="itemId(keyOf(parent, i))"
-                [attr.data-wt-key]="keyOf(parent, i)"
+                [attr.data-wu-key]="keyOf(parent, i)"
                 [attr.tabindex]="tabindexOf(keyOf(parent, i))"
                 [attr.href]="hasChildren(item) ? null : hrefOf(item)"
                 [attr.title]="item.title || null"
@@ -108,17 +108,17 @@
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, hasSubmenu: hasChildren(item) }"></ng-container>
   </ng-container>
   <ng-template #defaultContent>
-    <span *ngIf="item.icon" class="wt-tieredmenu-item-icon p-tieredmenu-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
-    <span *ngIf="item.escape !== false; else html" class="wt-tieredmenu-item-label p-tieredmenu-item-label p-menuitem-text">{{ item.label }}</span>
-    <ng-template #html><span class="wt-tieredmenu-item-label p-tieredmenu-item-label p-menuitem-text" [innerHTML]="item.label"></span></ng-template>
-    <span *ngIf="item.badge" class="wt-tieredmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
+    <span *ngIf="item.icon" class="wu-tieredmenu-item-icon p-tieredmenu-item-icon p-menuitem-icon" [ngClass]="item.icon" [ngStyle]="item.iconStyle || null" aria-hidden="true"></span>
+    <span *ngIf="item.escape !== false; else html" class="wu-tieredmenu-item-label p-tieredmenu-item-label p-menuitem-text">{{ item.label }}</span>
+    <ng-template #html><span class="wu-tieredmenu-item-label p-tieredmenu-item-label p-menuitem-text" [innerHTML]="item.label"></span></ng-template>
+    <span *ngIf="item.badge" class="wu-tieredmenu-badge p-badge" [ngClass]="item.badgeStyleClass || ''">{{ item.badge }}</span>
   </ng-template>
   <ng-container *ngIf="hasChildren(item)">
     <ng-container *ngIf="submenuIconTemplate; else chevron">
       <ng-container *ngTemplateOutlet="submenuIconTemplate"></ng-container>
     </ng-container>
     <ng-template #chevron>
-      <svg class="wt-tieredmenu-submenu-icon p-tieredmenu-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5-4.5 4.5"></path></svg>
+      <svg class="wu-tieredmenu-submenu-icon p-tieredmenu-submenu-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5-4.5 4.5"></path></svg>
     </ng-template>
   </ng-container>
 </ng-template>

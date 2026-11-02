@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-knob id="d-kn" name="volume" [(ngModel)]="volume" [ariaLabel]="tx('ระดับเสียงประกาศ')" (onChange)="volumeChanged($event)"></wt-knob>
+        <wu-knob id="d-kn" name="volume" [(ngModel)]="volume" [ariaLabel]="tx('ระดับเสียงประกาศ')" (onChange)="volumeChanged($event)"></wu-knob>
         <span class="docs-demo-output">
           ngModel: <code id="d-kn-value">{{ volume }}</code> · onChange: <code id="d-kn-change">{{ lastVolume ?? '-' }}</code>
         </span>
@@ -15,8 +15,8 @@
 
     <docs-section id="range" [section]="sec['range']">
       <docs-demo [html]="code['range']" [ts]="ts['range']">
-        <wt-knob id="d-kn-progress" name="progress" [(ngModel)]="progress" [step]="5" valueTemplate="{value}%" [ariaLabel]="tx('ความคืบหน้าของงาน')"></wt-knob>
-        <wt-knob
+        <wu-knob id="d-kn-progress" name="progress" [(ngModel)]="progress" [step]="5" valueTemplate="{value}%" [ariaLabel]="tx('ความคืบหน้าของงาน')"></wu-knob>
+        <wu-knob
           id="d-kn-temp"
           name="temperature"
           [(ngModel)]="temperature"
@@ -24,8 +24,8 @@
           [max]="40"
           valueTemplate="{value}°C"
           [ariaLabel]="tx('อุณหภูมิห้อง')"
-        ></wt-knob>
-        <wt-knob id="d-kn-plain" name="brightness" [(ngModel)]="brightness" [showValue]="false" [ariaLabel]="tx('ระดับความสว่าง')"></wt-knob>
+        ></wu-knob>
+        <wu-knob id="d-kn-plain" name="brightness" [(ngModel)]="brightness" [showValue]="false" [ariaLabel]="tx('ระดับความสว่าง')"></wu-knob>
         <span class="docs-demo-output">
           <code id="d-kn-progress-value">{{ progress }}</code> · <code id="d-kn-temp-value">{{ temperature }}</code> ·
           <code>{{ brightness }}</code>
@@ -35,8 +35,8 @@
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']">
-        <wt-knob id="d-kn-big" name="volume" [(ngModel)]="volume" [size]="140" [strokeWidth]="8" [ariaLabel]="tx('ระดับเสียงประกาศ')"></wt-knob>
-        <wt-knob
+        <wu-knob id="d-kn-big" name="volume" [(ngModel)]="volume" [size]="140" [strokeWidth]="8" [ariaLabel]="tx('ระดับเสียงประกาศ')"></wu-knob>
+        <wu-knob
           id="d-kn-score"
           name="score"
           [(ngModel)]="score"
@@ -45,21 +45,21 @@
           rangeColor="#dcfce7"
           textColor="#166534"
           [ariaLabel]="tx('คะแนนจิตพิสัย')"
-        ></wt-knob>
+        ></wu-knob>
       </docs-demo>
     </docs-section>
 
     <docs-section id="state" [section]="sec['state']">
       <docs-demo [html]="code['state']">
-        <wt-knob id="d-kn-ro" name="progress" [(ngModel)]="progress" [readonly]="true" valueTemplate="{value}%" [ariaLabel]="tx('ความคืบหน้าของงาน')"></wt-knob>
-        <wt-knob id="d-kn-off" name="volume" [(ngModel)]="volume" [disabled]="true" [ariaLabel]="tx('ปิดใช้งาน')"></wt-knob>
+        <wu-knob id="d-kn-ro" name="progress" [(ngModel)]="progress" [readonly]="true" valueTemplate="{value}%" [ariaLabel]="tx('ความคืบหน้าของงาน')"></wu-knob>
+        <wu-knob id="d-kn-off" name="volume" [(ngModel)]="volume" [disabled]="true" [ariaLabel]="tx('ปิดใช้งาน')"></wu-knob>
       </docs-demo>
     </docs-section>
 
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']">
         <form [formGroup]="form">
-          <wt-knob id="d-kn-books" formControlName="books" [min]="0" [max]="20" [valueTemplate]="tx('{value} เล่ม')" [ariaLabel]="tx('เป้าหมายการอ่าน (เล่ม)')"></wt-knob>
+          <wu-knob id="d-kn-books" formControlName="books" [min]="0" [max]="20" [valueTemplate]="tx('{value} เล่ม')" [ariaLabel]="tx('เป้าหมายการอ่าน (เล่ม)')"></wu-knob>
         </form>
         <span class="docs-demo-output">form.value: <code id="d-kn-form">{{ form.value | json }}</code></span>
       </docs-demo>

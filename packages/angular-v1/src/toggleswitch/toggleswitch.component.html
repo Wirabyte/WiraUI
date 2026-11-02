@@ -1,8 +1,8 @@
-<label class="wt-toggleswitch" [class]="styleClass || ''" [style]="rootStyle" [class.wt-toggleswitch-checked]="checked" [class.wt-toggleswitch-disabled]="isDisabled" [class.wt-invalid]="invalid">
+<label class="wu-toggleswitch" [class]="styleClass || ''" [style]="rootStyle" [class.wu-toggleswitch-checked]="checked" [class.wu-toggleswitch-disabled]="isDisabled" [class.wu-invalid]="invalid">
   <input
     type="checkbox"
     role="switch"
-    class="wt-toggleswitch-input"
+    class="wu-toggleswitch-input"
     [id]="id"
     [attr.name]="name || null"
     [checked]="checked"
@@ -14,8 +14,8 @@
     (change)="toggle($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-toggleswitch-control p-inputswitch p-component" [class.p-inputswitch-checked]="checked" [class.p-disabled]="isDisabled" aria-hidden="true">
-    <span class="wt-toggleswitch-track p-inputswitch-slider"><span class="wt-toggleswitch-handle"></span></span>
+  <span class="wu-toggleswitch-control p-inputswitch p-component" [class.p-inputswitch-checked]="checked" [class.p-disabled]="isDisabled" aria-hidden="true">
+    <span class="wu-toggleswitch-track p-inputswitch-slider"><span class="wu-toggleswitch-handle"></span></span>
   </span>
-  <span *ngIf="label" class="wt-toggleswitch-label">{{ label }}</span>
+  <span *ngIf="label" class="wu-toggleswitch-label">{{ label }}</span>
 </label>

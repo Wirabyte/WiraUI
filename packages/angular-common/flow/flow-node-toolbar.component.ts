@@ -11,23 +11,23 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiratheme/config';
-import type { FlowPosition } from 'wiratheme/core';
-import { ɵWtFlowHost } from './flow-host';
-import { WT_FLOW_NODE } from './flow.types';
+import { ɵtoBool } from 'wiraui/config';
+import type { FlowPosition } from 'wiraui/core';
+import { ɵWuFlowHost } from './flow-host';
+import { WU_FLOW_NODE } from './flow.types';
 
 /**
- * Buttons floating beside a node: `<wt-flow-node-toolbar position="top">` inside a node template. Shown while the node
+ * Buttons floating beside a node: `<wu-flow-node-toolbar position="top">` inside a node template. Shown while the node
  * is the only one selected (or as `[isVisible]` says); it keeps its size whatever the zoom and never starts a drag.
  */
 @Component({
-  selector: 'wt-flow-node-toolbar',
+  selector: 'wu-flow-node-toolbar',
   standalone: true,
   imports: [NgIf],
   template: `
     <div
       *ngIf="visible"
-      class="wt-flow-node-toolbar nodrag nowheel"
+      class="wu-flow-node-toolbar nodrag nowheel"
       [class]="styleClass || ''"
       role="toolbar"
       [attr.aria-label]="ariaLabel || label"
@@ -41,14 +41,14 @@ import { WT_FLOW_NODE } from './flow.types';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtFlowNodeToolbar implements OnInit, OnChanges, OnDestroy {
+export class WuFlowNodeToolbar implements OnInit, OnChanges, OnDestroy {
   /** Force it shown (true) or hidden (false); leave out to show it while the node is the only one selected. */
   @Input() isVisible: boolean | string | null | undefined;
   /** Side of the node. Default top. */
   @Input() position: FlowPosition = 'top';
   /** Along that side: start, center (default) or end. */
   @Input() align: 'start' | 'center' | 'end' = 'center';
-  /** Space between the node and the toolbar in px (default: the `--wt-flow-toolbar-offset` token, 10px). */
+  /** Space between the node and the toolbar in px (default: the `--wu-flow-toolbar-offset` token, 10px). */
   @Input() offset: number | string | null | undefined;
   /** The node it belongs to (default: the node whose template it is in). */
   @Input() nodeId: string | null | undefined;
@@ -59,8 +59,8 @@ export class WtFlowNodeToolbar implements OnInit, OnChanges, OnDestroy {
   private stop: (() => void) | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly host = inject(ɵWtFlowHost, { optional: true });
-  private readonly nodeCtx = inject(WT_FLOW_NODE, { optional: true });
+  private readonly host = inject(ɵWuFlowHost, { optional: true });
+  private readonly nodeCtx = inject(WU_FLOW_NODE, { optional: true });
 
   get side(): FlowPosition {
     const p = this.position;
@@ -91,7 +91,7 @@ export class WtFlowNodeToolbar implements OnInit, OnChanges, OnDestroy {
   }
 
   private id(): string | null {
-    return this.nodeId || this.nodeCtx?.id || this.el.closest?.('.wt-flow-node')?.getAttribute('data-id') || null;
+    return this.nodeId || this.nodeCtx?.id || this.el.closest?.('.wu-flow-node')?.getAttribute('data-id') || null;
   }
 
   /** True when it was shown / hidden. */

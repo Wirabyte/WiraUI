@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "$id": "WiraThemeNgAdd",
-  "title": "ng add wiratheme",
+  "$id": "WiraUINgAdd",
+  "title": "ng add wiraui",
   "type": "object",
   "properties": {
     "project": {
@@ -30,7 +30,7 @@
           },
           {
             "value": "scss",
-            "label": "SCSS: @use 'theme/wiratheme.theme' in styles.scss"
+            "label": "SCSS: @use 'theme/wiraui.theme' in styles.scss"
           },
           {
             "value": "css",
@@ -47,7 +47,7 @@
         "standalone"
       ],
       "default": "auto",
-      "description": "Where provideWiraTheme() goes.",
+      "description": "Where provideWiraUI() goes.",
       "x-prompt": {
         "message": "App structure?",
         "type": "list",
@@ -70,7 +70,7 @@
     "theme": {
       "type": "string",
       "default": "auto",
-      "description": "Theme or preset to start from. auto = this wiratheme major's default (v1: sila-light-teal, v2: mali, v3: wira). tools/sync-sources.mjs writes each major's choices into the prompt. Names teams know from other theme sets (lara-light-teal, saga-blue, aura …) are accepted too.",
+      "description": "Theme or preset to start from. auto = this wiraui major's default (v1: sila-light-teal, v2: mali, v3: wira). tools/sync-sources.mjs writes each major's choices into the prompt. Names teams know from other theme sets (lara-light-teal, saga-blue, aura …) are accepted too.",
       "x-prompt": {
         "message": "Theme?",
         "type": "list",
@@ -85,8 +85,8 @@
     "utils": {
       "type": "boolean",
       "default": true,
-      "description": "Add WiraTheme's utility classes (grid, flex, spacing, sizing, colours). They use the class names apps already use (grid, col-12, md:col-6, flex, p-3), so they can replace a separate utility library. Leave out with --utils=false; trim groups later in SCSS.",
-      "x-prompt": "Add WiraTheme utility classes (grid, flex, spacing)?"
+      "description": "Add WiraUI's utility classes (grid, flex, spacing, sizing, colours). They use the class names apps already use (grid, col-12, md:col-6, flex, p-3), so they can replace a separate utility library. Leave out with --utils=false; trim groups later in SCSS.",
+      "x-prompt": "Add WiraUI utility classes (grid, flex, spacing)?"
     },
     "primary": {
       "type": "string",
@@ -178,7 +178,7 @@
           },
           {
             "value": "class",
-            "label": "Toggle with the .wt-dark class"
+            "label": "Toggle with the .wu-dark class"
           },
           {
             "value": "media",
@@ -190,7 +190,7 @@
     "angularRange": {
       "type": "string",
       "visible": false,
-      "description": "Internal: overrides the supported Angular range read from wiratheme's package.json (tests only)."
+      "description": "Internal: overrides the supported Angular range read from wiraui's package.json (tests only)."
     }
   }
 }

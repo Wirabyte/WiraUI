@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 /**
- * Carries commands from a wt-terminal to the app and answers back: subscribe to `commandHandler`, reply with
+ * Carries commands from a wu-terminal to the app and answers back: subscribe to `commandHandler`, reply with
  * `sendResponse()`. Provided in root, so it works without being listed; an app (or a component) that lists it in
  * `providers` gets its own copy, as before.
  */
 @Injectable({ providedIn: 'root' })
-export class WtTerminalService {
+export class WuTerminalService {
   private readonly commandSource = new Subject<string>();
   private readonly responseSource = new Subject<string>();
 

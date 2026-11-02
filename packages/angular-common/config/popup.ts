@@ -1,7 +1,7 @@
 /** How a popup is laid out: under its anchor, as a bottom sheet (phones), or centred with a backdrop. */
-export type ɵWtPopupLayout = 'anchored' | 'sheet' | 'modal';
+export type ɵWuPopupLayout = 'anchored' | 'sheet' | 'modal';
 
-export interface ɵWtPopupOptions {
+export interface ɵWuPopupOptions {
   /** Pointer pressed outside the anchor and the panel. */
   onOutside: (event: Event) => void;
   /** The anchor scrolled out of sight. Default: same as onOutside. */
@@ -18,7 +18,7 @@ export interface ɵWtPopupOptions {
   /** Escape pressed anywhere while the panel is open (focus may still be on the anchor). */
   onEscape?: (event: KeyboardEvent) => void;
   /** Called after each placement under or over the anchor (e.g. to point an arrow at it). */
-  onPosition?: (popup: ɵWtPopup, anchor: DOMRect) => void;
+  onPosition?: (popup: ɵWuPopup, anchor: DOMRect) => void;
 }
 
 const PHONE = '(max-width: 575.98px)';
@@ -41,8 +41,8 @@ function supportsPopover(el: HTMLElement): el is PopoverElement {
  * Under the anchor it flips above when there is no room below, and follows the anchor on scroll and resize.
  * On phones it is a bottom sheet that stays above the on-screen keyboard (visualViewport).
  */
-export class ɵWtPopup {
-  layout: ɵWtPopupLayout = 'anchored';
+export class ɵWuPopup {
+  layout: ɵWuPopupLayout = 'anchored';
   /** Where the anchored panel ended up. */
   placement: 'below' | 'above' = 'below';
   private readonly win: Window | null;
@@ -51,7 +51,7 @@ export class ɵWtPopup {
   constructor(
     private readonly anchor: HTMLElement,
     private readonly panel: HTMLElement,
-    private readonly o: ɵWtPopupOptions,
+    private readonly o: ɵWuPopupOptions,
   ) {
     this.win = anchor.ownerDocument.defaultView;
   }

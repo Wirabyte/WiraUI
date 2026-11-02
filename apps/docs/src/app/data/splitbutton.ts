@@ -3,9 +3,9 @@ import { row, STYLE_ROW } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ACTIONS_TS = `import { WtMenuItem } from 'wiratheme/menu';
+const ACTIONS_TS = `import { WuMenuItem } from 'wiraui/menu';
 
-saveActions: WtMenuItem[] = [
+saveActions: WuMenuItem[] = [
   { label: 'บันทึกเป็นร่าง', icon: 'wi wi-file', command: (event) => this.run(event) },
   { label: 'บันทึกและส่งต่อ', icon: 'wi wi-send', command: (event) => this.run(event) },
   { separator: true },
@@ -13,7 +13,7 @@ saveActions: WtMenuItem[] = [
 ];
 lastAction = '';
 
-run(event: { item?: WtMenuItem }): void {
+run(event: { item?: WuMenuItem }): void {
   this.lastAction = event.item?.label ?? '';
 }`;
 
@@ -22,12 +22,12 @@ export const SPLITBUTTON_DOC: ComponentDoc = {
   title: 'SplitButton',
   group: 'Button',
   entry: 'splitbutton',
-  standalone: 'WtSplitButton',
-  module: 'WtSplitButtonModule',
-  selector: 'wt-splitbutton',
+  standalone: 'WuSplitButton',
+  module: 'WuSplitButtonModule',
+  selector: 'wu-splitbutton',
   description: {
-    th: 'ปุ่มที่มีคำสั่งหลักหนึ่งคำสั่ง และลูกศรที่เปิดเมนูคำสั่งอื่น ๆ เช่น บันทึก กับ บันทึกเป็นร่าง หน้าตาและสีเหมือน wt-button ส่วนเมนูคือ wt-menu แบบ popup',
-    en: 'A button with one main action and an arrow that opens a menu of the others, such as Save next to Save as draft. It looks like wt-button and takes its colours; the menu is the wt-menu popup.',
+    th: 'ปุ่มที่มีคำสั่งหลักหนึ่งคำสั่ง และลูกศรที่เปิดเมนูคำสั่งอื่น ๆ เช่น บันทึก กับ บันทึกเป็นร่าง หน้าตาและสีเหมือน wu-button ส่วนเมนูคือ wu-menu แบบ popup',
+    en: 'A button with one main action and an arrow that opens a menu of the others, such as Save next to Save as draft. It looks like wu-button and takes its colours; the menu is the wu-menu popup.',
   },
   english: {
     'บันทึกเป็นร่าง': 'Save as draft',
@@ -44,28 +44,28 @@ export const SPLITBUTTON_DOC: ComponentDoc = {
     'บันทึกครั้งที่': 'Saves',
     'ยังไม่มีสิทธิ์อนุมัติ': 'no right to approve yet',
     'ทุกคำสั่งปิดอยู่': 'every action off',
-    'รายการเมนูแบบเดียวกับ wt-menu': 'menu items, as in wt-menu',
+    'รายการเมนูแบบเดียวกับ wu-menu': 'menu items, as in wu-menu',
   },
   sections: {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtSplitButtonModule</code>) และ standalone (<code>WtSplitButton</code>) แท็กเขียนได้ทั้ง <code>wt-splitbutton</code>, <code>wt-splitButton</code> และ <code>wt-split-button</code>',
-        en: 'Works as an NgModule (<code>WtSplitButtonModule</code>) or standalone (<code>WtSplitButton</code>). The tag can be written <code>wt-splitbutton</code>, <code>wt-splitButton</code> or <code>wt-split-button</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuSplitButtonModule</code>) และ standalone (<code>WuSplitButton</code>) แท็กเขียนได้ทั้ง <code>wu-splitbutton</code>, <code>wu-splitButton</code> และ <code>wu-split-button</code>',
+        en: 'Works as an NgModule (<code>WuSplitButtonModule</code>) or standalone (<code>WuSplitButton</code>). The tag can be written <code>wu-splitbutton</code>, <code>wu-splitButton</code> or <code>wu-split-button</code>.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: 'ส่วนหลักทำ <code>(onClick)</code> ส่วนลูกศรเปิดเมนูจาก <code>[model]</code> (รายการเมนูแบบเดียวกับ wt-menu: <code>label</code>, <code>icon</code>, <code>command</code>, <code>routerLink</code>, <code>separator</code>, <code>disabled</code>) · <code>Alt</code> + <code>↓</code> เปิดเมนูจากคีย์บอร์ด และ <code>Esc</code> ปิดแล้วคืนโฟกัส · ระหว่างบันทึกใช้ <code>[disabled]="isApiSaving"</code>',
-        en: 'The main part runs <code>(onClick)</code>; the arrow opens the menu from <code>[model]</code> (menu items as in wt-menu: <code>label</code>, <code>icon</code>, <code>command</code>, <code>routerLink</code>, <code>separator</code>, <code>disabled</code>) · <code>Alt</code> + <code>↓</code> opens it from the keyboard and <code>Esc</code> closes it and gives focus back · while saving, <code>[disabled]="isApiSaving"</code>.',
+        th: 'ส่วนหลักทำ <code>(onClick)</code> ส่วนลูกศรเปิดเมนูจาก <code>[model]</code> (รายการเมนูแบบเดียวกับ wu-menu: <code>label</code>, <code>icon</code>, <code>command</code>, <code>routerLink</code>, <code>separator</code>, <code>disabled</code>) · <code>Alt</code> + <code>↓</code> เปิดเมนูจากคีย์บอร์ด และ <code>Esc</code> ปิดแล้วคืนโฟกัส · ระหว่างบันทึกใช้ <code>[disabled]="isApiSaving"</code>',
+        en: 'The main part runs <code>(onClick)</code>; the arrow opens the menu from <code>[model]</code> (menu items as in wu-menu: <code>label</code>, <code>icon</code>, <code>command</code>, <code>routerLink</code>, <code>separator</code>, <code>disabled</code>) · <code>Alt</code> + <code>↓</code> opens it from the keyboard and <code>Esc</code> closes it and gives focus back · while saving, <code>[disabled]="isApiSaving"</code>.',
       },
     },
     severity: {
       title: { th: 'สีและรูปแบบ', en: 'Colours and variants' },
       text: {
-        th: '<code>severity</code>, <code>[outlined]</code>, <code>[text]</code>, <code>[raised]</code>, <code>[rounded]</code> และ <code>size</code> เหมือน wt-button ทุกอย่าง',
-        en: '<code>severity</code>, <code>[outlined]</code>, <code>[text]</code>, <code>[raised]</code>, <code>[rounded]</code> and <code>size</code>, exactly as on wt-button.',
+        th: '<code>severity</code>, <code>[outlined]</code>, <code>[text]</code>, <code>[raised]</code>, <code>[rounded]</code> และ <code>size</code> เหมือน wu-button ทุกอย่าง',
+        en: '<code>severity</code>, <code>[outlined]</code>, <code>[text]</code>, <code>[raised]</code>, <code>[rounded]</code> and <code>size</code>, exactly as on wu-button.',
       },
     },
     disabled: {
@@ -85,22 +85,22 @@ export const SPLITBUTTON_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-splitButton&gt;</code> เป็น <code>&lt;wt-splitButton&gt;</code> input และ event ชื่อเดิม เมนูเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>tooltip</code>, <code>autoZIndex</code> และ <code>baseZIndex</code>) · class <code>p-splitbutton</code> อยู่คู่กับ <code>wt-splitbutton</code>',
-        en: 'Change <code>&lt;p-splitButton&gt;</code> to <code>&lt;wt-splitButton&gt;</code>; inputs and events keep their names. The menu opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>tooltip</code>, <code>autoZIndex</code> and <code>baseZIndex</code>) · the <code>p-splitbutton</code> class sits next to <code>wt-splitbutton</code>.',
+        th: 'เปลี่ยน <code>&lt;p-splitButton&gt;</code> เป็น <code>&lt;wu-splitButton&gt;</code> input และ event ชื่อเดิม เมนูเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>tooltip</code>, <code>autoZIndex</code> และ <code>baseZIndex</code>) · class <code>p-splitbutton</code> อยู่คู่กับ <code>wu-splitbutton</code>',
+        en: 'Change <code>&lt;p-splitButton&gt;</code> to <code>&lt;wu-splitButton&gt;</code>; inputs and events keep their names. The menu opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>tooltip</code>, <code>autoZIndex</code> and <code>baseZIndex</code>) · the <code>p-splitbutton</code> class sits next to <code>wu-splitbutton</code>.',
       },
     },
   },
   code: {
-    basic: `<wt-splitButton label="บันทึก" icon="wi wi-save" [model]="saveActions" [disabled]="isApiSaving" (onClick)="save()"></wt-splitButton>`,
-    severity: `<wt-splitButton label="ส่งออก" icon="wi wi-download" severity="secondary" [model]="exportActions"></wt-splitButton>
-<wt-splitButton label="ส่งออก" severity="success" [outlined]="true" [model]="exportActions"></wt-splitButton>
-<wt-splitButton label="ส่งออก" severity="info" [text]="true" [model]="exportActions"></wt-splitButton>
-<wt-splitButton label="ส่งออก" severity="help" [raised]="true" [rounded]="true" size="small" [model]="exportActions"></wt-splitButton>`,
-    disabled: `<wt-splitButton label="อนุมัติ" [model]="reviewActions" [buttonDisabled]="true"></wt-splitButton>
-<wt-splitButton label="อนุมัติ" [model]="reviewActions" [menuButtonDisabled]="true"></wt-splitButton>
-<wt-splitButton label="อนุมัติ" [model]="reviewActions" [disabled]="true"></wt-splitButton>`,
-    icons: `<wt-splitButton label="พิมพ์" icon="wi wi-print" iconPos="right" dropdownIcon="wi wi-ellipsis-v" severity="secondary"
-  [model]="exportActions" (onMenuShow)="logMenu('onMenuShow')" (onMenuHide)="logMenu('onMenuHide')"></wt-splitButton>`,
+    basic: `<wu-splitButton label="บันทึก" icon="wi wi-save" [model]="saveActions" [disabled]="isApiSaving" (onClick)="save()"></wu-splitButton>`,
+    severity: `<wu-splitButton label="ส่งออก" icon="wi wi-download" severity="secondary" [model]="exportActions"></wu-splitButton>
+<wu-splitButton label="ส่งออก" severity="success" [outlined]="true" [model]="exportActions"></wu-splitButton>
+<wu-splitButton label="ส่งออก" severity="info" [text]="true" [model]="exportActions"></wu-splitButton>
+<wu-splitButton label="ส่งออก" severity="help" [raised]="true" [rounded]="true" size="small" [model]="exportActions"></wu-splitButton>`,
+    disabled: `<wu-splitButton label="อนุมัติ" [model]="reviewActions" [buttonDisabled]="true"></wu-splitButton>
+<wu-splitButton label="อนุมัติ" [model]="reviewActions" [menuButtonDisabled]="true"></wu-splitButton>
+<wu-splitButton label="อนุมัติ" [model]="reviewActions" [disabled]="true"></wu-splitButton>`,
+    icons: `<wu-splitButton label="พิมพ์" icon="wi wi-print" iconPos="right" dropdownIcon="wi wi-ellipsis-v" severity="secondary"
+  [model]="exportActions" (onMenuShow)="logMenu('onMenuShow')" (onMenuHide)="logMenu('onMenuHide')"></wu-splitButton>`,
   },
   ts: {
     basic: `${ACTIONS_TS}
@@ -114,7 +114,7 @@ save(): void {
     error: () => (this.isApiSaving = false),
   });
 }`,
-    severity: `exportActions: WtMenuItem[] = [
+    severity: `exportActions: WuMenuItem[] = [
   { label: 'ไฟล์ PDF', icon: 'wi wi-file-pdf' },
   { label: 'ไฟล์ Excel', icon: 'wi wi-file-excel' },
 ];`,
@@ -123,7 +123,7 @@ save(): void {
 logMenu(name: string): void {
   this.menuEvents = [...this.menuEvents.slice(-3), name];
 }`,
-    disabled: `reviewActions: WtMenuItem[] = [
+    disabled: `reviewActions: WuMenuItem[] = [
   { label: 'ส่งกลับแก้ไข', icon: 'wi wi-undo' },
   { label: 'ไม่อนุมัติ', icon: 'wi wi-times' },
 ];`,
@@ -135,9 +135,9 @@ logMenu(name: string): void {
       rows: [
         row('label · icon', 'string', undefined, 'ข้อความและไอคอนของส่วนหลัก', 'Text and icon of the main part'),
         row('iconPos', "'left' | 'right'", "'left'", 'ไอคอนอยู่ก่อนหรือหลังข้อความ', 'Icon before or after the text'),
-        row('model', 'WtMenuItem[]', undefined, 'คำสั่งในเมนู', 'The menu\'s actions'),
+        row('model', 'WuMenuItem[]', undefined, 'คำสั่งในเมนู', 'The menu\'s actions'),
         row('severity', "'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'help' | 'contrast'", undefined, 'สี (ไม่ใส่คือสีหลัก)', 'Colour (none: the primary colour)'),
-        row('outlined · text · raised · rounded', BOOL, 'false', 'รูปแบบปุ่มเหมือน wt-button', 'Button variants, as on wt-button'),
+        row('outlined · text · raised · rounded', BOOL, 'false', 'รูปแบบปุ่มเหมือน wu-button', 'Button variants, as on wu-button'),
         row('size', "'small' | 'large'", undefined, 'ขนาด', 'Size'),
         row('disabled', BOOL, 'false', 'ปิดทั้งปุ่ม', 'The whole button off'),
         row('buttonDisabled · menuButtonDisabled', BOOL, 'false', 'ปิดเฉพาะส่วนหลัก / เฉพาะลูกศร', 'Only the main part / only the arrow off'),
@@ -161,7 +161,7 @@ logMenu(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtMenuItem } from 'wiratheme/menu';   // รายการเมนูแบบเดียวกับ wt-menu`,
+      code: `import { WuMenuItem } from 'wiraui/menu';   // รายการเมนูแบบเดียวกับ wu-menu`,
     },
   ],
   tokens: [],

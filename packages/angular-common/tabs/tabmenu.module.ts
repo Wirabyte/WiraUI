@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtTabMenu } from './tabmenu.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuTabMenu } from './tabmenu.component';
 
-/** For NgModule apps. Standalone apps can import `WtTabMenu` directly. */
+/** For NgModule apps. Standalone apps can import `WuTabMenu` directly. */
 @NgModule({
-  imports: [WtTabMenu, WtTemplate],
-  exports: [WtTabMenu, WtTemplate],
+  imports: [WuTabMenu, WuTemplate],
+  exports: [WuTabMenu, WuTemplate],
 })
-export class WtTabMenuModule {}
+export class WuTabMenuModule {}

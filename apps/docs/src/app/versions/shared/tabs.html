@@ -6,11 +6,11 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-tabs id="d-tabs" [(activeIndex)]="tab" [ariaLabel]="tx('ข้อมูลลูกค้า')" (onChange)="changed = $event.index">
-          <wt-tab-panel [header]="tx('ภาพรวม')">{{ tx('ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('คำสั่งซื้อ')">{{ tx('คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('บันทึก')">{{ tx('โทรกลับเรื่องใบกำกับภาษี') }}</wt-tab-panel>
-        </wt-tabs>
+        <wu-tabs id="d-tabs" [(activeIndex)]="tab" [ariaLabel]="tx('ข้อมูลลูกค้า')" (onChange)="changed = $event.index">
+          <wu-tab-panel [header]="tx('ภาพรวม')">{{ tx('ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ') }}</wu-tab-panel>
+          <wu-tab-panel [header]="tx('คำสั่งซื้อ')">{{ tx('คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้') }}</wu-tab-panel>
+          <wu-tab-panel [header]="tx('บันทึก')">{{ tx('โทรกลับเรื่องใบกำกับภาษี') }}</wu-tab-panel>
+        </wu-tabs>
         <span class="docs-demo-output">
           activeIndex: <code id="d-tabs-value">{{ tab }}</code> · onChange: <code id="d-tabs-changed">{{ changed ?? '-' }}</code>
         </span>
@@ -19,86 +19,86 @@
 
     <docs-section id="value" [section]="sec['value']">
       <docs-demo [html]="code['value']" [ts]="ts['value']" layout="stack">
-        <wt-tabs id="d-tabs-byvalue" [(value)]="section" [ariaLabel]="tx('ข้อมูลนักเรียน')">
-          <wt-tablist>
-            <wt-tab value="info">{{ tx('ข้อมูลทั่วไป') }}</wt-tab>
-            <wt-tab value="grades">{{ tx('ผลการเรียน') }}</wt-tab>
-            <wt-tab value="health" [disabled]="true">{{ tx('สุขภาพ') }}</wt-tab>
-            <wt-tab value="parents">{{ tx('ผู้ปกครอง') }}</wt-tab>
-          </wt-tablist>
-          <wt-tabpanels>
-            <wt-tabpanel value="info">{{ tx('ห้อง ม.1/2 · เลขที่ 15') }}</wt-tabpanel>
-            <wt-tabpanel value="grades">{{ tx('เกรดเฉลี่ย 3.45') }}</wt-tabpanel>
-            <wt-tabpanel value="health">{{ tx('ต้องมีสิทธิ์ครูประจำชั้น') }}</wt-tabpanel>
-            <wt-tabpanel value="parents">{{ tx('นางสมศรี ใจดี · 081-234-5678') }}</wt-tabpanel>
-          </wt-tabpanels>
-        </wt-tabs>
+        <wu-tabs id="d-tabs-byvalue" [(value)]="section" [ariaLabel]="tx('ข้อมูลนักเรียน')">
+          <wu-tablist>
+            <wu-tab value="info">{{ tx('ข้อมูลทั่วไป') }}</wu-tab>
+            <wu-tab value="grades">{{ tx('ผลการเรียน') }}</wu-tab>
+            <wu-tab value="health" [disabled]="true">{{ tx('สุขภาพ') }}</wu-tab>
+            <wu-tab value="parents">{{ tx('ผู้ปกครอง') }}</wu-tab>
+          </wu-tablist>
+          <wu-tabpanels>
+            <wu-tabpanel value="info">{{ tx('ห้อง ม.1/2 · เลขที่ 15') }}</wu-tabpanel>
+            <wu-tabpanel value="grades">{{ tx('เกรดเฉลี่ย 3.45') }}</wu-tabpanel>
+            <wu-tabpanel value="health">{{ tx('ต้องมีสิทธิ์ครูประจำชั้น') }}</wu-tabpanel>
+            <wu-tabpanel value="parents">{{ tx('นางสมศรี ใจดี · 081-234-5678') }}</wu-tabpanel>
+          </wu-tabpanels>
+        </wu-tabs>
         <span class="docs-demo-output">value: <code id="d-tabs-byvalue-out">{{ section | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="header" [section]="sec['header']">
       <docs-demo [html]="code['header']" layout="stack">
-        <wt-tabs id="d-tabs-header">
-          <wt-tab-panel>
+        <wu-tabs id="d-tabs-header">
+          <wu-tab-panel>
             <ng-template #header>
-              <span class="docs-panel-head"><i class="wi wi-envelope"></i> {{ tx('ข้อความ') }} <wt-badge value="3" severity="danger"></wt-badge></span>
+              <span class="docs-panel-head"><i class="wi wi-envelope"></i> {{ tx('ข้อความ') }} <wu-badge value="3" severity="danger"></wu-badge></span>
             </ng-template>
             {{ tx('กล่องข้อความ 3 ฉบับที่ยังไม่อ่าน') }}
-          </wt-tab-panel>
-          <wt-tab-panel [header]="tx('โปรไฟล์')">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wt-tab-panel>
-        </wt-tabs>
+          </wu-tab-panel>
+          <wu-tab-panel [header]="tx('โปรไฟล์')">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wu-tab-panel>
+        </wu-tabs>
       </docs-demo>
     </docs-section>
 
     <docs-section id="alias" [section]="sec['alias']">
       <docs-demo [html]="code['alias']" layout="stack">
-        <wt-tabView id="d-tabs-alias" [(activeIndex)]="aliasTab">
-          <wt-tabPanel [header]="tx('ภาพรวม')">{{ tx('ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ') }}</wt-tabPanel>
-          <wt-tabPanel [header]="tx('คำสั่งซื้อ')">{{ tx('คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้') }}</wt-tabPanel>
-        </wt-tabView>
+        <wu-tabView id="d-tabs-alias" [(activeIndex)]="aliasTab">
+          <wu-tabPanel [header]="tx('ภาพรวม')">{{ tx('ยอดซื้อรวม ฿48,200 จาก 12 คำสั่งซื้อ') }}</wu-tabPanel>
+          <wu-tabPanel [header]="tx('คำสั่งซื้อ')">{{ tx('คำสั่งซื้อล่าสุด #10234 เมื่อวานนี้') }}</wu-tabPanel>
+        </wu-tabView>
       </docs-demo>
     </docs-section>
 
     <docs-section id="icons" [section]="sec['icons']">
       <docs-demo [html]="code['icons']" layout="stack">
-        <wt-tabs id="d-tabs-icons">
-          <wt-tab-panel [header]="tx('โปรไฟล์')" leftIcon="wi wi-user">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('อีเมล')" leftIcon="wi wi-envelope">{{ tx('อีเมลหลักและอีเมลสำรอง') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('ความปลอดภัย')" leftIcon="wi wi-lock" [disabled]="true">{{ tx('รหัสผ่านและการยืนยันตัวตน') }}</wt-tab-panel>
-          <wt-tab-panel [header]="tx('การแจ้งเตือน')" leftIcon="wi wi-bell">{{ tx('เลือกช่องทางรับการแจ้งเตือน') }}</wt-tab-panel>
-        </wt-tabs>
+        <wu-tabs id="d-tabs-icons">
+          <wu-tab-panel [header]="tx('โปรไฟล์')" leftIcon="wi wi-user">{{ tx('ชื่อที่แสดงและรูปโปรไฟล์') }}</wu-tab-panel>
+          <wu-tab-panel [header]="tx('อีเมล')" leftIcon="wi wi-envelope">{{ tx('อีเมลหลักและอีเมลสำรอง') }}</wu-tab-panel>
+          <wu-tab-panel [header]="tx('ความปลอดภัย')" leftIcon="wi wi-lock" [disabled]="true">{{ tx('รหัสผ่านและการยืนยันตัวตน') }}</wu-tab-panel>
+          <wu-tab-panel [header]="tx('การแจ้งเตือน')" leftIcon="wi wi-bell">{{ tx('เลือกช่องทางรับการแจ้งเตือน') }}</wu-tab-panel>
+        </wu-tabs>
       </docs-demo>
     </docs-section>
 
     <docs-section id="scroll" [section]="sec['scroll']">
       <docs-demo [html]="code['scroll']" [ts]="ts['scroll']" layout="stack">
-        <wt-tabs id="d-tabs-scroll">
+        <wu-tabs id="d-tabs-scroll">
           @for (m of local(months); track m) {
-            <wt-tab-panel [header]="m">{{ tx('ยอดขายเดือน') }}{{ m }}</wt-tab-panel>
+            <wu-tab-panel [header]="m">{{ tx('ยอดขายเดือน') }}{{ m }}</wu-tab-panel>
           }
-        </wt-tabs>
+        </wu-tabs>
       </docs-demo>
       <docs-demo [html]="code['scrollValue']" [ts]="ts['scrollValue']" layout="stack">
-        <wt-tabs id="d-tabs-scroll-value" [(value)]="unit">
-          <wt-tablist>
+        <wu-tabs id="d-tabs-scroll-value" [(value)]="unit">
+          <wu-tablist>
             @for (u of units; track u) {
-              <wt-tab [value]="u">{{ tx('หน่วยที่') }} {{ u }}</wt-tab>
+              <wu-tab [value]="u">{{ tx('หน่วยที่') }} {{ u }}</wu-tab>
             }
-          </wt-tablist>
-          <wt-tabpanels>
+          </wu-tablist>
+          <wu-tabpanels>
             @for (u of units; track u) {
-              <wt-tabpanel [value]="u">{{ tx('เนื้อหาหน่วยที่') }} {{ u }}</wt-tabpanel>
+              <wu-tabpanel [value]="u">{{ tx('เนื้อหาหน่วยที่') }} {{ u }}</wu-tabpanel>
             }
-          </wt-tabpanels>
-        </wt-tabs>
+          </wu-tabpanels>
+        </wu-tabs>
         <span class="docs-demo-output">value: <code id="d-tabs-scroll-value-out">{{ unit }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="model" [section]="sec['model']">
       <docs-demo [html]="code['model']" [ts]="ts['model']" layout="stack">
-        <wt-tabs id="d-tabs-model" [model]="local(pages)" [(activeItem)]="page" [ariaLabel]="tx('ข้อมูลนักเรียน')"></wt-tabs>
+        <wu-tabs id="d-tabs-model" [model]="local(pages)" [(activeItem)]="page" [ariaLabel]="tx('ข้อมูลนักเรียน')"></wu-tabs>
         <span class="docs-demo-output">{{ tx('หน้าที่เลือก') }}: <code id="d-tabs-model-page">{{ page?.label ?? '-' }}</code></span>
       </docs-demo>
     </docs-section>

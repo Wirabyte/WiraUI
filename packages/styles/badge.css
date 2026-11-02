@@ -1,60 +1,60 @@
-/* wt-badge. Shared by wiratheme v1, v2 and v3. A count or status pill; with no value it is a dot. */
-@layer wiratheme.components {
-  wt-badge {
+/* wu-badge. Shared by wiraui v1, v2 and v3. A count or status pill; with no value it is a dot. */
+@layer wiraui.components {
+  wu-badge {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-badge {
-    --_bg: var(--wt-primary-color);
-    --_fg: var(--wt-primary-contrast);
-    --_size: var(--wt-badge-size);
+  .wu-badge {
+    --_bg: var(--wu-primary-color);
+    --_fg: var(--wu-primary-contrast);
+    --_size: var(--wu-badge-size);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     min-width: var(--_size);
     height: var(--_size);
-    padding: 0 var(--wt-badge-padding-x);
-    border-radius: var(--wt-radius-full);
+    padding: 0 var(--wu-badge-padding-x);
+    border-radius: var(--wu-radius-full);
     background: var(--_bg);
     color: var(--_fg);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-badge-font-size);
-    font-weight: var(--wt-badge-font-weight);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-badge-font-size);
+    font-weight: var(--wu-badge-font-weight);
     line-height: 1;
     white-space: nowrap;
   }
-  .wt-badge-sm {
-    --_size: calc(var(--wt-badge-size) * 0.75);
-    font-size: calc(var(--wt-badge-font-size) * 0.85);
-    padding: 0 calc(var(--wt-badge-padding-x) * 0.6);
+  .wu-badge-sm {
+    --_size: calc(var(--wu-badge-size) * 0.75);
+    font-size: calc(var(--wu-badge-font-size) * 0.85);
+    padding: 0 calc(var(--wu-badge-padding-x) * 0.6);
   }
-  .wt-badge-lg {
-    --_size: calc(var(--wt-badge-size) * 1.5);
-    font-size: calc(var(--wt-badge-font-size) * 1.5);
+  .wu-badge-lg {
+    --_size: calc(var(--wu-badge-size) * 1.5);
+    font-size: calc(var(--wu-badge-font-size) * 1.5);
   }
-  .wt-badge-xl {
-    --_size: calc(var(--wt-badge-size) * 2);
-    font-size: calc(var(--wt-badge-font-size) * 2);
+  .wu-badge-xl {
+    --_size: calc(var(--wu-badge-size) * 2);
+    font-size: calc(var(--wu-badge-font-size) * 2);
   }
-  .wt-badge-dot {
-    --_size: var(--wt-badge-dot-size);
+  .wu-badge-dot {
+    --_size: var(--wu-badge-dot-size);
     min-width: 0;
     width: var(--_size);
     padding: 0;
   }
-  .wt-badge-secondary { --_bg: var(--wt-button-secondary-bg); --_fg: var(--wt-button-secondary-color); }
-  .wt-badge-success { --_bg: var(--wt-success-color); --_fg: var(--wt-success-contrast); }
-  .wt-badge-info { --_bg: var(--wt-info-color); --_fg: var(--wt-info-contrast); }
-  .wt-badge-warn { --_bg: var(--wt-warn-color); --_fg: var(--wt-warn-contrast); }
-  .wt-badge-danger { --_bg: var(--wt-danger-color); --_fg: var(--wt-danger-contrast); }
-  .wt-badge-help { --_bg: var(--wt-help-color); --_fg: var(--wt-help-contrast); }
-  .wt-badge-contrast { --_bg: var(--wt-text); --_fg: var(--wt-card-bg); }
-  /* wtBadge / pBadge: a badge on the corner of another element. */
-  .wt-overlay-badge {
+  .wu-badge-secondary { --_bg: var(--wu-button-secondary-bg); --_fg: var(--wu-button-secondary-color); }
+  .wu-badge-success { --_bg: var(--wu-success-color); --_fg: var(--wu-success-contrast); }
+  .wu-badge-info { --_bg: var(--wu-info-color); --_fg: var(--wu-info-contrast); }
+  .wu-badge-warn { --_bg: var(--wu-warn-color); --_fg: var(--wu-warn-contrast); }
+  .wu-badge-danger { --_bg: var(--wu-danger-color); --_fg: var(--wu-danger-contrast); }
+  .wu-badge-help { --_bg: var(--wu-help-color); --_fg: var(--wu-help-contrast); }
+  .wu-badge-contrast { --_bg: var(--wu-text); --_fg: var(--wu-card-bg); }
+  /* wuBadge / pBadge: a badge on the corner of another element. */
+  .wu-overlay-badge {
     position: relative;
   }
-  .wt-overlay-badge > .wt-badge {
+  .wu-overlay-badge > .wu-badge {
     position: absolute;
     top: 0;
     right: 0;

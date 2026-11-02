@@ -326,7 +326,7 @@ describe('newer chart kinds', () => {
     ];
     const m = chartModel({ ...base, type: 'stream', labels: months, series });
     expect(m.generic).toBe(true);
-    expect(m.shapes.filter((s) => s.className === 'wt-chart-stream').length).toBe(2);
+    expect(m.shapes.filter((s) => s.className === 'wu-chart-stream').length).toBe(2);
     expect(m.yTicks).toEqual([]);
     expect(m.hover[0].tip?.rows.length).toBe(3);
     const share = chartModel({ ...base, type: 'stream', variant: 'expand', labels: months, series });
@@ -337,9 +337,9 @@ describe('newer chart kinds', () => {
   it('floats waterfall changes from the running total, with totals for nulls', () => {
     const m = chartModel({ ...base, type: 'waterfall', labels: ['เริ่ม', 'ขาย', 'คืน', 'รวม'], series: [{ data: [100, 50, -30, null] }] });
     const bars = m.shapes.filter((s) => s.kind === 'rect');
-    expect(bars.map((b) => b.fill)).toEqual(['var(--wt-chart-up)', 'var(--wt-chart-up)', 'var(--wt-chart-down)', 'var(--wt-chart-total)']);
+    expect(bars.map((b) => b.fill)).toEqual(['var(--wu-chart-up)', 'var(--wu-chart-up)', 'var(--wu-chart-down)', 'var(--wu-chart-total)']);
     expect(m.valueLabels.map((l) => l.text)).toEqual(['+100', '+50', '−30', '120']);
-    expect(m.shapes.filter((s) => s.className === 'wt-chart-connector').length).toBe(3);
+    expect(m.shapes.filter((s) => s.className === 'wu-chart-connector').length).toBe(3);
     // The total bar ends where the running total is.
     expect(bars[3].y!).toBeCloseTo(bars[2].y! + bars[2].h!, 0);
   });
@@ -354,7 +354,7 @@ describe('newer chart kinds', () => {
     expect(dots.shapes.find((s) => s.kind === 'line')?.gradient).toBeTruthy();
     expect(dots.hover[1].tip?.rows[2].value).toBe('−15');
     const arrows = chartModel({ ...base, type: 'dumbbell', variant: 'arrow', labels: ['ก', 'ข'], series });
-    expect(arrows.shapes.filter((s) => s.kind === 'path').map((s) => s.fill)).toEqual(['var(--wt-chart-up)', 'var(--wt-chart-down)']);
+    expect(arrows.shapes.filter((s) => s.kind === 'path').map((s) => s.fill)).toEqual(['var(--wu-chart-up)', 'var(--wu-chart-down)']);
   });
 
   it('lays timeline bars on rows, overlapping ones in lanes, on a date axis', () => {
@@ -395,7 +395,7 @@ describe('newer chart kinds', () => {
     expect(boxStats([1, 2, 3, 4, 5, 6, 7, 8, 100])).toMatchObject({ median: 5, q1: 3, q3: 7, max: 8, outliers: [100] });
     const data = [[1, 2, 3, 4, 5, 6, 7, 8, 100], { min: 2, q1: 4, median: 5, q3: 6, max: 9 }];
     const m = chartModel({ ...base, type: 'boxplot', labels: ['ก', 'ข'], series: [{ data }] });
-    expect(m.shapes.filter((s) => s.className === 'wt-chart-median').length).toBe(2);
+    expect(m.shapes.filter((s) => s.className === 'wu-chart-median').length).toBe(2);
     expect(m.hover[0].tip?.rows.map((r) => r.value)).toEqual(['8', '7', '5', '3', '1']);
     expect(chartModel({ ...base, type: 'boxplot', variant: 'violin', labels: ['ก'], series: [{ data: [data[0]] }] }).shapes.some((s) => s.key.endsWith('v'))).toBe(true);
     expect(chartModel({ ...base, type: 'boxplot', variant: 'points', labels: ['ก'], series: [{ data: [data[0]] }] }).shapes.filter((s) => s.kind === 'circle').length).toBe(9);
@@ -446,7 +446,7 @@ describe('newer chart kinds', () => {
     const lefts = m.texts.filter((t) => t.anchor === 'end' && t.hover).map((t) => t.y);
     expect(Math.abs(lefts[0] - lefts[1])).toBeGreaterThanOrEqual(14);
     const hi = chartModel({ ...base, type: 'slope', variant: 'highlight', labels: ['2568', '2569'], series });
-    expect(hi.shapes.filter((s) => s.kind === 'path').map((s) => s.stroke)).toEqual(['var(--wt-chart-up)', 'var(--wt-chart-down)', 'var(--wt-chart-muted)']);
+    expect(hi.shapes.filter((s) => s.kind === 'path').map((s) => s.stroke)).toEqual(['var(--wu-chart-up)', 'var(--wu-chart-down)', 'var(--wu-chart-muted)']);
     expect(chartHit(m, m.hover[0].points![0].x + 1, m.hover[0].points![0].y)?.key).toBe('l0');
   });
 

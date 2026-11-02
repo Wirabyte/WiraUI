@@ -1,33 +1,33 @@
-/* wt-tabs with wt-tab-panel (by index) or wt-tablist / wt-tab / wt-tabpanels / wt-tabpanel (by value). Shared by wiratheme v1, v2 and v3. A row that runs out of room scrolls sideways
+/* wu-tabs with wu-tab-panel (by index) or wu-tablist / wu-tab / wu-tabpanels / wu-tabpanel (by value). Shared by wiraui v1, v2 and v3. A row that runs out of room scrolls sideways
    (swipe, wheel, or the arrow buttons that appear at an edge with more tabs behind it); no scrollbar is drawn. */
-@layer wiratheme.components {
-  wt-tabs,
-  wt-tabview {
+@layer wiraui.components {
+  wu-tabs,
+  wu-tabview {
     display: block;
     min-width: 0;
   }
-  wt-tab-panel,
-  wt-tabpanel,
-  wt-tablist,
-  wt-tabpanels {
+  wu-tab-panel,
+  wu-tabpanel,
+  wu-tablist,
+  wu-tabpanels {
     display: block;
   }
-  wt-tab-panel[hidden],
-  wt-tabpanel[hidden] {
+  wu-tab-panel[hidden],
+  wu-tabpanel[hidden] {
     display: none;
   }
-  .wt-tabs {
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+  .wu-tabs {
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
   /* The baseline is an inset shadow, not a border: tabs paint their underline over it without a
      negative margin, so the row never overflows vertically (no stray vertical scrollbar). */
-  .wt-tabs-nav {
+  .wu-tabs-nav {
     position: relative;
   }
-  .wt-tablist {
+  .wu-tablist {
     position: relative;
     display: flex;
     overflow-x: auto;
@@ -36,12 +36,12 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    box-shadow: inset 0 calc(var(--wt-tabs-border-width) * -1) 0 var(--wt-border);
+    box-shadow: inset 0 calc(var(--wu-tabs-border-width) * -1) 0 var(--wu-border);
   }
-  .wt-tablist::-webkit-scrollbar {
+  .wu-tablist::-webkit-scrollbar {
     display: none;
   }
-  .wt-tabs-nav-btn {
+  .wu-tabs-nav-btn {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -49,124 +49,124 @@
     display: grid;
     place-items: center;
     width: 2.25rem;
-    padding: 0 0 var(--wt-tabs-border-width);
+    padding: 0 0 var(--wu-tabs-border-width);
     border: 0;
-    background: var(--wt-card-bg);
-    box-shadow: inset 0 calc(var(--wt-tabs-border-width) * -1) 0 var(--wt-border);
-    color: var(--wt-tabs-tab-active-color);
+    background: var(--wu-card-bg);
+    box-shadow: inset 0 calc(var(--wu-tabs-border-width) * -1) 0 var(--wu-border);
+    color: var(--wu-tabs-tab-active-color);
     cursor: pointer;
   }
-  .wt-tabs-nav-btn::after {
+  .wu-tabs-nav-btn::after {
     content: '';
     position: absolute;
     top: 0;
-    bottom: var(--wt-tabs-border-width);
+    bottom: var(--wu-tabs-border-width);
     width: 0.75rem;
     pointer-events: none;
   }
-  .wt-tabs-prev {
+  .wu-tabs-prev {
     left: 0;
   }
-  .wt-tabs-prev::after {
+  .wu-tabs-prev::after {
     left: 100%;
-    background: linear-gradient(to right, var(--wt-card-bg), transparent);
+    background: linear-gradient(to right, var(--wu-card-bg), transparent);
   }
-  .wt-tabs-next {
+  .wu-tabs-next {
     right: 0;
   }
-  .wt-tabs-next::after {
+  .wu-tabs-next::after {
     right: 100%;
-    background: linear-gradient(to left, var(--wt-card-bg), transparent);
+    background: linear-gradient(to left, var(--wu-card-bg), transparent);
   }
-  .wt-tabs-nav-btn:hover {
-    background: var(--wt-hover-bg);
+  .wu-tabs-nav-btn:hover {
+    background: var(--wu-hover-bg);
   }
-  .wt-tabs-nav-btn svg {
+  .wu-tabs-nav-btn svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  .wt-tab {
+  .wu-tab {
     flex: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     margin: 0;
-    padding: var(--wt-tabs-tab-padding-y) var(--wt-tabs-tab-padding-x);
+    padding: var(--wu-tabs-tab-padding-y) var(--wu-tabs-tab-padding-x);
     border: 0;
-    border-bottom: var(--wt-tabs-border-width) solid transparent;
+    border-bottom: var(--wu-tabs-border-width) solid transparent;
     background: transparent;
-    color: var(--wt-tabs-tab-color);
+    color: var(--wu-tabs-tab-color);
     font: inherit;
-    font-weight: var(--wt-tabs-tab-weight);
+    font-weight: var(--wu-tabs-tab-weight);
     white-space: nowrap;
     cursor: pointer;
     transition:
-      color var(--wt-transition),
-      border-color var(--wt-transition);
+      color var(--wu-transition),
+      border-color var(--wu-transition);
   }
-  .wt-tab:not(:disabled, [aria-disabled='true']):hover {
-    color: var(--wt-text);
+  .wu-tab:not(:disabled, [aria-disabled='true']):hover {
+    color: var(--wu-text);
   }
-  .wt-tab-active,
-  .wt-tab-active:not(:disabled, [aria-disabled='true']):hover {
-    border-bottom-color: var(--wt-tabs-tab-active-color);
-    color: var(--wt-tabs-tab-active-color);
+  .wu-tab-active,
+  .wu-tab-active:not(:disabled, [aria-disabled='true']):hover {
+    border-bottom-color: var(--wu-tabs-tab-active-color);
+    color: var(--wu-tabs-tab-active-color);
   }
-  .wt-tab:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: calc(var(--wt-control-focus-offset) * -1 - 2px);
-    box-shadow: inset var(--wt-control-focus-shadow);
+  .wu-tab:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: calc(var(--wu-control-focus-offset) * -1 - 2px);
+    box-shadow: inset var(--wu-control-focus-shadow);
   }
-  .wt-tab:disabled,
-  .wt-tab[aria-disabled='true'] {
-    opacity: var(--wt-disabled-opacity);
+  .wu-tab:disabled,
+  .wu-tab[aria-disabled='true'] {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-tab-icon {
+  .wu-tab-icon {
     line-height: 1;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-tablist {
+    .wu-tablist {
       scroll-behavior: auto;
     }
   }
-  .wt-tabpanels {
-    padding: var(--wt-tabs-panel-padding);
-    background: var(--wt-tabs-panel-bg);
+  .wu-tabpanels {
+    padding: var(--wu-tabs-panel-padding);
+    background: var(--wu-tabs-panel-bg);
   }
 
-  /* wt-tabmenu (and wt-tabs [model]): the same tab row, made of links. */
-  :is(wt-tabmenu, wt-tab-menu) {
+  /* wu-tabmenu (and wu-tabs [model]): the same tab row, made of links. */
+  :is(wu-tabmenu, wu-tab-menu) {
     display: block;
     min-width: 0;
   }
-  .wt-tabmenu {
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+  .wu-tabmenu {
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  .wt-tabmenu-list {
+  .wu-tabmenu-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .wt-tabmenu-item {
+  .wu-tabmenu-item {
     display: flex;
     flex: none;
   }
-  .wt-tabmenu-item > .wt-tab {
+  .wu-tabmenu-item > .wu-tab {
     text-decoration: none;
   }
-  .wt-tabmenu-badge {
+  .wu-tabmenu-badge {
     display: inline-grid;
     place-items: center;
     min-width: 1.25rem;
     height: 1.25rem;
     padding: 0 0.375rem;
     border-radius: 999px;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;

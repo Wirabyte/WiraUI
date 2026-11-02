@@ -10,25 +10,25 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
 import {
   ɵmeterParts,
-  WtMeterContext,
-  WtMeterGroupContext,
-  WtMeterItem,
-  WtMeterLabelPosition,
-  WtMeterOrientation,
+  WuMeterContext,
+  WuMeterGroupContext,
+  WuMeterItem,
+  WuMeterLabelPosition,
+  WuMeterOrientation,
 } from './metergroup.types';
 
 const template = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 type Parts = ReturnType<typeof ɵmeterParts>;
 
 /**
- * Several values on one bar, with a legend: `<wt-metergroup [value]="[{ label: 'รูปภาพ', value: 24 }, …]">`.
+ * Several values on one bar, with a legend: `<wu-metergroup [value]="[{ label: 'รูปภาพ', value: 24 }, …]">`.
  * Values are read against `min`–`max` (0–100 by default).
  */
 @Component({
-  selector: 'wt-metergroup, wt-meterGroup, wt-meter-group',
+  selector: 'wu-metergroup, wu-meterGroup, wu-meter-group',
   standalone: true,
   imports: [NgIf, NgFor, NgTemplateOutlet],
   templateUrl: './metergroup.component.html',
@@ -36,12 +36,12 @@ type Parts = ReturnType<typeof ɵmeterParts>;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtMeterGroup {
-  @Input() set value(v: WtMeterItem[] | null | undefined) {
+export class WuMeterGroup {
+  @Input() set value(v: WuMeterItem[] | null | undefined) {
     this._value = v || [];
     this.refresh();
   }
-  get value(): WtMeterItem[] {
+  get value(): WuMeterItem[] {
     return this._value;
   }
   @Input() set min(v: unknown) {
@@ -58,15 +58,15 @@ export class WtMeterGroup {
   get max(): number {
     return this._max;
   }
-  @Input() orientation: WtMeterOrientation = 'horizontal';
+  @Input() orientation: WuMeterOrientation = 'horizontal';
   /** Fill from the other end: right to left, or (vertical) bottom to top. */
   @Input() set reverse(v: unknown) { this._reverse = ɵtoBool(v); }
   get reverse(): boolean { return this._reverse; }
   private _reverse = false;
   /** Legend before or after the bar. */
-  @Input() labelPosition: WtMeterLabelPosition = 'end';
+  @Input() labelPosition: WuMeterLabelPosition = 'end';
   /** Legend items in a row or a column. */
-  @Input() labelOrientation: WtMeterOrientation = 'horizontal';
+  @Input() labelOrientation: WuMeterOrientation = 'horizontal';
   @Input() styleClass?: string;
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,16 +83,16 @@ export class WtMeterGroup {
   @ContentChild('start', { descendants: false }) private startRef?: unknown;
   @ContentChild('end', { descendants: false }) private endRef?: unknown;
   @ContentChild('icon', { descendants: false }) private iconRef?: unknown;
-  @ContentChildren(WtTemplate) private templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) private templates?: QueryList<WuTemplate>;
 
   parts: Parts = ɵmeterParts([], 0, 100);
-  groupContext: WtMeterGroupContext = { $implicit: [], totalPercent: 0, percentages: [] };
-  private _value: WtMeterItem[] = [];
+  groupContext: WuMeterGroupContext = { $implicit: [], totalPercent: 0, percentages: [] };
+  private _value: WuMeterItem[] = [];
   private _min = 0;
   private _max = 100;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   /** `<ng-template pTemplate="label" let-value let-totalPercent="totalPercent" let-percentages="percentages">`: the whole legend. */
@@ -117,22 +117,22 @@ export class WtMeterGroup {
 
   get classes(): string {
     const o = this.orientation;
-    const c = ['wt-metergroup', 'p-metergroup', 'p-component', `wt-metergroup-${o}`, `p-metergroup-${o}`];
-    if (this._reverse) c.push('wt-metergroup-reverse');
+    const c = ['wu-metergroup', 'p-metergroup', 'p-component', `wu-metergroup-${o}`, `p-metergroup-${o}`];
+    if (this._reverse) c.push('wu-metergroup-reverse');
     if (this.styleClass) c.push(this.styleClass);
     return c.join(' ');
   }
   get labelClasses(): string {
     const o = this.labelOrientation;
-    return `wt-metergroup-labels wt-metergroup-labels-${o} p-metergroup-labels p-metergroup-labels-${o}`;
+    return `wu-metergroup-labels wu-metergroup-labels-${o} p-metergroup-labels p-metergroup-labels-${o}`;
   }
 
-  meterContext(index: number): WtMeterContext {
+  meterContext(index: number): WuMeterContext {
     return {
       $implicit: this.parts.items[index],
       index,
       orientation: this.orientation,
-      class: 'wt-metergroup-meter p-metergroup-meter',
+      class: 'wu-metergroup-meter p-metergroup-meter',
       size: this.parts.sizes[index],
       totalPercent: this.parts.totalPercent,
     };

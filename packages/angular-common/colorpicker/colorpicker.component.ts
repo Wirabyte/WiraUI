@@ -19,16 +19,16 @@ import {
   ɵassertSupportedAngular,
   ɵrefreshOnTranslation,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WtConfig,
-} from 'wiratheme/config';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ColorFormat, ColorHsb, formatColor, hsbToHex, parseColor, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WuConfig,
+} from 'wiraui/config';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ColorFormat, ColorHsb, formatColor, hsbToHex, parseColor, WuLocale } from 'wiraui/core';
 
 /** `(onChange)`: the colour in the component's `format`. */
-export interface WtColorPickerChangeEvent {
+export interface WuColorPickerChangeEvent {
   originalEvent: Event;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
@@ -37,22 +37,22 @@ export interface WtColorPickerChangeEvent {
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 /**
- * Picks a colour: `<wt-colorPicker [(ngModel)]="color">`. A swatch opens a panel with a saturation/brightness
+ * Picks a colour: `<wu-colorPicker [(ngModel)]="color">`. A swatch opens a panel with a saturation/brightness
  * area, a hue strip and a hex field; `[inline]="true"` shows the panel on the page. The value is `'#rrggbb'`
  * (`format="hex"`, default), `{ r, g, b }` (`"rgb"`) or `{ h, s, b }` (`"hsb"`); any of those is read back.
  * Keyboard: arrows move the focused handle (Shift for bigger steps), Escape closes.
  */
 @Component({
-  selector: 'wt-colorpicker, wt-colorPicker, wt-color-picker',
+  selector: 'wu-colorpicker, wu-colorPicker, wu-color-picker',
   standalone: true,
   imports: [NgIf],
   templateUrl: './colorpicker.component.html',
   styleUrls: ['./colorpicker.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtColorPicker), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuColorPicker), multi: true }],
 })
-export class WtColorPicker implements ControlValueAccessor, OnDestroy {
+export class WuColorPicker implements ControlValueAccessor, OnDestroy {
   @Input() format: ColorFormat = 'hex';
   /** The panel on the page instead of a swatch that opens it. */
   @Input() set inline(v: unknown) { this._inline = ɵtoBool(v); }
@@ -78,7 +78,7 @@ export class WtColorPicker implements ControlValueAccessor, OnDestroy {
   @Input() hideTransitionOptions: unknown;
   @Input() autofocus: unknown;
 
-  @Output() readonly onChange = new EventEmitter<WtColorPickerChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuColorPickerChangeEvent>();
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
@@ -93,19 +93,19 @@ export class WtColorPicker implements ControlValueAccessor, OnDestroy {
   private _disabled = false;
   private _defaultColor = 'ff0000';
   private formDisabled = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private stopDrag: (() => void) | null = null;
   private onModel: (v: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly zone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -116,7 +116,7 @@ export class WtColorPicker implements ControlValueAccessor, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -151,10 +151,10 @@ export class WtColorPicker implements ControlValueAccessor, OnDestroy {
     const anchor = this.previewRef?.nativeElement;
     const panel = this.panelRef?.nativeElement;
     if (anchor && panel) {
-      this.popup = new ɵWtPopup(anchor, panel, {
+      this.popup = new ɵWuPopup(anchor, panel, {
         sheet: false,
-        sheetClass: 'wt-colorpicker-sheet',
-        modalClass: 'wt-colorpicker-modal',
+        sheetClass: 'wu-colorpicker-sheet',
+        modalClass: 'wu-colorpicker-modal',
         onOutside: () => this.zone.run(() => this.hide()),
         onEscape: (e) => this.zone.run(() => {
           e.preventDefault();
@@ -162,7 +162,7 @@ export class WtColorPicker implements ControlValueAccessor, OnDestroy {
         }),
       });
       this.popup.open();
-      (panel.querySelector('.wt-colorpicker-area') as HTMLElement | null)?.focus({ preventScroll: true });
+      (panel.querySelector('.wu-colorpicker-area') as HTMLElement | null)?.focus({ preventScroll: true });
     }
     this.onShow.emit();
   }

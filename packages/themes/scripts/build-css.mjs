@@ -1,6 +1,6 @@
-// Prebuilt CSS themes per wiratheme major, the Sass sources in dist/theme/ so the build shells
-// can ship them as `wiratheme/theme`, and the utility classes in dist/utils/ (`wiratheme/utils`).
-// tools/sync-sources.mjs copies dist/themes-<v> to `wiratheme/themes`.
+// Prebuilt CSS themes per wiraui major, the Sass sources in dist/theme/ so the build shells
+// can ship them as `wiraui/theme`, and the utility classes in dist/utils/ (`wiraui/utils`).
+// tools/sync-sources.mjs copies dist/themes-<v> to `wiraui/themes`.
 //   v1      dist/themes-v1/<name>/theme.css             (classic names: sila-light-teal, sayan-blue, …)
 //   v2, v3  dist/themes-v<n>/<preset>/theme.css         (the preset as designed)
 //           dist/themes-v<n>/<preset>/<swatch>.css      (with another primary colour)
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 // The CJS build: core's ESM output uses extensionless imports that plain Node cannot resolve.
-const { PRIMARY_SWATCHES, VERSION_CATALOG, normalize, themeConfig, toCSS } = require('@wiratheme/core');
+const { PRIMARY_SWATCHES, VERSION_CATALOG, normalize, themeConfig, toCSS } = require('@wiraui/core');
 const sass = require('sass');
 
 const dist = new URL('../dist/', import.meta.url);
@@ -48,7 +48,7 @@ mkdirSync(theme, { recursive: true });
 const files = readdirSync(scss).filter((f) => f.endsWith('.scss'));
 for (const f of files) copyFileSync(new URL(f, scss), new URL(f, theme));
 
-// Utilities: the Sass module (`@use 'wiratheme/utils'`) plus everything prebuilt for CSS-only apps.
+// Utilities: the Sass module (`@use 'wiraui/utils'`) plus everything prebuilt for CSS-only apps.
 const utilsSrc = new URL('../utils/', import.meta.url);
 const utils = new URL('utils/', dist);
 mkdirSync(utils, { recursive: true });

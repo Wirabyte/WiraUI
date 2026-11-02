@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTextarea } from './textarea.directive';
+import { WuTextarea } from './textarea.directive';
 
-/** For NgModule apps. Standalone apps can import `WtTextarea` directly. */
+/** For NgModule apps. Standalone apps can import `WuTextarea` directly. */
 @NgModule({
-  imports: [WtTextarea],
-  exports: [WtTextarea],
+  imports: [WuTextarea],
+  exports: [WuTextarea],
 })
-export class WtTextareaModule {}
+export class WuTextareaModule {}

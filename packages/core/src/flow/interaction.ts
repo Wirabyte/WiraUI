@@ -1,5 +1,5 @@
 /**
- * wt-flow: the decisions behind dragging, box selection, connecting and the keyboard, kept here (pure) so they are
+ * wu-flow: the decisions behind dragging, box selection, connecting and the keyboard, kept here (pure) so they are
  * tested once and the component only wires them to events.
  */
 import { clampPosition, flowClamp, handlesCompatible, connectionBetween, getBoundsOfRects, snapPosition } from './geometry';

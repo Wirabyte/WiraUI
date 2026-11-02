@@ -36,34 +36,34 @@ userPermissions: Permission[] = [
   { id: 1, code: 'student.view', name: 'ดูข้อมูลนักเรียน', module: 'งานทะเบียน' },
 ];`;
 
-/** Tokens wt-picklist and wt-orderlist share (one stylesheet). */
+/** Tokens wu-picklist and wu-orderlist share (one stylesheet). */
 const LIST_TOKENS: TokenRow[] = [
-  tok('--wt-picklist-gap', 'ระยะระหว่างรายการกับปุ่ม', 'Gap between the lists and the buttons'),
-  tok('--wt-picklist-box-border-width', 'ขอบของกรอบแต่ละรายการ (v2 / v3)', 'Border of each list frame (v2 / v3)'),
-  tok('--wt-picklist-box-radius', 'ความมนของกรอบ', 'Frame radius'),
-  tok('--wt-picklist-box-bg', 'พื้นของกรอบ', 'Frame background'),
-  tok('--wt-picklist-header-padding', 'ระยะในหัวรายการ', 'Header padding'),
-  tok('--wt-picklist-header-border-width', 'ขอบของหัวรายการ', 'Header border width'),
-  tok('--wt-picklist-header-radius', 'ความมนของหัวรายการ (v1)', 'Header radius (v1)'),
-  tok('--wt-picklist-header-bg', 'พื้นของหัวรายการ', 'Header background'),
-  tok('--wt-picklist-header-weight', 'น้ำหนักตัวอักษรหัวรายการ', 'Header font weight'),
-  tok('--wt-picklist-filter-padding', 'ระยะรอบช่องค้นหา', 'Padding around the search box'),
-  tok('--wt-picklist-filter-border-width', 'ขอบของแถบค้นหา', 'Search bar border width'),
-  tok('--wt-picklist-filter-bg', 'พื้นของแถบค้นหา', 'Search bar background'),
-  tok('--wt-picklist-list-padding', 'ระยะในรายการ', 'List padding'),
-  tok('--wt-picklist-list-border-width', 'ขอบของรายการ', 'List border width'),
-  tok('--wt-picklist-list-radius', 'ความมนของรายการ', 'List radius'),
-  tok('--wt-picklist-list-height', 'ความสูงของรายการ (เมื่อไม่ได้ตั้ง style หรือ scrollHeight)', 'List height (when no style or scrollHeight is set)'),
-  tok('--wt-picklist-list-min-height', 'ความสูงขั้นต่ำของรายการ', 'Minimum list height'),
-  tok('--wt-picklist-list-max-height', 'ความสูงสูงสุดของรายการ', 'Maximum list height'),
-  tok('--wt-picklist-item-gap', 'ระยะระหว่างรายการย่อย', 'Gap between items'),
-  tok('--wt-picklist-item-padding', 'ระยะในแต่ละรายการย่อย', 'Item padding'),
-  tok('--wt-picklist-item-radius', 'ความมนของรายการย่อย', 'Item radius'),
-  tok('--wt-picklist-item-stripe-bg', 'พื้นแถวคู่เมื่อ stripedRows', 'Even rows with stripedRows'),
-  tok('--wt-select-option-hover-bg', 'พื้นรายการที่ชี้ (ร่วมกับ Select)', 'Hovered item (shared with Select)'),
-  tok('--wt-select-option-selected-bg', 'พื้นรายการที่เลือก', 'Selected item background'),
-  tok('--wt-select-option-selected-color', 'สีตัวอักษรรายการที่เลือก', 'Selected item text'),
-  tok('--wt-primary-color', 'เส้นบอกตำแหน่งวางและตัวเลขบนภาพที่ลาก', 'The drop line and the count on the drag image'),
+  tok('--wu-picklist-gap', 'ระยะระหว่างรายการกับปุ่ม', 'Gap between the lists and the buttons'),
+  tok('--wu-picklist-box-border-width', 'ขอบของกรอบแต่ละรายการ (v2 / v3)', 'Border of each list frame (v2 / v3)'),
+  tok('--wu-picklist-box-radius', 'ความมนของกรอบ', 'Frame radius'),
+  tok('--wu-picklist-box-bg', 'พื้นของกรอบ', 'Frame background'),
+  tok('--wu-picklist-header-padding', 'ระยะในหัวรายการ', 'Header padding'),
+  tok('--wu-picklist-header-border-width', 'ขอบของหัวรายการ', 'Header border width'),
+  tok('--wu-picklist-header-radius', 'ความมนของหัวรายการ (v1)', 'Header radius (v1)'),
+  tok('--wu-picklist-header-bg', 'พื้นของหัวรายการ', 'Header background'),
+  tok('--wu-picklist-header-weight', 'น้ำหนักตัวอักษรหัวรายการ', 'Header font weight'),
+  tok('--wu-picklist-filter-padding', 'ระยะรอบช่องค้นหา', 'Padding around the search box'),
+  tok('--wu-picklist-filter-border-width', 'ขอบของแถบค้นหา', 'Search bar border width'),
+  tok('--wu-picklist-filter-bg', 'พื้นของแถบค้นหา', 'Search bar background'),
+  tok('--wu-picklist-list-padding', 'ระยะในรายการ', 'List padding'),
+  tok('--wu-picklist-list-border-width', 'ขอบของรายการ', 'List border width'),
+  tok('--wu-picklist-list-radius', 'ความมนของรายการ', 'List radius'),
+  tok('--wu-picklist-list-height', 'ความสูงของรายการ (เมื่อไม่ได้ตั้ง style หรือ scrollHeight)', 'List height (when no style or scrollHeight is set)'),
+  tok('--wu-picklist-list-min-height', 'ความสูงขั้นต่ำของรายการ', 'Minimum list height'),
+  tok('--wu-picklist-list-max-height', 'ความสูงสูงสุดของรายการ', 'Maximum list height'),
+  tok('--wu-picklist-item-gap', 'ระยะระหว่างรายการย่อย', 'Gap between items'),
+  tok('--wu-picklist-item-padding', 'ระยะในแต่ละรายการย่อย', 'Item padding'),
+  tok('--wu-picklist-item-radius', 'ความมนของรายการย่อย', 'Item radius'),
+  tok('--wu-picklist-item-stripe-bg', 'พื้นแถวคู่เมื่อ stripedRows', 'Even rows with stripedRows'),
+  tok('--wu-select-option-hover-bg', 'พื้นรายการที่ชี้ (ร่วมกับ Select)', 'Hovered item (shared with Select)'),
+  tok('--wu-select-option-selected-bg', 'พื้นรายการที่เลือก', 'Selected item background'),
+  tok('--wu-select-option-selected-color', 'สีตัวอักษรรายการที่เลือก', 'Selected item text'),
+  tok('--wu-primary-color', 'เส้นบอกตำแหน่งวางและตัวเลขบนภาพที่ลาก', 'The drop line and the count on the drag image'),
 ];
 
 const ARIA_LABELS_NOTE = {
@@ -76,9 +76,9 @@ export const PICKLIST_DOC: ComponentDoc = {
   title: 'PickList',
   group: 'Data',
   entry: 'picklist',
-  standalone: 'WtPickList',
-  module: 'WtPickListModule',
-  selector: 'wt-picklist',
+  standalone: 'WuPickList',
+  module: 'WuPickListModule',
+  selector: 'wu-picklist',
   description: {
     th: 'สองรายการที่ย้ายของไปมาได้ เลือกแล้วกดปุ่มตรงกลาง ดับเบิลคลิก หรือลากวาง แต่ละฝั่งค้นหาและจัดลำดับเองได้ ใช้กับสิทธิ์ของผู้ใช้หรือการเรียงลำดับผู้อนุมัติ',
     en: 'Two lists to move items between: select and use the buttons in the middle, double-click, or drag. Each side can be searched and put in order. Made for user permissions and approval chains.',
@@ -119,8 +119,8 @@ export const PICKLIST_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtPickListModule</code> ซึ่งรวม <code>wtTemplate</code> ไว้แล้ว) และ standalone (<code>WtPickList</code>) selector <code>wt-pickList</code> ก็ใช้ได้',
-        en: 'Works as an NgModule (<code>WtPickListModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtPickList</code>). The <code>wt-pickList</code> selector works too.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuPickListModule</code> ซึ่งรวม <code>wuTemplate</code> ไว้แล้ว) และ standalone (<code>WuPickList</code>) selector <code>wu-pickList</code> ก็ใช้ได้',
+        en: 'Works as an NgModule (<code>WuPickListModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuPickList</code>). The <code>wu-pickList</code> selector works too.',
       },
     },
     basic: {
@@ -154,8 +154,8 @@ export const PICKLIST_DOC: ComponentDoc = {
     events: {
       title: { th: 'Event และเมธอด', en: 'Events and methods' },
       text: {
-        th: 'event การย้าย (<code>onMoveToTarget</code>, <code>onMoveAllToTarget</code>, <code>onMoveToSource</code>, <code>onMoveAllToSource</code>) และการจัดลำดับ (<code>onSourceReorder</code>, <code>onTargetReorder</code>) ส่ง <code>items</code> ที่ย้ายมาให้ ตั้งชื่อด้วย <code>#pl="wtPickList"</code> แล้วเรียก <code>pl.moveAllRight()</code>, <code>pl.moveAllLeft()</code> หรือ <code>pl.resetFilter()</code> จากปุ่มของหน้าเองได้',
-        en: 'The move events (<code>onMoveToTarget</code>, <code>onMoveAllToTarget</code>, <code>onMoveToSource</code>, <code>onMoveAllToSource</code>) and the order events (<code>onSourceReorder</code>, <code>onTargetReorder</code>) bring the <code>items</code> that moved. Name it with <code>#pl="wtPickList"</code> to call <code>pl.moveAllRight()</code>, <code>pl.moveAllLeft()</code> or <code>pl.resetFilter()</code> from your own buttons.',
+        th: 'event การย้าย (<code>onMoveToTarget</code>, <code>onMoveAllToTarget</code>, <code>onMoveToSource</code>, <code>onMoveAllToSource</code>) และการจัดลำดับ (<code>onSourceReorder</code>, <code>onTargetReorder</code>) ส่ง <code>items</code> ที่ย้ายมาให้ ตั้งชื่อด้วย <code>#pl="wuPickList"</code> แล้วเรียก <code>pl.moveAllRight()</code>, <code>pl.moveAllLeft()</code> หรือ <code>pl.resetFilter()</code> จากปุ่มของหน้าเองได้',
+        en: 'The move events (<code>onMoveToTarget</code>, <code>onMoveAllToTarget</code>, <code>onMoveToSource</code>, <code>onMoveAllToSource</code>) and the order events (<code>onSourceReorder</code>, <code>onTargetReorder</code>) bring the <code>items</code> that moved. Name it with <code>#pl="wuPickList"</code> to call <code>pl.moveAllRight()</code>, <code>pl.moveAllLeft()</code> or <code>pl.resetFilter()</code> from your own buttons.',
       },
     },
     look: {
@@ -175,35 +175,35 @@ export const PICKLIST_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-pickList&gt;</code> เป็น <code>&lt;wt-picklist&gt;</code> (หรือ <code>&lt;wt-pickList&gt;</code>) input และ event ชื่อเดิม <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-picklist-*</code> อยู่คู่กับ <code>wt-picklist-*</code> ส่วน <code>responsive</code>, <code>filterLocale</code> และ <code>autoOptionFocus</code> รับไว้แต่ไม่มีผล (สองฝั่งเรียงบนลงล่างบนจอแคบเสมอ)',
-        en: 'Change <code>&lt;p-pickList&gt;</code> to <code>&lt;wt-picklist&gt;</code> (or <code>&lt;wt-pickList&gt;</code>). Inputs and events keep their names, <code>pTemplate="item"</code> works, and the <code>p-picklist-*</code> classes sit next to <code>wt-picklist-*</code>. <code>responsive</code>, <code>filterLocale</code> and <code>autoOptionFocus</code> are accepted and ignored (the lists always stack on narrow screens).',
+        th: 'เปลี่ยน <code>&lt;p-pickList&gt;</code> เป็น <code>&lt;wu-picklist&gt;</code> (หรือ <code>&lt;wu-pickList&gt;</code>) input และ event ชื่อเดิม <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-picklist-*</code> อยู่คู่กับ <code>wu-picklist-*</code> ส่วน <code>responsive</code>, <code>filterLocale</code> และ <code>autoOptionFocus</code> รับไว้แต่ไม่มีผล (สองฝั่งเรียงบนลงล่างบนจอแคบเสมอ)',
+        en: 'Change <code>&lt;p-pickList&gt;</code> to <code>&lt;wu-picklist&gt;</code> (or <code>&lt;wu-pickList&gt;</code>). Inputs and events keep their names, <code>pTemplate="item"</code> works, and the <code>p-picklist-*</code> classes sit next to <code>wu-picklist-*</code>. <code>responsive</code>, <code>filterLocale</code> and <code>autoOptionFocus</code> are accepted and ignored (the lists always stack on narrow screens).',
       },
     },
   },
   code: {
-    basic: `<wt-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
+    basic: `<wu-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" [sourceStyle]="{ height: '20rem' }" [targetStyle]="{ height: '20rem' }">
   <ng-template #item let-p>
     <div class="font-semibold">{{ p.name }}</div>
     <small class="text-color-secondary">{{ p.module }}</small>
   </ng-template>
-</wt-picklist>`,
-    dragdrop: `<wt-picklist [source]="ranks" [target]="flow" sourceHeader="ตำแหน่ง" targetHeader="ลำดับการส่งต่อ (เรียงจากบนลงล่าง)"
+</wu-picklist>`,
+    dragdrop: `<wu-picklist [source]="ranks" [target]="flow" sourceHeader="ตำแหน่ง" targetHeader="ลำดับการส่งต่อ (เรียงจากบนลงล่าง)"
   [dragdrop]="true" [showSourceControls]="false" [sourceStyle]="{ height: '20rem' }" [targetStyle]="{ height: '20rem' }">
   <ng-template #item let-r>
     <div class="font-semibold">{{ r.rank }}</div>
     <small class="text-color-secondary">{{ r.person || '(ยังไม่กำหนดผู้รับผิดชอบ)' }}</small>
   </ng-template>
-</wt-picklist>
-<wt-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wt-button>`,
-    filter: `<wt-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
+</wu-picklist>
+<wu-button label="บันทึก" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveFlow()"></wu-button>`,
+    filter: `<wu-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" filterBy="name,module" sourceFilterPlaceholder="ค้นหาสิทธิ์"
   targetFilterPlaceholder="ค้นหาสิทธิ์" [sourceStyle]="{ height: '16rem' }" [targetStyle]="{ height: '16rem' }">
   <ng-template #item let-p>
     {{ p.name }} <small class="text-color-secondary">· {{ p.module }}</small>
   </ng-template>
-</wt-picklist>`,
-    templates: `<wt-picklist [source]="allPermissions" [target]="userPermissions" filterBy="name"
+</wu-picklist>`,
+    templates: `<wu-picklist [source]="allPermissions" [target]="userPermissions" filterBy="name"
   [sourceStyle]="{ height: '16rem' }" [targetStyle]="{ height: '16rem' }">
   <ng-template #sourceHeader let-list>สิทธิ์ทั้งหมด ({{ list.length }})</ng-template>
   <ng-template #targetHeader let-list>สิทธิ์ที่ให้แล้ว ({{ list.length }})</ng-template>
@@ -212,19 +212,19 @@ export const PICKLIST_DOC: ComponentDoc = {
   </ng-template>
   <ng-template #emptymessagetarget>ยังไม่ได้ให้สิทธิ์ใด ๆ</ng-template>
   <ng-template #emptyfiltermessagesource>ไม่พบสิทธิ์ที่ค้นหา</ng-template>
-</wt-picklist>`,
-    events: `<wt-picklist #pl="wtPickList" [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
+</wu-picklist>`,
+    events: `<wu-picklist #pl="wuPickList" [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" [sourceStyle]="{ height: '14rem' }" [targetStyle]="{ height: '14rem' }"
   (onMoveToTarget)="logMove('onMoveToTarget', $event)" (onMoveAllToTarget)="logMove('onMoveAllToTarget', $event)"
   (onMoveToSource)="logMove('onMoveToSource', $event)" (onMoveAllToSource)="logMove('onMoveAllToSource', $event)"
   (onTargetReorder)="logMove('onTargetReorder', $event)">
   <ng-template #item let-p>{{ p.name }}</ng-template>
-</wt-picklist>
-<wt-button label="ให้ทุกสิทธิ์" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wt-button>
-<wt-button label="ถอนทุกสิทธิ์" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wt-button>`,
-    look: `<wt-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
+</wu-picklist>
+<wu-button label="ให้ทุกสิทธิ์" icon="wi wi-check" (onClick)="pl.moveAllRight()"></wu-button>
+<wu-button label="ถอนทุกสิทธิ์" icon="wi wi-times" severity="secondary" [outlined]="true" (onClick)="pl.moveAllLeft()"></wu-button>`,
+    look: `<wu-picklist [source]="allPermissions" [target]="userPermissions" sourceHeader="สิทธิ์ทั้งหมด"
   targetHeader="สิทธิ์ของผู้ใช้" optionLabel="name" scrollHeight="12rem" [stripedRows]="true"
-  [showSourceControls]="false" [showTargetControls]="false"></wt-picklist>`,
+  [showSourceControls]="false" [showTargetControls]="false"></wu-picklist>`,
   },
   ts: {
     basic: PERMISSIONS_TS,
@@ -245,11 +245,11 @@ saveFlow(): void {
     this.isApiSaving = false;
   });
 }`,
-    events: `import { WtPickListMoveEvent } from 'wiratheme/picklist';
+    events: `import { WuPickListMoveEvent } from 'wiraui/picklist';
 
 lastEvent = '';
 
-logMove(name: string, event: WtPickListMoveEvent): void {
+logMove(name: string, event: WuPickListMoveEvent): void {
   const codes = (event.items as Permission[]).map((p) => p.code);
   this.lastEvent = name + ': ' + codes.join(', ');
 }`,
@@ -301,11 +301,11 @@ logMove(name: string, event: WtPickListMoveEvent): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onMoveToTarget · onMoveAllToTarget', 'WtPickListMoveEvent', undefined, 'ย้ายไปปลายทาง (items คือรายการที่ย้าย)', 'Moved to the target (items are the ones that moved)'),
-        row('onMoveToSource · onMoveAllToSource', 'WtPickListMoveEvent', undefined, 'ย้ายกลับต้นทาง', 'Moved back to the source'),
-        row('onSourceReorder · onTargetReorder', 'WtPickListMoveEvent', undefined, 'จัดลำดับใหม่ด้วยปุ่มหรือการลาก', 'Reordered by the buttons or a drag'),
-        row('onSourceSelect · onTargetSelect', 'WtPickListSelectEvent', undefined, 'การเลือกเปลี่ยน (items คือที่เลือกทั้งหมด)', 'Selection changed (items is the whole selection)'),
-        row('onSourceFilter · onTargetFilter', 'WtPickListFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
+        row('onMoveToTarget · onMoveAllToTarget', 'WuPickListMoveEvent', undefined, 'ย้ายไปปลายทาง (items คือรายการที่ย้าย)', 'Moved to the target (items are the ones that moved)'),
+        row('onMoveToSource · onMoveAllToSource', 'WuPickListMoveEvent', undefined, 'ย้ายกลับต้นทาง', 'Moved back to the source'),
+        row('onSourceReorder · onTargetReorder', 'WuPickListMoveEvent', undefined, 'จัดลำดับใหม่ด้วยปุ่มหรือการลาก', 'Reordered by the buttons or a drag'),
+        row('onSourceSelect · onTargetSelect', 'WuPickListSelectEvent', undefined, 'การเลือกเปลี่ยน (items คือที่เลือกทั้งหมด)', 'Selection changed (items is the whole selection)'),
+        row('onSourceFilter · onTargetFilter', 'WuPickListFilterEvent', undefined, 'พิมพ์ค้นหา', 'Search typed'),
         row('onFocus · onBlur', 'Event', undefined, 'รายการได้ / เสียโฟกัส', 'A list gains / loses focus'),
         row('sourceChange · targetChange', 'any[]', undefined, 'คู่ของ [(source)] / [(target)]', 'For [(source)] / [(target)]'),
       ],
@@ -314,7 +314,7 @@ logMove(name: string, event: WtPickListMoveEvent): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (item) · index · selected', undefined, 'แต่ละรายการ', 'Each item'),
         row('sourceHeader · targetHeader', '$implicit (list)', undefined, 'หัวของแต่ละฝั่ง', 'Each side\'s title'),
@@ -327,7 +327,7 @@ logMove(name: string, event: WtPickListMoveEvent): void {
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน template reference เช่น #pl="wtPickList"', en: 'Call them through a template reference such as #pl="wtPickList".' },
+      note: { th: 'เรียกผ่าน template reference เช่น #pl="wuPickList"', en: 'Call them through a template reference such as #pl="wuPickList".' },
       rows: [
         row('moveRight() · moveAllRight()', 'void', undefined, 'ย้ายที่เลือก / ทุกรายการที่ค้นหาเหลือไปปลายทาง', 'Move the selection / every item the search leaves to the target'),
         row('moveLeft() · moveAllLeft()', 'void', undefined, 'ย้ายกลับต้นทาง', 'Move back to the source'),
@@ -338,17 +338,17 @@ logMove(name: string, event: WtPickListMoveEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtPickListFilterEvent, WtPickListMoveEvent, WtPickListSelectEvent } from 'wiratheme/picklist';
+      code: `import { WuPickListFilterEvent, WuPickListMoveEvent, WuPickListSelectEvent } from 'wiraui/picklist';
 
-interface WtPickListMoveEvent {
+interface WuPickListMoveEvent {
   originalEvent?: Event;
   items: unknown[];        // รายการที่ย้าย
 }
-interface WtPickListSelectEvent {
+interface WuPickListSelectEvent {
   originalEvent?: Event;
   items: unknown[];        // ที่เลือกทั้งหมดของฝั่งนั้น
 }
-interface WtPickListFilterEvent {
+interface WuPickListFilterEvent {
   query: string;
   value: unknown[];        // รายการที่ค้นหาเหลือ
 }`,
@@ -385,9 +385,9 @@ export const ORDERLIST_DOC: ComponentDoc = {
   title: 'OrderList',
   group: 'Data',
   entry: 'orderlist',
-  standalone: 'WtOrderList',
-  module: 'WtOrderListModule',
-  selector: 'wt-orderlist',
+  standalone: 'WuOrderList',
+  module: 'WuOrderListModule',
+  selector: 'wu-orderlist',
   description: {
     th: 'รายการเดียวที่ผู้ใช้จัดลำดับเอง ด้วยปุ่มขึ้น ลง บนสุด ล่างสุด คีย์บอร์ด หรือลากวาง เช่น ลำดับวิชาเลือกที่ต้องการ ใช้หน้าตาและ token ชุดเดียวกับ PickList',
     en: 'One list people put in order with up, down, top and bottom buttons, the keyboard or a drag, such as electives by preference. It shares its look and tokens with PickList.',
@@ -420,8 +420,8 @@ export const ORDERLIST_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtOrderListModule</code> ซึ่งรวม <code>wtTemplate</code> ไว้แล้ว) และ standalone (<code>WtOrderList</code>) selector <code>wt-orderList</code> ก็ใช้ได้',
-        en: 'Works as an NgModule (<code>WtOrderListModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtOrderList</code>). The <code>wt-orderList</code> selector works too.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuOrderListModule</code> ซึ่งรวม <code>wuTemplate</code> ไว้แล้ว) และ standalone (<code>WuOrderList</code>) selector <code>wu-orderList</code> ก็ใช้ได้',
+        en: 'Works as an NgModule (<code>WuOrderListModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuOrderList</code>). The <code>wu-orderList</code> selector works too.',
       },
     },
     basic: {
@@ -462,32 +462,32 @@ export const ORDERLIST_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-orderList&gt;</code> เป็น <code>&lt;wt-orderlist&gt;</code> (หรือ <code>&lt;wt-orderList&gt;</code>) input และ event ชื่อเดิม (<code>dataKey</code>, <code>listStyle</code>, <code>onReorder</code>, <code>trackBy</code>, <code>filterBy</code>) <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-orderlist-*</code> อยู่คู่กับ <code>wt-orderlist-*</code> ส่วน <code>responsive</code>, <code>filterLocale</code> และ <code>autoOptionFocus</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-orderList&gt;</code> to <code>&lt;wt-orderlist&gt;</code> (or <code>&lt;wt-orderList&gt;</code>). Inputs and events keep their names (<code>dataKey</code>, <code>listStyle</code>, <code>onReorder</code>, <code>trackBy</code>, <code>filterBy</code>), <code>pTemplate="item"</code> works, and the <code>p-orderlist-*</code> classes sit next to <code>wt-orderlist-*</code>. <code>responsive</code>, <code>filterLocale</code> and <code>autoOptionFocus</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-orderList&gt;</code> เป็น <code>&lt;wu-orderlist&gt;</code> (หรือ <code>&lt;wu-orderList&gt;</code>) input และ event ชื่อเดิม (<code>dataKey</code>, <code>listStyle</code>, <code>onReorder</code>, <code>trackBy</code>, <code>filterBy</code>) <code>pTemplate="item"</code> ใช้ได้ และ class <code>p-orderlist-*</code> อยู่คู่กับ <code>wu-orderlist-*</code> ส่วน <code>responsive</code>, <code>filterLocale</code> และ <code>autoOptionFocus</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-orderList&gt;</code> to <code>&lt;wu-orderlist&gt;</code> (or <code>&lt;wu-orderList&gt;</code>). Inputs and events keep their names (<code>dataKey</code>, <code>listStyle</code>, <code>onReorder</code>, <code>trackBy</code>, <code>filterBy</code>), <code>pTemplate="item"</code> works, and the <code>p-orderlist-*</code> classes sit next to <code>wu-orderlist-*</code>. <code>responsive</code>, <code>filterLocale</code> and <code>autoOptionFocus</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id"
+    basic: `<wu-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id"
   [listStyle]="{ height: '18rem' }" [trackBy]="trackById" (onReorder)="reordered()">
   <ng-template #item let-e let-i="index">
     <div class="font-semibold">{{ i + 1 }}. {{ e.name }}</div>
     <small class="text-color-secondary">{{ e.teacher }}</small>
   </ng-template>
-</wt-orderlist>`,
-    dragdrop: `<wt-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id" [dragdrop]="true"
+</wu-orderlist>`,
+    dragdrop: `<wu-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id" [dragdrop]="true"
   [(selection)]="selectedElectives" controlsPosition="right" [listStyle]="{ height: '18rem' }">
   <ng-template #item let-e>{{ e.name }}</ng-template>
-</wt-orderlist>`,
-    filter: `<wt-orderlist [value]="electives" dataKey="id" filterBy="name,teacher" filterPlaceholder="ค้นหาวิชา"
+</wu-orderlist>`,
+    filter: `<wu-orderlist [value]="electives" dataKey="id" filterBy="name,teacher" filterPlaceholder="ค้นหาวิชา"
   [listStyle]="{ height: '14rem' }">
   <ng-template #header>วิชาเลือก ({{ electives.length }})</ng-template>
   <ng-template #item let-e>{{ e.name }} <small class="text-color-secondary">· {{ e.teacher }}</small></ng-template>
   <ng-template #emptyfilter>ไม่พบวิชาที่ค้นหา</ng-template>
   <ng-template #empty>ยังไม่มีวิชาเลือก</ng-template>
-</wt-orderlist>`,
-    look: `<wt-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id" optionLabel="name"
-  scrollHeight="14rem" [stripedRows]="true"></wt-orderlist>`,
+</wu-orderlist>`,
+    look: `<wu-orderlist [value]="electives" header="ลำดับวิชาเลือกที่ต้องการ" dataKey="id" optionLabel="name"
+  scrollHeight="14rem" [stripedRows]="true"></wu-orderlist>`,
   },
   ts: {
     basic: ELECTIVE_TS,
@@ -524,8 +524,8 @@ export const ORDERLIST_DOC: ComponentDoc = {
       rows: [
         row('onReorder', 'unknown[]', undefined, 'จัดลำดับใหม่ (รายการที่ย้าย)', 'Reordered (the items that moved)'),
         row('selectionChange', 'any[]', undefined, 'คู่ของ [(selection)]', 'For [(selection)]'),
-        row('onSelectionChange', 'WtOrderListSelectionChangeEvent', undefined, 'การเลือกเปลี่ยน', 'Selection changed'),
-        row('onFilterEvent', 'WtOrderListFilterEvent', undefined, 'พิมพ์ค้นหา (value คือรายการที่ค้นหาเหลือ)', 'Search typed (value is what the search leaves)'),
+        row('onSelectionChange', 'WuOrderListSelectionChangeEvent', undefined, 'การเลือกเปลี่ยน', 'Selection changed'),
+        row('onFilterEvent', 'WuOrderListFilterEvent', undefined, 'พิมพ์ค้นหา (value คือรายการที่ค้นหาเหลือ)', 'Search typed (value is what the search leaves)'),
         row('onFocus · onBlur', 'Event', undefined, 'รายการได้ / เสียโฟกัส', 'The list gains / loses focus'),
         row('valueChange', 'any[]', undefined, 'คู่ของ [(value)]', 'For [(value)]'),
       ],
@@ -534,7 +534,7 @@ export const ORDERLIST_DOC: ComponentDoc = {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (item) · index · selected', undefined, 'แต่ละรายการ', 'Each item'),
         row('header', '—', undefined, 'หัวรายการ', 'List title'),
@@ -545,13 +545,13 @@ export const ORDERLIST_DOC: ComponentDoc = {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtOrderListFilterEvent, WtOrderListSelectionChangeEvent } from 'wiratheme/orderlist';
+      code: `import { WuOrderListFilterEvent, WuOrderListSelectionChangeEvent } from 'wiraui/orderlist';
 
-interface WtOrderListSelectionChangeEvent {
+interface WuOrderListSelectionChangeEvent {
   originalEvent?: Event;
   value: unknown[];        // ที่เลือกทั้งหมด
 }
-interface WtOrderListFilterEvent {
+interface WuOrderListFilterEvent {
   originalEvent?: Event;
   value: unknown[];        // รายการที่ค้นหาเหลือ
 }`,

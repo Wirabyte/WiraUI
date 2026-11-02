@@ -1,24 +1,24 @@
 import { InjectionToken } from '@angular/core';
 import type { Observable } from 'rxjs';
-import type { ExcelSheet, ExcelStyle, ExcelTableOptions, ExcelTotal, FilterMatchMode, FilterMeta, FilterRule, SortMeta } from 'wiratheme/core';
+import type { ExcelSheet, ExcelStyle, ExcelTableOptions, ExcelTotal, FilterMatchMode, FilterMeta, FilterRule, SortMeta } from 'wiraui/core';
 
 export type { FilterMatchMode, FilterMeta, FilterRule, SortMeta };
-export type WtTableSelectionMode = 'single' | 'multiple';
-export type WtTableSortMode = 'single' | 'multiple';
+export type WuTableSelectionMode = 'single' | 'multiple';
+export type WuTableSortMode = 'single' | 'multiple';
 
-export interface WtTablePageEvent {
+export interface WuTablePageEvent {
   first: number;
   rows: number;
 }
 
 /** `(onSort)`: one field (single mode) or every level (multiple mode). */
-export interface WtTableSortEvent {
+export interface WuTableSortEvent {
   field?: string;
   order?: number;
   multisortmeta?: SortMeta[];
 }
 
-export interface WtTableFilterEvent {
+export interface WuTableFilterEvent {
   filters: Record<string, FilterRule>;
   globalFilter: string | null;
   /** Rows left after filtering (client-side tables). */
@@ -26,7 +26,7 @@ export interface WtTableFilterEvent {
 }
 
 /** `(onLazyLoad)`: what to ask the server for. `page` is 1-based for APIs that count pages. */
-export interface WtTableLazyLoadEvent {
+export interface WuTableLazyLoadEvent {
   first: number;
   rows: number;
   page: number;
@@ -37,32 +37,32 @@ export interface WtTableLazyLoadEvent {
   globalFilter: string | null;
 }
 
-export interface WtTableRowSelectEvent {
+export interface WuTableRowSelectEvent {
   originalEvent: Event;
   data: unknown;
   index?: number;
   type: 'row' | 'checkbox' | 'radio';
 }
 
-export interface WtTableHeaderCheckboxToggleEvent {
+export interface WuTableHeaderCheckboxToggleEvent {
   originalEvent: Event;
   checked: boolean;
 }
 
 /** `(onRowExpand)` / `(onRowCollapse)`. */
-export interface WtTableRowExpandEvent {
+export interface WuTableRowExpandEvent {
   originalEvent?: Event;
   data: unknown;
 }
 
 /** `dt.exportCSV({ selectionOnly: true })`: only the selected rows, or (`allValues`) every row whatever the search. */
-export interface WtTableExportOptions {
+export interface WuTableExportOptions {
   selectionOnly?: boolean;
   allValues?: boolean;
 }
 
 /** `[exportFunction]`: the text a cell exports as. */
-export type WtTableExportFunction = (cell: { data: unknown; field: string }) => unknown;
+export type WuTableExportFunction = (cell: { data: unknown; field: string }) => unknown;
 
 /**
  * `dt.exportExcel({ title: 'รายงาน', totals: { amount: 'sum' } })`: which rows (as for CSV), how the sheet looks
@@ -70,7 +70,7 @@ export type WtTableExportFunction = (cell: { data: unknown; field: string }) => 
  * anything else) and the workbook's font and dates. Columns may carry `exportWidth`, `exportFormat`, `exportStyle` and
  * `exportTotal` next to `field` and `header`.
  */
-export interface WtTableExcelOptions extends WtTableExportOptions, Omit<ExcelTableOptions, 'value'> {
+export interface WuTableExcelOptions extends WuTableExportOptions, Omit<ExcelTableOptions, 'value'> {
   /** File name without `.xlsx`. Default `[exportFilename]`, then `download`. */
   fileName?: string;
   /** Font of the workbook, e.g. `'TH Sarabun New'` with `fontSize: 16`. Default Calibri 11. */
@@ -85,7 +85,7 @@ export interface WtTableExcelOptions extends WtTableExportOptions, Omit<ExcelTab
 }
 
 /** The export keys a column of `[columns]` may carry for Excel. */
-export interface WtTableExcelColumn {
+export interface WuTableExcelColumn {
   field?: string;
   header?: unknown;
   exportable?: boolean;
@@ -97,16 +97,16 @@ export interface WtTableExcelColumn {
   exportTotal?: ExcelTotal | string | number;
 }
 
-export type WtTableRowGroupMode = 'subheader' | 'rowspan';
+export type WuTableRowGroupMode = 'subheader' | 'rowspan';
 
 /** `(onRowReorder)`: the row moved from `dragIndex` to `dropIndex` of `value` (changed in place). */
-export interface WtTableRowReorderEvent {
+export interface WuTableRowReorderEvent {
   dragIndex: number;
   dropIndex: number;
 }
 
 /** `(sortFunction)` with `[customSort]="true"`: sort `data` in place. */
-export interface WtTableSortFunctionEvent {
+export interface WuTableSortFunctionEvent {
   data: unknown[];
   mode: 'single' | 'multiple';
   field?: string;
@@ -115,27 +115,27 @@ export interface WtTableSortFunctionEvent {
 }
 
 /** `(onColResize)`: the header cell resized and by how many pixels. */
-export interface WtTableColResizeEvent {
+export interface WuTableColResizeEvent {
   element: HTMLElement;
   delta: number;
 }
 
 /** `(onColReorder)`: `columns` after the move (changed in place). */
-export interface WtTableColReorderEvent {
+export interface WuTableColReorderEvent {
   dragIndex: number;
   dropIndex: number;
   columns: unknown[];
 }
 
 /** `(onContextMenuSelect)`: the row right-clicked. */
-export interface WtTableContextMenuSelectEvent {
+export interface WuTableContextMenuSelectEvent {
   originalEvent: Event;
   data: unknown;
   index?: number;
 }
 
 /** `(onEditInit)` / `(onEditComplete)` / `(onEditCancel)` of cell editing. */
-export interface WtTableEditEvent {
+export interface WuTableEditEvent {
   field: string;
   data: unknown;
   index?: number;
@@ -143,7 +143,7 @@ export interface WtTableEditEvent {
 }
 
 /** What `stateKey` keeps between visits. */
-export interface WtTableState {
+export interface WuTableState {
   first?: number;
   rows?: number;
   sortField?: string | null;
@@ -157,14 +157,14 @@ export interface WtTableState {
 }
 
 /** What the column, row and checkbox directives need from their table. */
-export interface ɵWtTableApi {
+export interface ɵWuTableApi {
   readonly major: number;
   readonly changes: Observable<void>;
   sortOrderOf(field: string): number;
   sortIndexOf(field: string): number;
   sortBy(field: string, event: Event): void;
   isSelected(row: unknown): boolean;
-  readonly selectionMode?: WtTableSelectionMode | null;
+  readonly selectionMode?: WuTableSelectionMode | null;
   toggleRow(row: unknown, event: Event, index: number | undefined, type: 'row' | 'checkbox' | 'radio'): void;
   isRowSelectable(row: unknown, index?: number): boolean;
   isContextMenuRow(row: unknown): boolean;
@@ -196,4 +196,4 @@ export interface ɵWtTableApi {
   filterRules(field: string, rules: FilterMeta[] | null, operator?: 'and' | 'or'): void;
 }
 
-export const ɵWT_TABLE = new InjectionToken<ɵWtTableApi>('WT_TABLE');
+export const ɵWU_TABLE = new InjectionToken<ɵWuTableApi>('WU_TABLE');

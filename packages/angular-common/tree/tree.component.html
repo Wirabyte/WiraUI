@@ -1,19 +1,19 @@
 <div
-  class="wt-tree p-tree p-component"
-  [class.wt-tree-selectable]="!!selectionMode"
+  class="wu-tree p-tree p-component"
+  [class.wu-tree-selectable]="!!selectionMode"
   [class.p-tree-selectable]="!!selectionMode"
-  [class.wt-tree-loading]="loading"
+  [class.wu-tree-loading]="loading"
   [class.p-tree-loading]="loading"
   [class]="styleClass || ''"
   [style]="rootStyle"
 >
-  <div *ngIf="headerTemplate" class="wt-tree-header p-tree-header">
+  <div *ngIf="headerTemplate" class="wu-tree-header p-tree-header">
     <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
   </div>
-  <div *ngIf="filter" class="wt-select-filter-wrap wt-tree-filter-container p-tree-filter-container p-iconfield">
+  <div *ngIf="filter" class="wu-select-filter-wrap wu-tree-filter-container p-tree-filter-container p-iconfield">
     <input
       type="text"
-      class="wt-inputtext wt-select-filter p-tree-filter p-inputtext"
+      class="wu-inputtext wu-select-filter p-tree-filter p-inputtext"
       role="searchbox"
       autocomplete="off"
       [value]="query"
@@ -23,12 +23,12 @@
       (input)="search($event)"
       (keydown.enter)="$event.preventDefault()"
     />
-    <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+    <svg class="wu-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
   </div>
-  <div class="wt-tree-container-wrap p-tree-wrapper" [style.max-height]="scrollHeight || null">
+  <div class="wu-tree-container-wrap p-tree-wrapper" [style.max-height]="scrollHeight || null">
     <ul
       *ngIf="tabKey as tabStop; else noRows"
-      class="wt-tree-container p-tree-root-children p-tree-container"
+      class="wu-tree-container p-tree-root-children p-tree-container"
       role="tree"
       [id]="treeId"
       [attr.aria-label]="ariaLabel || null"
@@ -40,10 +40,10 @@
     >
       <li
         *ngFor="let row of rows; trackBy: trackRow"
-        class="wt-tree-node p-tree-node p-treenode"
+        class="wu-tree-node p-tree-node p-treenode"
         role="treeitem"
         [id]="rowId(row)"
-        [attr.data-wt-key]="row.key"
+        [attr.data-wu-key]="row.key"
         [attr.tabindex]="row.key === tabStop ? 0 : -1"
         [attr.aria-level]="row.level + 1"
         [attr.aria-setsize]="row.size"
@@ -58,12 +58,12 @@
         [class.p-tree-node-leaf]="isLeaf(row.node)"
       >
         <div
-          class="wt-tree-node-content p-tree-node-content p-treenode-content"
-          [style.padding-inline-start]="'calc(' + row.level + ' * var(--wt-tree-indent) + var(--wt-tree-node-padding-x))'"
-          [class.wt-tree-node-selected]="!checkbox && isSelected(row.node)"
+          class="wu-tree-node-content p-tree-node-content p-treenode-content"
+          [style.padding-inline-start]="'calc(' + row.level + ' * var(--wu-tree-indent) + var(--wu-tree-node-padding-x))'"
+          [class.wu-tree-node-selected]="!checkbox && isSelected(row.node)"
           [class.p-tree-node-selected]="!checkbox && isSelected(row.node)"
           [class.p-highlight]="!checkbox && isSelected(row.node)"
-          [class.wt-tree-node-selectable]="selectable(row.node)"
+          [class.wu-tree-node-selectable]="selectable(row.node)"
           [class.p-tree-node-selectable]="selectable(row.node)"
           (click)="nodeClick($event, row)"
           (dblclick)="nodeDblClick($event, row)"
@@ -71,15 +71,15 @@
         >
           <button
             type="button"
-            class="wt-tree-toggler p-tree-node-toggle-button p-tree-toggler"
+            class="wu-tree-toggler p-tree-node-toggle-button p-tree-toggler"
             tabindex="-1"
             [attr.aria-label]="togglerAriaLabel || (isOpen(row.node) ? t.collapse : t.expand)"
-            [class.wt-tree-toggler-hidden]="isLeaf(row.node)"
-            [class.wt-tree-toggler-open]="isOpen(row.node)"
+            [class.wu-tree-toggler-hidden]="isLeaf(row.node)"
+            [class.wu-tree-toggler-open]="isOpen(row.node)"
             (click)="toggle($event, row)"
           >
             <ng-container *ngIf="row.node.loading; else arrow">
-              <span class="wt-tree-spinner" aria-hidden="true"></span>
+              <span class="wu-tree-spinner" aria-hidden="true"></span>
             </ng-container>
             <ng-template #arrow>
               <ng-container *ngIf="togglerIconTemplate; else chevron">
@@ -90,15 +90,15 @@
               </ng-template>
             </ng-template>
           </button>
-          <span *ngIf="checkbox" class="wt-checkbox wt-tree-check" [class.wt-checkbox-checked]="isSelected(row.node)" [class.wt-tree-check-disabled]="!selectable(row.node)" aria-hidden="true">
-            <span class="wt-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="isSelected(row.node)">
-              <span class="wt-checkbox-box p-checkbox-box" [class.wt-checkbox-mixed]="isPartial(row.node)">
-                <svg class="wt-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span *ngIf="checkbox" class="wu-checkbox wu-tree-check" [class.wu-checkbox-checked]="isSelected(row.node)" [class.wu-tree-check-disabled]="!selectable(row.node)" aria-hidden="true">
+            <span class="wu-checkbox-control p-checkbox p-component" [class.p-checkbox-checked]="isSelected(row.node)">
+              <span class="wu-checkbox-box p-checkbox-box" [class.wu-checkbox-mixed]="isPartial(row.node)">
+                <svg class="wu-checkbox-icon p-checkbox-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
               </span>
             </span>
           </span>
-          <span *ngIf="iconOf(row.node) as icon" class="wt-tree-node-icon p-tree-node-icon p-treenode-icon" [ngClass]="icon" aria-hidden="true"></span>
-          <span class="wt-tree-node-label p-tree-node-label p-treenode-label">
+          <span *ngIf="iconOf(row.node) as icon" class="wu-tree-node-icon p-tree-node-icon p-treenode-icon" [ngClass]="icon" aria-hidden="true"></span>
+          <span class="wu-tree-node-label p-tree-node-label p-treenode-label">
             <ng-container *ngIf="nodeTemplate(row.node) as tpl; else plainLabel">
               <ng-container *ngTemplateOutlet="tpl; context: { $implicit: row.node }"></ng-container>
             </ng-container>
@@ -108,18 +108,18 @@
       </li>
     </ul>
     <ng-template #noRows>
-      <div *ngIf="!loading" class="wt-tree-empty p-tree-empty-message" [id]="treeId">
+      <div *ngIf="!loading" class="wu-tree-empty p-tree-empty-message" [id]="treeId">
         <ng-container *ngIf="emptyTemplate; else emptyLabel">
           <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
         </ng-container>
         <ng-template #emptyLabel>{{ emptyText }}</ng-template>
       </div>
     </ng-template>
-    <div *ngIf="loading" class="wt-tree-mask p-tree-mask" role="status" [attr.aria-label]="t.loading">
-      <span class="wt-tree-spinner wt-tree-spinner-lg" aria-hidden="true"></span>
+    <div *ngIf="loading" class="wu-tree-mask p-tree-mask" role="status" [attr.aria-label]="t.loading">
+      <span class="wu-tree-spinner wu-tree-spinner-lg" aria-hidden="true"></span>
     </div>
   </div>
-  <div *ngIf="footerTemplate" class="wt-tree-footer p-tree-footer">
+  <div *ngIf="footerTemplate" class="wu-tree-footer p-tree-footer">
     <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
   </div>
 </div>

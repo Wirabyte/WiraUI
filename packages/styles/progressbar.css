@@ -1,37 +1,37 @@
-/* wt-progressbar. Shared by wiratheme v1, v2 and v3. Determinate (value of max) or indeterminate. */
-@layer wiratheme.components {
-  /* The height sits on the host, so `style="height: 6px"` on <wt-progressbar> makes a thin bar. */
-  :is(wt-progressbar, wt-progress-bar) {
+/* wu-progressbar. Shared by wiraui v1, v2 and v3. Determinate (value of max) or indeterminate. */
+@layer wiraui.components {
+  /* The height sits on the host, so `style="height: 6px"` on <wu-progressbar> makes a thin bar. */
+  :is(wu-progressbar, wu-progress-bar) {
     display: block;
-    height: var(--wt-progressbar-height);
+    height: var(--wu-progressbar-height);
   }
-  .wt-progressbar {
+  .wu-progressbar {
     position: relative;
     overflow: hidden;
     height: 100%;
-    border-radius: var(--wt-progressbar-radius);
-    background: var(--wt-progressbar-bg);
-    font-family: var(--wt-font-family);
+    border-radius: var(--wu-progressbar-radius);
+    background: var(--wu-progressbar-bg);
+    font-family: var(--wu-font-family);
   }
-  .wt-progressbar-value {
+  .wu-progressbar-value {
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 0;
     height: 100%;
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
     transition: width 1s ease-in-out;
   }
   /* [striped] / [animated]: stripes over the fill (a layer of their own, so a `color` gradient stays). They lean
      forward (/) and travel the way the bar grows, so the bar reads as moving ahead, not backwards. */
-  .wt-progressbar-striped .wt-progressbar-value {
+  .wu-progressbar-striped .wu-progressbar-value {
     position: relative;
   }
-  .wt-progressbar-striped.wt-progressbar-indeterminate .wt-progressbar-value {
+  .wu-progressbar-striped.wu-progressbar-indeterminate .wu-progressbar-value {
     position: absolute;
   }
-  .wt-progressbar-striped .wt-progressbar-value::after {
+  .wu-progressbar-striped .wu-progressbar-value::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -45,17 +45,17 @@
       transparent 75%,
       transparent
     );
-    background-size: var(--wt-progressbar-stripe-size) var(--wt-progressbar-stripe-size);
+    background-size: var(--wu-progressbar-stripe-size) var(--wu-progressbar-stripe-size);
     pointer-events: none;
   }
-  .wt-progressbar-animated .wt-progressbar-value::after {
-    animation: wt-progressbar-stripes 0.8s linear infinite;
+  .wu-progressbar-animated .wu-progressbar-value::after {
+    animation: wu-progressbar-stripes 0.8s linear infinite;
   }
-  .wt-progressbar-animated:dir(rtl) .wt-progressbar-value::after {
+  .wu-progressbar-animated:dir(rtl) .wu-progressbar-value::after {
     animation-direction: reverse;
   }
   /* [shimmer]: a glossy bar and a band of light that sweeps along it now and then (desktop progress bars). */
-  .wt-progressbar-shimmer .wt-progressbar-value {
+  .wu-progressbar-shimmer .wu-progressbar-value {
     position: relative;
     overflow: hidden;
     /* The sweep's distance is measured in this bar's own width (cqw). */
@@ -64,49 +64,49 @@
       inset 0 0.25em 0.3em -0.15em rgba(255, 255, 255, 0.45),
       inset 0 -0.2em 0.3em -0.15em rgba(0, 0, 0, 0.12);
   }
-  .wt-progressbar-shimmer.wt-progressbar-indeterminate .wt-progressbar-value {
+  .wu-progressbar-shimmer.wu-progressbar-indeterminate .wu-progressbar-value {
     position: absolute;
   }
-  .wt-progressbar-shimmer .wt-progressbar-value::before {
+  .wu-progressbar-shimmer .wu-progressbar-value::before {
     content: '';
     position: absolute;
     inset: 0 auto 0 0;
     width: max(3rem, 35%);
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55) 50%, transparent);
     transform: translateX(-100%);
-    animation: wt-progressbar-shimmer 2.4s ease-in-out infinite;
+    animation: wu-progressbar-shimmer 2.4s ease-in-out infinite;
     pointer-events: none;
   }
-  .wt-progressbar-shimmer:dir(rtl) .wt-progressbar-value::before {
+  .wu-progressbar-shimmer:dir(rtl) .wu-progressbar-value::before {
     inset: 0 0 0 auto;
-    animation-name: wt-progressbar-shimmer-rtl;
+    animation-name: wu-progressbar-shimmer-rtl;
   }
-  .wt-progressbar-label {
+  .wu-progressbar-label {
     position: relative;
     z-index: 1;
     padding-inline: 0.5em;
-    font-size: var(--wt-progressbar-label-size);
-    font-weight: var(--wt-progressbar-label-weight);
+    font-size: var(--wu-progressbar-label-size);
+    font-weight: var(--wu-progressbar-label-weight);
     line-height: 1;
     white-space: nowrap;
   }
-  .wt-progressbar-indeterminate .wt-progressbar-value {
+  .wu-progressbar-indeterminate .wu-progressbar-value {
     position: absolute;
     top: 0;
     left: 0;
     width: 40%;
-    animation: wt-progressbar-indeterminate 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: wu-progressbar-indeterminate 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
   }
-  @keyframes wt-progressbar-stripes {
+  @keyframes wu-progressbar-stripes {
     from {
       background-position: 0 0;
     }
     to {
-      background-position: var(--wt-progressbar-stripe-size) 0;
+      background-position: var(--wu-progressbar-stripe-size) 0;
     }
   }
   /* The band crosses the bar in the first 60% of the loop, then rests. */
-  @keyframes wt-progressbar-shimmer {
+  @keyframes wu-progressbar-shimmer {
     0% {
       transform: translateX(-100%);
     }
@@ -115,7 +115,7 @@
       transform: translateX(calc(100cqw + 100%));
     }
   }
-  @keyframes wt-progressbar-shimmer-rtl {
+  @keyframes wu-progressbar-shimmer-rtl {
     0% {
       transform: translateX(100%);
     }
@@ -124,7 +124,7 @@
       transform: translateX(calc(-100cqw - 100%));
     }
   }
-  @keyframes wt-progressbar-indeterminate {
+  @keyframes wu-progressbar-indeterminate {
     from {
       transform: translateX(-100%);
     }
@@ -133,17 +133,17 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-progressbar-value {
+    .wu-progressbar-value {
       transition: none;
     }
-    .wt-progressbar-indeterminate .wt-progressbar-value {
+    .wu-progressbar-indeterminate .wu-progressbar-value {
       animation-duration: 4s;
     }
-    .wt-progressbar-animated .wt-progressbar-value::after,
-    .wt-progressbar-shimmer .wt-progressbar-value::before {
+    .wu-progressbar-animated .wu-progressbar-value::after,
+    .wu-progressbar-shimmer .wu-progressbar-value::before {
       animation: none;
     }
-    .wt-progressbar-shimmer .wt-progressbar-value::before {
+    .wu-progressbar-shimmer .wu-progressbar-value::before {
       display: none;
     }
   }

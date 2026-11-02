@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-empty-state id="d-es-basic"></wt-empty-state>
+        <wu-empty-state id="d-es-basic"></wu-empty-state>
       </docs-demo>
     </docs-section>
 
@@ -14,7 +14,7 @@
       <docs-demo [html]="code['types']" layout="stack">
         <div class="docs-demo-grid">
           @for (t of types; track t) {
-            <wt-empty-state [id]="'d-es-type-' + t" [type]="t" size="small"></wt-empty-state>
+            <wu-empty-state [id]="'d-es-type-' + t" [type]="t" size="small"></wu-empty-state>
           }
         </div>
       </docs-demo>
@@ -22,29 +22,29 @@
 
     <docs-section id="actions" [section]="sec['actions']">
       <docs-demo [html]="code['actions']" layout="stack">
-        <wt-empty-state id="d-es-actions" [title]="tx('ยังไม่มีนักเรียนในห้องนี้')" [description]="tx('เพิ่มนักเรียนทีละคน หรือนำเข้าจากไฟล์ Excel')">
-          <wt-button id="d-es-add" [label]="tx('เพิ่มนักเรียน')" icon="wi wi-plus" (onClick)="added = added + 1"></wt-button>
-          <wt-button [label]="tx('นำเข้าจาก Excel')" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wt-button>
-        </wt-empty-state>
-        <wt-empty-state id="d-es-search" type="search">
-          <wt-button [label]="tx('ล้างตัวกรอง')" severity="secondary" [text]="true"></wt-button>
-        </wt-empty-state>
+        <wu-empty-state id="d-es-actions" [title]="tx('ยังไม่มีนักเรียนในห้องนี้')" [description]="tx('เพิ่มนักเรียนทีละคน หรือนำเข้าจากไฟล์ Excel')">
+          <wu-button id="d-es-add" [label]="tx('เพิ่มนักเรียน')" icon="wi wi-plus" (onClick)="added = added + 1"></wu-button>
+          <wu-button [label]="tx('นำเข้าจาก Excel')" icon="wi wi-file-excel" severity="secondary" [outlined]="true"></wu-button>
+        </wu-empty-state>
+        <wu-empty-state id="d-es-search" type="search">
+          <wu-button [label]="tx('ล้างตัวกรอง')" severity="secondary" [text]="true"></wu-button>
+        </wu-empty-state>
         <span class="docs-demo-output">{{ tx('เพิ่มนักเรียน') }}: <code id="d-es-added">{{ added }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="picture" [section]="sec['picture']">
       <docs-demo [html]="code['picture']" layout="stack">
-        <wt-empty-state id="d-es-icon" icon="wi wi-bell" [title]="tx('ยังไม่มีการแจ้งเตือน')" description=""></wt-empty-state>
-        <wt-empty-state id="d-es-noimage" type="error" [showImage]="false">
-          <wt-button [label]="tx('ลองใหม่')" icon="wi wi-refresh" size="small"></wt-button>
-        </wt-empty-state>
+        <wu-empty-state id="d-es-icon" icon="wi wi-bell" [title]="tx('ยังไม่มีการแจ้งเตือน')" description=""></wu-empty-state>
+        <wu-empty-state id="d-es-noimage" type="error" [showImage]="false">
+          <wu-button [label]="tx('ลองใหม่')" icon="wi wi-refresh" size="small"></wu-button>
+        </wu-empty-state>
       </docs-demo>
     </docs-section>
 
     <docs-section id="table" [section]="sec['table']">
       <docs-demo [html]="code['table']" layout="stack">
-        <wt-table id="d-es-table" [value]="students">
+        <wu-table id="d-es-table" [value]="students">
           <ng-template #header>
             <tr>
               <th>{{ tx('รหัส') }}</th>
@@ -62,13 +62,13 @@
           <ng-template #emptymessage>
             <tr>
               <td colspan="3">
-                <wt-empty-state size="small" [title]="tx('ยังไม่มีนักเรียนในห้องนี้')">
-                  <wt-button [label]="tx('เพิ่มนักเรียน')" icon="wi wi-plus" size="small"></wt-button>
-                </wt-empty-state>
+                <wu-empty-state size="small" [title]="tx('ยังไม่มีนักเรียนในห้องนี้')">
+                  <wu-button [label]="tx('เพิ่มนักเรียน')" icon="wi wi-plus" size="small"></wu-button>
+                </wu-empty-state>
               </td>
             </tr>
           </ng-template>
-        </wt-table>
+        </wu-table>
       </docs-demo>
     </docs-section>
   </ng-template>

@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <input id="d-name" wtInputText [(ngModel)]="name" [placeholder]="tx('ชื่อ-นามสกุล')" />
+        <input id="d-name" wuInputText [(ngModel)]="name" [placeholder]="tx('ชื่อ-นามสกุล')" />
         <span class="docs-demo-output">name: <code id="d-value">{{ name | json }}</code></span>
       </docs-demo>
     </docs-section>
@@ -14,11 +14,11 @@
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']" layout="stack">
         <form [formGroup]="form" class="docs-demo-fields">
-          <input id="r-name" wtInputText formControlName="name" [placeholder]="tx('ชื่อ (ต้องกรอก)')" />
-          <input id="r-email" wtInputText formControlName="email" type="email" [placeholder]="tx('อีเมล')" />
+          <input id="r-name" wuInputText formControlName="name" [placeholder]="tx('ชื่อ (ต้องกรอก)')" />
+          <input id="r-email" wuInputText formControlName="email" type="email" [placeholder]="tx('อีเมล')" />
         </form>
         <div class="docs-demo-actions">
-          <wt-button id="r-patch" [label]="tx('ใส่ค่าตัวอย่าง')" size="small" severity="secondary" (onClick)="patch()"></wt-button>
+          <wu-button id="r-patch" [label]="tx('ใส่ค่าตัวอย่าง')" size="small" severity="secondary" (onClick)="patch()"></wu-button>
           <span class="docs-demo-output">valid: <b id="r-valid">{{ form.valid }}</b></span>
         </div>
       </docs-demo>
@@ -26,35 +26,35 @@
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <input id="d-input-sm" wtInputText wtSize="small" [placeholder]="tx('เล็ก')" [attr.aria-label]="tx('เล็ก')" />
-        <input wtInputText [placeholder]="tx('ปกติ')" [attr.aria-label]="tx('ปกติ')" />
-        <input wtInputText wtSize="large" [placeholder]="tx('ใหญ่')" [attr.aria-label]="tx('ใหญ่')" />
-        <input id="d-input-sm-class" wtInputText class="p-inputtext-sm" placeholder="p-inputtext-sm" aria-label="p-inputtext-sm" />
+        <input id="d-input-sm" wuInputText wuSize="small" [placeholder]="tx('เล็ก')" [attr.aria-label]="tx('เล็ก')" />
+        <input wuInputText [placeholder]="tx('ปกติ')" [attr.aria-label]="tx('ปกติ')" />
+        <input wuInputText wuSize="large" [placeholder]="tx('ใหญ่')" [attr.aria-label]="tx('ใหญ่')" />
+        <input id="d-input-sm-class" wuInputText class="p-inputtext-sm" placeholder="p-inputtext-sm" aria-label="p-inputtext-sm" />
       </docs-demo>
     </docs-section>
 
     <docs-section id="filled" [section]="sec['filled']">
       <docs-demo [html]="code['filled']">
-        <input wtInputText variant="filled" placeholder="Filled" />
+        <input wuInputText variant="filled" placeholder="Filled" />
       </docs-demo>
     </docs-section>
 
     <docs-section id="fluid" [section]="sec['fluid']">
       <docs-demo [html]="code['fluid']" layout="stack">
-        <input wtInputText [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" />
+        <input wuInputText [fluid]="true" [placeholder]="tx('กว้างเต็มพื้นที่')" />
       </docs-demo>
     </docs-section>
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <input wtInputText value="ACC-10234" [disabled]="true" aria-label="disabled" />
-        <input wtInputText [value]="tx('อ่านอย่างเดียว')" [readonly]="true" aria-label="readonly" />
+        <input wuInputText value="ACC-10234" [disabled]="true" aria-label="disabled" />
+        <input wuInputText [value]="tx('อ่านอย่างเดียว')" [readonly]="true" aria-label="readonly" />
       </docs-demo>
     </docs-section>
 
     <docs-section id="invalid" [section]="sec['invalid']">
       <docs-demo [html]="code['invalid']">
-        <input wtInputText [invalid]="true" [placeholder]="tx('อีเมล')" />
+        <input wuInputText [invalid]="true" [placeholder]="tx('อีเมล')" />
       </docs-demo>
     </docs-section>
   </ng-template>

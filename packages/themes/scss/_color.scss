@@ -33,7 +33,7 @@ $-digits: '0123456789abcdef';
 }
 
 // A hex colour (#abc / #aabbcc) or a string holding one → (r, g, b), or null.
-@function wt-try-rgb($value) {
+@function wu-try-rgb($value) {
   $type: meta.type-of($value);
   @if $type == 'color' {
     // A colour literal inspects as written, so this reads the hex the user typed.
@@ -45,17 +45,17 @@ $-digits: '0123456789abcdef';
   @return null;
 }
 
-// Like wt-try-rgb() but raises an error; $what names the setting in the message.
-@function wt-rgb($value, $what: 'colour') {
-  $rgb: wt-try-rgb($value);
+// Like wu-try-rgb() but raises an error; $what names the setting in the message.
+@function wu-rgb($value, $what: 'colour') {
+  $rgb: wu-try-rgb($value);
   @if not $rgb {
-    @error 'wiratheme: #{$what} must be a hex colour like #00a86b or #0a6, got `#{meta.inspect($value)}`.';
+    @error 'wiraui: #{$what} must be a hex colour like #00a86b or #0a6, got `#{meta.inspect($value)}`.';
   }
   @return $rgb;
 }
 
 // (r, g, b) → '#rrggbb'. Channels are clamped and rounded like rgbToHex().
-@function wt-hex($rgb) {
+@function wu-hex($rgb) {
   $out: '#';
   @each $v in $rgb {
     $v: math.round(math.max(0, math.min(255, $v)));
@@ -67,25 +67,25 @@ $-digits: '0123456789abcdef';
 }
 
 // sRGB mix; $percent (whole number) is the share of $a. Same sum as mix() so .5 rounds up in both.
-@function wt-mix($a, $b, $percent) {
+@function wu-mix($a, $b, $percent) {
   $out: ();
   @for $i from 1 through 3 {
     $out: list.append($out, math.div(list.nth($a, $i) * $percent + list.nth($b, $i) * (100 - $percent), 100), comma);
   }
-  @return wt-hex($out);
+  @return wu-hex($out);
 }
 
 // 50–950 scale from one base colour (the base becomes 500), as generatePalette().
-@function wt-palette($base) {
+@function wu-palette($base) {
   $out: ();
   @each $s in data.$shades {
     $hex: null;
     @if $s == 500 {
-      $hex: wt-hex($base);
+      $hex: wu-hex($base);
     } @else if map.has-key(data.$tint, $s) {
-      $hex: wt-mix((255, 255, 255), $base, map.get(data.$tint, $s));
+      $hex: wu-mix((255, 255, 255), $base, map.get(data.$tint, $s));
     } @else {
-      $hex: wt-mix((0, 0, 0), $base, map.get(data.$shade-mix, $s));
+      $hex: wu-mix((0, 0, 0), $base, map.get(data.$shade-mix, $s));
     }
     $out: map.merge($out, ($s: $hex));
   }
@@ -101,14 +101,14 @@ $-digits: '0123456789abcdef';
 }
 
 // WCAG relative luminance of (r, g, b).
-@function wt-luminance($rgb) {
+@function wu-luminance($rgb) {
   @return 0.2126 * -linear(list.nth($rgb, 1)) + 0.7152 * -linear(list.nth($rgb, 2)) + 0.0722 * -linear(list.nth($rgb, 3));
 }
 
 // WCAG contrast ratio between two (r, g, b) colours.
-@function wt-contrast($a, $b) {
-  $l1: wt-luminance($a);
-  $l2: wt-luminance($b);
+@function wu-contrast($a, $b) {
+  $l1: wu-luminance($a);
+  $l2: wu-luminance($b);
   @return math.div(math.max($l1, $l2) + 0.05, math.min($l1, $l2) + 0.05);
 }
 
@@ -123,7 +123,7 @@ $-digits: '0123456789abcdef';
 }
 
 // APCA lightness contrast of text on bg, both (r, g, b), as apcaContrast().
-@function wt-apca($text, $bg) {
+@function wu-apca($text, $bg) {
   $t: -apca-y($text);
   $b: -apca-y($bg);
   @if math.abs($b - $t) < 0.0005 {
@@ -144,10 +144,10 @@ $-digits: '0123456789abcdef';
 }
 
 // White or the darkest surface on $bg (both hex strings), as bestOn(): APCA, leaning to white within 5 Lc.
-@function wt-best-on($bg, $surface-950) {
-  $bg: wt-rgb($bg);
-  @if math.abs(wt-apca((255, 255, 255), $bg)) + 5 >= math.abs(wt-apca(wt-rgb($surface-950), $bg)) {
+@function wu-best-on($bg, $surface-950) {
+  $bg: wu-rgb($bg);
+  @if math.abs(wu-apca((255, 255, 255), $bg)) + 5 >= math.abs(wu-apca(wu-rgb($surface-950), $bg)) {
     @return '#ffffff';
   }
-  @return 'var(--wt-surface-950)';
+  @return 'var(--wu-surface-950)';
 }

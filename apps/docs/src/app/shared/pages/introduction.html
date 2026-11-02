@@ -3,17 +3,17 @@
   <h1 class="docs-h1">{{ en() ? 'Introduction' : 'บทนำ' }}</h1>
   @if (en()) {
     <p class="docs-lead">
-      WiraTheme is a set of UI components and a theming system built by Wirabyte. These docs cover the Angular packages (React and Vue are
+      WiraUI is a set of UI components and a theming system built by Wirabyte. These docs cover the Angular packages (React and Vue are
       coming). Familiar input names make moving an existing app easy, and the things Thai apps need are built in.
     </p>
   } @else {
     <p class="docs-lead">
-      WiraTheme คือชุด UI component และระบบธีมที่ Wirabyte เขียนขึ้นเอง เอกสารนี้เป็นของแพ็กเกจ Angular (React และ Vue กำลังตามมา)
+      WiraUI คือชุด UI component และระบบธีมที่ Wirabyte เขียนขึ้นเอง เอกสารนี้เป็นของแพ็กเกจ Angular (React และ Vue กำลังตามมา)
       ชื่อ input คุ้นมือ ย้ายแอปเดิมมาใช้ได้ง่าย และมีของที่งานไทยต้องใช้อยู่ในตัว
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · Angular {{ v.angular }}</span>
     <span class="docs-chip">{{ en() ? 'MIT · free' : 'MIT · ใช้ฟรี' }}</span>
   </div>
 </header>
@@ -22,18 +22,18 @@
   <docs-icon name="info"></docs-icon>
   @if (en()) {
     <p>
-      You are reading the docs for <b>wiratheme&#64;{{ v.major }}</b> (Angular {{ v.angular }}, {{ v.look | loc }}). On another Angular
+      You are reading the docs for <b>wiraui&#64;{{ v.major }}</b> (Angular {{ v.angular }}, {{ v.look | loc }}). On another Angular
       version, switch with the dropdown in the top bar; you stay on the same page.
     </p>
   } @else {
     <p>
-      เอกสารนี้เป็นของ <b>wiratheme&#64;{{ v.major }}</b> สำหรับ Angular {{ v.angular }} ({{ v.look | loc }})
+      เอกสารนี้เป็นของ <b>wiraui&#64;{{ v.major }}</b> สำหรับ Angular {{ v.angular }} ({{ v.look | loc }})
       ถ้าโปรเจคใช้ Angular รุ่นอื่น เปลี่ยนรุ่นได้จาก dropdown มุมขวาบน หน้านี้จะเปลี่ยนตามโดยไม่หลุดจากหน้าเดิม
     </p>
   }
 </div>
 
-<docs-section id="why" [title]="{ th: 'ทำไมต้อง WiraTheme', en: 'Why WiraTheme' }">
+<docs-section id="why" [title]="{ th: 'ทำไมต้อง WiraUI', en: 'Why WiraUI' }">
   <div class="docs-feature-list">
     @if (en()) {
       <div>
@@ -53,7 +53,7 @@
       </div>
       <div>
         <b>NgModule and standalone in every version</b>
-        <p>Most of our apps are still NgModule-based, so every component ships both <code>WtXxxModule</code> and <code>WtXxx</code>, from v1 on.</p>
+        <p>Most of our apps are still NgModule-based, so every component ships both <code>WuXxxModule</code> and <code>WuXxx</code>, from v1 on.</p>
       </div>
     } @else {
       <div>
@@ -73,7 +73,7 @@
       </div>
       <div>
         <b>NgModule และ standalone ทุกรุ่น</b>
-        <p>แอปของเราส่วนใหญ่ยังเป็น NgModule ทุก component จึงมีทั้ง <code>WtXxxModule</code> และ <code>WtXxx</code> ตั้งแต่ v1</p>
+        <p>แอปของเราส่วนใหญ่ยังเป็น NgModule ทุก component จึงมีทั้ง <code>WuXxxModule</code> และ <code>WuXxx</code> ตั้งแต่ v1</p>
       </div>
     }
   </div>
@@ -81,9 +81,9 @@
 
 <docs-section id="versions" [title]="{ th: 'รุ่นและ Angular', en: 'Versions and Angular' }">
   @if (en()) {
-    <p>WiraTheme has one major per Angular range. Each is locked to its range, and <code>ng add wiratheme</code> picks the right one for you.</p>
+    <p>WiraUI has one major per Angular range. Each is locked to its range, and <code>ng add wiraui</code> picks the right one for you.</p>
   } @else {
-    <p>WiraTheme แยก major ตามช่วง Angular แต่ละรุ่นถูกล็อกกับช่วงของตัวเอง ติดตั้งข้ามช่วงไม่ได้ และ <code>ng add wiratheme</code> เลือกรุ่นที่ถูกให้เอง</p>
+    <p>WiraUI แยก major ตามช่วง Angular แต่ละรุ่นถูกล็อกกับช่วงของตัวเอง ติดตั้งข้ามช่วงไม่ได้ และ <code>ng add wiraui</code> เลือกรุ่นที่ถูกให้เอง</p>
   }
   <div class="docs-table-wrap">
     <table class="docs-table">
@@ -99,7 +99,7 @@
       <tbody>
         @for (x of versions; track x.id) {
           <tr [class.docs-row-current]="x.id === v.id">
-            <td><code>wiratheme&#64;{{ x.major }}</code></td>
+            <td><code>wiraui&#64;{{ x.major }}</code></td>
             <td>{{ x.angular }}</td>
             <td>{{ x.look | loc }}</td>
             <td><code>{{ x.api }}</code></td>
@@ -142,7 +142,7 @@
     <a class="docs-next-card" [routerLink]="link('getting-started/installation')">
       <docs-icon name="rocket"></docs-icon>
       <b>{{ en() ? 'Installation' : 'ติดตั้ง' }}</b>
-      <span>{{ en() ? 'One command:' : 'คำสั่งเดียว' }} <code>ng add wiratheme</code></span>
+      <span>{{ en() ? 'One command:' : 'คำสั่งเดียว' }} <code>ng add wiraui</code></span>
     </a>
     <a class="docs-next-card" [routerLink]="link('getting-started/migration')">
       <docs-icon name="swap"></docs-icon>

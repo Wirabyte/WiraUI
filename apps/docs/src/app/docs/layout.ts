@@ -10,7 +10,7 @@ import { UiKey } from '../core/ui-text';
 import { navFor, navPageOf, navPagesFor } from '../core/nav';
 import { DOC_VERSIONS, DocVersionId, rememberVersion, versionOfUrl } from '../core/versions';
 
-const OPEN_STORE = 'wiratheme-docs-nav';
+const OPEN_STORE = 'wiraui-docs-nav';
 
 /**
  * Top bar, sidebar, content and "On this page" around every /:version page. Stays mounted across version switches.

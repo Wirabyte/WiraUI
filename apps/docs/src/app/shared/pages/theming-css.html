@@ -13,7 +13,7 @@
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }}</span>
   </div>
 </header>
 
@@ -21,24 +21,24 @@
   @if (v.major === 1) {
     @if (en()) {
       <p>
-        Files live at <code>wiratheme/themes/&lt;theme&gt;/theme.css</code>, e.g. <code>sila-light-teal</code>, <code>sila-dark-indigo</code>, <code>arun-blue</code>,
-        <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code>. A file exported from the WiraTheme Studio works too.
+        Files live at <code>wiraui/themes/&lt;theme&gt;/theme.css</code>, e.g. <code>sila-light-teal</code>, <code>sila-dark-indigo</code>, <code>arun-blue</code>,
+        <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code>. A file exported from the WiraUI Studio works too.
       </p>
     } @else {
       <p>
-        ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;ธีม&gt;/theme.css</code> เช่น <code>sila-light-teal</code>, <code>sila-dark-indigo</code>,
+        ไฟล์อยู่ที่ <code>wiraui/themes/&lt;ธีม&gt;/theme.css</code> เช่น <code>sila-light-teal</code>, <code>sila-dark-indigo</code>,
         <code>arun-blue</code>, <code>sayan-green</code>, <code>ratri-orange</code>, <code>md-light-indigo</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
       </p>
     }
   } @else {
     @if (en()) {
       <p>
-        Files live at <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (the preset's own colour) or <code>themes/&lt;preset&gt;/&lt;colour&gt;.css</code>,
-        e.g. <code>themes/{{ v.major === 2 ? 'mali' : 'wira' }}/cyan.css</code>. A file exported from the WiraTheme Studio works too.
+        Files live at <code>wiraui/themes/&lt;preset&gt;/theme.css</code> (the preset's own colour) or <code>themes/&lt;preset&gt;/&lt;colour&gt;.css</code>,
+        e.g. <code>themes/{{ v.major === 2 ? 'mali' : 'wira' }}/cyan.css</code>. A file exported from the WiraUI Studio works too.
       </p>
     } @else {
       <p>
-        ไฟล์อยู่ที่ <code>wiratheme/themes/&lt;preset&gt;/theme.css</code> (สีเริ่มต้นของ preset) หรือ <code>themes/&lt;preset&gt;/&lt;สี&gt;.css</code>
+        ไฟล์อยู่ที่ <code>wiraui/themes/&lt;preset&gt;/theme.css</code> (สีเริ่มต้นของ preset) หรือ <code>themes/&lt;preset&gt;/&lt;สี&gt;.css</code>
         เช่น <code>themes/{{ v.major === 2 ? 'mali' : 'wira' }}/cyan.css</code> หรือใช้ไฟล์ที่ export จาก สตูดิโอธีม แทนก็ได้
       </p>
     }
@@ -69,24 +69,24 @@
     @if (en()) {
       <p>
         Classic themes ship light and dark as separate files: use <code>sila-dark-*</code>, <code>sayan-*</code> or <code>ratri-*</code> for a dark app. Those are
-        dark-only, with no class to toggle. Light files also carry dark values under <code>:root.wt-dark</code>.
+        dark-only, with no class to toggle. Light files also carry dark values under <code>:root.wu-dark</code>.
       </p>
     } @else {
       <p>
         ธีมแบบคลาสสิกแยกไฟล์ light / dark ไว้แล้ว ใช้ไฟล์ <code>sila-dark-*</code>, <code>sayan-*</code> หรือ <code>ratri-*</code> เมื่อต้องการแอปสีมืด
-        ไฟล์กลุ่มนี้เป็นธีมมืดอย่างเดียวและไม่ต้องสลับ class ส่วนไฟล์ light มีค่า dark ใต้ <code>:root.wt-dark</code> ให้ด้วย
+        ไฟล์กลุ่มนี้เป็นธีมมืดอย่างเดียวและไม่ต้องสลับ class ส่วนไฟล์ light มีค่า dark ใต้ <code>:root.wu-dark</code> ให้ด้วย
       </p>
     }
   } @else {
     @if (en()) {
       <p>
-        The file has light values plus dark values under <code>:root.wt-dark</code>. Toggle with the <code>wt-dark</code> class on <code>&lt;html&gt;</code> or
-        <code>WtThemeService.setDarkMode(true)</code>. If your app already uses another class, name it in <code>darkModeSelector</code>.
+        The file has light values plus dark values under <code>:root.wu-dark</code>. Toggle with the <code>wu-dark</code> class on <code>&lt;html&gt;</code> or
+        <code>WuThemeService.setDarkMode(true)</code>. If your app already uses another class, name it in <code>darkModeSelector</code>.
       </p>
     } @else {
       <p>
-        ไฟล์ CSS มีทั้งค่า light และค่า dark ใต้ <code>:root.wt-dark</code> สลับด้วยการใส่ class <code>wt-dark</code> ที่ <code>&lt;html&gt;</code>
-        หรือเรียก <code>WtThemeService.setDarkMode(true)</code> ถ้าแอปเดิมใช้ class อื่นอยู่ ตั้งชื่อเดียวกันใน <code>darkModeSelector</code> ได้
+        ไฟล์ CSS มีทั้งค่า light และค่า dark ใต้ <code>:root.wu-dark</code> สลับด้วยการใส่ class <code>wu-dark</code> ที่ <code>&lt;html&gt;</code>
+        หรือเรียก <code>WuThemeService.setDarkMode(true)</code> ถ้าแอปเดิมใช้ class อื่นอยู่ ตั้งชื่อเดียวกันใน <code>darkModeSelector</code> ได้
       </p>
     }
   }

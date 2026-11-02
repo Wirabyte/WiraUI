@@ -1,8 +1,8 @@
-/** wt-error-page: what a 4xx / 5xx status code means for the page, framework-free. */
-import type { WtErrorKind } from './thai/locale';
+/** wu-error-page: what a 4xx / 5xx status code means for the page, framework-free. */
+import type { WuErrorKind } from './thai/locale';
 
 /** The error page's built-in buttons. */
-export type WtErrorAction = 'home' | 'back' | 'retry' | 'signIn';
+export type WuErrorAction = 'home' | 'back' | 'retry' | 'signIn';
 
 /** A status code to show: 400–599, else 500. */
 export function httpErrorCode(value: unknown): number {
@@ -14,7 +14,7 @@ export function httpErrorCode(value: unknown): number {
  * The kind of failure a status code is: 401 sign in, 403 forbidden, 404 / 410 missing, 408 / 504 time, 429 busy,
  * 502 gateway, 503 down, any other 5xx server, any other 4xx request.
  */
-export function httpErrorKind(code: number): WtErrorKind {
+export function httpErrorKind(code: number): WuErrorKind {
   switch (code) {
     case 401:
       return 'auth';
@@ -38,7 +38,7 @@ export function httpErrorKind(code: number): WtErrorKind {
 }
 
 /** The buttons that fit a code, the main one first: sign in (401), try again (timeouts, too many, 5xx) or back; home at the end (first for a missing page). */
-export function httpErrorActions(code: number): WtErrorAction[] {
+export function httpErrorActions(code: number): WuErrorAction[] {
   const kind = httpErrorKind(code);
   if (kind === 'auth') return ['signIn', 'home'];
   if (kind === 'missing') return ['home', 'back'];

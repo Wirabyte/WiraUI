@@ -1,4 +1,4 @@
-/** wt-chart: how values read on axes, labels and tooltips. */
+/** wu-chart: how values read on axes, labels and tooltips. */
 
 /**
  * `'number'` 1,234.5 · `'integer'` 1,235 · `'percent'` 12.3% (0.123 in) · `'currency'` ฿1,234 · `'compact'` 1.2 พัน /

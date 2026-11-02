@@ -230,7 +230,7 @@ importers:
 
   packages/themes:
     devDependencies:
-      '@wiratheme/core':
+      '@wiraui/core':
         specifier: workspace:*
         version: link:../core
       sass:

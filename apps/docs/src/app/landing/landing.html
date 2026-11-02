@@ -4,7 +4,7 @@
       <span class="docs-logo-mark" aria-hidden="true">
         <svg viewBox="0 0 32 32"><path d="M7.5 10.5 11.5 22l4.5-9 4.5 9 4-11.5" /></svg>
       </span>
-      <span class="docs-logo-text">WiraTheme</span>
+      <span class="docs-logo-text">WiraUI</span>
     </a>
     <nav class="lp-links" [attr.aria-label]="'top.menu' | t">
       <a [routerLink]="link('getting-started/introduction')">{{ 'top.docs' | t }}</a>
@@ -31,7 +31,7 @@
     <div class="lp-grid-bg" aria-hidden="true"></div>
     <a class="lp-pill" routerLink="/v3/getting-started/introduction">
       <span class="lp-pill-tag">{{ en() ? 'New' : 'ใหม่' }}</span>
-      wiratheme&#64;3 {{ en() ? 'for' : 'สำหรับ' }} Angular 21
+      wiraui&#64;3 {{ en() ? 'for' : 'สำหรับ' }} Angular 21
       <docs-icon name="arrowRight"></docs-icon>
     </a>
     @if (en()) {
@@ -62,8 +62,8 @@
     </div>
     <div class="lp-install" id="lp-install">
       <span class="lp-install-prompt" aria-hidden="true">$</span>
-      <code class="lp-install-cmd">ng add wiratheme</code>
-      <docs-copy text="ng add wiratheme"></docs-copy>
+      <code class="lp-install-cmd">ng add wiraui</code>
+      <docs-copy text="ng add wiraui"></docs-copy>
     </div>
   </section>
 
@@ -90,9 +90,9 @@
       <p class="lp-eyebrow">{{ en() ? 'Try it' : 'ลองใช้ได้เลย' }}</p>
       <h2>{{ en() ? 'Real components, not a screenshot' : 'component จริง ไม่ใช่ภาพตัวอย่าง' }}</h2>
       @if (en()) {
-        <p>Everything in this frame is live wiratheme&#64;3. Type, pick, submit, or change the primary colour and dark mode in the frame bar.</p>
+        <p>Everything in this frame is live wiraui&#64;3. Type, pick, submit, or change the primary colour and dark mode in the frame bar.</p>
       } @else {
-        <p>ทุกอย่างในกรอบนี้คือ wiratheme&#64;3 ที่ทำงานอยู่จริง ลองพิมพ์ เลือก กดส่ง หรือเปลี่ยนสีหลักและโหมดมืดที่แถบด้านบนของกรอบ</p>
+        <p>ทุกอย่างในกรอบนี้คือ wiraui&#64;3 ที่ทำงานอยู่จริง ลองพิมพ์ เลือก กดส่ง หรือเปลี่ยนสีหลักและโหมดมืดที่แถบด้านบนของกรอบ</p>
       }
     </div>
 
@@ -143,8 +143,8 @@
         </div>
 
         <div class="lp-demo-grid">
-          <wt-card [header]="en() ? 'Monthly revenue' : 'รายได้รายเดือน'" [subheader]="en() ? 'Thousand baht, last 12 months' : 'พันบาท ย้อนหลัง 12 เดือน'" class="lp-chart-card">
-            <wt-button wtCardActions label="Export" icon="wi wi-send" size="small" text></wt-button>
+          <wu-card [header]="en() ? 'Monthly revenue' : 'รายได้รายเดือน'" [subheader]="en() ? 'Thousand baht, last 12 months' : 'พันบาท ย้อนหลัง 12 เดือน'" class="lp-chart-card">
+            <wu-button wuCardActions label="Export" icon="wi wi-send" size="small" text></wu-button>
             <div class="lp-chart" role="img" [attr.aria-label]="en() ? 'Revenue rising from 62 to 128 thousand baht' : 'รายได้เพิ่มจาก 62 เป็น 128 พันบาท'">
               @for (b of bars(); track $index) {
                 <div class="lp-chart-col">
@@ -153,9 +153,9 @@
                 </div>
               }
             </div>
-          </wt-card>
+          </wu-card>
 
-          <wt-card [header]="en() ? 'Recent activity' : 'กิจกรรมล่าสุด'" class="lp-activity-card">
+          <wu-card [header]="en() ? 'Recent activity' : 'กิจกรรมล่าสุด'" class="lp-activity-card">
             <ul class="lp-activity">
               @for (a of activity; track $index) {
                 <li>
@@ -167,39 +167,39 @@
                 </li>
               }
             </ul>
-          </wt-card>
+          </wu-card>
 
-          <wt-card [header]="en() ? 'Sign up' : 'สมัครใช้งาน'" [subheader]="en() ? 'A short sample form' : 'ฟอร์มตัวอย่างสั้น ๆ'" class="lp-form-card">
+          <wu-card [header]="en() ? 'Sign up' : 'สมัครใช้งาน'" [subheader]="en() ? 'A short sample form' : 'ฟอร์มตัวอย่างสั้น ๆ'" class="lp-form-card">
             <form [formGroup]="form" class="lp-form">
               <label class="lp-field">
                 <span>{{ en() ? 'Name' : 'ชื่อ' }}</span>
-                <input id="lp-name" wtInputText fluid formControlName="name" [placeholder]="en() ? 'Your name' : 'ชื่อของคุณ'" />
+                <input id="lp-name" wuInputText fluid formControlName="name" [placeholder]="en() ? 'Your name' : 'ชื่อของคุณ'" />
               </label>
               <label class="lp-field">
                 <span>{{ en() ? 'Email' : 'อีเมล' }}</span>
-                <input id="lp-email" wtInputText fluid type="email" formControlName="email" placeholder="you@example.com" />
+                <input id="lp-email" wuInputText fluid type="email" formControlName="email" placeholder="you@example.com" />
               </label>
               <div class="lp-field lp-field-full">
                 <span>{{ en() ? 'Plan' : 'แผน' }}</span>
                 <div class="lp-options">
                   @for (p of plans; track p.value) {
-                    <wt-radiobutton name="lp-plan" [value]="p.value" formControlName="plan" [label]="p.label"></wt-radiobutton>
+                    <wu-radiobutton name="lp-plan" [value]="p.value" formControlName="plan" [label]="p.label"></wu-radiobutton>
                   }
                 </div>
               </div>
               <div class="lp-field-full">
-                <wt-toggleswitch formControlName="newsletter" [label]="en() ? 'Send me the newsletter' : 'รับข่าวสารทางอีเมล'"></wt-toggleswitch>
+                <wu-toggleswitch formControlName="newsletter" [label]="en() ? 'Send me the newsletter' : 'รับข่าวสารทางอีเมล'"></wu-toggleswitch>
               </div>
             </form>
-            <div wtCardFooter class="lp-form-footer">
-              <wt-button id="lp-submit" [label]="en() ? 'Sign up' : 'สมัคร'" icon="wi wi-send" [action]="submit" [disabled]="form.invalid"></wt-button>
+            <div wuCardFooter class="lp-form-footer">
+              <wu-button id="lp-submit" [label]="en() ? 'Sign up' : 'สมัคร'" icon="wi wi-send" [action]="submit" [disabled]="form.invalid"></wu-button>
               @if (submitted) {
                 <span class="lp-form-done" id="lp-submitted"><docs-icon name="check"></docs-icon>{{ en() ? 'Thanks! You are signed up (sample).' : 'สมัครเรียบร้อย (ตัวอย่าง)' }}</span>
               } @else if (form.invalid) {
                 <span class="lp-form-hint">{{ en() ? 'Fill in name and email to enable the button' : 'กรอกชื่อและอีเมลก่อน ปุ่มจะกดได้' }}</span>
               }
             </div>
-          </wt-card>
+          </wu-card>
         </div>
       </div>
     </div>
@@ -208,7 +208,7 @@
 
   <section class="lp-section">
     <div class="lp-section-head">
-      <p class="lp-eyebrow">{{ en() ? 'Why WiraTheme' : 'ทำไมต้อง WiraTheme' }}</p>
+      <p class="lp-eyebrow">{{ en() ? 'Why WiraUI' : 'ทำไมต้อง WiraUI' }}</p>
       <h2>{{ en() ? 'What our apps need, built in from day one' : 'ของที่งานจริงต้องใช้ อยู่ในตัวตั้งแต่แรก' }}</h2>
     </div>
     <div class="lp-features">
@@ -244,7 +244,7 @@
       </div>
       <div class="lp-feature">
         <span class="lp-feature-icon"><docs-icon name="wand"></docs-icon></span>
-        <h3>{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</h3>
+        <h3>{{ en() ? 'WiraUI Studio' : 'สตูดิโอธีม' }}</h3>
         @if (en()) {
           <p>Tune a theme on the web and see it at once, export SCSS / CSS / TS / JSON, and import any of them back to keep editing.</p>
         } @else {
@@ -301,7 +301,7 @@
         <span class="docs-logo-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32"><path d="M7.5 10.5 11.5 22l4.5-9 4.5 9 4-11.5" /></svg>
         </span>
-        <span class="docs-logo-text">WiraTheme</span>
+        <span class="docs-logo-text">WiraUI</span>
       </a>
       <p>{{ en() ? 'UI components and theming, Thai-first, by Wirabyte' : 'UI component และระบบธีมที่เข้าใจงานไทย โดย Wirabyte' }}</p>
     </div>
@@ -316,7 +316,7 @@
         <b>Theming</b>
         <a [routerLink]="link('theming/overview')">{{ pageTitle('theming/overview') | loc }}</a>
         <a [routerLink]="link('theming/presets')">Presets</a>
-        <a [routerLink]="link('theming/studio')">{{ en() ? 'WiraTheme Studio' : 'สตูดิโอธีม' }}</a>
+        <a [routerLink]="link('theming/studio')">{{ en() ? 'WiraUI Studio' : 'สตูดิโอธีม' }}</a>
       </div>
       <div>
         <b>Components</b>

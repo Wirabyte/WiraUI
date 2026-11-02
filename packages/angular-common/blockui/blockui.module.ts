@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtBlockUI } from './blockui.component';
+import { WuBlockUI } from './blockui.component';
 
-/** For NgModule apps. Standalone apps can import `WtBlockUI` directly. */
+/** For NgModule apps. Standalone apps can import `WuBlockUI` directly. */
 @NgModule({
-  imports: [WtBlockUI],
-  exports: [WtBlockUI],
+  imports: [WuBlockUI],
+  exports: [WuBlockUI],
 })
-export class WtBlockUIModule {}
+export class WuBlockUIModule {}

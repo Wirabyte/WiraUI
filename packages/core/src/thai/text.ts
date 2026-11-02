@@ -1,4 +1,4 @@
-/** Thai text helpers behind the `wiratheme/thai` pipes: amounts in words, Thai digits, phone numbers, date formats. */
+/** Thai text helpers behind the `wiraui/thai` pipes: amounts in words, Thai digits, phone numbers, date formats. */
 import { CalendarSystem } from './buddhist';
 
 const DIGIT_WORDS = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
@@ -96,7 +96,7 @@ export function toDateValue(value: unknown): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
-/** Named date formats of the `wtDate` pipe. */
+/** Named date formats of the `wuDate` pipe. */
 export type ThaiDateFormat = 'short' | 'medium' | 'long' | 'full' | 'time' | 'shortDateTime' | 'dateTime';
 
 /**

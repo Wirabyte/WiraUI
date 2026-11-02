@@ -21,15 +21,15 @@ import {
   ɵassertSupportedAngular,
   ɵrefreshOnTranslation,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { splitterBasis, splitterPercent, splitterReadState, splitterResize, splitterSizes, WtLocale } from 'wiratheme/core';
-import { WtSplitterPanel } from './splitter-panel.component';
-import { WtSplitterResizeEndEvent, WtSplitterResizeStartEvent } from './splitter.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { splitterBasis, splitterPercent, splitterReadState, splitterResize, splitterSizes, WuLocale } from 'wiraui/core';
+import { WuSplitterPanel } from './splitter-panel.component';
+import { WuSplitterResizeEndEvent, WuSplitterResizeStartEvent } from './splitter.types';
 
-/** A panel to draw: its content and what its wt-splitter-panel says about it. */
+/** A panel to draw: its content and what its wu-splitter-panel says about it. */
 interface PanelEntry {
   template: TemplateRef<unknown>;
   size?: unknown;
@@ -52,22 +52,22 @@ const RESIZE_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 
 
 /**
  * Panels side by side (or stacked, `layout="vertical"`) with a gutter to drag between each pair:
- * `<wt-splitter [panelSizes]="[25, 75]" [minSizes]="[10, 0]" [style]="{ height: '300px' }">` with one
- * `<ng-template wtTemplate="panel">` (or `#panel`, or a `<wt-splitter-panel>`) per panel. Sizes are in %. A gutter takes
+ * `<wu-splitter [panelSizes]="[25, 75]" [minSizes]="[10, 0]" [style]="{ height: '300px' }">` with one
+ * `<ng-template wuTemplate="panel">` (or `#panel`, or a `<wu-splitter-panel>`) per panel. Sizes are in %. A gutter takes
  * the keyboard too (arrows by `step` px, Home / End to a panel's minimum). `stateKey` remembers the sizes in session
  * (or `stateStorage="local"`) storage. A splitter inside a panel fills it.
  */
 @Component({
-  selector: 'wt-splitter',
+  selector: 'wu-splitter',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './splitter.component.html',
   styleUrls: ['./splitter.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-splitter-host' },
+  host: { class: 'wu-splitter-host' },
 })
-export class WtSplitter implements AfterContentInit, OnDestroy {
+export class WuSplitter implements AfterContentInit, OnDestroy {
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
@@ -107,13 +107,13 @@ export class WtSplitter implements AfterContentInit, OnDestroy {
   }
   get panelSizes(): number[] { return this.sizes; }
 
-  @Output() readonly onResizeStart = new EventEmitter<WtSplitterResizeStartEvent>();
-  @Output() readonly onResizeEnd = new EventEmitter<WtSplitterResizeEndEvent>();
+  @Output() readonly onResizeStart = new EventEmitter<WuSplitterResizeStartEvent>();
+  @Output() readonly onResizeEnd = new EventEmitter<WuSplitterResizeEndEvent>();
   /** The sizes after each resize, for `[(panelSizes)]`. */
   @Output() readonly panelSizesChange = new EventEmitter<number[]>();
 
-  @ContentChildren(WtSplitterPanel) protected panelComponents?: QueryList<WtSplitterPanel>;
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuSplitterPanel) protected panelComponents?: QueryList<WuSplitterPanel>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChildren('panel', { read: TemplateRef }) protected panelRefs?: QueryList<TemplateRef<unknown>>;
   @ViewChild('root') protected rootRef?: ElementRef<HTMLElement>;
 
@@ -123,7 +123,7 @@ export class WtSplitter implements AfterContentInit, OnDestroy {
   resizing = false;
   /** The gutter being dragged or moved with the keys. */
   activeGutter = -1;
-  readonly splitterId = ɵuniqueId('wt-splitter');
+  readonly splitterId = ɵuniqueId('wu-splitter');
   private _gutterSize = 4;
   private _step = 5;
   private _minSizes: unknown[] = [];
@@ -135,11 +135,11 @@ export class WtSplitter implements AfterContentInit, OnDestroy {
   private readonly subscriptions: Subscription[] = [];
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterContentInit(): void {
@@ -160,7 +160,7 @@ export class WtSplitter implements AfterContentInit, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -291,7 +291,7 @@ export class WtSplitter implements AfterContentInit, OnDestroy {
       if (this.stateStorage === 'local') return win.localStorage;
       if (this.stateStorage && this.stateStorage !== 'session' && !this.warned) {
         this.warned = true;
-        console.warn(`wt-splitter: stateStorage "${this.stateStorage}" is not "local" or "session"; using session storage.`);
+        console.warn(`wu-splitter: stateStorage "${this.stateStorage}" is not "local" or "session"; using session storage.`);
       }
       return win.sessionStorage;
     } catch {

@@ -13,21 +13,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtSize } from 'wiratheme/config';
-import { WtToggleButtonChangeEvent } from './togglebutton.types';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize } from 'wiraui/config';
+import { WuToggleButtonChangeEvent } from './togglebutton.types';
 
-/** On/off button for a boolean in ngModel or reactive forms: `<wt-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */
+/** On/off button for a boolean in ngModel or reactive forms: `<wu-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */
 @Component({
-  selector: 'wt-togglebutton, wt-toggleButton, wt-toggle-button',
+  selector: 'wu-togglebutton, wu-toggleButton, wu-toggle-button',
   standalone: true,
   imports: [NgIf],
   templateUrl: './togglebutton.component.html',
   styleUrls: ['./togglebutton.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtToggleButton), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuToggleButton), multi: true }],
 })
-export class WtToggleButton implements ControlValueAccessor, OnDestroy {
+export class WuToggleButton implements ControlValueAccessor, OnDestroy {
   /** Label when on / off. Default: the locale's yes / no. Pass '' for an icon-only button. */
   @Input() onLabel?: string;
   @Input() offLabel?: string;
@@ -40,11 +40,11 @@ export class WtToggleButton implements ControlValueAccessor, OnDestroy {
   get disabled(): boolean { return this._disabled; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
-  @Input() size?: WtSize;
-  @HostBinding('class.wt-togglebutton-sm') @HostBinding('class.p-togglebutton-sm') get sizeSm(): boolean {
+  @Input() size?: WuSize;
+  @HostBinding('class.wu-togglebutton-sm') @HostBinding('class.p-togglebutton-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
-  @HostBinding('class.wt-togglebutton-lg') @HostBinding('class.p-togglebutton-lg') get sizeLg(): boolean {
+  @HostBinding('class.wu-togglebutton-lg') @HostBinding('class.p-togglebutton-lg') get sizeLg(): boolean {
     return this.sizeKey === 'lg';
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -52,20 +52,20 @@ export class WtToggleButton implements ControlValueAccessor, OnDestroy {
   }
   get invalid(): boolean { return this._invalid; }
 
-  @Output() readonly onChange = new EventEmitter<WtToggleButtonChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuToggleButtonChangeEvent>();
 
   checked = false;
   private _disabled = false;
   private _invalid = false;
   private formDisabled = false;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly cdr = inject(ChangeDetectorRef);
   private onModelChange: (value: boolean) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnDestroy(): void {
@@ -96,9 +96,9 @@ export class WtToggleButton implements ControlValueAccessor, OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-togglebutton', 'p-button', 'p-togglebutton', 'p-component'];
-    if (this.checked) c.push('wt-togglebutton-checked', 'p-highlight');
-    if (this._invalid) c.push('wt-invalid');
+    const c = ['wu-togglebutton', 'p-button', 'p-togglebutton', 'p-component'];
+    if (this.checked) c.push('wu-togglebutton-checked', 'p-highlight');
+    if (this._invalid) c.push('wu-invalid');
     return c.join(' ');
   }
 

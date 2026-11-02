@@ -1,7 +1,7 @@
-<label class="wt-radiobutton" [class]="styleClass || ''" [style]="rootStyle" [class.wt-radiobutton-checked]="checked" [class.wt-radiobutton-disabled]="isDisabled" [class.wt-invalid]="invalid">
+<label class="wu-radiobutton" [class]="styleClass || ''" [style]="rootStyle" [class.wu-radiobutton-checked]="checked" [class.wu-radiobutton-disabled]="isDisabled" [class.wu-invalid]="invalid">
   <input
     type="radio"
-    class="wt-radiobutton-input"
+    class="wu-radiobutton-input"
     [id]="id"
     [attr.name]="name || null"
     [checked]="checked"
@@ -11,8 +11,8 @@
     (change)="select($event)"
     (blur)="onTouched()"
   />
-  <span class="wt-radiobutton-control p-radiobutton p-component" [class.p-radiobutton-checked]="checked" [class.p-radiobutton-disabled]="isDisabled" aria-hidden="true">
-    <span class="wt-radiobutton-box p-radiobutton-box" [class.p-highlight]="checked" [class.p-disabled]="isDisabled"><span class="wt-radiobutton-dot p-radiobutton-icon"></span></span>
+  <span class="wu-radiobutton-control p-radiobutton p-component" [class.p-radiobutton-checked]="checked" [class.p-radiobutton-disabled]="isDisabled" aria-hidden="true">
+    <span class="wu-radiobutton-box p-radiobutton-box" [class.p-highlight]="checked" [class.p-disabled]="isDisabled"><span class="wu-radiobutton-dot p-radiobutton-icon"></span></span>
   </span>
-  <span *ngIf="label" class="wt-radiobutton-label p-radiobutton-label" [class.p-radiobutton-label-active]="checked">{{ label }}</span>
+  <span *ngIf="label" class="wu-radiobutton-label p-radiobutton-label" [class.p-radiobutton-label-active]="checked">{{ label }}</span>
 </label>

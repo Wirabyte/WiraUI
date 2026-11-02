@@ -1,11 +1,11 @@
 import { NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ɵWtPanelMenuBase } from './panelmenu.base';
+import { ɵWuPanelMenuBase } from './panelmenu.base';
 
-/** A side menu of collapsible panels: `<wt-panelmenu [model]="items" [multiple]="true">`. Items take `routerLink`, `url` or `command`. */
+/** A side menu of collapsible panels: `<wu-panelmenu [model]="items" [multiple]="true">`. Items take `routerLink`, `url` or `command`. */
 @Component({
-  selector: 'wt-panelmenu, wt-panelMenu, wt-panel-menu',
+  selector: 'wu-panelmenu, wu-panelMenu, wu-panel-menu',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, RouterLink, RouterLinkActive],
   templateUrl: './panelmenu.component.html',
@@ -13,4 +13,4 @@ import { ɵWtPanelMenuBase } from './panelmenu.base';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtPanelMenu extends ɵWtPanelMenuBase {}
+export class WuPanelMenu extends ɵWuPanelMenuBase {}

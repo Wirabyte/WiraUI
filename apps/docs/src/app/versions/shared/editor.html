@@ -6,9 +6,9 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-editor id="d-ed-basic" name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" [placeholder]="tx('พิมพ์เนื้อหาข่าว')"></wt-editor>
+        <wu-editor id="d-ed-basic" name="newsBody" [(ngModel)]="newsBody" [style]="{ height: '320px' }" [placeholder]="tx('พิมพ์เนื้อหาข่าว')"></wu-editor>
         <div class="docs-demo-actions">
-          <wt-button id="d-ed-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wt-button>
+          <wu-button id="d-ed-save" [label]="tx('บันทึก')" icon="wi wi-save" [loading]="isApiSaving" [disabled]="!newsBody" (onClick)="saveNews()"></wu-button>
           <span class="docs-demo-output">saved: <code id="d-ed-saved">{{ savedCount }}</code></span>
         </div>
         <pre id="d-ed-basic-value" class="docs-csv">{{ newsBody ?? 'null' }}</pre>
@@ -17,22 +17,22 @@
 
     <docs-section id="toolbar" [section]="sec['toolbar']">
       <docs-demo [html]="code['toolbar']" [ts]="ts['toolbar']" layout="stack">
-        <wt-selectbutton id="d-ed-preset" name="preset" [(ngModel)]="preset" [options]="presets" [allowEmpty]="false"></wt-selectbutton>
-        <wt-editor id="d-ed-presets" name="presetBody" [(ngModel)]="presetBody" [toolbar]="preset" [style]="{ height: '160px' }"></wt-editor>
-        <wt-editor id="d-ed-custom" name="customBody" [(ngModel)]="customBody" [toolbar]="tools" [style]="{ height: '160px' }"></wt-editor>
+        <wu-selectbutton id="d-ed-preset" name="preset" [(ngModel)]="preset" [options]="presets" [allowEmpty]="false"></wu-selectbutton>
+        <wu-editor id="d-ed-presets" name="presetBody" [(ngModel)]="presetBody" [toolbar]="preset" [style]="{ height: '160px' }"></wu-editor>
+        <wu-editor id="d-ed-custom" name="customBody" [(ngModel)]="customBody" [toolbar]="tools" [style]="{ height: '160px' }"></wu-editor>
       </docs-demo>
     </docs-section>
 
     <docs-section id="options" [section]="sec['options']">
       <docs-demo [html]="code['options']" [ts]="ts['options']" layout="stack">
-        <wt-editor id="d-ed-options" name="noticeBody" [(ngModel)]="noticeBody" toolbar="full" [toolOptions]="toolOptions" [style]="{ height: '200px' }"></wt-editor>
+        <wu-editor id="d-ed-options" name="noticeBody" [(ngModel)]="noticeBody" toolbar="full" [toolOptions]="toolOptions" [style]="{ height: '200px' }"></wu-editor>
       </docs-demo>
     </docs-section>
 
     <docs-section id="header" [section]="sec['header']">
       <docs-slot-note slot="header"></docs-slot-note>
       <docs-demo [html]="code['header']" layout="stack">
-        <wt-editor id="d-ed-header" name="policy" [(ngModel)]="policy" [style]="{ height: '320px' }">
+        <wu-editor id="d-ed-header" name="policy" [(ngModel)]="policy" [style]="{ height: '320px' }">
           <ng-template #header>
             <span class="ql-formats">
               <select class="ql-size"></select>
@@ -67,14 +67,14 @@
               <button class="ql-clean"></button>
             </span>
           </ng-template>
-        </wt-editor>
+        </wu-editor>
         <pre id="d-ed-header-value" class="docs-csv">{{ policy ?? 'null' }}</pre>
       </docs-demo>
     </docs-section>
 
     <docs-section id="images" [section]="sec['images']">
       <docs-demo [html]="code['images']" [ts]="ts['images']" layout="stack">
-        <wt-editor
+        <wu-editor
           id="d-ed-images"
           name="imageBody"
           [(ngModel)]="imageBody"
@@ -83,7 +83,7 @@
           [style]="{ height: '240px' }"
           (onImageUpload)="imageUploaded($event)"
           (onImageUploadError)="imageFailed($event)"
-        ></wt-editor>
+        ></wu-editor>
         <span class="docs-demo-output">{{ tx('ล่าสุด') }}: <code id="d-ed-image-log">{{ lastImageEvent || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -95,39 +95,39 @@
 
     <docs-section id="tables" [section]="sec['tables']">
       <docs-demo [html]="code['tables']" [ts]="ts['tables']" layout="stack">
-        <wt-editor
+        <wu-editor
           id="d-ed-tables"
           name="timetable"
           [(ngModel)]="timetable"
           [toolbar]="['bold', '|', 'table', '|', 'undo', 'redo']"
           [toolOptions]="{ table: { rows: 6, cols: 6, headerRow: true } }"
           [style]="{ height: '260px' }"
-        ></wt-editor>
+        ></wu-editor>
       </docs-demo>
     </docs-section>
 
     <docs-section id="view" [section]="sec['view']">
       <docs-demo [html]="code['view']" [ts]="ts['view']" layout="stack">
-        <div id="d-ed-view" wtEditorContent [innerHTML]="announcement"></div>
+        <div id="d-ed-view" wuEditorContent [innerHTML]="announcement"></div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="readonly" [section]="sec['readonly']">
       <docs-demo [html]="code['readonly']" layout="stack">
-        <wt-editor id="d-ed-readonly" name="policyView" [ngModel]="policy" [readonly]="true" toolbar="basic"></wt-editor>
+        <wu-editor id="d-ed-readonly" name="policyView" [ngModel]="policy" [readonly]="true" toolbar="basic"></wu-editor>
       </docs-demo>
     </docs-section>
 
     <docs-section id="count" [section]="sec['count']">
       <docs-demo [html]="code['count']" layout="stack">
-        <wt-editor id="d-ed-count" name="summary" [(ngModel)]="summary" toolbar="basic" [showCount]="true" [style]="{ height: '120px' }"></wt-editor>
+        <wu-editor id="d-ed-count" name="summary" [(ngModel)]="summary" toolbar="basic" [showCount]="true" [style]="{ height: '120px' }"></wu-editor>
       </docs-demo>
     </docs-section>
 
     <docs-section id="events" [section]="sec['events']">
       <docs-demo [html]="code['events']" [ts]="ts['events']" layout="stack">
-        <wt-editor
-          #ed="wtEditor"
+        <wu-editor
+          #ed="wuEditor"
           id="d-ed-events"
           name="letter"
           [(ngModel)]="letter"
@@ -135,10 +135,10 @@
           [style]="{ height: '160px' }"
           (onInit)="editorReady($event)"
           (onTextChange)="textChanged($event)"
-        ></wt-editor>
+        ></wu-editor>
         <div class="docs-demo-actions">
-          <wt-button id="d-ed-letter" [label]="tx('ใส่จดหมายตัวอย่าง')" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wt-button>
-          <wt-button id="d-ed-focus" [label]="tx('ไปที่เนื้อหา')" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wt-button>
+          <wu-button id="d-ed-letter" [label]="tx('ใส่จดหมายตัวอย่าง')" icon="wi wi-file" severity="secondary" (onClick)="useLetterTemplate()"></wu-button>
+          <wu-button id="d-ed-focus" [label]="tx('ไปที่เนื้อหา')" severity="secondary" [text]="true" (onClick)="ed.getEditor().focus()"></wu-button>
         </div>
         <span class="docs-demo-output">onTextChange: <code id="d-ed-event">{{ lastEvent || '-' }}</code> · onInit: <code id="d-ed-ready">{{ editorIsReady }}</code></span>
       </docs-demo>

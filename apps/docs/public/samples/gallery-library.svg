@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 320 200">
-  <!-- Sample artwork for the docs (drawn for WiraTheme, free to use): the school library. -->
+  <!-- Sample artwork for the docs (drawn for WiraUI, free to use): the school library. -->
   <rect width="320" height="200" fill="#fef3c7" />
   <rect y="170" width="320" height="30" fill="#d6a46b" />
   <g fill="#92400e">

@@ -11,19 +11,19 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtSize } from 'wiratheme/config';
-import { WtCheckboxChangeEvent } from './checkbox.types';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuSize } from 'wiraui/config';
+import { WuCheckboxChangeEvent } from './checkbox.types';
 
 /**
  * Checkbox for ngModel and reactive forms, with two modes:
  * `binary` (the model is `trueValue` / `falseValue`) or a group (the model is an array and `value` is added or removed).
  */
 @Component({
-  selector: 'wt-checkbox, wt-checkBox, wt-check-box',
+  selector: 'wu-checkbox, wu-checkBox, wu-check-box',
   host: {
-    '[class.wt-checkbox-sm]': "sizeKey() === 'sm'",
+    '[class.wu-checkbox-sm]': "sizeKey() === 'sm'",
     '[class.p-checkbox-sm]': "sizeKey() === 'sm'",
-    '[class.wt-checkbox-lg]': "sizeKey() === 'lg'",
+    '[class.wu-checkbox-lg]': "sizeKey() === 'lg'",
     '[class.p-checkbox-lg]': "sizeKey() === 'lg'",
   },
   standalone: true,
@@ -31,9 +31,9 @@ import { WtCheckboxChangeEvent } from './checkbox.types';
   styleUrl: './checkbox.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtCheckbox), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuCheckbox), multi: true }],
 })
-export class WtCheckbox implements ControlValueAccessor {
+export class WuCheckbox implements ControlValueAccessor {
   readonly value = input<unknown>();
   readonly binary = input(false, { transform: booleanAttribute });
   readonly label = input<string>();
@@ -43,7 +43,7 @@ export class WtCheckbox implements ControlValueAccessor {
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
-  readonly size = input<WtSize>();
+  readonly size = input<WuSize>();
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly trueValue = input<unknown>(true);
   readonly falseValue = input<unknown>(false);
@@ -60,11 +60,11 @@ export class WtCheckbox implements ControlValueAccessor {
     return s && typeof s === 'object' ? (s as Record<string, any>) : null;
   });
 
-  readonly onChange = output<WtCheckboxChangeEvent>();
+  readonly onChange = output<WuCheckboxChangeEvent>();
 
   private readonly model = signal<unknown>(null);
   private readonly formDisabled = signal(false);
-  private readonly autoId = ɵuniqueId('wt-checkbox');
+  private readonly autoId = ɵuniqueId('wu-checkbox');
   private onModelChange: (value: unknown) => void = () => {};
   onTouched: () => void = () => {};
 
@@ -76,7 +76,7 @@ export class WtCheckbox implements ControlValueAccessor {
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   toggle(event: Event): void {

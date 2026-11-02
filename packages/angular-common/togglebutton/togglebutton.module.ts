@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtToggleButton } from './togglebutton.component';
+import { WuToggleButton } from './togglebutton.component';
 
-/** For NgModule apps. Standalone apps can import `WtToggleButton` directly. */
+/** For NgModule apps. Standalone apps can import `WuToggleButton` directly. */
 @NgModule({
-  imports: [WtToggleButton],
-  exports: [WtToggleButton],
+  imports: [WuToggleButton],
+  exports: [WuToggleButton],
 })
-export class WtToggleButtonModule {}
+export class WuToggleButtonModule {}

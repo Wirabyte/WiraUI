@@ -2,8 +2,8 @@
   <dialog
     #mask
     role="alertdialog"
-    class="wt-alert-mask"
-    [class.wt-alert-leaving]="leaving"
+    class="wu-alert-mask"
+    [class.wu-alert-leaving]="leaving"
     [attr.aria-labelledby]="o.title ? titleId : null"
     [attr.aria-describedby]="o.text || o.html ? textId : null"
     [attr.aria-busy]="loading || null"
@@ -12,38 +12,38 @@
     (pointerdown)="maskPointerdown($event)"
     (click)="maskClick($event)"
   >
-    <div #popup tabindex="-1" class="wt-alert" [ngClass]="part('popup')" [style.width]="popupWidth">
+    <div #popup tabindex="-1" class="wu-alert" [ngClass]="part('popup')" [style.width]="popupWidth">
       @if (o.showCloseButton) {
-        <button type="button" class="wt-alert-close" [attr.aria-label]="t.close" (click)="dismiss('close')">
+        <button type="button" class="wu-alert-close" [attr.aria-label]="t.close" (click)="dismiss('close')">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
         </button>
       }
 
       @for (r of runs; track r) {
         @if (icon) {
-          <div class="wt-alert-icon" [ngClass]="'wt-alert-icon-' + icon" [style.color]="o.iconColor || null" aria-hidden="true">
+          <div class="wu-alert-icon" [ngClass]="'wu-alert-icon-' + icon" [style.color]="o.iconColor || null" aria-hidden="true">
             <svg viewBox="0 0 80 80">
-              <circle class="wt-alert-halo" cx="40" cy="40" r="40"></circle>
-              <circle class="wt-alert-ring" cx="40" cy="40" r="36"></circle>
+              <circle class="wu-alert-halo" cx="40" cy="40" r="40"></circle>
+              <circle class="wu-alert-ring" cx="40" cy="40" r="36"></circle>
               @switch (icon) {
                 @case ('success') {
-                  <path class="wt-alert-mark" d="M25 41l10 10 21-22"></path>
+                  <path class="wu-alert-mark" d="M25 41l10 10 21-22"></path>
                 }
                 @case ('error') {
-                  <path class="wt-alert-mark" d="M29 29l22 22"></path>
-                  <path class="wt-alert-mark wt-alert-mark-2" d="M51 29L29 51"></path>
+                  <path class="wu-alert-mark" d="M29 29l22 22"></path>
+                  <path class="wu-alert-mark wu-alert-mark-2" d="M51 29L29 51"></path>
                 }
                 @case ('warning') {
-                  <path class="wt-alert-mark" d="M40 22v22"></path>
-                  <circle class="wt-alert-dot" cx="40" cy="55" r="3.5"></circle>
+                  <path class="wu-alert-mark" d="M40 22v22"></path>
+                  <circle class="wu-alert-dot" cx="40" cy="55" r="3.5"></circle>
                 }
                 @case ('info') {
-                  <circle class="wt-alert-dot" cx="40" cy="25" r="3.5"></circle>
-                  <path class="wt-alert-mark" d="M40 36v22"></path>
+                  <circle class="wu-alert-dot" cx="40" cy="25" r="3.5"></circle>
+                  <path class="wu-alert-mark" d="M40 36v22"></path>
                 }
                 @case ('question') {
-                  <path class="wt-alert-mark" d="M31 31a9 9 0 1 1 13 8c-3 1.8-4 3.4-4 6.5"></path>
-                  <circle class="wt-alert-dot" cx="40" cy="56" r="3.5"></circle>
+                  <path class="wu-alert-mark" d="M31 31a9 9 0 1 1 13 8c-3 1.8-4 3.4-4 6.5"></path>
+                  <circle class="wu-alert-dot" cx="40" cy="56" r="3.5"></circle>
                 }
               }
             </svg>
@@ -52,23 +52,23 @@
       }
 
       @if (o.title) {
-        <h2 class="wt-alert-title" [ngClass]="part('title')" [id]="titleId">{{ o.title }}</h2>
+        <h2 class="wu-alert-title" [ngClass]="part('title')" [id]="titleId">{{ o.title }}</h2>
       }
       @if (o.html) {
-        <div class="wt-alert-text" [ngClass]="part('htmlContainer')" [id]="textId" [innerHTML]="o.html"></div>
+        <div class="wu-alert-text" [ngClass]="part('htmlContainer')" [id]="textId" [innerHTML]="o.html"></div>
       } @else if (o.text) {
-        <p class="wt-alert-text" [ngClass]="part('htmlContainer')" [id]="textId">{{ o.text }}</p>
+        <p class="wu-alert-text" [ngClass]="part('htmlContainer')" [id]="textId">{{ o.text }}</p>
       }
 
       @if (o.input) {
-        <div class="wt-alert-input">
+        <div class="wu-alert-input">
           @if (o.inputLabel && o.input !== 'checkbox') {
-            <label class="wt-alert-label" [attr.for]="titleId + '-field'">{{ o.inputLabel }}</label>
+            <label class="wu-alert-label" [attr.for]="titleId + '-field'">{{ o.inputLabel }}</label>
           }
           @if (isTextInput) {
             <input
               [id]="titleId + '-field'"
-              class="wt-alert-field wt-inputtext p-inputtext"
+              class="wu-alert-field wu-inputtext p-inputtext"
               [type]="o.input"
               [value]="inputValue"
               [attr.placeholder]="o.inputPlaceholder || null"
@@ -79,13 +79,13 @@
             <textarea
               [id]="titleId + '-field'"
               rows="4"
-              class="wt-alert-field wt-inputtext p-inputtext"
+              class="wu-alert-field wu-inputtext p-inputtext"
               [value]="inputValue"
               [attr.placeholder]="o.inputPlaceholder || null"
               (input)="typed($event)"
             ></textarea>
           } @else if (o.input === 'select') {
-            <select [id]="titleId + '-field'" class="wt-alert-field" (change)="typed($event)">
+            <select [id]="titleId + '-field'" class="wu-alert-field" (change)="typed($event)">
               @if (o.inputPlaceholder) {
                 <option value="" disabled [selected]="!inputValue">{{ o.inputPlaceholder }}</option>
               }
@@ -94,15 +94,15 @@
               }
             </select>
           } @else if (o.input === 'radio') {
-            <div class="wt-alert-choices" role="radiogroup">
+            <div class="wu-alert-choices" role="radiogroup">
               @for (opt of options; track opt.value; let i = $index) {
-                <label class="wt-alert-choice">
+                <label class="wu-alert-choice">
                   <input
                     type="radio"
                     [name]="titleId + '-radio'"
                     [value]="opt.value"
                     [checked]="opt.value === inputValue"
-                    [class.wt-alert-field]="i === 0"
+                    [class.wu-alert-field]="i === 0"
                     (change)="typed($event)"
                   />
                   {{ opt.label }}
@@ -110,8 +110,8 @@
               }
             </div>
           } @else if (o.input === 'checkbox') {
-            <label class="wt-alert-choice wt-alert-choices">
-              <input type="checkbox" class="wt-alert-field" [checked]="!!inputValue" (change)="typed($event)" />
+            <label class="wu-alert-choice wu-alert-choices">
+              <input type="checkbox" class="wu-alert-field" [checked]="!!inputValue" (change)="typed($event)" />
               {{ o.inputPlaceholder || o.inputLabel }}
             </label>
           }
@@ -119,22 +119,22 @@
       }
 
       @if (validation) {
-        <div class="wt-alert-validation" role="alert">{{ validation }}</div>
+        <div class="wu-alert-validation" role="alert">{{ validation }}</div>
       }
       @if (loading) {
-        <div class="wt-alert-loader" role="status" [attr.aria-label]="t.loading"><span class="wt-alert-spinner"></span></div>
+        <div class="wu-alert-loader" role="status" [attr.aria-label]="t.loading"><span class="wu-alert-spinner"></span></div>
       }
 
       @if (hasActions) {
-        <div class="wt-alert-actions">
+        <div class="wu-alert-actions">
           @for (b of actions; track b) {
             @switch (b) {
               @case ('confirm') {
                 <button
                   type="button"
-                  class="wt-alert-button wt-alert-confirm"
+                  class="wu-alert-button wu-alert-confirm"
                   [ngClass]="part('confirmButton')"
-                  [class.wt-alert-custom]="!!o.confirmButtonColor"
+                  [class.wu-alert-custom]="!!o.confirmButtonColor"
                   [style.background]="o.confirmButtonColor || null"
                   [style.border-color]="o.confirmButtonColor || null"
                   (click)="confirm()"
@@ -143,9 +143,9 @@
               @case ('deny') {
                 <button
                   type="button"
-                  class="wt-alert-button wt-alert-deny"
+                  class="wu-alert-button wu-alert-deny"
                   [ngClass]="part('denyButton')"
-                  [class.wt-alert-custom]="!!o.denyButtonColor"
+                  [class.wu-alert-custom]="!!o.denyButtonColor"
                   [style.background]="o.denyButtonColor || null"
                   [style.border-color]="o.denyButtonColor || null"
                   (click)="deny()"
@@ -154,9 +154,9 @@
               @case ('cancel') {
                 <button
                   type="button"
-                  class="wt-alert-button wt-alert-cancel"
+                  class="wu-alert-button wu-alert-cancel"
                   [ngClass]="part('cancelButton')"
-                  [class.wt-alert-custom]="!!o.cancelButtonColor"
+                  [class.wu-alert-custom]="!!o.cancelButtonColor"
                   [style.background]="o.cancelButtonColor || null"
                   [style.border-color]="o.cancelButtonColor || null"
                   (click)="dismiss('cancel')"
@@ -168,10 +168,10 @@
       }
 
       @if (o.footer) {
-        <div class="wt-alert-footer" [innerHTML]="o.footer"></div>
+        <div class="wu-alert-footer" [innerHTML]="o.footer"></div>
       }
       @if (o.timer && o.timerProgressBar) {
-        <div class="wt-alert-timer"><span [style.animation-duration.ms]="o.timer"></span></div>
+        <div class="wu-alert-timer"><span [style.animation-duration.ms]="o.timer"></span></div>
       }
     </div>
   </dialog>

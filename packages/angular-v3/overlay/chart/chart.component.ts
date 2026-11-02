@@ -20,7 +20,7 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
 import {
   ChartAnnotations,
   ChartAxisScale,
@@ -41,12 +41,12 @@ import {
   chartSwapTypes,
   chartVariants,
   formatChartValue,
-} from 'wiratheme/core';
-import { WT_CHART_KINDS, WT_CHART_LOOKS } from './chart.icons';
-import { WtChartClickEvent, WtChartLegend, WtChartTipRow, WtChartToggleEvent, WtChartZoomEvent } from './chart.types';
+} from 'wiraui/core';
+import { WU_CHART_KINDS, WU_CHART_LOOKS } from './chart.icons';
+import { WuChartClickEvent, WuChartLegend, WuChartTipRow, WuChartToggleEvent, WuChartZoomEvent } from './chart.types';
 
-/** The theme's chart colours (`--wt-chart-1` … `-10`), so charts follow the preset and dark mode. */
-const PALETTE = Array.from({ length: 10 }, (_, i) => `var(--wt-chart-${i + 1})`);
+/** The theme's chart colours (`--wu-chart-1` … `-10`), so charts follow the preset and dark mode. */
+const PALETTE = Array.from({ length: 10 }, (_, i) => `var(--wu-chart-${i + 1})`);
 const ANIMATION_MS = 650;
 let uid = 0;
 
@@ -57,7 +57,7 @@ interface Frame {
 }
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-const TYPES = Object.keys(WT_CHART_KINDS) as ChartType[];
+const TYPES = Object.keys(WU_CHART_KINDS) as ChartType[];
 /** Kinds that hide labels from the legend (not series), without zeroing data that is not numbers. */
 const BY_LABELS: ChartType[] = ['funnel', 'unit', 'sunburst'];
 const GHOST_MS = 480;
@@ -67,29 +67,29 @@ const WORDS = {
   en: { toolbar: 'Chart tools', zoomIn: 'Zoom in', zoomOut: 'Zoom out', reset: 'Show all', download: 'Download', kinds: 'Chart type', looks: 'Look', back: 'Back' },
 };
 /** Charts that share a `group`, to show the tooltip at the same label together. */
-const GROUPS = new Map<string, Set<WtChart>>();
+const GROUPS = new Map<string, Set<WuChart>>();
 
 /**
- * WiraTheme's own chart, drawn in SVG with no chart library: `<wt-chart type="bar" [labels]="months" [series]="[{ name: 'รายรับ', data: income }]">`.
+ * WiraUI's own chart, drawn in SVG with no chart library: `<wu-chart type="bar" [labels]="months" [series]="[{ name: 'รายรับ', data: income }]">`.
  * Bar (grouped, stacked, across), line (smooth, dashed, a second axis), area, pie, doughnut, radar and scatter / bubble,
  * mixed per series. Text is real text in the page's font (Thai shapes properly); `font` and `fontSize` change it for
  * one chart. Values read as numbers, percents, baht or Thai compact units (`format`). The legend shows and hides
  * series, the tooltip follows the pointer or the arrow keys, values grow in when shown and move when they change, and
  * a hidden table gives screen readers the numbers. Chart.js-shaped `[data]` / `[options]` work too, so Chart.js code
- * (`<wt-chartjs>`, PrimeNG's `<p-chart>`) moves over as it is; for Chart.js plugins keep `<wt-chartjs>`. Export with `toSVG()`, `toPNG()` or `download()`.
+ * (`<wu-chartjs>`, `<p-chart>`) moves over as it is; for Chart.js plugins keep `<wu-chartjs>`. Export with `toSVG()`, `toPNG()` or `download()`.
  */
 @Component({
-  selector: 'wt-chart',
+  selector: 'wu-chart',
   standalone: true,
-  exportAs: 'wtChart',
+  exportAs: 'wuChart',
   templateUrl: './chart.component.html',
   styleUrl: './chart.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // `title` is an input here: keep it off the host so the chart gets no browser tooltip.
-  host: { class: 'wt-chart-host', '[attr.title]': 'null' },
+  host: { class: 'wu-chart-host', '[attr.title]': 'null' },
 })
-export class WtChart {
+export class WuChart {
   /**
    * `bar` (default), `line`, `area`, `pie`, `doughnut`, `polarArea`, `radialBar`, `radar`, `scatter`, `heatmap`, `treemap`,
    * `stream`, `waterfall`, `dumbbell`, `timeline`, `funnel`, `boxplot`, `histogram`, `sunburst`, `unit`, `slope`.
@@ -112,7 +112,7 @@ export class WtChart {
   readonly subtitle = input<string | null | undefined>();
   /** Height of the drawing: px or any CSS length. Default 320px (pie and doughnut 280px). */
   readonly height = input<string | number | null | undefined>();
-  readonly legend = input<WtChartLegend | null | undefined>();
+  readonly legend = input<WuChartLegend | null | undefined>();
   /** Font family of every text in the chart. Default: the theme's. */
   readonly font = input<string | null | undefined>();
   /** Size of axis and label text, px. Default 12. */
@@ -198,11 +198,11 @@ export class WtChart {
   readonly style = input<Record<string, any> | string | null | undefined>();
 
   /** A bar, point or slice was clicked (or chosen with Enter). */
-  readonly pointClick = output<WtChartClickEvent>();
+  readonly pointClick = output<WuChartClickEvent>();
   /** The legend showed or hid a series (pie: a slice). */
-  readonly seriesToggle = output<WtChartToggleEvent>();
+  readonly seriesToggle = output<WuChartToggleEvent>();
   /** Zoomed into labels `from` … `to` (indexes), or back to all of them (null). */
-  readonly zoomChange = output<WtChartZoomEvent | null>();
+  readonly zoomChange = output<WuChartZoomEvent | null>();
   /** The type switcher picked another kind. */
   readonly typeChange = output<ChartType>();
   /** The look picker picked another look. */
@@ -213,7 +213,7 @@ export class WtChart {
   /** The look drawn: `variant`, or what the picker picked. */
   readonly chosenLook = linkedSignal<string | undefined>(() => this.variant() || undefined);
 
-  readonly id = `wt-chart-${++uid}`;
+  readonly id = `wu-chart-${++uid}`;
   /** Series (pie: slices) hidden from the legend. */
   readonly hidden = signal<ReadonlySet<number>>(new Set());
   /** The label (or slice) under the pointer or keyboard. */
@@ -234,7 +234,7 @@ export class WtChart {
   /** The toolbar's download menu is open. */
   readonly menu = signal(false);
 
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly zone = inject(NgZone);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -255,7 +255,7 @@ export class WtChart {
   private dragged = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     const destroy = inject(DestroyRef);
     const sub = this.config.translationChange.subscribe((t) => this.lang$.set(t.code || 'th'));
     destroy.onDestroy(() => {
@@ -337,7 +337,7 @@ export class WtChart {
     const list = Array.isArray(own) ? own.filter((t) => TYPES.includes(t)) : chartSwapTypes(this.type(), series, labels);
     return list.length > 1 ? list : [];
   });
-  readonly kindsInfo = WT_CHART_KINDS;
+  readonly kindsInfo = WU_CHART_KINDS;
   /** Looks the picker offers for the kind drawn (none: no picker), and the one drawn. */
   readonly lookList = computed(() => (this.looks() ? chartVariants(this.kind()) : []));
   readonly activeLook = computed(() => {
@@ -346,13 +346,13 @@ export class WtChart {
     return now && list.includes(now) ? now : list[0];
   });
   lookName(look: string): string {
-    const name = WT_CHART_LOOKS[look];
+    const name = WU_CHART_LOOKS[look];
     return name ? (this.language().toLowerCase().startsWith('th') ? name.th : name.en) : look;
   }
   readonly words = computed(() => (this.language().toLowerCase().startsWith('th') ? WORDS.th : WORDS.en));
   readonly isHorizontal = computed(() => this.horizontal() || this.opt().indexAxis === 'y');
   readonly isStacked = computed(() => this.stacked() || !!this.opt().scales?.x?.stacked || !!this.opt().scales?.y?.stacked);
-  readonly legendPos = computed<WtChartLegend>(() => {
+  readonly legendPos = computed<WuChartLegend>(() => {
     const own = this.legend();
     if (own) return own;
     if (this.sparkline()) return 'none';
@@ -497,12 +497,12 @@ export class WtChart {
 
   readonly classes = computed(() =>
     [
-      'wt-chart',
-      `wt-chart-type-${this.kind()}`,
-      `wt-chart-legend-${this.legendPos()}`,
-      this.sparkline() ? 'wt-chart-sparkline' : '',
-      this.focusSeries() !== null ? 'wt-chart-focusing' : '',
-      this.entering() ? 'wt-chart-entering' : '',
+      'wu-chart',
+      `wu-chart-type-${this.kind()}`,
+      `wu-chart-legend-${this.legendPos()}`,
+      this.sparkline() ? 'wu-chart-sparkline' : '',
+      this.focusSeries() !== null ? 'wu-chart-focusing' : '',
+      this.entering() ? 'wu-chart-entering' : '',
       this.styleClass() || '',
     ]
       .filter(Boolean)
@@ -567,7 +567,7 @@ export class WtChart {
     const { labels, series } = this.target();
     const fmt = (v: number, right: boolean) => formatChartValue(v, right ? this.rightFormat() || this.format() : this.format(), this.formatOptions());
     let title = labels[i] ?? '';
-    const rows: WtChartTipRow[] = [];
+    const rows: WuChartTipRow[] = [];
     if (this.kind() === 'radialBar') {
       const ring = m.rings.find((r) => r.index === i);
       if (!ring) return null;
@@ -692,7 +692,7 @@ export class WtChart {
     }
     if (this.isRound()) {
       // Slices and rings light up as the pointer enters them; empty space around them lets go.
-      if (!(event.target as Element | null)?.closest?.('.wt-chart-slice, .wt-chart-ring, .wt-chart-track')) this.hovered.set(null);
+      if (!(event.target as Element | null)?.closest?.('.wu-chart-slice, .wu-chart-ring, .wu-chart-track')) this.hovered.set(null);
       return;
     }
     if (this.isCells()) {
@@ -898,12 +898,12 @@ export class WtChart {
     const key = this.hoverKey();
     const lit = !!key && !!s.hover && (key === s.hover || key.startsWith(s.hover + '/'));
     return [
-      'wt-chart-shape',
+      'wu-chart-shape',
       s.className || '',
-      s.enter ? `wt-chart-in-${s.enter}` : '',
-      s.dashed ? 'wt-chart-dashed' : '',
-      lit ? 'wt-chart-lit' : '',
-      dimOthers && key && s.hover && !lit ? 'wt-chart-dim' : '',
+      s.enter ? `wu-chart-in-${s.enter}` : '',
+      s.dashed ? 'wu-chart-dashed' : '',
+      lit ? 'wu-chart-lit' : '',
+      dimOthers && key && s.hover && !lit ? 'wu-chart-dim' : '',
     ]
       .filter(Boolean)
       .join(' ');
@@ -943,7 +943,7 @@ export class WtChart {
       ghost.removeAttribute('aria-label');
       ghost.removeAttribute('aria-labelledby');
       ghost.setAttribute('aria-hidden', 'true');
-      ghost.classList.add('wt-chart-ghost');
+      ghost.classList.add('wu-chart-ghost');
       body.appendChild(ghost);
       setTimeout(() => ghost.remove(), GHOST_MS);
     }
@@ -1034,7 +1034,7 @@ export class WtChart {
     canvas.height = Math.round(m.height * scale);
     const ctx = canvas.getContext('2d');
     if (!ctx) return '';
-    ctx.fillStyle = background || getComputedStyle(this.host).getPropertyValue('--wt-card-bg').trim() || '#ffffff';
+    ctx.fillStyle = background || getComputedStyle(this.host).getPropertyValue('--wu-card-bg').trim() || '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL('image/png');

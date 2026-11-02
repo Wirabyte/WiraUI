@@ -15,7 +15,7 @@ import { DocTreeNode, schoolFolders, TREE_DOC, TREESELECT_DOC } from '../../data
 import { MenuEntry, SimpleDemo, wait } from './demos';
 
 /*
- * State and handlers behind the pages added with Slider, Listbox, Galleria and the rest. Like demos.ts, no wiratheme
+ * State and handlers behind the pages added with Slider, Listbox, Galleria and the rest. Like demos.ts, no wiraui
  * import: the same template compiles against v1, v2 and v3, so events are typed by their shape.
  */
 

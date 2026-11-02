@@ -1,17 +1,17 @@
 <input
   #field
-  class="wt-inputtext wt-inputmask-input p-inputmask p-inputtext p-component"
+  class="wu-inputtext wu-inputmask-input p-inputmask p-inputtext p-component"
   [ngClass]="styleClass || ''"
   [ngStyle]="style || null"
-  [class.wt-inputtext-sm]="sizeKey === 'sm'"
+  [class.wu-inputtext-sm]="sizeKey === 'sm'"
   [class.p-inputtext-sm]="sizeKey === 'sm'"
-  [class.wt-inputtext-lg]="sizeKey === 'lg'"
+  [class.wu-inputtext-lg]="sizeKey === 'lg'"
   [class.p-inputtext-lg]="sizeKey === 'lg'"
-  [class.wt-inputtext-filled]="variant === 'filled'"
-  [class.wt-inputtext-fluid]="fluid"
-  [class.wt-invalid]="invalid"
+  [class.wu-inputtext-filled]="variant === 'filled'"
+  [class.wu-inputtext-fluid]="fluid"
+  [class.wu-invalid]="invalid"
   [class.p-invalid]="invalid"
-  [class.wt-filled]="filled"
+  [class.wu-filled]="filled"
   [class.p-filled]="filled"
   [attr.type]="type"
   [attr.id]="inputId || null"
@@ -33,6 +33,6 @@
   (input)="input($event)"
   (keydown)="keydown($event)"
 />
-<button *ngIf="clearable" type="button" class="wt-inputmask-clear p-inputmask-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear()">
+<button *ngIf="clearable" type="button" class="wu-inputmask-clear p-inputmask-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear()">
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
 </button>

@@ -1,51 +1,51 @@
-/* wt-chart (wiratheme v3). WiraTheme's own chart in SVG: real text in the page's font, colours from the theme
-   (--wt-chart-1 … 10), a legend that shows and hides series, a tooltip that follows the pointer or the arrow keys. */
-@layer wiratheme.components {
-  wt-chart {
+/* wu-chart (wiraui v3). WiraUI's own chart in SVG: real text in the page's font, colours from the theme
+   (--wu-chart-1 … 10), a legend that shows and hides series, a tooltip that follows the pointer or the arrow keys. */
+@layer wiraui.components {
+  wu-chart {
     display: block;
     min-width: 0;
   }
-  .wt-chart {
+  .wu-chart {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--wt-chart-gap);
-    color: var(--wt-chart-text);
-    font-family: var(--wt-chart-font-family);
-    font-size: var(--wt-chart-font-size);
-    line-height: var(--wt-line-height);
+    gap: var(--wu-chart-gap);
+    color: var(--wu-chart-text);
+    font-family: var(--wu-chart-font-family);
+    font-size: var(--wu-chart-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-chart-title {
-    color: var(--wt-chart-title-color);
-    font-size: var(--wt-chart-title-size);
-    font-weight: var(--wt-chart-title-weight);
+  .wu-chart-title {
+    color: var(--wu-chart-title-color);
+    font-size: var(--wu-chart-title-size);
+    font-weight: var(--wu-chart-title-weight);
   }
-  .wt-chart-subtitle {
-    color: var(--wt-chart-text);
+  .wu-chart-subtitle {
+    color: var(--wu-chart-text);
   }
-  .wt-chart-head {
+  .wu-chart-head {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: var(--wt-chart-gap);
+    gap: var(--wu-chart-gap);
   }
-  .wt-chart-heading {
+  .wu-chart-heading {
     min-width: 0;
   }
 
   /* Toolbar: zoom and download, top right. */
-  .wt-chart-toolbar {
+  .wu-chart-toolbar {
     display: flex;
     flex: none;
     gap: 0.125rem;
     margin-left: auto;
   }
-  .wt-chart-tool-wrap {
+  .wu-chart-tool-wrap {
     position: relative;
     display: inline-flex;
   }
-  .wt-chart-tool {
+  .wu-chart-tool {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -53,15 +53,15 @@
     height: 2rem;
     padding: 0;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-chart-toolbar-color);
+    color: var(--wu-chart-toolbar-color);
     cursor: pointer;
     transition:
-      background var(--wt-transition),
-      color var(--wt-transition);
+      background var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-chart-tool svg {
+  .wu-chart-tool svg {
     width: 1.125rem;
     height: 1.125rem;
     fill: none;
@@ -70,21 +70,21 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-chart-tool:hover:not(:disabled) {
-    background: var(--wt-hover-bg);
-    color: var(--wt-chart-title-color);
+  .wu-chart-tool:hover:not(:disabled) {
+    background: var(--wu-hover-bg);
+    color: var(--wu-chart-title-color);
   }
-  .wt-chart-tool:disabled {
+  .wu-chart-tool:disabled {
     opacity: 0.4;
     cursor: default;
   }
-  .wt-chart-tool:focus-visible,
-  .wt-chart-menu button:focus-visible {
-    outline: var(--wt-control-focus-outline);
+  .wu-chart-tool:focus-visible,
+  .wu-chart-menu button:focus-visible {
+    outline: var(--wu-control-focus-outline);
     outline-offset: 0;
-    box-shadow: var(--wt-control-focus-shadow);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-chart-menu {
+  .wu-chart-menu {
     position: absolute;
     top: calc(100% + 0.25rem);
     right: 0;
@@ -93,327 +93,327 @@
     flex-direction: column;
     min-width: 6rem;
     padding: 0.25rem;
-    border: 1px solid var(--wt-chart-tooltip-border);
-    border-radius: var(--wt-chart-tooltip-radius);
-    background: var(--wt-chart-tooltip-bg);
-    box-shadow: var(--wt-chart-tooltip-shadow);
+    border: 1px solid var(--wu-chart-tooltip-border);
+    border-radius: var(--wu-chart-tooltip-radius);
+    background: var(--wu-chart-tooltip-bg);
+    box-shadow: var(--wu-chart-tooltip-shadow);
   }
-  .wt-chart-menu button {
+  .wu-chart-menu button {
     padding: 0.375rem 0.625rem;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-chart-tooltip-color);
+    color: var(--wu-chart-tooltip-color);
     font: inherit;
     text-align: left;
     cursor: pointer;
   }
-  .wt-chart-menu button:hover {
-    background: var(--wt-hover-bg);
+  .wu-chart-menu button:hover {
+    background: var(--wu-hover-bg);
   }
 
   /* The drawing and the legend: legend below by default, above, or beside (wrapping under on narrow screens). */
-  .wt-chart-main {
+  .wu-chart-main {
     display: flex;
     flex-direction: column;
-    gap: var(--wt-chart-gap);
+    gap: var(--wu-chart-gap);
     min-width: 0;
   }
-  .wt-chart-legend-top .wt-chart-legend {
+  .wu-chart-legend-top .wu-chart-legend {
     order: -1;
   }
-  .wt-chart-legend-right .wt-chart-main {
+  .wu-chart-legend-right .wu-chart-main {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
   }
-  .wt-chart-legend-right .wt-chart-body {
+  .wu-chart-legend-right .wu-chart-body {
     flex: 1 1 16rem;
   }
-  .wt-chart-legend-right .wt-chart-legend {
+  .wu-chart-legend-right .wu-chart-legend {
     flex: 0 1 auto;
     flex-direction: column;
     align-items: flex-start;
   }
-  .wt-chart-body {
+  .wu-chart-body {
     position: relative;
     min-width: 0;
     width: 100%;
   }
-  .wt-chart-svg {
+  .wu-chart-svg {
     display: block;
     /* Drawn at the measured width; until a narrower box is measured (the frame after a resize) it scales down
        instead of pushing the page sideways. */
     max-width: 100%;
     overflow: visible;
     font-family: inherit;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     outline-color: transparent;
     -webkit-user-select: none;
     user-select: none;
   }
-  .wt-chart-zoomable {
+  .wu-chart-zoomable {
     cursor: crosshair;
     touch-action: pan-y;
   }
-  .wt-chart-selection {
-    fill: var(--wt-chart-selection);
-    stroke: var(--wt-chart-mark-color);
+  .wu-chart-selection {
+    fill: var(--wu-chart-selection);
+    stroke: var(--wu-chart-mark-color);
     stroke-width: 1;
     stroke-dasharray: 4 3;
     pointer-events: none;
   }
-  .wt-chart-svg:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-chart-svg:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
 
   /* Axes and grid. */
-  .wt-chart-grid line,
-  .wt-chart-web path,
-  .wt-chart-web line {
+  .wu-chart-grid line,
+  .wu-chart-web path,
+  .wu-chart-web line {
     fill: none;
-    stroke: var(--wt-chart-grid);
+    stroke: var(--wu-chart-grid);
     stroke-width: 1;
     shape-rendering: crispEdges;
   }
-  .wt-chart-web path,
-  .wt-chart-web line {
+  .wu-chart-web path,
+  .wu-chart-web line {
     shape-rendering: auto;
   }
-  .wt-chart-zero {
-    stroke: var(--wt-chart-axis);
+  .wu-chart-zero {
+    stroke: var(--wu-chart-axis);
     stroke-width: 1;
     shape-rendering: crispEdges;
   }
-  .wt-chart-tick,
-  .wt-chart-axis-title,
-  .wt-chart-value,
-  .wt-chart-reference-label {
-    fill: var(--wt-chart-text);
-    font-size: var(--wt-chart-font-size);
+  .wu-chart-tick,
+  .wu-chart-axis-title,
+  .wu-chart-value,
+  .wu-chart-reference-label {
+    fill: var(--wu-chart-text);
+    font-size: var(--wu-chart-font-size);
   }
-  .wt-chart-axis-title {
+  .wu-chart-axis-title {
     font-weight: 600;
   }
   /* Scale labels of a radar or polar area, over the shapes. */
-  .wt-chart-ring-label {
+  .wu-chart-ring-label {
     paint-order: stroke;
-    stroke: var(--wt-chart-dot-fill);
+    stroke: var(--wu-chart-dot-fill);
     stroke-width: 3px;
     stroke-linejoin: round;
     pointer-events: none;
   }
-  .wt-chart-tick-active {
-    fill: var(--wt-chart-title-color);
+  .wu-chart-tick-active {
+    fill: var(--wu-chart-title-color);
     font-weight: 600;
   }
-  .wt-chart-value {
-    fill: var(--wt-chart-value-color);
+  .wu-chart-value {
+    fill: var(--wu-chart-value-color);
     font-weight: 600;
     /* Over a slice or bar: the pointer goes through to it. */
     pointer-events: none;
-    transition: opacity var(--wt-transition);
+    transition: opacity var(--wu-transition);
   }
   /* Values wait until the marks have grown in. */
-  .wt-chart-entering .wt-chart-value {
+  .wu-chart-entering .wu-chart-value {
     opacity: 0;
   }
-  .wt-chart-value-inside {
-    fill: var(--wt-chart-value-inside-color);
+  .wu-chart-value-inside {
+    fill: var(--wu-chart-value-inside-color);
     paint-order: stroke;
     stroke: rgba(0, 0, 0, 0.25);
     stroke-width: 2px;
   }
 
   /* Marks. */
-  .wt-chart-bar,
-  .wt-chart-slice,
-  .wt-chart-area,
-  .wt-chart-line,
-  .wt-chart-radar,
-  .wt-chart-dot {
+  .wu-chart-bar,
+  .wu-chart-slice,
+  .wu-chart-area,
+  .wu-chart-line,
+  .wu-chart-radar,
+  .wu-chart-dot {
     transition:
-      opacity var(--wt-transition),
-      transform var(--wt-transition);
+      opacity var(--wu-transition),
+      transform var(--wu-transition);
   }
-  .wt-chart-bar {
+  .wu-chart-bar {
     cursor: pointer;
   }
-  .wt-chart-slice {
+  .wu-chart-slice {
     cursor: pointer;
-    stroke: var(--wt-chart-slice-border);
+    stroke: var(--wu-chart-slice-border);
     stroke-width: 1.5;
   }
-  .wt-chart-area {
-    opacity: var(--wt-chart-area-opacity);
+  .wu-chart-area {
+    opacity: var(--wu-chart-area-opacity);
   }
   /* A fading area: the gradient carries the opacity. */
-  .wt-chart-area-fade {
+  .wu-chart-area-fade {
     opacity: 1;
   }
-  .wt-chart-fade-from {
-    stop-opacity: var(--wt-chart-gradient-from);
+  .wu-chart-fade-from {
+    stop-opacity: var(--wu-chart-gradient-from);
   }
-  .wt-chart-fade-to {
-    stop-opacity: var(--wt-chart-gradient-to);
+  .wu-chart-fade-to {
+    stop-opacity: var(--wu-chart-gradient-to);
   }
-  .wt-chart-area-fade.wt-chart-dim {
-    opacity: var(--wt-chart-dim-opacity);
+  .wu-chart-area-fade.wu-chart-dim {
+    opacity: var(--wu-chart-dim-opacity);
   }
 
   /* Radial bars: a track and the value over it. */
-  .wt-chart-track,
-  .wt-chart-ring {
+  .wu-chart-track,
+  .wu-chart-ring {
     fill: none;
   }
-  .wt-chart-track {
-    stroke: var(--wt-chart-track);
+  .wu-chart-track {
+    stroke: var(--wu-chart-track);
   }
-  .wt-chart-ring {
+  .wu-chart-ring {
     cursor: pointer;
-    transition: opacity var(--wt-transition);
+    transition: opacity var(--wu-transition);
   }
-  .wt-chart-round {
+  .wu-chart-round {
     stroke-linecap: round;
   }
 
   /* Heatmap cells and treemap tiles. */
-  .wt-chart-cell {
+  .wu-chart-cell {
     cursor: pointer;
     transform-box: fill-box;
     transform-origin: center;
-    animation: wt-chart-cell-in 0.45s ease-out backwards;
+    animation: wu-chart-cell-in 0.45s ease-out backwards;
     transition:
-      opacity var(--wt-transition),
-      fill-opacity var(--wt-transition);
+      opacity var(--wu-transition),
+      fill-opacity var(--wu-transition);
   }
-  .wt-chart-cell-active {
-    stroke: var(--wt-chart-title-color);
+  .wu-chart-cell-active {
+    stroke: var(--wu-chart-title-color);
     stroke-width: 2;
   }
-  .wt-chart-cell-text {
-    fill: var(--wt-chart-value-color);
-    font-size: var(--wt-chart-font-size);
+  .wu-chart-cell-text {
+    fill: var(--wu-chart-value-color);
+    font-size: var(--wu-chart-font-size);
     font-weight: 600;
     pointer-events: none;
-    animation: wt-chart-fade-in 0.45s ease-out backwards;
+    animation: wu-chart-fade-in 0.45s ease-out backwards;
   }
-  .wt-chart-cell-text-inside {
-    fill: var(--wt-chart-value-inside-color);
+  .wu-chart-cell-text-inside {
+    fill: var(--wu-chart-value-inside-color);
   }
-  .wt-chart-cell-name {
+  .wu-chart-cell-name {
     font-weight: 700;
   }
-  @keyframes wt-chart-cell-in {
+  @keyframes wu-chart-cell-in {
     from {
       opacity: 0;
       transform: scale(0.85);
     }
   }
-  @keyframes wt-chart-fade-in {
+  @keyframes wu-chart-fade-in {
     from {
       opacity: 0;
     }
   }
 
   /* The newer kinds: plain shapes and texts, how they come in, and lit by the pointer. */
-  .wt-chart-shape {
+  .wu-chart-shape {
     transition:
-      opacity var(--wt-transition),
-      filter var(--wt-transition);
+      opacity var(--wu-transition),
+      filter var(--wu-transition);
   }
-  .wt-chart-lit {
+  .wu-chart-lit {
     filter: brightness(1.08) saturate(1.1);
   }
-  .wt-chart-stream {
-    stroke: var(--wt-chart-slice-border);
+  .wu-chart-stream {
+    stroke: var(--wu-chart-slice-border);
     stroke-width: 1;
   }
-  .wt-chart-sun {
-    stroke: var(--wt-chart-slice-border);
+  .wu-chart-sun {
+    stroke: var(--wu-chart-slice-border);
     stroke-width: 1;
     cursor: pointer;
   }
-  .wt-chart-line-shape {
+  .wu-chart-line-shape {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-chart-connector,
-  .wt-chart-whisker,
-  .wt-chart-median {
+  .wu-chart-connector,
+  .wu-chart-whisker,
+  .wu-chart-median {
     stroke-linecap: round;
   }
-  line.wt-chart-shape {
+  line.wu-chart-shape {
     stroke-linecap: round;
   }
-  .wt-chart-text {
-    fill: var(--wt-chart-text);
-    font-size: var(--wt-chart-font-size);
+  .wu-chart-text {
+    fill: var(--wu-chart-text);
+    font-size: var(--wu-chart-font-size);
     pointer-events: none;
-    transition: opacity var(--wt-transition);
+    transition: opacity var(--wu-transition);
   }
-  .wt-chart-text-strong {
-    fill: var(--wt-chart-title-color);
+  .wu-chart-text-strong {
+    fill: var(--wu-chart-title-color);
     font-weight: 600;
   }
-  .wt-chart-text-inside {
-    fill: var(--wt-chart-value-inside-color);
+  .wu-chart-text-inside {
+    fill: var(--wu-chart-value-inside-color);
   }
-  .wt-chart-text-muted {
-    fill: var(--wt-chart-muted);
+  .wu-chart-text-muted {
+    fill: var(--wu-chart-muted);
     font-weight: 600;
   }
-  .wt-chart-in-grow,
-  .wt-chart-in-grow-x,
-  .wt-chart-in-pop {
+  .wu-chart-in-grow,
+  .wu-chart-in-grow-x,
+  .wu-chart-in-pop {
     transform-box: fill-box;
   }
-  .wt-chart-in-grow {
+  .wu-chart-in-grow {
     transform-origin: center bottom;
-    animation: wt-chart-grow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+    animation: wu-chart-grow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
   }
-  .wt-chart-in-grow-x {
+  .wu-chart-in-grow-x {
     transform-origin: left center;
-    animation: wt-chart-grow-x 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+    animation: wu-chart-grow-x 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
   }
-  .wt-chart-in-pop {
+  .wu-chart-in-pop {
     transform-origin: center;
-    animation: wt-chart-pop 0.45s cubic-bezier(0.3, 1.5, 0.6, 1) backwards;
+    animation: wu-chart-pop 0.45s cubic-bezier(0.3, 1.5, 0.6, 1) backwards;
   }
-  .wt-chart-in-fade {
-    animation: wt-chart-fade-in 0.5s ease-out backwards;
+  .wu-chart-in-fade {
+    animation: wu-chart-fade-in 0.5s ease-out backwards;
   }
-  .wt-chart-in-draw {
+  .wu-chart-in-draw {
     stroke-dasharray: 1;
-    animation: wt-chart-draw 0.9s ease-out backwards;
+    animation: wu-chart-draw 0.9s ease-out backwards;
   }
-  @keyframes wt-chart-grow {
+  @keyframes wu-chart-grow {
     from {
       transform: scaleY(0);
     }
   }
-  @keyframes wt-chart-grow-x {
+  @keyframes wu-chart-grow-x {
     from {
       transform: scaleX(0);
     }
   }
-  @keyframes wt-chart-pop {
+  @keyframes wu-chart-pop {
     from {
       opacity: 0;
       transform: scale(0.4);
     }
   }
-  @keyframes wt-chart-draw {
+  @keyframes wu-chart-draw {
     from {
       stroke-dashoffset: 1;
     }
   }
 
   /* The type switcher, and the old drawing fading out over the new one. */
-  .wt-chart-swap {
+  .wu-chart-swap {
     display: inline-flex;
     flex: 0 1 auto;
     flex-wrap: wrap;
@@ -421,16 +421,16 @@
     gap: 0.125rem;
     margin-left: auto;
     padding: 0.1875rem;
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-chart-track);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-chart-track);
   }
-  .wt-chart-swap + .wt-chart-toolbar,
-  .wt-chart-looks + .wt-chart-swap,
-  .wt-chart-looks + .wt-chart-toolbar {
+  .wu-chart-swap + .wu-chart-toolbar,
+  .wu-chart-looks + .wu-chart-swap,
+  .wu-chart-looks + .wu-chart-toolbar {
     margin-left: 0;
   }
   /* The look picker: words in the same kind of pill as the switcher. */
-  .wt-chart-looks {
+  .wu-chart-looks {
     display: inline-flex;
     flex: 0 1 auto;
     flex-wrap: wrap;
@@ -438,39 +438,39 @@
     min-width: 0;
     margin-left: auto;
     padding: 0.1875rem;
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-chart-track);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-chart-track);
   }
-  .wt-chart-look-item {
+  .wu-chart-look-item {
     min-height: 1.75rem;
     padding: 0.125rem 0.625rem;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-chart-toolbar-color);
+    color: var(--wu-chart-toolbar-color);
     font: inherit;
     font-size: 0.8125rem;
     font-weight: 600;
     cursor: pointer;
     transition:
-      background var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-chart-look-item:hover {
-    color: var(--wt-chart-title-color);
+  .wu-chart-look-item:hover {
+    color: var(--wu-chart-title-color);
   }
-  .wt-chart-look-on {
-    background: var(--wt-chart-tooltip-bg);
-    box-shadow: var(--wt-chart-tooltip-shadow);
-    color: var(--wt-chart-mark-color);
+  .wu-chart-look-on {
+    background: var(--wu-chart-tooltip-bg);
+    box-shadow: var(--wu-chart-tooltip-shadow);
+    color: var(--wu-chart-mark-color);
   }
-  .wt-chart-look-item:focus-visible {
-    outline: var(--wt-control-focus-outline);
+  .wu-chart-look-item:focus-visible {
+    outline: var(--wu-control-focus-outline);
     outline-offset: 0;
-    box-shadow: var(--wt-control-focus-shadow);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-chart-swap-item {
+  .wu-chart-swap-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -478,16 +478,16 @@
     height: 1.75rem;
     padding: 0;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-chart-toolbar-color);
+    color: var(--wu-chart-toolbar-color);
     cursor: pointer;
     transition:
-      background var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-chart-swap-item svg {
+  .wu-chart-swap-item svg {
     width: 1.0625rem;
     height: 1.0625rem;
     fill: none;
@@ -496,103 +496,103 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-chart-swap-item:hover {
-    color: var(--wt-chart-title-color);
+  .wu-chart-swap-item:hover {
+    color: var(--wu-chart-title-color);
   }
-  .wt-chart-swap-on {
-    background: var(--wt-chart-tooltip-bg);
-    box-shadow: var(--wt-chart-tooltip-shadow);
-    color: var(--wt-chart-mark-color);
+  .wu-chart-swap-on {
+    background: var(--wu-chart-tooltip-bg);
+    box-shadow: var(--wu-chart-tooltip-shadow);
+    color: var(--wu-chart-mark-color);
   }
-  .wt-chart-swap-item:focus-visible {
-    outline: var(--wt-control-focus-outline);
+  .wu-chart-swap-item:focus-visible {
+    outline: var(--wu-control-focus-outline);
     outline-offset: 0;
-    box-shadow: var(--wt-control-focus-shadow);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-chart-ghost {
+  .wu-chart-ghost {
     position: absolute;
     top: 0;
     left: 0;
     pointer-events: none;
-    animation: wt-chart-ghost-out 0.48s ease-in forwards;
+    animation: wu-chart-ghost-out 0.48s ease-in forwards;
   }
-  @keyframes wt-chart-ghost-out {
+  @keyframes wu-chart-ghost-out {
     to {
       opacity: 0;
       filter: blur(2px);
       transform: scale(0.97);
     }
   }
-  .wt-chart-center-back {
+  .wu-chart-center-back {
     margin-top: 0.125rem;
-    color: var(--wt-chart-mark-color);
+    color: var(--wu-chart-mark-color);
     font-size: 0.75em;
     font-weight: 600;
   }
 
   /* Annotations: bands, marked points. */
-  .wt-chart-band {
-    fill-opacity: var(--wt-chart-band-opacity);
+  .wu-chart-band {
+    fill-opacity: var(--wu-chart-band-opacity);
     pointer-events: none;
   }
-  .wt-chart-mark {
-    fill: var(--wt-chart-dot-fill);
+  .wu-chart-mark {
+    fill: var(--wu-chart-dot-fill);
     stroke-width: 2.5;
     pointer-events: none;
   }
-  .wt-chart-mark-box {
+  .wu-chart-mark-box {
     pointer-events: none;
   }
-  .wt-chart-mark-label {
-    fill: var(--wt-chart-value-inside-color);
-    font-size: var(--wt-chart-font-size);
+  .wu-chart-mark-label {
+    fill: var(--wu-chart-value-inside-color);
+    font-size: var(--wu-chart-font-size);
     font-weight: 600;
     pointer-events: none;
   }
-  .wt-chart-line {
+  .wu-chart-line {
     fill: none;
-    stroke-width: var(--wt-chart-line-width);
+    stroke-width: var(--wu-chart-line-width);
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-chart-dashed {
+  .wu-chart-dashed {
     stroke-dasharray: 6 5;
   }
-  .wt-chart-radar {
-    fill-opacity: var(--wt-chart-area-opacity);
-    stroke-width: var(--wt-chart-line-width);
+  .wu-chart-radar {
+    fill-opacity: var(--wu-chart-area-opacity);
+    stroke-width: var(--wu-chart-line-width);
     stroke-linejoin: round;
   }
-  .wt-chart-dot {
-    fill: var(--wt-chart-dot-fill);
+  .wu-chart-dot {
+    fill: var(--wu-chart-dot-fill);
     stroke-width: 2;
     cursor: pointer;
   }
-  .wt-chart-bubble {
+  .wu-chart-bubble {
     fill-opacity: 0.7;
     stroke-width: 1.5;
   }
-  .wt-chart-dim {
-    opacity: var(--wt-chart-dim-opacity);
+  .wu-chart-dim {
+    opacity: var(--wu-chart-dim-opacity);
   }
-  .wt-chart-area.wt-chart-dim {
-    opacity: calc(var(--wt-chart-area-opacity) * var(--wt-chart-dim-opacity));
+  .wu-chart-area.wu-chart-dim {
+    opacity: calc(var(--wu-chart-area-opacity) * var(--wu-chart-dim-opacity));
   }
-  .wt-chart-crosshair {
-    stroke: var(--wt-chart-crosshair);
+  .wu-chart-crosshair {
+    stroke: var(--wu-chart-crosshair);
     stroke-width: 1;
     stroke-dasharray: 3 3;
     pointer-events: none;
   }
-  .wt-chart-reference {
+  .wu-chart-reference {
     stroke-width: 1.5;
   }
-  .wt-chart-reference-label {
+  .wu-chart-reference-label {
     font-weight: 600;
   }
 
   /* The doughnut's middle. */
-  .wt-chart-center {
+  .wu-chart-center {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -601,64 +601,64 @@
     text-align: center;
     pointer-events: none;
   }
-  .wt-chart-center-value {
-    color: var(--wt-chart-title-color);
-    font-size: var(--wt-chart-center-size);
+  .wu-chart-center-value {
+    color: var(--wu-chart-title-color);
+    font-size: var(--wu-chart-center-size);
     font-weight: 700;
     line-height: 1.2;
     overflow-wrap: anywhere;
   }
-  .wt-chart-center-label {
-    color: var(--wt-chart-text);
+  .wu-chart-center-label {
+    color: var(--wu-chart-text);
   }
   /* A half circle: the text sits above the centre. */
-  .wt-chart-center-lift {
+  .wu-chart-center-lift {
     transform: translate(-50%, calc(-100% - 0.25rem));
   }
-  .wt-chart-sparkline {
+  .wu-chart-sparkline {
     gap: 0;
   }
 
   /* Tooltip. */
-  .wt-chart-tooltip {
+  .wu-chart-tooltip {
     position: absolute;
     z-index: 1;
     min-width: 8rem;
     max-width: 18rem;
-    padding: var(--wt-chart-tooltip-padding);
-    border: 1px solid var(--wt-chart-tooltip-border);
-    border-radius: var(--wt-chart-tooltip-radius);
-    background: var(--wt-chart-tooltip-bg);
-    box-shadow: var(--wt-chart-tooltip-shadow);
-    color: var(--wt-chart-tooltip-color);
+    padding: var(--wu-chart-tooltip-padding);
+    border: 1px solid var(--wu-chart-tooltip-border);
+    border-radius: var(--wu-chart-tooltip-radius);
+    background: var(--wu-chart-tooltip-bg);
+    box-shadow: var(--wu-chart-tooltip-shadow);
+    color: var(--wu-chart-tooltip-color);
     transform: translate(14px, -50%);
     pointer-events: none;
     white-space: nowrap;
   }
-  .wt-chart-tooltip-flip {
+  .wu-chart-tooltip-flip {
     transform: translate(calc(-100% - 14px), -50%);
   }
-  .wt-chart-tooltip-title {
+  .wu-chart-tooltip-title {
     margin-bottom: 0.25rem;
     font-weight: 600;
   }
-  .wt-chart-tooltip-row {
+  .wu-chart-tooltip-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-chart-tooltip-name {
+  .wu-chart-tooltip-name {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .wt-chart-tooltip-value {
+  .wu-chart-tooltip-value {
     font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
 
   /* Legend. */
-  .wt-chart-legend {
+  .wu-chart-legend {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -667,61 +667,61 @@
     padding: 0;
     list-style: none;
   }
-  .wt-chart-legend-item {
+  .wu-chart-legend-item {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     min-height: 1.75rem;
     padding: 0.125rem 0.375rem;
     border: 0;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
     background: transparent;
-    color: var(--wt-chart-legend-color);
+    color: var(--wu-chart-legend-color);
     font: inherit;
     cursor: pointer;
     transition:
-      opacity var(--wt-transition),
-      background var(--wt-transition);
+      opacity var(--wu-transition),
+      background var(--wu-transition);
   }
-  .wt-chart-legend-item:hover {
-    background: var(--wt-hover-bg);
+  .wu-chart-legend-item:hover {
+    background: var(--wu-hover-bg);
   }
-  .wt-chart-legend-item:focus-visible {
-    outline: var(--wt-control-focus-outline);
+  .wu-chart-legend-item:focus-visible {
+    outline: var(--wu-control-focus-outline);
     outline-offset: 0;
-    box-shadow: var(--wt-control-focus-shadow);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-chart-legend-off {
+  .wu-chart-legend-off {
     opacity: 0.45;
   }
-  .wt-chart-legend-off .wt-chart-legend-name {
+  .wu-chart-legend-off .wu-chart-legend-name {
     text-decoration: line-through;
   }
-  .wt-chart-swatch {
+  .wu-chart-swatch {
     flex: none;
     width: 0.75rem;
     height: 0.75rem;
     border-radius: 3px;
   }
-  .wt-chart-swatch-line {
+  .wu-chart-swatch-line {
     height: 3px;
     border-radius: 2px;
   }
-  .wt-chart-swatch-dot {
+  .wu-chart-swatch-dot {
     border-radius: 50%;
   }
 
-  .wt-chart-empty {
+  .wu-chart-empty {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--wt-chart-text);
+    color: var(--wu-chart-text);
   }
 
   /* The data table for screen readers. */
-  .wt-chart-sr {
+  .wu-chart-sr {
     position: absolute !important;
     top: 0;
     left: 0;
@@ -736,20 +736,20 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .wt-chart-bar,
-    .wt-chart-slice,
-    .wt-chart-area,
-    .wt-chart-line,
-    .wt-chart-radar,
-    .wt-chart-dot,
-    .wt-chart-ring,
-    .wt-chart-legend-item {
+    .wu-chart-bar,
+    .wu-chart-slice,
+    .wu-chart-area,
+    .wu-chart-line,
+    .wu-chart-radar,
+    .wu-chart-dot,
+    .wu-chart-ring,
+    .wu-chart-legend-item {
       transition: none;
     }
-    .wt-chart-cell,
-    .wt-chart-cell-text,
-    .wt-chart-shape,
-    .wt-chart-ghost {
+    .wu-chart-cell,
+    .wu-chart-cell-text,
+    .wu-chart-shape,
+    .wu-chart-ghost {
       animation: none;
     }
   }

@@ -1,4 +1,4 @@
-<wt-tabmenu
+<wu-tabmenu
   *ngIf="model"
   [model]="model"
   [activeItem]="activeItem"
@@ -6,13 +6,13 @@
   [ariaLabel]="ariaLabel"
   [styleClass]="styleClass || undefined"
   [style]="rootStyle"
-></wt-tabmenu>
-<div *ngIf="!model" class="wt-tabs p-tabview p-component" [class]="styleClass || ''" [style]="rootStyle">
-  <div *ngIf="!valueMode" class="wt-tabs-nav p-tabview-nav-container">
-  <button *ngIf="canPrev" type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tabview-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
+></wu-tabmenu>
+<div *ngIf="!model" class="wu-tabs p-tabview p-component" [class]="styleClass || ''" [style]="rootStyle">
+  <div *ngIf="!valueMode" class="wu-tabs-nav p-tabview-nav-container">
+  <button *ngIf="canPrev" type="button" class="wu-tabs-nav-btn wu-tabs-prev p-tabview-nav-prev" tabindex="-1" aria-hidden="true" (click)="page(-1)">
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
-  <div #list class="wt-tablist p-tabview-nav" role="tablist" [attr.aria-label]="ariaLabel || null" (scroll)="updateArrows()">
+  <div #list class="wu-tablist p-tabview-nav" role="tablist" [attr.aria-label]="ariaLabel || null" (scroll)="updateArrows()">
     <button
       *ngFor="let panel of panels; let i = index"
       type="button"
@@ -26,14 +26,14 @@
       (click)="select(i, $event)"
       (keydown)="onKeydown($event, i)"
     >
-      <span *ngIf="panel.leftIcon" [class]="'wt-tab-icon p-tabview-left-icon ' + panel.leftIcon" aria-hidden="true"></span>
+      <span *ngIf="panel.leftIcon" [class]="'wu-tab-icon p-tabview-left-icon ' + panel.leftIcon" aria-hidden="true"></span>
       <span class="p-tabview-title"><ng-container *ngIf="panel.headerTemplate; else plainTitle"><ng-container *ngTemplateOutlet="panel.headerTemplate"></ng-container></ng-container><ng-template #plainTitle>{{ panel.header }}</ng-template></span>
     </button>
   </div>
-  <button *ngIf="canNext" type="button" class="wt-tabs-nav-btn wt-tabs-next p-tabview-nav-next" tabindex="-1" aria-hidden="true" (click)="page(1)">
+  <button *ngIf="canNext" type="button" class="wu-tabs-nav-btn wu-tabs-next p-tabview-nav-next" tabindex="-1" aria-hidden="true" (click)="page(1)">
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
   </div>
-  <!-- By value the content is the wt-tablist and wt-tabpanels themselves. -->
-  <div [class]="valueMode ? 'wt-tabs-content' : 'wt-tabpanels p-tabview-panels'"><ng-content></ng-content></div>
+  <!-- By value the content is the wu-tablist and wu-tabpanels themselves. -->
+  <div [class]="valueMode ? 'wu-tabs-content' : 'wu-tabpanels p-tabview-panels'"><ng-content></ng-content></div>
 </div>

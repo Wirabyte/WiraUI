@@ -1,35 +1,35 @@
-/* wt-toggleswitch (InputSwitch in the classic class names). Shared by wiratheme v1, v2 and v3.
+/* wu-toggleswitch (InputSwitch in the classic class names). Shared by wiraui v1, v2 and v3.
    Native checkbox with role="switch" underneath. The handle may be taller than the track (Material). */
-@layer wiratheme.components {
-  :is(wt-toggleswitch, wt-toggle-switch),
-  wt-inputswitch {
+@layer wiraui.components {
+  :is(wu-toggleswitch, wu-toggle-switch),
+  wu-inputswitch {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-toggleswitch {
+  .wu-toggleswitch {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
     user-select: none;
-    font-family: var(--wt-font-family);
-    font-size: calc(var(--wt-font-size) * var(--_sw-font, 1));
-    line-height: var(--wt-line-height);
-    color: var(--wt-text);
+    font-family: var(--wu-font-family);
+    font-size: calc(var(--wu-font-size) * var(--_sw-font, 1));
+    line-height: var(--wu-line-height);
+    color: var(--wu-text);
   }
-  /* size="small" | "large" (class names wt-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
-  .wt-toggleswitch-sm,
+  /* size="small" | "large" (class names wu-*-sm / -lg, and the p-*-sm / -lg ones apps already write) */
+  .wu-toggleswitch-sm,
   .p-toggleswitch-sm {
-    --_sw-scale: var(--wt-size-sm-scale);
+    --_sw-scale: var(--wu-size-sm-scale);
     --_sw-font: 0.875;
   }
-  .wt-toggleswitch-lg,
+  .wu-toggleswitch-lg,
   .p-toggleswitch-lg {
-    --_sw-scale: var(--wt-size-lg-scale);
-    --_sw-font: var(--wt-size-lg-scale);
+    --_sw-scale: var(--wu-size-lg-scale);
+    --_sw-font: var(--wu-size-lg-scale);
   }
-  .wt-toggleswitch-input {
+  .wu-toggleswitch-input {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -39,72 +39,72 @@
     cursor: inherit;
     z-index: 1;
   }
-  .wt-toggleswitch-control {
+  .wu-toggleswitch-control {
     display: inline-flex;
     flex: none;
   }
-  .wt-toggleswitch-track {
+  .wu-toggleswitch-track {
     /* Track width and height, handle size, and the handle's gap: the same on every side (inside the 1px border),
        never more than the token; 0 when the handle is taller than the track (Material). */
-    --_tw: calc(var(--wt-switch-width) * var(--_sw-scale, 1));
-    --_th: calc(var(--wt-switch-height) * var(--_sw-scale, 1));
-    --_hs: calc(var(--wt-switch-handle-size) * var(--_sw-scale, 1));
-    --_hg: max(0px, min(var(--wt-switch-handle-gap), calc((var(--_th) - 2px - var(--_hs)) / 2)));
+    --_tw: calc(var(--wu-switch-width) * var(--_sw-scale, 1));
+    --_th: calc(var(--wu-switch-height) * var(--_sw-scale, 1));
+    --_hs: calc(var(--wu-switch-handle-size) * var(--_sw-scale, 1));
+    --_hg: max(0px, min(var(--wu-switch-handle-gap), calc((var(--_th) - 2px - var(--_hs)) / 2)));
     position: relative;
     flex: none;
     box-sizing: border-box;
     width: var(--_tw);
     height: var(--_th);
     margin-block: max(0px, calc((var(--_hs) - var(--_th)) / 2));
-    border-radius: var(--wt-radius-full);
-    border: 1px solid var(--wt-switch-border-color);
-    background: var(--wt-switch-track-bg);
+    border-radius: var(--wu-radius-full);
+    border: 1px solid var(--wu-switch-border-color);
+    background: var(--wu-switch-track-bg);
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      box-shadow var(--wt-transition),
-      outline-color var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      outline-color var(--wu-transition);
   }
-  .wt-toggleswitch-handle {
+  .wu-toggleswitch-handle {
     position: absolute;
     top: 50%;
     left: var(--_hg);
     width: var(--_hs);
     height: var(--_hs);
     border-radius: 50%;
-    background: var(--wt-switch-handle-bg);
-    box-shadow: var(--wt-switch-handle-shadow);
+    background: var(--wu-switch-handle-bg);
+    box-shadow: var(--wu-switch-handle-shadow);
     transform: translateY(-50%);
     transition:
-      transform var(--wt-transition),
-      background-color var(--wt-transition);
+      transform var(--wu-transition),
+      background-color var(--wu-transition);
   }
-  .wt-toggleswitch:not(.wt-toggleswitch-disabled):hover .wt-toggleswitch-track {
-    background: var(--wt-switch-track-hover-bg);
+  .wu-toggleswitch:not(.wu-toggleswitch-disabled):hover .wu-toggleswitch-track {
+    background: var(--wu-switch-track-hover-bg);
   }
-  .wt-toggleswitch-checked .wt-toggleswitch-track {
-    background: var(--wt-switch-track-checked-bg);
-    border-color: var(--wt-switch-border-checked-color);
+  .wu-toggleswitch-checked .wu-toggleswitch-track {
+    background: var(--wu-switch-track-checked-bg);
+    border-color: var(--wu-switch-border-checked-color);
   }
-  .wt-toggleswitch-checked:not(.wt-toggleswitch-disabled):hover .wt-toggleswitch-track {
-    background: var(--wt-switch-track-checked-hover-bg);
+  .wu-toggleswitch-checked:not(.wu-toggleswitch-disabled):hover .wu-toggleswitch-track {
+    background: var(--wu-switch-track-checked-hover-bg);
   }
-  .wt-toggleswitch-checked .wt-toggleswitch-handle {
-    background: var(--wt-switch-handle-checked-bg);
+  .wu-toggleswitch-checked .wu-toggleswitch-handle {
+    background: var(--wu-switch-handle-checked-bg);
     /* inner width (track minus its 1px borders) − handle − both gaps */
     transform: translate(calc(var(--_tw) - 2px - var(--_hs) - 2 * var(--_hg)), -50%);
   }
-  .wt-toggleswitch-input:focus-visible + .wt-toggleswitch-control .wt-toggleswitch-track {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-toggleswitch-input:focus-visible + .wu-toggleswitch-control .wu-toggleswitch-track {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-toggleswitch-disabled {
+  .wu-toggleswitch-disabled {
     cursor: default;
-    opacity: var(--wt-disabled-opacity);
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-toggleswitch.wt-invalid .wt-toggleswitch-track,
-  :is(wt-toggleswitch, wt-inputswitch).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-toggleswitch-track {
-    border-color: var(--wt-danger-color);
+  .wu-toggleswitch.wu-invalid .wu-toggleswitch-track,
+  :is(wu-toggleswitch, wu-inputswitch).ng-invalid:is(.ng-touched, form.ng-submitted *) .wu-toggleswitch-track {
+    border-color: var(--wu-danger-color);
   }
 }

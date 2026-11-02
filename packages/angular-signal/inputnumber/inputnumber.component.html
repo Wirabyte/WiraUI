@@ -2,7 +2,7 @@
   @if (showButtons() && buttonLayout() === 'horizontal') {
     <button
       type="button"
-      class="wt-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
+      class="wu-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
       tabindex="-1"
       aria-hidden="true"
       [disabled]="isDisabled() || readonly() || atMin()"
@@ -21,13 +21,13 @@
   <input
     type="text"
     role="spinbutton"
-    class="wt-inputtext p-inputtext p-component p-inputnumber-input"
-    [class.wt-inputtext-sm]="sizeKey() === 'sm'"
+    class="wu-inputtext p-inputtext p-component p-inputnumber-input"
+    [class.wu-inputtext-sm]="sizeKey() === 'sm'"
     [class.p-inputtext-sm]="sizeKey() === 'sm'"
-    [class.wt-inputtext-lg]="sizeKey() === 'lg'"
+    [class.wu-inputtext-lg]="sizeKey() === 'lg'"
     [class.p-inputtext-lg]="sizeKey() === 'lg'"
-    [class.wt-invalid]="invalid()"
-    [class.wt-filled]="value() !== null"
+    [class.wu-invalid]="invalid()"
+    [class.wu-filled]="value() !== null"
     [id]="id()"
     [attr.name]="name() || null"
     [class]="inputStyleClass() || ''"
@@ -50,13 +50,13 @@
     (keydown)="keydown($event)"
   />
   @if (showClearButton()) {
-    <button type="button" class="wt-inputnumber-clear p-inputnumber-clear-icon" [attr.aria-label]="clearLabel()" (click)="clear()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m4.5 4.5 7 7M11.5 4.5l-7 7"></path></svg></button>
+    <button type="button" class="wu-inputnumber-clear p-inputnumber-clear-icon" [attr.aria-label]="clearLabel()" (click)="clear()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m4.5 4.5 7 7M11.5 4.5l-7 7"></path></svg></button>
   }
   @if (showButtons() && buttonLayout() === 'stacked') {
-    <span class="wt-inputnumber-buttons p-inputnumber-button-group">
+    <span class="wu-inputnumber-buttons p-inputnumber-button-group">
       <button
         type="button"
-        class="wt-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
+        class="wu-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
         tabindex="-1"
         aria-hidden="true"
         [disabled]="isDisabled() || readonly() || atMax()"
@@ -73,7 +73,7 @@
       </button>
       <button
         type="button"
-        class="wt-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
+        class="wu-inputnumber-button p-inputnumber-decrement-button" [class]="decrementButtonClass() || ''"
         tabindex="-1"
         aria-hidden="true"
         [disabled]="isDisabled() || readonly() || atMin()"
@@ -93,7 +93,7 @@
   @if (showButtons() && buttonLayout() === 'horizontal') {
     <button
       type="button"
-      class="wt-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
+      class="wu-inputnumber-button p-inputnumber-increment-button" [class]="incrementButtonClass() || ''"
       tabindex="-1"
       aria-hidden="true"
       [disabled]="isDisabled() || readonly() || atMax()"

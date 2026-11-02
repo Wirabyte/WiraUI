@@ -6,28 +6,28 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-accordion id="d-accordion" [(activeIndex)]="open">
-          <wt-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
-        </wt-accordion>
+        <wu-accordion id="d-accordion" [(activeIndex)]="open">
+          <wu-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wu-accordion-tab>
+        </wu-accordion>
         <span class="docs-demo-output">activeIndex: <code id="d-accordion-value">{{ open | json }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="multiple" [section]="sec['multiple']">
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']" layout="stack">
-        <wt-accordion
+        <wu-accordion
           id="d-accordion-multi"
           [multiple]="true"
           [(activeIndex)]="openList"
           (onOpen)="log('open', $event.index)"
           (onClose)="log('close', $event.index)"
         >
-          <wt-accordion-tab [header]="tx('ข้อมูลทั่วไป')">{{ tx('ชื่อ อีเมล และเบอร์โทร') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('ที่อยู่')">{{ tx('ที่อยู่จัดส่งและที่อยู่ออกใบกำกับภาษี') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การแจ้งเตือน')">{{ tx('อีเมลและ SMS') }}</wt-accordion-tab>
-        </wt-accordion>
+          <wu-accordion-tab [header]="tx('ข้อมูลทั่วไป')">{{ tx('ชื่อ อีเมล และเบอร์โทร') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('ที่อยู่')">{{ tx('ที่อยู่จัดส่งและที่อยู่ออกใบกำกับภาษี') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การแจ้งเตือน')">{{ tx('อีเมลและ SMS') }}</wu-accordion-tab>
+        </wu-accordion>
         <span class="docs-demo-output">
           activeIndex: <code id="d-accordion-multi-value">{{ openList | json }}</code> · event: <code id="d-accordion-event">{{ lastEvent || '-' }}</code>
         </span>
@@ -36,12 +36,12 @@
 
     <docs-section id="selected" [section]="sec['selected']">
       <docs-demo [html]="code['selected']" [ts]="ts['selected']" layout="stack">
-        <wt-accordion id="d-accordion-selected">
-          <wt-accordion-tab [header]="tx('รายละเอียด')" [(selected)]="detailsOpen">{{ tx('สั่งซื้อเมื่อ 12 มี.ค. · ชำระแล้ว') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('ประวัติ (ต้องมีสิทธิ์)')" [disabled]="true">{{ tx('ไม่แสดง') }}</wt-accordion-tab>
-        </wt-accordion>
+        <wu-accordion id="d-accordion-selected">
+          <wu-accordion-tab [header]="tx('รายละเอียด')" [(selected)]="detailsOpen">{{ tx('สั่งซื้อเมื่อ 12 มี.ค. · ชำระแล้ว') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('ประวัติ (ต้องมีสิทธิ์)')" [disabled]="true">{{ tx('ไม่แสดง') }}</wu-accordion-tab>
+        </wu-accordion>
         <div class="docs-demo-actions">
-          <wt-button id="d-open-details" [label]="tx('เปิดรายละเอียด')" size="small" severity="secondary" (onClick)="detailsOpen = true"></wt-button>
+          <wu-button id="d-open-details" [label]="tx('เปิดรายละเอียด')" size="small" severity="secondary" (onClick)="detailsOpen = true"></wu-button>
           <span class="docs-demo-output">selected: <code id="d-details-value">{{ detailsOpen }}</code></span>
         </div>
       </docs-demo>
@@ -49,33 +49,33 @@
 
     <docs-section id="value" [section]="sec['value']">
       <docs-demo [html]="code['value']" [ts]="ts['value']" layout="stack">
-        <wt-accordion id="d-accordion-byvalue" [(value)]="faq" (onOpen)="logPanel('open', $event.value)" (onClose)="logPanel('close', $event.value)">
-          <wt-accordion-panel value="apply">
-            <wt-accordion-header>{{ tx('การสมัครเรียน') }}</wt-accordion-header>
-            <wt-accordion-content>{{ tx('สมัครออนไลน์ได้ถึง 31 มีนาคม') }}</wt-accordion-content>
-          </wt-accordion-panel>
-          <wt-accordion-panel value="fees">
-            <wt-accordion-header>{{ tx('ค่าธรรมเนียม') }}</wt-accordion-header>
-            <wt-accordion-content>{{ tx('ชำระผ่าน QR หรือโอนเงิน') }}</wt-accordion-content>
-          </wt-accordion-panel>
-          <wt-accordion-panel value="internal" [disabled]="true">
-            <wt-accordion-header>{{ tx('เอกสารภายใน (ต้องมีสิทธิ์)') }}</wt-accordion-header>
-            <wt-accordion-content>{{ tx('ไม่แสดง') }}</wt-accordion-content>
-          </wt-accordion-panel>
-        </wt-accordion>
+        <wu-accordion id="d-accordion-byvalue" [(value)]="faq" (onOpen)="logPanel('open', $event.value)" (onClose)="logPanel('close', $event.value)">
+          <wu-accordion-panel value="apply">
+            <wu-accordion-header>{{ tx('การสมัครเรียน') }}</wu-accordion-header>
+            <wu-accordion-content>{{ tx('สมัครออนไลน์ได้ถึง 31 มีนาคม') }}</wu-accordion-content>
+          </wu-accordion-panel>
+          <wu-accordion-panel value="fees">
+            <wu-accordion-header>{{ tx('ค่าธรรมเนียม') }}</wu-accordion-header>
+            <wu-accordion-content>{{ tx('ชำระผ่าน QR หรือโอนเงิน') }}</wu-accordion-content>
+          </wu-accordion-panel>
+          <wu-accordion-panel value="internal" [disabled]="true">
+            <wu-accordion-header>{{ tx('เอกสารภายใน (ต้องมีสิทธิ์)') }}</wu-accordion-header>
+            <wu-accordion-content>{{ tx('ไม่แสดง') }}</wu-accordion-content>
+          </wu-accordion-panel>
+        </wu-accordion>
         <span class="docs-demo-output">
           value: <code id="d-accordion-byvalue-out">{{ faq | json }}</code> · event: <code id="d-accordion-byvalue-event">{{ lastPanel || '-' }}</code>
         </span>
-        <wt-accordion id="d-accordion-byvalues" [multiple]="true" [(value)]="faqs">
-          <wt-accordion-panel value="apply">
-            <wt-accordion-header>{{ tx('การสมัครเรียน') }}</wt-accordion-header>
-            <wt-accordion-content>{{ tx('สมัครออนไลน์ได้ถึง 31 มีนาคม') }}</wt-accordion-content>
-          </wt-accordion-panel>
-          <wt-accordion-panel value="fees">
-            <wt-accordion-header>{{ tx('ค่าธรรมเนียม') }}</wt-accordion-header>
-            <wt-accordion-content>{{ tx('ชำระผ่าน QR หรือโอนเงิน') }}</wt-accordion-content>
-          </wt-accordion-panel>
-        </wt-accordion>
+        <wu-accordion id="d-accordion-byvalues" [multiple]="true" [(value)]="faqs">
+          <wu-accordion-panel value="apply">
+            <wu-accordion-header>{{ tx('การสมัครเรียน') }}</wu-accordion-header>
+            <wu-accordion-content>{{ tx('สมัครออนไลน์ได้ถึง 31 มีนาคม') }}</wu-accordion-content>
+          </wu-accordion-panel>
+          <wu-accordion-panel value="fees">
+            <wu-accordion-header>{{ tx('ค่าธรรมเนียม') }}</wu-accordion-header>
+            <wu-accordion-content>{{ tx('ชำระผ่าน QR หรือโอนเงิน') }}</wu-accordion-content>
+          </wu-accordion-panel>
+        </wu-accordion>
         <span class="docs-demo-output">value: <code id="d-accordion-byvalues-out">{{ faqs | json }}</code></span>
       </docs-demo>
     </docs-section>
@@ -83,34 +83,34 @@
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="header"></docs-slot-note>
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-accordion id="d-acc-tpl">
-          <wt-accordion-tab>
+        <wu-accordion id="d-acc-tpl">
+          <wu-accordion-tab>
             <ng-template #header>
-              <span class="docs-panel-head"><i class="wi wi-truck"></i> {{ tx('การจัดส่ง') }} <wt-badge [value]="tx('ใหม่')" severity="success"></wt-badge></span>
+              <span class="docs-panel-head"><i class="wi wi-truck"></i> {{ tx('การจัดส่ง') }} <wu-badge [value]="tx('ใหม่')" severity="success"></wu-badge></span>
             </ng-template>
             <ng-template #content>
               <p id="d-acc-lazy" class="docs-demo-p">{{ tx('สร้างเมื่อเปิดหัวข้อนี้ครั้งแรก') }}</p>
             </ng-template>
-          </wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
-        </wt-accordion>
+          </wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wu-accordion-tab>
+        </wu-accordion>
       </docs-demo>
     </docs-section>
 
     <docs-section id="gap" [section]="sec['gap']">
       <docs-demo [html]="code['gap']" [ts]="ts['gap']" layout="stack">
         <span class="docs-demo-output">[gap]="true" · {{ tx('แยกเป็นการ์ด') }}</span>
-        <wt-accordion id="d-accordion-gap" [gap]="true" [(activeIndex)]="gapOpen">
-          <wt-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
-        </wt-accordion>
+        <wu-accordion id="d-accordion-gap" [gap]="true" [(activeIndex)]="gapOpen">
+          <wu-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wu-accordion-tab>
+        </wu-accordion>
         <span class="docs-demo-output">[gap]="false" · {{ tx('ต่อเป็นกล่องเดียว') }}</span>
-        <wt-accordion id="d-accordion-joined" [gap]="false" [(activeIndex)]="joinedOpen">
-          <wt-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wt-accordion-tab>
-          <wt-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wt-accordion-tab>
-        </wt-accordion>
+        <wu-accordion id="d-accordion-joined" [gap]="false" [(activeIndex)]="joinedOpen">
+          <wu-accordion-tab [header]="tx('การจัดส่ง')">{{ tx('จัดส่งภายใน 2 วันทำการ') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การคืนสินค้า')">{{ tx('คืนได้ภายใน 30 วัน') }}</wu-accordion-tab>
+          <wu-accordion-tab [header]="tx('การชำระเงิน')">{{ tx('บัตร โอนเงิน หรือ QR') }}</wu-accordion-tab>
+        </wu-accordion>
       </docs-demo>
     </docs-section>
 

@@ -27,7 +27,7 @@ import {
   yearPage,
 } from './date';
 import { CalendarSystem, formatDate } from './thai/buddhist';
-import { TH_LOCALE, WtLocale } from './thai/locale';
+import { TH_LOCALE, WuLocale } from './thai/locale';
 
 export type DateSelectionMode = 'single' | 'multiple' | 'range';
 /** What a cell of the panel is: a day, a month or a year. */
@@ -43,7 +43,7 @@ export interface DatePickerOptions extends DateLimits {
   firstDayOfWeek?: number;
   /** `'buddhist'` shows years as พ.ศ.; values stay ordinary Dates. Default `'gregorian'`. */
   calendar?: CalendarSystem;
-  locale?: WtLocale;
+  locale?: WuLocale;
   /** `formatDate()` pattern of the date part. Default: the locale's, or `MMMM yyyy` / `yyyy` for the month and year views. */
   dateFormat?: string;
   showTime?: boolean;
@@ -152,7 +152,7 @@ export class DatePickerState {
   get baseView(): DatePickerView {
     return this.o.timeOnly ? 'date' : this.o.view || 'date';
   }
-  get locale(): WtLocale {
+  get locale(): WuLocale {
     return this.o.locale || TH_LOCALE;
   }
   get calendar(): CalendarSystem {

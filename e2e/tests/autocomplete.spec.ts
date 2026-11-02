@@ -1,7 +1,7 @@
 import { expect, Page, test } from '@playwright/test';
 
 const model = async (page: Page) => JSON.parse((await page.locator('#ac-model').textContent()) || '{}');
-const options = (page: Page) => page.locator('.wt-autocomplete-overlay [role="option"]');
+const options = (page: Page) => page.locator('.wu-autocomplete-overlay [role="option"]');
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -16,7 +16,7 @@ test('with no delay set it asks on the key itself, with no wait (delay 0 is the 
     input.focus();
     input.value = 'ดาวเหนือ';
     input.dispatchEvent(new Event('input', { bubbles: true }));
-    return (globalThis as unknown as { wtAsked?: string }).wtAsked;
+    return (globalThis as unknown as { wuAsked?: string }).wuAsked;
   });
   expect(asked).toBe('ดาวเหนือ');
   await expect(options(page)).toHaveText(['ฟ้าครามดาวเหนือ', 'ดาวเหนือศึกษา']);
@@ -31,7 +31,7 @@ test('typing asks for suggestions; picking one makes the option the value and fi
   // While typing, the text is the value.
   await expect.poll(() => model(page)).toMatchObject({ school: 'ดาวเหนือ' });
   await options(page).filter({ hasText: 'ดาวเหนือศึกษา' }).click();
-  await expect(page.locator('.wt-autocomplete-overlay')).toHaveCount(0);
+  await expect(page.locator('.wu-autocomplete-overlay')).toHaveCount(0);
   await expect(input).toHaveValue('ดาวเหนือศึกษา');
   await expect.poll(() => model(page)).toMatchObject({ school: { id: 3, name: 'ดาวเหนือศึกษา' } });
   await expect(page.locator('#overlay-log')).toContainText('ac:ดาวเหนือศึกษา');
@@ -52,20 +52,20 @@ test('keyboard: arrows move through the suggestions, Enter picks, Escape closes;
   await expect(input).toHaveValue('ฟ้าใสวิทยา');
   await input.fill('');
   await page.keyboard.type('ไม่มี');
-  await expect(page.locator('.wt-autocomplete-overlay .wt-select-empty')).toHaveText('ไม่พบข้อมูลที่ค้นหา');
+  await expect(page.locator('.wu-autocomplete-overlay .wu-select-empty')).toHaveText('ไม่พบข้อมูลที่ค้นหา');
   await page.keyboard.press('Escape');
-  await expect(page.locator('.wt-autocomplete-overlay')).toHaveCount(0);
+  await expect(page.locator('.wu-autocomplete-overlay')).toHaveCount(0);
 });
 
 test('the dropdown button lists everything; a second press closes it', async ({ page }) => {
-  const button = page.locator('#ac-school .wt-autocomplete-dropdown');
+  const button = page.locator('#ac-school .wu-autocomplete-dropdown');
   await expect(button).toHaveAttribute('aria-label', 'แสดงตัวเลือกทั้งหมด');
   await button.click();
   await expect(options(page)).toHaveCount(5);
   await expect(page.locator('#ac-school-input')).toBeFocused();
   await expect(options(page).filter({ hasText: 'ทะเลหมอกพัฒนา' })).not.toHaveAttribute('aria-disabled', 'true');
   await button.click();
-  await expect(page.locator('.wt-autocomplete-overlay')).toHaveCount(0);
+  await expect(page.locator('.wu-autocomplete-overlay')).toHaveCount(0);
 });
 
 test('minLength waits for enough characters; forceSelection clears text that was not picked', async ({ page }) => {
@@ -73,7 +73,7 @@ test('minLength waits for enough characters; forceSelection clears text that was
   await input.click();
   await page.keyboard.type('ด');
   await page.waitForTimeout(100);
-  await expect(page.locator('.wt-autocomplete-overlay')).toHaveCount(0);
+  await expect(page.locator('.wu-autocomplete-overlay')).toHaveCount(0);
   await page.keyboard.type('าว');
   await expect(options(page).first()).toBeVisible();
   await page.locator('#select h2').click();

@@ -7,59 +7,59 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-slot-note slot="start"></docs-slot-note>
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-menubar id="d-mb-basic" [model]="local(items)" [ariaLabel]="tx('เมนูหลัก')">
+        <wu-menubar id="d-mb-basic" [model]="local(items)" [ariaLabel]="tx('เมนูหลัก')">
           <ng-template #start>
             <span class="docs-menubar-brand"><i class="wi wi-book"></i> WiraSchool</span>
           </ng-template>
           <ng-template #end>
-            <wt-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wt-button>
+            <wu-button [label]="tx('ออกจากระบบ')" icon="wi wi-sign-out" severity="secondary" [text]="true"></wu-button>
           </ng-template>
-        </wt-menubar>
+        </wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="header" [section]="sec['header']">
       <docs-demo [html]="code['header']" layout="stack">
-        <wt-menubar id="d-mb-header">
+        <wu-menubar id="d-mb-header">
           <ng-template #start>
             <span class="docs-menubar-brand"><i class="wi wi-building"></i> {{ tx('ระบบรับสมัคร') }}</span>
           </ng-template>
           <ng-template #end>
             <div class="docs-menubar-actions">
-              <wt-iconfield>
-                <wt-inputicon icon="wi wi-search"></wt-inputicon>
-                <input wtInputText [placeholder]="tx('ค้นหาผู้สมัคร')" [attr.aria-label]="tx('ค้นหาผู้สมัคร')" />
-              </wt-iconfield>
-              <wt-button icon="wi wi-bell" [rounded]="true" [text]="true" [ariaLabel]="tx('การแจ้งเตือน')"></wt-button>
-              <wt-avatar icon="wi wi-user" shape="circle"></wt-avatar>
+              <wu-iconfield>
+                <wu-inputicon icon="wi wi-search"></wu-inputicon>
+                <input wuInputText [placeholder]="tx('ค้นหาผู้สมัคร')" [attr.aria-label]="tx('ค้นหาผู้สมัคร')" />
+              </wu-iconfield>
+              <wu-button icon="wi wi-bell" [rounded]="true" [text]="true" [ariaLabel]="tx('การแจ้งเตือน')"></wu-button>
+              <wu-avatar icon="wi wi-user" shape="circle"></wu-avatar>
             </div>
           </ng-template>
-        </wt-menubar>
+        </wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="router" [section]="sec['router']">
       <docs-demo [html]="code['router']" [ts]="ts['router']" layout="stack">
-        <wt-menubar id="d-mb-router" [model]="local(links)" [ariaLabel]="tx('หัวข้อในหน้านี้')"></wt-menubar>
+        <wu-menubar id="d-mb-router" [model]="local(links)" [ariaLabel]="tx('หัวข้อในหน้านี้')"></wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="commands" [section]="sec['commands']">
       <docs-demo [html]="code['commands']" [ts]="ts['commands']" layout="stack">
-        <wt-menubar id="d-mb-commands" [model]="local(fileItems)" [ariaLabel]="tx('เมนูเอกสาร')"></wt-menubar>
+        <wu-menubar id="d-mb-commands" [model]="local(fileItems)" [ariaLabel]="tx('เมนูเอกสาร')"></wu-menubar>
         <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-mb-command">{{ lastCommand || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="states" [section]="sec['states']">
       <docs-demo [html]="code['states']" [ts]="ts['states']" layout="stack">
-        <wt-menubar id="d-mb-states" [model]="local(accountItems)" [ariaLabel]="tx('บัญชี')"></wt-menubar>
+        <wu-menubar id="d-mb-states" [model]="local(accountItems)" [ariaLabel]="tx('บัญชี')"></wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-demo [html]="code['templates']" [ts]="ts['templates']" layout="stack">
-        <wt-menubar id="d-mb-template" [model]="local(editorItems)" [ariaLabel]="tx('เมนูเอกสาร')">
+        <wu-menubar id="d-mb-template" [model]="local(editorItems)" [ariaLabel]="tx('เมนูเอกสาร')">
           <ng-template #item let-item let-root="root" let-hasSubmenu="hasSubmenu">
             @if (item.icon) {
               <i [class]="item.icon"></i>
@@ -72,27 +72,27 @@
               <i [class]="root ? 'wi wi-angle-down' : 'wi wi-angle-right'"></i>
             }
           </ng-template>
-        </wt-menubar>
+        </wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="narrow" [section]="sec['narrow']">
       <docs-demo [html]="code['narrow']" layout="stack">
-        <wt-menubar id="d-mb-narrow" [model]="local(items)" breakpoint="9999px" [ariaLabel]="tx('เมนูหลัก')">
+        <wu-menubar id="d-mb-narrow" [model]="local(items)" breakpoint="9999px" [ariaLabel]="tx('เมนูหลัก')">
           <ng-template #start>
             <span class="docs-menubar-brand">WiraSchool</span>
           </ng-template>
           <ng-template #menuicon>
             <i class="wi wi-bars"></i>
           </ng-template>
-        </wt-menubar>
+        </wu-menubar>
       </docs-demo>
     </docs-section>
 
     <docs-section id="auto" [section]="sec['auto']">
       <docs-demo [html]="code['auto']" layout="stack">
-        <wt-menubar id="d-mb-click" [model]="local(items)" [autoDisplay]="false" [ariaLabel]="tx('คลิกเพื่อเปิด')"></wt-menubar>
-        <wt-menubar id="d-mb-hover" [model]="local(items)" [autoDisplay]="true" [autoHide]="true" [autoHideDelay]="300" [ariaLabel]="tx('ชี้เพื่อเปิด')"></wt-menubar>
+        <wu-menubar id="d-mb-click" [model]="local(items)" [autoDisplay]="false" [ariaLabel]="tx('คลิกเพื่อเปิด')"></wu-menubar>
+        <wu-menubar id="d-mb-hover" [model]="local(items)" [autoDisplay]="true" [autoHide]="true" [autoHideDelay]="300" [ariaLabel]="tx('ชี้เพื่อเปิด')"></wu-menubar>
       </docs-demo>
     </docs-section>
 

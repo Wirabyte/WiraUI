@@ -11,33 +11,33 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig } from 'wiratheme/config';
-import { terminalHistoryAdd, terminalHistoryMove, terminalIsClear, WtLocale } from 'wiratheme/core';
-import { WtTerminalService } from './terminal.service';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { terminalHistoryAdd, terminalHistoryMove, terminalIsClear, WuLocale } from 'wiraui/core';
+import { WuTerminalService } from './terminal.service';
 
 /** A line on the screen: the command typed and the answer under it (`text` null: an answer with no command). */
-export interface WtTerminalCommand {
+export interface WuTerminalCommand {
   text: string | null;
   response?: string | null;
 }
 
 /**
- * A text console: `<wt-terminal welcomeMessage="ยินดีต้อนรับ" prompt="วิระ $">`. Enter sends the line through
- * `WtTerminalService` (`commandHandler`); the app answers with `sendResponse()` and the answer shows under it. ↑ / ↓ go
+ * A text console: `<wu-terminal welcomeMessage="ยินดีต้อนรับ" prompt="วิระ $">`. Enter sends the line through
+ * `WuTerminalService` (`commandHandler`); the app answers with `sendResponse()` and the answer shows under it. ↑ / ↓ go
  * through earlier commands, the `clear` command (see `clearCommand`) empties the screen, and a click anywhere on the
  * box puts the cursor on the prompt.
  */
 @Component({
-  selector: 'wt-terminal',
+  selector: 'wu-terminal',
   standalone: true,
   imports: [NgClass, NgFor, NgIf, NgStyle],
   templateUrl: './terminal.component.html',
   styleUrls: ['./terminal.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-terminal-host', '(click)': 'hostClick()' },
+  host: { class: 'wu-terminal-host', '(click)': 'hostClick()' },
 })
-export class WtTerminal implements AfterViewChecked, OnDestroy {
+export class WuTerminal implements AfterViewChecked, OnDestroy {
   /** Text at the top, before any command. */
   @Input() welcomeMessage?: string | null;
   /** Shown before each command, e.g. `'วิระ $'`. */
@@ -57,7 +57,7 @@ export class WtTerminal implements AfterViewChecked, OnDestroy {
   @ViewChild('container') protected containerRef?: ElementRef<HTMLElement>;
   @ViewChild('input') protected inputRef?: ElementRef<HTMLInputElement>;
 
-  commands: WtTerminalCommand[] = [];
+  commands: WuTerminalCommand[] = [];
   /** The line being typed. */
   command = '';
   private history: string[] = [];
@@ -66,13 +66,13 @@ export class WtTerminal implements AfterViewChecked, OnDestroy {
   private scrollDown = false;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
-  private readonly service = inject(WtTerminalService);
+  private readonly config = inject(WuConfig);
+  private readonly service = inject(WuTerminalService);
   private readonly subscription = this.service.responseHandler.subscribe((r) => this.setResponse(r));
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewChecked(): void {
@@ -89,7 +89,7 @@ export class WtTerminal implements AfterViewChecked, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -8,10 +8,10 @@ export const SLIDER_DOC: ComponentDoc = {
   title: 'Slider',
   group: 'Form',
   entry: 'slider',
-  standalone: 'WtSlider',
-  module: 'WtSliderModule',
+  standalone: 'WuSlider',
+  module: 'WuSliderModule',
   forms: true,
-  selector: 'wt-slider',
+  selector: 'wu-slider',
   description: {
     th: 'เลือกค่าตัวเลขด้วยการลากปุ่มไปตามราง ค่าเดียวหรือเป็นช่วง (สองปุ่ม) แนวนอนหรือแนวตั้ง ผูกด้วย ngModel กดที่รางเพื่อกระโดดไปที่ค่านั้น และใช้คีย์บอร์ดได้ครบ',
     en: 'Pick a number by dragging a handle along a track: one value or a range (two handles), horizontal or vertical, bound with ngModel. Click the track to jump there; the keyboard works throughout.',
@@ -33,8 +33,8 @@ export const SLIDER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtSliderModule</code>) และ standalone (<code>WtSlider</code>) ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>',
-        en: 'Works as an NgModule (<code>WtSliderModule</code>) or standalone (<code>WtSlider</code>), with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuSliderModule</code>) และ standalone (<code>WuSlider</code>) ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code>',
+        en: 'Works as an NgModule (<code>WuSliderModule</code>) or standalone (<code>WuSlider</code>), with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>.',
       },
     },
     basic: {
@@ -75,44 +75,44 @@ export const SLIDER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-slider&gt;</code> เป็น <code>&lt;wt-slider&gt;</code> input และ event ชื่อเดิม class <code>p-slider</code>, <code>p-slider-handle</code> และ <code>p-slider-range</code> อยู่คู่กับ class <code>wt-*</code> · <code>animate</code> และ <code>autofocus</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-slider&gt;</code> to <code>&lt;wt-slider&gt;</code>; inputs and events keep their names, and the <code>p-slider</code>, <code>p-slider-handle</code> and <code>p-slider-range</code> classes sit next to the <code>wt-*</code> ones · <code>animate</code> and <code>autofocus</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-slider&gt;</code> เป็น <code>&lt;wu-slider&gt;</code> input และ event ชื่อเดิม class <code>p-slider</code>, <code>p-slider-handle</code> และ <code>p-slider-range</code> อยู่คู่กับ class <code>wu-*</code> · <code>animate</code> และ <code>autofocus</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-slider&gt;</code> to <code>&lt;wu-slider&gt;</code>; inputs and events keep their names, and the <code>p-slider</code>, <code>p-slider-handle</code> and <code>p-slider-range</code> classes sit next to the <code>wu-*</code> ones · <code>animate</code> and <code>autofocus</code> are accepted and ignored.',
       },
     },
   },
   code: {
     basic: `<label id="volume-label">ระดับเสียงประกาศ</label>
-<wt-slider name="volume" [(ngModel)]="volume" ariaLabelledBy="volume-label" [style]="{ width: '16rem' }"></wt-slider>
+<wu-slider name="volume" [(ngModel)]="volume" ariaLabelledBy="volume-label" [style]="{ width: '16rem' }"></wu-slider>
 <span>{{ volume }}%</span>`,
     step: `<label id="pass-label">คะแนนผ่าน</label>
-<wt-slider name="passMark" [(ngModel)]="passMark" [min]="40" [max]="80" [step]="5" ariaLabelledBy="pass-label"></wt-slider>
+<wu-slider name="passMark" [(ngModel)]="passMark" [min]="40" [max]="80" [step]="5" ariaLabelledBy="pass-label"></wu-slider>
 <span>{{ passMark }}</span>`,
     range: `<label id="range-label">ช่วงคะแนน</label>
-<wt-slider name="scoreRange" [(ngModel)]="scoreRange" [range]="true" ariaLabelledBy="range-label"></wt-slider>
+<wu-slider name="scoreRange" [(ngModel)]="scoreRange" [range]="true" ariaLabelledBy="range-label"></wu-slider>
 <span>{{ scoreRange[0] }} ถึง {{ scoreRange[1] }}</span>`,
-    vertical: `<wt-slider name="brightness" [(ngModel)]="brightness" orientation="vertical" ariaLabel="ความสว่างจอ"
-  [style]="{ height: '10rem' }"></wt-slider>`,
+    vertical: `<wu-slider name="brightness" [(ngModel)]="brightness" orientation="vertical" ariaLabel="ความสว่างจอ"
+  [style]="{ height: '10rem' }"></wu-slider>`,
     events: {
-      v3: `<wt-slider name="bellVolume" [(ngModel)]="bellVolume" [step]="10" ariaLabel="ระดับเสียงประกาศ"
-  [disabled]="isApiSaving" (onSlideEnd)="saveVolume($event)"></wt-slider>
+      v3: `<wu-slider name="bellVolume" [(ngModel)]="bellVolume" [step]="10" ariaLabel="ระดับเสียงประกาศ"
+  [disabled]="isApiSaving" (onSlideEnd)="saveVolume($event)"></wu-slider>
 @if (isApiSaving) {
   <small>กำลังบันทึก…</small>
 }`,
-      classic: `<wt-slider name="bellVolume" [(ngModel)]="bellVolume" [step]="10" ariaLabel="ระดับเสียงประกาศ"
-  [disabled]="isApiSaving" (onSlideEnd)="saveVolume($event)"></wt-slider>
+      classic: `<wu-slider name="bellVolume" [(ngModel)]="bellVolume" [step]="10" ariaLabel="ระดับเสียงประกาศ"
+  [disabled]="isApiSaving" (onSlideEnd)="saveVolume($event)"></wu-slider>
 <small *ngIf="isApiSaving">กำลังบันทึก…</small>`,
     },
   },
   ts: {
     basic: `volume = 60;`,
     range: `scoreRange = [60, 80];`,
-    events: `import { WtSliderChangeEvent } from 'wiratheme/slider';
+    events: `import { WuSliderChangeEvent } from 'wiraui/slider';
 
 bellVolume = 50;   // ค่าจาก API
 isApiSaving = false;
 
 /** บันทึกเมื่อปล่อยปุ่ม */
-saveVolume(event: WtSliderChangeEvent): void {
+saveVolume(event: WuSliderChangeEvent): void {
   this.isApiSaving = true;
   this.settingService.saveVolume(event.value).subscribe({
     next: () => (this.isApiSaving = false),
@@ -141,8 +141,8 @@ saveVolume(event: WtSliderChangeEvent): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('onChange', 'WtSliderChangeEvent', undefined, 'ค่าเปลี่ยน (ระหว่างลากด้วย)', 'The value changed (while dragging too)'),
-        row('onSlideEnd', 'WtSliderChangeEvent', undefined, 'ปล่อยปุ่ม หรือหลังกดคีย์', 'The handle was let go, or after a key press'),
+        row('onChange', 'WuSliderChangeEvent', undefined, 'ค่าเปลี่ยน (ระหว่างลากด้วย)', 'The value changed (while dragging too)'),
+        row('onSlideEnd', 'WuSliderChangeEvent', undefined, 'ปล่อยปุ่ม หรือหลังกดคีย์', 'The handle was let go, or after a key press'),
       ],
     },
     {
@@ -158,7 +158,7 @@ saveVolume(event: WtSliderChangeEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `interface WtSliderChangeEvent {
+      code: `interface WuSliderChangeEvent {
   originalEvent?: Event;
   event?: Event;
   value?: number;      // ค่าเดียว
@@ -167,10 +167,10 @@ saveVolume(event: WtSliderChangeEvent): void {
     },
   ],
   tokens: [
-    tok('--wt-slider-track-size', 'ความหนาของราง', 'Track thickness'),
-    tok('--wt-slider-track-bg', 'สีราง (ส่วนที่เลือกใช้สีหลัก)', 'Track colour (the picked part uses the primary colour)'),
-    tok('--wt-slider-handle-size', 'ขนาดปุ่ม', 'Handle size'),
-    tok('--wt-slider-handle-bg', 'พื้นปุ่ม', 'Handle background'),
-    tok('--wt-slider-handle-border-width', 'ขอบปุ่ม', 'Handle border width'),
+    tok('--wu-slider-track-size', 'ความหนาของราง', 'Track thickness'),
+    tok('--wu-slider-track-bg', 'สีราง (ส่วนที่เลือกใช้สีหลัก)', 'Track colour (the picked part uses the primary colour)'),
+    tok('--wu-slider-handle-size', 'ขนาดปุ่ม', 'Handle size'),
+    tok('--wu-slider-handle-bg', 'พื้นปุ่ม', 'Handle background'),
+    tok('--wu-slider-handle-border-width', 'ขอบปุ่ม', 'Handle border width'),
   ],
 };

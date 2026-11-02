@@ -1,7 +1,7 @@
 import { NgZone } from '@angular/core';
 
-/** What a list component tells the drag helper. Lists are `[data-wt-list="name"]`, their items `[data-wt-index]`. */
-export interface ɵWtListDragHost {
+/** What a list component tells the drag helper. Lists are `[data-wu-list="name"]`, their items `[data-wu-index]`. */
+export interface ɵWuListDragHost {
   /** The component's root element: lists, the drag image and the drop marks live inside it. */
   readonly root: HTMLElement | null;
   canDrag(): boolean;
@@ -39,11 +39,11 @@ const LONG_PRESS = 300;
 const EDGE = 32;
 
 /**
- * Drag and drop for wt-picklist and wt-orderlist, on Pointer Events so mouse, pen and touch all work: a mouse drags
+ * Drag and drop for wu-picklist and wu-orderlist, on Pointer Events so mouse, pen and touch all work: a mouse drags
  * after a few pixels, a finger after a short press (a quick swipe still scrolls the list). The item under the pointer
  * shows a line where the drop lands; Esc cancels. Lists scroll when the pointer nears their top or bottom.
  */
-export class ɵWtListDrag {
+export class ɵWuListDrag {
   private pending: Pending | null = null;
   private active: Active | null = null;
   private suppressClick = false;
@@ -52,7 +52,7 @@ export class ɵWtListDrag {
   private readonly listeners: Array<[EventTarget, string, EventListener, AddEventListenerOptions | boolean]> = [];
 
   constructor(
-    private readonly host: ɵWtListDragHost,
+    private readonly host: ɵWuListDragHost,
     private readonly zone: NgZone | null
   ) {}
 
@@ -60,7 +60,7 @@ export class ɵWtListDrag {
   down(event: PointerEvent, list: string, index: number): void {
     if (this.active || this.pending || !this.host.canDrag()) return;
     if (event.button !== 0 || (event.pointerType === 'mouse' && (event.ctrlKey || event.metaKey || event.shiftKey))) return;
-    const item = (event.target as HTMLElement | null)?.closest?.('[data-wt-index]') as HTMLElement | null;
+    const item = (event.target as HTMLElement | null)?.closest?.('[data-wu-index]') as HTMLElement | null;
     if (!item) return;
     const touch = event.pointerType === 'touch';
     const pending: Pending = { id: event.pointerId, list, index, x: event.clientX, y: event.clientY, touch, item, timer: null };
@@ -151,11 +151,11 @@ export class ɵWtListDrag {
     ghost.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
     ghost.setAttribute('aria-hidden', 'true');
     ghost.removeAttribute('role');
-    ghost.classList.add('wt-list-drag-ghost');
+    ghost.classList.add('wu-list-drag-ghost');
     ghost.style.width = `${rect.width}px`;
     if (items.length > 1) {
       const badge = root.ownerDocument.createElement('span');
-      badge.className = 'wt-list-drag-count';
+      badge.className = 'wu-list-drag-count';
       badge.textContent = String(items.length);
       ghost.appendChild(badge);
     }
@@ -171,7 +171,7 @@ export class ɵWtListDrag {
       }
     }
     this.active = { from: p.list, items, ghost, dx: p.x - rect.left, dy: p.y - rect.top, over: null };
-    root.classList.add('wt-list-dragging');
+    root.classList.add('wu-list-dragging');
     if (p.touch) this.listen(root.ownerDocument, 'touchmove', this.blockTouchScroll, { passive: false, capture: true });
     this.listen(root.ownerDocument, 'contextmenu', this.blockTouchScroll, true);
     this.track(p.x, p.y);
@@ -184,22 +184,22 @@ export class ɵWtListDrag {
     this.lastPoint = { x, y };
     a.ghost.style.transform = `translate(${Math.round(x - a.dx)}px, ${Math.round(y - a.dy)}px)`;
     const under = root.ownerDocument.elementFromPoint(x, y) as HTMLElement | null;
-    const listEl = under?.closest?.('[data-wt-list]') as HTMLElement | null;
-    const name = listEl && root.contains(listEl) ? listEl.getAttribute('data-wt-list') : null;
+    const listEl = under?.closest?.('[data-wu-list]') as HTMLElement | null;
+    const name = listEl && root.contains(listEl) ? listEl.getAttribute('data-wu-list') : null;
     this.clearMarks();
     if (!listEl || !name || !this.host.accepts(a.from, name)) {
       a.over = null;
       this.stopScroll();
       return;
     }
-    const rows = Array.from(listEl.querySelectorAll<HTMLElement>('[data-wt-index]'));
-    let index = rows.length ? Number(rows[rows.length - 1].getAttribute('data-wt-index')) + 1 : 0;
+    const rows = Array.from(listEl.querySelectorAll<HTMLElement>('[data-wu-index]'));
+    let index = rows.length ? Number(rows[rows.length - 1].getAttribute('data-wu-index')) + 1 : 0;
     let mark: HTMLElement | null = null;
     let after = false;
     for (const row of rows) {
       const r = row.getBoundingClientRect();
       if (y < r.top + r.height / 2) {
-        index = Number(row.getAttribute('data-wt-index'));
+        index = Number(row.getAttribute('data-wu-index'));
         mark = row;
         break;
       }
@@ -209,9 +209,9 @@ export class ɵWtListDrag {
       after = true;
     }
     a.over = { list: name, index };
-    listEl.classList.add('wt-list-dragover');
-    if (mark) mark.classList.add(after ? 'wt-list-drop-after' : 'wt-list-drop-before');
-    else listEl.classList.add('wt-list-drop-into');
+    listEl.classList.add('wu-list-dragover');
+    if (mark) mark.classList.add(after ? 'wu-list-drop-after' : 'wu-list-drop-before');
+    else listEl.classList.add('wu-list-drop-into');
     this.autoScroll(listEl, y);
   }
 
@@ -243,8 +243,8 @@ export class ɵWtListDrag {
   private clearMarks(): void {
     const root = this.host.root;
     if (!root) return;
-    root.querySelectorAll('.wt-list-drop-before, .wt-list-drop-after').forEach((el) => el.classList.remove('wt-list-drop-before', 'wt-list-drop-after'));
-    root.querySelectorAll('.wt-list-dragover, .wt-list-drop-into').forEach((el) => el.classList.remove('wt-list-dragover', 'wt-list-drop-into'));
+    root.querySelectorAll('.wu-list-drop-before, .wu-list-drop-after').forEach((el) => el.classList.remove('wu-list-drop-before', 'wu-list-drop-after'));
+    root.querySelectorAll('.wu-list-dragover, .wu-list-drop-into').forEach((el) => el.classList.remove('wu-list-dragover', 'wu-list-drop-into'));
   }
 
   private end(): void {
@@ -262,7 +262,7 @@ export class ɵWtListDrag {
       this.active = null;
     }
     this.clearMarks();
-    this.host.root?.classList.remove('wt-list-dragging');
+    this.host.root?.classList.remove('wu-list-dragging');
     for (const [target, type, fn, opts] of this.listeners.splice(0)) target.removeEventListener(type, fn, opts);
   }
 

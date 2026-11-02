@@ -24,25 +24,25 @@ import {
   ɵrefreshOnTranslation,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  ɵWtStyleLoader,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { ɵbuttonClass, ɵWT_BUTTON_CSS } from 'wiratheme/button';
-import { WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  ɵWuStyleLoader,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+import { WuLocale } from 'wiraui/core';
 
-export type WtDrawerPosition = 'left' | 'right' | 'top' | 'bottom' | 'full';
+export type WuDrawerPosition = 'left' | 'right' | 'top' | 'bottom' | 'full';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * A panel that slides in from an edge of the window: `<wt-drawer [(visible)]="menuOpen" header="เมนู" position="left">`
- * (`<wt-sidebar>` works too). It is a native `<dialog>`: modal by default (the page behind is inert and dimmed,
+ * A panel that slides in from an edge of the window: `<wu-drawer [(visible)]="menuOpen" header="เมนู" position="left">`
+ * (`<wu-sidebar>` works too). It is a native `<dialog>`: modal by default (the page behind is inert and dimmed,
  * focus stays inside), closed with the × button, Escape or a click on the dimmed page.
  */
 @Component({
-  selector: 'wt-drawer, wt-sidebar',
+  selector: 'wu-drawer, wu-sidebar',
   standalone: true,
   imports: [NgClass, NgIf, NgStyle, NgTemplateOutlet],
   templateUrl: './drawer.component.html',
@@ -50,11 +50,11 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtDrawer implements AfterViewChecked, OnDestroy {
+export class WuDrawer implements AfterViewChecked, OnDestroy {
   /** Two-way: `[(visible)]`. */
   @Input() set visible(v: unknown) { this.setVisible(ɵtoBool(v)); }
   get visible(): boolean { return this._visible; }
-  @Input() position: WtDrawerPosition = 'left';
+  @Input() position: WuDrawerPosition = 'left';
   /** Covers the whole window (same as `position="full"`). */
   @Input() set fullScreen(v: unknown) { this._fullScreen = ɵtoBool(v); }
   get fullScreen(): boolean { return this._fullScreen; }
@@ -88,7 +88,7 @@ export class WtDrawer implements AfterViewChecked, OnDestroy {
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
   @ContentChild('footer', { descendants: false }) protected footerRef?: unknown;
   @ContentChild('content', { descendants: false }) protected contentRef?: unknown;
@@ -96,7 +96,7 @@ export class WtDrawer implements AfterViewChecked, OnDestroy {
   @ContentChild('closeicon', { descendants: false }) protected closeIconRef?: unknown;
   @ViewChild('mask') protected maskRef?: ElementRef<HTMLDialogElement>;
 
-  readonly titleId = ɵuniqueId('wt-drawer-title');
+  readonly titleId = ɵuniqueId('wu-drawer-title');
   /** The `<dialog>` is in the DOM (it stays a moment after closing, for the slide-out). */
   rendered = false;
   leaving = false;
@@ -114,28 +114,28 @@ export class WtDrawer implements AfterViewChecked, OnDestroy {
   private returnFocus: HTMLElement | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly doc = inject(DOCUMENT);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('button', ɵWT_BUTTON_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('button', ɵWU_BUTTON_CSS);
   }
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
-  get side(): WtDrawerPosition {
+  get side(): WuDrawerPosition {
     return this._fullScreen ? 'full' : this.position || 'left';
   }
   get panelClass(): string {
     const s = this.side;
-    return `wt-drawer-${s} p-drawer-${s} p-sidebar-${s}${s === 'full' ? ' p-drawer-full p-sidebar-full' : ''} ${this.styleClass || ''}`;
+    return `wu-drawer-${s} p-drawer-${s} p-sidebar-${s}${s === 'full' ? ' p-drawer-full p-sidebar-full' : ''} ${this.styleClass || ''}`;
   }
   get closeClass(): string {
-    return ɵbuttonClass('p-button-text p-button-secondary p-button-rounded') + ' wt-btn-icon-only wt-drawer-close p-drawer-close-button p-sidebar-close';
+    return ɵbuttonClass('p-button-text p-button-secondary p-button-rounded') + ' wu-btn-icon-only wu-drawer-close p-drawer-close-button p-sidebar-close';
   }
   get headerTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.headerRef) || ɵfindTemplate(this.templates, 'header');
@@ -170,10 +170,10 @@ export class WtDrawer implements AfterViewChecked, OnDestroy {
       }
     }
     if (this._blockScroll ?? this._modal) this.unlockScroll = ɵlockScroll(this.doc);
-    if (this._modal) this.doc.dispatchEvent(new CustomEvent('wt-modal-open'));
+    if (this._modal) this.doc.dispatchEvent(new CustomEvent('wu-modal-open'));
     const auto = el.querySelector('[autofocus]') as HTMLElement | null;
     if (auto) auto.focus();
-    else if (!this._modal) (el.querySelector('.wt-drawer') as HTMLElement | null)?.focus();
+    else if (!this._modal) (el.querySelector('.wu-drawer') as HTMLElement | null)?.focus();
     Promise.resolve().then(() => this.onShow.emit());
   }
 

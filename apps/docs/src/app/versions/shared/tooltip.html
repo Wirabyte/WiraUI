@@ -6,10 +6,10 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-button id="d-tooltip-top" [label]="tx('บน')" [wtTooltip]="tx('บันทึกแบบร่าง')" tooltipPosition="top"></wt-button>
-        <wt-button [label]="tx('ล่าง')" [wtTooltip]="tx('ส่งออกเป็น Excel')" tooltipPosition="bottom"></wt-button>
-        <wt-button [label]="tx('ซ้าย')" [wtTooltip]="tx('ย้อนกลับ')" tooltipPosition="left"></wt-button>
-        <wt-button [label]="tx('ขวา')" [wtTooltip]="tx('ถัดไป')"></wt-button>
+        <wu-button id="d-tooltip-top" [label]="tx('บน')" [wuTooltip]="tx('บันทึกแบบร่าง')" tooltipPosition="top"></wu-button>
+        <wu-button [label]="tx('ล่าง')" [wuTooltip]="tx('ส่งออกเป็น Excel')" tooltipPosition="bottom"></wu-button>
+        <wu-button [label]="tx('ซ้าย')" [wuTooltip]="tx('ย้อนกลับ')" tooltipPosition="left"></wu-button>
+        <wu-button [label]="tx('ขวา')" [wuTooltip]="tx('ถัดไป')"></wu-button>
       </docs-demo>
     </docs-section>
 
@@ -17,33 +17,33 @@
       <docs-demo [html]="code['event']">
         <input
           id="d-tooltip-focus"
-          wtInputText
-          [wtTooltip]="tx('กรอกเลขบัตรประชาชน 13 หลัก')"
+          wuInputText
+          [wuTooltip]="tx('กรอกเลขบัตรประชาชน 13 หลัก')"
           tooltipEvent="focus"
           tooltipPosition="top"
           [placeholder]="tx('เลขบัตรประชาชน')"
           [attr.aria-label]="tx('เลขบัตรประชาชน')"
         />
-        <wt-button [label]="tx('ช้าหน่อย')" severity="secondary" [wtTooltip]="tx('แสดงหลัง 500ms')" [showDelay]="500" [hideDelay]="300"></wt-button>
+        <wu-button [label]="tx('ช้าหน่อย')" severity="secondary" [wuTooltip]="tx('แสดงหลัง 500ms')" [showDelay]="500" [hideDelay]="300"></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="html" [section]="sec['html']">
       <docs-demo [html]="code['html']">
-        <wt-button
+        <wu-button
           [label]="tx('รายละเอียด')"
           severity="secondary"
-          [wtTooltip]="tx(proHint)"
+          [wuTooltip]="tx(proHint)"
           [escape]="false"
           tooltipPosition="top"
-        ></wt-button>
+        ></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="options" [section]="sec['options']">
       <docs-demo [html]="code['options']">
-        <wt-button [label]="tx(off ? 'tooltip ปิดอยู่' : 'tooltip เปิดอยู่')" severity="secondary" [wtTooltip]="tx('แสดงแล้ว')" [tooltipDisabled]="off" (onClick)="off = !off"></wt-button>
-        <wt-button [label]="tx('บรรทัดเดียว')" severity="secondary" [wtTooltip]="tx('ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่')" [fitContent]="true" tooltipPosition="top"></wt-button>
+        <wu-button [label]="tx(off ? 'tooltip ปิดอยู่' : 'tooltip เปิดอยู่')" severity="secondary" [wuTooltip]="tx('แสดงแล้ว')" [tooltipDisabled]="off" (onClick)="off = !off"></wu-button>
+        <wu-button [label]="tx('บรรทัดเดียว')" severity="secondary" [wuTooltip]="tx('ข้อความยาวที่ไม่ต้องการให้ตัดขึ้นบรรทัดใหม่')" [fitContent]="true" tooltipPosition="top"></wu-button>
       </docs-demo>
     </docs-section>
   </ng-template>

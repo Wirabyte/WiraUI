@@ -1,4 +1,4 @@
-/** Organization chart (wt-organizationChart): leaves, selection, and moving between the boxes with the keys. */
+/** Organization chart (wu-organizationChart): leaves, selection, and moving between the boxes with the keys. */
 import type { TreeNode } from './tree';
 
 export type OrgChartSelectionMode = 'single' | 'multiple' | null | undefined;

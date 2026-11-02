@@ -20,24 +20,24 @@ import {
   ɵassertSupportedAngular,
   ɵfindTemplate,
   ɵrefreshOnTranslation,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { imageCompareAt, imageCompareClamp, imageCompareKey, WtLocale } from 'wiratheme/core';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { imageCompareAt, imageCompareClamp, imageCompareKey, WuLocale } from 'wiraui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
  * Two pictures in one box with a divider to drag between them (before / after):
- * `<wt-imageCompare><ng-template wtTemplate="left"><img src="before.jpg" /></ng-template>
- * <ng-template wtTemplate="right"><img src="after.jpg" /></ng-template></wt-imageCompare>`.
+ * `<wu-imageCompare><ng-template wuTemplate="left"><img src="before.jpg" /></ng-template>
+ * <ng-template wuTemplate="right"><img src="after.jpg" /></ng-template></wu-imageCompare>`.
  * As before, the `left` picture fills the box and the `right` one shows from the start edge up to the divider. Drag
  * anywhere on it (a sideways swipe on phones; up and down still scrolls the page), or focus the round handle and use
  * the arrows, Page Up / Page Down, Home / End. `[(value)]` reads or sets where the divider is (0–100, default 50).
  */
 @Component({
-  selector: 'wt-imageCompare, wt-imagecompare, wt-image-compare',
+  selector: 'wu-imageCompare, wu-imagecompare, wu-image-compare',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './imagecompare.component.html',
@@ -45,9 +45,9 @@ const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof Te
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // A tabindex written on the tag goes to the handle only, so the page gets one tab stop.
-  host: { class: 'wt-imagecompare-host', '[attr.tabindex]': 'null' },
+  host: { class: 'wu-imagecompare-host', '[attr.tabindex]': 'null' },
 })
-export class WtImageCompare implements OnInit, OnDestroy {
+export class WuImageCompare implements OnInit, OnDestroy {
   /** Tab order of the handle. Default 0. */
   @Input() set tabindex(v: unknown) {
     const n = Number(v);
@@ -73,7 +73,7 @@ export class WtImageCompare implements OnInit, OnDestroy {
 
   @Output() readonly valueChange = new EventEmitter<number>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('left', { descendants: false }) protected leftRef?: unknown;
   @ContentChild('right', { descendants: false }) protected rightRef?: unknown;
 
@@ -87,11 +87,11 @@ export class WtImageCompare implements OnInit, OnDestroy {
   private dirObserver: MutationObserver | null = null;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngOnInit(): void {
@@ -117,7 +117,7 @@ export class WtImageCompare implements OnInit, OnDestroy {
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -154,7 +154,7 @@ export class WtImageCompare implements OnInit, OnDestroy {
     const touch = event.pointerType === 'touch';
     this.press = { id: event.pointerId, touch, moved: false };
     const root = event.currentTarget as HTMLElement;
-    (root.querySelector('.wt-imagecompare-handle') as HTMLElement | null)?.focus({ preventScroll: true });
+    (root.querySelector('.wu-imagecompare-handle') as HTMLElement | null)?.focus({ preventScroll: true });
     if (touch) return;
     event.preventDefault();
     try {
@@ -199,7 +199,7 @@ export class WtImageCompare implements OnInit, OnDestroy {
   // ---------- internals ----------
 
   private moveTo(event: PointerEvent): void {
-    const root = this.host.querySelector('.wt-imagecompare') as HTMLElement | null;
+    const root = this.host.querySelector('.wu-imagecompare') as HTMLElement | null;
     if (!root) return;
     const r = root.getBoundingClientRect();
     this.setValue(imageCompareAt(event.clientX, r.left, r.width, this.rtl));

@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <label id="d-otp-label" class="docs-otp-label">{{ tx('รหัสยืนยัน 6 หลักจาก SMS') }}</label>
-        <wt-inputOtp
+        <wu-inputOtp
           id="d-otp"
           name="code"
           [(ngModel)]="otpCode"
@@ -16,9 +16,9 @@
           ariaLabelledBy="d-otp-label"
           (onChange)="codeChanged($event)"
           (onFocus)="focused()"
-        ></wt-inputOtp>
+        ></wu-inputOtp>
         <div class="docs-demo-actions">
-          <wt-button id="d-otp-verify" [label]="tx('ยืนยันรหัส')" icon="wi wi-check" [disabled]="otpCode.length < 6" (onClick)="verify()"></wt-button>
+          <wu-button id="d-otp-verify" [label]="tx('ยืนยันรหัส')" icon="wi wi-check" [disabled]="otpCode.length < 6" (onClick)="verify()"></wu-button>
           <span class="docs-demo-output">
             ngModel: <code id="d-otp-value">{{ otpCode || '-' }}</code> · onChange: <code id="d-otp-change">{{ lastChange || '-' }}</code> · verify():
             <code id="d-otp-verified">{{ verified }}</code>
@@ -29,15 +29,15 @@
 
     <docs-section id="mask" [section]="sec['mask']">
       <docs-demo [html]="code['mask']">
-        <wt-inputOtp id="d-otp-mask" name="password" [(ngModel)]="password" [mask]="true" [ariaLabel]="tx('รหัสผ่านชั่วคราว')"></wt-inputOtp>
+        <wu-inputOtp id="d-otp-mask" name="password" [(ngModel)]="password" [mask]="true" [ariaLabel]="tx('รหัสผ่านชั่วคราว')"></wu-inputOtp>
         <span class="docs-demo-output">ngModel: <code id="d-otp-mask-value">{{ password || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="look" [section]="sec['look']">
       <docs-demo [html]="code['look']" layout="stack">
-        <wt-inputOtp id="d-otp-small" name="room" [(ngModel)]="room" size="small" variant="filled" [ariaLabel]="tx('รหัสห้องสอบ')"></wt-inputOtp>
-        <wt-inputOtp
+        <wu-inputOtp id="d-otp-small" name="room" [(ngModel)]="room" size="small" variant="filled" [ariaLabel]="tx('รหัสห้องสอบ')"></wu-inputOtp>
+        <wu-inputOtp
           id="d-otp-invalid"
           name="wrong"
           [(ngModel)]="wrongCode"
@@ -45,16 +45,16 @@
           [integerOnly]="true"
           [invalid]="true"
           [ariaLabel]="tx('รหัสยืนยัน 6 หลักจาก SMS')"
-        ></wt-inputOtp>
-        <wt-inputOtp id="d-otp-ro" name="roomRead" [ngModel]="'4821'" [readonly]="true" [ariaLabel]="tx('รหัสห้องสอบ')"></wt-inputOtp>
-        <wt-inputOtp id="d-otp-off" name="roomOff" [disabled]="true" [ariaLabel]="tx('รหัสห้องสอบ')"></wt-inputOtp>
+        ></wu-inputOtp>
+        <wu-inputOtp id="d-otp-ro" name="roomRead" [ngModel]="'4821'" [readonly]="true" [ariaLabel]="tx('รหัสห้องสอบ')"></wu-inputOtp>
+        <wu-inputOtp id="d-otp-off" name="roomOff" [disabled]="true" [ariaLabel]="tx('รหัสห้องสอบ')"></wu-inputOtp>
       </docs-demo>
     </docs-section>
 
     <docs-section id="template" [section]="sec['template']">
       <docs-slot-note slot="input"></docs-slot-note>
       <docs-demo [html]="code['template']" layout="stack">
-        <wt-inputOtp id="d-otp-own" name="own" [(ngModel)]="ownCode" [length]="6" [integerOnly]="true" [ariaLabel]="tx('รหัสยืนยัน 6 หลักจาก SMS')">
+        <wu-inputOtp id="d-otp-own" name="own" [(ngModel)]="ownCode" [length]="6" [integerOnly]="true" [ariaLabel]="tx('รหัสยืนยัน 6 หลักจาก SMS')">
           <ng-template #input let-token let-events="events" let-index="index">
             <input
               class="docs-otp-box"
@@ -73,7 +73,7 @@
               <span class="docs-otp-dash" aria-hidden="true">-</span>
             }
           </ng-template>
-        </wt-inputOtp>
+        </wu-inputOtp>
         <span class="docs-demo-output">ngModel: <code id="d-otp-own-value">{{ ownCode || '-' }}</code></span>
       </docs-demo>
     </docs-section>

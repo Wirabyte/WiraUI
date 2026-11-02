@@ -19,30 +19,30 @@ import {
   ɵsize,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtPopup,
-  WtSize,
-  ɵWtStyleLoader,
-} from 'wiratheme/config';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵpasswordStrength, WtPasswordStrength } from './password.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuPopup,
+  WuSize,
+  ɵWuStyleLoader,
+} from 'wiraui/config';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵpasswordStrength, WuPasswordStrength } from './password.types';
 
 /**
  * Password field with a show/hide button and a strength meter under it:
- * `<wt-password [(ngModel)]="pw" toggleMask>`; `[feedback]="false"` for login forms.
+ * `<wu-password [(ngModel)]="pw" toggleMask>`; `[feedback]="false"` for login forms.
  */
 @Component({
-  selector: 'wt-password',
+  selector: 'wu-password',
   standalone: true,
   imports: [NgIf],
   templateUrl: './password.component.html',
   styleUrls: ['./password.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtPassword), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuPassword), multi: true }],
 })
-export class WtPassword implements ControlValueAccessor, OnDestroy {
+export class WuPassword implements ControlValueAccessor, OnDestroy {
   @Input() placeholder?: string;
   /** Strength meter while typing. Default true. */
   @Input() set feedback(v: unknown) { this._feedback = v === undefined || ɵtoBool(v); }
@@ -72,11 +72,11 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   get disabled(): boolean { return this._disabled; }
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
-  @Input() size?: WtSize;
-  @HostBinding('class.wt-password-sm') @HostBinding('class.p-password-sm') get sizeSm(): boolean {
+  @Input() size?: WuSize;
+  @HostBinding('class.wu-password-sm') @HostBinding('class.p-password-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
-  @HostBinding('class.wt-password-lg') @HostBinding('class.p-password-lg') get sizeLg(): boolean {
+  @HostBinding('class.wu-password-lg') @HostBinding('class.p-password-lg') get sizeLg(): boolean {
     return this.sizeKey === 'lg';
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -86,18 +86,18 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   @Input() set fluid(v: unknown) { this._fluid = ɵtoBool(v); }
   get fluid(): boolean { return this._fluid; }
 
-  @HostBinding('class.wt-password-fluid') get fluidClass(): boolean {
+  @HostBinding('class.wu-password-fluid') get fluidClass(): boolean {
     return this._fluid;
   }
-  @HostBinding('class.wt-filled') @HostBinding('class.p-inputwrapper-filled') get filled(): boolean {
+  @HostBinding('class.wu-filled') @HostBinding('class.p-inputwrapper-filled') get filled(): boolean {
     return !!this.value;
   }
 
   value = '';
   unmasked = false;
-  readonly feedbackId = ɵuniqueId('wt-password-feedback');
+  readonly feedbackId = ɵuniqueId('wu-password-feedback');
   private focused = false;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   @ViewChild('root') private rootRef?: ElementRef<HTMLElement>;
   @ViewChild('panel') private panelRef?: ElementRef<HTMLElement>;
   private _feedback = true;
@@ -106,16 +106,16 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   private _invalid = false;
   private _fluid = false;
   private formDisabled = false;
-  private readonly autoId = ɵuniqueId('wt-password');
-  private readonly config = inject(WtConfig);
+  private readonly autoId = ɵuniqueId('wu-password');
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly cdr = inject(ChangeDetectorRef);
   private onModelChange: (value: string) => void = () => {};
   private onTouchedFn: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    inject(ɵWtStyleLoader).load('inputtext', ɵWT_INPUTTEXT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    inject(ɵWuStyleLoader).load('inputtext', ɵWU_INPUTTEXT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -129,7 +129,7 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
   get isDisabled(): boolean {
     return this._disabled || this.formDisabled;
   }
-  get strength(): WtPasswordStrength {
+  get strength(): WuPasswordStrength {
     return ɵpasswordStrength(this.value, this.mediumRegex, this.strongRegex);
   }
   /** The meter opens under the field while it has focus. */
@@ -163,9 +163,9 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    const c = ['wt-password', 'p-password', 'p-component', 'p-inputwrapper'];
-    if (this._toggleMask) c.push('wt-password-has-toggle', 'p-password-mask');
-    if (this.strength) c.push('wt-password-' + this.strength);
+    const c = ['wu-password', 'p-password', 'p-component', 'p-inputwrapper'];
+    if (this._toggleMask) c.push('wu-password-has-toggle', 'p-password-mask');
+    if (this.strength) c.push('wu-password-' + this.strength);
     return c.join(' ');
   }
   get toggleLabel(): string {
@@ -182,11 +182,11 @@ export class WtPassword implements ControlValueAccessor, OnDestroy {
     this.cdr.detectChanges();
     const panel = this.panelRef?.nativeElement;
     if (!panel || !this.rootRef) return;
-    this.popup = new ɵWtPopup(this.rootRef.nativeElement, panel, {
+    this.popup = new ɵWuPopup(this.rootRef.nativeElement, panel, {
       sheet: false,
       gap: 6,
-      sheetClass: 'wt-password-sheet',
-      modalClass: 'wt-password-modal',
+      sheetClass: 'wu-password-sheet',
+      modalClass: 'wu-password-modal',
       onOutside: () => {},
       onPosition: (_, anchor) => (panel.style.minWidth = `${Math.round(anchor.width)}px`),
     });

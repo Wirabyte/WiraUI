@@ -8,9 +8,9 @@ export const INPUTMASK_DOC: ComponentDoc = {
   title: 'InputMask',
   group: 'Form',
   entry: 'inputmask',
-  standalone: 'WtInputMask',
-  module: 'WtInputMaskModule',
-  selector: 'wt-inputmask',
+  standalone: 'WuInputMask',
+  module: 'WuInputMaskModule',
+  selector: 'wu-inputmask',
   forms: true,
   description: {
     th: 'ช่องกรอกตามรูปแบบ เช่น เลขบัตรประชาชน เบอร์โทร หรือทะเบียนรถ ช่องพิมพ์ตัวคั่นให้เอง รับเลขไทย และ mask ที่มีแต่ตัวเลขขึ้นแป้นตัวเลขบนมือถือ',
@@ -48,8 +48,8 @@ export const INPUTMASK_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtInputMaskModule</code>) และ standalone (<code>WtInputMask</code>) คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> selector <code>wt-inputMask</code> ที่ template เดิมใช้ก็ใช้ได้ ย้ายมาแค่เปลี่ยน prefix',
-        en: 'Works as an NgModule (<code>WtInputMaskModule</code>) or standalone (<code>WtInputMask</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The <code>wt-inputMask</code> selector existing templates use works too, so moving over is a prefix change.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuInputMaskModule</code>) และ standalone (<code>WuInputMask</code>) คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code> selector <code>wu-inputMask</code> ที่ template เดิมใช้ก็ใช้ได้ ย้ายมาแค่เปลี่ยน prefix',
+        en: 'Works as an NgModule (<code>WuInputMaskModule</code>) or standalone (<code>WuInputMask</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>. The <code>wu-inputMask</code> selector existing templates use works too, so moving over is a prefix change.',
       },
     },
     basic: {
@@ -125,42 +125,42 @@ export const INPUTMASK_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-inputMask&gt;</code> เป็น <code>&lt;wt-inputMask&gt;</code> (หรือ <code>wt-inputmask</code>) input เดิมอย่าง <code>mask</code>, <code>unmask</code>, <code>autoClear</code>, <code>slotChar</code>, <code>placeholder</code> และ <code>(onComplete)</code> ใช้ได้เลย model ยังได้ข้อความตามรูปแบบที่มี <code>_</code> ระหว่างยังไม่ครบเหมือนเดิม ส่วน <code>keepBuffer</code> และ <code>autoFocus</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-inputMask&gt;</code> to <code>&lt;wt-inputMask&gt;</code> (or <code>wt-inputmask</code>). Existing inputs such as <code>mask</code>, <code>unmask</code>, <code>autoClear</code>, <code>slotChar</code>, <code>placeholder</code> and <code>(onComplete)</code> work as they are, and the model still gets the formatted text with <code>_</code> while it is incomplete. <code>keepBuffer</code> and <code>autoFocus</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-inputMask&gt;</code> เป็น <code>&lt;wu-inputMask&gt;</code> (หรือ <code>wu-inputmask</code>) input เดิมอย่าง <code>mask</code>, <code>unmask</code>, <code>autoClear</code>, <code>slotChar</code>, <code>placeholder</code> และ <code>(onComplete)</code> ใช้ได้เลย model ยังได้ข้อความตามรูปแบบที่มี <code>_</code> ระหว่างยังไม่ครบเหมือนเดิม ส่วน <code>keepBuffer</code> และ <code>autoFocus</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-inputMask&gt;</code> to <code>&lt;wu-inputMask&gt;</code> (or <code>wu-inputmask</code>). Existing inputs such as <code>mask</code>, <code>unmask</code>, <code>autoClear</code>, <code>slotChar</code>, <code>placeholder</code> and <code>(onComplete)</code> work as they are, and the model still gets the formatted text with <code>_</code> while it is incomplete. <code>keepBuffer</code> and <code>autoFocus</code> are accepted and ignored.',
       },
     },
   },
   code: {
     basic: `<label for="idCard">เลขบัตรประชาชน</label>
-<wt-inputmask inputId="idCard" name="idCard" [(ngModel)]="idCard" mask="9-9999-99999-99-9"
-  placeholder="เลขบัตรประชาชน 13 หลัก"></wt-inputmask>`,
-    examples: `<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" ariaLabel="เบอร์มือถือ"></wt-inputmask>
-<wt-inputmask name="birthDate" [(ngModel)]="birthDate" mask="99/99/9999" ariaLabel="วันเกิด"></wt-inputmask>
-<wt-inputmask name="sku" [(ngModel)]="sku" mask="aa-9999" ariaLabel="รหัสสินค้า"></wt-inputmask>
-<wt-inputmask name="office" [(ngModel)]="office" mask="(999) 999-9999? x99999"
-  ariaLabel="เบอร์ที่ทำงาน (มีเบอร์ต่อได้)"></wt-inputmask>`,
-    thai: `<wt-inputmask name="plate" [(ngModel)]="plate" mask="9aa 9999" characterPattern="[ก-ฮ]"
-  ariaLabel="ทะเบียนรถ"></wt-inputmask>`,
-    slotchar: `<wt-inputmask name="visitDate" [(ngModel)]="visitDate" mask="99/99/9999" slotChar="dd/mm/yyyy"
-  ariaLabel="วันนัด"></wt-inputmask>
-<wt-inputmask name="otp" [(ngModel)]="otp" mask="999999" slotChar="•" ariaLabel="รหัส OTP"></wt-inputmask>`,
+<wu-inputmask inputId="idCard" name="idCard" [(ngModel)]="idCard" mask="9-9999-99999-99-9"
+  placeholder="เลขบัตรประชาชน 13 หลัก"></wu-inputmask>`,
+    examples: `<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" ariaLabel="เบอร์มือถือ"></wu-inputmask>
+<wu-inputmask name="birthDate" [(ngModel)]="birthDate" mask="99/99/9999" ariaLabel="วันเกิด"></wu-inputmask>
+<wu-inputmask name="sku" [(ngModel)]="sku" mask="aa-9999" ariaLabel="รหัสสินค้า"></wu-inputmask>
+<wu-inputmask name="office" [(ngModel)]="office" mask="(999) 999-9999? x99999"
+  ariaLabel="เบอร์ที่ทำงาน (มีเบอร์ต่อได้)"></wu-inputmask>`,
+    thai: `<wu-inputmask name="plate" [(ngModel)]="plate" mask="9aa 9999" characterPattern="[ก-ฮ]"
+  ariaLabel="ทะเบียนรถ"></wu-inputmask>`,
+    slotchar: `<wu-inputmask name="visitDate" [(ngModel)]="visitDate" mask="99/99/9999" slotChar="dd/mm/yyyy"
+  ariaLabel="วันนัด"></wu-inputmask>
+<wu-inputmask name="otp" [(ngModel)]="otp" mask="999999" slotChar="•" ariaLabel="รหัส OTP"></wu-inputmask>`,
     autoclear: `<!-- ค่าเริ่มต้นเป็น true: ค่าที่ไม่ครบถูกล้างตอนออกจากช่อง -->
-<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" ariaLabel="ล้างเมื่อไม่ครบ (ค่าเริ่มต้น)"></wt-inputmask>
-<wt-inputmask name="draftPhone" [(ngModel)]="draftPhone" mask="999-999-9999" [autoClear]="false"
-  ariaLabel="เก็บค่าที่กรอกไว้"></wt-inputmask>`,
-    unmask: `<wt-inputmask name="idCard" [(ngModel)]="idCard" mask="9-9999-99999-99-9" ariaLabel="ตามรูปแบบ (ค่าเริ่มต้น)"></wt-inputmask>
-<wt-inputmask name="idCardRaw" [(ngModel)]="idCardRaw" mask="9-9999-99999-99-9" [unmask]="true"
-  ariaLabel="เฉพาะตัวที่พิมพ์"></wt-inputmask>`,
-    events: `<wt-inputmask name="memberId" [(ngModel)]="memberId" mask="9-9999-99999-99-9" [showClear]="true"
-  ariaLabel="เลขสมาชิก" (onComplete)="lookUp()" (onClear)="clearLookup()"></wt-inputmask>
+<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" ariaLabel="ล้างเมื่อไม่ครบ (ค่าเริ่มต้น)"></wu-inputmask>
+<wu-inputmask name="draftPhone" [(ngModel)]="draftPhone" mask="999-999-9999" [autoClear]="false"
+  ariaLabel="เก็บค่าที่กรอกไว้"></wu-inputmask>`,
+    unmask: `<wu-inputmask name="idCard" [(ngModel)]="idCard" mask="9-9999-99999-99-9" ariaLabel="ตามรูปแบบ (ค่าเริ่มต้น)"></wu-inputmask>
+<wu-inputmask name="idCardRaw" [(ngModel)]="idCardRaw" mask="9-9999-99999-99-9" [unmask]="true"
+  ariaLabel="เฉพาะตัวที่พิมพ์"></wu-inputmask>`,
+    events: `<wu-inputmask name="memberId" [(ngModel)]="memberId" mask="9-9999-99999-99-9" [showClear]="true"
+  ariaLabel="เลขสมาชิก" (onComplete)="lookUp()" (onClear)="clearLookup()"></wu-inputmask>
 <p>{{ lookupText }}</p>`,
     reactive: `<form [formGroup]="form">
-  <wt-inputmask formControlName="phone" mask="999-999-9999" ariaLabel="เบอร์มือถือ"></wt-inputmask>
+  <wu-inputmask formControlName="phone" mask="999-999-9999" ariaLabel="เบอร์มือถือ"></wu-inputmask>
 </form>`,
-    look: `<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" size="small" placeholder="เล็ก"></wt-inputmask>
-<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" size="large" placeholder="ใหญ่"></wt-inputmask>
-<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" variant="filled" placeholder="แบบพื้นทึบ"></wt-inputmask>
-<wt-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wt-inputmask>`,
+    look: `<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" size="small" placeholder="เล็ก"></wu-inputmask>
+<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" size="large" placeholder="ใหญ่"></wu-inputmask>
+<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" variant="filled" placeholder="แบบพื้นทึบ"></wu-inputmask>
+<wu-inputmask name="phone" [(ngModel)]="phone" mask="999-999-9999" [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wu-inputmask>`,
   },
   ts: {
     basic: `idCard = '';`,
@@ -232,19 +232,19 @@ clearLookup(): void {
     },
   ],
   tokens: [
-    tok('--wt-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
-    tok('--wt-field-color', 'สีตัวอักษร', 'Text colour'),
-    tok('--wt-field-border', 'ขอบ', 'Border'),
-    tok('--wt-field-hover-border', 'ขอบตอนชี้', 'Hover border'),
-    tok('--wt-field-focus-border', 'ขอบตอนโฟกัส', 'Focus border'),
-    tok('--wt-field-focus-shadow', 'วงโฟกัส', 'Focus ring'),
-    tok('--wt-field-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
-    tok('--wt-field-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
-    tok('--wt-input-radius', 'ความมนของมุม', 'Corner radius'),
-    tok('--wt-field-placeholder', 'สี placeholder และปุ่ม ×', 'Placeholder and × button colour'),
-    tok('--wt-field-filled-bg', 'พื้นของ variant="filled"', 'variant="filled" background'),
-    tok('--wt-field-disabled-bg', 'พื้นเมื่อ disabled / readonly', 'Disabled / readonly background'),
-    tok('--wt-danger-color', 'ขอบเมื่อ invalid', 'Invalid border'),
+    tok('--wu-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
+    tok('--wu-field-color', 'สีตัวอักษร', 'Text colour'),
+    tok('--wu-field-border', 'ขอบ', 'Border'),
+    tok('--wu-field-hover-border', 'ขอบตอนชี้', 'Hover border'),
+    tok('--wu-field-focus-border', 'ขอบตอนโฟกัส', 'Focus border'),
+    tok('--wu-field-focus-shadow', 'วงโฟกัส', 'Focus ring'),
+    tok('--wu-field-padding-x', 'ระยะซ้ายขวา', 'Horizontal padding'),
+    tok('--wu-field-padding-y', 'ระยะบนล่าง', 'Vertical padding'),
+    tok('--wu-input-radius', 'ความมนของมุม', 'Corner radius'),
+    tok('--wu-field-placeholder', 'สี placeholder และปุ่ม ×', 'Placeholder and × button colour'),
+    tok('--wu-field-filled-bg', 'พื้นของ variant="filled"', 'variant="filled" background'),
+    tok('--wu-field-disabled-bg', 'พื้นเมื่อ disabled / readonly', 'Disabled / readonly background'),
+    tok('--wu-danger-color', 'ขอบเมื่อ invalid', 'Invalid border'),
   ],
   overrides: `    input: { radius: '10px' },   // InputMask ใช้ token เดียวกับ InputText`,
 };

@@ -2,10 +2,10 @@
 <html lang="th">
   <head>
     <meta charset="utf-8" />
-    <title>WiraTheme · ชุด UI ที่เข้าใจงานไทย</title>
+    <title>WiraUI · ชุด UI ที่เข้าใจงานไทย</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="WiraTheme: UI components and theming, Thai-first with the Buddhist calendar built in. Angular 15–21+ today, React and Vue coming. Free under MIT. · ชุด UI และระบบธีมที่เข้าใจงานไทย ภาษาไทยและ พ.ศ. ในตัว รองรับ Angular 15–21+ วันนี้ React และ Vue กำลังตามมา ใช้ฟรีภายใต้ MIT" />
+    <meta name="description" content="WiraUI: UI components and theming, Thai-first with the Buddhist calendar built in. Angular 15–21+ today, React and Vue coming. Free under MIT. · ชุด UI และระบบธีมที่เข้าใจงานไทย ภาษาไทยและ พ.ศ. ในตัว รองรับ Angular 15–21+ วันนี้ React และ Vue กำลังตามมา ใช้ฟรีภายใต้ MIT" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
@@ -19,12 +19,12 @@
     <!-- Dark mode and language before Angular starts, so the first paint is already right. -->
     <script>
       try {
-        var d = localStorage.getItem('wiratheme-docs-dark');
+        var d = localStorage.getItem('wiraui-docs-dark');
         if (d === '1' || (d === null && matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('wt-dark');
+          document.documentElement.classList.add('wu-dark');
         }
         var q = /[?&]lang=(th|en)(?![a-z])/.exec(location.search);
-        var l = (q && q[1]) || localStorage.getItem('wiratheme-docs-lang');
+        var l = (q && q[1]) || localStorage.getItem('wiraui-docs-lang');
         document.documentElement.lang = l === 'th' || l === 'en' ? l : /^th/i.test(navigator.language) ? 'th' : 'en';
       } catch (e) {}
     </script>

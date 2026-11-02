@@ -8,9 +8,9 @@ export const KNOB_DOC: ComponentDoc = {
   title: 'Knob',
   group: 'Form',
   entry: 'knob',
-  standalone: 'WtKnob',
-  module: 'WtKnobModule',
-  selector: 'wt-knob',
+  standalone: 'WuKnob',
+  module: 'WuKnobModule',
+  selector: 'wu-knob',
   forms: true,
   description: {
     th: 'ปุ่มหมุนรูปวงแหวนสำหรับเลือกตัวเลขในช่วง เช่น ระดับเสียง ความสว่าง หรือเปอร์เซ็นต์ ลากรอบวง คลิก หรือใช้คีย์บอร์ดก็ได้ ใช้กับ ngModel และ reactive forms',
@@ -31,8 +31,8 @@ export const KNOB_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtKnobModule</code>) และ standalone (<code>WtKnob</code>) คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code>',
-        en: 'Works as an NgModule (<code>WtKnobModule</code>) or standalone (<code>WtKnob</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuKnobModule</code>) และ standalone (<code>WuKnob</code>) คู่กับ <code>FormsModule</code> หรือ <code>ReactiveFormsModule</code>',
+        en: 'Works as an NgModule (<code>WuKnobModule</code>) or standalone (<code>WuKnob</code>), with <code>FormsModule</code> or <code>ReactiveFormsModule</code>.',
       },
     },
     basic: {
@@ -80,23 +80,23 @@ export const KNOB_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-knob&gt;</code> เป็น <code>&lt;wt-knob&gt;</code> input และ event ใช้ชื่อเดิม (<code>min</code>, <code>max</code>, <code>step</code>, <code>size</code>, <code>strokeWidth</code>, <code>valueColor</code>, <code>rangeColor</code>, <code>textColor</code>, <code>valueTemplate</code>, <code>showValue</code>, <code>readonly</code>, <code>disabled</code>, <code>onChange</code>)',
-        en: 'Change <code>&lt;p-knob&gt;</code> to <code>&lt;wt-knob&gt;</code>; the inputs and the event keep their names (<code>min</code>, <code>max</code>, <code>step</code>, <code>size</code>, <code>strokeWidth</code>, <code>valueColor</code>, <code>rangeColor</code>, <code>textColor</code>, <code>valueTemplate</code>, <code>showValue</code>, <code>readonly</code>, <code>disabled</code>, <code>onChange</code>).',
+        th: 'เปลี่ยน <code>&lt;p-knob&gt;</code> เป็น <code>&lt;wu-knob&gt;</code> input และ event ใช้ชื่อเดิม (<code>min</code>, <code>max</code>, <code>step</code>, <code>size</code>, <code>strokeWidth</code>, <code>valueColor</code>, <code>rangeColor</code>, <code>textColor</code>, <code>valueTemplate</code>, <code>showValue</code>, <code>readonly</code>, <code>disabled</code>, <code>onChange</code>)',
+        en: 'Change <code>&lt;p-knob&gt;</code> to <code>&lt;wu-knob&gt;</code>; the inputs and the event keep their names (<code>min</code>, <code>max</code>, <code>step</code>, <code>size</code>, <code>strokeWidth</code>, <code>valueColor</code>, <code>rangeColor</code>, <code>textColor</code>, <code>valueTemplate</code>, <code>showValue</code>, <code>readonly</code>, <code>disabled</code>, <code>onChange</code>).',
       },
     },
   },
   code: {
-    basic: `<wt-knob name="volume" [(ngModel)]="volume" ariaLabel="ระดับเสียงประกาศ" (onChange)="volumeChanged($event)"></wt-knob>`,
-    range: `<wt-knob name="progress" [(ngModel)]="progress" [step]="5" valueTemplate="{value}%" ariaLabel="ความคืบหน้าของงาน"></wt-knob>
-<wt-knob name="temperature" [(ngModel)]="temperature" [min]="-10" [max]="40" valueTemplate="{value}°C" ariaLabel="อุณหภูมิห้อง"></wt-knob>
-<wt-knob name="brightness" [(ngModel)]="brightness" [showValue]="false" ariaLabel="ระดับความสว่าง"></wt-knob>`,
-    look: `<wt-knob name="volume" [(ngModel)]="volume" [size]="140" [strokeWidth]="8" ariaLabel="ระดับเสียงประกาศ"></wt-knob>
-<wt-knob name="score" [(ngModel)]="score" [size]="80" valueColor="#16a34a" rangeColor="#dcfce7" textColor="#166534"
-  ariaLabel="คะแนนจิตพิสัย"></wt-knob>`,
-    state: `<wt-knob name="progress" [(ngModel)]="progress" [readonly]="true" valueTemplate="{value}%" ariaLabel="ความคืบหน้าของงาน"></wt-knob>
-<wt-knob name="volume" [(ngModel)]="volume" [disabled]="true" ariaLabel="ปิดใช้งาน"></wt-knob>`,
+    basic: `<wu-knob name="volume" [(ngModel)]="volume" ariaLabel="ระดับเสียงประกาศ" (onChange)="volumeChanged($event)"></wu-knob>`,
+    range: `<wu-knob name="progress" [(ngModel)]="progress" [step]="5" valueTemplate="{value}%" ariaLabel="ความคืบหน้าของงาน"></wu-knob>
+<wu-knob name="temperature" [(ngModel)]="temperature" [min]="-10" [max]="40" valueTemplate="{value}°C" ariaLabel="อุณหภูมิห้อง"></wu-knob>
+<wu-knob name="brightness" [(ngModel)]="brightness" [showValue]="false" ariaLabel="ระดับความสว่าง"></wu-knob>`,
+    look: `<wu-knob name="volume" [(ngModel)]="volume" [size]="140" [strokeWidth]="8" ariaLabel="ระดับเสียงประกาศ"></wu-knob>
+<wu-knob name="score" [(ngModel)]="score" [size]="80" valueColor="#16a34a" rangeColor="#dcfce7" textColor="#166534"
+  ariaLabel="คะแนนจิตพิสัย"></wu-knob>`,
+    state: `<wu-knob name="progress" [(ngModel)]="progress" [readonly]="true" valueTemplate="{value}%" ariaLabel="ความคืบหน้าของงาน"></wu-knob>
+<wu-knob name="volume" [(ngModel)]="volume" [disabled]="true" ariaLabel="ปิดใช้งาน"></wu-knob>`,
     reactive: `<form [formGroup]="form">
-  <wt-knob formControlName="books" [min]="0" [max]="20" valueTemplate="{value} เล่ม" ariaLabel="เป้าหมายการอ่าน (เล่ม)"></wt-knob>
+  <wu-knob formControlName="books" [min]="0" [max]="20" valueTemplate="{value} เล่ม" ariaLabel="เป้าหมายการอ่าน (เล่ม)"></wu-knob>
 </form>`,
   },
   ts: {
@@ -141,9 +141,9 @@ brightness = 70;`,
     },
   ],
   tokens: [
-    tok('--wt-knob-value-color', 'สีส่วนที่เลือก', 'Colour of the chosen part'),
-    tok('--wt-knob-range-color', 'สีส่วนที่เหลือของวง', 'Colour of the rest of the ring'),
-    tok('--wt-knob-text-color', 'สีข้อความกลางวง', 'Colour of the text'),
-    tok('--wt-knob-text-size', 'ขนาดข้อความกลางวง', 'Size of the text'),
+    tok('--wu-knob-value-color', 'สีส่วนที่เลือก', 'Colour of the chosen part'),
+    tok('--wu-knob-range-color', 'สีส่วนที่เหลือของวง', 'Colour of the rest of the ring'),
+    tok('--wu-knob-text-color', 'สีข้อความกลางวง', 'Colour of the text'),
+    tok('--wu-knob-text-size', 'ขนาดข้อความกลางวง', 'Size of the text'),
   ],
 };

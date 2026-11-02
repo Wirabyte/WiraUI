@@ -1,18 +1,18 @@
 import { Directive, inject } from '@angular/core';
-import { ɵWtStyleLoader } from 'wiratheme/config';
-import { WT_EDITOR_CSS } from './editor.styles';
+import { ɵWuStyleLoader } from 'wiraui/config';
+import { WU_EDITOR_CSS } from './editor.styles';
 
 /**
  * Shows saved editor HTML the way the editor drew it (headings, lists, quotes, tables, pictures, the `ql-align-*` /
- * `ql-indent-*` / `ql-size-*` classes): `<div wtEditorContent [innerHTML]="news.body"></div>`.
+ * `ql-indent-*` / `ql-size-*` classes): `<div wuEditorContent [innerHTML]="news.body"></div>`.
  */
 @Directive({
-  selector: '[wtEditorContent]',
+  selector: '[wuEditorContent]',
   standalone: true,
-  host: { class: 'wt-editor-content wt-editor-view' },
+  host: { class: 'wu-editor-content wu-editor-view' },
 })
-export class WtEditorContent {
+export class WuEditorContent {
   constructor() {
-    inject(ɵWtStyleLoader).load('editor', WT_EDITOR_CSS);
+    inject(ɵWuStyleLoader).load('editor', WU_EDITOR_CSS);
   }
 }

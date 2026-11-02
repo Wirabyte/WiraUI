@@ -1,11 +1,11 @@
-/* wt-toast. Shared by wiratheme v1, v2 and v3. A stack of messages in the top layer (popover), so it shows above
+/* wu-toast. Shared by wiraui v1, v2 and v3. A stack of messages in the top layer (popover), so it shows above
    dialogs without z-index. The family decides the look: a thick coloured edge in the classic look, a tinted
    frosted card in the styled one. On phones the stack spans the screen. */
-@layer wiratheme.components {
-  wt-toast {
+@layer wiraui.components {
+  wu-toast {
     display: contents;
   }
-  .wt-toast {
+  .wu-toast {
     position: fixed;
     inset: auto;
     z-index: 1200;
@@ -13,112 +13,112 @@
     flex-direction: column;
     gap: 0.75rem;
     box-sizing: border-box;
-    width: var(--wt-toast-width);
+    width: var(--wu-toast-width);
     max-width: calc(100vw - 2.5rem);
     margin: 0;
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--wt-text);
+    color: var(--wu-text);
     overflow: visible;
     pointer-events: none;
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
   }
-  .wt-toast:not(:popover-open):empty {
+  .wu-toast:not(:popover-open):empty {
     display: none;
   }
-  .wt-toast-top-right { top: 1.25rem; right: 1.25rem; }
-  .wt-toast-top-left { top: 1.25rem; left: 1.25rem; }
-  .wt-toast-bottom-right { bottom: 1.25rem; right: 1.25rem; }
-  .wt-toast-bottom-left { bottom: 1.25rem; left: 1.25rem; }
-  .wt-toast-top-center { top: 1.25rem; left: 50%; transform: translateX(-50%); }
-  .wt-toast-bottom-center { bottom: 1.25rem; left: 50%; transform: translateX(-50%); }
-  .wt-toast-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .wu-toast-top-right { top: 1.25rem; right: 1.25rem; }
+  .wu-toast-top-left { top: 1.25rem; left: 1.25rem; }
+  .wu-toast-bottom-right { bottom: 1.25rem; right: 1.25rem; }
+  .wu-toast-bottom-left { bottom: 1.25rem; left: 1.25rem; }
+  .wu-toast-top-center { top: 1.25rem; left: 50%; transform: translateX(-50%); }
+  .wu-toast-bottom-center { bottom: 1.25rem; left: 50%; transform: translateX(-50%); }
+  .wu-toast-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-  .wt-toast-message {
-    --_c: var(--wt-info-color);
-    --_bg: var(--wt-info-bg);
-    --_fg: var(--wt-info-text);
+  .wu-toast-message {
+    --_c: var(--wu-info-color);
+    --_bg: var(--wu-info-bg);
+    --_fg: var(--wu-info-text);
     position: relative;
     pointer-events: auto;
     overflow: hidden;
     border-style: solid;
-    border-width: var(--wt-toast-border-width);
-    border-color: color-mix(in srgb, var(--_c) var(--wt-toast-border-mix), transparent);
-    border-radius: var(--wt-toast-radius);
+    border-width: var(--wu-toast-border-width);
+    border-color: color-mix(in srgb, var(--_c) var(--wu-toast-border-mix), transparent);
+    border-radius: var(--wu-toast-radius);
     background: var(--_bg);
-    -webkit-backdrop-filter: var(--wt-overlay-backdrop);
-    backdrop-filter: var(--wt-overlay-backdrop);
+    -webkit-backdrop-filter: var(--wu-overlay-backdrop);
+    backdrop-filter: var(--wu-overlay-backdrop);
     color: var(--_fg);
-    box-shadow: var(--wt-toast-shadow);
-    -webkit-backdrop-filter: blur(var(--wt-toast-blur));
-    backdrop-filter: blur(var(--wt-toast-blur));
-    animation: wt-toast-in-right 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+    box-shadow: var(--wu-toast-shadow);
+    -webkit-backdrop-filter: blur(var(--wu-toast-blur));
+    backdrop-filter: blur(var(--wu-toast-blur));
+    animation: wu-toast-in-right 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
     transition:
       opacity 0.2s ease-in,
       transform 0.2s ease-in;
   }
-  .wt-toast-top-left .wt-toast-message,
-  .wt-toast-bottom-left .wt-toast-message {
-    animation-name: wt-toast-in-left;
+  .wu-toast-top-left .wu-toast-message,
+  .wu-toast-bottom-left .wu-toast-message {
+    animation-name: wu-toast-in-left;
   }
-  .wt-toast-top-center .wt-toast-message,
-  .wt-toast-bottom-center .wt-toast-message,
-  .wt-toast-center .wt-toast-message {
-    animation-name: wt-toast-in-down;
+  .wu-toast-top-center .wu-toast-message,
+  .wu-toast-bottom-center .wu-toast-message,
+  .wu-toast-center .wu-toast-message {
+    animation-name: wu-toast-in-down;
   }
-  .wt-toast-leaving {
+  .wu-toast-leaving {
     opacity: 0;
     transform: scale(0.96);
   }
-  .wt-toast-success { --_c: var(--wt-success-color); --_bg: var(--wt-success-bg); --_fg: var(--wt-success-text); }
-  .wt-toast-warn { --_c: var(--wt-warn-color); --_bg: var(--wt-warn-bg); --_fg: var(--wt-warn-text); }
-  .wt-toast-error { --_c: var(--wt-danger-color); --_bg: var(--wt-danger-bg); --_fg: var(--wt-danger-text); }
-  .wt-toast-secondary { --_c: var(--wt-text-muted); --_bg: var(--wt-hover-bg); --_fg: var(--wt-text); }
+  .wu-toast-success { --_c: var(--wu-success-color); --_bg: var(--wu-success-bg); --_fg: var(--wu-success-text); }
+  .wu-toast-warn { --_c: var(--wu-warn-color); --_bg: var(--wu-warn-bg); --_fg: var(--wu-warn-text); }
+  .wu-toast-error { --_c: var(--wu-danger-color); --_bg: var(--wu-danger-bg); --_fg: var(--wu-danger-text); }
+  .wu-toast-secondary { --_c: var(--wu-text-muted); --_bg: var(--wu-hover-bg); --_fg: var(--wu-text); }
   /* The icon and border take the text colour on the dark box, not the box colour itself. */
-  .wt-toast-contrast { --_c: var(--wt-card-bg); --_bg: var(--wt-text); --_fg: var(--wt-card-bg); }
+  .wu-toast-contrast { --_c: var(--wu-card-bg); --_bg: var(--wu-text); --_fg: var(--wu-card-bg); }
 
-  .wt-toast-content {
+  .wu-toast-content {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: var(--wt-toast-padding);
+    padding: var(--wu-toast-padding);
   }
-  .wt-toast-icon {
+  .wu-toast-icon {
     flex: none;
     display: inline-grid;
     place-items: center;
-    width: var(--wt-toast-icon-size);
-    height: var(--wt-toast-icon-size);
+    width: var(--wu-toast-icon-size);
+    height: var(--wu-toast-icon-size);
     color: var(--_c);
-    font-size: var(--wt-toast-icon-size);
+    font-size: var(--wu-toast-icon-size);
     line-height: 1;
   }
-  .wt-toast-icon svg {
+  .wu-toast-icon svg {
     width: 100%;
     height: 100%;
   }
-  .wt-toast-text {
+  .wu-toast-text {
     flex: 1 1 auto;
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  .wt-toast-summary {
-    font-weight: var(--wt-toast-summary-weight);
+  .wu-toast-summary {
+    font-weight: var(--wu-toast-summary-weight);
     line-height: 1.4;
   }
-  .wt-toast-detail {
+  .wu-toast-detail {
     margin-top: 0.25rem;
     font-size: 0.875em;
     line-height: 1.5;
     white-space: pre-line;
   }
-  .wt-toast-summary:empty + .wt-toast-detail {
+  .wu-toast-summary:empty + .wu-toast-detail {
     margin-top: 0;
   }
   /* Top-right of the box, whatever the message template put before it. */
-  .wt-toast-close {
+  .wu-toast-close {
     flex: none;
     display: inline-grid;
     place-items: center;
@@ -133,67 +133,67 @@
     cursor: pointer;
     opacity: 0.75;
   }
-  .wt-toast-close:hover {
+  .wu-toast-close:hover {
     background: color-mix(in srgb, currentColor 12%, transparent);
     opacity: 1;
   }
-  .wt-toast-close:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-toast-close:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-toast-close svg {
+  .wu-toast-close svg {
     width: 0.875rem;
     height: 0.875rem;
   }
 
   /* Phones: the stack spans the screen and slides down from the top (or up from the bottom). */
   @media (max-width: 575.98px) {
-    .wt-toast {
+    .wu-toast {
       right: 0.75rem !important;
       left: 0.75rem !important;
       width: auto;
       max-width: none;
       transform: none;
     }
-    .wt-toast-center {
+    .wu-toast-center {
       top: 0.75rem;
     }
-    .wt-toast-top-right,
-    .wt-toast-top-left,
-    .wt-toast-top-center {
+    .wu-toast-top-right,
+    .wu-toast-top-left,
+    .wu-toast-top-center {
       top: 0.75rem;
     }
-    .wt-toast-bottom-right,
-    .wt-toast-bottom-left,
-    .wt-toast-bottom-center {
+    .wu-toast-bottom-right,
+    .wu-toast-bottom-left,
+    .wu-toast-bottom-center {
       bottom: 0.75rem;
     }
-    .wt-toast .wt-toast-message {
-      animation-name: wt-toast-in-down;
+    .wu-toast .wu-toast-message {
+      animation-name: wu-toast-in-down;
     }
   }
 
-  @keyframes wt-toast-in-right {
+  @keyframes wu-toast-in-right {
     from {
       opacity: 0;
       transform: translateX(2rem);
     }
   }
-  @keyframes wt-toast-in-left {
+  @keyframes wu-toast-in-left {
     from {
       opacity: 0;
       transform: translateX(-2rem);
     }
   }
-  @keyframes wt-toast-in-down {
+  @keyframes wu-toast-in-down {
     from {
       opacity: 0;
       transform: translateY(-1rem);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-toast-message {
+    .wu-toast-message {
       animation: none;
       transition: none;
     }
@@ -201,10 +201,10 @@
 
   /* Countdown: shrinks over the toast's life and stops while the pointer holds the toast. It is the toast's bottom
      edge: the pale bottom border would otherwise show under it as a thin gap. */
-  .wt-toast-message:has(> .wt-toast-timer) {
+  .wu-toast-message:has(> .wu-toast-timer) {
     border-bottom-width: 0;
   }
-  .wt-toast-timer {
+  .wu-toast-timer {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -212,18 +212,18 @@
     height: 3px;
     pointer-events: none;
   }
-  .wt-toast-timer span {
+  .wu-toast-timer span {
     display: block;
     height: 100%;
     background: var(--_c);
     opacity: 0.55;
     transform-origin: left center;
-    animation: wt-toast-timer linear forwards;
+    animation: wu-toast-timer linear forwards;
   }
-  .wt-toast-message:hover .wt-toast-timer span {
+  .wu-toast-message:hover .wu-toast-timer span {
     animation-play-state: paused;
   }
-  @keyframes wt-toast-timer {
+  @keyframes wu-toast-timer {
     from {
       transform: scaleX(1);
     }

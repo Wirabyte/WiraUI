@@ -1,33 +1,33 @@
-/* wt-organizationChart. Shared by wiratheme v1, v2 and v3. Boxes in a tree from the top down, joined by thin lines drawn
+/* wu-organizationChart. Shared by wiraui v1, v2 and v3. Boxes in a tree from the top down, joined by thin lines drawn
    with borders. A chart wider than its place scrolls inside its own box (phones), it never widens the page. */
-@layer wiratheme.components {
-  :is(wt-organizationchart, wt-organization-chart) {
+@layer wiraui.components {
+  :is(wu-organizationchart, wu-organization-chart) {
     display: block;
     max-width: 100%;
     min-width: 0;
   }
-  .wt-organizationchart {
+  .wu-organizationchart {
     box-sizing: border-box;
     max-width: 100%;
     overflow: auto;
     overscroll-behavior-x: contain;
-    padding: var(--wt-organizationchart-padding);
-    color: var(--wt-text);
+    padding: var(--wu-organizationchart-padding);
+    color: var(--wu-text);
   }
-  .wt-organizationchart-tree,
-  .wt-organizationchart-children {
+  .wu-organizationchart-tree,
+  .wu-organizationchart-children {
     margin: 0;
     padding: 0;
     list-style: none;
   }
   /* As wide as the chart, at least as wide as the box: centred when it fits, scrolls from the start when it does not. */
-  .wt-organizationchart-tree {
+  .wu-organizationchart-tree {
     display: flex;
     justify-content: center;
     width: max-content;
     min-width: 100%;
   }
-  .wt-organizationchart-branch {
+  .wu-organizationchart-branch {
     position: relative;
     display: flex;
     flex: none;
@@ -35,134 +35,134 @@
     align-items: center;
     outline: none;
   }
-  .wt-organizationchart-children {
+  .wu-organizationchart-children {
     position: relative;
     display: flex;
     justify-content: center;
-    padding-top: var(--wt-organizationchart-connector-height);
+    padding-top: var(--wu-organizationchart-connector-height);
   }
   /* The line down from the parent. */
-  .wt-organizationchart-children::before {
+  .wu-organizationchart-children::before {
     content: '';
     position: absolute;
     top: 0;
     left: 50%;
-    height: var(--wt-organizationchart-connector-height);
-    border-left: 1px solid var(--wt-organizationchart-connector-color);
+    height: var(--wu-organizationchart-connector-height);
+    border-left: 1px solid var(--wu-organizationchart-connector-color);
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch {
-    padding: var(--wt-organizationchart-connector-height) var(--wt-organizationchart-gutter) 0;
+  .wu-organizationchart-children > .wu-organizationchart-branch {
+    padding: var(--wu-organizationchart-connector-height) var(--wu-organizationchart-gutter) 0;
   }
   /* The line across the brothers and sisters, and the line down into each. */
-  .wt-organizationchart-children > .wt-organizationchart-branch::before,
-  .wt-organizationchart-children > .wt-organizationchart-branch::after {
+  .wu-organizationchart-children > .wu-organizationchart-branch::before,
+  .wu-organizationchart-children > .wu-organizationchart-branch::after {
     content: '';
     position: absolute;
     top: 0;
     box-sizing: border-box;
     width: 50%;
-    height: var(--wt-organizationchart-connector-height);
-    border-top: 1px solid var(--wt-organizationchart-connector-color);
+    height: var(--wu-organizationchart-connector-height);
+    border-top: 1px solid var(--wu-organizationchart-connector-color);
     pointer-events: none;
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch::before {
+  .wu-organizationchart-children > .wu-organizationchart-branch::before {
     right: 50%;
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch::after {
+  .wu-organizationchart-children > .wu-organizationchart-branch::after {
     left: 50%;
-    border-left: 1px solid var(--wt-organizationchart-connector-color);
+    border-left: 1px solid var(--wu-organizationchart-connector-color);
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:first-child::before {
+  .wu-organizationchart-children > .wu-organizationchart-branch:first-child::before {
     border: 0 none;
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:first-child::after {
-    border-top-left-radius: var(--wt-organizationchart-connector-radius);
+  .wu-organizationchart-children > .wu-organizationchart-branch:first-child::after {
+    border-top-left-radius: var(--wu-organizationchart-connector-radius);
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:last-child::before {
+  .wu-organizationchart-children > .wu-organizationchart-branch:last-child::before {
     right: calc(50% - 1px);
-    border-right: 1px solid var(--wt-organizationchart-connector-color);
-    border-top-right-radius: var(--wt-organizationchart-connector-radius);
+    border-right: 1px solid var(--wu-organizationchart-connector-color);
+    border-top-right-radius: var(--wu-organizationchart-connector-radius);
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:last-child::after {
+  .wu-organizationchart-children > .wu-organizationchart-branch:last-child::after {
     border: 0 none;
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:only-child::before {
+  .wu-organizationchart-children > .wu-organizationchart-branch:only-child::before {
     display: none;
   }
-  .wt-organizationchart-children > .wt-organizationchart-branch:only-child::after {
+  .wu-organizationchart-children > .wu-organizationchart-branch:only-child::after {
     border: 0 none;
-    border-left: 1px solid var(--wt-organizationchart-connector-color);
+    border-left: 1px solid var(--wu-organizationchart-connector-color);
     border-radius: 0;
   }
-  .wt-organizationchart-node {
+  .wu-organizationchart-node {
     position: relative;
     box-sizing: border-box;
-    padding: var(--wt-organizationchart-node-padding);
-    border: 1px solid var(--wt-organizationchart-node-border-color);
-    border-radius: var(--wt-organizationchart-node-radius);
-    background: var(--wt-organizationchart-node-bg);
-    color: var(--wt-organizationchart-node-color);
+    padding: var(--wu-organizationchart-node-padding);
+    border: 1px solid var(--wu-organizationchart-node-border-color);
+    border-radius: var(--wu-organizationchart-node-radius);
+    background: var(--wu-organizationchart-node-bg);
+    color: var(--wu-organizationchart-node-color);
     text-align: center;
     transition:
-      background-color var(--wt-transition),
-      border-color var(--wt-transition),
-      color var(--wt-transition),
-      box-shadow var(--wt-transition);
+      background-color var(--wu-transition),
+      border-color var(--wu-transition),
+      color var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-organizationchart-node-toggleable {
-    padding: var(--wt-organizationchart-node-toggleable-padding);
+  .wu-organizationchart-node-toggleable {
+    padding: var(--wu-organizationchart-node-toggleable-padding);
   }
-  .wt-organizationchart-node-selectable {
+  .wu-organizationchart-node-selectable {
     cursor: pointer;
   }
-  .wt-organizationchart-node-selectable:not(.wt-organizationchart-node-selected):hover {
-    background: var(--wt-organizationchart-node-hover-bg);
+  .wu-organizationchart-node-selectable:not(.wu-organizationchart-node-selected):hover {
+    background: var(--wu-organizationchart-node-hover-bg);
   }
-  .wt-organizationchart-node-selected {
-    background: var(--wt-organizationchart-node-selected-bg);
-    color: var(--wt-organizationchart-node-selected-color);
+  .wu-organizationchart-node-selected {
+    background: var(--wu-organizationchart-node-selected-bg);
+    color: var(--wu-organizationchart-node-selected-color);
   }
-  .wt-organizationchart-branch:focus-visible > .wt-organizationchart-node {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-organizationchart-branch:focus-visible > .wu-organizationchart-node {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-organizationchart-node-toggle-button {
+  .wu-organizationchart-node-toggle-button {
     position: absolute;
-    bottom: calc(var(--wt-organizationchart-toggle-size) / -2);
+    bottom: calc(var(--wu-organizationchart-toggle-size) / -2);
     left: 50%;
     z-index: 1;
     display: grid;
     place-items: center;
     box-sizing: border-box;
-    width: var(--wt-organizationchart-toggle-size);
-    height: var(--wt-organizationchart-toggle-size);
-    margin: 0 0 0 calc(var(--wt-organizationchart-toggle-size) / -2);
+    width: var(--wu-organizationchart-toggle-size);
+    height: var(--wu-organizationchart-toggle-size);
+    margin: 0 0 0 calc(var(--wu-organizationchart-toggle-size) / -2);
     padding: 0;
-    border: 1px solid var(--wt-organizationchart-node-border-color);
+    border: 1px solid var(--wu-organizationchart-node-border-color);
     border-radius: 50%;
-    background: var(--wt-organizationchart-toggle-bg);
-    color: var(--wt-organizationchart-toggle-color);
+    background: var(--wu-organizationchart-toggle-bg);
+    color: var(--wu-organizationchart-toggle-color);
     cursor: pointer;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-organizationchart-node-toggle-button:hover {
-    background: var(--wt-organizationchart-toggle-hover-bg);
-    color: var(--wt-organizationchart-toggle-hover-color);
+  .wu-organizationchart-node-toggle-button:hover {
+    background: var(--wu-organizationchart-toggle-hover-bg);
+    color: var(--wu-organizationchart-toggle-hover-color);
   }
-  .wt-organizationchart-node-toggle-button svg {
+  .wu-organizationchart-node-toggle-button svg {
     width: 0.875rem;
     height: 0.875rem;
   }
   /* Closed with preserveSpace: still there, keeping the chart's shape, but hidden (and inert). */
-  .wt-organizationchart-hidden {
+  .wu-organizationchart-hidden {
     visibility: hidden;
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-organizationchart-node,
-    .wt-organizationchart-node-toggle-button {
+    .wu-organizationchart-node,
+    .wu-organizationchart-node-toggle-button {
       transition: none;
     }
   }

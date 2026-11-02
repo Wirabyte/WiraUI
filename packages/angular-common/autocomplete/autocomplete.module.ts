@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtAutoComplete } from './autocomplete.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuAutoComplete } from './autocomplete.component';
 
-/** For NgModule apps. Standalone apps can import `WtAutoComplete` directly. */
+/** For NgModule apps. Standalone apps can import `WuAutoComplete` directly. */
 @NgModule({
-  imports: [WtAutoComplete, WtTemplate],
-  exports: [WtAutoComplete, WtTemplate],
+  imports: [WuAutoComplete, WuTemplate],
+  exports: [WuAutoComplete, WuTemplate],
 })
-export class WtAutoCompleteModule {}
+export class WuAutoCompleteModule {}

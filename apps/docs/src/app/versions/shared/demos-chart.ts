@@ -2,7 +2,7 @@ import { CHART_DOC, CHART_MONTHS } from '../../data/chart';
 import { SimpleDemo } from './demos';
 
 /*
- * State behind the Chart page (wt-chart) (wiratheme@3 only, so only DocsV3Module declares it). Data goes through local() so
+ * State behind the Chart page (wu-chart) (wiraui@3 only, so only DocsV3Module declares it). Data goes through local() so
  * labels and series names follow the site language. "Random" data comes from a fixed sequence, so every run (and the
  * end-to-end tests) sees the same numbers.
  */

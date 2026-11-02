@@ -1,70 +1,70 @@
 import { Directive, inject, Input, TemplateRef } from '@angular/core';
-import type { WtFlowConnectionLineContext, WtFlowEdgeContext, WtFlowNodeContext } from './flow.types';
+import type { WuFlowConnectionLineContext, WuFlowEdgeContext, WuFlowNodeContext } from './flow.types';
 
 /**
- * A node template for one node type: `<ng-template wtFlowNode="person" let-node>…</ng-template>` draws every node with
- * `type: 'person'`. Without a type (`<ng-template wtFlowNode let-node>`) it draws every node that has no template of
- * its own (the built-in `input`, `output` and `group` types keep their look). Put `<wt-flow-handle>`s inside for the
+ * A node template for one node type: `<ng-template wuFlowNode="person" let-node>…</ng-template>` draws every node with
+ * `type: 'person'`. Without a type (`<ng-template wuFlowNode let-node>`) it draws every node that has no template of
+ * its own (the built-in `input`, `output` and `group` types keep their look). Put `<wu-flow-handle>`s inside for the
  * places edges attach. Works the same in every version.
  */
 @Directive({
-  selector: 'ng-template[wtFlowNode]',
+  selector: 'ng-template[wuFlowNode]',
   standalone: true,
 })
-export class WtFlowNodeTemplate {
+export class WuFlowNodeTemplate {
   /** The node type this template draws; empty for the default template. */
-  @Input('wtFlowNode') type: string | null | undefined = '';
-  readonly template: TemplateRef<WtFlowNodeContext> = inject(TemplateRef);
+  @Input('wuFlowNode') type: string | null | undefined = '';
+  readonly template: TemplateRef<WuFlowNodeContext> = inject(TemplateRef);
 
-  static ngTemplateContextGuard(_dir: WtFlowNodeTemplate, _ctx: unknown): _ctx is WtFlowNodeContext {
+  static ngTemplateContextGuard(_dir: WuFlowNodeTemplate, _ctx: unknown): _ctx is WuFlowNodeContext {
     return true;
   }
 }
 
 /**
- * An edge template for one edge type: `<ng-template wtFlowEdge="special" let-edge><svg:path [attr.d]="edge.path" />
+ * An edge template for one edge type: `<ng-template wuFlowEdge="special" let-edge><svg:path [attr.d]="edge.path" />
  * </ng-template>`. The template sits inside the edge's SVG group, so write its elements with the `svg:` prefix. The
  * flow adds the wide invisible path that catches clicks. Without a type it draws every edge with a custom type.
  */
 @Directive({
-  selector: 'ng-template[wtFlowEdge]',
+  selector: 'ng-template[wuFlowEdge]',
   standalone: true,
 })
-export class WtFlowEdgeTemplate {
-  @Input('wtFlowEdge') type: string | null | undefined = '';
-  readonly template: TemplateRef<WtFlowEdgeContext> = inject(TemplateRef);
+export class WuFlowEdgeTemplate {
+  @Input('wuFlowEdge') type: string | null | undefined = '';
+  readonly template: TemplateRef<WuFlowEdgeContext> = inject(TemplateRef);
 
-  static ngTemplateContextGuard(_dir: WtFlowEdgeTemplate, _ctx: unknown): _ctx is WtFlowEdgeContext {
+  static ngTemplateContextGuard(_dir: WuFlowEdgeTemplate, _ctx: unknown): _ctx is WuFlowEdgeContext {
     return true;
   }
 }
 
 /**
  * HTML drawn at an edge's label position instead of the plain label (a button on the edge, a badge):
- * `<ng-template wtFlowEdgeLabel="removable" let-edge>`. Without a type it applies to every edge that has a `label`.
+ * `<ng-template wuFlowEdgeLabel="removable" let-edge>`. Without a type it applies to every edge that has a `label`.
  */
 @Directive({
-  selector: 'ng-template[wtFlowEdgeLabel]',
+  selector: 'ng-template[wuFlowEdgeLabel]',
   standalone: true,
 })
-export class WtFlowEdgeLabelTemplate {
-  @Input('wtFlowEdgeLabel') type: string | null | undefined = '';
-  readonly template: TemplateRef<WtFlowEdgeContext> = inject(TemplateRef);
+export class WuFlowEdgeLabelTemplate {
+  @Input('wuFlowEdgeLabel') type: string | null | undefined = '';
+  readonly template: TemplateRef<WuFlowEdgeContext> = inject(TemplateRef);
 
-  static ngTemplateContextGuard(_dir: WtFlowEdgeLabelTemplate, _ctx: unknown): _ctx is WtFlowEdgeContext {
+  static ngTemplateContextGuard(_dir: WuFlowEdgeLabelTemplate, _ctx: unknown): _ctx is WuFlowEdgeContext {
     return true;
   }
 }
 
-/** The line drawn while a connection is dragged: `<ng-template wtFlowConnectionLine let-line><svg:path …/></ng-template>`. */
+/** The line drawn while a connection is dragged: `<ng-template wuFlowConnectionLine let-line><svg:path …/></ng-template>`. */
 @Directive({
-  selector: 'ng-template[wtFlowConnectionLine]',
+  selector: 'ng-template[wuFlowConnectionLine]',
   standalone: true,
 })
-export class WtFlowConnectionLineTemplate {
-  readonly template: TemplateRef<WtFlowConnectionLineContext> = inject(TemplateRef);
+export class WuFlowConnectionLineTemplate {
+  readonly template: TemplateRef<WuFlowConnectionLineContext> = inject(TemplateRef);
 
-  static ngTemplateContextGuard(_dir: WtFlowConnectionLineTemplate, _ctx: unknown): _ctx is WtFlowConnectionLineContext {
+  static ngTemplateContextGuard(_dir: WuFlowConnectionLineTemplate, _ctx: unknown): _ctx is WuFlowConnectionLineContext {
     return true;
   }
 }

@@ -13,7 +13,7 @@ import { SimpleDemo } from './demos';
 
 /*
  * State and handlers behind the Terminal, ImageCompare, Carousel, Splitter, OrganizationChart, Knob and InputOtp
- * pages. Like demos.ts, no wiratheme import: the same templates compile against v1, v2 and v3, so services come in
+ * pages. Like demos.ts, no wiraui import: the same templates compile against v1, v2 and v3, so services come in
  * through tokens each version module provides (DOCS_TERMINAL) and events are typed by their shape.
  */
 

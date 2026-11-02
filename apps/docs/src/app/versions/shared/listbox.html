@@ -6,7 +6,7 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-listbox
+        <wu-listbox
           id="d-lb-basic"
           name="room"
           [(ngModel)]="room"
@@ -15,14 +15,14 @@
           optionDisabled="closed"
           [ariaLabel]="tx('ห้องเรียน')"
           [style]="{ width: '16rem' }"
-        ></wt-listbox>
+        ></wu-listbox>
         <span class="docs-demo-output">ngModel: <code id="d-lb-basic-value">{{ room?.name || 'null' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="multiple" [section]="sec['multiple']">
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']">
-        <wt-listbox
+        <wu-listbox
           id="d-lb-multi"
           name="roomCodes"
           [(ngModel)]="roomCodes"
@@ -35,14 +35,14 @@
           [striped]="true"
           [ariaLabel]="tx('ห้องเรียน')"
           [style]="{ width: '16rem' }"
-        ></wt-listbox>
+        ></wu-listbox>
         <span class="docs-demo-output">ngModel: <code id="d-lb-multi-value">{{ roomCodes.join(', ') || '[]' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="filter" [section]="sec['filter']">
       <docs-demo [html]="code['filter']">
-        <wt-listbox
+        <wu-listbox
           id="d-lb-filter"
           name="filterRoom"
           [(ngModel)]="filterRoom"
@@ -56,7 +56,7 @@
           [ariaLabel]="tx('ห้องเรียน')"
           (onFilter)="filtered($event)"
           [style]="{ width: '16rem' }"
-        ></wt-listbox>
+        ></wu-listbox>
         <span class="docs-demo-output">onFilter: <code id="d-lb-filter-text">{{ lastFilter || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -64,7 +64,7 @@
     <docs-section id="group" [section]="sec['group']">
       <docs-slot-note slot="group"></docs-slot-note>
       <docs-demo [html]="code['group']" [ts]="ts['group']">
-        <wt-listbox
+        <wu-listbox
           id="d-lb-group"
           name="groupRoom"
           [(ngModel)]="groupRoom"
@@ -77,14 +77,14 @@
           <ng-template #group let-grade>
             <span class="docs-lb-group"><i class="wi wi-users"></i> {{ grade.label }}</span>
           </ng-template>
-        </wt-listbox>
+        </wu-listbox>
         <span class="docs-demo-output">ngModel: <code id="d-lb-group-value">{{ groupRoom?.name || 'null' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-demo [html]="code['templates']" [ts]="ts['templates']">
-        <wt-listbox
+        <wu-listbox
           id="d-lb-tpl"
           name="tplCodes"
           [(ngModel)]="tplCodes"
@@ -108,7 +108,7 @@
           <ng-template #footer let-value>
             <span id="d-lb-tpl-footer" class="docs-lb-footer">{{ tx('เลือกแล้ว') }} {{ value?.length || 0 }} {{ tx('ห้อง') }}</span>
           </ng-template>
-        </wt-listbox>
+        </wu-listbox>
         <span class="docs-demo-output">onDblClick → {{ tx('เปิดห้อง') }}: <code id="d-lb-opened">{{ lastOpened || '-' }}</code></span>
       </docs-demo>
     </docs-section>

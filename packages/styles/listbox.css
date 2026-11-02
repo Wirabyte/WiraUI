@@ -1,84 +1,84 @@
-/* wt-listbox. Shared by wiratheme v1, v2 and v3. A framed list that stays on the page; the search box, rows, groups
-   and the empty line are drawn by wt-select's stylesheet and the check boxes by wt-checkbox's (both loaded with it). */
-@layer wiratheme.components {
-  :is(wt-listbox, wt-list-box) {
+/* wu-listbox. Shared by wiraui v1, v2 and v3. A framed list that stays on the page; the search box, rows, groups
+   and the empty line are drawn by wu-select's stylesheet and the check boxes by wu-checkbox's (both loaded with it). */
+@layer wiraui.components {
+  :is(wu-listbox, wu-list-box) {
     display: block;
     max-width: 100%;
   }
-  .wt-listbox {
+  .wu-listbox {
     box-sizing: border-box;
     max-width: 100%;
     display: flex;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
-    border: var(--wt-listbox-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-input-radius);
-    background: var(--wt-field-bg);
-    color: var(--wt-text);
+    border: var(--wu-listbox-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-input-radius);
+    background: var(--wu-field-bg);
+    color: var(--wu-text);
   }
-  .wt-listbox.wt-listbox-focused {
-    border-color: var(--wt-field-focus-border);
-    box-shadow: var(--wt-field-focus-shadow);
+  .wu-listbox.wu-listbox-focused {
+    border-color: var(--wu-field-focus-border);
+    box-shadow: var(--wu-field-focus-shadow);
   }
-  .wt-listbox-header {
+  .wu-listbox-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .wt-listbox-header .wt-select-filter-wrap {
+  .wu-listbox-header .wu-select-filter-wrap {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .wt-listbox-toggle-all {
+  .wu-listbox-toggle-all {
     flex: none;
   }
   /* The check-all box sits in the same column as the rows' boxes (list padding + row padding). */
-  .wt-select-header.wt-listbox-header:has(> .wt-listbox-toggle-all) {
-    padding-inline-start: calc(var(--wt-select-list-padding) + var(--wt-select-option-padding-x));
+  .wu-select-header.wu-listbox-header:has(> .wu-listbox-toggle-all) {
+    padding-inline-start: calc(var(--wu-select-list-padding) + var(--wu-select-option-padding-x));
   }
-  .wt-listbox-header-slot,
-  .wt-listbox-footer {
-    padding: var(--wt-select-header-padding);
+  .wu-listbox-header-slot,
+  .wu-listbox-footer {
+    padding: var(--wu-select-header-padding);
   }
-  .wt-listbox-header-slot {
-    border-bottom: var(--wt-select-header-border-width) solid var(--wt-border);
+  .wu-listbox-header-slot {
+    border-bottom: var(--wu-select-header-border-width) solid var(--wu-border);
   }
-  .wt-listbox-footer {
-    border-top: var(--wt-select-header-border-width) solid var(--wt-border);
+  .wu-listbox-footer {
+    border-top: var(--wu-select-header-border-width) solid var(--wu-border);
   }
-  .wt-listbox-list {
+  .wu-listbox-list {
     outline: none;
   }
-  .wt-listbox .wt-select-option {
+  .wu-listbox .wu-select-option {
     white-space: normal;
     user-select: none;
   }
-  .wt-listbox .wt-select-option:not(.wt-select-option-disabled):not(.wt-select-option-selected):hover {
-    background: var(--wt-select-option-hover-bg);
+  .wu-listbox .wu-select-option:not(.wu-select-option-disabled):not(.wu-select-option-selected):hover {
+    background: var(--wu-select-option-hover-bg);
   }
-  .wt-listbox-striped .wt-select-option:nth-child(even):not(.wt-select-option-selected) {
-    background: var(--wt-table-row-striped-bg);
+  .wu-listbox-striped .wu-select-option:nth-child(even):not(.wu-select-option-selected) {
+    background: var(--wu-table-row-striped-bg);
   }
   /* The keyboard's place: a ring (keyboard use only), so it reads apart from the picked rows. */
-  .wt-listbox-list:focus-visible .wt-listbox-option-active {
-    box-shadow: inset 0 0 0 2px var(--wt-field-focus-border);
+  .wu-listbox-list:focus-visible .wu-listbox-option-active {
+    box-shadow: inset 0 0 0 2px var(--wu-field-focus-border);
   }
-  .wt-listbox-check {
+  .wu-listbox-check {
     pointer-events: none;
   }
-  .wt-listbox-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-listbox-disabled {
+    opacity: var(--wu-disabled-opacity);
   }
-  .wt-listbox-disabled .wt-select-option {
+  .wu-listbox-disabled .wu-select-option {
     cursor: default;
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) for the select-all box. */
   @media (pointer: coarse) {
-    .wt-listbox-toggle-all {
+    .wu-listbox-toggle-all {
       position: relative;
     }
-    .wt-listbox-toggle-all::after {
+    .wu-listbox-toggle-all::after {
       content: '';
       position: absolute;
       inset: -0.375rem;

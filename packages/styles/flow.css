@@ -1,8 +1,8 @@
-/* wt-flow. Shared by wiratheme v1, v2 and v3. A pane (background, then a viewport that pans and zooms with one CSS
+/* wu-flow. Shared by wiraui v1, v2 and v3. A pane (background, then a viewport that pans and zooms with one CSS
    transform) holding SVG layers for the edges and absolutely placed nodes, with panels, controls and the minimap on
-   top. Every look is a --wt-flow-* token; each has a fallback to the theme's own colours, so dark mode follows. */
-@layer wiratheme.components {
-  wt-flow {
+   top. Every look is a --wu-flow-* token; each has a fallback to the theme's own colours, so dark mode follows. */
+@layer wiraui.components {
+  wu-flow {
     display: block;
     position: relative;
     box-sizing: border-box;
@@ -10,9 +10,9 @@
     max-width: 100%;
     height: 100%;
     min-width: 0;
-    min-height: var(--wt-flow-min-height);
+    min-height: var(--wu-flow-min-height);
   }
-  .wt-flow {
+  .wu-flow {
     --_flow-zoom: 1;
     position: relative;
     box-sizing: border-box;
@@ -20,10 +20,10 @@
     height: 100%;
     min-height: inherit;
     overflow: hidden;
-    border: var(--wt-flow-border-width) solid var(--wt-flow-border-color);
-    border-radius: var(--wt-flow-radius);
-    background: var(--wt-flow-bg);
-    color: var(--wt-text);
+    border: var(--wu-flow-border-width) solid var(--wu-flow-border-color);
+    border-radius: var(--wu-flow-radius);
+    background: var(--wu-flow-bg);
+    color: var(--wu-text);
     font-family: inherit;
     isolation: isolate;
     outline: none;
@@ -32,58 +32,58 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-  .wt-flow:focus-visible {
-    box-shadow: var(--wt-flow-focus-ring);
+  .wu-flow:focus-visible {
+    box-shadow: var(--wu-flow-focus-ring);
   }
 
   /* ---------- background ---------- */
 
-  .wt-flow-backgrounds {
+  .wu-flow-backgrounds {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
   }
-  wt-flow-background {
+  wu-flow-background {
     position: absolute;
     inset: 0;
     display: block;
   }
-  .wt-flow-background {
+  .wu-flow-background {
     position: absolute;
     inset: 0;
     display: block;
     width: 100%;
     height: 100%;
   }
-  .wt-flow-background-dot {
-    fill: var(--wt-flow-grid-dot-color);
+  .wu-flow-background-dot {
+    fill: var(--wu-flow-grid-dot-color);
   }
-  .wt-flow-background-line {
+  .wu-flow-background-line {
     fill: none;
-    stroke: var(--wt-flow-grid-line-color);
+    stroke: var(--wu-flow-grid-line-color);
     stroke-width: 1;
   }
 
   /* ---------- pane and viewport ---------- */
 
-  .wt-flow-pane {
+  .wu-flow-pane {
     position: absolute;
     inset: 0;
     z-index: 1;
     overflow: hidden;
   }
-  .wt-flow-pane-pannable {
+  .wu-flow-pane-pannable {
     cursor: grab;
   }
-  .wt-flow-panning .wt-flow-pane,
-  .wt-flow-pan-key .wt-flow-pane {
+  .wu-flow-panning .wu-flow-pane,
+  .wu-flow-pan-key .wu-flow-pane {
     cursor: grabbing;
   }
-  .wt-flow-selecting .wt-flow-pane {
+  .wu-flow-selecting .wu-flow-pane {
     cursor: crosshair;
   }
-  .wt-flow-viewport {
+  .wu-flow-viewport {
     position: absolute;
     top: 0;
     left: 0;
@@ -91,15 +91,15 @@
     height: 0;
     transform-origin: 0 0;
   }
-  .wt-flow-defs {
+  .wu-flow-defs {
     position: absolute;
     width: 0;
     height: 0;
     overflow: hidden;
   }
   /* SVG layers are 1px boxes that draw outside themselves: edges can sit anywhere in flow coordinates. */
-  .wt-flow-edges,
-  .wt-flow-overlay {
+  .wu-flow-edges,
+  .wu-flow-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -108,127 +108,127 @@
     overflow: visible;
     pointer-events: none;
   }
-  .wt-flow-overlay {
+  .wu-flow-overlay {
     z-index: 3000;
   }
 
   /* ---------- edges ---------- */
 
-  .wt-flow-edge {
+  .wu-flow-edge {
     outline: none;
   }
-  .wt-flow-edge-path,
-  .wt-flow-edge .wt-flow-edge-path {
+  .wu-flow-edge-path,
+  .wu-flow-edge .wu-flow-edge-path {
     fill: none;
-    stroke: var(--wt-flow-edge-color);
-    stroke-width: var(--wt-flow-edge-width);
+    stroke: var(--wu-flow-edge-color);
+    stroke-width: var(--wu-flow-edge-width);
     stroke-linecap: round;
     stroke-linejoin: round;
     pointer-events: none;
-    transition: stroke var(--wt-transition), stroke-width var(--wt-transition);
+    transition: stroke var(--wu-transition), stroke-width var(--wu-transition);
   }
-  .wt-flow-edge-interaction {
+  .wu-flow-edge-interaction {
     fill: none;
     stroke: transparent;
     pointer-events: stroke;
   }
-  .wt-flow-edge-selectable .wt-flow-edge-interaction {
+  .wu-flow-edge-selectable .wu-flow-edge-interaction {
     cursor: pointer;
   }
-  .wt-flow-edge:hover .wt-flow-edge-path {
-    stroke: var(--wt-flow-edge-hover-color);
+  .wu-flow-edge:hover .wu-flow-edge-path {
+    stroke: var(--wu-flow-edge-hover-color);
   }
-  .wt-flow-edge-selected .wt-flow-edge-path,
-  .wt-flow-edge-selected:hover .wt-flow-edge-path {
-    stroke: var(--wt-flow-edge-selected-color);
-    stroke-width: var(--wt-flow-edge-selected-width);
+  .wu-flow-edge-selected .wu-flow-edge-path,
+  .wu-flow-edge-selected:hover .wu-flow-edge-path {
+    stroke: var(--wu-flow-edge-selected-color);
+    stroke-width: var(--wu-flow-edge-selected-width);
   }
-  .wt-flow-edge-animated .wt-flow-edge-path {
-    stroke-dasharray: var(--wt-flow-edge-animated-dash);
-    animation: wt-flow-dash var(--wt-flow-edge-animated-duration) linear infinite;
+  .wu-flow-edge-animated .wu-flow-edge-path {
+    stroke-dasharray: var(--wu-flow-edge-animated-dash);
+    animation: wu-flow-dash var(--wu-flow-edge-animated-duration) linear infinite;
   }
-  @keyframes wt-flow-dash {
+  @keyframes wu-flow-dash {
     to {
       stroke-dashoffset: -10;
     }
   }
-  .wt-flow-edge:focus-visible .wt-flow-edge-interaction {
-    stroke: var(--wt-flow-edge-focus-color);
+  .wu-flow-edge:focus-visible .wu-flow-edge-interaction {
+    stroke: var(--wu-flow-edge-focus-color);
     stroke-width: 8;
   }
-  .wt-flow-edge:focus-visible .wt-flow-edge-path {
-    stroke: var(--wt-flow-edge-selected-color);
+  .wu-flow-edge:focus-visible .wu-flow-edge-path {
+    stroke: var(--wu-flow-edge-selected-color);
   }
-  .wt-flow-edge-reconnecting .wt-flow-edge-path {
+  .wu-flow-edge-reconnecting .wu-flow-edge-path {
     opacity: 0.3;
   }
   /* The ends of an edge that drag it to another handle: invisible targets, live while the edge is hovered or selected. */
-  .wt-flow-edge-updater {
+  .wu-flow-edge-updater {
     fill: transparent;
     stroke: none;
     pointer-events: none;
     cursor: move;
   }
-  .wt-flow-edge:hover .wt-flow-edge-updater,
-  .wt-flow-edge-selected .wt-flow-edge-updater {
+  .wu-flow-edge:hover .wu-flow-edge-updater,
+  .wu-flow-edge-selected .wu-flow-edge-updater {
     pointer-events: all;
   }
-  .wt-flow-edge-updater:hover {
-    fill: var(--wt-flow-edge-updater-bg);
+  .wu-flow-edge-updater:hover {
+    fill: var(--wu-flow-edge-updater-bg);
   }
-  .wt-flow-marker-closed {
-    fill: var(--wt-flow-edge-color);
-    stroke: var(--wt-flow-edge-color);
+  .wu-flow-marker-closed {
+    fill: var(--wu-flow-edge-color);
+    stroke: var(--wu-flow-edge-color);
   }
-  .wt-flow-marker-open {
+  .wu-flow-marker-open {
     fill: none;
-    stroke: var(--wt-flow-edge-color);
+    stroke: var(--wu-flow-edge-color);
   }
-  .wt-flow-marker-selected.wt-flow-marker-closed {
-    fill: var(--wt-flow-edge-selected-color);
-    stroke: var(--wt-flow-edge-selected-color);
+  .wu-flow-marker-selected.wu-flow-marker-closed {
+    fill: var(--wu-flow-edge-selected-color);
+    stroke: var(--wu-flow-edge-selected-color);
   }
-  .wt-flow-marker-selected.wt-flow-marker-open {
-    stroke: var(--wt-flow-edge-selected-color);
+  .wu-flow-marker-selected.wu-flow-marker-open {
+    stroke: var(--wu-flow-edge-selected-color);
   }
 
   /* ---------- edge labels ---------- */
 
-  .wt-flow-edge-labels {
+  .wu-flow-edge-labels {
     position: absolute;
     top: 0;
     left: 0;
     width: 0;
     height: 0;
   }
-  .wt-flow-edge-label {
+  .wu-flow-edge-label {
     position: absolute;
     top: 0;
     left: 0;
     box-sizing: border-box;
-    max-width: var(--wt-flow-edge-label-max-width);
-    padding: var(--wt-flow-edge-label-padding);
+    max-width: var(--wu-flow-edge-label-max-width);
+    padding: var(--wu-flow-edge-label-padding);
     overflow: hidden;
-    border: var(--wt-flow-edge-label-border);
-    border-radius: var(--wt-flow-edge-label-radius);
-    background: var(--wt-flow-edge-label-bg);
-    color: var(--wt-flow-edge-label-color);
-    font-size: var(--wt-flow-edge-label-font-size);
+    border: var(--wu-flow-edge-label-border);
+    border-radius: var(--wu-flow-edge-label-radius);
+    background: var(--wu-flow-edge-label-bg);
+    color: var(--wu-flow-edge-label-color);
+    font-size: var(--wu-flow-edge-label-font-size);
     line-height: 1.4;
     white-space: nowrap;
     text-overflow: ellipsis;
     pointer-events: all;
     cursor: pointer;
   }
-  .wt-flow-edge-label-selected {
-    border-color: var(--wt-flow-edge-selected-color);
+  .wu-flow-edge-label-selected {
+    border-color: var(--wu-flow-edge-selected-color);
   }
-  .wt-flow-edge-label-plain {
+  .wu-flow-edge-label-plain {
     padding: 0;
     border: 0;
     background: transparent;
   }
-  .wt-flow-edge-label-custom {
+  .wu-flow-edge-label-custom {
     max-width: none;
     padding: 0;
     overflow: visible;
@@ -239,7 +239,7 @@
 
   /* ---------- nodes ---------- */
 
-  .wt-flow-nodes {
+  .wu-flow-nodes {
     position: absolute;
     top: 0;
     left: 0;
@@ -247,178 +247,178 @@
     height: 0;
   }
   /* max-content: the nodes' container has no width, so a node would otherwise shrink to its narrowest content. */
-  .wt-flow-node {
+  .wu-flow-node {
     position: absolute;
     top: 0;
     left: 0;
     box-sizing: border-box;
     width: max-content;
-    border-radius: var(--wt-flow-node-radius);
+    border-radius: var(--wu-flow-node-radius);
     outline: none;
     pointer-events: all;
     touch-action: none;
     transform-origin: 0 0;
   }
-  .wt-flow-node-draggable {
+  .wu-flow-node-draggable {
     cursor: grab;
   }
-  .wt-flow-node-dragging {
+  .wu-flow-node-dragging {
     cursor: grabbing;
   }
-  .wt-flow-node:focus-visible {
-    outline: var(--wt-flow-node-focus-outline);
+  .wu-flow-node:focus-visible {
+    outline: var(--wu-flow-node-focus-outline);
     outline-offset: 2px;
   }
-  /* The built-in look; custom templates can borrow it with class="wt-flow-node-box". */
-  .wt-flow-node-builtin:not(.wt-flow-node-group),
-  .wt-flow-node-box {
+  /* The built-in look; custom templates can borrow it with class="wu-flow-node-box". */
+  .wu-flow-node-builtin:not(.wu-flow-node-group),
+  .wu-flow-node-box {
     box-sizing: border-box;
-    width: var(--wt-flow-node-width);
+    width: var(--wu-flow-node-width);
     max-width: 100vw;
-    padding: var(--wt-flow-node-padding);
-    border: var(--wt-flow-node-border-width) solid var(--wt-flow-node-border-color);
-    border-radius: var(--wt-flow-node-radius);
-    background: var(--wt-flow-node-bg);
-    color: var(--wt-flow-node-color);
-    box-shadow: var(--wt-flow-node-shadow);
-    font-size: var(--wt-flow-node-font-size);
+    padding: var(--wu-flow-node-padding);
+    border: var(--wu-flow-node-border-width) solid var(--wu-flow-node-border-color);
+    border-radius: var(--wu-flow-node-radius);
+    background: var(--wu-flow-node-bg);
+    color: var(--wu-flow-node-color);
+    box-shadow: var(--wu-flow-node-shadow);
+    font-size: var(--wu-flow-node-font-size);
     line-height: 1.4;
     text-align: center;
-    transition: border-color var(--wt-transition), box-shadow var(--wt-transition);
+    transition: border-color var(--wu-transition), box-shadow var(--wu-transition);
   }
-  .wt-flow-node-box {
+  .wu-flow-node-box {
     width: auto;
     /* Fills a node the resizer has given a size; follows the content otherwise. */
     height: 100%;
   }
-  .wt-flow-node-builtin:not(.wt-flow-node-group):hover,
-  .wt-flow-node-custom:hover .wt-flow-node-box {
-    border-color: var(--wt-flow-node-hover-border-color);
+  .wu-flow-node-builtin:not(.wu-flow-node-group):hover,
+  .wu-flow-node-custom:hover .wu-flow-node-box {
+    border-color: var(--wu-flow-node-hover-border-color);
   }
-  .wt-flow-node-builtin.wt-flow-node-selected:not(.wt-flow-node-group),
-  .wt-flow-node-selected .wt-flow-node-box {
-    border-color: var(--wt-flow-node-selected-border-color);
-    box-shadow: var(--wt-flow-node-shadow), var(--wt-flow-node-selected-ring);
+  .wu-flow-node-builtin.wu-flow-node-selected:not(.wu-flow-node-group),
+  .wu-flow-node-selected .wu-flow-node-box {
+    border-color: var(--wu-flow-node-selected-border-color);
+    box-shadow: var(--wu-flow-node-shadow), var(--wu-flow-node-selected-ring);
   }
-  .wt-flow-node-builtin.wt-flow-node-dragging:not(.wt-flow-node-group),
-  .wt-flow-node-dragging .wt-flow-node-box {
-    box-shadow: var(--wt-flow-node-dragging-shadow), var(--wt-flow-node-selected-ring);
+  .wu-flow-node-builtin.wu-flow-node-dragging:not(.wu-flow-node-group),
+  .wu-flow-node-dragging .wu-flow-node-box {
+    box-shadow: var(--wu-flow-node-dragging-shadow), var(--wu-flow-node-selected-ring);
   }
-  .wt-flow-node-label {
+  .wu-flow-node-label {
     overflow-wrap: anywhere;
   }
-  .wt-flow-node-group {
+  .wu-flow-node-group {
     min-width: 10rem;
     min-height: 6rem;
-    border: var(--wt-flow-node-border-width) solid var(--wt-flow-group-border-color);
-    border-radius: var(--wt-flow-node-radius);
-    background: var(--wt-flow-group-bg);
+    border: var(--wu-flow-node-border-width) solid var(--wu-flow-group-border-color);
+    border-radius: var(--wu-flow-node-radius);
+    background: var(--wu-flow-group-bg);
   }
-  .wt-flow-node-group .wt-flow-node-label {
+  .wu-flow-node-group .wu-flow-node-label {
     position: absolute;
     top: 0.375rem;
     left: 0.625rem;
     right: 0.625rem;
-    color: var(--wt-flow-group-label-color);
+    color: var(--wu-flow-group-label-color);
     font-size: 0.75rem;
     font-weight: 600;
     text-align: left;
   }
-  .wt-flow-node-group.wt-flow-node-selected {
-    border-color: var(--wt-flow-node-selected-border-color);
-    box-shadow: var(--wt-flow-node-selected-ring);
+  .wu-flow-node-group.wu-flow-node-selected {
+    border-color: var(--wu-flow-node-selected-border-color);
+    box-shadow: var(--wu-flow-node-selected-ring);
   }
   /* The node a keyboard connection starts from (C), until Enter on the target. */
-  .wt-flow-node-connect-source {
-    outline: 2px dashed var(--wt-flow-connection-color);
+  .wu-flow-node-connect-source {
+    outline: 2px dashed var(--wu-flow-connection-color);
     outline-offset: 3px;
   }
 
   /* ---------- handles ---------- */
 
   /* Above the resizer's lines and corners, which share the node's border with it. */
-  .wt-flow-handle {
+  .wu-flow-handle {
     position: absolute;
     z-index: 11;
     box-sizing: border-box;
-    width: var(--wt-flow-handle-size);
-    height: var(--wt-flow-handle-size);
+    width: var(--wu-flow-handle-size);
+    height: var(--wu-flow-handle-size);
     min-width: 5px;
     min-height: 5px;
-    border: var(--wt-flow-handle-border-width) solid var(--wt-flow-handle-border);
+    border: var(--wu-flow-handle-border-width) solid var(--wu-flow-handle-border);
     border-radius: 50%;
-    background: var(--wt-flow-handle-bg);
+    background: var(--wu-flow-handle-bg);
     transform: translate(-50%, -50%);
     pointer-events: all;
-    transition: background-color var(--wt-transition), transform var(--wt-transition);
+    transition: background-color var(--wu-transition), transform var(--wu-transition);
   }
   /* A bigger invisible target than the dot. */
-  .wt-flow-handle::before {
+  .wu-flow-handle::before {
     content: '';
     position: absolute;
-    inset: calc(-1 * var(--wt-flow-handle-hit));
+    inset: calc(-1 * var(--wu-flow-handle-hit));
     border-radius: 50%;
   }
-  .wt-flow-handle-top {
+  .wu-flow-handle-top {
     top: 0;
     left: 50%;
   }
-  .wt-flow-handle-bottom {
+  .wu-flow-handle-bottom {
     top: 100%;
     left: 50%;
   }
-  .wt-flow-handle-left {
+  .wu-flow-handle-left {
     top: 50%;
     left: 0;
   }
-  .wt-flow-handle-right {
+  .wu-flow-handle-right {
     top: 50%;
     left: 100%;
   }
-  .wt-flow-handle-connectable {
+  .wu-flow-handle-connectable {
     cursor: crosshair;
   }
-  .wt-flow-handle-connectable:hover,
-  .wt-flow-handle-connecting {
-    background: var(--wt-flow-handle-hover-bg);
+  .wu-flow-handle-connectable:hover,
+  .wu-flow-handle-connecting {
+    background: var(--wu-flow-handle-hover-bg);
     transform: translate(-50%, -50%) scale(1.3);
   }
-  .wt-flow-connecting .wt-flow-handle-connectable:not(.wt-flow-handle-connecting) {
+  .wu-flow-connecting .wu-flow-handle-connectable:not(.wu-flow-handle-connecting) {
     transform: translate(-50%, -50%) scale(1.15);
   }
-  .wt-flow-handle-valid,
-  .wt-flow-handle-valid:hover {
-    background: var(--wt-flow-handle-valid-bg);
+  .wu-flow-handle-valid,
+  .wu-flow-handle-valid:hover {
+    background: var(--wu-flow-handle-valid-bg);
     transform: translate(-50%, -50%) scale(1.4);
   }
-  .wt-flow-handle-invalid,
-  .wt-flow-handle-invalid:hover {
-    background: var(--wt-flow-handle-invalid-bg);
+  .wu-flow-handle-invalid,
+  .wu-flow-handle-invalid:hover {
+    background: var(--wu-flow-handle-invalid-bg);
   }
 
   /* ---------- connecting, selecting, guides ---------- */
 
-  .wt-flow-connection-path {
+  .wu-flow-connection-path {
     fill: none;
-    stroke: var(--wt-flow-connection-color);
-    stroke-width: var(--wt-flow-connection-width);
+    stroke: var(--wu-flow-connection-color);
+    stroke-width: var(--wu-flow-connection-width);
     stroke-linecap: round;
   }
-  .wt-flow-connection-invalid .wt-flow-connection-path {
-    stroke: var(--wt-flow-handle-invalid-bg);
+  .wu-flow-connection-invalid .wu-flow-connection-path {
+    stroke: var(--wu-flow-handle-invalid-bg);
     stroke-dasharray: 4 4;
   }
-  .wt-flow-selection {
+  .wu-flow-selection {
     position: absolute;
     z-index: 5;
     box-sizing: border-box;
-    border: 1px solid var(--wt-flow-selection-border);
+    border: 1px solid var(--wu-flow-selection-border);
     border-radius: 2px;
-    background: var(--wt-flow-selection-bg);
+    background: var(--wu-flow-selection-bg);
     pointer-events: none;
   }
-  .wt-flow-guide {
-    stroke: var(--wt-flow-guide-color);
+  .wu-flow-guide {
+    stroke: var(--wu-flow-guide-color);
     stroke-width: 1;
     stroke-dasharray: 4 3;
     vector-effect: non-scaling-stroke;
@@ -426,323 +426,323 @@
 
   /* ---------- panels, controls, minimap ---------- */
 
-  wt-flow-panel {
+  wu-flow-panel {
     display: block;
   }
-  .wt-flow-panel {
+  .wu-flow-panel {
     position: absolute;
     z-index: 5;
     box-sizing: border-box;
-    max-width: calc(100% - 2 * var(--wt-flow-panel-margin));
-    margin: var(--wt-flow-panel-margin);
+    max-width: calc(100% - 2 * var(--wu-flow-panel-margin));
+    margin: var(--wu-flow-panel-margin);
     cursor: default;
     touch-action: auto;
     -webkit-user-select: text;
     user-select: text;
   }
-  .wt-flow-panel-top-left {
+  .wu-flow-panel-top-left {
     top: 0;
     left: 0;
   }
-  .wt-flow-panel-top-center {
+  .wu-flow-panel-top-center {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
   }
-  .wt-flow-panel-top-right {
+  .wu-flow-panel-top-right {
     top: 0;
     right: 0;
   }
-  .wt-flow-panel-bottom-left {
+  .wu-flow-panel-bottom-left {
     bottom: 0;
     left: 0;
   }
-  .wt-flow-panel-bottom-center {
+  .wu-flow-panel-bottom-center {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
   }
-  .wt-flow-panel-bottom-right {
+  .wu-flow-panel-bottom-right {
     right: 0;
     bottom: 0;
   }
-  .wt-flow-panel-center-left {
+  .wu-flow-panel-center-left {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
   }
-  .wt-flow-panel-center-right {
+  .wu-flow-panel-center-right {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
   }
 
-  wt-flow-controls.wt-flow-controls {
+  wu-flow-controls.wu-flow-controls {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--wt-flow-controls-border);
-    border-radius: var(--wt-flow-controls-radius);
-    background: var(--wt-flow-controls-bg);
-    color: var(--wt-flow-controls-color);
-    box-shadow: var(--wt-flow-controls-shadow);
+    border: 1px solid var(--wu-flow-controls-border);
+    border-radius: var(--wu-flow-controls-radius);
+    background: var(--wu-flow-controls-bg);
+    color: var(--wu-flow-controls-color);
+    box-shadow: var(--wu-flow-controls-shadow);
     -webkit-user-select: none;
     user-select: none;
   }
-  wt-flow-controls.wt-flow-controls-horizontal {
+  wu-flow-controls.wu-flow-controls-horizontal {
     flex-direction: row;
   }
-  .wt-flow-controls-button {
+  .wu-flow-controls-button {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    width: var(--wt-flow-controls-button-size);
-    height: var(--wt-flow-controls-button-size);
+    width: var(--wu-flow-controls-button-size);
+    height: var(--wu-flow-controls-button-size);
     margin: 0;
     padding: 0;
     border: 0;
-    border-bottom: 1px solid var(--wt-flow-controls-border);
+    border-bottom: 1px solid var(--wu-flow-controls-border);
     background: transparent;
     color: inherit;
     font: inherit;
     cursor: pointer;
   }
-  .wt-flow-controls-horizontal .wt-flow-controls-button {
+  .wu-flow-controls-horizontal .wu-flow-controls-button {
     border-bottom: 0;
-    border-right: 1px solid var(--wt-flow-controls-border);
+    border-right: 1px solid var(--wu-flow-controls-border);
   }
-  .wt-flow-controls .wt-flow-controls-button:last-child {
+  .wu-flow-controls .wu-flow-controls-button:last-child {
     border-bottom: 0;
     border-right: 0;
   }
-  .wt-flow-controls-button:hover:not(:disabled) {
-    background: var(--wt-flow-controls-hover-bg);
+  .wu-flow-controls-button:hover:not(:disabled) {
+    background: var(--wu-flow-controls-hover-bg);
   }
-  .wt-flow-controls-button:disabled {
-    opacity: var(--wt-flow-controls-disabled-opacity);
+  .wu-flow-controls-button:disabled {
+    opacity: var(--wu-flow-controls-disabled-opacity);
     cursor: default;
   }
-  .wt-flow-controls-button:focus-visible {
-    outline: 2px solid var(--wt-primary-color);
+  .wu-flow-controls-button:focus-visible {
+    outline: 2px solid var(--wu-primary-color);
     outline-offset: -2px;
   }
-  .wt-flow-controls-button svg {
+  .wu-flow-controls-button svg {
     display: block;
     width: 1rem;
     height: 1rem;
   }
-  .wt-flow-controls-interactive[aria-pressed='true'] {
-    color: var(--wt-primary-color);
+  .wu-flow-controls-interactive[aria-pressed='true'] {
+    color: var(--wu-primary-color);
   }
 
-  wt-flow-minimap.wt-flow-minimap {
+  wu-flow-minimap.wu-flow-minimap {
     display: block;
     overflow: hidden;
-    border: 1px solid var(--wt-flow-minimap-border);
-    border-radius: var(--wt-flow-minimap-radius);
-    background: var(--wt-flow-minimap-bg);
-    box-shadow: var(--wt-flow-minimap-shadow);
+    border: 1px solid var(--wu-flow-minimap-border);
+    border-radius: var(--wu-flow-minimap-radius);
+    background: var(--wu-flow-minimap-bg);
+    box-shadow: var(--wu-flow-minimap-shadow);
     line-height: 0;
   }
-  .wt-flow-minimap-svg {
+  .wu-flow-minimap-svg {
     display: block;
     max-width: 100%;
     height: auto;
   }
-  .wt-flow-minimap-pannable .wt-flow-minimap-svg {
+  .wu-flow-minimap-pannable .wu-flow-minimap-svg {
     cursor: grab;
     touch-action: none;
   }
-  .wt-flow-minimap-node {
-    fill: var(--wt-flow-minimap-node-bg);
+  .wu-flow-minimap-node {
+    fill: var(--wu-flow-minimap-node-bg);
     stroke: none;
   }
-  .wt-flow-minimap-node-group {
-    fill: var(--wt-flow-minimap-group-bg);
+  .wu-flow-minimap-node-group {
+    fill: var(--wu-flow-minimap-group-bg);
   }
-  .wt-flow-minimap-node-selected {
-    fill: var(--wt-flow-minimap-node-selected-bg);
+  .wu-flow-minimap-node-selected {
+    fill: var(--wu-flow-minimap-node-selected-bg);
   }
-  .wt-flow-minimap-mask {
-    fill: var(--wt-flow-minimap-mask);
-    stroke: var(--wt-flow-minimap-mask-stroke);
+  .wu-flow-minimap-mask {
+    fill: var(--wu-flow-minimap-mask);
+    stroke: var(--wu-flow-minimap-mask-stroke);
     stroke-width: 1.5;
     vector-effect: non-scaling-stroke;
   }
 
   /* ---------- node toolbar ---------- */
 
-  wt-flow-node-toolbar {
+  wu-flow-node-toolbar {
     display: contents;
   }
-  .wt-flow-node-toolbar {
+  .wu-flow-node-toolbar {
     --_s: calc(1 / var(--_flow-zoom, 1));
-    --_o: calc(var(--_flow-toolbar-offset, var(--wt-flow-toolbar-offset)) * var(--_s));
+    --_o: calc(var(--_flow-toolbar-offset, var(--wu-flow-toolbar-offset)) * var(--_s));
     position: absolute;
     z-index: 12;
     display: flex;
     align-items: center;
-    gap: var(--wt-flow-toolbar-gap);
+    gap: var(--wu-flow-toolbar-gap);
     box-sizing: border-box;
-    padding: var(--wt-flow-toolbar-padding);
-    border: 1px solid var(--wt-flow-toolbar-border);
-    border-radius: var(--wt-flow-toolbar-radius);
-    background: var(--wt-flow-toolbar-bg);
-    color: var(--wt-text);
-    box-shadow: var(--wt-flow-toolbar-shadow);
+    padding: var(--wu-flow-toolbar-padding);
+    border: 1px solid var(--wu-flow-toolbar-border);
+    border-radius: var(--wu-flow-toolbar-radius);
+    background: var(--wu-flow-toolbar-bg);
+    color: var(--wu-text);
+    box-shadow: var(--wu-flow-toolbar-shadow);
     white-space: nowrap;
     cursor: default;
     pointer-events: all;
   }
-  .wt-flow-node-toolbar[data-position='top'] {
+  .wu-flow-node-toolbar[data-position='top'] {
     bottom: calc(100% + var(--_o));
     left: 50%;
     transform-origin: 50% 100%;
     transform: translateX(-50%) scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='bottom'] {
+  .wu-flow-node-toolbar[data-position='bottom'] {
     top: calc(100% + var(--_o));
     left: 50%;
     transform-origin: 50% 0;
     transform: translateX(-50%) scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='left'] {
+  .wu-flow-node-toolbar[data-position='left'] {
     top: 50%;
     right: calc(100% + var(--_o));
     transform-origin: 100% 50%;
     transform: translateY(-50%) scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='right'] {
+  .wu-flow-node-toolbar[data-position='right'] {
     top: 50%;
     left: calc(100% + var(--_o));
     transform-origin: 0 50%;
     transform: translateY(-50%) scale(var(--_s));
   }
-  .wt-flow-node-toolbar:is([data-position='top'], [data-position='bottom'])[data-align='start'] {
+  .wu-flow-node-toolbar:is([data-position='top'], [data-position='bottom'])[data-align='start'] {
     left: 0;
     transform: scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='top'][data-align='start'] {
+  .wu-flow-node-toolbar[data-position='top'][data-align='start'] {
     transform-origin: 0 100%;
   }
-  .wt-flow-node-toolbar[data-position='bottom'][data-align='start'] {
+  .wu-flow-node-toolbar[data-position='bottom'][data-align='start'] {
     transform-origin: 0 0;
   }
-  .wt-flow-node-toolbar:is([data-position='top'], [data-position='bottom'])[data-align='end'] {
+  .wu-flow-node-toolbar:is([data-position='top'], [data-position='bottom'])[data-align='end'] {
     left: auto;
     right: 0;
     transform: scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='top'][data-align='end'] {
+  .wu-flow-node-toolbar[data-position='top'][data-align='end'] {
     transform-origin: 100% 100%;
   }
-  .wt-flow-node-toolbar[data-position='bottom'][data-align='end'] {
+  .wu-flow-node-toolbar[data-position='bottom'][data-align='end'] {
     transform-origin: 100% 0;
   }
-  .wt-flow-node-toolbar:is([data-position='left'], [data-position='right'])[data-align='start'] {
+  .wu-flow-node-toolbar:is([data-position='left'], [data-position='right'])[data-align='start'] {
     top: 0;
     transform: scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='left'][data-align='start'] {
+  .wu-flow-node-toolbar[data-position='left'][data-align='start'] {
     transform-origin: 100% 0;
   }
-  .wt-flow-node-toolbar[data-position='right'][data-align='start'] {
+  .wu-flow-node-toolbar[data-position='right'][data-align='start'] {
     transform-origin: 0 0;
   }
-  .wt-flow-node-toolbar:is([data-position='left'], [data-position='right'])[data-align='end'] {
+  .wu-flow-node-toolbar:is([data-position='left'], [data-position='right'])[data-align='end'] {
     top: auto;
     bottom: 0;
     transform: scale(var(--_s));
   }
-  .wt-flow-node-toolbar[data-position='left'][data-align='end'] {
+  .wu-flow-node-toolbar[data-position='left'][data-align='end'] {
     transform-origin: 100% 100%;
   }
-  .wt-flow-node-toolbar[data-position='right'][data-align='end'] {
+  .wu-flow-node-toolbar[data-position='right'][data-align='end'] {
     transform-origin: 0 100%;
   }
 
   /* ---------- node resizer ---------- */
 
-  wt-flow-node-resizer {
+  wu-flow-node-resizer {
     display: contents;
   }
-  .wt-flow-resize-line {
+  .wu-flow-resize-line {
     --_s: calc(1 / var(--_flow-zoom, 1));
     position: absolute;
     z-index: 9;
     box-sizing: border-box;
-    border: 0 solid var(--wt-flow-resizer-color);
+    border: 0 solid var(--wu-flow-resizer-color);
     pointer-events: all;
   }
   /* A wider strip than the line catches the press. */
-  .wt-flow-resize-line::before {
+  .wu-flow-resize-line::before {
     content: '';
     position: absolute;
     inset: calc(-4px * var(--_s));
   }
-  .wt-flow-resize-line[data-dir='top'],
-  .wt-flow-resize-line[data-dir='bottom'] {
+  .wu-flow-resize-line[data-dir='top'],
+  .wu-flow-resize-line[data-dir='bottom'] {
     left: 0;
     right: 0;
     height: 0;
     border-top-width: calc(1px * var(--_s));
     cursor: ns-resize;
   }
-  .wt-flow-resize-line[data-dir='top'] {
+  .wu-flow-resize-line[data-dir='top'] {
     top: 0;
   }
-  .wt-flow-resize-line[data-dir='bottom'] {
+  .wu-flow-resize-line[data-dir='bottom'] {
     top: 100%;
   }
-  .wt-flow-resize-line[data-dir='left'],
-  .wt-flow-resize-line[data-dir='right'] {
+  .wu-flow-resize-line[data-dir='left'],
+  .wu-flow-resize-line[data-dir='right'] {
     top: 0;
     bottom: 0;
     width: 0;
     border-left-width: calc(1px * var(--_s));
     cursor: ew-resize;
   }
-  .wt-flow-resize-line[data-dir='left'] {
+  .wu-flow-resize-line[data-dir='left'] {
     left: 0;
   }
-  .wt-flow-resize-line[data-dir='right'] {
+  .wu-flow-resize-line[data-dir='right'] {
     left: 100%;
   }
-  .wt-flow-resize-handle {
+  .wu-flow-resize-handle {
     position: absolute;
     z-index: 10;
     box-sizing: border-box;
-    width: var(--wt-flow-resizer-handle-size);
-    height: var(--wt-flow-resizer-handle-size);
-    border: 1px solid var(--wt-flow-resizer-color);
+    width: var(--wu-flow-resizer-handle-size);
+    height: var(--wu-flow-resizer-handle-size);
+    border: 1px solid var(--wu-flow-resizer-color);
     border-radius: 2px;
-    background: var(--wt-flow-resizer-handle-bg);
+    background: var(--wu-flow-resizer-handle-bg);
     transform: translate(-50%, -50%) scale(calc(1 / var(--_flow-zoom, 1)));
     pointer-events: all;
   }
-  .wt-flow-resize-handle::before {
+  .wu-flow-resize-handle::before {
     content: '';
     position: absolute;
     inset: -0.375rem;
   }
-  .wt-flow-resize-handle[data-dir='top-left'] {
+  .wu-flow-resize-handle[data-dir='top-left'] {
     top: 0;
     left: 0;
     cursor: nwse-resize;
   }
-  .wt-flow-resize-handle[data-dir='top-right'] {
+  .wu-flow-resize-handle[data-dir='top-right'] {
     top: 0;
     left: 100%;
     cursor: nesw-resize;
   }
-  .wt-flow-resize-handle[data-dir='bottom-right'] {
+  .wu-flow-resize-handle[data-dir='bottom-right'] {
     top: 100%;
     left: 100%;
     cursor: nwse-resize;
   }
-  .wt-flow-resize-handle[data-dir='bottom-left'] {
+  .wu-flow-resize-handle[data-dir='bottom-left'] {
     top: 100%;
     left: 0;
     cursor: nesw-resize;
@@ -750,7 +750,7 @@
 
   /* ---------- helpers ---------- */
 
-  .wt-flow-sr-only {
+  .wu-flow-sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -761,7 +761,7 @@
     border: 0;
     white-space: nowrap;
   }
-  .wt-flow-probe {
+  .wu-flow-probe {
     position: absolute;
     top: 0;
     left: -100000px;
@@ -772,37 +772,37 @@
   /* ---------- touch, narrow screens, motion ---------- */
 
   @media (pointer: coarse) {
-    .wt-flow-handle::before {
-      inset: calc(-1 * var(--wt-flow-handle-hit-coarse));
+    .wu-flow-handle::before {
+      inset: calc(-1 * var(--wu-flow-handle-hit-coarse));
     }
-    .wt-flow-controls-button {
-      width: var(--wt-flow-controls-button-size-coarse);
-      height: var(--wt-flow-controls-button-size-coarse);
+    .wu-flow-controls-button {
+      width: var(--wu-flow-controls-button-size-coarse);
+      height: var(--wu-flow-controls-button-size-coarse);
     }
-    .wt-flow-resize-handle::before {
+    .wu-flow-resize-handle::before {
       inset: -0.75rem;
     }
   }
   @media (max-width: 575.98px) {
-    .wt-flow-panel {
-      --wt-flow-panel-margin: 0.5rem;
+    .wu-flow-panel {
+      --wu-flow-panel-margin: 0.5rem;
     }
-    wt-flow-minimap.wt-flow-minimap {
+    wu-flow-minimap.wu-flow-minimap {
       max-width: 40%;
     }
-    wt-flow-minimap .wt-flow-minimap-svg {
+    wu-flow-minimap .wu-flow-minimap-svg {
       width: 8rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-flow-edge-animated .wt-flow-edge-path {
+    .wu-flow-edge-animated .wu-flow-edge-path {
       animation: none;
     }
-    .wt-flow-edge-path,
-    .wt-flow-handle,
-    .wt-flow-edge-updater,
-    .wt-flow-node-builtin,
-    .wt-flow-node-box {
+    .wu-flow-edge-path,
+    .wu-flow-handle,
+    .wu-flow-edge-updater,
+    .wu-flow-node-builtin,
+    .wu-flow-node-box {
       transition: none;
     }
   }

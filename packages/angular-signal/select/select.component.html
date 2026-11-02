@@ -1,24 +1,24 @@
 <div
   #root
-  class="wt-select p-select p-component"
+  class="wu-select p-select p-component"
   [ngClass]="styleClass || ''"
-  [class.wt-select-open]="open"
+  [class.wu-select-open]="open"
   [class.p-select-open]="open"
-  [class.wt-select-focus]="focused || open"
+  [class.wu-select-focus]="focused || open"
   [class.p-focus]="focused || open"
-  [class.wt-select-disabled]="disabled"
+  [class.wu-select-disabled]="disabled"
   [class.p-disabled]="disabled"
-  [class.wt-select-invalid]="invalid"
+  [class.wu-select-invalid]="invalid"
   [class.p-invalid]="invalid"
-  [class.wt-select-filled]="variant === 'filled'"
+  [class.wu-select-filled]="variant === 'filled'"
   [class.p-variant-filled]="variant === 'filled'"
-  [class.wt-select-sm]="sizeKey === 'sm'"
+  [class.wu-select-sm]="sizeKey === 'sm'"
   [class.p-select-sm]="sizeKey === 'sm'"
-  [class.wt-select-lg]="sizeKey === 'lg'"
+  [class.wu-select-lg]="sizeKey === 'lg'"
   [class.p-select-lg]="sizeKey === 'lg'"
-  [class.wt-select-clearable]="clearable"
+  [class.wu-select-clearable]="clearable"
   [class.p-select-clearable]="clearable"
-  [class.wt-select-loading]="loading"
+  [class.wu-select-loading]="loading"
   [class.p-select-loading]="loading"
   (mousedown)="fieldMousedown($event)"
   (click)="fieldClick($event)"
@@ -27,7 +27,7 @@
     <input
       #focusInput
       type="text"
-      class="wt-select-label wt-select-editable p-select-label p-inputtext"
+      class="wu-select-label wu-select-editable p-select-label p-inputtext"
       role="combobox"
       autocomplete="off"
       [id]="inputId || baseId"
@@ -50,7 +50,7 @@
     <input
       #focusInput
       type="text"
-      class="wt-select-input p-hidden-accessible"
+      class="wu-select-input p-hidden-accessible"
       role="combobox"
       readonly
       inputmode="none"
@@ -69,7 +69,7 @@
       (keydown)="keydown($event)"
       (focus)="fieldFocus($event)"
     />
-    <span class="wt-select-label p-select-label" [class.wt-select-placeholder]="showPlaceholder" [class.p-placeholder]="showPlaceholder" aria-hidden="true">
+    <span class="wu-select-label p-select-label" [class.wu-select-placeholder]="showPlaceholder" [class.p-placeholder]="showPlaceholder" aria-hidden="true">
       @if (selectedItemTemplate && selectedItem) {
         <ng-container *ngTemplateOutlet="selectedItemTemplate; context: { $implicit: selectedItem.option }"></ng-container>
       } @else {
@@ -78,13 +78,13 @@
     </span>
   }
   @if (clearable) {
-    <button type="button" class="wt-select-clear p-select-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
+    <button type="button" class="wu-select-clear p-select-clear-icon" tabindex="-1" [attr.aria-label]="t.clear" (click)="clear($event)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>
     </button>
   }
-  <span class="wt-select-dropdown p-select-dropdown" aria-hidden="true">
+  <span class="wu-select-dropdown p-select-dropdown" aria-hidden="true">
     @if (loading) {
-      <span class="wt-select-spinner p-select-loading-icon"></span>
+      <span class="wu-select-spinner p-select-loading-icon"></span>
     } @else if (dropdownIconTemplate) {
       <ng-container *ngTemplateOutlet="dropdownIconTemplate"></ng-container>
     } @else {
@@ -97,7 +97,7 @@
   <div
     #panel
     popover="manual"
-    class="wt-select-overlay p-select-overlay p-component"
+    class="wu-select-overlay p-select-overlay p-component"
     [ngClass]="panelStyleClass || ''"
     [ngStyle]="panelStyle || null"
     (mousedown)="panelMousedown($event)"
@@ -106,12 +106,12 @@
       <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
     }
     @if (filter) {
-      <div class="wt-select-header p-select-header">
-        <div class="wt-select-filter-wrap p-iconfield">
+      <div class="wu-select-header p-select-header">
+        <div class="wu-select-filter-wrap p-iconfield">
           <input
             #filterInput
             type="text"
-            class="wt-inputtext wt-select-filter p-select-filter p-inputtext"
+            class="wu-inputtext wu-select-filter p-select-filter p-inputtext"
             role="searchbox"
             autocomplete="off"
             [value]="filterText"
@@ -122,15 +122,15 @@
             (input)="search($event)"
             (keydown)="keydown($event)"
           />
-          <svg class="wt-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
+          <svg class="wu-select-filter-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5 14 14"></path></svg>
         </div>
       </div>
     }
-    <div class="wt-select-list-container p-select-list-container" [style.max-height]="scrollHeight">
-      <ul #listBox class="wt-select-list p-select-list" role="listbox" [id]="listId" [attr.aria-label]="ariaLabel || placeholder || null">
+    <div class="wu-select-list-container p-select-list-container" [style.max-height]="scrollHeight">
+      <ul #listBox class="wu-select-list p-select-list" role="listbox" [id]="listId" [attr.aria-label]="ariaLabel || placeholder || null">
         @for (item of visible; track $index; let i = $index) {
           @if (item.group) {
-            <li class="wt-select-group p-select-option-group" role="presentation">
+            <li class="wu-select-group p-select-option-group" role="presentation">
               @if (groupTemplate) {
                 <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: item.option }"></ng-container>
               } @else {
@@ -139,14 +139,14 @@
             </li>
           } @else {
             <li
-              class="wt-select-option p-select-option"
+              class="wu-select-option p-select-option"
               role="option"
               [id]="optionId(i)"
-              [class.wt-select-option-selected]="isSelected(item)"
+              [class.wu-select-option-selected]="isSelected(item)"
               [class.p-select-option-selected]="isSelected(item)"
-              [class.wt-select-option-active]="i === activeIndex"
+              [class.wu-select-option-active]="i === activeIndex"
               [class.p-focus]="i === activeIndex"
-              [class.wt-select-option-disabled]="item.disabled"
+              [class.wu-select-option-disabled]="item.disabled"
               [class.p-disabled]="item.disabled"
               [attr.aria-selected]="isSelected(item)"
               [attr.aria-disabled]="item.disabled || null"
@@ -154,17 +154,17 @@
               (mousemove)="hover(i)"
             >
               @if (checkmark) {
-                <svg class="wt-select-check p-select-option-check-icon" [class.wt-select-check-on]="isSelected(item)" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"></path></svg>
+                <svg class="wu-select-check p-select-option-check-icon" [class.wu-select-check-on]="isSelected(item)" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"></path></svg>
               }
               @if (itemTemplate) {
                 <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item.option, selected: isSelected(item), index: i }"></ng-container>
               } @else {
-                <span class="wt-select-option-label">{{ item.label || ' ' }}</span>
+                <span class="wu-select-option-label">{{ item.label || ' ' }}</span>
               }
             </li>
           }
         } @empty {
-          <li class="wt-select-empty p-select-empty-message" role="option" aria-disabled="true">
+          <li class="wu-select-empty p-select-empty-message" role="option" aria-disabled="true">
             @if (emptyTemplate) {
               <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
             } @else {

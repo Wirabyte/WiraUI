@@ -4,7 +4,7 @@ import { row, tok } from './doc-helpers';
 const BOOL = 'boolean';
 
 /** The search most samples share: a method that filters a local array, the way the TS tab shows it. */
-const SEARCH_TS = `import { WtAutoCompleteCompleteEvent } from 'wiratheme/autocomplete';
+const SEARCH_TS = `import { WuAutoCompleteCompleteEvent } from 'wiraui/autocomplete';
 
 interface Province {
   id: number;
@@ -24,14 +24,14 @@ provinces: Province[] = [
 suggestions: Province[] = [];
 province: Province | string | null = null;   // ตัวเลือกที่เลือก (ทั้ง object) หรือข้อความที่กำลังพิมพ์
 
-search(event: WtAutoCompleteCompleteEvent): void {
+search(event: WuAutoCompleteCompleteEvent): void {
   const query = event.query.toLowerCase();
   // แอปจริงเรียก API ตรงนี้ แล้วตั้ง suggestions เมื่อได้ผลกลับมา
   this.suggestions = this.provinces.filter((p) => p.name_th.toLowerCase().includes(query));
 }`;
 
 /** English sample data drops the Thai names (the Thai sample keeps both, as the apps store them). */
-const SEARCH_TS_EN = `import { WtAutoCompleteCompleteEvent } from 'wiratheme/autocomplete';
+const SEARCH_TS_EN = `import { WuAutoCompleteCompleteEvent } from 'wiraui/autocomplete';
 
 interface Province {
   id: number;
@@ -50,14 +50,14 @@ provinces: Province[] = [
 suggestions: Province[] = [];
 province: Province | string | null = null;   // ตัวเลือกที่เลือก (ทั้ง object) หรือข้อความที่กำลังพิมพ์
 
-search(event: WtAutoCompleteCompleteEvent): void {
+search(event: WuAutoCompleteCompleteEvent): void {
   const query = event.query.toLowerCase();
   // แอปจริงเรียก API ตรงนี้ แล้วตั้ง suggestions เมื่อได้ผลกลับมา
   this.suggestions = this.provinces.filter((p) => p.name_th.toLowerCase().includes(query));
 }`;
 
 /** The opening of most samples. */
-const FIELD = `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="search($event)"
+const FIELD = `<wu-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="search($event)"
   optionLabel="name_th"`;
 
 export const AUTOCOMPLETE_DOC: ComponentDoc = {
@@ -65,10 +65,10 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
   title: 'AutoComplete',
   group: 'Form',
   entry: 'autocomplete',
-  standalone: 'WtAutoComplete',
-  module: 'WtAutoCompleteModule',
+  standalone: 'WuAutoComplete',
+  module: 'WuAutoCompleteModule',
   forms: true,
-  selector: 'wt-autocomplete',
+  selector: 'wu-autocomplete',
   description: {
     th: 'ช่องพิมพ์ที่แนะนำตัวเลือกระหว่างพิมพ์ หน้าเว็บหาผลเองด้วย (completeMethod) จากข้อมูลในหน้าหรือ API เลือกแล้วได้ทั้ง object มีปุ่มแสดงทั้งหมด บังคับให้เลือกจากรายการได้ และหน้าตากับธีมเหมือน Select',
     en: 'A field that suggests options while you type. The page finds them in (completeMethod), from local data or an API. A pick gives the whole option, a button can show everything, picks can be required, and it looks and themes like Select.',
@@ -125,8 +125,8 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wt-autoComplete</code> ก็ใช้ได้ ช่องและรายการใช้ stylesheet และ token ชุดเดียวกับ Select: เป็นช่องพิมพ์ได้ และปุ่ม dropdown อยู่ตรงที่ลูกศรของ Select',
-        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wt-autoComplete</code> selector works too. The field and the list share Select\'s stylesheet and tokens: an editable field, with the dropdown button where Select has its arrow.',
+        th: 'ใช้คู่กับ <code>FormsModule</code> (ngModel) หรือ <code>ReactiveFormsModule</code> selector <code>wu-autoComplete</code> ก็ใช้ได้ ช่องและรายการใช้ stylesheet และ token ชุดเดียวกับ Select: เป็นช่องพิมพ์ได้ และปุ่ม dropdown อยู่ตรงที่ลูกศรของ Select',
+        en: 'Use it with <code>FormsModule</code> (ngModel) or <code>ReactiveFormsModule</code>. The <code>wu-autoComplete</code> selector works too. The field and the list share Select\'s stylesheet and tokens: an editable field, with the dropdown button where Select has its arrow.',
       },
     },
     basic: {
@@ -139,8 +139,8 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
     delay: {
       title: { th: 'เวลารอและจำนวนตัวอักษร', en: 'Delay and minimum length' },
       text: {
-        th: '<code>delay</code> รอกี่ ms หลังพิมพ์ตัวสุดท้ายก่อนส่ง (ค่าเริ่มต้น 0 คือส่งทุกครั้งที่พิมพ์ทันที ตั้งทั้งแอปได้ด้วย <code>provideWiraTheme({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> ต้องพิมพ์กี่ตัวก่อนส่ง (ค่าเริ่มต้น 1) ระหว่างรอ <code>[suggestions]</code> ช่องแสดง spinner เอง ตัวอย่างนี้จำลอง API ที่ตอบกลับใน 0.7 วินาที',
-        en: '<code>delay</code> is how many ms to wait after the last key before asking (default 0: ask on every key at once; set it for the whole app with <code>provideWiraTheme({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> how many characters before asking (default 1). While waiting for <code>[suggestions]</code> the field shows a spinner. This sample stands in for an API that answers in 0.7 seconds.',
+        th: '<code>delay</code> รอกี่ ms หลังพิมพ์ตัวสุดท้ายก่อนส่ง (ค่าเริ่มต้น 0 คือส่งทุกครั้งที่พิมพ์ทันที ตั้งทั้งแอปได้ด้วย <code>provideWiraUI({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> ต้องพิมพ์กี่ตัวก่อนส่ง (ค่าเริ่มต้น 1) ระหว่างรอ <code>[suggestions]</code> ช่องแสดง spinner เอง ตัวอย่างนี้จำลอง API ที่ตอบกลับใน 0.7 วินาที',
+        en: '<code>delay</code> is how many ms to wait after the last key before asking (default 0: ask on every key at once; set it for the whole app with <code>provideWiraUI({ delays: { autoComplete: 300 } })</code>) · <code>minLength</code> how many characters before asking (default 1). While waiting for <code>[suggestions]</code> the field shows a spinner. This sample stands in for an API that answers in 0.7 seconds.',
       },
     },
     empty: {
@@ -181,8 +181,8 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
     look: {
       title: { th: 'ปุ่มล้าง ความกว้าง และแบบพื้นทึบ', en: 'Clear button, width and filled' },
       text: {
-        th: '<code>[showClear]="true"</code> เพิ่มปุ่ม × เมื่อมีค่า (ส่ง <code>(onClear)</code>) · กว้าง 14rem ตาม <code>--wt-select-width</code> เหมือน Select · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
-        en: '<code>[showClear]="true"</code> adds an × once there is a value (it emits <code>(onClear)</code>) · 14rem wide from <code>--wt-select-width</code>, like Select · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
+        th: '<code>[showClear]="true"</code> เพิ่มปุ่ม × เมื่อมีค่า (ส่ง <code>(onClear)</code>) · กว้าง 14rem ตาม <code>--wu-select-width</code> เหมือน Select · <code>[fluid]="true"</code> หรือ <code>styleClass="w-full"</code> กว้างเต็มพื้นที่ · <code>variant="filled"</code> แบบพื้นทึบ',
+        en: '<code>[showClear]="true"</code> adds an × once there is a value (it emits <code>(onClear)</code>) · 14rem wide from <code>--wu-select-width</code>, like Select · <code>[fluid]="true"</code> or <code>styleClass="w-full"</code> fills the space · <code>variant="filled"</code> for a filled field.',
       },
     },
     sizes: {
@@ -221,34 +221,34 @@ export const AUTOCOMPLETE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-autoComplete&gt;</code> เป็น <code>&lt;wt-autocomplete&gt;</code> (หรือ <code>wt-autoComplete</code>) <code>suggestions</code>, <code>completeMethod</code>, <code>field</code> / <code>optionLabel</code>, <code>delay</code>, <code>minLength</code>, <code>dropdown</code>, <code>forceSelection</code> และ template <code>pTemplate="item"</code> ใช้ชื่อเดิม รายการเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>virtualScroll</code>, <code>completeOnFocus</code> และ transition options)',
-        en: 'Change <code>&lt;p-autoComplete&gt;</code> to <code>&lt;wt-autocomplete&gt;</code> (or <code>wt-autoComplete</code>). <code>suggestions</code>, <code>completeMethod</code>, <code>field</code> / <code>optionLabel</code>, <code>delay</code>, <code>minLength</code>, <code>dropdown</code>, <code>forceSelection</code> and <code>pTemplate="item"</code> templates keep their names. The list opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>virtualScroll</code>, <code>completeOnFocus</code> and the transition options).',
+        th: 'เปลี่ยน <code>&lt;p-autoComplete&gt;</code> เป็น <code>&lt;wu-autocomplete&gt;</code> (หรือ <code>wu-autoComplete</code>) <code>suggestions</code>, <code>completeMethod</code>, <code>field</code> / <code>optionLabel</code>, <code>delay</code>, <code>minLength</code>, <code>dropdown</code>, <code>forceSelection</code> และ template <code>pTemplate="item"</code> ใช้ชื่อเดิม รายการเปิดใน top layer จึงไม่ต้องใช้ <code>appendTo</code> (รับไว้แต่ไม่มีผล เช่นเดียวกับ <code>virtualScroll</code>, <code>completeOnFocus</code> และ transition options)',
+        en: 'Change <code>&lt;p-autoComplete&gt;</code> to <code>&lt;wu-autocomplete&gt;</code> (or <code>wu-autoComplete</code>). <code>suggestions</code>, <code>completeMethod</code>, <code>field</code> / <code>optionLabel</code>, <code>delay</code>, <code>minLength</code>, <code>dropdown</code>, <code>forceSelection</code> and <code>pTemplate="item"</code> templates keep their names. The list opens in the top layer, so <code>appendTo</code> is not needed (accepted and ignored, like <code>virtualScroll</code>, <code>completeOnFocus</code> and the transition options).',
       },
     },
   },
   code: {
     basic: `<label for="province">จังหวัด</label>
-${FIELD} inputId="province" placeholder="พิมพ์ชื่อจังหวัด"></wt-autocomplete>`,
-    delay: `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="slowSuggestions" (completeMethod)="searchSlow($event)"
-  optionLabel="name_th" [delay]="500" [minLength]="2" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร"></wt-autocomplete>`,
-    empty: `${FIELD} emptyMessage="ไม่พบจังหวัดนี้"></wt-autocomplete>
-${FIELD} [showEmptyMessage]="false" placeholder="ไม่แสดงรายการเมื่อไม่พบ"></wt-autocomplete>`,
-    dropdown: `${FIELD} [dropdown]="true" placeholder="กดปุ่มเพื่อดูทั้งหมด"></wt-autocomplete>
-${FIELD} [dropdown]="true" dropdownMode="current" placeholder="ปุ่มค้นตามข้อความในช่อง"></wt-autocomplete>`,
+${FIELD} inputId="province" placeholder="พิมพ์ชื่อจังหวัด"></wu-autocomplete>`,
+    delay: `<wu-autocomplete name="province" [(ngModel)]="province" [suggestions]="slowSuggestions" (completeMethod)="searchSlow($event)"
+  optionLabel="name_th" [delay]="500" [minLength]="2" placeholder="พิมพ์อย่างน้อย 2 ตัวอักษร"></wu-autocomplete>`,
+    empty: `${FIELD} emptyMessage="ไม่พบจังหวัดนี้"></wu-autocomplete>
+${FIELD} [showEmptyMessage]="false" placeholder="ไม่แสดงรายการเมื่อไม่พบ"></wu-autocomplete>`,
+    dropdown: `${FIELD} [dropdown]="true" placeholder="กดปุ่มเพื่อดูทั้งหมด"></wu-autocomplete>
+${FIELD} [dropdown]="true" dropdownMode="current" placeholder="ปุ่มค้นตามข้อความในช่อง"></wu-autocomplete>`,
     force: `<!-- ข้อความที่ไม่ได้เลือกจะถูกล้างเมื่อออกจากช่อง -->
-${FIELD} [forceSelection]="true" placeholder="ต้องเลือกจากรายการ"></wt-autocomplete>`,
-    disabled: `<wt-autocomplete name="level" [(ngModel)]="level" [suggestions]="levelSuggestions" (completeMethod)="searchLevels($event)"
-  optionLabel="name" optionDisabled="closed" [autoHighlight]="true" [dropdown]="true" placeholder="เลือกระดับชั้น"></wt-autocomplete>`,
-    group: `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="regionSuggestions" (completeMethod)="searchRegions($event)"
-  [group]="true" optionLabel="name_th" placeholder="ค้นตามภาค"></wt-autocomplete>`,
-    look: `${FIELD} [showClear]="true" placeholder="มีปุ่มล้าง"></wt-autocomplete>
-${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wt-autocomplete>
-${FIELD} [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wt-autocomplete>`,
-    sizes: `${FIELD} size="small" placeholder="เล็ก"></wt-autocomplete>
-${FIELD} placeholder="ปกติ"></wt-autocomplete>
-${FIELD} size="large" placeholder="ใหญ่"></wt-autocomplete>`,
+${FIELD} [forceSelection]="true" placeholder="ต้องเลือกจากรายการ"></wu-autocomplete>`,
+    disabled: `<wu-autocomplete name="level" [(ngModel)]="level" [suggestions]="levelSuggestions" (completeMethod)="searchLevels($event)"
+  optionLabel="name" optionDisabled="closed" [autoHighlight]="true" [dropdown]="true" placeholder="เลือกระดับชั้น"></wu-autocomplete>`,
+    group: `<wu-autocomplete name="province" [(ngModel)]="province" [suggestions]="regionSuggestions" (completeMethod)="searchRegions($event)"
+  [group]="true" optionLabel="name_th" placeholder="ค้นตามภาค"></wu-autocomplete>`,
+    look: `${FIELD} [showClear]="true" placeholder="มีปุ่มล้าง"></wu-autocomplete>
+${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wu-autocomplete>
+${FIELD} [fluid]="true" placeholder="กว้างเต็มพื้นที่"></wu-autocomplete>`,
+    sizes: `${FIELD} size="small" placeholder="เล็ก"></wu-autocomplete>
+${FIELD} placeholder="ปกติ"></wu-autocomplete>
+${FIELD} size="large" placeholder="ใหญ่"></wu-autocomplete>`,
     templates: {
-      v3: `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="searchByCode($event)"
+      v3: `<wu-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="searchByCode($event)"
   optionLabel="name_th" [dropdown]="true" placeholder="พิมพ์ชื่อหรือรหัสจังหวัด">
   <ng-template #header>
     <div class="px-3 py-2 text-sm text-color-secondary">เลือกจังหวัด</div>
@@ -258,37 +258,37 @@ ${FIELD} size="large" placeholder="ใหญ่"></wt-autocomplete>`,
   </ng-template>
   <ng-template #empty>ไม่พบจังหวัดที่ค้นหา</ng-template>
   <ng-template #footer>
-    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+    <wu-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wu-button>
   </ng-template>
-</wt-autocomplete>`,
-      classic: `<wt-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="searchByCode($event)"
+</wu-autocomplete>`,
+      classic: `<wu-autocomplete name="province" [(ngModel)]="province" [suggestions]="suggestions" (completeMethod)="searchByCode($event)"
   optionLabel="name_th" [dropdown]="true" placeholder="พิมพ์ชื่อหรือรหัสจังหวัด">
-  <ng-template wtTemplate="header">
+  <ng-template wuTemplate="header">
     <div class="px-3 py-2 text-sm text-color-secondary">เลือกจังหวัด</div>
   </ng-template>
-  <ng-template wtTemplate="item" let-p>
+  <ng-template wuTemplate="item" let-p>
     <b class="mr-2">{{ p.code }}</b> {{ p.name_th }}
   </ng-template>
-  <ng-template wtTemplate="empty">ไม่พบจังหวัดที่ค้นหา</ng-template>
-  <ng-template wtTemplate="footer">
-    <wt-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wt-button>
+  <ng-template wuTemplate="empty">ไม่พบจังหวัดที่ค้นหา</ng-template>
+  <ng-template wuTemplate="footer">
+    <wu-button label="เพิ่มจังหวัด" icon="wi wi-plus" size="small" [text]="true" (onClick)="addProvince()"></wu-button>
   </ng-template>
-</wt-autocomplete>`,
+</wu-autocomplete>`,
     },
     events: `${FIELD} [dropdown]="true" [showClear]="true"
   (onSelect)="log('onSelect')" (onUnselect)="log('onUnselect')" (onClear)="log('onClear')"
   (onDropdownClick)="log('onDropdownClick')" (onFocus)="log('onFocus')" (onBlur)="log('onBlur')"
-  (onShow)="log('onShow')" (onHide)="log('onHide')"></wt-autocomplete>`,
+  (onShow)="log('onShow')" (onHide)="log('onHide')"></wu-autocomplete>`,
     reactive: `<form [formGroup]="form">
-  <wt-autocomplete formControlName="province" [suggestions]="suggestions" (completeMethod)="search($event)"
-    optionLabel="name_th" placeholder="จังหวัด"></wt-autocomplete>
+  <wu-autocomplete formControlName="province" [suggestions]="suggestions" (completeMethod)="search($event)"
+    optionLabel="name_th" placeholder="จังหวัด"></wu-autocomplete>
 </form>`,
   },
   ts: {
     basic: { th: SEARCH_TS, en: SEARCH_TS_EN },
     delay: `slowSuggestions: Province[] = [];
 
-searchSlow(event: WtAutoCompleteCompleteEvent): void {
+searchSlow(event: WuAutoCompleteCompleteEvent): void {
   // แทน API ที่ตอบช้า: ระหว่างรอ ช่องแสดง spinner
   setTimeout(() => {
     const query = event.query.toLowerCase();
@@ -304,7 +304,7 @@ searchSlow(event: WtAutoCompleteCompleteEvent): void {
 ];
 levelSuggestions = this.levels;
 
-searchLevels(event: WtAutoCompleteCompleteEvent): void {
+searchLevels(event: WuAutoCompleteCompleteEvent): void {
   const query = event.query.toLowerCase();
   this.levelSuggestions = this.levels.filter((l) => l.name.toLowerCase().includes(query));
 }`,
@@ -315,14 +315,14 @@ searchLevels(event: WtAutoCompleteCompleteEvent): void {
 ];
 regionSuggestions = this.regions;
 
-searchRegions(event: WtAutoCompleteCompleteEvent): void {
+searchRegions(event: WuAutoCompleteCompleteEvent): void {
   const query = event.query.toLowerCase();
   // เฉพาะภาคที่มีจังหวัดตรงกับคำค้น
   this.regionSuggestions = this.regions
     .map((r) => ({ ...r, items: r.items.filter((p) => p.name_th.toLowerCase().includes(query)) }))
     .filter((r) => r.items.length);
 }`,
-    templates: `searchByCode(event: WtAutoCompleteCompleteEvent): void {
+    templates: `searchByCode(event: WuAutoCompleteCompleteEvent): void {
   const query = event.query.toLowerCase();
   // ค้นทั้งชื่อและรหัส
   this.suggestions = this.provinces.filter(
@@ -358,7 +358,7 @@ log(name: string): void {
       id: 'api-search',
       title: { th: 'Inputs · การค้นหา', en: 'Inputs · search' },
       rows: [
-        row('delay', 'number', '0', 'รอกี่ ms หลังพิมพ์ก่อนส่ง completeMethod (0 = ส่งทันที ค่าเริ่มต้นตั้งทั้งแอปได้ที่ provideWiraTheme({ delays }))', 'Ms to wait after typing before completeMethod (0 = at once; the default is set for the app with provideWiraTheme({ delays }))'),
+        row('delay', 'number', '0', 'รอกี่ ms หลังพิมพ์ก่อนส่ง completeMethod (0 = ส่งทันที ค่าเริ่มต้นตั้งทั้งแอปได้ที่ provideWiraUI({ delays }))', 'Ms to wait after typing before completeMethod (0 = at once; the default is set for the app with provideWiraUI({ delays }))'),
         row('minLength', 'number', '1', 'จำนวนตัวอักษรขั้นต่ำก่อนส่ง', 'Characters needed before asking'),
         row('dropdown', BOOL, 'false', 'ปุ่มแสดงตัวเลือกทั้งหมด', 'A button that shows every option'),
         row('dropdownMode', "'blank' | 'current'", "'blank'", 'ปุ่มส่งคำค้นว่าง หรือข้อความในช่อง', 'The button asks with an empty query, or the current text'),
@@ -388,9 +388,9 @@ log(name: string): void {
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('completeMethod', 'WtAutoCompleteCompleteEvent', undefined, 'ถึงเวลาหาผล: ตั้ง [suggestions] จาก query', 'Time to find results: set [suggestions] from query'),
-        row('onSelect · onUnselect', 'WtAutoCompleteSelectEvent', undefined, 'เลือกแล้ว · ค่าที่เลือกไว้ถูกแทน', 'Picked · a picked value was replaced'),
-        row('onDropdownClick', 'WtAutoCompleteCompleteEvent', undefined, 'กดปุ่ม dropdown', 'The dropdown button was pressed'),
+        row('completeMethod', 'WuAutoCompleteCompleteEvent', undefined, 'ถึงเวลาหาผล: ตั้ง [suggestions] จาก query', 'Time to find results: set [suggestions] from query'),
+        row('onSelect · onUnselect', 'WuAutoCompleteSelectEvent', undefined, 'เลือกแล้ว · ค่าที่เลือกไว้ถูกแทน', 'Picked · a picked value was replaced'),
+        row('onDropdownClick', 'WuAutoCompleteCompleteEvent', undefined, 'กดปุ่ม dropdown', 'The dropdown button was pressed'),
         row('onClear', 'Event | undefined', undefined, 'กดปุ่มล้าง', 'The clear button was pressed'),
         row('onFocus · onBlur', 'FocusEvent', undefined, 'โฟกัสเข้า / ออกจากช่อง', 'Focus came in / left'),
         row('onKeyUp', 'KeyboardEvent', undefined, 'ปล่อยปุ่มในช่อง', 'A key was released in the field'),
@@ -401,7 +401,7 @@ log(name: string): void {
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #item, wtTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wtTemplate="item" or pTemplate="item".' },
+      note: { th: 'เขียนเป็น #item, wuTemplate="item" หรือ pTemplate="item" ก็ได้', en: 'Write them as #item, wuTemplate="item" or pTemplate="item".' },
       rows: [
         row('item', '$implicit (option) · index', undefined, 'แต่ละแถวในรายการ', 'Each row in the list'),
         row('group', '$implicit (group)', undefined, 'หัวกลุ่ม', 'A group header'),
@@ -419,38 +419,38 @@ log(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WtAutoCompleteCompleteEvent, WtAutoCompleteSelectEvent } from 'wiratheme/autocomplete';
+      code: `import { WuAutoCompleteCompleteEvent, WuAutoCompleteSelectEvent } from 'wiraui/autocomplete';
 
-interface WtAutoCompleteCompleteEvent {
+interface WuAutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
 }
 
-interface WtAutoCompleteSelectEvent {
+interface WuAutoCompleteSelectEvent {
   originalEvent: Event;
   value: unknown;    // ตัวเลือกที่เลือก (หรือถูกแทน)
 }`,
     },
   ],
   tokens: [
-    tok('--wt-select-width', 'ความกว้างของช่อง (ร่วมกับ Select ค่าเริ่มต้น 14rem)', 'Field width (shared with Select; 14rem by default)'),
-    tok('--wt-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
-    tok('--wt-field-border', 'ขอบของช่อง', 'Field border'),
-    tok('--wt-input-radius', 'ความมนของช่อง', 'Field radius'),
-    tok('--wt-select-dropdown-width', 'ความกว้างของปุ่ม dropdown และ spinner', 'Dropdown button and spinner width'),
-    tok('--wt-select-dropdown-color', 'สีลูกศรของปุ่ม dropdown', 'Dropdown arrow colour'),
-    tok('--wt-overlay-bg', 'พื้นของรายการ', 'List background'),
-    tok('--wt-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
-    tok('--wt-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
-    tok('--wt-select-overlay-border-width', 'ขอบของรายการ', 'List border width'),
-    tok('--wt-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
-    tok('--wt-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
-    tok('--wt-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
-    tok('--wt-select-option-radius', 'ความมนของแถว', 'Row radius'),
-    tok('--wt-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
-    tok('--wt-select-option-selected-bg', 'พื้นแถวที่เลือกอยู่', 'Picked row background'),
-    tok('--wt-select-option-selected-color', 'สีตัวอักษรแถวที่เลือกอยู่', 'Picked row text'),
-    tok('--wt-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
-    tok('--wt-select-group-weight', 'น้ำหนักหัวกลุ่ม', 'Group header weight'),
+    tok('--wu-select-width', 'ความกว้างของช่อง (ร่วมกับ Select ค่าเริ่มต้น 14rem)', 'Field width (shared with Select; 14rem by default)'),
+    tok('--wu-field-bg', 'พื้นของช่อง (ร่วมกับ InputText)', 'Field background (shared with InputText)'),
+    tok('--wu-field-border', 'ขอบของช่อง', 'Field border'),
+    tok('--wu-input-radius', 'ความมนของช่อง', 'Field radius'),
+    tok('--wu-select-dropdown-width', 'ความกว้างของปุ่ม dropdown และ spinner', 'Dropdown button and spinner width'),
+    tok('--wu-select-dropdown-color', 'สีลูกศรของปุ่ม dropdown', 'Dropdown arrow colour'),
+    tok('--wu-overlay-bg', 'พื้นของรายการ', 'List background'),
+    tok('--wu-select-overlay-radius', 'ความมนของรายการ', 'List radius'),
+    tok('--wu-select-overlay-shadow', 'เงาของรายการ', 'List shadow'),
+    tok('--wu-select-overlay-border-width', 'ขอบของรายการ', 'List border width'),
+    tok('--wu-select-list-padding', 'ระยะรอบรายการ', 'List padding'),
+    tok('--wu-select-option-padding-x', 'ระยะซ้ายขวาของแถว', 'Row horizontal padding'),
+    tok('--wu-select-option-padding-y', 'ระยะบนล่างของแถว', 'Row vertical padding'),
+    tok('--wu-select-option-radius', 'ความมนของแถว', 'Row radius'),
+    tok('--wu-select-option-hover-bg', 'พื้นแถวที่ชี้ / ไฮไลต์', 'Hovered / highlighted row'),
+    tok('--wu-select-option-selected-bg', 'พื้นแถวที่เลือกอยู่', 'Picked row background'),
+    tok('--wu-select-option-selected-color', 'สีตัวอักษรแถวที่เลือกอยู่', 'Picked row text'),
+    tok('--wu-select-group-color', 'สีหัวกลุ่ม', 'Group header colour'),
+    tok('--wu-select-group-weight', 'น้ำหนักหัวกลุ่ม', 'Group header weight'),
   ],
 };

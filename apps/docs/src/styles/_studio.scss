@@ -1,4 +1,4 @@
-// WiraTheme Studio (theming/studio), mobile-first: one column with the preview under the editor; from xl the preview
+// WiraUI Studio (theming/studio), mobile-first: one column with the preview under the editor; from xl the preview
 // sits beside it. Field grids follow the editor's own width (container queries), not the window's.
 @use 'mq';
 
@@ -68,7 +68,7 @@
   gap: 6px;
   min-width: 0;
 }
-.docs-designer-notice > wt-message {
+.docs-designer-notice > wu-message {
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -116,11 +116,11 @@
   max-width: 100%;
 }
 // Select buttons wrap instead of pushing the page sideways on phones.
-.docs-designer wt-selectbutton {
+.docs-designer wu-selectbutton {
   max-width: 100%;
   min-width: 0;
 }
-.docs-designer .wt-selectbutton {
+.docs-designer .wu-selectbutton {
   flex-wrap: wrap;
   max-width: 100%;
 }
@@ -143,11 +143,11 @@
   container-type: inline-size;
   min-width: 0;
 }
-.docs-designer-editor wt-tabpanel {
+.docs-designer-editor wu-tabpanel {
   display: block;
   min-width: 0;
 }
-.docs-designer-editor wt-tabpanel > * + * {
+.docs-designer-editor wu-tabpanel > * + * {
   margin-top: 12px;
 }
 .docs-designer-count {
@@ -268,17 +268,17 @@
   min-width: 0;
 }
 .docs-designer-control > input,
-.docs-designer-control > wt-select {
+.docs-designer-control > wu-select {
   flex: 1 1 auto;
   width: 100%;
   min-width: 0;
 }
-.docs-designer-control > wt-select .wt-select,
-.docs-designer-field > wt-select,
-.docs-designer-field > wt-select .wt-select {
+.docs-designer-control > wu-select .wu-select,
+.docs-designer-field > wu-select,
+.docs-designer-field > wu-select .wu-select {
   width: 100%;
 }
-.docs-designer-control > wt-colorpicker {
+.docs-designer-control > wu-colorpicker {
   flex: none;
 }
 .docs-designer-warn {
@@ -351,8 +351,8 @@
   gap: 6px;
   min-width: 0;
 }
-.docs-designer-comp-head wt-select,
-.docs-designer-comp-head .wt-select {
+.docs-designer-comp-head wu-select,
+.docs-designer-comp-head .wu-select {
   width: 100%;
 }
 .docs-designer-group {
@@ -418,10 +418,10 @@
   padding: 14px;
   border: 1px solid var(--docs-border);
   border-radius: var(--docs-radius-lg);
-  // The theme's page behind its components: its ground colour, or Glass's colour fields (--wt-backdrop).
-  background: var(--wt-backdrop, var(--wt-ground, var(--docs-surface)));
-  color: var(--wt-text, var(--docs-text));
-  font-family: var(--wt-font-family, var(--docs-font));
+  // The theme's page behind its components: its ground colour, or Glass's colour fields (--wu-backdrop).
+  background: var(--wu-backdrop, var(--wu-ground, var(--docs-surface)));
+  color: var(--wu-text, var(--docs-text));
+  font-family: var(--wu-font-family, var(--docs-font));
 }
 .docs-designer-preview-head {
   display: flex;
@@ -449,12 +449,12 @@
   min-width: 0;
 }
 .docs-designer-pv-fields > input,
-.docs-designer-pv-fields > wt-select,
-.docs-designer-pv-fields .wt-select {
+.docs-designer-pv-fields > wu-select,
+.docs-designer-pv-fields .wu-select {
   width: 100%;
   min-width: 0;
 }
-.docs-designer-pv wt-table {
+.docs-designer-pv wu-table {
   display: block;
   min-width: 0;
 }
@@ -477,7 +477,7 @@
   flex: 1 1 200px;
   min-width: 0;
 }
-.docs-designer-pv-pick .wt-select {
+.docs-designer-pv-pick .wu-select {
   width: 100%;
 }
 // Side by side or wide only means something once the preview sits beside the editor (xl).
@@ -523,37 +523,37 @@
 // A dialog drawn with the dialog tokens, so its look can be tuned without opening one.
 .docs-designer-pv-dialog {
   min-width: 0;
-  border: 1px solid var(--wt-dialog-border);
-  border-radius: var(--wt-dialog-radius);
-  background: var(--wt-dialog-bg);
-  box-shadow: var(--wt-dialog-shadow);
-  color: var(--wt-text);
+  border: 1px solid var(--wu-dialog-border);
+  border-radius: var(--wu-dialog-radius);
+  background: var(--wu-dialog-bg);
+  box-shadow: var(--wu-dialog-shadow);
+  color: var(--wu-text);
 }
 .docs-designer-pv-dialog-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: var(--wt-dialog-header-padding);
-  font-size: var(--wt-dialog-title-size);
-  font-weight: var(--wt-dialog-title-weight);
+  padding: var(--wu-dialog-header-padding);
+  font-size: var(--wu-dialog-title-size);
+  font-weight: var(--wu-dialog-title-weight);
   line-height: 1.3;
 }
 .docs-designer-pv-dialog-head .wi {
-  color: var(--wt-text-muted);
+  color: var(--wu-text-muted);
 }
 .docs-section .docs-designer-pv-dialog p,
 .docs-designer-pv-dialog p {
   margin: 0;
-  padding: var(--wt-dialog-content-padding);
-  color: var(--wt-text-muted);
+  padding: var(--wu-dialog-content-padding);
+  color: var(--wu-text-muted);
 }
 .docs-designer-pv-dialog-foot {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-  padding: var(--wt-dialog-footer-padding);
+  padding: var(--wu-dialog-footer-padding);
 }
 
 @include mq.up(xl) {

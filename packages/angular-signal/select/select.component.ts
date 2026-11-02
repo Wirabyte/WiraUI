@@ -1,29 +1,29 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, forwardRef, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵWtSelectBase } from './select.base';
+import { ɵWuSelectBase } from './select.base';
 
 /**
- * Choose one option from a list: `<wt-select [options]="provinces" optionLabel="name_th" optionValue="id"
+ * Choose one option from a list: `<wu-select [options]="provinces" optionLabel="name_th" optionValue="id"
  * [(ngModel)]="provinceId" placeholder="เลือกจังหวัด" [filter]="true">`. The list opens in the top layer (no appendTo
- * needed); the search matches Thai and English, Thai digits as 0–9. `wt-dropdown` is the same component.
+ * needed); the search matches Thai and English, Thai digits as 0–9. `wu-dropdown` is the same component.
  */
 @Component({
-  selector: 'wt-select, wt-dropdown',
+  selector: 'wu-select, wu-dropdown',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './select.component.html',
   styleUrl: './select.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtSelect), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuSelect), multi: true }],
   host: {
     class: 'p-inputwrapper',
-    '[class.wt-select-fluid]': 'fluid',
+    '[class.wu-select-fluid]': 'fluid',
     '[class.p-inputwrapper-filled]': 'filled',
     '[class.p-inputwrapper-focus]': 'focused || open',
     '[style]': 'style',
     '(focusout)': 'focusOut($event)',
   },
 })
-export class WtSelect extends ɵWtSelectBase {}
+export class WuSelect extends ɵWuSelectBase {}

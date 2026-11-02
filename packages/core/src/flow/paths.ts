@@ -1,5 +1,5 @@
 /**
- * wt-flow: edge shapes as SVG path data. Every function returns `[path, labelX, labelY, offsetX, offsetY]`: the `d`
+ * wu-flow: edge shapes as SVG path data. Every function returns `[path, labelX, labelY, offsetX, offsetY]`: the `d`
  * attribute, where the label goes (the middle of the edge), and how far that is from the source on each axis.
  */
 import { positionVector } from './geometry';

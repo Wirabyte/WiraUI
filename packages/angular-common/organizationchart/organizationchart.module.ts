@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { WtTemplate } from 'wiratheme/config';
-import { WtOrganizationChart } from './organizationchart.component';
+import { WuTemplate } from 'wiraui/config';
+import { WuOrganizationChart } from './organizationchart.component';
 
-/** For NgModule apps. Standalone apps can import `WtOrganizationChart` directly. `wtTemplate` (`pTemplate`) comes with it. */
+/** For NgModule apps. Standalone apps can import `WuOrganizationChart` directly. `wuTemplate` (`pTemplate`) comes with it. */
 @NgModule({
-  imports: [WtOrganizationChart, WtTemplate],
-  exports: [WtOrganizationChart, WtTemplate],
+  imports: [WuOrganizationChart, WuTemplate],
+  exports: [WuOrganizationChart, WuTemplate],
 })
-export class WtOrganizationChartModule {}
+export class WuOrganizationChartModule {}

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtListbox } from './listbox.component';
+import { WuListbox } from './listbox.component';
 
-/** For NgModule apps. Standalone apps can import `WtListbox` directly. */
+/** For NgModule apps. Standalone apps can import `WuListbox` directly. */
 @NgModule({
-  imports: [WtListbox],
-  exports: [WtListbox],
+  imports: [WuListbox],
+  exports: [WuListbox],
 })
-export class WtListboxModule {}
+export class WuListboxModule {}

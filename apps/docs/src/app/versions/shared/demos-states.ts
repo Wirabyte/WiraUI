@@ -1,7 +1,7 @@
 import { EMPTYSTATE_DOC, ERRORPAGE_DOC, RESULT_DOC } from '../../data/states';
 import { SimpleDemo } from './demos';
 
-/* State behind the EmptyState and Result pages (no wiratheme import, like demos.ts). */
+/* State behind the EmptyState and Result pages (no wiraui import, like demos.ts). */
 
 export abstract class EmptyStateDemo extends SimpleDemo {
   protected readonly doc = EMPTYSTATE_DOC;

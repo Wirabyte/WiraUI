@@ -53,7 +53,7 @@ export function wiraSchoolUnits(): DocOrgNode[] {
   ];
 }
 
-const CHART_TS = `import type { TreeNode } from 'wiratheme/api';
+const CHART_TS = `import type { TreeNode } from 'wiraui/api';
 
 chart: TreeNode[] = [
   {
@@ -79,9 +79,9 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
   title: 'OrganizationChart',
   group: 'Charts',
   entry: 'organizationchart',
-  standalone: 'WtOrganizationChart',
-  module: 'WtOrganizationChartModule',
-  selector: 'wt-organizationChart',
+  standalone: 'WuOrganizationChart',
+  module: 'WuOrganizationChartModule',
+  selector: 'wu-organizationChart',
   description: {
     th: 'ผังองค์กรแบบต้นไม้จากบนลงล่าง กล่องเชื่อมด้วยเส้น วาดกล่องเองตามชนิดของข้อมูลได้ เลือกกล่องได้ทีละกล่องหรือหลายกล่อง พับ / กางสาขาได้ ใช้คีย์บอร์ดได้ และเลื่อนดูในกล่องของตัวเองบนมือถือ',
     en: 'An organization chart drawn top down, boxes joined by lines: draw the boxes yourself by data type, pick one box or many, fold and open branches, use the keyboard, and scroll it inside its own box on phones.',
@@ -113,8 +113,8 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtOrganizationChartModule</code> มี <code>wtTemplate</code> ให้ด้วย) และ standalone (<code>WtOrganizationChart</code>) · แท็กเขียนได้ทั้ง <code>wt-organizationChart</code>, <code>wt-organizationchart</code> และ <code>wt-organization-chart</code> · ข้อมูลเป็น <code>TreeNode</code> จาก <code>wiratheme/api</code>',
-        en: 'Works as an NgModule (<code>WtOrganizationChartModule</code>, which brings <code>wtTemplate</code>) or standalone (<code>WtOrganizationChart</code>) · the tag can be <code>wt-organizationChart</code>, <code>wt-organizationchart</code> or <code>wt-organization-chart</code> · the data is <code>TreeNode</code> from <code>wiratheme/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuOrganizationChartModule</code> มี <code>wuTemplate</code> ให้ด้วย) และ standalone (<code>WuOrganizationChart</code>) · แท็กเขียนได้ทั้ง <code>wu-organizationChart</code>, <code>wu-organizationchart</code> และ <code>wu-organization-chart</code> · ข้อมูลเป็น <code>TreeNode</code> จาก <code>wiraui/api</code>',
+        en: 'Works as an NgModule (<code>WuOrganizationChartModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuOrganizationChart</code>) · the tag can be <code>wu-organizationChart</code>, <code>wu-organizationchart</code> or <code>wu-organization-chart</code> · the data is <code>TreeNode</code> from <code>wiraui/api</code>.',
       },
     },
     basic: {
@@ -127,8 +127,8 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
     templates: {
       title: { th: 'วาดกล่องเอง', en: 'Drawing the boxes' },
       text: {
-        th: 'template ตั้งชื่อตาม <code>type</code> ของกล่อง เช่น <code>wtTemplate="person"</code> ใช้กับกล่องที่ <code>type: \'person\'</code> และ <code>wtTemplate="default"</code> ใช้กับกล่องที่เหลือ (ได้ <code>let-node</code>) · ใช้ <code>wtTemplate</code> หรือ <code>pTemplate</code> ทุกรุ่น (ชื่อตาม type ไม่ใช้ <code>#ref</code>) · <code>togglericon</code> วาดไอคอนปุ่มพับเอง (ได้ <code>let-expanded</code>)',
-        en: 'Name a template after a box’s <code>type</code>: <code>wtTemplate="person"</code> draws boxes with <code>type: \'person\'</code>, and <code>wtTemplate="default"</code> the rest (each gets <code>let-node</code>) · use <code>wtTemplate</code> or <code>pTemplate</code> in every version (type names are not <code>#refs</code>) · <code>togglericon</code> draws the fold button’s icon (it gets <code>let-expanded</code>).',
+        th: 'template ตั้งชื่อตาม <code>type</code> ของกล่อง เช่น <code>wuTemplate="person"</code> ใช้กับกล่องที่ <code>type: \'person\'</code> และ <code>wuTemplate="default"</code> ใช้กับกล่องที่เหลือ (ได้ <code>let-node</code>) · ใช้ <code>wuTemplate</code> หรือ <code>pTemplate</code> ทุกรุ่น (ชื่อตาม type ไม่ใช้ <code>#ref</code>) · <code>togglericon</code> วาดไอคอนปุ่มพับเอง (ได้ <code>let-expanded</code>)',
+        en: 'Name a template after a box’s <code>type</code>: <code>wuTemplate="person"</code> draws boxes with <code>type: \'person\'</code>, and <code>wuTemplate="default"</code> the rest (each gets <code>let-node</code>) · use <code>wuTemplate</code> or <code>pTemplate</code> in every version (type names are not <code>#refs</code>) · <code>togglericon</code> draws the fold button’s icon (it gets <code>let-expanded</code>).',
       },
     },
     selection: {
@@ -155,42 +155,42 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-organizationChart&gt;</code> เป็น <code>&lt;wt-organizationChart&gt;</code> input, event และ template แบบ <code>pTemplate="person"</code> ใช้ชื่อเดิม และข้อมูล <code>TreeNode</code> ชุดเดิมใช้ได้เลย',
-        en: 'Change <code>&lt;p-organizationChart&gt;</code> to <code>&lt;wt-organizationChart&gt;</code>; the inputs, events and <code>pTemplate="person"</code> templates keep their names, and the same <code>TreeNode</code> data works as is.',
+        th: 'เปลี่ยน <code>&lt;p-organizationChart&gt;</code> เป็น <code>&lt;wu-organizationChart&gt;</code> input, event และ template แบบ <code>pTemplate="person"</code> ใช้ชื่อเดิม และข้อมูล <code>TreeNode</code> ชุดเดิมใช้ได้เลย',
+        en: 'Change <code>&lt;p-organizationChart&gt;</code> to <code>&lt;wu-organizationChart&gt;</code>; the inputs, events and <code>pTemplate="person"</code> templates keep their names, and the same <code>TreeNode</code> data works as is.',
       },
     },
   },
   code: {
-    basic: `<wt-organizationChart [value]="chart" ariaLabel="ผังองค์กรโรงเรียนวิระ"></wt-organizationChart>`,
-    templates: `<wt-organizationChart [value]="chart" ariaLabel="ผังองค์กรโรงเรียนวิระ">
-  <ng-template wtTemplate="person" let-node>
+    basic: `<wu-organizationChart [value]="chart" ariaLabel="ผังองค์กรโรงเรียนวิระ"></wu-organizationChart>`,
+    templates: `<wu-organizationChart [value]="chart" ariaLabel="ผังองค์กรโรงเรียนวิระ">
+  <ng-template wuTemplate="person" let-node>
     <div class="person">
-      <wt-avatar [label]="node.data.initial" shape="circle"></wt-avatar>
+      <wu-avatar [label]="node.data.initial" shape="circle"></wu-avatar>
       <b>{{ node.data.name }}</b>
       <small>{{ node.data.title }}</small>
     </div>
   </ng-template>
-</wt-organizationChart>`,
+</wu-organizationChart>`,
     selection: {
-      v3: `<wt-organizationChart [value]="units" selectionMode="single" [(selection)]="picked" (onNodeSelect)="selected($event)">
-</wt-organizationChart>
+      v3: `<wu-organizationChart [value]="units" selectionMode="single" [(selection)]="picked" (onNodeSelect)="selected($event)">
+</wu-organizationChart>
 @if (picked) {
   <span>ที่เลือก: {{ picked.label }}</span>
 }
 
-<wt-organizationChart [value]="units" selectionMode="multiple" [(selection)]="team"></wt-organizationChart>`,
-      classic: `<wt-organizationChart [value]="units" selectionMode="single" [(selection)]="picked" (onNodeSelect)="selected($event)">
-</wt-organizationChart>
+<wu-organizationChart [value]="units" selectionMode="multiple" [(selection)]="team"></wu-organizationChart>`,
+      classic: `<wu-organizationChart [value]="units" selectionMode="single" [(selection)]="picked" (onNodeSelect)="selected($event)">
+</wu-organizationChart>
 <span *ngIf="picked">ที่เลือก: {{ picked.label }}</span>
 
-<wt-organizationChart [value]="units" selectionMode="multiple" [(selection)]="team"></wt-organizationChart>`,
+<wu-organizationChart [value]="units" selectionMode="multiple" [(selection)]="team"></wu-organizationChart>`,
     },
-    collapsible: `<wt-organizationChart [value]="units" [collapsible]="true" [preserveSpace]="false"
-  (onNodeExpand)="opened($event)" (onNodeCollapse)="closed($event)"></wt-organizationChart>`,
+    collapsible: `<wu-organizationChart [value]="units" [collapsible]="true" [preserveSpace]="false"
+  (onNodeExpand)="opened($event)" (onNodeCollapse)="closed($event)"></wu-organizationChart>`,
   },
   ts: {
     basic: CHART_TS,
-    selection: `import type { TreeNode } from 'wiratheme/api';
+    selection: `import type { TreeNode } from 'wiraui/api';
 
 picked: TreeNode | null = null;
 team: TreeNode[] = [];
@@ -228,8 +228,8 @@ selected(event: { node: TreeNode }): void {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'ตั้งชื่อตาม type ของกล่องด้วย wtTemplate="ชื่อ" หรือ pTemplate · togglericon เขียนเป็น #togglericon ได้ด้วย',
-        en: 'Name them after the box type with wtTemplate="name" or pTemplate · togglericon can also be #togglericon.',
+        th: 'ตั้งชื่อตาม type ของกล่องด้วย wuTemplate="ชื่อ" หรือ pTemplate · togglericon เขียนเป็น #togglericon ได้ด้วย',
+        en: 'Name them after the box type with wuTemplate="name" or pTemplate · togglericon can also be #togglericon.',
       },
       rows: [
         row('<type> · default', '$implicit (node)', undefined, 'เนื้อในกล่องที่ type ตรงกัน / กล่องที่เหลือ', 'Inside boxes of that type / every other box'),
@@ -249,24 +249,24 @@ selected(event: { node: TreeNode }): void {
     },
   ],
   tokens: [
-    tok('--wt-organizationchart-padding', 'ระยะรอบผัง', 'Padding around the chart'),
-    tok('--wt-organizationchart-gutter', 'ระยะระหว่างกล่องข้างกัน', 'Gap between boxes side by side'),
-    tok('--wt-organizationchart-connector-height', 'ความสูงของเส้นเชื่อม', 'Height of the connectors'),
-    tok('--wt-organizationchart-connector-color', 'สีเส้นเชื่อม', 'Connector colour'),
-    tok('--wt-organizationchart-connector-radius', 'มุมโค้งของเส้นเชื่อม', 'Connector corner radius'),
-    tok('--wt-organizationchart-node-bg', 'พื้นกล่อง', 'Box background'),
-    tok('--wt-organizationchart-node-color', 'สีตัวอักษรในกล่อง', 'Box text colour'),
-    tok('--wt-organizationchart-node-border-color', 'สีขอบกล่อง', 'Box border colour'),
-    tok('--wt-organizationchart-node-padding', 'ระยะในกล่อง', 'Box padding'),
-    tok('--wt-organizationchart-node-toggleable-padding', 'ระยะในกล่องที่มีปุ่มพับ', 'Padding of boxes with a fold button'),
-    tok('--wt-organizationchart-node-radius', 'มุมโค้งของกล่อง', 'Box corner radius'),
-    tok('--wt-organizationchart-node-hover-bg', 'พื้นกล่องเมื่อชี้ (เมื่อเลือกได้)', 'Box background on hover (when pickable)'),
-    tok('--wt-organizationchart-node-selected-bg', 'พื้นกล่องที่เลือก', 'Picked box background'),
-    tok('--wt-organizationchart-node-selected-color', 'สีตัวอักษรของกล่องที่เลือก', 'Picked box text colour'),
-    tok('--wt-organizationchart-toggle-size', 'ขนาดปุ่มพับ', 'Fold button size'),
-    tok('--wt-organizationchart-toggle-bg', 'พื้นปุ่มพับ', 'Fold button background'),
-    tok('--wt-organizationchart-toggle-color', 'สีไอคอนปุ่มพับ', 'Fold button icon colour'),
-    tok('--wt-organizationchart-toggle-hover-bg', 'พื้นปุ่มพับเมื่อชี้', 'Fold button background on hover'),
-    tok('--wt-organizationchart-toggle-hover-color', 'สีไอคอนปุ่มพับเมื่อชี้', 'Fold button icon colour on hover'),
+    tok('--wu-organizationchart-padding', 'ระยะรอบผัง', 'Padding around the chart'),
+    tok('--wu-organizationchart-gutter', 'ระยะระหว่างกล่องข้างกัน', 'Gap between boxes side by side'),
+    tok('--wu-organizationchart-connector-height', 'ความสูงของเส้นเชื่อม', 'Height of the connectors'),
+    tok('--wu-organizationchart-connector-color', 'สีเส้นเชื่อม', 'Connector colour'),
+    tok('--wu-organizationchart-connector-radius', 'มุมโค้งของเส้นเชื่อม', 'Connector corner radius'),
+    tok('--wu-organizationchart-node-bg', 'พื้นกล่อง', 'Box background'),
+    tok('--wu-organizationchart-node-color', 'สีตัวอักษรในกล่อง', 'Box text colour'),
+    tok('--wu-organizationchart-node-border-color', 'สีขอบกล่อง', 'Box border colour'),
+    tok('--wu-organizationchart-node-padding', 'ระยะในกล่อง', 'Box padding'),
+    tok('--wu-organizationchart-node-toggleable-padding', 'ระยะในกล่องที่มีปุ่มพับ', 'Padding of boxes with a fold button'),
+    tok('--wu-organizationchart-node-radius', 'มุมโค้งของกล่อง', 'Box corner radius'),
+    tok('--wu-organizationchart-node-hover-bg', 'พื้นกล่องเมื่อชี้ (เมื่อเลือกได้)', 'Box background on hover (when pickable)'),
+    tok('--wu-organizationchart-node-selected-bg', 'พื้นกล่องที่เลือก', 'Picked box background'),
+    tok('--wu-organizationchart-node-selected-color', 'สีตัวอักษรของกล่องที่เลือก', 'Picked box text colour'),
+    tok('--wu-organizationchart-toggle-size', 'ขนาดปุ่มพับ', 'Fold button size'),
+    tok('--wu-organizationchart-toggle-bg', 'พื้นปุ่มพับ', 'Fold button background'),
+    tok('--wu-organizationchart-toggle-color', 'สีไอคอนปุ่มพับ', 'Fold button icon colour'),
+    tok('--wu-organizationchart-toggle-hover-bg', 'พื้นปุ่มพับเมื่อชี้', 'Fold button background on hover'),
+    tok('--wu-organizationchart-toggle-hover-color', 'สีไอคอนปุ่มพับเมื่อชี้', 'Fold button icon colour on hover'),
   ],
 };

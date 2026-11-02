@@ -1,5 +1,5 @@
 /**
- * wt-chart: radial bars (rings and gauges), heatmaps and treemaps. Called by `chartModel()`; same model, same rules (no
+ * wu-chart: radial bars (rings and gauges), heatmaps and treemaps. Called by `chartModel()`; same model, same rules (no
  * DOM, text widths from `measure`).
  */
 import { formatChartValue } from './format';

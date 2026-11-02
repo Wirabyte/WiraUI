@@ -22,27 +22,27 @@ import {
   ɵsize,
   ɵtoBool,
   ɵuniqueId,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  ɵWtPopup,
-  ɵWtStyleLoader,
-  WtTemplate,
-} from 'wiratheme/config';
-import { firstIndex, lastIndex, optionField, sameValue, searchText, SelectItem, selectItems, stepIndex, WtLocale } from 'wiratheme/core';
-import { ɵWT_INPUTTEXT_CSS } from 'wiratheme/inputtext';
-import { ɵWT_SELECT_CSS } from 'wiratheme/select';
-import { WtAutoCompleteCompleteEvent, WtAutoCompleteSelectEvent } from './autocomplete.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  ɵWuPopup,
+  ɵWuStyleLoader,
+  WuTemplate,
+} from 'wiraui/config';
+import { firstIndex, lastIndex, optionField, sameValue, searchText, SelectItem, selectItems, stepIndex, WuLocale } from 'wiraui/core';
+import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵWU_SELECT_CSS } from 'wiraui/select';
+import { WuAutoCompleteCompleteEvent, WuAutoCompleteSelectEvent } from './autocomplete.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * What wt-autocomplete does, shared by the v1 and v2/v3 templates. A text field that asks the page for suggestions
+ * What wu-autocomplete does, shared by the v1 and v2/v3 templates. A text field that asks the page for suggestions
  * (`(completeMethod)`, after `delay` ms and `minLength` characters) and lists them under it in the top layer.
  * Picking one makes it the value (the whole option); typing without picking keeps the text, unless `forceSelection`.
- * The field and list look and theme like wt-select.
+ * The field and list look and theme like wu-select.
  */
 @Directive()
-export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDestroy {
+export abstract class ɵWuAutoCompleteBase implements ControlValueAccessor, OnDestroy {
   /** The suggestions for the last query. */
   @Input() set suggestions(v: readonly unknown[] | null | undefined) {
     this._suggestions = v || [];
@@ -116,18 +116,18 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
   @Input() showTransitionOptions: unknown;
   @Input() hideTransitionOptions: unknown;
 
-  @Output() readonly completeMethod = new EventEmitter<WtAutoCompleteCompleteEvent>();
-  @Output() readonly onSelect = new EventEmitter<WtAutoCompleteSelectEvent>();
-  @Output() readonly onUnselect = new EventEmitter<WtAutoCompleteSelectEvent>();
+  @Output() readonly completeMethod = new EventEmitter<WuAutoCompleteCompleteEvent>();
+  @Output() readonly onSelect = new EventEmitter<WuAutoCompleteSelectEvent>();
+  @Output() readonly onUnselect = new EventEmitter<WuAutoCompleteSelectEvent>();
   @Output() readonly onFocus = new EventEmitter<FocusEvent>();
   @Output() readonly onBlur = new EventEmitter<FocusEvent>();
-  @Output() readonly onDropdownClick = new EventEmitter<WtAutoCompleteCompleteEvent>();
+  @Output() readonly onDropdownClick = new EventEmitter<WuAutoCompleteCompleteEvent>();
   @Output() readonly onClear = new EventEmitter<Event | undefined>();
   @Output() readonly onKeyUp = new EventEmitter<KeyboardEvent>();
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ContentChild('group', { descendants: false }) protected groupRef?: unknown;
   @ContentChild('header', { descendants: false }) protected headerRef?: unknown;
@@ -147,14 +147,14 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
   /** Waiting for suggestions after asking. */
   loading = false;
   activeIndex = -1;
-  readonly baseId = ɵuniqueId('wt-autocomplete');
+  readonly baseId = ɵuniqueId('wu-autocomplete');
   readonly listId = `${this.baseId}-list`;
   readonly trackIndex = (i: number): number => i;
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly host: HTMLElement = inject(ElementRef).nativeElement;
   protected readonly doc = inject(DOCUMENT);
-  protected readonly config = inject(WtConfig);
+  protected readonly config = inject(WuConfig);
   private _delay: number | null = null;
   private readonly i18n = ɵrefreshOnTranslation();
   private _suggestions: readonly unknown[] = [];
@@ -177,16 +177,16 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
   /** A query was sent and its suggestions have not arrived yet. */
   private searching = false;
   private timer: ReturnType<typeof setTimeout> | null = null;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   private onModelChange: (v: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
-    const styles = inject(ɵWtStyleLoader);
-    // The field and the list are drawn by wt-select's stylesheet.
-    styles.load('inputtext', ɵWT_INPUTTEXT_CSS);
-    styles.load('select', ɵWT_SELECT_CSS);
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+    const styles = inject(ɵWuStyleLoader);
+    // The field and the list are drawn by wu-select's stylesheet.
+    styles.load('inputtext', ɵWU_INPUTTEXT_CSS);
+    styles.load('select', ɵWU_SELECT_CSS);
   }
 
   ngOnDestroy(): void {
@@ -197,7 +197,7 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
 
   // ---------- what the templates read ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   get sizeKey(): 'sm' | 'lg' | null {
@@ -419,10 +419,10 @@ export abstract class ɵWtAutoCompleteBase implements ControlValueAccessor, OnDe
     const panel = this.panelRef?.nativeElement;
     const anchor = this.rootRef?.nativeElement;
     if (!panel || !anchor) return;
-    this.popup = new ɵWtPopup(anchor, panel, {
+    this.popup = new ɵWuPopup(anchor, panel, {
       sheet: false,
-      sheetClass: 'wt-select-sheet',
-      modalClass: 'wt-select-modal',
+      sheetClass: 'wu-select-sheet',
+      modalClass: 'wu-select-modal',
       onOutside: () => this.hide(),
       onPosition: (_, box) => (panel.style.minWidth = `${Math.round(box.width)}px`),
     });

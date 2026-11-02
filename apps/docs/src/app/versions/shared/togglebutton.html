@@ -6,35 +6,35 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-togglebutton inputId="d-pin" [(ngModel)]="pinned"></wt-togglebutton>
+        <wu-togglebutton inputId="d-pin" [(ngModel)]="pinned"></wu-togglebutton>
         <span class="docs-demo-output">pinned: <code id="d-pin-value">{{ pinned }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="sizes" [section]="sec['sizes']">
       <docs-demo [html]="code['sizes']">
-        <wt-togglebutton [(ngModel)]="sizeValue" size="small" [onLabel]="tx('เล็ก')" [offLabel]="tx('เล็ก')"></wt-togglebutton>
-        <wt-togglebutton [(ngModel)]="sizeValue" [onLabel]="tx('ปกติ')" [offLabel]="tx('ปกติ')"></wt-togglebutton>
-        <wt-togglebutton [(ngModel)]="sizeValue" size="large" [onLabel]="tx('ใหญ่')" [offLabel]="tx('ใหญ่')"></wt-togglebutton>
+        <wu-togglebutton [(ngModel)]="sizeValue" size="small" [onLabel]="tx('เล็ก')" [offLabel]="tx('เล็ก')"></wu-togglebutton>
+        <wu-togglebutton [(ngModel)]="sizeValue" [onLabel]="tx('ปกติ')" [offLabel]="tx('ปกติ')"></wu-togglebutton>
+        <wu-togglebutton [(ngModel)]="sizeValue" size="large" [onLabel]="tx('ใหญ่')" [offLabel]="tx('ใหญ่')"></wu-togglebutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="labels" [section]="sec['labels']">
       <docs-demo [html]="code['labels']">
-        <wt-togglebutton
+        <wu-togglebutton
           [(ngModel)]="following"
           [onLabel]="tx('ติดตามแล้ว')"
           [offLabel]="tx('ติดตาม')"
           onIcon="wi wi-check"
           offIcon="wi wi-plus"
-        ></wt-togglebutton>
+        ></wu-togglebutton>
       </docs-demo>
     </docs-section>
 
     <docs-section id="reactive" [section]="sec['reactive']">
       <docs-demo [html]="code['reactive']" [ts]="ts['reactive']">
         <form [formGroup]="form" class="docs-demo-form">
-          <wt-togglebutton inputId="r-notify" formControlName="notify" [onLabel]="tx('แจ้งเตือนเปิด')" [offLabel]="tx('แจ้งเตือนปิด')"></wt-togglebutton>
+          <wu-togglebutton inputId="r-notify" formControlName="notify" [onLabel]="tx('แจ้งเตือนเปิด')" [offLabel]="tx('แจ้งเตือนปิด')"></wu-togglebutton>
         </form>
         <span class="docs-demo-output">value: <code id="r-notify-value">{{ form.getRawValue() | json }}</code></span>
       </docs-demo>
@@ -42,8 +42,8 @@
 
     <docs-section id="disabled" [section]="sec['disabled']">
       <docs-demo [html]="code['disabled']">
-        <wt-togglebutton [ngModel]="true" [disabled]="true" [onLabel]="tx('ปิดอยู่')"></wt-togglebutton>
-        <wt-togglebutton [invalid]="true" offLabel="Invalid"></wt-togglebutton>
+        <wu-togglebutton [ngModel]="true" [disabled]="true" [onLabel]="tx('ปิดอยู่')"></wu-togglebutton>
+        <wu-togglebutton [invalid]="true" offLabel="Invalid"></wu-togglebutton>
       </docs-demo>
     </docs-section>
   </ng-template>

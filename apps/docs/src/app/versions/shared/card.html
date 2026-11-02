@@ -6,30 +6,30 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-card [header]="tx('โปรไฟล์')" [subheader]="tx('ข้อมูลบัญชี')" class="docs-demo-card">
+        <wu-card [header]="tx('โปรไฟล์')" [subheader]="tx('ข้อมูลบัญชี')" class="docs-demo-card">
           <p class="docs-demo-p">{{ tx('สมชาย ใจดี · สมาชิกตั้งแต่ 2566 · แผน Pro') }}</p>
-        </wt-card>
+        </wu-card>
       </docs-demo>
     </docs-section>
 
     <docs-section id="slots" [section]="sec['slots']">
       <docs-demo [html]="code['slots']" layout="stack">
-        <wt-card [header]="tx('แผน Pro')" [subheader]="tx('รายเดือน')" class="docs-demo-card">
-          <div wtCardHeader class="docs-demo-cover"><span>{{ tx('฿290 / เดือน') }}</span></div>
-          <wt-button wtCardActions icon="wi wi-plus" [text]="true" [rounded]="true" [ariaLabel]="tx('เพิ่ม')"></wt-button>
+        <wu-card [header]="tx('แผน Pro')" [subheader]="tx('รายเดือน')" class="docs-demo-card">
+          <div wuCardHeader class="docs-demo-cover"><span>{{ tx('฿290 / เดือน') }}</span></div>
+          <wu-button wuCardActions icon="wi wi-plus" [text]="true" [rounded]="true" [ariaLabel]="tx('เพิ่ม')"></wu-button>
           <p class="docs-demo-p">{{ tx('5 โปรเจค · พื้นที่ 50 GB · ผู้ใช้ไม่จำกัด') }}</p>
-          <div wtCardFooter>
-            <wt-button [label]="tx('อัปเกรด')" size="small"></wt-button>
-            <wt-button [label]="tx('รายละเอียด')" size="small" severity="secondary" [text]="true"></wt-button>
+          <div wuCardFooter>
+            <wu-button [label]="tx('อัปเกรด')" size="small"></wu-button>
+            <wu-button [label]="tx('รายละเอียด')" size="small" severity="secondary" [text]="true"></wu-button>
           </div>
-        </wt-card>
+        </wu-card>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="header"></docs-slot-note>
       <docs-demo [html]="code['templates']" layout="grid">
-        <wt-card id="d-card-tpl" styleClass="docs-card-news" [style]="{ maxWidth: '26rem' }">
+        <wu-card id="d-card-tpl" styleClass="docs-card-news" [style]="{ maxWidth: '26rem' }">
           <ng-template #header>
             <div class="docs-demo-cover"><span>{{ tx('ปีการศึกษา 2569') }}</span></div>
           </ng-template>
@@ -39,25 +39,25 @@
             <p class="docs-demo-p">{{ tx('เปิดรับสมัครนักเรียนชั้น ม.1 และ ม.4') }}</p>
           </ng-template>
           <ng-template #footer>
-            <wt-button [label]="tx('สมัครเลย')" size="small"></wt-button>
+            <wu-button [label]="tx('สมัครเลย')" size="small"></wu-button>
           </ng-template>
-        </wt-card>
-        <wt-card id="d-card-elements" [header]="tx('ประกาศ')">
-          <wt-header><div class="docs-demo-cover"><span>{{ tx('ปิดภาคเรียนวันที่ 1 ตุลาคม') }}</span></div></wt-header>
+        </wu-card>
+        <wu-card id="d-card-elements" [header]="tx('ประกาศ')">
+          <wu-header><div class="docs-demo-cover"><span>{{ tx('ปิดภาคเรียนวันที่ 1 ตุลาคม') }}</span></div></wu-header>
           <p class="docs-demo-p">{{ tx('ปิดภาคเรียนวันที่ 1 ตุลาคม') }}</p>
-          <wt-footer>{{ tx('อัปเดตเมื่อวานนี้') }}</wt-footer>
-        </wt-card>
+          <wu-footer>{{ tx('อัปเดตเมื่อวานนี้') }}</wu-footer>
+        </wu-card>
       </docs-demo>
     </docs-section>
 
     <docs-section id="variants" [section]="sec['variants']">
       <docs-demo [html]="code['variants']" layout="grid">
-        <wt-card header="Default" [subheader]="tx('ขอบบาง + เงาอ่อน')"></wt-card>
-        <wt-card header="Outlined" [subheader]="tx('มีขอบ ไม่มีเงา')" variant="outlined"></wt-card>
-        <wt-card header="Elevated" [subheader]="tx('ไม่มีขอบ เงาชัด')" variant="elevated"></wt-card>
+        <wu-card header="Default" [subheader]="tx('ขอบบาง + เงาอ่อน')"></wu-card>
+        <wu-card header="Outlined" [subheader]="tx('มีขอบ ไม่มีเงา')" variant="outlined"></wu-card>
+        <wu-card header="Elevated" [subheader]="tx('ไม่มีขอบ เงาชัด')" variant="elevated"></wu-card>
         @if (glass) {
           <div class="docs-demo-backdrop">
-            <wt-card header="Glass" [subheader]="tx('พื้นกระจก')" variant="glass"></wt-card>
+            <wu-card header="Glass" [subheader]="tx('พื้นกระจก')" variant="glass"></wu-card>
           </div>
         }
       </docs-demo>
@@ -65,23 +65,23 @@
 
     <docs-section id="advanced" [section]="sec['advanced']">
       <docs-demo [html]="code['advanced']" layout="stack">
-        <wt-card id="d-card-advanced" [header]="tx('ทริปทะเลสาบยามเย็น')" [subheader]="tx('3 วัน 2 คืน · เชียงใหม่')" class="docs-card-advanced">
-          <img wtCardHeader src="samples/card-cover.svg" [alt]="tx('ทะเลสาบยามเย็น')" class="docs-card-cover" />
+        <wu-card id="d-card-advanced" [header]="tx('ทริปทะเลสาบยามเย็น')" [subheader]="tx('3 วัน 2 คืน · เชียงใหม่')" class="docs-card-advanced">
+          <img wuCardHeader src="samples/card-cover.svg" [alt]="tx('ทะเลสาบยามเย็น')" class="docs-card-cover" />
           <p class="docs-demo-p">{{ tx('พักริมทะเลสาบ ล่องเรือชมพระอาทิตย์ตก และอาหารเย็นจากฟาร์มท้องถิ่น') }}</p>
-          <div wtCardFooter class="docs-card-actions">
-            <wt-button [label]="tx('ยกเลิก')" severity="secondary" [outlined]="true" [fluid]="true"></wt-button>
-            <wt-button [label]="tx('บันทึก')" [fluid]="true"></wt-button>
+          <div wuCardFooter class="docs-card-actions">
+            <wu-button [label]="tx('ยกเลิก')" severity="secondary" [outlined]="true" [fluid]="true"></wu-button>
+            <wu-button [label]="tx('บันทึก')" [fluid]="true"></wu-button>
           </div>
-        </wt-card>
+        </wu-card>
       </docs-demo>
     </docs-section>
 
     <docs-section id="loading" [section]="sec['loading']">
       <docs-demo [html]="code['loading']" [ts]="ts['loading']" layout="stack">
-        <wt-toggleswitch id="d-loading" [(ngModel)]="isPageLoading" label="isPageLoading"></wt-toggleswitch>
-        <wt-card [header]="tx('ยอดขายเดือนนี้')" [loading]="isPageLoading" class="docs-demo-card">
+        <wu-toggleswitch id="d-loading" [(ngModel)]="isPageLoading" label="isPageLoading"></wu-toggleswitch>
+        <wu-card [header]="tx('ยอดขายเดือนนี้')" [loading]="isPageLoading" class="docs-demo-card">
           <p class="docs-demo-p">{{ tx('฿128,400 จาก 312 คำสั่งซื้อ') }}</p>
-        </wt-card>
+        </wu-card>
       </docs-demo>
     </docs-section>
   </ng-template>

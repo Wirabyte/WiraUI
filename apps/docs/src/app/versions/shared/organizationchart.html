@@ -6,27 +6,27 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
-        <wt-organizationChart id="d-oc" [value]="local(chart)" [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')"></wt-organizationChart>
+        <wu-organizationChart id="d-oc" [value]="local(chart)" [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')"></wu-organizationChart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-demo [html]="code['templates']" layout="stack">
-        <wt-organizationChart id="d-oc-people" [value]="local(chart)" [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')">
-          <ng-template wtTemplate="person" let-node>
+        <wu-organizationChart id="d-oc-people" [value]="local(chart)" [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')">
+          <ng-template wuTemplate="person" let-node>
             <div class="docs-oc-person">
-              <wt-avatar [label]="node.data.initial" shape="circle"></wt-avatar>
+              <wu-avatar [label]="node.data.initial" shape="circle"></wu-avatar>
               <b>{{ node.data.name }}</b>
               <small>{{ node.data.title }}</small>
             </div>
           </ng-template>
-        </wt-organizationChart>
+        </wu-organizationChart>
       </docs-demo>
     </docs-section>
 
     <docs-section id="selection" [section]="sec['selection']">
       <docs-demo [html]="code['selection']" [ts]="ts['selection']" layout="stack">
-        <wt-organizationChart
+        <wu-organizationChart
           id="d-oc-single"
           [value]="local(units)"
           selectionMode="single"
@@ -34,24 +34,24 @@
           (onNodeSelect)="selected($event)"
           (onNodeUnselect)="unselected($event)"
           [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')"
-        ></wt-organizationChart>
+        ></wu-organizationChart>
         <span class="docs-demo-output">
           {{ tx('ที่เลือก') }}: <code id="d-oc-picked">{{ picked?.label || '-' }}</code> · <code id="d-oc-event">{{ lastEvent || '-' }}</code>
         </span>
-        <wt-organizationChart
+        <wu-organizationChart
           id="d-oc-multi"
           [value]="local(teamUnits)"
           selectionMode="multiple"
           [(selection)]="team"
           [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')"
-        ></wt-organizationChart>
+        ></wu-organizationChart>
         <span class="docs-demo-output">{{ tx('ที่เลือก') }}: <code id="d-oc-team">{{ teamLabels() }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="collapsible" [section]="sec['collapsible']">
       <docs-demo [html]="code['collapsible']" layout="stack">
-        <wt-organizationChart
+        <wu-organizationChart
           id="d-oc-fold"
           [value]="local(foldUnits)"
           [collapsible]="true"
@@ -59,7 +59,7 @@
           (onNodeExpand)="folded($event, true)"
           (onNodeCollapse)="folded($event, false)"
           [ariaLabel]="tx('ผังองค์กรโรงเรียนวิระ')"
-        ></wt-organizationChart>
+        ></wu-organizationChart>
         <span class="docs-demo-output"><code id="d-oc-fold-event">{{ lastEvent || '-' }}</code></span>
       </docs-demo>
     </docs-section>

@@ -7,7 +7,7 @@
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <div class="docs-pm-column">
-          <wt-panelmenu id="d-pm-basic" [model]="local(items)"></wt-panelmenu>
+          <wu-panelmenu id="d-pm-basic" [model]="local(items)"></wu-panelmenu>
         </div>
       </docs-demo>
     </docs-section>
@@ -17,11 +17,11 @@
         <div class="docs-pm-pair">
           <div class="docs-pm-cell">
             <span class="docs-pm-caption">{{ tx('ทีละหัวข้อ') }} · [multiple]="false"</span>
-            <wt-panelmenu id="d-pm-single" [model]="local(oneAtATime)" [multiple]="false"></wt-panelmenu>
+            <wu-panelmenu id="d-pm-single" [model]="local(oneAtATime)" [multiple]="false"></wu-panelmenu>
           </div>
           <div class="docs-pm-cell">
             <span class="docs-pm-caption">{{ tx('หลายหัวข้อ') }} · [multiple]="true"</span>
-            <wt-panelmenu id="d-pm-multi" [model]="local(severalAtOnce)" [multiple]="true"></wt-panelmenu>
+            <wu-panelmenu id="d-pm-multi" [model]="local(severalAtOnce)" [multiple]="true"></wu-panelmenu>
           </div>
         </div>
       </docs-demo>
@@ -30,7 +30,7 @@
     <docs-section id="links" [section]="sec['links']">
       <docs-demo [html]="code['links']" [ts]="ts['links']" layout="stack">
         <div class="docs-pm-column">
-          <wt-panelmenu id="d-pm-links" [model]="local(links)"></wt-panelmenu>
+          <wu-panelmenu id="d-pm-links" [model]="local(links)"></wu-panelmenu>
         </div>
         <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-pm-command">{{ lastCommand || '-' }}</code></span>
       </docs-demo>
@@ -39,7 +39,7 @@
     <docs-section id="states" [section]="sec['states']">
       <docs-demo [html]="code['states']" [ts]="ts['states']" layout="stack">
         <div class="docs-pm-column">
-          <wt-panelmenu id="d-pm-states" [model]="local(accountItems)"></wt-panelmenu>
+          <wu-panelmenu id="d-pm-states" [model]="local(accountItems)"></wu-panelmenu>
         </div>
       </docs-demo>
     </docs-section>
@@ -48,7 +48,7 @@
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['templates']" layout="stack">
         <div class="docs-pm-pair">
-          <wt-panelmenu id="d-pm-template" [model]="local(editorItems)">
+          <wu-panelmenu id="d-pm-template" [model]="local(editorItems)">
             <ng-template #item let-item let-root="root">
               @if (item.icon) {
                 <i [class]="item.icon"></i>
@@ -61,12 +61,12 @@
                 <i class="wi wi-angle-down docs-pm-end"></i>
               }
             </ng-template>
-          </wt-panelmenu>
-          <wt-panelmenu id="d-pm-icon" [model]="local(classItems)">
+          </wu-panelmenu>
+          <wu-panelmenu id="d-pm-icon" [model]="local(classItems)">
             <ng-template #submenuicon>
               <i class="wi wi-chevron-down"></i>
             </ng-template>
-          </wt-panelmenu>
+          </wu-panelmenu>
         </div>
       </docs-demo>
     </docs-section>
@@ -74,7 +74,7 @@
     <docs-section id="style" [section]="sec['style']">
       <docs-demo [html]="code['style']" [ts]="ts['style']" layout="stack">
         <aside class="docs-pm-narrow">
-          <wt-panelmenu id="d-pm-style" [model]="local(compactItems)" [style]="{ width: '100%' }" styleClass="app-sidebar"></wt-panelmenu>
+          <wu-panelmenu id="d-pm-style" [model]="local(compactItems)" [style]="{ width: '100%' }" styleClass="app-sidebar"></wu-panelmenu>
         </aside>
       </docs-demo>
     </docs-section>

@@ -1,7 +1,7 @@
 <div
-  class="wt-inputotp p-inputotp p-component"
+  class="wu-inputotp p-inputotp p-component"
   role="group"
-  [class.wt-inputotp-disabled]="disabled"
+  [class.wu-inputotp-disabled]="disabled"
   [attr.aria-label]="groupLabel"
   [attr.aria-labelledby]="ariaLabelledBy || null"
   [ngStyle]="rootStyle"
@@ -10,10 +10,10 @@
   <ng-container *ngFor="let i of indexes; trackBy: trackIndex">
     <input
       *ngIf="!inputTemplate; else custom"
-      wtInputText
-      class="wt-inputotp-input p-inputotp-input"
+      wuInputText
+      class="wu-inputotp-input p-inputotp-input"
       [ngClass]="styleClass || ''"
-      [wtSize]="inputSize"
+      [wuSize]="inputSize"
       [variant]="inputVariant"
       [invalid]="invalid"
       [attr.type]="mask ? 'password' : 'text'"

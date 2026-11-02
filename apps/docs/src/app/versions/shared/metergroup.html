@@ -6,31 +6,31 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" layout="stack">
-        <wt-metergroup id="d-meter-basic" [value]="local(single)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        <wu-metergroup id="d-meter-basic" [value]="local(single)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="multiple" [section]="sec['multiple']">
       <docs-demo [html]="code['multiple']" [ts]="ts['multiple']" layout="stack">
-        <wt-metergroup id="d-meter-multi" [value]="local(storage)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        <wu-metergroup id="d-meter-multi" [value]="local(storage)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="icons" [section]="sec['icons']">
       <docs-demo [html]="code['icons']" [ts]="ts['icons']" layout="stack">
-        <wt-metergroup [value]="local(storageIcons)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        <wu-metergroup [value]="local(storageIcons)" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="label" [section]="sec['label']">
       <docs-demo [html]="code['label']" layout="stack">
-        <wt-metergroup [value]="local(storage)" labelPosition="start" labelOrientation="vertical" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        <wu-metergroup [value]="local(storage)" labelPosition="start" labelOrientation="vertical" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="vertical" [section]="sec['vertical']">
       <docs-demo [html]="code['vertical']">
-        <wt-metergroup id="d-meter-vertical" [value]="local(storage)" orientation="vertical" labelOrientation="vertical" style="height: 20rem" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+        <wu-metergroup id="d-meter-vertical" [value]="local(storage)" orientation="vertical" labelOrientation="vertical" style="height: 20rem" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
@@ -38,11 +38,11 @@
       <docs-demo [html]="code['reverse']" [ts]="ts['multiple']">
         <div class="docs-demo-labelled">
           <span class="docs-demo-output">{{ tx('ปกติ') }}</span>
-          <wt-metergroup id="d-meter-normal" [value]="local(storage)" orientation="vertical" labelOrientation="vertical" style="height: 14rem" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wt-metergroup>
+          <wu-metergroup id="d-meter-normal" [value]="local(storage)" orientation="vertical" labelOrientation="vertical" style="height: 14rem" [ariaLabel]="tx('พื้นที่จัดเก็บ')"></wu-metergroup>
         </div>
         <div class="docs-demo-labelled">
           <span class="docs-demo-output">[reverse]="true"</span>
-          <wt-metergroup
+          <wu-metergroup
             id="d-meter-reverse"
             [value]="local(storage)"
             orientation="vertical"
@@ -50,21 +50,21 @@
             [reverse]="true"
             style="height: 14rem"
             [ariaLabel]="tx('พื้นที่จัดเก็บ')"
-          ></wt-metergroup>
+          ></wu-metergroup>
         </div>
       </docs-demo>
     </docs-section>
 
     <docs-section id="minmax" [section]="sec['minmax']">
       <docs-demo [html]="code['minmax']" [ts]="ts['minmax']" layout="stack">
-        <wt-metergroup [value]="local(usedGb)" [min]="0" [max]="200" [ariaLabel]="tx('พื้นที่ 200 GB')"></wt-metergroup>
+        <wu-metergroup [value]="local(usedGb)" [min]="0" [max]="200" [ariaLabel]="tx('พื้นที่ 200 GB')"></wu-metergroup>
       </docs-demo>
     </docs-section>
 
     <docs-section id="template" [section]="sec['template']">
       <docs-slot-note slot="label"></docs-slot-note>
       <docs-demo [html]="code['template']" [ts]="ts['multiple']" layout="stack">
-        <wt-metergroup id="d-meter-template" [value]="local(storage)" labelPosition="start" [ariaLabel]="tx('พื้นที่จัดเก็บ')">
+        <wu-metergroup id="d-meter-template" [value]="local(storage)" labelPosition="start" [ariaLabel]="tx('พื้นที่จัดเก็บ')">
           <ng-template #label let-value let-percentages="percentages">
             <div class="docs-storage-cards">
               @for (item of value; track item.label; let i = $index) {
@@ -78,7 +78,7 @@
           <ng-template #end let-totalPercent="totalPercent">
             <p class="docs-demo-p docs-storage-total">{{ tx('ใช้ไปทั้งหมด') }} {{ totalPercent }}%</p>
           </ng-template>
-        </wt-metergroup>
+        </wu-metergroup>
       </docs-demo>
     </docs-section>
   </ng-template>

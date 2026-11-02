@@ -1,15 +1,15 @@
-/* wt-imagecropper. Shared by wiratheme v1, v2 and v3. A canvas with the picture fitted to the component's width (and
+/* wu-imagecropper. Shared by wiraui v1, v2 and v3. A canvas with the picture fitted to the component's width (and
    to its height when the app gives it one), a crop box over it with the rest dimmed, and a toolbar underneath. The
    viewport keeps the picture's shape on its own (aspect-ratio), so the component needs no height to look right. */
-@layer wiratheme.components {
-  :is(wt-imagecropper, wt-image-cropper, image-cropper) {
+@layer wiraui.components {
+  :is(wu-imagecropper, wu-image-cropper, image-cropper) {
     display: block;
     max-width: 100%;
     min-width: 0;
   }
-  .wt-imagecropper {
+  .wu-imagecropper {
     /* Handle size, and the invisible margin around handles and edges that still catches a press. */
-    --_handle: var(--wt-imagecropper-handle-size);
+    --_handle: var(--wu-imagecropper-handle-size);
     --_hit: 0.375rem;
     --_pad: calc(var(--_handle) / 2 + 1px);
     box-sizing: border-box;
@@ -19,34 +19,34 @@
     max-width: 100%;
     min-width: 0;
     overflow: hidden;
-    border: var(--wt-imagecropper-border-width) solid var(--wt-border);
-    border-radius: var(--wt-imagecropper-radius);
-    background: var(--wt-imagecropper-bg);
-    color: var(--wt-text);
+    border: var(--wu-imagecropper-border-width) solid var(--wu-border);
+    border-radius: var(--wu-imagecropper-radius);
+    background: var(--wu-imagecropper-bg);
+    color: var(--wu-text);
   }
 
   /* ---------- the picture ---------- */
 
   /* content-box: the aspect ratio applies to the area inside the padding, where the picture goes. A set width keeps
      the full width when max-height caps a tall picture (Firefox otherwise narrows the box through the ratio). */
-  .wt-imagecropper-viewport {
+  .wu-imagecropper-viewport {
     position: relative;
     box-sizing: content-box;
     flex: 1 1 auto;
     width: calc(100% - var(--_pad) * 2);
     min-height: 0;
-    max-height: var(--wt-imagecropper-max-height);
+    max-height: var(--wu-imagecropper-max-height);
     padding: var(--_pad);
     overflow: hidden;
   }
-  .wt-imagecropper-empty .wt-imagecropper-viewport {
-    min-height: var(--wt-imagecropper-min-height);
+  .wu-imagecropper-empty .wu-imagecropper-viewport {
+    min-height: var(--wu-imagecropper-min-height);
   }
-  .wt-imagecropper-frame {
+  .wu-imagecropper-frame {
     position: absolute;
     inset: var(--_pad);
   }
-  .wt-imagecropper-stage {
+  .wu-imagecropper-stage {
     position: absolute;
     top: 0;
     left: 0;
@@ -55,20 +55,20 @@
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     /* Shows through where the picture is transparent (PNG, padding, the corners of a tilted photo). */
-    background-color: var(--wt-card-bg);
+    background-color: var(--wu-card-bg);
     background-image:
-      linear-gradient(45deg, var(--wt-hover-bg) 25%, transparent 25%, transparent 75%, var(--wt-hover-bg) 75%),
-      linear-gradient(45deg, var(--wt-hover-bg) 25%, transparent 25%, transparent 75%, var(--wt-hover-bg) 75%);
+      linear-gradient(45deg, var(--wu-hover-bg) 25%, transparent 25%, transparent 75%, var(--wu-hover-bg) 75%),
+      linear-gradient(45deg, var(--wu-hover-bg) 25%, transparent 25%, transparent 75%, var(--wu-hover-bg) 75%);
     background-position: 0 0, 0.5rem 0.5rem;
     background-size: 1rem 1rem;
   }
-  .wt-imagecropper-pannable {
+  .wu-imagecropper-pannable {
     cursor: grab;
   }
-  .wt-imagecropper-panning {
+  .wu-imagecropper-panning {
     cursor: grabbing;
   }
-  .wt-imagecropper-canvas {
+  .wu-imagecropper-canvas {
     position: absolute;
     inset: 0;
     display: block;
@@ -77,43 +77,43 @@
     pointer-events: none;
   }
   /* The dim outside the box: a shadow around a hole the box's size, clipped to the picture. */
-  .wt-imagecropper-shade {
+  .wu-imagecropper-shade {
     position: absolute;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
   }
-  .wt-imagecropper-hole {
+  .wu-imagecropper-hole {
     position: absolute;
-    box-shadow: 0 0 0 9999px var(--wt-imagecropper-mask);
+    box-shadow: 0 0 0 9999px var(--wu-imagecropper-mask);
   }
 
   /* ---------- the crop box ---------- */
 
-  .wt-imagecropper-box {
+  .wu-imagecropper-box {
     position: absolute;
     box-sizing: border-box;
-    border: 1px solid var(--wt-imagecropper-line);
+    border: 1px solid var(--wu-imagecropper-line);
     /* A dark hairline outside the light one, so the box reads on white photos too. */
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
     cursor: move;
     touch-action: none;
     outline: none;
   }
-  .wt-imagecropper-box:focus-visible {
-    border-color: var(--wt-primary-color);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: 0 0 0 1px var(--wt-primary-color), var(--wt-control-focus-shadow);
+  .wu-imagecropper-box:focus-visible {
+    border-color: var(--wu-primary-color);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: 0 0 0 1px var(--wu-primary-color), var(--wu-control-focus-shadow);
   }
-  .wt-imagecropper-round .wt-imagecropper-hole,
-  .wt-imagecropper-round .wt-imagecropper-box,
-  .wt-imagecropper-round .wt-imagecropper-grid {
+  .wu-imagecropper-round .wu-imagecropper-hole,
+  .wu-imagecropper-round .wu-imagecropper-box,
+  .wu-imagecropper-round .wu-imagecropper-grid {
     border-radius: 50%;
   }
   /* Rule of thirds, shown while dragging. */
-  .wt-imagecropper-grid {
-    --_line: var(--wt-imagecropper-grid-color);
+  .wu-imagecropper-grid {
+    --_line: var(--wu-imagecropper-grid-color);
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -123,110 +123,110 @@
       linear-gradient(to right, transparent calc(100% / 3 - 0.5px), var(--_line) 0, var(--_line) calc(100% / 3 + 0.5px), transparent 0, transparent calc(200% / 3 - 0.5px), var(--_line) 0, var(--_line) calc(200% / 3 + 0.5px), transparent 0),
       linear-gradient(to bottom, transparent calc(100% / 3 - 0.5px), var(--_line) 0, var(--_line) calc(100% / 3 + 0.5px), transparent 0, transparent calc(200% / 3 - 0.5px), var(--_line) 0, var(--_line) calc(200% / 3 + 0.5px), transparent 0);
   }
-  .wt-imagecropper-dragging .wt-imagecropper-grid {
+  .wu-imagecropper-dragging .wu-imagecropper-grid {
     opacity: 1;
   }
   /* Edges: invisible strips along each side. */
-  .wt-imagecropper-edge {
+  .wu-imagecropper-edge {
     position: absolute;
   }
-  .wt-imagecropper-edge-n,
-  .wt-imagecropper-edge-s {
+  .wu-imagecropper-edge-n,
+  .wu-imagecropper-edge-s {
     left: var(--_hit);
     right: var(--_hit);
     height: calc(var(--_hit) * 2);
     cursor: ns-resize;
   }
-  .wt-imagecropper-edge-n {
+  .wu-imagecropper-edge-n {
     top: calc(var(--_hit) * -1);
   }
-  .wt-imagecropper-edge-s {
+  .wu-imagecropper-edge-s {
     bottom: calc(var(--_hit) * -1);
   }
-  .wt-imagecropper-edge-e,
-  .wt-imagecropper-edge-w {
+  .wu-imagecropper-edge-e,
+  .wu-imagecropper-edge-w {
     top: var(--_hit);
     bottom: var(--_hit);
     width: calc(var(--_hit) * 2);
     cursor: ew-resize;
   }
-  .wt-imagecropper-edge-e {
+  .wu-imagecropper-edge-e {
     right: calc(var(--_hit) * -1);
   }
-  .wt-imagecropper-edge-w {
+  .wu-imagecropper-edge-w {
     left: calc(var(--_hit) * -1);
   }
   /* Squares at the corners and the middle of each side. */
-  .wt-imagecropper-handle {
+  .wu-imagecropper-handle {
     position: absolute;
     z-index: 1;
     box-sizing: border-box;
     width: var(--_handle);
     height: var(--_handle);
     margin: calc(var(--_handle) / -2) 0 0 calc(var(--_handle) / -2);
-    border: 1px solid var(--wt-imagecropper-handle-border);
+    border: 1px solid var(--wu-imagecropper-handle-border);
     border-radius: 2px;
-    background: var(--wt-imagecropper-handle-bg);
+    background: var(--wu-imagecropper-handle-bg);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
-  .wt-imagecropper-handle::before {
+  .wu-imagecropper-handle::before {
     content: '';
     position: absolute;
     inset: calc(var(--_hit) * -1);
   }
-  .wt-imagecropper-handle-hidden {
+  .wu-imagecropper-handle-hidden {
     border-color: transparent;
     background: transparent;
     box-shadow: none;
   }
-  .wt-imagecropper-handle-nw {
+  .wu-imagecropper-handle-nw {
     top: 0;
     left: 0;
     cursor: nwse-resize;
   }
-  .wt-imagecropper-handle-n {
+  .wu-imagecropper-handle-n {
     top: 0;
     left: 50%;
     cursor: ns-resize;
   }
-  .wt-imagecropper-handle-ne {
+  .wu-imagecropper-handle-ne {
     top: 0;
     left: 100%;
     cursor: nesw-resize;
   }
-  .wt-imagecropper-handle-e {
+  .wu-imagecropper-handle-e {
     top: 50%;
     left: 100%;
     cursor: ew-resize;
   }
-  .wt-imagecropper-handle-se {
+  .wu-imagecropper-handle-se {
     top: 100%;
     left: 100%;
     cursor: nwse-resize;
   }
-  .wt-imagecropper-handle-s {
+  .wu-imagecropper-handle-s {
     top: 100%;
     left: 50%;
     cursor: ns-resize;
   }
-  .wt-imagecropper-handle-sw {
+  .wu-imagecropper-handle-sw {
     top: 100%;
     left: 0;
     cursor: nesw-resize;
   }
-  .wt-imagecropper-handle-w {
+  .wu-imagecropper-handle-w {
     top: 50%;
     left: 0;
     cursor: ew-resize;
   }
-  .wt-imagecropper-disabled .wt-imagecropper-box,
-  .wt-imagecropper-disabled .wt-imagecropper-stage {
+  .wu-imagecropper-disabled .wu-imagecropper-box,
+  .wu-imagecropper-disabled .wu-imagecropper-stage {
     cursor: default;
   }
 
   /* ---------- states ---------- */
 
-  .wt-imagecropper-status {
+  .wu-imagecropper-status {
     position: absolute;
     inset: 0;
     display: flex;
@@ -235,15 +235,15 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 1rem;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     text-align: center;
   }
-  .wt-imagecropper-status svg {
+  .wu-imagecropper-status svg {
     width: 2.5rem;
     height: 2.5rem;
     opacity: 0.6;
   }
-  .wt-imagecropper-hint {
+  .wu-imagecropper-hint {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -258,68 +258,68 @@
 
   /* ---------- toolbar ---------- */
 
-  .wt-imagecropper-toolbar {
+  .wu-imagecropper-toolbar {
     display: flex;
     flex: none;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--wt-imagecropper-toolbar-gap) calc(var(--wt-imagecropper-toolbar-gap) * 4);
-    padding: var(--wt-imagecropper-toolbar-padding);
-    border-top: var(--wt-imagecropper-border-width) solid var(--wt-border);
-    background: var(--wt-card-bg);
+    gap: var(--wu-imagecropper-toolbar-gap) calc(var(--wu-imagecropper-toolbar-gap) * 4);
+    padding: var(--wu-imagecropper-toolbar-padding);
+    border-top: var(--wu-imagecropper-border-width) solid var(--wu-border);
+    background: var(--wu-card-bg);
   }
-  .wt-imagecropper-group {
+  .wu-imagecropper-group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--wt-imagecropper-toolbar-gap);
+    gap: var(--wu-imagecropper-toolbar-gap);
     min-width: 0;
   }
-  .wt-imagecropper-group-zoom {
+  .wu-imagecropper-group-zoom {
     flex: 1 1 12rem;
     flex-wrap: nowrap;
     max-width: 18rem;
   }
-  .wt-imagecropper-toolbar .wt-btn {
+  .wu-imagecropper-toolbar .wu-btn {
     flex: none;
   }
-  .wt-imagecropper-toolbar .wt-btn svg {
+  .wu-imagecropper-toolbar .wu-btn svg {
     display: block;
     width: 1.125rem;
     height: 1.125rem;
   }
-  .wt-imagecropper-zoom {
+  .wu-imagecropper-zoom {
     flex: 1 1 auto;
     width: 100%;
     min-width: 3rem;
     /* A 24 px tall box: easier to hit than the bare track (WCAG 2.5.8). */
     height: 1.5rem;
     margin: 0;
-    accent-color: var(--wt-primary-color);
+    accent-color: var(--wu-primary-color);
     cursor: pointer;
   }
-  .wt-imagecropper-zoom:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
-    border-radius: var(--wt-radius-sm);
+  .wu-imagecropper-zoom:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
+    border-radius: var(--wu-radius-sm);
   }
-  .wt-imagecropper-zoom:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-imagecropper-zoom:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
 
   /* Fingers get bigger handles and a wider margin around them. */
   @media (pointer: coarse) {
-    .wt-imagecropper {
-      --_handle: calc(var(--wt-imagecropper-handle-size) * 1.35);
+    .wu-imagecropper {
+      --_handle: calc(var(--wu-imagecropper-handle-size) * 1.35);
       --_hit: 0.625rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-imagecropper-grid {
+    .wu-imagecropper-grid {
       transition: none;
     }
   }

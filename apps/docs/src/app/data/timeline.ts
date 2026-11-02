@@ -13,9 +13,9 @@ export const TIMELINE_DOC: ComponentDoc = {
   title: 'Timeline',
   group: 'Data',
   entry: 'timeline',
-  standalone: 'WtTimeline',
-  module: 'WtTimelineModule',
-  selector: 'wt-timeline',
+  standalone: 'WuTimeline',
+  module: 'WuTimelineModule',
+  selector: 'wu-timeline',
   description: {
     th: 'เหตุการณ์เรียงตามเส้นเวลา เช่น สถานะคำสั่งซื้อหรือประวัติการแก้ไข แต่ละเหตุการณ์มีจุดบนเส้น เนื้อหา และของอีกฝั่งได้ เรียงแนวตั้งหรือแนวนอน',
     en: 'Events along a line, such as order statuses or an edit history. Each event has a marker, its content and, optionally, something on the other side, laid out vertically or horizontally.',
@@ -34,8 +34,8 @@ export const TIMELINE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtTimelineModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtTimeline</code>)',
-        en: 'Works as an NgModule (<code>WtTimelineModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtTimeline</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTimelineModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuTimeline</code>)',
+        en: 'Works as an NgModule (<code>WuTimelineModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuTimeline</code>).',
       },
     },
     basic: {
@@ -76,35 +76,35 @@ export const TIMELINE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-timeline&gt;</code> เป็น <code>&lt;wt-timeline&gt;</code> input <code>value</code>, <code>align</code>, <code>layout</code> และ template <code>content</code> / <code>opposite</code> / <code>marker</code> (เขียนเป็น <code>pTemplate</code> ก็ได้) ใช้ต่อได้ class <code>p-timeline-*</code> อยู่คู่กับ <code>wt-timeline-*</code>',
-        en: 'Change <code>&lt;p-timeline&gt;</code> to <code>&lt;wt-timeline&gt;</code>. The <code>value</code>, <code>align</code> and <code>layout</code> inputs and the <code>content</code> / <code>opposite</code> / <code>marker</code> templates (<code>pTemplate</code> works too) carry over, and the <code>p-timeline-*</code> classes sit next to <code>wt-timeline-*</code>.',
+        th: 'เปลี่ยน <code>&lt;p-timeline&gt;</code> เป็น <code>&lt;wu-timeline&gt;</code> input <code>value</code>, <code>align</code>, <code>layout</code> และ template <code>content</code> / <code>opposite</code> / <code>marker</code> (เขียนเป็น <code>pTemplate</code> ก็ได้) ใช้ต่อได้ class <code>p-timeline-*</code> อยู่คู่กับ <code>wu-timeline-*</code>',
+        en: 'Change <code>&lt;p-timeline&gt;</code> to <code>&lt;wu-timeline&gt;</code>. The <code>value</code>, <code>align</code> and <code>layout</code> inputs and the <code>content</code> / <code>opposite</code> / <code>marker</code> templates (<code>pTemplate</code> works too) carry over, and the <code>p-timeline-*</code> classes sit next to <code>wu-timeline-*</code>.',
       },
     },
   },
   code: {
-    basic: `<wt-timeline [value]="orders">
+    basic: `<wu-timeline [value]="orders">
   <ng-template #content let-e let-i="index">{{ i + 1 }}. {{ e.status }}</ng-template>
-</wt-timeline>`,
-    opposite: `<wt-timeline [value]="orders">
+</wu-timeline>`,
+    opposite: `<wu-timeline [value]="orders">
   <ng-template #opposite let-e>
     <small class="text-color-secondary">{{ e.date }}</small>
   </ng-template>
   <ng-template #content let-e>{{ e.status }}</ng-template>
-</wt-timeline>`,
-    align: `<wt-timeline [value]="orders" align="right">
+</wu-timeline>`,
+    align: `<wu-timeline [value]="orders" align="right">
   <ng-template #opposite let-e>
     <small class="text-color-secondary">{{ e.date }}</small>
   </ng-template>
   <ng-template #content let-e>{{ e.status }}</ng-template>
-</wt-timeline>
+</wu-timeline>
 
-<wt-timeline [value]="orders" align="alternate">
+<wu-timeline [value]="orders" align="alternate">
   <ng-template #opposite let-e>
     <small class="text-color-secondary">{{ e.date }}</small>
   </ng-template>
   <ng-template #content let-e>{{ e.status }}</ng-template>
-</wt-timeline>`,
-    marker: `<wt-timeline [value]="orders">
+</wu-timeline>`,
+    marker: `<wu-timeline [value]="orders">
   <ng-template #marker let-e>
     <span class="flex align-items-center justify-content-center w-2rem h-2rem border-circle text-white"
       [style.background-color]="e.color">
@@ -117,14 +117,14 @@ export const TIMELINE_DOC: ComponentDoc = {
       <small class="text-color-secondary">{{ e.date }}</small>
     </div>
   </ng-template>
-</wt-timeline>`,
-    horizontal: `<wt-timeline [value]="orders" layout="horizontal" align="top">
+</wu-timeline>`,
+    horizontal: `<wu-timeline [value]="orders" layout="horizontal" align="top">
   <ng-template #content let-e>{{ e.status }}</ng-template>
-</wt-timeline>
+</wu-timeline>
 
-<wt-timeline [value]="orders" layout="horizontal" align="bottom">
+<wu-timeline [value]="orders" layout="horizontal" align="bottom">
   <ng-template #content let-e>{{ e.status }}</ng-template>
-</wt-timeline>`,
+</wu-timeline>`,
   },
   ts: {
     basic: ORDERS_TS,
@@ -145,8 +145,8 @@ export const TIMELINE_DOC: ComponentDoc = {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #content, wtTemplate="content" หรือ pTemplate="content" ก็ได้',
-        en: 'Write them as #content, wtTemplate="content" or pTemplate="content".',
+        th: 'เขียนเป็น #content, wuTemplate="content" หรือ pTemplate="content" ก็ได้',
+        en: 'Write them as #content, wuTemplate="content" or pTemplate="content".',
       },
       rows: [
         row('content', '$implicit (event) · index', undefined, 'เนื้อหาของแต่ละเหตุการณ์', "Each event's content"),
@@ -157,24 +157,24 @@ export const TIMELINE_DOC: ComponentDoc = {
     {
       id: 'api-types',
       title: 'Types',
-      code: `type WtTimelineAlign = 'left' | 'right' | 'alternate' | 'top' | 'bottom';
-type WtTimelineLayout = 'vertical' | 'horizontal';
+      code: `type WuTimelineAlign = 'left' | 'right' | 'alternate' | 'top' | 'bottom';
+type WuTimelineLayout = 'vertical' | 'horizontal';
 
-interface WtTimelineContext {
+interface WuTimelineContext {
   $implicit: unknown;
   index: number;
 }`,
     },
   ],
   tokens: [
-    tok('--wt-timeline-event-min-height', 'ความสูงขั้นต่ำของแต่ละเหตุการณ์ (แนวตั้ง)', 'Minimum height of each event (vertical)'),
-    tok('--wt-timeline-content-padding', 'ระยะรอบเนื้อหาและของอีกฝั่ง (แนวตั้ง)', 'Padding around the content and the opposite side (vertical)'),
-    tok('--wt-timeline-horizontal-padding', 'ระยะรอบเนื้อหาและของอีกฝั่ง (แนวนอน)', 'Padding around the content and the opposite side (horizontal)'),
-    tok('--wt-timeline-marker-size', 'ขนาดจุดบนเส้น', 'Marker size'),
-    tok('--wt-timeline-marker-border-width', 'ความหนาขอบของจุด', 'Marker border width'),
-    tok('--wt-timeline-marker-border-color', 'สีขอบของจุด', 'Marker border colour'),
-    tok('--wt-timeline-marker-bg', 'พื้นของจุด', 'Marker background'),
-    tok('--wt-timeline-connector-size', 'ความหนาของเส้น', 'Line thickness'),
-    tok('--wt-timeline-connector-color', 'สีของเส้น', 'Line colour'),
+    tok('--wu-timeline-event-min-height', 'ความสูงขั้นต่ำของแต่ละเหตุการณ์ (แนวตั้ง)', 'Minimum height of each event (vertical)'),
+    tok('--wu-timeline-content-padding', 'ระยะรอบเนื้อหาและของอีกฝั่ง (แนวตั้ง)', 'Padding around the content and the opposite side (vertical)'),
+    tok('--wu-timeline-horizontal-padding', 'ระยะรอบเนื้อหาและของอีกฝั่ง (แนวนอน)', 'Padding around the content and the opposite side (horizontal)'),
+    tok('--wu-timeline-marker-size', 'ขนาดจุดบนเส้น', 'Marker size'),
+    tok('--wu-timeline-marker-border-width', 'ความหนาขอบของจุด', 'Marker border width'),
+    tok('--wu-timeline-marker-border-color', 'สีขอบของจุด', 'Marker border colour'),
+    tok('--wu-timeline-marker-bg', 'พื้นของจุด', 'Marker background'),
+    tok('--wu-timeline-connector-size', 'ความหนาของเส้น', 'Line thickness'),
+    tok('--wu-timeline-connector-color', 'สีของเส้น', 'Line colour'),
   ],
 };

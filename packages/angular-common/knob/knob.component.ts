@@ -11,31 +11,31 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { knobPaths, knobText, knobValueAt, rangeKeyValue } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { knobPaths, knobText, knobValueAt, rangeKeyValue } from 'wiraui/core';
 
 const toNumber = (v: unknown, fallback: number): number =>
   v === null || v === undefined || v === '' || !Number.isFinite(Number(v)) ? fallback : Number(v);
 
 /**
- * A round dial for a number: `<wt-knob [(ngModel)]="volume" [min]="0" [max]="100" [step]="5" valueTemplate="{value}%">`.
+ * A round dial for a number: `<wu-knob [(ngModel)]="volume" [min]="0" [max]="100" [step]="5" valueTemplate="{value}%">`.
  * Press or drag on the dial (mouse, pen, touch), or focus it and use the keys: arrows ± step, Page Up / Page Down ± 10
- * steps, Home / End. Works with ngModel and reactive forms. Colours come from the theme (`--wt-knob-*`) unless
+ * steps, Home / End. Works with ngModel and reactive forms. Colours come from the theme (`--wu-knob-*`) unless
  * `valueColor` / `rangeColor` / `textColor` are given.
  */
 @Component({
-  selector: 'wt-knob',
+  selector: 'wu-knob',
   standalone: true,
   imports: [NgIf],
   templateUrl: './knob.component.html',
   styleUrls: ['./knob.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtKnob), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuKnob), multi: true }],
   // A tabindex written on the tag goes to the dial only, so the page gets one tab stop.
-  host: { class: 'wt-knob-host', '[attr.tabindex]': 'null' },
+  host: { class: 'wu-knob-host', '[attr.tabindex]': 'null' },
 })
-export class WtKnob implements ControlValueAccessor {
+export class WuKnob implements ControlValueAccessor {
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;
@@ -101,7 +101,7 @@ export class WtKnob implements ControlValueAccessor {
   private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   // ---------- what the template reads ----------

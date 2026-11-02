@@ -1,9 +1,9 @@
-<span class="wt-image p-image p-component" [class.wt-image-preview]="preview" [class.p-image-preview]="preview" [ngClass]="styleClass || ''" [ngStyle]="style || null">
+<span class="wu-image p-image p-component" [class.wu-image-preview]="preview" [class.p-image-preview]="preview" [ngClass]="styleClass || ''" [ngStyle]="style || null">
   @if (imageTemplate) {
     <ng-container *ngTemplateOutlet="imageTemplate; context: { errorCallback: errorCallback }"></ng-container>
   } @else {
     <img
-      class="wt-image-img"
+      class="wu-image-img"
       [attr.src]="src || null"
       [attr.srcset]="srcSet || null"
       [attr.sizes]="sizes || null"
@@ -17,41 +17,41 @@
     />
   }
   @if (preview) {
-    <button type="button" class="wt-image-indicator p-image-preview-mask" [attr.aria-label]="t.previewImage" (click)="openPreview($event)">
+    <button type="button" class="wu-image-indicator p-image-preview-mask" [attr.aria-label]="t.previewImage" (click)="openPreview($event)">
       @if (indicatorTemplate) {
         <ng-container *ngTemplateOutlet="indicatorTemplate"></ng-container>
       } @else {
-        <svg class="wt-image-indicator-icon p-image-preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <svg class="wu-image-indicator-icon p-image-preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
       }
     </button>
   }
 </span>
 
 @if (previewVisible) {
-  <dialog #dialog class="wt-image-mask p-image-mask p-overlay-mask" [attr.aria-label]="alt || t.previewImage" (cancel)="dialogCancel($event)" (click)="maskClick($event)">
-    <div class="wt-image-toolbar p-image-toolbar">
-      <button type="button" class="wt-image-action p-image-action p-image-rotate-right-button" [attr.aria-label]="t.rotateRight" (click)="rotateRight()">
+  <dialog #dialog class="wu-image-mask p-image-mask p-overlay-mask" [attr.aria-label]="alt || t.previewImage" (cancel)="dialogCancel($event)" (click)="maskClick($event)">
+    <div class="wu-image-toolbar p-image-toolbar">
+      <button type="button" class="wu-image-action p-image-action p-image-rotate-right-button" [attr.aria-label]="t.rotateRight" (click)="rotateRight()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v6h-6"></path><path d="M20 10A8 8 0 1 0 18.3 17"></path></svg>
       </button>
-      <button type="button" class="wt-image-action p-image-action p-image-rotate-left-button" [attr.aria-label]="t.rotateLeft" (click)="rotateLeft()">
+      <button type="button" class="wu-image-action p-image-action p-image-rotate-left-button" [attr.aria-label]="t.rotateLeft" (click)="rotateLeft()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M4 10a8 8 0 1 1 1.7 7"></path></svg>
       </button>
-      <button type="button" class="wt-image-action p-image-action p-image-zoom-out-button" [attr.aria-label]="t.zoomOut" [disabled]="!canZoomOut" (click)="zoomOut()">
+      <button type="button" class="wu-image-action p-image-action p-image-zoom-out-button" [attr.aria-label]="t.zoomOut" [disabled]="!canZoomOut" (click)="zoomOut()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M20.5 20.5 16 16"></path></svg>
       </button>
-      <button type="button" class="wt-image-action p-image-action p-image-zoom-in-button" [attr.aria-label]="t.zoomIn" [disabled]="!canZoomIn" (click)="zoomIn()">
+      <button type="button" class="wu-image-action p-image-action p-image-zoom-in-button" [attr.aria-label]="t.zoomIn" [disabled]="!canZoomIn" (click)="zoomIn()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M11 8v6M20.5 20.5 16 16"></path></svg>
       </button>
-      <button type="button" class="wt-image-action p-image-action p-image-close-button" autofocus [attr.aria-label]="t.close" (click)="closePreview()">
+      <button type="button" class="wu-image-action p-image-action p-image-close-button" autofocus [attr.aria-label]="t.close" (click)="closePreview()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
       </button>
     </div>
-    <div class="wt-image-preview-stage">
+    <div class="wu-image-preview-stage">
       @if (previewTemplate) {
         <ng-container *ngTemplateOutlet="previewTemplate; context: previewContext"></ng-container>
       } @else {
         <img
-          class="wt-image-original p-image-original"
+          class="wu-image-original p-image-original"
           [attr.src]="previewSrc"
           [attr.srcset]="previewImageSrcSet || null"
           [attr.sizes]="previewImageSizes || null"

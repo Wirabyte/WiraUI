@@ -22,31 +22,31 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { WtTabMenu } from './tabmenu.component';
-import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WtTabsChangeEvent, WtTabValue } from './tabs.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { WuTabMenu } from './tabmenu.component';
+import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WuTabsChangeEvent, WuTabValue } from './tabs.types';
 
 /**
  * Tabs, written either way apps already write them:
- * - by index: `<wt-tabs [(activeIndex)]="i"><wt-tab-panel header="ข้อมูล">…</wt-tab-panel></wt-tabs>`
- *   (`wt-tabview` / `wt-tabpanel` are the same components);
- * - by value: `<wt-tabs [(value)]="tab"><wt-tablist><wt-tab value="info">ข้อมูล</wt-tab></wt-tablist>
- *   <wt-tabpanels><wt-tabpanel value="info">…</wt-tabpanel></wt-tabpanels></wt-tabs>`.
- * - from a menu model, as links to views or routes: `<wt-tabs [model]="pages" [(activeItem)]="page">` (items take
- *   `routerLink`, `url`, `command`, `icon`, `badge`, `disabled`; the same as wt-tabmenu).
+ * - by index: `<wu-tabs [(activeIndex)]="i"><wu-tab-panel header="ข้อมูล">…</wu-tab-panel></wu-tabs>`
+ *   (`wu-tabview` / `wu-tabpanel` are the same components);
+ * - by value: `<wu-tabs [(value)]="tab"><wu-tablist><wu-tab value="info">ข้อมูล</wu-tab></wu-tablist>
+ *   <wu-tabpanels><wu-tabpanel value="info">…</wu-tabpanel></wu-tabpanels></wu-tabs>`.
+ * - from a menu model, as links to views or routes: `<wu-tabs [model]="pages" [(activeItem)]="page">` (items take
+ *   `routerLink`, `url`, `command`, `icon`, `badge`, `disabled`; the same as wu-tabmenu).
  * Arrow keys, Home and End move between tabs. A row that runs out of room scrolls sideways, with arrow
  * buttons at the edges that have more tabs behind them.
  */
 @Component({
-  selector: 'wt-tabs, wt-tabview, wt-tabView',
+  selector: 'wu-tabs, wu-tabview, wu-tabView',
   standalone: true,
-  imports: [NgFor, NgIf, NgTemplateOutlet, WtTabMenu],
+  imports: [NgFor, NgIf, NgTemplateOutlet, WuTabMenu],
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
+export class WuTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   /** Two-way: `[(activeIndex)]` (tabs by index). */
   @Input() set activeIndex(v: number) {
     this._activeIndex = Number(v) || 0;
@@ -54,16 +54,16 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
     this.revealSoon();
   }
   get activeIndex(): number { return this._activeIndex; }
-  /** Two-way: `[(value)]` (tabs by value, with `wt-tablist` / `wt-tab`). Unset: the first tab. */
-  @Input() set value(v: WtTabValue | undefined) {
+  /** Two-way: `[(value)]` (tabs by value, with `wu-tablist` / `wu-tab`). Unset: the first tab. */
+  @Input() set value(v: WuTabValue | undefined) {
     this._value = v;
     this.cdr.markForCheck();
   }
-  get value(): WtTabValue | undefined { return this._value; }
-  /** Tabs as links from a menu model (no panels): `[model]="pages"` + `[(activeItem)]`, like wt-tabmenu. */
-  @Input() model?: WtMenuItem[] | null;
+  get value(): WuTabValue | undefined { return this._value; }
+  /** Tabs as links from a menu model (no panels): `[model]="pages"` + `[(activeItem)]`, like wu-tabmenu. */
+  @Input() model?: WuMenuItem[] | null;
   /** With `[model]`: the current item. Two-way: `[(activeItem)]`. Unset with router links: the active route. */
-  @Input() activeItem?: WtMenuItem | null;
+  @Input() activeItem?: WuMenuItem | null;
   @Input() ariaLabel?: string;
   /** Classes for the root element, as before (`styleClass="w-full"`). */
   @Input() styleClass?: string | null;
@@ -86,23 +86,23 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   // Typed `any` so the field `[(value)]` binds to can be a string, a number or a union of the app's own tab names.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly valueChange = new EventEmitter<any>();
-  @Output() readonly onChange = new EventEmitter<WtTabsChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuTabsChangeEvent>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Output() readonly activeItemChange = new EventEmitter<any>();
 
-  @ContentChildren(forwardRef(() => WtTabPanel)) panelList?: QueryList<WtTabPanel>;
-  @ContentChild(forwardRef(() => WtTabList)) tabList?: WtTabList;
-  @ContentChildren(forwardRef(() => WtTab), { descendants: true }) tabItemList?: QueryList<WtTab>;
+  @ContentChildren(forwardRef(() => WuTabPanel)) panelList?: QueryList<WuTabPanel>;
+  @ContentChild(forwardRef(() => WuTabList)) tabList?: WuTabList;
+  @ContentChildren(forwardRef(() => WuTab), { descendants: true }) tabItemList?: QueryList<WuTab>;
 
   @ViewChild('list') private listRef?: ElementRef<HTMLElement>;
 
-  panels: WtTabPanel[] = [];
-  tabItems: WtTab[] = [];
-  readonly baseId = ɵuniqueId('wt-tabs');
+  panels: WuTabPanel[] = [];
+  tabItems: WuTab[] = [];
+  readonly baseId = ɵuniqueId('wu-tabs');
   canPrev = false;
   canNext = false;
   private _activeIndex = 0;
-  private _value: WtTabValue | undefined;
+  private _value: WuTabValue | undefined;
   private subs: Subscription[] = [];
   private resize?: ResizeObserver;
   private destroyed = false;
@@ -110,14 +110,14 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
-  /** Written with `wt-tablist` / `wt-tab` / `wt-tabpanels` instead of panel headers. */
+  /** Written with `wu-tablist` / `wu-tab` / `wu-tabpanels` instead of panel headers. */
   get valueMode(): boolean {
     return !!this.tabList;
   }
-  get activeValue(): WtTabValue | undefined {
+  get activeValue(): WuTabValue | undefined {
     return this._value ?? this.tabItems[0]?.value;
   }
 
@@ -168,18 +168,18 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
     requestAnimationFrame(() => {
       const list = this.listRef?.nativeElement;
       if (!list || this.destroyed) return;
-      ɵrevealTab(list, list.querySelectorAll<HTMLElement>('.wt-tab')[this._activeIndex]);
+      ɵrevealTab(list, list.querySelectorAll<HTMLElement>('.wu-tab')[this._activeIndex]);
       this.updateArrows(true);
     });
   }
 
   /** Our classes plus the classic-era names (`p-tabview-nav-link`, `p-highlight`). */
   tabClasses(index: number): string {
-    return index === this._activeIndex ? 'wt-tab wt-tab-active p-tabview-nav-link p-highlight' : 'wt-tab p-tabview-nav-link';
+    return index === this._activeIndex ? 'wu-tab wu-tab-active p-tabview-nav-link p-highlight' : 'wu-tab p-tabview-nav-link';
   }
 
-  /** With `[model]`: wt-tabmenu reports the item that was picked. */
-  pickItem(item: WtMenuItem): void {
+  /** With `[model]`: wu-tabmenu reports the item that was picked. */
+  pickItem(item: WuMenuItem): void {
     this.activeItem = item;
     this.activeItemChange.emit(item);
   }
@@ -198,12 +198,12 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
     if (next === null) return;
     event.preventDefault();
     this.select(next, event);
-    const tabs = this.el.nativeElement.querySelectorAll<HTMLButtonElement>('.wt-tab');
+    const tabs = this.el.nativeElement.querySelectorAll<HTMLButtonElement>('.wu-tab');
     tabs[next]?.focus();
   }
 
-  /** Tabs by value: `wt-tab` calls this when it is clicked or reached with the keyboard. */
-  selectValue(value: WtTabValue | undefined, event: Event): void {
+  /** Tabs by value: `wu-tab` calls this when it is clicked or reached with the keyboard. */
+  selectValue(value: WuTabValue | undefined, event: Event): void {
     if (value === undefined || value === this.activeValue) return;
     this._value = value;
     this.cdr.markForCheck();
@@ -212,25 +212,25 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
     this.onChange.emit({ index: this.tabItems.findIndex((t) => t.value === value), value, originalEvent: event });
   }
 
-  idOf(kind: 'tab' | 'panel', value: WtTabValue | undefined): string {
+  idOf(kind: 'tab' | 'panel', value: WuTabValue | undefined): string {
     return `${this.baseId}-${kind}-${ɵtabKey(value)}`;
   }
 }
 
-/** The row of `wt-tab`s when tabs are written by value. Scrolls sideways with edge arrows, like the index form. */
+/** The row of `wu-tab`s when tabs are written by value. Scrolls sideways with edge arrows, like the index form. */
 @Component({
-  selector: 'wt-tablist',
+  selector: 'wu-tablist',
   standalone: true,
   imports: [NgIf],
   template: `
-    <div class="wt-tabs-nav p-tablist">
-      <button *ngIf="canPrev" type="button" class="wt-tabs-nav-btn wt-tabs-prev p-tablist-prev-button" tabindex="-1" aria-hidden="true" (click)="page(-1)">
+    <div class="wu-tabs-nav p-tablist">
+      <button *ngIf="canPrev" type="button" class="wu-tabs-nav-btn wu-tabs-prev p-tablist-prev-button" tabindex="-1" aria-hidden="true" (click)="page(-1)">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div #list class="wt-tablist p-tablist-tab-list" role="tablist" [attr.aria-label]="tabs?.ariaLabel || null" (scroll)="updateArrows()">
+      <div #list class="wu-tablist p-tablist-tab-list" role="tablist" [attr.aria-label]="tabs?.ariaLabel || null" (scroll)="updateArrows()">
         <ng-content></ng-content>
       </div>
-      <button *ngIf="canNext" type="button" class="wt-tabs-nav-btn wt-tabs-next p-tablist-next-button" tabindex="-1" aria-hidden="true" (click)="page(1)">
+      <button *ngIf="canNext" type="button" class="wu-tabs-nav-btn wu-tabs-next p-tablist-next-button" tabindex="-1" aria-hidden="true" (click)="page(1)">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
@@ -238,8 +238,8 @@ export class WtTabs implements AfterContentInit, AfterViewInit, OnDestroy {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtTabList implements AfterViewInit, OnDestroy {
-  readonly tabs = inject(WtTabs, { optional: true });
+export class WuTabList implements AfterViewInit, OnDestroy {
+  readonly tabs = inject(WuTabs, { optional: true });
   canPrev = false;
   canNext = false;
   @ViewChild('list') private listRef?: ElementRef<HTMLElement>;
@@ -267,7 +267,7 @@ export class WtTabList implements AfterViewInit, OnDestroy {
     requestAnimationFrame(() => {
       const list = this.listRef?.nativeElement;
       if (!list || this.destroyed) return;
-      ɵrevealTab(list, list.querySelector<HTMLElement>('.wt-tab-active') ?? undefined);
+      ɵrevealTab(list, list.querySelector<HTMLElement>('.wu-tab-active') ?? undefined);
       this.updateArrows(true);
     });
   }
@@ -289,25 +289,25 @@ export class WtTabList implements AfterViewInit, OnDestroy {
   }
 }
 
-/** One tab when tabs are written by value: `<wt-tab value="info">ข้อมูล</wt-tab>`. */
+/** One tab when tabs are written by value: `<wu-tab value="info">ข้อมูล</wu-tab>`. */
 @Component({
-  selector: 'wt-tab',
+  selector: 'wu-tab',
   standalone: true,
   template: '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-tab p-tab', role: 'tab' },
+  host: { class: 'wu-tab p-tab', role: 'tab' },
 })
-export class WtTab {
-  @Input() value?: WtTabValue;
+export class WuTab {
+  @Input() value?: WuTabValue;
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
 
   private _disabled = false;
-  private readonly tabs = inject(WtTabs, { optional: true });
+  private readonly tabs = inject(WuTabs, { optional: true });
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  @HostBinding('class.wt-tab-active') @HostBinding('class.p-tab-active') @HostBinding('attr.aria-selected')
+  @HostBinding('class.wu-tab-active') @HostBinding('class.p-tab-active') @HostBinding('attr.aria-selected')
   get active(): boolean {
     return !!this.tabs && this.tabs.activeValue === this.value;
   }
@@ -347,31 +347,31 @@ export class WtTab {
   }
 }
 
-/** The panels when tabs are written by value: `<wt-tabpanels><wt-tabpanel value="info">…</wt-tabpanel></wt-tabpanels>`. */
+/** The panels when tabs are written by value: `<wu-tabpanels><wu-tabpanel value="info">…</wu-tabpanel></wu-tabpanels>`. */
 @Component({
-  selector: 'wt-tabpanels',
+  selector: 'wu-tabpanels',
   standalone: true,
   template: '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-tabpanels p-tabpanels' },
+  host: { class: 'wu-tabpanels p-tabpanels' },
 })
-export class WtTabPanels {}
+export class WuTabPanels {}
 
 /**
- * Content of one tab: `<wt-tab-panel header="ข้อมูล" leftIcon="pi pi-user" [disabled]="…">` by index, or
- * `<wt-tabpanel value="info">` inside `wt-tabpanels` by value.
+ * Content of one tab: `<wu-tab-panel header="ข้อมูล" leftIcon="pi pi-user" [disabled]="…">` by index, or
+ * `<wu-tabpanel value="info">` inside `wu-tabpanels` by value.
  */
 @Component({
-  selector: 'wt-tab-panel, wt-tabpanel, wt-tabPanel',
+  selector: 'wu-tab-panel, wu-tabpanel, wu-tabPanel',
   standalone: true,
   template: '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'wt-tabpanel p-tabview-panel', role: 'tabpanel' },
+  host: { class: 'wu-tabpanel p-tabview-panel', role: 'tabpanel' },
 })
-export class WtTabPanel {
-  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+export class WuTabPanel {
+  @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
   @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
@@ -381,11 +381,11 @@ export class WtTabPanel {
   @Input() leftIcon?: string;
   @Input() set disabled(v: unknown) { this._disabled = ɵtoBool(v); }
   get disabled(): boolean { return this._disabled; }
-  /** Tabs by value: the `value` of the `wt-tab` that shows this panel. */
-  @Input() value?: WtTabValue;
+  /** Tabs by value: the `value` of the `wu-tab` that shows this panel. */
+  @Input() value?: WuTabValue;
 
   private _disabled = false;
-  private readonly tabs = inject(WtTabs, { optional: true });
+  private readonly tabs = inject(WuTabs, { optional: true });
 
   private get index(): number {
     return this.tabs ? this.tabs.panels.indexOf(this) : 0;

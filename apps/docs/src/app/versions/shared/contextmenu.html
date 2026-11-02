@@ -10,7 +10,7 @@
           <span><i class="wi wi-file"></i> {{ tx('ใบงานคณิตศาสตร์ ม.1') }}</span>
           <small>{{ tx('คลิกขวาที่การ์ดนี้') }}</small>
         </div>
-        <wt-contextMenu id="d-cm-basic" [model]="local(fileActions)" [target]="worksheet"></wt-contextMenu>
+        <wu-contextMenu id="d-cm-basic" [model]="local(fileActions)" [target]="worksheet"></wu-contextMenu>
         <span class="docs-demo-output">{{ tx('สั่งล่าสุด') }}: <code id="d-cm-command">{{ lastCommand || '-' }}</code></span>
       </docs-demo>
     </docs-section>
@@ -24,7 +24,7 @@
             </li>
           }
         </ul>
-        <wt-contextMenu #fileMenu id="d-cm-show" [model]="local(fileActions)"></wt-contextMenu>
+        <wu-contextMenu #fileMenu id="d-cm-show" [model]="local(fileActions)"></wu-contextMenu>
         <span class="docs-demo-output">
           {{ tx('เลือกอยู่') }}: <code id="d-cm-picked">{{ pickedFile?.name || '-' }}</code> · {{ tx('สั่งล่าสุด') }}: <code id="d-cm-show-command">{{ lastCommand || '-' }}</code>
         </span>

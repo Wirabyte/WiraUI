@@ -5,7 +5,7 @@ import { FLOW_DOC } from '../../data/flow';
 import { MenuEntry, SimpleDemo } from './demos';
 
 /*
- * State and handlers behind the Flow page. Like the other demo files, no wiratheme import: the same template compiles
+ * State and handlers behind the Flow page. Like the other demo files, no wiraui import: the same template compiles
  * against v1, v2 and v3, so the helpers (applyNodeChanges, addEdge) come in through DOCS_FLOW and the flow's own
  * types are mirrored here by shape.
  */
@@ -57,7 +57,7 @@ interface DocFlowViewport {
   zoom: number;
 }
 
-/** The flow methods the demos call (a `#ref` to <wt-flow> of any version fits). */
+/** The flow methods the demos call (a `#ref` to <wu-flow> of any version fits). */
 interface DocFlowApi {
   screenToFlowPosition(point: { x: number; y: number }): { x: number; y: number };
   getNode(id: string): DocFlowNode | undefined;
@@ -172,7 +172,7 @@ const NOTE_NODES: DocFlowNode[] = [
   { id: 'scores', type: 'note', position: { x: 240, y: 60 }, width: 180, height: 96, data: { text: 'ส่งคะแนนก่อนวันศุกร์', tone: 'green' } },
 ];
 
-/** A #ref to <wt-contextMenu> of any version. */
+/** A #ref to <wu-contextMenu> of any version. */
 interface DocMenu {
   show(event?: Event): void;
 }
@@ -253,29 +253,29 @@ export const FLOW_KEYS: { keys: string; text: Text }[] = [
   { keys: 'C → Tab → Enter', text: { th: 'เริ่มเชื่อมจากโหนดที่โฟกัส แล้ว Enter ที่โหนดปลายทาง', en: 'Start a connection from the focused node, then Enter on the target' } },
   { keys: 'Escape', text: { th: 'ยกเลิกการเชื่อม และล้างที่เลือก', en: 'Cancel a connection and clear the selection' } },
   { keys: '+ · −', text: { th: 'ซูมเข้า / ออก', en: 'Zoom in / out' } },
-  { keys: 'Ctrl / ⌘ + Z · Ctrl / ⌘ + Shift + Z · Ctrl + Y', text: { th: 'เลิกทำ / ทำซ้ำ (wtFlowHistory)', en: 'Undo / redo (wtFlowHistory)' } },
+  { keys: 'Ctrl / ⌘ + Z · Ctrl / ⌘ + Shift + Z · Ctrl + Y', text: { th: 'เลิกทำ / ทำซ้ำ (wuFlowHistory)', en: 'Undo / redo (wuFlowHistory)' } },
   { keys: 'Shift + ลาก', text: { th: 'ตีกรอบเลือก', en: 'Draw a selection box' } },
   { keys: 'Space + ลาก', text: { th: 'เลื่อนภาพ (เมื่อ selectionOnDrag)', en: 'Pan (with selectionOnDrag)' } },
 ];
 
-/** ngx-vflow → wt-flow, for the migration table. */
+/** ngx-vflow → wu-flow, for the migration table. */
 export const FLOW_MIGRATION: { from: string; to: string; note?: Text }[] = [
-  { from: 'VflowModule · Vflow', to: 'WtFlowModule · WtFlow + parts' },
-  { from: '<vflow [nodes] [edges]>', to: '<wt-flow [(nodes)] [(edges)]>', note: { th: 'ได้ array ใหม่กลับมาเมื่อผู้ใช้แก้', en: 'new arrays come back when people edit' } },
+  { from: 'VflowModule · Vflow', to: 'WuFlowModule · WuFlow + parts' },
+  { from: '<vflow [nodes] [edges]>', to: '<wu-flow [(nodes)] [(edges)]>', note: { th: 'ได้ array ใหม่กลับมาเมื่อผู้ใช้แก้', en: 'new arrays come back when people edit' } },
   { from: "node.point: { x, y }", to: 'node.position: { x, y }' },
   { from: 'node.text', to: 'node.data.label' },
-  { from: "type: 'html-template' + <ng-template nodeHtml let-ctx>", to: "type: 'person' + <ng-template wtFlowNode=\"person\" let-node>", note: { th: 'template ต่อชนิดโหนด', en: 'one template per node type' } },
+  { from: "type: 'html-template' + <ng-template nodeHtml let-ctx>", to: "type: 'person' + <ng-template wuFlowNode=\"person\" let-node>", note: { th: 'template ต่อชนิดโหนด', en: 'one template per node type' } },
   { from: 'type: MyNodeComponent', to: "type: 'machine' + [nodeTypes]=\"{ machine: MyNodeComponent }\"" },
-  { from: '<handle type="source" position="right" id="out">', to: '<wt-flow-handle type="source" position="right" id="out">' },
+  { from: '<handle type="source" position="right" id="out">', to: '<wu-flow-handle type="source" position="right" id="out">' },
   { from: "edge.curve: 'bezier' | 'straight' | 'smooth-step'", to: "edge.type: 'default' | 'straight' | 'smoothstep'", note: { th: 'มี step และ simplebezier เพิ่ม', en: 'plus step and simplebezier' } },
   { from: "edge.markers.end: { type: 'arrow-closed' }", to: "edge.markerEnd: 'arrowclosed'" },
-  { from: 'edge.edgeLabels.center', to: 'edge.label · <ng-template wtFlowEdgeLabel>' },
-  { from: '<ng-template edge let-ctx>', to: '<ng-template wtFlowEdge="type" let-edge>' },
-  { from: '<ng-template connection let-ctx>', to: '<ng-template wtFlowConnectionLine let-line>' },
+  { from: 'edge.edgeLabels.center', to: 'edge.label · <ng-template wuFlowEdgeLabel>' },
+  { from: '<ng-template edge let-ctx>', to: '<ng-template wuFlowEdge="type" let-edge>' },
+  { from: '<ng-template connection let-ctx>', to: '<ng-template wuFlowConnectionLine let-line>' },
   { from: '(onConnect)', to: '(connect) + addEdge() · [autoConnect]="true"' },
   { from: "[connection]: ConnectionSettings({ mode, validator })", to: 'connectionMode · [isValidConnection]' },
   { from: '(onNodesChange) · (onEdgesChange)', to: '(nodeChanges) · (edgeChanges)', note: { th: 'คู่กับ [applyChanges]="false" และ applyNodeChanges()', en: 'with [applyChanges]="false" and applyNodeChanges()' } },
-  { from: '<background> · <minimap>', to: '<wt-flow-background> · <wt-flow-minimap> · <wt-flow-controls>' },
+  { from: '<background> · <minimap>', to: '<wu-flow-background> · <wu-flow-minimap> · <wu-flow-controls>' },
   { from: 'view="auto"', to: '[fitView]="true"' },
   { from: 'fitView() · zoomTo() · panTo()', to: 'fitView() · zoomTo() · setCenter() · setViewport()' },
   { from: 'documentPointToFlowPoint()', to: 'screenToFlowPosition()' },
@@ -502,8 +502,8 @@ export abstract class FlowDemo extends SimpleDemo {
   menuKey(e: KeyboardEvent, flow: DocFlowApi, menu: DocMenu): void {
     if (e.key !== 'ContextMenu' && !(e.shiftKey && e.key === 'F10')) return;
     const target = e.target as Element;
-    const node = flow.getNode(target.closest('.wt-flow-node')?.getAttribute('data-id') || '');
-    const edge = flow.getEdge(target.closest('.wt-flow-edge')?.getAttribute('data-id') || '');
+    const node = flow.getNode(target.closest('.wu-flow-node')?.getAttribute('data-id') || '');
+    const edge = flow.getEdge(target.closest('.wu-flow-edge')?.getAttribute('data-id') || '');
     if (node) this.openNodeMenu({ event: e, node }, flow, menu);
     else if (edge) this.openEdgeMenu({ event: e, edge }, flow, menu);
     else this.openPaneMenu(e, flow, menu);
@@ -613,7 +613,7 @@ export abstract class FlowDemo extends SimpleDemo {
   countDrawn(): void {
     const el = this.host.nativeElement;
     requestAnimationFrame(() =>
-      requestAnimationFrame(() => this.drawn.set(el.querySelectorAll('#d-flow-perf .wt-flow-node').length))
+      requestAnimationFrame(() => this.drawn.set(el.querySelectorAll('#d-flow-perf .wu-flow-node').length))
     );
   }
 }

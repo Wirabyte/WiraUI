@@ -1,10 +1,10 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ɵWtImageBase } from './image.base';
+import { ɵWuImageBase } from './image.base';
 
-/** An image, with `[preview]="true"` a full-screen view with rotate and zoom: `<wt-image [src]="url" alt="…" width="240" [preview]="true">`. */
+/** An image, with `[preview]="true"` a full-screen view with rotate and zoom: `<wu-image [src]="url" alt="…" width="240" [preview]="true">`. */
 @Component({
-  selector: 'wt-image',
+  selector: 'wu-image',
   standalone: true,
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './image.component.html',
@@ -12,4 +12,4 @@ import { ɵWtImageBase } from './image.base';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtImage extends ɵWtImageBase {}
+export class WuImage extends ɵWuImageBase {}

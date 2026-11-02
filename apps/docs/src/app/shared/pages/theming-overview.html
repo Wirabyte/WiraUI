@@ -3,17 +3,17 @@
   <h1 class="docs-h1">{{ en() ? 'Theming overview' : 'ภาพรวมของธีม' }}</h1>
   @if (en()) {
     <p class="docs-lead">
-      A WiraTheme theme is a set of design tokens that becomes one set of <code>--wt-*</code> CSS variables. Write it in CSS, SCSS or TypeScript;
-      component CSS only reads <code>var(--wt-*)</code>, so theme files hold nothing but token values.
+      A WiraUI theme is a set of design tokens that becomes one set of <code>--wu-*</code> CSS variables. Write it in CSS, SCSS or TypeScript;
+      component CSS only reads <code>var(--wu-*)</code>, so theme files hold nothing but token values.
     </p>
   } @else {
     <p class="docs-lead">
-      ธีมของ WiraTheme คือชุด design token ที่ออกมาเป็น CSS variable <code>--wt-*</code> ชุดเดียว เขียนได้ 3 ทาง (CSS, SCSS, TypeScript)
-      และ CSS ของ component อ่านแค่ <code>var(--wt-*)</code> ไฟล์ธีมจึงมีแต่ค่า token
+      ธีมของ WiraUI คือชุด design token ที่ออกมาเป็น CSS variable <code>--wu-*</code> ชุดเดียว เขียนได้ 3 ทาง (CSS, SCSS, TypeScript)
+      และ CSS ของ component อ่านแค่ <code>var(--wu-*)</code> ไฟล์ธีมจึงมีแต่ค่า token
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiratheme&#64;{{ v.major }} · {{ v.look | loc }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · {{ v.look | loc }}</span>
   </div>
 </header>
 
@@ -31,7 +31,7 @@
         <tr>
           <td><b>primitive</b></td>
           <td>{{ en() ? 'palettes 50–950, radius and spacing scales' : 'palette 50–950, radius scale, spacing scale' }}</td>
-          <td><code>--wt-primary-500</code>, <code>--wt-radius-md</code></td>
+          <td><code>--wu-primary-500</code>, <code>--wu-radius-md</code></td>
         </tr>
         <tr>
           <td><b>semantic</b></td>
@@ -42,12 +42,12 @@
                 : 'primary, surface, success / info / warn / danger / help, text, border, focus ring, form field (มีค่า light / dark)'
             }}
           </td>
-          <td><code>--wt-primary-color</code>, <code>--wt-text</code>, <code>--wt-field-padding-y</code></td>
+          <td><code>--wu-primary-color</code>, <code>--wu-text</code>, <code>--wu-field-padding-y</code></td>
         </tr>
         <tr>
           <td><b>component</b></td>
           <td>{{ en() ? 'per-component values that can refer to semantic tokens' : 'ค่าเฉพาะของแต่ละ component ที่อ้างถึง semantic ได้' }}</td>
-          <td><code>--wt-button-padding-x</code>, <code>--wt-card-body-gap</code></td>
+          <td><code>--wu-button-padding-x</code>, <code>--wu-card-body-gap</code></td>
         </tr>
       </tbody>
     </table>
@@ -61,9 +61,9 @@
 
 <docs-section id="layers" [title]="{ th: 'ลำดับการชนะ (@layer)', en: 'What wins (@layer)' }">
   @if (en()) {
-    <p>WiraTheme declares the cascade layer order at the top of <code>&lt;head&gt;</code> for you, so import order does not matter.</p>
+    <p>WiraUI declares the cascade layer order at the top of <code>&lt;head&gt;</code> for you, so import order does not matter.</p>
   } @else {
-    <p>WiraTheme ประกาศลำดับ cascade layer ไว้บนสุดของ <code>&lt;head&gt;</code> ให้เอง ไม่ต้องสนลำดับการ import</p>
+    <p>WiraUI ประกาศลำดับ cascade layer ไว้บนสุดของ <code>&lt;head&gt;</code> ให้เอง ไม่ต้องสนลำดับการ import</p>
   }
   <docs-code [code]="local(s.LAYER_ORDER)" lang="css"></docs-code>
   <docs-code [code]="local(s.LAYER_STACK)" lang="text" [file]="en() ? 'Who wins' : 'ใครชนะ'"></docs-code>
@@ -79,7 +79,7 @@
     <a class="docs-next-card" [routerLink]="link('theming/scss')">
       <docs-icon name="code"></docs-icon>
       <b>SCSS</b>
-      <span><code>&#64;use 'wiratheme/theme' with (…)</code>{{ en() ? ', the format WiraTheme Studio exports' : ' แบบไฟล์ที่ สตูดิโอธีม export' }}</span>
+      <span><code>&#64;use 'wiraui/theme' with (…)</code>{{ en() ? ', the format WiraUI Studio exports' : ' แบบไฟล์ที่ สตูดิโอธีม export' }}</span>
     </a>
     <a class="docs-next-card" [routerLink]="link('theming/css')">
       <docs-icon name="layers"></docs-icon>
@@ -107,7 +107,7 @@
       <tbody>
         @for (x of versions; track x.id) {
           <tr [class.docs-row-current]="x.id === v.id">
-            <td><code>wiratheme&#64;{{ x.major }}</code></td>
+            <td><code>wiraui&#64;{{ x.major }}</code></td>
             <td>{{ x.lookDetail | loc }}</td>
           </tr>
         }
@@ -115,7 +115,7 @@
     </table>
   </div>
   <p>
-    <a [routerLink]="link('theming/presets')">{{ en() ? 'See every theme in' : 'ดู preset ทั้งหมดของ' }} wiratheme&#64;{{ v.major }}</a>
+    <a [routerLink]="link('theming/presets')">{{ en() ? 'See every theme in' : 'ดู preset ทั้งหมดของ' }} wiraui&#64;{{ v.major }}</a>
     {{ en() ? 'and try them right away.' : 'และลองสลับดูได้ทันที' }}
   </p>
 </docs-section>
@@ -123,7 +123,7 @@
 <docs-section id="dark" title="Dark mode">
   @if (en()) {
     <p>
-      Three modes: <code>'none'</code> (light values only), <code>'class'</code> (toggled with <code>.wt-dark</code> on <code>&lt;html&gt;</code>) and
+      Three modes: <code>'none'</code> (light values only), <code>'class'</code> (toggled with <code>.wu-dark</code> on <code>&lt;html&gt;</code>) and
       <code>'media'</code> (<code>prefers-color-scheme</code>). Or name your own class with <code>darkModeSelector</code>, e.g. <code>'.my-dark'</code>.
     </p>
     <p>
@@ -132,7 +132,7 @@
     </p>
   } @else {
     <p>
-      ตั้งได้ 3 แบบ: <code>'none'</code> (มีแค่ค่า light), <code>'class'</code> (สลับด้วย <code>.wt-dark</code> บน <code>&lt;html&gt;</code>)
+      ตั้งได้ 3 แบบ: <code>'none'</code> (มีแค่ค่า light), <code>'class'</code> (สลับด้วย <code>.wu-dark</code> บน <code>&lt;html&gt;</code>)
       และ <code>'media'</code> (ตาม <code>prefers-color-scheme</code>) หรือตั้งชื่อ class เองด้วย <code>darkModeSelector</code> เช่น <code>'.my-dark'</code>
     </p>
     <p>
@@ -160,6 +160,6 @@
 </docs-section>
 
 <docs-section id="runtime" [title]="{ th: 'เปลี่ยนธีมตอน runtime', en: 'Changing the theme at run time' }">
-  <p>{{ en() ? "The theme button on this site calls the open version's WtThemeService directly." : 'ปุ่มปรับธีมด้านบนของเว็บนี้ใช้ WtThemeService ของรุ่นที่เปิดอยู่ตรง ๆ' }}</p>
+  <p>{{ en() ? "The theme button on this site calls the open version's WuThemeService directly." : 'ปุ่มปรับธีมด้านบนของเว็บนี้ใช้ WuThemeService ของรุ่นที่เปิดอยู่ตรง ๆ' }}</p>
   <docs-code [code]="local(s.TS_RUNTIME)" lang="ts"></docs-code>
 </docs-section>

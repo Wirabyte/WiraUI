@@ -8,7 +8,7 @@
       <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
         <div class="docs-phone" id="d-bb-basic">
           <div class="docs-phone-screen">{{ tx(tabs[tab].label) }}</div>
-          <wt-bottombar [model]="local(tabs)" [(activeIndex)]="tab" [fixed]="false" (onItemClick)="picked($event)"></wt-bottombar>
+          <wu-bottombar [model]="local(tabs)" [(activeIndex)]="tab" [fixed]="false" (onItemClick)="picked($event)"></wu-bottombar>
         </div>
         <span class="docs-demo-output">{{ tx('รายการที่เลือก') }}: <code id="d-bb-last">{{ last }}</code></span>
       </docs-demo>
@@ -19,11 +19,11 @@
         <div class="docs-demo-grid">
           <div class="docs-phone" id="d-bb-pill">
             <div class="docs-phone-screen">{{ tx(tabs[pillTab].label) }}</div>
-            <wt-bottombar [model]="local(tabs)" look="pill" [(activeIndex)]="pillTab" [fixed]="false"></wt-bottombar>
+            <wu-bottombar [model]="local(tabs)" look="pill" [(activeIndex)]="pillTab" [fixed]="false"></wu-bottombar>
           </div>
           <div class="docs-phone" id="d-bb-fab">
             <div class="docs-phone-screen">{{ tx(tabs[fabTab].label) }}</div>
-            <wt-bottombar [model]="local(tabs)" look="fab" [action]="local(action)" [(activeIndex)]="fabTab" [fixed]="false" (onItemClick)="picked($event)"></wt-bottombar>
+            <wu-bottombar [model]="local(tabs)" look="fab" [action]="local(action)" [(activeIndex)]="fabTab" [fixed]="false" (onItemClick)="picked($event)"></wu-bottombar>
           </div>
         </div>
       </docs-demo>

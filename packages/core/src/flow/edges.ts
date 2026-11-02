@@ -1,4 +1,4 @@
-/** wt-flow: where an edge starts and ends, and its arrowheads. */
+/** wu-flow: where an edge starts and ends, and its arrowheads. */
 import { findHandle, handlePoint, isFlowPosition, sidePoint } from './geometry';
 import type { FlowEdge, FlowEdgeMarker, FlowMarker, FlowNode, FlowNodeHandles, FlowPosition, FlowRect } from './types';
 

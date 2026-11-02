@@ -11,16 +11,16 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWT_SKIP_VERSION_CHECK, WtConfig, WtTemplate } from 'wiratheme/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
 import { ɵspinnerColors, ɵspinnerMulticolor } from './progressspinner.types';
 
 /**
- * Busy indicator: `<wt-progress-spinner style="width: 2rem; height: 2rem">`. The preset sets its default size and
+ * Busy indicator: `<wu-progress-spinner style="width: 2rem; height: 2rem">`. The preset sets its default size and
  * colours; `[multicolor]` / `[colors]` change the colours it cycles through. With `label` (or a `label` template) the
  * text sits under the ring (or beside it, `labelPosition="right"`), centred for you.
  */
 @Component({
-  selector: 'wt-progress-spinner, wt-progressspinner, wt-progressSpinner',
+  selector: 'wu-progress-spinner, wu-progressspinner, wu-progressSpinner',
   standalone: true,
   imports: [NgTemplateOutlet],
   templateUrl: './progressspinner.component.html',
@@ -32,11 +32,11 @@ import { ɵspinnerColors, ɵspinnerMulticolor } from './progressspinner.types';
     '[style.width]': 'hostSize().width',
     '[style.height]': 'hostSize().height',
     '[style]': 'colorVars()',
-    '[class.wt-progress-spinner-host-labelled]': 'labelled()',
-    '[class.wt-progress-spinner-host-right]': "labelled() && labelPosition() === 'right'",
+    '[class.wu-progress-spinner-host-labelled]': 'labelled()',
+    '[class.wu-progress-spinner-host-right]': "labelled() && labelPosition() === 'right'",
   },
 })
-export class WtProgressSpinner {
+export class WuProgressSpinner {
   readonly strokeWidth = input('2');
   readonly fill = input('none');
   readonly animationDuration = input('2s');
@@ -67,8 +67,8 @@ export class WtProgressSpinner {
   });
 
   private readonly labelRef = contentChild('label', { descendants: false });
-  private readonly templates = contentChildren(WtTemplate);
-  /** `<ng-template #label>` (or `wtTemplate="label"`): own content under the ring. */
+  private readonly templates = contentChildren(WuTemplate);
+  /** `<ng-template #label>` (or `wuTemplate="label"`): own content under the ring. */
   readonly labelTemplate = computed(() => {
     const own = this.labelRef();
     return ((own instanceof TemplateRef ? own : null) || ɵfindTemplate(this.templates(), 'label')) as TemplateRef<unknown> | null;
@@ -83,10 +83,10 @@ export class WtProgressSpinner {
   });
   readonly colorVars = computed(() => ɵspinnerColors(this.multicolor(), this.colors()));
 
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
     const i18n = ɵrefreshOnTranslation();
     inject(DestroyRef).onDestroy(() => i18n.unsubscribe());
   }

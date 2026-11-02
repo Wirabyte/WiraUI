@@ -1,27 +1,27 @@
-/* wt-error-page. Shared by wiratheme v1, v2 and v3. A page for a 4xx / 5xx status: the formal look draws a quiet icon
+/* wu-error-page. Shared by wiraui v1, v2 and v3. A page for a 4xx / 5xx status: the formal look draws a quiet icon
    and the code in large type; the kawaii look a little character holding the code up on a sign, bobbing and blinking.
    Then the title, a muted line, the buttons (the first one solid), an optional reference and a details box. */
-@layer wiratheme.components {
-  wt-error-page,
-  wt-errorPage {
+@layer wiraui.components {
+  wu-error-page,
+  wu-errorPage {
     display: block;
   }
-  .wt-error-page {
+  .wu-error-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--wt-error-page-gap);
-    padding: var(--wt-error-page-padding);
+    gap: var(--wu-error-page-gap);
+    padding: var(--wu-error-page-padding);
     text-align: center;
-    font-family: var(--wt-font-family);
+    font-family: var(--wu-font-family);
   }
-  .wt-error-page-full {
+  .wu-error-page-full {
     box-sizing: border-box;
     justify-content: center;
     min-height: 100vh;
     min-height: 100dvh;
   }
-  .wt-ep-art {
+  .wu-ep-art {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,18 +29,18 @@
   }
 
   /* Formal: an icon in a soft square, a small label, the code in large type. */
-  .wt-ep-badge {
+  .wu-ep-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--wt-error-page-badge-size);
-    height: var(--wt-error-page-badge-size);
+    width: var(--wu-error-page-badge-size);
+    height: var(--wu-error-page-badge-size);
     margin-bottom: 1rem;
-    border-radius: var(--wt-radius-lg);
-    background: var(--wt-error-page-badge-bg);
-    color: var(--wt-error-page-badge-color);
+    border-radius: var(--wu-radius-lg);
+    background: var(--wu-error-page-badge-bg);
+    color: var(--wu-error-page-badge-color);
   }
-  .wt-ep-badge svg {
+  .wu-ep-badge svg {
     width: 55%;
     height: 55%;
     fill: none;
@@ -49,19 +49,19 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-ep-label {
-    color: var(--wt-error-page-label-color);
+  .wu-ep-label {
+    color: var(--wu-error-page-label-color);
     font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-  .wt-ep-code {
-    background: linear-gradient(180deg, var(--wt-error-page-code-from), var(--wt-error-page-code-to));
+  .wu-ep-code {
+    background: linear-gradient(180deg, var(--wu-error-page-code-from), var(--wu-error-page-code-to));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-size: var(--wt-error-page-code-size);
+    font-size: var(--wu-error-page-code-size);
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.04em;
@@ -69,124 +69,124 @@
   }
 
   /* Kawaii: the character, its blob and sparkles. */
-  .wt-ep-mascot {
+  .wu-ep-mascot {
     display: block;
-    width: var(--wt-error-page-mascot-width);
+    width: var(--wu-error-page-mascot-width);
     max-width: 100%;
     height: auto;
     overflow: visible;
   }
-  .wt-ep-k-blob {
-    fill: var(--wt-error-page-k-blob);
+  .wu-ep-k-blob {
+    fill: var(--wu-error-page-k-blob);
   }
-  .wt-ep-k-spark {
-    fill: var(--wt-error-page-k-spark);
+  .wu-ep-k-spark {
+    fill: var(--wu-error-page-k-spark);
     transform-box: fill-box;
     transform-origin: center;
-    animation: wt-ep-twinkle 2.4s ease-in-out infinite;
+    animation: wu-ep-twinkle 2.4s ease-in-out infinite;
   }
-  .wt-ep-k-spark-2 {
+  .wu-ep-k-spark-2 {
     animation-delay: 0.8s;
   }
-  .wt-ep-k-spark-3 {
+  .wu-ep-k-spark-3 {
     animation-delay: 1.6s;
   }
-  .wt-ep-k-shadow {
-    fill: var(--wt-error-page-k-ink);
+  .wu-ep-k-shadow {
+    fill: var(--wu-error-page-k-ink);
     opacity: 0.12;
     transform-box: fill-box;
     transform-origin: center;
-    animation: wt-ep-shadow 3s ease-in-out infinite;
+    animation: wu-ep-shadow 3s ease-in-out infinite;
   }
-  .wt-ep-k-bob {
-    animation: wt-ep-bob 3s ease-in-out infinite;
+  .wu-ep-k-bob {
+    animation: wu-ep-bob 3s ease-in-out infinite;
   }
-  .wt-ep-k-body,
-  .wt-ep-k-bubble {
-    fill: var(--wt-error-page-k-body);
-    stroke: var(--wt-error-page-k-ink);
+  .wu-ep-k-body,
+  .wu-ep-k-bubble {
+    fill: var(--wu-error-page-k-body);
+    stroke: var(--wu-error-page-k-ink);
     stroke-width: 3.5;
     stroke-linejoin: round;
   }
-  .wt-ep-k-bubble {
+  .wu-ep-k-bubble {
     stroke-width: 3;
   }
-  .wt-ep-k-blush {
-    fill: var(--wt-error-page-k-blush);
+  .wu-ep-k-blush {
+    fill: var(--wu-error-page-k-blush);
   }
-  .wt-ep-k-ink {
-    fill: var(--wt-error-page-k-ink);
+  .wu-ep-k-ink {
+    fill: var(--wu-error-page-k-ink);
   }
-  .wt-ep-k-shine {
+  .wu-ep-k-shine {
     fill: #ffffff;
   }
-  .wt-ep-k-line {
+  .wu-ep-k-line {
     fill: none;
-    stroke: var(--wt-error-page-k-ink);
+    stroke: var(--wu-error-page-k-ink);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-ep-k-thin {
+  .wu-ep-k-thin {
     stroke-width: 2.5;
   }
-  .wt-ep-k-eyes {
+  .wu-ep-k-eyes {
     transform-box: fill-box;
     transform-origin: center;
-    animation: wt-ep-blink 4.5s infinite;
+    animation: wu-ep-blink 4.5s infinite;
   }
-  .wt-ep-k-sign {
-    fill: var(--wt-error-page-k-sign);
+  .wu-ep-k-sign {
+    fill: var(--wu-error-page-k-sign);
   }
-  .wt-ep-k-outline {
-    stroke: var(--wt-error-page-k-ink);
+  .wu-ep-k-outline {
+    stroke: var(--wu-error-page-k-ink);
     stroke-width: 3;
   }
-  .wt-ep-k-code {
-    fill: var(--wt-error-page-k-sign-text);
-    font-family: var(--wt-font-family);
+  .wu-ep-k-code {
+    fill: var(--wu-error-page-k-sign-text);
+    font-family: var(--wu-font-family);
     font-size: 25px;
     font-weight: 800;
     letter-spacing: 0.02em;
   }
-  .wt-ep-k-mark {
-    fill: var(--wt-error-page-k-sign);
-    font-family: var(--wt-font-family);
+  .wu-ep-k-mark {
+    fill: var(--wu-error-page-k-sign);
+    font-family: var(--wu-font-family);
     font-size: 22px;
     font-weight: 800;
   }
-  .wt-ep-k-small {
+  .wu-ep-k-small {
     font-size: 15px;
   }
-  .wt-ep-k-drop {
-    fill: var(--wt-error-page-k-drop);
-    stroke: var(--wt-error-page-k-ink);
+  .wu-ep-k-drop {
+    fill: var(--wu-error-page-k-drop);
+    stroke: var(--wu-error-page-k-ink);
     stroke-width: 2;
-    animation: wt-ep-drip 1.6s ease-in infinite;
+    animation: wu-ep-drip 1.6s ease-in infinite;
   }
-  .wt-ep-k-drop-2 {
+  .wu-ep-k-drop-2 {
     animation-delay: 0.6s;
   }
-  .wt-ep-k-orbit {
+  .wu-ep-k-orbit {
     transform-box: view-box;
     transform-origin: 130px 56px;
-    animation: wt-ep-orbit 3.2s linear infinite;
+    animation: wu-ep-orbit 3.2s linear infinite;
   }
-  .wt-ep-k-snore {
-    animation: wt-ep-snore 2.6s ease-in-out infinite;
+  .wu-ep-k-snore {
+    animation: wu-ep-snore 2.6s ease-in-out infinite;
   }
-  @keyframes wt-ep-bob {
+  @keyframes wu-ep-bob {
     50% {
       transform: translateY(-5px);
     }
   }
-  @keyframes wt-ep-shadow {
+  @keyframes wu-ep-shadow {
     50% {
       transform: scaleX(0.86);
       opacity: 0.08;
     }
   }
-  @keyframes wt-ep-blink {
+  @keyframes wu-ep-blink {
     0%,
     92%,
     100% {
@@ -196,13 +196,13 @@
       transform: scaleY(0.1);
     }
   }
-  @keyframes wt-ep-twinkle {
+  @keyframes wu-ep-twinkle {
     50% {
       transform: scale(0.55) rotate(20deg);
       opacity: 0.55;
     }
   }
-  @keyframes wt-ep-drip {
+  @keyframes wu-ep-drip {
     0% {
       transform: translateY(-3px);
       opacity: 0;
@@ -215,12 +215,12 @@
       opacity: 0;
     }
   }
-  @keyframes wt-ep-orbit {
+  @keyframes wu-ep-orbit {
     to {
       transform: rotate(360deg);
     }
   }
-  @keyframes wt-ep-snore {
+  @keyframes wu-ep-snore {
     50% {
       transform: translate(4px, -5px);
       opacity: 0.6;
@@ -228,114 +228,114 @@
   }
 
   /* Words. */
-  .wt-ep-title {
+  .wu-ep-title {
     margin: 0;
-    color: var(--wt-error-page-title-color);
-    font-size: var(--wt-error-page-title-size);
-    font-weight: var(--wt-error-page-title-weight);
-    line-height: var(--wt-line-height);
+    color: var(--wu-error-page-title-color);
+    font-size: var(--wu-error-page-title-size);
+    font-weight: var(--wu-error-page-title-weight);
+    line-height: var(--wu-line-height);
   }
-  .wt-ep-description {
+  .wu-ep-description {
     margin: 0;
     max-width: 34rem;
-    color: var(--wt-error-page-description-color);
-    line-height: var(--wt-line-height);
+    color: var(--wu-error-page-description-color);
+    line-height: var(--wu-line-height);
   }
 
   /* Buttons: the first one solid. */
-  .wt-ep-actions {
+  .wu-ep-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 1rem;
   }
-  .wt-ep-actions:empty {
+  .wu-ep-actions:empty {
     display: none;
   }
-  .wt-ep-button {
+  .wu-ep-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 2.5rem;
     padding: 0.5rem 1.125rem;
-    border: 1px solid var(--wt-error-page-button-border);
-    border-radius: var(--wt-error-page-button-radius);
-    background: var(--wt-error-page-button-bg);
-    color: var(--wt-error-page-button-color);
+    border: 1px solid var(--wu-error-page-button-border);
+    border-radius: var(--wu-error-page-button-radius);
+    background: var(--wu-error-page-button-bg);
+    color: var(--wu-error-page-button-color);
     font: inherit;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
     transition:
-      background var(--wt-transition),
-      border-color var(--wt-transition),
-      transform var(--wt-transition);
+      background var(--wu-transition),
+      border-color var(--wu-transition),
+      transform var(--wu-transition);
   }
-  .wt-ep-button:hover {
-    background: var(--wt-hover-bg);
+  .wu-ep-button:hover {
+    background: var(--wu-hover-bg);
   }
-  .wt-ep-button-main {
-    border-color: var(--wt-primary-color);
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+  .wu-ep-button-main {
+    border-color: var(--wu-primary-color);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
   }
-  .wt-ep-button-main:hover {
-    background: var(--wt-primary-hover);
-    border-color: var(--wt-primary-hover);
+  .wu-ep-button-main:hover {
+    background: var(--wu-primary-hover);
+    border-color: var(--wu-primary-hover);
   }
-  .wt-ep-button:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-ep-button:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
   /* Kawaii buttons: round, standing on a little ledge that they press into. */
-  .wt-error-page-kawaii .wt-ep-button {
+  .wu-error-page-kawaii .wu-ep-button {
     border-radius: 999px;
-    box-shadow: 0 3px 0 var(--wt-error-page-button-border);
+    box-shadow: 0 3px 0 var(--wu-error-page-button-border);
   }
-  .wt-error-page-kawaii .wt-ep-button-main {
-    box-shadow: 0 3px 0 var(--wt-error-page-k-button-shadow);
+  .wu-error-page-kawaii .wu-ep-button-main {
+    box-shadow: 0 3px 0 var(--wu-error-page-k-button-shadow);
   }
-  .wt-error-page-kawaii .wt-ep-button:active {
+  .wu-error-page-kawaii .wu-ep-button:active {
     transform: translateY(2px);
     box-shadow: none;
   }
 
-  .wt-ep-reference {
+  .wu-ep-reference {
     margin: 0.5rem 0 0;
-    color: var(--wt-error-page-description-color);
+    color: var(--wu-error-page-description-color);
     font-size: 0.8125rem;
   }
-  .wt-ep-reference code {
+  .wu-ep-reference code {
     padding: 0.125rem 0.375rem;
-    border-radius: var(--wt-radius-sm);
-    background: var(--wt-hover-bg);
+    border-radius: var(--wu-radius-sm);
+    background: var(--wu-hover-bg);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     user-select: all;
   }
-  .wt-ep-content {
+  .wu-ep-content {
     box-sizing: border-box;
     width: 100%;
     max-width: 36rem;
     margin-top: 1rem;
     padding: 1rem 1.25rem;
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-hover-bg);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-hover-bg);
     text-align: start;
   }
-  .wt-ep-content:empty {
+  .wu-ep-content:empty {
     display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .wt-ep-k-spark,
-    .wt-ep-k-shadow,
-    .wt-ep-k-bob,
-    .wt-ep-k-eyes,
-    .wt-ep-k-drop,
-    .wt-ep-k-orbit,
-    .wt-ep-k-snore {
+    .wu-ep-k-spark,
+    .wu-ep-k-shadow,
+    .wu-ep-k-bob,
+    .wu-ep-k-eyes,
+    .wu-ep-k-drop,
+    .wu-ep-k-orbit,
+    .wu-ep-k-snore {
       animation: none;
     }
   }

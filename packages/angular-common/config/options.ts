@@ -1,29 +1,29 @@
 import { InjectionToken } from '@angular/core';
-import { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WtLocale } from 'wiratheme/core';
+import { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WuLocale } from 'wiraui/core';
 
 /**
  * Size of the whole UI: the root font size every rem in the theme follows.
  * `'sm'` 12px, `'md'` 14px (the size the familiar component docs use), `'lg'` 16px (the browser default), or a number of px.
  */
-export type WtScale = 'sm' | 'md' | 'lg' | number;
+export type WuScale = 'sm' | 'md' | 'lg' | number;
 
 /**
  * Waits before searching, in milliseconds, for the whole app. `0` (the default) searches on every key with no wait;
  * set a pause (say 300) to search once typing stops. A `[delay]` / `[filterDelay]` on the component wins.
  */
-export interface WtDelays {
-  /** wt-autoComplete: before asking `(completeMethod)`. */
+export interface WuDelays {
+  /** wu-autoComplete: before asking `(completeMethod)`. */
   autoComplete?: number;
-  /** wt-table: before `filterGlobal()` and the column filters apply. */
+  /** wu-table: before `filterGlobal()` and the column filters apply. */
   filter?: number;
 }
 
-export interface WiraThemeOptions {
+export interface WiraUIOptions {
   /** Whole theme from TypeScript. Leave out when the main theme comes from a SCSS or CSS file. */
   preset?: ThemePreset;
-  /** Changes on top of the main theme. They win over the SCSS/CSS file through `@layer wiratheme.overrides`. */
+  /** Changes on top of the main theme. They win over the SCSS/CSS file through `@layer wiraui.overrides`. */
   overrides?: ThemeOverrides;
-  /** Dark mode for the tokens TypeScript writes (`preset`, `overrides`). Default `'class'` (`.wt-dark` on `<html>`). */
+  /** Dark mode for the tokens TypeScript writes (`preset`, `overrides`). Default `'class'` (`.wu-dark` on `<html>`). */
   darkMode?: DarkMode;
   /**
    * The usual dark-mode option name, for apps moving over: `'.my-dark'` (a class on `<html>`), `'system'` (prefers-color-scheme)
@@ -32,21 +32,21 @@ export interface WiraThemeOptions {
   darkModeSelector?: string;
   /**
    * `'dark'` when the main theme is dark-only (sayan-*, ratri-*, sila-dark-*), so `overrides` apply without a dark-mode class.
-   * Read from the theme when left out: a TS `preset` knows it, and SCSS/CSS themes write `--wt-scheme`.
+   * Read from the theme when left out: a TS `preset` knows it, and SCSS/CSS themes write `--wu-scheme`.
    */
   scheme?: Scheme;
   /** Ink effect when buttons are pressed. Default: the preset's choice (on for Material), else false. */
   ripple?: boolean;
   /** UI language. Default `'th'`. */
-  locale?: 'th' | 'en' | WtLocale;
+  locale?: 'th' | 'en' | WuLocale;
   /** How dates are shown and typed. Default `'buddhist'` (พ.ศ.). */
   calendar?: CalendarSystem;
   /** Element the TypeScript tokens apply to. Default `:root`. */
   selector?: string;
   /** Size of the whole UI (sets the root font size). Default: leave the page's own root size alone. */
-  scale?: WtScale;
+  scale?: WuScale;
   /** Waits before searching for the whole app: `{ autoComplete: 300, filter: 300 }`. Default 0 (no wait). */
-  delays?: WtDelays;
+  delays?: WuDelays;
 }
 
-export const WT_OPTIONS = new InjectionToken<WiraThemeOptions>('WT_OPTIONS');
+export const WU_OPTIONS = new InjectionToken<WiraUIOptions>('WU_OPTIONS');

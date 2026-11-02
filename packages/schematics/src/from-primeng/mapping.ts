@@ -1,9 +1,9 @@
 /**
- * What `ng g wiratheme:from-primeng` changes: PrimeNG entry points, NgModules, classes and tags, and their WiraTheme
- * names. test/from-primeng.test.ts checks every target here against the real WiraTheme sources.
+ * What `ng g wiraui:from-primeng` changes: PrimeNG entry points, NgModules, classes and tags, and their WiraUI
+ * names. test/from-primeng.test.ts checks every target here against the real WiraUI sources.
  */
 
-/** PrimeNG names (module and class, without `Module`) whose WiraTheme name differs. */
+/** PrimeNG names (module and class, without `Module`) whose WiraUI name differs. */
 export const NAME_RENAMES: Record<string, string> = {
   Dropdown: 'Select',
   Calendar: 'DatePicker',
@@ -21,7 +21,7 @@ export const NAME_RENAMES: Record<string, string> = {
   DynamicDialog: 'Dialog',
 };
 
-/** PrimeNG entry point → WiraTheme entry point where they differ (`primeng/dropdown` → `wiratheme/select`). */
+/** PrimeNG entry point → WiraUI entry point where they differ (`primeng/dropdown` → `wiraui/select`). */
 export const ENTRY_RENAMES: Record<string, string> = {
   dropdown: 'select',
   calendar: 'datepicker',
@@ -39,98 +39,98 @@ export const ENTRY_RENAMES: Record<string, string> = {
   dynamicdialog: 'dialog',
 };
 
-/** WiraTheme entry points and their NgModules. */
-export const WT_MODULES: Record<string, string[]> = {
-  accordion: ['WtAccordionModule'],
-  alert: ['WtAlertModule'],
-  animate: ['WtAnimateModule'],
-  autocomplete: ['WtAutoCompleteModule'],
-  avatar: ['WtAvatarModule'],
-  badge: ['WtBadgeModule'],
-  blockui: ['WtBlockUIModule'],
-  breadcrumb: ['WtBreadcrumbModule'],
-  button: ['WtButtonModule'],
-  card: ['WtCardModule'],
-  carousel: ['WtCarouselModule'],
-  // v1 / v2: the Chart.js chart; v3: WiraTheme's own, which takes Chart.js data and options.
-  chart: ['WtChartModule'],
-  chartjs: ['WtChartJsModule'],
-  checkbox: ['WtCheckboxModule'],
-  chip: ['WtChipModule'],
-  colorpicker: ['WtColorPickerModule'],
-  confirmdialog: ['WtConfirmDialogModule'],
-  contextmenu: ['WtContextMenuModule'],
-  datepicker: ['WtDatePickerModule'],
-  dialog: ['WtDialogModule'],
-  divider: ['WtDividerModule'],
-  dock: ['WtDockModule'],
-  dragdrop: ['WtDragDropModule'],
-  drawer: ['WtDrawerModule'],
-  editor: ['WtEditorModule'],
-  fieldset: ['WtFieldsetModule'],
-  fileupload: ['WtFileUploadModule'],
-  floatlabel: ['WtFloatLabelModule'],
-  galleria: ['WtGalleriaModule'],
-  iconfield: ['WtIconFieldModule'],
-  image: ['WtImageModule'],
-  imagecompare: ['WtImageCompareModule'],
-  inplace: ['WtInplaceModule'],
-  inputgroup: ['WtInputGroupModule'],
-  inputmask: ['WtInputMaskModule'],
-  inputnumber: ['WtInputNumberModule'],
-  inputotp: ['WtInputOtpModule'],
-  inputtext: ['WtInputTextModule'],
-  keyfilter: ['WtKeyFilterModule'],
-  knob: ['WtKnobModule'],
-  listbox: ['WtListboxModule'],
-  menu: ['WtMenuModule'],
-  menubar: ['WtMenubarModule'],
-  message: ['WtMessageModule'],
-  metergroup: ['WtMeterGroupModule'],
-  multiselect: ['WtMultiSelectModule'],
-  orderlist: ['WtOrderListModule'],
-  organizationchart: ['WtOrganizationChartModule'],
-  paginator: ['WtPaginatorModule'],
-  panel: ['WtPanelModule'],
-  panelmenu: ['WtPanelMenuModule'],
-  password: ['WtPasswordModule'],
-  picklist: ['WtPickListModule'],
-  popover: ['WtPopoverModule'],
-  progressbar: ['WtProgressBarModule'],
-  progressspinner: ['WtProgressSpinnerModule'],
-  radiobutton: ['WtRadioButtonModule'],
-  rating: ['WtRatingModule'],
-  ripple: ['WtRippleModule'],
-  scroller: ['WtScrollerModule'],
-  scrollpanel: ['WtScrollPanelModule'],
-  select: ['WtSelectModule'],
-  selectbutton: ['WtSelectButtonModule'],
-  skeleton: ['WtSkeletonModule'],
-  slider: ['WtSliderModule'],
-  splitbutton: ['WtSplitButtonModule'],
-  splitter: ['WtSplitterModule'],
-  stepper: ['WtStepperModule'],
-  steps: ['WtStepsModule'],
-  table: ['WtTableModule'],
-  tabmenu: ['WtTabMenuModule'],
-  tabs: ['WtTabsModule'],
-  tag: ['WtTagModule'],
-  terminal: ['WtTerminalModule'],
-  textarea: ['WtTextareaModule'],
-  tieredmenu: ['WtTieredMenuModule'],
-  timeline: ['WtTimelineModule'],
-  toast: ['WtToastModule'],
-  togglebutton: ['WtToggleButtonModule'],
-  toggleswitch: ['WtToggleSwitchModule'],
-  toolbar: ['WtToolbarModule'],
-  tooltip: ['WtTooltipModule'],
-  tree: ['WtTreeModule'],
-  treeselect: ['WtTreeSelectModule'],
+/** WiraUI entry points and their NgModules. */
+export const WU_MODULES: Record<string, string[]> = {
+  accordion: ['WuAccordionModule'],
+  alert: ['WuAlertModule'],
+  animate: ['WuAnimateModule'],
+  autocomplete: ['WuAutoCompleteModule'],
+  avatar: ['WuAvatarModule'],
+  badge: ['WuBadgeModule'],
+  blockui: ['WuBlockUIModule'],
+  breadcrumb: ['WuBreadcrumbModule'],
+  button: ['WuButtonModule'],
+  card: ['WuCardModule'],
+  carousel: ['WuCarouselModule'],
+  // v1 / v2: the Chart.js chart; v3: WiraUI's own, which takes Chart.js data and options.
+  chart: ['WuChartModule'],
+  chartjs: ['WuChartJsModule'],
+  checkbox: ['WuCheckboxModule'],
+  chip: ['WuChipModule'],
+  colorpicker: ['WuColorPickerModule'],
+  confirmdialog: ['WuConfirmDialogModule'],
+  contextmenu: ['WuContextMenuModule'],
+  datepicker: ['WuDatePickerModule'],
+  dialog: ['WuDialogModule'],
+  divider: ['WuDividerModule'],
+  dock: ['WuDockModule'],
+  dragdrop: ['WuDragDropModule'],
+  drawer: ['WuDrawerModule'],
+  editor: ['WuEditorModule'],
+  fieldset: ['WuFieldsetModule'],
+  fileupload: ['WuFileUploadModule'],
+  floatlabel: ['WuFloatLabelModule'],
+  galleria: ['WuGalleriaModule'],
+  iconfield: ['WuIconFieldModule'],
+  image: ['WuImageModule'],
+  imagecompare: ['WuImageCompareModule'],
+  inplace: ['WuInplaceModule'],
+  inputgroup: ['WuInputGroupModule'],
+  inputmask: ['WuInputMaskModule'],
+  inputnumber: ['WuInputNumberModule'],
+  inputotp: ['WuInputOtpModule'],
+  inputtext: ['WuInputTextModule'],
+  keyfilter: ['WuKeyFilterModule'],
+  knob: ['WuKnobModule'],
+  listbox: ['WuListboxModule'],
+  menu: ['WuMenuModule'],
+  menubar: ['WuMenubarModule'],
+  message: ['WuMessageModule'],
+  metergroup: ['WuMeterGroupModule'],
+  multiselect: ['WuMultiSelectModule'],
+  orderlist: ['WuOrderListModule'],
+  organizationchart: ['WuOrganizationChartModule'],
+  paginator: ['WuPaginatorModule'],
+  panel: ['WuPanelModule'],
+  panelmenu: ['WuPanelMenuModule'],
+  password: ['WuPasswordModule'],
+  picklist: ['WuPickListModule'],
+  popover: ['WuPopoverModule'],
+  progressbar: ['WuProgressBarModule'],
+  progressspinner: ['WuProgressSpinnerModule'],
+  radiobutton: ['WuRadioButtonModule'],
+  rating: ['WuRatingModule'],
+  ripple: ['WuRippleModule'],
+  scroller: ['WuScrollerModule'],
+  scrollpanel: ['WuScrollPanelModule'],
+  select: ['WuSelectModule'],
+  selectbutton: ['WuSelectButtonModule'],
+  skeleton: ['WuSkeletonModule'],
+  slider: ['WuSliderModule'],
+  splitbutton: ['WuSplitButtonModule'],
+  splitter: ['WuSplitterModule'],
+  stepper: ['WuStepperModule'],
+  steps: ['WuStepsModule'],
+  table: ['WuTableModule'],
+  tabmenu: ['WuTabMenuModule'],
+  tabs: ['WuTabsModule'],
+  tag: ['WuTagModule'],
+  terminal: ['WuTerminalModule'],
+  textarea: ['WuTextareaModule'],
+  tieredmenu: ['WuTieredMenuModule'],
+  timeline: ['WuTimelineModule'],
+  toast: ['WuToastModule'],
+  togglebutton: ['WuToggleButtonModule'],
+  toggleswitch: ['WuToggleSwitchModule'],
+  toolbar: ['WuToolbarModule'],
+  tooltip: ['WuTooltipModule'],
+  tree: ['WuTreeModule'],
+  treeselect: ['WuTreeSelectModule'],
 };
 
 /**
- * Other names apps import from PrimeNG, by entry: `[PrimeNG name, WiraTheme name, WiraTheme entry]`. The services keep
- * their PrimeNG names (WiraTheme exports them too).
+ * Other names apps import from PrimeNG, by entry: `[PrimeNG name, WiraUI name, WiraUI entry]`. The services keep
+ * their PrimeNG names (WiraUI exports them too).
  */
 export const SYMBOLS: Record<string, [string, string, string][]> = {
   api: [
@@ -144,9 +144,9 @@ export const SYMBOLS: Record<string, [string, string, string][]> = {
     ['Message', 'Message', 'api'],
     ['ToastMessageOptions', 'ToastMessageOptions', 'api'],
     ['Confirmation', 'Confirmation', 'api'],
-    ['PrimeTemplate', 'WtTemplate', 'api'],
-    ['PrimeNGConfig', 'WtConfig', 'config'],
-    ['LazyLoadEvent', 'WtTableLazyLoadEvent', 'table'],
+    ['PrimeTemplate', 'WuTemplate', 'api'],
+    ['PrimeNGConfig', 'WuConfig', 'config'],
+    ['LazyLoadEvent', 'WuTableLazyLoadEvent', 'table'],
     ['FilterMatchMode', 'FilterMatchMode', 'table'],
     ['SortMeta', 'SortMeta', 'table'],
     ['FilterMetadata', 'FilterMeta', 'table'],
@@ -157,24 +157,24 @@ export const SYMBOLS: Record<string, [string, string, string][]> = {
     ['DynamicDialogConfig', 'DynamicDialogConfig', 'dialog'],
   ],
   table: [
-    ['Table', 'WtTable', 'table'],
-    ['TableLazyLoadEvent', 'WtTableLazyLoadEvent', 'table'],
-    ['TableRowSelectEvent', 'WtTableRowSelectEvent', 'table'],
+    ['Table', 'WuTable', 'table'],
+    ['TableLazyLoadEvent', 'WuTableLazyLoadEvent', 'table'],
+    ['TableRowSelectEvent', 'WuTableRowSelectEvent', 'table'],
   ],
-  dropdown: [['Dropdown', 'WtSelect', 'select']],
-  select: [['Select', 'WtSelect', 'select']],
-  calendar: [['Calendar', 'WtDatePicker', 'datepicker']],
-  datepicker: [['DatePicker', 'WtDatePicker', 'datepicker']],
-  overlaypanel: [['OverlayPanel', 'WtPopover', 'popover']],
-  popover: [['Popover', 'WtPopover', 'popover']],
-  menu: [['Menu', 'WtMenu', 'menu']],
-  dialog: [['Dialog', 'WtDialog', 'dialog']],
-  fileupload: [['FileUpload', 'WtFileUpload', 'fileupload']],
-  paginator: [['Paginator', 'WtPaginator', 'paginator']],
+  dropdown: [['Dropdown', 'WuSelect', 'select']],
+  select: [['Select', 'WuSelect', 'select']],
+  calendar: [['Calendar', 'WuDatePicker', 'datepicker']],
+  datepicker: [['DatePicker', 'WuDatePicker', 'datepicker']],
+  overlaypanel: [['OverlayPanel', 'WuPopover', 'popover']],
+  popover: [['Popover', 'WuPopover', 'popover']],
+  menu: [['Menu', 'WuMenu', 'menu']],
+  dialog: [['Dialog', 'WuDialog', 'dialog']],
+  fileupload: [['FileUpload', 'WuFileUpload', 'fileupload']],
+  paginator: [['Paginator', 'WuPaginator', 'paginator']],
 };
 
-/** `wt-` tags WiraTheme answers to (including the PrimeNG spellings it accepts), case as written. */
-export const WT_TAGS = new Set(
+/** `wu-` tags WiraUI answers to (including the PrimeNG spellings it accepts), case as written. */
+export const WU_TAGS = new Set(
   (
     'accordion accordionTab accordiontab accordion-tab accordion-panel accordion-header accordion-content autoComplete autocomplete ' +
     'avatar avatarGroup avatar-group badge blockUI breadcrumb button calendar card carousel cellEditor chart checkbox chip colorPicker ' +
@@ -191,12 +191,12 @@ export const WT_TAGS = new Set(
   ).split(/\s+/)
 );
 
-/** PrimeNG tags with no WiraTheme counterpart yet: left as they are and reported. */
+/** PrimeNG tags with no WiraUI counterpart yet: left as they are and reported. */
 export const NOT_YET = ['cascadeSelect', 'chips', 'confirmPopup', 'dataView', 'megaMenu', 'scrollTop', 'speedDial', 'treeTable', 'triStateCheckbox'];
 
-/** The WiraTheme name of a PrimeNG module or class name (`DropdownModule` → `WtSelectModule`). */
-export function wtName(primeName: string): string {
+/** The WiraUI name of a PrimeNG module or class name (`DropdownModule` → `WuSelectModule`). */
+export function wuName(primeName: string): string {
   const module = primeName.endsWith('Module');
   const base = module ? primeName.slice(0, -'Module'.length) : primeName;
-  return `Wt${NAME_RENAMES[base] ?? base}${module ? 'Module' : ''}`;
+  return `Wu${NAME_RENAMES[base] ?? base}${module ? 'Module' : ''}`;
 }

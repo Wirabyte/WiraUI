@@ -1,19 +1,19 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ɵWtOrderListBase } from './orderlist.base';
+import { ɵWuOrderListBase } from './orderlist.base';
 
 /**
- * A list to put in order: `<wt-orderlist [value]="steps" header="ลำดับ" dataKey="id" [dragdrop]="true"
- * (onReorder)="save()">` with the app's `item` template. `wt-orderList` is the same.
+ * A list to put in order: `<wu-orderlist [value]="steps" header="ลำดับ" dataKey="id" [dragdrop]="true"
+ * (onReorder)="save()">` with the app's `item` template. `wu-orderList` is the same.
  */
 @Component({
-  selector: 'wt-orderlist, wt-orderList, wt-order-list',
+  selector: 'wu-orderlist, wu-orderList, wu-order-list',
   standalone: true,
-  exportAs: 'wtOrderList',
+  exportAs: 'wuOrderList',
   imports: [NgClass, NgStyle, NgTemplateOutlet],
   templateUrl: './orderlist.component.html',
   styleUrl: './orderlist.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtOrderList extends ɵWtOrderListBase {}
+export class WuOrderList extends ɵWuOrderListBase {}

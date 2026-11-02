@@ -1,4 +1,4 @@
-/** wt-flow: saving and loading a diagram as JSON, and drawing it as a standalone SVG. */
+/** wu-flow: saving and loading a diagram as JSON, and drawing it as a standalone SVG. */
 import { collectMarkers, FLOW_MARKER_REF, FLOW_MARKER_VIEWBOX, getEdgeEnds, markerId, markerLength, markerShape, normalizeMarker } from './edges';
 import { absolutePositions, nodeLookup, nodeSize, sortNodesParentsFirst } from './graph';
 import type { FlowSizeLookup } from './graph';
@@ -204,7 +204,7 @@ export function flowToSvg(nodes: readonly FlowNode[], edges: readonly FlowEdge[]
   const h = y2 - y1 + pad * 2;
   const ox = pad - x1;
   const oy = pad - y1;
-  const markers = collectMarkers(drawn, 'wt-flow-svg-marker', edgeColor);
+  const markers = collectMarkers(drawn, 'wu-flow-svg-marker', edgeColor);
   const parts: string[] = [];
   parts.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${fmt(w)}" height="${fmt(h)}" viewBox="0 0 ${fmt(w)} ${fmt(h)}" font-family="${esc(font)}" font-size="${fontSize}">`);
   if (options.title) parts.push(`<title>${esc(options.title)}</title>`);
@@ -240,7 +240,7 @@ export function flowToSvg(nodes: readonly FlowNode[], edges: readonly FlowEdge[]
   for (const g of geometry) {
     const start = normalizeMarker(g.e.markerStart);
     const stop = normalizeMarker(g.e.markerEnd);
-    const url = (m: NonNullable<ReturnType<typeof normalizeMarker>>) => `url(#${markerId('wt-flow-svg-marker', { ...m, color: m.color || edgeColor })})`;
+    const url = (m: NonNullable<ReturnType<typeof normalizeMarker>>) => `url(#${markerId('wu-flow-svg-marker', { ...m, color: m.color || edgeColor })})`;
     const dash = g.e.animated ? ' stroke-dasharray="5 5"' : '';
     const ms = start ? ` marker-start="${url(start)}"` : '';
     const me = stop ? ` marker-end="${url(stop)}"` : '';

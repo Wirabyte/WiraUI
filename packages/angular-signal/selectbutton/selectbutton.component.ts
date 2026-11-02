@@ -15,19 +15,19 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵWT_SKIP_VERSION_CHECK, WtSize, WtTemplate } from 'wiratheme/config';
-import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './selectbutton.types';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuSize, WuTemplate } from 'wiraui/config';
+import { WuSelectButtonChangeEvent, WuSelectButtonOptionClickEvent } from './selectbutton.types';
 
 /**
  * Pick one option (or several with `multiple`) from a row of buttons:
- * `<wt-selectbutton [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="plan">`.
+ * `<wu-selectbutton [options]="plans" optionLabel="name" optionValue="id" [(ngModel)]="plan">`.
  */
 @Component({
-  selector: 'wt-selectbutton, wt-selectButton, wt-select-button',
+  selector: 'wu-selectbutton, wu-selectButton, wu-select-button',
   host: {
-    '[class.wt-selectbutton-sm]': "sizeKey() === 'sm'",
+    '[class.wu-selectbutton-sm]': "sizeKey() === 'sm'",
     '[class.p-selectbutton-sm]': "sizeKey() === 'sm'",
-    '[class.wt-selectbutton-lg]': "sizeKey() === 'lg'",
+    '[class.wu-selectbutton-lg]': "sizeKey() === 'lg'",
     '[class.p-selectbutton-lg]': "sizeKey() === 'lg'",
   },
   standalone: true,
@@ -36,10 +36,10 @@ import { WtSelectButtonChangeEvent, WtSelectButtonOptionClickEvent } from './sel
   styleUrl: './selectbutton.css',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtSelectButton), multi: true }],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuSelectButton), multi: true }],
 })
-export class WtSelectButton implements ControlValueAccessor {
-  private readonly slotTemplates = contentChildren(WtTemplate);
+export class WuSelectButton implements ControlValueAccessor {
+  private readonly slotTemplates = contentChildren(WuTemplate);
   private readonly itemRef = contentChild('item', { read: TemplateRef });
   readonly itemTemplate = computed(() => this.itemRef() || ɵfindTemplate(this.slotTemplates(), 'item'));
   readonly options = input<readonly unknown[] | null | undefined>([]);
@@ -57,12 +57,12 @@ export class WtSelectButton implements ControlValueAccessor {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
-  readonly size = input<WtSize>();
+  readonly size = input<WuSize>();
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly ariaLabelledBy = input<string>();
 
-  readonly onChange = output<WtSelectButtonChangeEvent>();
-  readonly onOptionClick = output<WtSelectButtonOptionClickEvent>();
+  readonly onChange = output<WuSelectButtonChangeEvent>();
+  readonly onOptionClick = output<WuSelectButtonOptionClickEvent>();
 
   private readonly model = signal<unknown>(null);
   private readonly formDisabled = signal(false);
@@ -84,13 +84,13 @@ export class WtSelectButton implements ControlValueAccessor {
   });
   readonly classes = computed(() => [this.baseClasses(), this.styleClass()].filter(Boolean).join(' '));
   readonly baseClasses = computed(() => {
-    const c = ['wt-selectbutton', 'p-selectbutton', 'p-component'];
-    if (this.invalid()) c.push('wt-invalid', 'p-invalid');
+    const c = ['wu-selectbutton', 'p-selectbutton', 'p-component'];
+    if (this.invalid()) c.push('wu-invalid', 'p-invalid');
     return c.join(' ');
   });
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   labelOf(option: unknown): string {
@@ -107,8 +107,8 @@ export class WtSelectButton implements ControlValueAccessor {
   }
   optionClasses(option: unknown): string {
     return this.isSelected(option)
-      ? 'wt-selectbutton-option wt-selectbutton-option-checked p-togglebutton p-togglebutton-checked'
-      : 'wt-selectbutton-option p-togglebutton';
+      ? 'wu-selectbutton-option wu-selectbutton-option-checked p-togglebutton p-togglebutton-checked'
+      : 'wu-selectbutton-option p-togglebutton';
   }
 
   select(option: unknown, index: number, event: Event): void {

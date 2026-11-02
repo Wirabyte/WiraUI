@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtDrawer } from './drawer.component';
+import { WuDrawer } from './drawer.component';
 
-/** For NgModule apps. Standalone apps can import `WtDrawer` directly. */
+/** For NgModule apps. Standalone apps can import `WuDrawer` directly. */
 @NgModule({
-  imports: [WtDrawer],
-  exports: [WtDrawer],
+  imports: [WuDrawer],
+  exports: [WuDrawer],
 })
-export class WtDrawerModule {}
+export class WuDrawerModule {}

@@ -1,23 +1,23 @@
-/* wt-rating. Shared by wiratheme v1, v2 and v3. Stars backed by native radio buttons, so arrow keys,
+/* wu-rating. Shared by wiraui v1, v2 and v3. Stars backed by native radio buttons, so arrow keys,
    screen readers and forms work as with any radio group. */
-@layer wiratheme.components {
-  wt-rating {
+@layer wiraui.components {
+  wu-rating {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-rating {
+  .wu-rating {
     display: inline-flex;
     align-items: center;
-    gap: var(--wt-rating-gap);
+    gap: var(--wu-rating-gap);
   }
-  .wt-rating-option {
+  .wu-rating-option {
     position: relative;
     display: inline-flex;
     cursor: pointer;
-    color: var(--wt-rating-icon-color);
-    transition: color var(--wt-transition);
+    color: var(--wu-rating-icon-color);
+    transition: color var(--wu-transition);
   }
-  .wt-rating-option input {
+  .wu-rating-option input {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -26,32 +26,32 @@
     opacity: 0;
     cursor: inherit;
   }
-  .wt-rating-icon {
-    width: var(--wt-rating-icon-size);
-    height: var(--wt-rating-icon-size);
+  .wu-rating-icon {
+    width: var(--wu-rating-icon-size);
+    height: var(--wu-rating-icon-size);
   }
-  .wt-rating-option-active {
-    color: var(--wt-rating-icon-active-color);
+  .wu-rating-option-active {
+    color: var(--wu-rating-icon-active-color);
   }
-  .wt-rating-option-active .wt-rating-icon {
+  .wu-rating-option-active .wu-rating-icon {
     fill: currentColor;
   }
-  .wt-rating-option:has(input:focus-visible) {
-    border-radius: var(--wt-radius-sm);
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-rating-option:has(input:focus-visible) {
+    border-radius: var(--wu-radius-sm);
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-rating-readonly .wt-rating-option,
-  .wt-rating-disabled .wt-rating-option {
+  .wu-rating-readonly .wu-rating-option,
+  .wu-rating-disabled .wu-rating-option {
     cursor: default;
   }
-  .wt-rating-disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-rating-disabled {
+    opacity: var(--wu-disabled-opacity);
   }
   /* Bigger touch targets on phones without changing the star size. */
   @media (pointer: coarse) {
-    .wt-rating-option::after {
+    .wu-rating-option::after {
       content: '';
       position: absolute;
       inset: -0.375rem;

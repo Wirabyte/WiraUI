@@ -15,31 +15,31 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWT_SKIP_VERSION_CHECK, WtMenuItem, WtTemplate } from 'wiratheme/config';
-import { menuFirst, menuFocusable, menuLast, menuStep, menuVisible } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { menuFirst, menuFocusable, menuLast, menuStep, menuVisible } from 'wiraui/core';
 import { ɵpageTabs, ɵrevealTab, ɵtabEdges } from './tabs.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * What wt-tabmenu does, shared by the v1 and v2/v3 templates. A row of tabs built from a menu model, for switching
+ * What wu-tabmenu does, shared by the v1 and v2/v3 templates. A row of tabs built from a menu model, for switching
  * views or routes: `[activeItem]` marks the current one (routed items without it follow the router). It looks like
- * wt-tabs and scrolls sideways the same way.
+ * wu-tabs and scrolls sideways the same way.
  */
 @Directive()
-export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
-  @Input() set model(v: WtMenuItem[] | null | undefined) {
+export abstract class ɵWuTabMenuBase implements AfterViewInit, OnDestroy {
+  @Input() set model(v: WuMenuItem[] | null | undefined) {
     this._model = v || [];
   }
-  get model(): WtMenuItem[] {
+  get model(): WuMenuItem[] {
     return this._model;
   }
   /** The current item. Two-way: `[(activeItem)]` or `(activeItemChange)`. */
-  @Input() set activeItem(v: WtMenuItem | null | undefined) {
+  @Input() set activeItem(v: WuMenuItem | null | undefined) {
     this._active = v ?? null;
     this.revealSoon();
   }
-  get activeItem(): WtMenuItem | null {
+  get activeItem(): WuMenuItem | null {
     return this._active;
   }
   /** Accepted for templates moving over: the arrows appear on their own whenever the tabs overflow. */
@@ -49,29 +49,29 @@ export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
   @Input() ariaLabel?: string;
   @Input() ariaLabelledBy?: string;
 
-  @Output() readonly activeItemChange = new EventEmitter<WtMenuItem>();
+  @Output() readonly activeItemChange = new EventEmitter<WuMenuItem>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('item', { descendants: false }) protected itemRef?: unknown;
   @ViewChild('list') protected listRef?: ElementRef<HTMLElement>;
 
-  readonly baseId = ɵuniqueId('wt-tabmenu');
+  readonly baseId = ɵuniqueId('wu-tabmenu');
   readonly trackIndex = (i: number): number => i;
   canPrev = false;
   canNext = false;
   /** Classes routerLinkActive adds to routed tabs when no activeItem is given. */
-  readonly routerActiveClasses = ['wt-tab-active'];
+  readonly routerActiveClasses = ['wu-tab-active'];
 
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly doc = inject(DOCUMENT);
-  private _model: WtMenuItem[] = [];
-  private _active: WtMenuItem | null = null;
+  private _model: WuMenuItem[] = [];
+  private _active: WuMenuItem | null = null;
   private focusIndex = -1;
   private resize?: ResizeObserver;
   private destroyed = false;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {
@@ -90,22 +90,22 @@ export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
 
   // ---------- what the templates read ----------
 
-  get items(): WtMenuItem[] {
+  get items(): WuMenuItem[] {
     return menuVisible(this._model);
   }
   get itemTemplate(): TemplateRef<unknown> | null {
     return asTemplate(this.itemRef) || ɵfindTemplate(this.templates, 'item');
   }
-  isActive(item: WtMenuItem): boolean {
+  isActive(item: WuMenuItem): boolean {
     return !!this._active && item === this._active;
   }
   itemId(index: number): string {
     return `${this.baseId}_${index}`;
   }
-  hrefOf(item: WtMenuItem): string | null {
+  hrefOf(item: WuMenuItem): string | null {
     return item.url && !item.disabled ? item.url : null;
   }
-  routed(item: WtMenuItem): boolean {
+  routed(item: WuMenuItem): boolean {
     return item.routerLink !== undefined && item.routerLink !== null && !item.disabled;
   }
   /** One Tab stop: the current tab (or the first one); the arrows move between tabs. */
@@ -115,7 +115,7 @@ export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
 
   // ---------- events ----------
 
-  itemClick(event: MouseEvent, item: WtMenuItem, index: number): void {
+  itemClick(event: MouseEvent, item: WuMenuItem, index: number): void {
     if (item.disabled) {
       event.preventDefault();
       return;
@@ -132,7 +132,7 @@ export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
 
   /** Arrows, Home and End move between tabs; Enter or Space opens one (a link follows it, a command runs). */
   keydown(event: KeyboardEvent): void {
-    const index = Number((event.target as HTMLElement | null)?.closest?.('[data-wt-index]')?.getAttribute('data-wt-index'));
+    const index = Number((event.target as HTMLElement | null)?.closest?.('[data-wu-index]')?.getAttribute('data-wu-index'));
     if (!Number.isFinite(index)) return;
     const items = this.items;
     let next = -1;
@@ -184,7 +184,7 @@ export abstract class ɵWtTabMenuBase implements AfterViewInit, OnDestroy {
     requestAnimationFrame(() => {
       const list = this.listRef?.nativeElement;
       if (!list || this.destroyed) return;
-      ɵrevealTab(list, list.querySelector<HTMLElement>('.wt-tab-active') ?? undefined);
+      ɵrevealTab(list, list.querySelector<HTMLElement>('.wu-tab-active') ?? undefined);
       this.updateArrows(true);
     });
   }

@@ -1,7 +1,7 @@
-export type WtProgressBarMode = 'determinate' | 'indeterminate';
+export type WuProgressBarMode = 'determinate' | 'indeterminate';
 
 /** Context of `<ng-template #content let-value let-max="max" let-percent="percent">`. */
-export interface WtProgressBarContext {
+export interface WuProgressBarContext {
   $implicit: number;
   value: number;
   max: number;

@@ -6,73 +6,73 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']">
-        <wt-button id="d-alert-success" [label]="tx('สำเร็จ')" severity="success" (onClick)="fireIcon('บันทึกแล้ว', 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย', 'success')"></wt-button>
-        <wt-button [label]="tx('ผิดพลาด')" severity="danger" (onClick)="fireIcon('บันทึกไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง', 'error')"></wt-button>
-        <wt-button [label]="tx('เตือน')" severity="warn" (onClick)="fireIcon('ใกล้หมดเวลา', 'เหลือเวลาอีก 5 นาที', 'warning')"></wt-button>
-        <wt-button [label]="tx('ข้อมูล')" severity="info" (onClick)="fireIcon('มีเวอร์ชันใหม่', 'รีเฟรชหน้าเพื่อใช้งาน', 'info')"></wt-button>
-        <wt-button [label]="tx('คำถาม')" severity="help" (onClick)="fireIcon('ต้องการความช่วยเหลือ?', 'ติดต่อทีมงานได้ทุกวัน', 'question')"></wt-button>
+        <wu-button id="d-alert-success" [label]="tx('สำเร็จ')" severity="success" (onClick)="fireIcon('บันทึกแล้ว', 'ข้อมูลลูกค้าถูกบันทึกเรียบร้อย', 'success')"></wu-button>
+        <wu-button [label]="tx('ผิดพลาด')" severity="danger" (onClick)="fireIcon('บันทึกไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง', 'error')"></wu-button>
+        <wu-button [label]="tx('เตือน')" severity="warn" (onClick)="fireIcon('ใกล้หมดเวลา', 'เหลือเวลาอีก 5 นาที', 'warning')"></wu-button>
+        <wu-button [label]="tx('ข้อมูล')" severity="info" (onClick)="fireIcon('มีเวอร์ชันใหม่', 'รีเฟรชหน้าเพื่อใช้งาน', 'info')"></wu-button>
+        <wu-button [label]="tx('คำถาม')" severity="help" (onClick)="fireIcon('ต้องการความช่วยเหลือ?', 'ติดต่อทีมงานได้ทุกวัน', 'question')"></wu-button>
         <span class="docs-demo-output">result: <code id="d-alert-result">{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="question" [section]="sec['question']">
       <docs-demo [html]="code['question']" [ts]="ts['question']">
-        <wt-button id="d-alert-remove" [label]="tx('ลบรายการ')" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wt-button>
+        <wu-button id="d-alert-remove" [label]="tx('ลบรายการ')" severity="danger" icon="wi wi-trash" (onClick)="remove()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="deny" [section]="sec['deny']">
       <docs-demo [html]="code['deny']" [ts]="ts['deny']">
-        <wt-button [label]="tx('ออกจากหน้านี้')" severity="secondary" (onClick)="leave()"></wt-button>
+        <wu-button [label]="tx('ออกจากหน้านี้')" severity="secondary" (onClick)="leave()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="inputs" [section]="sec['inputs']">
       <docs-demo [html]="code['inputs']" [ts]="ts['inputs']">
-        <wt-button [label]="tx('อีเมล')" severity="secondary" [outlined]="true" (onClick)="askEmail()"></wt-button>
-        <wt-button [label]="tx('สาขา (select)')" severity="secondary" [outlined]="true" (onClick)="askBranch()"></wt-button>
-        <wt-button [label]="tx('ขนาด (radio)')" severity="secondary" [outlined]="true" (onClick)="askSize()"></wt-button>
-        <wt-button [label]="tx('ความคิดเห็น (textarea)')" severity="secondary" [outlined]="true" (onClick)="askComment()"></wt-button>
-        <wt-button [label]="tx('เงื่อนไข (checkbox)')" severity="secondary" [outlined]="true" (onClick)="askTerms()"></wt-button>
+        <wu-button [label]="tx('อีเมล')" severity="secondary" [outlined]="true" (onClick)="askEmail()"></wu-button>
+        <wu-button [label]="tx('สาขา (select)')" severity="secondary" [outlined]="true" (onClick)="askBranch()"></wu-button>
+        <wu-button [label]="tx('ขนาด (radio)')" severity="secondary" [outlined]="true" (onClick)="askSize()"></wu-button>
+        <wu-button [label]="tx('ความคิดเห็น (textarea)')" severity="secondary" [outlined]="true" (onClick)="askComment()"></wu-button>
+        <wu-button [label]="tx('เงื่อนไข (checkbox)')" severity="secondary" [outlined]="true" (onClick)="askTerms()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="preconfirm" [section]="sec['preconfirm']">
       <docs-demo [html]="code['preconfirm']" [ts]="ts['preconfirm']">
-        <wt-button [label]="tx('ส่งคำขอ')" icon="wi wi-send" (onClick)="request()"></wt-button>
+        <wu-button [label]="tx('ส่งคำขอ')" icon="wi wi-send" (onClick)="request()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="timer" [section]="sec['timer']">
       <docs-demo [html]="code['timer']" [ts]="ts['timer']">
-        <wt-button [label]="tx('บันทึกอัตโนมัติ')" icon="wi wi-check" (onClick)="autosave()"></wt-button>
+        <wu-button [label]="tx('บันทึกอัตโนมัติ')" icon="wi wi-check" (onClick)="autosave()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="custom" [section]="sec['custom']">
       <docs-demo [html]="code['custom']" [ts]="ts['custom']">
-        <wt-button [label]="tx('โปรโมชัน')" severity="help" (onClick)="promo()"></wt-button>
+        <wu-button [label]="tx('โปรโมชัน')" severity="help" (onClick)="promo()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="helpers" [section]="sec['helpers']">
       <docs-demo [html]="code['helpers']" [ts]="ts['helpers']">
-        <wt-button [label]="tx('ออกจากระบบ')" severity="secondary" (onClick)="logout()"></wt-button>
-        <wt-button [label]="tx('คัดลอกลิงก์')" severity="secondary" (onClick)="copied()"></wt-button>
-        <wt-button [label]="tx('ซิงก์ข้อมูล')" severity="secondary" (onClick)="sync()"></wt-button>
+        <wu-button [label]="tx('ออกจากระบบ')" severity="secondary" (onClick)="logout()"></wu-button>
+        <wu-button [label]="tx('คัดลอกลิงก์')" severity="secondary" (onClick)="copied()"></wu-button>
+        <wu-button [label]="tx('ซิงก์ข้อมูล')" severity="secondary" (onClick)="sync()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>
 
     <docs-section id="migration" [section]="sec['migration']">
       <docs-demo [html]="code['migration']" [ts]="ts['migration']">
-        <wt-button id="d-alert-static" [label]="tx('เรียกแบบ static')" severity="secondary" (onClick)="legacy()"></wt-button>
+        <wu-button id="d-alert-static" [label]="tx('เรียกแบบ static')" severity="secondary" (onClick)="legacy()"></wu-button>
         <span class="docs-demo-output">result: <code>{{ result || '-' }}</code></span>
       </docs-demo>
     </docs-section>

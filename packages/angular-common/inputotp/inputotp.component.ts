@@ -24,35 +24,35 @@ import {
   ɵrefreshOnTranslation,
   ɵsize,
   ɵtoBool,
-  ɵWT_SKIP_VERSION_CHECK,
-  WtConfig,
-  WtTemplate,
-} from 'wiratheme/config';
-import { otpAccepts, otpCleanPaste, otpFill, otpTokens, otpValue, WtLocale } from 'wiratheme/core';
-import { WtInputText } from 'wiratheme/inputtext';
-import { WtInputOtpChangeEvent, WtInputOtpInputTemplateContext, WtInputOtpTemplateEvents } from './inputotp.types';
+  ɵWU_SKIP_VERSION_CHECK,
+  WuConfig,
+  WuTemplate,
+} from 'wiraui/config';
+import { otpAccepts, otpCleanPaste, otpFill, otpTokens, otpValue, WuLocale } from 'wiraui/core';
+import { WuInputText } from 'wiraui/inputtext';
+import { WuInputOtpChangeEvent, WuInputOtpInputTemplateContext, WuInputOtpTemplateEvents } from './inputotp.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 
 /**
- * One box per character of a one-time code: `<wt-inputOtp [(ngModel)]="code" [length]="6" [integerOnly]="true">`.
+ * One box per character of a one-time code: `<wu-inputOtp [(ngModel)]="code" [length]="6" [integerOnly]="true">`.
  * Typing moves to the next box, Backspace clears and goes back, ← / → (Home / End) move, and pasting (or the phone's
  * SMS code suggestion) fills every box at once. `mask` hides the characters. The value is the characters joined
- * (`'123456'`). Works with ngModel and reactive forms; a custom field goes in `<ng-template wtTemplate="input" let-token
+ * (`'123456'`). Works with ngModel and reactive forms; a custom field goes in `<ng-template wuTemplate="input" let-token
  * let-events="events" let-index="index">`.
  */
 @Component({
-  selector: 'wt-inputOtp, wt-inputotp, wt-input-otp',
+  selector: 'wu-inputOtp, wu-inputotp, wu-input-otp',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WtInputText],
+  imports: [NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet, WuInputText],
   templateUrl: './inputotp.component.html',
   styleUrls: ['./inputotp.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WtInputOtp), multi: true }],
-  host: { class: 'wt-inputotp-host' },
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WuInputOtp), multi: true }],
+  host: { class: 'wu-inputotp-host' },
 })
-export class WtInputOtp implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class WuInputOtp implements ControlValueAccessor, AfterViewInit, OnDestroy {
   /** Number of boxes. Default 4. */
   @Input() set length(v: unknown) {
     const n = Math.floor(Number(v));
@@ -91,17 +91,17 @@ export class WtInputOtp implements ControlValueAccessor, AfterViewInit, OnDestro
   @Input() ariaLabel?: string | null;
   @Input() ariaLabelledBy?: string | null;
 
-  @Output() readonly onChange = new EventEmitter<WtInputOtpChangeEvent>();
+  @Output() readonly onChange = new EventEmitter<WuInputOtpChangeEvent>();
   @Output() readonly onFocus = new EventEmitter<Event>();
   @Output() readonly onBlur = new EventEmitter<Event>();
 
-  @ContentChildren(WtTemplate) protected templates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('input', { descendants: false }) protected inputRef?: unknown;
 
   /** What each box holds. */
   tokens: string[] = [];
   indexes: number[] = [0, 1, 2, 3];
-  private contexts: WtInputOtpInputTemplateContext[] = [];
+  private contexts: WuInputOtpInputTemplateContext[] = [];
   private _length = 4;
   private _mask = false;
   private _integerOnly = false;
@@ -115,11 +115,11 @@ export class WtInputOtp implements ControlValueAccessor, AfterViewInit, OnDestro
   private onTouched: () => void = () => undefined;
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   ngAfterViewInit(): void {
@@ -132,7 +132,7 @@ export class WtInputOtp implements ControlValueAccessor, AfterViewInit, OnDestro
 
   // ---------- what the template reads ----------
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -159,10 +159,10 @@ export class WtInputOtp implements ControlValueAccessor, AfterViewInit, OnDestro
     return i;
   }
   /** The `input` template's context for box `i`; one object per box, so the field is not drawn again on each check. */
-  contextOf(i: number): WtInputOtpInputTemplateContext {
+  contextOf(i: number): WuInputOtpInputTemplateContext {
     let c = this.contexts[i];
     if (!c) {
-      const events: WtInputOtpTemplateEvents = {
+      const events: WuInputOtpTemplateEvents = {
         input: (e) => this.onInput(e, i),
         keydown: (e) => this.onKeydown(e as KeyboardEvent, i),
         focus: (e) => this.onInputFocus(e),

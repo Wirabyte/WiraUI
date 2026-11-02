@@ -13,14 +13,14 @@
   <ng-container *ngIf="startTemplate">
     <ng-container *ngTemplateOutlet="startTemplate; context: groupContext"></ng-container>
   </ng-container>
-  <div class="wt-metergroup-meters p-metergroup-meters">
+  <div class="wu-metergroup-meters p-metergroup-meters">
     <ng-container *ngFor="let item of parts.items; let i = index">
       <ng-container *ngIf="meterTemplate; else plainMeter">
         <ng-container *ngTemplateOutlet="meterTemplate; context: meterContext(i)"></ng-container>
       </ng-container>
       <ng-template #plainMeter>
         <span
-          class="wt-metergroup-meter p-metergroup-meter"
+          class="wu-metergroup-meter p-metergroup-meter"
           [style.background]="parts.colors[i]"
           [style.width]="orientation === 'horizontal' ? parts.sizes[i] : null"
           [style.height]="orientation === 'vertical' ? parts.sizes[i] : null"
@@ -42,22 +42,22 @@
   </ng-container>
   <ng-template #plainLegend>
     <ol [class]="labelClasses">
-      <li *ngFor="let item of parts.items; let i = index" class="wt-metergroup-label p-metergroup-label">
+      <li *ngFor="let item of parts.items; let i = index" class="wu-metergroup-label p-metergroup-label">
         <ng-container *ngIf="iconTemplate; else plainIcon">
           <ng-container *ngTemplateOutlet="iconTemplate; context: { $implicit: item, icon: item.icon }"></ng-container>
         </ng-container>
         <ng-template #plainIcon>
           <i
             *ngIf="item.icon; else marker"
-            [class]="'wt-metergroup-label-icon p-metergroup-label-icon ' + item.icon"
+            [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon"
             [style.color]="parts.colors[i]"
             aria-hidden="true"
           ></i>
           <ng-template #marker>
-            <span class="wt-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts.colors[i]"></span>
+            <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts.colors[i]"></span>
           </ng-template>
         </ng-template>
-        <span class="wt-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts.percentages[i] }}%)</span>
+        <span class="wu-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts.percentages[i] }}%)</span>
       </li>
     </ol>
   </ng-template>

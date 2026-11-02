@@ -10,12 +10,12 @@ export const CHART_DOC: ComponentDoc = {
   title: 'Chart',
   group: 'Charts',
   entry: 'chart',
-  standalone: 'WtChart',
-  module: 'WtChartModule',
-  selector: 'wt-chart',
+  standalone: 'WuChart',
+  module: 'WuChartModule',
+  selector: 'wu-chart',
   description: {
-    th: 'กราฟของ WiraTheme เอง วาดด้วย SVG ไม่ต้องติดตั้ง Chart.js: แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น (โค้ง ขั้นบันได) พื้นที่ไล่สี วงกลม โดนัท วงแหวนและเกจ วงกลมแบบรัศมี เรดาร์ จุด/ฟอง heatmap และ treemap ผสมกันได้ มีกราฟจิ๋ว คำอธิบายบนกราฟ แถบเครื่องมือซูม และกราฟที่ชี้ไปด้วยกัน ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ภาษาไทยไม่เพี้ยน) ตัวเลขแบบเงินบาท เปอร์เซ็นต์ หรือหน่วยไทย (พัน หมื่น แสน ล้าน) legend ซ่อนแสดงได้ tooltip ตามเมาส์หรือคีย์บอร์ด เคลื่อนไหวเมื่อข้อมูลเปลี่ยน และ export เป็น PNG / SVG / CSV ได้ · มีเฉพาะ wiratheme@3 (v1 / v2 ใช้ ChartJS)',
-    en: 'WiraTheme’s own chart, drawn in SVG with no Chart.js: bars (grouped, stacked, across), lines (smooth, steps), fading areas, pie, doughnut, radial bars and gauges, polar area, radar, scatter / bubble, heatmap and treemap, mixed as you like, plus sparklines, annotations, a zoom toolbar and charts that point together. Text is real text in the page’s font (Thai shapes properly), values read as baht, percents or Thai units (พัน, หมื่น, แสน, ล้าน), the legend hides and shows series, the tooltip follows the pointer or the keyboard, data changes animate, and charts export as PNG, SVG or CSV · wiratheme@3 only (v1 / v2: ChartJS).',
+    th: 'กราฟของ WiraUI เอง วาดด้วย SVG ไม่ต้องติดตั้ง Chart.js: แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น (โค้ง ขั้นบันได) พื้นที่ไล่สี วงกลม โดนัท วงแหวนและเกจ วงกลมแบบรัศมี เรดาร์ จุด/ฟอง heatmap และ treemap ผสมกันได้ มีกราฟจิ๋ว คำอธิบายบนกราฟ แถบเครื่องมือซูม และกราฟที่ชี้ไปด้วยกัน ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ภาษาไทยไม่เพี้ยน) ตัวเลขแบบเงินบาท เปอร์เซ็นต์ หรือหน่วยไทย (พัน หมื่น แสน ล้าน) legend ซ่อนแสดงได้ tooltip ตามเมาส์หรือคีย์บอร์ด เคลื่อนไหวเมื่อข้อมูลเปลี่ยน และ export เป็น PNG / SVG / CSV ได้ · มีเฉพาะ wiraui@3 (v1 / v2 ใช้ ChartJS)',
+    en: 'WiraUI’s own chart, drawn in SVG with no Chart.js: bars (grouped, stacked, across), lines (smooth, steps), fading areas, pie, doughnut, radial bars and gauges, polar area, radar, scatter / bubble, heatmap and treemap, mixed as you like, plus sparklines, annotations, a zoom toolbar and charts that point together. Text is real text in the page’s font (Thai shapes properly), values read as baht, percents or Thai units (พัน, หมื่น, แสน, ล้าน), the legend hides and shows series, the tooltip follows the pointer or the keyboard, data changes animate, and charts export as PNG, SVG or CSV · wiraui@3 only (v1 / v2: ChartJS).',
   },
   english: {
     'ม.ค.': 'Jan',
@@ -185,15 +185,15 @@ export const CHART_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtChartModule</code>) และ standalone (<code>WtChart</code>) · ไม่ต้องติดตั้งอะไรเพิ่ม · กราฟที่วาดด้วย Chart.js อยู่ที่ <code>wiratheme/chartjs</code> (<code>&lt;wt-chartjs&gt;</code>) ใช้คู่กันในแอปเดียวได้',
-        en: 'Works as an NgModule (<code>WtChartModule</code>) or standalone (<code>WtChart</code>) · nothing else to install · the Chart.js chart is <code>wiratheme/chartjs</code> (<code>&lt;wt-chartjs&gt;</code>); both can live in one app.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuChartModule</code>) และ standalone (<code>WuChart</code>) · ไม่ต้องติดตั้งอะไรเพิ่ม · กราฟที่วาดด้วย Chart.js อยู่ที่ <code>wiraui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>) ใช้คู่กันในแอปเดียวได้',
+        en: 'Works as an NgModule (<code>WuChartModule</code>) or standalone (<code>WuChart</code>) · nothing else to install · the Chart.js chart is <code>wiraui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>); both can live in one app.',
       },
     },
     basic: {
       title: 'Basic',
       text: {
-        th: '<code>[labels]</code> คือป้ายของแกน และ <code>[series]</code> คือชุดข้อมูล <code>{ name, data }</code> (ค่าละหนึ่งตัวต่อป้าย <code>null</code> คือไม่มีค่า) · สีมาจากธีม (<code>--wt-chart-1</code> คือสีหลักของ preset) จึงเข้ากับทุก preset และโหมดมืด · กว้างเต็มพื้นที่ สูง 320px (เปลี่ยนด้วย <code>height</code>) และวาดใหม่เมื่อขนาดเปลี่ยน · ชี้หรือแตะดู tooltip คลิก legend เพื่อซ่อน / แสดงชุดข้อมูล',
-        en: '<code>[labels]</code> are the axis labels and <code>[series]</code> the data sets, <code>{ name, data }</code> (one value per label, <code>null</code> for none) · colours come from the theme (<code>--wt-chart-1</code> is the preset’s primary), so every preset and dark mode fit · it fills the width at 320px high (<code>height</code> changes it) and redraws when the size changes · point or tap for the tooltip, click the legend to hide or show a series.',
+        th: '<code>[labels]</code> คือป้ายของแกน และ <code>[series]</code> คือชุดข้อมูล <code>{ name, data }</code> (ค่าละหนึ่งตัวต่อป้าย <code>null</code> คือไม่มีค่า) · สีมาจากธีม (<code>--wu-chart-1</code> คือสีหลักของ preset) จึงเข้ากับทุก preset และโหมดมืด · กว้างเต็มพื้นที่ สูง 320px (เปลี่ยนด้วย <code>height</code>) และวาดใหม่เมื่อขนาดเปลี่ยน · ชี้หรือแตะดู tooltip คลิก legend เพื่อซ่อน / แสดงชุดข้อมูล',
+        en: '<code>[labels]</code> are the axis labels and <code>[series]</code> the data sets, <code>{ name, data }</code> (one value per label, <code>null</code> for none) · colours come from the theme (<code>--wu-chart-1</code> is the preset’s primary), so every preset and dark mode fit · it fills the width at 320px high (<code>height</code> changes it) and redraws when the size changes · point or tap for the tooltip, click the legend to hide or show a series.',
       },
     },
     line: {
@@ -402,15 +402,15 @@ export const CHART_DOC: ComponentDoc = {
     chartjs: {
       title: { th: 'ย้ายจาก ChartJS', en: 'Moving from ChartJS' },
       text: {
-        th: '<code>[data]</code> แบบ Chart.js (<code>{ labels, datasets }</code>) ใช้ได้เลย: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (สีเดียวหรือสีละชิ้น), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · <code>[options]</code> ส่วนที่เข้าใจ: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · จึงเปลี่ยนแค่ tag จาก <code>wt-chartjs</code> (หรือ <code>p-chart</code> เดิม) เป็น <code>wt-chart</code> แล้วถอด chart.js ออกได้ · ถ้าต้องใช้ปลั๊กอินหรือกราฟแบบที่ไม่มีที่นี่ ใช้ <code>wt-chartjs</code> ต่อได้ในแอปเดียวกัน',
-        en: 'Chart.js-shaped <code>[data]</code> (<code>{ labels, datasets }</code>) works as it is: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (one colour or one per slice), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · the <code>[options]</code> it understands: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · so changing the tag from <code>wt-chartjs</code> (or the old <code>p-chart</code>) to <code>wt-chart</code> lets chart.js go · for plugins or chart kinds missing here, keep <code>wt-chartjs</code> in the same app.',
+        th: '<code>[data]</code> แบบ Chart.js (<code>{ labels, datasets }</code>) ใช้ได้เลย: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (สีเดียวหรือสีละชิ้น), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · <code>[options]</code> ส่วนที่เข้าใจ: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · จึงเปลี่ยนแค่ tag จาก <code>wu-chartjs</code> (หรือ <code>p-chart</code> เดิม) เป็น <code>wu-chart</code> แล้วถอด chart.js ออกได้ · ถ้าต้องใช้ปลั๊กอินหรือกราฟแบบที่ไม่มีที่นี่ ใช้ <code>wu-chartjs</code> ต่อได้ในแอปเดียวกัน',
+        en: 'Chart.js-shaped <code>[data]</code> (<code>{ labels, datasets }</code>) works as it is: <code>label</code>, <code>data</code>, <code>backgroundColor</code> / <code>borderColor</code> (one colour or one per slice), <code>type</code>, <code>yAxisID</code>, <code>stack</code>, <code>hidden</code>, <code>tension</code>, <code>fill</code>, <code>borderDash</code> · the <code>[options]</code> it understands: <code>indexAxis: \'y\'</code>, <code>scales.*.stacked</code>, <code>scales.y.min / max / beginAtZero</code>, <code>plugins.legend</code>, <code>plugins.title</code>, <code>cutout</code> · so changing the tag from <code>wu-chartjs</code> (or the old <code>p-chart</code>) to <code>wu-chart</code> lets chart.js go · for plugins or chart kinds missing here, keep <code>wu-chartjs</code> in the same app.',
       },
     },
     export: {
       title: { th: 'บันทึกเป็นรูป', en: 'Save as a picture' },
       text: {
-        th: '<code>#c="wtChart"</code> แล้ว <code>c.download(\'รายงาน\')</code> บันทึกเป็น PNG (<code>\'svg\'</code> เป็น SVG) · <code>c.toPNG(scale)</code> คืน data URL, <code>c.toSVG()</code> คืนข้อความ SVG ที่ใส่สีและฟอนต์ไว้ในตัว (แนบอีเมล ใส่รายงาน PDF) · รูปใช้ฟอนต์ที่ติดตั้งในเครื่อง ไม่ใช่ web font',
-        en: '<code>#c="wtChart"</code>, then <code>c.download(\'report\')</code> saves a PNG (<code>\'svg\'</code> for SVG) · <code>c.toPNG(scale)</code> returns a data URL and <code>c.toSVG()</code> SVG text with the colours and fonts written in (for e-mail, PDF reports) · pictures use fonts installed on the machine, not web fonts.',
+        th: '<code>#c="wuChart"</code> แล้ว <code>c.download(\'รายงาน\')</code> บันทึกเป็น PNG (<code>\'svg\'</code> เป็น SVG) · <code>c.toPNG(scale)</code> คืน data URL, <code>c.toSVG()</code> คืนข้อความ SVG ที่ใส่สีและฟอนต์ไว้ในตัว (แนบอีเมล ใส่รายงาน PDF) · รูปใช้ฟอนต์ที่ติดตั้งในเครื่อง ไม่ใช่ web font',
+        en: '<code>#c="wuChart"</code>, then <code>c.download(\'report\')</code> saves a PNG (<code>\'svg\'</code> for SVG) · <code>c.toPNG(scale)</code> returns a data URL and <code>c.toSVG()</code> SVG text with the colours and fonts written in (for e-mail, PDF reports) · pictures use fonts installed on the machine, not web fonts.',
       },
     },
     a11y: {
@@ -422,63 +422,63 @@ export const CHART_DOC: ComponentDoc = {
     },
   },
   code: {
-    import: `import { WtChart } from 'wiratheme/chart';`,
-    basic: `<wt-chart type="bar" [labels]="months" [series]="money" format="currency"></wt-chart>`,
-    line: `<wt-chart type="line" [labels]="months" [series]="visitors" [smooth]="true" format="compact"></wt-chart>
-<wt-chart type="area" [labels]="months" [series]="money" [stacked]="true" format="compact"></wt-chart>`,
-    bars: `<wt-chart type="bar" [labels]="grades" [series]="students" [stacked]="true" [showValues]="true"></wt-chart>
-<wt-chart type="bar" [labels]="channels" [series]="applicants" [horizontal]="true" [showValues]="true" height="260"></wt-chart>`,
-    mixed: `<wt-chart type="bar" [labels]="months" [series]="salesAndGrowth" format="compact" rightFormat="percent"
-  yTitle="ยอดขาย" y2Title="อัตราเติบโต"></wt-chart>`,
-    pie: `<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [showValues]="true" suffix=" คน"></wt-chart>
-<wt-chart type="pie" [labels]="channels" [series]="applicants" legend="bottom"></wt-chart>`,
-    radar: `<wt-chart type="radar" [labels]="skills" [series]="skillScores" [max]="5"></wt-chart>
-<wt-chart type="scatter" [series]="readingVsScore" xTitle="ชั่วโมงอ่านหนังสือ" yTitle="คะแนนสอบ"></wt-chart>`,
-    curves: `<wt-chart type="area" [labels]="months" [series]="money" format="compact"></wt-chart>
-<wt-chart type="line" [labels]="years" [series]="tuition" curve="step" format="currency"></wt-chart>`,
-    gauge: `<wt-chart type="radialBar" [labels]="['การเข้าเรียนวันนี้']" [series]="[{ data: [87] }]" [startAngle]="-90" [endAngle]="90"></wt-chart>
-<wt-chart type="radialBar" [labels]="['ส่งงาน', 'เข้าเรียน', 'กิจกรรม']" [series]="[{ data: [76, 92, 58] }]" legend="bottom"></wt-chart>`,
-    polar: `<wt-chart type="polarArea" [labels]="channels" [series]="applicants"></wt-chart>
-<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [startAngle]="-90" [endAngle]="90" legend="bottom"></wt-chart>`,
-    swap: `<wt-chart type="bar" [labels]="months" [series]="money" [swap]="true" format="compact" (typeChange)="kind = $event"></wt-chart>
-<wt-chart type="doughnut" [labels]="channels" [series]="applicants" [swap]="true"></wt-chart>`,
-    dynamic: `<wt-selectbutton [options]="kinds" optionLabel="label" optionValue="value" [(ngModel)]="kind"></wt-selectbutton>
-<wt-chart [type]="kind" [labels]="months" [series]="money" format="compact"></wt-chart>`,
-    stream: `<wt-chart type="stream" [labels]="months" [series]="clubs" variant="silhouette" [looks]="true"></wt-chart>`,
-    waterfall: `<wt-chart type="waterfall" [labels]="budgetSteps" [series]="budgetFlow" format="compact" variant="bars" [looks]="true"></wt-chart>`,
-    dumbbell: `<wt-chart type="dumbbell" [labels]="subjects" [series]="beforeAfter" variant="dots" [looks]="true" height="300"></wt-chart>`,
-    timeline: `<wt-chart type="timeline" [series]="project" variant="bars" [looks]="true" height="300"></wt-chart>`,
-    funnel: `<wt-chart type="funnel" [labels]="steps" [series]="admissions" variant="funnel" [looks]="true" height="320"></wt-chart>`,
-    boxplot: `<wt-chart type="boxplot" [labels]="classes" [series]="scores" variant="box" [looks]="true" yTitle="คะแนน"></wt-chart>`,
-    histogram: `<wt-chart type="histogram" [series]="heights" variant="bars" [looks]="true" xTitle="ส่วนสูง (ซม.)"></wt-chart>`,
-    sunburst: `<wt-chart type="sunburst" [series]="budget" variant="sunburst" [looks]="true" format="compact" height="360"></wt-chart>`,
-    unit: `<wt-chart type="unit" [labels]="travel" [series]="travelCounts" variant="waffle" [looks]="true" height="300"></wt-chart>`,
-    slope: `<wt-chart type="slope" [labels]="['2568', '2569']" [series]="yearScores" variant="lines" [looks]="true" height="320"></wt-chart>`,
-    heatmap: `<wt-chart type="heatmap" [labels]="days" [series]="library" variant="square" [looks]="true" height="260"></wt-chart>
-<wt-chart type="heatmap" [labels]="days" [series]="library" [colorRanges]="ranges" height="260"></wt-chart>`,
-    treemap: `<wt-chart type="treemap" [labels]="departments" [series]="budgets" format="compact" height="340"></wt-chart>`,
+    import: `import { WuChart } from 'wiraui/chart';`,
+    basic: `<wu-chart type="bar" [labels]="months" [series]="money" format="currency"></wu-chart>`,
+    line: `<wu-chart type="line" [labels]="months" [series]="visitors" [smooth]="true" format="compact"></wu-chart>
+<wu-chart type="area" [labels]="months" [series]="money" [stacked]="true" format="compact"></wu-chart>`,
+    bars: `<wu-chart type="bar" [labels]="grades" [series]="students" [stacked]="true" [showValues]="true"></wu-chart>
+<wu-chart type="bar" [labels]="channels" [series]="applicants" [horizontal]="true" [showValues]="true" height="260"></wu-chart>`,
+    mixed: `<wu-chart type="bar" [labels]="months" [series]="salesAndGrowth" format="compact" rightFormat="percent"
+  yTitle="ยอดขาย" y2Title="อัตราเติบโต"></wu-chart>`,
+    pie: `<wu-chart type="doughnut" [labels]="channels" [series]="applicants" [showValues]="true" suffix=" คน"></wu-chart>
+<wu-chart type="pie" [labels]="channels" [series]="applicants" legend="bottom"></wu-chart>`,
+    radar: `<wu-chart type="radar" [labels]="skills" [series]="skillScores" [max]="5"></wu-chart>
+<wu-chart type="scatter" [series]="readingVsScore" xTitle="ชั่วโมงอ่านหนังสือ" yTitle="คะแนนสอบ"></wu-chart>`,
+    curves: `<wu-chart type="area" [labels]="months" [series]="money" format="compact"></wu-chart>
+<wu-chart type="line" [labels]="years" [series]="tuition" curve="step" format="currency"></wu-chart>`,
+    gauge: `<wu-chart type="radialBar" [labels]="['การเข้าเรียนวันนี้']" [series]="[{ data: [87] }]" [startAngle]="-90" [endAngle]="90"></wu-chart>
+<wu-chart type="radialBar" [labels]="['ส่งงาน', 'เข้าเรียน', 'กิจกรรม']" [series]="[{ data: [76, 92, 58] }]" legend="bottom"></wu-chart>`,
+    polar: `<wu-chart type="polarArea" [labels]="channels" [series]="applicants"></wu-chart>
+<wu-chart type="doughnut" [labels]="channels" [series]="applicants" [startAngle]="-90" [endAngle]="90" legend="bottom"></wu-chart>`,
+    swap: `<wu-chart type="bar" [labels]="months" [series]="money" [swap]="true" format="compact" (typeChange)="kind = $event"></wu-chart>
+<wu-chart type="doughnut" [labels]="channels" [series]="applicants" [swap]="true"></wu-chart>`,
+    dynamic: `<wu-selectbutton [options]="kinds" optionLabel="label" optionValue="value" [(ngModel)]="kind"></wu-selectbutton>
+<wu-chart [type]="kind" [labels]="months" [series]="money" format="compact"></wu-chart>`,
+    stream: `<wu-chart type="stream" [labels]="months" [series]="clubs" variant="silhouette" [looks]="true"></wu-chart>`,
+    waterfall: `<wu-chart type="waterfall" [labels]="budgetSteps" [series]="budgetFlow" format="compact" variant="bars" [looks]="true"></wu-chart>`,
+    dumbbell: `<wu-chart type="dumbbell" [labels]="subjects" [series]="beforeAfter" variant="dots" [looks]="true" height="300"></wu-chart>`,
+    timeline: `<wu-chart type="timeline" [series]="project" variant="bars" [looks]="true" height="300"></wu-chart>`,
+    funnel: `<wu-chart type="funnel" [labels]="steps" [series]="admissions" variant="funnel" [looks]="true" height="320"></wu-chart>`,
+    boxplot: `<wu-chart type="boxplot" [labels]="classes" [series]="scores" variant="box" [looks]="true" yTitle="คะแนน"></wu-chart>`,
+    histogram: `<wu-chart type="histogram" [series]="heights" variant="bars" [looks]="true" xTitle="ส่วนสูง (ซม.)"></wu-chart>`,
+    sunburst: `<wu-chart type="sunburst" [series]="budget" variant="sunburst" [looks]="true" format="compact" height="360"></wu-chart>`,
+    unit: `<wu-chart type="unit" [labels]="travel" [series]="travelCounts" variant="waffle" [looks]="true" height="300"></wu-chart>`,
+    slope: `<wu-chart type="slope" [labels]="['2568', '2569']" [series]="yearScores" variant="lines" [looks]="true" height="320"></wu-chart>`,
+    heatmap: `<wu-chart type="heatmap" [labels]="days" [series]="library" variant="square" [looks]="true" height="260"></wu-chart>
+<wu-chart type="heatmap" [labels]="days" [series]="library" [colorRanges]="ranges" height="260"></wu-chart>`,
+    treemap: `<wu-chart type="treemap" [labels]="departments" [series]="budgets" format="compact" height="340"></wu-chart>`,
     sparkline: `<div class="kpis">
   <div class="kpi">
     <span>ผู้เข้าชม</span>
     <strong>30,400</strong>
-    <wt-chart type="area" [labels]="months" [series]="visitors.slice(0, 1)" [sparkline]="true"></wt-chart>
+    <wu-chart type="area" [labels]="months" [series]="visitors.slice(0, 1)" [sparkline]="true"></wu-chart>
   </div>
   <!-- … -->
 </div>`,
-    annotations: `<wt-chart type="line" [labels]="months" [series]="visitors.slice(0, 1)" [annotations]="notes" format="compact"></wt-chart>`,
-    toolbar: `<wt-chart
+    annotations: `<wu-chart type="line" [labels]="months" [series]="visitors.slice(0, 1)" [annotations]="notes" format="compact"></wu-chart>`,
+    toolbar: `<wu-chart
   type="area"
   [labels]="days30"
   [series]="daily"
   [toolbar]="true"
   fileName="visitors"
   (zoomChange)="zoomed = $event"
-></wt-chart>`,
-    sync: `<wt-chart group="school" type="line" [labels]="months" [series]="visitors.slice(0, 1)" height="200"></wt-chart>
-<wt-chart group="school" type="bar" [labels]="months" [series]="money" format="compact" height="200"></wt-chart>`,
-    format: `<wt-chart type="bar" [labels]="months" [series]="money" format="compact" font="Sarabun" [fontSize]="14"></wt-chart>
-<wt-chart type="line" [labels]="months" [series]="visitors" format="number" suffix=" คน" [decimals]="0"></wt-chart>`,
-    extras: `<wt-chart
+></wu-chart>`,
+    sync: `<wu-chart group="school" type="line" [labels]="months" [series]="visitors.slice(0, 1)" height="200"></wu-chart>
+<wu-chart group="school" type="bar" [labels]="months" [series]="money" format="compact" height="200"></wu-chart>`,
+    format: `<wu-chart type="bar" [labels]="months" [series]="money" format="compact" font="Sarabun" [fontSize]="14"></wu-chart>
+<wu-chart type="line" [labels]="months" [series]="visitors" format="number" suffix=" คน" [decimals]="0"></wu-chart>`,
+    extras: `<wu-chart
   type="line"
   title="รายรับรายจ่าย ภาคเรียนที่ 2/2569"
   subtitle="หน่วย: บาท"
@@ -487,57 +487,57 @@ export const CHART_DOC: ComponentDoc = {
   [referenceLines]="[{ value: 400000, label: 'งบประมาณ' }]"
   format="compact"
   yTitle="บาท"
-></wt-chart>`,
-    live: `<wt-button label="สุ่มข้อมูลใหม่" icon="wi wi-refresh" (onClick)="shuffle()"></wt-button>
-<wt-chart type="bar" [labels]="months" [series]="live" (pointClick)="clicked($event)"></wt-chart>
+></wu-chart>`,
+    live: `<wu-button label="สุ่มข้อมูลใหม่" icon="wi wi-refresh" (onClick)="shuffle()"></wu-button>
+<wu-chart type="bar" [labels]="months" [series]="live" (pointClick)="clicked($event)"></wu-chart>
 <p>คลิกล่าสุด: {{ lastClick }}</p>`,
-    chartjs: `<!-- เดิม: <wt-chartjs type="bar" [data]="data" [options]="options"> -->
-<wt-chart type="bar" [data]="data" [options]="options"></wt-chart>`,
-    export: `<wt-chart #c="wtChart" type="doughnut" [labels]="channels" [series]="applicants"></wt-chart>
-<wt-button label="ดาวน์โหลด PNG" icon="wi wi-download" (onClick)="c.download('applicants')"></wt-button>
-<wt-button label="ดาวน์โหลด SVG" severity="secondary" [outlined]="true" (onClick)="c.download('applicants', 'svg')"></wt-button>`,
+    chartjs: `<!-- เดิม: <wu-chartjs type="bar" [data]="data" [options]="options"> -->
+<wu-chart type="bar" [data]="data" [options]="options"></wu-chart>`,
+    export: `<wu-chart #c="wuChart" type="doughnut" [labels]="channels" [series]="applicants"></wu-chart>
+<wu-button label="ดาวน์โหลด PNG" icon="wi wi-download" (onClick)="c.download('applicants')"></wu-button>
+<wu-button label="ดาวน์โหลด SVG" severity="secondary" [outlined]="true" (onClick)="c.download('applicants', 'svg')"></wu-button>`,
   },
   ts: {
-    basic: `import { WtChartSeries } from 'wiratheme/chart';
+    basic: `import { WuChartSeries } from 'wiraui/chart';
 
 months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'];
-money: WtChartSeries[] = [
+money: WuChartSeries[] = [
   { name: 'รายรับ', data: [420000, 380000, 510000, 465000, 530000, 610000] },
   { name: 'รายจ่าย', data: [310000, 295000, 340000, 360000, 330000, 390000] },
 ];`,
-    line: `visitors: WtChartSeries[] = [
+    line: `visitors: WuChartSeries[] = [
   { name: 'ผู้เข้าชม', data: [12500, 18200, 15800, 24100, 21900, 30400] },
   { name: 'สมัครเรียน', data: [820, 1340, 1210, 2050, 1890, 2610], smooth: false, dashed: true },
 ];`,
     bars: `grades = ['ม.1', 'ม.2', 'ม.3'];
-students: WtChartSeries[] = [
+students: WuChartSeries[] = [
   { name: 'ชาย', data: [132, 120, 115] },
   { name: 'หญิง', data: [128, 135, 124] },
 ];
 channels = ['เพื่อน / ครอบครัว', 'โซเชียลมีเดีย', 'เว็บไซต์', 'ป้ายประกาศ', 'อื่น ๆ'];
-applicants: WtChartSeries[] = [{ name: 'ผู้สมัคร', data: [420, 365, 210, 95, 40] }];`,
-    mixed: `salesAndGrowth: WtChartSeries[] = [
+applicants: WuChartSeries[] = [{ name: 'ผู้สมัคร', data: [420, 365, 210, 95, 40] }];`,
+    mixed: `salesAndGrowth: WuChartSeries[] = [
   { name: 'ยอดขาย', data: [1200000, 1350000, 1280000, 1520000, 1610000, 1790000] },
   { name: 'อัตราเติบโต', type: 'line', axis: 'right', data: [0.04, 0.125, -0.052, 0.188, 0.059, 0.112] },
 ];`,
     radar: `skills = ['ฟัง', 'พูด', 'อ่าน', 'เขียน', 'คิดวิเคราะห์'];
-skillScores: WtChartSeries[] = [
+skillScores: WuChartSeries[] = [
   { name: 'ห้อง ม.1/1', data: [4.2, 3.6, 4.5, 3.1, 3.9] },
   { name: 'ค่าเฉลี่ยระดับชั้น', data: [3.8, 3.4, 3.9, 3.3, 3.5], dashed: true },
 ];
-readingVsScore: WtChartSeries[] = [
+readingVsScore: WuChartSeries[] = [
   { name: 'นักเรียน', data: [{ x: 2, y: 54 }, { x: 4, y: 61 }, { x: 5, y: 66, r: 9 } /* … */] },
 ];`,
-    live: `import { WtChartClickEvent, WtChartSeries } from 'wiratheme/chart';
+    live: `import { WuChartClickEvent, WuChartSeries } from 'wiraui/chart';
 
-live: WtChartSeries[] = [{ name: 'ผู้เข้าชม', data: this.random() }];
+live: WuChartSeries[] = [{ name: 'ผู้เข้าชม', data: this.random() }];
 lastClick = '-';
 
 shuffle(): void {
   this.live = [{ name: 'ผู้เข้าชม', data: this.random() }];   // a new array: the chart moves to it
 }
 
-clicked(e: WtChartClickEvent): void {
+clicked(e: WuChartClickEvent): void {
   this.lastClick = \`\${e.label}: \${e.value}\`;
 }
 
@@ -545,25 +545,25 @@ private random(): number[] {
   return this.months.map(() => Math.round(200 + Math.random() * 800));
 }`,
     curves: `years = ['2564', '2565', '2566', '2567', '2568', '2569'];
-tuition: WtChartSeries[] = [{ name: 'ค่าเทอม', data: [12000, 12000, 13500, 13500, 15000, 15000] }];`,
-    heatmap: `import { WtChartColorRange, WtChartSeries } from 'wiratheme/chart';
+tuition: WuChartSeries[] = [{ name: 'ค่าเทอม', data: [12000, 12000, 13500, 13500, 15000, 15000] }];`,
+    heatmap: `import { WuChartColorRange, WuChartSeries } from 'wiraui/chart';
 
 days = ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.'];
-library: WtChartSeries[] = [
+library: WuChartSeries[] = [
   { name: '08:00', data: [12, 18, 9, 22, 14] },
   { name: '10:00', data: [35, 41, 28, 39, 30] },
   { name: '12:00', data: [58, 64, 49, 61, 70] },
   { name: '14:00', data: [27, 33, 25, 38, 21] },
   { name: '16:00', data: [44, 19, 52, 17, 8] },
 ];
-ranges: WtChartColorRange[] = [
+ranges: WuChartColorRange[] = [
   { from: 0, to: 20, color: '#22c55e', name: 'ว่าง' },
   { from: 21, to: 45, color: '#f59e0b', name: 'ปานกลาง' },
   { from: 46, to: 100, color: '#ef4444', name: 'แน่น' },
 ];`,
-    dynamic: `import { WtChartType } from 'wiratheme/chart';
+    dynamic: `import { WuChartType } from 'wiraui/chart';
 
-kind: WtChartType = 'bar';
+kind: WuChartType = 'bar';
 kinds = [
   { label: 'แท่ง', value: 'bar' },
   { label: 'เส้น', value: 'line' },
@@ -571,7 +571,7 @@ kinds = [
   { label: 'สตรีม', value: 'stream' },
   { label: 'ตารางสี', value: 'heatmap' },
 ];`,
-    stream: `clubs: WtChartSeries[] = [
+    stream: `clubs: WuChartSeries[] = [
   { name: 'ชมรมดนตรี', data: [30, 42, 38, 55, 48, 62] },
   { name: 'ชมรมกีฬา', data: [45, 40, 52, 48, 60, 58] },
   { name: 'ชมรมศิลปะ', data: [20, 28, 35, 30, 26, 40] },
@@ -579,13 +579,13 @@ kinds = [
 ];`,
     waterfall: `budgetSteps = ['งบต้นปี', 'ค่าเทอม', 'เงินบริจาค', 'ค่าสาธารณูปโภค', 'ค่ากิจกรรม', 'ซ่อมอาคาร', 'คงเหลือ'];
 // A change per step; null draws the total there.
-budgetFlow: WtChartSeries[] = [{ data: [500000, 320000, 85000, -140000, -210000, -180000, null] }];`,
+budgetFlow: WuChartSeries[] = [{ data: [500000, 320000, 85000, -140000, -210000, -180000, null] }];`,
     dumbbell: `subjects = ['คณิตศาสตร์', 'วิทยาศาสตร์', 'ภาษาไทย', 'ภาษาอังกฤษ', 'สังคมศึกษา'];
-beforeAfter: WtChartSeries[] = [
+beforeAfter: WuChartSeries[] = [
   { name: 'ก่อนเรียน', data: [42, 48, 61, 39, 55] },
   { name: 'หลังเรียน', data: [68, 71, 66, 58, 52] },
 ];`,
-    timeline: `project: WtChartSeries[] = [
+    timeline: `project: WuChartSeries[] = [
   {
     name: 'โครงการ',
     data: [
@@ -598,15 +598,15 @@ beforeAfter: WtChartSeries[] = [
   },
 ];`,
     funnel: `steps = ['เข้าชมเว็บไซต์', 'ดูหลักสูตร', 'กรอกใบสมัคร', 'ส่งเอกสาร', 'ชำระเงิน'];
-admissions: WtChartSeries[] = [{ data: [12000, 6400, 2100, 1450, 980] }];`,
+admissions: WuChartSeries[] = [{ data: [12000, 6400, 2100, 1450, 980] }];`,
     boxplot: `classes = ['ม.4/1', 'ม.4/2', 'ม.4/3', 'ม.4/4'];
 // Raw scores per class: quartiles, whiskers and outliers are worked out.
-scores: WtChartSeries[] = [{ name: 'คะแนน', data: [[55, 62, 71, 48, /* … */], /* … */] }];`,
+scores: WuChartSeries[] = [{ name: 'คะแนน', data: [[55, 62, 71, 48, /* … */], /* … */] }];`,
     histogram: `// 200 raw values, counted into bins.
-heights: WtChartSeries[] = [{ name: 'ส่วนสูง', data: [158.2, 163.9, 151.4, /* … */] }];`,
-    sunburst: `import { WtChartNode, WtChartSeries } from 'wiratheme/chart';
+heights: WuChartSeries[] = [{ name: 'ส่วนสูง', data: [158.2, 163.9, 151.4, /* … */] }];`,
+    sunburst: `import { WuChartNode, WuChartSeries } from 'wiraui/chart';
 
-budgetTree: WtChartNode[] = [
+budgetTree: WuChartNode[] = [
   {
     name: 'วิชาการ',
     children: [
@@ -617,10 +617,10 @@ budgetTree: WtChartNode[] = [
   },
   // …
 ];
-budget: WtChartSeries[] = [{ name: 'งบประมาณ', data: this.budgetTree }];`,
+budget: WuChartSeries[] = [{ name: 'งบประมาณ', data: this.budgetTree }];`,
     unit: `travel = ['เดิน', 'จักรยาน', 'รถรับส่ง', 'รถผู้ปกครอง', 'รถสาธารณะ'];
-travelCounts: WtChartSeries[] = [{ name: 'การเดินทางมาโรงเรียน', data: [120, 85, 210, 340, 95] }];`,
-    slope: `yearScores: WtChartSeries[] = [
+travelCounts: WuChartSeries[] = [{ name: 'การเดินทางมาโรงเรียน', data: [120, 85, 210, 340, 95] }];`,
+    slope: `yearScores: WuChartSeries[] = [
   { name: 'คณิตศาสตร์', data: [52, 61] },
   { name: 'วิทยาศาสตร์', data: [58, 63] },
   { name: 'ภาษาไทย', data: [66, 64] },
@@ -628,17 +628,17 @@ travelCounts: WtChartSeries[] = [{ name: 'การเดินทางมา�
   { name: 'สังคมศึกษา', data: [60, 60] },
 ];`,
     treemap: `departments = ['บุคลากร', 'วิชาการ', 'อาคารสถานที่', 'กิจการนักเรียน', 'เทคโนโลยี', 'งบกลาง'];
-budgets: WtChartSeries[] = [{ name: 'งบประมาณ', data: [4800000, 3200000, 2100000, 1400000, 1100000, 900000] }];`,
-    annotations: `import { WtChartAnnotations } from 'wiratheme/chart';
+budgets: WuChartSeries[] = [{ name: 'งบประมาณ', data: [4800000, 3200000, 2100000, 1400000, 1100000, 900000] }];`,
+    annotations: `import { WuChartAnnotations } from 'wiraui/chart';
 
-notes: WtChartAnnotations = {
+notes: WuChartAnnotations = {
   y: [{ value: 20000, to: 26000, label: 'ช่วงเป้าหมาย', color: '#16a34a' }],
   x: [{ at: 'เม.ย.', to: 'พ.ค.', label: 'ปิดภาคเรียน' }],
   points: [{ at: 'มิ.ย.', value: 30400, label: 'สูงสุด' }],
 };`,
     toolbar: `days30 = Array.from({ length: 30 }, (_, i) => String(i + 1));
-daily: WtChartSeries[] = [{ name: 'ผู้เข้าชมรายวัน', data: [/* 30 values */] }];
-zoomed: WtChartZoomEvent | null = null;`,
+daily: WuChartSeries[] = [{ name: 'ผู้เข้าชมรายวัน', data: [/* 30 values */] }];
+zoomed: WuChartZoomEvent | null = null;`,
     chartjs: `data = {
   labels: ['ม.ค.', 'ก.พ.', 'มี.ค.'],
   datasets: [
@@ -650,7 +650,7 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
   },
   css: {
     sparkline: `.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1rem; }
-.kpi { display: grid; gap: 0.25rem; padding: 1rem; border: 1px solid var(--wt-border); border-radius: var(--wt-radius-lg); }
+.kpi { display: grid; gap: 0.25rem; padding: 1rem; border: 1px solid var(--wu-border); border-radius: var(--wu-radius-lg); }
 .kpi strong { font-size: 1.5rem; }`,
   },
   api: [
@@ -666,11 +666,11 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
           'Kind of chart'
         ),
         row('variant', 'string', undefined, 'ลักษณะของแต่ละแบบ (ดูในแต่ละหัวข้อ เช่น heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')', 'The look of a kind (see each section, e.g. heatmap \'hex\', funnel \'pyramid\', boxplot \'violin\')'),
-        row('swap', "boolean | WtChartType[]", undefined, '(Beta) ปุ่มสลับแบบกราฟ: true คือทุกแบบที่ข้อมูลแสดงได้', '(Beta) A type switcher: true offers every kind the data can be drawn as'),
+        row('swap', "boolean | WuChartType[]", undefined, '(Beta) ปุ่มสลับแบบกราฟ: true คือทุกแบบที่ข้อมูลแสดงได้', '(Beta) A type switcher: true offers every kind the data can be drawn as'),
         row('looks', BOOL, 'false', 'ปุ่มเลือกลักษณะของแบบที่มีหลายลักษณะ', 'A look picker for kinds with several looks'),
         row('bins', 'number', 'auto', 'จำนวนช่วงของฮิสโตแกรม', 'Histogram bins'),
         row('labels', 'string[]', undefined, 'ป้ายของแกน (ชิ้นของวงกลม)', 'Axis labels (pie slices)'),
-        row('series', 'WtChartSeries[]', undefined, '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }', '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }'),
+        row('series', 'WuChartSeries[]', undefined, '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }', '{ name, data, type?, color?, colors?, axis?, stack?, smooth?, dashed?, fill?, hidden? }'),
         row('data · options', 'Chart.js data · options', undefined, 'ข้อมูลแบบ Chart.js แทน labels / series', 'Chart.js-shaped data instead of labels / series'),
       ],
     },
@@ -720,10 +720,10 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
       title: 'Outputs',
       typeLabel: 'Event',
       rows: [
-        row('pointClick', 'WtChartClickEvent', undefined, '{ series, seriesName, index, label, value, originalEvent }', '{ series, seriesName, index, label, value, originalEvent }'),
-        row('seriesToggle', 'WtChartToggleEvent', undefined, '{ index, name, hidden } เมื่อ legend ซ่อน / แสดง', '{ index, name, hidden } when the legend hides / shows'),
-        row('zoomChange', 'WtChartZoomEvent | null', undefined, '{ from, to } ช่วงป้ายที่ซูม (null: ดูทั้งหมด)', '{ from, to } labels zoomed into (null: all)'),
-        row('typeChange', 'WtChartType', undefined, 'แบบที่เลือกจากปุ่มสลับแบบกราฟ', 'The kind picked in the type switcher'),
+        row('pointClick', 'WuChartClickEvent', undefined, '{ series, seriesName, index, label, value, originalEvent }', '{ series, seriesName, index, label, value, originalEvent }'),
+        row('seriesToggle', 'WuChartToggleEvent', undefined, '{ index, name, hidden } เมื่อ legend ซ่อน / แสดง', '{ index, name, hidden } when the legend hides / shows'),
+        row('zoomChange', 'WuChartZoomEvent | null', undefined, '{ from, to } ช่วงป้ายที่ซูม (null: ดูทั้งหมด)', '{ from, to } labels zoomed into (null: all)'),
+        row('typeChange', 'WuChartType', undefined, 'แบบที่เลือกจากปุ่มสลับแบบกราฟ', 'The kind picked in the type switcher'),
         row('variantChange', 'string', undefined, 'ลักษณะที่เลือกจากปุ่มเลือกลักษณะ', 'The look picked in the look picker'),
       ],
     },
@@ -731,7 +731,7 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
       id: 'api-methods',
       title: { th: 'เมธอด', en: 'Methods' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
-      note: { th: 'เรียกผ่าน #c="wtChart"', en: 'Call them through #c="wtChart".' },
+      note: { th: 'เรียกผ่าน #c="wuChart"', en: 'Call them through #c="wuChart".' },
       rows: [
         row("download(fileName = 'chart', 'png' | 'svg' | 'csv')", 'Promise<void>', undefined, 'บันทึกเป็นไฟล์', 'Save as a file'),
         row('toCSV()', 'string', undefined, 'ตัวเลขเป็น CSV แถวละป้าย คอลัมน์ละชุด', 'The numbers as CSV, a row per label and a column per series'),
@@ -742,20 +742,20 @@ options = { plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero
     },
   ],
   tokens: [
-    tok('--wt-chart-1 … --wt-chart-10', 'สีของชุดข้อมูลตามลำดับ (1 คือสีหลักของธีม)', 'Series colours in order (1 is the theme’s primary)'),
-    tok('--wt-chart-font-family · -font-size', 'ฟอนต์และขนาดของข้อความในกราฟ', 'Font and size of the chart’s text'),
-    tok('--wt-chart-text · -title-color · -title-size · -title-weight', 'สีข้อความ · หัวเรื่อง', 'Text colour · heading'),
-    tok('--wt-chart-grid · -axis · -crosshair', 'เส้นตาราง · เส้นศูนย์ · เส้นตามเมาส์', 'Grid · zero line · pointer guide'),
-    tok('--wt-chart-line-width · -area-opacity · -dot-fill', 'ความหนาของเส้น · ความทึบของพื้นที่ · สีในจุด', 'Line width · area opacity · dot fill'),
-    tok('--wt-chart-dim-opacity', 'ความจางของชุดอื่นเมื่อชี้ที่ legend', 'How faint other series get while one is pointed at'),
-    tok('--wt-chart-value-color · -value-inside-color · -slice-border', 'ค่าบนกราฟ · ค่าบนชิ้นวงกลม · ขอบชิ้น', 'Values · values on slices · slice edges'),
-    tok('--wt-chart-reference-color · -center-size · -legend-color', 'เส้นอ้างอิง · ข้อความกลางโดนัท · legend', 'Reference lines · doughnut middle · legend'),
-    tok('--wt-chart-tooltip-bg · -color · -border · -radius · -shadow · -padding', 'tooltip', 'Tooltip'),
-    tok('--wt-chart-gradient-from · -gradient-to', 'ความทึบบนสุดและล่างสุดของพื้นที่ไล่สี', 'Opacity at the top and bottom of a fading area'),
-    tok('--wt-chart-track', 'รางของ radial bar', 'Radial bar track'),
-    tok('--wt-chart-band-opacity · -mark-color', 'ความทึบของแถบคำอธิบาย · สีจุดที่มีป้าย', 'Annotation band opacity · marked point colour'),
-    tok('--wt-chart-selection · -toolbar-color', 'กรอบที่ลากเพื่อซูม · ปุ่มในแถบเครื่องมือ', 'Zoom selection · toolbar buttons'),
-    tok('--wt-chart-up · -down · -total · -muted', 'เพิ่มขึ้น · ลดลง · ยอดรวม (waterfall, ดัมเบล, ความชัน) · เส้นต่อและข้อความรอง', 'Up · down · totals (waterfall, dumbbell, slope) · joints and quiet text'),
-    tok('--wt-chart-gap', 'ระยะระหว่างหัวเรื่อง กราฟ และ legend', 'Gap between heading, chart and legend'),
+    tok('--wu-chart-1 … --wu-chart-10', 'สีของชุดข้อมูลตามลำดับ (1 คือสีหลักของธีม)', 'Series colours in order (1 is the theme’s primary)'),
+    tok('--wu-chart-font-family · -font-size', 'ฟอนต์และขนาดของข้อความในกราฟ', 'Font and size of the chart’s text'),
+    tok('--wu-chart-text · -title-color · -title-size · -title-weight', 'สีข้อความ · หัวเรื่อง', 'Text colour · heading'),
+    tok('--wu-chart-grid · -axis · -crosshair', 'เส้นตาราง · เส้นศูนย์ · เส้นตามเมาส์', 'Grid · zero line · pointer guide'),
+    tok('--wu-chart-line-width · -area-opacity · -dot-fill', 'ความหนาของเส้น · ความทึบของพื้นที่ · สีในจุด', 'Line width · area opacity · dot fill'),
+    tok('--wu-chart-dim-opacity', 'ความจางของชุดอื่นเมื่อชี้ที่ legend', 'How faint other series get while one is pointed at'),
+    tok('--wu-chart-value-color · -value-inside-color · -slice-border', 'ค่าบนกราฟ · ค่าบนชิ้นวงกลม · ขอบชิ้น', 'Values · values on slices · slice edges'),
+    tok('--wu-chart-reference-color · -center-size · -legend-color', 'เส้นอ้างอิง · ข้อความกลางโดนัท · legend', 'Reference lines · doughnut middle · legend'),
+    tok('--wu-chart-tooltip-bg · -color · -border · -radius · -shadow · -padding', 'tooltip', 'Tooltip'),
+    tok('--wu-chart-gradient-from · -gradient-to', 'ความทึบบนสุดและล่างสุดของพื้นที่ไล่สี', 'Opacity at the top and bottom of a fading area'),
+    tok('--wu-chart-track', 'รางของ radial bar', 'Radial bar track'),
+    tok('--wu-chart-band-opacity · -mark-color', 'ความทึบของแถบคำอธิบาย · สีจุดที่มีป้าย', 'Annotation band opacity · marked point colour'),
+    tok('--wu-chart-selection · -toolbar-color', 'กรอบที่ลากเพื่อซูม · ปุ่มในแถบเครื่องมือ', 'Zoom selection · toolbar buttons'),
+    tok('--wu-chart-up · -down · -total · -muted', 'เพิ่มขึ้น · ลดลง · ยอดรวม (waterfall, ดัมเบล, ความชัน) · เส้นต่อและข้อความรอง', 'Up · down · totals (waterfall, dumbbell, slope) · joints and quiet text'),
+    tok('--wu-chart-gap', 'ระยะระหว่างหัวเรื่อง กราฟ และ legend', 'Gap between heading, chart and legend'),
   ],
 };

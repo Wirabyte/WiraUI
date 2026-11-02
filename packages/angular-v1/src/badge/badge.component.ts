@@ -1,23 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject, Input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵseverity, ɵWT_SKIP_VERSION_CHECK } from 'wiratheme/config';
-import { WtBadgeSeverity, WtBadgeSize } from './badge.types';
+import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { WuBadgeSeverity, WuBadgeSize } from './badge.types';
 
-/** Count or status pill: `<wt-badge value="8" severity="danger">`. Without a value it is a dot. */
+/** Count or status pill: `<wu-badge value="8" severity="danger">`. Without a value it is a dot. */
 @Component({
-  selector: 'wt-badge',
+  selector: 'wu-badge',
   standalone: true,
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WtBadge {
+export class WuBadge {
   @Input() value?: string | number | null;
-  @Input() severity?: WtBadgeSeverity;
-  @Input() size?: WtBadgeSize;
+  @Input() severity?: WuBadgeSeverity;
+  @Input() size?: WuBadgeSize;
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
   get hasValue(): boolean {
@@ -39,12 +39,12 @@ export class WtBadge {
   }
   get baseClasses(): string {
     const sev = ɵseverity(this.severity);
-    const c = ['wt-badge', 'p-badge', 'p-component'];
-    if (sev !== 'primary') c.push('wt-badge-' + sev, 'p-badge-' + (sev === 'warn' ? 'warning' : sev));
-    if (this.size === 'small') c.push('wt-badge-sm', 'p-badge-sm');
-    if (this.size === 'large') c.push('wt-badge-lg', 'p-badge-lg');
-    if (this.size === 'xlarge') c.push('wt-badge-xl', 'p-badge-xl');
-    if (!this.hasValue) c.push('wt-badge-dot', 'p-badge-dot');
+    const c = ['wu-badge', 'p-badge', 'p-component'];
+    if (sev !== 'primary') c.push('wu-badge-' + sev, 'p-badge-' + (sev === 'warn' ? 'warning' : sev));
+    if (this.size === 'small') c.push('wu-badge-sm', 'p-badge-sm');
+    if (this.size === 'large') c.push('wu-badge-lg', 'p-badge-lg');
+    if (this.size === 'xlarge') c.push('wu-badge-xl', 'p-badge-xl');
+    if (!this.hasValue) c.push('wu-badge-dot', 'p-badge-dot');
     return c.join(' ');
   }
 }

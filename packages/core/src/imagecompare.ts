@@ -1,4 +1,4 @@
-/** Image compare (wt-imageCompare): where the divider sits, from a pointer or a key. Positions are % from the start edge. */
+/** Image compare (wu-imageCompare): where the divider sits, from a pointer or a key. Positions are % from the start edge. */
 import { knobSnap, rangeKeyValue } from './knob';
 
 /** A position in 0 … 100; anything unreadable is `fallback` (50, the middle). */

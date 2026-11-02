@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtChip } from './chip.component';
+import { WuChip } from './chip.component';
 
-/** For NgModule apps. Standalone apps can import `WtChip` directly. */
+/** For NgModule apps. Standalone apps can import `WuChip` directly. */
 @NgModule({
-  imports: [WtChip],
-  exports: [WtChip],
+  imports: [WuChip],
+  exports: [WuChip],
 })
-export class WtChipModule {}
+export class WuChipModule {}

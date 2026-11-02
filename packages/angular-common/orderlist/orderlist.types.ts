@@ -1,11 +1,11 @@
 /** `(onSelectionChange)`: the whole selection after the click or key. */
-export interface WtOrderListSelectionChangeEvent {
+export interface WuOrderListSelectionChangeEvent {
   originalEvent?: Event;
   value: unknown[];
 }
 
 /** `(onFilterEvent)`: the items the search leaves. */
-export interface WtOrderListFilterEvent {
+export interface WuOrderListFilterEvent {
   originalEvent?: Event;
   value: unknown[];
 }

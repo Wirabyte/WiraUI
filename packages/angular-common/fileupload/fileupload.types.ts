@@ -1,54 +1,54 @@
 /** `(onSelect)`: the files just added (`files`, only the ones that passed the checks) and all files now chosen. */
-export interface WtFileSelectEvent {
+export interface WuFileSelectEvent {
   originalEvent: Event;
   files: File[];
   currentFiles: File[];
 }
 
 /** `(uploadHandler)` with `[customUpload]="true"`: the app sends the files itself. */
-export interface WtFileUploadHandlerEvent {
+export interface WuFileUploadHandlerEvent {
   files: File[];
 }
 
-export interface WtFileRemoveEvent {
+export interface WuFileRemoveEvent {
   originalEvent: Event;
   file: File;
 }
 
 /** `(onUpload)`: the request finished with a 2xx status. */
-export interface WtFileUploadEvent {
+export interface WuFileUploadEvent {
   originalEvent: Event | XMLHttpRequest;
   files: File[];
 }
 
-export interface WtFileUploadErrorEvent {
+export interface WuFileUploadErrorEvent {
   xhr: XMLHttpRequest;
   files: File[];
 }
 
-export interface WtFileBeforeUploadEvent {
+export interface WuFileBeforeUploadEvent {
   formData: FormData;
 }
 
-export interface WtFileSendEvent {
+export interface WuFileSendEvent {
   xhr: XMLHttpRequest;
   formData: FormData;
 }
 
-export interface WtFileProgressEvent {
+export interface WuFileProgressEvent {
   originalEvent: ProgressEvent;
   progress: number;
 }
 
 /** `(onValidationFail)`: a file the component turned away, why, and the message it showed. */
-export interface WtFileValidationFailEvent {
+export interface WuFileValidationFailEvent {
   file: File | null;
   reason: 'type' | 'size' | 'limit';
   message: string;
 }
 
 /** Context of the `content` template: the chosen files and callbacks to act on them. */
-export interface WtFileUploadContentContext {
+export interface WuFileUploadContentContext {
   $implicit: File[];
   files: File[];
   uploadedFiles: File[];
@@ -61,4 +61,4 @@ export interface WtFileUploadContentContext {
   messages: string[];
 }
 
-export type WtFileUploadMode = 'advanced' | 'basic';
+export type WuFileUploadMode = 'advanced' | 'basic';

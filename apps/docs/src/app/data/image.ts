@@ -6,9 +6,9 @@ export const IMAGE_DOC: ComponentDoc = {
   title: 'Image',
   group: 'Media',
   entry: 'image',
-  standalone: 'WtImage',
-  module: 'WtImageModule',
-  selector: 'wt-image',
+  standalone: 'WuImage',
+  module: 'WuImageModule',
+  selector: 'wu-image',
   description: {
     th: 'รูปภาพที่กดขยายดูเต็มจอได้ ในหน้าต่างเต็มจอหมุนและย่อขยายได้ กด Esc หรือคลิกข้างรูปเพื่อปิด และใส่ไฟล์ใหญ่แยกสำหรับดูเต็มจอได้',
     en: 'A picture that opens full screen on demand, with rotate and zoom. Escape or a click beside the picture closes it, and the full-screen view can load a larger file.',
@@ -28,8 +28,8 @@ export const IMAGE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtImageModule</code> ซึ่ง export <code>WtTemplate</code> ให้ด้วย) และ standalone (<code>WtImage</code>)',
-        en: 'Works as an NgModule (<code>WtImageModule</code>, which also exports <code>WtTemplate</code>) or standalone (<code>WtImage</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuImageModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuImage</code>)',
+        en: 'Works as an NgModule (<code>WuImageModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuImage</code>).',
       },
     },
     basic: {
@@ -84,22 +84,22 @@ export const IMAGE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-image&gt;</code> เป็น <code>&lt;wt-image&gt;</code> input เดิมอย่าง <code>src</code>, <code>alt</code>, <code>width</code>, <code>preview</code>, <code>imageClass</code> และ <code>(onImageError)</code> ใช้ต่อได้ template <code>pTemplate="indicator"</code> / <code>"image"</code> / <code>"preview"</code> ใช้ได้ ส่วน <code>appendTo</code>, <code>showTransitionOptions</code> และ <code>hideTransitionOptions</code> รับไว้แต่ไม่มีผล',
-        en: 'Change <code>&lt;p-image&gt;</code> to <code>&lt;wt-image&gt;</code>. Existing inputs such as <code>src</code>, <code>alt</code>, <code>width</code>, <code>preview</code>, <code>imageClass</code> and <code>(onImageError)</code> keep working, and so do <code>pTemplate="indicator"</code> / <code>"image"</code> / <code>"preview"</code> templates. <code>appendTo</code>, <code>showTransitionOptions</code> and <code>hideTransitionOptions</code> are accepted and ignored.',
+        th: 'เปลี่ยน <code>&lt;p-image&gt;</code> เป็น <code>&lt;wu-image&gt;</code> input เดิมอย่าง <code>src</code>, <code>alt</code>, <code>width</code>, <code>preview</code>, <code>imageClass</code> และ <code>(onImageError)</code> ใช้ต่อได้ template <code>pTemplate="indicator"</code> / <code>"image"</code> / <code>"preview"</code> ใช้ได้ ส่วน <code>appendTo</code>, <code>showTransitionOptions</code> และ <code>hideTransitionOptions</code> รับไว้แต่ไม่มีผล',
+        en: 'Change <code>&lt;p-image&gt;</code> to <code>&lt;wu-image&gt;</code>. Existing inputs such as <code>src</code>, <code>alt</code>, <code>width</code>, <code>preview</code>, <code>imageClass</code> and <code>(onImageError)</code> keep working, and so do <code>pTemplate="indicator"</code> / <code>"image"</code> / <code>"preview"</code> templates. <code>appendTo</code>, <code>showTransitionOptions</code> and <code>hideTransitionOptions</code> are accepted and ignored.',
       },
     },
   },
   code: {
-    basic: `<wt-image src="samples/school-thumb.svg" alt="อาคารเรียนของโรงเรียน" width="320" height="200" loading="lazy"
-  imageClass="shadow-2" [imageStyle]="{ 'border-radius': '12px' }"></wt-image>`,
-    preview: `<wt-image src="samples/school-thumb.svg" alt="อาคารเรียนของโรงเรียน" width="320" [preview]="true"
-  (onShow)="logPreview('onShow')" (onHide)="logPreview('onHide')"></wt-image>`,
-    large: `<wt-image src="samples/school-thumb.svg" previewImageSrc="samples/school-large.svg" alt="อาคารเรียนของโรงเรียน"
-  width="240" [preview]="true"></wt-image>`,
+    basic: `<wu-image src="samples/school-thumb.svg" alt="อาคารเรียนของโรงเรียน" width="320" height="200" loading="lazy"
+  imageClass="shadow-2" [imageStyle]="{ 'border-radius': '12px' }"></wu-image>`,
+    preview: `<wu-image src="samples/school-thumb.svg" alt="อาคารเรียนของโรงเรียน" width="320" [preview]="true"
+  (onShow)="logPreview('onShow')" (onHide)="logPreview('onHide')"></wu-image>`,
+    large: `<wu-image src="samples/school-thumb.svg" previewImageSrc="samples/school-large.svg" alt="อาคารเรียนของโรงเรียน"
+  width="240" [preview]="true"></wu-image>`,
     srcset: `<!-- จอกว้างแสดง 480px จอแคบเต็มความกว้าง -->
-<wt-image src="samples/school-thumb.svg" srcSet="samples/school-thumb.svg 320w, samples/school-large.svg 1280w"
-  sizes="(min-width: 768px) 480px, 100vw" alt="อาคารเรียนของโรงเรียน" [preview]="true"></wt-image>`,
-    templates: `<wt-image src="samples/card-cover.svg" alt="ทะเลสาบยามเย็น" width="320" [preview]="true">
+<wu-image src="samples/school-thumb.svg" srcSet="samples/school-thumb.svg 320w, samples/school-large.svg 1280w"
+  sizes="(min-width: 768px) 480px, 100vw" alt="อาคารเรียนของโรงเรียน" [preview]="true"></wu-image>`,
+    templates: `<wu-image src="samples/card-cover.svg" alt="ทะเลสาบยามเย็น" width="320" [preview]="true">
   <ng-template #indicator>
     <span class="flex align-items-center gap-2"><i class="wi wi-search"></i> ดูภาพเต็ม</span>
   </ng-template>
@@ -107,12 +107,12 @@ export const IMAGE_DOC: ComponentDoc = {
   <ng-template #preview let-src let-imgClass="class" let-imgStyle="style" let-previewCallback="previewCallback">
     <img [src]="src" [class]="imgClass" [style]="imgStyle" alt="ทะเลสาบยามเย็น" (click)="previewCallback()" />
   </ng-template>
-</wt-image>`,
-    error: `<wt-image [preview]="true" (onImageError)="useStandIn()">
+</wu-image>`,
+    error: `<wu-image [preview]="true" (onImageError)="useStandIn()">
   <ng-template #image let-errorCallback="errorCallback">
     <img [src]="photoSrc" alt="รูปนักเรียน" width="160" height="160" (error)="errorCallback($event)" />
   </ng-template>
-</wt-image>`,
+</wu-image>`,
   },
   ts: {
     preview: `previewEvents: string[] = [];
@@ -158,8 +158,8 @@ useStandIn(): void {
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
       note: {
-        th: 'เขียนเป็น #preview, wtTemplate="preview" หรือ pTemplate="preview" ก็ได้',
-        en: 'Write them as #preview, wtTemplate="preview" or pTemplate="preview".',
+        th: 'เขียนเป็น #preview, wuTemplate="preview" หรือ pTemplate="preview" ก็ได้',
+        en: 'Write them as #preview, wuTemplate="preview" or pTemplate="preview".',
       },
       rows: [
         row('indicator', '—', undefined, 'เนื้อหาบนปุ่มเปิด (แทนไอคอนรูปตา)', 'Content of the open button (instead of the eye icon)'),
@@ -169,11 +169,11 @@ useStandIn(): void {
     },
   ],
   tokens: [
-    tok('--wt-image-indicator-bg', 'พื้นของปุ่มเปิดที่ทับรูป (และไอคอนมุมบนจอสัมผัส)', 'Background of the open button over the picture (and the corner icon on touch screens)'),
-    tok('--wt-image-indicator-color', 'สีไอคอนบนปุ่มเปิดและในหน้าต่างเต็มจอ', 'Icon colour on the open button and in the full-screen view'),
-    tok('--wt-image-mask-bg', 'พื้นหลังของหน้าต่างเต็มจอ', 'Background of the full-screen view'),
-    tok('--wt-image-action-bg', 'พื้นของปุ่มหมุน ย่อ ขยาย และปิด', 'Background of the rotate, zoom and close buttons'),
-    tok('--wt-image-action-hover-bg', 'พื้นของปุ่มเหล่านั้นเมื่อชี้', 'Those buttons on hover'),
-    tok('--wt-transition', 'ความเร็วที่ปุ่มเปิดค่อย ๆ ปรากฏ', 'How fast the open button fades in'),
+    tok('--wu-image-indicator-bg', 'พื้นของปุ่มเปิดที่ทับรูป (และไอคอนมุมบนจอสัมผัส)', 'Background of the open button over the picture (and the corner icon on touch screens)'),
+    tok('--wu-image-indicator-color', 'สีไอคอนบนปุ่มเปิดและในหน้าต่างเต็มจอ', 'Icon colour on the open button and in the full-screen view'),
+    tok('--wu-image-mask-bg', 'พื้นหลังของหน้าต่างเต็มจอ', 'Background of the full-screen view'),
+    tok('--wu-image-action-bg', 'พื้นของปุ่มหมุน ย่อ ขยาย และปิด', 'Background of the rotate, zoom and close buttons'),
+    tok('--wu-image-action-hover-bg', 'พื้นของปุ่มเหล่านั้นเมื่อชี้', 'Those buttons on hover'),
+    tok('--wu-transition', 'ความเร็วที่ปุ่มเปิดค่อย ๆ ปรากฏ', 'How fast the open button fades in'),
   ],
 };

@@ -1,15 +1,15 @@
 import { Directive } from '@angular/core';
 
-/** `<wt-header>` inside a card: projected into the card's top area, as before. */
+/** `<wu-header>` inside a card: projected into the card's top area, as before. */
 @Directive({
-  selector: 'wt-header',
+  selector: 'wu-header',
   standalone: true,
 })
-export class WtHeader {}
+export class WuHeader {}
 
-/** `<wt-footer>` inside a card: projected into the card's footer, as before. (Dialogs read it too.) */
+/** `<wu-footer>` inside a card: projected into the card's footer, as before. (Dialogs read it too.) */
 @Directive({
-  selector: 'wt-footer',
+  selector: 'wu-footer',
   standalone: true,
 })
-export class WtFooter {}
+export class WuFooter {}

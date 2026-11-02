@@ -14,15 +14,15 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWT_SKIP_VERSION_CHECK, WtConfig, ɵWtPopup, WtTemplate } from 'wiratheme/config';
-import { WtLocale } from 'wiratheme/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuPopup, WuTemplate } from 'wiraui/config';
+import { WuLocale } from 'wiraui/core';
 
 /**
- * Shared logic of wt-popover (v1 and v2/v3 templates): a panel with an arrow under (or over) whatever opened it.
+ * Shared logic of wu-popover (v1 and v2/v3 templates): a panel with an arrow under (or over) whatever opened it.
  * `#op` + `(click)="op.toggle($event)"`, as existing templates do.
  */
 @Directive()
-export abstract class ɵWtPopoverBase implements OnDestroy {
+export abstract class ɵWuPopoverBase implements OnDestroy {
   /** A click outside closes it. Default true. */
   @Input() set dismissable(v: unknown) { this._dismissable = v === undefined || ɵtoBool(v); }
   /** An × in the corner. */
@@ -43,7 +43,7 @@ export abstract class ɵWtPopoverBase implements OnDestroy {
   @Output() readonly onShow = new EventEmitter<void>();
   @Output() readonly onHide = new EventEmitter<void>();
 
-  @ContentChildren(WtTemplate) protected slotTemplates?: QueryList<WtTemplate>;
+  @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
   @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
   /** A `content` template (`pTemplate="content"` / `#content`), with `let-closeCallback="closeCallback"`. */
   get contentTemplate(): TemplateRef<unknown> | null {
@@ -59,17 +59,17 @@ export abstract class ɵWtPopoverBase implements OnDestroy {
   private _showCloseIcon = false;
   private _focusOnShow = true;
   private target: HTMLElement | null = null;
-  private popup: ɵWtPopup | null = null;
+  private popup: ɵWuPopup | null = null;
   protected readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WtConfig);
+  private readonly config = inject(WuConfig);
   private readonly doc = inject(DOCUMENT);
   private readonly i18n = ɵrefreshOnTranslation();
 
   constructor() {
-    ɵassertSupportedAngular(inject(ɵWT_SKIP_VERSION_CHECK, { optional: true }));
+    ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
-  get t(): WtLocale {
+  get t(): WuLocale {
     return this.config.translation;
   }
 
@@ -132,11 +132,11 @@ export abstract class ɵWtPopoverBase implements OnDestroy {
   private attach(): void {
     const panel = this.panelRef?.nativeElement;
     if (!panel || !this.target) return;
-    this.popup = new ɵWtPopup(this.target, panel, {
+    this.popup = new ɵWuPopup(this.target, panel, {
       sheet: false,
       gap: 10,
-      sheetClass: 'wt-popover-sheet',
-      modalClass: 'wt-popover-modal',
+      sheetClass: 'wu-popover-sheet',
+      modalClass: 'wu-popover-modal',
       onOutside: () => {
         if (this._dismissable) this.hide();
       },
@@ -147,7 +147,7 @@ export abstract class ɵWtPopoverBase implements OnDestroy {
       },
       onPosition: (popup, anchor) => {
         const flipped = popup.placement === 'above';
-        panel.classList.toggle('wt-popover-flipped', flipped);
+        panel.classList.toggle('wu-popover-flipped', flipped);
         panel.classList.toggle('p-popover-flipped', flipped);
         panel.classList.toggle('p-overlaypanel-flipped', flipped);
         // The arrow points at the middle of the anchor, wherever the panel was pushed to fit.

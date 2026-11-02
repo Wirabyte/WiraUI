@@ -1,6 +1,6 @@
 {
-  "name": "WiraTheme UI Kit",
-  "id": "wiratheme-ui-kit",
+  "name": "WiraUI UI Kit",
+  "id": "wiraui-ui-kit",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",

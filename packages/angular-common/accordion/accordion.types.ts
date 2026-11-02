@@ -1,11 +1,11 @@
-export interface WtAccordionTabEvent {
+export interface WuAccordionTabEvent {
   index: number;
   /** Panels by value: the panel's value. */
   value?: unknown;
 }
 
 /**
- * The `gap` input of wt-accordion as a CSS length: `null` keeps the theme's look; `true` / `''` is 0.75rem; a number is
+ * The `gap` input of wu-accordion as a CSS length: `null` keeps the theme's look; `true` / `''` is 0.75rem; a number is
  * px; `false` / `0` joins the panels.
  */
 export function ɵaccordionGap(v: unknown): string | null {

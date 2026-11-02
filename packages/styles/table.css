@@ -1,265 +1,265 @@
-/* wt-table. Shared by wiratheme v1, v2 and v3. The rows are the app's own markup (header / body templates); these
+/* wu-table. Shared by wiraui v1, v2 and v3. The rows are the app's own markup (header / body templates); these
    rules style any <th> / <td> inside. Narrow screens scroll sideways (`responsiveLayout="scroll"`) or turn rows into
    cards (`"stack"`, with `<span class="p-column-title">` labels in the cells). */
-@layer wiratheme.components {
-  wt-table,
-  wt-datatable {
+@layer wiraui.components {
+  wu-table,
+  wu-datatable {
     display: block;
     min-width: 0;
   }
-  .wt-table {
+  .wu-table {
     position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
-    color: var(--wt-text);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
-    line-height: var(--wt-line-height);
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
   }
-  .wt-table-flex {
+  .wu-table-flex {
     height: 100%;
   }
-  .wt-table-header {
-    padding: var(--wt-table-header-padding);
-    border: 1px solid var(--wt-table-border-color);
-    border-width: var(--wt-table-header-border-width);
-    background: var(--wt-table-header-bg);
-    color: var(--wt-text);
-    font-weight: var(--wt-table-header-weight);
+  .wu-table-header {
+    padding: var(--wu-table-header-padding);
+    border: 1px solid var(--wu-table-border-color);
+    border-width: var(--wu-table-header-border-width);
+    background: var(--wu-table-header-bg);
+    color: var(--wu-text);
+    font-weight: var(--wu-table-header-weight);
   }
-  .wt-table-footer {
-    padding: var(--wt-table-header-padding);
-    border: 1px solid var(--wt-table-border-color);
+  .wu-table-footer {
+    padding: var(--wu-table-header-padding);
+    border: 1px solid var(--wu-table-border-color);
     border-width: 0 0 1px;
-    background: var(--wt-table-header-bg);
-    font-weight: var(--wt-table-header-weight);
+    background: var(--wu-table-header-bg);
+    font-weight: var(--wu-table-header-weight);
   }
-  .wt-table-wrapper {
+  .wu-table-wrapper {
     position: relative;
     min-width: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .wt-table-scrollable .wt-table-wrapper {
+  .wu-table-scrollable .wu-table-wrapper {
     overflow: auto;
     overscroll-behavior: contain;
   }
-  .wt-table-flex .wt-table-wrapper {
+  .wu-table-flex .wu-table-wrapper {
     flex: 1 1 auto;
     min-height: 0;
   }
-  .wt-table-table {
+  .wu-table-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
   }
 
   /* ---------- cells ---------- */
-  .wt-table-thead > tr > th {
-    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
-    border: 1px solid var(--wt-table-border-color);
+  .wu-table-thead > tr > th {
+    padding: var(--wu-table-cell-padding-y) var(--wu-table-cell-padding-x);
+    border: 1px solid var(--wu-table-border-color);
     border-width: 0 0 1px;
-    background: var(--wt-table-head-bg);
-    color: var(--wt-table-head-color);
-    font-weight: var(--wt-table-head-weight);
+    background: var(--wu-table-head-bg);
+    color: var(--wu-table-head-color);
+    font-weight: var(--wu-table-head-weight);
     text-align: start;
     vertical-align: middle;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-table-scrollable .wt-table-thead > tr > th {
+  .wu-table-scrollable .wu-table-thead > tr > th {
     position: sticky;
     top: 0;
     z-index: 1;
   }
-  .wt-table-tbody > tr {
-    height: var(--wt-table-row-height);
-    background: var(--wt-table-row-bg);
-    color: var(--wt-text);
-    transition: background-color var(--wt-transition);
+  .wu-table-tbody > tr {
+    height: var(--wu-table-row-height);
+    background: var(--wu-table-row-bg);
+    color: var(--wu-text);
+    transition: background-color var(--wu-transition);
   }
-  .wt-table-tbody > tr > td {
-    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
-    border: 1px solid var(--wt-table-border-color);
+  .wu-table-tbody > tr > td {
+    padding: var(--wu-table-cell-padding-y) var(--wu-table-cell-padding-x);
+    border: 1px solid var(--wu-table-border-color);
     border-width: 0 0 1px;
     text-align: start;
     vertical-align: middle;
   }
-  .wt-table-tfoot > tr > td,
-  .wt-table-tfoot > tr > th {
-    padding: var(--wt-table-cell-padding-y) var(--wt-table-cell-padding-x);
-    border: 1px solid var(--wt-table-border-color);
+  .wu-table-tfoot > tr > td,
+  .wu-table-tfoot > tr > th {
+    padding: var(--wu-table-cell-padding-y) var(--wu-table-cell-padding-x);
+    border: 1px solid var(--wu-table-border-color);
     border-width: 0 0 1px;
-    background: var(--wt-table-head-bg);
-    color: var(--wt-table-head-color);
-    font-weight: var(--wt-table-head-weight);
+    background: var(--wu-table-head-bg);
+    color: var(--wu-table-head-color);
+    font-weight: var(--wu-table-head-weight);
   }
   /* Striped: per table (stripedRows, p-datatable-striped), or for every table from the theme (table-stripe-bg).
      Off by default: even rows then have the plain row colour. */
-  .wt-table-tbody > tr:nth-child(even) {
-    background: var(--wt-table-stripe-bg, var(--wt-table-row-bg));
+  .wu-table-tbody > tr:nth-child(even) {
+    background: var(--wu-table-stripe-bg, var(--wu-table-row-bg));
   }
-  .wt-table-striped .wt-table-tbody > tr:nth-child(even) {
-    background: var(--wt-table-row-striped-bg);
+  .wu-table-striped .wu-table-tbody > tr:nth-child(even) {
+    background: var(--wu-table-row-striped-bg);
   }
-  .wt-table-hoverable .wt-table-tbody > tr:not(.wt-table-empty-row):hover {
-    background: var(--wt-table-row-hover-bg);
+  .wu-table-hoverable .wu-table-tbody > tr:not(.wu-table-empty-row):hover {
+    background: var(--wu-table-row-hover-bg);
   }
   /* The row the context menu is open for. */
-  .wt-table-tbody > tr.wt-row-contextmenu {
-    outline: 2px solid var(--wt-field-focus-border);
+  .wu-table-tbody > tr.wu-row-contextmenu {
+    outline: 2px solid var(--wu-field-focus-border);
     outline-offset: -2px;
   }
-  .wt-table-tbody > tr.wt-row-selected,
-  .wt-table-hoverable .wt-table-tbody > tr.wt-row-selected:hover {
-    background: var(--wt-table-row-selected-bg);
-    color: var(--wt-table-row-selected-color);
+  .wu-table-tbody > tr.wu-row-selected,
+  .wu-table-hoverable .wu-table-tbody > tr.wu-row-selected:hover {
+    background: var(--wu-table-row-selected-bg);
+    color: var(--wu-table-row-selected-color);
   }
-  .wt-selectable-row {
+  .wu-selectable-row {
     cursor: pointer;
   }
-  .wt-selectable-row:focus-visible {
-    outline: 2px solid var(--wt-primary-color);
+  .wu-selectable-row:focus-visible {
+    outline: 2px solid var(--wu-primary-color);
     outline-offset: -2px;
   }
-  .wt-table-gridlines .wt-table-header {
+  .wu-table-gridlines .wu-table-header {
     border-width: 1px;
   }
-  .wt-table-gridlines .wt-table-thead > tr > th,
-  .wt-table-gridlines .wt-table-tbody > tr > td,
-  .wt-table-gridlines .wt-table-tfoot > tr > td,
-  .wt-table-gridlines .wt-table-tfoot > tr > th {
+  .wu-table-gridlines .wu-table-thead > tr > th,
+  .wu-table-gridlines .wu-table-tbody > tr > td,
+  .wu-table-gridlines .wu-table-tfoot > tr > td,
+  .wu-table-gridlines .wu-table-tfoot > tr > th {
     border-width: 0 1px 1px 0;
   }
-  .wt-table-gridlines .wt-table-thead > tr > th:first-child,
-  .wt-table-gridlines .wt-table-tbody > tr > td:first-child,
-  .wt-table-gridlines .wt-table-tfoot > tr > :first-child {
+  .wu-table-gridlines .wu-table-thead > tr > th:first-child,
+  .wu-table-gridlines .wu-table-tbody > tr > td:first-child,
+  .wu-table-gridlines .wu-table-tfoot > tr > :first-child {
     border-left-width: 1px;
   }
-  .wt-table-gridlines .wt-table-thead > tr:first-child > th {
+  .wu-table-gridlines .wu-table-thead > tr:first-child > th {
     border-top-width: 1px;
   }
-  .wt-table-sm .wt-table-thead > tr > th,
-  .wt-table-sm .wt-table-tbody > tr > td,
-  .wt-table-sm .wt-table-tfoot > tr > * {
-    padding: calc(var(--wt-table-cell-padding-y) * 0.5) calc(var(--wt-table-cell-padding-x) * 0.5);
+  .wu-table-sm .wu-table-thead > tr > th,
+  .wu-table-sm .wu-table-tbody > tr > td,
+  .wu-table-sm .wu-table-tfoot > tr > * {
+    padding: calc(var(--wu-table-cell-padding-y) * 0.5) calc(var(--wu-table-cell-padding-x) * 0.5);
   }
-  .wt-table-lg .wt-table-thead > tr > th,
-  .wt-table-lg .wt-table-tbody > tr > td,
-  .wt-table-lg .wt-table-tfoot > tr > * {
-    padding: calc(var(--wt-table-cell-padding-y) * 1.25) calc(var(--wt-table-cell-padding-x) * 1.25);
+  .wu-table-lg .wu-table-thead > tr > th,
+  .wu-table-lg .wu-table-tbody > tr > td,
+  .wu-table-lg .wu-table-tfoot > tr > * {
+    padding: calc(var(--wu-table-cell-padding-y) * 1.25) calc(var(--wu-table-cell-padding-x) * 1.25);
   }
-  .wt-table-empty {
-    color: var(--wt-text-muted);
+  .wu-table-empty {
+    color: var(--wu-text-muted);
     text-align: center !important;
   }
 
   /* ---------- sorting ---------- */
-  .wt-sortable-column {
+  .wu-sortable-column {
     cursor: pointer;
     user-select: none;
   }
-  .wt-sortable-column:not(.wt-sorted):hover {
-    background: var(--wt-table-head-hover-bg);
+  .wu-sortable-column:not(.wu-sorted):hover {
+    background: var(--wu-table-head-hover-bg);
   }
-  .wt-sortable-column.wt-sorted {
-    background: var(--wt-table-sorted-bg);
-    color: var(--wt-table-sorted-color);
+  .wu-sortable-column.wu-sorted {
+    background: var(--wu-table-sorted-bg);
+    color: var(--wu-table-sorted-color);
   }
-  .wt-sortable-column:focus-visible {
-    outline: 2px solid var(--wt-primary-color);
+  .wu-sortable-column:focus-visible {
+    outline: 2px solid var(--wu-primary-color);
     outline-offset: -2px;
   }
-  .wt-sorticon {
+  .wu-sorticon {
     display: inline-flex;
     align-items: center;
     gap: 0.125rem;
     margin-left: 0.375rem;
     vertical-align: middle;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
   }
-  .wt-sorticon-svg {
+  .wu-sorticon-svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  .wt-sorticon-asc,
-  .wt-sorticon-desc {
-    color: var(--wt-table-sorted-color);
+  .wu-sorticon-asc,
+  .wu-sorticon-desc {
+    color: var(--wu-table-sorted-color);
   }
-  .wt-sorticon-asc .wt-sorticon-down,
-  .wt-sorticon-desc .wt-sorticon-up {
+  .wu-sorticon-asc .wu-sorticon-down,
+  .wu-sorticon-desc .wu-sorticon-up {
     opacity: 0.25;
   }
-  .wt-sorticon-badge {
+  .wu-sorticon-badge {
     display: inline-grid;
     place-items: center;
     min-width: 1rem;
     height: 1rem;
     padding: 0 0.25rem;
     border-radius: 999px;
-    background: var(--wt-table-sorted-color);
-    color: var(--wt-primary-contrast);
+    background: var(--wu-table-sorted-color);
+    color: var(--wu-primary-contrast);
     font-size: 0.6875rem;
     font-weight: 700;
     line-height: 1;
   }
-  .wt-sorticon-badge[hidden] {
+  .wu-sorticon-badge[hidden] {
     display: none;
   }
 
   /* ---------- checkboxes ---------- */
-  .wt-table-checkbox {
+  .wu-table-checkbox {
     display: inline-flex;
     vertical-align: middle;
   }
 
   /* ---------- loading ---------- */
-  .wt-table-mask {
+  .wu-table-mask {
     position: absolute;
     inset: 0;
     z-index: 2;
     display: grid;
     place-items: center;
-    background: color-mix(in srgb, var(--wt-card-bg) 60%, transparent);
+    background: color-mix(in srgb, var(--wu-card-bg) 60%, transparent);
   }
-  .wt-table-spinner {
+  .wu-table-spinner {
     width: 2rem;
     height: 2rem;
-    border: 3px solid var(--wt-primary-color);
+    border: 3px solid var(--wu-primary-color);
     border-right-color: transparent;
     border-radius: 50%;
-    animation: wt-table-spin 0.8s linear infinite;
+    animation: wu-table-spin 0.8s linear infinite;
   }
-  .wt-table-loading-icon {
+  .wu-table-loading-icon {
     font-size: 2rem;
-    color: var(--wt-primary-color);
+    color: var(--wu-primary-color);
   }
-  @keyframes wt-table-spin {
+  @keyframes wu-table-spin {
     to {
       transform: rotate(360deg);
     }
   }
-  .wt-table-paginator .wt-paginator {
+  .wu-table-paginator .wu-paginator {
     border-width: 0 0 1px;
   }
 
   /* ---------- stack layout ---------- */
-  .wt-table .p-column-title {
+  .wu-table .p-column-title {
     display: none;
   }
-  .wt-table-stacked .wt-table-thead > tr > th,
-  .wt-table-stacked .wt-table-tfoot > tr > * {
+  .wu-table-stacked .wu-table-thead > tr > th,
+  .wu-table-stacked .wu-table-tfoot > tr > * {
     display: none;
   }
-  .wt-table-stacked .wt-table-tbody > tr {
+  .wu-table-stacked .wu-table-tbody > tr {
     display: block;
     /* The row height token is for table rows; a card is as tall as its cells. */
     height: auto;
-    border-bottom: 1px solid var(--wt-table-border-color);
+    border-bottom: 1px solid var(--wu-table-border-color);
   }
-  .wt-table-stacked .wt-table-tbody > tr > td {
+  .wu-table-stacked .wu-table-tbody > tr > td {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -268,92 +268,92 @@
     border: 0 !important;
     text-align: end;
   }
-  .wt-table-stacked .wt-table-tbody > tr > td > .p-column-title {
+  .wu-table-stacked .wu-table-tbody > tr > td > .p-column-title {
     display: inline-block;
     flex: none;
     min-width: 40%;
-    color: var(--wt-text-muted);
-    font-weight: var(--wt-table-head-weight);
+    color: var(--wu-text-muted);
+    font-weight: var(--wu-table-head-weight);
     text-align: start;
   }
-  .wt-table-stacked .wt-table-tbody > tr.wt-table-empty-row > td {
+  .wu-table-stacked .wu-table-tbody > tr.wu-table-empty-row > td {
     justify-content: center;
   }
 
   /* Frozen columns stay put while the table scrolls sideways. Their cells repaint the row's colour over an opaque
      card so scrolled cells never show through. */
-  .wt-table-thead > tr > .wt-frozen-column,
-  .wt-table-tbody > tr > .wt-frozen-column,
-  .wt-table-tfoot > tr > .wt-frozen-column {
+  .wu-table-thead > tr > .wu-frozen-column,
+  .wu-table-tbody > tr > .wu-frozen-column,
+  .wu-table-tfoot > tr > .wu-frozen-column {
     position: sticky;
     z-index: 1;
   }
-  .wt-table-thead > tr > .wt-frozen-column {
+  .wu-table-thead > tr > .wu-frozen-column {
     z-index: 2;
   }
-  .wt-table-tbody > tr > .wt-frozen-column {
-    background: linear-gradient(var(--wt-table-row-bg), var(--wt-table-row-bg)), var(--wt-card-bg);
+  .wu-table-tbody > tr > .wu-frozen-column {
+    background: linear-gradient(var(--wu-table-row-bg), var(--wu-table-row-bg)), var(--wu-card-bg);
   }
-  .wt-table-tbody > tr:nth-child(even) > .wt-frozen-column {
-    background: linear-gradient(var(--wt-table-stripe-bg), var(--wt-table-stripe-bg)), var(--wt-card-bg);
+  .wu-table-tbody > tr:nth-child(even) > .wu-frozen-column {
+    background: linear-gradient(var(--wu-table-stripe-bg), var(--wu-table-stripe-bg)), var(--wu-card-bg);
   }
-  .wt-table-striped .wt-table-tbody > tr:nth-child(even) > .wt-frozen-column {
-    background: linear-gradient(var(--wt-table-row-striped-bg), var(--wt-table-row-striped-bg)), var(--wt-card-bg);
+  .wu-table-striped .wu-table-tbody > tr:nth-child(even) > .wu-frozen-column {
+    background: linear-gradient(var(--wu-table-row-striped-bg), var(--wu-table-row-striped-bg)), var(--wu-card-bg);
   }
-  .wt-table-hoverable .wt-table-tbody > tr:not(.wt-table-empty-row):hover > .wt-frozen-column {
-    background: linear-gradient(var(--wt-table-row-hover-bg), var(--wt-table-row-hover-bg)), var(--wt-card-bg);
+  .wu-table-hoverable .wu-table-tbody > tr:not(.wu-table-empty-row):hover > .wu-frozen-column {
+    background: linear-gradient(var(--wu-table-row-hover-bg), var(--wu-table-row-hover-bg)), var(--wu-card-bg);
   }
-  .wt-table-tbody > tr.wt-row-selected > .wt-frozen-column {
-    background: linear-gradient(var(--wt-table-row-selected-bg), var(--wt-table-row-selected-bg)), var(--wt-card-bg);
+  .wu-table-tbody > tr.wu-row-selected > .wu-frozen-column {
+    background: linear-gradient(var(--wu-table-row-selected-bg), var(--wu-table-row-selected-bg)), var(--wu-card-bg);
   }
-  .wt-table-stacked .wt-frozen-column {
+  .wu-table-stacked .wu-frozen-column {
     position: static;
   }
 
   /* Frozen rows: under the header while the body scrolls. */
-  .wt-table-frozen-tbody > tr > td {
-    background: linear-gradient(var(--wt-table-row-bg), var(--wt-table-row-bg)), var(--wt-card-bg);
+  .wu-table-frozen-tbody > tr > td {
+    background: linear-gradient(var(--wu-table-row-bg), var(--wu-table-row-bg)), var(--wu-card-bg);
   }
-  .wt-table-scrollable .wt-table-frozen-tbody > tr > td {
+  .wu-table-scrollable .wu-table-frozen-tbody > tr > td {
     position: sticky;
     top: var(--_table-head-height, 0px);
     z-index: 1;
   }
-  .wt-table-frozen-tbody > tr:last-child > td {
-    border-bottom: 2px solid var(--wt-table-border-color);
+  .wu-table-frozen-tbody > tr:last-child > td {
+    border-bottom: 2px solid var(--wu-table-border-color);
   }
 
   /* Row reorder: the grip, the row being moved, and where it lands. */
-  .wt-reorderable-row-handle {
+  .wu-reorderable-row-handle {
     cursor: grab;
     touch-action: none;
     user-select: none;
   }
-  .wt-reorderable-row-handle:focus-visible {
-    outline: var(--wt-control-focus-outline);
+  .wu-reorderable-row-handle:focus-visible {
+    outline: var(--wu-control-focus-outline);
     outline-offset: 2px;
-    border-radius: var(--wt-radius-sm);
+    border-radius: var(--wu-radius-sm);
   }
-  .wt-table-tbody > tr.wt-row-dragging {
+  .wu-table-tbody > tr.wu-row-dragging {
     opacity: 0.5;
   }
-  .wt-table-tbody > tr.wt-row-drop-above > td {
-    box-shadow: inset 0 2px 0 var(--wt-primary-color);
+  .wu-table-tbody > tr.wu-row-drop-above > td {
+    box-shadow: inset 0 2px 0 var(--wu-primary-color);
   }
-  .wt-table-tbody > tr.wt-row-drop-below > td {
-    box-shadow: inset 0 -2px 0 var(--wt-primary-color);
+  .wu-table-tbody > tr.wu-row-drop-below > td {
+    box-shadow: inset 0 -2px 0 var(--wu-primary-color);
   }
-  wt-tableradiobutton {
+  wu-tableradiobutton {
     display: inline-flex;
   }
 
   /* Column resize and reorder. */
-  .wt-resizable-column {
+  .wu-resizable-column {
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .wt-column-resizer {
+  .wu-column-resizer {
     position: absolute;
     top: 0;
     right: 0;
@@ -362,7 +362,7 @@
     cursor: col-resize;
     touch-action: none;
   }
-  .wt-resizable-column:not(.wt-resizable-column-off) > .wt-column-resizer::after {
+  .wu-resizable-column:not(.wu-resizable-column-off) > .wu-column-resizer::after {
     content: '';
     position: absolute;
     top: 25%;
@@ -371,97 +371,97 @@
     width: 2px;
     border-radius: 1px;
     background: transparent;
-    transition: background-color var(--wt-transition);
+    transition: background-color var(--wu-transition);
   }
-  .wt-resizable-column:hover > .wt-column-resizer::after,
-  .wt-column-resizing > .wt-column-resizer::after {
-    background: var(--wt-primary-color);
+  .wu-resizable-column:hover > .wu-column-resizer::after,
+  .wu-column-resizing > .wu-column-resizer::after {
+    background: var(--wu-primary-color);
   }
-  th:not(.wt-resizable-column) > .wt-column-resizer {
+  th:not(.wu-resizable-column) > .wu-column-resizer {
     display: none;
   }
-  .wt-reorderable-column {
+  .wu-reorderable-column {
     cursor: grab;
   }
-  .wt-column-dragging {
+  .wu-column-dragging {
     opacity: 0.6;
   }
-  .wt-col-drop-before {
-    box-shadow: inset 2px 0 0 var(--wt-primary-color);
+  .wu-col-drop-before {
+    box-shadow: inset 2px 0 0 var(--wu-primary-color);
   }
-  .wt-col-drop-after {
-    box-shadow: inset -2px 0 0 var(--wt-primary-color);
+  .wu-col-drop-after {
+    box-shadow: inset -2px 0 0 var(--wu-primary-color);
   }
 
   /* Cell and row editing. */
-  .wt-editable-column {
+  .wu-editable-column {
     cursor: pointer;
   }
-  .wt-editable-column:focus-visible {
-    outline: 2px solid var(--wt-primary-color);
+  .wu-editable-column:focus-visible {
+    outline: 2px solid var(--wu-primary-color);
     outline-offset: -2px;
   }
-  .wt-editable-column.wt-cell-editing {
+  .wu-editable-column.wu-cell-editing {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     cursor: default;
   }
-  .wt-cell-editing :is(input, select, textarea, .wt-inputtext),
-  .wt-row-editing :is(input, select, textarea, .wt-inputtext) {
+  .wu-cell-editing :is(input, select, textarea, .wu-inputtext),
+  .wu-row-editing :is(input, select, textarea, .wu-inputtext) {
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
   }
-  wt-celleditor {
+  wu-celleditor {
     display: contents;
   }
 
   /* Row groups and expanded rows. */
   /* Row groups: the header is a tinted band with an accent on its first cell; the footer (class p-rowgroup-footer
-     or wt-rowgroup-footer on its <tr>) is a quiet summary line that closes the group with a stronger rule. */
-  .wt-table-tbody > tr.wt-rowgroup-header {
-    background: var(--wt-table-group-bg);
-    color: var(--wt-table-group-color);
-    font-weight: var(--wt-table-head-weight);
+     or wu-rowgroup-footer on its <tr>) is a quiet summary line that closes the group with a stronger rule. */
+  .wu-table-tbody > tr.wu-rowgroup-header {
+    background: var(--wu-table-group-bg);
+    color: var(--wu-table-group-color);
+    font-weight: var(--wu-table-head-weight);
   }
-  .wt-table-tbody > tr.wt-rowgroup-header > :is(td, th):first-child {
-    box-shadow: inset var(--wt-table-group-accent-width) 0 0 var(--wt-primary-color);
+  .wu-table-tbody > tr.wu-rowgroup-header > :is(td, th):first-child {
+    box-shadow: inset var(--wu-table-group-accent-width) 0 0 var(--wu-primary-color);
   }
-  .wt-table-tbody > tr:is(.wt-rowgroup-footer, .p-rowgroup-footer) {
-    background: var(--wt-table-row-bg);
-    color: var(--wt-text-muted);
+  .wu-table-tbody > tr:is(.wu-rowgroup-footer, .p-rowgroup-footer) {
+    background: var(--wu-table-row-bg);
+    color: var(--wu-text-muted);
     font-size: 0.9375em;
   }
-  .wt-table-tbody > tr:is(.wt-rowgroup-footer, .p-rowgroup-footer) > td {
+  .wu-table-tbody > tr:is(.wu-rowgroup-footer, .p-rowgroup-footer) > td {
     border-bottom-width: 2px;
   }
-  .wt-row-toggler[aria-expanded='true'] .wt-row-toggler-icon {
+  .wu-row-toggler[aria-expanded='true'] .wu-row-toggler-icon {
     transform: rotate(90deg);
   }
 
   /* Column filter: a box (or a yes / no / any button) with a clear button. */
-  :is(wt-columnfilter, wt-column-filter) {
+  :is(wu-columnfilter, wu-column-filter) {
     display: block;
     min-width: 0;
   }
-  .wt-column-filter {
+  .wu-column-filter {
     display: flex;
     align-items: center;
     gap: 0.25rem;
     min-width: 0;
     font-weight: normal;
   }
-  .wt-column-filter > :first-child:not(button) {
+  .wu-column-filter > :first-child:not(button) {
     flex: 1 1 auto;
     min-width: 0;
   }
-  .wt-column-filter-input.wt-inputtext {
+  .wu-column-filter-input.wu-inputtext {
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
   }
-  .wt-column-filter-clear,
-  .wt-column-filter-bool {
+  .wu-column-filter-clear,
+  .wu-column-filter-bool {
     display: grid;
     flex: none;
     place-items: center;
@@ -469,45 +469,45 @@
     padding: 0;
     cursor: pointer;
   }
-  .wt-column-filter-clear {
+  .wu-column-filter-clear {
     width: 2rem;
     height: 2rem;
     border: 0;
     border-radius: 50%;
     background: none;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
   }
-  .wt-column-filter-clear:hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-text);
+  .wu-column-filter-clear:hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-text);
   }
-  .wt-column-filter-bool {
+  .wu-column-filter-bool {
     width: 1.5rem;
     height: 1.5rem;
-    border: 1px solid var(--wt-field-border);
-    border-radius: var(--wt-radius-sm);
-    background: var(--wt-field-bg);
-    color: var(--wt-primary-color);
+    border: 1px solid var(--wu-field-border);
+    border-radius: var(--wu-radius-sm);
+    background: var(--wu-field-bg);
+    color: var(--wu-primary-color);
   }
-  .wt-column-filter-clear svg,
-  .wt-column-filter-bool svg {
+  .wu-column-filter-clear svg,
+  .wu-column-filter-bool svg {
     width: 0.875rem;
     height: 0.875rem;
   }
   /* Menu display: a filter button in the header, its panel in the top layer. */
-  .wt-column-filter-menu {
+  .wu-column-filter-menu {
     display: inline-flex;
     vertical-align: middle;
   }
-  .wt-column-filter-menu-button.wt-column-filter-active {
-    background: var(--wt-primary-soft);
-    color: var(--wt-primary-soft-text);
+  .wu-column-filter-menu-button.wu-column-filter-active {
+    background: var(--wu-primary-soft);
+    color: var(--wu-primary-soft-text);
   }
-  .wt-column-filter-menu-button svg {
+  .wu-column-filter-menu-button svg {
     width: 1rem;
     height: 1rem;
   }
-  .wt-column-filter-overlay {
+  .wu-column-filter-overlay {
     position: fixed;
     inset: auto;
     z-index: 1200;
@@ -518,54 +518,54 @@
     width: min(18rem, calc(100vw - 1rem));
     margin: 0;
     padding: 0.75rem;
-    border: 1px solid var(--wt-border);
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-card-bg);
-    color: var(--wt-text);
-    box-shadow: var(--wt-shadow-md);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
+    border: 1px solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-card-bg);
+    color: var(--wu-text);
+    box-shadow: var(--wu-shadow-md);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
     font-weight: normal;
     text-align: start;
   }
-  .wt-column-filter-rule {
+  .wu-column-filter-rule {
     display: flex;
     flex-direction: column;
     gap: 0.375rem;
     padding-bottom: 0.625rem;
-    border-bottom: 1px solid var(--wt-border);
+    border-bottom: 1px solid var(--wu-border);
   }
-  .wt-column-filter-select.wt-inputtext,
-  .wt-column-filter-rule .wt-inputtext {
+  .wu-column-filter-select.wu-inputtext,
+  .wu-column-filter-rule .wu-inputtext {
     box-sizing: border-box;
     width: 100%;
   }
-  .wt-column-filter-remove,
-  .wt-column-filter-add {
+  .wu-column-filter-remove,
+  .wu-column-filter-add {
     align-self: flex-start;
   }
-  .wt-column-filter-buttons {
+  .wu-column-filter-buttons {
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
   }
-  .wt-column-filter-clear:focus-visible,
-  .wt-column-filter-bool:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
+  .wu-column-filter-clear:focus-visible,
+  .wu-column-filter-bool:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-table-spinner {
+    .wu-table-spinner {
       animation-duration: 2s;
     }
   }
   /* Touch screens: a hit area of at least 24 × 24 px (WCAG 2.5.8) without changing the look. */
   @media (pointer: coarse) {
-    .wt-reorderable-row-handle {
+    .wu-reorderable-row-handle {
       position: relative;
     }
     /* Wider than the grip, and at least 24px tall whatever the icon font's line box comes to (17px on Linux). */
-    .wt-reorderable-row-handle::after {
+    .wu-reorderable-row-handle::after {
       content: '';
       position: absolute;
       top: 50%;

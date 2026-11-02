@@ -3,18 +3,18 @@
  * (`ConfirmationService`, `MessageService`, `ConfirmEventType`, `SharedModule` …) are exported too, so moving an import
  * here is often the only change.
  */
-export { WtTemplate } from 'wiratheme/config';
-export type { WtMenuItem, WtMenuItem as MenuItem, WtMenuItemCommandEvent, WtMenuItemCommandEvent as MenuItemCommandEvent } from 'wiratheme/config';
-export { WtSharedModule, WtSharedModule as SharedModule } from './shared.module';
+export { WuTemplate } from 'wiraui/config';
+export type { WuMenuItem, WuMenuItem as MenuItem, WuMenuItemCommandEvent, WuMenuItemCommandEvent as MenuItemCommandEvent } from 'wiraui/config';
+export { WuSharedModule, WuSharedModule as SharedModule } from './shared.module';
 export {
-  WtConfirmationService,
-  WtConfirmationService as ConfirmationService,
-  WtConfirmEventType,
-  WtConfirmEventType as ConfirmEventType,
-} from 'wiratheme/confirmdialog';
-export type { WtConfirmation, WtConfirmation as Confirmation } from 'wiratheme/confirmdialog';
-export { WtMessageService, WtMessageService as MessageService } from 'wiratheme/toast';
-export type { WtToastMessage, WtToastMessage as Message, WtToastMessage as ToastMessageOptions } from 'wiratheme/toast';
-export { WtAlert, WtAlertService } from 'wiratheme/alert';
-export type { WtAlertOptions, WtAlertResult } from 'wiratheme/alert';
-export type { TreeNode } from 'wiratheme/core';
+  WuConfirmationService,
+  WuConfirmationService as ConfirmationService,
+  WuConfirmEventType,
+  WuConfirmEventType as ConfirmEventType,
+} from 'wiraui/confirmdialog';
+export type { WuConfirmation, WuConfirmation as Confirmation } from 'wiraui/confirmdialog';
+export { WuMessageService, WuMessageService as MessageService } from 'wiraui/toast';
+export type { WuToastMessage, WuToastMessage as Message, WuToastMessage as ToastMessageOptions } from 'wiraui/toast';
+export { WuAlert, WuAlertService } from 'wiraui/alert';
+export type { WuAlertOptions, WuAlertResult } from 'wiraui/alert';
+export type { TreeNode } from 'wiraui/core';

@@ -15,7 +15,7 @@ export type Snippet = VersionSnippet | { th: VersionSnippet; en: VersionSnippet 
 
 /**
  * The sample for this version and language. Samples are written the v3 way; v1 / v2 readers get named slots as
- * `<ng-template wtTemplate="footer">`, the form their templates use (v3 keeps `<ng-template #footer>`).
+ * `<ng-template wuTemplate="footer">`, the form their templates use (v3 keeps `<ng-template #footer>`).
  */
 export function pick(s: Snippet | undefined, v: DocVersion, lang: Lang = 'th'): string {
   if (!s) return '';
@@ -24,9 +24,9 @@ export function pick(s: Snippet | undefined, v: DocVersion, lang: Lang = 'th'): 
   return v.major === 3 ? s : classicSlots(s);
 }
 
-/** `<ng-template #footer let-x>` → `<ng-template wtTemplate="footer" let-x>`. */
+/** `<ng-template #footer let-x>` → `<ng-template wuTemplate="footer" let-x>`. */
 export function classicSlots(html: string): string {
-  return html.replace(/<ng-template #([a-zA-Z]+)/g, '<ng-template wtTemplate="$1"');
+  return html.replace(/<ng-template #([a-zA-Z]+)/g, '<ng-template wuTemplate="$1"');
 }
 
 export interface ImportNames {
@@ -42,7 +42,7 @@ const FORMS = "import { FormsModule } from '@angular/forms';\n";
 export function ngModuleImport(n: ImportNames, lang: Lang = 'th'): string {
   return `// ${lang === 'en' ? 'app.module.ts or the feature module that uses it' : 'app.module.ts หรือ feature module ที่ใช้'}
 import { NgModule } from '@angular/core';
-${n.forms ? FORMS : ''}import { ${n.module} } from 'wiratheme/${n.entry}';
+${n.forms ? FORMS : ''}import { ${n.module} } from 'wiraui/${n.entry}';
 
 @NgModule({
   imports: [${n.forms ? 'FormsModule, ' : ''}${n.module}],
@@ -53,7 +53,7 @@ export class AppModule {}`;
 export function standaloneImport(n: ImportNames, v: DocVersion): string {
   const flag = v.major === 1 ? '\n  standalone: true,' : '';
   return `import { Component } from '@angular/core';
-${n.forms ? FORMS : ''}import { ${n.standalone} } from 'wiratheme/${n.entry}';
+${n.forms ? FORMS : ''}import { ${n.standalone} } from 'wiraui/${n.entry}';
 
 @Component({
   selector: 'app-example',${flag}

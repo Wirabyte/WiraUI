@@ -1,15 +1,15 @@
 <label
-  class="wt-toggleswitch"
+  class="wu-toggleswitch"
   [class]="styleClass() || ''"
   [style]="rootStyle()"
-  [class.wt-toggleswitch-checked]="checked()"
-  [class.wt-toggleswitch-disabled]="isDisabled()"
-  [class.wt-invalid]="invalid()"
+  [class.wu-toggleswitch-checked]="checked()"
+  [class.wu-toggleswitch-disabled]="isDisabled()"
+  [class.wu-invalid]="invalid()"
 >
   <input
     type="checkbox"
     role="switch"
-    class="wt-toggleswitch-input p-toggleswitch-input"
+    class="wu-toggleswitch-input p-toggleswitch-input"
     [id]="id()"
     [attr.name]="name() || null"
     [checked]="checked()"
@@ -22,15 +22,15 @@
     (blur)="onTouched()"
   />
   <span
-    class="wt-toggleswitch-control p-toggleswitch p-component"
+    class="wu-toggleswitch-control p-toggleswitch p-component"
     [class.p-toggleswitch-checked]="checked()"
     [class.p-disabled]="isDisabled()"
     [class.p-invalid]="invalid()"
     aria-hidden="true"
   >
-    <span class="wt-toggleswitch-track p-toggleswitch-slider"><span class="wt-toggleswitch-handle p-toggleswitch-handle"></span></span>
+    <span class="wu-toggleswitch-track p-toggleswitch-slider"><span class="wu-toggleswitch-handle p-toggleswitch-handle"></span></span>
   </span>
   @if (label()) {
-    <span class="wt-toggleswitch-label">{{ label() }}</span>
+    <span class="wu-toggleswitch-label">{{ label() }}</span>
   }
 </label>

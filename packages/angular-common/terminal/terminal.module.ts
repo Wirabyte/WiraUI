@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { WtTerminal } from './terminal.component';
+import { WuTerminal } from './terminal.component';
 
-/** For NgModule apps. Standalone apps can import `WtTerminal` directly. `WtTerminalService` is provided in root. */
+/** For NgModule apps. Standalone apps can import `WuTerminal` directly. `WuTerminalService` is provided in root. */
 @NgModule({
-  imports: [WtTerminal],
-  exports: [WtTerminal],
+  imports: [WuTerminal],
+  exports: [WuTerminal],
 })
-export class WtTerminalModule {}
+export class WuTerminalModule {}

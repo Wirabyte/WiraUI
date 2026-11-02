@@ -1,8 +1,8 @@
 # wiraicon
 
-WiraTheme's icons: 424 icons in five weights (thin, light, regular, bold, fill), with the names Angular teams already
+WiraUI's icons: 424 icons in five weights (thin, light, regular, bold, fill), with the names Angular teams already
 write (`times`, `exclamation-triangle`, `cog` …) plus Font Awesome and Phosphor spellings as aliases. Works on its own,
-without `wiratheme`. Drawings from [Phosphor Icons](https://phosphoricons.com) (MIT).
+without `wiraui`. Drawings from [Phosphor Icons](https://phosphoricons.com) (MIT).
 
 ```bash
 npm install wiraicon
@@ -20,7 +20,7 @@ Add the stylesheet once (Angular: `angular.json` → `styles`):
 <i class="wi wi-check"></i>
 <i class="wi wi-trash wi-bold"></i>        <!-- weights: wi-thin, wi-light, wi-bold, wi-fill -->
 <i class="wi wi-spinner wi-spin"></i>
-<wt-button icon="wi wi-save" label="บันทึก"></wt-button>
+<wu-button icon="wi wi-save" label="บันทึก"></wu-button>
 ```
 
 Each weight is its own font and is only downloaded when a page uses it.
@@ -33,7 +33,7 @@ import { WiIcon } from 'wiraicon/angular';   // NgModule apps: WiIconModule
 
 ```html
 <wi-icon name="check"></wi-icon>
-<wi-icon name="trash" weight="bold" [size]="20" color="var(--wt-danger-color)"></wi-icon>
+<wi-icon name="trash" weight="bold" [size]="20" color="var(--wu-danger-color)"></wi-icon>
 <wi-icon name="info-circle" label="ข้อมูลเพิ่มเติม"></wi-icon>
 ```
 

@@ -1,10 +1,10 @@
-/* WtAlert. Shared by wiratheme v1, v2 and v3. A ready-made alert in a native modal <dialog>: an animated icon,
+/* WuAlert. Shared by wiraui v1, v2 and v3. A ready-made alert in a native modal <dialog>: an animated icon,
    title, text, optional input and buttons, centred in a card. Colours come from the theme's semantic colours. */
-@layer wiratheme.components {
-  wt-alertdialog {
+@layer wiraui.components {
+  wu-alertdialog {
     display: contents;
   }
-  .wt-alert-mask[open] {
+  .wu-alert-mask[open] {
     position: fixed;
     inset: 0;
     display: flex;
@@ -21,48 +21,48 @@
     background: transparent;
     overflow: hidden;
   }
-  .wt-alert-mask::backdrop {
-    background: var(--wt-mask);
-    animation: wt-alert-fade 0.15s ease-out;
+  .wu-alert-mask::backdrop {
+    background: var(--wu-mask);
+    animation: wu-alert-fade 0.15s ease-out;
   }
-  .wt-alert-leaving::backdrop {
+  .wu-alert-leaving::backdrop {
     opacity: 0;
     transition: opacity 0.15s ease-in;
   }
-  .wt-alert {
+  .wu-alert {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    width: var(--wt-alert-width);
+    width: var(--wu-alert-width);
     max-width: 100%;
     max-height: 100%;
-    padding: var(--wt-alert-padding);
+    padding: var(--wu-alert-padding);
     overflow-y: auto;
-    border: 1px solid var(--wt-dialog-border);
-    border-radius: var(--wt-alert-radius);
-    background: var(--wt-dialog-bg);
-    color: var(--wt-text);
-    box-shadow: var(--wt-dialog-shadow);
-    font-family: var(--wt-font-family);
-    font-size: var(--wt-font-size);
+    border: 1px solid var(--wu-dialog-border);
+    border-radius: var(--wu-alert-radius);
+    background: var(--wu-dialog-bg);
+    color: var(--wu-text);
+    box-shadow: var(--wu-dialog-shadow);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
     text-align: center;
-    animation: wt-alert-pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.25);
+    animation: wu-alert-pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.25);
   }
-  .wt-alert *,
-  .wt-alert *::before,
-  .wt-alert *::after {
+  .wu-alert *,
+  .wu-alert *::before,
+  .wu-alert *::after {
     box-sizing: border-box;
   }
-  .wt-alert-leaving .wt-alert {
+  .wu-alert-leaving .wu-alert {
     opacity: 0;
     transform: scale(0.95);
     transition:
       opacity 0.15s ease-in,
       transform 0.15s ease-in;
   }
-  .wt-alert-close {
+  .wu-alert-close {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
@@ -74,95 +74,95 @@
     border: 0;
     border-radius: 50%;
     background: transparent;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     cursor: pointer;
   }
-  .wt-alert-close:hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-text);
+  .wu-alert-close:hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-text);
   }
-  .wt-alert-close svg {
+  .wu-alert-close svg {
     width: 1rem;
     height: 1rem;
   }
 
   /* ---------- icon: a ring that draws itself, then the mark ---------- */
-  .wt-alert-icon {
+  .wu-alert-icon {
     flex: none;
-    width: var(--wt-alert-icon-size);
-    height: var(--wt-alert-icon-size);
+    width: var(--wu-alert-icon-size);
+    height: var(--wu-alert-icon-size);
     margin: 0.25rem 0 1rem;
-    color: var(--_icon, var(--wt-info-color));
+    color: var(--_icon, var(--wu-info-color));
   }
-  .wt-alert-icon-success { --_icon: var(--wt-success-color); }
-  .wt-alert-icon-error { --_icon: var(--wt-danger-color); }
-  .wt-alert-icon-warning { --_icon: var(--wt-warn-color); }
-  .wt-alert-icon-info { --_icon: var(--wt-info-color); }
-  .wt-alert-icon-question { --_icon: var(--wt-help-color); }
-  .wt-alert-icon svg {
+  .wu-alert-icon-success { --_icon: var(--wu-success-color); }
+  .wu-alert-icon-error { --_icon: var(--wu-danger-color); }
+  .wu-alert-icon-warning { --_icon: var(--wu-warn-color); }
+  .wu-alert-icon-info { --_icon: var(--wu-info-color); }
+  .wu-alert-icon-question { --_icon: var(--wu-help-color); }
+  .wu-alert-icon svg {
     display: block;
     width: 100%;
     height: 100%;
     overflow: visible;
   }
-  .wt-alert-halo {
+  .wu-alert-halo {
     fill: currentColor;
     opacity: 0.12;
     transform-origin: center;
-    animation: wt-alert-halo 0.45s ease-out;
+    animation: wu-alert-halo 0.45s ease-out;
   }
-  .wt-alert-ring,
-  .wt-alert-mark {
+  .wu-alert-ring,
+  .wu-alert-mark {
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .wt-alert-ring {
+  .wu-alert-ring {
     stroke-width: 3;
     stroke-dasharray: 227;
     stroke-dashoffset: 0;
     transform: rotate(-90deg);
     transform-origin: center;
-    animation: wt-alert-draw-ring 0.5s ease-out both;
+    animation: wu-alert-draw-ring 0.5s ease-out both;
   }
-  .wt-alert-mark {
+  .wu-alert-mark {
     stroke-width: 5;
     stroke-dasharray: 60;
     stroke-dashoffset: 0;
-    animation: wt-alert-draw 0.35s 0.35s ease-out both;
+    animation: wu-alert-draw 0.35s 0.35s ease-out both;
   }
-  .wt-alert-mark-2 {
+  .wu-alert-mark-2 {
     animation-delay: 0.5s;
   }
-  .wt-alert-dot {
+  .wu-alert-dot {
     fill: currentColor;
     transform-origin: center;
-    animation: wt-alert-dot 0.3s 0.55s ease-out both;
+    animation: wu-alert-dot 0.3s 0.55s ease-out both;
   }
-  .wt-alert-icon-error svg,
-  .wt-alert-icon-warning svg {
-    animation: wt-alert-nudge 0.45s 0.7s ease-in-out;
+  .wu-alert-icon-error svg,
+  .wu-alert-icon-warning svg {
+    animation: wu-alert-nudge 0.45s 0.7s ease-in-out;
   }
 
   /* ---------- text, input, buttons ---------- */
-  .wt-alert-title {
+  .wu-alert-title {
     margin: 0 0 0.5rem;
-    color: var(--wt-text);
-    font-size: var(--wt-alert-title-size);
+    color: var(--wu-text);
+    font-size: var(--wu-alert-title-size);
     font-weight: 600;
     line-height: 1.3;
     overflow-wrap: anywhere;
   }
-  .wt-alert-text {
+  .wu-alert-text {
     max-width: 100%;
     margin: 0;
-    color: var(--wt-text-muted);
+    color: var(--wu-text-muted);
     line-height: 1.6;
     overflow-wrap: anywhere;
     white-space: pre-line;
   }
-  .wt-alert-input {
+  .wu-alert-input {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -170,38 +170,38 @@
     margin-top: 1rem;
     text-align: left;
   }
-  .wt-alert-input .wt-inputtext,
-  .wt-alert-input select.wt-alert-field {
+  .wu-alert-input .wu-inputtext,
+  .wu-alert-input select.wu-alert-field {
     width: 100%;
   }
-  .wt-alert-input select.wt-alert-field {
-    min-height: calc(var(--wt-field-padding-y) * 2 + 1.5em);
-    padding: var(--wt-field-padding-y) var(--wt-field-padding-x);
-    border: var(--wt-field-border-width) solid var(--wt-field-border);
-    border-radius: var(--wt-input-radius);
-    background: var(--wt-field-bg);
-    color: var(--wt-field-color);
+  .wu-alert-input select.wu-alert-field {
+    min-height: calc(var(--wu-field-padding-y) * 2 + 1.5em);
+    padding: var(--wu-field-padding-y) var(--wu-field-padding-x);
+    border: var(--wu-field-border-width) solid var(--wu-field-border);
+    border-radius: var(--wu-input-radius);
+    background: var(--wu-field-bg);
+    color: var(--wu-field-color);
     font: inherit;
   }
-  .wt-alert-choice {
+  .wu-alert-choice {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
   }
-  .wt-alert-choice input {
+  .wu-alert-choice input {
     width: 1.125rem;
     height: 1.125rem;
     margin: 0;
-    accent-color: var(--wt-primary-color);
+    accent-color: var(--wu-primary-color);
   }
-  .wt-alert-choices {
+  .wu-alert-choices {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem 1.25rem;
   }
-  .wt-alert-validation {
+  .wu-alert-validation {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,161 +209,161 @@
     align-self: stretch;
     margin-top: 0.75rem;
     padding: 0.5rem 0.75rem;
-    border-radius: var(--wt-radius-md);
-    background: var(--wt-danger-bg);
-    color: var(--wt-danger-text);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-danger-bg);
+    color: var(--wu-danger-text);
     font-size: 0.875em;
   }
-  .wt-alert-actions {
+  .wu-alert-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 1.5rem;
   }
-  .wt-alert-button {
+  .wu-alert-button {
     min-width: 6rem;
     min-height: 2.5rem;
-    padding: var(--wt-button-padding-y) calc(var(--wt-button-padding-x) * 1.25);
+    padding: var(--wu-button-padding-y) calc(var(--wu-button-padding-x) * 1.25);
     border: 1px solid transparent;
-    border-radius: var(--wt-button-radius);
+    border-radius: var(--wu-button-radius);
     font: inherit;
-    font-weight: var(--wt-button-font-weight);
+    font-weight: var(--wu-button-font-weight);
     cursor: pointer;
     touch-action: manipulation;
     transition:
-      filter var(--wt-transition),
-      box-shadow var(--wt-transition);
+      filter var(--wu-transition),
+      box-shadow var(--wu-transition);
   }
-  .wt-alert-button:hover {
+  .wu-alert-button:hover {
     filter: brightness(0.94);
   }
-  .wt-alert-button:focus-visible,
-  .wt-alert-close:focus-visible {
-    outline: var(--wt-control-focus-outline);
-    outline-offset: var(--wt-control-focus-offset);
-    box-shadow: var(--wt-control-focus-shadow);
+  .wu-alert-button:focus-visible,
+  .wu-alert-close:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
   }
-  .wt-alert-confirm {
-    border-color: var(--wt-primary-color);
-    background: var(--wt-primary-color);
-    color: var(--wt-primary-contrast);
+  .wu-alert-confirm {
+    border-color: var(--wu-primary-color);
+    background: var(--wu-primary-color);
+    color: var(--wu-primary-contrast);
   }
-  .wt-alert-deny {
-    border-color: var(--wt-danger-color);
-    background: var(--wt-danger-color);
-    color: var(--wt-danger-contrast);
+  .wu-alert-deny {
+    border-color: var(--wu-danger-color);
+    background: var(--wu-danger-color);
+    color: var(--wu-danger-contrast);
   }
-  .wt-alert-cancel {
-    border-color: var(--wt-button-secondary-border);
-    background: var(--wt-button-secondary-bg);
-    color: var(--wt-button-secondary-color);
+  .wu-alert-cancel {
+    border-color: var(--wu-button-secondary-border);
+    background: var(--wu-button-secondary-bg);
+    color: var(--wu-button-secondary-color);
   }
   /* A colour the app picked: white text reads on any saturated button colour. */
-  .wt-alert-button.wt-alert-custom {
+  .wu-alert-button.wu-alert-custom {
     color: #fff;
   }
-  .wt-alert-loader {
+  .wu-alert-loader {
     display: grid;
     place-items: center;
     margin-top: 1.5rem;
     min-height: 2.5rem;
   }
-  .wt-alert-spinner {
+  .wu-alert-spinner {
     width: 2.25rem;
     height: 2.25rem;
-    border: 3px solid color-mix(in srgb, var(--wt-primary-color) 20%, transparent);
-    border-top-color: var(--wt-primary-color);
+    border: 3px solid color-mix(in srgb, var(--wu-primary-color) 20%, transparent);
+    border-top-color: var(--wu-primary-color);
     border-radius: 50%;
-    animation: wt-alert-spin 0.8s linear infinite;
+    animation: wu-alert-spin 0.8s linear infinite;
   }
-  .wt-alert-footer {
+  .wu-alert-footer {
     align-self: stretch;
     margin-top: 1.25rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--wt-border);
-    color: var(--wt-text-muted);
+    border-top: 1px solid var(--wu-border);
+    color: var(--wu-text-muted);
     font-size: 0.875em;
   }
-  .wt-alert-timer {
+  .wu-alert-timer {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
     height: 0.25rem;
     overflow: hidden;
-    border-radius: 0 0 var(--wt-alert-radius) var(--wt-alert-radius);
+    border-radius: 0 0 var(--wu-alert-radius) var(--wu-alert-radius);
   }
-  .wt-alert-timer span {
+  .wu-alert-timer span {
     display: block;
     height: 100%;
-    background: color-mix(in srgb, var(--wt-primary-color) 45%, transparent);
+    background: color-mix(in srgb, var(--wu-primary-color) 45%, transparent);
     transform-origin: left;
-    animation: wt-alert-timer linear forwards;
+    animation: wu-alert-timer linear forwards;
   }
 
   /* Phones: the card takes the screen width and the buttons share a row. */
   @media (max-width: 575.98px) {
-    .wt-alert-mask[open] {
+    .wu-alert-mask[open] {
       padding: 0.75rem;
     }
-    .wt-alert {
+    .wu-alert {
       width: 100% !important;
     }
-    .wt-alert-actions {
+    .wu-alert-actions {
       align-self: stretch;
     }
-    .wt-alert-button {
+    .wu-alert-button {
       flex: 1 1 0;
       min-width: 0;
       min-height: 2.75rem;
     }
   }
 
-  @keyframes wt-alert-pop {
+  @keyframes wu-alert-pop {
     from {
       opacity: 0;
       transform: scale(0.7);
     }
   }
-  @keyframes wt-alert-fade {
+  @keyframes wu-alert-fade {
     from {
       opacity: 0;
     }
   }
-  @keyframes wt-alert-halo {
+  @keyframes wu-alert-halo {
     from {
       opacity: 0;
       transform: scale(0.4);
     }
   }
-  @keyframes wt-alert-draw-ring {
+  @keyframes wu-alert-draw-ring {
     from {
       stroke-dashoffset: 227;
     }
   }
-  @keyframes wt-alert-draw {
+  @keyframes wu-alert-draw {
     from {
       stroke-dashoffset: 60;
     }
   }
-  @keyframes wt-alert-dot {
+  @keyframes wu-alert-dot {
     from {
       opacity: 0;
       transform: scale(0);
     }
   }
-  @keyframes wt-alert-nudge {
+  @keyframes wu-alert-nudge {
     25% { transform: translateX(-4px); }
     50% { transform: translateX(4px); }
     75% { transform: translateX(-2px); }
   }
-  @keyframes wt-alert-spin {
+  @keyframes wu-alert-spin {
     to {
       transform: rotate(360deg);
     }
   }
-  @keyframes wt-alert-timer {
+  @keyframes wu-alert-timer {
     from {
       transform: scaleX(1);
     }
@@ -372,16 +372,16 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .wt-alert,
-    .wt-alert-mask::backdrop,
-    .wt-alert-halo,
-    .wt-alert-ring,
-    .wt-alert-mark,
-    .wt-alert-dot,
-    .wt-alert-icon svg {
+    .wu-alert,
+    .wu-alert-mask::backdrop,
+    .wu-alert-halo,
+    .wu-alert-ring,
+    .wu-alert-mark,
+    .wu-alert-dot,
+    .wu-alert-icon svg {
       animation: none;
     }
-    .wt-alert-spinner {
+    .wu-alert-spinner {
       animation-duration: 2s;
     }
   }

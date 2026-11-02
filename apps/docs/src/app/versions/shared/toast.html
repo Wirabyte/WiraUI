@@ -6,61 +6,61 @@
 
     <docs-section id="basic" [section]="sec['basic']">
       <docs-demo [html]="code['basic']" [ts]="ts['basic']">
-        <wt-button id="d-toast-save" [label]="tx('บันทึก')" icon="wi wi-check" (onClick)="save()"></wt-button>
-        <wt-button id="d-toast-dialog" [label]="tx('toast เหนือ dialog')" severity="secondary" (onClick)="dialogOpen = true"></wt-button>
-        <wt-dialog [header]="tx('ส่งใบเสนอราคา')" [(visible)]="dialogOpen" [style]="{ width: '24rem' }">
+        <wu-button id="d-toast-save" [label]="tx('บันทึก')" icon="wi wi-check" (onClick)="save()"></wu-button>
+        <wu-button id="d-toast-dialog" [label]="tx('toast เหนือ dialog')" severity="secondary" (onClick)="dialogOpen = true"></wu-button>
+        <wu-dialog [header]="tx('ส่งใบเสนอราคา')" [(visible)]="dialogOpen" [style]="{ width: '24rem' }">
           <p class="docs-demo-p">{{ tx('toast ขึ้นเหนือ dialog นี้') }}</p>
           <ng-template #footer>
-            <wt-button id="d-toast-from-dialog" [label]="tx('ส่ง')" icon="wi wi-send" (onClick)="fromDialog()"></wt-button>
+            <wu-button id="d-toast-from-dialog" [label]="tx('ส่ง')" icon="wi wi-send" (onClick)="fromDialog()"></wu-button>
           </ng-template>
-        </wt-dialog>
+        </wu-dialog>
       </docs-demo>
     </docs-section>
 
     <docs-section id="severity" [section]="sec['severity']">
       <docs-demo [html]="code['severity']" [ts]="ts['severity']">
         @for (s of severities; track s) {
-          <wt-button [label]="s" [severity]="$any(s)" size="small" (onClick)="show(s)"></wt-button>
+          <wu-button [label]="s" [severity]="$any(s)" size="small" (onClick)="show(s)"></wu-button>
         }
       </docs-demo>
     </docs-section>
 
     <docs-section id="position" [section]="sec['position']">
       <docs-demo [html]="code['position']">
-        <wt-button [label]="tx('ล่างซ้าย')" severity="secondary" [outlined]="true" (onClick)="at('bl', 'ล่างซ้าย')"></wt-button>
-        <wt-button [label]="tx('บนกลาง')" severity="secondary" [outlined]="true" (onClick)="at('tc', 'บนกลาง')"></wt-button>
+        <wu-button [label]="tx('ล่างซ้าย')" severity="secondary" [outlined]="true" (onClick)="at('bl', 'ล่างซ้าย')"></wu-button>
+        <wu-button [label]="tx('บนกลาง')" severity="secondary" [outlined]="true" (onClick)="at('tc', 'บนกลาง')"></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="life" [section]="sec['life']">
       <docs-demo [html]="code['life']">
-        <wt-button [label]="tx('ค้างไว้')" severity="warn" (onClick)="sticky()"></wt-button>
-        <wt-button [label]="tx('10 วินาที')" severity="info" (onClick)="long()"></wt-button>
-        <wt-button [label]="tx('ล้างทั้งหมด')" severity="secondary" (onClick)="clear()"></wt-button>
+        <wu-button [label]="tx('ค้างไว้')" severity="warn" (onClick)="sticky()"></wu-button>
+        <wu-button [label]="tx('10 วินาที')" severity="info" (onClick)="long()"></wu-button>
+        <wu-button [label]="tx('ล้างทั้งหมด')" severity="secondary" (onClick)="clear()"></wu-button>
       </docs-demo>
     </docs-section>
 
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="message"></docs-slot-note>
       <docs-demo [html]="code['templates']" [ts]="ts['templates']">
-        <wt-button [label]="tx('แชร์เอกสาร')" icon="wi wi-send" (onClick)="share()"></wt-button>
+        <wu-button [label]="tx('แชร์เอกสาร')" icon="wi wi-send" (onClick)="share()"></wu-button>
       </docs-demo>
     </docs-section>
 
     <!-- The toasts the demos above send to. -->
-    <wt-toast></wt-toast>
-    <wt-toast key="bl" position="bottom-left"></wt-toast>
-    <wt-toast key="tc" position="top-center"></wt-toast>
-    <wt-toast key="invite" position="bottom-right">
+    <wu-toast></wu-toast>
+    <wu-toast key="bl" position="bottom-left"></wu-toast>
+    <wu-toast key="tc" position="top-center"></wu-toast>
+    <wu-toast key="invite" position="bottom-right">
       <ng-template #message let-m>
         <div class="docs-toast-invite">
-          <wt-avatar [label]="m.data?.initial" shape="circle"></wt-avatar>
+          <wu-avatar [label]="m.data?.initial" shape="circle"></wu-avatar>
           <div>
             <b>{{ m.summary }}</b>
             <p class="docs-demo-p">{{ m.detail }}</p>
           </div>
         </div>
       </ng-template>
-    </wt-toast>
+    </wu-toast>
   </ng-template>
 </docs-component-page>

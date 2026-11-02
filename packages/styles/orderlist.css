@@ -1,7 +1,7 @@
-/* wt-orderlist. Shared by wiratheme v1, v2 and v3. Its list, items, buttons and drag marks come from the pick list
+/* wu-orderlist. Shared by wiraui v1, v2 and v3. Its list, items, buttons and drag marks come from the pick list
    stylesheet, which the component loads: one place for the layout of both. */
-@layer wiratheme.components {
-  :is(wt-orderlist, wt-order-list) {
+@layer wiraui.components {
+  :is(wu-orderlist, wu-order-list) {
     display: block;
     max-width: 100%;
   }

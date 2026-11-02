@@ -1,5 +1,5 @@
 /**
- * wt-flow: the change lists the flow reports (`(nodeChanges)`, `(edgeChanges)`) and the pure helpers that apply them,
+ * wu-flow: the change lists the flow reports (`(nodeChanges)`, `(edgeChanges)`) and the pure helpers that apply them,
  * for apps that keep the nodes and edges themselves (`[applyChanges]="false"`). Nothing is mutated: changed items are
  * copied, the rest keep their identity, so OnPush views and memoised selectors see exactly what changed.
  */

@@ -1,35 +1,35 @@
-/* wt-inputnumber. Shared by wiratheme v1, v2 and v3. A text field that edits a number: formatted while
+/* wu-inputnumber. Shared by wiraui v1, v2 and v3. A text field that edits a number: formatted while
    idle, plain while typing. Optional step buttons are joined to the field (stacked on the right, or
    horizontal on both sides); they widen on touch screens. Field styles come from inputtext. */
-@layer wiratheme.components {
-  :is(wt-inputnumber, wt-input-number) {
+@layer wiraui.components {
+  :is(wu-inputnumber, wu-input-number) {
     display: inline-flex;
     vertical-align: middle;
     max-width: 100%;
   }
-  :is(wt-inputnumber, wt-input-number).wt-inputnumber-fluid {
+  :is(wu-inputnumber, wu-input-number).wu-inputnumber-fluid {
     display: flex;
     width: 100%;
   }
-  .wt-inputnumber {
+  .wu-inputnumber {
     display: inline-flex;
     align-items: stretch;
     width: 100%;
     min-width: 0;
   }
-  .wt-inputnumber .wt-inputtext {
+  .wu-inputnumber .wu-inputtext {
     flex: 1 1 auto;
     width: 100%;
     min-width: 0;
   }
   /* showClear: an × inside the field, left of any step buttons. */
-  .wt-inputnumber {
+  .wu-inputnumber {
     position: relative;
   }
-  .wt-inputnumber:has(> .wt-inputnumber-clear) .wt-inputtext {
+  .wu-inputnumber:has(> .wu-inputnumber-clear) .wu-inputtext {
     padding-right: 2.25rem;
   }
-  .wt-inputnumber-clear {
+  .wu-inputnumber-clear {
     position: absolute;
     top: 50%;
     right: 0.5rem;
@@ -42,103 +42,103 @@
     border: 0;
     border-radius: 50%;
     background: none;
-    color: var(--wt-field-placeholder);
+    color: var(--wu-field-placeholder);
     cursor: pointer;
     transform: translateY(-50%);
   }
-  .wt-inputnumber-clear svg {
+  .wu-inputnumber-clear svg {
     width: 0.875rem;
     height: 0.875rem;
   }
-  .wt-inputnumber-clear:hover {
-    background: var(--wt-hover-bg);
-    color: var(--wt-text);
+  .wu-inputnumber-clear:hover {
+    background: var(--wu-hover-bg);
+    color: var(--wu-text);
   }
-  .wt-inputnumber:has(> .wt-inputnumber-buttons) .wt-inputnumber-clear,
-  .wt-inputnumber:has(> .wt-inputnumber-button:last-child) .wt-inputnumber-clear {
-    right: calc(var(--wt-inputnumber-button-width) + 0.5rem);
+  .wu-inputnumber:has(> .wu-inputnumber-buttons) .wu-inputnumber-clear,
+  .wu-inputnumber:has(> .wu-inputnumber-button:last-child) .wu-inputnumber-clear {
+    right: calc(var(--wu-inputnumber-button-width) + 0.5rem);
   }
-  :is(wt-inputnumber, wt-input-number).ng-invalid:is(.ng-touched, form.ng-submitted *) .wt-inputtext {
-    border-color: var(--wt-danger-color);
+  :is(wu-inputnumber, wu-input-number).ng-invalid:is(.ng-touched, form.ng-submitted *) .wu-inputtext {
+    border-color: var(--wu-danger-color);
   }
-  .wt-inputnumber-button {
+  .wu-inputnumber-button {
     flex: none;
     display: grid;
     place-items: center;
-    width: var(--wt-inputnumber-button-width);
+    width: var(--wu-inputnumber-button-width);
     margin: 0;
     padding: 0;
-    border: var(--wt-field-border-width) solid var(--wt-inputnumber-button-border);
-    background: var(--wt-inputnumber-button-bg);
-    color: var(--wt-inputnumber-button-color);
+    border: var(--wu-field-border-width) solid var(--wu-inputnumber-button-border);
+    background: var(--wu-inputnumber-button-bg);
+    color: var(--wu-inputnumber-button-color);
     cursor: pointer;
     touch-action: manipulation;
     transition:
-      background-color var(--wt-transition),
-      color var(--wt-transition);
+      background-color var(--wu-transition),
+      color var(--wu-transition);
   }
-  .wt-inputnumber-sm .wt-inputnumber-button {
-    width: calc(var(--wt-inputnumber-button-width) * var(--wt-size-sm-scale));
+  .wu-inputnumber-sm .wu-inputnumber-button {
+    width: calc(var(--wu-inputnumber-button-width) * var(--wu-size-sm-scale));
   }
-  .wt-inputnumber-lg .wt-inputnumber-button {
-    width: calc(var(--wt-inputnumber-button-width) * var(--wt-size-lg-scale));
+  .wu-inputnumber-lg .wu-inputnumber-button {
+    width: calc(var(--wu-inputnumber-button-width) * var(--wu-size-lg-scale));
   }
-  .wt-inputnumber-button:not(:disabled):hover {
-    background: var(--wt-inputnumber-button-hover-bg);
-    color: var(--wt-inputnumber-button-hover-color);
+  .wu-inputnumber-button:not(:disabled):hover {
+    background: var(--wu-inputnumber-button-hover-bg);
+    color: var(--wu-inputnumber-button-hover-color);
   }
-  .wt-inputnumber-button:disabled {
-    opacity: var(--wt-disabled-opacity);
+  .wu-inputnumber-button:disabled {
+    opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  .wt-inputnumber-button svg {
+  .wu-inputnumber-button svg {
     width: 0.875rem;
     height: 0.875rem;
   }
 
   /* stacked: up and down buttons in a column on the right */
-  .wt-inputnumber-stacked .wt-inputtext {
+  .wu-inputnumber-stacked .wu-inputtext {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .wt-inputnumber-buttons {
+  .wu-inputnumber-buttons {
     display: flex;
     flex-direction: column;
-    margin-left: calc(var(--wt-field-border-width) * -1);
+    margin-left: calc(var(--wu-field-border-width) * -1);
   }
-  .wt-inputnumber-buttons .wt-inputnumber-button {
+  .wu-inputnumber-buttons .wu-inputnumber-button {
     flex: 1 1 0;
   }
-  .wt-inputnumber-buttons .wt-inputnumber-button:first-child {
-    border-top-right-radius: var(--wt-input-radius);
+  .wu-inputnumber-buttons .wu-inputnumber-button:first-child {
+    border-top-right-radius: var(--wu-input-radius);
   }
-  .wt-inputnumber-buttons .wt-inputnumber-button:last-child {
-    margin-top: calc(var(--wt-field-border-width) * -1);
-    border-bottom-right-radius: var(--wt-input-radius);
+  .wu-inputnumber-buttons .wu-inputnumber-button:last-child {
+    margin-top: calc(var(--wu-field-border-width) * -1);
+    border-bottom-right-radius: var(--wu-input-radius);
   }
 
   /* horizontal: minus on the left, plus on the right */
-  .wt-inputnumber-horizontal .wt-inputtext {
+  .wu-inputnumber-horizontal .wu-inputtext {
     border-radius: 0;
     text-align: center;
   }
-  .wt-inputnumber-horizontal .wt-inputnumber-button:first-child {
-    margin-right: calc(var(--wt-field-border-width) * -1);
-    border-radius: var(--wt-input-radius) 0 0 var(--wt-input-radius);
+  .wu-inputnumber-horizontal .wu-inputnumber-button:first-child {
+    margin-right: calc(var(--wu-field-border-width) * -1);
+    border-radius: var(--wu-input-radius) 0 0 var(--wu-input-radius);
   }
-  .wt-inputnumber-horizontal .wt-inputnumber-button:last-child {
-    margin-left: calc(var(--wt-field-border-width) * -1);
-    border-radius: 0 var(--wt-input-radius) var(--wt-input-radius) 0;
+  .wu-inputnumber-horizontal .wu-inputnumber-button:last-child {
+    margin-left: calc(var(--wu-field-border-width) * -1);
+    border-radius: 0 var(--wu-input-radius) var(--wu-input-radius) 0;
   }
-  .wt-inputnumber .wt-inputtext:focus {
+  .wu-inputnumber .wu-inputtext:focus {
     position: relative;
     z-index: 1;
   }
 
   /* Fingers need bigger targets than a mouse. */
   @media (pointer: coarse) {
-    .wt-inputnumber-button {
-      width: calc(var(--wt-inputnumber-button-width) + 0.5rem);
+    .wu-inputnumber-button {
+      width: calc(var(--wu-inputnumber-button-width) + 0.5rem);
     }
   }
 }

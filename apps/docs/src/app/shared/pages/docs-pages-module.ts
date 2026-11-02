@@ -13,7 +13,7 @@ import {
   UtilitiesPage,
 } from './pages';
 
-/** Pages without wiratheme components, shared by the v1, v2 and v3 modules. */
+/** Pages without wiraui components, shared by the v1, v2 and v3 modules. */
 @NgModule({
   declarations: [
     DocsVersionShell,

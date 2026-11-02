@@ -8,9 +8,9 @@ export const INPLACE_DOC: ComponentDoc = {
   title: 'Inplace',
   group: 'Panel',
   entry: 'inplace',
-  standalone: 'WtInplace',
-  module: 'WtInplaceModule',
-  selector: 'wt-inplace',
+  standalone: 'WuInplace',
+  module: 'WuInplaceModule',
+  selector: 'wu-inplace',
   description: {
     th: 'แสดงค่าเป็นข้อความธรรมดาจนกว่าจะคลิก แล้วจึงเปลี่ยนเป็นช่องแก้ไข เหมาะกับหน้าข้อมูลที่ส่วนใหญ่ดูอย่างเดียว เปิดแล้วโฟกัสเข้าช่องแก้ไขทันที และ Esc ปิดกลับ',
     en: 'Shows a value as plain text until it is clicked, then the field to edit it. It suits pages people mostly read; opening puts focus in the field and Esc goes back.',
@@ -37,8 +37,8 @@ export const INPLACE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WtInplaceModule</code>) และ standalone (<code>WtInplace</code>)',
-        en: 'Works as an NgModule (<code>WtInplaceModule</code>) or standalone (<code>WtInplace</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuInplaceModule</code>) และ standalone (<code>WuInplace</code>)',
+        en: 'Works as an NgModule (<code>WuInplaceModule</code>) or standalone (<code>WuInplace</code>).',
       },
     },
     basic: {
@@ -72,49 +72,49 @@ export const INPLACE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-inplace&gt;</code> เป็น <code>&lt;wt-inplace&gt;</code> template <code>pTemplate="display"</code> / <code>"content"</code> ใช้ต่อได้ และเนื้อหาที่ใส่ attribute <code>pInplaceDisplay</code> / <code>pInplaceContent</code> แบบเก่าก็อ่านได้ input และ event ชื่อเดิม class <code>p-inplace</code> อยู่คู่กับ <code>wt-inplace</code>',
-        en: 'Change <code>&lt;p-inplace&gt;</code> to <code>&lt;wt-inplace&gt;</code>. <code>pTemplate="display"</code> / <code>"content"</code> keep working, and content marked with the older <code>pInplaceDisplay</code> / <code>pInplaceContent</code> attributes is read too. Inputs and events keep their names; the <code>p-inplace</code> class sits next to <code>wt-inplace</code>.',
+        th: 'เปลี่ยน <code>&lt;p-inplace&gt;</code> เป็น <code>&lt;wu-inplace&gt;</code> template <code>pTemplate="display"</code> / <code>"content"</code> ใช้ต่อได้ และเนื้อหาที่ใส่ attribute <code>pInplaceDisplay</code> / <code>pInplaceContent</code> แบบเก่าก็อ่านได้ input และ event ชื่อเดิม class <code>p-inplace</code> อยู่คู่กับ <code>wu-inplace</code>',
+        en: 'Change <code>&lt;p-inplace&gt;</code> to <code>&lt;wu-inplace&gt;</code>. <code>pTemplate="display"</code> / <code>"content"</code> keep working, and content marked with the older <code>pInplaceDisplay</code> / <code>pInplaceContent</code> attributes is read too. Inputs and events keep their names; the <code>p-inplace</code> class sits next to <code>wu-inplace</code>.',
       },
     },
   },
   code: {
-    basic: `<wt-inplace [closable]="true">
+    basic: `<wu-inplace [closable]="true">
   <ng-template #display>
     <span>{{ studentName }}</span>
   </ng-template>
   <ng-template #content>
-    <input wtInputText name="studentName" [(ngModel)]="studentName" aria-label="ชื่อ - สกุล" />
+    <input wuInputText name="studentName" [(ngModel)]="studentName" aria-label="ชื่อ - สกุล" />
   </ng-template>
-</wt-inplace>`,
-    save: `<wt-inplace>
+</wu-inplace>`,
+    save: `<wu-inplace>
   <ng-template #display>
     ชื่อเล่น: <b>{{ nickname }}</b>
   </ng-template>
   <ng-template #content let-closeCallback="closeCallback">
-    <input wtInputText name="nickname" [(ngModel)]="nickname" aria-label="ชื่อเล่น" />
-    <wt-button label="บันทึก" icon="wi wi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wt-button>
+    <input wuInputText name="nickname" [(ngModel)]="nickname" aria-label="ชื่อเล่น" />
+    <wu-button label="บันทึก" icon="wi wi-check" size="small" [loading]="isApiSaving" (onClick)="saveNickname(closeCallback)"></wu-button>
   </ng-template>
-</wt-inplace>`,
-    lazy: `<wt-inplace [closable]="true" closeIcon="wi wi-times">
+</wu-inplace>`,
+    lazy: `<wu-inplace [closable]="true" closeIcon="wi wi-times">
   <ng-template #display>
     <i class="wi wi-image"></i> ดูรูปอาคาร
   </ng-template>
   <ng-template #content>
     <img src="photos/school.jpg" alt="อาคารเรียนของโรงเรียน" width="320" />
   </ng-template>
-</wt-inplace>`,
-    control: `<wt-inplace #noteEditor [(active)]="editingNote" [preventClick]="true" [closable]="true">
+</wu-inplace>`,
+    control: `<wu-inplace #noteEditor [(active)]="editingNote" [preventClick]="true" [closable]="true">
   <ng-template #display>
     {{ note || 'ยังไม่มีหมายเหตุ' }}
   </ng-template>
   <ng-template #content>
-    <textarea wtTextarea name="note" [(ngModel)]="note" rows="3" aria-label="หมายเหตุ"></textarea>
+    <textarea wuTextarea name="note" [(ngModel)]="note" rows="3" aria-label="หมายเหตุ"></textarea>
   </ng-template>
-</wt-inplace>
-<wt-button label="แก้ไขหมายเหตุ" icon="wi wi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wt-button>
-<wt-inplace [disabled]="true">
+</wu-inplace>
+<wu-button label="แก้ไขหมายเหตุ" icon="wi wi-pencil" severity="secondary" [text]="true" (onClick)="noteEditor.activate()"></wu-button>
+<wu-inplace [disabled]="true">
   <ng-template #display>แก้ไขได้เฉพาะเจ้าหน้าที่</ng-template>
-</wt-inplace>`,
+</wu-inplace>`,
   },
   ts: {
     basic: `studentName = 'ด.ช.กิตติพัฒน์ ใจดี';   // ข้อมูลจาก API`,
@@ -161,7 +161,7 @@ editingNote = false;`,
       id: 'api-templates',
       title: 'Templates',
       typeLabel: { th: 'context', en: 'Context' },
-      note: { th: 'เขียนเป็น #display, wtTemplate="display" หรือ pTemplate="display" ก็ได้', en: 'Write them as #display, wtTemplate="display" or pTemplate="display".' },
+      note: { th: 'เขียนเป็น #display, wuTemplate="display" หรือ pTemplate="display" ก็ได้', en: 'Write them as #display, wuTemplate="display" or pTemplate="display".' },
       rows: [
         row('display', '—', undefined, 'สิ่งที่เห็นก่อนเปิด', 'What shows before it opens'),
         row('content', 'closeCallback', undefined, 'ช่องแก้ไข (สร้างเมื่อเปิด)', 'The field (created on open)'),
@@ -177,5 +177,5 @@ editingNote = false;`,
       ],
     },
   ],
-  tokens: [tok('--wt-inplace-padding', 'ระยะรอบข้อความที่คลิกได้', 'Padding around the clickable text')],
+  tokens: [tok('--wu-inplace-padding', 'ระยะรอบข้อความที่คลิกได้', 'Padding around the clickable text')],
 };

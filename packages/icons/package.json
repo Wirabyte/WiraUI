@@ -1,7 +1,7 @@
 {
-  "name": "@wiratheme-build/icons",
+  "name": "@wiraui-build/icons",
   "private": true,
-  "description": "Build shell for wiraicon: WiraTheme's icon set (built on Phosphor Icons, MIT) as CSS classes, SVG files, data modules and an Angular component. Installs on its own, without wiratheme.",
+  "description": "Build shell for wiraicon: WiraUI's icon set (built on Phosphor Icons, MIT) as CSS classes, SVG files, data modules and an Angular component. Installs on its own, without wiraui.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node scripts/build.mjs --check",
