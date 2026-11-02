@@ -2,7 +2,7 @@
 // Needs its dist folder (pnpm pack:all). npm points `latest` at the first version a package ever publishes, whatever
 // tag it was given: publish v3 first, or fix it afterwards with `npm dist-tag add wiraui@<3.x> latest`.
 import { execFileSync } from 'node:child_process';
-import { appendFileSync, existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -30,4 +30,14 @@ const args = ['publish', '--tag', tag, ...flags.filter((f) => f === '--dry-run')
 console.log(`${pkg}@${version} → dist-tag ${tag}${args.includes('--dry-run') ? ' (dry run)' : ''}`);
 execFileSync('npm', args, { cwd: dist, stdio: 'inherit', shell: process.platform === 'win32' });
 
-if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `release=${pkg}@${version}\n`);
+// In the Publish workflow, tag the commit straight after each upload, so a later package failing keeps this tag.
+// The upload has already happened by now: a tag that fails must not stop the packages still to come.
+if (process.env.GITHUB_ACTIONS && !args.includes('--dry-run')) {
+  const release = `${pkg}@${version}`;
+  try {
+    execFileSync('git', ['tag', release], { cwd: root, stdio: 'inherit' });
+    execFileSync('git', ['push', 'origin', release], { cwd: root, stdio: 'inherit' });
+  } catch (e) {
+    console.warn(`::warning::Published ${release} but could not tag the commit: ${e.message}`);
+  }
+}

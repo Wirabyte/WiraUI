@@ -1,7 +1,8 @@
 name: Publish
 
-# Run by hand from the Actions tab, one package at a time. It is a dry run unless `dry_run` is turned off.
-# The first time, publish v3 first: npm points `latest` at the first version a package ever publishes.
+# Run by hand from the Actions tab, for one package or for `all` of them. It is a dry run unless `dry_run` is turned off,
+# and a real run does a dry run of every chosen package first, so a package that cannot go up stops it before any upload.
+# `all` goes in the order v3, v2, v1, icons: npm points `latest` at the first version a package ever publishes.
 # Needs the secret NPM_TOKEN. The repository variable WU_NPM_REGISTRY sets another registry (default: npmjs).
 
 on:
@@ -11,7 +12,7 @@ on:
         description: Which package
         type: choice
         required: true
-        options: [v3, v2, v1, icons]
+        options: [all, v3, v2, v1, icons]
       dry_run:
         description: Dry run (uploads nothing)
         type: boolean
@@ -39,13 +40,20 @@ jobs:
         run: pnpm pack:all
       - name: Test
         run: pnpm test
-      - name: Publish
-        id: publish
+      - name: Dry run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: node tools/publish.mjs ${{ inputs.package }} ${{ inputs.dry_run && '--dry-run' || '' }}
-      - name: Tag the commit
-        if: ${{ !inputs.dry_run }}
+          PACKAGES: ${{ inputs.package == 'all' && 'v3 v2 v1 icons' || inputs.package }}
         run: |
-          git tag "${{ steps.publish.outputs.release }}"
-          git push origin "${{ steps.publish.outputs.release }}"
+          for package in $PACKAGES; do
+            node tools/publish.mjs "$package" --dry-run
+          done
+      - name: Publish
+        if: ${{ !inputs.dry_run }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PACKAGES: ${{ inputs.package == 'all' && 'v3 v2 v1 icons' || inputs.package }}
+        run: |
+          for package in $PACKAGES; do
+            node tools/publish.mjs "$package"
+          done
