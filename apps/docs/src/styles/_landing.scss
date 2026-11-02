@@ -301,6 +301,12 @@ docs-landing {
   margin-top: 6px;
   font-weight: 600;
 }
+.lp-version-install {
+  overflow-wrap: anywhere;
+  color: var(--docs-muted);
+  font-family: var(--docs-mono);
+  font-size: 13px;
+}
 .lp-version-look {
   color: var(--docs-muted);
   font-size: 14px;

@@ -3,8 +3,6 @@ import { SampleWords } from '../../core/sample-text';
 
 /** Code shown on the Getting Started and Theming pages (DESIGN.md §5–§8). */
 
-export const NG_ADD = 'ng add wiraui';
-
 /** Default theme of each major: v1 starts from sila-light-teal, v2 from Mali, v3 from Wira. */
 export function defaultTheme(v: DocVersion): string {
   return v.major === 1 ? 'sila-light-teal' : v.major === 2 ? 'mali' : 'wira';
@@ -45,10 +43,10 @@ Next: import WuButtonModule (NgModule) or WuButton (standalone) from wiraui/butt
 
 export function ngAddFlags(v: DocVersion): string {
   return `# ใช้ค่าที่ตรวจพบและค่าเริ่มต้นทั้งหมด ไม่ถามอะไร
-ng add wiraui --defaults
+ng add ${v.install} --defaults
 
 # หรือส่งเป็น flag ทีละข้อ
-ng add wiraui --style=scss --structure=module --theme=${defaultTheme(v)} --primary=#00a86b`;
+ng add ${v.install} --style=scss --structure=module --theme=${defaultTheme(v)} --primary=#00a86b`;
 }
 
 export function providerNgModule(v: DocVersion): string {

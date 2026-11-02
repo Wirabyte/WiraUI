@@ -4,7 +4,7 @@
 
 ## 1.0.0-beta.0 · 2.0.0-beta.0 · 3.0.0-beta.0 · wiraicon 1.0.0-beta.0
 
-รุ่นแรกที่ออกให้ทดลองใช้
+รุ่นแรกที่ออกให้ทดลองใช้ เอกสารอยู่ที่ https://ui.wirabyte.com
 
 - Component มากกว่า 90 entry point ใช้ได้ทั้ง NgModule และ standalone พร้อมธีม SCSS / CSS / TypeScript, Theme Studio และ `ng add`
 - ของงานไทย: พ.ศ., เลขบัตรประชาชน, pipe `wiraui/thai`, ข้อความไทยในตัว

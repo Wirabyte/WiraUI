@@ -188,7 +188,7 @@ ng add wiraui
 | ทุกแบบ | สร้าง `src/theme/wiraui.overrides.ts` (ไฟล์ override ฝั่ง TS ซึ่งเริ่มต้นว่าง) แล้วผูกกับ provider |
 | ทุกแบบ | ติดตั้งฟอนต์และ icon ตามที่เลือก แล้วพิมพ์ "ขั้นตอนถัดไป" |
 
-`ng update wiraui` ใช้ตอนอัปเกรด Angular ข้ามช่วง (เช่น 17 → 18 ก็ขยับ v1 → v2) และรัน migration ให้ถ้ามี API เปลี่ยน ส่วนการติดตั้งแบบ manual มีคู่มือบนเว็บแนะนำแยกเป็นแท็บ CSS / SCSS / TS
+`ng update @angular/core@18 @angular/cli@18 wiraui@v2-beta` ใช้ตอนอัปเกรด Angular ข้ามช่วง (เช่น 17 → 18 ก็ขยับ v1 → v2) และรัน migration ให้ถ้ามี API เปลี่ยน ต้องสั่งพร้อม Angular ในคำสั่งเดียว เพราะ `ng update wiraui@beta` เดี่ยว ๆ บน Angular 20 ถูกปฏิเสธ (จะดึง Angular ไปรุ่นล่าสุด) ส่วนการติดตั้งแบบ manual มีคู่มือบนเว็บแนะนำแยกเป็นแท็บ CSS / SCSS / TS
 
 ---
 
@@ -657,7 +657,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ### 12.4 หน้าตาแยกตามรุ่นแบบ UI library เดิม (24 ต.ค. 2569)
 
-ทำตาม feedback ว่าปุ่มทุกรุ่นหน้าตาเหมือนกันและเว็บดู basic: แต่ละรุ่นมีธีมย่อยแบบ UI library เดิม ยุคเดียวกัน (6.10) โดยสำรวจแอป UI library เดิม ทุกตัวใน `E:\Web Applications Coding` ก่อน กลุ่ม v1 (Angular 15/17, Sila จาก Designer เก่า, `#00a86b`/`#4c99e1`/`#8f1403`, Kanit, radius 6px) ใช้ `var(--surface-ground)`, `var(--surface-border)` และเขียนทับ `.p-highlight`, `.p-button`, `.p-card-body`, `.p-datatable-*` ส่วนกลุ่ม v2/v3 (Mali) ส่วนใหญ่ตั้ง `darkModeSelector: '.non-dark-selector'` และอ่าน `--p-surface-*`, `--p-primary-color`, `--p-content-border-radius`
+ทำตาม feedback ว่าปุ่มทุกรุ่นหน้าตาเหมือนกันและเว็บดู basic: แต่ละรุ่นมีธีมย่อยแบบ UI library เดิม ยุคเดียวกัน (6.10) โดยสำรวจแอป UI library เดิม ของทีมทุกตัวก่อน กลุ่ม v1 (Angular 15/17, Sila จาก Designer เก่า, `#00a86b`/`#4c99e1`/`#8f1403`, Kanit, radius 6px) ใช้ `var(--surface-ground)`, `var(--surface-border)` และเขียนทับ `.p-highlight`, `.p-button`, `.p-card-body`, `.p-datatable-*` ส่วนกลุ่ม v2/v3 (Mali) ส่วนใหญ่ตั้ง `darkModeSelector: '.non-dark-selector'` และอ่าน `--p-surface-*`, `--p-primary-color`, `--p-content-border-radius`
 
 - **core:** `families.ts` (token ของ 8 family), `compat.ts` (ตัวแปร UI library เดิม), `CLASSIC_THEMES` + `VERSION_CATALOG` ใน `catalog.ts`, `themeConfig()` / `themePreset()` / `presetsFor()`, radius scale แบบ UI library เดิม (xs…xl), focus 4 แบบ (ring/outline/inset/bold)
 - **Sass:** เขียนใหม่ให้ตรงกับ `computeTokens()` ทั้งค่าและลำดับ (parity test 343 กรณีบน Sass 1.58 และ 1.106 รวมธีม v1 ทั้ง 25 ชื่อ) เพิ่ม `$theme`, `$scheme`, `$primary-contrast`
@@ -1083,7 +1083,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
   ปรับโครงใหม่:
   - job `apps` build playground กับเว็บเอกสารครั้งเดียว แล้ว job `e2e` แบบ matrix รัน component / docs × Chromium / WebKit / Firefox ขนานกัน
   - ติดตั้ง browser ให้ครบ (เดิมติดตั้งแค่ Chromium แต่รันทุก project)
-  - เลือก runner ได้ด้วย repository variable `WT_RUNNER` (เช่น `self-hosted` แบบโปรเจคอื่นของ Wirabyte)
+  - เลือก runner ได้ด้วย repository variable `WU_RUNNER` (ไม่ตั้ง = `self-hosted` ของ Wirabyte)
   - แถว Angular 21 / Node 20.19 ของ `ng add` ใช้ npm 11 เพราะ npm ที่มากับ Node 20.19 พังใน `ng new` ("reading 'edgesOut'")
 - **ลองทุก job ใน Linux ก่อน push (Docker, image `mcr.microsoft.com/playwright` รุ่นเดียวกับ e2e และ `node:<รุ่นต่ำสุด>`):** เพราะ Firefox ของ Playwright เปิดบนเครื่อง Windows นี้ไม่ได้ ชุด Firefox จึงไม่เคยรันมาก่อน ผลที่เจอ:
   - **บั๊กจริง:**
@@ -1100,10 +1100,12 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 - **v3 ไม่จำกัดเพดาน Angular:** `tools/versions.mjs` ตั้ง `max: null` จึงได้ peer `>=21.0.0` และ `wiraicon` ได้ `>=15.0.0` · CI เพิ่ม `ng add` บน Angular 22 (Node ต่ำสุดที่ CLI 22 รับคือ 22.22.3) และ `latest` · Angular CLI 22 ต้องการ Node `^22.22.3 || ^24.15 || >=26`
 - **ทุกแพ็กเกจเป็น `-beta.0`** · `tools/publish.mjs` เลือก dist-tag จากรุ่น (รุ่นจริง: `latest`, `v2-lts`, `v1-lts`; prerelease: `beta`, `v2-beta`, `v1-beta`) · workflow **Publish** กดเองเท่านั้น ค่าเริ่มต้นเป็น dry run ใช้ secret `NPM_TOKEN` และ registry จาก variable `WU_NPM_REGISTRY` (ไม่ตั้ง = npmjs) ซึ่งเผื่อคำตอบของข้อ 13.1 · ครั้งแรกต้องออก v3 ก่อน เพราะ npm ชี้ `latest` ไปที่รุ่นแรกที่ขึ้น registry
-- **ชื่อใหม่ WiraUI (ผู้ใช้เลือก):** `wiraui` บน npm ว่าง ส่วน `wiraui.com` เป็นร้านธีม WordPress ของคนอื่น จึงเปลี่ยนก่อนออกรุ่นแรกทั้งชื่อแพ็กเกจและ prefix (`wu-*`, `WuXxx`, `wuXxx`, `--wu-*`, `WU_*`) ส่วน `wiraicon` และ class / attribute แบบ `p-*`, `pTemplate` คงเดิม · repository variable `WT_RUNNER` คงชื่อเดิม เพราะตั้งอยู่บน GitHub
-- **เผยแพร่:** npm สาธารณะ (ข้อ 13.1 ตัดสินแล้ว) repo เป็น public เอกสารนี้จึงเรียกแอปของทีมว่า แอป A–E · เว็บเอกสาร deploy บน OpenShift (`deploy/openshift/`)
+- **ชื่อใหม่ WiraUI (ผู้ใช้เลือก):** `wiraui` บน npm ว่าง ส่วนโดเมนของชื่อเดิมเป็นร้านธีม WordPress ของคนอื่น จึงเปลี่ยนก่อนออกรุ่นแรกทั้งชื่อแพ็กเกจและ prefix (`wu-*`, `WuXxx`, `wuXxx`, `--wu-*`, `WU_*`) ส่วน `wiraicon` และ class / attribute แบบ `p-*`, `pTemplate` คงเดิม
+- **เผยแพร่:** npm สาธารณะ (ข้อ 13.1 ตัดสินแล้ว) repo เป็น public เอกสารนี้จึงเรียกแอปของทีมว่า แอป A–E · เว็บเอกสาร `ui.wirabyte.com` deploy บน OpenShift (`deploy/openshift/`)
 - **การกล่าวถึง UI library เดิม:** README และข้อความในแพ็กเกจไม่เอ่ยชื่อ ให้มีได้หน้าเดียวบนเว็บ คือหัวข้อเครื่องมือช่วยย้ายแบบไม่บังคับในหน้า “ย้ายโปรเจคเดิม” ให้ผู้ใช้เลือกเอง (`ng g wiraui:from-primeng`)
 - **ของในแพ็กเกจ:** เพิ่ม `repository` / `homepage` / `bugs` และ CHANGELOG, README ไม่มีชื่อแอปจริงแล้ว, comment ของ preset ที่ซ่อนไว้ไม่มีชื่อของบุคคลที่สาม
+- **CI:** รันบน runner `self-hosted` ของ Wirabyte เท่านั้น เพราะผู้ใช้ไม่จ่ายค่า `ubuntu-latest` และไม่มี trigger `pull_request` แต่แค่นั้นกันไม่พอ เพราะ PR จาก fork รัน workflow ในตัว PR เอง จึงเพิ่ม trigger เองได้ ก่อนเปิด repo เป็น public ต้องตั้ง Settings > General > Features > Pull requests เป็น Collaborators only และเมื่อเป็น public แล้วตั้ง Settings > Actions > General ให้ Require approval for all external contributors
+- **คำสั่งติดตั้งช่วง beta:** ช่วง semver อย่าง `wiraui@3` ไม่จับ prerelease และ `ng add wiraui` เลือก major ให้ไม่ได้เมื่อยังไม่มีรุ่นจริง เว็บจึงใช้ `DocVersion.install` (`wiraui@beta`, `wiraui@v2-beta`, `wiraui@v1-beta`) และ `ng add` ที่ปฏิเสธรุ่นก็บอก tag จากเลขรุ่นของตัวเอง ตอนออกรุ่นจริงให้เปลี่ยน `install` กับข้อความบนหน้าแรกและหน้า Introduction
 
 ### 12.26 Dock, SiteFooter, BottomBar (28 ต.ค. 2569)
 
@@ -1135,7 +1137,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 1. **License (ตัดสินแล้ว):** MIT ใช้ฟรีทุกรุ่นแบบ UI library เดิม ยุคเดิม ไม่มี license ขายและไม่มีรุ่น LTS แบบเสียเงิน (ไฟล์ `LICENSE` ที่ root ถูก copy เข้าทุกแพ็กเกจ) ช่องทาง publish คือ npm สาธารณะ
 8. **Figma UI Kit (เริ่มแล้ว, ดู 12.22):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
-2. **โดเมนของเว็บแนะนำ** เช่น `wiraui.wirabyte.com` และ host ที่ไหน (มีโปรเจค NodeJS Web Hosting อยู่แล้ว หรือใช้ Cloudflare Pages)
+2. **โดเมนของเว็บแนะนำ (ตัดสินแล้ว):** `ui.wirabyte.com` บน OpenShift (`deploy/openshift/docs.yaml`)
 3. **utility library เดิม (ตัดสินแล้ว):** ทำ utility ของ WiraUI เองในตัว (`wiraui/utils`, 6.11) ชื่อ class เดิม เปิด/ปิดได้
 4. **Icon:** พึ่ง icon font เดิม/Font Awesome ต่อไป หรือทำ `@wiraui/icons` (ตอนนี้ icon ที่ใช้ภายใน component เป็น SVG inline จึงไม่บังคับ dependency)
 5. **ชื่อและเอกลักษณ์ของ preset** (Wira / Lanna / Siam / …) และจะใช้ Kanit เป็นฟอนต์เริ่มต้นไหม

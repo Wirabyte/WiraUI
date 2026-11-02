@@ -21,8 +21,8 @@
   <ol class="docs-steps">
     @if (en()) {
       <li>
-        <b>Install next to what you have.</b> Run <code>ng add wiraui</code> and pick the theme closest to your current one
-        ({{ v.major === 1 ? 'e.g. sila-light-teal' : 'e.g. mali' }}). <code>ng add wiraui --theme</code> also accepts the theme names your team
+        <b>Install next to what you have.</b> Run <code>ng add {{ v.install }}</code> and pick the theme closest to your current one
+        ({{ v.major === 1 ? 'e.g. sila-light-teal' : 'e.g. mali' }}). <code>ng add {{ v.install }} --theme</code> also accepts the theme names your team
         already knows and picks the matching one. WiraUI has no global reset, so pages you have not moved stay as they are.
       </li>
       <li><b>Move one page at a time,</b> starting with pages that use few components.</li>
@@ -31,8 +31,8 @@
       <li><b>Remove the old library</b> once no page uses it.</li>
     } @else {
       <li>
-        <b>ติดตั้งคู่กับของเดิม</b> รัน <code>ng add wiraui</code> แล้วเลือกธีมที่ใกล้กับของเดิม
-        ({{ v.major === 1 ? 'เช่น sila-light-teal' : 'เช่น mali' }}) <code>ng add wiraui --theme</code> รับชื่อธีมที่ทีมคุ้นเคยอยู่แล้วและเลือกธีมที่ตรงกันให้เอง
+        <b>ติดตั้งคู่กับของเดิม</b> รัน <code>ng add {{ v.install }}</code> แล้วเลือกธีมที่ใกล้กับของเดิม
+        ({{ v.major === 1 ? 'เช่น sila-light-teal' : 'เช่น mali' }}) <code>ng add {{ v.install }} --theme</code> รับชื่อธีมที่ทีมคุ้นเคยอยู่แล้วและเลือกธีมที่ตรงกันให้เอง
         WiraUI ไม่มี global reset จึงไม่กระทบหน้าที่ยังไม่ได้ย้าย
       </li>
       <li><b>ย้ายทีละหน้า</b> เริ่มจากหน้าที่ใช้ component น้อยและความเสี่ยงต่ำ</li>
@@ -473,18 +473,18 @@
   <ul class="docs-list">
     @if (en()) {
       @if (v.major === 1) {
-        <li><b>Theme files</b> load <code>wiraui/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add wiraui --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
+        <li><b>Theme files</b> load <code>wiraui/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add {{ v.install }} --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
       } @else {
-        <li><b>Presets</b> come from <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add wiraui --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
+        <li><b>Presets</b> come from <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add {{ v.install }} --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
       }
       <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/studio')">WiraUI Studio</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
       <li><b>No more <code>::ng-deep</code> or <code>!important</code></b>: app CSS always beats WiraUI's <code>&#64;layer</code>. Move to tokens such as <code>--wu-card-body-gap</code> as you touch each page.</li>
       <li><b>Utility CSS</b>, grid libraries and Tailwind keep working; WiraUI ships no utility classes that clash.</li>
     } @else {
       @if (v.major === 1) {
-        <li><b>ไฟล์ธีม</b> โหลด <code>wiraui/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add wiraui --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
+        <li><b>ไฟล์ธีม</b> โหลด <code>wiraui/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add {{ v.install }} --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
       } @else {
-        <li><b>preset</b> มาจาก <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add wiraui --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
+        <li><b>preset</b> มาจาก <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add {{ v.install }} --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
       }
       <li><b>ธีมที่ export จาก designer รุ่นเก่า</b> สร้างใหม่ใน <a [routerLink]="link('theming/studio')">สตูดิโอธีม</a> ด้วยสีหลักและฟอนต์เดิม แล้ว export เป็น SCSS หรือ CSS</li>
       <li><b><code>::ng-deep</code> และ <code>!important</code></b> ไม่จำเป็นแล้ว เพราะ CSS ของแอปชนะ <code>&#64;layer</code> ของ WiraUI เสมอ ค่อย ๆ เปลี่ยนเป็น token เช่น <code>--wu-card-body-gap</code> เมื่อแก้หน้านั้น</li>

@@ -1,7 +1,9 @@
 # The WiraUI docs site on OpenShift. In your project:
 #   oc apply -f deploy/openshift/docs.yaml
 #   oc start-build wiraui-docs --follow
-# The build reads the public GitHub repository. The Route gets the cluster's default host; set spec.host for your domain.
+# The build reads the public GitHub repository. The Route serves ui.wirabyte.com; point its DNS at the cluster's router.
+# Without a certificate here the Route uses the router's default one, which only fits if it covers this host name:
+# otherwise add tls.certificate and tls.key below, or let cert-manager fill them in.
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
@@ -110,6 +112,7 @@ metadata:
   labels:
     app: wiraui-docs
 spec:
+  host: ui.wirabyte.com
   to:
     kind: Service
     name: wiraui-docs

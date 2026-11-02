@@ -6,12 +6,13 @@
 
 <p align="center">
   UI component library + Theme Designer สำหรับ Angular ของ Wirabyte<br />
-  API คุ้นมือ เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)
+  API คุ้นมือ เขียนเองทั้งหมด และมีของที่งานไทยต้องใช้ในตัว (พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย)<br />
+  เอกสารและตัวอย่าง: <a href="https://ui.wirabyte.com">ui.wirabyte.com</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/Wirabyte/WiraUI/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Wirabyte/WiraUI/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
-  <img alt="Angular 15–21" src="https://img.shields.io/badge/Angular-15%E2%80%9321-dd0031?logo=angular&amp;logoColor=white" />
+  <img alt="Angular 15+" src="https://img.shields.io/badge/Angular-15%2B-dd0031?logo=angular&amp;logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&amp;logoColor=white" />
   <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-16a34a" />
   <img alt="Thai first: Buddhist dates, Thai ID, Thai fonts" src="https://img.shields.io/badge/Thai--first-%E0%B8%9E.%E0%B8%A8.%20%C2%B7%20%E0%B9%80%E0%B8%A5%E0%B8%82%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%20%C2%B7%20%E0%B8%9F%E0%B8%AD%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%97%E0%B8%A2-0d9488" />
@@ -225,7 +226,7 @@ node tools/dry-run-ng-add.mjs "../my-app"
 
 ออกรุ่นด้วย workflow **Publish** ใน GitHub Actions หรือ `node tools/publish.mjs v3 --dry-run` ([tools/publish.mjs](tools/publish.mjs)) · ครั้งแรกให้ออก `v3` ก่อน เพราะ npm จะชี้ `latest` ไปที่รุ่นแรกที่ขึ้น registry
 
-เว็บเอกสารบน OpenShift ใช้ไฟล์ใน [deploy/openshift](deploy/openshift/docs.yaml):
+เว็บเอกสาร `ui.wirabyte.com` บน OpenShift ใช้ไฟล์ใน [deploy/openshift](deploy/openshift/docs.yaml):
 
 ```bash
 oc apply -f deploy/openshift/docs.yaml

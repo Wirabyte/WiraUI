@@ -191,6 +191,11 @@
       "type": "string",
       "visible": false,
       "description": "Internal: overrides the supported Angular range read from wiraui's package.json (tests only)."
+    },
+    "releaseVersion": {
+      "type": "string",
+      "visible": false,
+      "description": "Internal: overrides the version read from wiraui's package.json (tests only)."
     }
   }
 }

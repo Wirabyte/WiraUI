@@ -3,7 +3,6 @@ name: CI
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
 
 concurrency:
@@ -13,14 +12,15 @@ concurrency:
 env:
   NG_CLI_ANALYTICS: 'false'
 
-# Every job runs on GitHub's ubuntu-latest unless the repository variable WT_RUNNER names another runner label, e.g.
-# `self-hosted` for the Wirabyte runner the other projects use (Settings → Secrets and variables → Actions →
-# Variables). Nothing else in this file changes for it.
+# Every job runs on the Wirabyte self-hosted runners; the repository variable WU_RUNNER names another label instead.
+# This file has no `pull_request` trigger, but that alone does not protect those machines: a pull request from a fork
+# runs the workflow files in that pull request. The public repository must therefore limit pull requests to
+# collaborators and require approval for every outside contributor (DESIGN.md §12.27).
 
 jobs:
   build:
     name: Build and test (Node 24)
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -63,7 +63,7 @@ jobs:
   install:
     name: ng add on Angular ${{ matrix.angular }} / Node ${{ matrix.node }}
     needs: build
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     strategy:
       fail-fast: false
       matrix:
@@ -111,7 +111,7 @@ jobs:
   version-lock:
     name: wiraui@1 must not install on Angular 18
     needs: build
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     # In runner.temp for the same reason as the job above.
     steps:
       - uses: actions/download-artifact@v4
@@ -137,7 +137,7 @@ jobs:
   # built once and shared with the e2e jobs below.
   apps:
     name: Build the playgrounds and the docs site
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -168,7 +168,7 @@ jobs:
   e2e:
     name: Playwright · ${{ matrix.name }}
     needs: apps
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     strategy:
       fail-fast: false
       matrix:

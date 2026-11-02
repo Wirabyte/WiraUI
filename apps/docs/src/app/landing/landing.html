@@ -62,8 +62,8 @@
     </div>
     <div class="lp-install" id="lp-install">
       <span class="lp-install-prompt" aria-hidden="true">$</span>
-      <code class="lp-install-cmd">ng add wiraui</code>
-      <docs-copy text="ng add wiraui"></docs-copy>
+      <code class="lp-install-cmd">ng add wiraui&#64;beta</code>
+      <docs-copy text="ng add wiraui@beta"></docs-copy>
     </div>
   </section>
 
@@ -75,6 +75,7 @@
           <span class="lp-version-status" [attr.data-status]="v.status">{{ status[v.status] | loc }}</span>
         </span>
         <span class="lp-version-ng">Angular {{ v.angular }}</span>
+        <code class="lp-version-install">ng add {{ v.install }}</code>
         <span class="lp-version-look">{{ v.look | loc }}</span>
         <span class="lp-version-go">{{ en() ? 'v' + v.major + ' docs' : 'ดูเอกสาร v' + v.major }} <docs-icon name="arrowRight"></docs-icon></span>
       </a>

@@ -48,7 +48,7 @@ export const wiraOverrides = defineOverrides({
 export function ngAdd(options: NgAddOptions): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const log = context.logger;
-    assertAngularVersion(tree, options.angularRange || ownAngularRange());
+    assertAngularVersion(tree, options.angularRange || ownAngularRange(), options.releaseVersion || ownVersion());
 
     const project = getProject(tree, options.project);
     let style = options.style === 'auto' ? detectStyle(project) : options.style;
@@ -132,6 +132,21 @@ function ownAngularRange(): string | undefined {
   }
 }
 
+function ownVersion(): string | undefined {
+  try {
+    return require('../../package.json').version;
+  } catch (e) {
+    return undefined;
+  }
+}
+
+/** `wiraui@2`, or the dist-tag on a prerelease (tools/publish.mjs): a range such as `@2` never matches a prerelease. */
+function installSpec(major: number, version: string | undefined): string {
+  const pre = /^\d+\.\d+\.\d+-([a-z]+)/.exec(version || '');
+  if (!pre) return `wiraui@${major}`;
+  return `wiraui@${major === 3 ? '' : `v${major}-`}${pre[1]}`;
+}
+
 function wiraUIMajorFor(angular: number): number | null {
   if (angular >= 21) return 3;
   if (angular >= 18) return 2;
@@ -139,7 +154,7 @@ function wiraUIMajorFor(angular: number): number | null {
   return null;
 }
 
-function assertAngularVersion(tree: Tree, range: string | undefined): void {
+function assertAngularVersion(tree: Tree, range: string | undefined, version: string | undefined): void {
   if (!range) return;
   const m = />=\s*(\d+)[^<]*(?:<\s*(\d+))?/.exec(range);
   const major = angularMajor(tree);
@@ -151,7 +166,7 @@ function assertAngularVersion(tree: Tree, range: string | undefined): void {
   const span = max === null ? `${min}+` : `${min}–${max - 1}`;
   throw new SchematicsException(
     `This wiraui release supports Angular ${span}; this project uses Angular ${major}.` +
-      (fit ? ` Use: ng add wiraui@${fit}` : ' No wiraui release supports this Angular version.')
+      (fit ? ` Use: ng add ${installSpec(fit, version)}` : ' No wiraui release supports this Angular version.')
   );
 }
 

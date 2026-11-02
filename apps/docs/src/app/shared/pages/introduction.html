@@ -81,9 +81,9 @@
 
 <docs-section id="versions" [title]="{ th: 'รุ่นและ Angular', en: 'Versions and Angular' }">
   @if (en()) {
-    <p>WiraUI has one major per Angular range. Each is locked to its range, and <code>ng add wiraui</code> picks the right one for you.</p>
+    <p>WiraUI has one major per Angular range. Each is locked to its range. During the beta, install with the tag of your major: <code>ng add wiraui&#64;beta</code> (Angular 21+), <code>wiraui&#64;v2-beta</code> (18–20) or <code>wiraui&#64;v1-beta</code> (15–17).</p>
   } @else {
-    <p>WiraUI แยก major ตามช่วง Angular แต่ละรุ่นถูกล็อกกับช่วงของตัวเอง ติดตั้งข้ามช่วงไม่ได้ และ <code>ng add wiraui</code> เลือกรุ่นที่ถูกให้เอง</p>
+    <p>WiraUI แยก major ตามช่วง Angular แต่ละรุ่นถูกล็อกกับช่วงของตัวเอง ติดตั้งข้ามช่วงไม่ได้ ช่วง beta ให้ติดตั้งด้วย tag ของ major ที่ใช้: <code>ng add wiraui&#64;beta</code> (Angular 21 ขึ้นไป), <code>wiraui&#64;v2-beta</code> (18–20) หรือ <code>wiraui&#64;v1-beta</code> (15–17)</p>
   }
   <div class="docs-table-wrap">
     <table class="docs-table">
@@ -142,7 +142,7 @@
     <a class="docs-next-card" [routerLink]="link('getting-started/installation')">
       <docs-icon name="rocket"></docs-icon>
       <b>{{ en() ? 'Installation' : 'ติดตั้ง' }}</b>
-      <span>{{ en() ? 'One command:' : 'คำสั่งเดียว' }} <code>ng add wiraui</code></span>
+      <span>{{ en() ? 'One command:' : 'คำสั่งเดียว' }} <code>ng add {{ v.install }}</code></span>
     </a>
     <a class="docs-next-card" [routerLink]="link('getting-started/migration')">
       <docs-icon name="swap"></docs-icon>

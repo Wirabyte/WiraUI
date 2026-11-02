@@ -7,6 +7,8 @@ export interface DocVersion {
   major: number;
   /** Angular majors this wiraui major installs on. */
   angular: string;
+  /** What follows `ng add` / `npm install`. A prerelease needs its dist-tag; at the first stable release: wiraui, wiraui@2, wiraui@1. */
+  install: string;
   label: string;
   status: 'maintenance' | 'active' | 'latest';
   /** One-line description of the version's themes. */
@@ -22,6 +24,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v1',
     major: 1,
     angular: '15–17',
+    install: 'wiraui@v1-beta',
     label: 'v1 · Angular 15–17',
     status: 'maintenance',
     look: { th: 'ธีม Sila, Arun, Sayan, Ratri, Material', en: 'Sila, Arun, Sayan, Ratri, Material themes' },
@@ -36,6 +39,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v2',
     major: 2,
     angular: '18–20',
+    install: 'wiraui@v2-beta',
     label: 'v2 · Angular 18–20',
     status: 'active',
     look: { th: 'Mali, Sila, Material, Phet', en: 'Mali, Sila, Material, Phet' },
@@ -50,6 +54,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v3',
     major: 3,
     angular: '21+',
+    install: 'wiraui@beta',
     label: 'v3 · Angular 21+',
     status: 'latest',
     look: { th: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet', en: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet' },

@@ -12,4 +12,5 @@ export interface NgAddOptions {
   darkMode: 'none' | 'class' | 'media';
   /** Tests only: replaces the range read from wiraui's package.json. */
   angularRange?: string;
+  releaseVersion?: string;
 }

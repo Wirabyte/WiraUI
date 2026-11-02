@@ -167,6 +167,14 @@ describe('ng add wiraui', () => {
     );
   });
 
+  it('names the dist-tag instead of the major when this release is a prerelease', async () => {
+    const refusal = (angular: string, angularRange: string) =>
+      runner.runSchematic('ng-add', { ...base, angularRange, releaseVersion: '1.0.0-beta.0', style: 'auto', structure: 'auto' }, moduleApp(angular));
+    await expect(refusal('^19.0.0', '>=15.0.0 <18.0.0')).rejects.toThrow(/Use: ng add wiraui@v2-beta$/);
+    await expect(refusal('^21.0.0', '>=15.0.0 <18.0.0')).rejects.toThrow(/Use: ng add wiraui@beta$/);
+    await expect(refusal('^15.0.0', '>=21.0.0')).rejects.toThrow(/Use: ng add wiraui@v1-beta$/);
+  });
+
   it('takes Angular 22 and every newer major on wiraui@3', async () => {
     for (const angular of ['^21.0.0', '^22.2.0', '^23.0.0']) {
       const out = await runner.runSchematic('ng-add', { ...base, angularRange: '>=21.0.0', style: 'auto', structure: 'auto' }, moduleApp(angular));

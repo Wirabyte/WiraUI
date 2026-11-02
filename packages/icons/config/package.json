@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "WiraUI icons: 424 icons in five weights (thin, light, regular, bold, fill) as CSS classes, SVG files and an Angular component. Works without wiraui.",
   "license": "MIT",
-  "homepage": "https://github.com/Wirabyte/WiraUI/tree/main/packages/icons/config#readme",
+  "homepage": "https://ui.wirabyte.com",
   "bugs": "https://github.com/Wirabyte/WiraUI/issues",
   "keywords": ["icons", "icon font", "svg", "angular", "wiraui", "thai"],
   "repository": { "type": "git", "url": "git+https://github.com/Wirabyte/WiraUI.git", "directory": "packages/icons" },

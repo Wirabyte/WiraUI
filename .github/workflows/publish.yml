@@ -23,7 +23,7 @@ permissions:
 jobs:
   publish:
     name: Publish ${{ inputs.package }}${{ inputs.dry_run && ' (dry run)' || '' }}
-    runs-on: ${{ vars.WT_RUNNER || 'ubuntu-latest' }}
+    runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4

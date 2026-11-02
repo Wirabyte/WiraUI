@@ -12,16 +12,16 @@
 </header>
 
 <docs-section id="ng-add" title="ng add">
-  <docs-code [code]="local(s.NG_ADD)" lang="bash"></docs-code>
+  <docs-code [code]="'ng add ' + v.install" lang="bash"></docs-code>
   @if (en()) {
     <p>
-      <code>ng add</code> reads <code>&#64;angular/core</code> in <code>package.json</code> and picks the matching major: an Angular {{ v.angular }} project
-      gets <b>wiraui&#64;{{ v.major }}</b>. It then asks the questions below (the CLI speaks English). The first choice is what it detected or the default, so Enter accepts it.
+      This command installs <b>wiraui&#64;{{ v.major }}</b>, the major for Angular {{ v.angular }}: during the beta each major has its own tag.
+      <code>ng add</code> checks <code>&#64;angular/core</code> in <code>package.json</code>, then asks the questions below (the CLI speaks English). The first choice is what it detected or the default, so Enter accepts it.
     </p>
   } @else {
     <p>
-      <code>ng add</code> อ่าน <code>&#64;angular/core</code> ใน <code>package.json</code> แล้วเลือก major ที่เข้ากันเอง
-      โปรเจค Angular {{ v.angular }} จะได้ <b>wiraui&#64;{{ v.major }}</b> จากนั้นถามคำถามด้านล่าง
+      คำสั่งนี้ติดตั้ง <b>wiraui&#64;{{ v.major }}</b> ซึ่งเป็น major ของ Angular {{ v.angular }} ช่วง beta แต่ละ major มี tag ของตัวเอง
+      <code>ng add</code> ตรวจ <code>&#64;angular/core</code> ใน <code>package.json</code> จากนั้นถามคำถามด้านล่าง
       (คำถามของ CLI เป็นภาษาอังกฤษ) ตัวเลือกแรกคือค่าที่ตรวจพบหรือค่าเริ่มต้น กด Enter ผ่านได้ทุกข้อ
     </p>
   }
@@ -68,7 +68,7 @@
 
 <docs-section id="manual" [title]="{ th: 'ติดตั้งเอง', en: 'Manual setup' }">
   <p>{{ en() ? 'Prefer not to use the schematic? Install this version directly:' : 'ถ้าไม่อยากใช้ schematic ติดตั้งแพ็กเกจของรุ่นนี้ตรง ๆ ได้' }}</p>
-  <docs-code [code]="'npm install wiraui@' + v.major" lang="bash"></docs-code>
+  <docs-code [code]="'npm install ' + v.install" lang="bash"></docs-code>
   <docs-section id="manual-provider" [title]="{ th: '1. ใส่ provider', en: '1. Add the provider' }" [level]="3">
     @if (en()) {
       <p><code>provideWiraUI()</code> works in an NgModule's <code>providers</code> and in <code>app.config.ts</code>.</p>
@@ -106,7 +106,7 @@
     </ol>
     <div class="docs-note">
       <docs-icon name="info"></docs-icon>
-      <p>When you move Angular to another range (17 → 18, say), run <code>ng update wiraui</code>: it moves the major and runs any migrations.</p>
+      <p>When you move Angular to another range (17 → 18, say), update both in one command, e.g. <code>ng update &#64;angular/core&#64;18 &#64;angular/cli&#64;18 wiraui&#64;v2-beta</code>: it moves the major and runs any migrations.</p>
     </div>
   } @else {
     <p>ติดตั้งข้ามช่วงไม่ได้ (เช่น v1 ลง Angular 18) โดยกันไว้ 3 ชั้น</p>
@@ -117,7 +117,7 @@
     </ol>
     <div class="docs-note">
       <docs-icon name="info"></docs-icon>
-      <p>อัปเกรด Angular ข้ามช่วง (เช่น 17 → 18) ใช้ <code>ng update wiraui</code> ซึ่งขยับ major ให้และรัน migration ถ้ามี API เปลี่ยน</p>
+      <p>อัปเกรด Angular ข้ามช่วง (เช่น 17 → 18) ให้อัปเดตทั้งคู่ในคำสั่งเดียว เช่น <code>ng update &#64;angular/core&#64;18 &#64;angular/cli&#64;18 wiraui&#64;v2-beta</code> ซึ่งขยับ major ให้และรัน migration ถ้ามี API เปลี่ยน</p>
     </div>
   }
 </docs-section>
