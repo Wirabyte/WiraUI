@@ -109,7 +109,7 @@ jobs:
         run: npx ng build
 
   version-lock:
-    name: @wirabyte/ui@1 must not install on Angular 18
+    name: '@wirabyte/ui@1 must not install on Angular 18'
     needs: build
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     # In runner.temp for the same reason as the job above.
