@@ -14,8 +14,8 @@ export const CHART_DOC: ComponentDoc = {
   module: 'WuChartModule',
   selector: 'wu-chart',
   description: {
-    th: 'กราฟของ WiraUI เอง วาดด้วย SVG ไม่ต้องติดตั้ง Chart.js: แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น (โค้ง ขั้นบันได) พื้นที่ไล่สี วงกลม โดนัท วงแหวนและเกจ วงกลมแบบรัศมี เรดาร์ จุด/ฟอง heatmap และ treemap ผสมกันได้ มีกราฟจิ๋ว คำอธิบายบนกราฟ แถบเครื่องมือซูม และกราฟที่ชี้ไปด้วยกัน ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ภาษาไทยไม่เพี้ยน) ตัวเลขแบบเงินบาท เปอร์เซ็นต์ หรือหน่วยไทย (พัน หมื่น แสน ล้าน) legend ซ่อนแสดงได้ tooltip ตามเมาส์หรือคีย์บอร์ด เคลื่อนไหวเมื่อข้อมูลเปลี่ยน และ export เป็น PNG / SVG / CSV ได้ · มีเฉพาะ wiraui@3 (v1 / v2 ใช้ ChartJS)',
-    en: 'WiraUI’s own chart, drawn in SVG with no Chart.js: bars (grouped, stacked, across), lines (smooth, steps), fading areas, pie, doughnut, radial bars and gauges, polar area, radar, scatter / bubble, heatmap and treemap, mixed as you like, plus sparklines, annotations, a zoom toolbar and charts that point together. Text is real text in the page’s font (Thai shapes properly), values read as baht, percents or Thai units (พัน, หมื่น, แสน, ล้าน), the legend hides and shows series, the tooltip follows the pointer or the keyboard, data changes animate, and charts export as PNG, SVG or CSV · wiraui@3 only (v1 / v2: ChartJS).',
+    th: 'กราฟของ WiraUI เอง วาดด้วย SVG ไม่ต้องติดตั้ง Chart.js: แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น (โค้ง ขั้นบันได) พื้นที่ไล่สี วงกลม โดนัท วงแหวนและเกจ วงกลมแบบรัศมี เรดาร์ จุด/ฟอง heatmap และ treemap ผสมกันได้ มีกราฟจิ๋ว คำอธิบายบนกราฟ แถบเครื่องมือซูม และกราฟที่ชี้ไปด้วยกัน ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ภาษาไทยไม่เพี้ยน) ตัวเลขแบบเงินบาท เปอร์เซ็นต์ หรือหน่วยไทย (พัน หมื่น แสน ล้าน) legend ซ่อนแสดงได้ tooltip ตามเมาส์หรือคีย์บอร์ด เคลื่อนไหวเมื่อข้อมูลเปลี่ยน และ export เป็น PNG / SVG / CSV ได้ · มีเฉพาะ @wirabyte/ui@3 (v1 / v2 ใช้ ChartJS)',
+    en: 'WiraUI’s own chart, drawn in SVG with no Chart.js: bars (grouped, stacked, across), lines (smooth, steps), fading areas, pie, doughnut, radial bars and gauges, polar area, radar, scatter / bubble, heatmap and treemap, mixed as you like, plus sparklines, annotations, a zoom toolbar and charts that point together. Text is real text in the page’s font (Thai shapes properly), values read as baht, percents or Thai units (พัน, หมื่น, แสน, ล้าน), the legend hides and shows series, the tooltip follows the pointer or the keyboard, data changes animate, and charts export as PNG, SVG or CSV · @wirabyte/ui@3 only (v1 / v2: ChartJS).',
   },
   english: {
     'ม.ค.': 'Jan',
@@ -185,8 +185,8 @@ export const CHART_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuChartModule</code>) และ standalone (<code>WuChart</code>) · ไม่ต้องติดตั้งอะไรเพิ่ม · กราฟที่วาดด้วย Chart.js อยู่ที่ <code>wiraui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>) ใช้คู่กันในแอปเดียวได้',
-        en: 'Works as an NgModule (<code>WuChartModule</code>) or standalone (<code>WuChart</code>) · nothing else to install · the Chart.js chart is <code>wiraui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>); both can live in one app.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuChartModule</code>) และ standalone (<code>WuChart</code>) · ไม่ต้องติดตั้งอะไรเพิ่ม · กราฟที่วาดด้วย Chart.js อยู่ที่ <code>@wirabyte/ui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>) ใช้คู่กันในแอปเดียวได้',
+        en: 'Works as an NgModule (<code>WuChartModule</code>) or standalone (<code>WuChart</code>) · nothing else to install · the Chart.js chart is <code>@wirabyte/ui/chartjs</code> (<code>&lt;wu-chartjs&gt;</code>); both can live in one app.',
       },
     },
     basic: {
@@ -422,7 +422,7 @@ export const CHART_DOC: ComponentDoc = {
     },
   },
   code: {
-    import: `import { WuChart } from 'wiraui/chart';`,
+    import: `import { WuChart } from '@wirabyte/ui/chart';`,
     basic: `<wu-chart type="bar" [labels]="months" [series]="money" format="currency"></wu-chart>`,
     line: `<wu-chart type="line" [labels]="months" [series]="visitors" [smooth]="true" format="compact"></wu-chart>
 <wu-chart type="area" [labels]="months" [series]="money" [stacked]="true" format="compact"></wu-chart>`,
@@ -498,7 +498,7 @@ export const CHART_DOC: ComponentDoc = {
 <wu-button label="ดาวน์โหลด SVG" severity="secondary" [outlined]="true" (onClick)="c.download('applicants', 'svg')"></wu-button>`,
   },
   ts: {
-    basic: `import { WuChartSeries } from 'wiraui/chart';
+    basic: `import { WuChartSeries } from '@wirabyte/ui/chart';
 
 months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'];
 money: WuChartSeries[] = [
@@ -528,7 +528,7 @@ skillScores: WuChartSeries[] = [
 readingVsScore: WuChartSeries[] = [
   { name: 'นักเรียน', data: [{ x: 2, y: 54 }, { x: 4, y: 61 }, { x: 5, y: 66, r: 9 } /* … */] },
 ];`,
-    live: `import { WuChartClickEvent, WuChartSeries } from 'wiraui/chart';
+    live: `import { WuChartClickEvent, WuChartSeries } from '@wirabyte/ui/chart';
 
 live: WuChartSeries[] = [{ name: 'ผู้เข้าชม', data: this.random() }];
 lastClick = '-';
@@ -546,7 +546,7 @@ private random(): number[] {
 }`,
     curves: `years = ['2564', '2565', '2566', '2567', '2568', '2569'];
 tuition: WuChartSeries[] = [{ name: 'ค่าเทอม', data: [12000, 12000, 13500, 13500, 15000, 15000] }];`,
-    heatmap: `import { WuChartColorRange, WuChartSeries } from 'wiraui/chart';
+    heatmap: `import { WuChartColorRange, WuChartSeries } from '@wirabyte/ui/chart';
 
 days = ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.'];
 library: WuChartSeries[] = [
@@ -561,7 +561,7 @@ ranges: WuChartColorRange[] = [
   { from: 21, to: 45, color: '#f59e0b', name: 'ปานกลาง' },
   { from: 46, to: 100, color: '#ef4444', name: 'แน่น' },
 ];`,
-    dynamic: `import { WuChartType } from 'wiraui/chart';
+    dynamic: `import { WuChartType } from '@wirabyte/ui/chart';
 
 kind: WuChartType = 'bar';
 kinds = [
@@ -604,7 +604,7 @@ admissions: WuChartSeries[] = [{ data: [12000, 6400, 2100, 1450, 980] }];`,
 scores: WuChartSeries[] = [{ name: 'คะแนน', data: [[55, 62, 71, 48, /* … */], /* … */] }];`,
     histogram: `// 200 raw values, counted into bins.
 heights: WuChartSeries[] = [{ name: 'ส่วนสูง', data: [158.2, 163.9, 151.4, /* … */] }];`,
-    sunburst: `import { WuChartNode, WuChartSeries } from 'wiraui/chart';
+    sunburst: `import { WuChartNode, WuChartSeries } from '@wirabyte/ui/chart';
 
 budgetTree: WuChartNode[] = [
   {
@@ -629,7 +629,7 @@ travelCounts: WuChartSeries[] = [{ name: 'การเดินทางมา�
 ];`,
     treemap: `departments = ['บุคลากร', 'วิชาการ', 'อาคารสถานที่', 'กิจการนักเรียน', 'เทคโนโลยี', 'งบกลาง'];
 budgets: WuChartSeries[] = [{ name: 'งบประมาณ', data: [4800000, 3200000, 2100000, 1400000, 1100000, 900000] }];`,
-    annotations: `import { WuChartAnnotations } from 'wiraui/chart';
+    annotations: `import { WuChartAnnotations } from '@wirabyte/ui/chart';
 
 notes: WuChartAnnotations = {
   y: [{ value: 20000, to: 26000, label: 'ช่วงเป้าหมาย', color: '#16a34a' }],

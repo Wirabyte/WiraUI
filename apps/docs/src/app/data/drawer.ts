@@ -140,7 +140,7 @@ export const DRAWER_DOC: ComponentDoc = {
   ts: {
     basic: `import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { WuMenuItem } from 'wiraui/menu';
+import { WuMenuItem } from '@wirabyte/ui/menu';
 
 private readonly router = inject(Router);
 menuOpen = false;
@@ -155,7 +155,7 @@ goTo(path: string): void {
   this.menuOpen = false;
   this.router.navigateByUrl(path);
 }`,
-    position: `import { WuDrawerPosition } from 'wiraui/drawer';
+    position: `import { WuDrawerPosition } from '@wirabyte/ui/drawer';
 
 side: WuDrawerPosition = 'left';
 noticeOpen = false;

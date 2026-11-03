@@ -102,7 +102,7 @@ import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-state
 import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
 import { ThaiDemo } from '../shared/demos-thai';
 
-// Shared templates compiled against wiraui@1 components (DocsV1Module imports the v1 modules).
+// Shared templates compiled against @wirabyte/ui@1 components (DocsV1Module imports the v1 modules).
 
 @Component({ selector: 'docs-button-v1', templateUrl: '../shared/button.html', standalone: false })
 export class ButtonPageV1 extends ButtonDemo {}

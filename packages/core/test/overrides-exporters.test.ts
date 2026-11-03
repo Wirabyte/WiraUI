@@ -117,7 +117,7 @@ describe('exporters', () => {
     expect(toTSOverrides(defaults('siam'), { date })).toContain('nothing differs from the Siam preset yet');
     const ts = toTSOverrides(normalize({ preset: 'wira', surface: 'zinc' }), { date });
     expect(ts).toContain("surface: '{zinc}',");
-    expect(ts).toContain("import { defineOverrides } from 'wiraui/config';");
+    expect(ts).toContain("import { defineOverrides } from '@wirabyte/ui/config';");
     expect(computeTokens(defaults()).light['surface-950']).toBe('#070b14');
   });
 });

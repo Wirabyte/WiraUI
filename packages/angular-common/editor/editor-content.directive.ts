@@ -1,5 +1,5 @@
 import { Directive, inject } from '@angular/core';
-import { ɵWuStyleLoader } from 'wiraui/config';
+import { ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_EDITOR_CSS } from './editor.styles';
 
 /**

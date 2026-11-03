@@ -25,8 +25,8 @@ import {
   ɵWuPopup,
   WuSize,
   ɵWuStyleLoader,
-} from 'wiraui/config';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/config';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 import { ɵpasswordStrength } from './password.types';
 
 /**

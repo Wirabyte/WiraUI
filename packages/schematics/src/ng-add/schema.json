@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "$id": "WiraUINgAdd",
-  "title": "ng add wiraui",
+  "title": "ng add @wirabyte/ui",
   "type": "object",
   "properties": {
     "project": {

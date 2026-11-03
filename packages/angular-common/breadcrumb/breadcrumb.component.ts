@@ -22,8 +22,8 @@ import {
   WuConfig,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 
 /** `(onItemClick)`: the item clicked. */
 export interface WuBreadcrumbItemClickEvent {

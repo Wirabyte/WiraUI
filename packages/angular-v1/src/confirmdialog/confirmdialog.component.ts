@@ -1,6 +1,6 @@
 import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { WuDialog } from 'wiraui/dialog';
+import { WuDialog } from '@wirabyte/ui/dialog';
 import { ɵWuConfirmDialogBase } from './confirmdialog.base';
 
 /**

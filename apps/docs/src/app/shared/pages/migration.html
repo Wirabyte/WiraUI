@@ -13,7 +13,7 @@
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · Angular {{ v.angular }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">&#64;wirabyte/ui&#64;{{ v.major }} · Angular {{ v.angular }}</span>
   </div>
 </header>
 
@@ -130,7 +130,7 @@
           <td>Toast · Tooltip · Popover</td>
           <td><code>&lt;wu-toast&gt;</code> · <code>[wuTooltip]</code> · <code>&lt;wu-popover&gt;</code></td>
           <td><code>WuToastModule</code> · <code>WuTooltipModule</code> · <code>WuPopoverModule</code></td>
-          <td>{{ en() ? 'The services keep their names in one import:' : 'service ใช้ชื่อเดิมได้จาก import เดียว:' }} <code>wiraui/api</code></td>
+          <td>{{ en() ? 'The services keep their names in one import:' : 'service ใช้ชื่อเดิมได้จาก import เดียว:' }} <code>&#64;wirabyte/ui/api</code></td>
         </tr>
         <tr>
           <td>AlertDialog</td>
@@ -188,7 +188,7 @@
           <td>Menubar · Menu · TabMenu</td>
           <td><code>&lt;wu-menubar&gt;</code> · <code>&lt;wu-menu&gt;</code> · <code>&lt;wu-tabmenu&gt;</code></td>
           <td><code>WuMenubarModule</code> · <code>WuMenuModule</code> · <code>WuTabMenuModule</code></td>
-          <td>{{ en() ? 'MenuItem models move over unchanged (MenuItem from' : 'model ของ MenuItem ใช้ต่อได้ไม่ต้องแก้ (MenuItem จาก' }} <code>wiraui/api</code>{{ en() ? '); popups open in the top layer, so appendTo is accepted and ignored' : ') เมนู popup เปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
+          <td>{{ en() ? 'MenuItem models move over unchanged (MenuItem from' : 'model ของ MenuItem ใช้ต่อได้ไม่ต้องแก้ (MenuItem จาก' }} <code>&#64;wirabyte/ui/api</code>{{ en() ? '); popups open in the top layer, so appendTo is accepted and ignored' : ') เมนู popup เปิดใน top layer จึงไม่ต้องใช้ appendTo' }}</td>
         </tr>
         <tr>
           <td>PanelMenu · Steps</td>
@@ -250,7 +250,7 @@
           <td>Tree · Scroller</td>
           <td><code>&lt;wu-tree&gt;</code> · <code>&lt;wu-scroller&gt;</code></td>
           <td><code>WuTreeModule</code> · <code>WuScrollerModule</code></td>
-          <td>{{ en() ? 'TreeNode (from wiraui/api), the three selection modes, filter, lazy children and per-type templates; the scroller draws only rows in view, with lazy loading' : 'TreeNode (จาก wiraui/api) การเลือกทั้งสามแบบ ค้นหา โหลดลูกเมื่อเปิด และ template ตาม type ส่วน scroller วาดเฉพาะแถวที่เห็นและโหลดทีละช่วงได้' }}</td>
+          <td>{{ en() ? 'TreeNode (from @wirabyte/ui/api), the three selection modes, filter, lazy children and per-type templates; the scroller draws only rows in view, with lazy loading' : 'TreeNode (จาก &#64;wirabyte/ui/api) การเลือกทั้งสามแบบ ค้นหา โหลดลูกเมื่อเปิด และ template ตาม type ส่วน scroller วาดเฉพาะแถวที่เห็นและโหลดทีละช่วงได้' }}</td>
         </tr>
         <tr>
           <td>Galleria</td>
@@ -437,7 +437,7 @@
       <thead>
         <tr>
           <th></th>
-          <th>{{ en() ? 'In' : 'มีใน' }} wiraui&#64;{{ v.major }}</th>
+          <th>{{ en() ? 'In' : 'มีใน' }} &#64;wirabyte/ui&#64;{{ v.major }}</th>
         </tr>
       </thead>
       <tbody>
@@ -473,18 +473,18 @@
   <ul class="docs-list">
     @if (en()) {
       @if (v.major === 1) {
-        <li><b>Theme files</b> load <code>wiraui/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add {{ v.install }} --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
+        <li><b>Theme files</b> load <code>&#64;wirabyte/ui/themes/sila-light-teal/theme.css</code> (or another theme folder) instead of your current theme file. <code>ng add {{ v.install }} --theme</code> accepts the theme name your team already uses and writes the matching one.</li>
       } @else {
-        <li><b>Presets</b> come from <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add {{ v.install }} --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
+        <li><b>Presets</b> come from <code>&#64;wirabyte/ui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …); <code>ng add {{ v.install }} --theme</code> accepts the preset name your team already uses and picks the matching one. Keep your <code>darkModeSelector</code>.</li>
       }
       <li><b>A theme exported from an old designer</b> can be rebuilt in the <a [routerLink]="link('theming/studio')">WiraUI Studio</a> with the same primary colour and font, then exported as SCSS or CSS.</li>
       <li><b>No more <code>::ng-deep</code> or <code>!important</code></b>: app CSS always beats WiraUI's <code>&#64;layer</code>. Move to tokens such as <code>--wu-card-body-gap</code> as you touch each page.</li>
       <li><b>Utility CSS</b>, grid libraries and Tailwind keep working; WiraUI ships no utility classes that clash.</li>
     } @else {
       @if (v.major === 1) {
-        <li><b>ไฟล์ธีม</b> โหลด <code>wiraui/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add {{ v.install }} --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
+        <li><b>ไฟล์ธีม</b> โหลด <code>&#64;wirabyte/ui/themes/sila-light-teal/theme.css</code> (หรือโฟลเดอร์ธีมอื่น) แทนไฟล์ธีมเดิม <code>ng add {{ v.install }} --theme</code> รับชื่อธีมที่ทีมใช้อยู่แล้วและเขียนธีมที่ตรงกันให้</li>
       } @else {
-        <li><b>preset</b> มาจาก <code>wiraui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add {{ v.install }} --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
+        <li><b>preset</b> มาจาก <code>&#64;wirabyte/ui/presets</code> (<code>Mali</code>, <code>Sila</code>, <code>Material</code>, <code>Phet</code> …) <code>ng add {{ v.install }} --theme</code> รับชื่อ preset ที่ทีมใช้อยู่แล้วและเลือกตัวที่ตรงกันให้ ใช้ <code>darkModeSelector</code> เดิมได้</li>
       }
       <li><b>ธีมที่ export จาก designer รุ่นเก่า</b> สร้างใหม่ใน <a [routerLink]="link('theming/studio')">สตูดิโอธีม</a> ด้วยสีหลักและฟอนต์เดิม แล้ว export เป็น SCSS หรือ CSS</li>
       <li><b><code>::ng-deep</code> และ <code>!important</code></b> ไม่จำเป็นแล้ว เพราะ CSS ของแอปชนะ <code>&#64;layer</code> ของ WiraUI เสมอ ค่อย ๆ เปลี่ยนเป็น token เช่น <code>--wu-card-body-gap</code> เมื่อแก้หน้านั้น</li>
@@ -502,14 +502,14 @@
   } @else {
     <p>ถ้าแอปเดิมใช้ PrimeNG จะใช้คำสั่งนี้ให้ช่วยเปลี่ยนโค้ด หรือย้ายเองตามขั้นตอนด้านบนก็ได้ เลือกตามที่สะดวก แนะนำให้ลอง <code>--dry-run</code> ก่อน ซึ่งแสดงสิ่งที่จะเปลี่ยนโดยไม่เขียนไฟล์</p>
   }
-  <docs-code [code]="'ng g wiraui:from-primeng --dry-run'" lang="bash"></docs-code>
+  <docs-code [code]="'ng g @wirabyte/ui:from-primeng --dry-run'" lang="bash"></docs-code>
   <ul class="docs-list">
     @if (en()) {
-      <li><b>Imports</b> from <code>primeng/*</code> become <code>wiraui/*</code>, including renamed modules (<code>DropdownModule</code> becomes <code>WuSelectModule</code>); services keep their names.</li>
+      <li><b>Imports</b> from <code>primeng/*</code> become <code>&#64;wirabyte/ui/*</code>, including renamed modules (<code>DropdownModule</code> becomes <code>WuSelectModule</code>); services keep their names.</li>
       <li><b>Tags</b> <code>&lt;p-…&gt;</code> in templates become <code>&lt;wu-…&gt;</code> where a component exists. Attributes such as <code>pTemplate</code> and the <code>p-*</code> classes stay, because WiraUI reads them.</li>
       <li><b>What it cannot move</b> is listed at the end of the run, for you to handle.</li>
     } @else {
-      <li><b>import</b> จาก <code>primeng/*</code> เปลี่ยนเป็น <code>wiraui/*</code> รวมถึง module ที่เปลี่ยนชื่อ (<code>DropdownModule</code> เป็น <code>WuSelectModule</code>) ส่วน service ใช้ชื่อเดิม</li>
+      <li><b>import</b> จาก <code>primeng/*</code> เปลี่ยนเป็น <code>&#64;wirabyte/ui/*</code> รวมถึง module ที่เปลี่ยนชื่อ (<code>DropdownModule</code> เป็น <code>WuSelectModule</code>) ส่วน service ใช้ชื่อเดิม</li>
       <li><b>tag</b> <code>&lt;p-…&gt;</code> ใน template เปลี่ยนเป็น <code>&lt;wu-…&gt;</code> เฉพาะตัวที่มี component แล้ว ส่วน attribute อย่าง <code>pTemplate</code> และคลาส <code>p-*</code> คงไว้ เพราะ WiraUI อ่านได้</li>
       <li><b>ส่วนที่ย้ายไม่ได้</b> จะแสดงรายการตอนจบ ให้จัดการต่อเอง</li>
     }

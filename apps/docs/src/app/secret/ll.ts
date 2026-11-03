@@ -2,14 +2,14 @@ import { DOCUMENT, NgFor } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Routes } from '@angular/router';
-import { WuButtonModule } from 'wiraui/button';
-import { WuCheckboxModule } from 'wiraui/checkbox';
-import { provideWiraUI } from 'wiraui/config';
-import { computeTokens, ThemeConfig } from 'wiraui/core';
-import { LL } from 'wiraui/presets';
-import { WuProgressBarModule } from 'wiraui/progressbar';
-import { WuTagModule } from 'wiraui/tag';
-import { WuToggleSwitchModule } from 'wiraui/toggleswitch';
+import { WuButtonModule } from '@wirabyte/ui/button';
+import { WuCheckboxModule } from '@wirabyte/ui/checkbox';
+import { provideWiraUI } from '@wirabyte/ui/config';
+import { computeTokens, ThemeConfig } from '@wirabyte/ui/core';
+import { LL } from '@wirabyte/ui/presets';
+import { WuProgressBarModule } from '@wirabyte/ui/progressbar';
+import { WuTagModule } from '@wirabyte/ui/tag';
+import { WuToggleSwitchModule } from '@wirabyte/ui/toggleswitch';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
 import { HASU } from '../core/secrets';
 
@@ -110,8 +110,8 @@ const UNITS: Unit[] = [
           <div class="docs-hasu-name">
             <span class="docs-hasu-label">PRESET</span>
             <p class="docs-hasu-name-box"><ruby>LL<rt lang="ja">はす</rt></ruby></p>
-            <code>&#64;use 'wiraui/theme' with ($preset: 'll');</code>
-            <code>provideWiraUI(&#123; preset: LL &#125;)  // import &#123; LL &#125; from 'wiraui/presets'</code>
+            <code>&#64;use '&#64;wirabyte/ui/theme' with ($preset: 'll');</code>
+            <code>provideWiraUI(&#123; preset: LL &#125;)  // import &#123; LL &#125; from '&#64;wirabyte/ui/presets'</code>
           </div>
         </div>
       </section>

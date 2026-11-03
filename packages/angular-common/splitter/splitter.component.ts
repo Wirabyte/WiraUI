@@ -24,8 +24,8 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { splitterBasis, splitterPercent, splitterReadState, splitterResize, splitterSizes, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { splitterBasis, splitterPercent, splitterReadState, splitterResize, splitterSizes, WuLocale } from '@wirabyte/ui/core';
 import { WuSplitterPanel } from './splitter-panel.component';
 import { WuSplitterResizeEndEvent, WuSplitterResizeStartEvent } from './splitter.types';
 

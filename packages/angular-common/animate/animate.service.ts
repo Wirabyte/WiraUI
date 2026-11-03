@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { EnvironmentProviders, inject, Injectable, makeEnvironmentProviders, OnDestroy } from '@angular/core';
-import { ɵwuInitializer, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵwuInitializer, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_ANIMATE_CSS } from './animate.styles';
 import { WuAnimateOptions } from './animate.types';
 

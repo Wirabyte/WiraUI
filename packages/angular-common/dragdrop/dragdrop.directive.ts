@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { ɵtoBool, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵtoBool, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_DRAGDROP_CSS } from './dragdrop.styles';
 
 type Scope = string | string[] | null | undefined;

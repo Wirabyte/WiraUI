@@ -1,4 +1,4 @@
-export type { DatePickerValue, DatePickerView, DateSelectionMode, HourFormat } from 'wiraui/core';
+export type { DatePickerValue, DatePickerView, DateSelectionMode, HourFormat } from '@wirabyte/ui/core';
 
 /** `'button'`: a button joined to the right of the field. `'input'`: an icon inside the field. */
 export type WuDatePickerIconDisplay = 'button' | 'input';

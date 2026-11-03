@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuFlowBackground } from './flow-background.component';
 import { WuFlowControls } from './flow-controls.component';
 import { WuFlowHandle } from './flow-handle.component';

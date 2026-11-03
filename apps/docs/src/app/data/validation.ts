@@ -66,8 +66,8 @@ export const VALIDATION_DOC: ComponentDoc = {
     helpers: {
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       text: {
-        th: '<code>wiraui/core</code> มี <code>validationMessage()</code> แปลง errors เป็นข้อความ และ <code>isThaiPhone()</code> / <code>isValidThaiId()</code> สำหรับตรวจเอง',
-        en: '<code>wiraui/core</code> has <code>validationMessage()</code>, which turns errors into words, and <code>isThaiPhone()</code> / <code>isValidThaiId()</code> for your own checks.',
+        th: '<code>@wirabyte/ui/core</code> มี <code>validationMessage()</code> แปลง errors เป็นข้อความ และ <code>isThaiPhone()</code> / <code>isValidThaiId()</code> สำหรับตรวจเอง',
+        en: '<code>@wirabyte/ui/core</code> has <code>validationMessage()</code>, which turns errors into words, and <code>isThaiPhone()</code> / <code>isValidThaiId()</code> for your own checks.',
       },
     },
   },
@@ -109,14 +109,14 @@ save(form: NgForm): void {
   if (form.invalid) return;   // ช่องที่ผิดขึ้นสีแดงและแสดงข้อความแล้ว
   // บันทึก
 }`,
-    reactive: `import { WuValidators } from 'wiraui/validation';
+    reactive: `import { WuValidators } from '@wirabyte/ui/validation';
 
 form = new FormGroup({
   thaiId: new FormControl('', [Validators.required, WuValidators.thaiId]),
   password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   confirm: new FormControl('', [Validators.required, WuValidators.match('password')]),
 });`,
-    helpers: `import { isThaiPhone, isValidThaiId, validationMessage } from 'wiraui/core';
+    helpers: `import { isThaiPhone, isValidThaiId, validationMessage } from '@wirabyte/ui/core';
 
 isThaiPhone('081-234-5678');                                  // true
 isValidThaiId('1-1017-00203-45-0');                            // true

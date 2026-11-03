@@ -11,7 +11,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
+import { ɵtoBool } from '@wirabyte/ui/config';
 import { ɵWuFlowHost } from './flow-host';
 import type { WuFlowFitViewOptions, WuFlowPanelPosition } from './flow.types';
 

@@ -3,7 +3,7 @@ import { row, STYLE_ROW } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ACTIONS_TS = `import { WuMenuItem } from 'wiraui/menu';
+const ACTIONS_TS = `import { WuMenuItem } from '@wirabyte/ui/menu';
 
 saveActions: WuMenuItem[] = [
   { label: 'บันทึกเป็นร่าง', icon: 'wi wi-file', command: (event) => this.run(event) },
@@ -161,7 +161,7 @@ logMenu(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuMenuItem } from 'wiraui/menu';   // รายการเมนูแบบเดียวกับ wu-menu`,
+      code: `import { WuMenuItem } from '@wirabyte/ui/menu';   // รายการเมนูแบบเดียวกับ wu-menu`,
     },
   ],
   tokens: [],

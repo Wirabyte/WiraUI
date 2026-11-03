@@ -26,7 +26,7 @@ import {
   WuConfig,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   menuFirst,
   menuFocusable,
@@ -39,7 +39,7 @@ import {
   menuTypeahead,
   menuVisible,
   WuLocale,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const depth = (key: string) => (key ? key.split('_').length : 0);

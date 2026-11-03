@@ -1,5 +1,5 @@
 import { EnvironmentProviders, makeEnvironmentProviders, ModuleWithProviders, NgModule, inject } from '@angular/core';
-import { ɵwuInitializer } from 'wiraui/config';
+import { ɵwuInitializer } from '@wirabyte/ui/config';
 import { WuI18n } from './i18n.service';
 import { WU_I18N_OPTIONS, WuI18nOptions } from './i18n.types';
 import { WuLanguageSwitch } from './language-switch.component';

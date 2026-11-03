@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import type { Observable } from 'rxjs';
-import type { ExcelSheet, ExcelStyle, ExcelTableOptions, ExcelTotal, FilterMatchMode, FilterMeta, FilterRule, SortMeta } from 'wiraui/core';
+import type { ExcelSheet, ExcelStyle, ExcelTableOptions, ExcelTotal, FilterMatchMode, FilterMeta, FilterRule, SortMeta } from '@wirabyte/ui/core';
 
 export type { FilterMatchMode, FilterMeta, FilterRule, SortMeta };
 export type WuTableSelectionMode = 'single' | 'multiple';

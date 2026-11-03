@@ -8,11 +8,12 @@ import { ICONS_CODE, ICONS_SECTIONS, ICONS_WORDS } from '../../data/icons';
 
 /*
  * The Icons page (getting-started/icons). A version page, so its demos use that version's wu-button; the icons
- * themselves (wiraicon) are the same in every version. The gallery reads wiraicon/icons.json, which angular.json
- * serves next to the SVG files (wiraicon/svg/<weight>/<name>.svg), so the list is fetched once, not bundled.
+ * themselves (wiraicon) are the same in every version. The gallery reads icons.json from @wirabyte/icons, which
+ * angular.json serves as wiraicon/icons.json next to the SVG files (wiraicon/svg/<weight>/<name>.svg), so the list is
+ * fetched once, not bundled.
  */
 
-/** One entry of wiraicon/icons.json. */
+/** One entry of @wirabyte/icons/icons.json. */
 export interface WiraIconEntry {
   name: string;
   aliases: string[];
@@ -112,7 +113,7 @@ export abstract class IconsDemo {
   /** The standalone import, as the docs show it for this version (v1 components say standalone: true). */
   readonly standaloneCode = computed(
     () => `import { Component } from '@angular/core';
-import { WiIcon } from 'wiraicon/angular';
+import { WiIcon } from '@wirabyte/icons/angular';
 
 @Component({
   selector: 'app-example',${this.v.major === 1 ? '\n  standalone: true,' : ''}

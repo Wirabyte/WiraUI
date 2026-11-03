@@ -27,7 +27,7 @@ import {
   WU_VERSION_INFO,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   buildExcel,
   EXCEL_MIME,
@@ -46,8 +46,8 @@ import {
   SortMeta,
   sortRows,
   WuLocale,
-} from 'wiraui/core';
-import { WuPageEvent } from 'wiraui/paginator';
+} from '@wirabyte/ui/core';
+import { WuPageEvent } from '@wirabyte/ui/paginator';
 import {
   WuTableExcelColumn,
   WuTableExcelOptions,
@@ -1050,7 +1050,7 @@ export abstract class ɵWuTableBase implements ɵWuTableApi, AfterContentInit, A
     });
   }
 
-  /** The table as one sheet, to put several tables in one workbook with `buildExcel()` from `wiraui/excel`. */
+  /** The table as one sheet, to put several tables in one workbook with `buildExcel()` from `@wirabyte/ui/excel`. */
   toExcelSheet(options: WuTableExcelOptions = {}): ExcelSheet {
     const { rows, cols, headerKey } = this.exportSource(options);
     const columns: ExcelTableColumn[] = cols.map((c) => {

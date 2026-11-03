@@ -4,7 +4,7 @@ import { row, tok } from './doc-helpers';
 const BOOL = 'boolean';
 
 /** The search most samples share: a method that filters a local array, the way the TS tab shows it. */
-const SEARCH_TS = `import { WuAutoCompleteCompleteEvent } from 'wiraui/autocomplete';
+const SEARCH_TS = `import { WuAutoCompleteCompleteEvent } from '@wirabyte/ui/autocomplete';
 
 interface Province {
   id: number;
@@ -31,7 +31,7 @@ search(event: WuAutoCompleteCompleteEvent): void {
 }`;
 
 /** English sample data drops the Thai names (the Thai sample keeps both, as the apps store them). */
-const SEARCH_TS_EN = `import { WuAutoCompleteCompleteEvent } from 'wiraui/autocomplete';
+const SEARCH_TS_EN = `import { WuAutoCompleteCompleteEvent } from '@wirabyte/ui/autocomplete';
 
 interface Province {
   id: number;
@@ -419,7 +419,7 @@ log(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuAutoCompleteCompleteEvent, WuAutoCompleteSelectEvent } from 'wiraui/autocomplete';
+      code: `import { WuAutoCompleteCompleteEvent, WuAutoCompleteSelectEvent } from '@wirabyte/ui/autocomplete';
 
 interface WuAutoCompleteCompleteEvent {
   originalEvent: Event;

@@ -28,9 +28,9 @@ import {
   ɵWuStyleLoader,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { WuLocale } from '@wirabyte/ui/core';
 
 export type WuDrawerPosition = 'left' | 'right' | 'top' | 'bottom' | 'full';
 

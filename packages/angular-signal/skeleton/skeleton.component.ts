@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuSkeletonAnimation, WuSkeletonShape } from './skeleton.types';
 
 /** Placeholder while content loads: `<wu-skeleton width="10rem" height="1rem">`, `<wu-skeleton shape="circle" size="3rem">`. */

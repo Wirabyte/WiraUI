@@ -152,7 +152,7 @@ students = Array.from({ length: 1000 }, (_, i) => ({
   room: this.rooms[i % this.rooms.length],
 }));   // สร้าง 1,000 แถว`,
     horizontal: `days = Array.from({ length: 365 }, (_, i) => ({ no: i + 1, periods: 6 + (i % 3) }));`,
-    lazy: `import { WuScrollerRange } from 'wiraui/scroller';
+    lazy: `import { WuScrollerRange } from '@wirabyte/ui/scroller';
 
 lazyStudents: (Student | undefined)[] = Array.from({ length: 1000 });   // จำนวนทั้งหมดจาก API
 isApiLoading = false;
@@ -169,7 +169,7 @@ loadStudents(range: WuScrollerRange): void {
     error: () => (this.isApiLoading = false),
   });
 }`,
-    methods: `import { WuScrollerRange } from 'wiraui/scroller';
+    methods: `import { WuScrollerRange } from '@wirabyte/ui/scroller';
 
 firstInView = 0;
 

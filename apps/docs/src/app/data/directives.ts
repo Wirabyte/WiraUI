@@ -42,8 +42,8 @@ export const RIPPLE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: '<code>pRipple</code> ใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuRippleModule</code> จาก <code>wiraui/ripple</code> class <code>p-ripple</code> อยู่คู่กับ <code>wu-ripple</code>',
-        en: '<code>pRipple</code> keeps working; only the import changes to <code>WuRippleModule</code> from <code>wiraui/ripple</code>. The <code>p-ripple</code> class sits next to <code>wu-ripple</code>.',
+        th: '<code>pRipple</code> ใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuRippleModule</code> จาก <code>@wirabyte/ui/ripple</code> class <code>p-ripple</code> อยู่คู่กับ <code>wu-ripple</code>',
+        en: '<code>pRipple</code> keeps working; only the import changes to <code>WuRippleModule</code> from <code>@wirabyte/ui/ripple</code>. The <code>p-ripple</code> class sits next to <code>wu-ripple</code>.',
       },
     },
   },
@@ -62,7 +62,7 @@ export const RIPPLE_DOC: ComponentDoc = {
   },
   ts: {
     basic: `import { inject } from '@angular/core';
-import { WuConfig } from 'wiraui/config';
+import { WuConfig } from '@wirabyte/ui/config';
 
 private readonly config = inject(WuConfig);
 rippleOn = this.config.ripple;
@@ -155,8 +155,8 @@ export const KEYFILTER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: '<code>pKeyFilter="int"</code> และ <code>pValidateOnly</code> ใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuKeyFilterModule</code> จาก <code>wiraui/keyfilter</code> และมีชุด <code>thai</code> เพิ่ม',
-        en: '<code>pKeyFilter="int"</code> and <code>pValidateOnly</code> keep working; only the import changes to <code>WuKeyFilterModule</code> from <code>wiraui/keyfilter</code>, and there is a new <code>thai</code> filter.',
+        th: '<code>pKeyFilter="int"</code> และ <code>pValidateOnly</code> ใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuKeyFilterModule</code> จาก <code>@wirabyte/ui/keyfilter</code> และมีชุด <code>thai</code> เพิ่ม',
+        en: '<code>pKeyFilter="int"</code> and <code>pValidateOnly</code> keep working; only the import changes to <code>WuKeyFilterModule</code> from <code>@wirabyte/ui/keyfilter</code>, and there is a new <code>thai</code> filter.',
       },
     },
   },
@@ -213,7 +213,7 @@ phonePattern = /^0\\d{9}$/;   // ทั้งค่า: 0 ตามด้วย�
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WU_KEYFILTER_PRESETS, WuKeyFilterPreset } from 'wiraui/keyfilter';
+      code: `import { WU_KEYFILTER_PRESETS, WuKeyFilterPreset } from '@wirabyte/ui/keyfilter';
 
 type WuKeyFilterPreset = 'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum' | 'thai';
 const WU_KEYFILTER_PRESETS: Record<WuKeyFilterPreset, RegExp>;`,

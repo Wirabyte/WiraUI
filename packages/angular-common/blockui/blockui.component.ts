@@ -15,7 +15,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵlockScroll, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵlockScroll, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 

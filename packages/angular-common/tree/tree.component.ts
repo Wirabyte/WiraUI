@@ -26,11 +26,11 @@ import {
   ɵWuStyleLoader,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ɵWU_SELECT_CSS } from 'wiraui/select';
-import { filterTree, sameNode, toggleTreeCheck, TreeCheckState, treeCheckStates, TreeFilterMode, TreeNode, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵWU_CHECKBOX_CSS } from '@wirabyte/ui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ɵWU_SELECT_CSS } from '@wirabyte/ui/select';
+import { filterTree, sameNode, toggleTreeCheck, TreeCheckState, treeCheckStates, TreeFilterMode, TreeNode, WuLocale } from '@wirabyte/ui/core';
 
 /** `(onNodeSelect)`, `(onNodeExpand)` and the like: the node and the event behind it. */
 export interface WuTreeNodeEvent {

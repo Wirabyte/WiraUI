@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WuLocale } from 'wiraui/core';
+import { CalendarSystem, DarkMode, Scheme, ThemeOverrides, ThemePreset, WuLocale } from '@wirabyte/ui/core';
 
 /**
  * Size of the whole UI: the root font size every rem in the theme follows.

@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, ContentChild, ContentChildren, Directive, ElementRef, inject, Input, NgZone, OnDestroy, QueryList, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵfindTemplate, ɵtoBool, ɵWuPopup, ɵWuStyleLoader, WuConfig, WuTemplate } from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { FilterMatchMode, FilterMeta, WuLocale } from 'wiraui/core';
+import { ɵfindTemplate, ɵtoBool, ɵWuPopup, ɵWuStyleLoader, WuConfig, WuTemplate } from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { FilterMatchMode, FilterMeta, WuLocale } from '@wirabyte/ui/core';
 import { ɵWU_TABLE } from './table.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

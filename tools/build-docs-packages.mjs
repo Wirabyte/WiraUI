@@ -1,5 +1,5 @@
 // Packs the three wiraui majors for the docs site (apps/docs), which installs them side by side:
-//   wiraui-v1, wiraui-v2  → renamed builds (their internal 'wiraui/…' imports renamed too)
+//   wiraui-v1, wiraui-v2  → renamed builds (their internal '@wirabyte/ui/…' imports renamed too)
 //   wiraui                   → the normal v3 build
 //   wiraicon                    → the icon package (packages/icons/dist; run its build first)
 // Output: apps/docs/vendor/*.tgz, installed into apps/docs/node_modules.
@@ -7,11 +7,11 @@
 //
 // The first time (or with a package missing) it installs them all with npm. After that it only swaps in the packages
 // whose tarball changed, each unpacked beside the old one and moved into place in one rename: a running `ng serve`
-// never finds a package (say wiraicon/wiraicon.css) half gone, and unchanged packages are not touched at all.
+// never finds a package (say @wirabyte/icons/wiraicon.css) half gone, and unchanged packages are not touched at all.
 import { execSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { basename, dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -33,8 +33,8 @@ run(`npm pack --pack-destination "${vendor}"`, join(root, 'packages', 'icons', '
 const docs = join(root, 'apps', 'docs');
 const modules = join(docs, 'node_modules');
 const files = readdirSync(vendor);
-/** `wiraui-v1-1.0.0-beta.0.tgz` → `wiraui-v1`. */
-const nameOf = (file) => file.replace(/-\d+\.\d+\.\d+[^/]*\.tgz$/, '');
+/** `wiraui-v1-1.0.0-beta.0.tgz` → `wiraui-v1`; npm packs `@wirabyte/ui` as `wirabyte-ui-…tgz`. */
+const nameOf = (file) => file.replace(/-\d+\.\d+\.\d+[^/]*\.tgz$/, '').replace(/^wirabyte-/, '@wirabyte/');
 const hashOf = (file) => createHash('sha256').update(readFileSync(join(vendor, file))).digest('hex');
 /** Where the hash of the tarball a package came from is kept. */
 const stampOf = (name) => join(modules, name, '.wu-pack');
@@ -48,7 +48,7 @@ if (missing) {
   // './' matters: without it npm reads `vendor/x.tgz` as a GitHub owner/repo shorthand.
   for (const f of files) rmSync(join(modules, nameOf(f)), { recursive: true, force: true });
   rmSync(join(docs, '.angular', 'cache'), { recursive: true, force: true });
-  // chart.js is wiraui/chartjs's optional peer; it goes in the same install (a second --no-save install would prune it).
+  // chart.js is @wirabyte/ui/chartjs's optional peer; it goes in the same install (a second --no-save install would prune it).
   run(`${process.env.WU_NPM || 'npm'} install --no-save --no-audit --no-fund ${files.map((f) => `./vendor/${f}`).join(' ')} chart.js@^4.5.1`, docs);
   for (const f of files) writeFileSync(stampOf(nameOf(f)), hashOf(f));
   console.log('docs packages (installed):', files.join(', '));
@@ -70,8 +70,9 @@ if (missing) {
 /** Unpack `tgz` beside the installed package, then move it into place (a copy over it when a watcher holds the folder). */
 function swap(name, tgz) {
   const dest = join(modules, name);
-  const fresh = join(modules, `.wu-new-${name}`);
-  const old = join(modules, `.wu-old-${name}`);
+  // Beside it, in the same folder (a scoped name's scope folder), so each move stays a rename.
+  const fresh = join(dirname(dest), `.wu-new-${basename(dest)}`);
+  const old = join(dirname(dest), `.wu-old-${basename(dest)}`);
   rmSync(fresh, { recursive: true, force: true });
   rmSync(old, { recursive: true, force: true });
   mkdirSync(fresh, { recursive: true });

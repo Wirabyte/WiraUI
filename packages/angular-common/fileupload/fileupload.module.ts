@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuFileUpload } from './fileupload.component';
 
 /** For NgModule apps: the file upload and `wuTemplate` (`pTemplate`). Standalone apps can import `WuFileUpload` directly. */

@@ -13,7 +13,7 @@ import type {
   ChartValueFormat,
   ChartXAnnotation,
   ChartXY,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 export type {
   ChartAnnotations as WuChartAnnotations,

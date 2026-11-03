@@ -1,6 +1,6 @@
 // Installs the packed wiraui into each playground with `ng add`, drops in the shared test page
 // and builds it. Usage: node tools/setup-playgrounds.mjs [v1 v2 v3]
-// Needs packages/angular-<v>/wiraui-*.tgz (pnpm build:ng, then `pnpm --filter … pack`).
+// Needs packages/angular-<v>/wirabyte-ui-*.tgz (pnpm build:ng, then `pnpm --filter … pack`).
 import { execSync } from 'node:child_process';
 import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
@@ -18,25 +18,25 @@ const run = (cmd, cwd) => {
 for (const v of versions) {
   const app = join(root, 'apps', `playground-${v}`);
   const shell = join(root, 'packages', `angular-${v}`);
-  const tgz = readdirSync(shell).find((f) => /^wiraui-.*\.tgz$/.test(f));
+  const tgz = readdirSync(shell).find((f) => /^wirabyte-ui-.*\.tgz$/.test(f));
   if (!tgz) throw new Error(`${v}: no packed tarball in ${shell}; run its "pack" script first`);
   const src = join(app, 'src', 'app');
 
-  // Install the tarball, then `ng add wiraui` finds it installed and runs its ng-add schematic.
+  // Install the tarball, then `ng add @wirabyte/ui` finds it installed and runs its ng-add schematic.
   // (Angular CLI 21 cannot `ng add` a file: spec directly; real users install by name from the registry.)
   // WU_NPM lets you swap in a different npm, e.g. WU_NPM="npx -y npm@11" when the global npm is broken.
   const tarball = relative(app, join(shell, tgz)).split(sep).join('/');
   // Same version number on every local rebuild, so drop the old copy and the CLI's build cache
   // (Angular 15's webpack cache keys on package versions and would keep serving stale wiraui code).
-  rmSync(join(app, 'node_modules', 'wiraui'), { recursive: true, force: true });
+  rmSync(join(app, 'node_modules', '@wirabyte', 'ui'), { recursive: true, force: true });
   rmSync(join(app, '.angular', 'cache'), { recursive: true, force: true });
   // The theme file is ng add's output and ng add never overwrites one; drop it so a changed default theme shows up.
   for (const ext of ['scss', 'css']) rmSync(join(app, 'src', 'theme', `wiraui.theme.${ext}`), { force: true });
   // --no-save keeps package.json / package-lock.json free of the local tarball, so `npm ci` keeps working.
-  // chart.js is wiraui/chartjs's optional peer; it goes in the same install (a second --no-save install would prune it).
+  // chart.js is @wirabyte/ui/chartjs's optional peer; it goes in the same install (a second --no-save install would prune it).
   run(`${process.env.WU_NPM || 'npm'} install --no-save --no-audit --no-fund ${tarball} chart.js@^4.5.1`, app);
   // v3's default is Wira; the shared test page checks the styled look and its --p-* names, so v3 installs Mali.
-  run(`npx ng add wiraui --skip-confirmation --defaults --dark-mode=class --font=none${v === 'v3' ? ' --theme=mali' : ''}`, app);
+  run(`npx ng add @wirabyte/ui --skip-confirmation --defaults --dark-mode=class --font=none${v === 'v3' ? ' --theme=mali' : ''}`, app);
 
   copyFileSync(join(fixtures, 'app.component.html'), join(src, 'app.component.html'));
   if (v === 'v3') {
@@ -47,93 +47,93 @@ for (const v of versions) {
     const needs = [
       ['FormsModule', '@angular/forms'],
       ['ReactiveFormsModule', '@angular/forms'],
-      ['WuButtonModule', 'wiraui/button'],
-      ['WuCardModule', 'wiraui/card'],
-      ['WuInputTextModule', 'wiraui/inputtext'],
-      ['WuTextareaModule', 'wiraui/textarea'],
-      ['WuCheckboxModule', 'wiraui/checkbox'],
-      ['WuRadioButtonModule', 'wiraui/radiobutton'],
-      ['WuToggleSwitchModule', 'wiraui/toggleswitch'],
-      ['WuTagModule', 'wiraui/tag'],
-      ['WuBadgeModule', 'wiraui/badge'],
-      ['WuChipModule', 'wiraui/chip'],
-      ['WuAvatarModule', 'wiraui/avatar'],
-      ['WuDividerModule', 'wiraui/divider'],
-      ['WuSkeletonModule', 'wiraui/skeleton'],
-      ['WuProgressBarModule', 'wiraui/progressbar'],
-      ['WuMeterGroupModule', 'wiraui/metergroup'],
-      ['WuSelectModule', 'wiraui/select'],
-      ['WuTableModule', 'wiraui/table'],
-      ['WuMenubarModule', 'wiraui/menubar'],
-      ['WuMenuModule', 'wiraui/menu'],
-      ['WuTabMenuModule', 'wiraui/tabmenu'],
-      ['WuMultiSelectModule', 'wiraui/multiselect'],
-      ['WuInputMaskModule', 'wiraui/inputmask'],
-      ['WuTimelineModule', 'wiraui/timeline'],
-      ['WuChartJsModule', 'wiraui/chartjs'],
-      ['WuImageModule', 'wiraui/image'],
-      ['WuAutoCompleteModule', 'wiraui/autocomplete'],
-      ['WuPanelMenuModule', 'wiraui/panelmenu'],
-      ['WuStepsModule', 'wiraui/steps'],
-      ['WuPickListModule', 'wiraui/picklist'],
-      ['WuOrderListModule', 'wiraui/orderlist'],
-      ['WuFileUploadModule', 'wiraui/fileupload'],
-      ['WuStepperModule', 'wiraui/stepper'],
-      ['WuEditorModule', 'wiraui/editor'],
-      ['WuRippleModule', 'wiraui/ripple'],
-      ['WuKeyFilterModule', 'wiraui/keyfilter'],
-      ['WuSliderModule', 'wiraui/slider'],
-      ['WuSplitButtonModule', 'wiraui/splitbutton'],
-      ['WuListboxModule', 'wiraui/listbox'],
-      ['WuGalleriaModule', 'wiraui/galleria'],
-      ['WuColorPickerModule', 'wiraui/colorpicker'],
-      ['WuBreadcrumbModule', 'wiraui/breadcrumb'],
-      ['WuNavbarModule', 'wiraui/navbar'],
-      ['WuAsideMenuModule', 'wiraui/asidemenu'],
-      ['WuImageCropperModule', 'wiraui/imagecropper'],
-      ['WuI18nModule', 'wiraui/i18n'],
-      ['WuTerminalModule', 'wiraui/terminal'],
-      ['WuImageCompareModule', 'wiraui/imagecompare'],
-      ['WuCarouselModule', 'wiraui/carousel'],
-      ['WuSplitterModule', 'wiraui/splitter'],
-      ['WuOrganizationChartModule', 'wiraui/organizationchart'],
-      ['WuKnobModule', 'wiraui/knob'],
-      ['WuInputOtpModule', 'wiraui/inputotp'],
-      ['WuFlowModule', 'wiraui/flow'],
-      ['WuInplaceModule', 'wiraui/inplace'],
-      ['WuBlockUIModule', 'wiraui/blockui'],
-      ['WuScrollPanelModule', 'wiraui/scrollpanel'],
-      ['WuScrollerModule', 'wiraui/scroller'],
-      ['WuDrawerModule', 'wiraui/drawer'],
-      ['WuTieredMenuModule', 'wiraui/tieredmenu'],
-      ['WuContextMenuModule', 'wiraui/contextmenu'],
-      ['WuTreeModule', 'wiraui/tree'],
-      ['WuTreeSelectModule', 'wiraui/treeselect'],
-      ['WuDragDropModule', 'wiraui/dragdrop'],
-      ['WuProgressSpinnerModule', 'wiraui/progressspinner'],
-      ['WuMessageModule', 'wiraui/message'],
-      ['WuPanelModule', 'wiraui/panel'],
-      ['WuFieldsetModule', 'wiraui/fieldset'],
-      ['WuIconFieldModule', 'wiraui/iconfield'],
-      ['WuInputGroupModule', 'wiraui/inputgroup'],
-      ['WuFloatLabelModule', 'wiraui/floatlabel'],
-      ['WuToggleButtonModule', 'wiraui/togglebutton'],
-      ['WuSelectButtonModule', 'wiraui/selectbutton'],
-      ['WuRatingModule', 'wiraui/rating'],
-      ['WuPasswordModule', 'wiraui/password'],
-      ['WuToolbarModule', 'wiraui/toolbar'],
-      ['WuAccordionModule', 'wiraui/accordion'],
-      ['WuTabsModule', 'wiraui/tabs'],
-      ['WuInputNumberModule', 'wiraui/inputnumber'],
-      ['WuDatePickerModule', 'wiraui/datepicker'],
-      ['WuDialogModule', 'wiraui/dialog'],
-      ['WuAlertModule', 'wiraui/alert'],
-      ['WuConfirmDialogModule', 'wiraui/confirmdialog'],
-      ['WuToastModule', 'wiraui/toast'],
-      ['WuTooltipModule', 'wiraui/tooltip'],
-      ['WuPopoverModule', 'wiraui/popover'],
-      ['WuAnimateModule', 'wiraui/animate'],
-      ['WuValidationModule', 'wiraui/validation'],
+      ['WuButtonModule', '@wirabyte/ui/button'],
+      ['WuCardModule', '@wirabyte/ui/card'],
+      ['WuInputTextModule', '@wirabyte/ui/inputtext'],
+      ['WuTextareaModule', '@wirabyte/ui/textarea'],
+      ['WuCheckboxModule', '@wirabyte/ui/checkbox'],
+      ['WuRadioButtonModule', '@wirabyte/ui/radiobutton'],
+      ['WuToggleSwitchModule', '@wirabyte/ui/toggleswitch'],
+      ['WuTagModule', '@wirabyte/ui/tag'],
+      ['WuBadgeModule', '@wirabyte/ui/badge'],
+      ['WuChipModule', '@wirabyte/ui/chip'],
+      ['WuAvatarModule', '@wirabyte/ui/avatar'],
+      ['WuDividerModule', '@wirabyte/ui/divider'],
+      ['WuSkeletonModule', '@wirabyte/ui/skeleton'],
+      ['WuProgressBarModule', '@wirabyte/ui/progressbar'],
+      ['WuMeterGroupModule', '@wirabyte/ui/metergroup'],
+      ['WuSelectModule', '@wirabyte/ui/select'],
+      ['WuTableModule', '@wirabyte/ui/table'],
+      ['WuMenubarModule', '@wirabyte/ui/menubar'],
+      ['WuMenuModule', '@wirabyte/ui/menu'],
+      ['WuTabMenuModule', '@wirabyte/ui/tabmenu'],
+      ['WuMultiSelectModule', '@wirabyte/ui/multiselect'],
+      ['WuInputMaskModule', '@wirabyte/ui/inputmask'],
+      ['WuTimelineModule', '@wirabyte/ui/timeline'],
+      ['WuChartJsModule', '@wirabyte/ui/chartjs'],
+      ['WuImageModule', '@wirabyte/ui/image'],
+      ['WuAutoCompleteModule', '@wirabyte/ui/autocomplete'],
+      ['WuPanelMenuModule', '@wirabyte/ui/panelmenu'],
+      ['WuStepsModule', '@wirabyte/ui/steps'],
+      ['WuPickListModule', '@wirabyte/ui/picklist'],
+      ['WuOrderListModule', '@wirabyte/ui/orderlist'],
+      ['WuFileUploadModule', '@wirabyte/ui/fileupload'],
+      ['WuStepperModule', '@wirabyte/ui/stepper'],
+      ['WuEditorModule', '@wirabyte/ui/editor'],
+      ['WuRippleModule', '@wirabyte/ui/ripple'],
+      ['WuKeyFilterModule', '@wirabyte/ui/keyfilter'],
+      ['WuSliderModule', '@wirabyte/ui/slider'],
+      ['WuSplitButtonModule', '@wirabyte/ui/splitbutton'],
+      ['WuListboxModule', '@wirabyte/ui/listbox'],
+      ['WuGalleriaModule', '@wirabyte/ui/galleria'],
+      ['WuColorPickerModule', '@wirabyte/ui/colorpicker'],
+      ['WuBreadcrumbModule', '@wirabyte/ui/breadcrumb'],
+      ['WuNavbarModule', '@wirabyte/ui/navbar'],
+      ['WuAsideMenuModule', '@wirabyte/ui/asidemenu'],
+      ['WuImageCropperModule', '@wirabyte/ui/imagecropper'],
+      ['WuI18nModule', '@wirabyte/ui/i18n'],
+      ['WuTerminalModule', '@wirabyte/ui/terminal'],
+      ['WuImageCompareModule', '@wirabyte/ui/imagecompare'],
+      ['WuCarouselModule', '@wirabyte/ui/carousel'],
+      ['WuSplitterModule', '@wirabyte/ui/splitter'],
+      ['WuOrganizationChartModule', '@wirabyte/ui/organizationchart'],
+      ['WuKnobModule', '@wirabyte/ui/knob'],
+      ['WuInputOtpModule', '@wirabyte/ui/inputotp'],
+      ['WuFlowModule', '@wirabyte/ui/flow'],
+      ['WuInplaceModule', '@wirabyte/ui/inplace'],
+      ['WuBlockUIModule', '@wirabyte/ui/blockui'],
+      ['WuScrollPanelModule', '@wirabyte/ui/scrollpanel'],
+      ['WuScrollerModule', '@wirabyte/ui/scroller'],
+      ['WuDrawerModule', '@wirabyte/ui/drawer'],
+      ['WuTieredMenuModule', '@wirabyte/ui/tieredmenu'],
+      ['WuContextMenuModule', '@wirabyte/ui/contextmenu'],
+      ['WuTreeModule', '@wirabyte/ui/tree'],
+      ['WuTreeSelectModule', '@wirabyte/ui/treeselect'],
+      ['WuDragDropModule', '@wirabyte/ui/dragdrop'],
+      ['WuProgressSpinnerModule', '@wirabyte/ui/progressspinner'],
+      ['WuMessageModule', '@wirabyte/ui/message'],
+      ['WuPanelModule', '@wirabyte/ui/panel'],
+      ['WuFieldsetModule', '@wirabyte/ui/fieldset'],
+      ['WuIconFieldModule', '@wirabyte/ui/iconfield'],
+      ['WuInputGroupModule', '@wirabyte/ui/inputgroup'],
+      ['WuFloatLabelModule', '@wirabyte/ui/floatlabel'],
+      ['WuToggleButtonModule', '@wirabyte/ui/togglebutton'],
+      ['WuSelectButtonModule', '@wirabyte/ui/selectbutton'],
+      ['WuRatingModule', '@wirabyte/ui/rating'],
+      ['WuPasswordModule', '@wirabyte/ui/password'],
+      ['WuToolbarModule', '@wirabyte/ui/toolbar'],
+      ['WuAccordionModule', '@wirabyte/ui/accordion'],
+      ['WuTabsModule', '@wirabyte/ui/tabs'],
+      ['WuInputNumberModule', '@wirabyte/ui/inputnumber'],
+      ['WuDatePickerModule', '@wirabyte/ui/datepicker'],
+      ['WuDialogModule', '@wirabyte/ui/dialog'],
+      ['WuAlertModule', '@wirabyte/ui/alert'],
+      ['WuConfirmDialogModule', '@wirabyte/ui/confirmdialog'],
+      ['WuToastModule', '@wirabyte/ui/toast'],
+      ['WuTooltipModule', '@wirabyte/ui/tooltip'],
+      ['WuPopoverModule', '@wirabyte/ui/popover'],
+      ['WuAnimateModule', '@wirabyte/ui/animate'],
+      ['WuValidationModule', '@wirabyte/ui/validation'],
     ];
     const modFile = join(src, 'app.module.ts');
     let mod = readFileSync(modFile, 'utf8');

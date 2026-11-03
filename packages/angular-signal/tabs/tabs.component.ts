@@ -20,7 +20,7 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
 import { WuTabMenu } from './tabmenu.component';
 import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WuTabsChangeEvent, WuTabValue } from './tabs.types';
 

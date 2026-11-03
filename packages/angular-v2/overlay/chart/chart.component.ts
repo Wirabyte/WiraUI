@@ -1,10 +1,10 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ɵWuChartJsBase } from 'wiraui/chartjs';
+import { ɵWuChartJsBase } from '@wirabyte/ui/chartjs';
 
 /**
  * The Chart.js chart under the name older code uses: `<wu-chart type="bar" [data]="data" [options]="options">`, the
- * same component as `<wu-chartjs>` (wiraui/chartjs). The app installs chart.js 3 or 4. In wiraui v3 `wu-chart`
+ * same component as `<wu-chartjs>` (@wirabyte/ui/chartjs). The app installs chart.js 3 or 4. In wiraui v3 `wu-chart`
  * is WiraUI's own chart, which takes the same data and options.
  */
 @Component({

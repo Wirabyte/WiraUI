@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import {
   acceptsNumberInput,
   acceptsNumberText,
@@ -26,8 +26,8 @@ import {
   NumberTypingRules,
   parseNumber,
   stepNumber,
-} from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 import { WuInputNumberButtonLayout, WuInputNumberInputEvent, WuInputNumberMode } from './inputnumber.types';
 
 const optionalNumber = (v: unknown): number | null => (v === null || v === undefined || v === '' || isNaN(Number(v)) ? null : Number(v));

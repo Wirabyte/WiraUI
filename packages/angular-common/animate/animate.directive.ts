@@ -1,5 +1,5 @@
 import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
+import { ɵtoBool } from '@wirabyte/ui/config';
 import { WuAnimateService } from './animate.service';
 import { WuAnimation } from './animate.types';
 

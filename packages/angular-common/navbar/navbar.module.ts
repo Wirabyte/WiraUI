@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuNavbar } from './navbar.component';
 
 /** For NgModule apps (with `WuTemplate` for `wuTemplate="start"` / `"end"` / `"item"`). Standalone apps can import `WuNavbar` directly. */

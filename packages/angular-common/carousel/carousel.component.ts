@@ -19,7 +19,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { WuFooter, WuHeader } from 'wiraui/card';
+import { WuFooter, WuHeader } from '@wirabyte/ui/card';
 import {
   ɵassertSupportedAngular,
   ɵfindTemplate,
@@ -28,7 +28,7 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   carouselClampPage,
   carouselFirst,
@@ -39,7 +39,7 @@ import {
   carouselStep,
   CarouselResponsiveOptions,
   WuLocale,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { WuCarouselButtonProps, WuCarouselPageEvent } from './carousel.types';
 
 /** One drawn item: a real one, or a copy at either end that makes a circular carousel wrap smoothly. */

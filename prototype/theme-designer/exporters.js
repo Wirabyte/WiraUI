@@ -38,7 +38,7 @@
     lines.push('// ─────────────────────────────────────────────────────────────');
     lines.push('// ' + configLine(c));
     lines.push('');
-    lines.push("@use 'wiraui/theme' with (");
+    lines.push("@use '@wirabyte/ui/theme' with (");
     lines.push(`  $preset: '${c.preset}',`);
     lines.push(`  $primary: (${c.primaryShades ? '' : '                 // made from ' + c.primary}`);
     WU.SHADES.forEach((s) => lines.push(`    ${s}: ${P[s]},`));
@@ -169,7 +169,7 @@
       '// Goes with the main theme file (SCSS/CSS): values here win over it through @layer wiraui.overrides',
       '// ' + configLine(c),
       '',
-      `import { ${imp} } from 'wiraui/config';`,
+      `import { ${imp} } from '@wirabyte/ui/config';`,
       '',
       'export const wiraOverrides = defineOverrides({',
       tsBody(c, '  '),
@@ -187,8 +187,8 @@
       '// TypeScript only: no SCSS/CSS theme file needed',
       '// ' + configLine(c),
       '',
-      `import { ${imp} } from 'wiraui/config';`,
-      `import { ${cls} } from 'wiraui/presets';`,
+      `import { ${imp} } from '@wirabyte/ui/config';`,
+      `import { ${cls} } from '@wirabyte/ui/presets';`,
       '',
       `export const AppTheme = definePreset(${cls}, {`,
       tsBody(c, '  '),
@@ -214,7 +214,7 @@
     opts.push(`ripple: ${c.ripple},`);
     opts.push("locale: 'th',");
     opts.push("calendar: 'buddhist',");
-    const imports = ["import { provideWiraUI } from 'wiraui/config';"];
+    const imports = ["import { provideWiraUI } from '@wirabyte/ui/config';"];
     const rel = app === 'module' ? '../theme' : '../theme';
     if (format === 'ts-preset') imports.push(`import { AppTheme } from '${rel}/wiraui.preset';`);
     if (format === 'ts-overrides') imports.push(`import { wiraOverrides } from '${rel}/wiraui.overrides';`);
@@ -250,7 +250,7 @@
     const v = NG[ng];
     const steps = [{
       title: { th: `ติดตั้งแพ็กเกจ (Angular ${v.range} → wiraui v${v.tag})`, en: `Install the package (Angular ${v.range} → wiraui v${v.tag})` },
-      code: `ng add wiraui --defaults\n# หรือ / or\nnpm i wiraui@${v.tag}`,
+      code: `ng add @wirabyte/ui --defaults\n# หรือ / or\nnpm i @wirabyte/ui@${v.tag}`,
     }];
     if (format === 'scss') {
       steps.push({

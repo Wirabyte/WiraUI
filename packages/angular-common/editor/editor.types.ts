@@ -1,5 +1,5 @@
 import { InjectionToken, Provider } from '@angular/core';
-import type { EditorTool, EditorToolbar, EditorToolOptions } from 'wiraui/core';
+import type { EditorTool, EditorToolbar, EditorToolOptions } from '@wirabyte/ui/core';
 
 export type { EditorTool, EditorToolbar, EditorToolOptions };
 

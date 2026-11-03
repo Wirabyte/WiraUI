@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
-import type { I18nMessages, WuLocale } from 'wiraui/core';
+import type { I18nMessages, WuLocale } from '@wirabyte/ui/core';
 
-export type { I18nMessages } from 'wiraui/core';
+export type { I18nMessages } from '@wirabyte/ui/core';
 
 /**
  * The app's languages and texts: `provideWuI18n({ languages: ['th', 'en'], messages: { en: { 'บันทึก': 'Save' } } })`.

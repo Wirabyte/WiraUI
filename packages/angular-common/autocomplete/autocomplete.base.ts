@@ -27,10 +27,10 @@ import {
   ɵWuPopup,
   ɵWuStyleLoader,
   WuTemplate,
-} from 'wiraui/config';
-import { firstIndex, lastIndex, optionField, sameValue, searchText, SelectItem, selectItems, stepIndex, WuLocale } from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ɵWU_SELECT_CSS } from 'wiraui/select';
+} from '@wirabyte/ui/config';
+import { firstIndex, lastIndex, optionField, sameValue, searchText, SelectItem, selectItems, stepIndex, WuLocale } from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ɵWU_SELECT_CSS } from '@wirabyte/ui/select';
 import { WuAutoCompleteCompleteEvent, WuAutoCompleteSelectEvent } from './autocomplete.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, inject, Input, OnChanges, OnDestroy, Renderer2 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrippleAt, ɵsize, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrippleAt, ɵsize, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { ɵbuttonExtras } from './button-class';
 import { WU_BUTTON_CSS } from './button.styles';
 import { WuButtonSeverity, WuButtonSize, WuButtonVariant } from './button.types';

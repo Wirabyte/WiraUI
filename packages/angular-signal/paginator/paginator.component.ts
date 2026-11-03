@@ -1,7 +1,7 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WuSelect } from 'wiraui/select';
+import { WuSelect } from '@wirabyte/ui/select';
 import { ɵWuPaginatorBase } from './paginator.base';
 
 /**

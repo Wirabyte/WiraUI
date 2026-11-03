@@ -37,7 +37,7 @@ const before = new Map();
   }
 })(appDir);
 
-// Pick the wiraui major the app's Angular version needs, as `ng add wiraui` would.
+// Pick the wiraui major the app's Angular version needs, as `ng add @wirabyte/ui` would.
 const pkg = JSON.parse(before.get('package.json'));
 const angular = parseInt(/(\d+)/.exec(pkg.dependencies['@angular/core'])[1], 10);
 const [v, spec] = Object.entries(VERSIONS).find(([, s]) => angular >= s.min && (s.max === null || angular < s.max));
@@ -51,7 +51,7 @@ const runner = new SchematicTestRunner('wiraui', join(root, 'packages', 'schemat
 runner.logger.subscribe((e) => console.log(e.message));
 const out = await runner.runSchematic('ng-add', options, tree);
 
-console.log(`\n=== dry run: ${appDir} (Angular ${angular} → wiraui@${spec.major}, ${v}) — nothing was written ===`);
+console.log(`\n=== dry run: ${appDir} (Angular ${angular} → @wirabyte/ui@${spec.major}, ${v}) — nothing was written ===`);
 for (const file of out.files.map((f) => f.replace(/^\//, ''))) {
   const now = out.readContent(file);
   const was = before.get(file);

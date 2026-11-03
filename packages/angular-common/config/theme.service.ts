@@ -11,7 +11,7 @@ import {
   ThemeOverrides,
   ThemePreset,
   tokensToCss,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { WU_OPTIONS, WuScale } from './options';
 
 const STYLE_ATTR = 'data-wu-style';

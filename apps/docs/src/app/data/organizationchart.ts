@@ -53,7 +53,7 @@ export function wiraSchoolUnits(): DocOrgNode[] {
   ];
 }
 
-const CHART_TS = `import type { TreeNode } from 'wiraui/api';
+const CHART_TS = `import type { TreeNode } from '@wirabyte/ui/api';
 
 chart: TreeNode[] = [
   {
@@ -113,8 +113,8 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuOrganizationChartModule</code> มี <code>wuTemplate</code> ให้ด้วย) และ standalone (<code>WuOrganizationChart</code>) · แท็กเขียนได้ทั้ง <code>wu-organizationChart</code>, <code>wu-organizationchart</code> และ <code>wu-organization-chart</code> · ข้อมูลเป็น <code>TreeNode</code> จาก <code>wiraui/api</code>',
-        en: 'Works as an NgModule (<code>WuOrganizationChartModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuOrganizationChart</code>) · the tag can be <code>wu-organizationChart</code>, <code>wu-organizationchart</code> or <code>wu-organization-chart</code> · the data is <code>TreeNode</code> from <code>wiraui/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuOrganizationChartModule</code> มี <code>wuTemplate</code> ให้ด้วย) และ standalone (<code>WuOrganizationChart</code>) · แท็กเขียนได้ทั้ง <code>wu-organizationChart</code>, <code>wu-organizationchart</code> และ <code>wu-organization-chart</code> · ข้อมูลเป็น <code>TreeNode</code> จาก <code>@wirabyte/ui/api</code>',
+        en: 'Works as an NgModule (<code>WuOrganizationChartModule</code>, which brings <code>wuTemplate</code>) or standalone (<code>WuOrganizationChart</code>) · the tag can be <code>wu-organizationChart</code>, <code>wu-organizationchart</code> or <code>wu-organization-chart</code> · the data is <code>TreeNode</code> from <code>@wirabyte/ui/api</code>.',
       },
     },
     basic: {
@@ -190,7 +190,7 @@ export const ORGANIZATIONCHART_DOC: ComponentDoc = {
   },
   ts: {
     basic: CHART_TS,
-    selection: `import type { TreeNode } from 'wiraui/api';
+    selection: `import type { TreeNode } from '@wirabyte/ui/api';
 
 picked: TreeNode | null = null;
 team: TreeNode[] = [];

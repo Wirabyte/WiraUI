@@ -1,5 +1,5 @@
 import { inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { ɵrefreshOnTranslation, WuConfig } from 'wiraui/config';
+import { ɵrefreshOnTranslation, WuConfig } from '@wirabyte/ui/config';
 import {
   bahtText,
   CalendarSystem,
@@ -12,7 +12,7 @@ import {
   timeAgo,
   toDateValue,
   toThaiDigits,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 export type { ThaiDateFormat };
 

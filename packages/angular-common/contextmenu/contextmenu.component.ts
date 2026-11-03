@@ -13,8 +13,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuMenuItem } from 'wiraui/config';
-import { WuTieredMenu } from 'wiraui/tieredmenu';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuMenuItem } from '@wirabyte/ui/config';
+import { WuTieredMenu } from '@wirabyte/ui/tieredmenu';
 
 /** The element a `target` stands for: an element, an ElementRef, an element id, or a component that has one. */
 function targetElement(target: unknown, doc: Document): HTMLElement | null {

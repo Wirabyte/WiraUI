@@ -42,7 +42,7 @@ const FORMS = "import { FormsModule } from '@angular/forms';\n";
 export function ngModuleImport(n: ImportNames, lang: Lang = 'th'): string {
   return `// ${lang === 'en' ? 'app.module.ts or the feature module that uses it' : 'app.module.ts หรือ feature module ที่ใช้'}
 import { NgModule } from '@angular/core';
-${n.forms ? FORMS : ''}import { ${n.module} } from 'wiraui/${n.entry}';
+${n.forms ? FORMS : ''}import { ${n.module} } from '@wirabyte/ui/${n.entry}';
 
 @NgModule({
   imports: [${n.forms ? 'FormsModule, ' : ''}${n.module}],
@@ -53,7 +53,7 @@ export class AppModule {}`;
 export function standaloneImport(n: ImportNames, v: DocVersion): string {
   const flag = v.major === 1 ? '\n  standalone: true,' : '';
   return `import { Component } from '@angular/core';
-${n.forms ? FORMS : ''}import { ${n.standalone} } from 'wiraui/${n.entry}';
+${n.forms ? FORMS : ''}import { ${n.standalone} } from '@wirabyte/ui/${n.entry}';
 
 @Component({
   selector: 'app-example',${flag}

@@ -12,8 +12,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from 'wiraui/config';
-import { TH_LOCALE } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
+import { TH_LOCALE } from '@wirabyte/ui/core';
 
 /** `'columns'` (default): the brand beside columns of links. `'simple'`: one row. `'centered'`: everything centred. */
 export type WuSiteFooterLook = 'columns' | 'simple' | 'centered';

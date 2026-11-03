@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuSize } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵsize, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuSize } from '@wirabyte/ui/config';
 import { WuToggleSwitchChangeEvent } from './toggleswitch.types';
 
 /** On/off switch for ngModel and reactive forms (also known as InputSwitch), with an optional `label`. */

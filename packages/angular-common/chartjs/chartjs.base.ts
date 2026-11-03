@@ -13,7 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuChartJsDataSelectEvent } from './chartjs.types';
 
 /** Chart.js's own defaults: when an app has not changed them, charts take the theme's font and colours instead. */

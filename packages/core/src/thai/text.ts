@@ -1,4 +1,4 @@
-/** Thai text helpers behind the `wiraui/thai` pipes: amounts in words, Thai digits, phone numbers, date formats. */
+/** Thai text helpers behind the `@wirabyte/ui/thai` pipes: amounts in words, Thai digits, phone numbers, date formats. */
 import { CalendarSystem } from './buddhist';
 
 const DIGIT_WORDS = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];

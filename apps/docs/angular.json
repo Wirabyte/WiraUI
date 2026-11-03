@@ -58,22 +58,22 @@
               },
               {
                 "glob": "utils.min.css",
-                "input": "node_modules/wiraui/utils",
+                "input": "node_modules/@wirabyte/ui/utils",
                 "output": "wiraui-utils"
               },
               {
                 "glob": "icons.json",
-                "input": "node_modules/wiraicon",
+                "input": "node_modules/@wirabyte/icons",
                 "output": "wiraicon"
               },
               {
                 "glob": "**/*.svg",
-                "input": "node_modules/wiraicon/svg",
+                "input": "node_modules/@wirabyte/icons/svg",
                 "output": "wiraicon/svg"
               }
             ],
             "styles": [
-              "node_modules/wiraicon/wiraicon.css",
+              "node_modules/@wirabyte/icons/wiraicon.css",
               "src/styles.scss"
             ]
           },

@@ -4,7 +4,7 @@ import { ɵWuChartJsBase } from './chartjs.base';
 
 /**
  * A Chart.js chart: `<wu-chartjs type="bar" [data]="data" [options]="options" height="320px">`. The app installs
- * chart.js 3 or 4. WiraUI's own chart, with no library, is `<wu-chart>` (wiraui/chart, v3).
+ * chart.js 3 or 4. WiraUI's own chart, with no library, is `<wu-chart>` (@wirabyte/ui/chart, v3).
  */
 @Component({
   selector: 'wu-chartjs, wu-chartJs',

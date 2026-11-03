@@ -79,8 +79,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuImageCropperModule</code>) และ standalone (<code>WuImageCropper</code>) แท็กเขียนได้ทั้ง <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> และ <code>image-cropper</code> (แท็กที่แอปใช้อยู่แล้ว) · <code>base64ToFile()</code> import จาก <code>wiraui/imagecropper</code> (หรือ <code>wiraui/core</code>) ได้',
-        en: 'Works as an NgModule (<code>WuImageCropperModule</code>) or standalone (<code>WuImageCropper</code>). The tag can be <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> or <code>image-cropper</code> (the tag apps already use) · <code>base64ToFile()</code> comes from <code>wiraui/imagecropper</code> (or <code>wiraui/core</code>).',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuImageCropperModule</code>) และ standalone (<code>WuImageCropper</code>) แท็กเขียนได้ทั้ง <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> และ <code>image-cropper</code> (แท็กที่แอปใช้อยู่แล้ว) · <code>base64ToFile()</code> import จาก <code>@wirabyte/ui/imagecropper</code> (หรือ <code>@wirabyte/ui/core</code>) ได้',
+        en: 'Works as an NgModule (<code>WuImageCropperModule</code>) or standalone (<code>WuImageCropper</code>). The tag can be <code>wu-imagecropper</code>, <code>wu-imageCropper</code>, <code>wu-image-cropper</code> or <code>image-cropper</code> (the tag apps already use) · <code>base64ToFile()</code> comes from <code>@wirabyte/ui/imagecropper</code> (or <code>@wirabyte/ui/core</code>).',
       },
     },
     basic: {
@@ -149,8 +149,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     defaults: {
       title: { th: 'ค่าเริ่มต้นของทั้งแอป', en: 'App-wide defaults' },
       text: {
-        th: '<code>provideImageCropperOptions()</code> จาก <code>wiraui/imagecropper</code> ตั้งค่าเริ่มต้นให้ทุก cropper ในแอป: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> และ <code>maxZoom</code> · ใส่ใน <code>providers</code> ของ <code>app.config.ts</code> (v3) หรือของ NgModule (v1 / v2) · input ที่ใส่บน component ชนะค่าเหล่านี้เสมอ',
-        en: '<code>provideImageCropperOptions()</code> from <code>wiraui/imagecropper</code> sets the starting values of every cropper in the app: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> and <code>maxZoom</code> · put it in the <code>providers</code> of <code>app.config.ts</code> (v3) or of the NgModule (v1 / v2) · an input set on the component always wins over them.',
+        th: '<code>provideImageCropperOptions()</code> จาก <code>@wirabyte/ui/imagecropper</code> ตั้งค่าเริ่มต้นให้ทุก cropper ในแอป: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> และ <code>maxZoom</code> · ใส่ใน <code>providers</code> ของ <code>app.config.ts</code> (v3) หรือของ NgModule (v1 / v2) · input ที่ใส่บน component ชนะค่าเหล่านี้เสมอ',
+        en: '<code>provideImageCropperOptions()</code> from <code>@wirabyte/ui/imagecropper</code> sets the starting values of every cropper in the app: <code>output</code>, <code>format</code>, <code>imageQuality</code>, <code>toolbar</code> and <code>maxZoom</code> · put it in the <code>providers</code> of <code>app.config.ts</code> (v3) or of the NgModule (v1 / v2) · an input set on the component always wins over them.',
       },
     },
     limits: {
@@ -170,8 +170,8 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'แอปที่ใช้แท็ก <code>&lt;image-cropper&gt;</code> อยู่แล้ว: import <code>WuImageCropperModule</code> (หรือ <code>WuImageCropper</code>) แทน module เดิม แท็ก input และ event ใช้ชื่อเดิมได้ type ชื่อเดิม (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>) import จาก <code>wiraui/imagecropper</code> เปลี่ยนแค่ path · ผลลัพธ์ค่าเริ่มต้นเป็น <code>blob</code> โค้ดที่อ่าน <code>event.base64</code> ให้ใส่ <code>output="base64"</code> · ฟังก์ชันแปลง base64 เป็นไฟล์ที่แอปเขียนเองเปลี่ยนเป็น <code>base64ToFile()</code> ได้ · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> และ <code>options</code> รับไว้เพื่อให้ template เดิมใช้ได้',
-        en: 'Apps that already use the <code>&lt;image-cropper&gt;</code> tag: import <code>WuImageCropperModule</code> (or <code>WuImageCropper</code>) instead of the old module; the tag, inputs and events keep their names, and the types keep theirs too (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>), imported from <code>wiraui/imagecropper</code>, so only the path changes · the result is a <code>blob</code> by default: code that reads <code>event.base64</code> adds <code>output="base64"</code> · a base64-to-file function of your own can become <code>base64ToFile()</code> · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> and <code>options</code> are accepted so existing templates compile.',
+        th: 'แอปที่ใช้แท็ก <code>&lt;image-cropper&gt;</code> อยู่แล้ว: import <code>WuImageCropperModule</code> (หรือ <code>WuImageCropper</code>) แทน module เดิม แท็ก input และ event ใช้ชื่อเดิมได้ type ชื่อเดิม (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>) import จาก <code>@wirabyte/ui/imagecropper</code> เปลี่ยนแค่ path · ผลลัพธ์ค่าเริ่มต้นเป็น <code>blob</code> โค้ดที่อ่าน <code>event.base64</code> ให้ใส่ <code>output="base64"</code> · ฟังก์ชันแปลง base64 เป็นไฟล์ที่แอปเขียนเองเปลี่ยนเป็น <code>base64ToFile()</code> ได้ · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> และ <code>options</code> รับไว้เพื่อให้ template เดิมใช้ได้',
+        en: 'Apps that already use the <code>&lt;image-cropper&gt;</code> tag: import <code>WuImageCropperModule</code> (or <code>WuImageCropper</code>) instead of the old module; the tag, inputs and events keep their names, and the types keep theirs too (<code>ImageCroppedEvent</code>, <code>ImageTransform</code>, <code>LoadedImage</code>, <code>Dimensions</code>, <code>OutputFormat</code>), imported from <code>@wirabyte/ui/imagecropper</code>, so only the path changes · the result is a <code>blob</code> by default: code that reads <code>event.base64</code> adds <code>output="base64"</code> · a base64-to-file function of your own can become <code>base64ToFile()</code> · <code>allowMoveImage</code>, <code>initialStepSize</code>, <code>checkImageType</code> and <code>options</code> are accepted so existing templates compile.',
       },
     },
   },
@@ -275,7 +275,7 @@ export const IMAGECROPPER_DOC: ComponentDoc = {
 <wu-imagecropper [imageFile]="file" [cropperStaticWidth]="600" [cropperStaticHeight]="200"></wu-imagecropper>`,
   },
   ts: {
-    basic: `import { WuImageCroppedEvent } from 'wiraui/imagecropper';
+    basic: `import { WuImageCroppedEvent } from '@wirabyte/ui/imagecropper';
 
 imageChangedEvent: Event | null = null;
 croppedUrl = '';
@@ -309,7 +309,7 @@ imageCropped(event: WuImageCroppedEvent): void {
   this.croppedSize = event.width + ' × ' + event.height;   // ไม่เกิน 400 px
   this.fileSize = Math.round((event.blob?.size ?? 0) / 1024) + ' KB';
 }`,
-    tools: `import { WuImageCropper, WuImageTransform } from 'wiraui/imagecropper';
+    tools: `import { WuImageCropper, WuImageTransform } from '@wirabyte/ui/imagecropper';
 
 transform: WuImageTransform = { scale: 1, rotate: 0, flipH: false, flipV: false };
 croppedUrl = '';
@@ -318,11 +318,11 @@ async cropNow(cropper: WuImageCropper): Promise<void> {
   const event = await cropper.crop();   // null เมื่อยังไม่มีรูป
   this.croppedUrl = event?.objectUrl ?? '';
 }`,
-    toolbar: `import { WuImageCropperToolbar } from 'wiraui/imagecropper';
+    toolbar: `import { WuImageCropperToolbar } from '@wirabyte/ui/imagecropper';
 
 // 'full' (ค่าเริ่มต้น) · 'none' · หรือรายการปุ่ม: '|' ขึ้นกลุ่มใหม่
 tools: WuImageCropperToolbar = ['zoomOut', 'zoomIn', '|', 'rotate', '|', 'flipHorizontal', 'reset'];`,
-    'tools-template': `import { WuImageCropper } from 'wiraui/imagecropper';
+    'tools-template': `import { WuImageCropper } from '@wirabyte/ui/imagecropper';
 
 photoUrl = '';
 
@@ -330,7 +330,7 @@ async usePhoto(cropper: WuImageCropper): Promise<void> {
   const event = await cropper.crop();   // null เมื่อยังไม่มีรูป
   this.photoUrl = event?.objectUrl ?? '';
 }`,
-    'output-type': `import { WuImageCropper, WuImageCroppedEvent } from 'wiraui/imagecropper';
+    'output-type': `import { WuImageCropper, WuImageCroppedEvent } from '@wirabyte/ui/imagecropper';
 
 photoBlob: Blob | null = null;
 previewUrl = '';
@@ -352,7 +352,7 @@ async saveAsText(cropper: WuImageCropper): Promise<void> {
     defaults: {
       v3: `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideImageCropperOptions } from 'wiraui/imagecropper';
+import { provideImageCropperOptions } from '@wirabyte/ui/imagecropper';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -363,7 +363,7 @@ export const appConfig: ApplicationConfig = {
 };`,
       classic: `// app.module.ts
 import { NgModule } from '@angular/core';
-import { provideImageCropperOptions, WuImageCropperModule } from 'wiraui/imagecropper';
+import { provideImageCropperOptions, WuImageCropperModule } from '@wirabyte/ui/imagecropper';
 
 @NgModule({
   imports: [WuImageCropperModule],
@@ -374,7 +374,7 @@ import { provideImageCropperOptions, WuImageCropperModule } from 'wiraui/imagecr
 })
 export class AppModule {}`,
     },
-    upload: `import { base64ToFile, WuImageCroppedEvent } from 'wiraui/imagecropper';
+    upload: `import { base64ToFile, WuImageCroppedEvent } from '@wirabyte/ui/imagecropper';
 
 photoBlob: Blob | null = null;
 isApiSaving = false;
@@ -395,7 +395,7 @@ savePhoto(): void {
     error: () => (this.isApiSaving = false),
   });
 }`,
-    limits: `import { CropperPosition } from 'wiraui/imagecropper';
+    limits: `import { CropperPosition } from '@wirabyte/ui/imagecropper';
 
 file: File | null = null;
 /** ตำแหน่งกรอบเป็นพิกเซลของรูป อ่านค่าหรือกำหนดเองได้ */
@@ -490,7 +490,7 @@ cropBox: CropperPosition = { x1: 0, y1: 0, x2: 1280, y2: 720 };`,
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       typeLabel: { th: 'คืนค่า', en: 'Returns' },
       rows: [
-        row('base64ToFile(base64, type?)', 'Blob', undefined, 'data URL หรือ base64 เป็น Blob สำหรับ FormData (import จาก wiraui/imagecropper หรือ wiraui/core)', 'A data URL or base64 as a Blob for FormData (from wiraui/imagecropper or wiraui/core)'),
+        row('base64ToFile(base64, type?)', 'Blob', undefined, 'data URL หรือ base64 เป็น Blob สำหรับ FormData (import จาก @wirabyte/ui/imagecropper หรือ @wirabyte/ui/core)', 'A data URL or base64 as a Blob for FormData (from @wirabyte/ui/imagecropper or @wirabyte/ui/core)'),
       ],
     },
     {

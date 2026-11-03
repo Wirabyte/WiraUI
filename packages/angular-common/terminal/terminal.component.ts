@@ -11,8 +11,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
-import { terminalHistoryAdd, terminalHistoryMove, terminalIsClear, WuLocale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
+import { terminalHistoryAdd, terminalHistoryMove, terminalIsClear, WuLocale } from '@wirabyte/ui/core';
 import { WuTerminalService } from './terminal.service';
 
 /** A line on the screen: the command typed and the answer under it (`text` null: an answer with no command). */

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuOrderList } from './orderlist.component';
 
 /** For NgModule apps: the order list and `wuTemplate` (`pTemplate`). Standalone apps can import `WuOrderList` directly. */

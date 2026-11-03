@@ -12,7 +12,7 @@ const MENU_ITEM_ROWS = [
   row('badge · title · styleClass · style', 'string · string · string · object', undefined, 'ตัวเลขท้ายรายการ tooltip และการแต่ง', 'A trailing badge, a tooltip, and styling'),
 ];
 
-const ITEMS_TS = `import { WuMenuItem } from 'wiraui/menu';
+const ITEMS_TS = `import { WuMenuItem } from '@wirabyte/ui/menu';
 
 items: WuMenuItem[] = [
   {
@@ -275,7 +275,7 @@ export const CONTEXTMENU_DOC: ComponentDoc = {
     },
   },
   ts: {
-    basic: `import { WuMenuItem } from 'wiraui/menu';
+    basic: `import { WuMenuItem } from '@wirabyte/ui/menu';
 
 fileActions: WuMenuItem[] = [
   { label: 'คัดลอก', icon: 'wi wi-copy', command: (event) => this.run(event) },

@@ -15,8 +15,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
-import { menuFirst, menuFocusable, menuLast, menuStep, menuVisible } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
+import { menuFirst, menuFocusable, menuLast, menuStep, menuVisible } from '@wirabyte/ui/core';
 import { ɵpageTabs, ɵrevealTab, ɵtabEdges } from './tabs.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

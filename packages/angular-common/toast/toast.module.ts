@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuToast } from './toast.component';
 
 /** For NgModule apps. Also exports `WuTemplate` for the message and headless slots. */

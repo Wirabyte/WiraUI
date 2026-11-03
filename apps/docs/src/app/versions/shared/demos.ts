@@ -246,12 +246,12 @@ export abstract class PresetsDemo extends DemoPage {
   protected scssCode(): string {
     const id = this.state.activePresetId();
     return this.v.major === 1
-      ? `@use 'wiraui/theme' with (\n  $theme: '${id}',\n);`
-      : `@use 'wiraui/theme' with (\n  $preset: '${id}',\n);`;
+      ? `@use '@wirabyte/ui/theme' with (\n  $theme: '${id}',\n);`
+      : `@use '@wirabyte/ui/theme' with (\n  $preset: '${id}',\n);`;
   }
 
   protected cssCode(): string {
-    return `"styles": ["node_modules/wiraui/themes/${this.state.activePresetId()}/theme.css", "src/styles.css"]`;
+    return `"styles": ["node_modules/@wirabyte/ui/themes/${this.state.activePresetId()}/theme.css", "src/styles.css"]`;
   }
 }
 

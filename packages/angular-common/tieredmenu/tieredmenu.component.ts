@@ -26,7 +26,7 @@ import {
   ɵWuPopup,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const PHONE = '(max-width: 575.98px)';

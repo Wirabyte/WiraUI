@@ -1,5 +1,5 @@
 /**
- * The app's own translations (wiraui/i18n), framework-free. Messages are keyed by an id (`'menu.home'`) or by the
+ * The app's own translations (@wirabyte/ui/i18n), framework-free. Messages are keyed by an id (`'menu.home'`) or by the
  * text in the app's main language (`'บันทึก'`), so a Thai-first app can write Thai in its templates and add only an
  * English list; a missing key shows the key itself.
  */

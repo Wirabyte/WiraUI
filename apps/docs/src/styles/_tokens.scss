@@ -1,7 +1,7 @@
 // Docs chrome uses the Wirabyte brand (wirabyte.com). Its primary colour follows the theme on screen: the
 // --docs-primary* tokens read --wu-primary-color, which the active version (or the landing page) writes on :root,
 // so the theme panel recolours the whole site. Before a theme is applied they fall back to the brand blue.
-// Breakpoints (mobile-first, min-width): sm 576, md 768, lg 992, xl 1200, the same as wiraui/utils.
+// Breakpoints (mobile-first, min-width): sm 576, md 768, lg 992, xl 1200, the same as @wirabyte/ui/utils.
 :root {
   --docs-topbar-h: 60px;
   --docs-sidebar-w: 272px;

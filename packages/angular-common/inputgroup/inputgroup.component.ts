@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 
 /**
  * Joins fields, add-ons and buttons into one row with shared borders:

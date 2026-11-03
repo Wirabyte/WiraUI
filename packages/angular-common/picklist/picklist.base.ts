@@ -27,9 +27,9 @@ import {
   WU_VERSION_INFO,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 import {
   FilterMatchMode,
   ListState,
@@ -41,7 +41,7 @@ import {
   optionField,
   transferItems,
   WuLocale,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { ɵWuListDrag } from './list-drag';
 import { WuPickListFilterEvent, WuPickListFilterOptions, WuPickListMoveEvent, WuPickListSelectEvent, WuPickListSide } from './picklist.types';
 

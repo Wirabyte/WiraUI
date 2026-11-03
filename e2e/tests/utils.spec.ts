@@ -1,6 +1,6 @@
 import { expect, Page, test } from '@playwright/test';
 
-// `ng add --defaults` adds wiraui/utils (SCSS @use in v1/v2, CSS in angular.json in v3).
+// `ng add --defaults` adds @wirabyte/ui/utils (SCSS @use in v1/v2, CSS in angular.json in v3).
 const box = (page: Page, sel: string) => page.locator(sel).evaluate((el) => el.getBoundingClientRect().width);
 const style = (page: Page, sel: string, prop: string) => page.locator(sel).evaluate((el, p) => getComputedStyle(el).getPropertyValue(p), prop);
 

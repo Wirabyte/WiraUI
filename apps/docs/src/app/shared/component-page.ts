@@ -77,7 +77,7 @@ ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
     if (!raw) return '';
     const o = this.en() ? sampleText(this.doc().english).swap(raw) : raw;
     return `// src/theme/wiraui.overrides.ts
-import { defineOverrides } from 'wiraui/config';
+import { defineOverrides } from '@wirabyte/ui/config';
 
 export const wiraOverrides = defineOverrides({
   components: {

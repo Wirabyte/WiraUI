@@ -42,8 +42,8 @@ export const TOAST_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WuMessageService</code> อยู่ใน <code>wiraui/toast</code> หรือ import จาก <code>wiraui/api</code> ในชื่อ <code>MessageService</code> (type ของข้อความคือ <code>Message</code>)',
-        en: '<code>WuMessageService</code> comes from <code>wiraui/toast</code>, or from <code>wiraui/api</code> as <code>MessageService</code> (the message type is <code>Message</code>).',
+        th: '<code>WuMessageService</code> อยู่ใน <code>@wirabyte/ui/toast</code> หรือ import จาก <code>@wirabyte/ui/api</code> ในชื่อ <code>MessageService</code> (type ของข้อความคือ <code>Message</code>)',
+        en: '<code>WuMessageService</code> comes from <code>@wirabyte/ui/toast</code>, or from <code>@wirabyte/ui/api</code> as <code>MessageService</code> (the message type is <code>Message</code>).',
       },
     },
     basic: {
@@ -485,14 +485,14 @@ export const ANIMATE_DOC: ComponentDoc = {
   },
   ts: {
     import: `// app.config.ts (standalone)
-import { provideWuAnimate } from 'wiraui/animate';
+import { provideWuAnimate } from '@wirabyte/ui/animate';
 
 export const appConfig = {
   providers: [provideWiraUI(), provideWuAnimate({ duration: 600, once: true })],
 };
 
 // หรือ AppModule
-import { WuAnimateModule } from 'wiraui/animate';
+import { WuAnimateModule } from '@wirabyte/ui/animate';
 @NgModule({ imports: [WuAnimateModule.forRoot({ duration: 600 })] })
 export class AppModule {}`,
   },

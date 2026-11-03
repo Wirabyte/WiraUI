@@ -337,8 +337,8 @@ export const MESSAGE_DOC: ComponentDoc = {
     messages: {
       title: { th: 'หลายข้อความ (wu-messages)', en: 'Several messages (wu-messages)' },
       text: {
-        th: '<code>wu-messages</code> (อยู่ใน <code>wiraui/message</code>) แสดงข้อความจาก array <code>[(value)]</code> แต่ละรายการคือ <code>{ severity, summary, detail, closable?, icon?, life? }</code> กดปิดแล้วรายการถูกเอาออกจาก array ให้ · <code>[closable]</code> ค่าเริ่มต้น true · <code>[escape]="false"</code> ให้ summary / detail เป็น HTML (Angular sanitize ให้)',
-        en: '<code>wu-messages</code> (in <code>wiraui/message</code>) shows the messages of an array bound with <code>[(value)]</code>, each <code>{ severity, summary, detail, closable?, icon?, life? }</code>. Closing one removes it from the array. <code>[closable]</code> defaults to true; <code>[escape]="false"</code> makes summary / detail HTML (sanitised by Angular).',
+        th: '<code>wu-messages</code> (อยู่ใน <code>@wirabyte/ui/message</code>) แสดงข้อความจาก array <code>[(value)]</code> แต่ละรายการคือ <code>{ severity, summary, detail, closable?, icon?, life? }</code> กดปิดแล้วรายการถูกเอาออกจาก array ให้ · <code>[closable]</code> ค่าเริ่มต้น true · <code>[escape]="false"</code> ให้ summary / detail เป็น HTML (Angular sanitize ให้)',
+        en: '<code>wu-messages</code> (in <code>@wirabyte/ui/message</code>) shows the messages of an array bound with <code>[(value)]</code>, each <code>{ severity, summary, detail, closable?, icon?, life? }</code>. Closing one removes it from the array. <code>[closable]</code> defaults to true; <code>[escape]="false"</code> makes summary / detail HTML (sanitised by Angular).',
       },
     },
     service: {
@@ -371,14 +371,14 @@ export const MESSAGE_DOC: ComponentDoc = {
 <wu-button label="ส่งแบบฟอร์ม" icon="wi wi-send" (onClick)="sendForm()"></wu-button>`,
   },
   ts: {
-    messages: `import { Message } from 'wiraui/api';
+    messages: `import { Message } from '@wirabyte/ui/api';
 
 notices: Message[] = [
   { severity: 'success', summary: 'บันทึกแล้ว', detail: 'ข้อมูลนักเรียนถูกบันทึกเรียบร้อย' },
   { severity: 'warn', summary: 'ใกล้ครบกำหนด', detail: 'ส่งเอกสารภายในวันศุกร์', closable: false },
   { severity: 'error', summary: 'อัปโหลดไม่สำเร็จ', detail: 'ไฟล์ใหญ่เกิน 5 MB' },
 ];`,
-    service: `import { MessageService } from 'wiraui/api';
+    service: `import { MessageService } from '@wirabyte/ui/api';
 
 private readonly messageService = inject(MessageService);
 

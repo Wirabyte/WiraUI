@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, Injec
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { DocsI18n } from '../core/i18n';
 
-/** wiraui/utils CSS (copied to /wiraui-utils by angular.json), loaded only on the Utilities pages. */
+/** @wirabyte/ui/utils CSS (copied to /wiraui-utils by angular.json), loaded only on the Utilities pages. */
 export const UTILS_CSS = 'wiraui-utils/utils.min.css';
 
 @Injectable({ providedIn: 'root' })

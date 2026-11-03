@@ -7,7 +7,7 @@ export interface WuMenuItemCommandEvent {
 
 /**
  * One entry of a menu model (menubar today). The same fields MenuItem has in the apps moving over, so models need no
- * changes; `wiraui/api` also exports it as `MenuItem`.
+ * changes; `@wirabyte/ui/api` also exports it as `MenuItem`.
  */
 export interface WuMenuItem {
   label?: string;

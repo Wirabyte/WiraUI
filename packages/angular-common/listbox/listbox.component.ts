@@ -28,10 +28,10 @@ import {
   ɵWuStyleLoader,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ɵWU_SELECT_CSS } from 'wiraui/select';
+} from '@wirabyte/ui/config';
+import { ɵWU_CHECKBOX_CSS } from '@wirabyte/ui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ɵWU_SELECT_CSS } from '@wirabyte/ui/select';
 import {
   filterItems,
   firstIndex,
@@ -43,7 +43,7 @@ import {
   stepIndex,
   typeaheadIndex,
   WuLocale,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 /** `(onChange)`: the new value. */
 export interface WuListboxChangeEvent {

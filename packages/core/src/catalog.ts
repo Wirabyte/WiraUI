@@ -178,7 +178,7 @@ export const PRESETS = {
 } satisfies Record<string, PresetDefinition>;
 export type PresetId = keyof typeof PRESETS;
 export const PRESET_NAMES = Object.fromEntries(Object.entries(PRESETS).map(([id, p]) => [id, p.label])) as Record<PresetId, string>;
-/** The constant each preset is exported as from `wiraui/presets` (`'sila-classic'` → `SilaClassic`). */
+/** The constant each preset is exported as from `@wirabyte/ui/presets` (`'sila-classic'` → `SilaClassic`). */
 export function presetExportName(id: PresetId): string {
   if (id === 'll') return 'LL';
   if (id === 'kawaii') return 'WiraKawaii';
@@ -187,7 +187,7 @@ export function presetExportName(id: PresetId): string {
 
 /**
  * Ready-made classic themes named after the theme folders apps already reference, so `…/themes/sila-light-teal/theme.css`
- * becomes `wiraui/themes/sila-light-teal/theme.css`. For v2 and v3 every preset is also a theme of its own name.
+ * becomes `@wirabyte/ui/themes/sila-light-teal/theme.css`. For v2 and v3 every preset is also a theme of its own name.
  */
 export interface NamedTheme {
   preset: PresetId;

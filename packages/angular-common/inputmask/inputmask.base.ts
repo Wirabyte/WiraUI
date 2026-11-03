@@ -19,7 +19,7 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   ɵWuStyleLoader,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   caretAfter,
   fillMask,
@@ -32,8 +32,8 @@ import {
   typedBefore,
   unmaskedValue,
   WuLocale,
-} from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 
 /**
  * What wu-inputmask does, shared by the v1 and v2/v3 templates. A text field that types the literals of a mask for the

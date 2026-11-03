@@ -32,7 +32,7 @@ import {
   WuSize,
   ɵWuStyleLoader,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   CalendarSystem,
   classicDateFormat,
@@ -48,8 +48,8 @@ import {
   toDate,
   WuLocale,
   YearCell,
-} from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 import { WuDatePickerDataType, WuDatePickerIconDisplay, WuDatePickerMonthChangeEvent } from './datepicker.types';
 
 const PHONE = '(max-width: 575.98px)';

@@ -48,7 +48,7 @@ export function toSCSS(c: ThemeConfig, o: ExportOptions = {}): string {
   L.push('// ─────────────────────────────────────────────────────────────');
   L.push('// ' + configLine(c));
   L.push('');
-  L.push("@use 'wiraui/theme' with (");
+  L.push("@use '@wirabyte/ui/theme' with (");
   L.push(`  $preset: '${c.preset}',`);
   L.push(`  $primary: (${c.primaryShades ? '' : '                 // made from ' + c.primary}`);
   for (const s of SHADES) L.push(`    ${s}: ${P[s]},`);
@@ -176,7 +176,7 @@ export function toTSOverrides(c: ThemeConfig, o: ExportOptions = {}): string {
     '// Goes with the main theme file (SCSS/CSS): values here win over it through @layer wiraui.overrides',
     '// ' + configLine(c),
     '',
-    `import { ${usesPalette ? 'defineOverrides, palette' : 'defineOverrides'} } from 'wiraui/config';`,
+    `import { ${usesPalette ? 'defineOverrides, palette' : 'defineOverrides'} } from '@wirabyte/ui/config';`,
     '',
     'export const wiraOverrides = defineOverrides({',
     body,
@@ -194,8 +194,8 @@ export function toTSPreset(c: ThemeConfig, o: ExportOptions = {}): string {
     '// TypeScript only: no SCSS/CSS theme file needed',
     '// ' + configLine(c),
     '',
-    `import { ${usesPalette ? 'definePreset, palette' : 'definePreset'} } from 'wiraui/config';`,
-    `import { ${cls} } from 'wiraui/presets';`,
+    `import { ${usesPalette ? 'definePreset, palette' : 'definePreset'} } from '@wirabyte/ui/config';`,
+    `import { ${cls} } from '@wirabyte/ui/presets';`,
     '',
     `export const AppTheme = definePreset(${cls}, {`,
     body,

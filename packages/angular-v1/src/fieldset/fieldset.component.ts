@@ -12,7 +12,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
 
 /** A real <fieldset> with a legend, optionally collapsible: `<wu-fieldset legend="ที่อยู่" toggleable [(collapsed)]="closed">`. */
 @Component({

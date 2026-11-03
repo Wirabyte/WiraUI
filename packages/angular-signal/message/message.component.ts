@@ -12,7 +12,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵseverity, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
 import { WuMessageSeverity, WuMessageSize, WuMessageVariant } from './message.types';
 
 /**

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuConfirmDialog } from './confirmdialog.component';
 
 /** For NgModule apps. Also exports `WuTemplate` for the header, message and footer slots. */

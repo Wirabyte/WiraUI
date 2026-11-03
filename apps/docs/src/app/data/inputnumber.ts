@@ -86,8 +86,8 @@ export const INPUTNUMBER_DOC: ComponentDoc = {
     helpers: {
       title: { th: 'ฟังก์ชันช่วย', en: 'Helpers' },
       text: {
-        th: 'ฟังก์ชันที่ช่องนี้ใช้ export จาก <code>wiraui/core</code> ใช้จัดรูปแบบตัวเลขในตารางหรือรายงานให้ตรงกับช่องกรอกได้',
-        en: 'The functions behind the field are exported from <code>wiraui/core</code>, so tables and reports can format numbers the same way. They default to th-TH (hence ฿), and <code>parseNumber()</code> reads Thai digits as well, which is why the sample keeps ๑,๒๓๔.๕๐.',
+        th: 'ฟังก์ชันที่ช่องนี้ใช้ export จาก <code>@wirabyte/ui/core</code> ใช้จัดรูปแบบตัวเลขในตารางหรือรายงานให้ตรงกับช่องกรอกได้',
+        en: 'The functions behind the field are exported from <code>@wirabyte/ui/core</code>, so tables and reports can format numbers the same way. They default to th-TH (hence ฿), and <code>parseNumber()</code> reads Thai digits as well, which is why the sample keeps ๑,๒๓๔.๕๐.',
       },
     },
   },
@@ -138,7 +138,7 @@ keyPressed(event: KeyboardEvent): void {
     reactive: `form = new FormGroup({
   budget: new FormControl(50000, [Validators.required, Validators.max(100000)]),
 });`,
-    helpers: `import { clampNumber, formatNumber, parseNumber, stepNumber } from 'wiraui/core';
+    helpers: `import { clampNumber, formatNumber, parseNumber, stepNumber } from '@wirabyte/ui/core';
 
 formatNumber(1234.5, { mode: 'currency' });   // '฿1,234.50'
 formatNumber(60, { suffix: ' กก.' });          // '60 กก.'

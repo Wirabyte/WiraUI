@@ -7,8 +7,8 @@ export const ICONS_SECTIONS: Record<string, DocSectionText> = {
   install: {
     title: { th: 'ติดตั้ง', en: 'Installation' },
     text: {
-      th: 'wiraicon เป็น package แยกของ WiraUI ใช้ได้โดยไม่ต้องมี wiraui และใช้ได้กับ Angular 15 ขึ้นไป (ทุกรุ่นของ WiraUI) · ใส่ไฟล์ CSS ครั้งเดียวใน <code>angular.json</code> แล้วใช้เป็น class ได้ทั้งแอป · ถ้าอยากได้ไอคอนเป็น SVG ในหน้า ใช้ component <code>&lt;wi-icon&gt;</code> จาก <code>wiraicon/angular</code> (standalone <code>WiIcon</code> หรือ <code>WiIconModule</code>)',
-      en: 'wiraicon is a separate WiraUI package: it works without wiraui and with Angular 15 and later (every WiraUI version) · add its CSS once in <code>angular.json</code> and the classes work across the app · for icons as inline SVG, use the <code>&lt;wi-icon&gt;</code> component from <code>wiraicon/angular</code> (standalone <code>WiIcon</code>, or <code>WiIconModule</code>).',
+      th: 'wiraicon เป็น package แยกของ WiraUI ใช้ได้โดยไม่ต้องมี @wirabyte/ui และใช้ได้กับ Angular 15 ขึ้นไป (ทุกรุ่นของ WiraUI) · ใส่ไฟล์ CSS ครั้งเดียวใน <code>angular.json</code> แล้วใช้เป็น class ได้ทั้งแอป · ถ้าอยากได้ไอคอนเป็น SVG ในหน้า ใช้ component <code>&lt;wi-icon&gt;</code> จาก <code>@wirabyte/icons/angular</code> (standalone <code>WiIcon</code> หรือ <code>WiIconModule</code>)',
+      en: 'wiraicon is a separate WiraUI package: it works without @wirabyte/ui and with Angular 15 and later (every WiraUI version) · add its CSS once in <code>angular.json</code> and the classes work across the app · for icons as inline SVG, use the <code>&lt;wi-icon&gt;</code> component from <code>@wirabyte/icons/angular</code> (standalone <code>WiIcon</code>, or <code>WiIconModule</code>).',
     },
   },
   classes: {
@@ -70,15 +70,15 @@ export const ICONS_SECTIONS: Record<string, DocSectionText> = {
 };
 
 export const ICONS_CODE: Record<string, Snippet> = {
-  install: `npm install wiraicon`,
+  install: `npm install @wirabyte/icons`,
   styles: `// angular.json → projects.<app>.architect.build.options
 "styles": [
-  "node_modules/wiraicon/wiraicon.css",
+  "node_modules/@wirabyte/icons/wiraicon.css",
   "src/styles.scss"
 ]`,
   ngmodule: `// app.module.ts หรือ feature module ที่ใช้ <wi-icon>
 import { NgModule } from '@angular/core';
-import { WiIconModule } from 'wiraicon/angular';
+import { WiIconModule } from '@wirabyte/icons/angular';
 
 @NgModule({
   imports: [WiIconModule],
@@ -87,7 +87,7 @@ export class AppModule {}`,
   provide: {
     v3: `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideWiraIcon } from 'wiraicon/angular';
+import { provideWiraIcon } from '@wirabyte/icons/angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -97,7 +97,7 @@ export const appConfig: ApplicationConfig = {
 };`,
     classic: `// app.module.ts
 import { NgModule } from '@angular/core';
-import { provideWiraIcon, WiIconModule } from 'wiraicon/angular';
+import { provideWiraIcon, WiIconModule } from '@wirabyte/icons/angular';
 
 @NgModule({
   imports: [WiIconModule],

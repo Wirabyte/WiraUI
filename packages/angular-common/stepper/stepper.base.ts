@@ -15,7 +15,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
 
 /** A wu-step, as its stepper knows it. */
 export interface ɵWuStepRef {

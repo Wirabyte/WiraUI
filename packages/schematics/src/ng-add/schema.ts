@@ -4,7 +4,7 @@ export interface NgAddOptions {
   structure: 'auto' | 'module' | 'standalone';
   /** `'auto'`, a preset id (`'mali'`) or a ready-made theme (`'sila-light-teal'`) this major offers. */
   theme: string;
-  /** Add `wiraui/utils` (grid, flex, spacing …). */
+  /** Add `@wirabyte/ui/utils` (grid, flex, spacing …). */
   utils: boolean;
   primary: string;
   font: 'auto' | 'Kanit' | 'Sarabun' | 'Prompt' | 'Noto Sans Thai' | 'IBM Plex Sans Thai' | 'Anuphan' | 'Inter' | 'Roboto' | 'none';

@@ -1,4 +1,4 @@
-import type { TreeNode } from 'wiraui/core';
+import type { TreeNode } from '@wirabyte/ui/core';
 
 /** `(onNodeSelect)`, `(onNodeUnselect)`, `(onNodeExpand)`, `(onNodeCollapse)`: the node and the event behind it. */
 export interface WuOrganizationChartNodeEvent {

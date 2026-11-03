@@ -24,7 +24,7 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   orgChartIsLeaf,
   orgChartIsOpen,
@@ -34,7 +34,7 @@ import {
   orgChartVisible,
   TreeNode,
   WuLocale,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { WuOrganizationChartNodeEvent } from './organizationchart.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

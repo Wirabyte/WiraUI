@@ -31,7 +31,7 @@
 - **ของงานไทยมาในตัว:** วันที่ พ.ศ., เลขบัตรประชาชน, ฟอนต์ไทย และข้อความไทย/อังกฤษ
 - **ปรับธีมได้เต็มที่:** มี preset, ปรับด้วย SCSS, CSS หรือ TypeScript และมี Theme Studio ให้ใช้ฟรี
 - **ใช้งานได้ทุกคนทุกจอ:** รองรับคีย์บอร์ดครบ และแสดงผลได้ตั้งแต่มือถือถึงเดสก์ท็อป
-- **`wiraicon`:** แพ็กเกจ icon ของเราเอง 424 icon 5 น้ำหนัก ใช้แยกจาก WiraUI ได้
+- **`@wirabyte/icons`:** แพ็กเกจ icon ของเราเอง 424 icon 5 น้ำหนัก ใช้แยกจาก WiraUI ได้
 
 ## 📦 ติดตั้ง
 
@@ -39,9 +39,9 @@
 
 | Angular | คำสั่ง | แพ็กเกจ | สถานะ |
 |---|---|---|---|
-| 21 ขึ้นไป | `ng add wiraui@beta` | `wiraui@3` | active (latest) |
-| 18 – 20 | `ng add wiraui@v2-beta` | `wiraui@2` | active |
-| 15 – 17 | `ng add wiraui@v1-beta` | `wiraui@1` | maintenance |
+| 21 ขึ้นไป | `ng add @wirabyte/ui@beta` | `@wirabyte/ui@3` | active (latest) |
+| 18 – 20 | `ng add @wirabyte/ui@v2-beta` | `@wirabyte/ui@2` | active |
+| 15 – 17 | `ng add @wirabyte/ui@v1-beta` | `@wirabyte/ui@1` | maintenance |
 
 `ng add` ตั้งค่าธีม ฟอนต์ และ icon ให้ โดยถามเฉพาะที่จำเป็น จากนั้นเรียกใช้ component ได้เลย:
 
@@ -54,7 +54,7 @@
 
 - **ใช้ major ให้ตรงกับช่วง Angular:** แต่ละ major ล็อกกับช่วงของตัวเอง และจะไม่ยอมติดตั้งข้ามช่วง
 - **อัปเกรด Angular ข้ามช่วงในคำสั่งเดียว** เพื่อให้ Angular กับ WiraUI ขยับพร้อมกัน:
-  `ng update @angular/core@18 @angular/cli@18 wiraui@v2-beta`
+  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@v2-beta`
 - **ปรับหน้าตาผ่านไฟล์ธีม** ไม่เขียน CSS ทับ component เพื่อให้หน้าตาคงเดิมเมื่อออกรุ่นใหม่
 - **ย้ายแอปเดิมทีละหน้าได้:** WiraUI ใช้คู่กับ UI library เดิมได้ ไม่ต้องย้ายทีเดียว
 - **จำไว้ว่าเป็น beta:** API ยังเปลี่ยนได้ระหว่างรุ่น beta ถ้าใช้บน production ควรล็อกเวอร์ชันให้ตรงตัว

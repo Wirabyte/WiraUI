@@ -27,9 +27,9 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { otpAccepts, otpCleanPaste, otpFill, otpTokens, otpValue, WuLocale } from 'wiraui/core';
-import { WuInputText } from 'wiraui/inputtext';
+} from '@wirabyte/ui/config';
+import { otpAccepts, otpCleanPaste, otpFill, otpTokens, otpValue, WuLocale } from '@wirabyte/ui/core';
+import { WuInputText } from '@wirabyte/ui/inputtext';
 import { WuInputOtpChangeEvent, WuInputOtpInputTemplateContext, WuInputOtpTemplateEvents } from './inputotp.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Directive, EventEmitter, inject, Input, Output } from '@angular/core';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem } from 'wiraui/config';
-import { menuFirst, menuLast, menuStep, menuVisible } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem } from '@wirabyte/ui/config';
+import { menuFirst, menuLast, menuStep, menuVisible } from '@wirabyte/ui/core';
 
 /**
  * What wu-steps does, shared by the v1 and v2/v3 templates: numbered steps of a process from a menu model, the current

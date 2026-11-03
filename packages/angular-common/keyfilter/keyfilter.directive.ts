@@ -1,6 +1,6 @@
 import { Directive, ElementRef, forwardRef, HostListener, inject, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
-import { ɵtoBool } from 'wiraui/config';
+import { ɵtoBool } from '@wirabyte/ui/config';
 
 /** The named filters, as before, plus `thai` (Thai letters and spaces). */
 export type WuKeyFilterPreset = 'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum' | 'thai';

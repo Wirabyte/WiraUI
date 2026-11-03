@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuSplitterPanel } from './splitter-panel.component';
 import { WuSplitter } from './splitter.component';
 

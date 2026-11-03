@@ -23,9 +23,9 @@ import {
   ɵWuPopup,
   ɵWuStyleLoader,
   WuConfig,
-} from 'wiraui/config';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ColorFormat, ColorHsb, formatColor, hsbToHex, parseColor, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ColorFormat, ColorHsb, formatColor, hsbToHex, parseColor, WuLocale } from '@wirabyte/ui/core';
 
 /** `(onChange)`: the colour in the component's `format`. */
 export interface WuColorPickerChangeEvent {

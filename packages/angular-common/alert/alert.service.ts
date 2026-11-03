@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, inject, Injectable, OnDestroy } from '@angular/core';
-import { ɵwuRootInjector } from 'wiraui/config';
+import { ɵwuRootInjector } from '@wirabyte/ui/config';
 import { WuAlertDialog } from './alert-dialog.component';
 import { WuAlertDismissReason, WuAlertIcon, WuAlertOptions, WuAlertResult } from './alert.types';
 
@@ -122,7 +122,7 @@ const DISMISS: Record<WuAlertDismissReason, WuAlertDismissReason> = { cancel: 'c
 
 /**
  * `WuAlertService` without injection, for code that calls an alert from anywhere:
- * `import { WuAlert as Swal } from 'wiraui/alert'` keeps `Swal.fire(...)` calls working as they are.
+ * `import { WuAlert as Swal } from '@wirabyte/ui/alert'` keeps `Swal.fire(...)` calls working as they are.
  */
 export const WuAlert = {
   fire: ((a?: string | WuAlertOptions, text?: string, icon?: WuAlertIcon) => service().fire(a as string, text, icon)) as WuAlertService['fire'],

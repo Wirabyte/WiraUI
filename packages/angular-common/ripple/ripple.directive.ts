@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, inject, Input } from '@angular/core';
-import { ɵrippleAt, ɵtoBool, ɵWuStyleLoader, WuConfig } from 'wiraui/config';
+import { ɵrippleAt, ɵtoBool, ɵWuStyleLoader, WuConfig } from '@wirabyte/ui/config';
 import { WU_RIPPLE_CSS } from './ripple.styles';
 
 /**

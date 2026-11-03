@@ -5,7 +5,7 @@ import { SimpleDemo } from './demos';
 
 /*
  * State and handlers behind the Excel page. Like demos.ts, no wiraui import: the functions come from the version on
- * screen through DOCS_EXCEL, so v1, v2 and v3 each build their files with their own wiraui/excel. The handlers are
+ * screen through DOCS_EXCEL, so v1, v2 and v3 each build their files with their own @wirabyte/ui/excel. The handlers are
  * the page's samples, with the text in the site language.
  */
 

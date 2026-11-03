@@ -1,5 +1,5 @@
 import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { ɵseverity, ɵtoBool, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵseverity, ɵtoBool, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_BADGE_CSS } from './badge.styles';
 import { WuBadgeSeverity, WuBadgeSize } from './badge.types';
 

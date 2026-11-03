@@ -1,4 +1,4 @@
-import type { CarouselResponsiveOptions } from 'wiraui/core';
+import type { CarouselResponsiveOptions } from '@wirabyte/ui/core';
 
 /** `(onPage)`: the page now in view. */
 export interface WuCarouselPageEvent {

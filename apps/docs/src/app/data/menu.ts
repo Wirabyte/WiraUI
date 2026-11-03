@@ -25,7 +25,7 @@ const ITEM_ROWS = (groups: { th: string; en: string }): ApiRow[] => [
   row('title · automationId', 'string', undefined, 'title ของลิงก์ และ data-automationid', 'Link title, and data-automationid'),
 ];
 
-const COMMAND_TYPE = `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+const COMMAND_TYPE = `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;
@@ -85,8 +85,8 @@ export const MENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenu</code>) อ้างถึงเมนูใน template ด้วย <code>#menu</code> (exportAs คือ <code>wuMenu</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code>',
-        en: 'Works as an NgModule (<code>WuMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenu</code>). Reach the menu in a template with <code>#menu</code> (its exportAs is <code>wuMenu</code>). Items are typed <code>MenuItem</code> from <code>wiraui/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenu</code>) อ้างถึงเมนูใน template ด้วย <code>#menu</code> (exportAs คือ <code>wuMenu</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>@wirabyte/ui/api</code>',
+        en: 'Works as an NgModule (<code>WuMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenu</code>). Reach the menu in a template with <code>#menu</code> (its exportAs is <code>wuMenu</code>). Items are typed <code>MenuItem</code> from <code>@wirabyte/ui/api</code>.',
       },
     },
     popup: {
@@ -213,7 +213,7 @@ export const MENU_DOC: ComponentDoc = {
   (onShow)="logMenu('onShow')" (onHide)="logMenu('onHide')"></wu-menu>`,
   },
   ts: {
-    popup: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    popup: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 profileItems: MenuItem[] = [
   { label: 'โปรไฟล์ของฉัน', icon: 'wi wi-user', command: (event) => this.run(event) },
@@ -399,8 +399,8 @@ export const TABMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuTabMenuModule</code>) และ standalone (<code>WuTabMenu</code>) selector <code>wu-tabmenu</code> หรือ <code>wu-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code> แถวแท็บใช้ stylesheet และ token ของ wu-tabs · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> คือ component เดียวกันนี้ (ดูหน้า Tabs) ตอนนี้ wu-tabmenu อยู่ใน <code>wiraui/tabs</code> ส่วน import จาก <code>wiraui/tabmenu</code> ยังใช้ได้เหมือนเดิม',
-        en: 'Works as an NgModule (<code>WuTabMenuModule</code>) or standalone (<code>WuTabMenu</code>), as <code>wu-tabmenu</code> or <code>wu-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>wiraui/api</code>. The tab row uses the wu-tabs stylesheet and tokens · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> is this same component (see the Tabs page): wu-tabmenu now lives in <code>wiraui/tabs</code>, and imports from <code>wiraui/tabmenu</code> keep working.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTabMenuModule</code>) และ standalone (<code>WuTabMenu</code>) selector <code>wu-tabmenu</code> หรือ <code>wu-tabMenu</code> ก็ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>@wirabyte/ui/api</code> แถวแท็บใช้ stylesheet และ token ของ wu-tabs · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> คือ component เดียวกันนี้ (ดูหน้า Tabs) ตอนนี้ wu-tabmenu อยู่ใน <code>@wirabyte/ui/tabs</code> ส่วน import จาก <code>@wirabyte/ui/tabmenu</code> ยังใช้ได้เหมือนเดิม',
+        en: 'Works as an NgModule (<code>WuTabMenuModule</code>) or standalone (<code>WuTabMenu</code>), as <code>wu-tabmenu</code> or <code>wu-tabMenu</code>. Items are typed <code>MenuItem</code> from <code>@wirabyte/ui/api</code>. The tab row uses the wu-tabs stylesheet and tokens · <code>&lt;wu-tabs [model]="items" [(activeItem)]="activeItem"&gt;</code> is this same component (see the Tabs page): wu-tabmenu now lives in <code>@wirabyte/ui/tabs</code>, and imports from <code>@wirabyte/ui/tabmenu</code> keep working.',
       },
     },
     basic: {
@@ -455,7 +455,7 @@ export const TABMENU_DOC: ComponentDoc = {
 </div>`,
   },
   ts: {
-    basic: `import { MenuItem } from 'wiraui/api';
+    basic: `import { MenuItem } from '@wirabyte/ui/api';
 
 items: MenuItem[] = [
   { label: 'ภาพรวม', icon: 'wi wi-th-large' },
@@ -464,7 +464,7 @@ items: MenuItem[] = [
   { label: 'ตั้งค่า', icon: 'wi wi-cog' },
 ];
 activeItem: MenuItem = this.items[0];`,
-    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    commands: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 mailItems: MenuItem[] = [
   { label: 'ทั้งหมด', icon: 'wi wi-inbox', command: (event) => this.open(event) },

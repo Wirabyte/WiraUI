@@ -1,4 +1,4 @@
-import { buildExcel, EXCEL_MIME, ExcelSheet, excelSheetFromRows, ExcelTableColumn, ExcelTableOptions, ExcelWorkbook } from 'wiraui/core';
+import { buildExcel, EXCEL_MIME, ExcelSheet, excelSheetFromRows, ExcelTableColumn, ExcelTableOptions, ExcelWorkbook } from '@wirabyte/ui/core';
 
 /** `downloadExcel()` options besides the workbook. */
 export interface WuExcelDownloadOptions {

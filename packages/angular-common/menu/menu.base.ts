@@ -23,8 +23,8 @@ import {
   ɵWuPopup,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
-import { menuFocusable, menuHasSubmenu, menuKey, menuTypeahead, menuVisible } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { menuFocusable, menuHasSubmenu, menuKey, menuTypeahead, menuVisible } from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 

@@ -14,9 +14,9 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
-import { getBoundsOfRects, minimapLayout, minimapMaskPath, minimapToFlow, viewRect } from 'wiraui/core';
-import type { FlowMinimapLayout, FlowNode, FlowXY } from 'wiraui/core';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import { getBoundsOfRects, minimapLayout, minimapMaskPath, minimapToFlow, viewRect } from '@wirabyte/ui/core';
+import type { FlowMinimapLayout, FlowNode, FlowXY } from '@wirabyte/ui/core';
 import { ɵWuFlowHost } from './flow-host';
 import type { WuFlowPanelPosition } from './flow.types';
 

@@ -23,9 +23,9 @@ import {
   WU_VERSION_INFO,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { checkFile, formatFileSize, isImageFile, sameFile, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { checkFile, formatFileSize, isImageFile, sameFile, WuLocale } from '@wirabyte/ui/core';
 import {
   WuFileBeforeUploadEvent,
   WuFileProgressEvent,

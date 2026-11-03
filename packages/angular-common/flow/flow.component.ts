@@ -25,7 +25,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from '@wirabyte/ui/config';
 import {
   absolutePositions,
   alignmentGuides,
@@ -100,7 +100,7 @@ import {
   wheelDeltaPx,
   wheelZoomFactor,
   zoomAt,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import type {
   FlowConnection,
   FlowConnectionMode,
@@ -126,7 +126,7 @@ import type {
   FlowTreeLayoutOptions,
   FlowViewport,
   FlowXY,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { WuFlowHandle } from './flow-handle.component';
 import { ɵWuFlowChange, ɵWuFlowHost, ɵWuFlowNodeBox } from './flow-host';
 import { ɵWuFlowNodeComponentOutlet, ɵWuFlowNodeRegistry, ɵWuFlowNodeWrapper } from './flow-node-outlet';

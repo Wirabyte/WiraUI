@@ -1,5 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuTagSeverity } from './tag.types';
 
 /** Small status label: `<wu-tag value="อนุมัติ" severity="success" rounded>`. Projected content follows `value`. */

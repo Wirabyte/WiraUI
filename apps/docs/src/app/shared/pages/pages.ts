@@ -145,7 +145,7 @@ export class ThemingTypescriptPage extends DocsTextPage {
   });
 }
 
-/** utilities/:topic: content from data/utilities.ts, demos styled by the real wiraui/utils CSS. */
+/** utilities/:topic: content from data/utilities.ts, demos styled by the real @wirabyte/ui/utils CSS. */
 @Component({
   selector: 'docs-utilities',
   standalone: false,

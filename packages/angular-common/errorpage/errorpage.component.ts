@@ -1,7 +1,7 @@
 import { DOCUMENT, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
-import { httpErrorActions, httpErrorCode, httpErrorKind, httpErrorTextKey, TH_LOCALE, WuErrorAction, WuErrorKind } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
+import { httpErrorActions, httpErrorCode, httpErrorKind, httpErrorTextKey, TH_LOCALE, WuErrorAction, WuErrorKind } from '@wirabyte/ui/core';
 
 export type { WuErrorAction, WuErrorKind };
 

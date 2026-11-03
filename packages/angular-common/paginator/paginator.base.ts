@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, ContentChild, ContentChildren, Directive, EventEmitter, inject, Input, OnDestroy, Output, QueryList, TemplateRef } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
-import { pageInfo, pageLinks, pageReport, WuLocale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from '@wirabyte/ui/config';
+import { pageInfo, pageLinks, pageReport, WuLocale } from '@wirabyte/ui/core';
 import { WuPageEvent } from './paginator.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

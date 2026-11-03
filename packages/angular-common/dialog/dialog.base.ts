@@ -27,8 +27,8 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 import { WuDialogMaximizeEvent } from './dialog.types';
 
 /** Marks projected footer content: `<div wuDialogFooter>…</div>` or `<wu-footer>…</wu-footer>`. */

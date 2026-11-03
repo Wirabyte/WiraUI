@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { provideWiraUI } from 'wiraui/config';
+import { provideWiraUI } from '@wirabyte/ui/config';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
 import { DocsNotFound } from './not-found';
 

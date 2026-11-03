@@ -148,7 +148,7 @@ export const EXCEL_DOC: ComponentDoc = {
     },
   },
   code: {
-    import: `import { downloadExcel, downloadRowsAsExcel, buildExcel, excelSheetFromRows, ExcelStyle } from 'wiraui/excel';`,
+    import: `import { downloadExcel, downloadRowsAsExcel, buildExcel, excelSheetFromRows, ExcelStyle } from '@wirabyte/ui/excel';`,
     basic: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="download()"></wu-button>`,
     styles: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadStyles()"></wu-button>`,
     merge: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadTimetable()"></wu-button>`,
@@ -157,7 +157,7 @@ export const EXCEL_DOC: ComponentDoc = {
     workbook: `<wu-button label="ดาวน์โหลด" icon="wi wi-file-excel" (onClick)="downloadWorkbook()"></wu-button>`,
   },
   ts: {
-    basic: `import { downloadExcel } from 'wiraui/excel';
+    basic: `import { downloadExcel } from '@wirabyte/ui/excel';
 
 download(): void {
   downloadExcel(
@@ -171,7 +171,7 @@ download(): void {
     'scores' // ชื่อไฟล์ไม่ต้องมี .xlsx
   );
 }`,
-    styles: `import { downloadExcel, ExcelStyle } from 'wiraui/excel';
+    styles: `import { downloadExcel, ExcelStyle } from '@wirabyte/ui/excel';
 
 downloadStyles(): void {
   const head: ExcelStyle = { bold: true, color: '#ffffff', fill: '#1d4ed8', align: 'center', border: 'thin' };
@@ -196,7 +196,7 @@ downloadStyles(): void {
     'styles'
   );
 }`,
-    merge: `import { downloadExcel, ExcelStyle } from 'wiraui/excel';
+    merge: `import { downloadExcel, ExcelStyle } from '@wirabyte/ui/excel';
 
 downloadTimetable(): void {
   const cell: ExcelStyle = { border: 'thin', align: 'center', valign: 'middle' };
@@ -216,7 +216,7 @@ downloadTimetable(): void {
     'timetable'
   );
 }`,
-    formulas: `import { downloadExcel } from 'wiraui/excel';
+    formulas: `import { downloadExcel } from '@wirabyte/ui/excel';
 
 downloadReceipt(): void {
   const right = { align: 'right' as const };
@@ -239,7 +239,7 @@ downloadReceipt(): void {
     'receipt'
   );
 }`,
-    report: `import { downloadRowsAsExcel } from 'wiraui/excel';
+    report: `import { downloadRowsAsExcel } from '@wirabyte/ui/excel';
 
 interface Fee {
   code: string;
@@ -279,7 +279,7 @@ downloadReport(): void {
     'fees'
   );
 }`,
-    workbook: `import { downloadExcel, excelSheetFromRows } from 'wiraui/excel';
+    workbook: `import { downloadExcel, excelSheetFromRows } from '@wirabyte/ui/excel';
 
 downloadWorkbook(): void {
   downloadExcel(

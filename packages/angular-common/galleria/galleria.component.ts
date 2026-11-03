@@ -28,8 +28,8 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 
 /** How many thumbnails show at or below a window width: `{ breakpoint: '768px', numVisible: 2 }`. */
 export interface WuGalleriaResponsiveOptions {

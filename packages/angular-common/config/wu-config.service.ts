@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable, inject } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { CalendarSystem, EN_LOCALE, TH_LOCALE, WuLocale } from 'wiraui/core';
+import { CalendarSystem, EN_LOCALE, TH_LOCALE, WuLocale } from '@wirabyte/ui/core';
 import { WU_OPTIONS, WuDelays } from './options';
 
 /** App-wide settings components read. Shaped like the config service apps already know, so migrating code stays familiar. */

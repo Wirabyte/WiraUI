@@ -10,8 +10,8 @@ const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((s
 const SCSS_DIR = new URL('../scss/', import.meta.url);
 const importer = {
   findFileUrl(url: string) {
-    if (url !== 'wiraui/theme' && !url.startsWith('wiraui/theme/')) return null;
-    return new URL(url.slice('wiraui/theme/'.length) || 'index', SCSS_DIR);
+    if (url !== '@wirabyte/ui/theme' && !url.startsWith('@wirabyte/ui/theme/')) return null;
+    return new URL(url.slice('@wirabyte/ui/theme/'.length) || 'index', SCSS_DIR);
   },
 };
 

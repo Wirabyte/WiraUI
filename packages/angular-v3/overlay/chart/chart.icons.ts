@@ -1,4 +1,4 @@
-import type { ChartType } from 'wiraui/core';
+import type { ChartType } from '@wirabyte/ui/core';
 
 /** The look picker's names. */
 export const WU_CHART_LOOKS: Record<string, { th: string; en: string }> = {

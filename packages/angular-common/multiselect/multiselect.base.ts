@@ -28,11 +28,11 @@ import {
   ɵWuPopup,
   ɵWuStyleLoader,
   WuTemplate,
-} from 'wiraui/config';
-import { filterItems, firstIndex, lastIndex, sameValue, SelectItem, selectItems, stepIndex, typeaheadIndex, WuLocale } from 'wiraui/core';
-import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ɵWU_SELECT_CSS, WuSelectMatchMode } from 'wiraui/select';
+} from '@wirabyte/ui/config';
+import { filterItems, firstIndex, lastIndex, sameValue, SelectItem, selectItems, stepIndex, typeaheadIndex, WuLocale } from '@wirabyte/ui/core';
+import { ɵWU_CHECKBOX_CSS } from '@wirabyte/ui/checkbox';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ɵWU_SELECT_CSS, WuSelectMatchMode } from '@wirabyte/ui/select';
 import { WuMultiSelectChangeEvent, WuMultiSelectFilterEvent, WuMultiSelectSelectAllChangeEvent, WuMultiSelectSelectedItemsContext } from './multiselect.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

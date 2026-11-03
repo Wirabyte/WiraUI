@@ -118,7 +118,7 @@ test('studio: a token edit applies per mode, and the CSS download carries it', a
 
   const scss = await download(page, 'SCSS', 'เฉพาะที่แก้');
   expect(scss.name).toBe('wiraui.theme.scss');
-  expect(scss.text).toContain("@use 'wiraui/theme' with (");
+  expect(scss.text).toContain("@use '@wirabyte/ui/theme' with (");
   expect(scss.text).toContain('500: #0f766e,');
   expect(scss.text).not.toContain('$shadow:');
 });

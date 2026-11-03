@@ -43,4 +43,4 @@ export {
   layoutTree,
   reconnectEdge,
   updateEdge,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';

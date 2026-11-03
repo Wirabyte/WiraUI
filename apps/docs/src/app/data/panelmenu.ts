@@ -3,7 +3,7 @@ import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ITEMS_TS = `import { MenuItem } from 'wiraui/api';
+const ITEMS_TS = `import { MenuItem } from '@wirabyte/ui/api';
 
 items: MenuItem[] = [
   {
@@ -120,8 +120,8 @@ export const PANELMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuPanelMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuPanelMenu</code>) selector <code>wu-panelMenu</code> ก็ใช้ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code>',
-        en: 'Works as an NgModule (<code>WuPanelMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuPanelMenu</code>). The <code>wu-panelMenu</code> selector works too. Items are typed <code>MenuItem</code> from <code>wiraui/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuPanelMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuPanelMenu</code>) selector <code>wu-panelMenu</code> ก็ใช้ได้ type ของรายการคือ <code>MenuItem</code> จาก <code>@wirabyte/ui/api</code>',
+        en: 'Works as an NgModule (<code>WuPanelMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuPanelMenu</code>). The <code>wu-panelMenu</code> selector works too. Items are typed <code>MenuItem</code> from <code>@wirabyte/ui/api</code>.',
       },
     },
     basic: {
@@ -243,7 +243,7 @@ sections(): MenuItem[] {
     { label: 'การเงิน', icon: 'wi wi-wallet', items: [{ label: 'ค่าธรรมเนียม' }, { label: 'ใบเสร็จ' }] },
   ];
 }`,
-    links: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    links: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 // เทียบ fragment ด้วย: ไฮไลต์เฉพาะหัวข้อที่เปิดอยู่
 private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
@@ -368,7 +368,7 @@ classItems: MenuItem[] = [
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+      code: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;

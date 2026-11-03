@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 
 /** `(onChange)` and `(onSlideEnd)`: the value, and both ends of a range. */
 export interface WuSliderChangeEvent {

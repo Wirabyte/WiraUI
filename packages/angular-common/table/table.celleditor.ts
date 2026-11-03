@@ -1,5 +1,5 @@
 import { ContentChild, ContentChildren, Directive, inject, QueryList, TemplateRef } from '@angular/core';
-import { ɵfindTemplate, WuTemplate } from 'wiraui/config';
+import { ɵfindTemplate, WuTemplate } from '@wirabyte/ui/config';
 import { WuEditableColumn, WuEditableRow } from './table.directives';
 import { ɵWU_TABLE } from './table.types';
 

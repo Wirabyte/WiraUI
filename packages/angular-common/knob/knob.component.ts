@@ -11,8 +11,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
-import { knobPaths, knobText, knobValueAt, rangeKeyValue } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵtoBool, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
+import { knobPaths, knobText, knobValueAt, rangeKeyValue } from '@wirabyte/ui/core';
 
 const toNumber = (v: unknown, fallback: number): number =>
   v === null || v === undefined || v === '' || !Number.isFinite(Number(v)) ? fallback : Number(v);

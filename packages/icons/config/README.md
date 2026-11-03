@@ -2,10 +2,10 @@
 
 WiraUI's icons: 424 icons in five weights (thin, light, regular, bold, fill), with the names Angular teams already
 write (`times`, `exclamation-triangle`, `cog` …) plus Font Awesome and Phosphor spellings as aliases. Works on its own,
-without `wiraui`. Drawings from [Phosphor Icons](https://phosphoricons.com) (MIT).
+without `@wirabyte/ui`. Drawings from [Phosphor Icons](https://phosphoricons.com) (MIT).
 
 ```bash
-npm install wiraicon
+npm install @wirabyte/icons
 ```
 
 ## CSS classes (any framework)
@@ -13,7 +13,7 @@ npm install wiraicon
 Add the stylesheet once (Angular: `angular.json` → `styles`):
 
 ```json
-"styles": ["node_modules/wiraicon/wiraicon.css", "src/styles.scss"]
+"styles": ["node_modules/@wirabyte/icons/wiraicon.css", "src/styles.scss"]
 ```
 
 ```html
@@ -28,7 +28,7 @@ Each weight is its own font and is only downloaded when a page uses it.
 ## Angular component
 
 ```ts
-import { WiIcon } from 'wiraicon/angular';   // NgModule apps: WiIconModule
+import { WiIcon } from '@wirabyte/icons/angular';   // NgModule apps: WiIconModule
 ```
 
 ```html
@@ -45,7 +45,7 @@ Inline SVG, coloured by the text colour, 1em by default. Each weight's drawings 
 - `svg/<weight>/<name>.svg`: every icon as an SVG file (256 × 256, `fill="currentColor"`).
 - `data/<weight>`: the drawings as a JS module, for other frameworks.
 - `icons.json`: names, aliases, categories and code points.
-- `wiraIconName('xmark')` → `'times'`, `wiraIconSvg(body, 24)` from `wiraicon`.
+- `wiraIconName('xmark')` → `'times'`, `wiraIconSvg(body, 24)` from `@wirabyte/icons`.
 
 ## License
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuDividerAlign, WuDividerLayout, WuDividerType } from './divider.types';
 
 /** Line between sections, horizontal or vertical, with optional content on it: `<wu-divider align="center">หรือ</wu-divider>`. */

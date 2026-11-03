@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuTimeline } from './timeline.component';
 
 /** For NgModule apps (with `WuTemplate` for `pTemplate="content"` / `"opposite"` / `"marker"`). */

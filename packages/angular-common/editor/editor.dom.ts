@@ -1,4 +1,4 @@
-import { EditorSnapshot, safeEditorImage, safeEditorUrl } from 'wiraui/core';
+import { EditorSnapshot, safeEditorImage, safeEditorUrl } from '@wirabyte/ui/core';
 
 /**
  * DOM helpers of wu-editor, free of Angular: selection save / restore, the HTML cleaner used for values, pastes and

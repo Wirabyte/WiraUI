@@ -61,8 +61,8 @@ export const RADIOBUTTON_DOC: ComponentDoc = {
     layout: {
       title: { th: 'การจัดวาง', en: 'Layout' },
       text: {
-        th: 'แนวตั้งบรรทัดละตัว หรือแนวนอนที่เว้นระยะเท่ากันและขึ้นบรรทัดใหม่เมื่อแคบ ตัวอย่างใช้ class จาก <code>wiraui/utils</code> (หรือ CSS flex ของแอปเอง)',
-        en: 'One per line, or a row with an even gap that wraps when narrow. The sample uses <code>wiraui/utils</code> classes (or your own flex CSS).',
+        th: 'แนวตั้งบรรทัดละตัว หรือแนวนอนที่เว้นระยะเท่ากันและขึ้นบรรทัดใหม่เมื่อแคบ ตัวอย่างใช้ class จาก <code>@wirabyte/ui/utils</code> (หรือ CSS flex ของแอปเอง)',
+        en: 'One per line, or a row with an even gap that wraps when narrow. The sample uses <code>@wirabyte/ui/utils</code> classes (or your own flex CSS).',
       },
     },
     dynamic: { title: 'Dynamic', text: { th: 'สร้างตัวเลือกจากข้อมูลด้วย loop ได้ตามปกติ', en: 'Build the options from data with a loop.' } },

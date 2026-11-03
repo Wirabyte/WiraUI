@@ -132,7 +132,7 @@ export const FILEUPLOAD_DOC: ComponentDoc = {
   (onUpload)="imported($event)" (onError)="importFailed($event)"></wu-fileupload>`,
   },
   ts: {
-    basic: `import { WuFileUpload, WuFileUploadHandlerEvent } from 'wiraui/fileupload';
+    basic: `import { WuFileUpload, WuFileUploadHandlerEvent } from '@wirabyte/ui/fileupload';
 
 isApiSaving = false;
 
@@ -145,7 +145,7 @@ uploadDocuments(event: WuFileUploadHandlerEvent, fileUpload: WuFileUpload): void
     fileUpload.clear();
   });
 }`,
-    validation: `import { WuFileSelectEvent, WuFileValidationFailEvent } from 'wiraui/fileupload';
+    validation: `import { WuFileSelectEvent, WuFileValidationFailEvent } from '@wirabyte/ui/fileupload';
 
 lastPicked = '';
 lastProblem = '';
@@ -157,7 +157,7 @@ picked(event: WuFileSelectEvent): void {
 rejected(event: WuFileValidationFailEvent): void {
   this.lastProblem = event.reason;
 }`,
-    basicmode: `import { WuFileSelectEvent } from 'wiraui/fileupload';
+    basicmode: `import { WuFileSelectEvent } from '@wirabyte/ui/fileupload';
 
 photo: File | null = null;
 
@@ -168,7 +168,7 @@ pickPhoto(event: WuFileSelectEvent): void {
 clearPhoto(): void {
   this.photo = null;
 }`,
-    server: `import { WuFileBeforeUploadEvent, WuFileUploadErrorEvent, WuFileUploadEvent } from 'wiraui/fileupload';
+    server: `import { WuFileBeforeUploadEvent, WuFileUploadErrorEvent, WuFileUploadEvent } from '@wirabyte/ui/fileupload';
 
 uploadHeaders = { Authorization: 'Bearer ' + this.auth.token };
 classId = 12;
@@ -262,7 +262,7 @@ importFailed(event: WuFileUploadErrorEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuFileSelectEvent, WuFileUploadHandlerEvent, WuFileValidationFailEvent } from 'wiraui/fileupload';
+      code: `import { WuFileSelectEvent, WuFileUploadHandlerEvent, WuFileValidationFailEvent } from '@wirabyte/ui/fileupload';
 
 interface WuFileSelectEvent {
   originalEvent: Event;

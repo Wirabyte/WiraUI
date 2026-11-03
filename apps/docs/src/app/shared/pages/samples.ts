@@ -36,9 +36,9 @@ export function ngAddResult(v: DocVersion): string {
   ✔ created src/theme/wiraui.theme.scss
   ✔ src/styles.scss: added @use 'theme/wiraui.theme'
   ✔ created src/theme/wiraui.overrides.ts
-  ✔ src/styles.scss: added @use 'wiraui/utils';
+  ✔ src/styles.scss: added @use '@wirabyte/ui/utils';
   ✔ src/app/app.module.ts: added provideWiraUI() to the providers of AppModule
-Next: import WuButtonModule (NgModule) or WuButton (standalone) from wiraui/button, then use <wu-button label="Save"></wu-button>`;
+Next: import WuButtonModule (NgModule) or WuButton (standalone) from @wirabyte/ui/button, then use <wu-button label="Save"></wu-button>`;
 }
 
 export function ngAddFlags(v: DocVersion): string {
@@ -53,8 +53,8 @@ export function providerNgModule(v: DocVersion): string {
   return `// app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideWiraUI } from 'wiraui/config';
-import { WuButtonModule } from 'wiraui/button';
+import { provideWiraUI } from '@wirabyte/ui/config';
+import { WuButtonModule } from '@wirabyte/ui/button';
 import { wiraOverrides } from '../theme/wiraui.overrides';
 import { AppComponent } from './app.component';
 
@@ -84,7 +84,7 @@ export function providerStandalone(v: DocVersion): string {
         : `import { ApplicationConfig } from '@angular/core';`;
   return `// app.config.ts
 ${coreImport}
-import { provideWiraUI } from 'wiraui/config';
+import { provideWiraUI } from '@wirabyte/ui/config';
 import { wiraOverrides } from '../theme/wiraui.overrides';
 
 export const appConfig: ApplicationConfig = {
@@ -95,7 +95,7 @@ export const appConfig: ApplicationConfig = {
 }
 
 export const PROVIDER_FOR_ROOT = `// ถ้าชอบสไตล์ forRoot แบบ NgModule
-import { WiraUIModule } from 'wiraui/config';
+import { WiraUIModule } from '@wirabyte/ui/config';
 
 @NgModule({
   imports: [WiraUIModule.forRoot({ locale: 'th', calendar: 'buddhist' })],
@@ -106,12 +106,12 @@ export function scssTheme(v: DocVersion): string {
   if (v.major === 1) {
     return `// src/theme/wiraui.theme.scss
 // ชื่อธีมเดียวกับโฟลเดอร์ธีมที่แอปเดิมใช้อยู่
-@use 'wiraui/theme' with (
+@use '@wirabyte/ui/theme' with (
   $theme: 'sila-light-teal',
 );
 
 // หรือเริ่มจาก preset ของยุคนี้แล้วปรับเอง
-// @use 'wiraui/theme' with (
+// @use '@wirabyte/ui/theme' with (
 //   $preset: 'sila-classic',            // sila-classic · arun · sayan · ratri · material-classic
 //   $primary: #00a86b,                  // ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้
 //   $primary-contrast: #ffffff,         // ตัวอักษรบนปุ่มหลัก
@@ -122,7 +122,7 @@ export function scssTheme(v: DocVersion): string {
   }
   const presets = v.major === 2 ? 'mali · sila · material · phet' : 'wira · lanna · siam · nakhon · glass · mali · sila · material · phet';
   return `// src/theme/wiraui.theme.scss
-@use 'wiraui/theme' with (
+@use '@wirabyte/ui/theme' with (
   $preset: '${defaultTheme(v)}',${' '.repeat(Math.max(1, 26 - defaultTheme(v).length))}// ${presets}
   $primary: #06b6d4,                    // ใส่สีเดียว ระบบสร้างเฉด 50–950 ให้
   $primary-contrast: #ffffff,           // ตัวอักษรบนปุ่มหลัก
@@ -137,14 +137,14 @@ export function scssTheme(v: DocVersion): string {
   )
 );
 
-// @use 'wiraui/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
+// @use '@wirabyte/ui/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
 }
 
 export const SCSS_STYLES = `// src/styles.scss (บรรทัดแรก)
 @use 'theme/wiraui.theme';`;
 
 export const SCSS_API = `// ไฟล์ SCSS ของ component ในแอป: โมดูล API ไม่ปล่อย CSS ซ้ำ
-@use 'wiraui/theme/api' as wu;
+@use '@wirabyte/ui/theme/api' as wu;
 
 .student-card {
   border-color: wu.token(primary-300);   // → var(--wu-primary-300)
@@ -160,10 +160,10 @@ export const SCSS_API = `// ไฟล์ SCSS ของ component ในแอ�
 export function cssAngularJson(v: DocVersion): string {
   const file =
     v.major === 1
-      ? `"node_modules/wiraui/themes/sila-light-teal/theme.css",   // ชื่อโฟลเดอร์ธีมเดิมของแอป`
+      ? `"node_modules/@wirabyte/ui/themes/sila-light-teal/theme.css",   // ชื่อโฟลเดอร์ธีมเดิมของแอป`
       : v.major === 2
-        ? `"node_modules/wiraui/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`
-        : `"node_modules/wiraui/themes/wira/theme.css",              // หรือ themes/wira/<สี>.css เช่น cyan.css`;
+        ? `"node_modules/@wirabyte/ui/themes/mali/theme.css",              // หรือ themes/mali/<สี>.css เช่น cyan.css`
+        : `"node_modules/@wirabyte/ui/themes/wira/theme.css",              // หรือ themes/wira/<สี>.css เช่น cyan.css`;
   return `// angular.json → projects.<app>.architect.build.options
 "styles": [
   ${file}
@@ -204,12 +204,12 @@ export const LAYER_ORDER = `@layer reset, wiraui.tokens, wiraui.components, wira
 
 export const LAYER_STACK = `แพ้ / loses   wiraui.tokens       ← ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)
               wiraui.components   ← CSS ของ component (อ่านแค่ var(--wu-*))
-              wiraui.utilities    ← utility class (wiraui/utils) ถ้าเปิดใช้
+              wiraui.utilities    ← utility class (@wirabyte/ui/utils) ถ้าเปิดใช้
               wiraui.overrides    ← overrides จาก TS / WuThemeService
 ชนะ / wins    CSS ของแอปเอง          ← ไม่อยู่ใน layer จึงชนะโดยไม่ต้องใช้ !important`;
 
 export const TS_OVERRIDES = `// src/theme/wiraui.overrides.ts (ng add สร้างไฟล์นี้ให้ เริ่มต้นว่าง)
-import { defineOverrides, palette } from 'wiraui/config';
+import { defineOverrides, palette } from '@wirabyte/ui/config';
 
 export const wiraOverrides = defineOverrides({
   semantic: {
@@ -230,9 +230,9 @@ export const wiraOverrides = defineOverrides({
 export function tsPreset(v: DocVersion, id: string, name: string, dark: boolean): string {
   const named = v.major === 1 || !/^[A-Z]/.test(name);
   const base = named ? `themePreset('${id}')` : name;
-  const importLine = named ? `import { themePreset } from 'wiraui/presets';` : `import { ${name} } from 'wiraui/presets';`;
+  const importLine = named ? `import { themePreset } from '@wirabyte/ui/presets';` : `import { ${name} } from '@wirabyte/ui/presets';`;
   return `// ใช้ TypeScript อย่างเดียว ไม่มีไฟล์ธีม SCSS / CSS
-import { definePreset, palette, provideWiraUI } from 'wiraui/config';
+import { definePreset, palette, provideWiraUI } from '@wirabyte/ui/config';
 ${importLine}
 
 const School = definePreset(${base}, {${dark ? "\n  scheme: 'dark',                                   // ธีมมืดอย่างเดียว ไม่ต้องสลับ class" : ''}
@@ -246,7 +246,7 @@ provideWiraUI({ preset: School });`;
 }
 
 export const TS_RUNTIME = `import { inject } from '@angular/core';
-import { WuThemeService } from 'wiraui/config';
+import { WuThemeService } from '@wirabyte/ui/config';
 
 const theme = inject(WuThemeService);
 theme.setPrimary('#2563eb');                       // ทุกเฉดและ token ที่อ้างถึงเปลี่ยนตาม
@@ -283,7 +283,7 @@ export const FIRST_COMPONENT_TS = `export class AppComponent {
 }`;
 
 export const TRANSLATION = `import { inject } from '@angular/core';
-import { WuConfig } from 'wiraui/config';
+import { WuConfig } from '@wirabyte/ui/config';
 
 // ตั้งครั้งเดียวที่ระดับแอป: locale 'th' มีในตัวแล้ว แก้เฉพาะคำที่อยากเปลี่ยน
 inject(WuConfig).setTranslation({ emptyMessage: 'ไม่พบข้อมูลที่ค้นหา' });`;
@@ -354,7 +354,7 @@ export const GUIDE_WORDS: SampleWords = {
   'ชนะ / wins    ': 'wins          ',
   'ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)': 'the main theme from SCSS / CSS (or a TS preset)',
   'CSS ของ component (อ่านแค่ var(--wu-*))': 'component CSS (reads only var(--wu-*))',
-  'utility class (wiraui/utils) ถ้าเปิดใช้': 'utility classes (wiraui/utils), if enabled',
+  'utility class (@wirabyte/ui/utils) ถ้าเปิดใช้': 'utility classes (@wirabyte/ui/utils), if enabled',
   'overrides จาก TS / WuThemeService': 'overrides from TS / WuThemeService',
   'CSS ของแอปเอง          ': "your app's CSS         ",
   'ไม่อยู่ใน layer จึงชนะโดยไม่ต้องใช้ !important': 'not in a layer, so it wins with no !important',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵseverity, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuBadgeSeverity, WuBadgeSize } from './badge.types';
 
 /** Count or status pill: `<wu-badge value="8" severity="danger">`. Without a value it is a dot. */

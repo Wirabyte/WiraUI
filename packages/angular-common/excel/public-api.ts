@@ -12,7 +12,7 @@ export {
   excelRef,
   excelSheetFromRows,
   mergeExcelStyles,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 export type {
   ExcelBorder,
   ExcelBorderLine,
@@ -31,4 +31,4 @@ export type {
   ExcelTotal,
   ExcelValue,
   ExcelWorkbook,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';

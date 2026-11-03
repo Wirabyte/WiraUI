@@ -22,8 +22,8 @@ export class DocsImport {
   protected readonly line = computed(() => {
     const n = this.names();
     return this.version.major === 1
-      ? `import { ${n.module} } from 'wiraui/${n.entry}';`
-      : `import { ${n.standalone} } from 'wiraui/${n.entry}';`;
+      ? `import { ${n.module} } from '@wirabyte/ui/${n.entry}';`
+      : `import { ${n.standalone} } from '@wirabyte/ui/${n.entry}';`;
   });
 
   protected readonly tabs = computed<CodeTab[]>(() => {

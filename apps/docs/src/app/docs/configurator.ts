@@ -57,7 +57,7 @@ const SURFACES = [
           </span>
           <div class="docs-studio-heading">
             <b id="docs-studio-title">{{ 'config.title' | t }}</b>
-            <span>wiraui {{ version() }} · <code>{{ state.activePresetId() }}</code></span>
+            <span>WiraUI {{ version() }} · <code>{{ state.activePresetId() }}</code></span>
           </div>
           <button type="button" class="docs-link-btn" id="docs-config-reset" (click)="reveal($event, 'reset')">
             <docs-icon name="refresh"></docs-icon>{{ 'config.reset' | t }}

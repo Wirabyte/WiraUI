@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, ElementRef, HostBinding, HostListener, inject, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵtoBool, WuConfig, ɵWuStyleLoader } from 'wiraui/config';
-import { ɵWU_CHECKBOX_CSS } from 'wiraui/checkbox';
-import { ɵWU_RADIOBUTTON_CSS } from 'wiraui/radiobutton';
+import { ɵtoBool, WuConfig, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { ɵWU_CHECKBOX_CSS } from '@wirabyte/ui/checkbox';
+import { ɵWU_RADIOBUTTON_CSS } from '@wirabyte/ui/radiobutton';
 import { ɵWU_TABLE } from './table.types';
 
 /** Re-renders a directive's host whenever its table sorts, selects or pages. */

@@ -37,7 +37,7 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
     title: { th: 'Utility classes', en: 'Utility classes' },
     lead: {
       th: 'class สำเร็จรูปสำหรับ layout, ระยะห่าง, ขนาด, ตัวอักษร และสี มากับ wiraui ในตัว จึงไม่ต้องติดตั้ง utility library แยก และเปิดหรือปิดได้ตามต้องการ',
-      en: 'Ready-made classes for layout, spacing, sizing, type and colour that ship with wiraui, so no separate utility library is needed. Switch them on or off as you like.',
+      en: 'Ready-made classes for layout, spacing, sizing, type and colour that ship with @wirabyte/ui, so no separate utility library is needed. Switch them on or off as you like.',
     },
     sections: [
       {
@@ -64,10 +64,10 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
           en: '<code>ng add</code> asks whether to add the utility classes (skip with <code>--utils=false</code>), or add them yourself with SCSS or CSS. Leave them out and they are off.',
         },
         code: `// src/styles.scss: ทั้งชุด
-@use 'wiraui/utils';
+@use '@wirabyte/ui/utils';
 
 // หรือเลือกเอง
-@use 'wiraui/utils' with (
+@use '@wirabyte/ui/utils' with (
   $groups: (palette: false, shadows: false),   // ตัดกลุ่มที่ไม่ใช้
   $prefix: 'u-',                               // .u-flex, .md:u-col-6
   $responsive: true,                           // false = ไม่มี sm: md: lg: xl:
@@ -82,7 +82,7 @@ export const UTILITY_TOPICS: Record<string, UtilityTopic> = {
         title: { th: 'ใช้แบบ CSS', en: 'As plain CSS' },
         code: `// angular.json → projects.<app>.architect.build.options
 "styles": [
-  "node_modules/wiraui/utils/utils.min.css",
+  "node_modules/@wirabyte/ui/utils/utils.min.css",
   "src/styles.css"
 ]`,
         codeLang: 'json',

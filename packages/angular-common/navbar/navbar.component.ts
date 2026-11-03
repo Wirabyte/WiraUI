@@ -30,16 +30,16 @@ import {
   WuConfig,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
-import { menuHasSubmenu, menuVisible, WuLocale } from 'wiraui/core';
-import { WuMenu } from 'wiraui/menu';
+} from '@wirabyte/ui/config';
+import { menuHasSubmenu, menuVisible, WuLocale } from '@wirabyte/ui/core';
+import { WuMenu } from '@wirabyte/ui/menu';
 
 /** `solid`: card background with a bottom border. `glass`: translucent with a backdrop blur. `transparent`: no background until the page scrolls. */
 export type WuNavbarVariant = 'solid' | 'glass' | 'transparent';
 
 /**
  * What `[aside]` needs from a wu-aside-menu. Written as a shape so this entry point does not depend on
- * `wiraui/asidemenu`; pass the menu itself: `<wu-navbar [aside]="sideMenu">` + `<wu-aside-menu #sideMenu>`.
+ * `@wirabyte/ui/asidemenu`; pass the menu itself: `<wu-navbar [aside]="sideMenu">` + `<wu-aside-menu #sideMenu>`.
  */
 export interface WuNavbarAside {
   readonly mobile: boolean;

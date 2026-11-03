@@ -52,7 +52,7 @@ export interface DocsVersionTheme {
   apply(custom: ThemeCustom, dark: boolean, ripple: boolean | null, scale: DocsScale): void;
   /** Component texts and calendar follow the site language (WuConfig.setTranslation). */
   setLocale(lang: Lang): void;
-  /** The version's own token engine and exporters (`wiraui/core`), for WiraUI Studio. */
+  /** The version's own token engine and exporters (`@wirabyte/ui/core`), for WiraUI Studio. */
   readonly core: StudioCore;
   /** A fresh copy of a listed theme's config: what the studio starts from and resets to. */
   config(id: string): StudioConfig;
@@ -73,7 +73,7 @@ interface ThemeServiceLike<P> {
   setScale(scale: 'sm' | 'md' | 'lg' | null): void;
 }
 
-/** `wiraui/presets` (or -v1 / -v2). */
+/** `@wirabyte/ui/presets` (or -v1 / -v2). */
 interface PresetsModule<P> {
   VERSION_CATALOG: Record<number, { themes: string[]; defaultTheme: string }>;
   presetsFor(major: 1 | 2 | 3): P[];

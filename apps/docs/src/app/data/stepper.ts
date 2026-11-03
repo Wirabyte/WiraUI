@@ -339,7 +339,7 @@ paymentSteps = [
   { value: 3, label: 'ใบเสร็จ', icon: 'wi wi-check-circle' },
 ];`,
     label: `enrolStep = 1;`,
-    model: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    model: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 applySteps: MenuItem[] = [
   { label: 'เลือกหลักสูตร', subtitle: 'ห้องเรียนพิเศษ', command: (event) => this.stepPicked(event) },
@@ -411,7 +411,7 @@ trackNext(): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuStepContext } from 'wiraui/stepper';
+      code: `import { WuStepContext } from '@wirabyte/ui/stepper';
 
 interface WuStepContext {
   activateCallback: (value: unknown) => void;

@@ -42,7 +42,7 @@ import { WuDragDropModule } from 'wiraui-v2/dragdrop';
 import { WuNavbarModule } from 'wiraui-v2/navbar';
 import { WuAsideMenuModule } from 'wiraui-v2/asidemenu';
 import { WuImageCropperModule } from 'wiraui-v2/imagecropper';
-import { WiIconModule } from 'wiraicon/angular';
+import { WiIconModule } from '@wirabyte/icons/angular';
 import { WuTerminalModule, WuTerminalService } from 'wiraui-v2/terminal';
 import { WuImageCompareModule } from 'wiraui-v2/imagecompare';
 import { WuCarouselModule } from 'wiraui-v2/carousel';
@@ -511,7 +511,7 @@ import { THEME_V2 } from './theme-v2';
     ),
   ],
   providers: [
-    // Docs site only: wiraui@2 normally refuses to start on Angular 21 (DESIGN.md §3).
+    // Docs site only: @wirabyte/ui@2 normally refuses to start on Angular 21 (DESIGN.md §3).
     { provide: ɵWU_SKIP_VERSION_CHECK, useValue: true },
     provideWiraUI({ locale: 'th', calendar: 'buddhist' }),
     THEME_V2,
@@ -526,7 +526,7 @@ import { THEME_V2 } from './theme-v2';
     { provide: DOCS_TERMINAL, useExisting: WuTerminalService },
     // The Flow demos that apply changes themselves use this version's helpers.
     { provide: DOCS_FLOW, useValue: { applyNodeChanges, applyEdgeChanges, addEdge } },
-    // The Excel demos build files with this version's wiraui/excel.
+    // The Excel demos build files with this version's @wirabyte/ui/excel.
     { provide: DOCS_EXCEL, useValue: { downloadExcel, downloadRowsAsExcel, excelSheetFromRows } },
     // The Dialog page's service sample: this module's WuDialogService opens this version's picker.
     WuDialogService,

@@ -1,8 +1,8 @@
 import { AfterViewInit, booleanAttribute, Directive, DoCheck, ElementRef, inject, input, OnDestroy } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
-import { WuInputSize, WuInputVariant, ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { WuInputSize, WuInputVariant, ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 
 /**
  * Styles a native <textarea> like wuInputText. `autoResize` grows it with its text, including values

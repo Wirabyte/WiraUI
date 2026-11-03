@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuTable } from './table.component';
 import { WuCellEditor } from './table-celleditor.component';
 import { WuColumnFilter } from './table-filter.component';

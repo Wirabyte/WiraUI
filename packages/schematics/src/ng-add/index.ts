@@ -16,7 +16,7 @@ import { addGlobalStyle, angularMajor, getProject, hasDependency, ProjectInfo } 
 import * as ts from 'typescript';
 import { NgAddOptions } from './schema';
 
-const GENERATOR = 'ng add wiraui';
+const GENERATOR = 'ng add @wirabyte/ui';
 
 /** Theme names teams know from the theme sets they used before, so a familiar `--theme` still finds WiraUI's own. */
 const FAMILIAR_THEME_NAMES: [RegExp, string][] = [
@@ -37,7 +37,7 @@ function ownThemeName(name: string): string {
 
 const OVERRIDES_TEMPLATE = `// WiraUI · wiraui.overrides.ts
 // Values here win over the main theme file through @layer wiraui.overrides, no !important needed.
-import { defineOverrides } from 'wiraui/config';
+import { defineOverrides } from '@wirabyte/ui/config';
 
 export const wiraOverrides = defineOverrides({
   // semantic: { radius: '8px', density: 'compact' },
@@ -64,7 +64,7 @@ export function ngAdd(options: NgAddOptions): Rule {
     const catalog = VERSION_CATALOG[major];
     const themeName = !options.theme || options.theme === 'auto' ? catalog.defaultTheme : ownThemeName(options.theme);
     if (!catalog.themes.includes(themeName)) {
-      throw new SchematicsException(`wiraui@${major} has no theme "${themeName}"; choose one of: ${catalog.themes.join(', ')}`);
+      throw new SchematicsException(`@wirabyte/ui@${major} has no theme "${themeName}"; choose one of: ${catalog.themes.join(', ')}`);
     }
     const base = themeConfig(themeName);
     const config = normalize({
@@ -117,7 +117,7 @@ export function ngAdd(options: NgAddOptions): Rule {
         '  ℹ An existing UI library was found: both can run side by side while you migrate, and WiraUI components also carry the p-* classes your CSS targets.'
       );
     }
-    log.info('Next: import WuButtonModule (NgModule) or WuButton (standalone) from wiraui/button, then use <wu-button label="Save"></wu-button>');
+    log.info('Next: import WuButtonModule (NgModule) or WuButton (standalone) from @wirabyte/ui/button, then use <wu-button label="Save"></wu-button>');
   };
 }
 
@@ -125,7 +125,7 @@ export function ngAdd(options: NgAddOptions): Rule {
 
 function ownAngularRange(): string | undefined {
   try {
-    // node_modules/wiraui/schematics/ng-add/index.js → node_modules/wiraui/package.json
+    // node_modules/@wirabyte/ui/schematics/ng-add/index.js → node_modules/@wirabyte/ui/package.json
     return require('../../package.json').peerDependencies['@angular/core'];
   } catch (e) {
     return undefined;
@@ -140,11 +140,11 @@ function ownVersion(): string | undefined {
   }
 }
 
-/** `wiraui@2`, or the dist-tag on a prerelease (tools/publish.mjs): a range such as `@2` never matches a prerelease. */
+/** `@wirabyte/ui@2`, or the dist-tag on a prerelease (tools/publish.mjs): a range such as `@2` never matches a prerelease. */
 function installSpec(major: number, version: string | undefined): string {
   const pre = /^\d+\.\d+\.\d+-([a-z]+)/.exec(version || '');
-  if (!pre) return `wiraui@${major}`;
-  return `wiraui@${major === 3 ? '' : `v${major}-`}${pre[1]}`;
+  if (!pre) return `@wirabyte/ui@${major}`;
+  return `@wirabyte/ui@${major === 3 ? '' : `v${major}-`}${pre[1]}`;
 }
 
 function wiraUIMajorFor(angular: number): number | null {
@@ -165,8 +165,8 @@ function assertAngularVersion(tree: Tree, range: string | undefined, version: st
   const fit = wiraUIMajorFor(major);
   const span = max === null ? `${min}+` : `${min}–${max - 1}`;
   throw new SchematicsException(
-    `This wiraui release supports Angular ${span}; this project uses Angular ${major}.` +
-      (fit ? ` Use: ng add ${installSpec(fit, version)}` : ' No wiraui release supports this Angular version.')
+    `This @wirabyte/ui release supports Angular ${span}; this project uses Angular ${major}.` +
+      (fit ? ` Use: ng add ${installSpec(fit, version)}` : ' No @wirabyte/ui release supports this Angular version.')
   );
 }
 
@@ -210,13 +210,13 @@ function addScssUse(tree: Tree, stylesFile: string, themeModule: string): string
   return `${stylesFile}: added @use '${rel}'`;
 }
 
-const UTILS_CSS = 'node_modules/wiraui/utils/utils.css';
+const UTILS_CSS = 'node_modules/@wirabyte/ui/utils/utils.css';
 
-/** `@use 'wiraui/utils';` right under the theme's @use (both must come before any @import or rule). */
+/** `@use '@wirabyte/ui/utils';` right under the theme's @use (both must come before any @import or rule). */
 function addScssUtils(tree: Tree, stylesFile: string): string {
   const text = readText(tree, stylesFile);
-  if (text.includes('wiraui/utils')) return '';
-  const line = stylesFile.endsWith('.sass') ? `@use 'wiraui/utils'` : `@use 'wiraui/utils';`;
+  if (text.includes('@wirabyte/ui/utils')) return '';
+  const line = stylesFile.endsWith('.sass') ? `@use '@wirabyte/ui/utils'` : `@use '@wirabyte/ui/utils';`;
   const lines = text.split('\n');
   const at = lines.findIndex((l) => l.includes('wiraui.theme'));
   lines.splice(at + 1, 0, line);
@@ -250,7 +250,7 @@ function addToModule(tree: Tree, p: ProjectInfo, themeDir: string, provider: str
   const obj = findNgModuleObject(sf, boot.name);
   if (!obj) throw new SchematicsException(`@NgModule for ${boot.name} not found in ${file}`);
   apply(tree, file, [
-    importEdit(sf, 'provideWiraUI', 'wiraui/config'),
+    importEdit(sf, 'provideWiraUI', '@wirabyte/ui/config'),
     importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiraui.overrides`)),
     providersEdit(obj, provider),
   ]);
@@ -276,7 +276,7 @@ function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider:
   if (readText(tree, file).includes('provideWiraUI(')) return `${file}: provideWiraUI() already there`;
   if (!obj) throw new SchematicsException('ApplicationConfig not found; add provideWiraUI() to its providers by hand.');
   apply(tree, file, [
-    importEdit(sf, 'provideWiraUI', 'wiraui/config'),
+    importEdit(sf, 'provideWiraUI', '@wirabyte/ui/config'),
     importEdit(sf, 'wiraOverrides', relImport(file, `${themeDir}/wiraui.overrides`)),
     providersEdit(obj, provider),
   ]);

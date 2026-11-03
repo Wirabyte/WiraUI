@@ -10,7 +10,7 @@ export const UI = {
   'top.light': { th: 'ใช้โหมดสว่าง', en: 'Switch to light mode' },
   'top.dark': { th: 'ใช้โหมดมืด', en: 'Switch to dark mode' },
   'top.theme': { th: 'ปรับธีม', en: 'Customize theme' },
-  'top.version': { th: 'รุ่นของ wiraui', en: 'wiraui version' },
+  'top.version': { th: 'รุ่นของ WiraUI', en: 'WiraUI version' },
   'version.latest': { th: 'ล่าสุด', en: 'latest' },
   'version.active': { th: 'ดูแลอยู่', en: 'active' },
   'version.maintenance': { th: 'แก้เฉพาะบั๊ก', en: 'maintenance' },

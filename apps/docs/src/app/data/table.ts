@@ -73,7 +73,7 @@ const STUDENT_WORDS: SampleWords = {
 
 /** The page report text for the whole app: shown in the TS tab of the report sections. */
 const REPORT_TS = `import { inject } from '@angular/core';
-import { WuConfig } from 'wiraui/config';
+import { WuConfig } from '@wirabyte/ui/config';
 
 // app.component.ts: ทั้งแอปในครั้งเดียว: ทุกตารางและทุก paginator ใช้ข้อความนี้
 export class AppComponent {
@@ -1227,7 +1227,7 @@ reload(): void {
 }`,
     selection: `selectedStudent: Student | null = null;`,
     checkbox: `selectedStudents: Student[] = [];`,
-    lazy: `import { WuTableLazyLoadEvent } from 'wiraui/table';
+    lazy: `import { WuTableLazyLoadEvent } from '@wirabyte/ui/table';
 
 students: Student[] = [];
 totalRecords = 0;
@@ -1247,7 +1247,7 @@ loadStudents(event: WuTableLazyLoadEvent): void {
     frozen: `editStudent(student: Student): void {
   // เปิดฟอร์มแก้ไข
 }`,
-    expansion: `import { WuTableRowExpandEvent } from 'wiraui/table';
+    expansion: `import { WuTableRowExpandEvent } from '@wirabyte/ui/table';
 
 expandedRows: Record<string, boolean> = { 1: true };   // เปิดแถวแรกไว้ตั้งแต่ต้น
 lastToggle = '';
@@ -1273,7 +1273,7 @@ roomCount(room: string): number {
 }`,
     colfilter: `// แต่ละแถวมี paid: boolean ด้วย
 rooms = ['ม.1/1', 'ม.1/2', 'ม.1/10', 'ม.2/1', 'ม.2/3'];`,
-    export: `import { WuTable } from 'wiraui/table';
+    export: `import { WuTable } from '@wirabyte/ui/table';
 
 exportColumns = [
   { field: 'code', header: 'รหัส' },
@@ -1294,7 +1294,7 @@ formatCell(cell: { data: unknown; field: string }): string {
 previewCsv(table: WuTable): void {
   this.csvText = table.toCSV();
 }`,
-    excel: `import { WuTableExcelOptions } from 'wiraui/table';
+    excel: `import { WuTableExcelOptions } from '@wirabyte/ui/table';
 
 excelColumns = [
   { field: 'code', header: 'รหัส' },
@@ -1324,7 +1324,7 @@ report: WuTableExcelOptions = {
     ]);
   },
 };`,
-    reorder: `import { WuTableRowReorderEvent } from 'wiraui/table';
+    reorder: `import { WuTableRowReorderEvent } from '@wirabyte/ui/table';
 
 lastMove = '';
 
@@ -1340,7 +1340,7 @@ canPick = this.isEnrolled.bind(this);
 isEnrolled(row: { data: unknown; index?: number }): boolean {
   return (row.data as Student).status === 'กำลังศึกษา';
 }`,
-    celledit: `import { WuTableEditEvent } from 'wiraui/table';
+    celledit: `import { WuTableEditEvent } from '@wirabyte/ui/table';
 
 lastEdit = '';
 
@@ -1364,7 +1364,7 @@ cancelRow(student: Student): void {
   Object.assign(student, this.clones[student.id]);
   delete this.clones[student.id];
 }`,
-    columns: `import { WuTableColReorderEvent, WuTableColResizeEvent } from 'wiraui/table';
+    columns: `import { WuTableColReorderEvent, WuTableColResizeEvent } from '@wirabyte/ui/table';
 
 cols = [
   { field: 'code', header: 'รหัส' },
@@ -1381,7 +1381,7 @@ colResized(event: WuTableColResizeEvent): void {
 colMoved(event: WuTableColReorderEvent): void {
   this.lastColumns = 'onColReorder: ' + this.cols.map((c) => c.field).join(', ');
 }`,
-    filtermenu: `import { WuTable } from 'wiraui/table';
+    filtermenu: `import { WuTable } from '@wirabyte/ui/table';
 
 /** สองเงื่อนไขของคอลัมน์เดียว: ตั้งแต่ 80 และน้อยกว่า 90 */
 scoreBand(table: WuTable): void {
@@ -1390,7 +1390,7 @@ scoreBand(table: WuTable): void {
     { value: 90, matchMode: 'lt' },
   ], 'and');
 }`,
-    customsort: `import { WuTableSortFunctionEvent } from 'wiraui/table';
+    customsort: `import { WuTableSortFunctionEvent } from '@wirabyte/ui/table';
 
 private readonly statusOrder = ['พักการเรียน', 'ย้ายออก', 'กำลังศึกษา'];   // ต้องติดตามก่อน
 
@@ -1410,7 +1410,7 @@ stateRestored(): void {
   this.restoredCount++;
 }`,
     frozenrows: `totals = [{ label: 'คะแนนเฉลี่ย', score: 76.6 }];   // จาก API`,
-    contextmenu: `import { WuMenuItem } from 'wiraui/menu';
+    contextmenu: `import { WuMenuItem } from '@wirabyte/ui/menu';
 
 selectedStudent: Student | null = null;
 menuStudent: Student | null = null;   // แถวที่คลิกขวาล่าสุด
@@ -1779,7 +1779,7 @@ export const PAGINATOR_DOC: ComponentDoc = {
 </wu-paginator>`,
   },
   ts: {
-    basic: `import { WuPageEvent } from 'wiraui/paginator';
+    basic: `import { WuPageEvent } from '@wirabyte/ui/paginator';
 
 students: Student[] = [];   // จาก API
 first = 0;

@@ -11,8 +11,8 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
-import type { FlowPosition } from 'wiraui/core';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import type { FlowPosition } from '@wirabyte/ui/core';
 import { ɵWuFlowHost } from './flow-host';
 import { WU_FLOW_NODE } from './flow.types';
 

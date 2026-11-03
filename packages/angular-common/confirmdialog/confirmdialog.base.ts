@@ -13,9 +13,9 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate, ɵWuStyleLoader } from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 import { WuConfirmationService } from './confirmation.service';
 import { WuConfirmation, WuConfirmEventType } from './confirmdialog.types';
 

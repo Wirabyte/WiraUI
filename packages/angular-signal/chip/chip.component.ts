@@ -10,7 +10,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
 
 /**
  * Compact label with an optional icon or image: `<wu-chip label="แอดมิน" icon="pi pi-user" removable (onRemove)="…">`.

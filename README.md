@@ -31,7 +31,7 @@
 - **Thai-first:** Buddhist-era dates, Thai ID numbers, Thai fonts and built-in Thai and English text
 - **Themes you control:** presets, plus SCSS, CSS or TypeScript overrides, and a free Theme Studio
 - **Accessible and responsive:** full keyboard support, and layouts that work from phone to desktop
-- **`wiraicon`:** our own icon package with 424 icons in 5 weights, which also works without WiraUI
+- **`@wirabyte/icons`:** our own icon package with 424 icons in 5 weights, which also works without WiraUI
 
 ## 📦 Install
 
@@ -39,9 +39,9 @@ This is a beta, so name the tag for your app's Angular version:
 
 | Angular | Command | Package | Status |
 |---|---|---|---|
-| 21 and newer | `ng add wiraui@beta` | `wiraui@3` | active (latest) |
-| 18 – 20 | `ng add wiraui@v2-beta` | `wiraui@2` | active |
-| 15 – 17 | `ng add wiraui@v1-beta` | `wiraui@1` | maintenance |
+| 21 and newer | `ng add @wirabyte/ui@beta` | `@wirabyte/ui@3` | active (latest) |
+| 18 – 20 | `ng add @wirabyte/ui@v2-beta` | `@wirabyte/ui@2` | active |
+| 15 – 17 | `ng add @wirabyte/ui@v1-beta` | `@wirabyte/ui@1` | maintenance |
 
 `ng add` sets up the theme, fonts and icons, and asks only what it must. Then use the components:
 
@@ -54,7 +54,7 @@ This is a beta, so name the tag for your app's Angular version:
 
 - **Use the major for your Angular range.** Each major is locked to its range and refuses to install on any other.
 - **Change Angular ranges in one command,** so Angular and WiraUI move together:
-  `ng update @angular/core@18 @angular/cli@18 wiraui@v2-beta`
+  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@v2-beta`
 - **Theme through the theme files,** not by overriding component CSS, so your look carries over to new releases.
 - **Bring an existing app over gradually.** WiraUI runs next to your current UI library, so you can move one page at a time.
 - **Remember it is a beta.** APIs may still change between betas, so pin the exact version in production.

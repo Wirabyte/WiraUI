@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵsize, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuSize } from '@wirabyte/ui/config';
 import { WuToggleButtonChangeEvent } from './togglebutton.types';
 
 /** On/off button for a boolean in ngModel or reactive forms: `<wu-togglebutton [(ngModel)]="bold" onLabel="ตัวหนา" offLabel="ปกติ">`. */

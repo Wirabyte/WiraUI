@@ -2,7 +2,7 @@
  * Excel files (.xlsx) without a dependency. A workbook is plain objects: sheets of rows of cells, each cell a value or
  * `{ value, formula, style, link, colSpan, rowSpan }`, plus column widths, merged ranges, frozen panes, a filter and print
  * settings. `buildExcel()` writes it as Office Open XML and zips it. Used by wu-table's `exportExcel()` and the
- * `wiraui/excel` entry point.
+ * `@wirabyte/ui/excel` entry point.
  *
  * Strings stay text (leading zeros of phone numbers and Thai IDs survive, nothing turns into a formula), numbers stay
  * numbers, dates become Excel dates, and formulas are calculated by Excel when the file opens.

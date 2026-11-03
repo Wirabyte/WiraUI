@@ -12,17 +12,17 @@ import {
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
-import { wiraIconName, WiraIconWeight, wiraIconWeight, WIRAICON_WEIGHTS } from 'wiraicon';
+import { wiraIconName, WiraIconWeight, wiraIconWeight, WIRAICON_WEIGHTS } from '@wirabyte/icons';
 
 type Drawings = Readonly<Record<string, string>>;
 
 // One chunk per weight, fetched the first time a weight is drawn.
 const LOADERS: Record<WiraIconWeight, () => Promise<Drawings>> = {
-  regular: () => import('wiraicon/data/regular').then((m) => m.WIRAICON_REGULAR),
-  thin: () => import('wiraicon/data/thin').then((m) => m.WIRAICON_THIN),
-  light: () => import('wiraicon/data/light').then((m) => m.WIRAICON_LIGHT),
-  bold: () => import('wiraicon/data/bold').then((m) => m.WIRAICON_BOLD),
-  fill: () => import('wiraicon/data/fill').then((m) => m.WIRAICON_FILL),
+  regular: () => import('@wirabyte/icons/data/regular').then((m) => m.WIRAICON_REGULAR),
+  thin: () => import('@wirabyte/icons/data/thin').then((m) => m.WIRAICON_THIN),
+  light: () => import('@wirabyte/icons/data/light').then((m) => m.WIRAICON_LIGHT),
+  bold: () => import('@wirabyte/icons/data/bold').then((m) => m.WIRAICON_BOLD),
+  fill: () => import('@wirabyte/icons/data/fill').then((m) => m.WIRAICON_FILL),
 };
 const loaded = new Map<WiraIconWeight, Promise<Drawings>>();
 function drawings(weight: WiraIconWeight): Promise<Drawings> {

@@ -1,6 +1,6 @@
 // Publishes one built package with the right npm dist-tag. Usage: node tools/publish.mjs v1|v2|v3|icons [--dry-run]
 // Needs its dist folder (pnpm pack:all). npm points `latest` at the first version a package ever publishes, whatever
-// tag it was given: publish v3 first, or fix it afterwards with `npm dist-tag add wiraui@<3.x> latest`.
+// tag it was given: publish v3 first, or fix it afterwards with `npm dist-tag add @wirabyte/ui@<3.x> latest`.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -26,7 +26,8 @@ if (target.major && !version.startsWith(`${target.major}.`)) throw new Error(`${
 const pre = /^\d+\.\d+\.\d+-([a-z]+)/.exec(version);
 const tag = pre ? target.prefix + pre[1] : target.stable;
 
-const args = ['publish', '--tag', tag, ...flags.filter((f) => f === '--dry-run')];
+// A scoped package is private unless told otherwise, and the free org cannot hold private ones.
+const args = ['publish', '--tag', tag, '--access', 'public', ...flags.filter((f) => f === '--dry-run')];
 console.log(`${pkg}@${version} → dist-tag ${tag}${args.includes('--dry-run') ? ' (dry run)' : ''}`);
 execFileSync('npm', args, { cwd: dist, stdio: 'inherit', shell: process.platform === 'win32' });
 

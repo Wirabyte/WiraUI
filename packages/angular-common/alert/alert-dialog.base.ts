@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewChecked, ChangeDetectorRef, Directive, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
-import { ɵlockScroll, ɵuniqueId, WuConfig } from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+import { ɵlockScroll, ɵuniqueId, WuConfig } from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 import { WuAlertDismissReason, WuAlertIcon, WuAlertOptions, WuAlertResult } from './alert.types';
 
 type Icon = 'success' | 'error' | 'warning' | 'info' | 'question';

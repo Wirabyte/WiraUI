@@ -1,4 +1,4 @@
-import type { EditorTool } from 'wiraui/core';
+import type { EditorTool } from '@wirabyte/ui/core';
 
 const svg = (body: string, fill = false) =>
   `<svg class="wu-editor-icon" viewBox="0 0 20 20" ${fill ? 'fill="currentColor" stroke="none"' : 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true" focusable="false">${body}</svg>`;

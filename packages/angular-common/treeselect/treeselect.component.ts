@@ -29,11 +29,11 @@ import {
   ɵWuStyleLoader,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵWU_SELECT_CSS } from 'wiraui/select';
-import { ɵWU_MULTISELECT_CSS } from 'wiraui/multiselect';
-import { WuTree, WuTreeFilterEvent, WuTreeNodeEvent } from 'wiraui/tree';
-import { sameNode, treeParents, TreeFilterMode, TreeNode, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵWU_SELECT_CSS } from '@wirabyte/ui/select';
+import { ɵWU_MULTISELECT_CSS } from '@wirabyte/ui/multiselect';
+import { WuTree, WuTreeFilterEvent, WuTreeNodeEvent } from '@wirabyte/ui/tree';
+import { sameNode, treeParents, TreeFilterMode, TreeNode, WuLocale } from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 

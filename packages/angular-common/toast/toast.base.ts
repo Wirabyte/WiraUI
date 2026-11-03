@@ -17,8 +17,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuTemplate } from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 import { WuMessageService } from './message.service';
 import { WuToastCloseEvent, WuToastMessage, WuToastPosition } from './toast.types';
 

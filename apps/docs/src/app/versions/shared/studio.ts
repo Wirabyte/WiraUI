@@ -1173,15 +1173,15 @@ export abstract class StudioDemo {
 
   // ---------- export ----------
   /**
-   * The docs install v1 and v2 under other names (wiraui-v1/…); apps install `wiraui`, so files say that.
+   * The docs install v1 and v2 under other names (wiraui-v1/…); apps install `@wirabyte/ui`, so files say that.
    * Every exporter's text comes through here.
    */
   private out(text: string): string {
-    return text.replace(/wiraui-v\d(?=\/)/g, 'wiraui');
+    return text.replace(/wiraui-v\d(?=\/)/g, '@wirabyte/ui');
   }
 
   private exportOptions(): StudioExportOptions {
-    return { generator: `WiraUI Studio · wiraui@${this.v.major}` };
+    return { generator: `WiraUI Studio · @wirabyte/ui@${this.v.major}` };
   }
 
   /** The config plus every edit as one token set (what the page shows). */
@@ -1243,7 +1243,7 @@ export abstract class StudioDemo {
     const b = this.baseCfg();
     const base = this.theme().base;
     const lines = text.split('\n');
-    const start = lines.findIndex((l) => l.startsWith("@use 'wiraui/theme' with ("));
+    const start = lines.findIndex((l) => l.startsWith("@use '@wirabyte/ui/theme' with ("));
     const end = lines.lastIndexOf(');');
     if (start < 0 || end < start) return text;
     const chunks: { name: string; lines: string[] }[] = [];
@@ -1292,7 +1292,7 @@ export abstract class StudioDemo {
     const layer = head.indexOf(this.core.LAYER_ORDER);
     const file = this.v.major === 1 || this.theme().base === c.preset ? `themes/${this.theme().base}/theme.css` : `themes/${c.preset}/theme.css`;
     const lines = head.slice(0, layer + 1).map((l) =>
-      l.includes(EXPORT_FILES.css) ? l.replace(EXPORT_FILES.css, `${EXPORT_FILES.css} (changes only)`) : /^\s+Use:/.test(l) ? `   Use: angular.json → styles, after "node_modules/wiraui/${file}"` : l
+      l.includes(EXPORT_FILES.css) ? l.replace(EXPORT_FILES.css, `${EXPORT_FILES.css} (changes only)`) : /^\s+Use:/.test(l) ? `   Use: angular.json → styles, after "node_modules/@wirabyte/ui/${file}"` : l
     );
     const diff = this.diffTokens();
     const body = hasEdits(diff) ? editsCss(diff, c.darkMode) : '/* Nothing differs from the theme yet. */\n';
@@ -1484,8 +1484,8 @@ export abstract class StudioDemo {
         : {
             severity: 'warn',
             text: this.en()
-              ? `Imported ${fileName}. Its preset (${config.preset}) is not part of wiraui@${this.v.major}; it is shown as is.`
-              : `นำเข้า ${fileName} แล้ว preset ของไฟล์ (${config.preset}) ไม่มีใน wiraui@${this.v.major} จึงแสดงตามไฟล์`,
+              ? `Imported ${fileName}. Its preset (${config.preset}) is not part of @wirabyte/ui@${this.v.major}; it is shown as is.`
+              : `นำเข้า ${fileName} แล้ว preset ของไฟล์ (${config.preset}) ไม่มีใน @wirabyte/ui@${this.v.major} จึงแสดงตามไฟล์`,
           }
     );
   }

@@ -10,8 +10,8 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
-import { LANGUAGE_NAMES, WuLocale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
+import { LANGUAGE_NAMES, WuLocale } from '@wirabyte/ui/core';
 import { WuI18n } from './i18n.service';
 
 /** One choice of the switch. */

@@ -1,5 +1,5 @@
 import { booleanAttribute, Directive, DoCheck, ElementRef, inject, input } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_INPUTTEXT_CSS } from './inputtext.styles';
 import { WuInputSize, WuInputVariant } from './inputtext.types';
 

@@ -4,8 +4,8 @@
     <h1 class="docs-h1">{{ doc().title }}</h1>
     <p class="docs-lead">{{ doc().description | loc }}</p>
     <div class="docs-meta">
-      <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ version.major }} · Angular {{ version.angular }}</span>
-      <span class="docs-chip"><code>wiraui/{{ doc().entry }}</code></span>
+      <span class="docs-chip docs-chip-primary" id="doc-version">&#64;wirabyte/ui&#64;{{ version.major }} · Angular {{ version.angular }}</span>
+      <span class="docs-chip"><code>&#64;wirabyte/ui/{{ doc().entry }}</code></span>
       <span class="docs-chip docs-chip-quiet" id="doc-host">{{ 'page.runsOn' | t }} {{ host }}</span>
     </div>
     @for (r of doc().requires || []; track r.install) {

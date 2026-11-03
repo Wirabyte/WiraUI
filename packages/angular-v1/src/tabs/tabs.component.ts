@@ -22,7 +22,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
 import { WuTabMenu } from './tabmenu.component';
 import { ɵnextTab, ɵpageTabs, ɵrevealTab, ɵtabEdges, ɵtabKey, WuTabsChangeEvent, WuTabValue } from './tabs.types';
 

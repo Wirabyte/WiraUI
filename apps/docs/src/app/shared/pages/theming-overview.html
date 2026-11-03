@@ -13,7 +13,7 @@
     </p>
   }
   <div class="docs-meta">
-    <span class="docs-chip docs-chip-primary" id="doc-version">wiraui&#64;{{ v.major }} · {{ v.look | loc }}</span>
+    <span class="docs-chip docs-chip-primary" id="doc-version">&#64;wirabyte/ui&#64;{{ v.major }} · {{ v.look | loc }}</span>
   </div>
 </header>
 
@@ -79,7 +79,7 @@
     <a class="docs-next-card" [routerLink]="link('theming/scss')">
       <docs-icon name="code"></docs-icon>
       <b>SCSS</b>
-      <span><code>&#64;use 'wiraui/theme' with (…)</code>{{ en() ? ', the format WiraUI Studio exports' : ' แบบไฟล์ที่ สตูดิโอธีม export' }}</span>
+      <span><code>&#64;use '&#64;wirabyte/ui/theme' with (…)</code>{{ en() ? ', the format WiraUI Studio exports' : ' แบบไฟล์ที่ สตูดิโอธีม export' }}</span>
     </a>
     <a class="docs-next-card" [routerLink]="link('theming/css')">
       <docs-icon name="layers"></docs-icon>
@@ -107,7 +107,7 @@
       <tbody>
         @for (x of versions; track x.id) {
           <tr [class.docs-row-current]="x.id === v.id">
-            <td><code>wiraui&#64;{{ x.major }}</code></td>
+            <td><code>&#64;wirabyte/ui&#64;{{ x.major }}</code></td>
             <td>{{ x.lookDetail | loc }}</td>
           </tr>
         }
@@ -115,7 +115,7 @@
     </table>
   </div>
   <p>
-    <a [routerLink]="link('theming/presets')">{{ en() ? 'See every theme in' : 'ดู preset ทั้งหมดของ' }} wiraui&#64;{{ v.major }}</a>
+    <a [routerLink]="link('theming/presets')">{{ en() ? 'See every theme in' : 'ดู preset ทั้งหมดของ' }} &#64;wirabyte/ui&#64;{{ v.major }}</a>
     {{ en() ? 'and try them right away.' : 'และลองสลับดูได้ทันที' }}
   </p>
 </docs-section>

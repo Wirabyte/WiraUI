@@ -67,7 +67,7 @@ export function schoolFolders(): DocTreeNode[] {
   ];
 }
 
-const FOLDERS_TS = `import type { TreeNode } from 'wiraui/api';
+const FOLDERS_TS = `import type { TreeNode } from '@wirabyte/ui/api';
 
 folders: TreeNode[] = [
   {
@@ -154,8 +154,8 @@ export const TREE_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuTreeModule</code>) และ standalone (<code>WuTree</code>) type ของ node คือ <code>TreeNode</code> จาก <code>wiraui/api</code>',
-        en: 'Works as an NgModule (<code>WuTreeModule</code>) or standalone (<code>WuTree</code>). Nodes are typed <code>TreeNode</code> from <code>wiraui/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuTreeModule</code>) และ standalone (<code>WuTree</code>) type ของ node คือ <code>TreeNode</code> จาก <code>@wirabyte/ui/api</code>',
+        en: 'Works as an NgModule (<code>WuTreeModule</code>) or standalone (<code>WuTree</code>). Nodes are typed <code>TreeNode</code> from <code>@wirabyte/ui/api</code>.',
       },
     },
     basic: {
@@ -203,8 +203,8 @@ export const TREE_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-tree&gt;</code> เป็น <code>&lt;wu-tree&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="default"</code> และ template ตาม type ใช้ต่อได้) <code>TreeNode</code> import จาก <code>wiraui/api</code> · class <code>p-tree</code>, <code>p-treenode</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wu-*</code> · การลากวาง node (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> และ <code>layout="horizontal"</code> รับไว้แต่ยังไม่มีผล',
-        en: 'Change <code>&lt;p-tree&gt;</code> to <code>&lt;wu-tree&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="default"</code> and the per-type templates keep working), and <code>TreeNode</code> is imported from <code>wiraui/api</code> · the <code>p-tree</code>, <code>p-treenode</code> and <code>p-highlight</code> classes sit next to the <code>wu-*</code> ones · node drag and drop (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> and <code>layout="horizontal"</code> are accepted but not built yet.',
+        th: 'เปลี่ยน <code>&lt;p-tree&gt;</code> เป็น <code>&lt;wu-tree&gt;</code> input, event และ template ชื่อเดิม (<code>pTemplate="default"</code> และ template ตาม type ใช้ต่อได้) <code>TreeNode</code> import จาก <code>@wirabyte/ui/api</code> · class <code>p-tree</code>, <code>p-treenode</code> และ <code>p-highlight</code> อยู่คู่กับ class <code>wu-*</code> · การลากวาง node (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> และ <code>layout="horizontal"</code> รับไว้แต่ยังไม่มีผล',
+        en: 'Change <code>&lt;p-tree&gt;</code> to <code>&lt;wu-tree&gt;</code>; inputs, events and templates keep their names (<code>pTemplate="default"</code> and the per-type templates keep working), and <code>TreeNode</code> is imported from <code>@wirabyte/ui/api</code> · the <code>p-tree</code>, <code>p-treenode</code> and <code>p-highlight</code> classes sit next to the <code>wu-*</code> ones · node drag and drop (<code>draggableNodes</code>, <code>droppableNodes</code>), <code>virtualScroll</code> and <code>layout="horizontal"</code> are accepted but not built yet.',
       },
     },
   },
@@ -233,7 +233,7 @@ export const TREE_DOC: ComponentDoc = {
     basic: FOLDERS_TS,
     selection: `pickedFile: TreeNode | null = null;`,
     checkbox: `tickedFiles: TreeNode[] = [];`,
-    lazy: `import { WuTreeNodeEvent } from 'wiraui/tree';
+    lazy: `import { WuTreeNodeEvent } from '@wirabyte/ui/tree';
 
 grades: TreeNode[] = [
   { key: 'm1', label: 'ชั้น ม.1', leaf: false },
@@ -251,8 +251,8 @@ loadRooms(event: WuTreeNodeEvent): void {
     node.loading = false;
   });
 }`,
-    templates: `import { WuTreeNodeEvent } from 'wiraui/tree';
-import { WuMenuItem } from 'wiraui/menu';
+    templates: `import { WuTreeNodeEvent } from '@wirabyte/ui/tree';
+import { WuMenuItem } from '@wirabyte/ui/menu';
 
 // โฟลเดอร์ใช้ template default ไฟล์ใช้ template file
 fileActions: WuMenuItem[] = [
@@ -335,7 +335,7 @@ openFile(event: WuTreeNodeEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import type { TreeNode } from 'wiraui/api';
+      code: `import type { TreeNode } from '@wirabyte/ui/api';
 
 interface WuTreeNodeEvent { originalEvent: Event; node: TreeNode }
 interface WuTreeFilterEvent { filter: string; filteredValue: TreeNode[] }`,

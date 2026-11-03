@@ -1,5 +1,5 @@
 /**
- * What `ng g wiraui:from-primeng` changes: PrimeNG entry points, NgModules, classes and tags, and their WiraUI
+ * What `ng g @wirabyte/ui:from-primeng` changes: PrimeNG entry points, NgModules, classes and tags, and their WiraUI
  * names. test/from-primeng.test.ts checks every target here against the real WiraUI sources.
  */
 
@@ -21,7 +21,7 @@ export const NAME_RENAMES: Record<string, string> = {
   DynamicDialog: 'Dialog',
 };
 
-/** PrimeNG entry point → WiraUI entry point where they differ (`primeng/dropdown` → `wiraui/select`). */
+/** PrimeNG entry point → WiraUI entry point where they differ (`primeng/dropdown` → `@wirabyte/ui/select`). */
 export const ENTRY_RENAMES: Record<string, string> = {
   dropdown: 'select',
   calendar: 'datepicker',

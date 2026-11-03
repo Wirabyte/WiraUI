@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuTabMenu } from './tabmenu.component';
 import { WuTab, WuTabList, WuTabPanel, WuTabPanels, WuTabs } from './tabs.component';
 

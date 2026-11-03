@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Directive, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ɵtoBool } from 'wiraui/config';
-import { WuMessageService, WuToastMessage } from 'wiraui/toast';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import { WuMessageService, WuToastMessage } from '@wirabyte/ui/toast';
 import { WuMessageSeverity } from './message.types';
 
 /**

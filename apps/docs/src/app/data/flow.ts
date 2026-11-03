@@ -320,8 +320,8 @@ export const FLOW_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'NgModule ใช้ <code>WuFlowModule</code> (ได้ทุกส่วนของ flow รวม <code>wuTemplate</code>) ส่วน standalone นำเข้าเฉพาะส่วนที่ใช้: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · ชนิดข้อมูล (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) และ helper (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) นำเข้าจาก <code>wiraui/flow</code> ที่เดียวกัน · เขียนครั้งเดียวใช้ได้ทุกรุ่น และไม่มี dependency ภายนอก',
-        en: 'As an NgModule use <code>WuFlowModule</code> (every part of the flow, plus <code>wuTemplate</code>); standalone apps import the parts they use: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · the types (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) and helpers (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) come from <code>wiraui/flow</code> too · written once for every version, with no outside dependencies.',
+        th: 'NgModule ใช้ <code>WuFlowModule</code> (ได้ทุกส่วนของ flow รวม <code>wuTemplate</code>) ส่วน standalone นำเข้าเฉพาะส่วนที่ใช้: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · ชนิดข้อมูล (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) และ helper (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) นำเข้าจาก <code>@wirabyte/ui/flow</code> ที่เดียวกัน · เขียนครั้งเดียวใช้ได้ทุกรุ่น และไม่มี dependency ภายนอก',
+        en: 'As an NgModule use <code>WuFlowModule</code> (every part of the flow, plus <code>wuTemplate</code>); standalone apps import the parts they use: <code>WuFlow</code>, <code>WuFlowHandle</code>, <code>WuFlowNodeTemplate</code>, <code>WuFlowEdgeTemplate</code>, <code>WuFlowEdgeLabelTemplate</code>, <code>WuFlowConnectionLineTemplate</code>, <code>WuFlowBackground</code>, <code>WuFlowControls</code>, <code>WuFlowMinimap</code>, <code>WuFlowPanel</code>, <code>WuFlowNodeToolbar</code>, <code>WuFlowNodeResizer</code>, <code>WuFlowHistory</code> · the types (<code>WuFlowNode</code>, <code>WuFlowEdge</code> …) and helpers (<code>applyNodeChanges</code>, <code>addEdge</code>, <code>layoutFlow</code> …) come from <code>@wirabyte/ui/flow</code> too · written once for every version, with no outside dependencies.',
       },
     },
     basic: {
@@ -800,7 +800,7 @@ export const FLOW_DOC: ComponentDoc = {
 <label for="only-visible">วาดเฉพาะส่วนที่เห็น</label>`,
   },
   ts: {
-    basic: `import { WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    basic: `import { WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'submit', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ยื่นคำร้อง' } },
@@ -858,7 +858,7 @@ edges: WuFlowEdge[] = [
 removeEdge(id: string): void {
   this.edges = this.edges.filter((e) => e.id !== id);
 }`,
-    connecting: `import { addEdge, FlowConnection, WuFlowConnectEndEvent, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    connecting: `import { addEdge, FlowConnection, WuFlowConnectEndEvent, WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 't-mali', type: 'teacher', position: { x: 0, y: 0 }, data: { label: 'ครูมาลี' } },
@@ -891,7 +891,7 @@ connectEnded(event: WuFlowConnectEndEvent): void {
 toggleMode(): void {
   this.connectionMode = this.connectionMode === 'strict' ? 'loose' : 'strict';
 }`,
-    controlled: `import { applyEdgeChanges, applyNodeChanges, FlowEdgeChange, FlowNodeChange, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    controlled: `import { applyEdgeChanges, applyNodeChanges, FlowEdgeChange, FlowNodeChange, WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'orientation', type: 'input', position: { x: 0, y: 0 }, sourcePosition: 'right', data: { label: 'ปฐมนิเทศ' } },
@@ -914,7 +914,7 @@ onNodeChanges(changes: FlowNodeChange[]): void {
 onEdgeChanges(changes: FlowEdgeChange[]): void {
   this.edges = applyEdgeChanges(changes, this.edges);
 }`,
-    selection: `import { WuFlowDeleteEvent, WuFlowEdge, WuFlowNode, WuFlowSelectionChange } from 'wiraui/flow';
+    selection: `import { WuFlowDeleteEvent, WuFlowEdge, WuFlowNode, WuFlowSelectionChange } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'hall', position: { x: 0, y: 0 }, data: { label: 'จองหอประชุม', locked: true } },
@@ -965,7 +965,7 @@ edges: WuFlowEdge[] = [
   { id: 'clubs-care', source: 'clubs', target: 'care' },
   { id: 'grades-care', source: 'grades', target: 'care', type: 'smoothstep', animated: true },
 ];`,
-    toolbar: `import { WuFlow, WuFlowNode } from 'wiraui/flow';
+    toolbar: `import { WuFlow, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'meeting', type: 'note', position: { x: 0, y: 0 }, width: 180, height: 96, data: { text: 'ประชุมผู้ปกครอง 9:00 น.', tone: 'yellow' } },
@@ -979,9 +979,9 @@ recolor(flow: WuFlow, id: string, tone: string): void {
 removeNote(flow: WuFlow, id: string): void {
   flow.deleteElements({ nodes: [id] });
 }`,
-    contextmenu: `import { MenuItem } from 'wiraui/api';
-import { WuContextMenu } from 'wiraui/contextmenu';
-import { WuFlow, WuFlowEdge, WuFlowEdgeEvent, WuFlowNode, WuFlowNodeEvent } from 'wiraui/flow';
+    contextmenu: `import { MenuItem } from '@wirabyte/ui/api';
+import { WuContextMenu } from '@wirabyte/ui/contextmenu';
+import { WuFlow, WuFlowEdge, WuFlowEdgeEvent, WuFlowNode, WuFlowNodeEvent } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'request', type: 'input', position: { x: 0, y: 0 }, data: { label: 'ขอเบิกพัสดุ' } },
@@ -1079,7 +1079,7 @@ saveName(flow: WuFlow): void {
   if (this.renaming) flow.updateNodeData(this.renaming.id, { label: this.newName });
   this.renaming = null;
 }`,
-    viewport: `import { FlowViewport, WuFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    viewport: `import { FlowViewport, WuFlow, WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'start', type: 'input', position: { x: 0, y: 0 }, data: { label: 'แบบฟอร์มออนไลน์' } },
@@ -1125,7 +1125,7 @@ goToStart(flow: WuFlow): void {
 viewportText(): string {
   return Math.round(this.viewport.x) + ', ' + Math.round(this.viewport.y) + ' · ' + this.viewport.zoom.toFixed(2);
 }`,
-    layout: `import { layoutFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    layout: `import { layoutFlow, WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'principal', position: { x: 160, y: 0 }, data: { label: 'ผู้อำนวยการ' } },
@@ -1161,7 +1161,7 @@ edges: WuFlowEdge[] = [
   { id: 'door-reading', source: 'door', target: 'reading' },
   { id: 'shelves-loans', source: 'shelves', target: 'loans' },
 ];`,
-    export: `import { WuFlow, WuFlowEdge, WuFlowNode } from 'wiraui/flow';
+    export: `import { WuFlow, WuFlowEdge, WuFlowNode } from '@wirabyte/ui/flow';
 
 nodes: WuFlowNode[] = [
   { id: 'form', type: 'input', position: { x: 0, y: 0 }, sourcePosition: 'right', data: { label: 'กรอกใบสมัคร' } },

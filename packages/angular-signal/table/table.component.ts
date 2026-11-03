@@ -1,6 +1,6 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, forwardRef, ViewEncapsulation } from '@angular/core';
-import { WuPaginator } from 'wiraui/paginator';
+import { WuPaginator } from '@wirabyte/ui/paginator';
 import { ɵWuTableBase } from './table.base';
 import { ɵWU_TABLE } from './table.types';
 

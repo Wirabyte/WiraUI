@@ -1,4 +1,4 @@
-/* wiraui/animate. Shared by wiraui v1, v2 and v3. Elements with data-aos start hidden or moved and settle in
+/* @wirabyte/ui/animate. Shared by wiraui v1, v2 and v3. Elements with data-aos start hidden or moved and settle in
    place when they scroll into view (.wu-aos-in). Only elements the script watches (.wu-aos), so content never stays
    hidden without it; and never for people who ask for reduced motion. */
 @layer wiraui.utilities {

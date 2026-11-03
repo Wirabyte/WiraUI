@@ -160,7 +160,7 @@ room: Room | null = null;`,
   { label: 'ชั้น ม.1', items: [{ code: '101', name: 'ม.1/1' }, { code: '102', name: 'ม.1/2' }] },
   { label: 'ชั้น ม.2', items: [{ code: '201', name: 'ม.2/1' }, { code: '202', name: 'ม.2/2' }] },
 ];`,
-    templates: `import { WuListboxClickEvent } from 'wiraui/listbox';
+    templates: `import { WuListboxClickEvent } from '@wirabyte/ui/listbox';
 
 roomCodes: string[] = [];
 lastOpened = '';

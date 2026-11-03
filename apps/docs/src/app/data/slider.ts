@@ -106,7 +106,7 @@ export const SLIDER_DOC: ComponentDoc = {
   ts: {
     basic: `volume = 60;`,
     range: `scoreRange = [60, 80];`,
-    events: `import { WuSliderChangeEvent } from 'wiraui/slider';
+    events: `import { WuSliderChangeEvent } from '@wirabyte/ui/slider';
 
 bellVolume = 50;   // ค่าจาก API
 isApiSaving = false;

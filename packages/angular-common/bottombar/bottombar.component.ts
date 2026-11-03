@@ -17,8 +17,8 @@ import {
 } from '@angular/core';
 import { IsActiveMatchOptions, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from 'wiraui/config';
-import { TH_LOCALE } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
+import { TH_LOCALE } from '@wirabyte/ui/core';
 
 /** `'standard'` (default): a full-width bar. `'pill'`: a floating pill whose active item opens to show its name. `'fab'`: a bar with a raised round button in the middle (`action`). */
 export type WuBottomBarLook = 'standard' | 'pill' | 'fab';

@@ -23,8 +23,8 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 const ZOOM = { step: 0.1, min: 0.5, max: 1.5 };

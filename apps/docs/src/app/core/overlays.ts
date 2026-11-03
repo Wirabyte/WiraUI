@@ -42,7 +42,7 @@ export interface DocsTerminal {
 
 export const DOCS_TERMINAL = new InjectionToken<DocsTerminal>('DOCS_TERMINAL');
 
-/** The flow helpers of the version on screen (wiraui/flow), for the Flow demos that apply changes themselves. */
+/** The flow helpers of the version on screen (@wirabyte/ui/flow), for the Flow demos that apply changes themselves. */
 export interface DocsFlowKit {
   applyNodeChanges(changes: any[], nodes: any[]): any[];
   applyEdgeChanges(changes: any[], edges: any[]): any[];
@@ -51,7 +51,7 @@ export interface DocsFlowKit {
 
 export const DOCS_FLOW = new InjectionToken<DocsFlowKit>('DOCS_FLOW');
 
-/** The Excel functions of the version on screen (wiraui/excel). */
+/** The Excel functions of the version on screen (@wirabyte/ui/excel). */
 export interface DocsExcelKit {
   downloadExcel(source: any, options?: any): Promise<void>;
   downloadRowsAsExcel(rows: readonly any[], columns: readonly any[], options?: any, download?: any): Promise<void>;

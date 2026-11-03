@@ -6,7 +6,7 @@
 ## สรุปสั้น
 
 - **เป้าหมายหลัก:** UI library ของ Wirabyte เองที่ใช้ฟรี คงวิธีใช้ให้คุ้นมือจนย้ายจากของเดิมได้ง่าย แต่ครอบคลุมกว่าและเหมาะกับงานไทยกว่า
-- มีแพ็กเกจหลักแพ็กเกจเดียวชื่อ **`wiraui`** (ตอนตรวจ ชื่อนี้ยังว่างบน npm) แยก major ตามรุ่น Angular แบบเดียวกับ UI library เดิม: **v1 = Angular 15–17, v2 = 18–20, v3 = 21+** โดย v3 มาพร้อมหน้าตาใหม่แบบ **Liquid Glass + ชุดสีสด** และ `ng add wiraui` จะเลือก major ที่เข้ากับโปรเจคให้เอง
+- มีแพ็กเกจหลักแพ็กเกจเดียวชื่อ **`@wirabyte/ui`** ใต้ org Wirabyte บน npm (icon คือ `@wirabyte/icons`) แยก major ตามรุ่น Angular แบบเดียวกับ UI library เดิม: **v1 = Angular 15–17, v2 = 18–20, v3 = 21+** โดย v3 มาพร้อมหน้าตาใหม่แบบ **Liquid Glass + ชุดสีสด** และ `ng add @wirabyte/ui` จะเลือก major ที่เข้ากับโปรเจคให้เอง
 - ใช้ได้ทั้ง **standalone และ NgModule** ในทุกรุ่น
 - ธีมคือชุด **design token ที่ออกมาเป็น CSS variables** ชุดเดียว เขียนได้ 3 ทาง ได้แก่ **CSS** สำเร็จรูป, **SCSS** (`@use … with (…)`) และ **TypeScript** (override หรือ preset ทับได้ตอน runtime) ลำดับว่าค่าไหนชนะคุมด้วย CSS `@layer` จึงเลิกใช้ `!important` กับ `::ng-deep` ได้
 - **Theme Designer** แบบ UI library เดิม สมัยก่อน: ปรับค่าบนเว็บแล้วเห็นผลทันที จากนั้น export เป็น SCSS / CSS / TS / JSON และ import ไฟล์กลับมาแก้ต่อได้
@@ -75,7 +75,7 @@
 
 **ล็อกรุ่น ห้ามใช้ข้ามช่วง** (เช่น ติดตั้ง v1 ลง Angular 18 ต้องไม่ผ่าน) โดยกันไว้ 3 ชั้น:
 1. **ตอนติดตั้ง:** `peerDependencies` ของ v1 และ v2 เป็นช่วงปิด (`>=15.0.0 <18.0.0` …) ส่วน v3 เปิดด้านบน npm 7 ขึ้นไปจะปฏิเสธการติดตั้ง (ERESOLVE) ส่วน pnpm จะเตือน แต่โปรเจคที่ตั้ง `legacy-peer-deps` จะข้ามชั้นนี้ไปได้ จึงต้องมีอีก 2 ชั้น
-2. **ตอน `ng add` / `ng update`:** schematic ตรวจรุ่น Angular ก่อนแก้ไฟล์ ถ้าไม่ตรงจะหยุดและบอกว่าต้องใช้ `wiraui@<major ที่ถูก>`
+2. **ตอน `ng add` / `ng update`:** schematic ตรวจรุ่น Angular ก่อนแก้ไฟล์ ถ้าไม่ตรงจะหยุดและบอกว่าต้องใช้ `@wirabyte/ui@<major ที่ถูก>`
 3. **ตอนแอปเริ่มทำงาน:** `provideWiraUI()` และ constructor ของทุก component ตรวจ `VERSION.major` ของ `@angular/core` ถ้าอยู่นอกช่วงจะ throw error ทันที แอปจึงไม่เปิดทั้งตอน dev และ production
 
 มีข้อยกเว้นเดียวคือเว็บแนะนำ (ข้อ 10.1) ที่ต้องโชว์ v1/v2 บน Angular 21 ซึ่งจะใช้ token ภายในที่ไม่ได้เปิดเป็น API สาธารณะ (ขึ้นต้นด้วย `ɵ` แบบ API ภายในของ Angular) การล็อกนี้มีไว้กันการติดตั้งผิดและภาระ support ไม่ได้มีไว้กันคนตั้งใจหลบ
@@ -97,7 +97,7 @@
 WiraUI/                      (โครงจริงหลัง Phase 0)
 ├─ packages/
 │  ├─ core/              @wiraui/core: token engine, presets, exporters/importer, locale th/en,
-│  │                     ปฏิทิน พ.ศ., ตรวจเลขบัตรประชาชน (TS ล้วน, ถูก copy เข้าทุก build เป็น wiraui/core)
+│  │                     ปฏิทิน พ.ศ., ตรวจเลขบัตรประชาชน (TS ล้วน, ถูก copy เข้าทุก build เป็น @wirabyte/ui/core)
 │  ├─ themes/            scss/ (_index ไว้ @use … with, _api, _color, _data ที่ generate จาก core)
 │  │                     + script สร้าง CSS สำเร็จรูป 4 preset × 18 สี + parity test กับ core
 │  ├─ styles/            CSS ของ component ที่ทั้ง 3 รุ่นใช้ไฟล์เดียวกัน
@@ -116,19 +116,19 @@ WiraUI/                      (โครงจริงหลัง Phase 0)
                          build-docs-packages, dry-run-ng-add, finish-package
 ```
 
-ใน workspace แต่ละ build shell มีชื่อ package ไม่ซ้ำกัน แต่ตอน publish script จะตั้งชื่อเป็น `wiraui` ตัวเดียวกันในคนละ major
+ใน workspace แต่ละ build shell มีชื่อ package ไม่ซ้ำกัน แต่ตอน publish script จะตั้งชื่อเป็น `@wirabyte/ui` ตัวเดียวกันในคนละ major
 
 **โครงของแพ็กเกจที่ผู้ใช้เห็น** (ใช้ secondary entry point แบบ `primeng/button`)
 
 ```
-wiraui/config      provideWiraUI, WiraUIModule, definePreset, defineOverrides, palette, WuThemeService
-wiraui/button      WuButton, WuButtonModule
-wiraui/table       WuTable, WuTableModule …       (หนึ่ง entry ต่อหนึ่ง component)
-wiraui/alert       WuAlertService (แทน sweetalert2)
-wiraui/thai        wu-thai-id-input, wu-thai-address, pipe ภาษาไทย
-wiraui/theme       SCSS (_index.scss, _api.scss)
-wiraui/themes/     CSS สำเร็จรูป เช่น wira/teal.css, wira/blue.css
-wiraui/locale/     th, en
+@wirabyte/ui/config      provideWiraUI, WiraUIModule, definePreset, defineOverrides, palette, WuThemeService
+@wirabyte/ui/button      WuButton, WuButtonModule
+@wirabyte/ui/table       WuTable, WuTableModule …       (หนึ่ง entry ต่อหนึ่ง component)
+@wirabyte/ui/alert       WuAlertService (แทน sweetalert2)
+@wirabyte/ui/thai        wu-thai-id-input, wu-thai-address, pipe ภาษาไทย
+@wirabyte/ui/theme       SCSS (_index.scss, _api.scss)
+@wirabyte/ui/themes/     CSS สำเร็จรูป เช่น wira/teal.css, wira/blue.css
+@wirabyte/ui/locale/     th, en
 ```
 
 ### การแชร์โค้ดระหว่าง 3 รุ่น (เรื่องที่กำหนดภาระดูแลระยะยาว)
@@ -149,7 +149,7 @@ wiraui/locale/     th, en
 ## 5. การติดตั้ง (ง่ายแบบ UI library เดิม)
 
 ```bash
-ng add wiraui
+ng add @wirabyte/ui
 ```
 
 **คำถามระหว่างติดตั้ง** (ค่าในวงเล็บคือค่าที่ตรวจพบหรือค่าเริ่มต้น กด Enter ผ่านได้ทุกข้อ)
@@ -165,7 +165,7 @@ ng add wiraui
 ? Icon set                       (ตรวจพบ icon font เดิม)   › icon font เดิม · Font Awesome · ไม่ติดตั้ง
 ```
 
-**โหมดอัตโนมัติ:** `ng add wiraui --defaults` ใช้ค่าที่ตรวจพบกับค่าเริ่มต้นทั้งหมดโดยไม่ถาม และทุกข้อส่งเป็น flag ได้ เช่น `--style=scss --standalone=false --primary=#00a86b`
+**โหมดอัตโนมัติ:** `ng add @wirabyte/ui --defaults` ใช้ค่าที่ตรวจพบกับค่าเริ่มต้นทั้งหมดโดยไม่ถาม และทุกข้อส่งเป็น flag ได้ เช่น `--style=scss --standalone=false --primary=#00a86b`
 
 **ตรวจจากอะไร**
 
@@ -188,7 +188,7 @@ ng add wiraui
 | ทุกแบบ | สร้าง `src/theme/wiraui.overrides.ts` (ไฟล์ override ฝั่ง TS ซึ่งเริ่มต้นว่าง) แล้วผูกกับ provider |
 | ทุกแบบ | ติดตั้งฟอนต์และ icon ตามที่เลือก แล้วพิมพ์ "ขั้นตอนถัดไป" |
 
-`ng update @angular/core@18 @angular/cli@18 wiraui@v2-beta` ใช้ตอนอัปเกรด Angular ข้ามช่วง (เช่น 17 → 18 ก็ขยับ v1 → v2) และรัน migration ให้ถ้ามี API เปลี่ยน ต้องสั่งพร้อม Angular ในคำสั่งเดียว เพราะ `ng update wiraui@beta` เดี่ยว ๆ บน Angular 20 ถูกปฏิเสธ (จะดึง Angular ไปรุ่นล่าสุด) ส่วนการติดตั้งแบบ manual มีคู่มือบนเว็บแนะนำแยกเป็นแท็บ CSS / SCSS / TS
+`ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@v2-beta` ใช้ตอนอัปเกรด Angular ข้ามช่วง (เช่น 17 → 18 ก็ขยับ v1 → v2) และรัน migration ให้ถ้ามี API เปลี่ยน ต้องสั่งพร้อม Angular ในคำสั่งเดียว เพราะ `ng update @wirabyte/ui@beta` เดี่ยว ๆ บน Angular 20 ถูกปฏิเสธ (จะดึง Angular ไปรุ่นล่าสุด) ส่วนการติดตั้งแบบ manual มีคู่มือบนเว็บแนะนำแยกเป็นแท็บ CSS / SCSS / TS
 
 ---
 
@@ -225,8 +225,8 @@ token ทุกตัวประกาศบน `:root` ส่วน CSS ขอ
 ```jsonc
 // angular.json
 "styles": [
-  "node_modules/wiraui/themes/sila-light-teal/theme.css",  // v1: แทน primeng/resources/themes/lara-light-teal/… (ตารางเทียบชื่อใน §12.8)
-  // "node_modules/wiraui/themes/mali/emerald.css",        // v2/v3: <preset>/theme.css หรือ <preset>/<สี>.css
+  "node_modules/@wirabyte/ui/themes/sila-light-teal/theme.css",  // v1: แทน primeng/resources/themes/lara-light-teal/… (ตารางเทียบชื่อใน §12.8)
+  // "node_modules/@wirabyte/ui/themes/mali/emerald.css",        // v2/v3: <preset>/theme.css หรือ <preset>/<สี>.css
   "src/styles.css"
 ]
 ```
@@ -237,7 +237,7 @@ token ทุกตัวประกาศบน `:root` ส่วน CSS ขอ
 
 ```scss
 // src/theme/wiraui.theme.scss
-@use 'wiraui/theme' with (
+@use '@wirabyte/ui/theme' with (
   $preset: 'wira',
   $primary: #00a86b,                 // ใส่สีเดียวแล้วระบบสร้าง 50–950 ให้
   // $primary: (50: #e8f8f1, 100: #c5eedd, …, 950: #00281a),  // หรือกำหนดเองทุกเฉด
@@ -264,7 +264,7 @@ token ทุกตัวประกาศบน `:root` ส่วน CSS ขอ
 ไฟล์ SCSS ของ component ในแอปใช้ helper ได้ผ่านโมดูล API (โมดูลนี้ไม่ปล่อย CSS ซ้ำ):
 
 ```scss
-@use 'wiraui/theme/api' as wu;
+@use '@wirabyte/ui/theme/api' as wu;
 
 .student-card {
   border-color: wu.token(primary-300);   // → var(--wu-primary-300)
@@ -279,7 +279,7 @@ token ทุกตัวประกาศบน `:root` ส่วน CSS ขอ
 
 ```ts
 // src/theme/wiraui.overrides.ts
-import { defineOverrides, palette } from 'wiraui/config';
+import { defineOverrides, palette } from '@wirabyte/ui/config';
 
 export const wiraOverrides = defineOverrides({
   semantic: {
@@ -371,7 +371,7 @@ v3 มี preset ใหม่ชื่อชั่วคราวว่า **Gla
 | v3 | UI library เดิม 21 + ของ WiraUI | v2 + `wira`, `lanna`, `siam`, `nakhon`, `glass` | เหมือน v2 | `mali` |
 
 - **ทำงานอย่างไร:** CSS ของ component มีชุดเดียวใช้ทุกรุ่น ส่วนหน้าตามาจาก token ของ family (`packages/core/src/families.ts` ตัวเลขจากธีม MIT ของ UI library เดิม เช่น ปุ่ม Sila 15 padding `.75rem 1.25rem` ตัวหนา 700, ปุ่ม Mali `.5rem .75rem` น้ำหนัก 500) ทุก family ต่อยอดจาก Mali จึงมี token ชุดเดียวกันครบ (มี test ตรวจว่า CSS ทุกไฟล์ใช้แต่ token ที่ทุกธีมประกาศ)
-- **`VERSION_CATALOG`** ใน core บอกว่ารุ่นไหนมี preset/ธีมอะไร ใช้ร่วมกันโดย `ng add` (ถามเฉพาะธีมของรุ่นนั้น), ไฟล์ CSS สำเร็จรูป, SCSS (`@use 'wiraui/theme'` ไม่ใส่อะไรได้ค่าเริ่มต้นของรุ่น) และเว็บ docs
+- **`VERSION_CATALOG`** ใน core บอกว่ารุ่นไหนมี preset/ธีมอะไร ใช้ร่วมกันโดย `ng add` (ถามเฉพาะธีมของรุ่นนั้น), ไฟล์ CSS สำเร็จรูป, SCSS (`@use '@wirabyte/ui/theme'` ไม่ใส่อะไรได้ค่าเริ่มต้นของรุ่น) และเว็บ docs
 - **ธีมมืดล้วน** (`scheme: 'dark'` เช่น sayan, ratri, sila-dark) ใส่ค่ามืดเป็นค่าเดียว ไม่มี block `.wu-dark` เหมือน UI library เดิม 15 ที่สลับธีมด้วยการเปลี่ยนไฟล์ ส่วน overrides จาก TS อ่าน `--wu-scheme` จากไฟล์ธีมเองจึงทับถูกที่
 - **ชื่อ class ของ UI library เดิม:** DOM มี class `p-*` ของยุคนั้นคู่กับ `wu-*` เช่น v1 ปุ่ม warn มี `p-button-warning` และ checkbox ที่เลือกมี `.p-checkbox-box.p-highlight`, switch เป็น `p-inputswitch` ส่วน v2/v3 ใช้ `p-button-warn`, `p-checkbox-checked`, `p-toggleswitch` CSS ของแอปที่เขียนทับ `.p-button`, `.p-card-body`, `.p-highlight` อยู่แล้วจึงยังทำงาน (CSS ของแอปไม่อยู่ใน layer จึงชนะ) class ของ checkbox/radio/switch อยู่บน wrapper รอบกล่อง ไม่ใช่บน `<label>` เพราะ UI library เดิม กำหนดขนาด `.p-checkbox` ไว้ตายตัว ถ้าแอปยังโหลด CSS ของ UI library เดิม ระหว่างย้ายจะไม่บีบข้อความ label
 - **ตัวแปร CSS ของ UI library เดิม:** ไฟล์ธีม v1 สร้าง `--primary-color`, `--surface-ground`, `--surface-border`, `--text-color`, `--green-500`, … ส่วน v2/v3 สร้าง `--p-primary-color`, `--p-surface-0…950`, `--p-content-border-radius`, `--p-<สี>-<เฉด>`, … (`compat.ts`) โดยอ้างกลับไปที่ `--wu-*` จึงเปลี่ยนตามธีม และค่า component บางตัวอ่านค่าที่แอปตั้งแบบ UI library เดิม ก่อน เช่น `--p-card-body-gap: 0` ของ แอป B ยังได้ผล
@@ -380,7 +380,7 @@ v3 มี preset ใหม่ชื่อชั่วคราวว่า **Gla
 - **โหมดมืดแบบนวล:** ทุก family ใช้ชุดสีมืดเดียวกัน (`SOFT_DARK` ใน `families.ts`) ที่ยกพื้นขึ้นจากของ UI library เดิม หนึ่งขั้น (พื้นหน้าระหว่าง surface 900 กับ 800, การ์ด 800) และใช้ตัวอักษร surface 200 แทนสีขาว contrast จึงเหลือราว 11:1 แทน 20:1 ยังผ่าน WCAG AAA
 - **ขนาดตัวอักษรเป็น rem** และระยะทั้งหมดคูณ `--wu-density` แอปที่ตั้ง `html { font-size: 14px }` แบบ UI library เดิม จึงย่อทั้งชุดเหมือนเดิม
 
-### 6.11 Utility class ในตัว (`wiraui/utils`)
+### 6.11 Utility class ในตัว (`@wirabyte/ui/utils`)
 
 แทน utility library ที่แอปเดิมต้องติดตั้งแยก (ในแอปเราใช้หนักมาก เช่น แอป A ใช้ `col-12` ราว 3,300 ครั้ง, `grid` 1,200, `md:col-*` หลายร้อย) โดยใช้ **ชื่อ class เดิม** template จึงไม่ต้องแก้
 
@@ -388,10 +388,10 @@ v3 มี preset ใหม่ชื่อชั่วคราวว่า **Gla
 - **Mobile-first:** class ปกติคือขนาดมือถือ ส่วน `sm:` `md:` `lg:` `xl:` (576/768/992/1200px) มีผลจากความกว้างนั้นขึ้นไป
 - **ตามธีม:** สี, radius และ shadow อ่าน `--wu-*` จึงเปลี่ยนตาม preset และโหมดมืดเอง ระยะ gutter ของ grid ปรับตอน runtime ได้ด้วย `--wu-grid-gutter`
 - **ลำดับ layer:** `@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides` (`reset` มีไว้ให้แอปห่อ CSS reset ของตัวเอง เช่น `button { font: inherit }` ไม่ให้ชนะ style ของ component) utility จึงชนะ style ของ component (เช่น `class="p-0"` บน component) แต่แพ้ CSS ของแอปเอง ไฟล์ utility ประกาศลำดับ layer เต็มไว้บนสุดด้วย โหลดก่อนธีมก็ไม่เพี้ยน
-- **เปิด/ปิด:** `ng add` ถามว่าจะเพิ่มไหม (`--utils=false` เพื่อข้าม) แบบ SCSS ใส่ `@use 'wiraui/utils';` ใต้บรรทัดธีม แบบ CSS ใส่ `node_modules/wiraui/utils/utils.css` ใน angular.json ปิดทั้งหมดได้ด้วยการลบบรรทัดนั้น หรือเลือกเฉพาะบางกลุ่มใน SCSS:
+- **เปิด/ปิด:** `ng add` ถามว่าจะเพิ่มไหม (`--utils=false` เพื่อข้าม) แบบ SCSS ใส่ `@use '@wirabyte/ui/utils';` ใต้บรรทัดธีม แบบ CSS ใส่ `node_modules/@wirabyte/ui/utils/utils.css` ใน angular.json ปิดทั้งหมดได้ด้วยการลบบรรทัดนั้น หรือเลือกเฉพาะบางกลุ่มใน SCSS:
 
 ```scss
-@use 'wiraui/utils' with (
+@use '@wirabyte/ui/utils' with (
   $groups: (palette: false, shadows: false),  // ปิดบางกลุ่ม
   $prefix: 'u-',                                // .u-flex, .md:u-col-6 ถ้าต้องใช้คู่กับ library อื่นระหว่างย้าย
   $responsive: true,
@@ -557,7 +557,7 @@ const routes: Routes = [
 ];
 ```
 
-- **ติดตั้งทั้ง 3 รุ่นในแอปเดียว** ด้วยชื่อแฝง (npm alias / pnpm workspace): `wiraui-v1` → wiraui@1, `wiraui-v2` → wiraui@2, `wiraui` → wiraui@3 แล้วให้ `DocsV1Module` import จาก `wiraui-v1/button` เป็นต้น เพราะโหลดแบบ lazy โค้ดของ v1 จึงถูกดาวน์โหลดเฉพาะตอนเข้า `/v1`
+- **ติดตั้งทั้ง 3 รุ่นในแอปเดียว** ด้วยชื่อแฝง (npm alias / pnpm workspace): `wiraui-v1` → @wirabyte/ui@1, `wiraui-v2` → @wirabyte/ui@2, `@wirabyte/ui` → @wirabyte/ui@3 แล้วให้ `DocsV1Module` import จาก `wiraui-v1/button` เป็นต้น เพราะโหลดแบบ lazy โค้ดของ v1 จึงถูกดาวน์โหลดเฉพาะตอนเข้า `/v1`
 - **ทำไมรันได้:** v1 และ v2 เป็น library แบบ partial compilation ที่ linker ของ Angular 21 แปลงให้ได้ (หลักเดียวกับข้อ 3 ที่ว่า library ใช้กับ Angular รุ่นที่ใหม่กว่าได้) แอปหลักเปิด zone.js ไว้ (`provideZoneChangeDetection`) เพื่อให้ v1 ที่อิง zone ทำงานถูก ส่วน peerDependencies ของ v1/v2 ที่ไม่ครอบคลุม Angular 21 ให้ยกเว้นเฉพาะแอป docs ผ่าน `pnpm.peerDependencyRules`
 - **dropdown เปลี่ยนรุ่น:** เปลี่ยน prefix ของ URL แต่คงหน้าเดิมไว้ เช่น `/v3/components/button` → `/v1/components/button` ถ้ารุ่นนั้นไม่มี component นี้ (เช่น ของที่มีแค่ใน v3) ให้พาไปหน้ารายการ component ของรุ่นนั้นพร้อมข้อความบอก และจำรุ่นที่เลือกไว้ใน localStorage
 - **ธีมไม่ปนกัน:** token ของแต่ละรุ่นผูกกับ element ที่ครอบ route นั้น (`<div data-wu-version="v1">`) แทน `:root` และ Angular ลบ style ของ component ที่ถูกทำลายแล้วออกให้เอง สลับรุ่นแล้วจึงไม่มี CSS ของรุ่นก่อนค้างอยู่
@@ -585,7 +585,7 @@ const routes: Routes = [
 | 1 — MVP | component P1 (เริ่มใน `angular-signal` → v2/v3 → v1) | **นำร่องที่ แอป C** (ใช้ไม่กี่ component ความเสี่ยงต่ำ) แล้วต่อด้วย แอป B โดยใช้คู่กับ UI library เดิม และย้ายทีละหน้า |
 | 2 — เว็บ + Designer | เว็บแนะนำ, Theme Designer ตัวจริงเป็น Angular (ต่อยอดจากต้นแบบ + ปรับขนาดหน้าจอ preview ได้ + export token ไป Figma), configurator, preset Glass ของ v3, เริ่ม Figma UI Kit | ทำธีมของ แอป A (`#00a86b` + Kanit) ใน Designer แล้ว export ไปใช้ได้จริง |
 | 3 — ของเฉพาะ WiraUI | กลุ่ม W (Alert, Thai inputs, Table export, …) + P2 บางส่วน | แอปเราไม่ต้องพึ่ง sweetalert2 / buddhist-datepicker / xlsx โดยตรงแล้ว |
-| 4 — เครื่องมือย้าย | schematic `ng g wiraui:from-primeng` (เปลี่ยน `p-button` → `wu-button` ฯลฯ ใน component ที่ API ตรงกัน) | ย้าย แอป A (โปรเจคใหญ่สุด, v1) ได้ |
+| 4 — เครื่องมือย้าย | schematic `ng g @wirabyte/ui:from-primeng` (เปลี่ยน `p-button` → `wu-button` ฯลฯ ใน component ที่ API ตรงกัน) | ย้าย แอป A (โปรเจคใหญ่สุด, v1) ได้ |
 
 ### 12.1 Phase 0 แบบละเอียด
 
@@ -596,11 +596,11 @@ const routes: Routes = [
 | 1 | ตั้ง repo: pnpm workspace ใน `WiraUI/`, git, โครงโฟลเดอร์ตามข้อ 4, ล็อก Node 24 LTS ตัวเดียว (`.nvmrc` + `engines`), prettier/editorconfig | repo ที่ build ได้ทุก package |
 | 2 | `@wiraui/core`: ย้าย `engine.js` + `exporters.js` จากต้นแบบมาเป็น TypeScript ที่มี type ครบ ได้แก่ token schema (รวมกลุ่ม glass), `palette()`, presets, `computeTokens()`, exporters SCSS/CSS/TS/JSON และ `parseImport()` | ตัวคำนวณ token ตัวเดียวที่ runtime, schematics และ Designer ใช้ร่วมกัน |
 | 3 | Thai utils ใน core: locale `th`/`en`, ปฏิทิน พ.ศ. (แปลง/แสดง/อ่านค่า), ตรวจเลขบัตรประชาชน พร้อม unit test | ของที่ DatePicker และฟอร์มใน Phase 1 ต้องใช้ |
-| 4 | SCSS `wiraui/theme`: `_index.scss` (`@use … with`) ที่ปล่อย `@layer` + `:root` vars, `_api.scss` (`token()`, `dark`, `media`, `glass`) และ `palette()` ฝั่ง Sass ที่ใช้สูตรเดียวกับ TS (มี test เทียบผล) | import ธีมผ่าน SCSS ได้ |
+| 4 | SCSS `@wirabyte/ui/theme`: `_index.scss` (`@use … with`) ที่ปล่อย `@layer` + `:root` vars, `_api.scss` (`token()`, `dark`, `media`, `glass`) และ `palette()` ฝั่ง Sass ที่ใช้สูตรเดียวกับ TS (มี test เทียบผล) | import ธีมผ่าน SCSS ได้ |
 | 5 | script สร้าง CSS สำเร็จรูป: preset × สีหลัก → `themes/<preset>/<color>.css` | ทาง CSS สำหรับคนที่ไม่ใช้ SCSS |
-| 6 | `wiraui/config` ในทั้ง 3 รุ่น: `provideWiraUI()`, `WiraUIModule.forRoot()`, `defineOverrides`, `definePreset`, `WuThemeService`, ตัวใส่ style ที่คุมลำดับ `@layer`, คำเตือนใน dev mode, ใช้กับ SSR ได้ | override ธีมด้วย TS ได้ทั้ง NgModule และ standalone |
-| 7 | `wu-button` ครบทั้งท่อ: เขียนใน `angular-signal` → sync เข้า v2/v3 → พอร์ตเป็น v1 → build ด้วย ng-packagr ของ Angular 15 / 18 / 21 ได้ entry point `wiraui/button` | พิสูจน์ว่าการแชร์โค้ด 3 รุ่นใช้ได้จริง |
-| 8 | schematic `ng add wiraui`: ถามหรือตรวจเอง (ภาษาสไตล์, NgModule/standalone, รุ่น Angular, มี UI library เดิม ไหม, ฟอนต์) แล้วสร้างไฟล์ธีม + `overrides.ts` + ใส่ provider | ติดตั้งด้วยคำสั่งเดียวแบบ UI library เดิม |
+| 6 | `@wirabyte/ui/config` ในทั้ง 3 รุ่น: `provideWiraUI()`, `WiraUIModule.forRoot()`, `defineOverrides`, `definePreset`, `WuThemeService`, ตัวใส่ style ที่คุมลำดับ `@layer`, คำเตือนใน dev mode, ใช้กับ SSR ได้ | override ธีมด้วย TS ได้ทั้ง NgModule และ standalone |
+| 7 | `wu-button` ครบทั้งท่อ: เขียนใน `angular-signal` → sync เข้า v2/v3 → พอร์ตเป็น v1 → build ด้วย ng-packagr ของ Angular 15 / 18 / 21 ได้ entry point `@wirabyte/ui/button` | พิสูจน์ว่าการแชร์โค้ด 3 รุ่นใช้ได้จริง |
+| 8 | schematic `ng add @wirabyte/ui`: ถามหรือตรวจเอง (ภาษาสไตล์, NgModule/standalone, รุ่น Angular, มี UI library เดิม ไหม, ฟอนต์) แล้วสร้างไฟล์ธีม + `overrides.ts` + ใส่ provider | ติดตั้งด้วยคำสั่งเดียวแบบ UI library เดิม |
 | 9 | playground 3 ตัว: v1 = Angular 15 NgModule + SCSS (แบบ แอป A), v2 = Angular 19 NgModule (แบบ แอป B), v3 = Angular 21 standalone + zoneless โดยติดตั้งด้วย `ng add` จาก tarball ในเครื่อง | แอปทดสอบที่โครงเหมือนของจริง |
 | 10 | Playwright: spec ชุดเดียวของ `wu-button` รันกับ 3 playground × light/dark พร้อมภาพ baseline | ตรวจว่าทั้ง 3 รุ่นหน้าตาเหมือนกัน |
 | 11 | CI: build + test ทุก package บน Node 24 และมี job ติดตั้งจริงบน Node ต่ำสุดของแต่ละรุ่น (18 / 18.19 / 20.19) | กันของพังก่อน merge และยืนยันว่ารองรับ Node 18 จริง |
@@ -608,7 +608,7 @@ const routes: Routes = [
 | 12 | โครงเว็บ docs: แอป Angular 21 แบบ NgModule มี dropdown เลือกรุ่น และ `loadChildren` 3 module ที่แต่ละตัวโชว์ `wu-button` จาก wiraui v1 / v2 / v3 | พิสูจน์ว่า v1/v2 รันในแอป Angular 21 ได้จริง ก่อนลงแรงทำเว็บใน Phase 2 |
 
 **จบ Phase 0 เมื่อผ่านทุกข้อ**
-- รัน `ng add wiraui` บนแอปใหม่ Angular 15, 19 และ 21 แล้วได้ `<wu-button>` ที่ใช้ธีมได้ทั้ง 3 ทาง (SCSS, CSS, TS)
+- รัน `ng add @wirabyte/ui` บนแอปใหม่ Angular 15, 19 และ 21 แล้วได้ `<wu-button>` ที่ใช้ธีมได้ทั้ง 3 ทาง (SCSS, CSS, TS)
 - override ด้วย TS ชนะธีมจาก SCSS โดยไม่ใช้ `!important` และ CSS ของแอปชนะทั้งสองอย่าง
 - ไฟล์ที่ export จาก Designer ต้นแบบใช้กับ playground ทั้ง 3 ตัวได้โดยไม่ต้องแก้
 - ภาพ `wu-button` ของ v1/v2/v3 ตรงกัน (pixel diff ต่ำกว่าเกณฑ์)
@@ -637,7 +637,7 @@ const routes: Routes = [
 
 **สิ่งที่เจอระหว่างทำ (กันไว้แล้วในโค้ด)**
 - npm 10.2.5 (ที่ติดตั้งในเครื่องนี้) มีบั๊ก `Cannot read properties of null (reading 'edgesOut')` เวลาติดตั้งโปรเจค Angular 21 แก้ได้ด้วยการอัปเดต npm
-- Angular CLI 21 ใช้ `ng add` กับ tarball ในเครื่อง (`file:`) ไม่ได้ ผู้ใช้จริงติดตั้งจาก registry จึงไม่กระทบ ส่วน CI/สคริปต์ใช้วิธี `npm install <tgz>` แล้ว `ng add wiraui`
+- Angular CLI 21 ใช้ `ng add` กับ tarball ในเครื่อง (`file:`) ไม่ได้ ผู้ใช้จริงติดตั้งจาก registry จึงไม่กระทบ ส่วน CI/สคริปต์ใช้วิธี `npm install <tgz>` แล้ว `ng add @wirabyte/ui`
 - Angular CLI 15 ส่ง path ที่มีช่องว่างให้ npm แบบไม่ใส่เครื่องหมายคำพูด สคริปต์จึงใช้ path แบบ relative
 - ng-packagr 21 ใส่ `"type": "module"` ให้ทั้งแพ็กเกจ schematics จึงต้องเป็นไฟล์ `.cjs`
 - `angular.json` ของโปรเจคจริงมี trailing comma (แอป A) schematic จึงอ่านแบบเดียวกับ Angular CLI
@@ -665,7 +665,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ### 12.5 โหมดมืดนวล, utility ในตัว, สีองค์กร และ component ชุดง่าย (24 ต.ค. 2569)
 
-- **โหมดมืดนวล** (6.10) และ **`wiraui/utils`** (6.11)
+- **โหมดมืดนวล** (6.10) และ **`@wirabyte/ui/utils`** (6.11)
 - **สีองค์กร Wirabyte** (จาก wirabyte.com): preset `wira` ใช้น้ำเงินองค์กร `#1e7ae0` บน surface `ink` (`#f6f8fc` … `#070b14`) และ swatch `wira` เป็นสีเดียวกัน ส่วนธีม `sila-light-wira` ยังเป็นเขียว `#00a86b` เพราะทำไว้ให้ตรงกับแอปเดิม
 - **Component ชุดง่าย (11 ตัว, ครบ v1/v2/v3):** Tag, Badge, Chip, Avatar + AvatarGroup, Divider, Skeleton, ProgressBar, ProgressSpinner, Message, Panel, Fieldset
   - ทุกตัวมี token ของ family (เช่น Tag แบบ classic เป็นสีทึบ `tag-fill: 100%`, แบบ styled เป็นสีอ่อน `0%`; Panel แบบ classic มีเส้นขอบแยกหัว/เนื้อหา แบบ styled ขอบรอบทั้งกล่อง) และ class `p-*` ของแต่ละยุค (v1 `p-tag-warning`, `p-inline-message-error`, `p-toggleable-content`; v2/v3 `p-tag-warn`, `p-message-error`, `p-panel-content-container`)
@@ -686,7 +686,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **InputNumber:** แสดงค่าที่จัดรูปแบบแล้ว (`฿1,234.50`, `60 กก.`) และไม่เปลี่ยนข้อความตอนโฟกัส (เปลี่ยนตอนนั้นทำให้การเลือกจาก Tab, คลิก, autofill หรือ `fill()` ของ test runner หาย แล้วตัวเลขที่พิมพ์ไปต่อท้ายค่าเดิม เจอใน e2e) สิ่งที่พิมพ์/วางอ่านแบบผ่อนปรน (ไม่สน `฿` และ `,`) แล้วจัดรูปแบบใหม่ตอนออกจากช่อง จึงไม่ต้องจัดการตำแหน่ง caret ระหว่างพิมพ์ model อัปเดตทุกครั้งที่พิมพ์ ส่วน min/max และจำนวนทศนิยมบังคับตอนออกจากช่อง ตรรกะตัวเลข (`formatNumber`, `parseNumber` รับเลขไทยและค่าที่วาง, `stepNumber` ไม่มีเศษทศนิยมลอย, `clampNumber`) อยู่ใน core มี unit test, `inputmode` numeric/decimal ให้มือถือแสดงแป้นตัวเลข
 - **เปลี่ยนภาษาระหว่างใช้งาน:** component ที่แสดงข้อความจาก locale เป็น OnPush จึงต้องรู้ตัวเมื่อเรียก `WuConfig.setTranslation()` รุ่น v1 ใช้ `ɵrefreshOnTranslation()` (markForCheck) ส่วน signal ที่อ่านข้อความใน `computed()` ใช้ signal `language` เป็นตัวกระตุ้น เพราะ computed เก็บค่าไว้ (เจอจากเว็บ docs ที่สลับ TH/EN)
 - **แถบแท็บ:** เส้นฐานใช้ `box-shadow: inset` แทน border + margin ติดลบ จึงไม่ล้นแนวตั้งจน scrollbar โผล่ (`overflow-x: auto` บังคับให้แกน y เป็น auto ด้วย)
-- **ลำดับถัดไปตามการใช้งานจริง:** นับไฟล์ HTML ในทุกโปรเจคที่ใช้แต่ละ component (24 ต.ค. 2569): Table 449, Dialog 432, Select/Dropdown 437, Toast 194, ConfirmDialog 155, Tooltip 119, InputNumber 116, DatePicker/Calendar 98, Tabs/TabView 64, Accordion 34, Timeline 28, Steps 10 ชุดถัดไปจึงควรเป็น overlay (Dialog, ConfirmDialog/`WuAlertService`, Toast, Tooltip, Popover) แล้ว Select, InputNumber, DatePicker พ.ศ. และ Table แอป v2/v3 ใช้ Tabs แบบ UI library เดิม 18 (`<p-tabs><p-tablist><p-tab>`) อยู่ 41 ไฟล์ ถ้าจะลดงานย้ายควรเพิ่ม API แบบนั้นให้ `wiraui/tabs` ด้วย
+- **ลำดับถัดไปตามการใช้งานจริง:** นับไฟล์ HTML ในทุกโปรเจคที่ใช้แต่ละ component (24 ต.ค. 2569): Table 449, Dialog 432, Select/Dropdown 437, Toast 194, ConfirmDialog 155, Tooltip 119, InputNumber 116, DatePicker/Calendar 98, Tabs/TabView 64, Accordion 34, Timeline 28, Steps 10 ชุดถัดไปจึงควรเป็น overlay (Dialog, ConfirmDialog/`WuAlertService`, Toast, Tooltip, Popover) แล้ว Select, InputNumber, DatePicker พ.ศ. และ Table แอป v2/v3 ใช้ Tabs แบบ UI library เดิม 18 (`<p-tabs><p-tablist><p-tab>`) อยู่ 41 ไฟล์ ถ้าจะลดงานย้ายควรเพิ่ม API แบบนั้นให้ `@wirabyte/ui/tabs` ด้วย
 
 ### 12.6 DatePicker (24 ต.ค. 2569)
 
@@ -694,7 +694,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **ตรรกะอยู่ใน core ไม่ผูก framework:** `core/src/date.ts` (ตาราง 6 สัปดาห์คงที่ให้ panel ไม่กระโดด, min/max/disabled, หน้าปี 12 ช่องตามทศวรรษที่คนเห็นเช่น 2560–2569, ลูกศร/Home/End/PageUp/PageDown, เวลา wrap 23→00, 12/24 ชม.) และ `DatePickerState` (เลือกวัน/ช่วง/หลายวัน/เดือน/ปี, เวลา, ข้อความในช่อง) มี unit test 32 ข้อ component v1 (decorator, `*ngIf`) กับ v2/v3 (signal, `@if`) จึงเหลือแค่ template กับการจัดการโฟกัส
 - **รูปแบบวันที่:** `dateFormat` ใช้ภาษา `dd/mm/yy` เดิม (`classicDateFormat()` แปลงเป็น pattern ของ `formatDate()`) ค่าเริ่มต้นเป็นของ locale พิมพ์ได้ทั้งตรงรูปแบบ, ตัวเลขตามลำดับวัน/เดือน/ปีของรูปแบบด้วยตัวคั่นอะไรก็ได้ (`12/3/2569`, `12-03-69`), เลขไทย, ชื่อเดือนตัวพิมพ์ใดก็ได้ และในโหมด พ.ศ. ปีที่ต่ำกว่า 2300 ถือเป็น ค.ศ. ที่พิมพ์ตามความเคยชิน ค่าที่ใช้ไม่ได้ (นอก min/max) ไม่เข้า model และถูกแทนด้วยค่าเดิมตอนออกจากช่อง
 - **เวลา:** ช่อง ชม./นาที/วินาที เป็น `<input>` ที่กดปุ่มขึ้นลง (กดค้างได้), ลูกศรขึ้นลง และพิมพ์ได้ พิมพ์ครบแล้วไปช่องถัดไปเอง (เช่น `45` หรือ `7` ในช่องนาที) เกินช่วงถูกบีบตอนออกจากช่อง `readonlyInput` (ช่องหลัก) กับ `timeReadonlyInput` (ช่องเวลา) แยกกัน รับชื่อ `readOnlyInput` / `timeReadOnlyInput` ด้วย เมื่อมีเวลา panel ไม่ปิดหลังเลือกวัน (ต่างจากต้นฉบับ ตั้ง `hideOnDateTimeSelect` ได้)
-- **Overlay:** `ɵWuPopup` ใน `wiraui/config` (ใช้ต่อกับ Select, Dialog) วาง panel ใน top layer ด้วย `popover="manual"` จึงอยู่เหนือ dialog และไม่ถูก `overflow: hidden` ตัด ไม่ต้อง `appendTo` (รับไว้เฉย ๆ) panel อยู่ที่เดิมใน DOM ลำดับโฟกัสจึงถูก กลับด้านขึ้นบนเมื่อด้านล่างไม่พอ ตามช่องเมื่อ scroll บนมือถือเป็น bottom sheet ที่อยู่เหนือแป้นพิมพ์ (visualViewport) วันกว้าง 44px และช่องหลักไม่เรียกแป้นพิมพ์ (`inputmode="none"`)
+- **Overlay:** `ɵWuPopup` ใน `@wirabyte/ui/config` (ใช้ต่อกับ Select, Dialog) วาง panel ใน top layer ด้วย `popover="manual"` จึงอยู่เหนือ dialog และไม่ถูก `overflow: hidden` ตัด ไม่ต้อง `appendTo` (รับไว้เฉย ๆ) panel อยู่ที่เดิมใน DOM ลำดับโฟกัสจึงถูก กลับด้านขึ้นบนเมื่อด้านล่างไม่พอ ตามช่องเมื่อ scroll บนมือถือเป็น bottom sheet ที่อยู่เหนือแป้นพิมพ์ (visualViewport) วันกว้าง 44px และช่องหลักไม่เรียกแป้นพิมพ์ (`inputmode="none"`)
 - **คีย์บอร์ด:** ช่องหลัก ลูกศรลงเข้าตาราง, Escape/Enter ปิด, Tab ปิดแล้วไปช่องถัดไป (ซ่อนทันทีใน keydown เดียวกัน ไม่งั้นแอป zoneless จะ Tab เข้า panel) ในตาราง roving tabindex ตาม WAI-ARIA และ Tab วนใน panel
 - **ยุค:** v1 มี class `p-calendar`, `p-datepicker` (panel), `p-datepicker-trigger`, `p-highlight`, `p-monthpicker`, `p-timepicker`; v2/v3 มี `p-datepicker`, `p-datepicker-panel`, `p-datepicker-dropdown`, `p-datepicker-day-selected`, `p-datepicker-time-picker` token `datepicker-*` แยกตาม family (classic ใช้สีอ่อนบนวันที่เลือกและช่อง 2.5rem, styled ใช้สีหลักทึบ 2rem, Phet มุมเหลี่ยม)
 - **e2e 15 ข้อ** (Chromium v1/v2/v3 + WebKit) ใช้ `page.clock` ตรึงวันที่ และภาพ inline calendar ชุดเดียวกันทุกรุ่น สิ่งที่ e2e จับได้และแก้แล้ว:
@@ -724,12 +724,12 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
   - v2/v3: `p-dialog-close-button`, `p-confirmdialog`, `p-toast-close-button`, `p-popover`
 - **Migration ทำได้โดยเปลี่ยน import:**
   - `WuTemplate` อ่าน `pTemplate` ด้วย
-  - `wiraui/api` export ชื่อเดิม `ConfirmationService`, `MessageService`, `ConfirmEventType`, `SharedModule`, `Message`
+  - `@wirabyte/ui/api` export ชื่อเดิม `ConfirmationService`, `MessageService`, `ConfirmEventType`, `SharedModule`, `Message`
   - `WuTooltip` รับ attribute `pTooltip`
   - `WuConfirmDialog` รับ `acceptButtonStyleClass="p-button-success"` และแปลงเป็นปุ่ม WiraUI (`ɵbuttonClass`)
   - selector `wu-confirmDialog`, `wu-overlayPanel` ใช้ได้
-- **AlertDialog แทน SweetAlert** (`wiraui/alert`):
-  - `import { WuAlert as Swal } from 'wiraui/alert'` แล้วโค้ด `Swal.fire(...)` เดิมทำงานต่อได้
+- **AlertDialog แทน SweetAlert** (`@wirabyte/ui/alert`):
+  - `import { WuAlert as Swal } from '@wirabyte/ui/alert'` แล้วโค้ด `Swal.fire(...)` เดิมทำงานต่อได้
   - รับ option ชื่อเดิม: title, text, html, icon, showCancelButton, reverseButtons, confirmButtonColor, input, inputValidator, preConfirm, timer, didOpen, allowOutsideClick
   - ผลลัพธ์รูปเดิม: isConfirmed, isDenied, isDismissed, value, dismiss
   - มี `showLoading`, `close`, `mixin`, `confirm()` ที่คืน boolean
@@ -746,7 +746,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
   - modal ล็อก scroll ของหน้าเป็นค่าเริ่มต้น
   - Tooltip แสดงตอนโฟกัสด้วยคีย์บอร์ดด้วย
   - Tooltip HTML (`[escape]="false"`) เหลือเฉพาะแท็กจัดรูปแบบและลิงก์ http/https/mailto
-- **Animate on scroll** (`wiraui/animate`):
+- **Animate on scroll** (`@wirabyte/ui/animate`):
   - แทน AOS โดยใช้ attribute เดิม (`data-aos`, `data-aos-delay`, `-duration`, `-easing`, `-offset`, `-once`, `-mirror`, `-anchor-placement`) และชื่อ animation ครบ 27 ชื่อ (fade, zoom, flip, slide)
   - เปิดใช้ด้วย `provideWuAnimate()` (หรือ `WuAnimateModule.forRoot()`) แทน `AOS.init()` หรือใช้ directive `[wuAnimate]`
   - ใช้ IntersectionObserver โดย MutationObserver คอยจับ element ที่เพิ่มทีหลัง
@@ -767,7 +767,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **ขนาดรายตัว:** `size="small"`/`"large"` (หรือ `sm`/`lg`) ใน button, checkbox, radiobutton, toggleswitch, togglebutton, selectbutton, password, inputnumber, datepicker
   - class เดิม `p-button-sm`, `p-inputtext-sm` ใช้ได้
   - มี `<button wuButton>` (อ่าน `pButton`) และ `styleClass="p-button-*"` แปลงเป็น class ของเรา
-- **Validation** (`wiraui/validation`):
+- **Validation** (`@wirabyte/ui/validation`):
   - field แดงเองเมื่อ invalid และ (touched หรือ form submitted)
   - `wu-field-error` แสดงข้อความภาษาของ locale
   - validator ไทย: `thaiId`, `thaiPhone`, `match`
@@ -800,8 +800,8 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
     - แต่ใน flex ที่ยืดความสูง aspect-ratio ไม่ทำงาน ปุ่มจึงแคบ 35px บนช่องสูง 40px
 - **ใหม่:**
   - ProgressBar รับ `max` (นับจำนวน `1,000 / 2,500 รายการ`), `text` และ template `#content`
-  - MeterGroup (`wiraui/metergroup`) ครบ v1/v2/v3
-  - Glass เป็นของ v3 เท่านั้น: preset ไม่อยู่ใน `wiraui/presets` ของ v1/v2 และ `variant="glass"` ของ Card แสดงเป็นการ์ดปกติใน v1/v2
+  - MeterGroup (`@wirabyte/ui/metergroup`) ครบ v1/v2/v3
+  - Glass เป็นของ v3 เท่านั้น: preset ไม่อยู่ใน `@wirabyte/ui/presets` ของ v1/v2 และ `variant="glass"` ของ Card แสดงเป็นการ์ดปกติใน v1/v2
 - **ชื่อ preset เป็นของเราเอง** (ผู้ใช้ไม่อยากใช้ชื่อที่ดูลอกมา) ชื่อไทยตามความหมาย:
 
   | ชื่อเดิม (แนวเดียวกับ) | ชื่อใหม่ | ความหมาย |
@@ -835,17 +835,17 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
   - `p-dropdown` / `p-select` ใช้ 1,434 ครั้ง
   - `p-table` ใช้ 947 ครั้งใน 449 ไฟล์ ราว 96% แบ่งหน้า/เรียง/ค้นหาฝั่ง browser มี lazy เฉพาะ แอป D
   - CSS ของแอปเขียนทับ `.p-datatable-*` 640 จุด จึงเก็บชื่อ class ของแต่ละยุคไว้
-- **Select** (`wiraui/select`, `wu-select` หรือ `wu-dropdown`):
+- **Select** (`@wirabyte/ui/select`, `wu-select` หรือ `wu-dropdown`):
   - **โครงสร้าง:** combobox แบบ select-only ตาม ARIA มี `<input role="combobox">` ที่ซ่อนอยู่รับคีย์บอร์ดและ `<label for>` รายการเปิดใน top layer จึงไม่ต้องใช้ `appendTo`
   - **ค้นหา:** ไทย/อังกฤษไม่สนตัวพิมพ์ เลขไทยเท่ากับ 0–9 ค้นหลายฟิลด์ได้ด้วย `filterBy="name_th,code"`
   - **คีย์บอร์ด:** แบบ native select ทั้งลูกศร, Home/End, PageUp/Down, Enter/Space, Esc, Tab เลือกแถวที่ชี้อยู่ และพิมพ์ตัวอักษรเพื่อหาตอนที่ปิดอยู่ได้ คลิก label แค่ focus ไม่เปิดรายการ
   - **ความสามารถอื่น:** group, `optionDisabled`, `showClear`, `editable`, `loading`, `checkmark`, template item / selectedItem / group / header / footer / empty / emptyfilter / dropdownicon, `dataKey`
   - **ตรรกะ:** อยู่ใน core (`select.ts`) พร้อม unit test
-- **Paginator** (`wiraui/paginator`):
+- **Paginator** (`@wirabyte/ui/paginator`):
   - ปุ่มหน้า และช่องจำนวนแถวต่อหน้าที่ใช้ `wu-select`
   - รายงานภาษาไทยค่าเริ่มต้น `กำลังแสดง {first} ถึง {last} จาก {totalRecords} รายการ` (ข้อความที่แอปใช้มากที่สุด 188 ครั้ง)
   - บนมือถือซ่อนปุ่มหน้าแรก/สุดท้าย และให้รายงานขึ้นบรรทัดของตัวเอง
-- **Table** (`wiraui/table`, `wu-table` หรือ `wu-datatable` ตัวเดียวแบบ p-table):
+- **Table** (`@wirabyte/ui/table`, `wu-table` หรือ `wu-datatable` ตัวเดียวแบบ p-table):
   - **Template:** รับ `pTemplate="x"`, `wuTemplate="x"` และ `#x`: caption / header / body / footer / emptymessage / summary / loadingbody / paginatorleft / paginatorright / colgroup
   - **Body context:** `$implicit`, `rowIndex` นับต่อเนื่องข้ามหน้า (`{{ i + 1 }}` แบบเดิม), `columns`
   - **ลำดับข้อมูล:** ค้นหา (`filterGlobal`, `filter`) → เรียง → แบ่งหน้า
@@ -863,9 +863,9 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ### 12.10 Menubar และรอบรีวิวหน้าตา (25 ต.ค. 2569)
 
-- **Menubar** (`wiraui/menubar`, `wu-menubar`):
+- **Menubar** (`@wirabyte/ui/menubar`, `wu-menubar`):
   - **สำรวจ:** แอปส่วนใหญ่ใช้ `p-menubar` เป็นแถบหัวเว็บที่มีแค่ `pTemplate="start"` / `"end"` (ไม่มี model) และวาง `p-menu` popup ไว้ใน end จึงต้องใช้แบบไม่มี model ได้เต็มที่ และรับ `<ng-content>` เป็น end แบบเดิม
-  - **Model:** `MenuItem` แบบเดิม (`label`, `icon`, `items`, `routerLink` + ตัวเลือก router, `url`, `target`, `command`, `disabled`, `visible`, `separator`, `badge`, `escape`, `styleClass` …) export เป็น `MenuItem` จาก `wiraui/api` และ `WuMenuItem` จาก `wiraui/config`
+  - **Model:** `MenuItem` แบบเดิม (`label`, `icon`, `items`, `routerLink` + ตัวเลือก router, `url`, `target`, `command`, `disabled`, `visible`, `separator`, `badge`, `escape`, `styleClass` …) export เป็น `MenuItem` จาก `@wirabyte/ui/api` และ `WuMenuItem` จาก `@wirabyte/ui/config`
   - **Router:** `@angular/router` เป็น optional peer dependency เพราะ entry นี้ entry เดียวที่ import
   - **คีย์บอร์ด:** ตาม ARIA menubar มี tab stop เดียว (roving tabindex) ลูกศรซ้าย/ขวาข้ามรายการบนสุด ลง/ขึ้นเปิดเมนูย่อย ขวาในเมนูย่อยไปเมนูของรายการถัดไป Esc ถอยทีละชั้น พิมพ์ตัวอักษรไทยกระโดดได้
   - **Hover:** `autoDisplay` ค่าเริ่มต้นตามยุค (v1 ต้องคลิกก่อน, v2/v3 hover เปิดเลย) และถ้า hover เปิดอยู่แล้วคลิกจะคงไว้ ไม่ปิดทันที
@@ -892,54 +892,54 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **Tabs แบบ value:** `<wu-tabs [(value)]>` + `wu-tablist` / `wu-tab value` / `wu-tabpanels` / `wu-tabpanel value` ใช้ได้ทุกรุ่น (v1 ด้วย เพื่อให้ template ใช้ร่วมกันได้)
   - ถ้ามี `wu-tablist` จะไม่สร้างแถวหัวแท็บจาก panel
   - `[(value)]` เป็น `any` เพื่อผูกกับ field ที่เป็น string, number หรือ union ของแอปได้ใน strict template
-- **Menu** (`wiraui/menu`, `wu-menu`):
+- **Menu** (`@wirabyte/ui/menu`, `wu-menu`):
   - popup เปิดจากปุ่มด้วย `toggle($event)` อยู่ใน top layer (`appendTo` รับไว้แต่ไม่มีผล) หรือเป็นเมนูข้างแบบ inline
   - item ที่มี `items` เป็นกลุ่มมีหัวข้อ (ชั้นเดียว)
   - คีย์บอร์ด: เปิดแล้ว focus รายการแรก ลูกศรข้ามรายการที่ปิด Enter/Space เลือก Esc ปิดแล้วคืน focus ให้ปุ่ม เมนู inline มี tab stop เดียว
-- **TabMenu** (`wiraui/tabmenu`, `wu-tabmenu` / `wu-tabMenu`):
+- **TabMenu** (`@wirabyte/ui/tabmenu`, `wu-tabmenu` / `wu-tabMenu`):
   - แท็บจาก menu model มี `[(activeItem)]` ถ้าไม่ใส่ item ที่มี `routerLink` จะดู router แทน
   - ใช้ stylesheet ของ wu-tabs (โหลดให้เอง) ลูกศรย้าย focus เท่านั้น Enter/Space เปิดแท็บ
 
 ### 12.12 MultiSelect, InputMask และ Messages (25 ต.ค. 2569)
 
-- **MultiSelect** (`wiraui/multiselect`, `wu-multiselect` / `wu-multiSelect`, แอปใช้ 161 ครั้ง):
+- **MultiSelect** (`@wirabyte/ui/multiselect`, `wu-multiselect` / `wu-multiSelect`, แอปใช้ 161 ครั้ง):
   - หน้าตาและ token เดียวกับ Select (โหลด stylesheet ของ select และ checkbox ให้เอง) ค่าเป็น array
   - ค่าเริ่มต้นตามเดิม: `filter` และ `showToggleAll` เปิดอยู่, `maxSelectedLabels` 3 แล้วแสดง "เลือกแล้ว {0} รายการ" (`selectedItemsLabel`), `defaultLabel` คือ placeholder ชื่อเดิม
   - `display="chip"` มีปุ่มลบแต่ละค่า, `selectionLimit` ปิดแถวที่เหลือและซ่อนช่องเลือกทั้งหมด, template `selectedItems` ได้ค่าและ `removeChip`
   - ช่องเลือกทั้งหมดเลือกเฉพาะแถวที่ค้นหาเหลือและไม่ disabled มีขีดเมื่อเลือกบางแถว
   - คีย์บอร์ด: เลือกแล้วรายการยังเปิดอยู่, Space/Enter เลือกแถวที่ชี้, Ctrl/⌘+A เลือกทั้งหมด, Esc / Tab ปิด
-- **InputMask** (`wiraui/inputmask`, `wu-inputmask` / `wu-inputMask`, 74 ครั้ง ส่วนใหญ่เลขบัตรประชาชนและโทรศัพท์):
+- **InputMask** (`@wirabyte/ui/inputmask`, `wu-inputmask` / `wu-inputMask`, 74 ครั้ง ส่วนใหญ่เลขบัตรประชาชนและโทรศัพท์):
   - ตรรกะอยู่ใน core (`mask.ts`) พร้อม unit test: `9` `a` `*` และ `?` แบบเดิม `characterPattern` กำหนดตัวอักษร
   - อ่านข้อความแบบเดียวกับการพิมพ์ทั้งตอนพิมพ์ วาง และค่าจาก model เลขไทยนับเป็น 0–9 mask ที่เป็นตัวเลขล้วนเปิดแป้นตัวเลข (`inputmode="numeric"`)
   - Backspace / Delete ข้ามขีดที่ mask ใส่ให้ `autoClear` ล้างค่าที่ไม่ครบตอน blur
   - model: ข้อความที่จัดรูปแล้ว (มี `_` ระหว่างยังไม่ครบ แบบเดิม) หรือเฉพาะตัวที่พิมพ์เมื่อ `[unmask]="true"`
-- **Messages** (`wu-messages` อยู่ใน `wiraui/message`, 110 ครั้ง):
+- **Messages** (`wu-messages` อยู่ใน `@wirabyte/ui/message`, 110 ครั้ง):
   - กล่อง wu-message ซ้อนกันจาก `[(value)]` ปิดแล้วเอาออกจาก array
   - `enableService` ค่าเริ่มต้น true แบบเดิม: แสดงข้อความจาก `WuMessageService` ที่ `key` ตรงกัน (แอปส่วนใหญ่ปิดด้วย `[enableService]="false"`)
-- **Timeline** (`wiraui/timeline`, 35 ครั้ง): แนวตั้ง/แนวนอน, `align` left / right / alternate (top / bottom ตอนแนวนอน), template content / opposite / marker ถ้าไม่มี opposite เนื้อหาจะเต็มแถว (ต่างจากเดิมที่เหลือครึ่งเดียว)
-- **Chart** (`wiraui/chart`, 130 ครั้ง):
+- **Timeline** (`@wirabyte/ui/timeline`, 35 ครั้ง): แนวตั้ง/แนวนอน, `align` left / right / alternate (top / bottom ตอนแนวนอน), template content / opposite / marker ถ้าไม่มี opposite เนื้อหาจะเต็มแถว (ต่างจากเดิมที่เหลือครึ่งเดียว)
+- **Chart** (`@wirabyte/ui/chart`, 130 ครั้ง):
   - ห่อ Chart.js (`chart.js/auto`) เป็น optional peer `>=3 <5` แอปติดตั้ง `chart.js` เองเหมือนเดิม (แอปของทีมใช้ 4.x)
   - สร้างใหม่เมื่อ `type` / `data` / `options` เปลี่ยน แบบเดิม, `refresh()` สำหรับแก้ data ในที่, `(onDataSelect)`, `[plugins]`, `width` / `height` / `responsive`
   - ใช้ฟอนต์ (ภาษาไทย) และสีตัวอักษรของธีม เว้นแต่แอปตั้งค่า default ของ Chart.js เองหรือส่งมาใน `options`
   - ไม่กว้างเกินกรอบแม้ใส่ `width` คงที่
-- **Image** (`wiraui/image`, 45 ครั้ง ส่วนใหญ่ `[preview]`):
+- **Image** (`@wirabyte/ui/image`, 45 ครั้ง ส่วนใหญ่ `[preview]`):
   - ดูภาพเต็มจอด้วย `<dialog>` แบบ modal (top layer, Esc ปิด, focus กลับปุ่มเดิม, หน้าไม่เลื่อนข้างหลัง) หมุน/ซูม 0.5–1.5
   - บนจอที่ไม่มี hover ปุ่มดูภาพแสดงเป็นไอคอนเล็กที่มุมตลอด
-- **AutoComplete** (`wiraui/autocomplete`, 30 ครั้ง):
+- **AutoComplete** (`@wirabyte/ui/autocomplete`, 30 ครั้ง):
   - หน้าตาและ token เดียวกับ Select (ช่องแบบพิมพ์ได้ + ปุ่ม dropdown ตรงที่ลูกศร)
   - `(completeMethod)` หลัง `delay` (300) และ `minLength` (1), ระหว่างรอมี spinner, ไม่พบแสดงข้อความ
   - ค่าเป็น option ทั้งก้อนเมื่อเลือก ระหว่างพิมพ์เป็นข้อความแบบเดิม, `forceSelection` ล้างข้อความที่ไม่ได้เลือก (ถ้าตรงกับชื่อ option พอดีจะเลือกให้)
   - `field` ชื่อเดิมของ `optionLabel`
   - **ยังไม่ทำ:** `multiple` (แอปใช้ครั้งเดียว)
 - **Accordion แบบ value:** `<wu-accordion [(value)]>` + `wu-accordion-panel value` / `wu-accordion-header` / `wu-accordion-content` (แอปรุ่นใหม่ใช้ 17 ครั้ง) ใช้ได้ทุกรุ่น หน้าตาและคีย์บอร์ดเหมือนแบบ `wu-accordion-tab`, `multiple` แล้วค่าเป็น array
-- **PanelMenu** (`wiraui/panelmenu`, 18 ครั้ง): เมนูข้างแบบแผงพับได้ ซ้อนได้หลายชั้น สถานะเปิดอยู่ที่ `expanded` ของ item แบบเดิม, `multiple` ค่าเริ่มต้นตามยุค (v1 เปิดหลายแผงได้, v2/v3 ทีละแผง), คีย์บอร์ด ↑↓ ไล่ทุกแถวที่มองเห็น → เปิด ← ปิด/กลับไปแถวแม่
-- **Steps** (`wiraui/steps`, `p-steps` 10 ครั้ง): ขั้นตอนมีตัวเลขจาก menu model, ขั้นที่ผ่านแล้วเส้นและตัวเลขเป็นสีหลัก, ค่าเริ่มต้น read-only แบบเดิม `[readonly]="false"` คลิก/ลูกศร/Enter เลือกขั้นได้ (`[(activeIndex)]`) **ยังไม่ทำ:** Stepper แบบ value (`p-stepper` 7 ครั้ง)
+- **PanelMenu** (`@wirabyte/ui/panelmenu`, 18 ครั้ง): เมนูข้างแบบแผงพับได้ ซ้อนได้หลายชั้น สถานะเปิดอยู่ที่ `expanded` ของ item แบบเดิม, `multiple` ค่าเริ่มต้นตามยุค (v1 เปิดหลายแผงได้, v2/v3 ทีละแผง), คีย์บอร์ด ↑↓ ไล่ทุกแถวที่มองเห็น → เปิด ← ปิด/กลับไปแถวแม่
+- **Steps** (`@wirabyte/ui/steps`, `p-steps` 10 ครั้ง): ขั้นตอนมีตัวเลขจาก menu model, ขั้นที่ผ่านแล้วเส้นและตัวเลขเป็นสีหลัก, ค่าเริ่มต้น read-only แบบเดิม `[readonly]="false"` คลิก/ลูกศร/Enter เลือกขั้นได้ (`[(activeIndex)]`) **ยังไม่ทำ:** Stepper แบบ value (`p-stepper` 7 ครั้ง)
 
 ### 12.13 PickList, OrderList, FileUpload และ Stepper แบบ value (25 ต.ค. 2569)
 
-- **PickList / OrderList** (`wiraui/picklist`, `wiraui/orderlist`, แอปใช้ 21 / 7 ครั้ง): ตรรกะย้าย/เรียงอยู่ใน core (`picklist.ts`, มี unit test) ย้ายด้วยปุ่ม ลาก (`[dragdrop]`) หรือดับเบิลคลิก เลือกหลายแถวด้วย Ctrl/Shift ค้นหาแยกฝั่ง (`filterBy`, `showSourceFilter` / `showTargetFilter`) แก้ array เดิมในที่แบบเดิมแล้วส่ง `sourceChange` / `targetChange` ต่อ ปุ่มทุกปุ่มมีชื่อภาษาไทยให้ screen reader บนมือถือสองฝั่งเรียงบนลงล่างและลูกศรหมุนตาม
-- **FileUpload** (`wiraui/fileupload`, 14 ครั้ง): โหมด `advanced` (ลากวาง แสดงรายการ รูป preview ขนาดไฟล์ ปุ่มอัปโหลด/ยกเลิก) และ `basic` (ปุ่มเดียว `auto` ได้) ตรวจ `accept` / `maxFileSize` / `fileLimit` ใน core พร้อมข้อความไทย อัปโหลดเองด้วย XHR (`url`, `name`, `headers`, `withCredentials`, progress) หรือให้แอปทำเอง (`customUpload` + `(uploadHandler)`) ไฟล์ซ้ำ (ชื่อ ขนาด ชนิดเดียวกัน) ไม่ถูกเพิ่มซ้ำ
-- **Stepper แบบ value** (`wiraui/stepper`, `p-stepper` 7 ครั้ง): `wu-stepper [(value)]` + `wu-step-list` / `wu-step` / `wu-step-panels` / `wu-step-panel` และแนวตั้งด้วย `wu-step-item` template `content` ได้ `activateCallback` แบบเดิม `[linear]` ห้ามข้ามขั้น
+- **PickList / OrderList** (`@wirabyte/ui/picklist`, `@wirabyte/ui/orderlist`, แอปใช้ 21 / 7 ครั้ง): ตรรกะย้าย/เรียงอยู่ใน core (`picklist.ts`, มี unit test) ย้ายด้วยปุ่ม ลาก (`[dragdrop]`) หรือดับเบิลคลิก เลือกหลายแถวด้วย Ctrl/Shift ค้นหาแยกฝั่ง (`filterBy`, `showSourceFilter` / `showTargetFilter`) แก้ array เดิมในที่แบบเดิมแล้วส่ง `sourceChange` / `targetChange` ต่อ ปุ่มทุกปุ่มมีชื่อภาษาไทยให้ screen reader บนมือถือสองฝั่งเรียงบนลงล่างและลูกศรหมุนตาม
+- **FileUpload** (`@wirabyte/ui/fileupload`, 14 ครั้ง): โหมด `advanced` (ลากวาง แสดงรายการ รูป preview ขนาดไฟล์ ปุ่มอัปโหลด/ยกเลิก) และ `basic` (ปุ่มเดียว `auto` ได้) ตรวจ `accept` / `maxFileSize` / `fileLimit` ใน core พร้อมข้อความไทย อัปโหลดเองด้วย XHR (`url`, `name`, `headers`, `withCredentials`, progress) หรือให้แอปทำเอง (`customUpload` + `(uploadHandler)`) ไฟล์ซ้ำ (ชื่อ ขนาด ชนิดเดียวกัน) ไม่ถูกเพิ่มซ้ำ
+- **Stepper แบบ value** (`@wirabyte/ui/stepper`, `p-stepper` 7 ครั้ง): `wu-stepper [(value)]` + `wu-step-list` / `wu-step` / `wu-step-panels` / `wu-step-panel` และแนวตั้งด้วย `wu-step-item` template `content` ได้ `activateCallback` แบบเดิม `[linear]` ห้ามข้ามขั้น
 
 ### 12.14 Table เชิงลึก (25 ต.ค. 2569)
 
@@ -956,7 +956,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ### 12.15 Editor ของเราเอง (25 ต.ค. 2569)
 
-`wiraui/editor` (`wu-editor`, แอปใช้ 48 ครั้ง) ทำเองทั้งหมดบน `contenteditable` ไม่พึ่ง Quill / Tiptap / TinyMCE หน้าตาแบบ editor สมัยใหม่ (แถบเครื่องมือจัดกลุ่ม ปุ่มไอคอน เมนูลอย) และนิสัยเดิมยังใช้ได้: `[(ngModel)]` (HTML), `formControlName`, `placeholder`, `readonly`, template `header` แบบ Quill (ปุ่ม `ql-bold` ฯลฯ ผูกคำสั่งให้เอง), `(onTextChange)`, `(onInit)`
+`@wirabyte/ui/editor` (`wu-editor`, แอปใช้ 48 ครั้ง) ทำเองทั้งหมดบน `contenteditable` ไม่พึ่ง Quill / Tiptap / TinyMCE หน้าตาแบบ editor สมัยใหม่ (แถบเครื่องมือจัดกลุ่ม ปุ่มไอคอน เมนูลอย) และนิสัยเดิมยังใช้ได้: `[(ngModel)]` (HTML), `formControlName`, `placeholder`, `readonly`, template `header` แบบ Quill (ปุ่ม `ql-bold` ฯลฯ ผูกคำสั่งให้เอง), `(onTextChange)`, `(onInit)`
 
 - **ตั้งเครื่องมือได้ละเอียด:** `toolbar` เป็น preset (`basic` / `standard` / `full` / `none`), array ที่คั่นกลุ่มด้วย `'|'` หรือ array ของกลุ่ม และ `toolOptions` กำหนดรายการในเมนู (ระดับหัวข้อ ขนาด/ชุดฟอนต์ สี สีไฮไลต์ การจัดแนว ขนาดตารางเริ่มต้น การเปิดลิงก์ในแท็บใหม่ protocol ที่ยอมรับ) ตั้งค่าทั้งแอปได้ด้วย `provideEditorOptions()`
 - **ตาราง:** แทรกจากตาราง grid เลือกขนาด เพิ่ม/ลบแถว คอลัมน์ แถวหัวตาราง รวม/แยกเซลล์ ลบตาราง จากเมนูที่ลอยเหนือตาราง
@@ -972,19 +972,19 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **`styleClass` / `style` ลงที่ element หลัก** ของ component ที่ขาด 30 กว่าตัว (แอปใช้ 1,397 / 383 ครั้ง), slot template `header` / `footer` / `content` / `icons` ของ Card, Panel, Fieldset, AccordionTab, TabPanel, Toolbar, Popover, input ที่ขาด (`iconPos`, `iconPosition`, `link`, `badgeSeverity`, InputNumber ปุ่มล้างและ class ของช่อง …)
 - **directive:** `pRipple` / `wuRipple`, `pBadge`, `pKeyFilter` (`int`, `num`, `alpha`, regex …), `pInputTextarea` `autoResize`, `wuDraggable` / `wuDroppable` (และ `pDraggable` / `pDroppable`) ลากวางแบบ HTML พร้อม scope
 - **component ใหม่ (เขียนครั้งเดียวใน angular-common ใช้ได้ทุกรุ่น):**
-  - **Slider** (`wiraui/slider`): ค่าเดียวหรือช่วง (`[range]`), แนวนอน/ตั้ง, ลาก คลิกราง คีย์บอร์ด (ลูกศร Page Up/Down Home/End), `(onChange)` / `(onSlideEnd)`
-  - **SplitButton** (`wiraui/splitbutton`): ปุ่มหลัก + ลูกศรเปิด wu-menu, severity / outlined / text / size แบบ wu-button, Alt + ↓ เปิดเมนู
-  - **Listbox** (`wiraui/listbox`): รายการเลือกที่อยู่บนหน้า เลือกเดียว/หลายค่า check box + เลือกทั้งหมด ค้นหา จัดกลุ่ม striped template item / group / header / footer / empty คีย์บอร์ดครบ (Shift + ลูกศร, Ctrl + A, พิมพ์เพื่อกระโดด) **ยังไม่ทำ:** virtual scroll (รับ input ไว้)
-  - **Galleria** (`wiraui/galleria`): ภาพทีละภาพ ลูกศรบนภาพ จุด (ใต้ภาพหรือบนภาพ) แถบ thumbnail ที่เลื่อนตามภาพปัจจุบัน (`numVisible` + `responsiveOptions`) ล่าง/บน/ซ้าย/ขวา เล่นเอง (หยุดเมื่อชี้) วนรอบ ปัดบนจอสัมผัส ลูกศรคีย์บอร์ด และโหมดเต็มจอเป็น `<dialog>`
-  - **ColorPicker** (`wiraui/colorpicker`): ช่องสีเปิดแผง (top layer) หรือ `inline` มีพื้นที่ saturation/brightness แถบ hue และช่อง hex ค่าเป็น `#rrggbb` / `{r,g,b}` / `{h,s,b}` ตาม `format` อ่านค่าได้ทุกแบบ (คณิตสีอยู่ใน core `colorpicker.ts` มี unit test)
-  - **Breadcrumb** (`wiraui/breadcrumb`): menu model + `home` (ไอคอนบ้านให้เองถ้าไม่ระบุ) `routerLink` / `url` / `command` รายการสุดท้ายเป็น `aria-current="page"` ขึ้นบรรทัดใหม่ได้บนจอแคบ
-  - **Inplace** (`wiraui/inplace`): template display / content (+ `closeCallback`) เปิดแล้วโฟกัสไปที่ช่องแก้ไข Esc / ปุ่มปิดกลับ
-  - **BlockUI** (`wiraui/blockui`): บังทั้งหน้าเป็น `<dialog>` แบบ modal (หน้า inert เลื่อนไม่ได้) หรือบัง element เดียว (`[target]`) โดยย้ายแผ่นบังเข้าไปข้างใน และทำของเดิมเป็น `inert` + `aria-busy`
-  - **ScrollPanel** (`wiraui/scrollpanel`): เลื่อนภายในความสูง/ความสูงสูงสุดที่กำหนด scrollbar บางตามสีธีม โฟกัสแล้วเลื่อนด้วยคีย์บอร์ดได้
-  - **Scroller** (`wiraui/scroller`, ชื่อเดิม `wu-virtualScroller`): virtual scroll วาดเฉพาะแถวที่เห็น + เผื่อ (`numToleratedItems`) แนวตั้ง/นอน `lazy` + `(onLazyLoad)` `appendOnly` `scrollToIndex()` รายการสั้นวาดทั้งหมด **ยังไม่ทำ:** `orientation="both"`
-  - **Drawer** (`wiraui/drawer`, `wu-sidebar` ก็ได้): แผงจากขอบซ้าย/ขวา/บน/ล่าง/เต็มจอ เป็น `<dialog>` (modal ค่าเริ่มต้น: หน้าหลัง inert โฟกัสอยู่ข้างใน) ปิดด้วยปุ่ม Esc หรือคลิกพื้นหลัง ไหลเข้า-ออกตามขอบ focus กลับปุ่มเดิม
-  - **TieredMenu / ContextMenu** (`wiraui/tieredmenu`, `wiraui/contextmenu`): เมนูย่อยซ้อนหลายชั้นเปิดเมื่อชี้ คลิก หรือ → (พลิกไปอีกด้านเมื่อล้นจอ บนมือถือเปิดลงด้านล่างแทน) ContextMenu เปิดตรงตำแหน่งเมาส์จาก `[target]` / `[global]` / `show($event)` และปุ่ม context-menu ของคีย์บอร์ด
-  - **Tree / TreeSelect** (`wiraui/tree`, `wiraui/treeselect`): TreeNode แบบเดิม เลือกเดียว / หลายค่า / check box ที่กระจายลงลูกและขึ้นแม่ (มีขีดเมื่อเลือกบางส่วน, `partialSelected` ตั้งให้แบบเดิม) ค้นหาแบบ lenient / strict โหลดลูกตอนเปิด (`leaf: false` + `(onNodeExpand)`) template ตาม `type` ของ node คีย์บอร์ดแบบ tree (↑↓ → ← Enter Space) TreeSelect หน้าตาเดียวกับ Select แสดงเป็นข้อความหรือ chip เปิดแล้วกาง node แม่ของค่าที่เลือก ตรรกะ (ค้นหา การกระจาย check) อยู่ใน core `tree.ts` มี unit test **ยังไม่ทำ:** ลากวาง node และ layout แนวนอนของ Tree, TreeTable
+  - **Slider** (`@wirabyte/ui/slider`): ค่าเดียวหรือช่วง (`[range]`), แนวนอน/ตั้ง, ลาก คลิกราง คีย์บอร์ด (ลูกศร Page Up/Down Home/End), `(onChange)` / `(onSlideEnd)`
+  - **SplitButton** (`@wirabyte/ui/splitbutton`): ปุ่มหลัก + ลูกศรเปิด wu-menu, severity / outlined / text / size แบบ wu-button, Alt + ↓ เปิดเมนู
+  - **Listbox** (`@wirabyte/ui/listbox`): รายการเลือกที่อยู่บนหน้า เลือกเดียว/หลายค่า check box + เลือกทั้งหมด ค้นหา จัดกลุ่ม striped template item / group / header / footer / empty คีย์บอร์ดครบ (Shift + ลูกศร, Ctrl + A, พิมพ์เพื่อกระโดด) **ยังไม่ทำ:** virtual scroll (รับ input ไว้)
+  - **Galleria** (`@wirabyte/ui/galleria`): ภาพทีละภาพ ลูกศรบนภาพ จุด (ใต้ภาพหรือบนภาพ) แถบ thumbnail ที่เลื่อนตามภาพปัจจุบัน (`numVisible` + `responsiveOptions`) ล่าง/บน/ซ้าย/ขวา เล่นเอง (หยุดเมื่อชี้) วนรอบ ปัดบนจอสัมผัส ลูกศรคีย์บอร์ด และโหมดเต็มจอเป็น `<dialog>`
+  - **ColorPicker** (`@wirabyte/ui/colorpicker`): ช่องสีเปิดแผง (top layer) หรือ `inline` มีพื้นที่ saturation/brightness แถบ hue และช่อง hex ค่าเป็น `#rrggbb` / `{r,g,b}` / `{h,s,b}` ตาม `format` อ่านค่าได้ทุกแบบ (คณิตสีอยู่ใน core `colorpicker.ts` มี unit test)
+  - **Breadcrumb** (`@wirabyte/ui/breadcrumb`): menu model + `home` (ไอคอนบ้านให้เองถ้าไม่ระบุ) `routerLink` / `url` / `command` รายการสุดท้ายเป็น `aria-current="page"` ขึ้นบรรทัดใหม่ได้บนจอแคบ
+  - **Inplace** (`@wirabyte/ui/inplace`): template display / content (+ `closeCallback`) เปิดแล้วโฟกัสไปที่ช่องแก้ไข Esc / ปุ่มปิดกลับ
+  - **BlockUI** (`@wirabyte/ui/blockui`): บังทั้งหน้าเป็น `<dialog>` แบบ modal (หน้า inert เลื่อนไม่ได้) หรือบัง element เดียว (`[target]`) โดยย้ายแผ่นบังเข้าไปข้างใน และทำของเดิมเป็น `inert` + `aria-busy`
+  - **ScrollPanel** (`@wirabyte/ui/scrollpanel`): เลื่อนภายในความสูง/ความสูงสูงสุดที่กำหนด scrollbar บางตามสีธีม โฟกัสแล้วเลื่อนด้วยคีย์บอร์ดได้
+  - **Scroller** (`@wirabyte/ui/scroller`, ชื่อเดิม `wu-virtualScroller`): virtual scroll วาดเฉพาะแถวที่เห็น + เผื่อ (`numToleratedItems`) แนวตั้ง/นอน `lazy` + `(onLazyLoad)` `appendOnly` `scrollToIndex()` รายการสั้นวาดทั้งหมด **ยังไม่ทำ:** `orientation="both"`
+  - **Drawer** (`@wirabyte/ui/drawer`, `wu-sidebar` ก็ได้): แผงจากขอบซ้าย/ขวา/บน/ล่าง/เต็มจอ เป็น `<dialog>` (modal ค่าเริ่มต้น: หน้าหลัง inert โฟกัสอยู่ข้างใน) ปิดด้วยปุ่ม Esc หรือคลิกพื้นหลัง ไหลเข้า-ออกตามขอบ focus กลับปุ่มเดิม
+  - **TieredMenu / ContextMenu** (`@wirabyte/ui/tieredmenu`, `@wirabyte/ui/contextmenu`): เมนูย่อยซ้อนหลายชั้นเปิดเมื่อชี้ คลิก หรือ → (พลิกไปอีกด้านเมื่อล้นจอ บนมือถือเปิดลงด้านล่างแทน) ContextMenu เปิดตรงตำแหน่งเมาส์จาก `[target]` / `[global]` / `show($event)` และปุ่ม context-menu ของคีย์บอร์ด
+  - **Tree / TreeSelect** (`@wirabyte/ui/tree`, `@wirabyte/ui/treeselect`): TreeNode แบบเดิม เลือกเดียว / หลายค่า / check box ที่กระจายลงลูกและขึ้นแม่ (มีขีดเมื่อเลือกบางส่วน, `partialSelected` ตั้งให้แบบเดิม) ค้นหาแบบ lenient / strict โหลดลูกตอนเปิด (`leaf: false` + `(onNodeExpand)`) template ตาม `type` ของ node คีย์บอร์ดแบบ tree (↑↓ → ← Enter Space) TreeSelect หน้าตาเดียวกับ Select แสดงเป็นข้อความหรือ chip เปิดแล้วกาง node แม่ของค่าที่เลือก ตรรกะ (ค้นหา การกระจาย check) อยู่ใน core `tree.ts` มี unit test **ยังไม่ทำ:** ลากวาง node และ layout แนวนอนของ Tree, TreeTable
 - token ใหม่ของแต่ละ component อยู่ใน families (หน้าตา classic มีกรอบเพิ่มที่ Breadcrumb / Tree / Drawer) และข้อความใหม่อยู่ใน locale ไทย/อังกฤษ (`previousImage`, `imageOf`, `breadcrumb`, `home`, `colorPicker`, `hue`, `saturationBrightness` …)
 - ทดสอบ: unit core 142, e2e `more.spec.ts` 16 กรณีต่อรุ่น (v1 / v2 / v3 / WebKit) และตรวจภาพที่ 360 / 1280 ทั้งโหมดสว่าง/มืด ไม่มีหน้าล้นแนวนอน
 - **แก้จากการเขียนหน้าเอกสาร:** Editor เปิดตัวหนา/เอียงที่เคอร์เซอร์ (ไม่ได้เลือกข้อความ) แล้วข้อความที่พิมพ์ต่อเป็นตัวหนาจริง (เดิมการตั้ง selection ซ้ำทำให้หาย) และคำสั่งใช้ selection ปัจจุบันก่อน range ที่จำไว้ (ทางลัดทันทีหลัง Shift + ลูกศรไม่ทำกับช่วงเก่า), มี `getEditor()` / `getQuill()`, ปุ่มจัดแนวจาก `select.ql-align` มีไอคอนตามแนวปัจจุบัน; Tree / TreeSelect มี `emptyFilterMessage`; Tree / Listbox / TreeSelect / Galleria ไม่กว้างเกินกรอบเมื่อกำหนดความกว้างด้วย `[style]`; Table แก้ในเซลล์เลือกข้อความเดิมหลังค่าถูกเขียนลงช่อง (ไม่เลือกถ้าเริ่มพิมพ์แล้ว); `WuPanelModule` export `wu-header` / `wu-footer`
@@ -1001,12 +1001,12 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **input ใหม่:** Accordion `[gap]` (แยกเป็นการ์ดหรือติดกัน), ProgressBar `[striped]` / `[animated]`, MeterGroup `[reverse]`, Stepper `labelPosition="bottom"` + `subtitle` + `[readonly]`, Table เรียงครั้งที่ 3 = ยกเลิก (`removableSort` เปิดเป็นค่าเริ่มต้น), `stripedRows` ปิดเป็นค่าเริ่มต้น (เปิดเองได้), หัว/ท้ายกลุ่มแถวมีแถบสีและเส้น (`wu-rowgroup-footer`)
 - **รวม component ที่ซ้ำกัน (ตัวเดียวทำได้ทั้งสองแบบ):**
   - **Stepper ทำงานแบบ Steps ได้:** `<wu-stepper [model]="steps" [(activeIndex)]="i">` (รายการมี `label`, `subtitle`, `disabled`, `command`) `wu-steps` ยังอยู่เพื่อแอปที่ย้ายมา
-  - **Tabs ทำงานแบบ TabMenu ได้:** `<wu-tabs [model]="pages" [(activeItem)]="page">` (แอปใช้ TabMenu 71 จุด) ย้าย TabMenu เข้า entry `wiraui/tabs` (เดิม tabmenu import จาก tabs จึง import กลับไม่ได้) `wiraui/tabmenu` เหลือเป็น re-export และ CSS รวมเป็น `tabs.css`
+  - **Tabs ทำงานแบบ TabMenu ได้:** `<wu-tabs [model]="pages" [(activeItem)]="page">` (แอปใช้ TabMenu 71 จุด) ย้าย TabMenu เข้า entry `@wirabyte/ui/tabs` (เดิม tabmenu import จาก tabs จึง import กลับไม่ได้) `@wirabyte/ui/tabmenu` เหลือเป็น re-export และ CSS รวมเป็น `tabs.css`
   - Message แบบมี service (`WuMessageService` + `key`) และไม่มี service (`[(value)]`) มีอยู่แล้วใน `wu-messages`
 - **component ใหม่:**
-  - **Navbar** (`wiraui/navbar`): แถบบนจาก `[model]` (`routerLink` / `url` / `command`, เมนูย่อยเป็น wu-menu) brand / links / end ทั้งแบบ attribute และ template, `sticky` (มีเงาเมื่อเลื่อน), `variant` solid / glass / transparent, ต่ำกว่า `breakpoint` ลิงก์พับเข้าแผงใต้แถบ เมนูย่อยกางในที่ ปิดด้วย Esc / คลิกนอก / ขยายจอ
-  - **Aside Menu** (`wiraui/asidemenu`): เมนูด้านข้างแบบที่ แอป A และ แอป B เขียนเอง กลุ่มกางในที่หลายชั้น กลุ่มที่มีหน้าปัจจุบันเปิดเอง (ไม่ต้องใส่ class เอง) `[sections]` หัวข้อไม่พับ, `[(collapsed)]` เหลือแถบไอคอน (ไม่มีไอคอนใช้พยัญชนะแรก) เมนูย่อยเป็น flyout ข้างแถบ, บนมือถือเป็นแผงเลื่อนเข้าพร้อม mask ล็อกการเลื่อนหน้า ปิดเมื่อเลือกหรือเปลี่ยน route; `<wu-navbar [aside]="side">` ปุ่มเมนูของ navbar เปิด/ย่อ aside ให้เอง และบนมือถือย้ายลิงก์ของ navbar เข้าไปเป็นกลุ่มแรก
-  - **Image Cropper** (`wiraui/imagecropper`, tag `image-cropper` เดิมก็ใช้ได้): รับ `imageFile` / `imageChangedEvent` / `imageURL` / `imageBase64` หมุนรูปตาม EXIF, กรอบตามอัตราส่วน (`aspectRatio` เป็นตัวเลขหรือ `'4/3'`) ขนาดต่ำสุด/สูงสุด/คงที่ กรอบกลม, แถบเครื่องมือซูม หมุน พลิก คืนค่า, Ctrl + ล้อ / pinch ซูม ลากนอกกรอบเลื่อนรูป คีย์บอร์ดครบ, ผลเป็น blob หรือ base64 (png / jpeg / webp / bmp / ico) ปรับขนาดผล (`resizeToWidth` / `resizeToHeight`) จำกัด 16.7 ล้านพิกเซลตามข้อจำกัดของ iOS คณิตกรอบอยู่ใน core `imagecropper.ts` มี unit test
+  - **Navbar** (`@wirabyte/ui/navbar`): แถบบนจาก `[model]` (`routerLink` / `url` / `command`, เมนูย่อยเป็น wu-menu) brand / links / end ทั้งแบบ attribute และ template, `sticky` (มีเงาเมื่อเลื่อน), `variant` solid / glass / transparent, ต่ำกว่า `breakpoint` ลิงก์พับเข้าแผงใต้แถบ เมนูย่อยกางในที่ ปิดด้วย Esc / คลิกนอก / ขยายจอ
+  - **Aside Menu** (`@wirabyte/ui/asidemenu`): เมนูด้านข้างแบบที่ แอป A และ แอป B เขียนเอง กลุ่มกางในที่หลายชั้น กลุ่มที่มีหน้าปัจจุบันเปิดเอง (ไม่ต้องใส่ class เอง) `[sections]` หัวข้อไม่พับ, `[(collapsed)]` เหลือแถบไอคอน (ไม่มีไอคอนใช้พยัญชนะแรก) เมนูย่อยเป็น flyout ข้างแถบ, บนมือถือเป็นแผงเลื่อนเข้าพร้อม mask ล็อกการเลื่อนหน้า ปิดเมื่อเลือกหรือเปลี่ยน route; `<wu-navbar [aside]="side">` ปุ่มเมนูของ navbar เปิด/ย่อ aside ให้เอง และบนมือถือย้ายลิงก์ของ navbar เข้าไปเป็นกลุ่มแรก
+  - **Image Cropper** (`@wirabyte/ui/imagecropper`, tag `image-cropper` เดิมก็ใช้ได้): รับ `imageFile` / `imageChangedEvent` / `imageURL` / `imageBase64` หมุนรูปตาม EXIF, กรอบตามอัตราส่วน (`aspectRatio` เป็นตัวเลขหรือ `'4/3'`) ขนาดต่ำสุด/สูงสุด/คงที่ กรอบกลม, แถบเครื่องมือซูม หมุน พลิก คืนค่า, Ctrl + ล้อ / pinch ซูม ลากนอกกรอบเลื่อนรูป คีย์บอร์ดครบ, ผลเป็น blob หรือ base64 (png / jpeg / webp / bmp / ico) ปรับขนาดผล (`resizeToWidth` / `resizeToHeight`) จำกัด 16.7 ล้านพิกเซลตามข้อจำกัดของ iOS คณิตกรอบอยู่ใน core `imagecropper.ts` มี unit test
 - **WiraUI Studio ตัวจริง (ฟรี ไม่มีจ่ายเงิน ไม่ต้องล็อกอิน ทำงานในเบราว์เซอร์ทั้งหมด):** หน้า `theming/studio` ของเว็บเอกสาร แท็บ Primitive (scale สี primary / surface / สถานะ สร้างจากสีหลักหรือแก้ทีละเฉด), Semantic (กลุ่ม token ทั่วไป focus ring ฟอร์ม รายการ ฯลฯ), Component (เลือก component แล้วแก้ token ทุกตัว แยก Light / Dark), Custom (เพิ่ม `--wu-*` เอง) และ Settings (ชื่อ preset ฐาน โหมดมืด ฟอนต์ ขนาด ความหนาแน่น) ทุกช่องแสดงค่าปัจจุบัน อ้างอิง token อื่นได้ (`{field-bg}`) ค้นหาได้ทุกแท็บ undo / redo เห็นผลทั้งเว็บทันที (ผ่าน WuThemeService ของรุ่นนั้น) จำไว้ในเบราว์เซอร์ ดาวน์โหลด SCSS / CSS / TS preset / TS overrides / JSON (เฉพาะที่แก้ หรือทั้งหมด) และ import ไฟล์กลับมาแก้ต่อได้
 - **หน้าเอกสารใหม่:** Navbar, Aside Menu, Image Cropper (ทุกรุ่น)
 - **แก้ระหว่างทาง:** Stepper ที่ step มาจาก loop (`@for`, `*ngFor`, `[model]`) วาดเส้นเชื่อมไม่ขึ้น เพราะแต่ละ step วาดก่อนตัวถัดไปมีอยู่ ตอนนี้วาดใหม่หลังทุก step ลงทะเบียนครบ; flyout ของ Aside Menu บน Safari ไม่ปิดเองเมื่อคลิกข้างใน (Safari ไม่ให้ focus ปุ่มที่ถูกคลิก ส่ง focus ไปที่ nav แทน); แผงมือถือของ Aside Menu ไม่เลื่อนผ่านหน้าตอนโหลด (เลื่อนเฉพาะหลังเปิด/ปิดจริง); งบขนาด bundle ของ playground เป็น 3 / 4 MB เพราะรวมทุก component
@@ -1022,16 +1022,16 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 - **สีตัวอักษรบนปุ่มทึบ (`*-contrast-auto`):** เลือกด้วย APCA แทน WCAG 2 และเอนไปทางสีขาว (ภายใน 5 Lc) ปุ่ม teal / น้ำเงิน / แดง / เขียวมรกตได้ตัวอักษรขาว สีอ่อนอย่าง amber / lime / เหลืองยังเป็นตัวเข้ม (`apcaContrast()` ใน core และ `wu-apca()` ใน Sass ผลตรงกัน ตรวจด้วย parity test)
 - **ธีมเริ่มต้นของ v3 เป็น Wira** (ผู้ใช้เลือก) ทั้ง `ng add`, SCSS `$theme` ค่าเริ่มต้น และเว็บเอกสาร รายการ preset ของ v3 เรียงของ WiraUI ก่อน: Wira, Lanna, Siam, Nakhon, Glass แล้วจึง Mali, Sila, Material, Phet
 - **Glass เป็น Liquid Glass จริง** (`material: 'glass'`, ทั้งหมดเป็น token ใน `materialTokens()`): การ์ด เมนู dropdown panel ของ DatePicker popover dialog และ toast เป็นแผ่นกระจกโปร่งที่เบลอและเร่งสีสิ่งที่อยู่ข้างหลัง (`--wu-overlay-backdrop`, ชั้นลอยทึบกว่าเพื่อให้อ่านออก) มีขอบสะท้อนแสงด้านบนและเส้นบางรอบตัว เงายก ปุ่มเป็นแคปซูลมีแสงวาวด้านใน (`--wu-button-shadow`, `--wu-button-backdrop`) ปุ่มรองเป็นกระจกใส และพื้นหน้า (`--wu-backdrop` ที่ `.surface-ground` ใช้) มีแถบสีอ่อนจากสีของธีมให้กระจกมีอะไรให้หักเห ธีมอื่นค่าเหล่านี้เป็น `none` หน้าตาไม่เปลี่ยน
-- **ระบบภาษาของแอป (`wiraui/i18n`):** `provideWuI18n({ languages, defaultLanguage, messages, load, storageKey, detectBrowser, componentLocales, setHtmlLang })` (หรือ `WuI18nModule.forRoot()`), service `WuI18n` (`t()`, `use()`, `add()`, `languageChange`, `ready`), pipe `t` / `wuTranslate` (impure มี cache, re-render เองเมื่อเปลี่ยนภาษาแม้ใน OnPush / zoneless) และ `<wu-language-switch>` แบบปุ่ม TH | EN หรือ drop-down พร้อมลูกโลก key เป็น id (ซ้อน object ได้) หรือข้อความภาษาหลัก ภาษาที่ไม่มีข้อความแสดง key เอง, `{name}` แทนค่า, จำภาษาใน localStorage, `<html lang>` และข้อความในตัว component (ไทย/อังกฤษ) เปลี่ยนตาม ตรรกะอยู่ใน core `i18n.ts` มี unit test
+- **ระบบภาษาของแอป (`@wirabyte/ui/i18n`):** `provideWuI18n({ languages, defaultLanguage, messages, load, storageKey, detectBrowser, componentLocales, setHtmlLang })` (หรือ `WuI18nModule.forRoot()`), service `WuI18n` (`t()`, `use()`, `add()`, `languageChange`, `ready`), pipe `t` / `wuTranslate` (impure มี cache, re-render เองเมื่อเปลี่ยนภาษาแม้ใน OnPush / zoneless) และ `<wu-language-switch>` แบบปุ่ม TH | EN หรือ drop-down พร้อมลูกโลก key เป็น id (ซ้อน object ได้) หรือข้อความภาษาหลัก ภาษาที่ไม่มีข้อความแสดง key เอง, `{name}` แทนค่า, จำภาษาใน localStorage, `<html lang>` และข้อความในตัว component (ไทย/อังกฤษ) เปลี่ยนตาม ตรรกะอยู่ใน core `i18n.ts` มี unit test
 - **ชื่อจริง:** ตัวอย่าง เอกสาร fixture และ test ไม่ใช้ชื่อโรงเรียนหรือองค์กรที่มีอยู่จริง ใช้ "วิระ" / "โรงเรียนวิระ" หรือชื่อที่แต่งขึ้น
 - **หน้าเอกสาร (helper agent):** ธีมสำเร็จรูปของ Navbar หลายแบบพร้อมคัดลอก, หน้า Image Cropper ส่วนใหม่, ตัวอย่างที่สีกลืนกันอ่านยากถูกแก้, Studio เลือกดู component ใดก็ได้ในช่อง Preview, ตัดแถบตัวอย่างใน Theme drawer
 - **สำรวจรอบใหม่ (27 แอป):** tag `p-*` ทุกตัวที่แอปใช้มี `wu-*` รองรับครบ ไม่มีแอปใช้ Dock; ที่เหลือจาก UI library เดิม: TreeTable, Carousel, DataView, Splitter, InputOtp, Knob, MegaMenu, SpeedDial, Dock, ConfirmPopup, DynamicDialog (`WuDialogService` ยังไม่ทำ), CascadeSelect, OrganizationChart, ImageCompare, ScrollTop, Terminal, ButtonGroup, Fluid, IftaLabel แบบแยก; ของที่แอปเขียนเองหรือติดตั้ง library เพิ่มซ้ำ ๆ: export Excel ของ Table (xlsx 25 แอป), หน้า 404 / ผลลัพธ์ (33 แอป), empty state (29), pipe พ.ศ. (25), ที่อยู่ไทย (16), countdown (10), เลขบัตรประชาชน (10), แผนที่ (10), PDF (pdfmake 9, viewer 6), barcode / QR (6 / 5), signature pad (2), stat card (8)
 
-### 12.19 Icon ของเราเอง: `wiraicon` (26 ต.ค. 2569)
+### 12.19 Icon ของเราเอง: `@wirabyte/icons` (26 ต.ค. 2569)
 
-- **ที่มา:** สแกน 29 แอปพบ icon font เดิม 212 ชื่อ (9,475 จุด) และ Font Awesome 35 ชื่อ (83 จุด ส่วนใหญ่เป็น brand) ผู้ใช้เลือกใช้ตัวภาพของ Phosphor Icons (MIT, ใส่ข้อความ license ใน LICENSE ของแพ็กเกจ) 5 น้ำหนัก thin / light / regular / bold / fill และให้มีทั้ง class และ component ติดตั้งแยกจาก wiraui ได้ ชื่อแพ็กเกจ `wiraicon` (ว่างบน npm)
+- **ที่มา:** สแกน 29 แอปพบ icon font เดิม 212 ชื่อ (9,475 จุด) และ Font Awesome 35 ชื่อ (83 จุด ส่วนใหญ่เป็น brand) ผู้ใช้เลือกใช้ตัวภาพของ Phosphor Icons (MIT, ใส่ข้อความ license ใน LICENSE ของแพ็กเกจ) 5 น้ำหนัก thin / light / regular / bold / fill และให้มีทั้ง class และ component ติดตั้งแยกจาก wiraui ได้ ชื่อแพ็กเกจ `@wirabyte/icons` (ว่างบน npm)
 - **ชุด icon:** 424 ตัวใน 20 หมวด (`packages/icons/icons.mjs`) ชื่อหลักตามชื่อที่ทีมเขียนอยู่ (pi) ชื่อสำรองแบบ FA / Phosphor รวม 838 ชื่อ ชื่อที่เป็นน้ำหนักในตัว (`star-fill`, `circle-fill`, `caret-*` แบบสามเหลี่ยมทึบ) วาดน้ำหนักนั้นเสมอ code point เก็บใน `codepoints.json` (เพิ่มต่อท้ายเท่านั้น) ห้ามตั้งชื่อ icon ชนกับ class น้ำหนัก (`bold` จึงเป็น `text-bold`)
-- **ที่ได้:** `wiraicon.css` + font woff2 ต่อน้ำหนัก (~44KB, โหลดเฉพาะน้ำหนักที่หน้าใช้) class `wi wi-<name>` `wi-thin|light|bold|fill` `wi-spin` `wi-fw`; `svg/<weight>/<name>.svg`; `icons.json`; entry `wiraicon` (ชื่อ alias และ helper `wiraIconName()`, `wiraIconSvg()`), `wiraicon/angular` (`<wi-icon name weight size color label spin>`, `WiIconModule`, `provideWiraIcon()`) วาด SVG inline และโหลด `wiraicon/data/<weight>` ตอนใช้ครั้งแรก build ด้วย ng-packagr ของ Angular 15 (partial) จึงใช้ได้ Angular 15–21
+- **ที่ได้:** `wiraicon.css` + font woff2 ต่อน้ำหนัก (~44KB, โหลดเฉพาะน้ำหนักที่หน้าใช้) class `wi wi-<name>` `wi-thin|light|bold|fill` `wi-spin` `wi-fw`; `svg/<weight>/<name>.svg`; `icons.json`; entry `@wirabyte/icons` (ชื่อ alias และ helper `wiraIconName()`, `wiraIconSvg()`), `@wirabyte/icons/angular` (`<wi-icon name weight size color label spin>`, `WiIconModule`, `provideWiraIcon()`) วาด SVG inline และโหลด `@wirabyte/icons/data/<weight>` ตอนใช้ครั้งแรก build ด้วย ng-packagr ของ Angular 15 (partial) จึงใช้ได้ Angular 15–21
 - **build:** `pnpm build:icons` (`packages/icons/scripts/build.mjs`: ตรวจรายชื่อกับไฟล์ Phosphor, สร้าง font ด้วย svgicons2svgfont → svg2ttf → ttf2woff2 ตัว JS, CSS, SVG, ข้อมูล แล้ว ng-packagr) รวมใน `pnpm build`, `pack:all`, `pnpm test` และติดตั้งลงเว็บเอกสาร
 - **เว็บเอกสาร:** เปลี่ยนทุก icon และตัวอย่างจาก `pi pi-*` เป็น `wi wi-*` และมีหน้า Icons (ค้นหา เลือกหมวด น้ำหนัก ขนาด คัดลอก ดาวน์โหลด SVG)
 
@@ -1051,7 +1051,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ผู้ใช้ขอ component ใหญ่ "Flow" เขียนเองทั้งหมด แนวคิดจาก ngx-vflow แต่ความสามารถระดับ React Flow (xyflow v12) ไม่มี dependency ภายนอก
 - **core (`packages/core/src/flow/`, unit test 170):** ชนิดข้อมูล, geometry (snap, extent, จุด handle, handle ใกล้สุด, เส้นช่วยจัดแนว, resize), viewport (ซูมรอบจุด, translateExtent, fit bounds, แปลงพิกัดจอ ↔ flow, animation), เส้นเชื่อม `getBezierPath` / `getSmoothStepPath` / `getStepPath` / `getStraightPath` / `getSimpleBezierPath` (คืน `[path, labelX, labelY, offsetX, offsetY]` แบบ React Flow), graph (incomers / outgoers / bounds / intersect / parent-child / culling), change model (`applyNodeChanges`, `applyEdgeChanges`, `addEdge`, `reconnectEdge`), การโต้ตอบ (ลาก, กล่องเลือก, กติกาการเชื่อม strict / loose, จำกัดจำนวน, `isValidConnection`), จัดเรียง `layoutFlow` (layered: ตัดวง, rank, ลดเส้นตัดด้วย barycentre) และ `layoutTree`, `FlowHistory`, `flowToJSON` / `flowFromJSON` / `flowToSvg`
-- **Angular (`wiraui/flow`, เขียนครั้งเดียวใช้ได้ทุกรุ่น, zoneless-safe):** `<wu-flow>` two-way `[(nodes)]` `[(edges)]` `[(viewport)]` หรือคุมเองด้วย `(nodeChanges)` / `(edgeChanges)` + `[applyChanges]="false"`, template ต่อชนิด node (`wuFlowNode="person"`), edge / ป้าย / เส้นตอนลาก, `<wu-flow-handle>` `<wu-flow-background>` (dots / lines / cross ซ้อนได้) `<wu-flow-minimap>` `<wu-flow-controls>` `<wu-flow-panel>` `<wu-flow-node-toolbar>` `<wu-flow-node-resizer>` `wuFlowHistory`, method แบบ React Flow (fitView, zoomTo, setCenter, screenToFlowPosition, deleteElements, layout, toSvg …), event ครบ
+- **Angular (`@wirabyte/ui/flow`, เขียนครั้งเดียวใช้ได้ทุกรุ่น, zoneless-safe):** `<wu-flow>` two-way `[(nodes)]` `[(edges)]` `[(viewport)]` หรือคุมเองด้วย `(nodeChanges)` / `(edgeChanges)` + `[applyChanges]="false"`, template ต่อชนิด node (`wuFlowNode="person"`), edge / ป้าย / เส้นตอนลาก, `<wu-flow-handle>` `<wu-flow-background>` (dots / lines / cross ซ้อนได้) `<wu-flow-minimap>` `<wu-flow-controls>` `<wu-flow-panel>` `<wu-flow-node-toolbar>` `<wu-flow-node-resizer>` `wuFlowHistory`, method แบบ React Flow (fitView, zoomTo, setCenter, screenToFlowPosition, deleteElements, layout, toSvg …), event ครบ
 - **คีย์บอร์ดและ a11y:** Tab ไป node แล้ว edge, Enter / Space เลือก, ลูกศรย้าย (Shift ×10), Delete ลบ, Ctrl + A, + / − ซูม, C เริ่มเชื่อมจาก node ที่โฟกัสแล้ว Enter ที่ปลายทาง, Escape ยกเลิก, Ctrl + Z / Shift + Z / Y, aria-live ประกาศการเลือก ย้าย เชื่อม ลบ ซูม เป็นไทย / อังกฤษ; จอสัมผัส: แตะเลือก กดค้างเพิ่มในการเลือก สองนิ้วซูม ปุ่มและ handle ≥ 24px บน pointer: coarse
 - **token `--wu-flow-*` 84 ตัว** (MALI, dark ปรับ 3 ตัว), locale `flow*` 30 คีย์
 - **แก้ระหว่างทดสอบในเบราว์เซอร์จริง:** node แบบ template หดเหลือความกว้างเนื้อหา (`width: max-content`), Shift + ลูกศรย้าย ×100, กดลูกศรเร็วกว่ารอบวาด, กล่องเลือกในโหมดคุมเองบน WebKit, resizer วัดจากตำแหน่งเก่า, handle ถูก resizer ทับ, ป้ายเส้นอยู่ใต้ node, วงจุดปลายเส้นตอนเลือก
@@ -1098,35 +1098,36 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 
 ### 12.27 เตรียมออก beta (2 พ.ย. 2569)
 
-- **v3 ไม่จำกัดเพดาน Angular:** `tools/versions.mjs` ตั้ง `max: null` จึงได้ peer `>=21.0.0` และ `wiraicon` ได้ `>=15.0.0` · CI เพิ่ม `ng add` บน Angular 22 (Node ต่ำสุดที่ CLI 22 รับคือ 22.22.3) และ `latest` · Angular CLI 22 ต้องการ Node `^22.22.3 || ^24.15 || >=26`
+- **v3 ไม่จำกัดเพดาน Angular:** `tools/versions.mjs` ตั้ง `max: null` จึงได้ peer `>=21.0.0` และ `@wirabyte/icons` ได้ `>=15.0.0` · CI เพิ่ม `ng add` บน Angular 22 (Node ต่ำสุดที่ CLI 22 รับคือ 22.22.3) และ `latest` · Angular CLI 22 ต้องการ Node `^22.22.3 || ^24.15 || >=26`
 - **ทุกแพ็กเกจเป็น `-beta.0`** · `tools/publish.mjs` เลือก dist-tag จากรุ่น (รุ่นจริง: `latest`, `v2-lts`, `v1-lts`; prerelease: `beta`, `v2-beta`, `v1-beta`) · workflow **Publish** กดเองเท่านั้น ค่าเริ่มต้นเป็น dry run ใช้ secret `NPM_TOKEN` และ registry จาก variable `WU_NPM_REGISTRY` (ไม่ตั้ง = npmjs) ซึ่งเผื่อคำตอบของข้อ 13.1 · ครั้งแรกต้องออก v3 ก่อน เพราะ npm ชี้ `latest` ไปที่รุ่นแรกที่ขึ้น registry
-- **ชื่อใหม่ WiraUI (ผู้ใช้เลือก):** `wiraui` บน npm ว่าง ส่วนโดเมนของชื่อเดิมเป็นร้านธีม WordPress ของคนอื่น จึงเปลี่ยนก่อนออกรุ่นแรกทั้งชื่อแพ็กเกจและ prefix (`wu-*`, `WuXxx`, `wuXxx`, `--wu-*`, `WU_*`) ส่วน `wiraicon` และ class / attribute แบบ `p-*`, `pTemplate` คงเดิม
+- **ชื่อใหม่ WiraUI (ผู้ใช้เลือก):** `@wirabyte/ui` บน npm ว่าง ส่วนโดเมนของชื่อเดิมเป็นร้านธีม WordPress ของคนอื่น จึงเปลี่ยนก่อนออกรุ่นแรกทั้งชื่อแพ็กเกจและ prefix (`wu-*`, `WuXxx`, `wuXxx`, `--wu-*`, `WU_*`) ส่วน `@wirabyte/icons` และ class / attribute แบบ `p-*`, `pTemplate` คงเดิม
+- **ชื่อแพ็กเกจใต้ org (2026-11-03):** beta แรกขึ้นในชื่อ `wiraui` / `wiraicon` ซึ่ง npm ผูกกับบัญชีส่วนตัวของผู้ publish จึงเปลี่ยนเป็น `@wirabyte/ui` / `@wirabyte/icons` ก่อนมีผู้ใช้ และถอนชื่อเดิมออก ชื่อแบรนด์ WiraUI, prefix `wu-`, class `wi` และชื่อภายใน workspace (`@wiraui/*`, `wiraui-v1` ของเว็บ docs) คงเดิม · `tools/publish.mjs` ส่ง `--access public` เพราะแพ็กเกจที่มี scope เป็น private โดยปริยาย
 - **เผยแพร่:** npm สาธารณะ (ข้อ 13.1 ตัดสินแล้ว) repo เป็น public เอกสารนี้จึงเรียกแอปของทีมว่า แอป A–E · เว็บเอกสาร `ui.wirabyte.com` deploy บน OpenShift (`deploy/openshift/`)
-- **การกล่าวถึง UI library เดิม:** README และข้อความในแพ็กเกจไม่เอ่ยชื่อ ให้มีได้หน้าเดียวบนเว็บ คือหัวข้อเครื่องมือช่วยย้ายแบบไม่บังคับในหน้า “ย้ายโปรเจคเดิม” ให้ผู้ใช้เลือกเอง (`ng g wiraui:from-primeng`)
+- **การกล่าวถึง UI library เดิม:** README และข้อความในแพ็กเกจไม่เอ่ยชื่อ ให้มีได้หน้าเดียวบนเว็บ คือหัวข้อเครื่องมือช่วยย้ายแบบไม่บังคับในหน้า “ย้ายโปรเจคเดิม” ให้ผู้ใช้เลือกเอง (`ng g @wirabyte/ui:from-primeng`)
 - **ของในแพ็กเกจ:** เพิ่ม `repository` / `homepage` / `bugs` และ CHANGELOG, README ไม่มีชื่อแอปจริงแล้ว, comment ของ preset ที่ซ่อนไว้ไม่มีชื่อของบุคคลที่สาม
 - **CI:** รันบน runner `self-hosted` ของ Wirabyte เท่านั้น เพราะผู้ใช้ไม่จ่ายค่า `ubuntu-latest` และไม่มี trigger `pull_request` แต่แค่นั้นกันไม่พอ เพราะ PR จาก fork รัน workflow ในตัว PR เอง จึงเพิ่ม trigger เองได้ ก่อนเปิด repo เป็น public ต้องตั้ง Settings > General > Features > Pull requests เป็น Collaborators only และเมื่อเป็น public แล้วตั้ง Settings > Actions > General ให้ Require approval for all external contributors
-- **คำสั่งติดตั้งช่วง beta:** ช่วง semver อย่าง `wiraui@3` ไม่จับ prerelease และ `ng add wiraui` เลือก major ให้ไม่ได้เมื่อยังไม่มีรุ่นจริง เว็บจึงใช้ `DocVersion.install` (`wiraui@beta`, `wiraui@v2-beta`, `wiraui@v1-beta`) และ `ng add` ที่ปฏิเสธรุ่นก็บอก tag จากเลขรุ่นของตัวเอง ตอนออกรุ่นจริงให้เปลี่ยน `install` กับข้อความบนหน้าแรกและหน้า Introduction
+- **คำสั่งติดตั้งช่วง beta:** ช่วง semver อย่าง `@wirabyte/ui@3` ไม่จับ prerelease และ `ng add @wirabyte/ui` เลือก major ให้ไม่ได้เมื่อยังไม่มีรุ่นจริง เว็บจึงใช้ `DocVersion.install` (`@wirabyte/ui@beta`, `@wirabyte/ui@v2-beta`, `@wirabyte/ui@v1-beta`) และ `ng add` ที่ปฏิเสธรุ่นก็บอก tag จากเลขรุ่นของตัวเอง ตอนออกรุ่นจริงให้เปลี่ยน `install` กับข้อความบนหน้าแรกและหน้า Introduction
 
 ### 12.26 Dock, SiteFooter, BottomBar (28 ต.ค. 2569)
 
-- **Dock** (`wiraui/dock`, ทุกรุ่น): เดิมไม่ได้ทำเพราะไม่มีแอปใช้ ผู้ใช้ขอเพื่อทำหน้าจอแบบ Windows / macOS · API แบบ `p-dock` (`model`, `position`, `pTemplate="item"`) · `look="mac"`: ไอคอนขยายตามระยะจากเมาส์แบบ cosine (`dockScale` ใน core) ตั้ง `--wu-dock-scale` ที่แต่ละไอคอนนอก change detection ความกว้างไอคอนเปลี่ยนจริงให้ไอคอนข้าง ๆ ขยับ เด้งเมื่อคลิก จุดใต้แอปที่ `active` ย่อไอคอนเองเมื่อกล่องแคบ (ResizeObserver) · `look="windows"`: taskbar เต็มความกว้าง ไอคอนกลาง ช่อง `start` / `end` ขีดใต้แอปที่เปิด ขีดยาวสำหรับ `current` · หน้า docs มีหน้าจอตัวอย่างแบบ mac (แถบเมนู หน้าต่าง) และแบบ Windows (ปุ่ม Start เมนู Start ถาดนาฬิกา) · schematic ย้าย `p-dock` → `wu-dock` แล้ว
-- **SiteFooter** (`wiraui/sitefooter`): ชื่อ tag `wu-site-footer` เพราะ `wu-footer` คือ slot ท้ายของ card และ dialog อยู่แล้ว (แทน `p-footer`) ถ้าใช้ชื่อเดียวกัน dialog จะมี footer ทั้งเว็บโผล่ · คอลัมน์ลิงก์พับเป็น accordion ด้วย container query จึงพับตามความกว้างของ footer เองไม่ใช่จอ
-- **BottomBar** (`wiraui/bottombar`): รายการที่เลือกตาม `activeIndex` หรือ route (ตรงที่สุดชนะ) · `pill` รายการที่เลือกขยาย (flex-grow) · `fab` รอยเว้าทำด้วย mask บน `::before` ปุ่มจึงไม่ถูกตัด · `hideOnScroll` ฟัง scroll นอก change detection · `env(safe-area-inset-bottom)`
+- **Dock** (`@wirabyte/ui/dock`, ทุกรุ่น): เดิมไม่ได้ทำเพราะไม่มีแอปใช้ ผู้ใช้ขอเพื่อทำหน้าจอแบบ Windows / macOS · API แบบ `p-dock` (`model`, `position`, `pTemplate="item"`) · `look="mac"`: ไอคอนขยายตามระยะจากเมาส์แบบ cosine (`dockScale` ใน core) ตั้ง `--wu-dock-scale` ที่แต่ละไอคอนนอก change detection ความกว้างไอคอนเปลี่ยนจริงให้ไอคอนข้าง ๆ ขยับ เด้งเมื่อคลิก จุดใต้แอปที่ `active` ย่อไอคอนเองเมื่อกล่องแคบ (ResizeObserver) · `look="windows"`: taskbar เต็มความกว้าง ไอคอนกลาง ช่อง `start` / `end` ขีดใต้แอปที่เปิด ขีดยาวสำหรับ `current` · หน้า docs มีหน้าจอตัวอย่างแบบ mac (แถบเมนู หน้าต่าง) และแบบ Windows (ปุ่ม Start เมนู Start ถาดนาฬิกา) · schematic ย้าย `p-dock` → `wu-dock` แล้ว
+- **SiteFooter** (`@wirabyte/ui/sitefooter`): ชื่อ tag `wu-site-footer` เพราะ `wu-footer` คือ slot ท้ายของ card และ dialog อยู่แล้ว (แทน `p-footer`) ถ้าใช้ชื่อเดียวกัน dialog จะมี footer ทั้งเว็บโผล่ · คอลัมน์ลิงก์พับเป็น accordion ด้วย container query จึงพับตามความกว้างของ footer เองไม่ใช่จอ
+- **BottomBar** (`@wirabyte/ui/bottombar`): รายการที่เลือกตาม `activeIndex` หรือ route (ตรงที่สุดชนะ) · `pill` รายการที่เลือกขยาย (flex-grow) · `fab` รอยเว้าทำด้วย mask บน `::before` ปุ่มจึงไม่ถูกตัด · `hideOnScroll` ฟัง scroll นอก change detection · `env(safe-area-inset-bottom)`
 
 ### 12.25 ErrorPage (28 ต.ค. 2569)
 
-- **`wu-error-page`** (`wiraui/errorpage`, ทุกรุ่น, อยู่ใน angular-common แบบ @Input): หน้าข้อผิดพลาดสำเร็จรูปของรหัส 400–599 · `core/errorpage.ts` แยกรหัสเป็นกลุ่ม (`httpErrorKind`: auth forbidden missing time busy server gateway down request) และเลือกปุ่ม (`httpErrorActions`) · ข้อความอยู่ใน locale `errorPage` (แบบทางการต่อรหัส 17 ตัว + `4xx` / `5xx` กลาง, แบบ kawaii ต่อกลุ่ม) · แบบทางการ: ไอคอนในกรอบสีอ่อน คำว่า “ข้อผิดพลาด” และรหัสตัวใหญ่ไล่สี · แบบ kawaii: ตัวการ์ตูนหูแมวถือป้ายรหัสสีหลักของธีม ท่าทางตามกลุ่ม (เครื่องหมายคำถาม กุญแจ มึนหัว หลับ เหงื่อตก ปลั๊กหลุด) ขยับตัว กะพริบตา ประกายระยิบ นิ่งเมื่อลดการเคลื่อนไหว ปุ่มทรงกลมกดยุบ · ปุ่มส่ง `(action)` ก่อนทำงาน `preventDefault()` เพื่อใช้ router แทน · `reference` สำหรับแจ้งฝ่ายช่วยเหลือ · `fullPage` สำหรับ route `**`
+- **`wu-error-page`** (`@wirabyte/ui/errorpage`, ทุกรุ่น, อยู่ใน angular-common แบบ @Input): หน้าข้อผิดพลาดสำเร็จรูปของรหัส 400–599 · `core/errorpage.ts` แยกรหัสเป็นกลุ่ม (`httpErrorKind`: auth forbidden missing time busy server gateway down request) และเลือกปุ่ม (`httpErrorActions`) · ข้อความอยู่ใน locale `errorPage` (แบบทางการต่อรหัส 17 ตัว + `4xx` / `5xx` กลาง, แบบ kawaii ต่อกลุ่ม) · แบบทางการ: ไอคอนในกรอบสีอ่อน คำว่า “ข้อผิดพลาด” และรหัสตัวใหญ่ไล่สี · แบบ kawaii: ตัวการ์ตูนหูแมวถือป้ายรหัสสีหลักของธีม ท่าทางตามกลุ่ม (เครื่องหมายคำถาม กุญแจ มึนหัว หลับ เหงื่อตก ปลั๊กหลุด) ขยับตัว กะพริบตา ประกายระยิบ นิ่งเมื่อลดการเคลื่อนไหว ปุ่มทรงกลมกดยุบ · ปุ่มส่ง `(action)` ก่อนทำงาน `preventDefault()` เพื่อใช้ router แทน · `reference` สำหรับแจ้งฝ่ายช่วยเหลือ · `fullPage` สำหรับ route `**`
 
 ### 12.24 ไลบรารีเดียวจบ: Excel, EmptyState, Result, pipe ภาษาไทย, Chart / ChartJS, WuDialogService และตัวย้ายจาก UI library เดิม (28 ต.ค. 2569)
 
 ไล่ช่องว่างจากผลสำรวจ 27 แอป (12.18) ตามจำนวนแอปที่ได้ประโยชน์ **หลักที่ผู้ใช้ตั้ง:** ของที่ library อื่นทำได้ดีกว่าไม่ต้องทำเอง ให้แอป import คู่กัน (แบบ chart.js) ทำเองเฉพาะที่ของเราเหมาะกว่า (เล็ก ไม่มี dependency ผูกกับ component และธีม)
 
-- **Excel (`core/excel.ts`, `wiraui/excel`, Table `exportExcel()`):** ผู้ใช้เลือกเขียน writer เองแทนการห่อ ExcelJS (ใหญ่ ~1 MB และไม่ออกรุ่นใหม่ตั้งแต่ 2023) สร้าง Office Open XML + ZIP เอง (บีบอัดด้วย `CompressionStream` ถ้ามี ไม่มีก็เก็บแบบไม่บีบอัด) สไตล์เป็น object แบบแบน (`bold`, `color`, `fill`, `border`, `align`, `format` …) รวมเซลล์ด้วย `colSpan` / `rowSpan` แบบตาราง HTML หรือ `merges` สูตร (Excel คำนวณตอนเปิด, `fullCalcOnLoad`) ลิงก์ ตรึงแถว ตัวกรอง ตั้งค่าการพิมพ์ หลาย sheet วันที่เป็นวันที่จริง (`calendar: 'buddhist'` ใช้รูปแบบ `[$-th-TH,107]` แสดง พ.ศ.) ข้อความเป็นข้อความเสมอ (เลข 0 นำหน้าไม่หาย ไม่มีการกลายเป็นสูตร) · `excelSheetFromRows()` ทำรายงาน: หัวเรื่องรวมเซลล์ หัวตารางตรึงพร้อมปุ่มกรอง แถวรวมเป็น `SUBTOTAL` ที่คิดตามตัวกรอง สีตามเงื่อนไข · ตรวจกับ Excel จริงผ่าน COM (เปิดได้ไม่ต้องซ่อม สูตรคำนวณถูก วันที่ พ.ศ. ถูก) และ openpyxl · การ**อ่าน**ไฟล์ Excel รูปภาพ กราฟใน Excel ให้ใช้ SheetJS / ExcelJS คู่กัน
-- **EmptyState (`wiraui/emptystate`) และ Result (`wiraui/result`):** ภาพวาดเส้นของเราเองในสีของธีม (6 แบบ / รหัส 403 404 500 ที่มีภาพแทนเลข 0) ข้อความเริ่มต้นใน locale (`emptyState`, `result`) ทุกรุ่น
-- **pipe ภาษาไทย (`wiraui/thai`):** `wuDate` (รูปแบบที่ตั้งชื่อไว้หรือ pattern, พ.ศ. ในภาษาไทย ค.ศ. ในภาษาอื่น, อ่าน `'yyyy-mm-dd'` เป็นวันตามเวลาเครื่อง), `wuTimeAgo`, `wuBahtText` (ตรงกับ `BAHTTEXT` ของ Excel ทุกกรณีที่ทดสอบ), `wuThaiPhone`, `wuThaiId`, `wuThaiDigits`
-- **Chart และ ChartJS:** ผู้ใช้ขอให้มีทั้งกราฟของเราเองและ Chart.js ใน v3 แล้วตั้งชื่อให้ไม่สับสนเป็น **Chart** (ของเรา) กับ **ChartJS** · v3: `wiraui/chart` (`<wu-chart>`, อยู่ใน `angular-v3/overlay/chart`) คือกราฟของเราเอง และ `wiraui/chartjs` (`<wu-chartjs>`) คือตัวห่อ Chart.js · v1 / v2: มี `wiraui/chartjs` และ `wiraui/chart` ยังเป็นกราฟ Chart.js ชื่อเดิม (`angular-v1/src/chart`, `angular-v2/overlay/chart`) ให้ `p-chart` → `wu-chart` ย้ายได้ทุกรุ่น · playground ทดสอบ `wu-chartjs` · กราฟของเราเองวาดด้วย SVG ไม่ต้องลง Chart.js · ส่วนคำนวณอยู่ใน `core/chart` (สเกลตัวเลขกลม, เส้นโค้งแบบ monotone ที่ไม่เกินข้อมูล, ชิ้นวงกลม, layout ทั้งหมดเป็นพิกเซล) · แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น พื้นที่ วงกลม โดนัท เรดาร์ จุด/ฟอง ผสมกัน แกนขวา เส้นอ้างอิง · ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ไทยไม่เพี้ยน; `font`, `fontSize`) วัดความกว้างด้วย canvas ของฟอนต์จริง · ตัวเลข ฿ / % / หน่วยไทย (พัน หมื่น แสน ล้าน; Intl ของ `th-TH` ให้ 1.2K จึงเขียนเอง) · legend ซ่อนแสดง (ชุดที่ซ่อนหดลงก่อนหายไป) tooltip ตามเมาส์และคีย์บอร์ด (ประกาศผ่าน aria-live) ตารางข้อมูลซ่อนสำหรับโปรแกรมอ่านจอ · เคลื่อนจากค่าเดิมไปค่าใหม่ (tween ที่ข้อมูล แกนจึงขยับตามเอง; ปิดได้ และนิ่งเองเมื่อผู้ใช้ขอลดการเคลื่อนไหว) · export SVG / PNG · รับ `[data]` / `[options]` แบบ Chart.js · สี `--wu-chart-1…10` (1 = สีหลักของ preset) · **รอบสาม:** แบบใหม่ 10 แบบใน `core/chart/kinds.ts` วาดด้วย shape ทั่วไป (`model.shapes` / `texts`) ที่ hover target มี tooltip ของตัวเองและหาเจอด้วย `chartHit()` (กล่อง เส้น วงแหวน จุด) แต่ละแบบมี `variant`: stream (silhouette / wiggle / expand, ชื่ออยู่ในช่วงที่หนาสุด) waterfall (bars / steps, `null` คือแท่งยอดรวม) dumbbell (dots ไล่สี / arrow / range) timeline (bars / thin, แกนเวลาเลือกช่วงเอง พ.ศ. ในภาษาไทย งานซ้อนแยกช่อง) funnel (funnel โค้ง / bars + % ที่เหลือ / pyramid) boxplot (box / violin KDE / points, คำนวณควอไทล์จากค่าดิบ) histogram (bars / density, ขอบช่วงเป็นเลขกลม เส้นค่าเฉลี่ย) sunburst (sunburst / icicle, คลิกเจาะลง Esc ย้อน) unit (waffle 100 / dots / people 50 ปัดเศษแบบ largest remainder) slope (lines / highlight, ป้ายไม่ทับกัน) และ heatmap ลักษณะ circle / hex (รังผึ้ง) ตัวเลขในช่อง · ปุ่มสลับแบบกราฟ `swap` (Beta): `chartSwapTypes()` เลือกแบบที่ข้อมูลชุดนั้นแสดงได้ เปลี่ยนแล้ว clone SVG เดิมวางทับให้จางหายขณะกราฟใหม่โตขึ้น (`kind` เป็น linkedSignal ของ `type`) · แบบที่ค่าไม่ควร tween (ค่าดิบ ช่วงเวลา โหนด หน่วย) ใช้ entrance ของ shape เอง (grow / pop / draw / fade เรียงหน่วงทีละชิ้น) · token ใหม่ `--wu-chart-up/-down/-total/-muted` · **รอบสอง (ให้ต่างจาก Chart.js แบบ ApexCharts):** พื้นที่ไล่สี (`gradient`) เส้นขั้นบันได (`curve: 'step'`) `radialBar` (วงแหวนความคืบหน้า / เกจครึ่งวงด้วย `startAngle` / `endAngle` ซึ่งใช้กับโดนัทได้ด้วย) `polarArea` `heatmap` (เฉดสีเดียวตามค่า หรือ `colorRanges` ที่ legend ซ่อนเป็นช่วงได้) `treemap` (squarified, หลายชุดจัดเป็นกลุ่ม) `sparkline` `annotations` (เส้น / แถบที่ค่าหรือป้าย และจุดที่มีป้าย) แถบเครื่องมือ (`toolbar`: ลากเพื่อซูมช่วงป้าย ซูมเข้าออก ดาวน์โหลด PNG / SVG / CSV) และ `group` ให้หลายกราฟแสดง tooltip พร้อมกัน · animation: แกนใช้สเกลสุดท้ายตั้งแต่เริ่ม (ไม่ไล่ตามค่าที่กำลังโต) และเลื่อนจากสเกลเก่าไปใหม่เมื่อข้อมูลเปลี่ยน วงกลมกางออก (`sweep`) ค่าบนกราฟรอจนวาดเสร็จ · ป้าย % บนชิ้นวงกลมแสดงเฉพาะเมื่ออยู่ในชิ้นได้ทั้งหมด · หน้า docs ของ component ที่ต้องลง library อื่น (ChartJS → chart.js) มีกล่องคำสั่งติดตั้งด้านบน (`requires` ใน ComponentDoc) · หน้าที่มีบางรุ่น: nav มี `since` (v1/v2 ไม่เห็น Chart ในเมนูและการค้นหา ที่อยู่ /components/chart เดิมของ v1/v2 พาไป ChartJS สลับรุ่นจากหน้า Chart ไปหน้าบทนำ)
-- **WuDialogService (`wiraui/dialog`):** `open(Component, { header, width, data, footer, … })` คืน `WuDialogRef` (`onClose`, `result` เป็น promise) ใน component ที่เปิด inject `WuDialogConfig` / `WuDialogRef` · ชื่อ `DialogService`, `DynamicDialogRef`, `DynamicDialogConfig` ของ UI library เดิม export ไว้ด้วย · เขียนใน angular-common จึงใช้ได้ทุกรุ่น (สร้าง component ด้วย `ViewContainerRef` เพราะ `NgComponentOutlet` ของ Angular 15 ไม่ให้ instance)
-- **`ng g wiraui:from-primeng`:** เปลี่ยน import `primeng/*` เป็น `wiraui/*` (NgModule และ class เปลี่ยนชื่อ: Dropdown → Select, Calendar → DatePicker, InputSwitch → ToggleSwitch, OverlayPanel → Popover, Sidebar → Drawer, TabView → Tabs …; service ใช้ชื่อเดิม) และ tag `<p-…>` ใน `.html` และ `template:` เป็น `<wu-…>` ที่มีจริงเท่านั้น ส่วนที่ย้ายไม่ได้รายงานไว้ · test เทียบตารางชื่อกับ source จริงทุกตัว · ลองแบบไม่เขียนไฟล์กับ แอป A: 179 ไฟล์ 367 import 3,004 tag เหลือให้คนทำ 9 จุด (TreeTable 4, Chips 4, DomHandler 1) ซึ่งชี้ว่า **TreeTable และ InputChips ควรทำต่อ**
+- **Excel (`core/excel.ts`, `@wirabyte/ui/excel`, Table `exportExcel()`):** ผู้ใช้เลือกเขียน writer เองแทนการห่อ ExcelJS (ใหญ่ ~1 MB และไม่ออกรุ่นใหม่ตั้งแต่ 2023) สร้าง Office Open XML + ZIP เอง (บีบอัดด้วย `CompressionStream` ถ้ามี ไม่มีก็เก็บแบบไม่บีบอัด) สไตล์เป็น object แบบแบน (`bold`, `color`, `fill`, `border`, `align`, `format` …) รวมเซลล์ด้วย `colSpan` / `rowSpan` แบบตาราง HTML หรือ `merges` สูตร (Excel คำนวณตอนเปิด, `fullCalcOnLoad`) ลิงก์ ตรึงแถว ตัวกรอง ตั้งค่าการพิมพ์ หลาย sheet วันที่เป็นวันที่จริง (`calendar: 'buddhist'` ใช้รูปแบบ `[$-th-TH,107]` แสดง พ.ศ.) ข้อความเป็นข้อความเสมอ (เลข 0 นำหน้าไม่หาย ไม่มีการกลายเป็นสูตร) · `excelSheetFromRows()` ทำรายงาน: หัวเรื่องรวมเซลล์ หัวตารางตรึงพร้อมปุ่มกรอง แถวรวมเป็น `SUBTOTAL` ที่คิดตามตัวกรอง สีตามเงื่อนไข · ตรวจกับ Excel จริงผ่าน COM (เปิดได้ไม่ต้องซ่อม สูตรคำนวณถูก วันที่ พ.ศ. ถูก) และ openpyxl · การ**อ่าน**ไฟล์ Excel รูปภาพ กราฟใน Excel ให้ใช้ SheetJS / ExcelJS คู่กัน
+- **EmptyState (`@wirabyte/ui/emptystate`) และ Result (`@wirabyte/ui/result`):** ภาพวาดเส้นของเราเองในสีของธีม (6 แบบ / รหัส 403 404 500 ที่มีภาพแทนเลข 0) ข้อความเริ่มต้นใน locale (`emptyState`, `result`) ทุกรุ่น
+- **pipe ภาษาไทย (`@wirabyte/ui/thai`):** `wuDate` (รูปแบบที่ตั้งชื่อไว้หรือ pattern, พ.ศ. ในภาษาไทย ค.ศ. ในภาษาอื่น, อ่าน `'yyyy-mm-dd'` เป็นวันตามเวลาเครื่อง), `wuTimeAgo`, `wuBahtText` (ตรงกับ `BAHTTEXT` ของ Excel ทุกกรณีที่ทดสอบ), `wuThaiPhone`, `wuThaiId`, `wuThaiDigits`
+- **Chart และ ChartJS:** ผู้ใช้ขอให้มีทั้งกราฟของเราเองและ Chart.js ใน v3 แล้วตั้งชื่อให้ไม่สับสนเป็น **Chart** (ของเรา) กับ **ChartJS** · v3: `@wirabyte/ui/chart` (`<wu-chart>`, อยู่ใน `angular-v3/overlay/chart`) คือกราฟของเราเอง และ `@wirabyte/ui/chartjs` (`<wu-chartjs>`) คือตัวห่อ Chart.js · v1 / v2: มี `@wirabyte/ui/chartjs` และ `@wirabyte/ui/chart` ยังเป็นกราฟ Chart.js ชื่อเดิม (`angular-v1/src/chart`, `angular-v2/overlay/chart`) ให้ `p-chart` → `wu-chart` ย้ายได้ทุกรุ่น · playground ทดสอบ `wu-chartjs` · กราฟของเราเองวาดด้วย SVG ไม่ต้องลง Chart.js · ส่วนคำนวณอยู่ใน `core/chart` (สเกลตัวเลขกลม, เส้นโค้งแบบ monotone ที่ไม่เกินข้อมูล, ชิ้นวงกลม, layout ทั้งหมดเป็นพิกเซล) · แท่ง (กลุ่ม ซ้อน แนวนอน) เส้น พื้นที่ วงกลม โดนัท เรดาร์ จุด/ฟอง ผสมกัน แกนขวา เส้นอ้างอิง · ข้อความเป็นตัวอักษรจริงในฟอนต์ของหน้า (ไทยไม่เพี้ยน; `font`, `fontSize`) วัดความกว้างด้วย canvas ของฟอนต์จริง · ตัวเลข ฿ / % / หน่วยไทย (พัน หมื่น แสน ล้าน; Intl ของ `th-TH` ให้ 1.2K จึงเขียนเอง) · legend ซ่อนแสดง (ชุดที่ซ่อนหดลงก่อนหายไป) tooltip ตามเมาส์และคีย์บอร์ด (ประกาศผ่าน aria-live) ตารางข้อมูลซ่อนสำหรับโปรแกรมอ่านจอ · เคลื่อนจากค่าเดิมไปค่าใหม่ (tween ที่ข้อมูล แกนจึงขยับตามเอง; ปิดได้ และนิ่งเองเมื่อผู้ใช้ขอลดการเคลื่อนไหว) · export SVG / PNG · รับ `[data]` / `[options]` แบบ Chart.js · สี `--wu-chart-1…10` (1 = สีหลักของ preset) · **รอบสาม:** แบบใหม่ 10 แบบใน `core/chart/kinds.ts` วาดด้วย shape ทั่วไป (`model.shapes` / `texts`) ที่ hover target มี tooltip ของตัวเองและหาเจอด้วย `chartHit()` (กล่อง เส้น วงแหวน จุด) แต่ละแบบมี `variant`: stream (silhouette / wiggle / expand, ชื่ออยู่ในช่วงที่หนาสุด) waterfall (bars / steps, `null` คือแท่งยอดรวม) dumbbell (dots ไล่สี / arrow / range) timeline (bars / thin, แกนเวลาเลือกช่วงเอง พ.ศ. ในภาษาไทย งานซ้อนแยกช่อง) funnel (funnel โค้ง / bars + % ที่เหลือ / pyramid) boxplot (box / violin KDE / points, คำนวณควอไทล์จากค่าดิบ) histogram (bars / density, ขอบช่วงเป็นเลขกลม เส้นค่าเฉลี่ย) sunburst (sunburst / icicle, คลิกเจาะลง Esc ย้อน) unit (waffle 100 / dots / people 50 ปัดเศษแบบ largest remainder) slope (lines / highlight, ป้ายไม่ทับกัน) และ heatmap ลักษณะ circle / hex (รังผึ้ง) ตัวเลขในช่อง · ปุ่มสลับแบบกราฟ `swap` (Beta): `chartSwapTypes()` เลือกแบบที่ข้อมูลชุดนั้นแสดงได้ เปลี่ยนแล้ว clone SVG เดิมวางทับให้จางหายขณะกราฟใหม่โตขึ้น (`kind` เป็น linkedSignal ของ `type`) · แบบที่ค่าไม่ควร tween (ค่าดิบ ช่วงเวลา โหนด หน่วย) ใช้ entrance ของ shape เอง (grow / pop / draw / fade เรียงหน่วงทีละชิ้น) · token ใหม่ `--wu-chart-up/-down/-total/-muted` · **รอบสอง (ให้ต่างจาก Chart.js แบบ ApexCharts):** พื้นที่ไล่สี (`gradient`) เส้นขั้นบันได (`curve: 'step'`) `radialBar` (วงแหวนความคืบหน้า / เกจครึ่งวงด้วย `startAngle` / `endAngle` ซึ่งใช้กับโดนัทได้ด้วย) `polarArea` `heatmap` (เฉดสีเดียวตามค่า หรือ `colorRanges` ที่ legend ซ่อนเป็นช่วงได้) `treemap` (squarified, หลายชุดจัดเป็นกลุ่ม) `sparkline` `annotations` (เส้น / แถบที่ค่าหรือป้าย และจุดที่มีป้าย) แถบเครื่องมือ (`toolbar`: ลากเพื่อซูมช่วงป้าย ซูมเข้าออก ดาวน์โหลด PNG / SVG / CSV) และ `group` ให้หลายกราฟแสดง tooltip พร้อมกัน · animation: แกนใช้สเกลสุดท้ายตั้งแต่เริ่ม (ไม่ไล่ตามค่าที่กำลังโต) และเลื่อนจากสเกลเก่าไปใหม่เมื่อข้อมูลเปลี่ยน วงกลมกางออก (`sweep`) ค่าบนกราฟรอจนวาดเสร็จ · ป้าย % บนชิ้นวงกลมแสดงเฉพาะเมื่ออยู่ในชิ้นได้ทั้งหมด · หน้า docs ของ component ที่ต้องลง library อื่น (ChartJS → chart.js) มีกล่องคำสั่งติดตั้งด้านบน (`requires` ใน ComponentDoc) · หน้าที่มีบางรุ่น: nav มี `since` (v1/v2 ไม่เห็น Chart ในเมนูและการค้นหา ที่อยู่ /components/chart เดิมของ v1/v2 พาไป ChartJS สลับรุ่นจากหน้า Chart ไปหน้าบทนำ)
+- **WuDialogService (`@wirabyte/ui/dialog`):** `open(Component, { header, width, data, footer, … })` คืน `WuDialogRef` (`onClose`, `result` เป็น promise) ใน component ที่เปิด inject `WuDialogConfig` / `WuDialogRef` · ชื่อ `DialogService`, `DynamicDialogRef`, `DynamicDialogConfig` ของ UI library เดิม export ไว้ด้วย · เขียนใน angular-common จึงใช้ได้ทุกรุ่น (สร้าง component ด้วย `ViewContainerRef` เพราะ `NgComponentOutlet` ของ Angular 15 ไม่ให้ instance)
+- **`ng g @wirabyte/ui:from-primeng`:** เปลี่ยน import `primeng/*` เป็น `@wirabyte/ui/*` (NgModule และ class เปลี่ยนชื่อ: Dropdown → Select, Calendar → DatePicker, InputSwitch → ToggleSwitch, OverlayPanel → Popover, Sidebar → Drawer, TabView → Tabs …; service ใช้ชื่อเดิม) และ tag `<p-…>` ใน `.html` และ `template:` เป็น `<wu-…>` ที่มีจริงเท่านั้น ส่วนที่ย้ายไม่ได้รายงานไว้ · test เทียบตารางชื่อกับ source จริงทุกตัว · ลองแบบไม่เขียนไฟล์กับ แอป A: 179 ไฟล์ 367 import 3,004 tag เหลือให้คนทำ 9 จุด (TreeTable 4, Chips 4, DomHandler 1) ซึ่งชี้ว่า **TreeTable และ InputChips ควรทำต่อ**
 - **หมวดหมู่ของเว็บเอกสาร (ผู้ใช้ขอ):** เพิ่มกลุ่ม **Layout** (class grid / flex / spacing / sizing / position / form layout และ component ที่แบ่งพื้นที่: Divider, Splitter, Toolbar, ScrollPanel) · **Utilities** เหลือ class ด้านหน้าตา (Styling: typography, สี, เส้นขอบ) และ **Helpers** ที่ไม่ใช่ component (Excel, pipe ภาษาไทย, Animate on scroll, Ripple, DragDrop) · **Components** จัดตามหน้าที่: Form, Button, Panel, Navigation, Data, Charts (Chart, ChartJS, OrganizationChart, Flow), Display, Feedback (Message, Toast, ProgressBar, ProgressSpinner, Skeleton, BlockUI, EmptyState, Result), Media, Overlay · URL ของหน้าไม่เปลี่ยน · หัวเล็กบนหน้าบอกตำแหน่งตาม sidebar
 - **แก้ระหว่างทาง:** token ที่มีสองค่าใน `calc()` (`pad('2rem 1rem')`) เป็น CSS ที่ใช้ไม่ได้ จึงแยกเป็น `calc()` ต่อค่าและเพิ่ม test กันไว้ · class ของชนิดกราฟบน root (`wu-chart-area` ตอนนั้นชื่อ `wu-wirachart-area`) ชนกับ class ของพื้นที่ ทำให้ทั้งกราฟจาง จึงเปลี่ยนเป็น `wu-chart-type-*` · regex แบบ look-behind ใช้ไม่ได้ใน Safari ก่อน 16.4 (core อยู่ในทุก entry จึงพังทั้ง library) จึงเลี่ยง
 - **ยังไม่ทำ:** ที่อยู่ไทย (รอตัดสินแหล่งข้อมูล ข้อ 13.9), TreeTable, InputChips, DataView, CascadeSelect, MegaMenu, SpeedDial, ConfirmPopup, ScrollTop, countdown, stat card, ตัวเลือกปีการศึกษา · ของที่ library อื่นทำได้ดีกว่าและไม่ทำในไลบรารีหลัก: แผนที่, PDF, barcode / QR, signature pad, การอ่านไฟล์ Excel
@@ -1138,7 +1139,7 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
 1. **License (ตัดสินแล้ว):** MIT ใช้ฟรีทุกรุ่นแบบ UI library เดิม ยุคเดิม ไม่มี license ขายและไม่มีรุ่น LTS แบบเสียเงิน (ไฟล์ `LICENSE` ที่ root ถูก copy เข้าทุกแพ็กเกจ) ช่องทาง publish คือ npm สาธารณะ
 8. **Figma UI Kit (เริ่มแล้ว, ดู 12.22):** มี Figma kit คู่กับโค้ด โดยให้ Theme Designer export token เป็น Figma Variables / W3C Design Tokens JSON เพิ่มจาก SCSS/CSS/TS/JSON เดิม เพื่อให้ Figma กับโค้ดใช้ token ชุดเดียวกัน และ component ใน kit ตั้งชื่อ variant ตาม input ของ component (`severity`, `variant`, `size`) ให้ designer กับ dev คุยภาษาเดียวกัน ต้องตัดสินใจว่าจะเริ่มใน Phase 2 (พร้อม Designer ตัวจริง) หรือ Phase 3
 2. **โดเมนของเว็บแนะนำ (ตัดสินแล้ว):** `ui.wirabyte.com` บน OpenShift (`deploy/openshift/docs.yaml`)
-3. **utility library เดิม (ตัดสินแล้ว):** ทำ utility ของ WiraUI เองในตัว (`wiraui/utils`, 6.11) ชื่อ class เดิม เปิด/ปิดได้
+3. **utility library เดิม (ตัดสินแล้ว):** ทำ utility ของ WiraUI เองในตัว (`@wirabyte/ui/utils`, 6.11) ชื่อ class เดิม เปิด/ปิดได้
 4. **Icon:** พึ่ง icon font เดิม/Font Awesome ต่อไป หรือทำ `@wiraui/icons` (ตอนนี้ icon ที่ใช้ภายใน component เป็น SVG inline จึงไม่บังคับ dependency)
 5. **ชื่อและเอกลักษณ์ของ preset** (Wira / Lanna / Siam / …) และจะใช้ Kanit เป็นฟอนต์เริ่มต้นไหม
 6. **ที่เก็บธีมใน Designer:** เก็บในเครื่องอย่างเดียว (localStorage + ไฟล์) หรือผูกบัญชีผู้ใช้เพื่อเก็บบน server

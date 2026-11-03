@@ -1,4 +1,4 @@
-// Helpers for app and component styles: `@use 'wiraui/theme/api' as wu;`
+// Helpers for app and component styles: `@use '@wirabyte/ui/theme/api' as wu;`
 // Emits no CSS of its own, so it can be loaded from any number of files.
 @use 'sass:map';
 @use 'sass:meta';

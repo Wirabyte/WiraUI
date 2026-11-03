@@ -1,7 +1,7 @@
 {
   "name": "@wiraui-build/angular-v2",
   "private": true,
-  "description": "Build shell for wiraui@2 (Angular 18–20). Source comes from packages/angular-signal + overlay/, synced by tools/sync-sources.mjs.",
+  "description": "Build shell for @wirabyte/ui@2 (Angular 18–20). Source comes from packages/angular-signal + overlay/, synced by tools/sync-sources.mjs.",
   "scripts": {
     "sync": "node ../../tools/sync-sources.mjs v2",
     "build": "node ../../tools/sync-sources.mjs v2 && ng-packagr -p lib/ng-package.json -c lib/tsconfig.lib.json && node ../../tools/finish-package.mjs v2",

@@ -241,12 +241,12 @@ saveNews(): void {
     this.isApiSaving = false;
   });
 }`,
-    toolbar: `import { EditorToolbar } from 'wiraui/editor';
+    toolbar: `import { EditorToolbar } from '@wirabyte/ui/editor';
 
 presets = ['basic', 'standard', 'full', 'none'];
 preset: EditorToolbar = 'full';
 tools: EditorToolbar = ['bold', 'italic', '|', 'bulletList', 'orderedList', '|', 'link', 'image', 'table'];`,
-    options: `import { EditorToolOptions } from 'wiraui/editor';
+    options: `import { EditorToolOptions } from '@wirabyte/ui/editor';
 
 toolOptions: EditorToolOptions = {
   headings: [0, 2, 3],   // 0 = ย่อหน้า
@@ -257,7 +257,7 @@ toolOptions: EditorToolOptions = {
   table: { rows: 6, cols: 6, headerRow: true },
   link: { newTab: true },
 };`,
-    images: `import { WuEditorImageUpload, WuEditorImageUploadErrorEvent } from 'wiraui/editor';
+    images: `import { WuEditorImageUpload, WuEditorImageUploadErrorEvent } from '@wirabyte/ui/editor';
 
 imageUpload: WuEditorImageUpload = { upload: this.uploadImage.bind(this), maxSize: 1048576 };
 lastEvent = '';
@@ -277,7 +277,7 @@ imageFailed(event: WuEditorImageUploadErrorEvent): void {
   this.lastEvent = 'onImageUploadError: ' + event.reason;
 }`,
     defaults: `// app.config.ts หรือ providers ของ AppModule: ทั้งแอป: ทุก wu-editor ใช้ค่านี้
-import { provideEditorOptions } from 'wiraui/editor';
+import { provideEditorOptions } from '@wirabyte/ui/editor';
 
 providers: [
   provideEditorOptions({
@@ -292,7 +292,7 @@ timetable = '<p>ตารางสอบกลางภาค</p><table style="w
   + '<tbody><tr><td>คณิตศาสตร์</td><td>จันทร์ 6 ก.ค.</td><td>311</td></tr><tr><td>วิทยาศาสตร์</td><td>อังคาร 7 ก.ค.</td><td>312</td></tr></tbody></table>';`,
     view: `announcement = '<h2>จัดกิจกรรมวันไหว้ครู</h2><p class="ql-align-center">วันพฤหัสบดีที่ 18 มิถุนายน</p>'
   + '<ul><li>แต่งกายชุดนักเรียน</li><li>นำพานไหว้ครูของห้อง</li></ul>';   // ข่าวจาก API`,
-    events: `import { WuEditorApi, WuEditorInitEvent, WuEditorTextChangeEvent } from 'wiraui/editor';
+    events: `import { WuEditorApi, WuEditorInitEvent, WuEditorTextChangeEvent } from '@wirabyte/ui/editor';
 
 letter: string | null = null;
 lastEvent = '';
@@ -396,7 +396,7 @@ textChanged(event: WuEditorTextChangeEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuEditorInitEvent, WuEditorTextChangeEvent, provideEditorOptions } from 'wiraui/editor';
+      code: `import { WuEditorInitEvent, WuEditorTextChangeEvent, provideEditorOptions } from '@wirabyte/ui/editor';
 
 interface WuEditorTextChangeEvent {
   htmlValue: string | null;   // ว่างเปล่าคือ null

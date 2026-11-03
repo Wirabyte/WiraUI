@@ -27,7 +27,7 @@ export function wiraIconWeight(name: string, weight: WiraIconWeight = 'regular')
   return (WIRAICON_FIXED_WEIGHT[name] as WiraIconWeight) || weight;
 }
 
-/** A whole <svg> for a drawing from `wiraicon/data/<weight>`, sized by `size` (default 1em) and coloured by currentColor. */
+/** A whole <svg> for a drawing from `@wirabyte/icons/data/<weight>`, sized by `size` (default 1em) and coloured by currentColor. */
 export function wiraIconSvg(body: string, size: string | number = '1em', label?: string): string {
   const s = typeof size === 'number' ? `${size}px` : size;
   const a11y = label ? ` role="img" aria-label="${label.replace(/[&"<>]/g, (c) => `&#${c.charCodeAt(0)};`)}"` : ' aria-hidden="true"';

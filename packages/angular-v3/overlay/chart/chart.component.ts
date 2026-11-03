@@ -20,7 +20,7 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
 import {
   ChartAnnotations,
   ChartAxisScale,
@@ -41,7 +41,7 @@ import {
   chartSwapTypes,
   chartVariants,
   formatChartValue,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import { WU_CHART_KINDS, WU_CHART_LOOKS } from './chart.icons';
 import { WuChartClickEvent, WuChartLegend, WuChartTipRow, WuChartToggleEvent, WuChartZoomEvent } from './chart.types';
 

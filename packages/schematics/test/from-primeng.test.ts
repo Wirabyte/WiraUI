@@ -55,7 +55,7 @@ describe('from-primeng mapping', () => {
   });
 });
 
-describe('ng g wiraui:from-primeng', () => {
+describe('ng g @wirabyte/ui:from-primeng', () => {
   function app(): UnitTestTree {
     const t = new UnitTestTree(new HostTree());
     t.create('package.json', JSON.stringify({ dependencies: { '@angular/core': '^15.2.0', primeng: '^15.4.0' } }));
@@ -116,13 +116,13 @@ export class StudentsComponent {
   it('moves imports, renames NgModules and classes, and keeps the service names', async () => {
     const tree = await runner.runSchematic('from-primeng', {}, app());
     const mod = tree.readContent('src/app/app.module.ts');
-    expect(mod).toContain(`import { WuButtonModule } from 'wiraui/button';`);
-    expect(mod).toContain(`import { WuSelectModule } from 'wiraui/select';`);
-    expect(mod).toContain(`import { WuDatePickerModule } from 'wiraui/datepicker';`);
-    expect(mod).toContain(`import { WuToggleSwitchModule } from 'wiraui/toggleswitch';`);
-    expect(mod).toContain(`import { MessageService } from 'wiraui/api';`);
-    expect(mod).toContain(`import { WuConfig } from 'wiraui/config';`);
-    expect(mod).toContain(`import { DialogService } from 'wiraui/dialog';`);
+    expect(mod).toContain(`import { WuButtonModule } from '@wirabyte/ui/button';`);
+    expect(mod).toContain(`import { WuSelectModule } from '@wirabyte/ui/select';`);
+    expect(mod).toContain(`import { WuDatePickerModule } from '@wirabyte/ui/datepicker';`);
+    expect(mod).toContain(`import { WuToggleSwitchModule } from '@wirabyte/ui/toggleswitch';`);
+    expect(mod).toContain(`import { MessageService } from '@wirabyte/ui/api';`);
+    expect(mod).toContain(`import { WuConfig } from '@wirabyte/ui/config';`);
+    expect(mod).toContain(`import { DialogService } from '@wirabyte/ui/dialog';`);
     expect(mod).toContain('imports: [WuButtonModule, WuSelectModule, WuDatePickerModule, WuToggleSwitchModule, CascadeSelectModule]');
     expect(mod).toContain('constructor(config: WuConfig)');
     // What WiraUI lacks stays on PrimeNG.
@@ -130,7 +130,7 @@ export class StudentsComponent {
     expect(mod).toContain('config.ripple = true;');
 
     const cmp = tree.readContent('src/app/students.component.ts');
-    expect(cmp).toContain(`import { WuTable, WuTableModule } from 'wiraui/table';`);
+    expect(cmp).toContain(`import { WuTable, WuTableModule } from '@wirabyte/ui/table';`);
     expect(cmp).toContain('dt!: WuTable;');
     // Object keys that happen to share a name are left alone.
     expect(cmp).toContain('options = { Table: 1 };');

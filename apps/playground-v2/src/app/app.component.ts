@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, inject, VERSION } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { WIRAUI_MAJOR } from 'wiraui';
-import type { MenuItem, Message, TreeNode } from 'wiraui/api';
-import { definePreset, palette, Siam, WuConfig, WuThemeService } from 'wiraui/config';
-import { base64ToFile, EN_LOCALE } from 'wiraui/core';
-import type { CropperPosition, WuImageCroppedEvent } from 'wiraui/imagecropper';
-import { WuI18n } from 'wiraui/i18n';
-import { WuAlert, WuAlertService } from 'wiraui/alert';
-import { WuConfirmationService } from 'wiraui/confirmdialog';
-import { WuMessageService } from 'wiraui/toast';
-import { WuTerminalService } from 'wiraui/terminal';
-import { applyEdgeChanges, applyNodeChanges } from 'wiraui/flow';
-import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WuFlow, WuFlowSelectionChange } from 'wiraui/flow';
+import { WIRAUI_MAJOR } from '@wirabyte/ui';
+import type { MenuItem, Message, TreeNode } from '@wirabyte/ui/api';
+import { definePreset, palette, Siam, WuConfig, WuThemeService } from '@wirabyte/ui/config';
+import { base64ToFile, EN_LOCALE } from '@wirabyte/ui/core';
+import type { CropperPosition, WuImageCroppedEvent } from '@wirabyte/ui/imagecropper';
+import { WuI18n } from '@wirabyte/ui/i18n';
+import { WuAlert, WuAlertService } from '@wirabyte/ui/alert';
+import { WuConfirmationService } from '@wirabyte/ui/confirmdialog';
+import { WuMessageService } from '@wirabyte/ui/toast';
+import { WuTerminalService } from '@wirabyte/ui/terminal';
+import { applyEdgeChanges, applyNodeChanges } from '@wirabyte/ui/flow';
+import type { FlowEdge, FlowEdgeChange, FlowNode, FlowNodeChange, FlowViewport, WuFlow, WuFlowSelectionChange } from '@wirabyte/ui/flow';
 
 @Component({
   selector: 'app-root',
@@ -314,7 +314,7 @@ export class AppComponent {
     notify: new FormControl(false, { nonNullable: true }),
   });
 
-  /** The page's own texts in Thai and English (wiraui/i18n). */
+  /** The page's own texts in Thai and English (@wirabyte/ui/i18n). */
   readonly i18n = this.setupI18n();
   private readonly theme = inject(WuThemeService);
   private readonly config = inject(WuConfig);

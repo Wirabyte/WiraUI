@@ -270,7 +270,7 @@ themeChartData(): ChartData<'bar'> {
   };
 }`,
     click: `import { ChartData, ChartOptions } from 'chart.js';
-import { WuChartJsDataSelectEvent } from 'wiraui/chartjs';
+import { WuChartJsDataSelectEvent } from '@wirabyte/ui/chartjs';
 
 scoreData: ChartData<'bar'> = {
   labels: ['คณิตศาสตร์', 'วิทยาศาสตร์', 'ภาษาไทย', 'ภาษาอังกฤษ', 'สังคมศึกษา'],
@@ -315,7 +315,7 @@ centerText: Plugin<'doughnut', { text: string }> = {
   },
 };`,
     refresh: `import { ChartData } from 'chart.js';
-import { WuChartJs } from 'wiraui/chartjs';
+import { WuChartJs } from '@wirabyte/ui/chartjs';
 
 attendance: ChartData<'line'> = {
   labels: ['สัปดาห์ 1', 'สัปดาห์ 2', 'สัปดาห์ 3', 'สัปดาห์ 4', 'สัปดาห์ 5'],
@@ -371,7 +371,7 @@ addWeek(chart: WuChartJs): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuChartJsDataSelectEvent } from 'wiraui/chartjs';
+      code: `import { WuChartJsDataSelectEvent } from '@wirabyte/ui/chartjs';
 
 interface WuChartJsDataSelectEvent {
   originalEvent: MouseEvent;

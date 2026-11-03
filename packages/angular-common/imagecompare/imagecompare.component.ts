@@ -23,8 +23,8 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { imageCompareAt, imageCompareClamp, imageCompareKey, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { imageCompareAt, imageCompareClamp, imageCompareKey, WuLocale } from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 

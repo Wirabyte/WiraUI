@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideWiraUI } from 'wiraui/config';
+import { provideWiraUI } from '@wirabyte/ui/config';
 import { wiraOverrides } from '../theme/wiraui.overrides';
 
 export const appConfig: ApplicationConfig = {

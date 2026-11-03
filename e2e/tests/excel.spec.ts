@@ -2,7 +2,7 @@ import { expect, Page, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { inflateRawSync } from 'node:zlib';
 
-// Excel files from the docs site: the Excel page (wiraui/excel) and wu-table's exportExcel(), in v1, v2 and v3.
+// Excel files from the docs site: the Excel page (@wirabyte/ui/excel) and wu-table's exportExcel(), in v1, v2 and v3.
 // Each download is opened as a zip and its XML checked, so a file Excel would refuse fails here.
 
 const VERSIONS = ['v1', 'v2', 'v3'] as const;
@@ -57,7 +57,7 @@ for (const v of VERSIONS) {
     const errors = collectErrors(page);
     await page.goto(`/${v}/components/excel`);
     await expect(page.locator('h1')).toHaveText('Excel');
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${v.slice(1)}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${v.slice(1)}`);
 
     const basic = await xlsx(page, '#d-xl-basic');
     expect(basic.name).toBe('scores.xlsx');

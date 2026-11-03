@@ -1,4 +1,4 @@
-import type { FlowDimensions, FlowRect, FlowResizeLimits, FlowTextKey, FlowViewport, FlowXY } from 'wiraui/core';
+import type { FlowDimensions, FlowRect, FlowResizeLimits, FlowTextKey, FlowViewport, FlowXY } from '@wirabyte/ui/core';
 import type { WuFlowFitViewOptions, WuFlowNodeRect, WuFlowSetCenterOptions, WuFlowViewportOptions } from './flow.types';
 
 /** What changed in a render: the add-ons use it to update only when they need to. */

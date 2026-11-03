@@ -68,8 +68,8 @@ export const TERMINAL_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: 'เปลี่ยน <code>&lt;p-terminal&gt;</code> เป็น <code>&lt;wu-terminal&gt;</code> input <code>welcomeMessage</code> และ <code>prompt</code> ใช้ชื่อเดิม · <code>TerminalService</code> import จาก <code>wiraui/terminal</code> ได้ (<code>commandHandler</code>, <code>responseHandler</code>, <code>sendCommand()</code>, <code>sendResponse()</code> เหมือนเดิม) และไม่ต้องใส่ใน <code>providers</code> อีก (ใส่ไว้ก็ยังได้ component นั้นจะได้ service ของตัวเอง)',
-        en: 'Change <code>&lt;p-terminal&gt;</code> to <code>&lt;wu-terminal&gt;</code>; <code>welcomeMessage</code> and <code>prompt</code> keep their names · import <code>TerminalService</code> from <code>wiraui/terminal</code> (<code>commandHandler</code>, <code>responseHandler</code>, <code>sendCommand()</code> and <code>sendResponse()</code> as before); it no longer needs a <code>providers</code> entry (one listed still works, and gives that component its own service).',
+        th: 'เปลี่ยน <code>&lt;p-terminal&gt;</code> เป็น <code>&lt;wu-terminal&gt;</code> input <code>welcomeMessage</code> และ <code>prompt</code> ใช้ชื่อเดิม · <code>TerminalService</code> import จาก <code>@wirabyte/ui/terminal</code> ได้ (<code>commandHandler</code>, <code>responseHandler</code>, <code>sendCommand()</code>, <code>sendResponse()</code> เหมือนเดิม) และไม่ต้องใส่ใน <code>providers</code> อีก (ใส่ไว้ก็ยังได้ component นั้นจะได้ service ของตัวเอง)',
+        en: 'Change <code>&lt;p-terminal&gt;</code> to <code>&lt;wu-terminal&gt;</code>; <code>welcomeMessage</code> and <code>prompt</code> keep their names · import <code>TerminalService</code> from <code>@wirabyte/ui/terminal</code> (<code>commandHandler</code>, <code>responseHandler</code>, <code>sendCommand()</code> and <code>sendResponse()</code> as before); it no longer needs a <code>providers</code> entry (one listed still works, and gives that component its own service).',
       },
     },
   },
@@ -85,7 +85,7 @@ export const TERMINAL_DOC: ComponentDoc = {
   ts: {
     basic: `import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { WuTerminalService } from 'wiraui/terminal';
+import { WuTerminalService } from '@wirabyte/ui/terminal';
 
 export class ConsoleComponent implements OnDestroy {
   private readonly subscription: Subscription;

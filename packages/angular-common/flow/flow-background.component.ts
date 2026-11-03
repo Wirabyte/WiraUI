@@ -10,9 +10,9 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵuniqueId } from 'wiraui/config';
-import { backgroundPattern } from 'wiraui/core';
-import type { FlowBackgroundPattern, FlowViewport } from 'wiraui/core';
+import { ɵuniqueId } from '@wirabyte/ui/config';
+import { backgroundPattern } from '@wirabyte/ui/core';
+import type { FlowBackgroundPattern, FlowViewport } from '@wirabyte/ui/core';
 import { ɵWuFlowHost } from './flow-host';
 
 /**

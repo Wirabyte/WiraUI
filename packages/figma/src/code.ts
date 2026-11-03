@@ -500,7 +500,7 @@ async function buildFoundations(page: PageNode): Promise<void> {
   for (const name of Object.keys(K.textStyles)) {
     const row = add(type, box({ name, gap: 24 }));
     add(row, txt(name, { size: 12, color: 'text-muted' })).resize(120, 16);
-    const sample = add(row, txt(name === 'Code' ? "@use 'wiraui/theme';" : 'ภาษาไทยอ่านง่าย ทุกสระวรรณยุกต์ · WiraUI', { mono: name === 'Code' }));
+    const sample = add(row, txt(name === 'Code' ? "@use '@wirabyte/ui/theme';" : 'ภาษาไทยอ่านง่าย ทุกสระวรรณยุกต์ · WiraUI', { mono: name === 'Code' }));
     await setStyle(sample, name);
   }
 

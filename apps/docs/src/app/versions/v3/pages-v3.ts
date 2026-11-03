@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { WuDialogConfig, WuDialogRef } from 'wiraui/dialog';
+import { WuDialogConfig, WuDialogRef } from '@wirabyte/ui/dialog';
 import {
   ButtonDemo,
   CardDemo,
@@ -103,7 +103,7 @@ import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
 import { ThaiDemo } from '../shared/demos-thai';
 import { ChartDemo } from '../shared/demos-chart';
 
-// Shared templates compiled against wiraui@3 components (DocsV3Module imports the v1 modules).
+// Shared templates compiled against @wirabyte/ui@3 components (DocsV3Module imports the v1 modules).
 
 @Component({ selector: 'docs-button-v3', templateUrl: '../shared/button.html', standalone: false })
 export class ButtonPageV3 extends ButtonDemo {}
@@ -399,7 +399,7 @@ export class BottomBarPageV3 extends BottomBarDemo {}
 @Component({ selector: 'docs-thai-v3', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV3 extends ThaiDemo {}
 
-// wiraui@3 only.
+// @wirabyte/ui@3 only.
 @Component({ selector: 'docs-chart-v3', templateUrl: '../shared/chart.html', standalone: false })
 export class ChartPageV3 extends ChartDemo {}
 

@@ -89,8 +89,8 @@ export const BREADCRUMB_DOC: ComponentDoc = {
     },
   },
   ts: {
-    basic: `import { WuBreadcrumbItemClickEvent } from 'wiraui/breadcrumb';
-import { WuMenuItem } from 'wiraui/menu';
+    basic: `import { WuBreadcrumbItemClickEvent } from '@wirabyte/ui/breadcrumb';
+import { WuMenuItem } from '@wirabyte/ui/menu';
 
 home: WuMenuItem = { command: (event) => this.go(event) };
 trail: WuMenuItem[] = [
@@ -162,7 +162,7 @@ pressed(event: WuBreadcrumbItemClickEvent): void {
       title: 'Types',
       code: `interface WuBreadcrumbItemClickEvent {
   originalEvent: Event;
-  item: WuMenuItem;   // จาก 'wiraui/menu'
+  item: WuMenuItem;   // จาก '@wirabyte/ui/menu'
 }`,
     },
   ],

@@ -44,7 +44,7 @@ jobs:
       - name: Schematics
         run: pnpm --filter @wiraui/schematics test
 
-      - name: Build wiraui v1 (Angular 15), v2 (18), v3 (21)
+      - name: Build @wirabyte/ui v1 (Angular 15), v2 (18), v3 (21)
         env:
           CI: 'true'
         run: |
@@ -52,7 +52,7 @@ jobs:
           for v in v1 v2 v3; do pnpm --filter @wiraui-build/angular-$v build; done
           for v in v1 v2 v3; do (cd packages/angular-$v/dist && npm pack --pack-destination ../../../packs); done
 
-      - name: Build wiraicon
+      - name: Build @wirabyte/icons
         run: pnpm --filter @wiraui-build/icons test
 
       - uses: actions/upload-artifact@v4
@@ -68,7 +68,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Lowest Node each wiraui major promises (DESIGN.md §3)
+          # Lowest Node each @wirabyte/ui major promises (DESIGN.md §3)
           - { wu: 1, angular: '15', node: '18', flags: '--style=scss' }
           - { wu: 1, angular: '17', node: '18', flags: '--style=css --standalone=false' }
           - { wu: 2, angular: '18', node: '18.19', flags: '--style=scss --standalone=false' }
@@ -99,17 +99,17 @@ jobs:
         working-directory: ${{ runner.temp }}
         run: npx -y @angular/cli@${{ matrix.angular }} new app --defaults --skip-git --skip-tests --routing=false ${{ matrix.flags }}
       # Install the packed tarball first: Angular CLI 21 cannot `ng add` a file: spec directly.
-      - name: ng add wiraui@${{ matrix.wu }} from the packed tarball
+      - name: ng add @wirabyte/ui@${{ matrix.wu }} from the packed tarball
         working-directory: ${{ runner.temp }}/app
         run: |
-          npm install --no-audit --no-fund "$(ls ../packs/wiraui-${{ matrix.wu }}.*.tgz)"
-          npx ng add wiraui --defaults --skip-confirmation
+          npm install --no-audit --no-fund "$(ls ../packs/wirabyte-ui-${{ matrix.wu }}.*.tgz)"
+          npx ng add @wirabyte/ui --defaults --skip-confirmation
       - name: Build
         working-directory: ${{ runner.temp }}/app
         run: npx ng build
 
   version-lock:
-    name: wiraui@1 must not install on Angular 18
+    name: @wirabyte/ui@1 must not install on Angular 18
     needs: build
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
     # In runner.temp for the same reason as the job above.
@@ -128,8 +128,8 @@ jobs:
         working-directory: ${{ runner.temp }}/app
         run: |
           npm install --no-audit --no-fund
-          if npm install "$(ls ../packs/wiraui-1.*.tgz)" > install.log 2>&1; then
-            echo "wiraui@1 installed on Angular 18, the peer range lock is broken"; exit 1
+          if npm install "$(ls ../packs/wirabyte-ui-1.*.tgz)" > install.log 2>&1; then
+            echo "@wirabyte/ui@1 installed on Angular 18, the peer range lock is broken"; exit 1
           fi
           grep -q ERESOLVE install.log
 
@@ -146,7 +146,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Build and pack wiraui v1–v3 and wiraicon
+      - name: Build and pack @wirabyte/ui v1–v3 and @wirabyte/icons
         run: pnpm pack:all
       - name: npm ci in the apps
         run: for app in playground-v1 playground-v2 playground-v3 docs; do (cd apps/$app && npm ci --no-audit --no-fund); done

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WuTemplate } from 'wiraui/config';
+import { WuTemplate } from '@wirabyte/ui/config';
 import { WuPanelMenu } from './panelmenu.component';
 
 /** For NgModule apps. Standalone apps can import `WuPanelMenu` directly. */

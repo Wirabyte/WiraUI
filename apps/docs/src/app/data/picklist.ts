@@ -245,7 +245,7 @@ saveFlow(): void {
     this.isApiSaving = false;
   });
 }`,
-    events: `import { WuPickListMoveEvent } from 'wiraui/picklist';
+    events: `import { WuPickListMoveEvent } from '@wirabyte/ui/picklist';
 
 lastEvent = '';
 
@@ -338,7 +338,7 @@ logMove(name: string, event: WuPickListMoveEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuPickListFilterEvent, WuPickListMoveEvent, WuPickListSelectEvent } from 'wiraui/picklist';
+      code: `import { WuPickListFilterEvent, WuPickListMoveEvent, WuPickListSelectEvent } from '@wirabyte/ui/picklist';
 
 interface WuPickListMoveEvent {
   originalEvent?: Event;
@@ -545,7 +545,7 @@ export const ORDERLIST_DOC: ComponentDoc = {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuOrderListFilterEvent, WuOrderListSelectionChangeEvent } from 'wiraui/orderlist';
+      code: `import { WuOrderListFilterEvent, WuOrderListSelectionChangeEvent } from '@wirabyte/ui/orderlist';
 
 interface WuOrderListSelectionChangeEvent {
   originalEvent?: Event;

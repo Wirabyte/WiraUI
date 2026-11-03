@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { isObservable } from 'rxjs';
-import { ɵassertSupportedAngular, ɵrippleAt, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuConfig } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵrippleAt, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuConfig } from '@wirabyte/ui/config';
 import { ɵbuttonExtras } from './button-class';
 import { WuButtonAction, WuButtonSeverity, WuButtonSize, WuButtonVariant } from './button.types';
 

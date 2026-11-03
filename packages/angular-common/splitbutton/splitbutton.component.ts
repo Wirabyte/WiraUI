@@ -1,8 +1,8 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader, WuConfig, WuMenuItem } from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { WuMenu } from 'wiraui/menu';
+import { ɵassertSupportedAngular, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader, WuConfig, WuMenuItem } from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { WuMenu } from '@wirabyte/ui/menu';
 
 /**
  * A button with a default action and a menu of others: `<wu-splitButton label="บันทึก" icon="pi pi-save"

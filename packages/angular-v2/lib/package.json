@@ -1,5 +1,5 @@
 {
-  "name": "wiraui",
+  "name": "@wirabyte/ui",
   "version": "2.0.0-beta.0",
   "description": "WiraUI UI components for Angular 18–20: familiar API, Thai-first, themable with SCSS, CSS or TypeScript.",
   "license": "MIT",

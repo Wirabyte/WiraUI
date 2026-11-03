@@ -4,20 +4,20 @@ import { describe, expect, it } from 'vitest';
 import * as core from '../../core/src';
 import { renderUtilsPalettes } from '../scripts/scss-data.mjs';
 
-// `@use 'wiraui/utils'` on the oldest Sass we support (1.58.3, Angular 15) and the current one.
+// `@use '@wirabyte/ui/utils'` on the oldest Sass we support (1.58.3, Angular 15) and the current one.
 const require = createRequire(import.meta.url);
 const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((sass) => [`sass ${sass.info.split('\t')[1]}`, sass]);
 const UTILS_DIR = new URL('../utils/', import.meta.url);
 const importer = {
   findFileUrl(url: string) {
-    if (url !== 'wiraui/utils' && !url.startsWith('wiraui/utils/')) return null;
-    return new URL(url.slice('wiraui/utils/'.length) || 'index', UTILS_DIR);
+    if (url !== '@wirabyte/ui/utils' && !url.startsWith('@wirabyte/ui/utils/')) return null;
+    return new URL(url.slice('@wirabyte/ui/utils/'.length) || 'index', UTILS_DIR);
   },
 };
 
 function compile(sass: any, settings = ''): string {
   const warnings: string[] = [];
-  const source = settings ? `@use 'wiraui/utils' with (${settings});` : "@use 'wiraui/utils';";
+  const source = settings ? `@use '@wirabyte/ui/utils' with (${settings});` : "@use '@wirabyte/ui/utils';";
   const { css } = sass.compileString(source, { importers: [importer], logger: { warn: (m: string) => warnings.push(m), debug: () => {} } });
   expect(warnings, 'Sass warnings').toEqual([]);
   return css;

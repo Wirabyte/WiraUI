@@ -24,5 +24,5 @@ export {
   Glass,
   LL,
   WiraKawaii,
-} from 'wiraui/core';
-export type { ThemePreset } from 'wiraui/core';
+} from '@wirabyte/ui/core';
+export type { ThemePreset } from '@wirabyte/ui/core';

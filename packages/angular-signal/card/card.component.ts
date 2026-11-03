@@ -11,7 +11,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuTemplate } from '@wirabyte/ui/config';
 import { WuCardVariant } from './card.types';
 
 /**

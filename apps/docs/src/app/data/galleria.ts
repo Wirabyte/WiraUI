@@ -184,7 +184,7 @@ export const GALLERIA_DOC: ComponentDoc = {
   ts: {
     basic: `${PHOTOS_TS}
 photoIndex = 0;`,
-    position: `import { WuGalleriaResponsiveOptions } from 'wiraui/galleria';
+    position: `import { WuGalleriaResponsiveOptions } from '@wirabyte/ui/galleria';
 
 responsiveOptions: WuGalleriaResponsiveOptions[] = [
   { breakpoint: '768px', numVisible: 2 },   // จอกว้างไม่เกิน 768px: รูปย่อ 2 รูป

@@ -4,7 +4,7 @@
 //   svg/<weight>/*.svg    every icon as its own file
 //   data/<weight>         icon drawings for the <wi-icon> component (one entry per weight, loaded on first use)
 //   icons.json            names, aliases, categories and code points, for docs and tools
-//   index (TS)            names, aliases and helpers; `wiraicon/angular` is the <wi-icon> component
+//   index (TS)            names, aliases and helpers; `@wirabyte/icons/angular` is the <wi-icon> component
 // Usage: node scripts/build.mjs            build
 //        node scripts/build.mjs --check    only check the icon list against the Phosphor drawings
 import { execSync } from 'node:child_process';

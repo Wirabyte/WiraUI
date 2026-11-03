@@ -415,7 +415,7 @@ export const NAVBAR_DOC: ComponentDoc = {
   },
   css: Object.fromEntries(NAVBAR_THEMES.map((t) => [t.id, t.pageCss ? t.css + '\n\n' + t.pageCss : t.css])),
   ts: {
-    basic: `import { WuMenuItem } from 'wiraui/menu';
+    basic: `import { WuMenuItem } from '@wirabyte/ui/menu';
 
 links: WuMenuItem[] = [
   { label: 'หน้าแรก', routerLink: '/', routerLinkActiveOptions: { exact: true } },

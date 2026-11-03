@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
 import { WuRatingRateEvent } from './rating.types';
 
 /** Star rating for ngModel and reactive forms: `<wu-rating [(ngModel)]="score" [stars]="5">`. Arrow keys move between stars. */

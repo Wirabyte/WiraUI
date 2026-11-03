@@ -1,6 +1,6 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { WuAlertIcon, WuAlertService } from 'wiraui/alert';
+import { WuAlertIcon, WuAlertService } from '@wirabyte/ui/alert';
 import { WuConfirmation, WuConfirmEventType } from './confirmdialog.types';
 
 const ALERT_ICONS: [RegExp, WuAlertIcon][] = [

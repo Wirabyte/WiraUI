@@ -353,7 +353,7 @@ export const ERRORPAGE_DOC: ComponentDoc = {
   },
   ts: {
     codes: `status = 404; // 400, 401, 403, 404, 408, 429, 500, 502, 503 …`,
-    actions: `import { WuErrorPageActionEvent } from 'wiraui/errorpage';
+    actions: `import { WuErrorPageActionEvent } from '@wirabyte/ui/errorpage';
 
 picked(e: WuErrorPageActionEvent): void {
   e.originalEvent.preventDefault(); // stay here (the sample only shows the name)

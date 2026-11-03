@@ -155,8 +155,8 @@ export const DIALOG_DOC: ComponentDoc = {
     basic: `visible = false;
 name = 'สมหญิง ใจดี';`,
     service: `import { Component, inject } from '@angular/core';
-import { WuButton } from 'wiraui/button';
-import { WuDialogConfig, WuDialogRef, WuDialogService } from 'wiraui/dialog';
+import { WuButton } from '@wirabyte/ui/button';
+import { WuDialogConfig, WuDialogRef, WuDialogService } from '@wirabyte/ui/dialog';
 
 // หน้าที่เปิด dialog
 export class ClassroomPage {
@@ -420,14 +420,14 @@ export const ALERT_DOC: ComponentDoc = {
   },
   ts: {
     import: `import { inject } from '@angular/core';
-import { WuAlertService } from 'wiraui/alert';
+import { WuAlertService } from '@wirabyte/ui/alert';
 
 export class OrdersComponent {
   readonly alert = inject(WuAlertService);
 }
 
 // หรือเรียกจากที่ไหนก็ได้ (ต้องมี provideWiraUI() ใน app.config.ts / AppModule)
-import { WuAlert } from 'wiraui/alert';
+import { WuAlert } from '@wirabyte/ui/alert';
 WuAlert.fire('บันทึกแล้ว', '', 'success');`,
     question: `async remove(): Promise<void> {
   const r = await this.alert.fire({
@@ -524,7 +524,7 @@ async sync(): Promise<void> {
   await this.api.sync();
   this.alert.close();
 }`,
-    migration: `import { WuAlert } from 'wiraui/alert';
+    migration: `import { WuAlert } from '@wirabyte/ui/alert';
 
 // object ของ option ที่ใช้อยู่ส่งต่อให้ fire() ได้เลย
 const r = await WuAlert.fire({
@@ -642,8 +642,8 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: '<code>WuConfirmationService</code> อยู่ใน <code>wiraui/confirmdialog</code> หรือ import จาก <code>wiraui/api</code> พร้อมชื่อที่แอปใช้อยู่ (<code>ConfirmationService</code>, <code>ConfirmEventType</code>) ซึ่งรวม <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> และ <code>WuAlert</code> ไว้ใน import เดียว',
-        en: '<code>WuConfirmationService</code> comes from <code>wiraui/confirmdialog</code>, or from <code>wiraui/api</code> under the names apps already use (<code>ConfirmationService</code>, <code>ConfirmEventType</code>), together with <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> and <code>WuAlert</code> in one import.',
+        th: '<code>WuConfirmationService</code> อยู่ใน <code>@wirabyte/ui/confirmdialog</code> หรือ import จาก <code>@wirabyte/ui/api</code> พร้อมชื่อที่แอปใช้อยู่ (<code>ConfirmationService</code>, <code>ConfirmEventType</code>) ซึ่งรวม <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> และ <code>WuAlert</code> ไว้ใน import เดียว',
+        en: '<code>WuConfirmationService</code> comes from <code>@wirabyte/ui/confirmdialog</code>, or from <code>@wirabyte/ui/api</code> under the names apps already use (<code>ConfirmationService</code>, <code>ConfirmEventType</code>), together with <code>MessageService</code>, <code>WuTemplate</code> / <code>SharedModule</code> and <code>WuAlert</code> in one import.',
       },
     },
     basic: {
@@ -703,8 +703,8 @@ export const CONFIRMDIALOG_DOC: ComponentDoc = {
   },
   ts: {
     import: `import { inject } from '@angular/core';
-import { WuConfirmationService, WuConfirmEventType } from 'wiraui/confirmdialog';
-// หรือ: import { ConfirmationService, ConfirmEventType } from 'wiraui/api';
+import { WuConfirmationService, WuConfirmEventType } from '@wirabyte/ui/confirmdialog';
+// หรือ: import { ConfirmationService, ConfirmEventType } from '@wirabyte/ui/api';
 
 export class CustomersComponent {
   private readonly confirmation = inject(WuConfirmationService);

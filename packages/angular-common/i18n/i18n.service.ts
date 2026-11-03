@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { WuConfig } from 'wiraui/config';
-import { flattenMessages, I18nMessages, LOCALES, matchLanguage, pickLanguage, translateKey, WuLocale } from 'wiraui/core';
+import { WuConfig } from '@wirabyte/ui/config';
+import { flattenMessages, I18nMessages, LOCALES, matchLanguage, pickLanguage, translateKey, WuLocale } from '@wirabyte/ui/core';
 import { WU_I18N_OPTIONS } from './i18n.types';
 
 /**

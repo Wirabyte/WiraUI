@@ -17,8 +17,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from 'wiraui/config';
-import { dockScale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
+import { dockScale } from '@wirabyte/ui/core';
 
 /** `(onItemClick)`: the item clicked (or chosen with Enter / Space). */
 export interface WuDockItemClickEvent {

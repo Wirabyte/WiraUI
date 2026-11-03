@@ -37,7 +37,7 @@ export function ɵassertSupportedAngular(skip?: boolean | null): void {
   const range = ɵsupportedRangeText();
   const fit = ɵwiraUIMajorFor(major);
   const fix = fit
-    ? `Install wiraui@${fit} instead.`
-    : 'No wiraui release supports this Angular version.';
-  throw new Error(`[wiraui] wiraui@${wu} supports Angular ${range}; this app runs ${VERSION.full}. ${fix}`);
+    ? `Install @wirabyte/ui@${fit} instead.`
+    : 'No @wirabyte/ui release supports this Angular version.';
+  throw new Error(`[wiraui] @wirabyte/ui@${wu} supports Angular ${range}; this app runs ${VERSION.full}. ${fix}`);
 }

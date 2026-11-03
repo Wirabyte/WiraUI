@@ -15,7 +15,7 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import type { FlowNode } from 'wiraui/core';
+import type { FlowNode } from '@wirabyte/ui/core';
 import { WU_FLOW_NODE } from './flow.types';
 import type { WuFlowNodeContext } from './flow.types';
 

@@ -3,14 +3,14 @@ import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angula
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink, Routes } from '@angular/router';
-import { WuButtonModule } from 'wiraui/button';
-import { WuCheckboxModule } from 'wiraui/checkbox';
-import { provideWiraUI } from 'wiraui/config';
-import { computeTokens } from 'wiraui/core';
-import { WiraKawaii } from 'wiraui/presets';
-import { WuProgressBarModule } from 'wiraui/progressbar';
-import { WuTagModule } from 'wiraui/tag';
-import { WuToggleSwitchModule } from 'wiraui/toggleswitch';
+import { WuButtonModule } from '@wirabyte/ui/button';
+import { WuCheckboxModule } from '@wirabyte/ui/checkbox';
+import { provideWiraUI } from '@wirabyte/ui/config';
+import { computeTokens } from '@wirabyte/ui/core';
+import { WiraKawaii } from '@wirabyte/ui/presets';
+import { WuProgressBarModule } from '@wirabyte/ui/progressbar';
+import { WuTagModule } from '@wirabyte/ui/tag';
+import { WuToggleSwitchModule } from '@wirabyte/ui/toggleswitch';
 import { THEME_LANDING } from '../versions/v3/theme-v3';
 import { KAWAII } from '../core/secrets';
 import { KAWAII_LOGO_DECOS, KAWAII_LOGO_STILL_SVG } from './kawaii-logo';
@@ -76,8 +76,8 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=
       </section>
 
       <div class="docs-kawaii-code">
-        <code>&#64;use 'wiraui/theme' with ($preset: 'kawaii');</code>
-        <code>provideWiraUI(&#123; preset: WiraKawaii &#125;)  // import &#123; WiraKawaii &#125; from 'wiraui/presets'</code>
+        <code>&#64;use '&#64;wirabyte/ui/theme' with ($preset: 'kawaii');</code>
+        <code>provideWiraUI(&#123; preset: WiraKawaii &#125;)  // import &#123; WiraKawaii &#125; from '&#64;wirabyte/ui/presets'</code>
       </div>
 
       <div class="docs-kawaii-actions">

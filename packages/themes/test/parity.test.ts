@@ -13,9 +13,9 @@ const require = createRequire(import.meta.url);
 const COMPILERS: [string, any][] = [require('sass-158'), require('sass')].map((sass) => [`sass ${sass.info.split('\t')[1]}`, sass]);
 
 const SCSS_DIR = new URL('../scss/', import.meta.url);
-const PREFIX = 'wiraui/theme';
+const PREFIX = '@wirabyte/ui/theme';
 
-/** Resolves `wiraui/theme[/x]` to packages/themes/scss, as the published package does. */
+/** Resolves `@wirabyte/ui/theme[/x]` to packages/themes/scss, as the published package does. */
 const importer = {
   findFileUrl(url: string) {
     if (url !== PREFIX && !url.startsWith(PREFIX + '/')) return null;
@@ -220,19 +220,19 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
 
   describe('accepts hand-written settings', () => {
     it.each(HAND_WRITTEN)('with (%s)', (settings, raw) => {
-      const source = settings ? `@use 'wiraui/theme' with (${settings});` : "@use 'wiraui/theme';";
+      const source = settings ? `@use '@wirabyte/ui/theme' with (${settings});` : "@use '@wirabyte/ui/theme';";
       expectParity(compile(sass, source), core.normalize(raw));
     }, 30000);
 
     it('emits the tokens once however many files load it', () => {
-      const css = compile(sass, "@use 'wiraui/theme' with ($preset: 'siam');\n@use 'wiraui/theme/index' as again;");
+      const css = compile(sass, "@use '@wirabyte/ui/theme' with ($preset: 'siam');\n@use '@wirabyte/ui/theme/index' as again;");
       expect(css.match(/--wu-theme-source/g)).toHaveLength(1);
     });
   });
 
   describe('rejects bad settings with a clear error', () => {
     it.each(BAD)('with (%s)', (settings, message) => {
-      expect(() => compile(sass, `@use 'wiraui/theme' with (${settings});`)).toThrow(message);
+      expect(() => compile(sass, `@use '@wirabyte/ui/theme' with (${settings});`)).toThrow(message);
     });
   });
 
@@ -247,8 +247,8 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
     const surfaces = Object.keys(core.SURFACES) as core.SurfaceId[];
     const source = `@use 'sass:list';
 @use 'sass:map';
-@use 'wiraui/theme/color';
-@use 'wiraui/theme/data';
+@use '@wirabyte/ui/theme/color';
+@use '@wirabyte/ui/theme/data';
 $colours: (${literals.join(', ')});
 a {
   @for $i from 1 through list.length($colours) {
@@ -271,13 +271,13 @@ a {
 
   describe('api', () => {
     it('emits nothing when loaded alone', () => {
-      expect(compile(sass, "@use 'wiraui/theme/api' as wu;").trim()).toBe('');
+      expect(compile(sass, "@use '@wirabyte/ui/theme/api' as wu;").trim()).toBe('');
     });
 
     it('provides token(), dark(), media() and glass()', () => {
       const css = compile(
         sass,
-        `@use 'wiraui/theme/api' as wu;
+        `@use '@wirabyte/ui/theme/api' as wu;
 .card {
   border-color: wu.token(primary-300);
   @include wu.dark { border-color: wu.token(primary-700); }
@@ -312,7 +312,7 @@ a {
     });
 
     it('rejects an unknown breakpoint', () => {
-      expect(() => compile(sass, "@use 'wiraui/theme/api' as wu;\na { @include wu.media(xxl) { b: c; } }")).toThrow(/unknown breakpoint `xxl`/);
+      expect(() => compile(sass, "@use '@wirabyte/ui/theme/api' as wu;\na { @include wu.media(xxl) { b: c; } }")).toThrow(/unknown breakpoint `xxl`/);
     });
   });
 });

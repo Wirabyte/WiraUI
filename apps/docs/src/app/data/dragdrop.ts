@@ -69,8 +69,8 @@ export const DRAGDROP_DOC: ComponentDoc = {
     migration: {
       title: { th: 'ย้ายโค้ดเดิม', en: 'Moving existing code' },
       text: {
-        th: '<code>pDraggable</code>, <code>pDroppable</code>, <code>dragHandle</code>, <code>dragEffect</code>, <code>dropEffect</code> และ event ทุกตัวใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuDragDropModule</code> จาก <code>wiraui/dragdrop</code> · class <code>p-draggable-enter</code> บนที่วางอยู่คู่กับ <code>wu-droppable-over</code> และ <code>p-draggable</code> / <code>p-droppable</code> อยู่คู่กับ class <code>wu-*</code>',
-        en: '<code>pDraggable</code>, <code>pDroppable</code>, <code>dragHandle</code>, <code>dragEffect</code>, <code>dropEffect</code> and every event keep working; only the import changes to <code>WuDragDropModule</code> from <code>wiraui/dragdrop</code> · the <code>p-draggable-enter</code> class on a zone sits next to <code>wu-droppable-over</code>, and <code>p-draggable</code> / <code>p-droppable</code> next to the <code>wu-*</code> ones.',
+        th: '<code>pDraggable</code>, <code>pDroppable</code>, <code>dragHandle</code>, <code>dragEffect</code>, <code>dropEffect</code> และ event ทุกตัวใช้ต่อได้โดยไม่ต้องแก้ เปลี่ยนแค่ import เป็น <code>WuDragDropModule</code> จาก <code>@wirabyte/ui/dragdrop</code> · class <code>p-draggable-enter</code> บนที่วางอยู่คู่กับ <code>wu-droppable-over</code> และ <code>p-draggable</code> / <code>p-droppable</code> อยู่คู่กับ class <code>wu-*</code>',
+        en: '<code>pDraggable</code>, <code>pDroppable</code>, <code>dragHandle</code>, <code>dragEffect</code>, <code>dropEffect</code> and every event keep working; only the import changes to <code>WuDragDropModule</code> from <code>@wirabyte/ui/dragdrop</code> · the <code>p-draggable-enter</code> class on a zone sits next to <code>wu-droppable-over</code>, and <code>p-draggable</code> / <code>p-droppable</code> next to the <code>wu-*</code> ones.',
       },
     },
   },

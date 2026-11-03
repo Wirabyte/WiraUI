@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 // The header's version switcher is wiraui v3's select, whichever version the page shows.
-import { WuSelectModule } from 'wiraui/select';
+import { WuSelectModule } from '@wirabyte/ui/select';
 import { DocsSharedModule } from '../shared/docs-shared-module';
 import { DocsConfigurator } from './configurator';
 import { DocsLayout } from './layout';

@@ -35,8 +35,8 @@ import {
   WuConfig,
   WuMenuItem,
   WuTemplate,
-} from 'wiraui/config';
-import { menuHasSubmenu, menuVisible, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { menuHasSubmenu, menuVisible, WuLocale } from '@wirabyte/ui/core';
 
 /** Context of the `start` / `end` templates: `<ng-template wuTemplate="start" let-collapsed>`. */
 export interface WuAsideMenuSlotContext {

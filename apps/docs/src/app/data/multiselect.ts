@@ -282,7 +282,7 @@ ${FIELD} variant="filled" placeholder="แบบพื้นทึบ"></wu-mult
     labels: `provinceIds: number[] = [10, 50, 40];`,
     chips: `provinceIds: number[] = [50, 83];`,
     chipsNarrow: `provinceIds: number[] = [10, 50, 40, 83, 90];`,
-    toggleall: `import { WuMultiSelectSelectAllChangeEvent } from 'wiraui/multiselect';
+    toggleall: `import { WuMultiSelectSelectAllChangeEvent } from '@wirabyte/ui/multiselect';
 
 allChecked: boolean | null = null;
 
@@ -303,7 +303,7 @@ isOptionsLoading = true;`,
     moretemplates: `addProvince(): void {
   // เปิดฟอร์มเพิ่มจังหวัด
 }`,
-    events: `import { WuMultiSelectChangeEvent } from 'wiraui/multiselect';
+    events: `import { WuMultiSelectChangeEvent } from '@wirabyte/ui/multiselect';
 
 lastChange = '';
 lastEvent = '';
@@ -404,7 +404,7 @@ log(name: string): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuMultiSelectChangeEvent, WuMultiSelectSelectAllChangeEvent } from 'wiraui/multiselect';
+      code: `import { WuMultiSelectChangeEvent, WuMultiSelectSelectAllChangeEvent } from '@wirabyte/ui/multiselect';
 
 interface WuMultiSelectChangeEvent {
   originalEvent: Event;

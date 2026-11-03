@@ -31,8 +31,8 @@ import {
   ɵWuStyleLoader,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
+} from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
 import {
   base64ToFile,
   clampCrop,
@@ -72,7 +72,7 @@ import {
   viewWindow,
   WuLocale,
   zoomCrop,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 import {
   WU_IMAGE_CROPPER_OPTIONS,
   WuImageCroppedEvent,

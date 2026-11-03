@@ -10,8 +10,8 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from 'wiraui/config';
-import { menuHasSubmenu, menuItemAt, menuKey, menuVisible } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WU_VERSION_INFO, WuMenuItem, WuTemplate } from '@wirabyte/ui/config';
+import { menuHasSubmenu, menuItemAt, menuKey, menuVisible } from '@wirabyte/ui/core';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);
 

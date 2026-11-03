@@ -14,8 +14,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuPopup, WuTemplate } from 'wiraui/config';
-import { WuLocale } from 'wiraui/core';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵfocusable, ɵrefreshOnTranslation, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuPopup, WuTemplate } from '@wirabyte/ui/config';
+import { WuLocale } from '@wirabyte/ui/core';
 
 /**
  * Shared logic of wu-popover (v1 and v2/v3 templates): a panel with an arrow under (or over) whatever opened it.

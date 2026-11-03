@@ -1,6 +1,6 @@
 import { Directive, forwardRef, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
-import { isThaiPhone, isValidThaiId } from 'wiraui/core';
+import { isThaiPhone, isValidThaiId } from '@wirabyte/ui/core';
 
 const empty = (v: unknown) => v === null || v === undefined || v === '';
 

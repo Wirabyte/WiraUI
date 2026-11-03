@@ -3,7 +3,7 @@ import { row, tok } from './doc-helpers';
 
 const BOOL = 'boolean';
 
-const ITEMS_TS = `import { MenuItem } from 'wiraui/api';
+const ITEMS_TS = `import { MenuItem } from '@wirabyte/ui/api';
 
 items: MenuItem[] = [
   { label: 'หน้าแรก', icon: 'wi wi-home' },
@@ -97,8 +97,8 @@ export const MENUBAR_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenubarModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenubar</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>wiraui/api</code> (หรือ <code>WuMenuItem</code> จาก <code>wiraui/config</code>) entry นี้ใช้ <code>@angular/router</code> สำหรับ <code>routerLink</code> เป็น peer dependency แบบไม่บังคับที่ใช้เฉพาะ entry นี้',
-        en: 'Works as an NgModule (<code>WuMenubarModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenubar</code>). Items are typed <code>MenuItem</code> from <code>wiraui/api</code> (or <code>WuMenuItem</code> from <code>wiraui/config</code>). This entry uses <code>@angular/router</code> for <code>routerLink</code>: an optional peer dependency that only this entry needs.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuMenubarModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuMenubar</code>) type ของรายการคือ <code>MenuItem</code> จาก <code>@wirabyte/ui/api</code> (หรือ <code>WuMenuItem</code> จาก <code>@wirabyte/ui/config</code>) entry นี้ใช้ <code>@angular/router</code> สำหรับ <code>routerLink</code> เป็น peer dependency แบบไม่บังคับที่ใช้เฉพาะ entry นี้',
+        en: 'Works as an NgModule (<code>WuMenubarModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuMenubar</code>). Items are typed <code>MenuItem</code> from <code>@wirabyte/ui/api</code> (or <code>WuMenuItem</code> from <code>@wirabyte/ui/config</code>). This entry uses <code>@angular/router</code> for <code>routerLink</code>: an optional peer dependency that only this entry needs.',
       },
     },
     basic: {
@@ -240,7 +240,7 @@ export const MENUBAR_DOC: ComponentDoc = {
   },
   ts: {
     basic: ITEMS_TS,
-    router: `import { MenuItem } from 'wiraui/api';
+    router: `import { MenuItem } from '@wirabyte/ui/api';
 
 // เทียบ fragment ด้วย: ไฮไลต์เฉพาะหัวข้อที่เปิดอยู่
 private readonly sameSection = { paths: 'exact', queryParams: 'ignored', fragment: 'exact', matrixParams: 'ignored' };
@@ -258,7 +258,7 @@ links: MenuItem[] = [
   { label: 'ลิงก์และ router', icon: 'wi wi-hashtag', routerLink: [], fragment: 'router', routerLinkActiveOptions: this.sameSection },
   { label: 'คู่มือ router', icon: 'wi wi-external-link', url: 'https://angular.dev/guide/routing', target: '_blank' },
 ];`,
-    commands: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    commands: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 fileItems: MenuItem[] = [
   {
@@ -387,7 +387,7 @@ run(event: MenuItemCommandEvent): void {
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+      code: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;

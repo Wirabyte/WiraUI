@@ -14,8 +14,8 @@ interface Report {
 const PRIMENG_IMPORT = /^primeng\/([a-z]+)$/;
 
 /**
- * `ng g wiraui:from-primeng`: moves an app's PrimeNG code over in place. TypeScript imports from `primeng/*` become
- * `wiraui/*` (NgModules and classes renamed: `DropdownModule` → `WuSelectModule`, `Table` → `WuTable`; the services
+ * `ng g @wirabyte/ui:from-primeng`: moves an app's PrimeNG code over in place. TypeScript imports from `primeng/*` become
+ * `@wirabyte/ui/*` (NgModules and classes renamed: `DropdownModule` → `WuSelectModule`, `Table` → `WuTable`; the services
  * keep their names), and `<p-…>` tags in templates (`.html` files and inline `template:`) become `<wu-…>` where WiraUI
  * has them. PrimeNG attributes (`pButton`, `pTemplate`, `pTooltip` …) and `p-*` classes stay: WiraUI reads them.
  * Anything it cannot move is left untouched and listed. Run with `--dry-run` first to see the changes.
@@ -36,7 +36,7 @@ export function fromPrimeng(options: FromPrimeNgOptions): Rule {
       log.warn(`Left for you (${report.todo.length}):`);
       for (const t of report.todo) log.warn('  ' + t);
     }
-    log.info('Next: ng add wiraui (if not done), then remove primeng and its theme CSS from package.json / angular.json when nothing uses them.');
+    log.info('Next: ng add @wirabyte/ui (if not done), then remove primeng and its theme CSS from package.json / angular.json when nothing uses them.');
     return tree;
   };
 }
@@ -97,7 +97,7 @@ function migrateTs(tree: Tree, path: string, report: Report, options: FromPrimeN
     }
     if (!byEntry.size) continue;
     const typeOnly = stmt.importClause?.isTypeOnly ? 'type ' : '';
-    const lines = [...byEntry].map(([e, names]) => `import ${typeOnly}{ ${names.join(', ')} } from 'wiraui/${e}';`);
+    const lines = [...byEntry].map(([e, names]) => `import ${typeOnly}{ ${names.join(', ')} } from '@wirabyte/ui/${e}';`);
     if (left.length) lines.push(`import ${typeOnly}{ ${left.join(', ')} } from 'primeng/${entry}';`);
     edits.push({ start: stmt.getStart(sf), end: stmt.getEnd(), text: lines.join('\n') });
     changedImports += byEntry.size;

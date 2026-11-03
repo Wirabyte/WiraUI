@@ -2,7 +2,7 @@
   "name": "@wiraui/themes",
   "version": "0.1.0",
   "private": true,
-  "description": "WiraUI SCSS theme module (`@use 'wiraui/theme' with (…)`) and prebuilt CSS themes. Copied into every wiraui build.",
+  "description": "WiraUI SCSS theme module (`@use '@wirabyte/ui/theme' with (…)`) and prebuilt CSS themes. Copied into every wiraui build.",
   "scripts": {
     "gen": "node scripts/gen-scss-data.mjs",
     "build": "node scripts/gen-scss-data.mjs && node scripts/build-css.mjs",

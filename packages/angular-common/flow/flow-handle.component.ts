@@ -9,8 +9,8 @@ import {
   OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
-import type { FlowHandleType, FlowPosition } from 'wiraui/core';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import type { FlowHandleType, FlowPosition } from '@wirabyte/ui/core';
 import { ɵWuFlowHost } from './flow-host';
 import { WU_FLOW_NODE } from './flow.types';
 

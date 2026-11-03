@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, HostListener, inject, Input, OnDestroy } from '@angular/core';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from '@wirabyte/ui/config';
 import { WU_TOOLTIP_CSS } from './tooltip.styles';
 import { WuTooltipEvent, WuTooltipOptions, WuTooltipPosition } from './tooltip.types';
 

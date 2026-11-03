@@ -1,3 +1,3 @@
-// The preset `@use 'wiraui/theme'` falls back to when neither $theme nor $preset is set.
+// The preset `@use '@wirabyte/ui/theme'` falls back to when neither $theme nor $preset is set.
 // tools/sync-sources.mjs overwrites this file in each build: sila-classic for v1, mali for v2 and v3.
 $default-preset: 'wira';

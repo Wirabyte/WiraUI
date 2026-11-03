@@ -19,7 +19,7 @@ import {
   ɵWU_SKIP_VERSION_CHECK,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import { ɵprogressPercent, ɵprogressText, WuProgressBarContext, WuProgressBarMode } from './progressbar.types';
 
 /**

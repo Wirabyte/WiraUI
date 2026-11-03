@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, EventEmitter, inject, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
-import { FlowHistory, flowHistoryKey, isTypingTarget } from 'wiraui/core';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import { FlowHistory, flowHistoryKey, isTypingTarget } from '@wirabyte/ui/core';
 import { WuFlow } from './flow.component';
 
 /** `(historyChange)`: what undo / redo can do now. */

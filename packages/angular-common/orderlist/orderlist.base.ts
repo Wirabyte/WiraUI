@@ -27,11 +27,11 @@ import {
   WU_VERSION_INFO,
   WuConfig,
   WuTemplate,
-} from 'wiraui/config';
-import { ɵbuttonClass, ɵWU_BUTTON_CSS } from 'wiraui/button';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
-import { ɵlistItemLabel, ɵWU_PICKLIST_CSS, ɵWuListDrag, WuPickListFilterOptions } from 'wiraui/picklist';
-import { FilterMatchMode, ListState, moveBottom, moveDown, moveItemsTo, moveTop, moveUp, WuLocale } from 'wiraui/core';
+} from '@wirabyte/ui/config';
+import { ɵbuttonClass, ɵWU_BUTTON_CSS } from '@wirabyte/ui/button';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
+import { ɵlistItemLabel, ɵWU_PICKLIST_CSS, ɵWuListDrag, WuPickListFilterOptions } from '@wirabyte/ui/picklist';
+import { FilterMatchMode, ListState, moveBottom, moveDown, moveItemsTo, moveTop, moveUp, WuLocale } from '@wirabyte/ui/core';
 import { WuOrderListFilterEvent, WuOrderListSelectionChangeEvent } from './orderlist.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

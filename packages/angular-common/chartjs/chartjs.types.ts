@@ -5,5 +5,5 @@ export interface WuChartJsDataSelectEvent {
   dataset: unknown[];
 }
 
-/** The name wu-chart used (wiraui v1 / v2 `wiraui/chart`, and older code moving over). */
+/** The name wu-chart used (wiraui v1 / v2 `@wirabyte/ui/chart`, and older code moving over). */
 export type WuChartDataSelectEvent = WuChartJsDataSelectEvent;

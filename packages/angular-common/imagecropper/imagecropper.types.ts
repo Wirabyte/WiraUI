@@ -1,7 +1,7 @@
 import { InjectionToken, Provider } from '@angular/core';
-import type { CropDimensions, CropperPosition, CropperTool, CropperToolbar } from 'wiraui/core';
+import type { CropDimensions, CropperPosition, CropperTool, CropperToolbar } from '@wirabyte/ui/core';
 
-export type { CropDimensions, CropperPosition } from 'wiraui/core';
+export type { CropDimensions, CropperPosition } from '@wirabyte/ui/core';
 
 /** Image type of the result. Browsers encode png, jpeg and webp; the others come out as png. */
 export type WuImageCropperFormat = 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico';

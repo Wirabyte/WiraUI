@@ -4,7 +4,7 @@ import { row, tok } from './doc-helpers';
 const BOOL = 'boolean';
 
 /** The menu of the Basic sample (the demos build the same one, with commands: the docs have no router). */
-const MENU_TS = `import { WuMenuItem, WuMenuItemCommandEvent } from 'wiraui/menu';
+const MENU_TS = `import { WuMenuItem, WuMenuItemCommandEvent } from '@wirabyte/ui/menu';
 
 menu: WuMenuItem[] = [
   { label: 'แดชบอร์ด', icon: 'wi wi-home', command: (event) => this.go(event) },
@@ -114,8 +114,8 @@ export const ASIDEMENU_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuAsideMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuAsideMenu</code>) รายการเป็น <code>WuMenuItem</code> จาก <code>wiraui/menu</code> รูปแบบเดียวกับเมนูอื่น ๆ',
-        en: 'Works as an NgModule (<code>WuAsideMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuAsideMenu</code>). Items are <code>WuMenuItem</code> from <code>wiraui/menu</code>, the same shape as the other menus.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuAsideMenuModule</code> ซึ่ง export <code>WuTemplate</code> ให้ด้วย) และ standalone (<code>WuAsideMenu</code>) รายการเป็น <code>WuMenuItem</code> จาก <code>@wirabyte/ui/menu</code> รูปแบบเดียวกับเมนูอื่น ๆ',
+        en: 'Works as an NgModule (<code>WuAsideMenuModule</code>, which also exports <code>WuTemplate</code>) or standalone (<code>WuAsideMenu</code>). Items are <code>WuMenuItem</code> from <code>@wirabyte/ui/menu</code>, the same shape as the other menus.',
       },
     },
     basic: {
@@ -413,7 +413,7 @@ menu: WuMenuItem[] = [
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { WuMenuItem, WuMenuItemCommandEvent } from 'wiraui/menu';
+      code: `import { WuMenuItem, WuMenuItemCommandEvent } from '@wirabyte/ui/menu';
 
 // context ของ template start / end
 interface WuAsideMenuSlotContext {

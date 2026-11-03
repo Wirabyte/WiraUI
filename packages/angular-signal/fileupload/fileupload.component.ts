@@ -1,6 +1,6 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { WuMessage } from 'wiraui/message';
+import { WuMessage } from '@wirabyte/ui/message';
 import { ɵWuFileUploadBase } from './fileupload.base';
 
 /**

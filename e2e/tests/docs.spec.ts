@@ -53,7 +53,7 @@ test('switches between v1, v2 and v3 with the dropdown, each version working', a
     if (v !== 'v1') await pickVersion(page, v);
     await expect(page).toHaveURL(new RegExp(`/${v}/components/button$`));
     await expect(page.locator('#docs-version .wu-select-label')).toContainText(v);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#doc-host')).toContainText('Angular 21.');
     await expect(page.locator(`[data-wu-version="${v}"] wu-button .wu-btn`).first()).toBeVisible();
     // No global theme file: the tokens come from the version's own preset.
@@ -72,7 +72,7 @@ test('keeps the page and tab when switching version', async ({ page }) => {
   await expect(page.locator('#tab-api')).toHaveClass(/active/);
   await pickVersion(page, 'v1');
   await expect(page).toHaveURL(/\/v1\/components\/card\?tab=api$/);
-  await expect(page.locator('#doc-version')).toContainText('wiraui@1');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@1');
   await expect(page.locator('#tab-api')).toHaveClass(/active/);
 });
 
@@ -82,7 +82,7 @@ test('form controls work with ngModel and reactive forms in every version', asyn
 
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/inputtext`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
 
     // InputText: ngModel, then a required FormControl filled by patchValue.
     await page.locator('#d-name').fill('สมหญิง');
@@ -141,7 +141,7 @@ test('display, panel and message components work in every version', async ({ pag
   for (const [v, major] of VERSIONS) {
     // Chip: removing a chip emits onRemove and updates the list.
     await page.goto(`/${v}/components/chip`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await page.locator('#removable wu-chip').first().locator('button').click();
     await expect.poll(() => json(page, '#d-tags')).toEqual(['ลูกค้าใหม่', 'รอโทรกลับ']);
 
@@ -171,7 +171,7 @@ test('toggle, select, rating, password and float label controls work in every ve
   for (const [v, major] of VERSIONS) {
     // ToggleButton: ngModel and a reactive control.
     await page.goto(`/${v}/components/togglebutton`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await page.locator('#d-pin').click();
     await expect(page.locator('#d-pin-value')).toHaveText('true');
     await expect(page.locator('#d-pin')).toHaveAttribute('aria-pressed', 'true');
@@ -218,7 +218,7 @@ test('number input formats when idle, reads Thai digits and steps in every versi
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/inputnumber`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     const qty = page.locator('#d-qty');
     await expect(qty).toHaveValue('1,200');
     await expect(qty).toHaveAttribute('inputmode', 'decimal');
@@ -253,7 +253,7 @@ test('date picker: pick a day, type a date, time fields and the two readonly loc
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/datepicker`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
 
     // Pick a day from the calendar button; years show in the Buddhist era, the model is an ordinary Date.
     const field = page.locator('#dp-basic');
@@ -321,7 +321,7 @@ test('dialog opens and closes by button and Escape, and gives focus back, in eve
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/dialog`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     const open = page.locator('#d-dialog-open button');
     const box = page.locator('.d-dialog-basic');
     await open.click();
@@ -605,7 +605,7 @@ test('theme panel: the clicked swatch is the theme that shows, in light and dark
   await expect(page.locator('html')).toHaveClass(/wu-dark/);
   // Presets that carry both schemes leave the mode alone.
   await pickVersion(page, 'v3');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@3');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@3');
   await page.locator('.docs-preset-card[data-preset="sila"]').click();
   await expect(active).toHaveAttribute('data-preset', 'sila');
   await expect(page.locator('html')).toHaveClass(/wu-dark/);
@@ -624,7 +624,7 @@ test('the site takes the theme primary colour; favicon and a framework-neutral l
   await page.goto('/v1/components/button');
   await expect.poll(follows).toBe(true);
   await pickVersion(page, 'v3');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@3');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@3');
   await expect.poll(follows).toBe(true);
 
   await page.goto('/');
@@ -641,7 +641,7 @@ test('accordion, tabs and toolbar work in every version, keyboard included', asy
   for (const [v, major] of VERSIONS) {
     // Accordion: [(activeIndex)], multiple with onOpen / onClose, [(selected)], arrow keys between headers.
     await page.goto(`/${v}/components/accordion`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     const headers = page.locator('#d-accordion .wu-accordion-header');
     await expect(headers.nth(0)).toHaveAttribute('aria-expanded', 'true');
     await headers.nth(1).click();
@@ -692,12 +692,12 @@ test('lazy-loads only the version being viewed', async ({ page }) => {
   const chunks: string[] = [];
   page.on('response', (r) => r.url().endsWith('.js') && chunks.push(r.url()));
   await page.goto('/v3/components/button');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@3');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@3');
   // Opening a version's URL directly must also select it in the dropdown.
   await expect(page.locator('#docs-version .wu-select-label')).toContainText('v3');
   const before = chunks.length;
   await pickVersion(page, 'v1');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@1');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@1');
   expect(chunks.length).toBeGreaterThan(before);
 });
 
@@ -726,7 +726,7 @@ test('landing page runs a live v3 sample dashboard and leads into the docs', asy
 
 test('Ctrl+K search opens the page in the current version', async ({ page }) => {
   await page.goto('/v2/getting-started/introduction');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@2');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@2');
   await page.keyboard.press('Control+k');
   await page.locator('#docs-search-input').fill('radio');
   await page.keyboard.press('Enter');
@@ -748,7 +748,7 @@ test('configurator shows the version presets and themes only that version', asyn
   // v3 opens in its own default look, not v2's customised one. (The drawer is modal: close it first.)
   await page.keyboard.press('Escape');
   await pickVersion(page, 'v3');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@3');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@3');
   await expect.poll(() => primaryToken(page)).not.toBe(blue);
 });
 
@@ -951,7 +951,7 @@ test('menubar page in every version: submenus, a command, the keyboard, a router
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/menubar`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-menubar')).toHaveClass(/active/);
     const basic = page.locator('#d-mb-basic');
     await expect(basic.getByRole('menubar')).toHaveAttribute('aria-label', 'เมนูหลัก');
@@ -1034,7 +1034,7 @@ test('menu page in every version: popup from a button, Esc gives focus back, com
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/menu`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-menu')).toHaveClass(/active/);
 
     // Popup: the button opens it next to itself, the first item takes focus, ↓ moves, Esc closes and focus goes back.
@@ -1099,7 +1099,7 @@ test('tabmenu page in every version: activeItem, commands, keyboard, tabs that f
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/tabmenu`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-tabmenu')).toHaveClass(/active/);
 
     // [(activeItem)]: the first tab to start with, a click picks another.
@@ -1259,7 +1259,7 @@ test('inputmask page in every version: formatted model, Thai digits, literals, o
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/inputmask`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-inputmask')).toHaveClass(/active/);
 
     // Thai ID: the field types the literals; the model is the formatted text, with `_` while incomplete.
@@ -1324,7 +1324,7 @@ test('timeline page in every version: events, the opposite side, alignments and 
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/timeline`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-timeline')).toHaveClass(/active/);
 
     // No opposite template: the content takes the whole row; index comes with each event.
@@ -1429,7 +1429,7 @@ test('chart page in every version: every chart draws, a click picks a bar, refre
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/chartjs`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-chartjs')).toHaveClass(/active/);
 
     // Every chart has drawn something on its canvas.
@@ -1497,7 +1497,7 @@ test('image page in every version: picture, full-screen preview with zoom and ro
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/image`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-image')).toHaveClass(/active/);
 
     // The picture itself, with its alt, size and lazy loading.
@@ -1755,7 +1755,7 @@ test('panelmenu page in every version: panels from expanded, the multiple defaul
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(`/${v}/components/panelmenu`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-panelmenu')).toHaveClass(/active/);
 
     // The model's expanded flag decides which panel starts open; closed content is inert.
@@ -1835,7 +1835,7 @@ test('steps page in every version: a read-only progress row, picking by click an
   const errors = collectErrors(page);
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/steps`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-steps')).toHaveClass(/active/);
 
     // Read-only (the default): no Tab stop, a click changes nothing; Back / Next outside move the current step.
@@ -1916,7 +1916,7 @@ test('picklist page in every version: buttons, double-click, in place, drag, ord
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/${v}/components/picklist`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-picklist')).toHaveClass(/active/);
 
     // Select, then the middle button; the bound array changes in place. A double-click sends an item across.
@@ -2025,7 +2025,7 @@ test('orderlist page in every version: buttons, onReorder, drag, selection, keyb
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/${v}/components/orderlist`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-orderlist')).toHaveClass(/active/);
 
     // Select, then the order buttons; the array changes in place and (onReorder) fires.
@@ -2088,7 +2088,7 @@ test('fileupload page in every version: choose, sizes, thumbnails, remove, a pre
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/${v}/components/fileupload`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-fileupload')).toHaveClass(/active/);
 
     // Choose files: rows with sizes, a thumbnail for the picture, "pending" badges; remove one.
@@ -2189,7 +2189,7 @@ test('stepper page in every version: panels by value, done steps, keyboard, line
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/${v}/components/stepper`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-stepper')).toHaveClass(/active/);
 
     // Basic: numbers by position, Next through activateCallback, done steps, a click on a header.
@@ -2455,7 +2455,7 @@ test('editor page in every version: HTML value and null, presets, tool options, 
   for (const [v, major] of VERSIONS) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/${v}/components/editor`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-editor')).toHaveClass(/active/);
 
     // The value is HTML; emptied it is null and the save button waits for content; saving shows loading.
@@ -2951,7 +2951,7 @@ test('slider, splitbutton, listbox and colorpicker pages in every version', asyn
     await page.setViewportSize({ width: 1280, height: 900 });
     // Slider: keys move by the step, Home / End jump, a click on the track jumps; a range keeps its handles apart.
     await page.goto(`/${v}/components/slider`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-slider')).toHaveClass(/active/);
     const handle = page.locator('#d-sl-basic .wu-slider-handle');
     await expect(handle).toHaveAttribute('aria-labelledby', 'd-sl-volume-label');
@@ -3602,14 +3602,14 @@ test('each version opens in its own default theme, dark mode picks the dark twin
   await expect(active).toHaveAttribute('data-preset', 'sila-light-teal');
 
   await pickVersion(page, 'v2');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@2');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@2');
   await expect(active).toHaveAttribute('data-preset', 'mali');
   await page.locator('[data-preset="phet"]').click();
   await expect(active).toHaveAttribute('data-preset', 'phet');
 
   // v3 lists WiraUI's own presets too, and starts from its own default rather than v2's choice.
   await pickVersion(page, 'v3');
-  await expect(page.locator('#doc-version')).toContainText('wiraui@3');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@3');
   await expect(active).toHaveAttribute('data-preset', 'wira');
   await expect(page.locator('.docs-preset-card[data-preset="glass"]')).toBeVisible();
   expect(errors).toEqual([]);
@@ -3706,7 +3706,7 @@ test.describe('language', () => {
     await expect(page.locator('#docs-search')).toContainText('Search docs');
 
     await pickVersion(page, 'v1');
-    await expect(page.locator('#doc-version')).toContainText('wiraui@1');
+    await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@1');
     await expect(page.locator('#lang-en')).toHaveAttribute('aria-pressed', 'true');
     await page.locator('#nav-group-getting-started').click();
     await page.locator('#nav-introduction').click();
@@ -4394,7 +4394,7 @@ test('custom report text: own text on the table and the paginator, every placeho
   await expect(report.locator('.docs-api-name')).toHaveText(['{first}', '{last}', '{rows}', '{totalRecords}', '{currentPage}', '{totalPages}']);
   await expect(report.locator('docs-code')).toContainText('currentPageReportTemplate="หน้า {currentPage} จาก {totalPages} · นักเรียน {totalRecords} คน"');
   await report.getByRole('tab', { name: 'TS' }).click();
-  await expect(report.locator('docs-code')).toContainText("import { WuConfig } from 'wiraui/config';");
+  await expect(report.locator('docs-code')).toContainText("import { WuConfig } from '@wirabyte/ui/config';");
   await expect(report.locator('docs-code')).toContainText('setPageReport(): void {');
   await expect(report.locator('docs-code')).toContainText('this.config.setTranslation({ pageReport:');
 
@@ -4431,7 +4431,7 @@ test('only the migration page names the other UI library, as an option, in eithe
       expect(text, `${lang} ${path}`).not.toMatch(/primeng/i);
     }
     await page.goto('/v3/getting-started/migration');
-    await expect(page.locator('docs-section#schematic')).toContainText('wiraui:from-primeng --dry-run');
+    await expect(page.locator('docs-section#schematic')).toContainText('@wirabyte/ui:from-primeng --dry-run');
     const outside = await page.evaluate(() => {
       const main = document.body.cloneNode(true) as HTMLElement;
       main.querySelector('docs-section#schematic')?.remove();
@@ -5161,8 +5161,8 @@ test('icons page in every version: install, usage demos, a searchable gallery of
     await expect(page.locator('#nav-icons')).toHaveClass(/active/);
     for (const id of ['install', 'classes', 'weights', 'size', 'buttons', 'component', 'gallery', 'migration', 'license'])
       await expect(page.locator(`docs-section#${id}`)).toBeAttached();
-    await expect(page.locator('docs-section#install')).toContainText('npm install wiraicon');
-    await expect(page.locator('docs-section#install')).toContainText('node_modules/wiraicon/wiraicon.css');
+    await expect(page.locator('docs-section#install')).toContainText('npm install @wirabyte/icons');
+    await expect(page.locator('docs-section#install')).toContainText('node_modules/@wirabyte/icons/wiraicon.css');
     expect(await css(page.locator('#d-wi-classes i').first(), 'font-family')).toContain('wiraicon');
     await expect(page.locator('#d-wi-weights i').nth(3)).toHaveClass(/\bwi-bold\b/);
     await expect(page.locator('#d-wi-spin')).toHaveClass(/\bwi-spin\b/);
@@ -5608,7 +5608,7 @@ test('version switcher: our own select listing each version with its Angular ran
   const sw = page.locator('#docs-version');
   await expect(page.locator('select#docs-version, select.docs-version')).toHaveCount(0);
   await expect(sw.locator('.wu-select-label')).toContainText('v3');
-  await expect(sw.locator('[role="combobox"]')).toHaveAttribute('aria-label', 'รุ่นของ wiraui');
+  await expect(sw.locator('[role="combobox"]')).toHaveAttribute('aria-label', 'รุ่นของ WiraUI');
   await sw.click();
   const list = page.locator('.wu-select-list');
   await expect(list.getByRole('option')).toHaveCount(3);
@@ -5618,7 +5618,7 @@ test('version switcher: our own select listing each version with its Angular ran
   await list.getByRole('option', { name: /^v1\b/ }).click();
   // The same page in the chosen version, with its tab.
   await expect(page).toHaveURL(/\/v1\/components\/button\?tab=api$/);
-  await expect(page.locator('#doc-version')).toContainText('wiraui@1');
+  await expect(page.locator('#doc-version')).toContainText('@wirabyte/ui@1');
   await expect(sw.locator('.wu-select-label')).toContainText('v1');
   // Keyboard: ↓ opens, End goes to the last version, Enter picks.
   await sw.locator('[role="combobox"]').focus();
@@ -5686,14 +5686,14 @@ test.describe('English: the seven new pages and the switcher', () => {
 
   test('the version switcher speaks English', async ({ page }) => {
     await page.goto('/v2/components/button');
-    await expect(page.locator('#docs-version [role="combobox"]')).toHaveAttribute('aria-label', 'wiraui version');
+    await expect(page.locator('#docs-version [role="combobox"]')).toHaveAttribute('aria-label', 'WiraUI version');
     await page.locator('#docs-version').click();
     await expect(page.locator('.wu-select-list').getByRole('option').nth(0)).toContainText('maintenance');
     await expect(page.locator('.wu-select-list').getByRole('option').nth(2)).toContainText('latest');
   });
 });
 
-// ---------- Flow (wiraui/flow) ----------
+// ---------- Flow (@wirabyte/ui/flow) ----------
 
 const flowNode = (page: Page, flow: string, id: string) => page.locator(`#${flow} .wu-flow-node[data-id="${id}"]`);
 
@@ -5738,7 +5738,7 @@ test('flow page in every version: every demo draws, a drag connects two handles,
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const [v, major] of VERSIONS) {
     await page.goto(`/${v}/components/flow`);
-    await expect(page.locator('#doc-version')).toContainText(`wiraui@${major}`);
+    await expect(page.locator('#doc-version')).toContainText(`@wirabyte/ui@${major}`);
     await expect(page.locator('#nav-flow')).toHaveClass(/active/);
     for (const [id, nodes, edges] of FLOW_DEMOS) {
       await page.locator('#' + id).scrollIntoViewIfNeeded();

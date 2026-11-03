@@ -1,5 +1,5 @@
-// WiraUI theme: `@use 'wiraui/theme' with ($preset: 'mali', $primary: #10b981, …);`
-// or a ready-made theme: `@use 'wiraui/theme' with ($theme: 'sila-light-teal');`
+// WiraUI theme: `@use '@wirabyte/ui/theme' with ($preset: 'mali', $primary: #10b981, …);`
+// or a ready-made theme: `@use '@wirabyte/ui/theme' with ($theme: 'sila-light-teal');`
 // Emits the same --wu-* tokens as computeTokens() + tokensToCss() in @wiraui/core
 // (test/parity.test.ts compiles both supported Sass versions against it). Every setting is
 // optional; anything left out comes from the theme or preset.

@@ -84,7 +84,7 @@ export interface StudioCssOptions {
   extra?: TokenMap;
 }
 
-/** What the studio uses from `wiraui/core` (each version module passes its own copy). */
+/** What the studio uses from `@wirabyte/ui/core` (each version module passes its own copy). */
 export interface StudioCore {
   readonly CORE_VERSION: string;
   readonly CONFIG_MARKER: string;

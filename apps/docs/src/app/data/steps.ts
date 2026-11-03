@@ -45,8 +45,8 @@ export const STEPS_DOC: ComponentDoc = {
     import: {
       title: 'Import',
       text: {
-        th: 'ใช้ได้ทั้ง NgModule (<code>WuStepsModule</code>) และ standalone (<code>WuSteps</code>) ขั้นตอนแต่ละขั้นเป็น <code>MenuItem</code> จาก <code>wiraui/api</code>',
-        en: 'Works as an NgModule (<code>WuStepsModule</code>) or standalone (<code>WuSteps</code>). Each step is a <code>MenuItem</code> from <code>wiraui/api</code>.',
+        th: 'ใช้ได้ทั้ง NgModule (<code>WuStepsModule</code>) และ standalone (<code>WuSteps</code>) ขั้นตอนแต่ละขั้นเป็น <code>MenuItem</code> จาก <code>@wirabyte/ui/api</code>',
+        en: 'Works as an NgModule (<code>WuStepsModule</code>) or standalone (<code>WuSteps</code>). Each step is a <code>MenuItem</code> from <code>@wirabyte/ui/api</code>.',
       },
     },
     basic: {
@@ -138,7 +138,7 @@ export const STEPS_DOC: ComponentDoc = {
 <wu-steps [model]="enrolSteps" [(activeIndex)]="enrolIndex" orientation="vertical" [readonly]="false"></wu-steps>`,
   },
   ts: {
-    basic: `import { MenuItem } from 'wiraui/api';
+    basic: `import { MenuItem } from '@wirabyte/ui/api';
 
 steps: MenuItem[] = [
   { label: 'กรอกข้อมูล' },
@@ -155,7 +155,7 @@ back(): void {
 next(): void {
   this.activeIndex = Math.min(this.steps.length - 1, this.activeIndex + 1);
 }`,
-    interactive: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+    interactive: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 admission: MenuItem[] = [
   { label: 'เลือกหลักสูตร', command: (event) => this.go(event) },
@@ -176,7 +176,7 @@ go(event: MenuItemCommandEvent): void {
   { label: 'รายงานตัว' },
 ];
 checkIndex = 0;`,
-    layout: `import { MenuItem } from 'wiraui/api';
+    layout: `import { MenuItem } from '@wirabyte/ui/api';
 
 enrolSteps: MenuItem[] = [
   { label: 'ส่งใบสมัคร', subtitle: 'ออนไลน์' },
@@ -224,7 +224,7 @@ enrolIndex = 1;   // เปลี่ยนเมื่อเลือกขั�
     {
       id: 'api-types',
       title: 'Types',
-      code: `import { MenuItem, MenuItemCommandEvent } from 'wiraui/api';
+      code: `import { MenuItem, MenuItemCommandEvent } from '@wirabyte/ui/api';
 
 interface MenuItemCommandEvent {
   originalEvent?: Event;

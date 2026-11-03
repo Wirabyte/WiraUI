@@ -15,7 +15,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuSize, WuTemplate } from 'wiraui/config';
+import { ɵassertSupportedAngular, ɵfindTemplate, ɵoptionDisabled, ɵoptionLabel, ɵoptionValue, ɵsameValue, ɵsize, ɵWU_SKIP_VERSION_CHECK, WuSize, WuTemplate } from '@wirabyte/ui/config';
 import { WuSelectButtonChangeEvent, WuSelectButtonOptionClickEvent } from './selectbutton.types';
 
 /**

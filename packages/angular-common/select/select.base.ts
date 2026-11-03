@@ -27,7 +27,7 @@ import {
   ɵWuPopup,
   ɵWuStyleLoader,
   WuTemplate,
-} from 'wiraui/config';
+} from '@wirabyte/ui/config';
 import {
   filterItems,
   firstIndex,
@@ -39,8 +39,8 @@ import {
   stepIndex,
   typeaheadIndex,
   WuLocale,
-} from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+} from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 import { WuSelectChangeEvent, WuSelectFilterEvent, WuSelectMatchMode } from './select.types';
 
 const asTemplate = (v: unknown): TemplateRef<unknown> | null => (v instanceof TemplateRef ? v : null);

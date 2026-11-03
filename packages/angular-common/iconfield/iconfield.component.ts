@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, ViewEncapsulation } from '@angular/core';
-import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from 'wiraui/config';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 
 /**
  * Field with an icon inside it. An icon before the input sits on the left, one after it on the right:

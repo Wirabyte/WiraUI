@@ -14,9 +14,9 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵtoBool } from 'wiraui/config';
-import { resizeBox } from 'wiraui/core';
-import type { FlowRect, FlowResizeDirection, FlowResizeLimits, FlowXY } from 'wiraui/core';
+import { ɵtoBool } from '@wirabyte/ui/config';
+import { resizeBox } from '@wirabyte/ui/core';
+import type { FlowRect, FlowResizeDirection, FlowResizeLimits, FlowXY } from '@wirabyte/ui/core';
 import { ɵWuFlowHost } from './flow-host';
 import { WU_FLOW_NODE } from './flow.types';
 

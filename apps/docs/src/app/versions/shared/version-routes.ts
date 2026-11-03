@@ -116,7 +116,7 @@ export interface VersionPages {
   footer: Type<unknown>;
   bottombar: Type<unknown>;
   thai: Type<unknown>;
-  /** WiraUI's own chart: wiraui@3 only. */
+  /** WiraUI's own chart: @wirabyte/ui@3 only. */
   chart?: Type<unknown>;
 }
 

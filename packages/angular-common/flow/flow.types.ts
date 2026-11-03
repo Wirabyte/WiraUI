@@ -8,7 +8,7 @@ import type {
   FlowRect,
   FlowViewport,
   FlowXY,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 export type {
   FlowBox,
@@ -39,7 +39,7 @@ export type {
   FlowTreeLayoutOptions,
   FlowViewport,
   FlowXY,
-} from 'wiraui/core';
+} from '@wirabyte/ui/core';
 
 /** Shorter names for templates and apps: `WuFlowNode<Person>` is a `FlowNode<Person>`. */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

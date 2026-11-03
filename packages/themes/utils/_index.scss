@@ -2,9 +2,9 @@
 // Class names follow the utility conventions Angular apps already use (`grid`, `col-12 md:col-6`,
 // `flex align-items-center gap-2`, `p-3`, `surface-card`), so existing templates keep working.
 //
-//   @use 'wiraui/utils';                                            everything
-//   @use 'wiraui/utils' with ($groups: (palette: false));           drop a group
-//   @use 'wiraui/utils' with ($prefix: 'u-');                       .u-flex, .md:u-col-6
+//   @use '@wirabyte/ui/utils';                                            everything
+//   @use '@wirabyte/ui/utils' with ($groups: (palette: false));           drop a group
+//   @use '@wirabyte/ui/utils' with ($prefix: 'u-');                       .u-flex, .md:u-col-6
 //
 // Responsive variants (`sm:` `md:` `lg:` `xl:`) apply from that width up. Colours and radii read the
 // theme's --wu-* tokens, so they follow the preset and dark mode.
@@ -38,18 +38,18 @@ $important: false !default;
 $-group-names: (display, flex, grid, forms, spacing, sizing, typography, colors, palette, borders, shadows, position, overflow, misc);
 
 @if meta.type-of($groups) != 'map' and not (meta.type-of($groups) == 'list' and list.length($groups) == 0) {
-  @error 'wiraui/utils: $groups must be a map like (palette: false), got `#{meta.inspect($groups)}`.';
+  @error '@wirabyte/ui/utils: $groups must be a map like (palette: false), got `#{meta.inspect($groups)}`.';
 }
 @each $name, $on in $groups {
   @if not list.index($-group-names, $name) {
-    @error 'wiraui/utils: unknown group `#{$name}`; use #{$-group-names}.';
+    @error '@wirabyte/ui/utils: unknown group `#{$name}`; use #{$-group-names}.';
   }
   @if meta.type-of($on) != 'bool' {
-    @error 'wiraui/utils: $groups.#{$name} must be true or false, got `#{meta.inspect($on)}`.';
+    @error '@wirabyte/ui/utils: $groups.#{$name} must be true or false, got `#{meta.inspect($on)}`.';
   }
 }
 @if meta.type-of($prefix) != 'string' {
-  @error 'wiraui/utils: $prefix must be a string like \'u-\', got `#{meta.inspect($prefix)}`.';
+  @error '@wirabyte/ui/utils: $prefix must be a string like \'u-\', got `#{meta.inspect($prefix)}`.';
 }
 
 @function -on($group) {

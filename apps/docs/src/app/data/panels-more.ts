@@ -535,7 +535,7 @@ changed: number | null = null;`,
   'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];`,
     scrollValue: `units = Array.from({ length: 14 }, (_, i) => i + 1);
 unit = 1;`,
-    model: `import { MenuItem } from 'wiraui/api';
+    model: `import { MenuItem } from '@wirabyte/ui/api';
 
 pages: MenuItem[] = [
   { label: 'ข้อมูลทั่วไป', icon: 'wi wi-id-card' },

@@ -1,8 +1,8 @@
 import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, AbstractControlDirective, ControlContainer, FormGroupDirective, NgForm } from '@angular/forms';
-import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuStyleLoader } from 'wiraui/config';
-import { validationMessage } from 'wiraui/core';
-import { ɵWU_INPUTTEXT_CSS } from 'wiraui/inputtext';
+import { ɵassertSupportedAngular, ɵtoBool, ɵuniqueId, ɵWU_SKIP_VERSION_CHECK, WuConfig, ɵWuStyleLoader } from '@wirabyte/ui/config';
+import { validationMessage } from '@wirabyte/ui/core';
+import { ɵWU_INPUTTEXT_CSS } from '@wirabyte/ui/inputtext';
 
 /**
  * The error of one field, in Thai (or the app's language), shown once the field was touched or its form submitted:
