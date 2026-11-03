@@ -1,15 +1,26 @@
 # The WiraUI docs site on OpenShift. The cluster does not build it (a build needs more memory than it has): a machine
-# with podman builds the image, pushes it to our own registry, and the cluster pulls it from there. deploy/docs.sh does
-# all of it and puts the image it pushed in place of WU_DOCS_IMAGE below; apply this file through it, not by hand.
-# The Route serves ui.wirabyte.com; point its DNS at the cluster's router. Without a certificate here the Route uses the
-# router's default one, which only fits if it covers this host name: otherwise add tls.certificate and tls.key below,
-# or let cert-manager fill them in.
+# with podman builds the image, pushes it to our own registry, and the ImageStream below imports it from there.
+# deploy/docs.sh does all of it: it points wiraui-docs:latest at the image it pushed, then puts the image that tag
+# resolves to in place of WU_DOCS_IMAGE below, so applying this file never undoes what the image trigger set. Apply this
+# file through it, not by hand.
+# The Ingress serves ui.wirabyte.com through the nginx class over HTTP/2; point its DNS at the cluster's router.
+# cert-manager issues and renews the certificate with a DNS-01 challenge.
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: wiraui-docs
+  labels:
+    app: wiraui-docs
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wiraui-docs
   labels:
     app: wiraui-docs
+  annotations:
+    # Roll out again whenever wiraui-docs:latest points at a new image.
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"wiraui-docs:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"docs\")].image"}]'
 spec:
   replicas: 2
   selector:
@@ -67,19 +78,40 @@ spec:
     - port: 8080
       targetPort: 8080
 ---
-apiVersion: route.openshift.io/v1
-kind: Route
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wiraui-docs-tls
+  labels:
+    app: wiraui-docs
+spec:
+  secretName: wiraui-docs-tls
+  dnsNames:
+    - ui.wirabyte.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-wirabyte-prod
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: wiraui-docs
   labels:
     app: wiraui-docs
 spec:
-  host: ui.wirabyte.com
-  to:
-    kind: Service
-    name: wiraui-docs
-  port:
-    targetPort: 8080
+  ingressClassName: nginx
   tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
+    - hosts:
+        - ui.wirabyte.com
+      secretName: wiraui-docs-tls
+  rules:
+    - host: ui.wirabyte.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wiraui-docs
+                port:
+                  number: 8080

@@ -27,7 +27,14 @@ if [ "$STEP" = all ] || [ "$STEP" = build ]; then
 fi
 
 if [ "$STEP" = all ] || [ "$STEP" = deploy ]; then
-  sed "s#WU_DOCS_IMAGE#$IMAGE:$TAG#" deploy/openshift/docs.yaml | oc apply -f -
+  # The tag is set before the manifest is applied: the Deployment then gets the image the tag already resolves to, the
+  # same one the image trigger puts there, instead of a reference the cluster cannot pull.
+  INSECURE=""
+  if [ "${WU_TLS_VERIFY:-true}" = false ]; then INSECURE="--insecure"; fi
+  oc tag --source=docker "$IMAGE:$TAG" wiraui-docs:latest --reference-policy=local $INSECURE
+  oc import-image wiraui-docs:latest $INSECURE > /dev/null
+  RESOLVED="$(oc get istag wiraui-docs:latest -o jsonpath='{.image.dockerImageReference}')"
+  sed "s#WU_DOCS_IMAGE#$RESOLVED#" deploy/openshift/docs.yaml | oc apply -f -
   oc rollout status deployment/wiraui-docs --timeout=5m
   echo "deployed $IMAGE:$TAG"
 fi
