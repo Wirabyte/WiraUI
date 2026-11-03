@@ -1,5 +1,4 @@
-# The WiraUI docs site as a static nginx image. Build from the repository root:
-#   docker build -f deploy/openshift/Containerfile -t wiraui-docs .
+# The WiraUI docs site as a static nginx image. deploy/docs.sh builds it with podman from the repository root.
 FROM node:24-slim AS build
 WORKDIR /src
 COPY . .

@@ -1,53 +1,15 @@
-# The WiraUI docs site on OpenShift. In your project:
-#   oc apply -f deploy/openshift/docs.yaml
-#   oc start-build wiraui-docs --follow
-# The build reads the public GitHub repository. The Route serves ui.wirabyte.com; point its DNS at the cluster's router.
-# Without a certificate here the Route uses the router's default one, which only fits if it covers this host name:
-# otherwise add tls.certificate and tls.key below, or let cert-manager fill them in.
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  name: wiraui-docs
-  labels:
-    app: wiraui-docs
----
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
-metadata:
-  name: wiraui-docs
-  labels:
-    app: wiraui-docs
-spec:
-  source:
-    type: Git
-    git:
-      uri: https://github.com/Wirabyte/WiraUI.git
-      ref: main
-  strategy:
-    type: Docker
-    dockerStrategy:
-      dockerfilePath: deploy/openshift/Containerfile
-  output:
-    to:
-      kind: ImageStreamTag
-      name: wiraui-docs:latest
-  # Building all three library majors and the site takes a lot of memory.
-  resources:
-    requests:
-      cpu: "1"
-      memory: 4Gi
-    limits:
-      memory: 8Gi
----
+# The WiraUI docs site on OpenShift. The cluster does not build it (a build needs more memory than it has): a machine
+# with podman builds the image, pushes it to our own registry, and the cluster pulls it from there. deploy/docs.sh does
+# all of it and puts the image it pushed in place of WU_DOCS_IMAGE below; apply this file through it, not by hand.
+# The Route serves ui.wirabyte.com; point its DNS at the cluster's router. Without a certificate here the Route uses the
+# router's default one, which only fits if it covers this host name: otherwise add tls.certificate and tls.key below,
+# or let cert-manager fill them in.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wiraui-docs
   labels:
     app: wiraui-docs
-  annotations:
-    # Roll out again whenever a build pushes a new image.
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"wiraui-docs:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"docs\")].image"}]'
 spec:
   replicas: 2
   selector:
@@ -60,7 +22,7 @@ spec:
     spec:
       containers:
         - name: docs
-          image: wiraui-docs:latest
+          image: WU_DOCS_IMAGE
           ports:
             - containerPort: 8080
           readinessProbe:
