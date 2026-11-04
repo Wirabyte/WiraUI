@@ -1096,6 +1096,21 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
     - ตาราง Firefox กว้างกว่า จุดปล่อยของการลากจึงหลุดจอ แก้ให้อยู่ในหน้าต่าง
     - หน้า Studio โหลดยังไม่เสร็จแล้ว reload ทันที
 
+### 12.29 รุ่น 1.1.0 / 2.1.0 / 3.1.0: ข้อที่แอปแรกพบหลังรุ่นจริง (4–5 พ.ย. 2569)
+
+- **ResizeObserver (WUI-022):** ห้ามเปลี่ยนขนาดของ element ที่ observe อยู่ใน callback ของมันเอง เพราะเบราว์เซอร์จะนับว่ามี notification ค้าง แล้วแจ้ง error "ResizeObserver loop" ซึ่งแอปที่ส่ง error ของ window เข้า `ErrorHandler` เห็นเป็น `ERROR` ถ้าต้องเปลี่ยนจริง (เช่น textarea `autoResize`) ให้ `unobserve` ก่อน แล้วเปลี่ยนขนาดทันที จากนั้น `observe` ใหม่ใน `requestAnimationFrame` จะไม่มีเฟรมที่ขนาดผิด ถ้าเลื่อนการ resize ไป rAF เฉย ๆ จะเห็นความสูงเดิม 1 เฟรม เทสต์ `release1.spec.ts` เปิดปิด dialog แล้วตรวจว่าไม่มี error นี้ และตรวจหน้า playground ทั้ง 3 รุ่นที่ 360 / 1000 / 1440 แล้วไม่พบ component อื่นที่เกิด error นี้
+- **Aside Menu บนมือถือ (WUI-023):** ปุ่มปิดเป็น `position: absolute` มุมบนด้านท้ายของหัวเมนู (อยู่แถวโลโก้) หัวเมนูสูงอย่างน้อยเท่าปุ่ม และ start ที่เป็น element เดียวกว้างเต็มหัวเมนู ข้อแลกคือแถวแรกของ start ต้องเว้นท้ายไว้ให้ปุ่มเอง (แถวโลโก้มักว่างอยู่แล้ว) แทนที่จะเสียคอลัมน์ 52px ทุกแถว
+- **นาฬิกากลาง (WUI-024):** `provideWiraUI({ now })` → `WuConfig.clock` (เปลี่ยนตอนรันได้) และ `WuConfig.now()` (คืน Date ใหม่ทุกครั้ง ถ้า clock คืนค่าที่ไม่ใช่วันที่จะใช้นาฬิกาเครื่อง) ทุกจุดที่หมายถึง "ตอนนี้ตามปฏิทิน" ต้องอ่านจากที่นี่: DatePicker (ส่งเข้า `DatePickerState` ของ core ซึ่งรับ `now` อยู่แล้ว), Scheduler, `wuTimeAgo`, ป้ายวันของ Chat, ปีของ SiteFooter ส่วนการวัดช่วงเวลา (typeahead, debounce, อายุ toast, double-click ของ flow, การรวม undo ของ editor) ใช้ `Date.now()` ต่อ เพราะวัดระยะเวลาไม่ใช่เวลาปฏิทิน component ใหม่ที่ใช้ "วันนี้" ต้องอ่าน `config.now()` และ field ที่เรียกมันตอนสร้างต้องประกาศหลัง `config`
+- **รุ่น:** WUI-024 เป็นความสามารถใหม่ จึงออกเป็น minor (x.1.0) ไม่ใช่ patch
+- **Figma UI Kit ครบทุก component (`packages/figma`):** จาก 26 เป็น 95/95 entry point ที่มีหน้าตา (106 component set, ราว 1,700 component ต่อ preset)
+  - โครงสร้าง: `src/code.ts` เก็บตัวช่วยและชุดเดิม ส่วน `src/sets/{forms,data,panels,media}.ts` เป็นสคริปต์ที่ build ต่อท้าย แต่ละ section ลงทะเบียนด้วย `kitSection({ order, title, note, covers, build })` ชื่อระดับบนของแต่ละไฟล์ขึ้นต้นด้วยชื่อกลุ่ม เพราะใช้ scope เดียวกัน
+  - เทสต์ (`pnpm test:figma`, รันใน CI แล้ว): ทุก entry point ใน `exports` ของ v3 ที่ไม่อยู่ในรายการ "ไม่มีหน้าตา" ต้องอยู่ใน `covers`, token ที่ใช้ต้องมีครบทุก preset และเป็นชนิดถูก (`len()` ของ token สีหรือ shorthand ถือว่าผิด)
+  - บั๊กที่พบระหว่างทำ: token padding แบบหลายค่า (`0 1.25rem 1.25rem`) เคยถูกอ่านเป็นเงา (`box-shadow` รับค่านี้ได้) kit เดิมจึงได้ padding 0 ใน dialog, accordion, menu, navbar, paginator, tooltip ตอนนี้ `build.mjs` แยกเป็น `kit-<ชื่อ>-top/right/bottom/left` (มุม `-tl…`, gap `-row/-column`) และ `px`/`py`/`radius`/`strokeW` ใช้ด้านที่ถูกเอง
+  - `scripts/mock-figma.mjs` (Figma API จำลองที่ smoke และ preview ใช้ร่วมกัน) และ `scripts/preview.mjs` วาด kit เป็น HTML (`pnpm preview:figma`) เพื่อตรวจหน้าตาโดยไม่ต้องเปิด Figma · `scripts/tokens.mjs` ค้น token
+  - ข้อจำกัดของ Figma API ที่เลือกวาดแทน: ไม่มีรูปภาพ (กล่องสีพร้อมไอคอน), ไม่มี gradient (ColorPicker เป็นช่องสี, รหัส ErrorPage เป็นสีเดียว), ไม่มี vector path (เส้นของ Flow, กราฟเส้น, ลายเซ็น ประกอบจากแท่งและวงโค้ง) และสี `color-mix` กับ % ที่ไม่มีตัวแปร (วาดเป็นตัวแปรสีพร้อม opacity)
+  - ยังไม่ได้ลองใน Figma จริง: ทีม UI ควร import แล้วเช็กก่อน จึงค่อยเปลี่ยนหน้า landing / Studio ของเว็บคู่มือจาก "เร็ว ๆ นี้"
+  - งาน 4 กลุ่มแบ่งให้ agent ทำพร้อมกันครั้งแรกแล้ว Windows ล่ม (BugCheck 0x3B ตอนเปิด Chromium หลายตัวพร้อมกัน) รอบหลังรันทีละ 2 กลุ่ม และให้แต่ละกลุ่มเปิด Chromium ทีละขั้น
+
 ### 12.28 รุ่นจริงรุ่นแรก: ผลจากแอปแรกที่ใช้จริง (4 พ.ย. 2569)
 
 แอป Help Desk ที่สร้างบน 3.0.0-beta.0 จดปัญหาไว้ 21 ข้อ (WUI-001 ถึง WUI-021) ผู้ใช้ให้แก้ครบทุกข้อแล้วออกรุ่นจริง (1.0.0 / 2.0.0 / 3.0.0, icons 1.0.0) ไม่ใช่ beta

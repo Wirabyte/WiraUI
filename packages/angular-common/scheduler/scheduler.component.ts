@@ -89,7 +89,7 @@ export class WuScheduler implements OnDestroy {
   }
   /** The day the view shows (week and month views: the period around it). Default: today. */
   @Input() set date(v: Date | string | number | null | undefined) {
-    this._date = startOfDay(toDateValue(v) || new Date());
+    this._date = startOfDay(toDateValue(v) || this.config.now());
     this.cache = null;
   }
   get date(): Date {
@@ -128,9 +128,11 @@ export class WuScheduler implements OnDestroy {
   @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
   @ContentChild('event', { descendants: false }) protected eventRef?: unknown;
 
+  // First: the fields below ask it for "now" (provideWiraUI({ now }), WUI-024).
+  private readonly config = inject(WuConfig);
   private _events: WuSchedulerEvent[] = [];
   private _view: WuSchedulerView = 'week';
-  private _date = startOfDay(new Date());
+  private _date = startOfDay(this.config.now());
   private _startHour = 7;
   private _endHour = 20;
   private _slot = 30;
@@ -138,10 +140,9 @@ export class WuScheduler implements OnDestroy {
   private _max = 3;
   private cache: { key: string; days: DayCell[] } | null = null;
   private dragged: WuSchedulerEvent | null = null;
-  private now = new Date();
+  private now = this.config.now();
   private readonly timer = typeof window !== 'undefined' ? window.setInterval(() => this.tick(), 60000) : 0;
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly config = inject(WuConfig);
   private readonly i18n = ɵrefreshOnTranslation();
   private readonly translated = this.config.translationChange.subscribe(() => (this.cache = null));
 
@@ -271,7 +272,7 @@ export class WuScheduler implements OnDestroy {
     this.go(next);
   }
   goToday(): void {
-    this.go(new Date());
+    this.go(this.config.now());
   }
   /** Month view: a day's "+N more" opens that day. */
   openDay(date: Date): void {
@@ -348,7 +349,7 @@ export class WuScheduler implements OnDestroy {
   }
 
   private tick(): void {
-    this.now = new Date();
+    this.now = this.config.now();
     this.cdr.markForCheck();
   }
 

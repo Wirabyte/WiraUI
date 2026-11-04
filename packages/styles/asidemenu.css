@@ -344,6 +344,23 @@
     width: 1.125rem;
     height: 1.125rem;
   }
+  /* Phones: the close button sits in the top-end corner, on the brand row, and the start slot keeps the header's
+     whole width. In the flex row it was centred on a tall start (brand, clock, user card) and took a column beside
+     every one of its rows. Keep the end of the start's first row clear for it. */
+  .wu-aside-menu-mobile .wu-aside-menu-header {
+    position: relative;
+    min-height: calc(var(--wu-aside-menu-item-height) + 2 * var(--wu-aside-menu-padding));
+  }
+  .wu-aside-menu-mobile .wu-aside-menu-close {
+    position: absolute;
+    inset-block-start: var(--wu-aside-menu-padding);
+    inset-inline-end: var(--wu-aside-menu-padding);
+  }
+  /* A single block in the start slot (the usual wrapper) fills the header. */
+  .wu-aside-menu-mobile .wu-aside-menu-header > :first-child:nth-last-child(2) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 
   /* Phones: an off-canvas panel from the start edge, over a mask. Hidden panels are out of reach (visibility + inert). */
   .wu-aside-menu-mobile {

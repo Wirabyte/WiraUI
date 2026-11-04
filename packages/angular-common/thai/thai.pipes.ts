@@ -60,7 +60,7 @@ export class WuTimeAgoPipe implements PipeTransform, OnDestroy {
   private readonly i18n = ɵrefreshOnTranslation();
 
   transform(value: unknown, lang?: string | null): string {
-    return timeAgo(value, lang || this.config.translation.code || 'th');
+    return timeAgo(value, lang || this.config.translation.code || 'th', this.config.now());
   }
 
   ngOnDestroy(): void {

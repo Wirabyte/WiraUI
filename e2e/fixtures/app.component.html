@@ -1228,7 +1228,7 @@
         [showCollapseButton]="true"
         (visibleChange)="note('am:visible:' + $event)"
       >
-        <ng-template wuTemplate="start" let-collapsed><span class="am-brand">{{ collapsed ? 'ว' : 'โรงเรียนวิระ' }}</span></ng-template>
+        <ng-template wuTemplate="start" let-collapsed><div id="am-head"><span class="am-brand">{{ collapsed ? 'ว' : 'โรงเรียนวิระ' }}</span><div *ngIf="!collapsed" id="am-user" style="padding: 0.75rem; border-radius: 0.5rem; background: var(--wu-hover-bg)">ครูวิไล รักเรียน · ฝ่ายวิชาการ<br />เข้าระบบล่าสุด 08:30</div></div></ng-template>
         <button wuAsideMenuEnd id="am-logout" type="button" (click)="note('am:logout')">ออกจากระบบ</button>
       </wu-aside-menu>
       <div id="am-content" class="pg-card" style="flex: 1 1 auto; min-width: 0; height: 40rem">เนื้อหาของหน้า</div>
@@ -1328,5 +1328,13 @@
 
     <wu-scheduler id="r1-sched" [events]="r1Events" [(view)]="r1View" [(date)]="r1Day" [editable]="true" [startHour]="8" [endHour]="18"
       (onEventChange)="r1Move($event.event, $event.start, $event.end)" (onDateClick)="r1Clicked = 'slot'"></wu-scheduler>
+
+    <!-- One clock for the app (WuConfig.clock, e.g. the server's time): what components call "now". -->
+    <button id="clock-set" type="button" (click)="useServerClock()">ใช้เวลาของเซิร์ฟเวอร์</button>
+    <div *ngIf="clockShown" class="pg-row" style="align-items: flex-start">
+      <wu-datepicker id="clock-dp" [inline]="true"></wu-datepicker>
+      <span id="clock-ago">{{ clockSent | wuTimeAgo }}</span>
+      <wu-scheduler id="clock-sched" [startHour]="8" [endHour]="12"></wu-scheduler>
+    </div>
   </section>
 </main>

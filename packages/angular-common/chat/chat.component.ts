@@ -305,7 +305,7 @@ export class WuChat implements AfterViewChecked, OnDestroy {
     const calendar = this.config.calendarFor(lang);
     const locale = this.config.translation;
     const timeOf = (d: Date) => formatDate(d, datePattern('time', lang, calendar), { locale, calendar });
-    const today = startOfDay(new Date());
+    const today = startOfDay(this.config.now());
     let day = '';
     let prev: { mine: boolean; sender: unknown; at: number } | null = null;
     this._messages.forEach((m, i) => {

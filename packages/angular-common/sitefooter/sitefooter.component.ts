@@ -108,7 +108,7 @@ export class WuSiteFooter implements OnDestroy {
   }
   get copyrightText(): string {
     if (this.copyright !== undefined && this.copyright !== null) return this.copyright;
-    return this.brand ? `© ${new Date().getFullYear()} ${this.brand}` : '';
+    return this.brand ? `© ${this.config.now().getFullYear()} ${this.brand}` : '';
   }
   get showTop(): boolean {
     return this.backToTop === '' || this.backToTop === true || this.backToTop === 'true';

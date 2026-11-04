@@ -104,6 +104,7 @@ import { WuDescriptions, WuDescriptionsItem } from '@wirabyte/ui/descriptions';
 import { WuSignaturePad } from '@wirabyte/ui/signaturepad';
 import { WuChat } from '@wirabyte/ui/chat';
 import { WuScheduler } from '@wirabyte/ui/scheduler';
+import { WuTimeAgoPipe } from '@wirabyte/ui/thai';
 import type { CropperPosition, WuImageCroppedEvent } from '@wirabyte/ui/imagecropper';
 
 @Component({
@@ -115,6 +116,7 @@ import type { CropperPosition, WuImageCroppedEvent } from '@wirabyte/ui/imagecro
     WuSignaturePad,
     WuChat,
     WuScheduler,
+    WuTimeAgoPipe,
     FormsModule,
     WuMenubar,
     WuMenu,
@@ -976,6 +978,13 @@ export class App {
   ];
   r1View: 'day' | 'week' | 'month' = 'week';
   r1Day = new Date();
+  clockShown = false;
+  clockSent = new Date(2026, 0, 15, 8, 55);
+  /** The app's clock (say, the server's) is "now" for every component, whatever the device clock says. */
+  useServerClock(): void {
+    this.config.clock = () => new Date(2026, 0, 15, 9, 0);
+    this.clockShown = true;
+  }
   r1Events: { id: string; title: string; start: Date; end?: Date; allDay?: boolean }[] = [
     { id: 'a', title: 'ติดตั้งเครื่องพิมพ์', start: this.r1At(0, 9, 0), end: this.r1At(0, 10, 30) },
     { id: 'b', title: 'ตรวจเครือข่าย', start: this.r1At(0, 10, 0), end: this.r1At(0, 11, 0) },

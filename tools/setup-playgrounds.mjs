@@ -2,7 +2,7 @@
 // and builds it. Usage: node tools/setup-playgrounds.mjs [v1 v2 v3]
 // Needs packages/angular-<v>/wirabyte-ui-*.tgz (pnpm build:ng, then `pnpm --filter … pack`).
 import { execSync } from 'node:child_process';
-import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,8 +18,10 @@ const run = (cmd, cwd) => {
 for (const v of versions) {
   const app = join(root, 'apps', `playground-${v}`);
   const shell = join(root, 'packages', `angular-${v}`);
-  const tgz = readdirSync(shell).find((f) => /^wirabyte-ui-.*\.tgz$/.test(f));
-  if (!tgz) throw new Error(`${v}: no packed tarball in ${shell}; run its "pack" script first`);
+  // The tarball of the version just built: after a version bump the older ones are still in the folder.
+  const { version } = JSON.parse(readFileSync(join(shell, 'dist', 'package.json'), 'utf8'));
+  const tgz = `wirabyte-ui-${version}.tgz`;
+  if (!existsSync(join(shell, tgz))) throw new Error(`${v}: no ${tgz} in ${shell}; run its "pack" script first`);
   const src = join(app, 'src', 'app');
 
   // Install the tarball, then `ng add @wirabyte/ui` finds it installed and runs its ng-add schematic.
@@ -139,6 +141,7 @@ for (const v of versions) {
       ['WuSignaturePadModule', '@wirabyte/ui/signaturepad'],
       ['WuChatModule', '@wirabyte/ui/chat'],
       ['WuSchedulerModule', '@wirabyte/ui/scheduler'],
+      ['WuThaiModule', '@wirabyte/ui/thai'],
     ];
     const modFile = join(src, 'app.module.ts');
     let mod = readFileSync(modFile, 'utf8');

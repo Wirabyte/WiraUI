@@ -126,6 +126,26 @@ test('aside menu collapsed: an icon rail with tooltips; a group opens a flyout b
   await expect(page.locator('#am-collapsed')).toHaveText('false');
 });
 
+test('aside menu on a phone: a tall start keeps the close button on its first row and the whole header width', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  const nav = side(page).locator('nav.wu-aside-menu');
+  await page.locator('#am-open').click();
+  await expect(nav).toBeVisible();
+  const header = (await nav.locator('.wu-aside-menu-header').boundingBox())!;
+  const close = (await nav.locator('.wu-aside-menu-close').boundingBox())!;
+  const head = (await nav.locator('#am-head').boundingBox())!;
+  const user = (await nav.locator('#am-user').boundingBox())!;
+  // The start is tall (brand and a user card); the button stays at the top, at the end, on the brand row.
+  expect(header.height).toBeGreaterThan(close.height * 1.8);
+  expect(close.y - header.y).toBeLessThan(16);
+  expect(header.x + header.width - (close.x + close.width)).toBeLessThan(16);
+  // The start block spans the header, so the card under the button is not narrowed by a column for it.
+  expect(head.width).toBeGreaterThan(header.width - 24);
+  expect(user.x + user.width).toBeGreaterThan(close.x + close.width - 16);
+  await page.keyboard.press('Escape');
+  await expect(nav).toBeHidden();
+});
+
 test('aside menu on a phone: off-canvas over a mask; focus moves in and stays in; Escape, a pick and the mask close it', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   const host = side(page);

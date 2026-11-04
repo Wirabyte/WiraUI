@@ -584,3 +584,14 @@ test('Chart is a v3 page: v1 and v2 show only ChartJS, their old chart address o
   await page.locator('.wu-select-list').getByRole('option', { name: /^v1\b/ }).click();
   await expect(page).toHaveURL(/\/v1\/getting-started\/introduction$/);
 });
+
+test('configuration page: the now option (one clock for the app) in Thai and English, every version', async ({ page }) => {
+  for (const lang of ['th', 'en'])
+    for (const v of VERSIONS) {
+      await page.goto(`/${v}/getting-started/configuration?lang=${lang}`);
+      const row = page.locator('tr', { has: page.locator('code.docs-api-name', { hasText: /^now$/ }) });
+      await expect(row).toHaveCount(1);
+      await expect(row).toContainText('WuConfig.clock');
+      await expect(row).toContainText(lang === 'th' ? 'นาฬิกาเครื่องผู้ใช้' : 'the device clock');
+    }
+});

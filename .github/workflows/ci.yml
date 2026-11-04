@@ -55,6 +55,13 @@ jobs:
       - name: Build @wirabyte/icons
         run: pnpm --filter @wiraui-build/icons test
 
+      # Reads the v3 themes and the icons built above in Chromium; fails when a visual entry point has no component in
+      # the kit or a preset lacks a token the kit uses.
+      - name: Figma UI Kit (every visual component, every preset)
+        run: |
+          pnpm --filter @wiraui/e2e exec playwright install chromium
+          pnpm test:figma
+
       - uses: actions/upload-artifact@v4
         with:
           name: packs

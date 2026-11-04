@@ -48,6 +48,13 @@ export interface WiraUIOptions {
   /** Waits before searching for the whole app: `{ autoComplete: 300, filter: 300 }`. Default 0 (no wait). */
   delays?: WuDelays;
   /**
+   * The clock every component treats as "now": today in the datepicker and the scheduler, the scheduler's current-time
+   * line, `wuTimeAgo`, the chat's day labels, the year in the site footer. Default: the device clock. Give the
+   * server's time when the device clock cannot be trusted: `now: () => serverTime.now()`. Change it later through
+   * `WuConfig.clock`. Timers (debounces, toast life) keep measuring with the device clock.
+   */
+  now?: () => Date;
+  /**
    * Where the theme's fonts come from. `'google'` (the default) adds the Google Fonts stylesheet for the body and
    * heading fonts the theme ends up with (Kanit, Sarabun, Anuphan …) unless the page already links it, so a theme set
    * up by hand shows its font too. `'none'` leaves fonts to the app: self-hosted files, or no access to Google.

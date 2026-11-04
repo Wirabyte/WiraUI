@@ -80,17 +80,34 @@ function tok(name: string): Token | undefined {
 /** A token's colour; magenta marks a token the preset does not have, so it shows up in review. */
 function rgba(name: string): RGBA4 {
   const t = tok(name);
+  if (t && t.t !== 'color') K.missing.add(`${name} (not a colour)`);
   return t && t.t === 'color' ? t.v : [1, 0, 1, 1];
 }
 
 function len(name: string, fallback = 0): number {
   const t = tok(name);
+  // A shorthand (padding: 0 1.25rem) has no single value: use side(), which box() and setRadius() already do.
+  if (t && t.t !== 'length' && t.t !== 'number') K.missing.add(`${name} (not a length)`);
   return t && (t.t === 'length' || t.t === 'number') ? t.v : fallback;
 }
 
 function isLength(name: string): boolean {
   const t = K.p.light[name];
   return !!t && t.t === 'length';
+}
+
+/** The first of these tokens this preset has, else the last one. Some presets set a token to a percentage or
+ *  'none', which has no Figma value (scripts/tokens.mjs marks those with "!"): name a fallback after it. */
+function firstToken(...names: string[]): string {
+  return names.find((n) => K.p.light[n]) || names[names.length - 1];
+}
+
+/** One side of a token that may be a shorthand: build.mjs splits '0 1.25rem 1.25rem' into kit-<name>-top, -right …
+ *  (radius: -tl, -tr, -br, -bl; gap: -row, -column). A single-value token is its own every side. */
+function side(value: Len, which: string): Len {
+  if (typeof value !== 'string' || K.p.light[value]) return value;
+  const s = `kit-${value}-${which}`;
+  return K.p.light[s] ? s : value;
 }
 
 /** A solid paint bound to the token's variable. */
@@ -108,7 +125,13 @@ function bindLen(node: SceneNode, field: VariableBindableNodeField, value: Len, 
 }
 
 function setRadius(node: FrameNode | ComponentNode | RectangleNode, value: Len, scale = 1): void {
-  for (const f of ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'] as const) bindLen(node, f, value, scale);
+  const corners = [
+    ['topLeftRadius', 'tl'],
+    ['topRightRadius', 'tr'],
+    ['bottomLeftRadius', 'bl'],
+    ['bottomRightRadius', 'br'],
+  ] as const;
+  for (const [f, c] of corners) bindLen(node, f, side(value, c), scale);
 }
 
 // ── Building blocks ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -143,20 +166,27 @@ function box(o: BoxOpts, component = false): Box {
   n.counterAxisAlignItems = o.align || (o.dir === 'V' ? 'MIN' : 'CENTER');
   n.clipsContent = false;
   const s = o.scale ?? 1;
-  if (o.gap !== undefined) bindLen(n, 'itemSpacing', o.gap, s);
+  if (o.gap !== undefined) bindLen(n, 'itemSpacing', side(o.gap, o.dir === 'V' ? 'row' : 'column'), s);
+  // A padding token may be a shorthand: px takes its left and right, py its top and bottom.
   if (o.px !== undefined) {
-    bindLen(n, 'paddingLeft', o.px, s);
-    bindLen(n, 'paddingRight', o.px, s);
+    bindLen(n, 'paddingLeft', side(o.px, 'left'), s);
+    bindLen(n, 'paddingRight', side(o.px, 'right'), s);
   }
   if (o.py !== undefined) {
-    bindLen(n, 'paddingTop', o.py, s);
-    bindLen(n, 'paddingBottom', o.py, s);
+    bindLen(n, 'paddingTop', side(o.py, 'top'), s);
+    bindLen(n, 'paddingBottom', side(o.py, 'bottom'), s);
   }
   n.fills = o.fill ? [paint(o.fill)] : [];
   if (o.stroke) {
     n.strokes = [paint(o.stroke)];
     n.strokeAlign = 'INSIDE';
-    bindLen(n, 'strokeWeight', o.strokeW ?? 1);
+    const w = o.strokeW ?? 1;
+    if (side(w, 'top') !== w) {
+      bindLen(n, 'strokeTopWeight', side(w, 'top'));
+      bindLen(n, 'strokeRightWeight', side(w, 'right'));
+      bindLen(n, 'strokeBottomWeight', side(w, 'bottom'));
+      bindLen(n, 'strokeLeftWeight', side(w, 'left'));
+    } else bindLen(n, 'strokeWeight', w);
   } else n.strokes = [];
   if (o.radius !== undefined) setRadius(n, o.radius);
   if (o.width !== undefined) fixWidth(n, o.width);
@@ -768,10 +798,18 @@ function card(parent: Box, button: ComponentSetNode): ComponentNode {
   add(c, txt('ตุลาคม 2569', { color: 'text-muted', name: 'Subtitle' }));
   add(c, txt('สรุปยอดขายและจำนวนลูกค้าใหม่ของเดือนนี้ แยกตามสาขา', { name: 'Content', lineHeight: len('line-height', 1.6) }), true).textAutoResize = 'HEIGHT';
   const foot = add(c, box({ name: 'Footer', gap: 8, justify: 'MAX' }), true);
-  foot.appendChild(variant(button, { Severity: 'Secondary', Variant: 'Text', Size: 'Normal', State: 'Default' }).createInstance());
-  foot.appendChild(variant(button, { Severity: 'Primary', Variant: 'Solid', Size: 'Normal', State: 'Default' }).createInstance());
+  buttonAt(foot, button, 'Secondary', 'Text', 'ยกเลิก');
+  buttonAt(foot, button, 'Primary', 'Solid', 'บันทึก');
   parent.appendChild(c);
   return c;
+}
+
+/** A Button instance of the given severity and variant, with its own label. */
+function buttonAt(parent: Box, button: ComponentSetNode, severity: string, kind: string, label: string, size = 'Normal'): InstanceNode {
+  const inst = variant(button, { Severity: severity, Variant: kind, Size: size, State: 'Default' }).createInstance();
+  parent.appendChild(inst);
+  setProp(inst, 'Label', label);
+  return inst;
 }
 
 function dialog(parent: Box, button: ComponentSetNode): ComponentNode {
@@ -783,8 +821,8 @@ function dialog(parent: Box, button: ComponentSetNode): ComponentNode {
   const body = add(c, box({ name: 'Content', dir: 'V', px: 'dialog-content-padding', py: 0 }), true);
   add(body, txt('รายการที่ลบแล้วจะกู้คืนไม่ได้ ต้องการลบต่อหรือไม่', { name: 'Content', lineHeight: len('line-height', 1.6) }), true).textAutoResize = 'HEIGHT';
   const foot = add(c, box({ name: 'Footer', px: 'dialog-footer-padding', py: 'dialog-footer-padding', gap: 8, justify: 'MAX' }), true);
-  foot.appendChild(variant(button, { Severity: 'Secondary', Variant: 'Text', Size: 'Normal', State: 'Default' }).createInstance());
-  foot.appendChild(variant(button, { Severity: 'Danger', Variant: 'Solid', Size: 'Normal', State: 'Default' }).createInstance());
+  buttonAt(foot, button, 'Secondary', 'Text', 'ยกเลิก');
+  buttonAt(foot, button, 'Danger', 'Solid', 'ลบ');
   parent.appendChild(c);
   return c;
 }
@@ -808,20 +846,34 @@ function tabs(parent: Box): ComponentSetNode {
   return set;
 }
 
+/** Avatar `severity` (a soft tile of the colour, as the library draws it), or None for the plain avatar. */
+function avatarTone(sev: string): { bg: string; fg: string } {
+  const s = sev.toLowerCase();
+  if (sev === 'None') return { bg: 'avatar-bg', fg: 'avatar-color' };
+  if (s === 'secondary') return { bg: 'chip-bg', fg: 'chip-color' };
+  if (s === 'contrast') return { bg: 'text', fg: 'card-bg' };
+  return { bg: `kit-avatar-${s}-bg`, fg: s === 'primary' ? 'primary-soft-text' : `${s}-text` };
+}
+
 function avatars(parent: Box): ComponentSetNode {
   const comps: ComponentNode[] = [];
-  for (const shape of ['Circle', 'Square'])
-    for (const size of ['Normal', 'Large', 'XLarge']) {
-      const base = len('avatar-size', 32);
-      const px = size === 'Normal' ? base : size === 'Large' ? base * 1.5 : base * 2;
-      const c = box({ name: `Shape=${shape}, Size=${size}`, fill: 'avatar-bg', radius: shape === 'Circle' ? px / 2 : 'avatar-radius', justify: 'CENTER' }, true) as ComponentNode;
-      fixWidth(c, px);
-      fixHeight(c, px);
-      add(c, txt('สม', { size: Math.round(px * 0.4), weight: 'semibold', color: 'avatar-color', name: 'Initials', lineHeight: 1 }));
-      comps.push(c);
-    }
-  const set = variants('Avatar', comps, 3, parent);
+  for (const sev of ['None', ...SEVERITIES])
+    for (const content of ['Initials', 'Icon'])
+      for (const shape of ['Circle', 'Square'])
+        for (const size of ['Normal', 'Large', 'XLarge']) {
+          const base = len('avatar-size', 32);
+          const px = size === 'Normal' ? base : size === 'Large' ? base * 1.5 : base * 2;
+          const t = avatarTone(sev);
+          const c = box({ name: `Severity=${sev}, Content=${content}, Shape=${shape}, Size=${size}`, fill: t.bg, radius: shape === 'Circle' ? px / 2 : 'avatar-radius', justify: 'CENTER' }, true) as ComponentNode;
+          fixWidth(c, px);
+          fixHeight(c, px);
+          if (content === 'Icon') c.appendChild(icon('user', Math.round(px * 0.5), t.fg));
+          else add(c, txt('สม', { size: Math.round(px * 0.4), weight: 'semibold', color: t.fg, name: 'Initials', lineHeight: 1 }));
+          comps.push(c);
+        }
+  const set = variants('Avatar', comps, 12, parent);
   textProp(set, 'Initials', 'Initials', 'สม');
+  iconProps(set, 'user');
   return set;
 }
 
@@ -967,19 +1019,26 @@ function tableExample(parent: Box, cells: ComponentSetNode): void {
   }
 }
 
-function breadcrumb(parent: Box): ComponentNode {
-  const c = box({ name: 'Breadcrumb', px: 'breadcrumb-padding', py: 'breadcrumb-padding', gap: 'breadcrumb-gap', fill: 'breadcrumb-bg', radius: 'radius-md' }, true) as ComponentNode;
-  c.appendChild(icon('home', 16, 'breadcrumb-link-color'));
-  for (const [label, current] of [
-    ['สินค้า', false],
-    ['เครื่องดื่ม', false],
-    ['กาแฟคั่วกลาง', true],
-  ] as [string, boolean][]) {
-    c.appendChild(icon('angle-right', 14, 'text-muted'));
-    add(c, txt(label, { color: current ? 'breadcrumb-current-color' : 'breadcrumb-link-color', weight: current ? weightOf('breadcrumb-current-weight', 'medium') : 'regular', lineHeight: 1.3 }));
+function breadcrumb(parent: Box): ComponentSetNode {
+  const comps: ComponentNode[] = [];
+  // Plain: the trail on its own, for above a page title (no box, no padding).
+  for (const kind of ['Default', 'Plain']) {
+    const plain = kind === 'Plain';
+    const c = box({ name: `Variant=${kind}`, px: plain ? 0 : 'breadcrumb-padding', py: plain ? 0 : 'breadcrumb-padding', gap: 'breadcrumb-gap', fill: plain ? undefined : 'breadcrumb-bg', radius: plain ? 0 : 'radius-md' }, true) as ComponentNode;
+    c.appendChild(icon('home', 16, 'breadcrumb-link-color'));
+    for (const [label, current] of [
+      ['สินค้า', false],
+      ['เครื่องดื่ม', false],
+      ['กาแฟคั่วกลาง', true],
+    ] as [string, boolean][]) {
+      c.appendChild(icon('angle-right', 14, 'text-muted'));
+      add(c, txt(label, { color: current ? 'breadcrumb-current-color' : 'breadcrumb-link-color', weight: current ? weightOf('breadcrumb-current-weight', 'medium') : 'regular', lineHeight: 1.3, name: current ? 'Current' : label }));
+    }
+    comps.push(c);
   }
-  parent.appendChild(c);
-  return c;
+  const set = variants('Breadcrumb', comps, 2, parent);
+  textProp(set, 'Current', 'Current', 'กาแฟคั่วกลาง');
+  return set;
 }
 
 function accordion(parent: Box): ComponentSetNode {
@@ -1078,7 +1137,7 @@ function navbar(parent: Box): ComponentNode {
 function asideMenu(parent: Box): ComponentNode {
   const c = box({ name: 'Aside menu', dir: 'V', px: 'aside-menu-padding', py: 'aside-menu-padding', gap: 2, fill: 'aside-menu-bg', stroke: 'aside-menu-border-color', strokeW: 'aside-menu-border-width', width: Math.min(280, Math.max(200, len('aside-menu-width', 260))) }, true) as ComponentNode;
   const sectionLabel = (label: string) => {
-    const s = add(c, box({ name: 'Section', px: 'aside-menu-section-padding', py: 6 }), true);
+    const s = add(c, box({ name: 'Section', px: 'aside-menu-section-padding', py: 'aside-menu-section-padding', justify: 'MIN' }), true);
     add(s, txt(label, { size: 'aside-menu-section-size', weight: 'semibold', color: 'aside-menu-section-color', lineHeight: 1.2 }));
   };
   const item = (label: string, ic: string, active = false) => {
@@ -1098,70 +1157,143 @@ function asideMenu(parent: Box): ComponentNode {
   return c;
 }
 
+// ── Sections of the Components page ────────────────────────────────────────────────────────────────────────────────
+// Each section registers itself (this file and src/sets/*.ts, which the build appends to this one), so groups of
+// components live in their own files. `covers` names the @wirabyte/ui entry points a section draws: the smoke test
+// fails when a visual entry point is in no section.
+
+/** What sections share: sets made earlier on the page that later ones place instances of. */
+interface KitCtx {
+  button: ComponentSetNode;
+  sets: Record<string, ComponentSetNode | ComponentNode>;
+}
+
+interface KitSection {
+  /** Place on the page, lowest first: 100 actions, 200 forms, 300 data, 400 feedback, 500 panels and overlays,
+   *  600 navigation, 700 media, 800 page layout, 900 app-sized components. */
+  order: number;
+  title: string;
+  note: string;
+  covers: string[];
+  build: (parent: Box, ctx: KitCtx) => void;
+}
+
+const SECTIONS: KitSection[] = [];
+
+function kitSection(s: KitSection): void {
+  SECTIONS.push(s);
+}
+
+/** A row inside a section, for pieces that sit side by side. */
+function row(parent: Box, name: string, gap = 32): Box {
+  return add(parent, box({ name, gap, align: 'MIN' }));
+}
+
+kitSection({ order: 100, title: 'Button', note: 'Severity × Variant × Size × State. Properties: Label, Icon, Icon glyph.', covers: ['button'], build: (s, ctx) => void (ctx.button = ctx.sets['Button'] = buttons(s)) });
+kitSection({ order: 200, title: 'InputText', note: 'Size × State × Filled. Focus wears the focus ring effect style.', covers: ['inputtext'], build: (s, ctx) => void (ctx.sets['InputText'] = field(s)) });
+kitSection({
+  order: 230,
+  title: 'Select',
+  note: 'The field and its open panel (hover and selected options).',
+  covers: ['select'],
+  build: (s, ctx) => {
+    const r = row(s, 'Select');
+    ctx.sets['Select'] = select(r);
+    ctx.sets['Select panel'] = selectPanel(r);
+  },
+});
+kitSection({
+  order: 260,
+  title: 'Selection controls',
+  note: 'Checkbox, RadioButton and ToggleSwitch with their states.',
+  covers: ['checkbox', 'radiobutton', 'toggleswitch'],
+  build: (s, ctx) => {
+    ctx.sets['Checkbox'] = checkbox(s);
+    ctx.sets['RadioButton'] = radio(s);
+    ctx.sets['ToggleSwitch'] = toggleSwitch(s);
+  },
+});
+kitSection({
+  order: 300,
+  title: 'Tag, Badge, Avatar, Chip',
+  note: 'Also ProgressBar, Slider and Tooltip.',
+  covers: ['tag', 'badge', 'avatar', 'chip', 'progressbar', 'slider', 'tooltip'],
+  build: (s, ctx) => {
+    ctx.sets['Tag'] = tags(s);
+    ctx.sets['Badge'] = badges(s);
+    ctx.sets['Avatar'] = avatars(s);
+    misc(row(s, 'More'));
+  },
+});
+kitSection({
+  order: 400,
+  title: 'Message and Toast',
+  note: 'One per severity, with the icon the library uses.',
+  covers: ['message', 'toast'],
+  build: (s, ctx) => {
+    const r = row(s, 'Feedback');
+    ctx.sets['Message'] = messages(r);
+    ctx.sets['Toast'] = toasts(r);
+  },
+});
+kitSection({
+  order: 500,
+  title: 'Card, Dialog, Menu',
+  note: 'Footers hold Button instances: swap their variants freely.',
+  covers: ['card', 'dialog', 'menu'],
+  build: (s, ctx) => {
+    const r = row(s, 'Surfaces');
+    ctx.sets['Card'] = card(r, ctx.button);
+    ctx.sets['Dialog'] = dialog(r, ctx.button);
+    ctx.sets['Menu'] = menu(r);
+  },
+});
+kitSection({
+  order: 600,
+  title: 'Navigation',
+  note: 'Tab item, Breadcrumb, Steps (item and a row of four), Accordion item and Paginator.',
+  covers: ['tabs', 'breadcrumb', 'steps', 'accordion', 'paginator'],
+  build: (s, ctx) => {
+    ctx.sets['Tab'] = tabs(s);
+    ctx.sets['Breadcrumb'] = breadcrumb(s);
+    ctx.sets['Step'] = steps(s);
+    ctx.sets['Accordion item'] = accordion(s);
+    ctx.sets['Paginator'] = paginator(s);
+  },
+});
+kitSection({
+  order: 320,
+  title: 'Table',
+  note: 'Cell variants, and a whole table made of their instances.',
+  covers: ['table'],
+  build: (s, ctx) => {
+    const cells = table(s);
+    ctx.sets['Table cell'] = cells;
+    tableExample(s, cells);
+  },
+});
+kitSection({
+  order: 800,
+  title: 'Layout',
+  note: 'Navbar and Aside menu, as in the ready-made layouts of the library.',
+  covers: ['navbar', 'asidemenu'],
+  build: (s, ctx) => {
+    ctx.sets['Navbar'] = navbar(s);
+    ctx.sets['Aside menu'] = asideMenu(s);
+  },
+});
+
 async function buildComponents(page: PageNode): Promise<void> {
   const root = box({ name: `WiraUI · ${K.p.label} · Components`, dir: 'V', gap: 56, px: 64, py: 64, fill: 'ground' });
   page.appendChild(root);
   add(root, txt('Components', { size: 40, weight: 'bold' }));
   add(root, txt('Component sets with variants and properties, bound to the WiraUI variables. Names and properties follow the library (severity, variant, size, state).', { size: 15, color: 'text-muted' }));
-  const step = async (label: string, fn: () => void) => {
-    fn();
-    say(`  ${label}`);
+  const ctx = { sets: {} } as KitCtx;
+  for (const s of [...SECTIONS].sort((a, b) => a.order - b.order)) {
+    s.build(section(root, s.title, s.note), ctx);
+    say(`  ${s.title}`);
     await new Promise((r) => setTimeout(r, 0));
-  };
-  let button!: ComponentSetNode;
-  await step('Button', () => (button = buttons(section(root, 'Button', 'Severity × Variant × Size × State. Properties: Label, Icon, Icon glyph.'))));
-  await step('InputText', () => void field(section(root, 'InputText', 'Size × State × Filled. Focus wears the focus ring effect style.')));
-  await step('Select', () => {
-    const s = section(root, 'Select', 'The field and its open panel (hover and selected options).');
-    const row = add(s, box({ name: 'Select', gap: 32, align: 'MIN' }));
-    select(row);
-    selectPanel(row);
-  });
-  await step('Checkbox, RadioButton, ToggleSwitch', () => {
-    const s = section(root, 'Selection controls', 'Checkbox, RadioButton and ToggleSwitch with their states.');
-    checkbox(s);
-    radio(s);
-    toggleSwitch(s);
-  });
-  await step('Tag, Badge, Avatar, Chip', () => {
-    const s = section(root, 'Tag, Badge, Avatar, Chip', '');
-    tags(s);
-    badges(s);
-    avatars(s);
-    const row = add(s, box({ name: 'More', gap: 32 }));
-    misc(row);
-  });
-  await step('Message, Toast', () => {
-    const s = section(root, 'Message and Toast', 'One per severity, with the icon the library uses.');
-    const row = add(s, box({ name: 'Feedback', gap: 32, align: 'MIN' }));
-    messages(row);
-    toasts(row);
-  });
-  await step('Card, Dialog, Menu', () => {
-    const s = section(root, 'Card, Dialog, Menu', 'Footers hold Button instances: swap their variants freely.');
-    const row = add(s, box({ name: 'Surfaces', gap: 32, align: 'MIN' }));
-    card(row, button);
-    dialog(row, button);
-    menu(row);
-  });
-  await step('Tabs, Breadcrumb, Steps, Accordion, Paginator', () => {
-    const s = section(root, 'Navigation', 'Tab item, Breadcrumb, Steps (item and a row of four), Accordion item and Paginator.');
-    tabs(s);
-    breadcrumb(s);
-    steps(s);
-    accordion(s);
-    paginator(s);
-  });
-  await step('Table', () => {
-    const s = section(root, 'Table', 'Cell variants, and a whole table made of their instances.');
-    const cells = table(s);
-    tableExample(s, cells);
-  });
-  await step('Navbar, Aside menu', () => {
-    const s = section(root, 'Layout', 'Navbar and Aside menu, as in the ready-made layouts of the library.');
-    navbar(s);
-    asideMenu(s);
-  });
+  }
 }
 
 async function buildIcons(page: PageNode, all: boolean): Promise<void> {

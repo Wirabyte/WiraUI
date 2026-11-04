@@ -27,6 +27,19 @@ const pre = /^\d+\.\d+\.\d+-([a-z]+)/.exec(version);
 const tag = pre ? target.prefix + pre[1] : target.stable;
 
 // A scoped package is private unless told otherwise, and the free org cannot hold private ones.
+// A version already on the registry is skipped (versions can never be reused), so `all` also works for a release where
+// only some packages have a new version, such as @wirabyte/ui without a new @wirabyte/icons.
+let published = '';
+try {
+  published = execFileSync('npm', ['view', `${pkg}@${version}`, 'version'], { cwd: dist, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], shell: process.platform === 'win32' }).trim();
+} catch {
+  // Not on the registry yet (npm view fails for a package that was never published).
+}
+if (published === version) {
+  console.log(`${pkg}@${version} is already on the registry: skipped`);
+  process.exit(0);
+}
+
 const args = ['publish', '--tag', tag, '--access', 'public', ...flags.filter((f) => f === '--dry-run')];
 console.log(`${pkg}@${version} → dist-tag ${tag}${args.includes('--dry-run') ? ' (dry run)' : ''}`);
 execFileSync('npm', args, { cwd: dist, stdio: 'inherit', shell: process.platform === 'win32' });

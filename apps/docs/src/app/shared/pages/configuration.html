@@ -147,6 +147,24 @@
           </td>
         </tr>
         <tr>
+          <td><code class="docs-api-name">now</code></td>
+          <td><code class="docs-api-type">() =&gt; Date</code></td>
+          <td>{{ en() ? 'the device clock' : 'นาฬิกาเครื่องผู้ใช้' }}</td>
+          <td>
+            @if (en()) {
+              The clock every component calls "now": today in DatePicker and Scheduler, Scheduler's current-time line, the <code>wuTimeAgo</code> pipe,
+              Chat's day labels and the year in SiteFooter. Give the server's time when the device clock cannot be trusted:
+              <code>now: () =&gt; serverTime.now()</code>. Swap it later with <code>WuConfig.clock</code>; <code>WuConfig.now()</code> reads it.
+              Timers (search delays, toast life) keep using the device clock.
+            } @else {
+              นาฬิกาที่ทุก component ถือเป็น "ตอนนี้": วันนี้ใน DatePicker และ Scheduler, เส้นเวลาปัจจุบันของ Scheduler, pipe <code>wuTimeAgo</code>,
+              ป้ายวันในแชท และปีใน SiteFooter · ใส่เวลาของ server เมื่อเชื่อนาฬิกาเครื่องผู้ใช้ไม่ได้ <code>now: () =&gt; serverTime.now()</code>
+              · เปลี่ยนภายหลังได้ที่ <code>WuConfig.clock</code> และอ่านค่าด้วย <code>WuConfig.now()</code> · ตัวจับเวลา (หน่วงการค้นหา อายุของ toast)
+              ยังใช้นาฬิกาเครื่อง
+            }
+          </td>
+        </tr>
+        <tr>
           <td><code class="docs-api-name">selector</code></td>
           <td><code class="docs-api-type">string</code></td>
           <td><code>':root'</code></td>

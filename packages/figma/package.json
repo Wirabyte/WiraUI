@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node scripts/build.mjs && tsc -p tsconfig.json --noEmit && node scripts/smoke.mjs"
+    "test": "node scripts/build.mjs && tsc -p tsconfig.json --noEmit && node scripts/smoke.mjs",
+    "preview": "node scripts/build.mjs && node scripts/preview.mjs"
   },
   "devDependencies": {
     "@figma/plugin-typings": "1.142.0",

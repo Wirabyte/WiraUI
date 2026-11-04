@@ -227,7 +227,9 @@ export class WuDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   @ViewChild('input') private inputRef?: ElementRef<HTMLInputElement>;
   @ViewChild('panel') private panelRef?: ElementRef<HTMLElement>;
 
-  readonly state = new DatePickerState();
+  private readonly config = inject(WuConfig);
+  /** Today and the first month shown come from the app's clock (`provideWiraUI({ now })`), not the device's. */
+  readonly state = new DatePickerState({}, () => this.config.now());
   open = false;
   focused = false;
   weeks: DayCell[][] = [];
@@ -278,7 +280,6 @@ export class WuDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   private popup: ɵWuPopup | null = null;
   private repeat: ReturnType<typeof setTimeout> | null = null;
   private readonly autoId = ɵuniqueId('wu-datepicker');
-  private readonly config = inject(WuConfig);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly host: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);

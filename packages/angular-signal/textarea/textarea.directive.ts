@@ -43,6 +43,7 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
   private sub?: Subscription;
   private observer?: ResizeObserver;
   private width = -1;
+  private frame = 0;
 
   constructor() {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
@@ -54,15 +55,26 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
     const changes = this.ngControl && this.ngControl.valueChanges;
     if (changes) this.sub = changes.subscribe(() => setTimeout(() => this.resize()));
     // Hidden at first (a closed dialog, a collapsed panel), it measured 0: size it once it shows, and again when its
-    // width changes how the text wraps. Its own height changes do not count, so this never loops.
+    // width changes how the text wraps. Its own height changes do not count.
     if (typeof ResizeObserver !== 'undefined') {
-      this.observer = new ResizeObserver(() => {
-        const width = this.el.nativeElement.clientWidth;
+      const t = this.el.nativeElement;
+      const observer = new ResizeObserver(() => {
+        const width = t.clientWidth;
         if (width === this.width) return;
         this.width = width;
+        // Resizing a watched element inside its own callback leaves a notification undelivered, and the browser
+        // reports a "ResizeObserver loop" error (WUI-022). So stop watching while it grows, and watch again from
+        // the next frame. It still grows in this frame, and the first notification after that sees the same width.
+        observer.unobserve(t);
         this.resize();
+        cancelAnimationFrame(this.frame);
+        this.frame = requestAnimationFrame(() => {
+          this.frame = 0;
+          observer.observe(t);
+        });
       });
-      this.observer.observe(this.el.nativeElement);
+      observer.observe(t);
+      this.observer = observer;
     }
   }
 
@@ -78,6 +90,7 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
   ngOnDestroy(): void {
     if (this.sub) this.sub.unsubscribe();
     if (this.observer) this.observer.disconnect();
+    if (this.frame) cancelAnimationFrame(this.frame);
   }
 
   resize(): void {

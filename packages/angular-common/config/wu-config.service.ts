@@ -17,6 +17,21 @@ export class WuConfig {
     filter: Math.max(0, Number(this.options.delays?.filter) || 0),
   };
 
+  /**
+   * Where "now" comes from (`provideWiraUI({ now })`; default: the device clock). Assign another function at run
+   * time, say once the server time is known: components read it each time they need the time.
+   */
+  clock: () => Date = this.options.now || (() => new Date());
+
+  /**
+   * Now, by `clock`: what the datepicker, scheduler, chat, footer and `wuTimeAgo` call "now" and "today". A clock
+   * that returns no valid date falls back to the device clock. Always a new Date, so callers may change it.
+   */
+  now(): Date {
+    const d = this.clock();
+    return d instanceof Date && !Number.isNaN(d.getTime()) ? new Date(d.getTime()) : new Date();
+  }
+
   /** Emits after `setTranslation()` so components can refresh their labels. */
   readonly translationChange = new Subject<WuLocale>();
 

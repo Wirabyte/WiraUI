@@ -7,5 +7,5 @@
     "skipLibCheck": false,
     "typeRoots": ["./node_modules/@figma"]
   },
-  "files": ["src/code.ts"]
+  "include": ["src/**/*.ts"]
 }

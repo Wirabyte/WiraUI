@@ -37,6 +37,31 @@ test('a textarea that grows with its text measures itself once the dialog opens'
   await page.keyboard.press('Escape');
 });
 
+test('a textarea that already has text sizes itself in a dialog without a ResizeObserver loop error', async ({ page }) => {
+  // The browser reports the loop as a window error event; apps that forward those to the ErrorHandler log it as ERROR.
+  const logged: string[] = [];
+  page.on('console', (m) => { if (m.type() === 'error') logged.push(m.text()); });
+  await page.evaluate(() => {
+    const w = window as unknown as { wuErrors: string[] };
+    w.wuErrors = [];
+    window.addEventListener('error', (e) => w.wuErrors.push(e.message));
+  });
+  const frames = () => page.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(done, 50)))));
+  const ta = page.locator('#r1-ta');
+  // Open, close and open again: each time it shows, its width changes and it sizes itself to its text.
+  for (let round = 0; round < 2; round++) {
+    await page.locator('#r1-open button').click();
+    await expect(ta).toBeVisible();
+    await expect.poll(async () => (await ta.boundingBox())!.height).toBeGreaterThan(50);
+    await frames();
+    await page.keyboard.press('Escape');
+    await expect(ta).toBeHidden();
+  }
+  await frames();
+  const errors = await page.evaluate(() => (window as unknown as { wuErrors: string[] }).wuErrors);
+  expect([...errors, ...logged].filter((m) => /ResizeObserver/.test(m))).toEqual([]);
+});
+
 test('an icon-only button wears its badge on the corner instead of growing', async ({ page }) => {
   const bell = (await page.locator('#r1-bell button').boundingBox())!;
   const plain = (await page.locator('#r1-plain button').boundingBox())!;
@@ -189,4 +214,21 @@ test('scheduler: week, month and day views, a Buddhist year in Thai, events in t
   await sched.locator('.wu-scheduler-col').click({ position: { x: 20, y: 30 } });
   await expect(page.locator('#r1-clicked')).toHaveText('slot');
   await sched.getByRole('button', { name: 'สัปดาห์' }).click();
+});
+
+test('one clock for the app: WuConfig.clock (provideWiraUI({ now })) is "now" for the datepicker, wuTimeAgo and the scheduler', async ({ page }) => {
+  // The fixture sets the clock to 15 January 2026, 09:00, far from the device's date.
+  await page.locator('#clock-set').click();
+  const dp = page.locator('#clock-dp');
+  await dp.scrollIntoViewIfNeeded();
+  // The month shown first and the today mark come from that clock (2026 = 2569 in Thai).
+  await expect(dp.locator('.wu-datepicker-header')).toContainText('2569');
+  await expect(dp.locator('.wu-datepicker-header')).toContainText('มกราคม');
+  await expect(dp.locator('.wu-datepicker-today')).toHaveCount(1);
+  await expect(dp.locator('.wu-datepicker-today')).toHaveText('15');
+  await expect(page.locator('#clock-ago')).toHaveText('5 นาทีที่ผ่านมา');
+  const sched = page.locator('#clock-sched');
+  await expect(sched.locator('.wu-scheduler-title')).toContainText('2569');
+  await expect(sched.locator('.wu-scheduler-col-head.wu-scheduler-today')).toContainText('15');
+  await expect(sched.locator('.wu-scheduler-now')).toHaveCount(1);
 });
