@@ -28,6 +28,15 @@ export const METERGROUP_DOC: ComponentDoc = {
     'สี CSS ใดก็ได้ ไม่ใส่ = สีของธีมวนไป': 'any CSS colour; left out = the theme colours in turn',
     'ปกติ': 'Normal',
     'เติมจากล่างขึ้นบน': 'fills from the bottom',
+    'ลำดับใน value': 'its place in value',
+    'Ticket ตามสถานะ': 'Tickets by status',
+    'เปิด': 'Open',
+    'กำลังดำเนินการ': 'In progress',
+    'รอลูกค้า': 'Waiting on customer',
+    'ปิดแล้ว': 'Closed',
+    'กดล่าสุด': 'Last pressed',
+    'ทั้งหมด 50 รายการ': '50 in all',
+    'เปิดรายการของสถานะนั้น เช่น ผ่าน router ของแอป': "open that status's list, e.g. through the app's router",
   },
   sections: {
     import: { title: 'Import', text: importText },
@@ -71,6 +80,13 @@ export const METERGROUP_DOC: ComponentDoc = {
       title: 'Min / Max',
       text: { th: 'นับเป็นหน่วยจริงได้ เช่น GB โดยตั้ง <code>[max]</code> เป็นความจุ', en: 'Count in real units, such as GB, by setting <code>[max]</code> to the capacity.' },
     },
+    clickable: {
+      title: { th: 'แสดงค่า และคำอธิบายที่กดได้', en: 'Values, and a legend that clicks' },
+      text: {
+        th: '<code>[showValue]="true"</code> คำอธิบายแสดงค่าจริงคู่กับร้อยละ เช่น "เปิด 12 (24%)" · <code>[clickable]="true"</code> แต่ละรายการในคำอธิบายเป็นปุ่ม กดแล้วส่ง <code>(onItemClick)</code> พร้อม <code>{ originalEvent, item, index }</code> ใช้เปิดรายการของสถานะนั้น · ตัวอย่างนี้นับเป็นจำนวน Ticket โดยตั้ง <code>[max]</code> เป็นทั้งหมด',
+        en: '<code>[showValue]="true"</code> puts the raw value next to the percentage in the legend, such as “Open 12 (24%)” · with <code>[clickable]="true"</code> each legend item is a button that emits <code>(onItemClick)</code> with <code>{ originalEvent, item, index }</code>, to open that status’s list · here it counts tickets, with <code>[max]</code> set to the total.',
+      },
+    },
     template: {
       title: 'Templates',
       text: {
@@ -87,6 +103,8 @@ export const METERGROUP_DOC: ComponentDoc = {
     vertical: `<wu-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical"
   style="height: 20rem"></wu-metergroup>`,
     minmax: `<wu-metergroup [value]="usedGb" [min]="0" [max]="200" ariaLabel="พื้นที่ 200 GB"></wu-metergroup>`,
+    clickable: `<wu-metergroup [value]="tickets" [max]="50" [showValue]="true" [clickable]="true"
+  ariaLabel="Ticket ตามสถานะ" (onItemClick)="openStatus($event)"></wu-metergroup>`,
     reverse: `<wu-metergroup [value]="storage" orientation="vertical" labelOrientation="vertical" style="height: 14rem"></wu-metergroup>
 
 <!-- เติมจากล่างขึ้นบน -->
@@ -135,6 +153,20 @@ export const METERGROUP_DOC: ComponentDoc = {
   { label: 'วิดีโอ', value: 16, icon: 'wi wi-video' },
   { label: 'เอกสาร', value: 12, icon: 'wi wi-file' },
 ];`,
+    clickable: `import { WuMeterItem, WuMeterItemClickEvent } from '@wirabyte/ui/metergroup';
+
+// ทั้งหมด 50 รายการ
+tickets: WuMeterItem[] = [
+  { label: 'เปิด', value: 12, color: '#0ea5e9' },
+  { label: 'กำลังดำเนินการ', value: 20, color: '#f59e0b' },
+  { label: 'รอลูกค้า', value: 8, color: '#a855f7' },
+  { label: 'ปิดแล้ว', value: 10, color: '#22c55e' },
+];
+picked = '';
+
+openStatus(e: WuMeterItemClickEvent): void {
+  this.picked = e.item.label ?? ''; // เปิดรายการของสถานะนั้น เช่น ผ่าน router ของแอป
+}`,
     minmax: `// ใช้ไป 96 จาก 200 GB
 usedGb: WuMeterItem[] = [
   { label: 'ระบบ', value: 40, color: '#64748b' },
@@ -152,9 +184,17 @@ usedGb: WuMeterItem[] = [
         row('reverse', 'boolean', 'false', 'เติมจากอีกด้าน: ขวาไปซ้าย หรือ (แนวตั้ง) ล่างขึ้นบน คำอธิบายเรียงเหมือนเดิม', 'Fill from the other end: right to left, or (vertical) bottom to top; the legend keeps its order'),
         row('labelPosition', "'start' | 'end'", "'end'", 'คำอธิบายก่อนหรือหลังแถบ', 'Legend before or after the bar'),
         row('labelOrientation', "'horizontal' | 'vertical'", "'horizontal'", 'คำอธิบายเรียงแถวหรือคอลัมน์', 'Legend in a row or a column'),
+        row('showValue', 'boolean', 'false', 'คำอธิบายแสดงค่าจริงด้วย: เปิด 12 (24%)', 'The legend shows the raw value too: Open 12 (24%)'),
+        row('clickable', 'boolean', 'false', 'รายการในคำอธิบายเป็นปุ่มที่ส่ง (onItemClick)', 'Legend items are buttons that emit (onItemClick)'),
         row('styleClass · style', 'string · object', undefined, 'class และ style เพิ่ม (style เป็น object)', 'Extra class and style (style is an object)'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader (role="meter")', 'Accessible name (role="meter")'),
       ],
+    },
+    {
+      id: 'api-outputs',
+      title: 'Outputs',
+      typeLabel: 'Event',
+      rows: [row('onItemClick', 'WuMeterItemClickEvent', undefined, '{ originalEvent, item, index } กดรายการในคำอธิบาย (เมื่อ clickable)', '{ originalEvent, item, index } a legend item was pressed (with clickable)')],
     },
     {
       id: 'api-templates',
@@ -175,6 +215,11 @@ usedGb: WuMeterItem[] = [
   value: number;
   color?: string;   // สี CSS ใดก็ได้ ไม่ใส่ = สีของธีมวนไป
   icon?: string;
+}
+interface WuMeterItemClickEvent {
+  originalEvent: Event;
+  item: WuMeterItem;
+  index: number;   // ลำดับใน value
 }
 type WuMeterOrientation = 'horizontal' | 'vertical';
 type WuMeterLabelPosition = 'start' | 'end';`,

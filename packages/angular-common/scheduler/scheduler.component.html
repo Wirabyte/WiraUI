@@ -1,0 +1,142 @@
+<section [class]="rootClass" [style]="rootStyle">
+  <header class="wu-scheduler-toolbar">
+    <div class="wu-scheduler-nav">
+      <button type="button" class="wu-scheduler-button wu-scheduler-icon" [attr.aria-label]="t?.previous || 'Previous'" [attr.title]="t?.previous || 'Previous'" (click)="move(-1)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+      </button>
+      <button type="button" class="wu-scheduler-button wu-scheduler-icon" [attr.aria-label]="t?.next || 'Next'" [attr.title]="t?.next || 'Next'" (click)="move(1)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+      </button>
+      <button type="button" class="wu-scheduler-button" (click)="goToday()">{{ t?.today || 'Today' }}</button>
+    </div>
+    <h3 class="wu-scheduler-title" aria-live="polite">{{ title }}</h3>
+    <div *ngIf="viewButtons.length > 1" class="wu-scheduler-views" role="group">
+      <button
+        *ngFor="let v of viewButtons"
+        type="button"
+        class="wu-scheduler-button"
+        [class.wu-scheduler-button-active]="v === view"
+        [attr.aria-pressed]="v === view"
+        (click)="setView(v)"
+      >
+        {{ viewLabel(v) }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Month: six rows of seven days. -->
+  <div *ngIf="view === 'month'" class="wu-scheduler-month" role="grid">
+    <div class="wu-scheduler-month-head" role="row">
+      <span *ngFor="let name of weekdayNames" class="wu-scheduler-weekday" role="columnheader">{{ name }}</span>
+    </div>
+    <div *ngFor="let week of weeks" class="wu-scheduler-month-row" role="row">
+      <div
+        *ngFor="let cell of week; trackBy: trackCell"
+        class="wu-scheduler-cell"
+        role="gridcell"
+        [class.wu-scheduler-today]="cell.today"
+        [class.wu-scheduler-outside]="cell.outside"
+        (click)="cellClick($event, cell)"
+        (dragover)="dragOver($event)"
+        (drop)="dropOnDay($event, cell)"
+      >
+        <span class="wu-scheduler-day-number">{{ cell.date.getDate() }}</span>
+        <button
+          *ngFor="let p of visible(cell); trackBy: trackEvent"
+          type="button"
+          class="wu-scheduler-chip"
+          [class.wu-scheduler-chip-allday]="!p.time"
+          [style]="eventStyle(p)"
+          [attr.draggable]="canDrag(p) ? 'true' : null"
+          (click)="eventClick($event, p)"
+          (dragstart)="dragStart($event, p)"
+          (dragend)="dragEnd()"
+        >
+          <ng-container *ngIf="eventTemplate; else chipText">
+            <ng-container *ngTemplateOutlet="eventTemplate; context: { $implicit: p.event, start: p.start, end: p.end, view: view }"></ng-container>
+          </ng-container>
+          <ng-template #chipText>
+            <span *ngIf="p.time" class="wu-scheduler-chip-time">{{ p.time }}</span>
+            <span class="wu-scheduler-chip-title">{{ p.event.title }}</span>
+          </ng-template>
+        </button>
+        <button *ngIf="hidden(cell)" type="button" class="wu-scheduler-more" (click)="$event.stopPropagation(); openDay(cell.date)">
+          {{ moreText(hidden(cell)) }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day and week: an all-day row, then the hours. -->
+  <div *ngIf="view !== 'month'" class="wu-scheduler-time">
+    <div class="wu-scheduler-time-head">
+      <span class="wu-scheduler-gutter"></span>
+      <div *ngFor="let cell of days; trackBy: trackCell" class="wu-scheduler-col-head" [class.wu-scheduler-today]="cell.today">
+        <span class="wu-scheduler-col-name">{{ dayHeader(cell) }}</span>
+      </div>
+    </div>
+    <div class="wu-scheduler-allday">
+      <span class="wu-scheduler-gutter wu-scheduler-allday-label">{{ t?.allDay || 'All day' }}</span>
+      <div
+        *ngFor="let cell of days; trackBy: trackCell"
+        class="wu-scheduler-allday-cell"
+        (click)="allDayClick($event, cell)"
+        (dragover)="dragOver($event)"
+        (drop)="dropOnDay($event, cell)"
+      >
+        <button
+          *ngFor="let p of cell.allDay; trackBy: trackEvent"
+          type="button"
+          class="wu-scheduler-chip wu-scheduler-chip-allday"
+          [style]="eventStyle(p)"
+          [attr.draggable]="canDrag(p) ? 'true' : null"
+          (click)="eventClick($event, p)"
+          (dragstart)="dragStart($event, p)"
+          (dragend)="dragEnd()"
+        >
+          <ng-container *ngIf="eventTemplate; else allDayText">
+            <ng-container *ngTemplateOutlet="eventTemplate; context: { $implicit: p.event, start: p.start, end: p.end, view: view }"></ng-container>
+          </ng-container>
+          <ng-template #allDayText><span class="wu-scheduler-chip-title">{{ p.event.title }}</span></ng-template>
+        </button>
+      </div>
+    </div>
+    <div class="wu-scheduler-grid-scroll">
+      <div class="wu-scheduler-grid">
+        <div class="wu-scheduler-hours" aria-hidden="true">
+          <span *ngFor="let h of hours" class="wu-scheduler-hour">{{ hourLabel(h) }}</span>
+        </div>
+        <div
+          *ngFor="let cell of days; trackBy: trackCell"
+          class="wu-scheduler-col"
+          [class.wu-scheduler-today]="cell.today"
+          (click)="slotClick($event, cell)"
+          (dragover)="dragOver($event)"
+          (drop)="dropOnTime($event, cell)"
+        >
+          <span *ngFor="let h of hours" class="wu-scheduler-slot" aria-hidden="true"></span>
+          <span *ngIf="nowTop(cell) !== null" class="wu-scheduler-now" [style.top.%]="nowTop(cell)" aria-hidden="true"></span>
+          <button
+            *ngFor="let p of cell.timed; trackBy: trackEvent"
+            type="button"
+            class="wu-scheduler-event"
+            [style]="placedStyle(p)"
+            [attr.draggable]="canDrag(p) ? 'true' : null"
+            (click)="eventClick($event, p)"
+            (dragstart)="dragStart($event, p)"
+            (dragend)="dragEnd()"
+          >
+            <ng-container *ngIf="eventTemplate; else eventText">
+              <ng-container *ngTemplateOutlet="eventTemplate; context: { $implicit: p.event, start: p.start, end: p.end, view: view }"></ng-container>
+            </ng-container>
+            <ng-template #eventText>
+              <span class="wu-scheduler-event-time">{{ p.time }}</span>
+              <span class="wu-scheduler-event-title">{{ p.event.title }}</span>
+              <span *ngIf="p.event.description" class="wu-scheduler-event-description">{{ p.event.description }}</span>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

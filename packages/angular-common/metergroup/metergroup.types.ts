@@ -8,6 +8,13 @@ export interface WuMeterItem {
   icon?: string;
 }
 
+/** `(onItemClick)` of a clickable legend: the item, its place in `value`, and the click. */
+export interface WuMeterItemClickEvent {
+  originalEvent: Event;
+  item: WuMeterItem;
+  index: number;
+}
+
 export type WuMeterOrientation = 'horizontal' | 'vertical';
 export type WuMeterLabelPosition = 'start' | 'end';
 

@@ -34,11 +34,11 @@ export class WuToolbar {
   }
 
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('start', { read: TemplateRef }) protected startRef?: TemplateRef<unknown>;
-  @ContentChild('center', { read: TemplateRef }) protected centerRef?: TemplateRef<unknown>;
-  @ContentChild('end', { read: TemplateRef }) protected endRef?: TemplateRef<unknown>;
-  @ContentChild('left', { read: TemplateRef }) protected leftRef?: TemplateRef<unknown>;
-  @ContentChild('right', { read: TemplateRef }) protected rightRef?: TemplateRef<unknown>;
+  @ContentChild('start', { read: TemplateRef, descendants: false }) protected startRef?: TemplateRef<unknown>;
+  @ContentChild('center', { read: TemplateRef, descendants: false }) protected centerRef?: TemplateRef<unknown>;
+  @ContentChild('end', { read: TemplateRef, descendants: false }) protected endRef?: TemplateRef<unknown>;
+  @ContentChild('left', { read: TemplateRef, descendants: false }) protected leftRef?: TemplateRef<unknown>;
+  @ContentChild('right', { read: TemplateRef, descendants: false }) protected rightRef?: TemplateRef<unknown>;
 
   constructor() {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));

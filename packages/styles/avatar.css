@@ -35,6 +35,25 @@
   .wu-avatar-image {
     background: transparent;
   }
+  /* severity: a soft tile of the colour (like a soft tag) with the icon or letters in the colour's text shade. */
+  .wu-avatar:is(.wu-avatar-primary, .wu-avatar-success, .wu-avatar-info, .wu-avatar-warn, .wu-avatar-danger, .wu-avatar-help) {
+    background: color-mix(in srgb, var(--_tone) var(--wu-tag-soft-mix), transparent);
+    color: var(--_tone-text);
+  }
+  .wu-avatar-primary { --_tone: var(--wu-primary-color); --_tone-text: var(--wu-primary-soft-text); }
+  .wu-avatar-success { --_tone: var(--wu-success-color); --_tone-text: var(--wu-success-text); }
+  .wu-avatar-info { --_tone: var(--wu-info-color); --_tone-text: var(--wu-info-text); }
+  .wu-avatar-warn { --_tone: var(--wu-warn-color); --_tone-text: var(--wu-warn-text); }
+  .wu-avatar-danger { --_tone: var(--wu-danger-color); --_tone-text: var(--wu-danger-text); }
+  .wu-avatar-help { --_tone: var(--wu-help-color); --_tone-text: var(--wu-help-text); }
+  .wu-avatar.wu-avatar-secondary {
+    background: var(--wu-chip-bg);
+    color: var(--wu-chip-color);
+  }
+  .wu-avatar.wu-avatar-contrast {
+    background: var(--wu-text);
+    color: var(--wu-card-bg);
+  }
   .wu-avatar img {
     width: 100%;
     height: 100%;

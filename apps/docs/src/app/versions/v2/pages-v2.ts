@@ -100,6 +100,10 @@ import { FlowDemo } from '../shared/demos-flow';
 import { ExcelDemo } from '../shared/demos-excel';
 import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
 import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
+import { DescriptionsDemo, StatDemo } from '../shared/demos-stat';
+import { SignaturePadDemo } from '../shared/demos-signaturepad';
+import { ChatDemo } from '../shared/demos-chat';
+import { SchedulerDemo } from '../shared/demos-scheduler';
 import { ThaiDemo } from '../shared/demos-thai';
 
 // Shared templates compiled against @wirabyte/ui@2 components (DocsV2Module imports the v1 modules).
@@ -394,6 +398,21 @@ export class FooterPageV2 extends FooterDemo {}
 
 @Component({ selector: 'docs-bottombar-v2', templateUrl: '../shared/bottombar.html', standalone: false })
 export class BottomBarPageV2 extends BottomBarDemo {}
+
+@Component({ selector: 'docs-stat-v2', templateUrl: '../shared/stat.html', standalone: false })
+export class StatPageV2 extends StatDemo {}
+
+@Component({ selector: 'docs-descriptions-v2', templateUrl: '../shared/descriptions.html', standalone: false })
+export class DescriptionsPageV2 extends DescriptionsDemo {}
+
+@Component({ selector: 'docs-signaturepad-v2', templateUrl: '../shared/signaturepad.html', standalone: false })
+export class SignaturePadPageV2 extends SignaturePadDemo {}
+
+@Component({ selector: 'docs-chat-v2', templateUrl: '../shared/chat.html', standalone: false })
+export class ChatPageV2 extends ChatDemo {}
+
+@Component({ selector: 'docs-scheduler-v2', templateUrl: '../shared/scheduler.html', standalone: false })
+export class SchedulerPageV2 extends SchedulerDemo {}
 
 @Component({ selector: 'docs-thai-v2', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV2 extends ThaiDemo {}

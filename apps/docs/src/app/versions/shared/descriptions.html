@@ -1,0 +1,54 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wu-descriptions id="d-ds-basic" [title]="tx('ข้อมูลผู้แจ้ง')" [items]="local(reporter)"></wu-descriptions>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="columns" [section]="sec['columns']">
+      <docs-demo [html]="code['columns']" layout="stack">
+        <wu-descriptions id="d-ds-columns" [title]="tx('ข้อมูล Ticket')" [columns]="2">
+          <wu-descriptions-item [label]="tx('เลขที่')">HD-2569-0142</wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('สถานะ')">
+            <wu-tag [value]="tx('กำลังดำเนินการ')" severity="warn"></wu-tag>
+          </wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('หมวด')">{{ tx('เครือข่าย') }}</wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('ความสำคัญ')">
+            <wu-tag [value]="tx('สูง')" severity="danger"></wu-tag>
+          </wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('ผู้รับงาน')">{{ tx('น้ำฝน ใจงาม') }}</wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('แจ้งเมื่อ')">{{ tx('3 พ.ย. 2569 09:15 น.') }}</wu-descriptions-item>
+          <wu-descriptions-item [label]="tx('รายละเอียด')" [span]="2">
+            {{ tx('เชื่อมต่อ Wi-Fi ชั้น 3 ไม่ได้ตั้งแต่เช้า เครื่องอื่นในห้องเดียวกันใช้ได้ปกติ') }}
+          </wu-descriptions-item>
+        </wu-descriptions>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="vertical" [section]="sec['vertical']">
+      <docs-demo [html]="code['vertical']" [ts]="ts['vertical']" layout="stack">
+        <wu-descriptions id="d-ds-vertical" layout="vertical" [columns]="3" [items]="local(device)"></wu-descriptions>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="bordered" [section]="sec['bordered']">
+      <docs-demo [html]="code['bordered']" [ts]="ts['bordered']" layout="stack">
+        <wu-descriptions id="d-ds-bordered" [columns]="2" [bordered]="true" size="small" [items]="local(summary)"></wu-descriptions>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="responsive" [section]="sec['responsive']">
+      <docs-demo [html]="code['responsive']" [ts]="ts['bordered']" layout="stack">
+        <span class="docs-demo-output">{{ tx('กล่องแคบ 22rem') }}</span>
+        <div class="docs-narrow docs-ds-narrow">
+          <wu-descriptions id="d-ds-narrow" [columns]="2" [items]="local(summary)"></wu-descriptions>
+        </div>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

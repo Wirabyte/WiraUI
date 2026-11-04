@@ -415,6 +415,22 @@ export abstract class SelectButtonDemo extends SimpleDemo {
     { label: 'ตาราง', value: 'grid', icon: 'wi wi-th-large' },
   ];
   view = 'list';
+  readonly statusFilters = [
+    { label: 'เปิด', value: 'open', count: 12 },
+    { label: 'กำลังดำเนินการ', value: 'progress', count: 20 },
+    { label: 'รอลูกค้า', value: 'customer', count: 8 },
+    { label: 'รออะไหล่', value: 'parts', count: 3 },
+    { label: 'ส่งต่อ', value: 'handover', count: 2 },
+    { label: 'ปิดแล้ว', value: 'closed', count: 41 },
+    { label: 'ยกเลิก', value: 'cancelled', count: 4 },
+  ];
+  statuses = ['open', 'progress'];
+  readonly channels = [
+    { label: 'อีเมล', value: 'email', icon: 'wi wi-envelope', description: 'ตอบกลับภายใน 1 วันทำการ' },
+    { label: 'โทรศัพท์', value: 'phone', icon: 'wi wi-phone', description: 'ช่างโทรกลับภายใน 2 ชั่วโมง' },
+    { label: 'แชท', value: 'chat', icon: 'wi wi-comments', description: 'คุยกับเจ้าหน้าที่ได้ทันทีในเวลาทำการ' },
+  ];
+  channel = 'email';
 
   constructor() {
     super();
@@ -960,6 +976,17 @@ export abstract class MeterGroupDemo extends SimpleDemo {
     { label: 'ระบบ', value: 40, color: '#64748b' },
     { label: 'แอป', value: 56, color: '#1e7ae0' },
   ];
+  readonly tickets = [
+    { label: 'เปิด', value: 12, color: '#0ea5e9' },
+    { label: 'กำลังดำเนินการ', value: 20, color: '#f59e0b' },
+    { label: 'รอลูกค้า', value: 8, color: '#a855f7' },
+    { label: 'ปิดแล้ว', value: 10, color: '#22c55e' },
+  ];
+  picked = '';
+
+  openStatus(e: { item: { label?: string } }): void {
+    this.picked = e.item.label ?? '';
+  }
 }
 
 export abstract class ValidationDemo extends SimpleDemo {

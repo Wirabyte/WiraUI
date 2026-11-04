@@ -31,15 +31,15 @@ import { WuPanelToggler } from './panel.types';
 })
 export class WuPanel implements OnDestroy {
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
+  @ContentChild('header', { read: TemplateRef, descendants: false }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
   }
-  @ContentChild('icons', { read: TemplateRef }) protected iconsRef?: TemplateRef<unknown>;
+  @ContentChild('icons', { read: TemplateRef, descendants: false }) protected iconsRef?: TemplateRef<unknown>;
   get iconsTemplate(): TemplateRef<unknown> | null {
     return this.iconsRef || ɵfindTemplate(this.slotTemplates, 'icons');
   }
-  @ContentChild('footer', { read: TemplateRef }) protected footerRef?: TemplateRef<unknown>;
+  @ContentChild('footer', { read: TemplateRef, descendants: false }) protected footerRef?: TemplateRef<unknown>;
   get footerTemplate(): TemplateRef<unknown> | null {
     return this.footerRef || ɵfindTemplate(this.slotTemplates, 'footer');
   }

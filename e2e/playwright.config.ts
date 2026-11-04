@@ -28,21 +28,21 @@ export default defineConfig({
   expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.001, animations: 'disabled' } },
   use: { ...devices['Desktop Chrome'], viewport: { width: 1000, height: 800 }, deviceScaleFactor: 1 },
   projects: [
-    { name: 'v3', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/, use: { baseURL: url('playground-v3') } },
-    { name: 'v2', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/, use: { baseURL: url('playground-v2') }, dependencies: ['v3'] },
-    { name: 'v1', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/, use: { baseURL: url('playground-v1') }, dependencies: ['v3'] },
+    { name: 'v3', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow|release1)\.spec\.ts$/, use: { baseURL: url('playground-v3') } },
+    { name: 'v2', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow|release1)\.spec\.ts$/, use: { baseURL: url('playground-v2') }, dependencies: ['v3'] },
+    { name: 'v1', testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow|release1)\.spec\.ts$/, use: { baseURL: url('playground-v1') }, dependencies: ['v3'] },
     // Components in the other two engines: behaviour and layout only (font rendering differs, so no pixel baselines).
     {
       name: 'v3-firefox',
       timeout: OTHER_ENGINE_TIMEOUT,
-      testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/,
+      testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow|release1)\.spec\.ts$/,
       ignoreSnapshots: true,
       use: { ...devices['Desktop Firefox'], viewport: { width: 1000, height: 800 }, baseURL: url('playground-v3') },
     },
     {
       name: 'v3-webkit',
       timeout: OTHER_ENGINE_TIMEOUT,
-      testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow)\.spec\.ts$/,
+      testMatch: /(button|forms|utils|display|extras|panels|numbers|datepicker|overlays|review|select|table|menubar|aliases|menu|multiselect|inputmask|timeline|chart|image|autocomplete|lists|fileupload|stepper|tableextras|editor|parity|tabledeep|more|tweaks|navbar|asidemenu|imagecropper|i18n|parity2|responsive|flow|release1)\.spec\.ts$/,
       ignoreSnapshots: true,
       use: { ...devices['Desktop Safari'], viewport: { width: 1000, height: 800 }, baseURL: url('playground-v3') },
     },

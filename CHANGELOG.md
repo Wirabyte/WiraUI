@@ -2,6 +2,37 @@
 
 รุ่นของ `@wirabyte/ui` แยก major ตามช่วง Angular: `1.x` = 15–17, `2.x` = 18–20, `3.x` = 21 ขึ้นไป ทุก major ออกจาก source ชุดเดียวกัน หัวข้อด้านล่างจึงใช้กับทุก major ยกเว้นที่ระบุไว้ ส่วน `@wirabyte/icons` ออกพร้อมกันแต่ใช้เลขของตัวเอง
 
+## 1.0.0 · 2.0.0 · 3.0.0 · @wirabyte/icons 1.0.0
+
+รุ่นจริงรุ่นแรก ติดตั้งได้ด้วย `ng add @wirabyte/ui` (Angular 21 ขึ้นไป), `@wirabyte/ui@2` (18–20) หรือ `@wirabyte/ui@1` (15–17) โดยไม่ต้องระบุ tag แล้ว รวมทุกข้อที่พบจากการใช้จริงกับแอปแรก (รหัส WUI-001 ถึง WUI-021)
+
+**แก้บั๊ก**
+
+- Card, Panel, Accordion, Fieldset, Tabs, SelectButton, Toolbar, Popover และ cell editor ของ Table ไม่ดึง template `#header` / `#content` / `#footer` ของ component ที่อยู่ข้างในไปใช้อีก เช่น ตารางหรือ timeline ในการ์ด
+- Textarea ที่ใช้ `autoResize` วัดขนาดใหม่เมื่อเริ่มแสดง จึงไม่สูง 0px ใน dialog หรือ panel ที่เปิดทีหลัง
+- Datepicker ใช้ปฏิทินตามภาษาของแอปเหมือน pipe `wuDate`: ภาษาไทยใช้ `calendar` ที่ตั้งไว้ ภาษาอื่นใช้ ค.ศ. (`WuConfig.calendarFor()`)
+- ปุ่ม icon-only ที่มี `badge` แสดงป้ายลอยที่มุมปุ่ม ปุ่มไม่ขยายตาม
+- Navbar ไม่ล้นจอบนมือถือ: ปุ่มด้านขวาคงขนาด ชื่อหรือ brand ที่ยาวตัดด้วย …
+
+**ธีม**
+
+- `$tokens` / `$dark-tokens` (SCSS) และ `tokens` (TypeScript) ตั้งค่า token ใดก็ได้ด้วยชื่อ ชื่อที่สะกดผิดจะแจ้ง error
+- token ฟอนต์หัวข้อ `$heading-font-family` / `semantic.headingFontFamily` ใช้กับหัวข้อของ card, dialog, drawer, panel และอื่น ๆ
+- `provideWiraUI({ fonts })`: ค่าเริ่มต้น `'google'` โหลดฟอนต์ของธีมจาก Google Fonts ให้ ถ้าหน้าเว็บยังไม่ได้โหลด ตั้ง `'none'` สำหรับแอปที่ใช้ฟอนต์ของตัวเอง ส่วน `ng add --font=none` จะเขียนค่านี้ให้
+- preset `wira` หน้าตาใหม่: มุมโค้ง 10, เงา soft, หัวตารางโปร่ง, เมนูที่เลือกเป็นสีอ่อน
+- tag แบบ soft ใช้สีโปร่งของสีหลัก จึงเห็นชัดบนพื้นเทา และ breadcrumb มี `variant="plain"`
+
+**ของใหม่**
+
+- `wu-chat`: แชทพร้อม bubble, จัดกลุ่มตามผู้ส่ง, คั่นวัน, ไฟล์และรูป, สถานะอ่านแล้ว, ตัวบอกกำลังพิมพ์ และช่องพิมพ์ที่วางรูปได้
+- `wu-scheduler`: ปฏิทินนัดหมายแบบวัน สัปดาห์ เดือน ลากเลื่อนนัดได้ และแสดงปี พ.ศ. ตามภาษา
+- `wu-signature-pad`: ช่องเซ็นลายเซ็นสำหรับฟอร์ม ค่าที่ได้เป็นรูป PNG
+- `wu-stat`: การ์ดตัวเลข KPI พร้อมไอคอน, แนวโน้ม และสีตามความหมาย
+- `wu-descriptions`: รายการ label / value หลายคอลัมน์ ยุบเหลือคอลัมน์เดียวเมื่อกรอบแคบ
+- SelectButton `variant="chips"` (ตัวกรองแบบ chip) และ `variant="cards"` (การ์ดตัวเลือก), Avatar `severity`, MeterGroup `showValue` และ legend ที่คลิกได้ (`clickable`, `(onItemClick)`)
+
+**เอกสาร:** วิธีวาง global CSS ใน `@layer reset` และ override ใน `@layer wiraui.overrides`, การโหลดฟอนต์เมื่อติดตั้งแบบ manual และ footer ของ card
+
 ## 1.0.0-beta.0 · 2.0.0-beta.0 · 3.0.0-beta.0 · @wirabyte/icons 1.0.0-beta.0
 
 รุ่นแรกที่ออกให้ทดลองใช้ เอกสารอยู่ที่ https://ui.wirabyte.com

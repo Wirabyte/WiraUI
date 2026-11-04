@@ -1,0 +1,149 @@
+/* wu-stat. Shared by wiraui v1, v2 and v3. A KPI card: an icon in a soft tile of the severity colour, the label, the
+   value in large figures, then the trend and a hint. It is a card (card tokens), so it sits in a grid of cards. */
+@layer wiraui.components {
+  wu-stat {
+    display: block;
+    min-width: 0;
+  }
+  .wu-stat {
+    --_tone: var(--wu-primary-color);
+    --_tone-text: var(--wu-primary-soft-text);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--wu-stat-gap);
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: var(--wu-card-padding);
+    border: var(--wu-card-border-width) solid var(--wu-border);
+    border-radius: var(--wu-card-radius);
+    background: var(--wu-card-bg);
+    box-shadow: var(--wu-card-shadow);
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+    text-align: start;
+  }
+  .wu-stat-clickable {
+    cursor: pointer;
+    transition:
+      border-color var(--wu-transition),
+      box-shadow var(--wu-transition),
+      transform var(--wu-transition);
+  }
+  .wu-stat-clickable:hover {
+    border-color: color-mix(in srgb, var(--_tone) 40%, var(--wu-border));
+    box-shadow: var(--wu-shadow-md);
+  }
+  .wu-stat-clickable:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
+  }
+  .wu-stat-success { --_tone: var(--wu-success-color); --_tone-text: var(--wu-success-text); }
+  .wu-stat-info { --_tone: var(--wu-info-color); --_tone-text: var(--wu-info-text); }
+  .wu-stat-warn { --_tone: var(--wu-warn-color); --_tone-text: var(--wu-warn-text); }
+  .wu-stat-danger { --_tone: var(--wu-danger-color); --_tone-text: var(--wu-danger-text); }
+  .wu-stat-help { --_tone: var(--wu-help-color); --_tone-text: var(--wu-help-text); }
+  .wu-stat-secondary { --_tone: var(--wu-text-muted); --_tone-text: var(--wu-text); }
+  .wu-stat-contrast { --_tone: var(--wu-text); --_tone-text: var(--wu-text); }
+
+  .wu-stat-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--wu-stat-icon-size);
+    height: var(--wu-stat-icon-size);
+    border-radius: var(--wu-radius-lg);
+    background: color-mix(in srgb, var(--_tone) var(--wu-tag-soft-mix), transparent);
+    color: var(--_tone-text);
+    font-size: calc(var(--wu-stat-icon-size) * 0.45);
+    line-height: 1;
+  }
+  .wu-stat-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+  .wu-stat-label {
+    color: var(--wu-text-muted);
+    font-size: var(--wu-stat-label-size);
+    overflow-wrap: anywhere;
+  }
+  .wu-stat-value {
+    color: var(--wu-text);
+    font-family: var(--wu-heading-font-family);
+    font-size: var(--wu-stat-value-size);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--wu-stat-value-weight);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .wu-stat-affix {
+    margin: 0 0.125em;
+    color: var(--wu-text-muted);
+    font-size: 0.6em;
+    font-weight: 500;
+  }
+  .wu-stat-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.5rem;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+  }
+  .wu-stat-trend {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .wu-stat-trend-arrow {
+    font-size: 0.75em;
+  }
+  .wu-stat-trend-good {
+    color: var(--wu-success-text);
+  }
+  .wu-stat-trend-bad {
+    color: var(--wu-danger-text);
+  }
+  .wu-stat-trend-same {
+    color: var(--wu-text-muted);
+  }
+  .wu-stat-hint {
+    color: var(--wu-text-muted);
+  }
+  .wu-stat-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .wu-stat-shimmer {
+    display: block;
+    width: 60%;
+    height: calc(var(--wu-stat-value-size) * 1.25);
+    border-radius: var(--wu-radius-sm);
+    background: var(--wu-hover-bg);
+    animation: wu-stat-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes wu-stat-pulse {
+    50% {
+      opacity: 0.45;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wu-stat-shimmer {
+      animation: none;
+    }
+  }
+}

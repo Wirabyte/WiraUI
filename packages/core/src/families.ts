@@ -95,6 +95,37 @@ function merge(...parts: FamilyTokens[]): FamilyTokens {
 const MALI: FamilyTokens = merge(
   {
     light: {
+      // Titles (card, dialog, drawer, panel, fieldset, alert, empty state, result, error page): the body font unless a
+      // theme sets $heading-font-family / semantic.headingFontFamily, e.g. Kanit titles over IBM Plex Sans Thai text.
+      'heading-font-family': v('font-family'),
+      // Components new in release 1. They follow the card, field and tag tokens, so every preset styles them.
+      'stat-gap': '0.875rem',
+      'stat-icon-size': '2.75rem',
+      'stat-label-size': '0.875rem',
+      'stat-value-size': '1.75rem',
+      'stat-value-weight': '700',
+      'descriptions-gap': '0.75rem 1.5rem',
+      'descriptions-label-color': v('text-muted'),
+      'descriptions-label-weight': '400',
+      'descriptions-label-width': '9rem',
+      'descriptions-bordered-label-bg': v('hover-bg'),
+      'signature-height': '12rem',
+      'signature-ink': v('text'),
+      'signature-line': v('border'),
+      'chat-height': '32rem',
+      'chat-bubble-radius': '1.125rem',
+      'chat-bubble-bg': v('hover-bg'),
+      'chat-bubble-color': v('text'),
+      'chat-mine-bg': v('primary-color'),
+      'chat-mine-color': v('primary-contrast'),
+      'chat-meta-color': v('text-muted'),
+      'chat-gap': '0.25rem',
+      'scheduler-hour-height': '3rem',
+      'scheduler-border': v('border'),
+      'scheduler-today-bg': 'color-mix(in srgb, var(--wu-primary-color) 7%, transparent)',
+      'scheduler-event-bg': 'color-mix(in srgb, var(--wu-primary-color) 14%, var(--wu-card-bg))',
+      'scheduler-event-color': v('primary-soft-text'),
+      'scheduler-event-bar': v('primary-color'),
       'primary-color': p(500),
       'primary-hover': p(600),
       'primary-active': p(700),
@@ -212,6 +243,9 @@ const MALI: FamilyTokens = merge(
       'tag-padding-x': '0.5rem',
       'tag-gap': '0.25rem',
       'tag-fill': '0%',
+      // The soft look is the tag's colour at this strength over whatever is behind it, so it shows on white cards and
+      // grey pages alike (a fixed pale shade nearly vanished on a grey page).
+      'tag-soft-mix': '14%',
       'badge-size': '1.5rem',
       'badge-font-size': '0.75rem',
       'badge-font-weight': '700',
@@ -1782,6 +1816,14 @@ const WIRA: FamilyTokens = merge(
       'spinner-color-2': v('primary-color'),
       'spinner-color-3': v('primary-color'),
       'spinner-color-4': v('primary-color'),
+      // A lighter, current look: table heads without a band, in quiet text; the chosen menu item a soft tint of the
+      // primary colour rather than a solid bar.
+      'table-head-bg': 'transparent',
+      'table-head-color': v('text-muted'),
+      'table-head-weight': '500',
+      'table-head-hover-bg': v('hover-bg'),
+      'aside-menu-item-active-bg': 'color-mix(in srgb, var(--wu-primary-color) 12%, transparent)',
+      'aside-menu-item-active-color': v('primary-color'),
     },
     dark: {
       'primary-soft': mix(p(400), 16, s(800)),

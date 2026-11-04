@@ -1,0 +1,78 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wu-chat
+          id="d-chat-basic"
+          [messages]="messages"
+          [currentUserId]="me.id"
+          [typing]="typing"
+          height="26rem"
+          [maxFileSize]="maxSize"
+          (onSend)="send($event)"
+          (onAttachmentClick)="openFile($event)"
+          (onFileRejected)="tooBig($event)"
+        ></wu-chat>
+        <span class="docs-demo-output">
+          onAttachmentClick: <code id="d-chat-opened">{{ opened || '-' }}</code> · onFileRejected: <code id="d-chat-rejected">{{ rejected || '-' }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="files" [section]="sec['files']">
+      <docs-code [code]="$any(code['files'])" lang="html"></docs-code>
+    </docs-section>
+
+    <docs-section id="status" [section]="sec['status']">
+      <docs-demo [html]="code['status']" [ts]="ts['status']" layout="stack">
+        <wu-chat
+          id="d-chat-status"
+          [messages]="statusMessages"
+          [currentUserId]="me.id"
+          [sending]="busy"
+          height="20rem"
+          (onSend)="sendSlow($event)"
+          (onRetry)="retry($event)"
+        ></wu-chat>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="template" [section]="sec['template']">
+      <docs-slot-note slot="message"></docs-slot-note>
+      <docs-demo [html]="code['template']" [ts]="ts['template']" [css]="css['template']" layout="stack">
+        <wu-chat id="d-chat-tpl" [messages]="tplMessages" [currentUserId]="me.id" height="20rem" (onSend)="sendTpl($event)">
+          <ng-template #message let-message let-mine="mine">
+            <span class="docs-chat-text">{{ message.text }}</span>
+            @if (!mine && quickReplies[message.id]) {
+              <span class="docs-quick-replies">
+                @for (reply of quickReplies[message.id]; track reply) {
+                  <wu-button [label]="reply" size="small" severity="secondary" [outlined]="true" (onClick)="sendText(reply)"></wu-button>
+                }
+              </span>
+            }
+          </ng-template>
+        </wu-chat>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="closed" [section]="sec['closed']">
+      <docs-demo [html]="code['closed']" [ts]="ts['closed']" layout="stack">
+        <wu-chat
+          id="d-chat-closed"
+          [messages]="history"
+          [currentUserId]="me.id"
+          [readonly]="true"
+          [readonlyMessage]="tx('งานนี้ปิดแล้ว เปิด Ticket ใหม่ได้จากหน้าแรก')"
+          [hasMore]="hasMore"
+          (onLoadMore)="loadEarlier()"
+          height="20rem"
+        ></wu-chat>
+        <span class="docs-demo-output">messages: <code id="d-chat-history">{{ history.length }}</code> · hasMore: <code>{{ hasMore }}</code></span>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

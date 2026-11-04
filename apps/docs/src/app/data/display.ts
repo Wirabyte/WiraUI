@@ -268,11 +268,24 @@ export const AVATAR_DOC: ComponentDoc = {
     'ก': 'K',
     'ม': 'M',
     'สมชาย ใจดี': 'Alex Morgan',
+    'ว': 'W',
+    'น': 'N',
+    'Ticket ที่เปิดอยู่': 'Open tickets',
+    'ปิดงานแล้ว': 'Closed',
+    'รอตรวจสอบ': 'Needs a look',
+    'ล่าช้า': 'Late',
   },
   sections: {
     import: { title: 'Import', text: { th: 'มี <code>WuAvatar</code> และ <code>WuAvatarGroup</code> อยู่ใน <code>WuAvatarModule</code>', en: '<code>WuAvatar</code> and <code>WuAvatarGroup</code> both come with <code>WuAvatarModule</code>.' } },
     basic: { title: { th: 'Label, icon และรูป', en: 'Label, icon and image' } },
     sizes: { title: { th: 'ขนาดและรูปทรง', en: 'Sizes and shapes' } },
+    severity: {
+      title: { th: 'สีตามความหมาย', en: 'Severity' },
+      text: {
+        th: '<code>severity</code> วางพื้นสีอ่อนของสีนั้นไว้หลัง icon หรือตัวอักษร (แบบเดียวกับ tag สีอ่อน) ใช้เป็นไอคอนของตัวเลข KPI หรือเครื่องหมายสถานะในรายการ: <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>info</code>, <code>warn</code>, <code>danger</code>, <code>help</code> และ <code>contrast</code> · รูป (<code>image</code>) ไม่มีพื้น',
+        en: '<code>severity</code> puts a soft tile of that colour behind the icon or letters (as soft tags look), for KPI icons or status markers in a list: <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>info</code>, <code>warn</code>, <code>danger</code>, <code>help</code> and <code>contrast</code> · a picture (<code>image</code>) gets no tile.',
+      },
+    },
     group: { title: 'AvatarGroup', text: { th: 'ครอบด้วย <code>wu-avatar-group</code> เพื่อเรียงซ้อนกัน', en: 'Wrap them in <code>wu-avatar-group</code> to overlap them.' } },
     fallback: {
       title: { th: 'เมื่อโหลดรูปไม่ได้', en: 'When the image fails' },
@@ -290,6 +303,14 @@ export const AVATAR_DOC: ComponentDoc = {
 <wu-avatar label="B" size="large" shape="circle"></wu-avatar>
 <wu-avatar label="C" size="xlarge" shape="circle"></wu-avatar>
 <wu-avatar label="D" size="xlarge"></wu-avatar>`,
+    severity: `<wu-avatar icon="wi wi-ticket" severity="info" ariaLabel="Ticket ที่เปิดอยู่"></wu-avatar>
+<wu-avatar icon="wi wi-check-circle" severity="success" ariaLabel="ปิดงานแล้ว"></wu-avatar>
+<wu-avatar icon="wi wi-clock" severity="warn" ariaLabel="รอตรวจสอบ"></wu-avatar>
+<wu-avatar icon="wi wi-exclamation-triangle" severity="danger" ariaLabel="ล่าช้า"></wu-avatar>
+<wu-avatar label="ว" severity="help" shape="circle"></wu-avatar>
+<wu-avatar label="น" severity="primary" shape="circle"></wu-avatar>
+<wu-avatar icon="wi wi-user" severity="secondary" shape="circle"></wu-avatar>
+<wu-avatar label="AI" severity="contrast" shape="circle"></wu-avatar>`,
     group: `<wu-avatar-group>
   <wu-avatar label="ส" shape="circle"></wu-avatar>
   <wu-avatar label="ก" shape="circle"></wu-avatar>
@@ -308,6 +329,7 @@ export const AVATAR_DOC: ComponentDoc = {
         row('image', 'string', undefined, 'URL ของรูป', 'Image URL'),
         row('size', "'normal' | 'large' | 'xlarge'", "'normal'", 'ขนาด', 'Size'),
         row('shape', "'square' | 'circle'", "'square'", 'รูปทรง', 'Shape'),
+        row('severity', "'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'help' | 'contrast'", undefined, 'พื้นสีอ่อนของสีนั้นหลัง icon หรือตัวอักษร', 'A soft tile of that colour behind the icon or letters'),
         row('ariaLabel', 'string', undefined, 'ชื่อสำหรับ screen reader', 'Accessible name'),
         STYLE_ROW,
       ],
@@ -326,6 +348,7 @@ export const AVATAR_DOC: ComponentDoc = {
     tok('--wu-avatar-color', 'สีตัวอักษรและ icon', 'Text and icon colour'),
     tok('--wu-avatar-font-size', 'ขนาดตัวอักษร', 'Font size'),
     tok('--wu-avatar-radius', 'ความมนของ shape="square"', 'Radius of shape="square"'),
+    tok('--wu-tag-soft-mix', 'ความเข้มของพื้นเมื่อมี severity (สีมาจาก --wu-<severity>-color และ -text)', 'Strength of the tile with a severity (colours from --wu-<severity>-color and -text)'),
     tok('--wu-card-bg', 'ขอบคั่นระหว่าง avatar ในกลุ่ม', 'Ring between grouped avatars'),
   ],
 };

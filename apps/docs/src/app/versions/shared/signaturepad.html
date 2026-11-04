@@ -1,0 +1,95 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <div class="docs-sig-row">
+          <wu-signature-pad id="d-sig-basic" name="signature" [(ngModel)]="signature"></wu-signature-pad>
+          <div class="docs-sig-result">
+            <span class="docs-demo-output">{{ tx('ลายเซ็นที่ได้') }}</span>
+            @if (signature) {
+              <img id="d-sig-image" class="docs-sig-image" [src]="signature" [alt]="tx('ลายเซ็น')" />
+            } @else {
+              <span id="d-sig-empty" class="docs-sig-image docs-sig-empty">{{ tx('ยังไม่ได้เซ็น') }}</span>
+            }
+          </div>
+        </div>
+        <span class="docs-demo-output">ngModel: <code id="d-sig-value">{{ preview(signature) }}</code></span>
+        <div class="docs-demo-labelled">
+          <span class="docs-demo-output">{{ tx('ค่าเดียวกัน เขียนกลับเข้าช่องที่ปิดอยู่') }}</span>
+          <wu-signature-pad id="d-sig-copy" class="docs-sig-full" name="copy" [ngModel]="signature" [disabled]="true" [height]="120"></wu-signature-pad>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="pen" [section]="sec['pen']">
+      <docs-demo [html]="code['pen']" layout="stack">
+        <wu-signature-pad
+          id="d-sig-pen"
+          name="initials"
+          [(ngModel)]="initials"
+          penColor="#2563eb"
+          [penWidth]="3.5"
+          [height]="140"
+          [placeholder]="tx('เซ็นชื่อย่อ')"
+          [showGuide]="false"
+          exportBackground="#ffffff"
+        ></wu-signature-pad>
+        <span class="docs-demo-output">ngModel: <code id="d-sig-pen-value">{{ preview(initials) }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="form" [section]="sec['form']">
+      <docs-demo [html]="code['form']" [ts]="ts['form']" layout="stack">
+        <form #consentForm="ngForm" class="docs-sig-form" (ngSubmit)="submit(consentForm.valid)">
+          <wu-signature-pad
+            id="d-sig-form"
+            name="signature"
+            [(ngModel)]="consent.signature"
+            required
+            #sig="ngModel"
+            [invalid]="submitted && !!sig.invalid"
+            [ariaLabel]="tx('ลายมือชื่อผู้ยินยอม')"
+          ></wu-signature-pad>
+          @if (submitted && sig.invalid) {
+            <small id="d-sig-error" class="docs-sig-error">{{ tx('กรุณาเซ็นชื่อก่อนส่ง') }}</small>
+          }
+          <div>
+            <wu-button id="d-sig-submit" type="submit" [label]="tx('ส่งแบบฟอร์ม')" icon="wi wi-send"></wu-button>
+          </div>
+        </form>
+        <span class="docs-demo-output">
+          valid: <code id="d-sig-valid">{{ consentForm.valid }}</code> · sent: <code id="d-sig-sent">{{ sent }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="methods" [section]="sec['methods']">
+      <docs-demo [html]="code['methods']" [ts]="ts['methods']" layout="stack">
+        <wu-signature-pad
+          #pad
+          id="d-sig-methods"
+          name="approver"
+          [(ngModel)]="approver"
+          [showButtons]="false"
+          [ariaLabel]="tx('ลายมือชื่อผู้อนุมัติ')"
+          (onBegin)="began = began + 1"
+          (onEnd)="ended = ended + 1"
+          (onClear)="cleared = cleared + 1"
+        ></wu-signature-pad>
+        <div class="docs-demo-actions">
+          <wu-button id="d-sig-undo" [label]="tx('ย้อนกลับ')" icon="wi wi-undo" severity="secondary" [outlined]="true" (onClick)="pad.undo()"></wu-button>
+          <wu-button id="d-sig-clear" [label]="tx('ล้าง')" icon="wi wi-eraser" severity="secondary" [outlined]="true" (onClick)="pad.clear()"></wu-button>
+          <wu-button id="d-sig-jpeg" [label]="tx('ส่งออกเป็น JPEG')" icon="wi wi-download" (onClick)="exportJpeg(pad)"></wu-button>
+        </div>
+        <span class="docs-demo-output">
+          onBegin: <code id="d-sig-began">{{ began }}</code> · onEnd: <code id="d-sig-ended">{{ ended }}</code> · onClear:
+          <code id="d-sig-cleared">{{ cleared }}</code> · toDataURL('image/jpeg'): <code id="d-sig-jpeg-value">{{ preview(jpeg) }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

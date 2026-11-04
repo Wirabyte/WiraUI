@@ -52,6 +52,8 @@ export class WuBreadcrumb implements OnDestroy {
   @Input() home?: WuMenuItem | null;
   @Input() homeAriaLabel?: string;
   @Input() ariaLabel?: string;
+  /** `'plain'`: just the trail, with no box, padding or border, for above a page title. Default: the theme's box. */
+  @Input() variant?: 'default' | 'plain' | null;
   @Input() styleClass?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() style?: Record<string, any> | string | null;

@@ -120,6 +120,7 @@
     padding: var(--wu-drawer-header-padding);
   }
   .wu-drawer-title {
+    font-family: var(--wu-heading-font-family);
     min-width: 0;
     font-size: var(--wu-drawer-title-size);
     font-weight: var(--wu-drawer-title-weight);

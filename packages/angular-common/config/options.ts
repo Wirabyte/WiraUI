@@ -47,6 +47,12 @@ export interface WiraUIOptions {
   scale?: WuScale;
   /** Waits before searching for the whole app: `{ autoComplete: 300, filter: 300 }`. Default 0 (no wait). */
   delays?: WuDelays;
+  /**
+   * Where the theme's fonts come from. `'google'` (the default) adds the Google Fonts stylesheet for the body and
+   * heading fonts the theme ends up with (Kanit, Sarabun, Anuphan …) unless the page already links it, so a theme set
+   * up by hand shows its font too. `'none'` leaves fonts to the app: self-hosted files, or no access to Google.
+   */
+  fonts?: 'google' | 'none';
 }
 
 export const WU_OPTIONS = new InjectionToken<WiraUIOptions>('WU_OPTIONS');

@@ -43,22 +43,31 @@
   <ng-template #plainLegend>
     <ol [class]="labelClasses">
       <li *ngFor="let item of parts.items; let i = index" class="wu-metergroup-label p-metergroup-label">
-        <ng-container *ngIf="iconTemplate; else plainIcon">
-          <ng-container *ngTemplateOutlet="iconTemplate; context: { $implicit: item, icon: item.icon }"></ng-container>
-        </ng-container>
-        <ng-template #plainIcon>
-          <i
-            *ngIf="item.icon; else marker"
-            [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon"
-            [style.color]="parts.colors[i]"
-            aria-hidden="true"
-          ></i>
-          <ng-template #marker>
-            <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts.colors[i]"></span>
-          </ng-template>
+        <button *ngIf="clickable; else still" type="button" class="wu-metergroup-label-button" (click)="itemClick($event, item, i)">
+          <ng-container *ngTemplateOutlet="labelContent; context: { $implicit: item, i: i }"></ng-container>
+        </button>
+        <ng-template #still>
+          <ng-container *ngTemplateOutlet="labelContent; context: { $implicit: item, i: i }"></ng-container>
         </ng-template>
-        <span class="wu-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts.percentages[i] }}%)</span>
       </li>
     </ol>
   </ng-template>
+</ng-template>
+
+<ng-template #labelContent let-item let-i="i">
+  <ng-container *ngIf="iconTemplate; else plainIcon">
+    <ng-container *ngTemplateOutlet="iconTemplate; context: { $implicit: item, icon: item.icon }"></ng-container>
+  </ng-container>
+  <ng-template #plainIcon>
+    <i
+      *ngIf="item.icon; else marker"
+      [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon"
+      [style.color]="parts.colors[i]"
+      aria-hidden="true"
+    ></i>
+    <ng-template #marker>
+      <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts.colors[i]"></span>
+    </ng-template>
+  </ng-template>
+  <span class="wu-metergroup-label-text p-metergroup-label-text">{{ labelText(item, parts.percentages[i]) }}</span>
 </ng-template>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { ɵassertSupportedAngular, ɵWU_SKIP_VERSION_CHECK } from '@wirabyte/ui/config';
-import { WuAvatarShape, WuAvatarSize } from './avatar.types';
+import { WuAvatarSeverity, WuAvatarShape, WuAvatarSize, ɵWU_AVATAR_SEVERITIES } from './avatar.types';
 
 /**
  * Picture, initials or icon: `<wu-avatar image="…" label="สม" shape="circle">`.
@@ -21,6 +21,8 @@ export class WuAvatar {
   readonly image = input<string>();
   readonly size = input<WuAvatarSize>('normal');
   readonly shape = input<WuAvatarShape>('square');
+  /** A soft tile of that colour behind the icon or letters: KPI icons, status markers. */
+  readonly severity = input<WuAvatarSeverity | null>();
   readonly ariaLabel = input<string>();
 
   readonly onImageError = output<Event>();
@@ -47,6 +49,8 @@ export class WuAvatar {
     if (this.size() === 'large') c.push('wu-avatar-lg', 'p-avatar-lg');
     if (this.size() === 'xlarge') c.push('wu-avatar-xl', 'p-avatar-xl');
     if (this.showImage()) c.push('wu-avatar-image', 'p-avatar-image');
+    const severity = this.severity();
+    if (severity && ɵWU_AVATAR_SEVERITIES.includes(severity)) c.push('wu-avatar-' + severity);
     return c.join(' ');
   });
 

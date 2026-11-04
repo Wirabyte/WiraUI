@@ -41,6 +41,8 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
   private readonly el = inject<ElementRef<HTMLTextAreaElement>>(ElementRef);
   private readonly ngControl = inject(NgControl, { optional: true, self: true });
   private sub?: Subscription;
+  private observer?: ResizeObserver;
+  private width = -1;
 
   constructor() {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
@@ -51,6 +53,17 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
     this.resize();
     const changes = this.ngControl && this.ngControl.valueChanges;
     if (changes) this.sub = changes.subscribe(() => setTimeout(() => this.resize()));
+    // Hidden at first (a closed dialog, a collapsed panel), it measured 0: size it once it shows, and again when its
+    // width changes how the text wraps. Its own height changes do not count, so this never loops.
+    if (typeof ResizeObserver !== 'undefined') {
+      this.observer = new ResizeObserver(() => {
+        const width = this.el.nativeElement.clientWidth;
+        if (width === this.width) return;
+        this.width = width;
+        this.resize();
+      });
+      this.observer.observe(this.el.nativeElement);
+    }
   }
 
   ngDoCheck(): void {
@@ -64,11 +77,14 @@ export class WuTextarea implements AfterViewInit, DoCheck, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.sub) this.sub.unsubscribe();
+    if (this.observer) this.observer.disconnect();
   }
 
   resize(): void {
     if (!this.autoResize()) return;
     const t = this.el.nativeElement;
+    // With no layout yet its scrollHeight is 0; the observer sizes it when it shows.
+    if (!t.getClientRects().length) return;
     t.style.height = 'auto';
     t.style.height = t.scrollHeight + 'px';
   }

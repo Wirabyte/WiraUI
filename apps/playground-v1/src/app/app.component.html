@@ -1259,4 +1259,74 @@
     <p id="i18n-key">{{ 'menu.home' | wuTranslate }}</p>
     <code id="i18n-lang">{{ i18n.language }}</code>
   </section>
+  <section id="r1" class="pg-gallery">
+    <h2>Release 1</h2>
+    <!-- A card must not take the templates of a table or timeline inside it. -->
+    <wu-card id="r1-card" header="รายชื่อในการ์ด">
+      <wu-table id="r1-table" [value]="fewStudents">
+        <ng-template #header><tr><th>ชื่อในตาราง</th></tr></ng-template>
+        <ng-template #body let-s><tr><td>{{ s.name }}</td></tr></ng-template>
+      </wu-table>
+      <wu-timeline id="r1-timeline" [value]="steps">
+        <ng-template #content let-e><span class="r1-step">{{ e.status }}</span></ng-template>
+      </wu-timeline>
+    </wu-card>
+    <wu-card id="r1-footer-card" header="ท้ายการ์ด">
+      <ng-template #footer><div id="r1-footer-wrap" class="flex justify-content-end"><wu-button label="บันทึก" size="small"></wu-button></div></ng-template>
+    </wu-card>
+
+    <wu-button id="r1-open" label="เปิดบันทึก" (onClick)="r1Dialog = true"></wu-button>
+    <wu-dialog id="r1-dlg" header="บันทึก" [(visible)]="r1Dialog" [modal]="true" [style]="{ width: '24rem' }">
+      <textarea id="r1-ta" wuTextarea [autoResize]="true" rows="1" [(ngModel)]="r1Note"></textarea>
+    </wu-dialog>
+
+    <div class="pg-row">
+      <wu-button id="r1-bell" icon="wi wi-bell" [rounded]="true" [text]="true" badge="3" badgeSeverity="danger" ariaLabel="แจ้งเตือน"></wu-button>
+      <wu-button id="r1-plain" icon="wi wi-bell" [rounded]="true" [text]="true" ariaLabel="แจ้งเตือน"></wu-button>
+    </div>
+
+    <div id="r1-nav-box" style="width: 300px; max-width: 100%">
+      <wu-navbar id="r1-nav">
+        <span wuNavbarBrand id="r1-nav-title">หน้ารายการคำร้องทั้งหมดของฝ่ายบริการลูกค้า</span>
+        <div wuNavbarEnd class="flex align-items-center">
+          <wu-button icon="wi wi-sun" [text]="true" [rounded]="true" ariaLabel="โหมดสี"></wu-button>
+          <wu-button icon="wi wi-bell" [text]="true" [rounded]="true" ariaLabel="แจ้งเตือน"></wu-button>
+          <wu-button icon="wi wi-sign-out" [text]="true" [rounded]="true" ariaLabel="ออก"></wu-button>
+        </div>
+      </wu-navbar>
+    </div>
+
+    <wu-datepicker id="r1-date" [(ngModel)]="r1Date" dateFormat="dd/mm/yy" ariaLabel="วันนัด"></wu-datepicker>
+
+    <div class="pg-row">
+      <wu-avatar id="r1-avatar" icon="wi wi-ticket" severity="success" size="large"></wu-avatar>
+      <wu-tag id="r1-tag" value="เปิด" severity="info"></wu-tag>
+      <wu-breadcrumb id="r1-crumb" variant="plain" [model]="r1Trail"></wu-breadcrumb>
+    </div>
+
+    <wu-selectbutton id="r1-chips" variant="chips" [options]="r1Filters" optionLabel="label" optionValue="value" [(ngModel)]="r1Filter"></wu-selectbutton>
+    <wu-selectbutton id="r1-cards" variant="cards" [options]="r1Kinds" optionLabel="label" optionValue="value" [(ngModel)]="r1Kind" [allowEmpty]="false"></wu-selectbutton>
+
+    <wu-metergroup id="r1-meter" [value]="r1Meter" [showValue]="true" [clickable]="true" (onItemClick)="r1Clicked = $event.item.label || ''"></wu-metergroup>
+    <code id="r1-clicked">{{ r1Clicked }}</code>
+
+    <div class="r1-stats">
+      <wu-stat id="r1-stat" label="Ticket ที่เปิดอยู่" [value]="1250" icon="wi wi-ticket" severity="info" [trend]="8" trendLabel="จากเดือนก่อน"></wu-stat>
+      <wu-stat id="r1-stat-bad" label="งานค้าง" [value]="12" icon="wi wi-clock" severity="warn" [trend]="5" trendGood="down" [clickable]="true" (onClick)="r1Clicked = 'stat'"></wu-stat>
+    </div>
+
+    <wu-descriptions id="r1-desc" [columns]="2" title="ข้อมูลคำร้อง">
+      <wu-descriptions-item label="เลขที่">TK-0001</wu-descriptions-item>
+      <wu-descriptions-item label="สถานะ"><wu-tag value="กำลังดำเนินการ" severity="info"></wu-tag></wu-descriptions-item>
+      <wu-descriptions-item label="รายละเอียด" [span]="2">เครื่องพิมพ์ชั้น 2 ใช้งานไม่ได้</wu-descriptions-item>
+    </wu-descriptions>
+
+    <wu-signature-pad id="r1-sign" [(ngModel)]="r1Signature" [height]="160"></wu-signature-pad>
+    <code id="r1-sign-value">{{ r1Signature ? 'signed' : 'empty' }}</code>
+
+    <wu-chat id="r1-chat" [messages]="r1Messages" currentUserId="me" [height]="360" (onSend)="r1Send($event.text)"></wu-chat>
+
+    <wu-scheduler id="r1-sched" [events]="r1Events" [(view)]="r1View" [(date)]="r1Day" [editable]="true" [startHour]="8" [endHour]="18"
+      (onEventChange)="r1Move($event.event, $event.start, $event.end)" (onDateClick)="r1Clicked = 'slot'"></wu-scheduler>
+  </section>
 </main>

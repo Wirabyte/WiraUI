@@ -140,6 +140,20 @@ export function scssTheme(v: DocVersion): string {
 // @use '@wirabyte/ui/theme';             // ไม่ใส่ with (…) = ธีมเริ่มต้นของรุ่น (${defaultTheme(v)})`;
 }
 
+export const SCSS_TOKENS = `// src/theme/wiraui.theme.scss
+@use '@wirabyte/ui/theme' with (
+  $font-family: ('Sarabun', sans-serif),
+  $heading-font-family: ('Kanit', sans-serif), // หัวข้อของ card, dialog, drawer, panel, fieldset, alert …
+  $tokens: (
+    'table-head-bg': transparent,               // token ใดก็ได้ ไม่ต้องมี --wu- (โหมดสว่างและมืด)
+    'card-shadow': none,
+  ),
+  $dark-tokens: (
+    'card-border-width': 1px,                   // โหมดมืดเท่านั้น
+  ),
+);
+// ชื่อ token ที่สะกดผิด เช่น 'tabel-head-bg' compile ไม่ผ่าน`;
+
 export const SCSS_STYLES = `// src/styles.scss (บรรทัดแรก)
 @use 'theme/wiraui.theme';`;
 
@@ -225,6 +239,56 @@ export const wiraOverrides = defineOverrides({
     semantic: { surface: palette('#0f1d1a') }, // ส่วนที่ไม่ได้ระบุ dark มีผลทั้งสองโหมด
   },
 });`;
+
+export const TS_TOKENS = `import { defineOverrides } from '@wirabyte/ui/config';
+
+export const wiraOverrides = defineOverrides({
+  semantic: {
+    fontFamily: 'Sarabun',
+    headingFontFamily: 'Kanit',                // หัวข้อของ card, dialog, drawer, panel, fieldset, alert …
+  },
+  tokens: {
+    'table-head-bg': 'transparent',            // token ใดก็ได้ ไม่ต้องมี --wu- (โหมดสว่างและมืด)
+    'card-shadow': 'none',
+  },
+  dark: {
+    tokens: { 'card-border-width': '1px' },    // โหมดมืดเท่านั้น
+  },
+});
+// ชื่อ token ที่ไม่มีจริง throw error ตอนเริ่มแอป: wiraui: unknown token tabel-head-bg`;
+
+export const CSS_LAYERS = `/* src/styles.css */
+
+/* CSS ทั่วไปของแอป: ไว้ใน @layer reset ซึ่งอยู่ใต้ component */
+@layer reset {
+  * {
+    scrollbar-width: thin;
+  }
+  a {
+    color: inherit;
+  }
+}
+
+/* ปรับธีม: ไว้ใน @layer wiraui.overrides ซึ่งชนะ component */
+@layer wiraui.overrides {
+  .wu-card-title {
+    letter-spacing: -0.01em;
+  }
+}
+
+/* นอก layer ชนะทุก style ของ component: ใช้เฉพาะ selector ที่ตั้งใจให้ชนะ */
+.page-header .wu-btn {
+  min-width: 8rem;
+}`;
+
+export const FONTS_OPTION = `// app.config.ts
+provideWiraUI({
+  overrides: wiraOverrides,
+  fonts: 'google', // ค่าเริ่มต้น: ลิงก์ Google Fonts ของฟอนต์เนื้อหาและฟอนต์หัวข้อในธีมให้เอง
+});
+
+// ไฟล์ฟอนต์ของแอปเอง (self-host) หรือเครื่องที่เข้า Google ไม่ได้: แอปโหลดฟอนต์เอง
+provideWiraUI({ overrides: wiraOverrides, fonts: 'none' });`;
 
 /** TS-only theme from the preset on screen: a named theme in v1, a preset constant in v2 / v3. */
 export function tsPreset(v: DocVersion, id: string, name: string, dark: boolean): string {
@@ -378,6 +442,16 @@ export const GUIDE_WORDS: SampleWords = {
   "ตั้งครั้งเดียวที่ระดับแอป: locale 'th' มีในตัวแล้ว แก้เฉพาะคำที่อยากเปลี่ยน":
     "set once for the whole app: the 'th' locale is built in, change only the words you want",
   'ไม่พบข้อมูลที่ค้นหา': 'Nothing matches your search',
+  'หัวข้อของ card, dialog, drawer, panel, fieldset, alert …': 'titles of cards, dialogs, drawers, panels, fieldsets, alerts …',
+  'token ใดก็ได้ ไม่ต้องมี --wu- (โหมดสว่างและมืด)': 'any token, without --wu- (light and dark)',
+  'โหมดมืดเท่านั้น': 'dark mode only',
+  "ชื่อ token ที่สะกดผิด เช่น 'tabel-head-bg' compile ไม่ผ่าน": "a misspelt token name such as 'tabel-head-bg' does not compile",
+  'ชื่อ token ที่ไม่มีจริง throw error ตอนเริ่มแอป:': 'an unknown token name throws when the app starts:',
+  'CSS ทั่วไปของแอป: ไว้ใน @layer reset ซึ่งอยู่ใต้ component': "the app's general CSS: in @layer reset, below the components",
+  'ปรับธีม: ไว้ใน @layer wiraui.overrides ซึ่งชนะ component': 'theme adjustments: in @layer wiraui.overrides, above the components',
+  'นอก layer ชนะทุก style ของ component: ใช้เฉพาะ selector ที่ตั้งใจให้ชนะ': 'outside any layer it beats every component style: only for selectors meant to win',
+  'ค่าเริ่มต้น: ลิงก์ Google Fonts ของฟอนต์เนื้อหาและฟอนต์หัวข้อในธีมให้เอง': "the default: links Google Fonts for the theme's body and heading fonts",
+  'ไฟล์ฟอนต์ของแอปเอง (self-host) หรือเครื่องที่เข้า Google ไม่ได้: แอปโหลดฟอนต์เอง': "self-hosted font files, or no access to Google: the app loads the fonts",
   'ยอมรับเงื่อนไข': 'I accept the terms',
   'โปรไฟล์': 'Profile',
   'CSS เดิมของแอปที่แก้คลาสเหล่านี้ยังได้ผล: template ของ WiraUI มีคลาสเหล่านี้คู่กับ wu-*':

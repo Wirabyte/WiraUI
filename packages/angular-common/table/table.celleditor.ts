@@ -10,8 +10,8 @@ import { ɵWU_TABLE } from './table.types';
 @Directive()
 export abstract class ɵWuCellEditorBase {
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('input', { read: TemplateRef }) protected inputRef?: TemplateRef<unknown>;
-  @ContentChild('output', { read: TemplateRef }) protected outputRef?: TemplateRef<unknown>;
+  @ContentChild('input', { read: TemplateRef, descendants: false }) protected inputRef?: TemplateRef<unknown>;
+  @ContentChild('output', { read: TemplateRef, descendants: false }) protected outputRef?: TemplateRef<unknown>;
   protected readonly table = inject(ɵWU_TABLE);
   private readonly column = inject(WuEditableColumn, { optional: true });
   private readonly row = inject(WuEditableRow, { optional: true });

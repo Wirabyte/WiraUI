@@ -32,11 +32,11 @@ import { WuPanelToggler } from './panel.types';
 })
 export class WuPanel {
   private readonly slotTemplates = contentChildren(WuTemplate);
-  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  private readonly headerRef = contentChild('header', { read: TemplateRef, descendants: false });
   readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
-  private readonly iconsRef = contentChild('icons', { read: TemplateRef });
+  private readonly iconsRef = contentChild('icons', { read: TemplateRef, descendants: false });
   readonly iconsTemplate = computed(() => this.iconsRef() || ɵfindTemplate(this.slotTemplates(), 'icons'));
-  private readonly footerRef = contentChild('footer', { read: TemplateRef });
+  private readonly footerRef = contentChild('footer', { read: TemplateRef, descendants: false });
   readonly footerTemplate = computed(() => this.footerRef() || ɵfindTemplate(this.slotTemplates(), 'footer'));
   readonly header = input<string>();
   readonly toggleable = input(false, { transform: booleanAttribute });

@@ -1,6 +1,6 @@
 # Contributing to WiraUI
 
-Thanks for your interest. WiraUI is maintained by Wirabyte and is in beta.
+Thanks for your interest. WiraUI is maintained by Wirabyte.
 
 ## Reporting a problem or asking for a feature
 

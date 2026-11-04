@@ -23,6 +23,24 @@
   <docs-code [code]="local(s.TS_OVERRIDES)" lang="ts"></docs-code>
 </docs-section>
 
+<docs-section id="tokens" [title]="{ th: 'ฟอนต์หัวข้อ และ token ใดก็ได้', en: 'Heading font and any token' }">
+  @if (en()) {
+    <p>
+      <code>semantic.headingFontFamily</code> is the font of titles (cards, dialogs, drawers, panels, fieldsets, alerts …; it follows
+      <code>fontFamily</code> when left out). <code>tokens: &#123; 'table-head-bg': 'transparent' &#125;</code> at the top level sets any token by its name
+      without <code>--wu-</code>, in light and dark mode alike; under <code>dark: &#123; tokens: … &#125;</code> it is for dark mode only. An unknown token
+      name throws when the overrides are applied, so a typo shows up at once.
+    </p>
+  } @else {
+    <p>
+      <code>semantic.headingFontFamily</code> คือฟอนต์ของหัวข้อ (card, dialog, drawer, panel, fieldset, alert … ไม่ใส่ใช้ตาม <code>fontFamily</code>) ·
+      <code>tokens: &#123; 'table-head-bg': 'transparent' &#125;</code> ที่ชั้นนอกสุดตั้ง token ใดก็ได้ด้วยชื่อที่ไม่มี <code>--wu-</code> มีผลทั้งโหมดสว่างและมืด
+      ส่วนใน <code>dark: &#123; tokens: … &#125;</code> สำหรับโหมดมืดเท่านั้น · ชื่อ token ที่ไม่มีจริง throw error ตอนใส่ overrides จึงเห็นที่พิมพ์ผิดทันที
+    </p>
+  }
+  <docs-code [code]="local(s.TS_TOKENS)" lang="ts" file="src/theme/wiraui.overrides.ts"></docs-code>
+</docs-section>
+
 <docs-section id="preset" [title]="{ th: 'ธีมจาก TypeScript อย่างเดียว', en: 'A theme in TypeScript only' }">
   @if (en()) {
     <p>No theme file at all: start from one of this version's presets and adjust it with <code>definePreset()</code> (the sample uses the preset on this page).</p>

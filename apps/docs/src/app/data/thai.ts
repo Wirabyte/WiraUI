@@ -40,8 +40,8 @@ export const THAI_DOC: ComponentDoc = {
     calendar: {
       title: { th: 'ปฏิทินและภาษา', en: 'Calendar and language' },
       text: {
-        th: 'ภาษามาจากแอป (เปลี่ยนตาม <code>wu-language-switch</code> ทันที) · ภาษาไทยใช้ปฏิทินตาม <code>provideWiraUI({ calendar })</code> (ค่าเริ่มต้น พ.ศ.) ภาษาอื่นใช้ ค.ศ. · กำหนดเองได้ทีละที่: <code>wuDate: \'long\' : \'gregorian\'</code> หรือ <code>wuDate: \'long\' : null : \'en\'</code>',
-        en: 'The language is the app’s (it follows <code>wu-language-switch</code> at once) · Thai uses the calendar of <code>provideWiraUI({ calendar })</code> (Buddhist by default), other languages the Gregorian one · set either per use: <code>wuDate: \'long\' : \'gregorian\'</code> or <code>wuDate: \'long\' : null : \'en\'</code>.',
+        th: 'ภาษามาจากแอป (เปลี่ยนตาม <code>wu-language-switch</code> ทันที) · ภาษาไทยใช้ปฏิทินตาม <code>provideWiraUI({ calendar })</code> (ค่าเริ่มต้น พ.ศ.) ภาษาอื่นใช้ ค.ศ. (กฎเดียวกับ datepicker และ scheduler: <code>inject(WuConfig).calendarFor()</code> คืนปฏิทินของภาษาปัจจุบัน และ <code>calendarFor(\'en\')</code> ของภาษาที่ระบุ) · กำหนดเองได้ทีละที่: <code>wuDate: \'long\' : \'gregorian\'</code> หรือ <code>wuDate: \'long\' : null : \'en\'</code>',
+        en: 'The language is the app’s (it follows <code>wu-language-switch</code> at once) · Thai uses the calendar of <code>provideWiraUI({ calendar })</code> (Buddhist by default), other languages the Gregorian one (the same rule as the datepicker and the scheduler: <code>inject(WuConfig).calendarFor()</code> returns the calendar of the current language, <code>calendarFor(\'en\')</code> that of another) · set either per use: <code>wuDate: \'long\' : \'gregorian\'</code> or <code>wuDate: \'long\' : null : \'en\'</code>.',
       },
     },
     timeago: {

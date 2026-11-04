@@ -99,7 +99,9 @@ export function ngAdd(options: NgAddOptions): Rule {
 
     const [locale, calendar] =
       options.locale === 'en' ? ['en', 'gregorian'] : options.locale === 'th-gregorian' ? ['th', 'gregorian'] : ['th', 'buddhist'];
-    const provider = `provideWiraUI({ overrides: wiraOverrides, locale: '${locale}', calendar: '${calendar}', darkMode: '${options.darkMode}' })`;
+    // --font=none: the app brings its own font files, so the theme must not fetch any from Google either.
+    const fonts = options.font === 'none' ? ", fonts: 'none'" : '';
+    const provider = `provideWiraUI({ overrides: wiraOverrides, locale: '${locale}', calendar: '${calendar}', darkMode: '${options.darkMode}'${fonts} })`;
     done.push(structure === 'module' ? addToModule(tree, project, themeDir, provider) : addToStandalone(tree, project, themeDir, provider));
 
     if (options.font !== 'none') done.push(addFont(tree, project, fontChoice || config.fontFamily));

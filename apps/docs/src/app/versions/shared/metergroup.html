@@ -61,6 +61,21 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="clickable" [section]="sec['clickable']">
+      <docs-demo [html]="code['clickable']" [ts]="ts['clickable']" layout="stack">
+        <wu-metergroup
+          id="d-meter-click"
+          [value]="local(tickets)"
+          [max]="50"
+          [showValue]="true"
+          [clickable]="true"
+          [ariaLabel]="tx('Ticket ตามสถานะ')"
+          (onItemClick)="openStatus($event)"
+        ></wu-metergroup>
+        <span class="docs-demo-output">onItemClick: <code id="d-meter-picked">{{ picked || '-' }}</code></span>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="template" [section]="sec['template']">
       <docs-slot-note slot="label"></docs-slot-note>
       <docs-demo [html]="code['template']" [ts]="ts['multiple']" layout="stack">

@@ -21,6 +21,19 @@
       </docs-demo>
     </docs-section>
 
+    <docs-section id="severity" [section]="sec['severity']">
+      <docs-demo [html]="code['severity']">
+        <wu-avatar id="d-av-info" icon="wi wi-ticket" severity="info" [ariaLabel]="tx('Ticket ที่เปิดอยู่')"></wu-avatar>
+        <wu-avatar icon="wi wi-check-circle" severity="success" [ariaLabel]="tx('ปิดงานแล้ว')"></wu-avatar>
+        <wu-avatar icon="wi wi-clock" severity="warn" [ariaLabel]="tx('รอตรวจสอบ')"></wu-avatar>
+        <wu-avatar id="d-av-danger" icon="wi wi-exclamation-triangle" severity="danger" [ariaLabel]="tx('ล่าช้า')"></wu-avatar>
+        <wu-avatar [label]="tx('ว')" severity="help" shape="circle"></wu-avatar>
+        <wu-avatar [label]="tx('น')" severity="primary" shape="circle"></wu-avatar>
+        <wu-avatar icon="wi wi-user" severity="secondary" shape="circle"></wu-avatar>
+        <wu-avatar label="AI" severity="contrast" shape="circle"></wu-avatar>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="group" [section]="sec['group']">
       <docs-demo [html]="code['group']">
         <wu-avatar-group>

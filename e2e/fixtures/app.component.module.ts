@@ -729,6 +729,54 @@ export class AppComponent {
     return this.flowCtlNodes.map((n) => `${n.id}@${Math.round(n.position.x)},${Math.round(n.position.y)}${n.selected ? '*' : ''}`).join(' ');
   }
 
+  // ---------- release 1 ----------
+  r1Dialog = false;
+  r1Note = 'บรรทัดแรก\nบรรทัดที่สอง\nบรรทัดที่สาม';
+  r1Date = new Date(2026, 10, 4);
+  r1Trail = [{ label: 'คำร้อง' }, { label: 'TK-0001' }];
+  r1Filters = [
+    { label: 'ทั้งหมด', value: 'all' },
+    { label: 'เปิด', value: 'open' },
+    { label: 'กำลังทำ', value: 'doing' },
+    { label: 'ปิดแล้ว', value: 'closed' },
+  ];
+  r1Filter = 'open';
+  r1Kinds = [
+    { label: 'ซอฟต์แวร์', value: 'sw', icon: 'wi wi-code', description: 'โปรแกรม เว็บ บัญชีผู้ใช้' },
+    { label: 'ฮาร์ดแวร์', value: 'hw', icon: 'wi wi-desktop', description: 'เครื่อง อุปกรณ์ เครือข่าย' },
+  ];
+  r1Kind = 'sw';
+  r1Meter = [
+    { label: 'เปิด', value: 12 },
+    { label: 'กำลังทำ', value: 8 },
+    { label: 'ปิดแล้ว', value: 30 },
+  ];
+  r1Clicked = '';
+  r1Signature: string | null = null;
+  r1Messages: { id: number; text: string; time: Date; sender: { id: string; name: string }; mine?: boolean; read?: boolean }[] = [
+    { id: 1, text: 'สวัสดีครับ เครื่องพิมพ์ใช้ไม่ได้', time: new Date(Date.now() - 3600000), sender: { id: 'c1', name: 'วิระ ใจดี' } },
+    { id: 2, text: 'รับเรื่องแล้วครับ', time: new Date(Date.now() - 3000000), sender: { id: 'me', name: 'ทีมงาน' }, read: true },
+  ];
+  r1View: 'day' | 'week' | 'month' = 'week';
+  r1Day = new Date();
+  r1Events: { id: string; title: string; start: Date; end?: Date; allDay?: boolean }[] = [
+    { id: 'a', title: 'ติดตั้งเครื่องพิมพ์', start: this.r1At(0, 9, 0), end: this.r1At(0, 10, 30) },
+    { id: 'b', title: 'ตรวจเครือข่าย', start: this.r1At(0, 10, 0), end: this.r1At(0, 11, 0) },
+    { id: 'c', title: 'ประชุมทีม', start: this.r1At(1, 13, 0), end: this.r1At(1, 14, 0) },
+    { id: 'd', title: 'วันหยุด', start: this.r1At(2, 0, 0), allDay: true },
+  ];
+
+  r1At(days: number, hours: number, minutes: number): Date {
+    const d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + days, hours, minutes);
+  }
+  r1Send(text: string): void {
+    this.r1Messages = [...this.r1Messages, { id: this.r1Messages.length + 1, text, time: new Date(), sender: { id: 'me', name: 'ทีมงาน' } }];
+  }
+  r1Move(event: unknown, start: Date, end: Date): void {
+    this.r1Events = this.r1Events.map((e) => (e === event ? { ...e, start, end } : e));
+  }
+
   setupI18n(): WuI18n {
     const i18n = inject(WuI18n);
     i18n.add('th', { menu: { home: 'หน้าแรก' } });

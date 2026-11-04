@@ -42,16 +42,26 @@
     <ol [class]="labelClasses()">
       @for (item of parts().items; track $index; let i = $index) {
         <li class="wu-metergroup-label p-metergroup-label">
-          @if (iconTemplate(); as t) {
-            <ng-container *ngTemplateOutlet="t; context: { $implicit: item, icon: item.icon }"></ng-container>
-          } @else if (item.icon) {
-            <i [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon" [style.color]="parts().colors[i]" aria-hidden="true"></i>
+          @if (clickable()) {
+            <button type="button" class="wu-metergroup-label-button" (click)="itemClick($event, item, i)">
+              <ng-container *ngTemplateOutlet="labelContent; context: { $implicit: item, i: i }"></ng-container>
+            </button>
           } @else {
-            <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts().colors[i]"></span>
+            <ng-container *ngTemplateOutlet="labelContent; context: { $implicit: item, i: i }"></ng-container>
           }
-          <span class="wu-metergroup-label-text p-metergroup-label-text">{{ item.label }} ({{ parts().percentages[i] }}%)</span>
         </li>
       }
     </ol>
   }
+</ng-template>
+
+<ng-template #labelContent let-item let-i="i">
+  @if (iconTemplate(); as t) {
+    <ng-container *ngTemplateOutlet="t; context: { $implicit: item, icon: item.icon }"></ng-container>
+  } @else if (item.icon) {
+    <i [class]="'wu-metergroup-label-icon p-metergroup-label-icon ' + item.icon" [style.color]="parts().colors[i]" aria-hidden="true"></i>
+  } @else {
+    <span class="wu-metergroup-label-marker p-metergroup-label-marker" [style.background]="parts().colors[i]"></span>
+  }
+  <span class="wu-metergroup-label-text p-metergroup-label-text">{{ labelText(item, parts().percentages[i]) }}</span>
 </ng-template>

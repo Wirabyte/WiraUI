@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, inject, isDevMode } from '@angular/core';
 import {
   DarkMode,
+  googleFontHref,
   LAYER_ORDER,
   overridesToTokens,
   palette,
@@ -39,6 +40,7 @@ export class WuThemeService {
     this.writeOverrides();
     if (this.options.scale !== undefined) this.setScale(this.options.scale);
     if (this.preset && isDevMode()) this.warnIfStylesheetToo();
+    this.loadFonts();
   }
 
   /** Replaces the whole TypeScript theme. */
@@ -121,12 +123,39 @@ export class WuThemeService {
     if (!this.preset) return;
     const css = tokensToCss(presetToTokens(this.preset), { ...this.cssOptions(), extra: { 'theme-source-ts': '1' } });
     this.style('tokens', css);
+    if (this.initialized) this.loadFonts();
   }
 
   private writeOverrides(): void {
     const t = overridesToTokens(this.overrides, this.scheme());
     const empty = !Object.keys(t.light).length && !Object.keys(t.dark).length;
     this.style('overrides', empty ? '' : tokensToCss(t, { ...this.cssOptions(), layer: 'wiraui.overrides' }));
+    if (this.initialized) this.loadFonts();
+  }
+
+  /**
+   * Links the Google Fonts stylesheet for the body and heading fonts the tokens ended up with, from whichever source
+   * (SCSS, CSS or TypeScript), unless the page already links that family. `fonts: 'none'` turns it off.
+   */
+  private loadFonts(): void {
+    if (this.options.fonts === 'none') return;
+    const win = this.doc.defaultView;
+    if (!win || typeof win.getComputedStyle !== 'function') return;
+    const style = win.getComputedStyle(this.doc.documentElement);
+    for (const token of ['--wu-font-family', '--wu-heading-font-family']) {
+      const href = googleFontHref(style.getPropertyValue(token));
+      if (!href) continue;
+      const family = href.slice(href.indexOf('family=') + 7).split(/[:&]/)[0];
+      const linked = Array.from(this.doc.querySelectorAll<HTMLLinkElement>('link[href*="fonts.googleapis.com"]')).some((l) =>
+        l.href.includes(`family=${family}:`) || l.href.includes(`family=${family}&`)
+      );
+      if (linked) continue;
+      const link = this.doc.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.setAttribute('data-wu-font', family);
+      this.doc.head.appendChild(link);
+    }
   }
 
   private style(name: string, css: string, first = false): void {
@@ -161,7 +190,8 @@ function mergeSet(a: ThemeOverrideSet = {}, b: ThemeOverrideSet = {}): ThemeOver
   const components: Record<string, object> = { ...(a.components || {}) };
   const bc = (b.components || {}) as Record<string, object>;
   for (const k of Object.keys(bc)) components[k] = { ...(components[k] || {}), ...bc[k] };
-  return { semantic: { ...(a.semantic || {}), ...(b.semantic || {}) }, components };
+  const tokens = { ...(a.tokens || {}), ...(b.tokens || {}) };
+  return { semantic: { ...(a.semantic || {}), ...(b.semantic || {}) }, components, ...(Object.keys(tokens).length ? { tokens } : {}) };
 }
 
 function mergeOverrides(a: ThemeOverrides, b: ThemeOverrides): ThemeOverrides {

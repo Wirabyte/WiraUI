@@ -90,6 +90,16 @@
       <docs-demo [html]="code['badge']">
         <wu-button [label]="tx('แจ้งเตือน')" icon="wi wi-bell" badge="3"></wu-button>
         <wu-button id="d-btn-badge" [label]="tx('ข้อความ')" severity="secondary" badge="12" badgeSeverity="danger"></wu-button>
+        <wu-button
+          id="d-btn-bell"
+          icon="wi wi-bell"
+          badge="5"
+          badgeSeverity="danger"
+          severity="secondary"
+          [text]="true"
+          [rounded]="true"
+          [ariaLabel]="tx('แจ้งเตือน')"
+        ></wu-button>
         <wu-button id="d-btn-link" [label]="tx('ดูคำสั่งซื้อ')" [link]="true" [style]="{ minWidth: '8rem' }"></wu-button>
       </docs-demo>
     </docs-section>

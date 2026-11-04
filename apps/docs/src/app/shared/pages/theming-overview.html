@@ -69,8 +69,16 @@
   <docs-code [code]="local(s.LAYER_STACK)" lang="text" [file]="en() ? 'Who wins' : 'ใครชนะ'"></docs-code>
   @if (en()) {
     <p>The main theme can still come from SCSS, TypeScript overrides always apply on top, and your app's CSS beats both without <code>!important</code>.</p>
+    <p>
+      That includes broad global rules: keep the app's general styles in <code>&#64;layer reset</code> so components still win over them
+      (<a [routerLink]="link('theming/css')" fragment="app-layers">Your CSS and the layers</a>).
+    </p>
   } @else {
     <p>ผลคือธีมหลักยัง import ผ่าน SCSS ได้ TypeScript override ทับได้เสมอ และ CSS ของแอปชนะทั้งหมดโดยไม่ต้องใช้ <code>!important</code></p>
+    <p>
+      รวมถึงกฎกว้าง ๆ ระดับทั้งหน้าด้วย: เก็บ CSS ทั่วไปของแอปไว้ใน <code>&#64;layer reset</code> เพื่อให้ component ยังชนะ
+      (<a [routerLink]="link('theming/css')" fragment="app-layers">CSS ของแอปกับ layer</a>)
+    </p>
   }
 </docs-section>
 

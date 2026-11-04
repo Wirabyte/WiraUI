@@ -26,6 +26,7 @@
     font-weight: var(--wu-fieldset-legend-weight);
   }
   .wu-fieldset-legend-label {
+    font-family: var(--wu-heading-font-family);
     display: block;
     padding: var(--wu-fieldset-legend-padding-y) var(--wu-fieldset-legend-padding-x);
   }

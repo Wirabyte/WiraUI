@@ -147,6 +147,7 @@
 
   /* ---------- text, input, buttons ---------- */
   .wu-alert-title {
+    font-family: var(--wu-heading-font-family);
     margin: 0 0 0.5rem;
     color: var(--wu-text);
     font-size: var(--wu-alert-title-size);

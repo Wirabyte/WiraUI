@@ -1,0 +1,36 @@
+<button
+  *ngIf="clickable; else still"
+  type="button"
+  [class]="rootClass"
+  [style]="rootStyle"
+  [attr.aria-label]="ariaLabel || null"
+  (click)="click($event)"
+>
+  <ng-container *ngTemplateOutlet="body"></ng-container>
+</button>
+<ng-template #still>
+  <div [class]="rootClass" [style]="rootStyle" [attr.aria-label]="ariaLabel || null" [attr.role]="ariaLabel ? 'group' : null">
+    <ng-container *ngTemplateOutlet="body"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #body>
+  <span *ngIf="icon" class="wu-stat-icon" aria-hidden="true"><i [ngClass]="icon"></i></span>
+  <span class="wu-stat-body">
+    <span *ngIf="label" class="wu-stat-label">{{ label }}</span>
+    <span *ngIf="!loading; else shimmer" class="wu-stat-value">
+      <span *ngIf="prefix" class="wu-stat-affix">{{ prefix }}</span>{{ valueText }}<span *ngIf="unit" class="wu-stat-affix wu-stat-unit">{{ unit }}</span>
+    </span>
+    <ng-template #shimmer><span class="wu-stat-shimmer" aria-busy="true"></span></ng-template>
+    <span *ngIf="!loading && (hasTrend || hint)" class="wu-stat-foot">
+      <span *ngIf="hasTrend" [class]="trendClass">
+        <span class="wu-stat-trend-arrow" aria-hidden="true">{{ direction === 'up' ? '▲' : direction === 'down' ? '▼' : '–' }}</span>
+        <span class="wu-stat-sr">{{ trendWords }}</span>
+        {{ trendText }}
+      </span>
+      <span *ngIf="trendLabel && hasTrend" class="wu-stat-hint">{{ trendLabel }}</span>
+      <span *ngIf="hint" class="wu-stat-hint">{{ hint }}</span>
+    </span>
+    <ng-content></ng-content>
+  </span>
+</ng-template>

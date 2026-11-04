@@ -96,6 +96,7 @@
     touch-action: none;
   }
   .wu-dialog-title {
+    font-family: var(--wu-heading-font-family);
     min-width: 0;
     margin: 0;
     font-size: var(--wu-dialog-title-size);

@@ -9,6 +9,16 @@
     (blur)="onTouched()"
   >
     <ng-container *ngIf="itemTemplate; else plainLabel"><ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: option, index: i }"></ng-container></ng-container>
-    <ng-template #plainLabel><span class="p-button-label">{{ labelOf(option) }}</span></ng-template>
+    <ng-template #plainLabel>
+      <ng-container *ngIf="variant === 'cards'; else textLabel">
+        <span *ngIf="iconOf(option)" class="wu-selectbutton-card-icon" aria-hidden="true"><i [class]="iconOf(option)"></i></span>
+        <span class="wu-selectbutton-card-text">
+          <span class="wu-selectbutton-card-title">{{ labelOf(option) }}</span>
+          <span *ngIf="descriptionOf(option)" class="wu-selectbutton-card-description">{{ descriptionOf(option) }}</span>
+        </span>
+        <span class="wu-selectbutton-card-check" aria-hidden="true"></span>
+      </ng-container>
+      <ng-template #textLabel><span class="p-button-label">{{ labelOf(option) }}</span></ng-template>
+    </ng-template>
   </button>
 </div>

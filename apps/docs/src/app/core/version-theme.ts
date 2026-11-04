@@ -210,8 +210,9 @@ export function versionTheme<P>(
       config.ripple = ripple ?? info(id)?.ripple ?? false;
     },
     setLocale(lang) {
+      // The era follows the language on its own (WuConfig.calendarFor): Thai keeps provideWiraUI's Buddhist calendar,
+      // English shows Gregorian years.
       config.setTranslation(locales[lang]);
-      config.calendar = lang === 'th' ? 'buddhist' : 'gregorian';
     },
     core,
     config(id) {

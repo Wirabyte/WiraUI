@@ -7,7 +7,7 @@ export interface DocVersion {
   major: number;
   /** Angular majors this wiraui major installs on. */
   angular: string;
-  /** What follows `ng add` / `npm install`. A prerelease needs its dist-tag; at the first stable release: wiraui, @wirabyte/ui@2, @wirabyte/ui@1. */
+  /** What follows `ng add` / `npm install`: the latest major plain, older ones with their major (@wirabyte/ui@2, @wirabyte/ui@1). */
   install: string;
   label: string;
   status: 'maintenance' | 'active' | 'latest';
@@ -24,7 +24,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v1',
     major: 1,
     angular: '15–17',
-    install: '@wirabyte/ui@v1-beta',
+    install: '@wirabyte/ui@1',
     label: 'v1 · Angular 15–17',
     status: 'maintenance',
     look: { th: 'ธีม Sila, Arun, Sayan, Ratri, Material', en: 'Sila, Arun, Sayan, Ratri, Material themes' },
@@ -39,7 +39,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v2',
     major: 2,
     angular: '18–20',
-    install: '@wirabyte/ui@v2-beta',
+    install: '@wirabyte/ui@2',
     label: 'v2 · Angular 18–20',
     status: 'active',
     look: { th: 'Mali, Sila, Material, Phet', en: 'Mali, Sila, Material, Phet' },
@@ -54,7 +54,7 @@ export const DOC_VERSIONS: DocVersion[] = [
     id: 'v3',
     major: 3,
     angular: '21+',
-    install: '@wirabyte/ui@beta',
+    install: '@wirabyte/ui',
     label: 'v3 · Angular 21+',
     status: 'latest',
     look: { th: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet', en: 'Wira, Lanna, Siam, Nakhon, Glass + Mali, Sila, Material, Phet' },

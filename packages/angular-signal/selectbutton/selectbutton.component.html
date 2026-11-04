@@ -10,6 +10,17 @@
     >
       @if (itemTemplate(); as t) {
         <ng-container *ngTemplateOutlet="t; context: { $implicit: option, index: $index }"></ng-container>
+      } @else if (variant() === 'cards') {
+        @if (iconOf(option)) {
+          <span class="wu-selectbutton-card-icon" aria-hidden="true"><i [class]="iconOf(option)"></i></span>
+        }
+        <span class="wu-selectbutton-card-text">
+          <span class="wu-selectbutton-card-title">{{ labelOf(option) }}</span>
+          @if (descriptionOf(option)) {
+            <span class="wu-selectbutton-card-description">{{ descriptionOf(option) }}</span>
+          }
+        </span>
+        <span class="wu-selectbutton-card-check" aria-hidden="true"></span>
       } @else {
         {{ labelOf(option) }}
       }

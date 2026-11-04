@@ -56,6 +56,11 @@ import { WuErrorPageModule } from '@wirabyte/ui/errorpage';
 import { WuDockModule } from '@wirabyte/ui/dock';
 import { WuSiteFooterModule } from '@wirabyte/ui/sitefooter';
 import { WuBottomBarModule } from '@wirabyte/ui/bottombar';
+import { WuStatModule } from '@wirabyte/ui/stat';
+import { WuDescriptionsModule } from '@wirabyte/ui/descriptions';
+import { WuSignaturePadModule } from '@wirabyte/ui/signaturepad';
+import { WuChatModule } from '@wirabyte/ui/chat';
+import { WuSchedulerModule } from '@wirabyte/ui/scheduler';
 import { WuThaiModule } from '@wirabyte/ui/thai';
 import { WuChartModule } from '@wirabyte/ui/chart';
 import { WuInputOtpModule } from '@wirabyte/ui/inputotp';
@@ -199,6 +204,11 @@ import {
   DockPageV3,
   FooterPageV3,
   BottomBarPageV3,
+  StatPageV3,
+  DescriptionsPageV3,
+  SignaturePadPageV3,
+  ChatPageV3,
+  SchedulerPageV3,
   ThaiPageV3,
   PickStudentV3,
   ChartPageV3,
@@ -306,6 +316,11 @@ import { THEME_V3 } from './theme-v3';
     DockPageV3,
     FooterPageV3,
     BottomBarPageV3,
+    StatPageV3,
+    DescriptionsPageV3,
+    SignaturePadPageV3,
+    ChatPageV3,
+    SchedulerPageV3,
     ThaiPageV3,
     PickStudentV3,
     ChartPageV3,
@@ -407,6 +422,11 @@ import { THEME_V3 } from './theme-v3';
     WuDockModule,
     WuSiteFooterModule,
     WuBottomBarModule,
+    WuStatModule,
+    WuDescriptionsModule,
+    WuSignaturePadModule,
+    WuChatModule,
+    WuSchedulerModule,
     WuThaiModule,
     WuChartModule,
     WuInputOtpModule,
@@ -510,6 +530,11 @@ import { THEME_V3 } from './theme-v3';
         dock: DockPageV3,
         footer: FooterPageV3,
         bottombar: BottomBarPageV3,
+        stat: StatPageV3,
+        descriptions: DescriptionsPageV3,
+        signaturepad: SignaturePadPageV3,
+        chat: ChatPageV3,
+        scheduler: SchedulerPageV3,
         thai: ThaiPageV3,
         chart: ChartPageV3,
       })

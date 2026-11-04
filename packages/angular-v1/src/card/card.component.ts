@@ -38,11 +38,11 @@ export class WuCard {
   get loading(): boolean { return this._loading; }
 
   @ContentChildren(WuTemplate) protected templates?: QueryList<WuTemplate>;
-  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
-  @ContentChild('title', { read: TemplateRef }) protected titleRef?: TemplateRef<unknown>;
-  @ContentChild('subtitle', { read: TemplateRef }) protected subtitleRef?: TemplateRef<unknown>;
-  @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
-  @ContentChild('footer', { read: TemplateRef }) protected footerRef?: TemplateRef<unknown>;
+  @ContentChild('header', { read: TemplateRef, descendants: false }) protected headerRef?: TemplateRef<unknown>;
+  @ContentChild('title', { read: TemplateRef, descendants: false }) protected titleRef?: TemplateRef<unknown>;
+  @ContentChild('subtitle', { read: TemplateRef, descendants: false }) protected subtitleRef?: TemplateRef<unknown>;
+  @ContentChild('content', { read: TemplateRef, descendants: false }) protected contentRef?: TemplateRef<unknown>;
+  @ContentChild('footer', { read: TemplateRef, descendants: false }) protected footerRef?: TemplateRef<unknown>;
 
   private _loading = false;
 

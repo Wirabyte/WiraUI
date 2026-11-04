@@ -171,6 +171,11 @@ export abstract class BreadcrumbDemo extends SimpleDemo {
     { label: 'ม.1/1', command: (event) => this.go(event) },
     { label: 'ด.ช.กิตติพัฒน์ ใจดี' },
   ];
+  readonly gradeTrail: MenuEntry[] = [
+    { label: 'รายงาน', command: (event) => this.go(event) },
+    { label: 'ผลการเรียน', command: (event) => this.go(event) },
+    { label: 'ภาคเรียนที่ 1/2569' },
+  ];
   lastPressed = '';
   currentView = '';
 

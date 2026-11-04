@@ -134,6 +134,11 @@ for (const v of versions) {
       ['WuPopoverModule', '@wirabyte/ui/popover'],
       ['WuAnimateModule', '@wirabyte/ui/animate'],
       ['WuValidationModule', '@wirabyte/ui/validation'],
+      ['WuStatModule', '@wirabyte/ui/stat'],
+      ['WuDescriptionsModule', '@wirabyte/ui/descriptions'],
+      ['WuSignaturePadModule', '@wirabyte/ui/signaturepad'],
+      ['WuChatModule', '@wirabyte/ui/chat'],
+      ['WuSchedulerModule', '@wirabyte/ui/scheduler'],
     ];
     const modFile = join(src, 'app.module.ts');
     let mod = readFileSync(modFile, 'utf8');

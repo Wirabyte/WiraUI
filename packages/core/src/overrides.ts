@@ -49,6 +49,8 @@ export interface SemanticOverrides {
   /** Text colour on primary buttons, e.g. `'#ffffff'`. */
   primaryContrast?: string;
   fontFamily?: string;
+  /** Font of titles (card, dialog, drawer, panel …), e.g. `'Kanit'`. Default: `fontFamily`. */
+  headingFontFamily?: string;
   fontSize?: Size;
   lineHeight?: Size;
   radius?: Size;
@@ -71,6 +73,11 @@ export interface ComponentOverrides {
 export interface ThemeOverrideSet {
   semantic?: SemanticOverrides;
   components?: ComponentOverrides;
+  /**
+   * Any token by name, without `--wu-`: `{ 'table-header-bg': 'transparent', 'aside-menu-item-active-bg': '…' }`.
+   * At the top level a value applies in light and dark mode alike; under `dark` it is for dark mode only.
+   */
+  tokens?: Record<string, string | number>;
 }
 
 /** Partial theme changes applied on top of the main theme (SCSS/CSS file or a preset). */
@@ -199,6 +206,10 @@ function setTokens(set: ThemeOverrideSet, s950: string): ThemeTokens {
     const f = sem.fontFamily;
     t.light['font-family'] = /[,'"]/.test(f) ? f : `'${f}', sans-serif`;
   }
+  if (sem.headingFontFamily !== undefined) {
+    const f = sem.headingFontFamily;
+    t.light['heading-font-family'] = /[,'"]/.test(f) ? f : `'${f}', sans-serif`;
+  }
   if (sem.fontSize !== undefined) {
     if (typeof sem.fontSize === 'number') mergeTokens(t, fontTokens({ fontSize: sem.fontSize }));
     else t.light['font-size'] = sem.fontSize;
@@ -217,7 +228,27 @@ function setTokens(set: ThemeOverrideSet, s950: string): ThemeTokens {
     const v = group ? group[spec.key] : undefined;
     if (v !== undefined) mergeTokens(t, componentValue(spec, v));
   }
+
+  const raw = set.tokens || {};
+  for (const name of Object.keys(raw)) {
+    if (!knownToken(name)) throw new Error(`wiraui: unknown token ${name} (write the name without --wu-, e.g. 'table-header-bg')`);
+    t.light[name] = String(raw[name]);
+  }
   return t;
+}
+
+let tokenNames: Set<string> | null = null;
+/** Every token some preset defines, so a misspelt name in `tokens` is caught instead of silently doing nothing. */
+function knownToken(name: string): boolean {
+  if (!tokenNames) {
+    tokenNames = new Set<string>();
+    for (const id of Object.keys(PRESETS) as PresetId[]) {
+      const t = computeTokens(defaults(id));
+      for (const k of Object.keys(t.light)) tokenNames.add(k);
+      for (const k of Object.keys(t.dark)) tokenNames.add(k);
+    }
+  }
+  return tokenNames.has(name);
 }
 
 /**

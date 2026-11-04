@@ -372,7 +372,7 @@ export class WuTabPanels {}
 })
 export class WuTabPanel {
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
+  @ContentChild('header', { read: TemplateRef, descendants: false }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
   }

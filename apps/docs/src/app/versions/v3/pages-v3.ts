@@ -100,6 +100,10 @@ import { FlowDemo } from '../shared/demos-flow';
 import { ExcelDemo } from '../shared/demos-excel';
 import { EmptyStateDemo, ErrorPageDemo, ResultDemo } from '../shared/demos-states';
 import { BottomBarDemo, DockDemo, FooterDemo } from '../shared/demos-shell';
+import { DescriptionsDemo, StatDemo } from '../shared/demos-stat';
+import { SignaturePadDemo } from '../shared/demos-signaturepad';
+import { ChatDemo } from '../shared/demos-chat';
+import { SchedulerDemo } from '../shared/demos-scheduler';
 import { ThaiDemo } from '../shared/demos-thai';
 import { ChartDemo } from '../shared/demos-chart';
 
@@ -395,6 +399,21 @@ export class FooterPageV3 extends FooterDemo {}
 
 @Component({ selector: 'docs-bottombar-v3', templateUrl: '../shared/bottombar.html', standalone: false })
 export class BottomBarPageV3 extends BottomBarDemo {}
+
+@Component({ selector: 'docs-stat-v3', templateUrl: '../shared/stat.html', standalone: false })
+export class StatPageV3 extends StatDemo {}
+
+@Component({ selector: 'docs-descriptions-v3', templateUrl: '../shared/descriptions.html', standalone: false })
+export class DescriptionsPageV3 extends DescriptionsDemo {}
+
+@Component({ selector: 'docs-signaturepad-v3', templateUrl: '../shared/signaturepad.html', standalone: false })
+export class SignaturePadPageV3 extends SignaturePadDemo {}
+
+@Component({ selector: 'docs-chat-v3', templateUrl: '../shared/chat.html', standalone: false })
+export class ChatPageV3 extends ChatDemo {}
+
+@Component({ selector: 'docs-scheduler-v3', templateUrl: '../shared/scheduler.html', standalone: false })
+export class SchedulerPageV3 extends SchedulerDemo {}
 
 @Component({ selector: 'docs-thai-v3', templateUrl: '../shared/thai.html', standalone: false })
 export class ThaiPageV3 extends ThaiDemo {}

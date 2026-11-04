@@ -1,0 +1,21 @@
+<div [class]="rootClass" [style]="rootStyle">
+  <canvas
+    #canvas
+    class="wu-signature-pad-canvas"
+    role="img"
+    [attr.aria-label]="ariaLabel || t?.label || null"
+    (pointerdown)="down($event)"
+    (pointermove)="move($event)"
+    (pointerup)="up()"
+    (pointercancel)="up()"
+    (lostpointercapture)="up()"
+  ></canvas>
+  <span *ngIf="showGuide" class="wu-signature-pad-guide" aria-hidden="true"></span>
+  <span *ngIf="empty && hint" class="wu-signature-pad-hint" aria-hidden="true">{{ hint }}</span>
+  <div *ngIf="showButtons && !empty && !disabled" class="wu-signature-pad-tools">
+    <button type="button" class="wu-signature-pad-tool" [attr.aria-label]="t?.undo || 'Undo'" [attr.title]="t?.undo || 'Undo'" (click)="undo()">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3 2 6l3 3M2.5 6H10a4 4 0 0 1 0 8H7" /></svg>
+    </button>
+    <button type="button" class="wu-signature-pad-tool" (click)="clear()">{{ t?.clear || 'Clear' }}</button>
+  </div>
+</div>

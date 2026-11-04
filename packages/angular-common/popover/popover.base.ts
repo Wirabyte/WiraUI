@@ -44,7 +44,7 @@ export abstract class ɵWuPopoverBase implements OnDestroy {
   @Output() readonly onHide = new EventEmitter<void>();
 
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
+  @ContentChild('content', { read: TemplateRef, descendants: false }) protected contentRef?: TemplateRef<unknown>;
   /** A `content` template (`pTemplate="content"` / `#content`), with `let-closeCallback="closeCallback"`. */
   get contentTemplate(): TemplateRef<unknown> | null {
     return this.contentRef || ɵfindTemplate(this.slotTemplates, 'content');

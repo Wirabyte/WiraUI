@@ -81,9 +81,14 @@
     flex: 0 1 auto;
     overflow-wrap: anywhere;
   }
+  /* On a narrow bar the actions keep their size and the start gives way: its buttons stay, the brand or title text
+     ends in … (below), so nothing pushes the page wider than the screen. */
   .wu-navbar-end {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     margin-inline-start: auto;
+  }
+  .wu-navbar-start > :not([wuNavbarBrand]) {
+    flex-shrink: 0;
   }
   .wu-navbar-start:empty,
   .wu-navbar-end:empty {
@@ -99,6 +104,16 @@
     font-size: var(--wu-navbar-brand-size);
     font-weight: var(--wu-navbar-brand-weight);
     text-decoration: none;
+  }
+  .wu-navbar-start > [wuNavbarBrand]:not(:has(> *)) {
+    display: block;
+  }
+  .wu-navbar-start > [wuNavbarBrand]:not(:has(> *)),
+  .wu-navbar-start > [wuNavbarBrand] > :is(span, strong, b, em, small, div, h1, h2, h3) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .wu-navbar-start > [wuNavbarBrand]:focus-visible {
     outline: var(--wu-control-focus-outline);

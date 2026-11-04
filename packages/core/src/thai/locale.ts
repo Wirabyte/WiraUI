@@ -232,6 +232,35 @@ export interface WuLocale {
   validation: WuValidationMessages;
   /** Rich-text editor: toolbar labels, menus and dialogs. `{0}` / `{1}` are filled in (a level, a size, a count). */
   editor: WuEditorMessages;
+  /** wu-chat: the message box and its buttons, who is typing (`{name}`, `{count}`), read marks and day separators. */
+  chat?: WuChatMessages;
+  /** wu-signature-pad */
+  signaturePad?: { label: string; hint: string; clear: string; undo: string };
+  /** wu-scheduler: the toolbar, the views and the "+{count} more" link of a full day. */
+  scheduler?: { today: string; previous: string; next: string; day: string; week: string; month: string; allDay: string; more: string; noEvents: string };
+  /** wu-stat: how a screen reader says the trend. */
+  stat?: { up: string; down: string; same: string };
+}
+
+export interface WuChatMessages {
+  placeholder: string;
+  send: string;
+  attach: string;
+  removeFile: string;
+  typing: string;
+  typingMany: string;
+  read: string;
+  readBy: string;
+  today: string;
+  yesterday: string;
+  closed: string;
+  emptyTitle: string;
+  emptyDescription: string;
+  loadMore: string;
+  failed: string;
+  retry: string;
+  newMessages: string;
+  messages: string;
 }
 
 export interface WuEditorMessages {
@@ -668,6 +697,39 @@ export const TH_LOCALE: WuLocale = {
     characters: '{0} ตัวอักษร',
     content: 'เนื้อหา',
   },
+  chat: {
+    placeholder: 'พิมพ์ข้อความ',
+    send: 'ส่ง',
+    attach: 'แนบไฟล์',
+    removeFile: 'เอาไฟล์ออก',
+    typing: '{name} กำลังพิมพ์',
+    typingMany: '{count} คนกำลังพิมพ์',
+    read: 'อ่านแล้ว',
+    readBy: 'อ่านแล้ว {count}',
+    today: 'วันนี้',
+    yesterday: 'เมื่อวาน',
+    closed: 'ปิดการสนทนาแล้ว',
+    emptyTitle: 'ยังไม่มีข้อความ',
+    emptyDescription: 'เริ่มพิมพ์ข้อความด้านล่าง',
+    loadMore: 'ดูข้อความก่อนหน้า',
+    failed: 'ส่งไม่สำเร็จ',
+    retry: 'ส่งอีกครั้ง',
+    newMessages: 'ข้อความใหม่',
+    messages: 'ข้อความ',
+  },
+  signaturePad: { label: 'ช่องเซ็นชื่อ', hint: 'เซ็นชื่อในกรอบนี้', clear: 'ล้าง', undo: 'ย้อนกลับ' },
+  scheduler: {
+    today: 'วันนี้',
+    previous: 'ก่อนหน้า',
+    next: 'ถัดไป',
+    day: 'วัน',
+    week: 'สัปดาห์',
+    month: 'เดือน',
+    allDay: 'ทั้งวัน',
+    more: 'อีก {count} รายการ',
+    noEvents: 'ไม่มีนัดหมาย',
+  },
+  stat: { up: 'เพิ่มขึ้น', down: 'ลดลง', same: 'เท่าเดิม' },
 };
 
 export const EN_LOCALE: WuLocale = {
@@ -994,6 +1056,39 @@ export const EN_LOCALE: WuLocale = {
     characters: '{0} characters',
     content: 'Content',
   },
+  chat: {
+    placeholder: 'Type a message',
+    send: 'Send',
+    attach: 'Attach files',
+    removeFile: 'Remove file',
+    typing: '{name} is typing',
+    typingMany: '{count} people are typing',
+    read: 'Read',
+    readBy: 'Read by {count}',
+    today: 'Today',
+    yesterday: 'Yesterday',
+    closed: 'This conversation is closed',
+    emptyTitle: 'No messages yet',
+    emptyDescription: 'Start typing below',
+    loadMore: 'Earlier messages',
+    failed: 'Not sent',
+    retry: 'Send again',
+    newMessages: 'New messages',
+    messages: 'Messages',
+  },
+  signaturePad: { label: 'Signature', hint: 'Sign in the box', clear: 'Clear', undo: 'Undo' },
+  scheduler: {
+    today: 'Today',
+    previous: 'Previous',
+    next: 'Next',
+    day: 'Day',
+    week: 'Week',
+    month: 'Month',
+    allDay: 'All day',
+    more: '+{count} more',
+    noEvents: 'No events',
+  },
+  stat: { up: 'Up', down: 'Down', same: 'No change' },
 };
 
 export const LOCALES: Record<string, WuLocale> = { th: TH_LOCALE, en: EN_LOCALE };

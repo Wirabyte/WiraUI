@@ -1,0 +1,106 @@
+/* wu-descriptions. Shared by wiraui v1, v2 and v3. Label and value pairs in a grid of `--_cols` columns (a real <dl>).
+   It measures its own box: narrower than 36rem, the columns fold into one, whatever the screen. */
+@layer wiraui.components {
+  wu-descriptions {
+    display: block;
+    min-width: 0;
+  }
+  wu-descriptions-item,
+  wu-descriptionsItem {
+    display: none;
+  }
+  .wu-descriptions {
+    container-type: inline-size;
+    color: var(--wu-text);
+    font-family: var(--wu-font-family);
+    font-size: var(--wu-font-size);
+    line-height: var(--wu-line-height);
+  }
+  .wu-descriptions-title {
+    margin: 0 0 0.75rem;
+    font-family: var(--wu-heading-font-family);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .wu-descriptions-list {
+    display: grid;
+    grid-template-columns: repeat(var(--_cols, 1), minmax(0, 1fr));
+    gap: var(--wu-descriptions-gap);
+    margin: 0;
+  }
+  .wu-descriptions-item {
+    display: grid;
+    grid-template-columns: var(--wu-descriptions-label-width) minmax(0, 1fr);
+    gap: 0.25rem 1rem;
+    align-items: baseline;
+    min-width: 0;
+  }
+  .wu-descriptions-label {
+    color: var(--wu-descriptions-label-color);
+    font-weight: var(--wu-descriptions-label-weight);
+    overflow-wrap: anywhere;
+  }
+  .wu-descriptions-value {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .wu-descriptions-vertical .wu-descriptions-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem;
+  }
+  .wu-descriptions-vertical .wu-descriptions-label {
+    font-size: 0.875em;
+  }
+  .wu-descriptions-sm .wu-descriptions-list {
+    gap: 0.375rem 1rem;
+  }
+
+  /* bordered: one table of cells (1px gaps over the border colour), labels in a tinted cell. Rows read best full:
+     give the last item a `span` that fills its row. */
+  .wu-descriptions-bordered .wu-descriptions-list {
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--wu-border);
+    border-radius: var(--wu-radius-md);
+    background: var(--wu-border);
+  }
+  .wu-descriptions-bordered .wu-descriptions-item {
+    gap: 0;
+    align-items: stretch;
+    background: var(--wu-card-bg);
+  }
+  .wu-descriptions-bordered.wu-descriptions-horizontal .wu-descriptions-label {
+    border-inline-end: 1px solid var(--wu-border);
+  }
+  .wu-descriptions-bordered.wu-descriptions-vertical .wu-descriptions-label {
+    border-bottom: 1px solid var(--wu-border);
+  }
+  .wu-descriptions-bordered .wu-descriptions-label,
+  .wu-descriptions-bordered .wu-descriptions-value {
+    padding: 0.625rem 0.875rem;
+  }
+  .wu-descriptions-bordered.wu-descriptions-sm .wu-descriptions-label,
+  .wu-descriptions-bordered.wu-descriptions-sm .wu-descriptions-value {
+    padding: 0.375rem 0.625rem;
+  }
+  .wu-descriptions-bordered .wu-descriptions-label {
+    background: var(--wu-descriptions-bordered-label-bg);
+  }
+
+  @container (max-width: 36rem) {
+    .wu-descriptions-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .wu-descriptions-item {
+      grid-column: auto !important;
+    }
+  }
+  /* Very narrow (a phone): the label goes above its value even in the horizontal layout. */
+  @container (max-width: 22rem) {
+    .wu-descriptions-horizontal .wu-descriptions-item {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.125rem;
+    }
+  }
+}

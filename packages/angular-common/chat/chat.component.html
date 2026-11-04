@@ -1,0 +1,156 @@
+<section [class]="rootClass" [style]="rootStyle" [attr.aria-label]="ariaLabel || t?.messages || null">
+  <div #scroller class="wu-chat-scroll" role="log" aria-live="polite" (scroll)="onScroll()">
+    <div *ngIf="hasMore && !loading" class="wu-chat-more">
+      <button type="button" class="wu-chat-more-button" (click)="onLoadMore.emit()">{{ t?.loadMore || 'Earlier messages' }}</button>
+    </div>
+
+    <div *ngIf="loading" class="wu-chat-loading" aria-busy="true"><span class="wu-chat-spinner" aria-hidden="true"></span></div>
+
+    <div *ngIf="!loading && !messages.length" class="wu-chat-empty">
+      <svg class="wu-chat-empty-art" viewBox="0 0 64 48" aria-hidden="true">
+        <path d="M8 6h34a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H22l-9 8v-8H8a6 6 0 0 1-6-6V12a6 6 0 0 1 6-6z" />
+        <path d="M54 18h2a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6h-2v6l-8-6H34a6 6 0 0 1-6-6v-2" />
+      </svg>
+      <strong>{{ t?.emptyTitle || 'No messages yet' }}</strong>
+      <span *ngIf="!readonly">{{ t?.emptyDescription || 'Start typing below' }}</span>
+    </div>
+
+    <ng-container *ngIf="!loading">
+      <ng-container *ngFor="let row of view; trackBy: trackRow">
+        <div *ngIf="row.kind === 'day'" class="wu-chat-day"><span>{{ row.label }}</span></div>
+
+        <div *ngIf="row.kind === 'system'" class="wu-chat-system">
+          <span>{{ row.message.text }}<ng-container *ngIf="row.time"> · {{ row.time }}</ng-container></span>
+        </div>
+
+        <div
+          *ngIf="row.kind === 'message'"
+          class="wu-chat-line"
+          [class.wu-chat-mine]="row.mine"
+          [class.wu-chat-first]="row.first"
+          [class.wu-chat-last]="row.last"
+          [class.wu-chat-sending]="row.message.status === 'sending'"
+          [class.wu-chat-failed]="row.message.status === 'failed'"
+        >
+          <div *ngIf="!row.mine && showAvatars" class="wu-chat-avatar" aria-hidden="true">
+            <ng-container *ngIf="row.first">
+              <img *ngIf="row.message.sender?.avatar; else letters" [src]="row.message.sender?.avatar" alt="" />
+              <ng-template #letters><span>{{ initials(row.message.sender?.name) }}</span></ng-template>
+            </ng-container>
+          </div>
+          <div class="wu-chat-stack">
+            <span *ngIf="!row.mine && row.first && row.message.sender?.name" class="wu-chat-name">
+              {{ row.message.sender?.name }}
+              <span *ngIf="row.message.sender?.badge" class="wu-chat-badge">{{ row.message.sender?.badge }}</span>
+            </span>
+            <div class="wu-chat-bubble-row">
+              <div class="wu-chat-bubble">
+                <ng-container *ngIf="messageTemplate; else plain">
+                  <ng-container *ngTemplateOutlet="messageTemplate; context: { $implicit: row.message, mine: row.mine }"></ng-container>
+                </ng-container>
+                <ng-template #plain>
+                  <ng-container *ngFor="let a of row.message.attachments || []">
+                    <a
+                      *ngIf="isImage(a); else fileCard"
+                      class="wu-chat-image"
+                      [attr.href]="a.url || null"
+                      [attr.target]="a.url ? '_blank' : null"
+                      [attr.rel]="a.url ? 'noopener' : null"
+                      [attr.role]="a.url ? null : 'button'"
+                      [attr.tabindex]="a.url ? null : 0"
+                      (click)="attachmentClick($event, a, row.message)"
+                    >
+                      <img [src]="a.thumbnail || a.url" [alt]="a.name" loading="lazy" />
+                    </a>
+                    <ng-template #fileCard>
+                      <a
+                        class="wu-chat-file"
+                        [attr.href]="a.url || null"
+                        [attr.download]="a.url ? a.name : null"
+                        [attr.role]="a.url ? null : 'button'"
+                        [attr.tabindex]="a.url ? null : 0"
+                        (click)="attachmentClick($event, a, row.message)"
+                      >
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 1.5H4.5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V5L9 1.5zM9 1.5V5h3.5" /></svg>
+                        <span class="wu-chat-file-name">{{ a.name }}</span>
+                        <span *ngIf="a.size !== undefined" class="wu-chat-file-size">{{ sizeText(a.size) }}</span>
+                      </a>
+                    </ng-template>
+                  </ng-container>
+                  <span *ngIf="row.message.text" class="wu-chat-text">{{ row.message.text }}</span>
+                </ng-template>
+              </div>
+              <div class="wu-chat-meta">
+                <ng-container *ngIf="row.message.status === 'failed'; else normal">
+                  <span class="wu-chat-error">{{ t?.failed || 'Not sent' }}</span>
+                  <button type="button" class="wu-chat-retry" (click)="onRetry.emit(row.message)">{{ t?.retry || 'Send again' }}</button>
+                </ng-container>
+                <ng-template #normal>
+                  <span *ngIf="row.mine && row.message.read">{{ readText(row.message) }}</span>
+                  <span>{{ row.time }}</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div *ngIf="typingText" class="wu-chat-typing">
+      <span class="wu-chat-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      {{ typingText }}
+    </div>
+  </div>
+
+  <div *ngIf="readonly; else composer" class="wu-chat-closed">{{ readonlyMessage || t?.closed || 'This conversation is closed' }}</div>
+  <ng-template #composer>
+    <div *ngIf="pending.length" class="wu-chat-pending">
+      <span *ngFor="let p of pending; let i = index" class="wu-chat-pending-item">
+        <img *ngIf="p.preview; else pendingIcon" [src]="p.preview" alt="" />
+        <ng-template #pendingIcon>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 1.5H4.5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V5L9 1.5zM9 1.5V5h3.5" /></svg>
+        </ng-template>
+        <span class="wu-chat-pending-name">{{ p.file.name || 'clipboard.png' }}</span>
+        <button type="button" class="wu-chat-pending-remove" [attr.aria-label]="(t?.removeFile || 'Remove file') + ' ' + (p.file.name || '')" (click)="removePending(i)">×</button>
+      </span>
+    </div>
+    <div class="wu-chat-composer">
+      <input #fileInput type="file" multiple hidden [attr.accept]="accept || null" (change)="onFilesChosen($event)" />
+      <button
+        *ngIf="attach"
+        type="button"
+        class="wu-chat-icon-button"
+        [attr.aria-label]="t?.attach || 'Attach files'"
+        [attr.title]="t?.attach || 'Attach files'"
+        (click)="openFiles()"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 7.5 8 13a3.5 3.5 0 0 1-5-5l6-6a2.3 2.3 0 0 1 3.3 3.3L6.5 11a1.2 1.2 0 0 1-1.7-1.7L10 4.2" /></svg>
+      </button>
+      <textarea
+        #box
+        class="wu-chat-input"
+        rows="1"
+        [value]="draft"
+        [attr.placeholder]="placeholder || t?.placeholder || 'Type a message'"
+        [attr.aria-label]="placeholder || t?.placeholder || 'Type a message'"
+        (input)="draft = box.value; onInput()"
+        (keydown)="onKeydown($event)"
+        (paste)="onPaste($event)"
+      ></textarea>
+      <button
+        type="button"
+        class="wu-chat-send"
+        [disabled]="!canSend"
+        [attr.aria-label]="t?.send || 'Send'"
+        [attr.title]="t?.send || 'Send'"
+        [attr.aria-busy]="sending || null"
+        (click)="send()"
+      >
+        <span *ngIf="sending; else plane" class="wu-chat-spinner" aria-hidden="true"></span>
+        <ng-template #plane>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.5 1.5 7 9M14.5 1.5 10 14.5 7 9 1.5 6z" /></svg>
+        </ng-template>
+      </button>
+    </div>
+  </ng-template>
+</section>

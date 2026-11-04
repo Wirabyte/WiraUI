@@ -196,6 +196,23 @@
     background: var(--_tone);
     color: var(--wu-card-bg);
   }
+  /* An icon-only button wears its badge on the top corner, the way a notification bell does, instead of growing to
+     fit it. The badge reaches past the edge, so this button does not clip its content (a ripple there spills a little). */
+  .wu-btn-icon-only:has(> .wu-btn-badge) {
+    overflow: visible;
+  }
+  .wu-btn-icon-only > .wu-btn-badge {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    min-width: 1.6em;
+    height: 1.6em;
+    padding: 0 0.35em;
+    font-size: 0.68em;
+    transform: translate(40%, -40%);
+    box-shadow: 0 0 0 2px var(--wu-card-bg);
+    pointer-events: none;
+  }
   /* link: a button that reads as a link. */
   .wu-btn.wu-btn-link {
     border-color: transparent;

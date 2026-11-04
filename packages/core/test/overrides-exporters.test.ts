@@ -6,6 +6,7 @@ import {
   defaults,
   definePreset,
   defineOverrides,
+  googleFontHref,
   normalize,
   overridesToTokens,
   palette,
@@ -69,6 +70,31 @@ describe('overrides', () => {
     const t = presetToTokens(definePreset(Wira, { semantic: { primary: palette('{indigo}') } }));
     expect(t.light['primary-500']).toBe('#6366f1');
     expect(t.light['surface-0']).toBe('#ffffff');
+  });
+
+  it('sets any token by name, for both modes or dark mode only, and catches misspelt names', () => {
+    const t = overridesToTokens({ tokens: { 'table-header-bg': 'transparent', 'navbar-height': 64 }, dark: { tokens: { 'table-header-bg': '#0b1220' } } });
+    expect(t.light['table-header-bg']).toBe('transparent');
+    expect(t.light['navbar-height']).toBe('64');
+    expect(t.dark['table-header-bg']).toBe('#0b1220');
+    expect(() => overridesToTokens({ tokens: { '--wu-table-header-bg': 'red' } })).toThrow(/unknown token --wu-table-header-bg/);
+    expect(() => overridesToTokens({ tokens: { 'table-heder-bg': 'red' } })).toThrow(/unknown token table-heder-bg/);
+  });
+
+  it('gives titles their own font, the body font by default', () => {
+    expect(computeTokens(defaults('wira')).light['heading-font-family']).toBe('var(--wu-font-family)');
+    expect(overridesToTokens({ semantic: { headingFontFamily: 'Kanit' } }).light['heading-font-family']).toBe("'Kanit', sans-serif");
+  });
+});
+
+describe('googleFontHref', () => {
+  it('links the families the themes know and nothing else', () => {
+    expect(googleFontHref("'IBM Plex Sans Thai', sans-serif")).toBe(
+      'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap'
+    );
+    expect(googleFontHref('Anuphan')).toContain('family=Anuphan:wght@');
+    expect(googleFontHref('system-ui, sans-serif')).toBeNull();
+    expect(googleFontHref('')).toBeNull();
   });
 });
 

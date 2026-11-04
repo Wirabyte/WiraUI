@@ -87,6 +87,7 @@
     line-height: 1;
   }
   .wu-empty-state-title {
+    font-family: var(--wu-heading-font-family);
     margin: 0;
     color: var(--wu-empty-state-title-color);
     font-size: var(--wu-empty-state-title-size);

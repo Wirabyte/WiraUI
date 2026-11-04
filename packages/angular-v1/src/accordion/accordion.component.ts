@@ -179,11 +179,11 @@ export class WuAccordion implements AfterContentInit, OnDestroy {
 })
 export class WuAccordionTab {
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('header', { read: TemplateRef }) protected headerRef?: TemplateRef<unknown>;
+  @ContentChild('header', { read: TemplateRef, descendants: false }) protected headerRef?: TemplateRef<unknown>;
   get headerTemplate(): TemplateRef<unknown> | null {
     return this.headerRef || ɵfindTemplate(this.slotTemplates, 'header');
   }
-  @ContentChild('content', { read: TemplateRef }) protected contentRef?: TemplateRef<unknown>;
+  @ContentChild('content', { read: TemplateRef, descendants: false }) protected contentRef?: TemplateRef<unknown>;
   get contentTemplate(): TemplateRef<unknown> | null {
     return this.contentRef || ɵfindTemplate(this.slotTemplates, 'content');
   }

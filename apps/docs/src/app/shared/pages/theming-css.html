@@ -55,6 +55,26 @@
   <docs-code [code]="local(overrideCode)" lang="css" file="src/styles.css"></docs-code>
 </docs-section>
 
+<docs-section id="app-layers" [title]="{ th: 'CSS ของแอปกับ layer', en: 'Your CSS and the layers' }">
+  @if (en()) {
+    <p>
+      WiraUI's layer order is <code>&#64;layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;</code>. CSS outside any layer
+      beats every layer, so a broad global rule such as <code>* &#123; scrollbar-width: thin &#125;</code> or <code>a &#123; color: inherit &#125;</code>
+      written plainly in <code>styles.css</code> also beats the components' own styles. Put the app's general styles in <code>&#64;layer reset</code>,
+      which sits below the components, and theme adjustments in <code>&#64;layer wiraui.overrides</code>, which sits above them. Keep unlayered CSS for
+      selectors you mean to win.
+    </p>
+  } @else {
+    <p>
+      ลำดับ layer ของ WiraUI คือ <code>&#64;layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;</code> CSS ที่ไม่อยู่ใน
+      layer ชนะทุก layer ดังนั้นกฎกว้าง ๆ อย่าง <code>* &#123; scrollbar-width: thin &#125;</code> หรือ <code>a &#123; color: inherit &#125;</code>
+      ที่เขียนตรง ๆ ใน <code>styles.css</code> จะชนะ style ของ component ไปด้วย · CSS ทั่วไปของแอปให้ไว้ใน <code>&#64;layer reset</code> ซึ่งอยู่ใต้
+      component ส่วนการปรับธีมไว้ใน <code>&#64;layer wiraui.overrides</code> ซึ่งอยู่เหนือ component · CSS นอก layer เก็บไว้ให้ selector ที่ตั้งใจให้ชนะ
+    </p>
+  }
+  <docs-code [code]="local(s.CSS_LAYERS)" lang="css" file="src/styles.css"></docs-code>
+</docs-section>
+
 <docs-section id="scoped" [title]="{ th: 'ธีมเฉพาะจุด', en: 'Scoped themes' }">
   @if (en()) {
     <p>CSS variables inherit down to the components inside, so set them on a wrapping element.</p>

@@ -110,7 +110,7 @@ export class WuDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   // ---------- how it reads ----------
   /** `dd/mm/yy` style: d dd (day), m mm (month), M MM (month name), y yy (2- / 4-digit year), D DD (day name). Default: the locale's. */
   @Input() dateFormat?: string;
-  /** `'buddhist'` shows years as พ.ศ.; the model stays an ordinary Date. Default: `WuConfig.calendar` (พ.ศ.). */
+  /** `'buddhist'` shows years as พ.ศ.; the model stays an ordinary Date. Default: `WuConfig.calendar` (พ.ศ.) while the app is in Thai, ค.ศ. in other languages. */
   @Input() calendar?: CalendarSystem;
   /** `true` is `calendar="buddhist"`, `false` is `calendar="gregorian"`. Both spellings work. */
   @Input() set isBudhistYear(v: unknown) { this._buddhist = ɵtoBool(v); }
@@ -704,7 +704,7 @@ export class WuDatePicker implements ControlValueAccessor, OnChanges, OnInit, On
   // ---------- internals ----------
 
   private configure(): void {
-    const calendar = this.calendar || (this._buddhist === null ? this.config.calendar : this._buddhist ? 'buddhist' : 'gregorian');
+    const calendar = this.calendar || (this._buddhist === null ? this.config.calendarFor() : this._buddhist ? 'buddhist' : 'gregorian');
     this.state.configure({
       selectionMode: this.selectionMode,
       view: this.view,

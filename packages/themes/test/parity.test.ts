@@ -206,6 +206,9 @@ const BAD: [string, RegExp][] = [
   ['$components: (card: (gap: 0px))', /unknown component token `card.gap`/],
   ['$components: (chip: (radius: 0px))', /unknown component token `chip.radius`/],
   ['$components: (card: (bordered: 1px))', /\$components.card.bordered must be true or false/],
+  ["$tokens: ('table-heder-bg': red)", /unknown token `table-heder-bg`/],
+  ["$dark-tokens: ('--wu-table-header-bg': red)", /unknown token `--wu-table-header-bg`/],
+  ['$tokens: red', /\$tokens must be a map/],
 ];
 
 const label = (raw: unknown) => JSON.stringify(raw).replace(/"/g, '');
@@ -222,6 +225,22 @@ describe.each(COMPILERS)('%s', (_name, sass) => {
     it.each(HAND_WRITTEN)('with (%s)', (settings, raw) => {
       const source = settings ? `@use '@wirabyte/ui/theme' with (${settings});` : "@use '@wirabyte/ui/theme';";
       expectParity(compile(sass, source), core.normalize(raw));
+    }, 30000);
+
+    it('sets tokens by name ($tokens for both modes, $dark-tokens for dark) and a heading font', () => {
+      const css = compile(
+        sass,
+        "@use '@wirabyte/ui/theme' with ($tokens: ('table-header-bg': transparent, 'navbar-height': 64px), $dark-tokens: ('navbar-height': 56px), $heading-font-family: ('Kanit', sans-serif));"
+      );
+      const { blocks } = parseCss(css);
+      const light = tokensOf(blocks['@layer wiraui.tokens > :root']);
+      const dark = tokensOf(blocks[DARK_PATH.class!]);
+      expect(light['table-header-bg']).toBe('transparent');
+      expect(light['navbar-height']).toBe('64px');
+      expect(light['heading-font-family']).toBe("'Kanit', sans-serif");
+      // A light-and-dark value replaces the family's own dark value too.
+      expect(dark['table-header-bg']).toBeUndefined();
+      expect(dark['navbar-height']).toBe('56px');
     }, 30000);
 
     it('emits the tokens once however many files load it', () => {

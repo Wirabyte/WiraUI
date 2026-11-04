@@ -10,6 +10,8 @@ export const appConfig: ApplicationConfig = {
       locale: 'th',
       calendar: 'buddhist',
       darkMode: 'class',
+      // The tests compare the three majors pixel by pixel in system fonts: no web fonts.
+      fonts: 'none',
     }),
   ],
 };

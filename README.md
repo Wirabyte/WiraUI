@@ -35,13 +35,13 @@
 
 ## 📦 Install
 
-This is a beta, so name the tag for your app's Angular version:
+Pick the major for your app's Angular version:
 
 | Angular | Command | Package | Status |
 |---|---|---|---|
-| 21 and newer | `ng add @wirabyte/ui@beta` | `@wirabyte/ui@3` | active (latest) |
-| 18 – 20 | `ng add @wirabyte/ui@v2-beta` | `@wirabyte/ui@2` | active |
-| 15 – 17 | `ng add @wirabyte/ui@v1-beta` | `@wirabyte/ui@1` | maintenance |
+| 21 and newer | `ng add @wirabyte/ui` | `@wirabyte/ui@3` | active (latest) |
+| 18 – 20 | `ng add @wirabyte/ui@2` | `@wirabyte/ui@2` | active |
+| 15 – 17 | `ng add @wirabyte/ui@1` | `@wirabyte/ui@1` | maintenance |
 
 `ng add` sets up the theme, fonts and icons, and asks only what it must. Then use the components:
 
@@ -54,10 +54,10 @@ This is a beta, so name the tag for your app's Angular version:
 
 - **Use the major for your Angular range.** Each major is locked to its range and refuses to install on any other.
 - **Change Angular ranges in one command,** so Angular and WiraUI move together:
-  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@v2-beta`
+  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@2`
 - **Theme through the theme files,** not by overriding component CSS, so your look carries over to new releases.
 - **Bring an existing app over gradually.** WiraUI runs next to your current UI library, so you can move one page at a time.
-- **Remember it is a beta.** APIs may still change between betas, so pin the exact version in production.
+- **Update within a major freely.** Minor and patch releases keep the API; a new major means a new Angular range.
 
 ## 📚 Learn more
 

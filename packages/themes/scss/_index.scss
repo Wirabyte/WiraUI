@@ -27,6 +27,8 @@ $primary-contrast: null !default;
 $semantic: null !default;
 // ('Kanit', sans-serif)
 $font-family: null !default;
+// Titles of cards, dialogs, drawers, panels …; null follows $font-family. ('Kanit', sans-serif)
+$heading-font-family: null !default;
 $font-size: null !default; // px, emitted in rem
 $line-height: null !default;
 $radius: null !default; // px
@@ -46,6 +48,9 @@ $scheme: null !default;
 $material: null !default;
 // Component id → kebab-case (or camelCase) token keys: (card: (body-gap: 0px, bordered: false), table: (striped: true))
 $components: () !default;
+// Any token by name, without --wu-: ('table-header-bg': transparent). Light and dark alike, unless $dark-tokens has it.
+$tokens: () !default;
+$dark-tokens: () !default;
 
 // ---------- reading settings ----------
 
@@ -312,6 +317,9 @@ $-light: map.merge(
 $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
 @include -add(map.get(data.$families, $-family));
 @include -add(map.get(data.$materials, $-material));
+@if $heading-font-family {
+  $-light: map.merge($-light, ('heading-font-family': -font-family($heading-font-family)));
+}
 
 @if $-primary-contrast {
   $-light: map.merge($-light, ('primary-contrast': $-primary-contrast));
@@ -379,6 +387,27 @@ $-light: map.merge($-light, ('transition': '#{$-transition}ms'));
   @if $v != null {
     @include -add(-component-value($spec, $v));
   }
+}
+
+// $tokens: any token by name, without --wu-: ('table-header-bg': transparent, 'aside-menu-item-active-bg': …).
+// A value here applies in light and dark mode alike; $dark-tokens gives dark mode its own.
+@if not -is-map($tokens) {
+  @error 'wiraui: $tokens must be a map like (\'table-header-bg\': transparent), got `#{meta.inspect($tokens)}`.';
+}
+@if not -is-map($dark-tokens) {
+  @error 'wiraui: $dark-tokens must be a map like (\'table-header-bg\': #1e293b), got `#{meta.inspect($dark-tokens)}`.';
+}
+@each $k, $v in map.merge($tokens, $dark-tokens) {
+  @if not map.has-key($-light, $k) and not map.has-key($-dark, $k) {
+    @error 'wiraui: unknown token `#{$k}` (write the name without --wu-, e.g. \'table-header-bg\').';
+  }
+}
+@each $k, $v in $tokens {
+  $-light: map.merge($-light, ($k: '#{$v}'));
+  $-dark: map.remove($-dark, $k);
+}
+@each $k, $v in $dark-tokens {
+  $-dark: map.merge($-dark, ($k: '#{$v}'));
 }
 
 @if $-scheme == 'dark' {

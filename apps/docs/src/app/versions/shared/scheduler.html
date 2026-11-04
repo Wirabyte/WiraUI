@@ -1,0 +1,68 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" [ts]="ts['basic']" layout="stack">
+        <wu-scheduler
+          id="d-sch-basic"
+          [events]="visits"
+          [(view)]="view"
+          [(date)]="day"
+          [editable]="true"
+          height="26rem"
+          (onEventChange)="move($event)"
+          (onDateClick)="create($event)"
+          (onEventClick)="open($event)"
+        ></wu-scheduler>
+        <span class="docs-demo-output">
+          view: <code id="d-sch-view">{{ view }}</code> · onEventClick: <code id="d-sch-picked">{{ picked || '-' }}</code> · onEventChange:
+          <code id="d-sch-moved">{{ moved || '-' }}</code> · onDateClick: <code id="d-sch-created">{{ created || '-' }}</code> · events:
+          <code id="d-sch-count">{{ visits.length }}</code>
+        </span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="month" [section]="sec['month']">
+      <docs-demo [html]="code['month']" [ts]="ts['month']" layout="stack">
+        <wu-scheduler id="d-sch-month" [events]="monthVisits" [(view)]="monthView" [views]="['month', 'day']" [maxEventsPerDay]="2"></wu-scheduler>
+        <span class="docs-demo-output">view: <code id="d-sch-month-view">{{ monthView }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="hours" [section]="sec['hours']">
+      <docs-demo [html]="code['hours']" layout="stack">
+        <wu-scheduler
+          id="d-sch-hours"
+          [events]="visits"
+          view="day"
+          [views]="['day', 'week']"
+          [startHour]="8"
+          [endHour]="17"
+          [slotMinutes]="15"
+          [firstDayOfWeek]="1"
+          height="20rem"
+        ></wu-scheduler>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="template" [section]="sec['template']">
+      <docs-slot-note slot="event"></docs-slot-note>
+      <docs-demo [html]="code['template']" [css]="css['template']" layout="stack">
+        <wu-scheduler id="d-sch-tpl" [events]="iconVisits" view="week" height="22rem">
+          <ng-template #event let-event let-start="start" let-view="view">
+            <span class="docs-visit">
+              <i [class]="event.data?.icon" aria-hidden="true"></i>
+              <b>{{ event.title }}</b>
+              @if (view !== 'month') {
+                <small>{{ start | date: 'HH:mm' }} · {{ event.description }}</small>
+              }
+            </span>
+          </ng-template>
+        </wu-scheduler>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

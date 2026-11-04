@@ -56,6 +56,11 @@ import { WuErrorPageModule } from 'wiraui-v2/errorpage';
 import { WuDockModule } from 'wiraui-v2/dock';
 import { WuSiteFooterModule } from 'wiraui-v2/sitefooter';
 import { WuBottomBarModule } from 'wiraui-v2/bottombar';
+import { WuStatModule } from 'wiraui-v2/stat';
+import { WuDescriptionsModule } from 'wiraui-v2/descriptions';
+import { WuSignaturePadModule } from 'wiraui-v2/signaturepad';
+import { WuChatModule } from 'wiraui-v2/chat';
+import { WuSchedulerModule } from 'wiraui-v2/scheduler';
 import { WuThaiModule } from 'wiraui-v2/thai';
 import { WuInputOtpModule } from 'wiraui-v2/inputotp';
 import { addEdge, applyEdgeChanges, applyNodeChanges, WuFlowModule } from 'wiraui-v2/flow';
@@ -198,6 +203,11 @@ import {
   DockPageV2,
   FooterPageV2,
   BottomBarPageV2,
+  StatPageV2,
+  DescriptionsPageV2,
+  SignaturePadPageV2,
+  ChatPageV2,
+  SchedulerPageV2,
   ThaiPageV2,
   PickStudentV2,
   TextareaPageV2,
@@ -304,6 +314,11 @@ import { THEME_V2 } from './theme-v2';
     DockPageV2,
     FooterPageV2,
     BottomBarPageV2,
+    StatPageV2,
+    DescriptionsPageV2,
+    SignaturePadPageV2,
+    ChatPageV2,
+    SchedulerPageV2,
     ThaiPageV2,
     PickStudentV2,
   ],
@@ -404,6 +419,11 @@ import { THEME_V2 } from './theme-v2';
     WuDockModule,
     WuSiteFooterModule,
     WuBottomBarModule,
+    WuStatModule,
+    WuDescriptionsModule,
+    WuSignaturePadModule,
+    WuChatModule,
+    WuSchedulerModule,
     WuThaiModule,
     WuInputOtpModule,
     WuFlowModule,
@@ -506,6 +526,11 @@ import { THEME_V2 } from './theme-v2';
         dock: DockPageV2,
         footer: FooterPageV2,
         bottombar: BottomBarPageV2,
+        stat: StatPageV2,
+        descriptions: DescriptionsPageV2,
+        signaturepad: SignaturePadPageV2,
+        chat: ChatPageV2,
+        scheduler: SchedulerPageV2,
         thai: ThaiPageV2,
       })
     ),

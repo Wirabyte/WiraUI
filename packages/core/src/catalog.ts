@@ -45,6 +45,27 @@ export type SurfaceId = keyof typeof SURFACES;
 
 export const FONTS = ['Kanit', 'Sarabun', 'Prompt', 'Noto Sans Thai', 'IBM Plex Sans Thai', 'Anuphan', 'Inter', 'Roboto'] as const;
 
+/** Google Fonts families the presets, ng add and the Studio use, with the weights to ask for (the API refuses weights a family lacks). */
+const GOOGLE_FONT_WEIGHTS: Record<string, string> = {
+  ...Object.fromEntries(FONTS.map((f) => [f, ':wght@400;500;600;700'])),
+  'Noto Sans Thai Looped': ':wght@400;500;600;700',
+  'Noto Serif Thai': ':wght@400;500;600;700',
+  Taviraj: ':wght@400;500;600;700',
+  Trirong: ':wght@400;500;600;700',
+  Pridi: ':wght@400;500;600;700',
+  Itim: '',
+};
+
+/**
+ * The Google Fonts stylesheet for the first family of a CSS `font-family` value (`"'Kanit', sans-serif"`), or `null` when
+ * it is not a family the themes know.
+ */
+export function googleFontHref(fontFamily: string): string | null {
+  const name = fontFamily.split(',')[0].trim().replace(/^['"]|['"]$/g, '');
+  if (!Object.prototype.hasOwnProperty.call(GOOGLE_FONT_WEIGHTS, name)) return null;
+  return `https://fonts.googleapis.com/css2?family=${name.replace(/ /g, '+')}${GOOGLE_FONT_WEIGHTS[name]}&display=swap`;
+}
+
 /** Density multiplies every padding a preset defines (1 = the preset's own spacing). */
 export const DENSITY: Record<'compact' | 'normal' | 'comfortable', number> = {
   compact: 0.8,
@@ -168,7 +189,7 @@ export const PRESETS = {
   material: { ...styled, family: 'material', label: 'Material', fontFamily: 'Roboto', primary: '#10b981', surface: 'slate', semantic: MATERIAL_SEMANTIC, radius: 6, shadow: 'material', ripple: true, focusRing: 'inset' },
   phet: { ...styled, family: 'phet', label: 'Phet', primary: '#10b981', surface: 'slate', semantic: PHET_SEMANTIC, radius: 6, shadow: 'phet', ripple: false, focusRing: 'bold', transition: 0 },
   // ---- v3: WiraUI's own ----
-  wira: { family: 'wira', label: 'Wira', primary: '#1e7ae0', surface: 'ink', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Kanit', fontSize: 14, lineHeight: 1.6, radius: 6, density: 'normal', shadow: 'subtle', ripple: false, focusRing: 'ring', transition: 150, scheme: 'light' },
+  wira: { family: 'wira', label: 'Wira', primary: '#1e7ae0', surface: 'ink', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Kanit', fontSize: 14, lineHeight: 1.6, radius: 10, density: 'normal', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 150, scheme: 'light' },
   lanna: { family: 'wira', label: 'Lanna', primary: '#0d9488', surface: 'stone', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Sarabun', fontSize: 15, lineHeight: 1.7, radius: 12, density: 'comfortable', shadow: 'soft', ripple: false, focusRing: 'ring', transition: 200, scheme: 'light' },
   siam: { family: 'wira', label: 'Siam', primary: '#6366f1', surface: 'gray', semantic: SEMANTIC_DEFAULTS, fontFamily: 'Prompt', fontSize: 14, lineHeight: 1.6, radius: 4, density: 'normal', shadow: 'elevated', ripple: true, focusRing: 'outline', transition: 200, scheme: 'light' },
   nakhon: { family: 'wira', label: 'Nakhon', primary: '#3b82f6', surface: 'zinc', semantic: SEMANTIC_DEFAULTS, fontFamily: 'IBM Plex Sans Thai', fontSize: 13, lineHeight: 1.55, radius: 2, density: 'compact', shadow: 'none', ripple: false, focusRing: 'outline', transition: 100, scheme: 'light' },

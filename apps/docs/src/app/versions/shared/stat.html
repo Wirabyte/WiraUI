@@ -1,0 +1,94 @@
+<docs-component-page [doc]="doc">
+  <ng-template docsFeatures>
+    <docs-section id="import" [section]="sec['import']">
+      <docs-import [names]="doc"></docs-import>
+    </docs-section>
+
+    <docs-section id="basic" [section]="sec['basic']">
+      <docs-demo [html]="code['basic']" layout="stack">
+        <div class="docs-stat-one">
+          <wu-stat id="d-stat-basic" [label]="tx('Ticket ที่เปิดอยู่')" [value]="12" icon="wi wi-ticket" severity="info" [hint]="tx('รอช่างรับงาน 3 รายการ')"></wu-stat>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="grid" [section]="sec['grid']">
+      <docs-demo [html]="code['grid']" [css]="css['grid']" layout="stack">
+        <div class="docs-stat-kpi">
+          <div class="docs-kpi-grid" id="d-stat-grid">
+            <wu-stat id="d-stat-open" [label]="tx('Ticket ที่เปิดอยู่')" [value]="12" icon="wi wi-ticket" severity="info" [trend]="-8" trendGood="down" [trendLabel]="tx('จากเดือนก่อน')"></wu-stat>
+            <wu-stat id="d-stat-closed" [label]="tx('ปิดงานเดือนนี้')" [value]="1284" icon="wi wi-check-circle" severity="success" [trend]="12.5" [trendLabel]="tx('จากเดือนก่อน')"></wu-stat>
+            <wu-stat
+              id="d-stat-reply"
+              [label]="tx('เวลาตอบกลับเฉลี่ย')"
+              value="1.4"
+              [unit]="tx('ชม.')"
+              icon="wi wi-clock"
+              severity="warn"
+              [trend]="6"
+              trendGood="down"
+              [trendLabel]="tx('ช้าลงจากเดือนก่อน')"
+            ></wu-stat>
+            <wu-stat id="d-stat-csat" [label]="tx('ความพึงพอใจ')" value="4.8" unit="/ 5" icon="wi wi-star" severity="help" trend="+0.2" [hint]="tx('จาก 326 คำตอบ')"></wu-stat>
+          </div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="trend" [section]="sec['trend']">
+      <docs-demo [html]="code['trend']" layout="stack">
+        <div class="docs-demo-grid">
+          <wu-stat id="d-stat-up" [label]="tx('ปิดงานเดือนนี้')" [value]="1284" [trend]="12.5" [trendLabel]="tx('จากเดือนก่อน')"></wu-stat>
+          <wu-stat id="d-stat-down-good" [label]="tx('Ticket ที่เปิดอยู่')" [value]="12" [trend]="-8" trendGood="down" [trendLabel]="tx('จากเดือนก่อน')"></wu-stat>
+          <wu-stat id="d-stat-up-bad" [label]="tx('เวลาตอบกลับเฉลี่ย')" value="1.4" [unit]="tx('ชม.')" [trend]="6" trendGood="down"></wu-stat>
+          <wu-stat id="d-stat-string" [label]="tx('ความพึงพอใจ')" value="4.8" unit="/ 5" trend="+0.2"></wu-stat>
+          <wu-stat id="d-stat-suffix" [label]="tx('คำขอต่อชั่วโมง')" [value]="486" [trend]="32" trendSuffix=""></wu-stat>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="value" [section]="sec['value']">
+      <docs-demo [html]="code['value']" layout="stack">
+        <div class="docs-demo-grid">
+          <wu-stat id="d-stat-prefix" [label]="tx('รายรับเดือนนี้')" [value]="128400" prefix="฿" icon="wi wi-money-bill" severity="success"></wu-stat>
+          <wu-stat id="d-stat-unit" [label]="tx('ผู้เข้าใช้ระบบวันนี้')" [value]="3542" [unit]="tx('คน')" icon="wi wi-users"></wu-stat>
+          <wu-stat id="d-stat-text" [label]="tx('สถานะเซิร์ฟเวอร์')" [value]="tx('ปกติ')" icon="wi wi-server" severity="secondary"></wu-stat>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="content" [section]="sec['content']">
+      <docs-demo [html]="code['content']" [css]="css['content']" layout="stack">
+        <div class="docs-stat-one">
+          <wu-stat id="d-stat-spark" [label]="tx('คำขอต่อชั่วโมง')" [value]="486" icon="wi wi-chart-line" [trend]="4.2" [trendLabel]="tx('จากชั่วโมงก่อน')">
+            <svg class="docs-sparkline" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,24 15,20 30,22 45,14 60,16 75,9 90,12 105,6 120,8" />
+            </svg>
+          </wu-stat>
+        </div>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="states" [section]="sec['states']">
+      <docs-demo [html]="code['states']" [ts]="ts['states']" layout="stack">
+        <div class="docs-demo-grid">
+          <wu-stat id="d-stat-loading" [label]="tx('Ticket ใหม่วันนี้')" [value]="7" icon="wi wi-bell" [loading]="isLoading"></wu-stat>
+          <wu-stat
+            id="d-stat-click"
+            [label]="tx('รอการอนุมัติ')"
+            [value]="5"
+            icon="wi wi-hourglass"
+            severity="warn"
+            [clickable]="true"
+            [ariaLabel]="tx('รอการอนุมัติ 5 รายการ เปิดรายการ')"
+            (onClick)="openList('pending')"
+          ></wu-stat>
+        </div>
+        <div class="docs-demo-actions">
+          <wu-button id="d-stat-reload" [label]="tx('โหลดใหม่')" icon="wi wi-refresh" severity="secondary" [outlined]="true" (onClick)="reload()"></wu-button>
+          <span class="docs-demo-output">loading: <code id="d-stat-loading-value">{{ isLoading }}</code> · onClick: <code id="d-stat-opened">{{ opened || '-' }}</code></span>
+        </div>
+      </docs-demo>
+    </docs-section>
+  </ng-template>
+</docs-component-page>

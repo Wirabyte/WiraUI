@@ -148,9 +148,9 @@ export class WuAccordion {
 })
 export class WuAccordionTab {
   private readonly slotTemplates = contentChildren(WuTemplate);
-  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  private readonly headerRef = contentChild('header', { read: TemplateRef, descendants: false });
   readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
-  private readonly contentRef = contentChild('content', { read: TemplateRef });
+  private readonly contentRef = contentChild('content', { read: TemplateRef, descendants: false });
   readonly contentTemplate = computed(() => this.contentRef() || ɵfindTemplate(this.slotTemplates(), 'content'));
   readonly header = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });

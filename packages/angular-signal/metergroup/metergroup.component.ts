@@ -9,15 +9,17 @@ import {
   inject,
   input,
   numberAttribute,
+  output,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
+import { WuConfig, ɵassertSupportedAngular, ɵfindTemplate, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
 import {
   ɵmeterParts,
   WuMeterContext,
   WuMeterGroupContext,
   WuMeterItem,
+  WuMeterItemClickEvent,
   WuMeterLabelPosition,
   WuMeterOrientation,
 } from './metergroup.types';
@@ -48,6 +50,11 @@ export class WuMeterGroup {
   readonly labelPosition = input<WuMeterLabelPosition>('end');
   /** Legend items in a row or a column. */
   readonly labelOrientation = input<WuMeterOrientation>('horizontal');
+  /** Each legend item shows its value too: `เปิด 12 (24%)`. */
+  readonly showValue = input(false, { transform: booleanAttribute });
+  /** Legend items become buttons that emit `(onItemClick)`, e.g. to open the list for that status. */
+  readonly clickable = input(false, { transform: booleanAttribute });
+  readonly onItemClick = output<WuMeterItemClickEvent>();
   readonly styleClass = input<string>();
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,8 +101,20 @@ export class WuMeterGroup {
     return `wu-metergroup-labels wu-metergroup-labels-${o} p-metergroup-label-list p-metergroup-label-list-${o}`;
   });
 
+  private readonly config = inject(WuConfig);
+
   constructor() {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+  }
+
+  /** The legend text of one item. */
+  labelText(item: WuMeterItem, percent: number): string {
+    const value = this.showValue() ? ' ' + Number(item.value).toLocaleString(this.config.translation.code === 'th' ? 'th-TH' : 'en-US') : '';
+    return `${item.label ?? ''}${value} (${percent}%)`;
+  }
+
+  itemClick(event: Event, item: WuMeterItem, index: number): void {
+    this.onItemClick.emit({ originalEvent: event, item, index });
   }
 
   meterContext(index: number): WuMeterContext {

@@ -37,11 +37,11 @@ export class WuCard {
   readonly loading = input(false, { transform: booleanAttribute });
 
   private readonly templates = contentChildren(WuTemplate);
-  private readonly headerRef = contentChild('header', { read: TemplateRef });
-  private readonly titleRef = contentChild('title', { read: TemplateRef });
-  private readonly subtitleRef = contentChild('subtitle', { read: TemplateRef });
-  private readonly contentRef = contentChild('content', { read: TemplateRef });
-  private readonly footerRef = contentChild('footer', { read: TemplateRef });
+  private readonly headerRef = contentChild('header', { read: TemplateRef, descendants: false });
+  private readonly titleRef = contentChild('title', { read: TemplateRef, descendants: false });
+  private readonly subtitleRef = contentChild('subtitle', { read: TemplateRef, descendants: false });
+  private readonly contentRef = contentChild('content', { read: TemplateRef, descendants: false });
+  private readonly footerRef = contentChild('footer', { read: TemplateRef, descendants: false });
   readonly headerTemplate = computed(() => this.headerRef() || this.named('header'));
   readonly titleTemplate = computed(() => this.titleRef() || this.named('title'));
   readonly subtitleTemplate = computed(() => this.subtitleRef() || this.named('subtitle'));

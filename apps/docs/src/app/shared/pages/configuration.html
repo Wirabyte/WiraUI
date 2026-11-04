@@ -108,9 +108,12 @@
           <td><code>'buddhist'</code></td>
           <td>
             @if (en()) {
-              How dates are shown and typed. Buddhist Era (B.E.) by default; model values stay ordinary <code>Date</code> objects.
+              How dates are shown and typed while the app is in Thai. Buddhist Era (B.E.) by default; in any other language dates turn Gregorian on their
+              own, and a component's own <code>calendar</code> input still wins. <code>WuConfig.calendarFor(language?)</code> returns that rule. Model
+              values stay ordinary <code>Date</code> objects.
             } @else {
-              การแสดงและพิมพ์วันที่ ค่าเริ่มต้นเป็น พ.ศ. ส่วนค่าใน model ยังเป็น <code>Date</code> ปกติ
+              การแสดงและพิมพ์วันที่ตอนแอปเป็นภาษาไทย ค่าเริ่มต้นเป็น พ.ศ. เมื่อแอปเปลี่ยนเป็นภาษาอื่นวันที่เป็น ค.ศ. เอง ส่วน <code>calendar</code> ที่ใส่ใน
+              component ยังชนะ · <code>WuConfig.calendarFor(language?)</code> คืนปฏิทินตามกฎนี้ · ค่าใน model ยังเป็น <code>Date</code> ปกติ
             }
           </td>
         </tr>
@@ -123,6 +126,23 @@
               Milliseconds to wait after typing before AutoComplete asks for suggestions and before Table filters run. 0 (the default) answers on the key itself. A component's own <code>delay</code> / <code>filterDelay</code> input still wins.
             } @else {
               หน่วงกี่มิลลิวินาทีหลังพิมพ์ ก่อน AutoComplete ขอรายการแนะนำ และก่อน Table กรองข้อมูล ค่าเริ่มต้น 0 คือทำทันทีที่กดปุ่ม ถ้าใส่ <code>delay</code> / <code>filterDelay</code> ที่ component จะใช้ค่านั้นแทน
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><code class="docs-api-name">fonts</code></td>
+          <td><code class="docs-api-type">'google' | 'none'</code></td>
+          <td><code>'google'</code></td>
+          <td>
+            @if (en()) {
+              Where the theme's fonts come from. <code>'google'</code> links the Google Fonts stylesheet for the body and heading fonts the theme ends up
+              with (Kanit, Sarabun, Prompt, Noto Sans Thai, IBM Plex Sans Thai, Anuphan, Inter, Roboto …), whether the theme came from SCSS, CSS or
+              TypeScript, unless the page already links that family. <code>'none'</code> leaves fonts to the app: self-hosted files, or no access to Google.
+              <code>ng add --font=none</code> writes it for you.
+            } @else {
+              ฟอนต์ของธีมมาจากไหน <code>'google'</code> ใส่ลิงก์ stylesheet ของ Google Fonts ให้ฟอนต์เนื้อหาและฟอนต์หัวข้อที่ธีมใช้ (Kanit, Sarabun, Prompt,
+              Noto Sans Thai, IBM Plex Sans Thai, Anuphan, Inter, Roboto …) ไม่ว่าธีมจะมาจาก SCSS, CSS หรือ TypeScript เว้นแต่หน้าเว็บลิงก์ฟอนต์นั้นไว้แล้ว
+              · <code>'none'</code> ให้แอปจัดการฟอนต์เอง: ไฟล์ฟอนต์ของแอปเอง หรือเครื่องที่เข้า Google ไม่ได้ · <code>ng add --font=none</code> ใส่ค่านี้ให้
             }
           </td>
         </tr>
@@ -140,8 +160,18 @@
 <docs-section id="locale" [title]="{ th: 'ภาษาไทยและ พ.ศ.', en: 'Thai and the Buddhist calendar' }">
   @if (en()) {
     <p>The Thai locale and Buddhist calendar are the defaults. To change a few words, call <code>WuConfig.setTranslation()</code> once at app level.</p>
+    <p>
+      The calendar follows the app's language: Thai uses the <code>calendar</code> of <code>provideWiraUI()</code>, any other language the Gregorian one,
+      so an English page shows Gregorian years without a second setting. The datepicker, the scheduler, the chat's day separators and the date pipes all
+      read <code>WuConfig.calendarFor(language?)</code>; call it yourself for dates you format.
+    </p>
   } @else {
     <p>locale <code>th</code> และปฏิทิน พ.ศ. เป็นค่าเริ่มต้น ไม่ต้องตั้งอะไรเพิ่ม ถ้าอยากแก้บางคำใช้ <code>WuConfig.setTranslation()</code> ครั้งเดียวที่ระดับแอป</p>
+    <p>
+      ปฏิทินเป็นไปตามภาษาของแอป: ภาษาไทยใช้ <code>calendar</code> ของ <code>provideWiraUI()</code> ภาษาอื่นใช้ ค.ศ. หน้าภาษาอังกฤษจึงเป็น ค.ศ.
+      โดยไม่ต้องตั้งเพิ่ม · datepicker, scheduler, ตัวคั่นวันของ chat และ pipe วันที่ อ่านจาก <code>WuConfig.calendarFor(language?)</code>
+      เรียกใช้เองได้กับวันที่ที่แอปจัดรูปแบบเอง
+    </p>
   }
   <docs-code [code]="local(s.TRANSLATION)" lang="ts"></docs-code>
 </docs-section>

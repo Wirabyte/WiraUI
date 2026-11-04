@@ -1096,6 +1096,17 @@ Card, InputText, Textarea, Checkbox, RadioButton และ ToggleSwitch เส�
     - ตาราง Firefox กว้างกว่า จุดปล่อยของการลากจึงหลุดจอ แก้ให้อยู่ในหน้าต่าง
     - หน้า Studio โหลดยังไม่เสร็จแล้ว reload ทันที
 
+### 12.28 รุ่นจริงรุ่นแรก: ผลจากแอปแรกที่ใช้จริง (4 พ.ย. 2569)
+
+แอป Help Desk ที่สร้างบน 3.0.0-beta.0 จดปัญหาไว้ 21 ข้อ (WUI-001 ถึง WUI-021) ผู้ใช้ให้แก้ครบทุกข้อแล้วออกรุ่นจริง (1.0.0 / 2.0.0 / 3.0.0, icons 1.0.0) ไม่ใช่ beta
+
+- **template ของ component ลูก:** query แบบชื่อ (`#header`) ต้องเป็น `descendants: false` ทุกจุด ทั้ง `contentChild()` และ `@ContentChild` เพราะค่าเริ่มต้นค้นทุกชั้น ตารางในการ์ดจึงเคยเอาหัวตารางไปเป็นหัวการ์ด มีทั้งหมด 34 จุดใน 3 รุ่น ส่วน query ด้วย class (`WuTemplate`) ใช้ `contentChildren` ซึ่งค่าเริ่มต้นเป็นชั้นเดียวอยู่แล้ว ห้ามเพิ่ม query แบบชื่อโดยไม่ใส่ `descendants: false`
+- **ปฏิทินตามภาษา:** `WuConfig.calendarFor(language)` เป็นกติกาเดียวของทั้งไลบรารี: ภาษาไทยใช้ `calendar` ที่ตั้งไว้ ภาษาอื่นใช้ ค.ศ. pipe, datepicker และ component ใหม่ที่แสดงวันที่อ่านจากที่นี่
+- **ฟอนต์:** `provideWiraUI({ fonts: 'google' })` เป็นค่าเริ่มต้น อ่าน `--wu-font-family` และ `--wu-heading-font-family` ที่ได้จริง แล้วเพิ่มลิงก์ Google Fonts ถ้าหน้าเว็บยังไม่มี playground ทดสอบตั้ง `'none'` เพราะเทียบภาพ 3 รุ่นด้วยฟอนต์ระบบ
+- **token ตามชื่อ:** `$tokens` / `$dark-tokens` และ `tokens` (TS) ตั้งค่า token ใดก็ได้ ค่าใน `$tokens` ใช้ทั้งโหมดสว่างและมืด (ลบค่ามืดเดิมของ family ทิ้ง) ชื่อที่ไม่มีอยู่จริงเป็น error ทั้งตอน compile SCSS และตอนรัน TS
+- **หน้าตา:** preset `wira` มุมโค้ง 10 เงา soft หัวตารางโปร่ง เมนูที่เลือกเป็นสีอ่อน (family WIRA ทั้งหมดได้หัวตารางและเมนูแบบใหม่) tag แบบ soft เป็นสีโปร่ง (`--wu-tag-soft-mix` 14%) แทนเฉดอ่อนทึบ
+- **component ใหม่** ทำครั้งเดียวใน `angular-common` ใช้ได้ทุกรุ่น: Chat, Scheduler, SignaturePad, Stat, Descriptions และ SelectButton `variant` chips / cards ส่วน token ของ component ใหม่อยู่ใน family MALI ทุก preset จึงได้ค่า และปรับผ่าน `$tokens` ได้
+
 ### 12.27 เตรียมออก beta (2 พ.ย. 2569)
 
 - **v3 ไม่จำกัดเพดาน Angular:** `tools/versions.mjs` ตั้ง `max: null` จึงได้ peer `>=21.0.0` และ `@wirabyte/icons` ได้ `>=15.0.0` · CI เพิ่ม `ng add` บน Angular 22 (Node ต่ำสุดที่ CLI 22 รับคือ 22.22.3) และ `latest` · Angular CLI 22 ต้องการ Node `^22.22.3 || ^24.15 || >=26`

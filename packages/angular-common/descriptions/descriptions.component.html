@@ -1,0 +1,13 @@
+<section [class]="rootClass" [style]="rootStyle">
+  <h3 *ngIf="title" class="wu-descriptions-title">{{ title }}</h3>
+  <dl class="wu-descriptions-list">
+    <div *ngFor="let item of items || []" class="wu-descriptions-item" [style.grid-column]="spanOf(item.span)">
+      <dt class="wu-descriptions-label">{{ item.label }}</dt>
+      <dd class="wu-descriptions-value">{{ valueText(item.value) }}</dd>
+    </div>
+    <div *ngFor="let item of children" class="wu-descriptions-item" [style.grid-column]="spanOf(item.span)">
+      <dt class="wu-descriptions-label">{{ item.label }}</dt>
+      <dd class="wu-descriptions-value"><ng-container *ngTemplateOutlet="item.content"></ng-container></dd>
+    </div>
+  </dl>
+</section>

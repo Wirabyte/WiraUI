@@ -92,8 +92,8 @@ export const BUTTON_DOC: ComponentDoc = {
     badge: {
       title: 'Badge',
       text: {
-        th: '<code>badge</code> ตัวเลขหรือข้อความท้ายปุ่ม และ <code>badgeSeverity</code> สีของ badge · <code>[link]="true"</code> ทำให้ปุ่มเป็นแบบลิงก์ · <code>[style]</code> (object) ใส่ที่ตัวปุ่ม',
-        en: '<code>badge</code> puts a count or text at the end and <code>badgeSeverity</code> colours it · <code>[link]="true"</code> makes a link-style button · <code>[style]</code> (an object) goes on the button.',
+        th: '<code>badge</code> ตัวเลขหรือข้อความท้ายปุ่ม และ <code>badgeSeverity</code> สีของ badge · ปุ่มที่มีแต่ icon (เช่น กระดิ่งแจ้งเตือน) ติด badge ไว้ที่มุมบนแทน ปุ่มจึงไม่ขยายตาม · <code>[link]="true"</code> ทำให้ปุ่มเป็นแบบลิงก์ · <code>[style]</code> (object) ใส่ที่ตัวปุ่ม',
+        en: '<code>badge</code> puts a count or text at the end and <code>badgeSeverity</code> colours it · an icon-only button (a notification bell, say) wears it on its top corner instead, so the button keeps its size · <code>[link]="true"</code> makes a link-style button · <code>[style]</code> (an object) goes on the button.',
       },
     },
     loading: {
@@ -144,6 +144,8 @@ export const BUTTON_DOC: ComponentDoc = {
 <wu-button icon="wi wi-trash" severity="danger" [text]="true" ariaLabel="ลบ"></wu-button>`,
     badge: `<wu-button label="แจ้งเตือน" icon="wi wi-bell" badge="3"></wu-button>
 <wu-button label="ข้อความ" severity="secondary" badge="12" badgeSeverity="danger"></wu-button>
+<wu-button icon="wi wi-bell" badge="5" badgeSeverity="danger" severity="secondary" [text]="true" [rounded]="true"
+  ariaLabel="แจ้งเตือน"></wu-button>
 <wu-button label="ดูคำสั่งซื้อ" [link]="true" [style]="{ minWidth: '8rem' }"></wu-button>`,
     action: `<wu-button id="demo-save" label="ส่งข้อมูล" icon="wi wi-send" [action]="save"></wu-button>`,
     loading: `<wu-button label="บันทึกแบบร่าง" icon="wi wi-save" [loading]="isApiSaving" (onClick)="saveDraft()"></wu-button>

@@ -115,6 +115,11 @@ export interface VersionPages {
   dock: Type<unknown>;
   footer: Type<unknown>;
   bottombar: Type<unknown>;
+  stat: Type<unknown>;
+  descriptions: Type<unknown>;
+  signaturepad: Type<unknown>;
+  chat: Type<unknown>;
+  scheduler: Type<unknown>;
   thai: Type<unknown>;
   /** WiraUI's own chart: @wirabyte/ui@3 only. */
   chart?: Type<unknown>;
@@ -241,6 +246,11 @@ export function versionRoutes(p: VersionPages): Routes {
         { path: 'components/dock', component: p.dock },
         { path: 'components/sitefooter', component: p.footer },
         { path: 'components/bottombar', component: p.bottombar },
+        { path: 'components/stat', component: p.stat },
+        { path: 'components/descriptions', component: p.descriptions },
+        { path: 'components/signaturepad', component: p.signaturepad },
+        { path: 'components/chat', component: p.chat },
+        { path: 'components/scheduler', component: p.scheduler },
         { path: 'components/thai', component: p.thai },
         // Pages only some versions have: the others fall through to the 404 below.
         // v1 / v2 have no chart of their own: their old Chart address goes to ChartJS.

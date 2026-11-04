@@ -28,6 +28,15 @@ export class WuConfig {
   getTranslation<K extends keyof WuLocale>(key: K): WuLocale[K] {
     return this.translation[key];
   }
+
+  /**
+   * The calendar dates use in `language` (default: the UI language): `calendar` while the app is in Thai, Gregorian in
+   * any other language, so switching the app to English also turns พ.ศ. into ค.ศ. The date pipes and the datepicker
+   * read this; a component's own `calendar` input still wins.
+   */
+  calendarFor(language: string = this.translation.code || 'th'): CalendarSystem {
+    return language === 'th' ? this.calendar : 'gregorian';
+  }
 }
 
 function resolveLocale(locale: 'th' | 'en' | WuLocale | undefined): WuLocale {

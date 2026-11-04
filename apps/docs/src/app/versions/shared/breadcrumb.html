@@ -18,6 +18,15 @@
       <docs-code [code]="$any(ts['links'])" lang="ts"></docs-code>
     </docs-section>
 
+    <docs-section id="plain" [section]="sec['plain']">
+      <docs-demo [html]="code['plain']" [ts]="ts['plain']" layout="stack">
+        <div class="docs-bc-page">
+          <wu-breadcrumb id="d-bc-plain" [model]="local(gradeTrail)" [home]="home" [homeAriaLabel]="tx('หน้าแรก')" variant="plain"></wu-breadcrumb>
+          <div class="docs-bc-title">{{ tx('ภาคเรียนที่ 1/2569') }}</div>
+        </div>
+      </docs-demo>
+    </docs-section>
+
     <docs-section id="templates" [section]="sec['templates']">
       <docs-slot-note slot="item"></docs-slot-note>
       <docs-demo [html]="code['templates']" layout="stack">

@@ -44,6 +44,28 @@
     align-items: center;
     gap: 0.5rem;
   }
+  /* clickable: each legend item is a button (same look, a pointer and a focus ring). */
+  .wu-metergroup-label-button {
+    display: inline-flex;
+    align-items: center;
+    gap: inherit;
+    margin: 0;
+    padding: 0.125rem 0.25rem;
+    border: 0;
+    border-radius: var(--wu-radius-sm);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  .wu-metergroup-label-button:hover {
+    background: var(--wu-hover-bg);
+  }
+  .wu-metergroup-label-button:focus-visible {
+    outline: var(--wu-control-focus-outline);
+    outline-offset: var(--wu-control-focus-offset);
+    box-shadow: var(--wu-control-focus-shadow);
+  }
   .wu-metergroup-label-marker {
     flex: none;
     display: inline-flex;
@@ -87,6 +109,12 @@
   @media (prefers-reduced-motion: reduce) {
     .wu-metergroup-meter {
       transition: none;
+    }
+  }
+  /* Touch screens: clickable legend items are at least 24 px tall (WCAG 2.5.8). */
+  @media (pointer: coarse) {
+    .wu-metergroup-label-button {
+      min-height: 24px;
     }
   }
 }

@@ -1,4 +1,4 @@
-<nav class="wu-breadcrumb p-breadcrumb p-component" [class]="styleClass || ''" [style]="rootStyle" [attr.aria-label]="ariaLabel || t.breadcrumb">
+<nav class="wu-breadcrumb p-breadcrumb p-component" [class]="styleClass || ''" [class.wu-breadcrumb-plain]="variant === 'plain'" [style]="rootStyle" [attr.aria-label]="ariaLabel || t.breadcrumb">
   <ol class="wu-breadcrumb-list p-breadcrumb-list p-menuitem-list">
     <li
       *ngIf="home"

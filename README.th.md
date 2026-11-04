@@ -35,13 +35,13 @@
 
 ## 📦 ติดตั้ง
 
-ตอนนี้เป็นรุ่น beta จึงต้องระบุ tag ตามรุ่น Angular ของแอป:
+เลือก major ให้ตรงกับรุ่น Angular ของแอป:
 
 | Angular | คำสั่ง | แพ็กเกจ | สถานะ |
 |---|---|---|---|
-| 21 ขึ้นไป | `ng add @wirabyte/ui@beta` | `@wirabyte/ui@3` | active (latest) |
-| 18 – 20 | `ng add @wirabyte/ui@v2-beta` | `@wirabyte/ui@2` | active |
-| 15 – 17 | `ng add @wirabyte/ui@v1-beta` | `@wirabyte/ui@1` | maintenance |
+| 21 ขึ้นไป | `ng add @wirabyte/ui` | `@wirabyte/ui@3` | active (latest) |
+| 18 – 20 | `ng add @wirabyte/ui@2` | `@wirabyte/ui@2` | active |
+| 15 – 17 | `ng add @wirabyte/ui@1` | `@wirabyte/ui@1` | maintenance |
 
 `ng add` ตั้งค่าธีม ฟอนต์ และ icon ให้ โดยถามเฉพาะที่จำเป็น จากนั้นเรียกใช้ component ได้เลย:
 
@@ -54,10 +54,10 @@
 
 - **ใช้ major ให้ตรงกับช่วง Angular:** แต่ละ major ล็อกกับช่วงของตัวเอง และจะไม่ยอมติดตั้งข้ามช่วง
 - **อัปเกรด Angular ข้ามช่วงในคำสั่งเดียว** เพื่อให้ Angular กับ WiraUI ขยับพร้อมกัน:
-  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@v2-beta`
+  `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@2`
 - **ปรับหน้าตาผ่านไฟล์ธีม** ไม่เขียน CSS ทับ component เพื่อให้หน้าตาคงเดิมเมื่อออกรุ่นใหม่
 - **ย้ายแอปเดิมทีละหน้าได้:** WiraUI ใช้คู่กับ UI library เดิมได้ ไม่ต้องย้ายทีเดียว
-- **จำไว้ว่าเป็น beta:** API ยังเปลี่ยนได้ระหว่างรุ่น beta ถ้าใช้บน production ควรล็อกเวอร์ชันให้ตรงตัว
+- **อัปเดตภายใน major เดิมได้เลย:** รุ่น minor และ patch ไม่เปลี่ยน API ส่วน major ใหม่หมายถึงช่วง Angular ใหม่
 
 ## 📚 อ่านต่อ
 

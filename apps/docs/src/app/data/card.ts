@@ -53,8 +53,8 @@ export const CARD_DOC: ComponentDoc = {
     slots: {
       title: 'Slots',
       text: {
-        th: 'ใส่ attribute <code>wuCardHeader</code> (ด้านบนสุด เช่น รูป), <code>wuCardActions</code> (ข้างหัวการ์ด) และ <code>wuCardFooter</code> บน element ที่จะวาง ส่วนที่ไม่ได้ใส่จะไม่กินพื้นที่',
-        en: 'Add <code>wuCardHeader</code> (top, e.g. an image), <code>wuCardActions</code> (next to the title) or <code>wuCardFooter</code> to the element you place. Unused slots take no space.',
+        th: 'ใส่ attribute <code>wuCardHeader</code> (ด้านบนสุด เช่น รูป), <code>wuCardActions</code> (ข้างหัวการ์ด) และ <code>wuCardFooter</code> บน element ที่จะวาง ส่วนที่ไม่ได้ใส่จะไม่กินพื้นที่ · footer ที่มี element ครอบชิ้นเดียว (เช่น <code>&lt;div wuCardFooter class="flex justify-content-end gap-2"&gt;</code>) กว้างเต็มการ์ด class จัดตำแหน่งของ element นั้นจึงใช้ได้ เช่น ดันปุ่มไปชิดขวา ส่วนปุ่มที่วางตรง ๆ ใน footer คงขนาดของตัวเอง',
+        en: 'Add <code>wuCardHeader</code> (top, e.g. an image), <code>wuCardActions</code> (next to the title) or <code>wuCardFooter</code> to the element you place. Unused slots take no space · a single wrapper in the footer (such as <code>&lt;div wuCardFooter class="flex justify-content-end gap-2"&gt;</code>) spans the card’s width, so its own alignment classes work, pushing the buttons to the right for one; buttons placed straight in the footer keep their size.',
       },
     },
     templates: {

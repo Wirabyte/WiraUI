@@ -38,7 +38,7 @@ export class WuDatePipe implements PipeTransform, OnDestroy {
     if (!date) return '';
     const own = this.config.translation;
     const language = lang || own.code || 'th';
-    const cal: CalendarSystem = calendar || (language === 'th' ? this.config.calendar : 'gregorian');
+    const cal: CalendarSystem = calendar || this.config.calendarFor(language);
     const key = `${date.getTime()}|${format}|${cal}|${language}`;
     if (key === this.lastKey && own === this.lastLocale) return this.lastValue;
     const locale = language === own.code ? own : LOCALES[language] || own;

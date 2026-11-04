@@ -2715,3 +2715,129 @@ wu-scroller {
   font-size: 1.25rem;
   font-weight: 700;
 }
+
+/* Stat page: one card at a readable width; the KPI row measures its demo box (one column, two, then four). */
+.docs-stat-one {
+  width: min(22rem, 100%);
+}
+.docs-stat-kpi {
+  container-type: inline-size;
+  width: 100%;
+}
+.docs-kpi-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+@container (min-width: 30rem) {
+  .docs-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (min-width: 54rem) {
+  .docs-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.docs-sparkline {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  margin-top: 0.5rem;
+  fill: none;
+  stroke: var(--wu-primary-color);
+  stroke-width: 2;
+}
+.docs-sparkline polyline {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Descriptions page: the narrow box shows the fold. */
+.docs-ds-narrow {
+  padding: 12px;
+}
+
+/* SignaturePad page: the pad and the picture it gives, side by side from tablet width. */
+.docs-sig-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+@include mq.up(md) {
+  .docs-sig-row {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+.docs-sig-result {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.docs-sig-image {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  object-fit: contain;
+  border: 1px dashed var(--docs-border);
+  border-radius: 12px;
+  background: var(--docs-surface);
+}
+.docs-sig-empty {
+  display: grid;
+  place-items: center;
+  color: var(--docs-muted);
+  font-size: 13px;
+}
+.docs-sig-full,
+.docs-sig-form {
+  width: 100%;
+}
+.docs-sig-form {
+  display: grid;
+  gap: 8px;
+}
+.docs-sig-error {
+  color: var(--wu-danger-text, #dc2626);
+  font-size: 13px;
+}
+
+/* Chat page: the bubble template with quick replies. */
+.docs-chat-text {
+  white-space: pre-wrap;
+}
+.docs-quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Scheduler page: the event template. */
+.docs-visit {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  text-align: start;
+}
+.docs-visit i {
+  margin-inline-end: 4px;
+}
+.docs-visit small {
+  opacity: 0.8;
+}
+
+/* Breadcrumb page: a plain trail over a page title. */
+.docs-bc-page {
+  display: grid;
+  gap: 4px;
+}
+.docs-bc-title {
+  color: var(--docs-text);
+  font-family: var(--wu-heading-font-family, var(--docs-display));
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}

@@ -46,6 +46,25 @@
   <docs-code [code]="local(themeCode)" lang="scss" file="src/theme/wiraui.theme.scss"></docs-code>
 </docs-section>
 
+<docs-section id="tokens" [title]="{ th: 'ฟอนต์หัวข้อ และ token ใดก็ได้', en: 'Heading font and any token' }">
+  @if (en()) {
+    <p>
+      <code>$heading-font-family</code> is the font of titles: cards, dialogs, drawers, panels, fieldsets, alerts, empty states, results and error pages
+      (it follows <code>$font-family</code> when left out). <code>$tokens: ('table-head-bg': transparent, …)</code> sets any token by its name without
+      <code>--wu-</code>, for light and dark mode alike; <code>$dark-tokens: (…)</code> is for dark mode only. A misspelt token name is a compile error,
+      not a silent no-op. Both fonts are fetched from Google Fonts at run time unless <code>provideWiraUI(&#123; fonts: 'none' &#125;)</code>.
+    </p>
+  } @else {
+    <p>
+      <code>$heading-font-family</code> คือฟอนต์ของหัวข้อ: card, dialog, drawer, panel, fieldset, alert, empty state, result และหน้า error
+      (ไม่ใส่ใช้ตาม <code>$font-family</code>) · <code>$tokens: ('table-head-bg': transparent, …)</code> ตั้ง token ใดก็ได้ด้วยชื่อที่ไม่มี
+      <code>--wu-</code> มีผลทั้งโหมดสว่างและมืด ส่วน <code>$dark-tokens: (…)</code> สำหรับโหมดมืดเท่านั้น · ชื่อ token ที่สะกดผิด compile ไม่ผ่าน
+      ไม่เงียบหายไปเฉย ๆ · ฟอนต์ทั้งสองโหลดจาก Google Fonts ตอนแอปทำงาน เว้นแต่ตั้ง <code>provideWiraUI(&#123; fonts: 'none' &#125;)</code>
+    </p>
+  }
+  <docs-code [code]="local(s.SCSS_TOKENS)" lang="scss" file="src/theme/wiraui.theme.scss"></docs-code>
+</docs-section>
+
 <docs-section id="styles" [title]="{ th: 'เรียกใช้ใน styles.scss', en: 'Load it from styles.scss' }">
   @if (en()) {
     <p>The theme file emits <code>&#64;layer wiraui.tokens</code> and the variables on <code>:root</code>. Put it on the first line of <code>styles.scss</code>.</p>

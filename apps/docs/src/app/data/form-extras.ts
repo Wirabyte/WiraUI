@@ -276,6 +276,19 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
     'เดือน': 'Month',
     'รายการ': 'List',
     'ตาราง': 'Grid',
+    'เปิด': 'Open',
+    'กำลังดำเนินการ': 'In progress',
+    'รอลูกค้า': 'Waiting on customer',
+    'รออะไหล่': 'Waiting on parts',
+    'ส่งต่อ': 'Handed over',
+    'ปิดแล้ว': 'Closed',
+    'ยกเลิก': 'Cancelled',
+    'ช่องทางติดต่อกลับ': 'How we get back to you',
+    'โทรศัพท์': 'Phone',
+    'แชท': 'Chat',
+    'ตอบกลับภายใน 1 วันทำการ': 'An answer within one working day',
+    'ช่างโทรกลับภายใน 2 ชั่วโมง': 'A technician calls back within 2 hours',
+    'คุยกับเจ้าหน้าที่ได้ทันทีในเวลาทำการ': 'Talk to someone right away in working hours',
   },
   sections: {
     sizes: {
@@ -297,6 +310,20 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
         en: 'The <code>item</code> template gets the option as <code>let-option</code> and <code>let-index="index"</code> to draw an icon or your own text · <code>[unselectable]="true"</code> is the older opposite of <code>allowEmpty</code>: clicking the chosen option keeps it.',
       },
     },
+    chips: {
+      title: { th: 'แบบชิป: ตัวกรองหลายตัวเลือก', en: 'Chips: filters with many options' },
+      text: {
+        th: '<code>variant="chips"</code> แยกแต่ละตัวเลือกเป็นเม็ดของตัวเองมีช่องไฟ ตัวเลือกมากแค่ไหนก็ขึ้นบรรทัดใหม่เป็นแถวเรียบร้อย ไม่ใช่แถบติดกันที่หักกลาง เหมาะกับตัวกรองสถานะที่มีจำนวนต่อท้าย (ใส่ <code>wu-badge</code> ใน template <code>item</code>) · ใช้กับ <code>multiple</code> ได้',
+        en: '<code>variant="chips"</code> gives each option a pill of its own with space around it, so any number of options wrap into tidy rows instead of breaking a joined bar. Good for status filters with a count (a <code>wu-badge</code> in the <code>item</code> template) · works with <code>multiple</code>.',
+      },
+    },
+    cards: {
+      title: { th: 'แบบการ์ด', en: 'Cards' },
+      text: {
+        th: '<code>variant="cards"</code> เป็น grid ของการ์ดตัวเลือก: ไอคอนจาก field <code>optionIcon</code> (ค่าเริ่มต้น <code>icon</code>) ชื่อจาก <code>optionLabel</code> บรรทัดอธิบายจาก <code>optionDescription</code> (ค่าเริ่มต้น <code>description</code>) และวงกลมเลือกที่มุม · เลือกได้ทีละใบเหมือน radio (<code>[allowEmpty]="false"</code> ให้มีใบที่เลือกเสมอ) การ์ดกว้างอย่างน้อย 15rem และเหลือคอลัมน์เดียวบนมือถือ',
+        en: '<code>variant="cards"</code> lays the options out as a grid of cards: an icon from the <code>optionIcon</code> field (default <code>icon</code>), the title from <code>optionLabel</code>, a line from <code>optionDescription</code> (default <code>description</code>) and a round check in the corner · one card at a time, as a radio group (<code>[allowEmpty]="false"</code> keeps one chosen). Cards are at least 15rem wide and stack into one column on a phone.',
+      },
+    },
   },
   code: {
     item: `<wu-selectbutton name="view" [(ngModel)]="view" [options]="views" optionLabel="label" optionValue="value"
@@ -311,6 +338,15 @@ export const SELECTBUTTON_DOC: ComponentDoc = {
   [(ngModel)]="plan"></wu-selectbutton>
 <wu-selectbutton name="plan" [options]="plans" optionLabel="label" optionValue="value"
   [(ngModel)]="plan" size="large"></wu-selectbutton>`,
+    chips: `<wu-selectbutton name="statuses" [(ngModel)]="statuses" [options]="statusFilters" optionLabel="label"
+  optionValue="value" variant="chips" [multiple]="true">
+  <ng-template #item let-option>
+    {{ option.label }} <wu-badge [value]="option.count" severity="secondary"></wu-badge>
+  </ng-template>
+</wu-selectbutton>`,
+    cards: `<span id="channel-label">ช่องทางติดต่อกลับ</span>
+<wu-selectbutton name="channel" [(ngModel)]="channel" [options]="channels" optionLabel="label"
+  optionValue="value" variant="cards" [allowEmpty]="false" ariaLabelledBy="channel-label"></wu-selectbutton>`,
     basic: `<wu-selectbutton [options]="plans" optionLabel="label" optionValue="value"
   name="plan" [(ngModel)]="plan"></wu-selectbutton>`,
     multiple: `<wu-selectbutton [options]="days" name="workdays" [(ngModel)]="workdays" [multiple]="true"></wu-selectbutton>`,
@@ -333,6 +369,22 @@ plan = 'pro';`,
   { label: 'ตาราง', value: 'grid', icon: 'wi wi-th-large' },
 ];
 view = 'list';`,
+    chips: `statusFilters = [
+  { label: 'เปิด', value: 'open', count: 12 },
+  { label: 'กำลังดำเนินการ', value: 'progress', count: 20 },
+  { label: 'รอลูกค้า', value: 'customer', count: 8 },
+  { label: 'รออะไหล่', value: 'parts', count: 3 },
+  { label: 'ส่งต่อ', value: 'handover', count: 2 },
+  { label: 'ปิดแล้ว', value: 'closed', count: 41 },
+  { label: 'ยกเลิก', value: 'cancelled', count: 4 },
+];
+statuses = ['open', 'progress'];`,
+    cards: `channels = [
+  { label: 'อีเมล', value: 'email', icon: 'wi wi-envelope', description: 'ตอบกลับภายใน 1 วันทำการ' },
+  { label: 'โทรศัพท์', value: 'phone', icon: 'wi wi-phone', description: 'ช่างโทรกลับภายใน 2 ชั่วโมง' },
+  { label: 'แชท', value: 'chat', icon: 'wi wi-comments', description: 'คุยกับเจ้าหน้าที่ได้ทันทีในเวลาทำการ' },
+];
+channel = 'email';`,
     multiple: `days = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];
 workdays = ['จ', 'อ', 'พ', 'พฤ', 'ศ'];`,
     reactive: `plans = [
@@ -357,6 +409,9 @@ form = new FormGroup({ plan: new FormControl('free') });`,
         row('unselectable', 'boolean', undefined, 'ชื่อเดิม ตรงข้ามกับ allowEmpty: true = กดซ้ำแล้วไม่ยกเลิก', 'Older name, the opposite of allowEmpty: true = a second click keeps it'),
         row('disabled', 'boolean', 'false', 'ปิดการใช้', 'Disables it'),
         row('invalid', 'boolean', 'false', 'บังคับขึ้นสีแดง', 'Forces the error style'),
+        row('variant', "'default' | 'chips' | 'cards'", "'default'", 'แถบติดกัน · เม็ดแยกกันที่ขึ้นบรรทัดเรียบร้อย · grid ของการ์ด', 'A joined bar · separate pills that wrap cleanly · a grid of cards'),
+        row('optionIcon', 'string', "'icon'", 'variant="cards": field ที่เป็น class ของไอคอนบนการ์ด', 'variant="cards": the field with the card’s icon class'),
+        row('optionDescription', 'string', "'description'", 'variant="cards": field ที่เป็นบรรทัดใต้ชื่อ', 'variant="cards": the field with the line under the title'),
         row('ariaLabelledBy', 'string', undefined, 'id ของ label ของกลุ่ม', 'id of the group label'),
         STYLE_ROW,
       ],

@@ -27,7 +27,7 @@ import { ɵassertSupportedAngular, ɵfindTemplate, ɵuniqueId, ɵWU_SKIP_VERSION
 })
 export class WuFieldset {
   private readonly slotTemplates = contentChildren(WuTemplate);
-  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  private readonly headerRef = contentChild('header', { read: TemplateRef, descendants: false });
   readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
   readonly legend = input<string>();
   readonly toggleable = input(false, { transform: booleanAttribute });

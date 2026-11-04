@@ -40,7 +40,7 @@ import { WuSelectButtonChangeEvent, WuSelectButtonOptionClickEvent } from './sel
 })
 export class WuSelectButton implements ControlValueAccessor {
   private readonly slotTemplates = contentChildren(WuTemplate);
-  private readonly itemRef = contentChild('item', { read: TemplateRef });
+  private readonly itemRef = contentChild('item', { read: TemplateRef, descendants: false });
   readonly itemTemplate = computed(() => this.itemRef() || ɵfindTemplate(this.slotTemplates(), 'item'));
   readonly options = input<readonly unknown[] | null | undefined>([]);
   readonly optionLabel = input<string>();
@@ -58,6 +58,15 @@ export class WuSelectButton implements ControlValueAccessor {
   readonly invalid = input(false, { transform: booleanAttribute });
   /** `small` or `large` (also `sm` / `lg`). */
   readonly size = input<WuSize>();
+  /**
+   * `'chips'`: each option its own pill with space around it, for filters with many options (and a count in the item
+   * template): rows wrap cleanly instead of breaking a joined bar. Default: the joined bar.
+   */
+  readonly variant = input<'default' | 'chips' | 'cards' | null>();
+  /** `variant="cards"`: the option field with the card's icon class. Default `'icon'`. */
+  readonly optionIcon = input<string>('icon');
+  /** `variant="cards"`: the option field with the line under the title. Default `'description'`. */
+  readonly optionDescription = input<string>('description');
   readonly sizeKey = computed(() => ɵsize(this.size()));
   readonly ariaLabelledBy = input<string>();
 
@@ -86,6 +95,8 @@ export class WuSelectButton implements ControlValueAccessor {
   readonly baseClasses = computed(() => {
     const c = ['wu-selectbutton', 'p-selectbutton', 'p-component'];
     if (this.invalid()) c.push('wu-invalid', 'p-invalid');
+    if (this.variant() === 'chips') c.push('wu-selectbutton-chips');
+    if (this.variant() === 'cards') c.push('wu-selectbutton-cards');
     return c.join(' ');
   });
 
@@ -93,6 +104,14 @@ export class WuSelectButton implements ControlValueAccessor {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
   }
 
+  iconOf(option: unknown): string {
+    const v = (option && typeof option === 'object' ? (option as Record<string, unknown>)[this.optionIcon()] : undefined);
+    return typeof v === 'string' ? v : '';
+  }
+  descriptionOf(option: unknown): string {
+    const v = (option && typeof option === 'object' ? (option as Record<string, unknown>)[this.optionDescription()] : undefined);
+    return v === null || v === undefined ? '' : String(v);
+  }
   labelOf(option: unknown): string {
     return ɵoptionLabel(option, this.optionLabel());
   }

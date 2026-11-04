@@ -309,7 +309,7 @@ export class WuTabPanels {}
 })
 export class WuTabPanel {
   private readonly slotTemplates = contentChildren(WuTemplate);
-  private readonly headerRef = contentChild('header', { read: TemplateRef });
+  private readonly headerRef = contentChild('header', { read: TemplateRef, descendants: false });
   readonly headerTemplate = computed(() => this.headerRef() || ɵfindTemplate(this.slotTemplates(), 'header'));
   readonly header = input<string>();
   /** Icon class before the header, e.g. `pi pi-user`. */

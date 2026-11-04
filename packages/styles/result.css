@@ -95,6 +95,7 @@
     stroke-linecap: round;
   }
   .wu-result-title {
+    font-family: var(--wu-heading-font-family);
     margin: 0;
     color: var(--wu-result-title-color);
     font-size: var(--wu-result-title-size);

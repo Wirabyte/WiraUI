@@ -86,3 +86,8 @@ body {
 .scr-row { box-sizing: border-box; height: 32px; padding: 0.375rem 0.75rem; }
 .scr-odd { background: var(--wu-hover-bg); }
 #bu-target, #cm-target, #dd-src, #dd-dst, #dd-other { min-width: 10rem; min-height: 4rem; }
+.r1-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}

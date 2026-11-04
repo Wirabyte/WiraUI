@@ -71,6 +71,7 @@
     min-width: 0;
   }
   .wu-card-title {
+    font-family: var(--wu-heading-font-family);
     font-size: var(--wu-card-title-size);
     font-weight: var(--wu-card-title-weight);
     line-height: 1.35;
@@ -93,6 +94,12 @@
     align-items: center;
     gap: 0.5rem;
     padding-top: var(--wu-card-footer-padding-top);
+  }
+  /* A single wrapper in the footer (<div class="flex justify-content-end">…</div>) spans the card's width, so its own
+     alignment classes work. Buttons placed straight in the footer keep their size. */
+  .wu-card-footer > :only-child:not(wu-button, button, a, .wu-btn, .p-button) {
+    flex: 1 1 100%;
+    min-width: 0;
   }
 
   /* Buttons inside the wrapper the app projects (<div wuCardFooter>) get the slot's spacing too. */

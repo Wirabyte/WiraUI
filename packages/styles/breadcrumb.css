@@ -11,6 +11,13 @@
     border-radius: var(--wu-radius-md);
     background: var(--wu-breadcrumb-bg);
   }
+  /* variant="plain": the trail on its own, for above a page title. */
+  .wu-breadcrumb.wu-breadcrumb-plain {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
   .wu-breadcrumb-list {
     display: flex;
     flex-wrap: wrap;

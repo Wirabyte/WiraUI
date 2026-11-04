@@ -1,5 +1,6 @@
 /* wu-tag. Shared by wiraui v1, v2 and v3. `--wu-tag-fill` picks the look: 0% = soft tint with coloured
-   text (styled), 100% = solid colour with contrast text (classic). */
+   text (styled), 100% = solid colour with contrast text (classic). The tint is see-through (`--wu-tag-soft-mix` of the
+   colour), so a tag stands out on a grey page as well as on a white card. */
 @layer wiraui.components {
   wu-tag {
     display: inline-flex;
@@ -8,7 +9,7 @@
   .wu-tag {
     --_solid: var(--wu-primary-color);
     --_on-solid: var(--wu-primary-contrast);
-    --_soft: var(--wu-primary-soft);
+    --_soft: color-mix(in srgb, var(--_solid) var(--wu-tag-soft-mix), transparent);
     --_on-soft: var(--wu-primary-soft-text);
     display: inline-flex;
     align-items: center;
@@ -50,10 +51,10 @@
     --_soft: var(--wu-chip-bg);
     --_on-soft: var(--wu-chip-color);
   }
-  .wu-tag-success { --_solid: var(--wu-success-color); --_on-solid: var(--wu-success-contrast); --_soft: var(--wu-success-bg); --_on-soft: var(--wu-success-text); }
-  .wu-tag-info { --_solid: var(--wu-info-color); --_on-solid: var(--wu-info-contrast); --_soft: var(--wu-info-bg); --_on-soft: var(--wu-info-text); }
-  .wu-tag-warn { --_solid: var(--wu-warn-color); --_on-solid: var(--wu-warn-contrast); --_soft: var(--wu-warn-bg); --_on-soft: var(--wu-warn-text); }
-  .wu-tag-danger { --_solid: var(--wu-danger-color); --_on-solid: var(--wu-danger-contrast); --_soft: var(--wu-danger-bg); --_on-soft: var(--wu-danger-text); }
-  .wu-tag-help { --_solid: var(--wu-help-color); --_on-solid: var(--wu-help-contrast); --_soft: var(--wu-help-bg); --_on-soft: var(--wu-help-text); }
+  .wu-tag-success { --_solid: var(--wu-success-color); --_on-solid: var(--wu-success-contrast); --_on-soft: var(--wu-success-text); }
+  .wu-tag-info { --_solid: var(--wu-info-color); --_on-solid: var(--wu-info-contrast); --_on-soft: var(--wu-info-text); }
+  .wu-tag-warn { --_solid: var(--wu-warn-color); --_on-solid: var(--wu-warn-contrast); --_on-soft: var(--wu-warn-text); }
+  .wu-tag-danger { --_solid: var(--wu-danger-color); --_on-solid: var(--wu-danger-contrast); --_on-soft: var(--wu-danger-text); }
+  .wu-tag-help { --_solid: var(--wu-help-color); --_on-solid: var(--wu-help-contrast); --_on-soft: var(--wu-help-text); }
   .wu-tag-contrast { --_solid: var(--wu-text); --_on-solid: var(--wu-card-bg); --_soft: var(--wu-text); --_on-soft: var(--wu-card-bg); }
 }

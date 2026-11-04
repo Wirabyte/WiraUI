@@ -53,5 +53,43 @@
         <span class="docs-demo-output">view: <code id="d-sb-item-value">{{ view }}</code></span>
       </docs-demo>
     </docs-section>
+
+    <docs-section id="chips" [section]="sec['chips']">
+      <docs-demo [html]="code['chips']" [ts]="ts['chips']" layout="stack">
+        <wu-selectbutton
+          id="d-sb-chips"
+          name="statuses"
+          [(ngModel)]="statuses"
+          [options]="local(statusFilters)"
+          optionLabel="label"
+          optionValue="value"
+          variant="chips"
+          [multiple]="true"
+        >
+          <ng-template #item let-option>
+            {{ option.label }} <wu-badge [value]="option.count" severity="secondary"></wu-badge>
+          </ng-template>
+        </wu-selectbutton>
+        <span class="docs-demo-output">statuses: <code id="d-sb-chips-value">{{ statuses | json }}</code></span>
+      </docs-demo>
+    </docs-section>
+
+    <docs-section id="cards" [section]="sec['cards']">
+      <docs-demo [html]="code['cards']" [ts]="ts['cards']" layout="stack">
+        <span id="channel-label" class="docs-demo-output">{{ tx('ช่องทางติดต่อกลับ') }}</span>
+        <wu-selectbutton
+          id="d-sb-cards"
+          name="channel"
+          [(ngModel)]="channel"
+          [options]="local(channels)"
+          optionLabel="label"
+          optionValue="value"
+          variant="cards"
+          [allowEmpty]="false"
+          ariaLabelledBy="channel-label"
+        ></wu-selectbutton>
+        <span class="docs-demo-output">channel: <code id="d-sb-cards-value">{{ channel }}</code></span>
+      </docs-demo>
+    </docs-section>
   </ng-template>
 </docs-component-page>

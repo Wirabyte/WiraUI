@@ -1,3 +1,8 @@
+import { WuStatModule } from '@wirabyte/ui/stat';
+import { WuDescriptionsModule } from '@wirabyte/ui/descriptions';
+import { WuSignaturePadModule } from '@wirabyte/ui/signaturepad';
+import { WuChatModule } from '@wirabyte/ui/chat';
+import { WuSchedulerModule } from '@wirabyte/ui/scheduler';
 import { WuFlowModule } from '@wirabyte/ui/flow';
 import { WuTerminalModule } from '@wirabyte/ui/terminal';
 import { WuImageCompareModule } from '@wirabyte/ui/imagecompare';
@@ -98,10 +103,10 @@ import { wiraOverrides } from '../theme/wiraui.overrides';
   declarations: [
     AppComponent
   ],
-  imports: [WuFlowModule, WuTerminalModule, WuImageCompareModule, WuCarouselModule, WuSplitterModule, WuOrganizationChartModule, WuKnobModule, WuInputOtpModule, WuI18nModule, WuNavbarModule, WuAsideMenuModule, WuImageCropperModule, WuSliderModule, WuSplitButtonModule, WuListboxModule, WuGalleriaModule, WuColorPickerModule, WuBreadcrumbModule, WuInplaceModule, WuBlockUIModule, WuScrollPanelModule, WuScrollerModule, WuDrawerModule, WuTieredMenuModule, WuContextMenuModule, WuTreeModule, WuTreeSelectModule, WuDragDropModule, WuRippleModule, WuKeyFilterModule, WuEditorModule, WuPickListModule, WuOrderListModule, WuFileUploadModule, WuStepperModule, WuStepsModule, WuPanelMenuModule, WuAutoCompleteModule, WuImageModule, WuChartJsModule, WuInputMaskModule, WuTimelineModule, WuMenuModule, WuTabMenuModule, WuMultiSelectModule, WuMenubarModule, WuTableModule, WuSelectModule, WuMeterGroupModule, WuValidationModule, WuDialogModule, WuAlertModule, WuConfirmDialogModule, WuToastModule, WuTooltipModule, WuPopoverModule, WuAnimateModule, WuDatePickerModule, WuInputNumberModule, WuToolbarModule, WuAccordionModule, WuTabsModule, WuIconFieldModule, WuInputGroupModule, WuFloatLabelModule, WuToggleButtonModule, WuSelectButtonModule, WuRatingModule, WuPasswordModule, WuTagModule, WuBadgeModule, WuChipModule, WuAvatarModule, WuDividerModule, WuSkeletonModule, WuProgressBarModule, WuProgressSpinnerModule, WuMessageModule, WuPanelModule, WuFieldsetModule, FormsModule, ReactiveFormsModule, WuCardModule, WuInputTextModule, WuTextareaModule, WuCheckboxModule, WuRadioButtonModule, WuToggleSwitchModule, WuButtonModule, 
+  imports: [WuStatModule, WuDescriptionsModule, WuSignaturePadModule, WuChatModule, WuSchedulerModule, WuFlowModule, WuTerminalModule, WuImageCompareModule, WuCarouselModule, WuSplitterModule, WuOrganizationChartModule, WuKnobModule, WuInputOtpModule, WuI18nModule, WuNavbarModule, WuAsideMenuModule, WuImageCropperModule, WuSliderModule, WuSplitButtonModule, WuListboxModule, WuGalleriaModule, WuColorPickerModule, WuBreadcrumbModule, WuInplaceModule, WuBlockUIModule, WuScrollPanelModule, WuScrollerModule, WuDrawerModule, WuTieredMenuModule, WuContextMenuModule, WuTreeModule, WuTreeSelectModule, WuDragDropModule, WuRippleModule, WuKeyFilterModule, WuEditorModule, WuPickListModule, WuOrderListModule, WuFileUploadModule, WuStepperModule, WuStepsModule, WuPanelMenuModule, WuAutoCompleteModule, WuImageModule, WuChartJsModule, WuInputMaskModule, WuTimelineModule, WuMenuModule, WuTabMenuModule, WuMultiSelectModule, WuMenubarModule, WuTableModule, WuSelectModule, WuMeterGroupModule, WuValidationModule, WuDialogModule, WuAlertModule, WuConfirmDialogModule, WuToastModule, WuTooltipModule, WuPopoverModule, WuAnimateModule, WuDatePickerModule, WuInputNumberModule, WuToolbarModule, WuAccordionModule, WuTabsModule, WuIconFieldModule, WuInputGroupModule, WuFloatLabelModule, WuToggleButtonModule, WuSelectButtonModule, WuRatingModule, WuPasswordModule, WuTagModule, WuBadgeModule, WuChipModule, WuAvatarModule, WuDividerModule, WuSkeletonModule, WuProgressBarModule, WuProgressSpinnerModule, WuMessageModule, WuPanelModule, WuFieldsetModule, FormsModule, ReactiveFormsModule, WuCardModule, WuInputTextModule, WuTextareaModule, WuCheckboxModule, WuRadioButtonModule, WuToggleSwitchModule, WuButtonModule, 
     BrowserModule
   ],
-  providers: [provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'class' })],
+  providers: [provideWiraUI({ overrides: wiraOverrides, locale: 'th', calendar: 'buddhist', darkMode: 'class', fonts: 'none' })],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

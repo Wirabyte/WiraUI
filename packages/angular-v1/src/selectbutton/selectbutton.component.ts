@@ -35,7 +35,7 @@ import { WuSelectButtonChangeEvent, WuSelectButtonOptionClickEvent } from './sel
 })
 export class WuSelectButton implements ControlValueAccessor {
   @ContentChildren(WuTemplate) protected slotTemplates?: QueryList<WuTemplate>;
-  @ContentChild('item', { read: TemplateRef }) protected itemRef?: TemplateRef<unknown>;
+  @ContentChild('item', { read: TemplateRef, descendants: false }) protected itemRef?: TemplateRef<unknown>;
   get itemTemplate(): TemplateRef<unknown> | null {
     return this.itemRef || ɵfindTemplate(this.slotTemplates, 'item');
   }
@@ -58,6 +58,15 @@ export class WuSelectButton implements ControlValueAccessor {
   @Input() set invalid(v: unknown) { this._invalid = ɵtoBool(v); }
   /** `small` or `large` (also `sm` / `lg`). */
   @Input() size?: WuSize;
+  /**
+   * `'chips'`: each option its own pill with space around it, for filters with many options (and a count in the item
+   * template): rows wrap cleanly instead of breaking a joined bar. Default: the joined bar.
+   */
+  @Input() variant?: 'default' | 'chips' | 'cards' | null;
+  /** `variant="cards"`: the option field with the card's icon class. Default `'icon'`. */
+  @Input() optionIcon = 'icon';
+  /** `variant="cards"`: the option field with the line under the title. Default `'description'`. */
+  @Input() optionDescription = 'description';
   @HostBinding('class.wu-selectbutton-sm') @HostBinding('class.p-selectbutton-sm') get sizeSm(): boolean {
     return this.sizeKey === 'sm';
   }
@@ -103,9 +112,17 @@ export class WuSelectButton implements ControlValueAccessor {
     return [this.baseClasses, this.styleClass].filter(Boolean).join(' ');
   }
   get baseClasses(): string {
-    return 'wu-selectbutton p-selectbutton p-buttonset p-component' + (this._invalid ? ' wu-invalid' : '');
+    return 'wu-selectbutton p-selectbutton p-buttonset p-component' + (this._invalid ? ' wu-invalid' : '') + (this.variant === 'chips' ? ' wu-selectbutton-chips' : '') + (this.variant === 'cards' ? ' wu-selectbutton-cards' : '');
   }
 
+  iconOf(option: unknown): string {
+    const v = (option && typeof option === 'object' ? (option as Record<string, unknown>)[this.optionIcon] : undefined);
+    return typeof v === 'string' ? v : '';
+  }
+  descriptionOf(option: unknown): string {
+    const v = (option && typeof option === 'object' ? (option as Record<string, unknown>)[this.optionDescription] : undefined);
+    return v === null || v === undefined ? '' : String(v);
+  }
   labelOf(option: unknown): string {
     return ɵoptionLabel(option, this.optionLabel);
   }

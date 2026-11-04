@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 test('tags are solid in the classic look and soft in the styled look, with that era’s class names', async ({ page }, info) => {
   const v1 = info.project.name.split('-')[0] === 'v1';
   const tag = page.locator('#tag-primary .wu-tag');
-  expect(await bgOf(page, '#tag-primary .wu-tag')).toEqual(await pixel(page, await colorOf(page, v1 ? 'var(--wu-primary-color)' : 'var(--wu-primary-soft)')));
+  expect(await bgOf(page, '#tag-primary .wu-tag')).toEqual(await pixel(page, await colorOf(page, v1 ? 'var(--wu-primary-color)' : 'color-mix(in srgb, var(--wu-primary-color) var(--wu-tag-soft-mix), transparent)')));
   await expect(tag).toHaveClass(/(^| )p-tag( |$)/);
   await expect(page.locator('#tag-warn .wu-tag')).toHaveClass(v1 ? /p-tag-warning/ : /p-tag-warn( |$)/);
   await expect(page.locator('#msg-error .wu-message')).toHaveClass(v1 ? /p-inline-message-error/ : /p-message-error/);

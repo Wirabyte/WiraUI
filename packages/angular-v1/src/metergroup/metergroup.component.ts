@@ -4,18 +4,21 @@ import {
   Component,
   ContentChild,
   ContentChildren,
+  EventEmitter,
   inject,
   Input,
+  Output,
   QueryList,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
+import { WuConfig, ɵassertSupportedAngular, ɵfindTemplate, ɵtoBool, ɵWU_SKIP_VERSION_CHECK, WuTemplate } from '@wirabyte/ui/config';
 import {
   ɵmeterParts,
   WuMeterContext,
   WuMeterGroupContext,
   WuMeterItem,
+  WuMeterItemClickEvent,
   WuMeterLabelPosition,
   WuMeterOrientation,
 } from './metergroup.types';
@@ -67,6 +70,13 @@ export class WuMeterGroup {
   @Input() labelPosition: WuMeterLabelPosition = 'end';
   /** Legend items in a row or a column. */
   @Input() labelOrientation: WuMeterOrientation = 'horizontal';
+  /** Each legend item shows its value too: `เปิด 12 (24%)`. */
+  @Input() set showValue(v: unknown) { this._showValue = ɵtoBool(v); }
+  get showValue(): boolean { return this._showValue; }
+  /** Legend items become buttons that emit `(onItemClick)`, e.g. to open the list for that status. */
+  @Input() set clickable(v: unknown) { this._clickable = ɵtoBool(v); }
+  get clickable(): boolean { return this._clickable; }
+  @Output() readonly onItemClick = new EventEmitter<WuMeterItemClickEvent>();
   @Input() styleClass?: string;
   /** Inline styles for the root element, as an object: `[style]="{ width: '20rem' }"`. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -90,9 +100,23 @@ export class WuMeterGroup {
   private _value: WuMeterItem[] = [];
   private _min = 0;
   private _max = 100;
+  private _showValue = false;
+  private _clickable = false;
+
+  private readonly config = inject(WuConfig);
 
   constructor() {
     ɵassertSupportedAngular(inject(ɵWU_SKIP_VERSION_CHECK, { optional: true }));
+  }
+
+  /** The legend text of one item. */
+  labelText(item: WuMeterItem, percent: number): string {
+    const value = this._showValue ? ' ' + Number(item.value).toLocaleString(this.config.translation.code === 'th' ? 'th-TH' : 'en-US') : '';
+    return `${item.label ?? ''}${value} (${percent}%)`;
+  }
+
+  itemClick(event: Event, item: WuMeterItem, index: number): void {
+    this.onItemClick.emit({ originalEvent: event, item, index });
   }
 
   /** `<ng-template pTemplate="label" let-value let-totalPercent="totalPercent" let-percentages="percentages">`: the whole legend. */

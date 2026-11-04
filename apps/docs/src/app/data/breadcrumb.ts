@@ -51,6 +51,13 @@ export const BREADCRUMB_DOC: ComponentDoc = {
         en: '<code>routerLink</code> (with <code>queryParams</code>, <code>fragment</code> and the rest) uses the app\'s router · <code>url</code> and <code>target</code> for plain links · <code>disabled: true</code> shows the item but it cannot be pressed · items also take <code>icon</code>, <code>title</code>, <code>styleClass</code> and <code>style</code>.',
       },
     },
+    plain: {
+      title: { th: 'แบบเรียบเหนือหัวข้อหน้า', en: 'Plain, above a page title' },
+      text: {
+        th: '<code>variant="plain"</code> เหลือแค่เส้นทาง ไม่มีกล่อง ระยะใน หรือขอบ จึงวางชิดเหนือหัวข้อของหน้าได้พอดี (ค่าเริ่มต้นเป็นกล่องตามธีม)',
+        en: '<code>variant="plain"</code> keeps only the trail, with no box, padding or border, so it sits snugly above a page title (the default is the theme’s box).',
+      },
+    },
     templates: {
       title: { th: 'Template', en: 'Templates' },
       text: {
@@ -69,6 +76,8 @@ export const BREADCRUMB_DOC: ComponentDoc = {
   code: {
     basic: `<wu-breadcrumb [model]="trail" [home]="home" homeAriaLabel="หน้าแรก" (onItemClick)="pressed($event)"></wu-breadcrumb>`,
     links: `<wu-breadcrumb [model]="reportTrail" [home]="{ icon: 'wi wi-home', routerLink: '/' }"></wu-breadcrumb>`,
+    plain: `<wu-breadcrumb [model]="gradeTrail" [home]="home" variant="plain"></wu-breadcrumb>
+<h1 class="page-title">ภาคเรียนที่ 1/2569</h1>`,
     templates: {
       v3: `<wu-breadcrumb [model]="trail" [home]="{ icon: 'wi wi-home', routerLink: '/' }">
   <ng-template #item let-item>
@@ -109,6 +118,11 @@ go(event: { item?: WuMenuItem }): void {
 pressed(event: WuBreadcrumbItemClickEvent): void {
   this.lastPressed = event.item.label ?? 'หน้าแรก';
 }`,
+    plain: `gradeTrail: WuMenuItem[] = [
+  { label: 'รายงาน', routerLink: '/reports' },
+  { label: 'ผลการเรียน', routerLink: '/reports/grades' },
+  { label: 'ภาคเรียนที่ 1/2569' },
+];`,
     links: `reportTrail: WuMenuItem[] = [
   { label: 'รายงาน', routerLink: '/reports' },
   { label: 'ผลการเรียน', routerLink: '/reports/grades', queryParams: { term: '1/2569' } },
@@ -125,6 +139,7 @@ pressed(event: WuBreadcrumbItemClickEvent): void {
         row('home', 'WuMenuItem', undefined, 'รายการแรก ไม่ใส่ icon ได้ไอคอนบ้านในตัว', 'The first item; with no icon it gets the built-in house'),
         row('homeAriaLabel', 'string', 'locale', 'ชื่อของรายการแรกเมื่อไม่มี label', 'Name of the first item when it has no label'),
         row('ariaLabel', 'string', 'locale', 'ชื่อของทั้งแถบ', 'Name of the whole trail'),
+        row('variant', "'default' | 'plain'", "'default'", 'plain: ไม่มีกล่อง ระยะใน หรือขอบ (วางเหนือหัวข้อของหน้า)', 'plain: no box, padding or border (for above a page title)'),
         STYLE_ROW,
       ],
     },
