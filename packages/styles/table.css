@@ -41,9 +41,12 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+  /* Only the sideways overscroll is contained (no back/forward swipe off the table). Containing it vertically kept the
+     wheel from ever reaching the page while the pointer was over a table, because the browser treats this wrapper as
+     a scroll container even when the rows fit and nothing scrolls (WUI-025). */
   .wu-table-scrollable .wu-table-wrapper {
     overflow: auto;
-    overscroll-behavior: contain;
+    overscroll-behavior-x: contain;
   }
   .wu-table-flex .wu-table-wrapper {
     flex: 1 1 auto;
