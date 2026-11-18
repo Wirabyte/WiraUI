@@ -1,4 +1,4 @@
-import { expect, Page, test } from '@playwright/test';
+import { expect, Locator, Page, test } from '@playwright/test';
 
 // Release 1: the fixes from the first app built on WiraUI (WUI-001…021) and the components new in it, in every major.
 
@@ -119,6 +119,33 @@ test('select button as filter chips and as option cards', async ({ page }) => {
   await cards.nth(1).click();
   await expect(cards.nth(1)).toHaveAttribute('aria-pressed', 'true');
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'false');
+});
+
+/** An option's colours once its colour transition has ended. */
+const colours = (option: Locator) =>
+  option.evaluate(async (el) => {
+    await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
+    const s = getComputedStyle(el);
+    return { background: s.backgroundColor, top: s.borderTopColor, left: s.borderLeftColor };
+  });
+
+test('a chosen chip or card looks chosen in any position, with the pointer elsewhere (WUI-026)', async ({ page }) => {
+  for (const id of ['#r1-chips', '#r1-cards']) {
+    const options = page.locator(`${id} .wu-selectbutton-option`);
+    // The first option chosen: how a chosen option and a plain one look.
+    await options.first().click();
+    await page.mouse.move(0, 0);
+    await expect(options.first()).toHaveAttribute('aria-pressed', 'true');
+    const chosen = await colours(options.first());
+    const plain = await colours(options.nth(1));
+    expect(chosen).not.toEqual(plain);
+    // The second one chosen looks the same, and not only while the pointer is on it.
+    await options.nth(1).click();
+    await page.mouse.move(0, 0);
+    await expect(options.nth(1)).toHaveAttribute('aria-pressed', 'true');
+    expect(await colours(options.nth(1))).toEqual(chosen);
+    expect(await colours(options.first())).toEqual(plain);
+  }
 });
 
 test('meter group legend shows values and can be clicked', async ({ page }) => {

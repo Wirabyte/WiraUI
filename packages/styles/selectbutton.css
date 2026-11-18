@@ -89,15 +89,17 @@
     opacity: var(--wu-disabled-opacity);
     cursor: default;
   }
-  /* variant="chips": separate pills that wrap in tidy rows (filters with many options, often with a count). */
+  /* variant="chips": separate pills that wrap in tidy rows (filters with many options, often with a count).
+     Chips and cards have no divider, so their option rules don't repeat the `option + option` selector: it outranked
+     the checked rule on every option but the first, which then only looked chosen while hovered. The checked rules
+     name the option class as well, to stay ahead of every option rule of the variant (WUI-026). */
   .wu-selectbutton.wu-selectbutton-chips {
     gap: 0.5rem;
     padding: 0;
     border: 0;
     background: transparent;
   }
-  .wu-selectbutton-chips .wu-selectbutton-option,
-  .wu-selectbutton-chips .wu-selectbutton-option + .wu-selectbutton-option {
+  .wu-selectbutton-chips .wu-selectbutton-option {
     border: 1px solid var(--wu-border);
     border-radius: var(--wu-radius-full);
     background: var(--wu-card-bg);
@@ -109,8 +111,8 @@
     background: var(--wu-hover-bg);
     color: var(--wu-text);
   }
-  .wu-selectbutton-chips .wu-selectbutton-option-checked,
-  .wu-selectbutton-chips .wu-selectbutton-option-checked:not(:disabled):hover {
+  .wu-selectbutton-chips .wu-selectbutton-option.wu-selectbutton-option-checked,
+  .wu-selectbutton-chips .wu-selectbutton-option.wu-selectbutton-option-checked:not(:disabled):hover {
     border-color: color-mix(in srgb, var(--wu-primary-color) 45%, transparent);
     background: color-mix(in srgb, var(--wu-primary-color) var(--wu-tag-soft-mix), var(--wu-card-bg));
     color: var(--wu-primary-soft-text);
@@ -129,8 +131,7 @@
     border: 0;
     background: transparent;
   }
-  .wu-selectbutton-cards .wu-selectbutton-option,
-  .wu-selectbutton-cards .wu-selectbutton-option + .wu-selectbutton-option {
+  .wu-selectbutton-cards .wu-selectbutton-option {
     position: relative;
     justify-content: flex-start;
     align-items: flex-start;
@@ -148,8 +149,8 @@
     border-color: var(--wu-field-hover-border);
     color: var(--wu-text);
   }
-  .wu-selectbutton-cards .wu-selectbutton-option-checked,
-  .wu-selectbutton-cards .wu-selectbutton-option-checked:not(:disabled):hover {
+  .wu-selectbutton-cards .wu-selectbutton-option.wu-selectbutton-option-checked,
+  .wu-selectbutton-cards .wu-selectbutton-option.wu-selectbutton-option-checked:not(:disabled):hover {
     border-color: var(--wu-primary-color);
     background: color-mix(in srgb, var(--wu-primary-color) 6%, var(--wu-card-bg));
     color: var(--wu-text);
