@@ -194,7 +194,6 @@ export function cssOverride(v: DocVersion): string {
    var(--p-content-border-radius), var(--p-<สี>-<เฉด>) … ใช้ต่อได้ */`;
   return `/* src/styles.css: CSS ของแอปไม่อยู่ใน @layer จึงชนะธีมทั้งหมด */
 :root {
-  --wu-primary-color: #00a86b;
   --wu-primary-contrast: #ffffff;    /* ตัวอักษรขาวบนปุ่มหลักตามแบรนด์ */
   --wu-card-body-gap: 0;
 }
@@ -210,8 +209,10 @@ ${compat}`;
 export const CSS_SCOPED = `/* ทั้งโซน เช่น ฝั่ง admin ใช้สีหลักอีกสี */
 .admin-area {
   --wu-primary-color: #e11d48;
-  --wu-primary-hover: #be123c;
-  --wu-primary-active: #9f1239;
+  --wu-primary-hover: #be123c;       /* ตอนชี้ */
+  --wu-primary-active: #9f1239;      /* ตอนกด */
+  --wu-primary-soft: #fff1f2;        /* พื้นของรายการที่เลือก */
+  --wu-primary-soft-text: #9f1239;   /* ตัวอักษรของรายการที่เลือก */
 }`;
 
 export const LAYER_ORDER = `@layer reset, wiraui.tokens, wiraui.components, wiraui.utilities, wiraui.overrides;`;
@@ -414,6 +415,10 @@ export const GUIDE_WORDS: SampleWords = {
   'dark mode แบบ class: ใส่ .wu-dark ที่ <html> (หรือ class ที่ตั้งใน darkModeSelector)':
     'class-based dark mode: put .wu-dark on <html> (or the class set in darkModeSelector)',
   'ทั้งโซน เช่น ฝั่ง admin ใช้สีหลักอีกสี': 'a whole area, e.g. the admin side, in another primary colour',
+  'พื้นของรายการที่เลือก': 'background of the chosen item',
+  'ตัวอักษรของรายการที่เลือก': 'text of the chosen item',
+  'ตอนชี้': 'under the pointer',
+  'ตอนกด': 'while pressed',
   'แพ้ / loses   ': 'loses         ',
   'ชนะ / wins    ': 'wins          ',
   'ธีมหลักจาก SCSS / CSS (หรือ preset จาก TS)': 'the main theme from SCSS / CSS (or a TS preset)',

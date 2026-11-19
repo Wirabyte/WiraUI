@@ -16,7 +16,7 @@ import {
   VERSION_CATALOG,
 } from './catalog';
 import { ThemeConfig, defaults, themeConfig } from './config';
-import { generatePalette, isHex, isPalette, Palette } from './color';
+import { generatePalette, isHex, isPalette, Palette, SHADES } from './color';
 import {
   componentValue,
   computeTokens,
@@ -107,6 +107,20 @@ export function palette(input: string): Palette {
   }
   if (!isHex(input)) throw new Error(`wiraui: palette() needs a hex colour or {name}, got ${input}`);
   return generatePalette(input);
+}
+
+/**
+ * The primary colour when it was changed on its own: `primary-color` is none of the 50–950 shades while
+ * `primary-hover` still is one, so hover, pressed and selected colours stay the theme's. `read` gives a token's
+ * resolved value by its name without `--wu-`. `null` when the primary colour and its shades belong together.
+ */
+export function strayPrimary(read: (token: string) => string): string | null {
+  const value = (token: string) => (read(token) || '').trim().toLowerCase();
+  const color = value('primary-color');
+  const hover = value('primary-hover');
+  if (!color || !hover) return null;
+  const shades = SHADES.map((s) => value('primary-' + s));
+  return !shades.includes(color) && shades.includes(hover) ? color : null;
 }
 
 export function defineOverrides(overrides: ThemeOverrides): ThemeOverrides {

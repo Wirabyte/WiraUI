@@ -7028,3 +7028,24 @@ test('samples of the five new pages follow the team style per version', async ({
   await expect(code('docs-section#chips')).toContainText('<ng-template #item let-option>');
   await expect(code('docs-section#cards')).toContainText('variant="cards" [allowEmpty]="false"');
 });
+
+test('Theming → CSS never changes the primary colour on its own, in any version (WUI-027)', async ({ page }) => {
+  const code = (sel: string) => page.locator(`${sel} docs-code`).first();
+  for (const v of ['v1', 'v2', 'v3']) {
+    await page.goto(`/${v}/theming/css`);
+    // The app CSS sample leaves the primary colour alone (set there, buttons kept the theme's hover colour).
+    await expect(code('docs-section#override')).toContainText('--wu-primary-contrast: #ffffff;');
+    await expect(code('docs-section#override')).not.toContainText('--wu-primary-color');
+    await expect(page.locator('#primary-note')).toContainText('WuThemeService.setPrimary()');
+    await expect(page.locator('#primary-note a')).toHaveCount(2);
+    // The scoped sample sets the colour with everything that goes with it.
+    for (const token of ['color', 'hover', 'active', 'soft', 'soft-text']) {
+      await expect(code('docs-section#scoped')).toContainText(`--wu-primary-${token}: #`);
+    }
+  }
+  await page.locator('#primary-note a').first().click();
+  await expect(page).toHaveURL(/\/v3\/theming\/scss$/);
+  await page.goto('/v3/theming/css?lang=en');
+  await expect(page.locator('#primary-note')).toContainText('Do not change the primary colour through --wu-primary-color alone');
+  await expect(code('docs-section#scoped')).toContainText('background of the chosen item');
+});

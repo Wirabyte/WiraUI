@@ -13,6 +13,7 @@ import {
   parseImport,
   PRESET_IDS,
   presetToTokens,
+  strayPrimary,
   toCSS,
   toJSON,
   toSCSS,
@@ -84,6 +85,42 @@ describe('overrides', () => {
   it('gives titles their own font, the body font by default', () => {
     expect(computeTokens(defaults('wira')).light['heading-font-family']).toBe('var(--wu-font-family)');
     expect(overridesToTokens({ semantic: { headingFontFamily: 'Kanit' } }).light['heading-font-family']).toBe("'Kanit', sans-serif");
+  });
+});
+
+describe('strayPrimary', () => {
+  // What getComputedStyle() gives for a token: a value that is one var() is replaced by what it points to.
+  const reader = (tokens: Record<string, string>) => (name: string): string => {
+    let value = tokens[name] ?? '';
+    for (let ref = /^var\(--wu-([a-z0-9-]+)\)$/.exec(value); ref; ref = /^var\(--wu-([a-z0-9-]+)\)$/.exec(value)) value = tokens[ref[1]] ?? '';
+    return value;
+  };
+  const wira = computeTokens(defaults('wira'));
+
+  it('finds nothing wrong in any preset, in light or dark mode', () => {
+    for (const id of PRESET_IDS) {
+      const t = computeTokens(defaults(id));
+      expect(strayPrimary(reader(t.light)), id).toBeNull();
+      expect(strayPrimary(reader({ ...t.light, ...t.dark })), id + ' dark').toBeNull();
+    }
+  });
+
+  it('finds nothing wrong after a new primary palette', () => {
+    const light = { ...wira.light, ...overridesToTokens({ semantic: { primary: palette('#1d48ba') } }).light };
+    expect(reader(light)('primary-hover')).toBe('#193d9e');
+    expect(strayPrimary(reader(light))).toBeNull();
+  });
+
+  it('names a primary colour set without its shades', () => {
+    const light = { ...wira.light, ...overridesToTokens({ tokens: { 'primary-color': '#1D48BA' } }).light };
+    expect(reader(light)('primary-hover')).toBe('#1a68be');
+    expect(strayPrimary(reader(light))).toBe('#1d48ba');
+  });
+
+  it('accepts a primary colour set together with its hover colour, and a page without a theme', () => {
+    const light = { ...wira.light, 'primary-color': '#e11d48', 'primary-hover': '#be123c' };
+    expect(strayPrimary(reader(light))).toBeNull();
+    expect(strayPrimary(() => '')).toBeNull();
   });
 });
 

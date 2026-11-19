@@ -53,6 +53,24 @@
     <p>CSS ของแอปไม่อยู่ใน <code>&#64;layer</code> จึงชนะค่าของธีมเสมอ ตั้งตัวแปรบน <code>:root</code> ครั้งเดียวแล้วมีผลทั้งแอป</p>
   }
   <docs-code [code]="local(overrideCode)" lang="css" file="src/styles.css"></docs-code>
+  <div class="docs-note" id="primary-note">
+    <docs-icon name="info"></docs-icon>
+    @if (en()) {
+      <p>
+        Do not change the primary colour through <code>--wu-primary-color</code> alone. Hover, pressed and selected colours come from the theme's
+        50–950 shades, so they would keep the old colour (dev mode warns in the console). Change the whole set instead: the theme file of that
+        colour, <a [routerLink]="link('theming/scss')"><code>$primary</code> in SCSS</a>,
+        <a [routerLink]="link('theming/typescript')"><code>palette()</code> in the overrides</a> or <code>WuThemeService.setPrimary()</code>.
+      </p>
+    } @else {
+      <p>
+        สีหลักอย่าเปลี่ยนที่ <code>--wu-primary-color</code> ตัวเดียว เพราะสีตอนชี้ ตอนกด และสีของรายการที่เลือกมาจากเฉด 50–950 ของธีม
+        จึงยังเป็นสีเดิม (dev mode จะเตือนใน console) · ให้เปลี่ยนทั้งชุดด้วยไฟล์ธีมของสีนั้น,
+        <a [routerLink]="link('theming/scss')"><code>$primary</code> ใน SCSS</a>,
+        <a [routerLink]="link('theming/typescript')"><code>palette()</code> ใน overrides</a> หรือ <code>WuThemeService.setPrimary()</code>
+      </p>
+    }
+  </div>
 </docs-section>
 
 <docs-section id="app-layers" [title]="{ th: 'CSS ของแอปกับ layer', en: 'Your CSS and the layers' }">

@@ -167,4 +167,7 @@ for (const v of versions) {
   writeFileSync(styles, current);
 
   run('npx ng build', app);
+  // A development build beside it (dist/playground-<v>-dev) for what only dev mode does, such as WuThemeService's
+  // console warnings: e2e/tests/devmode.spec.ts. No source maps: nothing reads them, and they triple the CI artifact.
+  run(`npx ng build --configuration development --source-map=false --output-path dist/playground-${v}-dev`, app);
 }

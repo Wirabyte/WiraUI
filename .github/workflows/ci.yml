@@ -16,11 +16,15 @@ env:
 # This file has no `pull_request` trigger, but that alone does not protect those machines: a pull request from a fork
 # runs the workflow files in that pull request. The public repository must therefore limit pull requests to
 # collaborators and require approval for every outside contributor (DESIGN.md §12.27).
+#
+# Every job has a time limit of about three times what it takes (build 4 min, ng add 6, apps 7, Playwright 12–36), so
+# a step that hangs gives the runner back instead of holding it for GitHub's six hours.
 
 jobs:
   build:
     name: Build and test (Node 24)
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -72,6 +76,7 @@ jobs:
     name: ng add on Angular ${{ matrix.angular }} / Node ${{ matrix.node }}
     needs: build
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -120,6 +125,7 @@ jobs:
     name: '@wirabyte/ui@1 must not install on Angular 18'
     needs: build
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
+    timeout-minutes: 30
     # In runner.temp for the same reason as the job above.
     steps:
       - uses: actions/download-artifact@v4
@@ -142,10 +148,12 @@ jobs:
           grep -q ERESOLVE install.log
 
   # The apps the browsers test (playgrounds v1–v3 built with `ng add` from the packed tarballs, and the docs site),
-  # built once and shared with the e2e jobs below.
+  # built once and shared with the e2e jobs below. Each playground is built twice: for production, and for development
+  # (dist/playground-<v>-dev) so the dev-mode job can check what WiraUI only does in dev mode.
   apps:
     name: Build the playgrounds and the docs site
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -158,7 +166,7 @@ jobs:
         run: pnpm pack:all
       - name: npm ci in the apps
         run: for app in playground-v1 playground-v2 playground-v3 docs; do (cd apps/$app && npm ci --no-audit --no-fund); done
-      - name: ng add + build the playgrounds
+      - name: ng add + build the playgrounds (production and development)
         run: pnpm run playgrounds
       # `pnpm docs` would be pnpm's own command (it opens the package page): the script needs `pnpm run`.
       - name: Build the docs site (v1, v2, v3 lazy-loaded on Angular 21)
@@ -177,6 +185,7 @@ jobs:
     name: Playwright · ${{ matrix.name }}
     needs: apps
     runs-on: ${{ vars.WU_RUNNER || 'self-hosted' }}
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
@@ -185,6 +194,8 @@ jobs:
           - { name: 'components · Chromium (v3, v2, v1)', browser: chromium, projects: '--project=v3 --project=v2 --project=v1' }
           - { name: 'components · WebKit', browser: webkit, projects: '--project=v3-webkit' }
           - { name: 'components · Firefox', browser: firefox, projects: '--project=v3-firefox' }
+          # Development builds: dev-mode warnings (WuThemeService), the same test in every major.
+          - { name: 'dev mode · Chromium (v3, v2, v1)', browser: chromium, projects: '--project=v3-dev --project=v2-dev --project=v1-dev' }
           - { name: 'docs · Chromium', browser: chromium, projects: '--project=docs' }
           - { name: 'docs · WebKit', browser: webkit, projects: '--project=docs-webkit' }
           - { name: 'docs · Firefox', browser: firefox, projects: '--project=docs-firefox' }
@@ -205,9 +216,18 @@ jobs:
         run: pnpm --filter @wiraui/e2e exec playwright install ${{ runner.environment == 'github-hosted' && '--with-deps' || '' }} ${{ matrix.browser }}
       - name: Test
         run: pnpm --filter @wiraui/e2e exec playwright test ${{ matrix.projects }}
+      # What a failed test left: a screenshot of the page at the failure and the image diffs.
       - if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.browser }}-${{ strategy.job-index }}
           path: e2e/test-results
+          retention-days: 7
+      # The HTML report of every run, passed or failed (not of a cancelled one): open index.html to browse each test.
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}-${{ strategy.job-index }}
+          path: e2e/playwright-report
+          if-no-files-found: ignore
           retention-days: 7

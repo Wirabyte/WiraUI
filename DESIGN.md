@@ -308,6 +308,10 @@ provideWiraUI({
 
 ถ้าใช้ทั้งไฟล์ธีมและ `preset` พร้อมกัน ใน dev mode จะมีคำเตือน (ไฟล์ SCSS/CSS ฝัง `--wu-theme-source` ไว้ให้ runtime ตรวจได้)
 
+dev mode เตือนอีกกรณีหนึ่ง (WUI-027): สีหลักถูกเปลี่ยนที่ `--wu-primary-color` ตัวเดียว โดยเฉด 50–950 ยังเป็นของธีม สีตอนชี้ ตอนกด และสีของรายการที่เลือก (`primary-hover`, `primary-active`, `primary-soft`, `primary-soft-text` และ token ที่อ้างถึง รวม 26 ตัวใน preset `wira`) ผูกกับเฉด จึงค้างเป็นสีเดิม `strayPrimary()` ใน core ถือว่าเข้ากรณีนี้เมื่อ `primary-color` ไม่ตรงกับเฉดใด แต่ `primary-hover` ยังตรงกับเฉดหนึ่ง ธีมที่ตั้ง hover เองด้วยจึงไม่ถูกเตือน และ preset ทุกตัวทั้ง light / dark ผ่าน (มี unit test) `WuThemeService` ตรวจแบบ synchronous ตอน `init()` และหลัง overrides เปลี่ยน เตือนครั้งเดียว ไม่ใช้ `setTimeout` เพื่อไม่ทิ้ง timer ค้างใน `fakeAsync` ของแอป · ไม่เปลี่ยนให้ hover คำนวณจาก `--wu-primary-color` ด้วย `color-mix` เพราะสีของ preset ที่ใช้เฉดคนละคู่ (dark ใช้ 400 → 300, Phet ใช้ 600 → 700) จะเปลี่ยนตาม
+
+คำเตือนใน dev mode ทดสอบกับ build แบบ production ไม่ได้ `tools/setup-playgrounds.mjs` จึง build playground แต่ละรุ่นแบบ development เพิ่มไว้ที่ `dist/playground-<v>-dev` และ `e2e/tests/devmode.spec.ts` (project `v3-dev`, `v2-dev`, `v1-dev`) ใส่ CSS ของแอปเข้า `<head>` ก่อนสคริปต์ทำงาน แล้วตรวจข้อความใน console ทั้ง 3 กรณี: ธีมตามที่ติดตั้ง ไม่เตือน · ตั้ง `--wu-primary-color` ตัวเดียว เตือนครั้งเดียว · ตั้งคู่กับ hover ไม่เตือน
+
 ### 6.6 เปลี่ยนธีมตอน runtime
 
 ```ts

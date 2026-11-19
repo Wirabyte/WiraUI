@@ -8,6 +8,7 @@ import {
   palette,
   presetToTokens,
   Scheme,
+  strayPrimary,
   ThemeOverrideSet,
   ThemeOverrides,
   ThemePreset,
@@ -30,6 +31,7 @@ export class WuThemeService {
   private preset: ThemePreset | null = this.options.preset || null;
   private overrides: ThemeOverrides = this.options.overrides || {};
   private initialized = false;
+  private primaryWarned = false;
 
   /** Called once by `provideWiraUI()`. Safe to call again. */
   init(): void {
@@ -131,6 +133,7 @@ export class WuThemeService {
     const empty = !Object.keys(t.light).length && !Object.keys(t.dark).length;
     this.style('overrides', empty ? '' : tokensToCss(t, { ...this.cssOptions(), layer: 'wiraui.overrides' }));
     if (this.initialized) this.loadFonts();
+    if (this.initialized && isDevMode()) this.warnIfPrimaryAlone();
   }
 
   /**
@@ -168,6 +171,26 @@ export class WuThemeService {
       else head.appendChild(el);
     }
     el.textContent = css;
+  }
+
+  /**
+   * `--wu-primary-color` set on its own (app CSS, `$tokens` or `tokens`) leaves hover, pressed and selected colours on
+   * the theme's shades, so a button turns back to the old colour under the pointer. Said once, when the app starts or
+   * the overrides change.
+   */
+  private warnIfPrimaryAlone(): void {
+    const win = this.doc.defaultView;
+    if (this.primaryWarned || !win || typeof win.getComputedStyle !== 'function') return;
+    const style = win.getComputedStyle(this.doc.documentElement);
+    const color = strayPrimary((token) => style.getPropertyValue('--wu-' + token));
+    if (!color) return;
+    this.primaryWarned = true;
+    console.warn(
+      `[wiraui] --wu-primary-color (${color}) was set without its shades, so hover, pressed and selected colours are still ` +
+        `the theme's. Set the whole primary colour instead: $primary in the SCSS theme, semantic.primary with palette() in ` +
+        `the overrides, or WuThemeService.setPrimary(). To change single tokens, set --wu-primary-hover, ` +
+        `--wu-primary-active, --wu-primary-soft and --wu-primary-soft-text as well.`
+    );
   }
 
   /** A preset and a SCSS/CSS theme file both define every token; one of them is redundant. */

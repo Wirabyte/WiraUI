@@ -69,6 +69,7 @@ ${pickTokens.map((t) => `  ${t.name}: …;`).join('\n')}
 .promo-banner {
   --wu-primary-color: #e11d48;
   --wu-primary-hover: #be123c;
+  --wu-primary-active: #9f1239;
 }`;
   });
 
