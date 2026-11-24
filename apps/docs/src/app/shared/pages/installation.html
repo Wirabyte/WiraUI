@@ -54,12 +54,14 @@
           <tr><td>SCSS / Sass</td><td>Creates <code>src/theme/wiraui.theme.scss</code> and puts <code>&#64;use 'theme/wiraui.theme';</code> first in <code>styles.scss</code></td></tr>
           <tr><td>CSS / Less / other</td><td>Adds the prebuilt CSS of the chosen theme to <code>angular.json</code> → <code>styles</code></td></tr>
           <tr><td>All</td><td>Creates <code>src/theme/wiraui.overrides.ts</code> (empty TypeScript overrides), wires it to the provider and prints the next steps</td></tr>
+          <tr><td>All</td><td>Copies the WiraUI skill for Claude Code into <code>.claude/skills/wiraui/</code>, so coding agents in this app know the components. Commit it to share it with the team; skip with <code>--claude-skill=false</code></td></tr>
         } @else {
           <tr><td>NgModule</td><td>เพิ่ม <code>provideWiraUI(...)</code> ใน <code>providers</code> ของ <code>app.module.ts</code></td></tr>
           <tr><td>Standalone</td><td>เพิ่ม <code>provideWiraUI(...)</code> ใน <code>app.config.ts</code> (หรือ <code>bootstrapApplication</code> ใน <code>main.ts</code>)</td></tr>
           <tr><td>SCSS / Sass</td><td>สร้าง <code>src/theme/wiraui.theme.scss</code> แล้วใส่ <code>&#64;use 'theme/wiraui.theme';</code> เป็นบรรทัดแรกของ <code>styles.scss</code></td></tr>
           <tr><td>CSS / Less / อื่น ๆ</td><td>เพิ่มไฟล์ CSS สำเร็จรูปของธีมที่เลือกลงใน <code>angular.json</code> → <code>styles</code></td></tr>
           <tr><td>ทุกแบบ</td><td>สร้าง <code>src/theme/wiraui.overrides.ts</code> (override ฝั่ง TS เริ่มต้นว่าง) ผูกกับ provider แล้วพิมพ์ "ขั้นตอนถัดไป"</td></tr>
+          <tr><td>ทุกแบบ</td><td>คัดลอก skill ของ WiraUI สำหรับ Claude Code ไปไว้ที่ <code>.claude/skills/wiraui/</code> ให้ coding agent ในแอปนี้รู้วิธีใช้ component commit โฟลเดอร์นี้เพื่อแชร์ให้ทีม ข้ามได้ด้วย <code>--claude-skill=false</code></td></tr>
         }
       </tbody>
     </table>

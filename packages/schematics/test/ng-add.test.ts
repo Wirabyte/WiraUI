@@ -125,6 +125,22 @@ describe('ng add @wirabyte/ui', () => {
     expect(JSON.parse(css.readContent('angular.json')).projects.web.architect.build.options.styles).not.toContain('node_modules/@wirabyte/ui/utils/utils.css');
   });
 
+  it('copies the Claude Code skill into .claude/skills/wiraui, and leaves it out with --claude-skill=false', async () => {
+    const t = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp());
+    expect(t.readContent('.claude/skills/wiraui/SKILL.md')).toMatch(/^---\nname: wiraui\n/);
+    expect(t.exists('.claude/skills/wiraui/references/table/lazy.md')).toBe(true);
+    // A second run replaces the whole folder: edited files come back, files an older release had go away.
+    t.overwrite('.claude/skills/wiraui/SKILL.md', 'old');
+    t.create('.claude/skills/wiraui/references/table.md', 'old layout');
+    t.create('.claude/skills/other/SKILL.md', 'another skill');
+    const again = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, t);
+    expect(again.readContent('.claude/skills/wiraui/SKILL.md')).toMatch(/^---\nname: wiraui\n/);
+    expect(again.exists('.claude/skills/wiraui/references/table.md')).toBe(false);
+    expect(again.exists('.claude/skills/other/SKILL.md')).toBe(true);
+    const off = await runner.runSchematic('ng-add', { ...base, claudeSkill: false, style: 'auto', structure: 'auto' }, moduleApp());
+    expect(off.exists('.claude/skills/wiraui/SKILL.md')).toBe(false);
+  });
+
   it('offers each major its own themes', async () => {
     const sayan = await runner.runSchematic('ng-add', { ...base, style: 'css', structure: 'auto', theme: 'sayan-blue' }, moduleApp());
     const css = sayan.readContent('src/theme/wiraui.theme.css');

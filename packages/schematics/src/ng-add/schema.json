@@ -187,6 +187,11 @@
         ]
       }
     },
+    "claudeSkill": {
+      "type": "boolean",
+      "default": true,
+      "description": "Copy the WiraUI skill for Claude Code into .claude/skills/wiraui, so coding agents working in this app know the components. Commit the folder to share it with the team. Leave out with --claude-skill=false."
+    },
     "angularRange": {
       "type": "string",
       "visible": false,

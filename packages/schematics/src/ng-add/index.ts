@@ -1,5 +1,6 @@
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { posix } from 'path';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
+import { join, posix } from 'path';
 import { FONTS, MajorVersion, normalize, themeConfig, toCSS, toSCSS, VERSION_CATALOG } from '../core';
 import {
   Edit,
@@ -105,6 +106,7 @@ export function ngAdd(options: NgAddOptions): Rule {
     done.push(structure === 'module' ? addToModule(tree, project, themeDir, provider) : addToStandalone(tree, project, themeDir, provider));
 
     if (options.font !== 'none') done.push(addFont(tree, project, fontChoice || config.fontFamily));
+    if (options.claudeSkill !== false) done.push(addClaudeSkill(tree));
 
     log.info('');
     log.info(`WiraUI: ${style === 'scss' ? 'SCSS' : 'CSS'} · ${structure === 'module' ? 'NgModule' : 'Standalone'} · ${themeName} · ${config.primary}`);
@@ -283,6 +285,31 @@ function addToStandalone(tree: Tree, p: ProjectInfo, themeDir: string, provider:
     providersEdit(obj, provider),
   ]);
   return `${file}: added provideWiraUI() to providers`;
+}
+
+// node_modules/@wirabyte/ui/schematics/ng-add/index.cjs → schematics/claude-skill (copied there by scripts/copy-assets.mjs)
+const SKILL_SRC = join(__dirname, '..', 'claude-skill');
+const SKILL_DEST = '.claude/skills/wiraui';
+
+/** The skill belongs to WiraUI, so a second run replaces the whole folder with this release's copy. */
+function addClaudeSkill(tree: Tree): string {
+  if (!existsSync(SKILL_SRC)) return '';
+  const updating = tree.exists(`${SKILL_DEST}/SKILL.md`);
+  const old = new Set<string>();
+  tree.getDir(SKILL_DEST).visit((path) => {
+    old.add(path.replace(/^\//, ''));
+  });
+  (function copy(dir: string, rel: string): void {
+    for (const name of readdirSync(dir)) {
+      const from = join(dir, name);
+      const to = `${rel}/${name}`;
+      if (statSync(from).isDirectory()) copy(from, to);
+      else if (old.delete(to)) tree.overwrite(to, readFileSync(from));
+      else tree.create(to, readFileSync(from));
+    }
+  })(SKILL_SRC, SKILL_DEST);
+  for (const stale of old) tree.delete(stale);
+  return `${updating ? 'updated' : 'created'} ${SKILL_DEST}/ (WiraUI skill for Claude Code; commit it to share with the team)`;
 }
 
 function addFont(tree: Tree, p: ProjectInfo, family: string): string {
