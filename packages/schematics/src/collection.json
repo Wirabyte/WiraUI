@@ -9,6 +9,14 @@
         "install"
       ]
     },
+    "claude-skill": {
+      "description": "Copy the WiraUI skill for Claude Code into .claude/skills/wiraui, or replace the copy an earlier release left there",
+      "factory": "./skill/index.cjs#claudeSkill",
+      "schema": "./skill/schema.json",
+      "aliases": [
+        "skill"
+      ]
+    },
     "from-primeng": {
       "description": "Move PrimeNG imports and <p-…> tags in this workspace to WiraUI (try --dry-run first)",
       "factory": "./from-primeng/index.cjs#fromPrimeng",

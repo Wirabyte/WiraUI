@@ -45,6 +45,7 @@ jobs:
           pnpm --filter @wiraui/themes build
           pnpm --filter @wiraui/themes test
 
+      # Also runs tools/check-skill.mjs: every name in skills/wiraui must exist in the source.
       - name: Schematics
         run: pnpm --filter @wiraui/schematics test
 
@@ -116,7 +117,11 @@ jobs:
         working-directory: ${{ runner.temp }}/app
         run: |
           npm install --no-audit --no-fund "$(ls ../packs/wirabyte-ui-${{ matrix.wu }}.*.tgz)"
-          npx ng add @wirabyte/ui --defaults --skip-confirmation
+          npx ng add @wirabyte/ui --defaults --skip-confirmation --claude-skill
+      # --defaults leaves the skill out; --claude-skill copies it and stamps the release it came from.
+      - name: The Claude Code skill was copied
+        working-directory: ${{ runner.temp }}/app
+        run: grep -q '@wirabyte/ui ${{ matrix.wu }}\.' .claude/skills/wiraui/SKILL.md
       - name: Build
         working-directory: ${{ runner.temp }}/app
         run: npx ng build

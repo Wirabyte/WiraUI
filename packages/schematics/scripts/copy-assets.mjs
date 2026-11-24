@@ -6,9 +6,13 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dist = fileURLToPath(new URL('../dist', import.meta.url));
-for (const f of ['collection.json', 'migration.json', 'ng-add/schema.json', 'from-primeng/schema.json']) {
+for (const f of ['collection.json', 'migration.json', 'ng-add/schema.json', 'from-primeng/schema.json', 'skill/schema.json']) {
   cpSync(fileURLToPath(new URL(`../src/${f}`, import.meta.url)), join(dist, f));
 }
+// The Claude Code skill (repo skills/wiraui) that ng add and the claude-skill schematic copy into the app's .claude/skills/wiraui.
+// tsc does not clear dist/, so drop the old copy first or renamed files would linger.
+rmSync(join(dist, 'claude-skill'), { recursive: true, force: true });
+cpSync(fileURLToPath(new URL('../../../skills/wiraui', import.meta.url)), join(dist, 'claude-skill'), { recursive: true });
 
 const jsFiles = [];
 (function walk(dir) {

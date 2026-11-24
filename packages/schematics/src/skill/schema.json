@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "WiraUIClaudeSkill",
+  "title": "Copy the WiraUI skill for Claude Code",
+  "type": "object",
+  "properties": {
+    "releaseVersion": {
+      "type": "string",
+      "visible": false,
+      "description": "Internal: overrides the version read from wiraui's package.json (tests only)."
+    }
+  }
+}
