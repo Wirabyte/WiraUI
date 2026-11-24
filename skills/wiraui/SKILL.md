@@ -1,13 +1,15 @@
 ---
 name: wiraui
-description: How to install, configure, theme and use WiraUI (@wirabyte/ui), Wirabyte's Angular component library (v1 = Angular 15–17, v2 = 18–20, v3 = 21+). Use whenever a project has @wirabyte/ui in package.json, its templates use wu-* tags or wu* directives (wuButton, wuInputText, wuTooltip…), its code calls provideWiraUI / WuThemeService / WuAlertService / WuMessageService, or the user wants to add WiraUI to an Angular app, build a page or form with it, theme it, or move PrimeNG (p-*) templates over to it. Also for Thai-specific UI needs it covers (Buddhist-era dates, Thai ID, baht text, Excel export).
+description: How to install, configure, theme and use WiraUI (@wirabyte/ui), Wirabyte's Angular component library (v1 = Angular 15–17, v2 = 18–20, v3 = 21+). Use whenever a project has @wirabyte/ui in package.json, its templates use wu-* tags or wu* directives (wuButton, wuInputText, wuTooltip…), its code calls provideWiraUI / WuThemeService / WuAlertService / WuMessageService, or the user wants to add WiraUI to an Angular app, build a page or form with it, theme it, or move an app's p-* templates from its previous UI library over to it. Also for Thai-specific UI needs it covers (Buddhist-era dates, Thai ID, baht text, Excel export).
 ---
 
 # WiraUI (`@wirabyte/ui`)
 
-Angular UI library with ~100 components, written in-house. API names deliberately mirror PrimeNG (`label`, `severity`, `options`, `optionLabel`, `(onClick)`…), Thai-first (Thai text + Buddhist calendar by default), themed through `--wu-*` CSS variables.
+Angular UI library with ~100 components, written in-house. API names follow what Angular apps already use (`label`, `severity`, `options`, `optionLabel`, `(onClick)`…), Thai-first (Thai text + Buddhist calendar by default), themed through `--wu-*` CSS variables.
 
-Docs: https://ui.wirabyte.com/v3/ (swap `v3` for `v1`/`v2`). Source of truth when this skill is unsure: the docs data files in the WiraUI repo, `apps/docs/src/app/data/<component>.ts` (inputs, outputs, types, tokens, examples).
+This copy of the skill describes **@wirabyte/ui 0.0.0**. If `package.json` has a newer `@wirabyte/ui`, refresh the folder before relying on it: `ng g @wirabyte/ui:claude-skill` (replaces all of `.claude/skills/wiraui/`; `0.0.0` means the copy came straight from the WiraUI repo).
+
+Docs: https://ui.wirabyte.com/v3/ (swap `v3` for `v1`/`v2`). Source of truth when this skill is unsure: the installed package's own typings, `node_modules/@wirabyte/ui/<entry>/index.d.ts` (they match the installed version exactly), then the docs site.
 
 ## Step 0 — find out what the project is
 
@@ -23,8 +25,8 @@ Before writing any WiraUI code, check:
 
    Majors are locked to their range: wrong major fails at install (peer deps), at `ng add`, and throws at app start. Never install across ranges, never suggest `--legacy-peer-deps` as a fix.
 2. **Is WiraUI already set up?** Look for `provideWiraUI(` (app.module.ts / app.config.ts / main.ts) and `src/theme/wiraui.theme.scss` or a `@wirabyte/ui/themes/...` entry in angular.json. If yes, skip install.
-3. **NgModule or standalone?** `bootstrapModule(` vs `bootstrapApplication(` in main.ts. Most team apps are NgModule, even on Angular 19.
-4. **Does it still use PrimeNG?** Then WiraUI runs side by side; see [migration](references/migration.md).
+3. **NgModule or standalone?** `bootstrapModule(` vs `bootstrapApplication(` in main.ts. Never assume from the Angular version: NgModule apps are common on Angular 18+ too.
+4. **Does it still use another UI library (`p-*` tags)?** Then WiraUI runs side by side; see [migration](references/migration.md).
 
 ## Install
 
@@ -36,13 +38,13 @@ ng add @wirabyte/ui --defaults
 ng add @wirabyte/ui --style=scss --structure=module --theme=wira --primary=#00a86b --font=Kanit --locale=th-buddhist --darkMode=none
 ```
 
-Flags (from the schematic schema): `--style auto|scss|css`, `--structure auto|module|standalone`, `--theme <name>` (default per major: v1 `sila-light-teal`, v2 `mali`, v3 `wira`), `--utils` (utility classes, default true), `--primary <hex>`, `--font auto|Kanit|Sarabun|Prompt|"Noto Sans Thai"|"IBM Plex Sans Thai"|Anuphan|Inter|Roboto|none`, `--locale th-buddhist|th-gregorian|en`, `--darkMode none|class|media`, `--claude-skill` (copy this skill into `.claude/skills/wiraui`, default true), `--project <name>`.
+Flags (from the schematic schema): `--style auto|scss|css`, `--structure auto|module|standalone`, `--theme <name>` (default per major: v1 `sila-light-teal`, v2 `mali`, v3 `wira`), `--utils` (utility classes, default true), `--primary <hex>`, `--font auto|Kanit|Sarabun|Prompt|"Noto Sans Thai"|"IBM Plex Sans Thai"|Anuphan|Inter|Roboto|none`, `--locale th-buddhist|th-gregorian|en`, `--darkMode none|class|media`, `--claude-skill` (copy this skill into `.claude/skills/wiraui`, default false), `--project <name>`.
 
-`--utils` (default on) adds utility classes named like PrimeFlex (`grid`, `col-12`, `md:col-6`, `flex`, `p-3`): a drop-in for PrimeFlex, but pass `--utils=false` when the app uses Tailwind or another utility library it wants to keep.
+`--utils` (default on) adds utility classes with the names existing apps already use (`grid`, `col-12`, `md:col-6`, `flex`, `p-3`), so their old utility library can go, but pass `--utils=false` when the app uses Tailwind or another utility library it wants to keep.
 
-What it changes: adds `provideWiraUI(...)` to `app.module.ts` providers or `app.config.ts`; SCSS apps get `src/theme/wiraui.theme.scss` + `@use 'theme/wiraui.theme';` as line 1 of `styles.scss`; CSS apps get `src/theme/wiraui.theme.css` (plus `node_modules/@wirabyte/ui/utils/utils.css` unless `--utils=false`) in angular.json `styles`; always creates `src/theme/wiraui.overrides.ts`; copies this skill into `.claude/skills/wiraui/` (replaced on a re-run).
+What it changes: adds `provideWiraUI(...)` to `app.module.ts` providers or `app.config.ts`; SCSS apps get `src/theme/wiraui.theme.scss` + `@use 'theme/wiraui.theme';` as line 1 of `styles.scss`; CSS apps get `src/theme/wiraui.theme.css` (plus `node_modules/@wirabyte/ui/utils/utils.css` unless `--utils=false`) in angular.json `styles`; always creates `src/theme/wiraui.overrides.ts`; with `--claude-skill`, copies this skill into `.claude/skills/wiraui/`.
 
-Upgrading Angular across a range moves both in one command: `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@2`.
+Upgrading Angular across a range moves both in one command: `ng update @angular/core@18 @angular/cli@18 @wirabyte/ui@2`. Neither `ng update` nor `npm update` touches this skill folder: run `ng g @wirabyte/ui:claude-skill` afterwards.
 
 Manual setup (no schematic): `npm i @wirabyte/ui@<major>`, then add the provider and one theme route from [theming](references/theming/setup.md).
 
@@ -76,14 +78,14 @@ import { WuSelect } from '@wirabyte/ui/select';         // standalone
 
 - Form controls implement ControlValueAccessor: use `[(ngModel)]` (import `FormsModule`) or `formControlName` (`ReactiveFormsModule`). Model values are plain JS values; dates are plain `Date` even when shown in B.E.
 - Show validation errors with `<wu-field-error>` / `WuValidators` from `@wirabyte/ui/validation` (see [validation](references/forms/validation.md)).
-- Old camelCase tags and PrimeNG-style attribute names are accepted too (`wu-inputNumber`, `wu-calendar`, `pInputText`, `pTemplate`), but write the canonical names from the index below in new code.
+- Old camelCase tags and the previous library's attribute names are accepted too (`wu-inputNumber`, `wu-calendar`, `pInputText`, `pTemplate`), but write the canonical names from the index below in new code.
 
 ### What differs between majors (templates are otherwise identical)
 
 | | v1 (Ng 15–17) | v2 (Ng 18–20) | v3 (Ng 21+) |
 |---|---|---|---|
 | Standalone component in your app | needs `standalone: true` | default | default |
-| Named slot templates | `<ng-template wuTemplate="footer">` | `<ng-template wuTemplate="footer">` | `<ng-template #footer>` |
+| Named slot templates | `<ng-template #footer>` or `wuTemplate="footer"` | same | same |
 | Control flow in examples | `*ngIf` / `*ngFor` | either | `@if` / `@for` |
 | Component API style (internal; bindings look the same) | `@Input` / `@Output` | mostly signals `input()` / `model()` | mostly signals |
 | Default theme | `sila-light-teal` | `mali` | `wira` (Liquid Glass available) |
@@ -94,7 +96,7 @@ The docs list "Signal Forms" for v3, but no component-level Signal Forms integra
 ## House rules (what makes WiraUI code correct)
 
 - **Overlays live in the browser top layer.** Dialog, Drawer, Select panels, menus, tooltips: no `appendTo`, no `z-index`, no `baseZIndex` (accepted, ignored).
-- **Services come from one import:** `@wirabyte/ui/api` exports `WuMessageService` (alias `MessageService`), `WuConfirmationService` (`ConfirmationService`), `WuAlertService` / `WuAlert`, `MenuItem`, `TreeNode`, `WuTemplate`, `SharedModule`. Both names of each service are the same class; in app code prefer `MessageService` / `ConfirmationService` from `@wirabyte/ui/api` (one import, PrimeNG-familiar). Put `<wu-toast>` / `<wu-confirmdialog>` once in a root template.
+- **Services come from one import:** `@wirabyte/ui/api` exports `WuMessageService` (alias `MessageService`), `WuConfirmationService` (`ConfirmationService`), `WuAlertService` / `WuAlert`, `MenuItem`, `TreeNode`, `WuTemplate`, `SharedModule`. Both names of each service are the same class; in app code prefer `MessageService` / `ConfirmationService` from `@wirabyte/ui/api` (one import, the names apps already use). Put `<wu-toast>` / `<wu-confirmdialog>` once in a root template.
 - **Alerts:** `WuAlert.fire({...})` / `WuAlertService` replaces SweetAlert2 (`Swal.fire`) with the same theme.
 - **Async buttons:** prefer `<wu-button [action]="save">` (function returning Promise/Observable; button shows spinner and blocks double clicks) over hand-written `loading` flags. Bind once: `save = this.doSave.bind(this)`, or an arrow property `save = () => this.api.save(this.form.value)`; never `[action]="doSave()"` (that calls it during rendering).
 - **Style through tokens, not CSS hacks.** Never `::ng-deep` or `!important` on `.wu-*`/`.p-*` internals. Use `defineOverrides({ components: { card: { bodyGap: '0' } } })`, SCSS `$components`/`$tokens`, or plain `--wu-*` variables in app CSS (app CSS is outside `@layer`, so it already wins). Per-component token names are listed in each reference.
@@ -107,8 +109,8 @@ The docs list "Signal Forms" for v3, but no component-level Signal Forms integra
 
 ## Gotchas that apply across components
 
-- **PrimeNG inputs that are accepted but do nothing** (so migrated templates compile): `appendTo`, `baseZIndex`, `autoZIndex`, `transitionOptions` / `*TransitionOptions`, most `virtualScroll*`, `responsive`, `autoDisplayFirst`, `dropdownAppendTo`. Don't "fix" them and don't rely on them.
-- **Not built yet:** Table virtual scroll; AutoComplete `optionValue` and `multiple`. No WiraUI counterpart for PrimeNG `cascadeSelect`, `chips`, `confirmPopup`, `dataView`, `megaMenu`, `scrollTop`, `speedDial`, `treeTable`, `triStateCheckbox`.
+- **Inputs kept from the previous library that are accepted but do nothing** (so migrated templates compile): `appendTo`, `baseZIndex`, `autoZIndex`, `transitionOptions` / `*TransitionOptions`, most `virtualScroll*`, `responsive`, `autoDisplayFirst`, `dropdownAppendTo`. Don't "fix" them and don't rely on them.
+- **Not built yet:** Table virtual scroll; AutoComplete `optionValue` and `multiple`. No WiraUI counterpart for the previous library's `cascadeSelect`, `chips`, `confirmPopup`, `dataView`, `megaMenu`, `scrollTop`, `speedDial`, `treeTable`, `triStateCheckbox`.
 - **Option lists** (Select, MultiSelect, AutoComplete, Listbox, SelectButton) share `options` / `optionLabel` / `optionValue` / `optionDisabled` / `dataKey`. Without `optionValue` the model is the whole object, so set `dataKey` when the model is reloaded from an API.
 - **Function-valued inputs take the function itself:** `[action]`, `[rowSelectable]`, `[exportFunction]`, Flow `[isValidConnection]`/`[beforeDelete]`. Bind once in the class: `fn = this.fn.bind(this)`.
 - **`[style]` is an object** (`[style]="{ height: '12rem' }"`), plus `styleClass` for classes.
@@ -129,7 +131,7 @@ The docs list "Signal Forms" for v3, but no component-level Signal Forms integra
 
 ## Component index
 
-Import from `@wirabyte/ui/<entry>`. Before using a component you haven't used in this session, read its file: **`references/<folder>/<entry>.md`**, one file per component (1–6 KB: import, inputs, outputs, slots, examples, gotchas). In folders that have a `_shared.md`, read it once too; it holds the rules every component there follows. Read only the files you need. Examples are v3-style (`<ng-template #x>`, `@if`); for v1/v2 apply the conversions in the version table above.
+Import from `@wirabyte/ui/<entry>`. Before using a component you haven't used in this session, read its file: **`references/<folder>/<entry>.md`**, one file per component (1–6 KB: import, inputs, outputs, slots, examples, gotchas). In folders that have a `_shared.md`, read it once too; it holds the rules every component there follows. Read only the files you need. Examples are v3-style (`@if` / `@for`); on Angular 15–16 write `*ngIf` / `*ngFor` instead. `<ng-template #x>` slots work in every major.
 
 | Folder | Components (selector), file = entry unless noted |
 |---|---|
@@ -143,6 +145,6 @@ Import from `@wirabyte/ui/<entry>`. Before using a component you haven't used in
 | `charts/` + `_shared.md` | Chart `wu-chart` → `chart.md` (v3 own engine; Chart.js wrapper on v1/v2) · ChartJS `wu-chartjs` · Flow `wu-flow` · OrganizationChart `wu-organizationChart` |
 | `helpers/` | Thai pipes `wuDate` `wuTimeAgo` `wuBahtText` `wuThaiPhone` `wuThaiId` `wuThaiDigits` → `thai-pipes.md` (entry `thai`) · Excel `downloadExcel()` `buildExcel()` · DragDrop `[wuDraggable]` `[wuDroppable]` · Ripple `[wuRipple]` · Animate `[data-aos]` / `provideWuAnimate()` |
 | `theming/` | `setup.md` (theme routes SCSS / CSS / TS, presets per major, tokens, layers, dark mode, scale, `WuThemeService`, old variable names) · `icons.md` (`@wirabyte/icons`) · `utils.md` (utility classes, `@wirabyte/ui/utils`) |
-| `migration.md` | Moving a PrimeNG app over: `from-primeng` schematic, tag/module mapping, kept class names and CSS variables |
+| `migration.md` | Moving an app over from its previous UI library (`p-*` tags): `from-primeng` schematic, tag/module mapping, kept class names and CSS variables |
 
 Entries not obvious from the name: `asidemenu`, `sitefooter`, `emptystate`, `errorpage`, `progressspinner`, `signaturepad`, `inputotp`, `imagecropper`, `imagecompare`, `organizationchart`, `alert` (AlertDialog), `validation` (WuFieldError / WuValidationModule), `thai` (WuThaiModule).

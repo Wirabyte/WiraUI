@@ -189,8 +189,9 @@
     },
     "claudeSkill": {
       "type": "boolean",
-      "default": true,
-      "description": "Copy the WiraUI skill for Claude Code into .claude/skills/wiraui, so coding agents working in this app know the components. Commit the folder to share it with the team. Leave out with --claude-skill=false."
+      "default": false,
+      "description": "Copy the WiraUI skill for Claude Code into .claude/skills/wiraui, so coding agents working in this app know the components. Commit the folder to share it with the team. Off unless asked for: answer yes at the prompt or pass --claude-skill. Add or refresh it later with ng g @wirabyte/ui:claude-skill.",
+      "x-prompt": "Copy the WiraUI skill for Claude Code into .claude/skills/wiraui?"
     },
     "angularRange": {
       "type": "string",

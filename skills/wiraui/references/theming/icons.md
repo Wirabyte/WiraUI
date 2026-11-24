@@ -25,7 +25,7 @@ npm install @wirabyte/icons
 - Weights: `wi-thin`, `wi-light`, regular (no class), `wi-bold`, `wi-fill`. Each weight is its own font; a page downloads only the weights it uses.
 - Size follows `font-size`, colour follows `color` (theme tokens work). `wi-spin` rotates (slower under reduced motion); `wi-fw` gives every icon the same width.
 - WiraUI components' `icon` input takes the classes: `<wu-button label="บันทึก" icon="wi wi-save">`, `icon="wi wi-trash wi-bold"`. An icon-only button always needs `ariaLabel`.
-- From PrimeNG: replace `pi pi-` with `wi wi-` across the project (templates, menu data, `icon="…"`). Names that are missing: search the docs gallery by the old name.
+- From a `pi pi-` icon font: replace `pi pi-` with `wi wi-` across the project (templates, menu data, `icon="…"`). Names that are missing: search the docs gallery by the old name.
 
 `<wi-icon>` component (inline SVG, no font) from `@wirabyte/icons/angular`: standalone `WiIcon`, or `WiIconModule`:
 ```html

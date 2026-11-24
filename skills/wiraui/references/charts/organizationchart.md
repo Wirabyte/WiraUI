@@ -5,7 +5,7 @@
 > Also read [`_shared.md`](_shared.md) in this folder: which chart component to use on which major.
 
 `wu-organizationChart` · `WuOrganizationChartModule` (brings `wuTemplate`) / `WuOrganizationChart` from `@wirabyte/ui/organizationchart`
-Also accepted: `wu-organizationchart`, `wu-organization-chart`; migrating from PrimeNG `<p-organizationChart>` (inputs, events and `pTemplate="person"` keep their names; same `TreeNode` data).
+Also accepted: `wu-organizationchart`, `wu-organization-chart`; migrating from `<p-organizationChart>` (inputs, events and `pTemplate="person"` keep their names; same `TreeNode` data).
 
 Org chart drawn top down with boxes joined by lines: your own box templates by data type, single/multiple selection, foldable branches, keyboard, scrolls sideways inside its own box on phones. Data is `TreeNode` from `@wirabyte/ui/api`. For a freely draggable/editable diagram use Flow instead.
 

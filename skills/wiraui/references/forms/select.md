@@ -5,7 +5,7 @@
 > Also read [`_shared.md`](_shared.md) in this folder: ngModel / reactive forms basics, sizes, invalid styling and the option-list inputs shared by every form control.
 
 `wu-select` · `WuSelectModule` / `WuSelect` from `@wirabyte/ui/select` · forms: ngModel / formControlName
-Also accepted: `wu-dropdown`; PrimeNG `p-dropdown` / `p-select` templates port with most inputs unchanged.
+Also accepted: `wu-dropdown`; `p-dropdown` / `p-select` templates port with most inputs unchanged.
 
 Pick one value from a list: Thai search, groups, row templates, full keyboard support. The list opens in the top layer.
 

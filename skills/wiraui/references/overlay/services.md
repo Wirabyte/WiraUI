@@ -4,7 +4,7 @@
 
 > Also read [`_shared.md`](_shared.md) in this folder: top-layer rules (no appendTo / z-index) and slot syntax.
 
-All four services are `providedIn: 'root'`; nothing to add to `providers`. Import from `@wirabyte/ui/api` (one import, PrimeNG-compatible aliases) or from the component entry:
+All four services are `providedIn: 'root'`; nothing to add to `providers`. Import from `@wirabyte/ui/api` (one import, with the service names apps already use as aliases) or from the component entry:
 
 | Service | `@wirabyte/ui/api` names | Component entry | Host component (place once in a root template) |
 |---|---|---|---|

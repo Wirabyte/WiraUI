@@ -5,7 +5,7 @@
 > Also read [`_shared.md`](_shared.md) in this folder: ngModel / reactive forms basics, sizes, invalid styling and the option-list inputs shared by every form control.
 
 `wu-datepicker` · `WuDatePickerModule` / `WuDatePicker` from `@wirabyte/ui/datepicker` · forms: ngModel / formControlName
-Also accepted: `wu-calendar`, `wu-datePicker` (a prefix change moves PrimeNG `p-calendar` code over).
+Also accepted: `wu-calendar`, `wu-datePicker` (a prefix change moves `p-calendar` code over).
 
 Date and time field. Years show in the Buddhist era (B.E.) by default in Thai apps while the model stays an ordinary Gregorian `Date`. Reads dates typed many ways, picks ranges or several days, opens as a bottom sheet on phones.
 

@@ -30,6 +30,7 @@ packages/angular-v3      build of @wirabyte/ui@3 (Angular 21 toolchain)
 packages/schematics      ng add / ng update
 packages/icons           @wirabyte/icons
 packages/figma           Figma UI Kit plugin (see its README, in Thai)
+skills/wiraui            skill for coding agents, shipped in @wirabyte/ui (DESIGN.md §12.30)
 apps/docs                docs site (Angular 21, loads each major lazily)
 apps/playground-v*       test app for each major (separate npm projects)
 ```
@@ -81,6 +82,8 @@ If your local npm is 10.2.x, which has a bug with Angular 21, update npm or run 
 - **Keyboard and screen readers.** Controls must work from the keyboard and expose the right roles and labels.
 - **Thai and English.** Built-in text needs both languages, and Thai text must render correctly.
 - **Docs with the code.** New inputs and components need a docs page or example, with a Playwright test.
+- **Skill with the code.** When a component's inputs, outputs, defaults or selectors change, update its file in
+  `skills/wiraui/references`. `pnpm test` runs `tools/check-skill.mjs`, which checks the names but not the behaviour.
 - **Fictional data.** Samples, demos and tests use made-up names, never real people, schools or companies.
 - **No new runtime dependencies** without talking about it first. Components are written in-house.
 

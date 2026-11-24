@@ -35,5 +35,5 @@ type WuTooltipEvent = 'hover' | 'focus' | 'both';
 **Tokens** - `--wu-tooltip-bg`, `--wu-tooltip-color`, `--wu-tooltip-radius`, `--wu-tooltip-padding`, `--wu-tooltip-max-width`, `--wu-tooltip-shadow`
 
 **Gotchas**
-- Default position is `right` (PrimeNG-style), not top.
+- Default position is `right`, not top.
 - Icon-only buttons still need `ariaLabel`; a tooltip is not an accessible name.

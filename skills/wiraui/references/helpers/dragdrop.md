@@ -70,4 +70,4 @@ Scope (several kinds / separate zones) and handle:
 - It does not move data: remember the dragged item in `(onDragStart)` and mutate your arrays in `(onDrop)`.
 - A zone takes only its own scope; same scope name on both sides is required.
 - Browser drag and drop works with a mouse; give touch screens a move button as well.
-- Migration from PrimeNG: only the import changes (`WuDragDropModule` from `@wirabyte/ui/dragdrop`).
+- Migrating `pDraggable` / `pDroppable` code: only the import changes (`WuDragDropModule` from `@wirabyte/ui/dragdrop`).

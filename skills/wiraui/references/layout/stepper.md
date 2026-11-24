@@ -3,7 +3,7 @@
 > Examples are v3-style. For v1/v2 (Angular 15–20) write slots as `<ng-template wuTemplate="x">` instead of `<ng-template #x>`, `*ngIf`/`*ngFor` instead of `@if`/`@for`, and add `standalone: true` to your own standalone components on v1.
 
 `wu-stepper` · `WuStepperModule` (brings `wu-stepper`, `wu-step-list`, `wu-step`, `wu-step-panels`, `wu-step-panel`, `wu-step-item`, `wuTemplate`) · standalone: `WuStepper`, `WuStepList`, `WuStep`, `WuStepPanels`, `WuStepPanel` (+ `WuStepItem` for vertical) from `@wirabyte/ui/stepper`
-Also accepted: none; PrimeNG `p-stepper` / `p-step-*` tags are renamed to `wu-*` (`p-*` classes sit next to `wu-*`).
+Also accepted: none; `p-stepper` / `p-step-*` tags are renamed to `wu-*` (`p-*` classes sit next to `wu-*`).
 
 Steps of a process with each step's content built in. Two styles:
 

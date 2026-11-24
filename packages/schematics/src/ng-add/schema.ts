@@ -10,7 +10,7 @@ export interface NgAddOptions {
   font: 'auto' | 'Kanit' | 'Sarabun' | 'Prompt' | 'Noto Sans Thai' | 'IBM Plex Sans Thai' | 'Anuphan' | 'Inter' | 'Roboto' | 'none';
   locale: 'th-buddhist' | 'th-gregorian' | 'en';
   darkMode: 'none' | 'class' | 'media';
-  /** Copy the Claude Code skill into `.claude/skills/wiraui`. */
+  /** Copy the Claude Code skill into `.claude/skills/wiraui`. Off unless asked for. */
   claudeSkill?: boolean;
   /** Tests only: replaces the range read from wiraui's package.json. */
   angularRange?: string;

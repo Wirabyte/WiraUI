@@ -91,7 +91,7 @@ downloadExcel({
     { ...excelSheetFromRows(this.fees, [ /* columns */ ], { sheetName: 'รายชื่อ' }), landscape: true, fitToWidth: true, paper: 'A4' },
   ],
 }, 'workbook');
-// several wu-tables in one file: buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })
+// several tables in one file: buildExcel({ sheets: [dt1.toExcelSheet(), dt2.toExcelSheet()] })
 ```
 
 **Functions** — returns

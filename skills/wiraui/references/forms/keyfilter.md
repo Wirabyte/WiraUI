@@ -27,7 +27,7 @@ phonePattern = /^0\d{9}$/;    // with wuValidateOnly: tested on the whole value
 - `wuKeyFilter` · `pKeyFilter`: `'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum' | 'thai' | RegExp | string` — named filter, or RegExp tested per character (a string like `wuKeyFilter="[A-Z0-9-]"` works too)
 - `wuValidateOnly` · `pValidateOnly`: `boolean` = `false` — block nothing; form gets error `keyfilter` (RegExp tests the whole value)
 
-**Named filters** — `pint` positive digits · `int` digits and minus · `pnum` digits and decimal point · `money` digits, points, commas, spaces · `num` digits, points, minus · `hex` 0–9 a–f · `email` · `alpha` English letters · `alphanum` English letters and digits · `thai` Thai letters and spaces (new vs PrimeNG).
+**Named filters** — `pint` positive digits · `int` digits and minus · `pnum` digits and decimal point · `money` digits, points, commas, spaces · `num` digits, points, minus · `hex` 0–9 a–f · `email` · `alpha` English letters · `alphanum` English letters and digits · `thai` Thai letters and spaces (new in WiraUI).
 **Form errors** — `keyfilter: true` when the value fails (with `wuValidateOnly`).
 **Types** — `import { WU_KEYFILTER_PRESETS, WuKeyFilterPreset } from '@wirabyte/ui/keyfilter'; type WuKeyFilterPreset = 'pint' | ... | 'thai'; const WU_KEYFILTER_PRESETS: Record<WuKeyFilterPreset, RegExp>;`
 **Tokens** — none (field keeps InputText tokens).

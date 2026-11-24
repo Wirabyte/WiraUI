@@ -5,7 +5,7 @@
 > Also read [`_shared.md`](_shared.md) in this folder: ngModel / reactive forms basics, sizes, invalid styling and the option-list inputs shared by every form control.
 
 `wu-toggleswitch` · `WuToggleSwitchModule` / `WuToggleSwitch` from `@wirabyte/ui/toggleswitch` · forms: ngModel / formControlName
-Also accepted: `wu-toggleSwitch`, `wu-inputSwitch`, `wu-inputswitch`, `wu-toggle-switch` (so moving from PrimeNG `p-inputSwitch` is a prefix change).
+Also accepted: `wu-toggleSwitch`, `wu-inputSwitch`, `wu-inputswitch`, `wu-toggle-switch` (so moving from `p-inputSwitch` is a prefix change).
 
 On / off switch with a built-in label; underneath is a real checkbox with `role="switch"`.
 

@@ -33,4 +33,4 @@ setRipple(on: boolean): void { this.config.ripple = on; }   // whole app at once
 **Gotchas**
 - Shows only once ripple is on for the app: `provideWiraUI({ ripple: true })` or `WuConfig.ripple = true` (the Material preset turns it on).
 - People who ask their device for reduced motion see no ink.
-- Class `p-ripple` sits next to `wu-ripple`. PrimeNG migration: only the import changes.
+- Class `p-ripple` sits next to `wu-ripple`. Migrating `pRipple` code: only the import changes.

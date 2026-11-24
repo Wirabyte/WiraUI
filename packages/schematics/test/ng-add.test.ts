@@ -125,20 +125,31 @@ describe('ng add @wirabyte/ui', () => {
     expect(JSON.parse(css.readContent('angular.json')).projects.web.architect.build.options.styles).not.toContain('node_modules/@wirabyte/ui/utils/utils.css');
   });
 
-  it('copies the Claude Code skill into .claude/skills/wiraui, and leaves it out with --claude-skill=false', async () => {
-    const t = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp());
-    expect(t.readContent('.claude/skills/wiraui/SKILL.md')).toMatch(/^---\nname: wiraui\n/);
+  it('copies the Claude Code skill only when asked, stamped with the release it came from', async () => {
+    const off = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, moduleApp());
+    expect(off.exists('.claude/skills/wiraui/SKILL.md')).toBe(false);
+    const asked = { ...base, claudeSkill: true, releaseVersion: '1.2.3', style: 'auto', structure: 'auto' };
+    const t = await runner.runSchematic('ng-add', asked, moduleApp());
+    const skill = t.readContent('.claude/skills/wiraui/SKILL.md');
+    expect(skill).toMatch(/^---\nname: wiraui\n/);
+    expect(skill).toContain('@wirabyte/ui 1.2.3');
+    expect(skill).not.toContain('@wirabyte/ui 0.0.0');
     expect(t.exists('.claude/skills/wiraui/references/table/lazy.md')).toBe(true);
-    // A second run replaces the whole folder: edited files come back, files an older release had go away.
+  });
+
+  it('claude-skill replaces the whole skill folder and leaves other skills alone', async () => {
+    const t = await runner.runSchematic('ng-add', { ...base, claudeSkill: true, releaseVersion: '1.2.3', style: 'auto', structure: 'auto' }, moduleApp());
+    // Edited files come back, files an older release had go away.
     t.overwrite('.claude/skills/wiraui/SKILL.md', 'old');
     t.create('.claude/skills/wiraui/references/table.md', 'old layout');
     t.create('.claude/skills/other/SKILL.md', 'another skill');
-    const again = await runner.runSchematic('ng-add', { ...base, style: 'auto', structure: 'auto' }, t);
-    expect(again.readContent('.claude/skills/wiraui/SKILL.md')).toMatch(/^---\nname: wiraui\n/);
+    const again = await runner.runSchematic('claude-skill', { releaseVersion: '1.3.0' }, t);
+    expect(again.readContent('.claude/skills/wiraui/SKILL.md')).toContain('@wirabyte/ui 1.3.0');
     expect(again.exists('.claude/skills/wiraui/references/table.md')).toBe(false);
-    expect(again.exists('.claude/skills/other/SKILL.md')).toBe(true);
-    const off = await runner.runSchematic('ng-add', { ...base, claudeSkill: false, style: 'auto', structure: 'auto' }, moduleApp());
-    expect(off.exists('.claude/skills/wiraui/SKILL.md')).toBe(false);
+    expect(again.readContent('.claude/skills/other/SKILL.md')).toBe('another skill');
+    // On its own, in a workspace ng add never copied it into.
+    const fresh = await runner.runSchematic('claude-skill', { releaseVersion: '1.3.0' }, moduleApp());
+    expect(fresh.readContent('.claude/skills/wiraui/SKILL.md')).toMatch(/^---\nname: wiraui\n/);
   });
 
   it('offers each major its own themes', async () => {

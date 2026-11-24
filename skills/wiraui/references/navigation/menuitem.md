@@ -2,7 +2,7 @@
 
 > Examples are v3-style. For v1/v2 (Angular 15–20) write slots as `<ng-template wuTemplate="x">` instead of `<ng-template #x>`, `*ngIf`/`*ngFor` instead of `@if`/`@for`, and add `standalone: true` to your own standalone components on v1.
 
-Every menu-like component here takes a `MenuItem[]` (`model`), the same shape as PrimeNG's MenuItem, so existing models work unchanged. Import from `@wirabyte/ui/api` (`MenuItem`, `MenuItemCommandEvent`) or `@wirabyte/ui/menu` / `menubar` / `config` (`WuMenuItem`, `WuMenuItemCommandEvent`); same shape, docs use either.
+Every menu-like component here takes a `MenuItem[]` (`model`), the `MenuItem` shape existing apps already use, so their models work unchanged. Import from `@wirabyte/ui/api` (`MenuItem`, `MenuItemCommandEvent`) or `@wirabyte/ui/menu` / `menubar` / `config` (`WuMenuItem`, `WuMenuItemCommandEvent`); same shape, docs use either.
 
 ```ts
 interface WuMenuItemCommandEvent { originalEvent?: Event; item?: WuMenuItem; index?: number }

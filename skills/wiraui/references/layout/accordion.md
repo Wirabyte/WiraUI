@@ -7,7 +7,7 @@ Also accepted: `wu-accordionTab` / `wu-accordiontab` (= `wu-accordion-tab`), `wu
 
 Headers that open and close content, one at a time or several, with arrow-key navigation. Two forms, both in v1, v2 and v3:
 
-- **Tag/index form (older, PrimeNG `p-accordionTab` style):** `<wu-accordion-tab header="…">`, open state by `[(activeIndex)]`.
+- **Tag/index form (older, `p-accordionTab` style):** `<wu-accordion-tab header="…">`, open state by `[(activeIndex)]`.
 - **Value form (newer):** `<wu-accordion-panel value="x">` + `<wu-accordion-header>` + `<wu-accordion-content>`, open state by `[(value)]`.
 
 **Prefer the value form in new code** (state is bound to a value, not a position); keep the index form when editing or migrating templates already written that way. Don't mix both in one accordion.
@@ -64,4 +64,4 @@ interface WuAccordionTabEvent { index: number; value?: unknown /* value form */ 
 - `[(activeIndex)]` is position-based, `[(value)]` is value-based: bind the one matching the markup.
 - `onOpen`/`onClose` payload has `index` (index form) or `value` (value form).
 - Template slots: v3 `#header` / `#content`, v1/v2 `wuTemplate="header"`.
-- `wu-accordionTab` (camelCase) is the same component, so a PrimeNG → WiraUI move is a prefix change.
+- `wu-accordionTab` (camelCase) is the same component, so moving `p-accordionTab` code over is a prefix change.

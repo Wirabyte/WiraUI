@@ -7,7 +7,7 @@ Also accepted: `wu-tabView`, `wu-tabview`; `wu-tabPanel`, `wu-tabpanel` (= `wu-t
 
 Content tabs with arrow-key selection; the tab row scrolls sideways (edge arrows) when it overflows. Three forms:
 
-- **Tag/index form (older, PrimeNG `p-tabView` style):** `<wu-tab-panel header="…">` children, `[(activeIndex)]`.
+- **Tag/index form (older, `p-tabView` style):** `<wu-tab-panel header="…">` children, `[(activeIndex)]`.
 - **Value form (newer; "used a lot by newer apps"; v1, v2, v3):** `wu-tablist` + `wu-tab value` and `wu-tabpanels` + `wu-tabpanel value`, `[(value)]`.
 - **Model form:** `[model]` of `MenuItem[]` draws a row of link-tabs with no panels (same component as `wu-tabmenu`); you render the picked view yourself.
 
@@ -70,5 +70,5 @@ interface WuTabsChangeEvent { index: number; value?: string | number /* value fo
 - Pick one form per `wu-tabs`; `activeIndex` and `value` are separate bindings.
 - `wu-tabpanel` / `wu-tab-panel` / `wu-tabPanel` are one component; `header` is for the index form, `value` for the value form.
 - Header template: v3 `#header`, v1/v2 `wuTemplate="header"`. Loops: v3 `@for … track`, v1 `*ngFor`.
-- `scrollable` from PrimeNG templates is accepted but unnecessary.
+- `scrollable` from migrated `p-tabView` templates is accepted but unnecessary.
 - Model form has no panels; draw the view under the row yourself or use `<router-outlet>`.
